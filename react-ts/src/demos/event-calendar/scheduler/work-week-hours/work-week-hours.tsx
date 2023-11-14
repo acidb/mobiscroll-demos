@@ -1,12 +1,12 @@
 import React from 'react'
-import { Eventcalendar, getJson, Toast, /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscEventCreateFailedEvent, MbscEventUpdateFailedEvent, Toast,  /* localeImport */ } from '@mobiscroll/react';
 import './work-week-hours.css';
 
 
 function WorkWeekHours() {
-    const [myEvents, setEvents] = React.useState([]);
-    const [isToastOpen, setToastOpen] = React.useState(false);
-    const [toastText, setToastText] = React.useState();
+    const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+    const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
+    const [toastText, setToastText] = React.useState<string>();
     const invalids = [{
         start: '12:00',
         end: '13:00',
@@ -24,21 +24,21 @@ function WorkWeekHours() {
         }, 'jsonp');
     }, []);
     
-    const onEventCreateFailed = React.useCallback((event) => {
+    const onEventCreateFailed = React.useCallback((event: MbscEventCreateFailedEvent) => {
         if (event.invalid.type === "lunch") {
             setToastText("Can't create this task on lunch break.");
             setToastOpen(true);
         }
-    });
+    }, []);
     
-     const onEventUpdateFailed = React.useCallback((event) => {
+     const onEventUpdateFailed = React.useCallback((event: MbscEventUpdateFailedEvent) => {
         if (event.invalid.type === "lunch") {
             setToastText("Can't schedule this task on lunch break.");
             setToastOpen(true);
         }
-    });
+    }, []);
     
-    const view = React.useMemo(() => {
+    const view = React.useMemo<MbscEventcalendarView>(() => {
         return {
             schedule: {
                 type: 'week',

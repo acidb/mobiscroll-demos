@@ -1,4 +1,7 @@
-import { Eventcalendar, Button, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, Button, Toast, setOptions, /* localeImport */ 
+MbscResource,
+MbscCalendarEvent,
+MbscEventcalendarView} from '@mobiscroll/react';
 import React from 'react'
 import './compare-resources.css'
 
@@ -7,7 +10,7 @@ setOptions({
     // themeJs
 });
 
-const myResources = [
+const myResources: MbscResource[] = [
   {
     id: 1,
     name: 'Emma Smith',
@@ -75,13 +78,13 @@ const myResources = [
   },
 ];
 
-const CompareResources = () => {
-  const [resources, setResources] = React.useState(myResources);
-  const [fixedNr, setFixedNr] = React.useState(0);
-  const [fixedResources, setFixedResources] = React.useState([]);
-  const [isToastOpen, setIsToastOpen] = React.useState(false);
+const CompareResources: React.FC = () => {
+  const [resources, setResources] = React.useState<MbscResource[]>(myResources);
+  const [fixedNr, setFixedNr] = React.useState<number>(0);
+  const [fixedResources, setFixedResources] = React.useState<MbscResource[]>([]);
+  const [isToastOpen, setIsToastOpen] = React.useState<boolean>(false);
 
-  const myEvents = React.useMemo(() => {
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
     return [
       {
         start: 'dyndatetime(y,m,d,9)',
@@ -404,7 +407,7 @@ const CompareResources = () => {
     ];
   }, []);
 
-  const view = React.useMemo(() => {
+  const view = React.useMemo<MbscEventcalendarView>(() => {
     return {
       timeline: {
         type: 'week',
@@ -422,10 +425,10 @@ const CompareResources = () => {
   }, []);
 
   const toggleComparison = React.useCallback(
-    (resource) => {
-      const isFixed = resource.fixed;
-      let newFixedResources = [];
-      let newFixedNr = fixedNr;
+    (resource: MbscResource) => {
+      const isFixed: boolean = resource.fixed;
+      let newFixedResources: MbscResource[] = [];
+      let newFixedNr: number = fixedNr;
 
       if (!isFixed) {
         resource.fixed = true;
@@ -437,8 +440,8 @@ const CompareResources = () => {
         newFixedNr--;
       }
 
-      const newResources = [...newFixedResources];
-      myResources.forEach(function (r) {
+      const newResources: MbscResource[] = [...newFixedResources];
+      myResources.forEach(function (r: MbscResource) {
         if (!r.fixed) {
           newResources.push(r);
         }
@@ -456,7 +459,7 @@ const CompareResources = () => {
   );
 
   const renderResource = React.useCallback(
-    (r) => {
+    (r: MbscResource) => {
       return (
         <div className="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
           <div>{r.name}</div>

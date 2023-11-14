@@ -1,8 +1,8 @@
 # Logs
 logs
 *.log
-.npmrc
 npm-debug.log*
+.npmrc
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
