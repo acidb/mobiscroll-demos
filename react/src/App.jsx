@@ -1,39 +1,33 @@
-import React from 'react'
-// import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Root from "./routes/root";
-import CompareResources from "./demos/event-calendar/timeline/compare-resources/compare-resources"
-import WorkWeekHours from "./demos/event-calendar/scheduler/work-week-hours/work-week-hours"
-import './App.css'
-import '@mobiscroll/react/dist/css/mobiscroll.min.css'
+import { StrictMode } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Root from './routes/root';
+import CompareResources from './demos/eventcalendar/timeline/compare-resources/compare-resources';
+import WorkWeekHours from './demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
+import './App.css';
+import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 
 function App() {
-
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Root/>,
+      path: '/',
+      element: <Root />,
     },
     {
-      path: "/timeline/compare-resources",
-      element: <CompareResources/>,
+      path: '/timeline/compare-resources',
+      element: <CompareResources />,
     },
     {
       path: '/schedule/work-week-hours',
-      element: <WorkWeekHours/>,
-    }
+      element: <WorkWeekHours />,
+    },
   ]);
   return (
     <>
-       <React.StrictMode>
-          <RouterProvider router={router} />
-      </React.StrictMode>
-
+      <StrictMode>
+        <RouterProvider router={router} />
+      </StrictMode>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
