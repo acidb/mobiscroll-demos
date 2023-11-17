@@ -16,7 +16,7 @@ setOptions({
 const myResources: MbscResource[] = [
   {
     id: 1,
-    name: 'Emma Smith TSTSTST',
+    name: 'Emma Smith',
     color: '#c8cdcf'
   },
   {

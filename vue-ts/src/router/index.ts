@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import WorkWeekHours from '../demos/eventcalendar/scheduler/work-week-hours/work-week-hours.ts.vue'
-import CompareResources from '../demos/eventcalendar/timeline/compare-resources/compare-resources.ts.vue'
+import WorkWeekHours from '../demos/eventcalendar/scheduler/work-week-hours/work-week-hours.vue'
+import CompareResources from '../demos/eventcalendar/timeline/compare-resources/compare-resources.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
