@@ -71,12 +71,12 @@ export default {
     <div id="demo-work-week-hours"></div>
     `,
   css: `
-  /*<hidden>*/
+/*<hidden>*/
 
-  .demo-work-week-hours {
-      height: 100%;
-  }
+.demo-work-week-hours {
+    height: 100%;
+}
 
-  /*</hidden>*/
+/*</hidden>*/
     `,
 };

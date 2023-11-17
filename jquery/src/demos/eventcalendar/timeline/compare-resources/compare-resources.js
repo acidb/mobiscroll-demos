@@ -471,9 +471,11 @@ export default {
       });
     });
   },
-  markup: `<div id="demo-compare-resources" class="md-compare"></div>`,
+  markup: `
+    <div id="demo-compare-resources" class="md-compare"></div>
+  `,
   css: `
-  .md-compare-resource {
+.md-compare-resource {
     font-size: 12px;
 }
 
