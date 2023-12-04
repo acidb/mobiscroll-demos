@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { MbscModule } from '@mobiscroll/angular';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -8,7 +10,9 @@ import { AppComponent } from './app.component';
   declarations: [
     AppComponent
   ],
-  imports: [
+  imports: [  
+    FormsModule,   
+    MbscModule, 
     BrowserModule,
     AppRoutingModule
   ],
