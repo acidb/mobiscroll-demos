@@ -5,10 +5,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppComponent as WorkWeekHours } from '../demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
+import { AppComponent as CompareResources } from '../demos/eventcalendar/timeline/compare-resources/compare-resources';
+
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [FormsModule, MbscModule, BrowserModule, AppRoutingModule],
+  declarations: [AppComponent, WorkWeekHours, CompareResources],
+  imports: [FormsModule, MbscModule, BrowserModule, AppRoutingModule, HttpClientJsonpModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

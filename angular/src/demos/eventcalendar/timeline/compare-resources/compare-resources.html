@@ -1,0 +1,23 @@
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [resources]="resources"
+  [view]="view"
+  [dragToMove]="true"
+  [resourceTemplate]="resourceTmpl"
+  class="md-compare"
+>
+  <ng-template #resourceTmpl let-resource>
+    <div class="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
+      <div>{{resource.name}}</div>
+      <mbsc-button
+        *ngIf="resource.fixed || (!resource.fixed && (fixedNr <= 2))"
+        (click)="toggleComparison(resource)"
+        class="md-compare-button"
+        [color]="resource.fixed ? 'danger' : 'success'"
+        variant="outline"
+      >
+        {{resource.fixed ? "Remove" : "Compare"}}
+      </mbsc-button>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>
