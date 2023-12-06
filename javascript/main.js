@@ -1,24 +1,52 @@
+import { Router } from 'html5-history-router';
 import './style.css';
-import javascriptLogo from './javascript.svg';
-import viteLogo from '/vite.svg';
-import { setupCounter } from './counter.js';
+import '@mobiscroll/javascript/dist/css/mobiscroll.min.css';
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`;
+// import { enhance } from '@mobiscroll/javascript';
+import { enhance } from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
-setupCounter(document.querySelector('#counter'));
+import HomePage from './pages/home/home';
+import WorkWeekHoursPage from './src/demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
+import CompareResourcesPage from './src/demos/eventcalendar/timeline/compare-resources/compare-resources';
+
+const router = new Router();
+
+const app = document.getElementById('app');
+
+function loadPage(page) {
+  app.innerHTML = "<div id='javascript-demo-placeholder'>" + page.markup + '</div>';
+
+  if (page.css && !page.loaded) {
+    page.loaded = true;
+    var style = document.createElement('style');
+    style.innerHTML = page.css;
+    document.getElementsByTagName('head')[0].appendChild(style);
+  }
+
+  // enhance(app);
+
+  if (page.init) {
+    page.init();
+  }
+
+  enhance(app);
+}
+
+router
+  .on('/', () => {
+    loadPage(HomePage);
+  })
+  .on('/timeline/compare-resources', () => {
+    loadPage(CompareResourcesPage);
+  })
+  .on('/scheduler/work-week-hours', () => {
+    loadPage(WorkWeekHoursPage);
+  });
+
+document.addEventListener('click', (ev) => {
+  const link = ev.target.closest('.app-link');
+  if (link) {
+    ev.preventDefault();
+    router.pushState(link.getAttribute('href'));
+  }
+});
