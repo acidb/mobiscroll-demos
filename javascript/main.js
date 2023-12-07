@@ -2,7 +2,6 @@ import { Router } from 'html5-history-router';
 import './style.css';
 import '@mobiscroll/javascript/dist/css/mobiscroll.min.css';
 
-// import { enhance } from '@mobiscroll/javascript';
 import { enhance } from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 import HomePage from './pages/home/home';
@@ -22,8 +21,6 @@ function loadPage(page) {
     style.innerHTML = page.css;
     document.getElementsByTagName('head')[0].appendChild(style);
   }
-
-  // enhance(app);
 
   if (page.init) {
     page.init();

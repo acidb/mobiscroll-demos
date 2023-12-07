@@ -1,5 +1,4 @@
-// import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
-import * as mobiscroll from '@mobiscroll/javascript';
+import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
   init() {

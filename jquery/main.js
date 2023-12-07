@@ -3,7 +3,7 @@ import { Router } from 'html5-history-router';
 import './style.css';
 import '@mobiscroll/jquery/dist/css/mobiscroll.min.css';
 
-// import { enhance } from "@mobiscroll/jquery";
+import { enhance } from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 
 import HomePage from './pages/home/home';
 import WorkWeekHoursPage from './src/demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
@@ -22,11 +22,11 @@ function loadPage(page) {
     document.getElementsByTagName('head')[0].appendChild(style);
   }
 
-  // enhance(app);
-
   if (page.init) {
     page.init();
   }
+
+  enhance(app);
 }
 
 router
