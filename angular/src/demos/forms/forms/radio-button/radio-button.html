@@ -1,0 +1,22 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Radio buttons</div>
+    <mbsc-radio-group [(ngModel)]="group">
+      <mbsc-radio label="Radio Option 1" description="This is description for radio 1" value="opt1"></mbsc-radio>
+      <mbsc-radio label="Radio Option 2" description="This is description for radio 2" value="opt2"></mbsc-radio>
+      <mbsc-radio label="Radio Option 3" value="opt3"></mbsc-radio>
+      <mbsc-radio label="Disabled" [disabled]="true" value="opt4"></mbsc-radio>
+    </mbsc-radio-group>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Radio button colors</div>
+    <mbsc-radio-group [(ngModel)]="colors">
+      <mbsc-radio label="Primary" color="primary" value="primary"></mbsc-radio>
+      <mbsc-radio label="Secondary" color="secondary" value="secondary"></mbsc-radio>
+      <mbsc-radio label="Success" color="success" value="success"></mbsc-radio>
+      <mbsc-radio label="Danger" color="danger" value="danger"></mbsc-radio>
+      <mbsc-radio label="Warning" color="warning" value="warning"></mbsc-radio>
+      <mbsc-radio label="Info" color="info" value="info"></mbsc-radio>
+    </mbsc-radio-group>
+  </div>
+</mbsc-page>

@@ -1,0 +1,8 @@
+<mbsc-eventcalendar [view]="view" [data]="myEvents" [resources]="myResources" [resourceTemplate]="resourceTemp"> </mbsc-eventcalendar>
+<ng-template #resourceTemp let-resource>
+  <div class="resource-template-content">
+    <div class="resource-name">{{resource.name}}</div>
+    <div class="resource-description">{{resource.description}}</div>
+    <img class="resource-avatar" [src]="resource.img" />
+  </div>
+</ng-template>

@@ -1,0 +1,15 @@
+<mbsc-page>
+  <mbsc-select
+    label="Multiline"
+    [data]="myData"
+    display="anchored"
+    [itemHeight]="60"
+    [itemTemplate]="itemTemp"
+    labelStyle="stacked"
+    inputStyle="box"
+    placeholder="Please select..."
+  ></mbsc-select>
+  <ng-template #itemTemp let-item>
+    <div class="md-multiple-lines-item"><span class="md-multiple-lines-text">{{item.display}}</span></div>
+  </ng-template>
+</mbsc-page>

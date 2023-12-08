@@ -1,0 +1,18 @@
+<mbsc-page>
+  <mbsc-button (click)="openPopup($event)">Show modal</mbsc-button>
+  <mbsc-popup [options]="popupSettings" #popup>
+    <div class="mbsc-form-group">
+      <mbsc-input label="Title"></mbsc-input>
+      <mbsc-textarea label="Description"></mbsc-textarea>
+    </div>
+    <div class="mbsc-form-group">
+      <mbsc-switch label="All-day"></mbsc-switch>
+      <mbsc-input label="Starts"></mbsc-input>
+      <mbsc-input label="Ends"></mbsc-input>
+      <mbsc-segmented-group name="my-group">
+        <mbsc-segmented>Show as busy</mbsc-segmented>
+        <mbsc-segmented>Show as free</mbsc-segmented>
+      </mbsc-segmented-group>
+    </div>
+  </mbsc-popup>
+</mbsc-page>

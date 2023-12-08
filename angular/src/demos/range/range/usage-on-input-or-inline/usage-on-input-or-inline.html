@@ -1,0 +1,26 @@
+<mbsc-page>
+  <input mbsc-datepicker [controls]="['calendar']" select="range" placeholder="Please Select..." />
+
+  <mbsc-datepicker
+    [controls]="['calendar']"
+    select="range"
+    label="Range"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+
+  <mbsc-datepicker [startInput]="start" [endInput]="end" select="range"></mbsc-datepicker>
+  <div class="mbsc-grid mbsc-no-padding">
+    <div class="mbsc-row">
+      <div class="mbsc-col-6">
+        <mbsc-input #start placeholder="Please Select..." label="Start" inputStyle="outline" labelStyle="stacked"></mbsc-input>
+      </div>
+      <div class="mbsc-col-6">
+        <mbsc-input #end placeholder="Please Select..." label="End" inputStyle="outline" labelStyle="stacked"></mbsc-input>
+      </div>
+    </div>
+  </div>
+
+  <mbsc-datepicker select="range" display="inline"></mbsc-datepicker>
+</mbsc-page>

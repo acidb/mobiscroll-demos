@@ -1,0 +1,32 @@
+<script setup lang="ts"></script>
+
+<template></template>
+
+<style>
+/*<hidden>*/
+
+.demo-copy-cut-paste,
+.demo-copy-cut-paste .mbsc-page,
+.md-copy-cut-paste,
+.md-copy-cut-paste-cont,
+.md-copy-cut-paste-cont + div {
+  height: 100%;
+}
+
+/*</hidden>*/
+
+.md-copy-cut-paste .mbsc-segmented {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.md-copy-cut-paste .md-hide-calendar {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+</style>

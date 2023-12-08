@@ -1,0 +1,28 @@
+<mbsc-datepicker
+  [controls]="['calendar']"
+  select="range"
+  display="inline"
+  [calendarSize]="6"
+  calendarType="month"
+  [min]="min"
+  [labels]="labels"
+  [invalid]="invalid"
+  [colors]="colors"
+  [showRangeLabels]="false"
+  [inRangeInvalid]="false"
+  [rangeEndInvalid]="true"
+  [calendarHeaderTemplate]="headerTemplate"
+  class="md-book-rental"
+>
+  <ng-template #headerTemplate>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
+    <div class="md-book-rental-header">
+      <div class="md-book-rental-zone md-book-rental-pre">pre-season</div>
+      <div class="md-book-rental-zone md-book-rental-in">in-season</div>
+      <div class="md-book-rental-zone md-book-rental-off">off-season</div>
+      <div class="md-book-rental-zone md-book-rental-booked">booked</div>
+    </div>
+    <mbsc-calendar-prev></mbsc-calendar-prev>
+    <mbsc-calendar-next></mbsc-calendar-next>
+  </ng-template>
+</mbsc-datepicker>

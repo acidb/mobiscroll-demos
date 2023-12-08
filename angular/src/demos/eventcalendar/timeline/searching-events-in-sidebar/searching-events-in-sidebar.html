@@ -1,0 +1,29 @@
+<mbsc-page>
+  <div class="md-search-events-sidebar mbsc-flex">
+    <div class="md-search-events-cont mbsc-flex-col mbsc-flex-none">
+      <mbsc-input (input)="onSearch($event)" startIcon="material-search" inputStyle="outline" placeholder="Search events"></mbsc-input>
+      <mbsc-eventcalendar
+        *ngIf="showList"
+        [data]="listEvents"
+        [view]="listView"
+        [showControls]="false"
+        (onEventClick)="eventClick($event)"
+      ></mbsc-eventcalendar>
+    </div>
+    <div class="md-search-events-calendar mbsc-flex-1-1">
+      <mbsc-eventcalendar
+        [data]="calEvents"
+        [resources]="myResources"
+        [view]="calView"
+        [selectMultipleEvents]="true"
+        [(selectedDate)]="currentDate"
+        [(selectedEvents)]="mySelectedEvent"
+        (onPageLoading)="onPageLoading($event)"
+        [clickToCreate]="false"
+        [dragToCreate]="false"
+        [dragToMove]="false"
+        [dragToResize]="false"
+      ></mbsc-eventcalendar>
+    </div>
+  </div>
+</mbsc-page>

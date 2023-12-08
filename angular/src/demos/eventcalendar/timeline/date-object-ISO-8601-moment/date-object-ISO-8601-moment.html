@@ -1,0 +1,32 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Date object</div>
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="addDate()"
+        >start: new Date(2020, 4, 19, 11, 15) <br />
+        end: new Date(2020, 4, 19, 13, 45)</mbsc-button
+      >
+    </div>
+    <mbsc-eventcalendar [data]="dateObjData" [resources]="myResources" [view]="view" [selectedDate]="selectedObj"></mbsc-eventcalendar>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">ISO string</div>
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="addISO()"
+        >start: 2020-05-20T15:30:00 <br />
+        end: 2020-05-20T18:00:00</mbsc-button
+      >
+    </div>
+    <mbsc-eventcalendar [data]="dateStrData" [resources]="myResources" [view]="view" [selectedDate]="selectedISO"></mbsc-eventcalendar>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Moment js</div>
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="addMoment()"
+        >start: moment([2020, 4, 21, 12]) <br />
+        end: moment([2020, 4, 21, 15])</mbsc-button
+      >
+    </div>
+    <mbsc-eventcalendar [data]="momentData" [resources]="myResources" [view]="view" [selectedDate]="selectedMoment"></mbsc-eventcalendar>
+  </div>
+</mbsc-page>

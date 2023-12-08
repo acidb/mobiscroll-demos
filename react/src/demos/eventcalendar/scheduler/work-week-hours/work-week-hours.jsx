@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Eventcalendar, getJson, Toast /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
+import { Eventcalendar, getJson, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './work-week-hours.css';
 
-function WorkWeekHours() {
-  const [myEvents, setEvents] = useState([]);
-  const [isToastOpen, setToastOpen] = useState(false);
-  const [toastText, setToastText] = useState();
+function App() {
+  const [myEvents, setEvents] = React.useState([]);
+  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [toastText, setToastText] = React.useState();
   const invalids = [
     {
       start: '12:00',
@@ -19,8 +19,8 @@ function WorkWeekHours() {
     },
   ];
 
-  useEffect(() => {
-    getJson(
+  React.useEffect(() => {
+    mobiscroll.util.http.getJson(
       'https://trial.mobiscroll.com//workday-events/?vers=5',
       (events) => {
         setEvents(events);
@@ -29,21 +29,21 @@ function WorkWeekHours() {
     );
   }, []);
 
-  const onEventCreateFailed = useCallback((event) => {
+  const onEventCreateFailed = React.useCallback((event) => {
     if (event.invalid.type === 'lunch') {
       setToastText("Can't create this task on lunch break.");
       setToastOpen(true);
     }
-  }, []);
+  });
 
-  const onEventUpdateFailed = useCallback((event) => {
+  const onEventUpdateFailed = React.useCallback((event) => {
     if (event.invalid.type === 'lunch') {
       setToastText("Can't schedule this task on lunch break.");
       setToastOpen(true);
     }
-  }, []);
+  });
 
-  const view = useMemo(() => {
+  const view = React.useMemo(() => {
     return {
       schedule: {
         type: 'week',
@@ -55,13 +55,13 @@ function WorkWeekHours() {
     };
   }, []);
 
-  const closeToast = useCallback(() => {
+  const closeToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
   return (
-    <>
-      <Eventcalendar
+    <div>
+      <mobiscroll.Eventcalendar
         // theme
         // locale
         dragToCreate={true}
@@ -78,8 +78,8 @@ function WorkWeekHours() {
         isOpen={isToastOpen}
         onClose={closeToast}
       />
-    </>
+    </div>
   );
 }
 
-export default WorkWeekHours;
+ReactDOM.render(<App />, document.getElementById('content'));

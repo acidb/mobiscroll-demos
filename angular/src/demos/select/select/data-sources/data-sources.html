@@ -1,0 +1,30 @@
+<mbsc-page>
+  <div class="mbsc-grid mbsc-form-grid">
+    <div class="mbsc-row">
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <mbsc-select label="HTML" labelStyle="stacked" inputStyle="box" placeholder="Please select...">
+          <mbsc-select-option value="atl">Atlanta</mbsc-select-option>
+          <mbsc-select-option value="ber">Berlin</mbsc-select-option>
+          <mbsc-select-option value="chi">Chicago</mbsc-select-option>
+          <mbsc-select-option value="lon">London</mbsc-select-option>
+          <mbsc-select-option value="la">Los Angeles</mbsc-select-option>
+          <mbsc-select-option value="ny">New York</mbsc-select-option>
+          <mbsc-select-option value="par">Paris</mbsc-select-option>
+          <mbsc-select-option value="sf">San Francisco</mbsc-select-option>
+        </mbsc-select>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <mbsc-select [data]="myData" label="Data object" labelStyle="stacked" inputStyle="box" placeholder="Please select..."></mbsc-select>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <mbsc-select
+          [data]="remoteData"
+          label="Remote data"
+          labelStyle="stacked"
+          inputStyle="box"
+          placeholder="Please select..."
+        ></mbsc-select>
+      </div>
+    </div>
+  </div>
+</mbsc-page>

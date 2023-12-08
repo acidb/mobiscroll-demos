@@ -1,0 +1,16 @@
+<mbsc-page>
+  <div class="dms-calendar-booking">
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Single date & appointment booking</div>
+      <mbsc-datepicker [options]="singleSettings" [labels]="singleLabels" [invalid]="singleInvalid"></mbsc-datepicker>
+    </div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Select date & time</div>
+      <mbsc-datepicker [options]="datetimeSettings" [labels]="datetimeLabels" [invalid]="datetimeInvalid"></mbsc-datepicker>
+    </div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Booking multiple appointments</div>
+      <mbsc-datepicker [options]="multipleSettings" [labels]="multipleLabels" [invalid]="multipleInvalid"></mbsc-datepicker>
+    </div>
+  </div>
+</mbsc-page>

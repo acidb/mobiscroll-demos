@@ -1,0 +1,42 @@
+<mbsc-page>
+  <div class="mbsc-grid">
+    <div class="mbsc-row">
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Marked days</div>
+          <mbsc-datepicker
+            [controls]="['calendar']"
+            select="range"
+            [showRangeLabels]="false"
+            display="inline"
+            [marked]="markedDays"
+          ></mbsc-datepicker>
+        </div>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Colored days</div>
+          <mbsc-datepicker
+            [controls]="['calendar']"
+            select="range"
+            [showRangeLabels]="false"
+            display="inline"
+            [colors]="coloredDays"
+          ></mbsc-datepicker>
+        </div>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Labels</div>
+          <mbsc-datepicker
+            [controls]="['calendar']"
+            select="range"
+            [showRangeLabels]="false"
+            display="inline"
+            [labels]="labelDays"
+          ></mbsc-datepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+</mbsc-page>

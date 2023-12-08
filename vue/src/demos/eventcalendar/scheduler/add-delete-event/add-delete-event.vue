@@ -1,0 +1,33 @@
+<script setup></script>
+
+<template></template>
+
+<style>
+.md-add-event-demo {
+  position: absolute;
+  height: 100%;
+}
+
+.md-add-event-demo .mbsc-row {
+  height: 100%;
+}
+
+.md-add-event-demo .md-col-right {
+  overflow: auto;
+  height: 100%;
+  border-left: 1px solid #ccc;
+}
+
+.md-add-event-demo .md-delete-btn {
+  margin: 0;
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  z-index: 1;
+  transition: background-color 0.3s ease-out;
+}
+
+.demo-add-delete-event {
+  height: 100%;
+}
+</style>

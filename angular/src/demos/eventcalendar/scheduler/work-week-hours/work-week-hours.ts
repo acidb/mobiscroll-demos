@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-// import { MbscEventcalendarOptions, /* localeImport */ } from '../../mobiscroll.custom.min.js';
-import {
-  MbscEventcalendarOptions,
-  Notifications,
-  MbscEventCreateFailedEvent,
-  MbscEventUpdateFailedEvent /* localeImport */,
-} from '@mobiscroll/angular';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+// import { MbscEventcalendarOptions, /* localeImport */ } from '@mobiscroll/angular';
+import { setOptions, MbscEventcalendarOptions, Notifications /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'work-week-hours',
+  styleUrl: './work-week-hours.css',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './work-week-hours.html',
-  providers: [Notifications, HttpClient],
+  providers: [Notifications],
 })
 export class AppComponent implements OnInit {
   constructor(
@@ -47,17 +44,17 @@ export class AppComponent implements OnInit {
         endTime: '18:00',
       },
     },
-    onEventCreateFailed: (event: MbscEventCreateFailedEvent, inst: any) => {
-      if (event.invalid['type'] === 'lunch') {
+    onEventCreateFailed: (event, inst) => {
+      if (event.invalid.type === 'lunch') {
         this.notify.toast({
-          message: "Can't create this task on " + (event.invalid.title || '').toLowerCase(),
+          message: "Can't create this task on " + event.invalid.title.toLowerCase(),
         });
       }
     },
-    onEventUpdateFailed: (event: MbscEventUpdateFailedEvent, inst: any) => {
-      if (event.invalid['type'] === 'lunch') {
+    onEventUpdateFailed: (event, inst) => {
+      if (event.invalid.type === 'lunch') {
         this.notify.toast({
-          message: "Can't schedule this task on " + (event.invalid.title || '').toLowerCase(),
+          message: "Can't schedule this task on " + event.invalid.title.toLowerCase(),
         });
       }
     },

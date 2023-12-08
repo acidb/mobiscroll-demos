@@ -1,0 +1,14 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Gregorian calendar</div>
+    <mbsc-eventcalendar [data]="myEvents" [resources]="myResources" [options]="gregorianSettings"></mbsc-eventcalendar>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Jalali calendar</div>
+    <mbsc-eventcalendar [data]="myEvents" [resources]="myResources" [options]="jalaliSettings"></mbsc-eventcalendar>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Hijri calendar</div>
+    <mbsc-eventcalendar [data]="myEvents" [resources]="myResources" [options]="hijriSettings"></mbsc-eventcalendar>
+  </div>
+</mbsc-page>

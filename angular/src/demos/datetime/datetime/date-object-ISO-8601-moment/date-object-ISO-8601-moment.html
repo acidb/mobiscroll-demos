@@ -1,0 +1,32 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Controlling the default value</div>
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="setDate()">Set: Sun Nov 15 2020 03:24:00 GMT</mbsc-button>
+    </div>
+    <mbsc-datepicker [controls]="['date']" [(ngModel)]="date" returnFormat="jsdate" label="Date object">Date object</mbsc-datepicker>
+  </div>
+  <div class="mbsc-padding">Return value: {{date}}</div>
+
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Working with Date strings</div>
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="setISO()">Set: 2020-05-20T12:30:00</mbsc-button>
+    </div>
+    <div>
+      <mbsc-datepicker [controls]="['date']" [(ngModel)]="iso" returnFormat="iso8601" label="ISO string"></mbsc-datepicker>
+    </div>
+  </div>
+  <div class="mbsc-padding">Return value: {{iso}}</div>
+
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Working with Moment JS Objects</div>
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="setMoment()">Set: 2020-03-06T15:30:00+02:00</mbsc-button>
+    </div>
+    <div>
+      <mbsc-datepicker [controls]="['date']" [(ngModel)]="momentJs" returnFormat="moment" label="Moment JS"></mbsc-datepicker>
+    </div>
+  </div>
+  <div class="mbsc-padding">Return value: {{momentJs ? momentJs.format() : ''}}</div>
+</mbsc-page>

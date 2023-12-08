@@ -1,5 +1,4 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
-
 export default {
   init() {
     mobiscroll.setOptions({
@@ -472,7 +471,7 @@ export default {
     });
   },
   markup: `
-    <div id="demo-compare-resources" class="md-compare"></div>
+<div id="demo-compare-resources" class="md-compare"></div>
   `,
   css: `
 .md-compare-resource {

@@ -1,0 +1,57 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Button colors</div>
+    <div class="mbsc-mbsc-button-group">
+      <mbsc-button color="primary">Primary</mbsc-button>
+      <mbsc-button color="secondary">Secondary</mbsc-button>
+      <mbsc-button color="success">Success</mbsc-button>
+      <mbsc-button color="danger">Danger</mbsc-button>
+      <mbsc-button color="warning">Warning</mbsc-button>
+      <mbsc-button color="info">Info</mbsc-button>
+      <mbsc-button color="light">Light</mbsc-button>
+      <mbsc-button color="dark">Dark</mbsc-button>
+    </div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Segmented colors</div>
+    <mbsc-segmented-group name="groupPrimary" color="primary">
+      <mbsc-segmented value="desktop" icon="home" [checked]="true">Desktop</mbsc-segmented>
+      <mbsc-segmented value="mobile" icon="mobile">Mobile</mbsc-segmented>
+      <mbsc-segmented value="cloud" icon="cloud-upload">Cloud</mbsc-segmented>
+    </mbsc-segmented-group>
+    <mbsc-segmented-group name="groupSecondary" color="secondary">
+      <mbsc-segmented value="desktop" icon="home" [checked]="true">Desktop</mbsc-segmented>
+      <mbsc-segmented value="mobile" icon="mobile">Mobile</mbsc-segmented>
+      <mbsc-segmented value="cloud" icon="cloud-upload">Cloud</mbsc-segmented>
+    </mbsc-segmented-group>
+    <mbsc-segmented-group name="groupSuccess" color="success">
+      <mbsc-segmented value="desktop" icon="home" [checked]="true">Desktop</mbsc-segmented>
+      <mbsc-segmented value="mobile" icon="mobile">Mobile</mbsc-segmented>
+      <mbsc-segmented value="cloud" icon="cloud-upload">Cloud</mbsc-segmented>
+    </mbsc-segmented-group>
+    <mbsc-segmented-group name="groupDanger" color="danger">
+      <mbsc-segmented value="desktop" icon="home" [checked]="true">Desktop</mbsc-segmented>
+      <mbsc-segmented value="mobile" icon="mobile">Mobile</mbsc-segmented>
+      <mbsc-segmented value="cloud" icon="cloud-upload">Cloud</mbsc-segmented>
+    </mbsc-segmented-group>
+    <mbsc-segmented-group name="groupWarning" color="warning">
+      <mbsc-segmented value="desktop" icon="home" [checked]="true">Desktop</mbsc-segmented>
+      <mbsc-segmented value="mobile" icon="mobile">Mobile</mbsc-segmented>
+      <mbsc-segmented value="cloud" icon="cloud-upload">Cloud</mbsc-segmented>
+    </mbsc-segmented-group>
+    <mbsc-segmented-group name="groupInfo" color="info">
+      <mbsc-segmented value="desktop" icon="home" [checked]="true">Desktop</mbsc-segmented>
+      <mbsc-segmented value="mobile" icon="mobile">Mobile</mbsc-segmented>
+      <mbsc-segmented value="cloud" icon="cloud-upload">Cloud</mbsc-segmented>
+    </mbsc-segmented-group>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Stepper colors</div>
+    <mbsc-stepper label="Primary" color="primary" [(ngModel)]="primary" [min]="-500" [max]="500" [step]="100"> </mbsc-stepper>
+    <mbsc-stepper label="Secondary" color="secondary" [(ngModel)]="secondary" [min]="-500" [max]="500" [step]="100"> </mbsc-stepper>
+    <mbsc-stepper label="Success" color="success" [(ngModel)]="success" [min]="-500" [max]="500" [step]="100"> </mbsc-stepper>
+    <mbsc-stepper label="Danger" color="danger" [(ngModel)]="danger" [min]="-500" [max]="500" [step]="100"> </mbsc-stepper>
+    <mbsc-stepper label="Warning" color="warning" [(ngModel)]="warning" [min]="-500" [max]="500" [step]="100"> </mbsc-stepper>
+    <mbsc-stepper label="Info" color="info" [(ngModel)]="info" [min]="-500" [max]="500" [step]="100"></mbsc-stepper>
+  </div>
+</mbsc-page>

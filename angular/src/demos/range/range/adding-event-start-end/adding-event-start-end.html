@@ -1,0 +1,13 @@
+<mbsc-page>
+  <mbsc-input label="Title" placeholder="Name of the event"></mbsc-input>
+  <mbsc-input label="Location" placeholder="Where will it be?"></mbsc-input>
+  <mbsc-switch label="All day" [(ngModel)]="allDay" (change)="allDayChange()"></mbsc-switch>
+  <mbsc-datepicker [controls]="controls" select="range" [startInput]="start" [endInput]="end"></mbsc-datepicker>
+  <mbsc-input #start label="Start" placeholder="Start event"></mbsc-input>
+  <mbsc-input #end label="End" placeholder="End event"></mbsc-input>
+  <mbsc-segmented-group [(ngModel)]="showAs">
+    <mbsc-segmented value="busy">Show as busy</mbsc-segmented>
+    <mbsc-segmented value="free">Show as free</mbsc-segmented>
+  </mbsc-segmented-group>
+  <mbsc-textarea label="Notes" placeholder="Enter notes, URL, comments"></mbsc-textarea>
+</mbsc-page>

@@ -1,0 +1,30 @@
+<div>
+  <mbsc-eventcalendar [data]="events" [options]="calSettings"></mbsc-eventcalendar>
+</div>
+
+<mbsc-popup [options]="addPopupSettings" [isOpen]="addOpen" [anchor]="addAnchor">
+  <div class="mbsc-form-group">
+    <mbsc-input label="Title" [(ngModel)]="title"></mbsc-input>
+    <mbsc-textarea label="Description" [(ngModel)]="desc"></mbsc-textarea>
+  </div>
+  <div class="mbsc-form-group">
+    <mbsc-switch label="All-day" [(ngModel)]="allDay" (change)="allDayChange()"></mbsc-switch>
+    <mbsc-datetime
+      label="Starts"
+      [(ngModel)]="start"
+      [dateWheels]="dateWheels"
+      [mode]="mode"
+      [touchUi]="false"
+      (onChange)="changeDate($event)"
+    ></mbsc-datetime>
+    <mbsc-datetime label="Ends" [(ngModel)]="end" [dateWheels]="dateWheels" [mode]="mode" [touchUi]="false" [min]="min"></mbsc-datetime>
+    <mbsc-segmented-group [(ngModel)]="busy">
+      <mbsc-segmented value="busy">Show as busy</mbsc-segmented>
+      <mbsc-segmented value="free">Show as free</mbsc-segmented>
+    </mbsc-segmented-group>
+  </div>
+</mbsc-popup>
+
+<mbsc-popup [options]="deletePopupSettings" [isOpen]="deleteOpen" [anchor]="deleteAnchor">
+  Are you sure you want to delete this event?
+</mbsc-popup>

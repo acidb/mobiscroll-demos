@@ -1,0 +1,48 @@
+<mbsc-datepicker [controls]="['calendar']" display="inline" calendarType="week" [weeks]="2"></mbsc-datepicker>
+
+<mbsc-datepicker [controls]="['calendar']" display="inline" [calendarHeaderTemplate]="customHeaderTemplate">
+  <ng-template #customHeaderTemplate>
+    <mbsc-calendar-prev class="custom-prev"></mbsc-calendar-prev>
+    <mbsc-calendar-nav class="custom-nav"></mbsc-calendar-nav>
+    <mbsc-calendar-next class="custom-next"></mbsc-calendar-next>
+  </ng-template>
+</mbsc-datepicker>
+
+<mbsc-datepicker [controls]="['calendar']" display="inline" [calendarHeaderTemplate]="todayHeaderTemplate">
+  <ng-template #todayHeaderTemplate>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
+    <div class="custom-buttons">
+      <mbsc-calendar-prev></mbsc-calendar-prev>
+      <mbsc-calendar-today></mbsc-calendar-today>
+      <mbsc-calendar-next></mbsc-calendar-next>
+    </div>
+  </ng-template>
+</mbsc-datepicker>
+
+<mbsc-datepicker
+  [controls]="['calendar']"
+  display="inline"
+  [calendarType]="calendarType"
+  [weeks]="2"
+  [calendarHeaderTemplate]="switchHeaderTemplate"
+>
+  <ng-template #switchHeaderTemplate>
+    <mbsc-calendar-nav class="custom-view-nav"></mbsc-calendar-nav>
+    <div class="custom-view">
+      <mbsc-segmented-group [(ngModel)]="view" (change)="changeView()">
+        <mbsc-segmented value="week" icon="material-date-range"></mbsc-segmented>
+        <mbsc-segmented value="month" icon="material-event-note"></mbsc-segmented>
+      </mbsc-segmented-group>
+    </div>
+    <mbsc-calendar-prev></mbsc-calendar-prev>
+    <mbsc-calendar-next></mbsc-calendar-next>
+  </ng-template>
+</mbsc-datepicker>
+
+<mbsc-datepicker
+  [controls]="['calendar']"
+  display="inline"
+  calendarType="week"
+  [weeks]="2"
+  headerText="You selected {value}"
+></mbsc-datepicker>

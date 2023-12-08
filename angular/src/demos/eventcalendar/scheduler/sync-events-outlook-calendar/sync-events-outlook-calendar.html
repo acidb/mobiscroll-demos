@@ -1,0 +1,45 @@
+<mbsc-page class="md-sync-events-outlook-cont">
+  <div class="md-sync-events-outlook-menu">
+    <ng-container *ngIf="!isLoggedIn">
+      <div class="mbsc-form-group-inset mbsc-align-center">
+        <p class="mbsc-italic mbsc-txt-muted">Log into your Outlook account to view and edit your Outlook Calendar events</p>
+        <mbsc-button class="md-sync-events-outlook-button mbsc-button-block" (click)="logIn()">Sync my outlook calendars </mbsc-button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="isLoggedIn">
+      <div class="mbsc-form-group-inset mbsc-align-center">
+        <p class="mbsc-italic mbsc-txt-muted">
+          Editing events sync back to your calendar when enabled. You'll be asked for confirmation on every action.
+        </p>
+      </div>
+      <div class="mbsc-form-group-inset">
+        <mbsc-switch label="Enable editing" [(ngModel)]="isEditable" (change)="changeEditable($event)"></mbsc-switch>
+      </div>
+      <div class="mbsc-form-group-inset md-sync-events-outlook-inset">
+        <ng-container *ngFor="let cal of myCalendars;">
+          <mbsc-switch
+            label="{{cal.name}}"
+            [(ngModel)]="calendarData[cal.id].checked"
+            (change)="toggleCalendars($event, cal.id)"
+          ></mbsc-switch>
+        </ng-container>
+      </div>
+      <div class="mbsc-form-group-inset">
+        <mbsc-button class="md-sync-events-outlook-button mbsc-button-block" (click)="logOut()">Log out of my account </mbsc-button>
+      </div>
+    </ng-container>
+  </div>
+  <div class="md-sync-events-outlook-calendar" [ngClass]="{'md-loading-events': isLoading}">
+    <div class="md-sync-events-overlay"></div>
+    <mbsc-eventcalendar
+      [options]="calendarOptions"
+      [data]="myEvents"
+      [exclusiveEndDates]="true"
+      [clickToCreate]="isEditable"
+      [dragToCreate]="isEditable"
+      [dragToMove]="isEditable"
+      [dragToResize]="isEditable"
+    >
+    </mbsc-eventcalendar>
+  </div>
+</mbsc-page>

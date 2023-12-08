@@ -1,0 +1,24 @@
+<mbsc-page>
+  <div class="mbsc-grid">
+    <div class="mbsc-row">
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Daily schedule</div>
+          <mbsc-eventcalendar [data]="myEvents" [options]="dailySettings"></mbsc-eventcalendar>
+        </div>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Weekly schedule</div>
+          <mbsc-eventcalendar [data]="myEvents" [options]="weeklySettings"></mbsc-eventcalendar>
+        </div>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Monthly schedule</div>
+          <mbsc-eventcalendar [data]="myEvents" [options]="monthlySettings"></mbsc-eventcalendar>
+        </div>
+      </div>
+    </div>
+  </div>
+</mbsc-page>

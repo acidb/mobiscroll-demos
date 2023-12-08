@@ -1,0 +1,48 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Single select</div>
+    <mbsc-segmented-group>
+      <mbsc-segmented value="day">Day</mbsc-segmented>
+      <mbsc-segmented value="week">Week</mbsc-segmented>
+      <mbsc-segmented value="month">Month</mbsc-segmented>
+      <mbsc-segmented value="year" [checked]="true">Year</mbsc-segmented>
+    </mbsc-segmented-group>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Multiple select</div>
+    <mbsc-segmented-group select="multiple" [(ngModel)]="multi">
+      <mbsc-segmented value="sun" [disabled]="true">S</mbsc-segmented>
+      <mbsc-segmented value="mon">M</mbsc-segmented>
+      <mbsc-segmented value="tue">T</mbsc-segmented>
+      <mbsc-segmented value="wed">W</mbsc-segmented>
+      <mbsc-segmented value="thu">T</mbsc-segmented>
+      <mbsc-segmented value="fri">F</mbsc-segmented>
+      <mbsc-segmented value="sat" [disabled]="true">S</mbsc-segmented>
+    </mbsc-segmented-group>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Text and Icon</div>
+    <mbsc-segmented-group>
+      <mbsc-segmented value="featured" icon="material-star" [checked]="true">Featured</mbsc-segmented>
+      <mbsc-segmented value="explore" icon="material-explore">Explore</mbsc-segmented>
+      <mbsc-segmented value="updates" icon="material-system-update">Updates</mbsc-segmented>
+    </mbsc-segmented-group>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Icon</div>
+    <mbsc-segmented-group>
+      <mbsc-segmented value="mail" icon="fa-mail-reply"></mbsc-segmented>
+      <mbsc-segmented value="retweet" icon="fa-retweet"></mbsc-segmented>
+      <mbsc-segmented value="star" icon="star3" [checked]="true"></mbsc-segmented>
+      <mbsc-segmented value="cogs" icon="cogs"></mbsc-segmented>
+    </mbsc-segmented-group>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Disabled</div>
+    <mbsc-segmented-group disabled="true">
+      <mbsc-segmented value="individual" [checked]="true">Idividual</mbsc-segmented>
+      <mbsc-segmented value="team">Team</mbsc-segmented>
+      <mbsc-segmented value="company">Company</mbsc-segmented>
+    </mbsc-segmented-group>
+  </div>
+</mbsc-page>

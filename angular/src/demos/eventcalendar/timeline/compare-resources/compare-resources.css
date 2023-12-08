@@ -10,3 +10,16 @@
 .md-compare .mbsc-timeline-row-gutter {
   height: 6px;
 }
+
+.mbsc-timeline-row-fixed {
+  overflow: visible;
+}
+
+.mbsc-timeline-row-fixed:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 100%;
+  border-bottom: 2px solid #ccc;
+}

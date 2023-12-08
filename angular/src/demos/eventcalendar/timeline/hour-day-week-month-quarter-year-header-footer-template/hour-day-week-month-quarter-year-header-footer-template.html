@@ -1,0 +1,117 @@
+<div class="md-date-header-template">
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Hourly header template</div>
+    <mbsc-eventcalendar
+      [view]="hourView"
+      [data]="hourlyEvents"
+      [resources]="myResources"
+      [hourTemplate]="hourTemp"
+      [hourFooterTemplate]="hourFooterTemp"
+    >
+      <ng-template #hourTemp let-day>
+        <div [ngClass]="'md-date-header md-date-header-hour md-date-header-events-' + getEventOccurrence(day)">
+          {{formatDate('h:mm A', day.date)}}
+        </div>
+      </ng-template>
+      <ng-template #hourFooterTemp let-day>
+        <div class="md-date-footer">{{getOccuppancy(day.events)}} %</div>
+      </ng-template>
+    </mbsc-eventcalendar>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Daily header template</div>
+    <mbsc-eventcalendar
+      [view]="dayView"
+      [data]="dailyEvents"
+      [resources]="myResources"
+      [dayTemplate]="dayTemp"
+      [dayFooterTemplate]="dayFooterTemp"
+    >
+      <ng-template #dayTemp let-day>
+        <div [ngClass]="'md-date-header md-date-header-day md-date-header-events-' + getEventOccurrence(day)">
+          <div class="md-date-header-day-name">{{formatDate('DDD', day.date)}}</div>
+          <div class="md-date-header-day-nr">{{formatDate('DD', day.date)}}</div>
+        </div>
+      </ng-template>
+      <ng-template #dayFooterTemp let-day>
+        <div class="md-date-footer">{{getOccuppancy(day.events)}} %</div>
+      </ng-template>
+    </mbsc-eventcalendar>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Weekly header template</div>
+    <mbsc-eventcalendar
+      [view]="weekView"
+      [data]="weeklyEvents"
+      [resources]="myResources"
+      [weekTemplate]="weekTemp"
+      [weekFooterTemplate]="weekFooterTemp"
+    >
+      <ng-template #weekTemp let-day>
+        <div [ngClass]="'md-date-header md-date-header-week md-date-header-events-' + getEventOccurrence(day)">
+          {{formatDate('MMM DD', day.startDate)}} - {{formatDate('MMM DD', day.endDate)}}
+        </div>
+      </ng-template>
+      <ng-template #weekFooterTemp let-day>
+        <div class="md-date-footer">{{getOccuppancy(day.events)}} %</div>
+      </ng-template>
+    </mbsc-eventcalendar>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Monthly header template</div>
+    <mbsc-eventcalendar
+      [view]="monthView"
+      [data]="monthlyEvents"
+      [resources]="myResources"
+      [monthTemplate]="monthTemp"
+      [monthFooterTemplate]="monthFooterTemp"
+    >
+      <ng-template #monthTemp let-day>
+        <div [ngClass]="'md-date-header md-date-header-month md-date-header-events-' + getEventOccurrence(day)">
+          {{formatDate('MMM', day.date)}}
+        </div>
+      </ng-template>
+      <ng-template #monthFooterTemp let-day>
+        <div class="md-date-footer">{{getOccuppancy(day.events)}} %</div>
+      </ng-template>
+    </mbsc-eventcalendar>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Quarter header template</div>
+    <mbsc-eventcalendar
+      [view]="quarterView"
+      [data]="quarterEvents"
+      [resources]="myResources"
+      [quarterTemplate]="quarterTemp"
+      [quarterFooterTemplate]="quarterFooterTemp"
+    >
+      <ng-template #quarterTemp let-day>
+        <div [ngClass]="'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(day)">
+          {{formatDate('MMM', day.date)}}
+        </div>
+      </ng-template>
+      <ng-template #quarterFooterTemp let-day>
+        <div class="md-date-footer">{{getOccuppancy(day.events)}} %</div>
+      </ng-template>
+    </mbsc-eventcalendar>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Yearly header template</div>
+    <mbsc-eventcalendar
+      [view]="yearView"
+      [data]="yearlyEvents"
+      [resources]="myResources"
+      [yearTemplate]="yearTemp"
+      [yearFooterTemplate]="yearFooterTemp"
+    >
+      <ng-template #yearTemp let-day>
+        <div [ngClass]="'md-date-header md-date-header-year md-date-header-events-' + getEventOccurrence(day)">
+          {{formatDate('YYYY', day.date)}}
+        </div>
+      </ng-template>
+      <ng-template #yearFooterTemp let-day>
+        <div class="md-date-footer">{{getOccuppancy(day.events)}} %</div>
+      </ng-template>
+    </mbsc-eventcalendar>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<mbsc-page>
+  <div class="md-range-filter">
+    <h4 class="md-header">Filter Results by</h4>
+    <div class="mbsc-padding">
+      <mbsc-button class="mbsc-button-block" (click)="today()">Today</mbsc-button>
+      <mbsc-button class="mbsc-button-block" (click)="yesterday()">Yesterday</mbsc-button>
+      <mbsc-button class="mbsc-button-block" (click)="thisWeek()">This Week</mbsc-button>
+      <mbsc-button class="mbsc-button-block" (click)="lastMonth()">Last Month</mbsc-button>
+      <mbsc-button class="mbsc-button-block" (click)="clear()">Clear</mbsc-button>
+    </div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Or by a custom range</div>
+      <mbsc-datepicker
+        [(ngModel)]="range"
+        [controls]="['calendar']"
+        select="range"
+        display="inline"
+        [showRangeLabels]="false"
+      ></mbsc-datepicker>
+    </div>
+  </div>
+</mbsc-page>

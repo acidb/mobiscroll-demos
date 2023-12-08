@@ -1,0 +1,26 @@
+<div class="md-drag-drop-calendar">
+  <div class="mbsc-form-group-title">Calendar 1</div>
+  <mbsc-eventcalendar
+    [view]="myView"
+    [data]="firstEvents"
+    [height]="450"
+    [dragToMove]="true"
+    [eventDelete]="true"
+    [externalDrag]="true"
+    [externalDrop]="true"
+    (onEventCreated)="handleFirstCalEventCreated($event)"
+    class="md-drag-drop-first-calendar"
+  ></mbsc-eventcalendar>
+  <div class="mbsc-form-group-title">Calendar 2</div>
+  <mbsc-eventcalendar
+    [view]="myView"
+    [data]="secondEvents"
+    [height]="450"
+    [dragToMove]="true"
+    [eventDelete]="true"
+    [externalDrag]="true"
+    [externalDrop]="true"
+    (onEventCreated)="handleSecondCalEventCreated($event)"
+    class="md-drag-drop-second-calendar"
+  ></mbsc-eventcalendar>
+</div>

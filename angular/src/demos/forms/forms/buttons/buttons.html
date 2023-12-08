@@ -1,0 +1,60 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Buttons</div>
+    <div class="mbsc-button-group">
+      <mbsc-button>Button</mbsc-button>
+      <mbsc-button [disabled]="true">Disabled</mbsc-button>
+    </div>
+    <div class="mbsc-button-group">
+      <mbsc-button (click)="actionToast()">Click for action</mbsc-button>
+    </div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Full width buttons</div>
+    <div class="mbsc-button-group-block">
+      <mbsc-button>Full width button</mbsc-button>
+      <mbsc-button [disabled]="true">Disabled full width</mbsc-button>
+    </div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Justified buttons</div>
+    <div class="mbsc-button-group-justified">
+      <mbsc-button>Tag</mbsc-button>
+      <mbsc-button>Favorite</mbsc-button>
+      <mbsc-button>Flag</mbsc-button>
+    </div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Icons</div>
+    <div class="mbsc-button-group">
+      <mbsc-button icon="tag"></mbsc-button>
+      <mbsc-button icon="heart"></mbsc-button>
+      <mbsc-button icon="flag" [disabled]="true"></mbsc-button>
+    </div>
+    <div class="mbsc-button-group">
+      <mbsc-button startIcon="tag">Tag</mbsc-button>
+      <mbsc-button startIcon="heart">Favorite</mbsc-button>
+      <mbsc-button startIcon="flag" [disabled]="true">Flag</mbsc-button>
+    </div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Flat buttons</div>
+    <div class="mbsc-button-group">
+      <mbsc-button variant="flat">Flat</mbsc-button>
+      <mbsc-button variant="flat" startIcon="arrow-left5">Flat & Icon</mbsc-button>
+      <mbsc-button variant="flat" icon="arrow-left5"></mbsc-button>
+      <mbsc-button variant="flat" icon="key2" [disabled]="true"></mbsc-button>
+      <mbsc-button variant="flat" [disabled]="true">Flat disabled</mbsc-button>
+    </div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Outline buttons</div>
+    <div class="mbsc-button-group">
+      <mbsc-button variant="outline">Outline</mbsc-button>
+      <mbsc-button variant="outline" startIcon="arrow-left5">Outline & Icon</mbsc-button>
+      <mbsc-button variant="outline" icon="arrow-left5"></mbsc-button>
+      <mbsc-button variant="outline" icon="key2" [disabled]="true"></mbsc-button>
+      <mbsc-button variant="outline" [disabled]="true">Outline disabled</mbsc-button>
+    </div>
+  </div>
+</mbsc-page>

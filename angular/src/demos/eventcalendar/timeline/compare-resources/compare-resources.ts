@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Notifications, setOptions, MbscCalendarEvent, MbscResource, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
@@ -8,8 +8,9 @@ setOptions({
 
 @Component({
   selector: 'compare-resources',
-  templateUrl: './compare-resources.html',
   styleUrl: './compare-resources.css',
+  encapsulation: ViewEncapsulation.None,
+  templateUrl: './compare-resources.html',
   providers: [Notifications],
 })
 export class AppComponent {
@@ -407,11 +408,10 @@ export class AppComponent {
   fixedResources: MbscResource[] = [];
   fixedNr: number = 0;
   toggleComparison = (resource: MbscResource) => {
-    const origResource = this.myResources.find((r: MbscResource) => r.id === resource.id);
     if (!resource.fixed) {
       this.fixedNr++;
-      origResource!.fixed = true;
-      this.fixedResources.push(origResource!);
+      resource.fixed = true;
+      this.fixedResources.push(resource);
       if (this.fixedNr > 2) {
         this.notify.toast({
           message: 'Comparing up to 3 schedules',
@@ -419,7 +419,7 @@ export class AppComponent {
       }
     } else {
       this.fixedNr--;
-      origResource!.fixed = false;
+      resource.fixed = false;
       this.fixedResources = this.fixedResources.filter((r) => r.id !== resource.id);
     }
     const result = [...this.fixedResources];

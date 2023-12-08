@@ -1,0 +1,61 @@
+<mbsc-eventcalendar
+  [data]="shifts"
+  [slots]="slots"
+  [view]="calView"
+  [options]="calendarOptions"
+  [headerTemplate]="headerTemp"
+  [resourceTemplate]="resourceTemp"
+  [slotTemplate]="slotTemp"
+  class="md-shift-management-calendar"
+>
+  <ng-template #headerTemp>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
+    <div class="md-shift-header-controls">
+      <mbsc-checkbox
+        *ngFor="let st of shiftTimes;"
+        [(ngModel)]="st.checked"
+        [label]="st.name"
+        [disabled]="st.disabled"
+        (change)="checkboxChange($event)"
+        theme="material"
+      ></mbsc-checkbox>
+    </div>
+    <mbsc-select
+      [data]="views"
+      inputStyle="box"
+      [(ngModel)]="viewType"
+      class="md-shift-cal-view"
+      (onChange)="viewChange($event)"
+    ></mbsc-select>
+    <mbsc-calendar-prev></mbsc-calendar-prev>
+    <mbsc-calendar-today></mbsc-calendar-today>
+    <mbsc-calendar-next></mbsc-calendar-next>
+  </ng-template>
+  <ng-template #resourceTemp let-resource>
+    <div [ngClass]="{'md-shift-resource ': resource.children}" [ngStyle]="{color: resource.children ? resource.children[0].color : ''}">
+      <span *ngIf="resource.children" class="md-shift-resource-icon" [innerHTML]="resource.icon"></span> {{resource.name}}
+    </div>
+  </ng-template>
+  <ng-template #slotTemp let-args>
+    <div class="md-shift-header" *ngIf="formatMyDate(args.date) as date">
+      <div class="md-shift-name" *ngIf="getShiftsNrs(date, args.slot.id) as shiftList">
+        {{args.slot.name}}
+        <span class="md-shift-time">{{args.slot.time}}</span>
+      </div>
+      <ng-container *ngIf="getShiftsNrs(date, args.slot.id).length > 0">
+        <div [class]="'md-shift-counts-'  + date + '-' + args.slot.id">
+          <ng-container *ngFor="let shift of getShiftsNrs(date, args.slot.id); let i = index">
+            <div *ngIf="shift" class="md-shift-count">
+              <span class="md-shift-icon" [innerHTML]="resources[i].icon"></span>
+              <span [class]="'md-shift-nr md-shift-nr-' + date + '-' + args.slot.id + '-' + (i + 1)"> {{shift}} </span>
+            </div>
+            <br *ngIf="i === 3" />
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="getShiftsNrs(date, args.slot.id).length === 0">
+        <div class="md-shift-count" [innerHTML]="empty"></div>
+      </ng-container>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>

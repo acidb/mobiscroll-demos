@@ -1,0 +1,32 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Date</div>
+    <mbsc-datepicker [controls]="['date']" label="Default" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['date']" dateFormat="DD.MM.YYYY" label="Separator" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['date']" dateFormat="MMMM" label="Month only" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['date']" dateFormat="D MMMM YYYY" label="Month name" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['date']" dateFormat="MM/YYYY" label="Month/year" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['date']" dateFormat="DDD DD MMM, YYYY" label="Day of week" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['date']" dateFormat="YYYY-MM-DD" label="ATOM" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['date']" dateFormat="DDD, DD MMM YYYY" label="COOKIE" [value]="now"></mbsc-datepicker>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Time</div>
+    <mbsc-datepicker [controls]="['time']" label="Default time" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['time']" timeFormat="hh:mm A" label="12 h" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['time']" timeFormat="HH:mm" label="24 h" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['time']" timeFormat="HH:mm:ss" label="Hour, min, sec" [value]="now"></mbsc-datepicker>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Date & Time</div>
+    <mbsc-datepicker [controls]="['date', 'time']" label="Date & Time" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker
+      [controls]="['date', 'time']"
+      dateFormat="DDD D MMM, YYYY"
+      timeFormat="H:mm"
+      dateWheels="|DDD D MMM, YYYY|"
+      label="Day name"
+      [value]="now"
+    ></mbsc-datepicker>
+  </div>
+</mbsc-page>

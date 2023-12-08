@@ -1,0 +1,19 @@
+<mbsc-page>
+  <div class="mbsc-grid mbsc-grid-fixed mbsc-no-padding">
+    <div class="mbsc-row">
+      <div class="mbsc-col-sm-12">
+        <div class="mbsc-form-group-inset">
+          <mbsc-select [data]="getData()" label="Region" (onChange)="regChange($event)" placeholder="Please select..."></mbsc-select>
+          <mbsc-select
+            [data]="divData"
+            label="Division"
+            (onChange)="divChange($event)"
+            [disabled]="divDisabled"
+            placeholder="Please select..."
+          ></mbsc-select>
+          <mbsc-select [data]="subData" label="Subdivision" [disabled]="subDisabled" placeholder="Please select..."></mbsc-select>
+        </div>
+      </div>
+    </div>
+  </div>
+</mbsc-page>

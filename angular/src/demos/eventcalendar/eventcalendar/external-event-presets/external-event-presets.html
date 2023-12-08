@@ -1,0 +1,44 @@
+<div class="mbsc-grid mbsc-no-padding">
+  <div class="mbsc-row">
+    <div class="mbsc-col-sm-9 external-event-calendar">
+      <mbsc-eventcalendar [options]="calendarOptions"></mbsc-eventcalendar>
+    </div>
+    <div class="mbsc-col-sm-3">
+      <div class="mbsc-form-group-title">Available tasks</div>
+      <div
+        mbsc-draggable
+        *ngFor="let task of tasks;let i = index"
+        [dragData]="tasks[i]"
+        class="external-event-task"
+        [ngStyle]="{background: task.color}"
+      >
+        <div>{{task.title}}</div>
+        <div>{{task.length}}</div>
+      </div>
+    </div>
+    <mbsc-popup
+      display="anchored"
+      [width]="400"
+      [contentPadding]="false"
+      [touchUi]="false"
+      headerText="Assign task"
+      [buttons]="['ok']"
+      [anchor]="anchor"
+      (onClose)="onClose()"
+      #popup
+    >
+      <div class="mbsc-form-group">
+        <mbsc-input label="Task" [(ngModel)]="title" readonly></mbsc-input>
+        <mbsc-textarea label="Details" [(ngModel)]="details" placeholder="Add description..."></mbsc-textarea>
+        <mbsc-select
+          [(ngModel)]="technician"
+          [data]="myData"
+          label="Technician"
+          display="anchored"
+          [touchUi]="false"
+          placeholder="Please select..."
+        ></mbsc-select>
+      </div>
+    </mbsc-popup>
+  </div>
+</div>

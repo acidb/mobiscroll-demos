@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import {
   Eventcalendar,
+  Toast,
   getJson,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscEventCreateFailedEvent,
   MbscEventUpdateFailedEvent,
-  Toast /* localeImport */,
+  MbscEventCreateFailedEvent /* localeImport */,
 } from '@mobiscroll/react';
 import './work-week-hours.css';
 
-function WorkWeekHours() {
-  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = useState<boolean>(false);
-  const [toastText, setToastText] = useState<string>();
+const App: React.FC = () => {
+  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
+  const [toastText, setToastText] = React.useState<string>();
   const invalids = [
     {
       start: '12:00',
@@ -27,31 +27,31 @@ function WorkWeekHours() {
     },
   ];
 
-  useEffect(() => {
+  React.useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com//workday-events/?vers=5',
-      (events) => {
+      (events: any) => {
         setEvents(events);
       },
       'jsonp',
     );
   }, []);
 
-  const onEventCreateFailed = useCallback((event: MbscEventCreateFailedEvent) => {
+  const onEventCreateFailed = React.useCallback((event: MbscEventCreateFailedEvent) => {
     if (event.invalid.type === 'lunch') {
       setToastText("Can't create this task on lunch break.");
       setToastOpen(true);
     }
   }, []);
 
-  const onEventUpdateFailed = useCallback((event: MbscEventUpdateFailedEvent) => {
+  const onEventUpdateFailed = React.useCallback((event: MbscEventUpdateFailedEvent) => {
     if (event.invalid.type === 'lunch') {
       setToastText("Can't schedule this task on lunch break.");
       setToastOpen(true);
     }
   }, []);
 
-  const view = useMemo<MbscEventcalendarView>(() => {
+  const view = React.useMemo<MbscEventcalendarView>(() => {
     return {
       schedule: {
         type: 'week',
@@ -63,13 +63,13 @@ function WorkWeekHours() {
     };
   }, []);
 
-  const closeToast = useCallback(() => {
+  const closeToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
   return (
     <div>
-      <Eventcalendar
+      <mobiscroll.Eventcalendar
         // theme
         // locale
         dragToCreate={true}
@@ -88,6 +88,4 @@ function WorkWeekHours() {
       />
     </div>
   );
-}
-
-export default WorkWeekHours;
+};

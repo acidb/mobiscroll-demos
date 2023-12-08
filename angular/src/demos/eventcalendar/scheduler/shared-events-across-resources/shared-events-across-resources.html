@@ -1,0 +1,26 @@
+<mbsc-eventcalendar
+  [view]="view"
+  [data]="myEvents"
+  [resources]="myResources"
+  [clickToCreate]="true"
+  [dragToCreate]="true"
+  [dragToMove]="true"
+  [dragToResize]="true"
+  (onEventDoubleClick)="onEventDoubleClick($event)"
+  (onEventCreated)="onEventCreated($event)"
+  [extendDefaultEvent]="extendDefaultEvent"
+>
+</mbsc-eventcalendar>
+<mbsc-popup [options]="popupOptions" [anchor]="anchor" [buttons]="buttons" #popup (onClose)="onClose()">
+  <div class="mbsc-form-group">
+    <mbsc-input [(ngModel)]="title" label="Title" input-style="box" label-style="stacked"></mbsc-input>
+    <div class="mbsc-padding">
+      <label class="mbsc-txt-muted">Select event participants</label>
+    </div>
+    <mbsc-segmented-group select="multiple" [(ngModel)]="participants">
+      <mbsc-segmented [value]="1">Ryan</mbsc-segmented>
+      <mbsc-segmented [value]="2">Kate</mbsc-segmented>
+      <mbsc-segmented [value]="3">John</mbsc-segmented>
+    </mbsc-segmented-group>
+  </div>
+</mbsc-popup>

@@ -1,13 +1,5 @@
-import { useState, useMemo, useCallback, FC } from 'react';
-import {
-  Eventcalendar,
-  Button,
-  Toast,
-  setOptions /* localeImport */,
-  MbscResource,
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-} from '@mobiscroll/react';
+import React from 'react';
+import { Eventcalendar, Button, Toast, setOptions, MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/react';
 import './compare-resources.css';
 
 setOptions({
@@ -83,13 +75,13 @@ const myResources: MbscResource[] = [
   },
 ];
 
-const CompareResources: FC = () => {
-  const [resources, setResources] = useState<MbscResource[]>(myResources);
-  const [fixedNr, setFixedNr] = useState<number>(0);
-  const [fixedResources, setFixedResources] = useState<MbscResource[]>([]);
-  const [isToastOpen, setIsToastOpen] = useState<boolean>(false);
+const App: React.FC = () => {
+  const [resources, setResources] = React.useState<MbscResource[]>(myResources);
+  const [fixedNr, setFixedNr] = React.useState<number>(0);
+  const [fixedResources, setFixedResources] = React.useState<MbscResource[]>([]);
+  const [isToastOpen, setIsToastOpen] = React.useState<boolean>(false);
 
-  const myEvents = useMemo<MbscCalendarEvent[]>(() => {
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
     return [
       {
         start: 'dyndatetime(y,m,d,9)',
@@ -412,7 +404,7 @@ const CompareResources: FC = () => {
     ];
   }, []);
 
-  const view = useMemo<MbscEventcalendarView>(() => {
+  const view = React.useMemo<MbscEventcalendarView>(() => {
     return {
       timeline: {
         type: 'week',
@@ -425,15 +417,15 @@ const CompareResources: FC = () => {
     };
   }, []);
 
-  const closeToast = useCallback(() => {
+  const closeToast = React.useCallback(() => {
     setIsToastOpen(false);
   }, []);
 
-  const toggleComparison = useCallback(
+  const toggleComparison = React.useCallback(
     (resource: MbscResource) => {
-      const isFixed: boolean = resource.fixed;
-      let newFixedResources: MbscResource[] = [];
-      let newFixedNr: number = fixedNr;
+      const isFixed = resource.fixed;
+      let newFixedResources = [];
+      let newFixedNr = fixedNr;
 
       if (!isFixed) {
         resource.fixed = true;
@@ -445,8 +437,8 @@ const CompareResources: FC = () => {
         newFixedNr--;
       }
 
-      const newResources: MbscResource[] = [...newFixedResources];
-      myResources.forEach(function (r: MbscResource) {
+      const newResources = [...newFixedResources];
+      myResources.forEach(function (r) {
         if (!r.fixed) {
           newResources.push(r);
         }
@@ -463,7 +455,7 @@ const CompareResources: FC = () => {
     [fixedNr, fixedResources],
   );
 
-  const renderResource = useCallback(
+  const renderResource = React.useCallback(
     (r: MbscResource) => {
       return (
         <div className="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
@@ -487,11 +479,11 @@ const CompareResources: FC = () => {
   );
 
   return (
-    <>
+    <React.Fragment>
       <Eventcalendar data={myEvents} resources={resources} dragToMove={true} renderResource={renderResource} view={view} />
       <Toast message="Comparing up to 3 schedules" isOpen={isToastOpen} onClose={closeToast} />
-    </>
+    </React.Fragment>
   );
 };
 
-export default CompareResources;
+ReactDOM.render(<App />, document.getElementById('content'));

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import React from 'react';
 import { Eventcalendar, Button, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './compare-resources.css';
 
@@ -75,13 +75,13 @@ const myResources = [
   },
 ];
 
-const CompareResources = () => {
-  const [resources, setResources] = useState(myResources);
-  const [fixedNr, setFixedNr] = useState(0);
-  const [fixedResources, setFixedResources] = useState([]);
-  const [isToastOpen, setIsToastOpen] = useState(false);
+const App = () => {
+  const [resources, setResources] = React.useState(myResources);
+  const [fixedNr, setFixedNr] = React.useState(0);
+  const [fixedResources, setFixedResources] = React.useState([]);
+  const [isToastOpen, setIsToastOpen] = React.useState(false);
 
-  const myEvents = useMemo(() => {
+  const myEvents = React.useMemo(() => {
     return [
       {
         start: 'dyndatetime(y,m,d,9)',
@@ -404,7 +404,7 @@ const CompareResources = () => {
     ];
   }, []);
 
-  const view = useMemo(() => {
+  const view = React.useMemo(() => {
     return {
       timeline: {
         type: 'week',
@@ -417,11 +417,11 @@ const CompareResources = () => {
     };
   }, []);
 
-  const closeToast = useCallback(() => {
+  const closeToast = React.useCallback(() => {
     setIsToastOpen(false);
   }, []);
 
-  const toggleComparison = useCallback(
+  const toggleComparison = React.useCallback(
     (resource) => {
       const isFixed = resource.fixed;
       let newFixedResources = [];
@@ -455,7 +455,7 @@ const CompareResources = () => {
     [fixedNr, fixedResources],
   );
 
-  const renderResource = useCallback(
+  const renderResource = React.useCallback(
     (r) => {
       return (
         <div className="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
@@ -479,11 +479,11 @@ const CompareResources = () => {
   );
 
   return (
-    <>
+    <React.Fragment>
       <Eventcalendar data={myEvents} resources={resources} dragToMove={true} renderResource={renderResource} view={view} />
       <Toast message="Comparing up to 3 schedules" isOpen={isToastOpen} onClose={closeToast} />
-    </>
+    </React.Fragment>
   );
 };
 
-export default CompareResources;
+ReactDOM.render(<App />, document.getElementById('content'));

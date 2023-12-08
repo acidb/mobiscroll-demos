@@ -1,0 +1,32 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <mbsc-input [(ngModel)]="dateInput" inputStyle="box" labelStyle="stacked" (click)="inputClick()"></mbsc-input>
+  </div>
+  <mbsc-popup class="demo-date-filtering-popup" [responsive]="respPopup" #popup>
+    <div class="mbsc-grid mbsc-no-padding">
+      <div class="mbsc-row">
+        <div class="mbsc-col-sm-4 mbsc-push-sm-8 demo-date-filtering-dates">
+          <div class="demo-date-filtering-inputs">
+            <mbsc-select
+              [(ngModel)]="selected"
+              [data]="myData"
+              label="Date range"
+              inputStyle="box"
+              labelStyle="stacked"
+              [options]="selectOptions"
+            ></mbsc-select>
+            <mbsc-input #start label="Start" inputStyle="box" labelStyle="stacked" [disabled]="disableInput"></mbsc-input>
+            <mbsc-input #end label="End" inputStyle="box" labelStyle="stacked" [disabled]="disableInput"></mbsc-input>
+          </div>
+          <div class="demo-date-filtering-desktop-buttons mbsc-button-group-justified">
+            <mbsc-button class="apply-button" (click)="applyClick()">Apply</mbsc-button>
+            <mbsc-button class="cancel-button" (click)="cancelClick()">Cancel</mbsc-button>
+          </div>
+        </div>
+        <div class="mbsc-col-sm-8 mbsc-pull-sm-4">
+          <mbsc-datepicker [(ngModel)]="selectedDate" [startInput]="start" [endInput]="end" [options]="calendarOptions"></mbsc-datepicker>
+        </div>
+      </div>
+    </div>
+  </mbsc-popup>
+</mbsc-page>

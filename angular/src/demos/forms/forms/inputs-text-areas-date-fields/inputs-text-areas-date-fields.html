@@ -1,0 +1,75 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Single-line text</div>
+    <mbsc-input label="Label" placeholder="Text field label"></mbsc-input>
+    <mbsc-input label="Password" type="password" placeholder="Text field with icon" startIcon="lock2"></mbsc-input>
+    <mbsc-input
+      label="Password Toggle"
+      type="password"
+      placeholder="Text field with icon"
+      startIcon="lock2"
+      [passwordToggle]="true"
+    ></mbsc-input>
+    <mbsc-input placeholder="Text field with right icon" endIcon="pencil"></mbsc-input>
+    <mbsc-input [disabled]="true" placeholder="Text field disabled"></mbsc-input>
+    <mbsc-input [error]="true" placeholder="Text field with error style"></mbsc-input>
+    <mbsc-input [error]="true" [errorMessage]="errorMessage" placeholder="Text field with error style and message"> </mbsc-input>
+    <mbsc-input label="File upload" type="file" placeholder="Select file..."></mbsc-input>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Multi-line text</div>
+    <mbsc-textarea [(ngModel)]="empty" label="Label"></mbsc-textarea>
+    <mbsc-textarea [(ngModel)]="empty" endIcon="pencil"></mbsc-textarea>
+    <mbsc-textarea [(ngModel)]="empty" label="Label" startIcon="bubble"></mbsc-textarea>
+    <mbsc-textarea [disabled]="true" placeholder="disabled"></mbsc-textarea>
+    <mbsc-textarea [(ngModel)]="empty" [error]="true" [errorMessage]="errorMessage"></mbsc-textarea>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Input fields for date entry</div>
+    <mbsc-input label="Date field" type="date" placeholder="Please Select..."></mbsc-input>
+    <mbsc-datepicker label="Calendar" [controls]="['calendar']" placeholder="Please Select..."></mbsc-datepicker>
+    <mbsc-datepicker label="Date scroller" [controls]="['date']" placeholder="Please Select..."></mbsc-datepicker>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Input fields for number entry</div>
+    <mbsc-input label="Number field" type="number" placeholder="Please Select..."></mbsc-input>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Select</div>
+    <mbsc-dropdown [(ngModel)]="select" label="Label">
+      <option value="select">Select</option>
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </mbsc-dropdown>
+    <mbsc-dropdown [(ngModel)]="iconSelect" endIcon="plus">
+      <option value="select">Select with right icon</option>
+      <option value="opel">Opel</option>
+      <option value="renault">Renault</option>
+      <option value="Citroen">Citroen</option>
+      <option value="Lotus">Lotus</option>
+    </mbsc-dropdown>
+    <mbsc-dropdown [(ngModel)]="leftIconSelect" startIcon="plus">
+      <option value="select">Select with left icon</option>
+      <option value="Peugeot">Peugeot</option>
+      <option value="Porsche">Porsche</option>
+      <option value="Fiat">Fiat</option>
+      <option value="Volkswagen">Volkswagen</option>
+    </mbsc-dropdown>
+    <mbsc-dropdown [(ngModel)]="errorSelect" [error]="true">
+      <option value="select">Select error</option>
+      <option value="Ferrari">Ferrari</option>
+      <option value="Honda">Honda</option>
+      <option value="Suzuki">Suzuki</option>
+      <option value="Lamborghini">Lamborghini</option>
+    </mbsc-dropdown>
+    <mbsc-dropdown [(ngModel)]="disabledSelect" [disabled]="true">
+      <option value="select">Select disabled</option>
+      <option value="Bentley">Bentley</option>
+      <option value="Morgan">Morgan</option>
+      <option value="Chevrolet">Chevrolet</option>
+      <option value="Dodge">Dodge</option>
+    </mbsc-dropdown>
+  </div>
+</mbsc-page>

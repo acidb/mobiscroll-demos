@@ -1,0 +1,48 @@
+<mbsc-page>
+  <div class="mbsc-grid">
+    <div class="mbsc-form-group">
+      <div class="mbsc-row">
+        <div class="mbsc-col-12">
+          <div class="mbsc-txt-muted md-mobile-picker-header">Use the picker with any inputs & show on focus/click</div>
+          <input mbsc-datepicker [controls]="['calendar']" class="md-mobile-picker-input" placeholder="Please Select..." />
+        </div>
+      </div>
+    </div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-row">
+        <div class="mbsc-col-12 mbsc-txt-muted md-mobile-picker-header">Disable <code>onClick/onFocus</code> and only show on button</div>
+        <div class="mbsc-col-8">
+          <input
+            mbsc-datepicker
+            #picker="mobiscroll"
+            [(ngModel)]="today"
+            [controls]="['calendar']"
+            [showOnClick]="false"
+            [showOnFocus]="false"
+            class="md-mobile-picker-input"
+          />
+        </div>
+        <div class="mbsc-col-4">
+          <mbsc-button variant="outline" color="primary" class="md-mobile-picker-button" (click)="openPicker()">Show picker</mbsc-button>
+        </div>
+      </div>
+    </div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-row">
+        <div class="mbsc-col-12">
+          <div class="mbsc-txt-muted md-mobile-picker-header">Use the picker with a Mobiscroll input</div>
+          <mbsc-datepicker
+            [controls]="['calendar']"
+            class="md-mobile-picker-box-label"
+            inputStyle="box"
+            placeholder="Please Select..."
+          ></mbsc-datepicker>
+        </div>
+      </div>
+    </div>
+    <div class="mbsc-txt-muted md-mobile-picker-header">Use the picker inline in any page</div>
+  </div>
+  <div class="md-mobile-picker-inline">
+    <mbsc-datepicker [controls]="['calendar']" display="inline"></mbsc-datepicker>
+  </div>
+</mbsc-page>

@@ -1,0 +1,30 @@
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [view]="calView"
+  [headerTemplate]="customTemplate"
+  [options]="calendarOptions"
+  [selectedDate]="selectedDate"
+  [refDate]="refDate"
+>
+  <ng-template #customTemplate>
+    <div
+      [(ngModel)]="rangeValue"
+      mbsc-datepicker
+      select="range"
+      display="anchored"
+      [showOverlay]="false"
+      [touchUi]="true"
+      [buttons]="[]"
+      (onClose)="onClose()"
+    >
+      <mbsc-button variant="flat" class="mbsc-calendar-button">
+        <span class="mbsc-calendar-title">{{rangeText}}</span>
+      </mbsc-button>
+    </div>
+    <div class="md-custom-range-view-controls">
+      <mbsc-calendar-prev></mbsc-calendar-prev>
+      <mbsc-calendar-today></mbsc-calendar-today>
+      <mbsc-calendar-next></mbsc-calendar-next>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>

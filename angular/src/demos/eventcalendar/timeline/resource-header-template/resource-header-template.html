@@ -1,0 +1,21 @@
+<mbsc-eventcalendar
+  class="md-resource-header-template"
+  [view]="view"
+  [data]="myEvents"
+  [resources]="myResources"
+  [resourceTemplate]="resourceTemp"
+  [resourceHeaderTemplate]="headerTemp"
+>
+  <ng-template #resourceTemp let-resource>
+    <div class="md-resource-header-template-cont">
+      <div class="md-resource-header-template-name">{{resource.name}}</div>
+      <div class="md-resource-header-template-seats">{{resource.seats + ' seats'}}</div>
+    </div>
+  </ng-template>
+  <ng-template #headerTemp>
+    <div class="md-resource-header-template-title">
+      <div class="md-resource-header-template-name">Room</div>
+      <div class="md-resource-header-template-seats">Capacity</div>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>

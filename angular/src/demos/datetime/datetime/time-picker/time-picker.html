@@ -1,0 +1,34 @@
+<mbsc-page>
+  <mbsc-datepicker
+    [controls]="['time']"
+    label="Time picker"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+  <mbsc-datepicker
+    [controls]="['time']"
+    timeFormat="HH:mm"
+    label="24 hour picker"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+  <mbsc-datepicker
+    [controls]="['time']"
+    timeFormat="h:mm A"
+    label="12 hour picker with AM/PM"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+  <mbsc-datepicker
+    [controls]="['time']"
+    timeFormat="HH:mm:ss"
+    headerText="Time: {value}"
+    label="Hour, Min, Sec"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+</mbsc-page>

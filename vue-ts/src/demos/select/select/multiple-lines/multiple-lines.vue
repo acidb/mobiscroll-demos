@@ -1,0 +1,18 @@
+<script setup lang="ts"></script>
+
+<template></template>
+
+<style>
+.md-multiple-lines-item {
+  font-size: 14px;
+  white-space: initial;
+  display: flex;
+  height: 60px;
+  line-height: normal;
+}
+
+.md-multiple-lines-text {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+</style>

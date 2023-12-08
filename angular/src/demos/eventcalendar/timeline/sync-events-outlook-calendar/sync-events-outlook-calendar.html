@@ -1,0 +1,66 @@
+<mbsc-page class="md-sync-events-outlook-cont" [ngClass]="{'md-loading-events': isLoading}">
+  <mbsc-eventcalendar
+    [options]="calendarOptions"
+    [data]="myEvents"
+    [resources]="myResources"
+    [invalid]="myInvalids"
+    [exclusiveEndDates]="true"
+    [clickToCreate]="isEditable"
+    [dragToCreate]="isEditable"
+    [dragToMove]="isEditable"
+    [dragToResize]="isEditable"
+    [headerTemplate]="customTemplate"
+    [(selectedDate)]="selectedDate"
+  >
+    <ng-template #customTemplate>
+      <mbsc-calendar-nav class="md-sync-events-outlook-nav"></mbsc-calendar-nav>
+      <div class="md-spinner">
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+      </div>
+
+      <div class="md-outlook-calendar-buttons">
+        <mbsc-button (click)="logIn()" *ngIf="!isLoggedIn" class="md-sync-events-outlook-button">Sync my outlook calendars </mbsc-button>
+        <mbsc-button #calButton (click)="openPopup()" *ngIf="isLoggedIn" class="md-sync-events-outlook-button">My Calendars </mbsc-button>
+        <mbsc-button (click)="navigate()">Today</mbsc-button>
+        <mbsc-calendar-prev></mbsc-calendar-prev>
+        <mbsc-calendar-next></mbsc-calendar-next>
+      </div>
+    </ng-template>
+  </mbsc-eventcalendar>
+
+  <mbsc-popup [options]="popupOptions" [anchor]="myAnchor" #popup>
+    <div class="mbsc-form-group-inset mbsc-align-center">
+      <p class="mbsc-italic mbsc-txt-muted">
+        Editing events sync back to your calendar when enabled. You'll be asked for confirmation on every action.
+      </p>
+    </div>
+    <div class="mbsc-form-group-inset">
+      <mbsc-switch label="Enable editing" [(ngModel)]="isEditable" (change)="changeEditable($event)"></mbsc-switch>
+    </div>
+
+    <div class="mbsc-form-group-inset md-sync-events-outlook-inset">
+      <div class="mbsc-form-group-title">My calendars</div>
+      <ng-container *ngFor="let cal of myCalendars;">
+        <mbsc-switch
+          label="{{cal.name}}"
+          [(ngModel)]="calendarData[cal.id].checked"
+          (change)="toggleCalendars($event, cal.id)"
+        ></mbsc-switch>
+      </ng-container>
+    </div>
+    <div class="mbsc-form-group-inset">
+      <mbsc-button class="md-sync-events-outlook-button mbsc-button-block" (click)="logOut()">Log out of my account </mbsc-button>
+    </div>
+  </mbsc-popup></mbsc-page
+>

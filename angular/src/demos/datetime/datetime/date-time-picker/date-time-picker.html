@@ -1,0 +1,33 @@
+<mbsc-page>
+  <mbsc-datepicker
+    [controls]="['datetime']"
+    label="Compact date & time picker"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+  <mbsc-datepicker [(ngModel)]="testDate" (onChange)="onChangeHandler($event)" [controls]="['date', 'time']"></mbsc-datepicker>
+
+  <div class="mbsc-grid mbsc-no-padding">
+    <div class="mbsc-row">
+      <div class="mbsc-col-6">
+        <mbsc-datepicker
+          [controls]="['date']"
+          label="Date"
+          inputStyle="outline"
+          labelStyle="stacked"
+          placeholder="Please Select..."
+        ></mbsc-datepicker>
+      </div>
+      <div class="mbsc-col-6">
+        <mbsc-datepicker
+          [controls]="['time']"
+          label="Time"
+          inputStyle="outline"
+          labelStyle="stacked"
+          placeholder="Please Select..."
+        ></mbsc-datepicker>
+      </div>
+    </div>
+  </div>
+</mbsc-page>

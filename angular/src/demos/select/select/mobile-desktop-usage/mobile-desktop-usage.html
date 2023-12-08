@@ -1,0 +1,64 @@
+<mbsc-page>
+  <div class="mbsc-grid">
+    <div class="mbsc-form-group">
+      <div class="mbsc-row">
+        <div class="mbsc-col-12">
+          <div class="mbsc-txt-muted md-mobile-picker-header">Use the picker with any inputs & show on focus/click</div>
+          <input #input class="md-mobile-picker-input" placeholder="Please select..." />
+          <select mbsc-select [inputElement]="input">
+            <option value="atl">Atlanta</option>
+            <option value="ber">Berlin</option>
+            <option value="chi">Chicago</option>
+            <option value="lon">London</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-row">
+        <div class="mbsc-col-12 mbsc-txt-muted md-mobile-picker-header">Disable <code>onClick/onFocus</code> and only show on button</div>
+        <div class="mbsc-col-8">
+          <input #myinput class="md-mobile-picker-input" placeholder="Please select..." />
+          <select
+            #picker="mobiscroll"
+            mbsc-select
+            [inputElement]="myinput"
+            [(ngModel)]="selected"
+            [showOnClick]="false"
+            [showOnFocus]="false"
+          >
+            <option value="atl">Atlanta</option>
+            <option value="ber">Berlin</option>
+            <option value="chi">Chicago</option>
+            <option value="lon">London</option>
+          </select>
+        </div>
+        <div class="mbsc-col-4">
+          <mbsc-button variant="outline" color="primary" class="md-mobile-picker-button" (click)="openPicker()">Show picker</mbsc-button>
+        </div>
+      </div>
+    </div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-row">
+        <div class="mbsc-col-12">
+          <div class="mbsc-txt-muted md-mobile-picker-header">Use the picker with a Mobiscroll input</div>
+          <mbsc-select class="md-mobile-picker-box-label" inputStyle="box" placeholder="Please Select...">
+            <mbsc-select-option value="atl">Atlanta</mbsc-select-option>
+            <mbsc-select-option value="ber">Berlin</mbsc-select-option>
+            <mbsc-select-option value="chi">Chicago</mbsc-select-option>
+            <mbsc-select-option value="lon">London</mbsc-select-option>
+          </mbsc-select>
+        </div>
+      </div>
+    </div>
+    <div class="mbsc-txt-muted md-mobile-picker-header">Use the picker inline in any page</div>
+  </div>
+  <div class="md-mobile-picker-inline">
+    <mbsc-select display="inline">
+      <mbsc-select-option value="atl">Atlanta</mbsc-select-option>
+      <mbsc-select-option value="ber">Berlin</mbsc-select-option>
+      <mbsc-select-option value="chi">Chicago</mbsc-select-option>
+      <mbsc-select-option value="lon">London</mbsc-select-option>
+    </mbsc-select>
+  </div>
+</mbsc-page>

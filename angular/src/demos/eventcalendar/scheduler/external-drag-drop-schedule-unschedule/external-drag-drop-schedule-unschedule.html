@@ -1,0 +1,23 @@
+<div class="mbsc-grid mbsc-no-padding">
+  <div class="mbsc-row">
+    <div class="mbsc-col-sm-9 external-drop-calendar">
+      <mbsc-eventcalendar [data]="myEvents" [options]="calendarOptions"></mbsc-eventcalendar>
+    </div>
+    <div class="mbsc-col-sm-3 external-drop-cont">
+      <mbsc-dropcontainer (onItemDrop)="onItemDrop($event)">
+        <div class="mbsc-form-group-title">Available tasks</div>
+
+        <div
+          mbsc-draggable
+          *ngFor="let task of myTasks; "
+          [dragData]="task "
+          class="external-drop-task"
+          [ngStyle]="{background: task.color}"
+        >
+          <div>{{task.title}}</div>
+          <div>{{getHours(task)}}</div>
+        </div>
+      </mbsc-dropcontainer>
+    </div>
+  </div>
+</div>

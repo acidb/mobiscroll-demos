@@ -1,0 +1,14 @@
+<script setup lang="ts"></script>
+
+<template></template>
+
+<style>
+.mbsc-calendar .quarter-year-header-picker .mbsc-segmented {
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.quarter-year-header-picker {
+  flex: 1 0 auto;
+}
+</style>

@@ -1,0 +1,21 @@
+<mbsc-eventcalendar [data]="appointments" [options]="calendarOptions"></mbsc-eventcalendar>
+<mbsc-popup class="md-tooltip" #popup [anchor]="anchor" [options]="popupOptions">
+  <div (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+    <div class="md-tooltip-header" [ngStyle]="{background: bgColor}">
+      <span class="md-tooltip-name-age">{{info}}</span>
+      <span class="md-tooltip-time">{{time}}</span>
+    </div>
+    <div class="md-tooltip-info">
+      <div class="md-tooltip-title">
+        Status: <span class="md-tooltip-status md-tooltip-text">{{status}}</span>
+        <mbsc-button [color]="buttonType" variant="outline" class="md-tooltip-status-button" (click)="setStatus()"
+          >{{buttonText}}</mbsc-button
+        >
+      </div>
+      <div class="md-tooltip-title">Reason for visit: <span class="md-tooltip-reason md-tooltip-text">{{reason}}</span></div>
+      <div class="md-tooltip-title">Location: <span class="md-tooltip-location md-tooltip-text">{{location}}</span></div>
+      <mbsc-button color="secondary" class="md-tooltip-view-button" (click)="viewFile()">View patient file</mbsc-button>
+      <mbsc-button color="danger" variant="outline" class="md-tooltip-delete-button" (click)="deleteApp()">Delete appointment</mbsc-button>
+    </div>
+  </div>
+</mbsc-popup>

@@ -1,0 +1,42 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Controlling the default value</div>
+    <mbsc-select [data]="myData" label="Default" inputStyle="outline" labelStyle="stacked" placeholder="Please select..."></mbsc-select>
+    <mbsc-select
+      [data]="myData"
+      [defaultSelection]="myDefault"
+      label="Custom default"
+      inputStyle="outline"
+      labelStyle="stacked"
+      placeholder="Please select..."
+    ></mbsc-select>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Setting a custom value</div>
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="setBoston()">Boston</mbsc-button>
+      <mbsc-button (click)="setLondon()">London</mbsc-button>
+    </div>
+    <mbsc-select [(ngModel)]="customVal" [data]="myData" display="inline"></mbsc-select>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Buttons API</div>
+    <mbsc-select
+      [data]="myData"
+      #selectInst
+      [buttons]="customButtons"
+      label="Custom"
+      inputStyle="outline"
+      labelStyle="stacked"
+      placeholder="Please select..."
+    ></mbsc-select>
+    <mbsc-select
+      [data]="myData"
+      [buttons]="['cancel']"
+      label="Auto set"
+      inputStyle="outline"
+      labelStyle="stacked"
+      placeholder="Please select..."
+    ></mbsc-select>
+  </div>
+</mbsc-page>

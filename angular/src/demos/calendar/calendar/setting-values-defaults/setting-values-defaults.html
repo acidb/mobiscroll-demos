@@ -1,0 +1,43 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Controlling the default value</div>
+    <mbsc-datepicker label="Default" [controls]="['calendar']" placeholder="Please select..."></mbsc-datepicker>
+    <mbsc-datepicker
+      label="Custom default"
+      [controls]="['calendar']"
+      [defaultSelection]="myDefaultSelection"
+      placeholder="Please select..."
+    ></mbsc-datepicker>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Setting a custom value</div>
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="setValue()">02-01-2020</mbsc-button>
+      <mbsc-button (click)="setToday()">Today</mbsc-button>
+    </div>
+    <mbsc-datepicker [controls]="['calendar']" [(ngModel)]="customVal" display="inline"></mbsc-datepicker>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Buttons API</div>
+    <mbsc-datepicker
+      #nowInst
+      label="Now"
+      [controls]="['calendar']"
+      [(ngModel)]="now"
+      [buttons]="nowButtons"
+      placeholder="Please select..."
+    ></mbsc-datepicker>
+    <mbsc-datepicker
+      #customInst
+      label="Custom"
+      [controls]="['calendar']"
+      [(ngModel)]="custom"
+      [buttons]="customButtons"
+      placeholder="Please select..."
+      >Custom</mbsc-datepicker
+    >
+    <mbsc-datepicker label="Auto set" [controls]="['calendar']" [buttons]="autoButtons" placeholder="Please select..."
+      >Auto set</mbsc-datepicker
+    >
+  </div>
+</mbsc-page>

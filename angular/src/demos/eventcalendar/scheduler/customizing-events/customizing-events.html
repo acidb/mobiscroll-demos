@@ -1,0 +1,31 @@
+<mbsc-eventcalendar
+  [scheduleEventTemplate]="eventTemplate"
+  [data]="myEvents"
+  [options]="eventSettings"
+  class="md-custom-event"
+></mbsc-eventcalendar>
+
+<ng-template #eventTemplate let-data>
+  <div *ngIf="data.allDay" [ngStyle]="{background: getCategory(data.original.category).color}" class="md-custom-event-allday-title">
+    {{data.title}}
+  </div>
+  <div
+    *ngIf="!data.allDay"
+    class="md-custom-event-cont"
+    [ngStyle]="{'border-left': '5px solid ' + getCategory(data.original.category).color,background: getCategory(data.original.category).color}"
+  >
+    <div class="md-custom-event-wrapper">
+      <div [ngStyle]="{background: getCategory(data.original.category).color}" class="md-custom-event-category">
+        {{getCategory(data.original.category).name}}
+      </div>
+      <div class="md-custom-event-details">
+        <div class="md-custom-event-title">{{data.title}}</div>
+        <div class="md-custom-event-time">{{data.start + ' - ' + data.end}}</div>
+        <mbsc-button class="md-custom-event-btn" color="dark" variant="outline" (click)="edit()">Edit</mbsc-button>
+        <div class="md-cutom-event-img-cont">
+          <img *ngFor="let p of data.original.participants" class="md-custom-event-img" [src]="getParticipant(p).img" />
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

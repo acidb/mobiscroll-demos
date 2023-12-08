@@ -1,0 +1,37 @@
+<mbsc-eventcalendar
+  [data]="myMeals"
+  [resources]="types"
+  [options]="calendarOptions"
+  [resourceTemplate]="resourceTemp"
+  [scheduleEventContentTemplate]="eventTemp"
+  class="md-meal-planner-calendar"
+>
+  <ng-template #resourceTemp let-resource>
+    <div class="md-meal-planner-cont">
+      <div class="md-meal-planner-title" [ngStyle]="{color: resource.color}">
+        <span class="md-meal-planner-icon">{{resource.icon}}</span>
+        {{resource.name}}
+      </div>
+      <div class="md-meal-planner-kcal">{{resource.kcal}}</div>
+    </div>
+  </ng-template>
+  <ng-template #eventTemp let-args>
+    <div class="md-meal-planner-event">
+      <div class="md-meal-planner-event-title">{{args.original.title}}</div>
+      <div *ngIf="args.original.calories" class="md-meal-planner-event-desc">Calories {{args.original.calories}} kcal</div>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>
+<mbsc-popup [options]="popupOptions" [buttons]="popupButtons" [headerText]="popupHeader" #popup class="md-meal-planner-popup">
+  <mbsc-segmented-group [(ngModel)]="type">
+    <mbsc-segmented *ngFor="let t of types" [value]="t.id">{{t.name}}</mbsc-segmented>
+  </mbsc-segmented-group>
+  <div class="mbsc-form-group">
+    <mbsc-input label="Name" [(ngModel)]="name"></mbsc-input>
+    <mbsc-input label="Calories" [(ngModel)]="calories"></mbsc-input>
+    <mbsc-textarea label="Notes" [(ngModel)]="notes"></mbsc-textarea>
+  </div>
+  <div *ngIf="isEdit" class="mbsc-button-group">
+    <mbsc-button class="mbsc-button-block" color="danger" variant="outline" (click)="onDeleteClick()">Delete meal </mbsc-button>
+  </div>
+</mbsc-popup>

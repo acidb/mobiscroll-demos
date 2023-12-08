@@ -1,0 +1,16 @@
+<div class="md-switching-view-cont">
+  <mbsc-eventcalendar [data]="myEvents" [view]="calView" [headerTemplate]="customTemplate">
+    <ng-template #customTemplate>
+      <mbsc-calendar-nav class="cal-header-nav"></mbsc-calendar-nav>
+      <div class="cal-header-picker">
+        <mbsc-segmented-group [(ngModel)]="view" (change)="changeView()">
+          <mbsc-segmented value="month" icon="material-event-note"></mbsc-segmented>
+          <mbsc-segmented value="week" icon="material-date-range"></mbsc-segmented>
+          <mbsc-segmented value="day" icon="material-view-day"></mbsc-segmented>
+        </mbsc-segmented-group>
+      </div>
+      <mbsc-calendar-prev class="cal-header-prev"></mbsc-calendar-prev>
+      <mbsc-calendar-next class="cal-header-next"></mbsc-calendar-next>
+    </ng-template>
+  </mbsc-eventcalendar>
+</div>

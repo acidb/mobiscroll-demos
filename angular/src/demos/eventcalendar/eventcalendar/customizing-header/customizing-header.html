@@ -1,0 +1,23 @@
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [view]="calView"
+  [headerTemplate]="customTemplate"
+  #calendar
+  [(selectedDate)]="currentDate"
+  class="md-custom-header"
+>
+  <ng-template #customTemplate>
+    <mbsc-calendar-nav class="md-custom-header-nav"></mbsc-calendar-nav>
+    <div class="md-custom-header-controls">
+      <mbsc-button (click)="navigatePage(true)" icon="material-arrow-back" variant="flat" class="md-custom-header-button"></mbsc-button>
+      <mbsc-calendar-today class="md-custom-header-today"></mbsc-calendar-today>
+      <mbsc-button (click)="navigatePage(false)" icon="material-arrow-forward" variant="flat" class="md-custom-header-button"></mbsc-button>
+    </div>
+    <div class="md-custom-header-view">
+      <mbsc-segmented-group [(ngModel)]="view" (change)="changeView()">
+        <mbsc-segmented value="calendar" icon="calendar"></mbsc-segmented>
+        <mbsc-segmented value="schedule" icon="material-list"></mbsc-segmented>
+      </mbsc-segmented-group>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>

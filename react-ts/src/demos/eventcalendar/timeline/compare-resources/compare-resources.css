@@ -11,11 +11,11 @@
   height: 6px;
 }
 
-.md-compare .mbsc-timeline-row-fixed {
+.mbsc-timeline-row-fixed {
   overflow: visible;
 }
 
-.md-compare .mbsc-timeline-row-fixed:after {
+.mbsc-timeline-row-fixed:after {
   content: '';
   position: absolute;
   right: 0;

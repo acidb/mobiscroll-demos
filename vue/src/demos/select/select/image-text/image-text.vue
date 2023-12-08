@@ -1,0 +1,20 @@
+<script setup></script>
+
+<template></template>
+
+<style>
+.md-image-text-item {
+  position: relative;
+  padding: 15px 0 15px 50px;
+  text-align: left;
+  line-height: normal;
+}
+
+.md-image-text-avatar {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 0;
+  top: 5px;
+}
+</style>

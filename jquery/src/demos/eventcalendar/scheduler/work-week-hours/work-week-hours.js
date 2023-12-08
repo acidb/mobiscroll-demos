@@ -1,12 +1,12 @@
 import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery';
-
+import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 export default {
   init() {
     mobiscroll.setOptions({
       // locale,
       // theme
     });
+
     $(function () {
       var inst = $('#demo-work-week-hours')
         .mobiscroll()
@@ -68,8 +68,8 @@ export default {
     });
   },
   markup: `
-    <div id="demo-work-week-hours"></div>
-    `,
+<div id="demo-work-week-hours"></div>
+  `,
   css: `
 /*<hidden>*/
 
@@ -78,5 +78,5 @@ export default {
 }
 
 /*</hidden>*/
-    `,
+  `,
 };

@@ -1,0 +1,23 @@
+<script setup></script>
+
+<template></template>
+
+<style>
+.md-seach-header-bar .mbsc-textfield-wrapper.mbsc-form-control-wrapper {
+  width: 400px;
+  margin: 12px auto;
+}
+
+.md-search-popup .mbsc-popover-list {
+  width: 400px;
+}
+
+.md-search-popup .mbsc-event-list {
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
+
+.md-search-events .mbsc-ios-dark.mbsc-textfield-box {
+  background: #313131;
+}
+</style>

@@ -1,6 +1,4 @@
-// import * as mobiscroll from '@mobiscroll/javascript';
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
-
 export default {
   init() {
     mobiscroll.setOptions({
@@ -54,7 +52,7 @@ export default {
       },
     });
 
-    mobiscroll.util.http.getJson(
+    mobiscroll.getJson(
       'https://trial.mobiscroll.com/workday-events/',
       function (events) {
         inst.setEvents(events);
@@ -63,8 +61,8 @@ export default {
     );
   },
   markup: `
-    <div id="demo-work-week-hours"></div>
-    `,
+<div id="demo-work-week-hours"></div>
+  `,
   css: `
 /*<hidden>*/
 
@@ -73,5 +71,5 @@ export default {
 }
 
 /*</hidden>*/
-    `,
+  `,
 };

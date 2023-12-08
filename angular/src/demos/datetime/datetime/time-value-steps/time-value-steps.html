@@ -1,0 +1,36 @@
+<mbsc-page>
+  <mbsc-datepicker
+    [controls]="['datetime']"
+    [stepMinute]="15"
+    label="Date & Time (every 15 min)"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+  <mbsc-datepicker
+    [controls]="['time']"
+    [stepMinute]="5"
+    label="Time (every 5 min)"
+    [stepMinute]="5"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+  <mbsc-datepicker
+    [controls]="['time']"
+    [stepHour]="2"
+    label="Time (every 2 hours)"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+  <mbsc-datepicker
+    [controls]="['time']"
+    [stepSecond]="30"
+    timeFormat="HH:mm:ss"
+    label="Time (every 30 seconds)"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
+</mbsc-page>

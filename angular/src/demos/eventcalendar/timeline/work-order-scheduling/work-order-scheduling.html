@@ -1,0 +1,63 @@
+<mbsc-eventcalendar
+  class="md-work-order-scheduling"
+  [data]="myEvents"
+  [resources]="myResources"
+  [options]="calendarOptions"
+  [(selectedDate)]="calendarSelectedDate"
+  [extendDefaultEvent]="extendDefaultEvent"
+  [dayTemplate]="dayTemp"
+  [scheduleEventContentTemplate]="eventTemp"
+>
+  <ng-template #dayTemp let-day>
+    <div class="md-work-order-date">{{formatDate('DD DDD MMM YYYY', day.date)}}</div>
+    <div class="md-work-order-date-title">{{getRevenue(day)}}</div>
+  </ng-template>
+  <ng-template #eventTemp let-event>
+    <div class="my-class">{{event.title}}<span class="md-work-order-price-tag">${{getCostString(event.original.cost)}}</span></div>
+  </ng-template>
+</mbsc-eventcalendar>
+<mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" [headerText]="popupHeaderText" #popup>
+  <div class="mbsc-form-group">
+    <mbsc-input label="Title" [(ngModel)]="popupEventTitle"></mbsc-input>
+    <mbsc-input label="Location" [(ngModel)]="popupEventLocation"></mbsc-input>
+    <mbsc-input label="Bill to customer ($)" [(ngModel)]="popupEventBill"></mbsc-input>
+    <mbsc-textarea label="Notes" [(ngModel)]="popupEventNotes"></mbsc-textarea>
+  </div>
+  <div class="mbsc-form-group">
+    <mbsc-datepicker
+      [(ngModel)]="popupEventDates"
+      [options]="datePickerOptions"
+      [startInput]="startInput"
+      [endInput]="endInput"
+    ></mbsc-datepicker>
+    <mbsc-input #startInput label="Starts"></mbsc-input>
+    <mbsc-input #endInput label="Ends"></mbsc-input>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-grid mbsc-no-padding">
+      <div class="mbsc-row">
+        <ng-container *ngFor="let resources of myResources;">
+          <ng-container *ngFor="let res of resources.children;">
+            <div class="mbsc-col-sm-4">
+              <ng-container>
+                <div class="mbsc-form-group-title">{{res.name}}</div>
+                <mbsc-checkbox
+                  *ngFor="let r of res.children;"
+                  label="{{r.name}}"
+                  [(ngModel)]="r.checked"
+                  theme="material"
+                  class="work-order-checkbox-label"
+                ></mbsc-checkbox>
+              </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="mbsc-form-group">
+    <div *ngIf="isEdit" class="mbsc-button-group">
+      <mbsc-button class="mbsc-button-block" color="danger" variant="outline" (click)="onDeleteClick()">Delete work order</mbsc-button>
+    </div>
+  </div>
+</mbsc-popup>

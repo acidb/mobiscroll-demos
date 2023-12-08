@@ -1,0 +1,18 @@
+<mbsc-eventcalendar
+  [view]="view"
+  [data]="myEvents"
+  [resources]="myResources"
+  [scheduleEventTemplate]="eventTemplate"
+  [extendDefaultEvent]="myDefaultEvent"
+  class="md-timeline-template"
+></mbsc-eventcalendar>
+
+<ng-template #eventTemplate let-data>
+  <div class="md-timeline-template-event" [ngStyle]="{borderColor: data.color, background: data.color}">
+    <div class="md-timeline-template-event-cont">
+      <span class="mbsc-icon mbsc-font-icon mbsc-icon-{{data.original.taskType}}" [ngStyle]="{background: data.color}"></span>
+      <span class="md-timeline-template-time" [ngStyle]="{color: data.color}">{{data.start}}</span>
+      <span class="md-timeline-template-title">{{data.original.title}}</span>
+    </div>
+  </div>
+</ng-template>

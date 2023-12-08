@@ -1,0 +1,22 @@
+<mbsc-page>
+  <mbsc-select
+    [data]="myData"
+    display="anchored"
+    [itemHeight]="64"
+    label="Albums"
+    [itemTemplate]="itemTemp"
+    labelStyle="stacked"
+    inputStyle="box"
+    placeholder="Please select..."
+  ></mbsc-select>
+  <ng-template #itemTemp let-item>
+    <div class="md-item-template">
+      <img class="md-item-template-img" [src]="'https://img.mobiscroll.com/demos/' + item.data.img + '.png'" />
+      <div class="md-item-template-title">
+        <span>{{item.data.text1}}</span>
+        <span class="md-item-template-year">{{' (' + item.data.year + ')'}}</span>
+      </div>
+      <div class="md-item-template-artist">{{'by ' + item.data.artist}}</div>
+    </div>
+  </ng-template>
+</mbsc-page>

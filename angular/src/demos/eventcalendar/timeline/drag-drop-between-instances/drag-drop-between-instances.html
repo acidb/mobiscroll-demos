@@ -1,0 +1,31 @@
+<div class="mbsc-flex-col md-drag-drop-bw-inst-cont">
+  <mbsc-eventcalendar
+    [data]="bookings"
+    [resources]="reservations"
+    [options]="firstCalOptions"
+    [(selectedDate)]="selectedDate"
+    class="md-drag-drop-bw-inst-first"
+  ></mbsc-eventcalendar>
+  <mbsc-eventcalendar
+    [data]="flights"
+    [resources]="jets"
+    [options]="secondCalOptions"
+    [(selectedDate)]="selectedDate"
+    [resourceTemplate]="myResourceTemplate"
+    class="md-drag-drop-bw-inst-second"
+  >
+    <ng-template #myResourceTemplate let-resource>
+      <div *ngIf="!resource.children; else elseBlock" class="mbsc-flex mbsc-align-items-center mbsc-justify-content-start">
+        <img class="md-drag-drop-bw-inst-avatar" [src]="resource.img" />
+        <div class="md-drag-drop-bw-inst-details mbsc-flex-col mbsc-flex-1-0">
+          <div class="md-drag-drop-bw-inst-name">{{resource.name}}</div>
+          <div class="md-aircraft-code mbsc-flex mbsc-justify-content-between">
+            <div>{{resource.code}}️</div>
+            <div><span [innerHTML]="'🧑🏽‍✈️'"></span>{{resource.crew}}</div>
+          </div>
+        </div>
+      </div>
+      <ng-template #elseBlock>{{resource.name}}</ng-template>
+    </ng-template>
+  </mbsc-eventcalendar>
+</div>

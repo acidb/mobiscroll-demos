@@ -1,0 +1,23 @@
+<mbsc-page>
+  <mbsc-datepicker
+    [controls]="['calendar']"
+    select="range"
+    label="Range"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+    (onCancel)="onCancel($event)"
+    (onCellClick)="onCellClick($event)"
+    (onChange)="onChange($event)"
+    (onClose)="onClose($event)"
+    (onDestroy)="onDestroy($event)"
+    (onInit)="onInit($event)"
+    (onLabelClick)="onLabelClick($event)"
+    (onOpen)="onOpen($event)"
+    (onPageChange)="onPageChange($event)"
+    (onPageLoaded)="onPageLoaded($event)"
+    (onPageLoading)="onPageLoading($event)"
+    (onPosition)="onPosition($event)"
+    (onTempChange)="onTempChange($event)"
+  ></mbsc-datepicker>
+</mbsc-page>

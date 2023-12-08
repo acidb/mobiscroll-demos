@@ -1,0 +1,7 @@
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [resources]="myResources"
+  [view]="myView"
+  (onResourceExpand)="loadChildResources($event)"
+  class="md-load-resources-on-demand"
+></mbsc-eventcalendar>

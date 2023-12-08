@@ -1,0 +1,14 @@
+<mbsc-eventcalendar [data]="myEvents" [view]="view" [headerTemplate]="customTemplate" [height]="calHeight">
+  <ng-template #customTemplate>
+    <mbsc-calendar-nav class="md-header-filter-nav"></mbsc-calendar-nav>
+    <div class="quarter-year-header-picker">
+      <mbsc-segmented-group [(ngModel)]="type" (change)="setType($event)">
+        <mbsc-segmented value="quarter">Quarter</mbsc-segmented>
+        <mbsc-segmented value="year">Year</mbsc-segmented>
+      </mbsc-segmented-group>
+    </div>
+    <mbsc-calendar-prev class="md-header-filter-prev"></mbsc-calendar-prev>
+    <mbsc-calendar-today class="md-header-filter-today"></mbsc-calendar-today>
+    <mbsc-calendar-next class="md-header-filter-next"></mbsc-calendar-next>
+  </ng-template>
+</mbsc-eventcalendar>

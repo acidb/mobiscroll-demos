@@ -1,0 +1,18 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Add a new credit card</div>
+    <mbsc-input label="Name" placeholder="Required"></mbsc-input>
+    <mbsc-input label="Card" placeholder="Credit card number"></mbsc-input>
+    <mbsc-datepicker
+      [controls]="['date']"
+      dateFormat="MM/YYYY"
+      dateWheels="DD MMMM YYYY"
+      [min]="today"
+      [max]="until"
+      label="Expiration"
+      placeholder="Required"
+      value="12/2025"
+    ></mbsc-datepicker>
+    <mbsc-input label="Security" placeholder="3-digit CVV"></mbsc-input>
+  </div>
+</mbsc-page>

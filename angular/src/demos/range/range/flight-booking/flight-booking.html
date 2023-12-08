@@ -1,0 +1,118 @@
+<mbsc-page>
+  <div class="mbsc-grid mbsc-no-padding">
+    <div class="mbsc-row">
+      <div class="mbsc-col-12">
+        <mbsc-datepicker
+          [controls]="['calendar']"
+          select="range"
+          [min]="min"
+          [max]="max"
+          [pages]="2"
+          label="Pick your flight"
+          inputStyle="outline"
+          labelStyle="stacked"
+          placeholder="Please select..."
+        ></mbsc-datepicker>
+      </div>
+    </div>
+
+    <div class="mbsc-row">
+      <div class="mbsc-col-6">
+        <mbsc-datepicker
+          [controls]="['calendar']"
+          select="range"
+          [min]="min"
+          [max]="max"
+          [pages]="2"
+          [startInput]="outbound"
+          [endInput]="return"
+        ></mbsc-datepicker>
+        <mbsc-input #outbound label="Outbound" inputStyle="outline" labelStyle="stacked" placeholder="Please Select..."></mbsc-input>
+      </div>
+      <div class="mbsc-col-6">
+        <mbsc-input #return label="Return" inputStyle="outline" labelStyle="stacked" placeholder="Please Select..."></mbsc-input>
+      </div>
+    </div>
+
+    <div class="mbsc-row">
+      <div class="mbsc-col-6">
+        <mbsc-datepicker
+          [controls]="['calendar']"
+          select="range"
+          [min]="min"
+          [max]="max"
+          [pages]="2"
+          [invalid]="invalid"
+          [startInput]="outboundInv"
+          [endInput]="returnInv"
+        ></mbsc-datepicker>
+        <mbsc-input #outboundInv label="Outbound" inputStyle="outline" labelStyle="stacked" placeholder="Please Select..."></mbsc-input>
+      </div>
+      <div class="mbsc-col-6">
+        <mbsc-input #returnInv label="Return" inputStyle="outline" labelStyle="stacked" placeholder="Please Select..."></mbsc-input>
+      </div>
+    </div>
+
+    <div class="mbsc-row">
+      <mbsc-radio-group [(ngModel)]="trip" name="flight-booking-type" theme="material" themeVariant="light">
+        <mbsc-radio value="round" label="Round trip" theme="material" themeVariant="light"></mbsc-radio>
+        <mbsc-radio value="oneway" label="One way" theme="material" themeVariant="light"></mbsc-radio>
+      </mbsc-radio-group>
+    </div>
+    <div class="mbsc-row">
+      <div class="mbsc-col-6">
+        <mbsc-datepicker
+          [controls]="['calendar']"
+          [select]="trip == 'oneway' ? 'date' : 'range'"
+          [min]="min"
+          [max]="max"
+          [pages]="2"
+          [startInput]="outboundBooking"
+          [endInput]="returnBooking"
+          label="Outbound"
+          inputStyle="outline"
+          labelStyle="stacked"
+          placeholder="Please Select..."
+        ></mbsc-datepicker>
+        <mbsc-input
+          #outboundBooking
+          label="Outbound"
+          inputStyle="outline"
+          labelStyle="stacked"
+          placeholder="Please Select..."
+          [ngClass]="{ 'mbsc-hidden': trip=='oneway' }"
+        ></mbsc-input>
+      </div>
+      <div class="mbsc-col-6">
+        <mbsc-input
+          #returnBooking
+          label="Return"
+          inputStyle="outline"
+          labelStyle="stacked"
+          placeholder="Please Select..."
+          [disabled]="trip == 'oneway'"
+        ></mbsc-input>
+      </div>
+    </div>
+
+    <div class="mbsc-row">
+      <div class="mbsc-col-12">
+        <mbsc-datepicker
+          #calInst
+          [(ngModel)]="booking"
+          [controls]="['calendar']"
+          select="range"
+          [buttons]="buttons"
+          [min]="min"
+          [max]="max"
+          [pages]="2"
+          (onTempChange)="changeTripType($event)"
+          label="Pick your flight"
+          inputStyle="outline"
+          labelStyle="stacked"
+          placeholder="Please select..."
+        ></mbsc-datepicker>
+      </div>
+    </div>
+  </div>
+</mbsc-page>

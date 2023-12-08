@@ -1,12 +1,12 @@
 import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
-
 export default {
   init() {
     mobiscroll.setOptions({
       // locale,
       // theme
     });
+
     $(function () {
       var myResources = [
         {
@@ -472,7 +472,7 @@ export default {
     });
   },
   markup: `
-    <div id="demo-compare-resources" class="md-compare"></div>
+<div id="demo-compare-resources" class="md-compare"></div>
   `,
   css: `
 .md-compare-resource {

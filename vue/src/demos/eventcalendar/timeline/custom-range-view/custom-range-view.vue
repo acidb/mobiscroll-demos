@@ -1,0 +1,19 @@
+<script setup></script>
+
+<template></template>
+
+<style>
+.md-custom-range-view-controls {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: end;
+  align-items: center;
+}
+
+.mbsc-material .mbsc-calendar-title {
+  font-size: 1.428572em;
+  font-weight: 400;
+  text-transform: none;
+  line-height: 1.4em;
+}
+</style>

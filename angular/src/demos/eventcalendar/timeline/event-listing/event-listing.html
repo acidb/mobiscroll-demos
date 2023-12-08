@@ -1,0 +1,17 @@
+<div class="md-event-listing">
+  <mbsc-eventcalendar [data]="myEvents" [view]="calView" [resources]="myResources" [headerTemplate]="myHeaderTemplate">
+    <ng-template #myHeaderTemplate>
+      <mbsc-calendar-nav class="md-event-listing-nav"></mbsc-calendar-nav>
+      <div class="md-event-listing-picker">
+        <mbsc-segmented-group [(ngModel)]="view" (change)="changeView()">
+          <mbsc-segmented value="workweek">Work week</mbsc-segmented>
+          <mbsc-segmented value="week">Week</mbsc-segmented>
+          <mbsc-segmented value="month">Month</mbsc-segmented>
+        </mbsc-segmented-group>
+      </div>
+      <mbsc-calendar-prev class="md-event-listing-prev"></mbsc-calendar-prev>
+      <mbsc-calendar-today class="md-event-listing-today"></mbsc-calendar-today>
+      <mbsc-calendar-next class="md-event-listing-next"></mbsc-calendar-next>
+    </ng-template>
+  </mbsc-eventcalendar>
+</div>

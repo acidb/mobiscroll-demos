@@ -1,0 +1,30 @@
+<mbsc-page (keydown)="onKeydown($event)">
+  <div class="mbsc-flex-col md-copy-cut-paste">
+    <div class="mbsc-flex-none">
+      <mbsc-segmented-group [(ngModel)]="activeCalendar" (change)="switchCalendar($event)">
+        <mbsc-segmented value="first">First calendar</mbsc-segmented>
+        <mbsc-segmented value="second">Second calendar</mbsc-segmented>
+      </mbsc-segmented-group>
+    </div>
+    <div class="mbsc-flex-col mbsc-flex-1-1">
+      <div id="demo-copy-cut-paste-first-cont" class="mbsc-flex-1-1 md-copy-cut-paste-cont">
+        <mbsc-eventcalendar
+          [data]="firstEvents"
+          [(selectedEvents)]="firstSelectedEvents"
+          [options]="calendarSettings"
+          [ngClass]="{'md-hide-calendar': activeCalendar === 'second'}"
+        ></mbsc-eventcalendar>
+      </div>
+      <div id="demo-copy-cut-paste-second-cont" class="mbsc-flex-1-1 md-copy-cut-paste-cont">
+        <mbsc-eventcalendar
+          [data]="secondEvents"
+          [(selectedEvents)]="secondSelectedEvents"
+          [options]="calendarSettings"
+          [ngClass]="{'md-hide-calendar': activeCalendar === 'first'}"
+        ></mbsc-eventcalendar>
+      </div>
+      <mbsc-select #menu [(ngModel)]="selectValue" [data]="menuData" [anchor]="menuAnchor" [options]="menuSettings"></mbsc-select>
+    </div>
+  </div>
+  <div #dummy tabindex="-1"></div>
+</mbsc-page>

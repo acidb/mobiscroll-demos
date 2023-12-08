@@ -1,0 +1,31 @@
+<mbsc-page>
+  <div class="mbsc-grid mbsc-form-grid">
+    <div class="mbsc-row">
+      <div class="mbsc-col-sm-12 mbsc-col-md-6">
+        <mbsc-select
+          [data]="names"
+          display="center"
+          [filter]="true"
+          [buttons]="undefined"
+          label="Local data"
+          labelStyle="stacked"
+          inputStyle="box"
+          placeholder="Please select..."
+          [selectMultiple]="true"
+        ></mbsc-select>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-6">
+        <mbsc-select
+          [data]="remoteData"
+          display="anchored"
+          [filter]="true"
+          [options]="remoteOptions"
+          label="Remote data"
+          labelStyle="stacked"
+          inputStyle="box"
+          placeholder="Please select..."
+        ></mbsc-select>
+      </div>
+    </div>
+  </div>
+</mbsc-page>

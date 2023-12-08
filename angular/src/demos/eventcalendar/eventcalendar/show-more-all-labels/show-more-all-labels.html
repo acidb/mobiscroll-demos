@@ -1,0 +1,42 @@
+<div class="mbsc-grid">
+  <div class="mbsc-row">
+    <div class="mbsc-col-sm-12 mbsc-col-md-4">
+      <div class="mbsc-form-group">
+        <div class="mbsc-form-group-title">All labels</div>
+        <mbsc-eventcalendar [data]="myEvents" [view]="allLabelsView"></mbsc-eventcalendar>
+      </div>
+    </div>
+    <div class="mbsc-col-sm-12 mbsc-col-md-4">
+      <div class="mbsc-form-group">
+        <div class="mbsc-form-group-title">Up to 3 labels</div>
+        <mbsc-eventcalendar [data]="myEvents" [view]="nrLabelsView"></mbsc-eventcalendar>
+      </div>
+    </div>
+    <div class="mbsc-col-sm-12 mbsc-col-md-4">
+      <div class="mbsc-form-group">
+        <div class="mbsc-form-group-title">Labels fitting the row</div>
+        <mbsc-eventcalendar [data]="myEvents" [view]="fitLabelsView"></mbsc-eventcalendar>
+      </div>
+    </div>
+  </div>
+  <div class="mbsc-row">
+    <div class="mbsc-col-sm-12 mbsc-col-md-4">
+      <div class="mbsc-form-group">
+        <div class="mbsc-form-group-title">All labels</div>
+        <mbsc-eventcalendar [data]="myEvents" [view]="allLabelsWeekView"></mbsc-eventcalendar>
+      </div>
+    </div>
+    <div class="mbsc-col-sm-12 mbsc-col-md-4">
+      <div class="mbsc-form-group">
+        <div class="mbsc-form-group-title">Up to 3 labels</div>
+        <mbsc-eventcalendar [data]="myEvents" [view]="nrLabelsWeekView"></mbsc-eventcalendar>
+      </div>
+    </div>
+    <div class="mbsc-col-sm-12 mbsc-col-md-4">
+      <div class="mbsc-form-group">
+        <div class="mbsc-form-group-title">Labels fitting the row</div>
+        <mbsc-eventcalendar [data]="myEvents" [view]="fitLabelsWeekView"></mbsc-eventcalendar>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<mbsc-eventcalendar
+  [view]="view"
+  [data]="myEvents"
+  groupBy="date"
+  [resources]="myResources"
+  [resourceTemplate]="resourceTemp"
+  [dayTemplate]="dayTemp"
+>
+  <ng-template #resourceTemp let-resource>
+    <div class="header-resource-template-content">
+      <img class="header-resource-avatar" [src]="resource.img" />
+      <div class="header-resource-name">{{resource.name}}</div>
+    </div>
+  </ng-template>
+
+  <ng-template #dayTemp let-day>
+    <div class="header-template-container">
+      <div class="header-template-date">
+        <div class="header-template-day-name">{{formatDate('DDDD', day.date)}}</div>
+        <div class="header-template-day">{{formatDate('MMMM DD', day.date)}}</div>
+      </div>
+      <div class="header-template-task" [ngStyle]="{background:getTask(day.date).color}">{{getTask(day.date).name}}</div>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>

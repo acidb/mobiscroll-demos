@@ -1,0 +1,18 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Switch</div>
+    <mbsc-switch label="Switch Off" description="This is description for Switch" [(ngModel)]="sw1"></mbsc-switch>
+    <mbsc-switch label="Switch On" description="This is description for Switch 2" [(ngModel)]="sw2"></mbsc-switch>
+    <mbsc-switch label="Disabled Switch Off" [(ngModel)]="sw3" [disabled]="true"></mbsc-switch>
+    <mbsc-switch label="Disabled Switch On" [(ngModel)]="sw4" [disabled]="true"> </mbsc-switch>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Switch colors</div>
+    <mbsc-switch label="Primary" color="primary" [(ngModel)]="primary"></mbsc-switch>
+    <mbsc-switch label="Secondary" color="secondary" [(ngModel)]="secondary"></mbsc-switch>
+    <mbsc-switch label="Success" color="success" [(ngModel)]="success"></mbsc-switch>
+    <mbsc-switch label="Danger" color="danger" [(ngModel)]="danger"></mbsc-switch>
+    <mbsc-switch label="Warning" color="warning" [(ngModel)]="warning"></mbsc-switch>
+    <mbsc-switch label="Info" color="info" [(ngModel)]="info"></mbsc-switch>
+  </div>
+</mbsc-page>
