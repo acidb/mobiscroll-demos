@@ -1,7 +1,6 @@
 import React from 'react';
 import { Eventcalendar, getJson, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
 import './colors-invalids-css-class.css';
-
 setOptions({
   // localeJs,
   // themeJs

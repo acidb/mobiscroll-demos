@@ -1,5 +1,9 @@
 import React from 'react';
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Select, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Select = mobiscroll.Select;
+const Page = mobiscroll.Page;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -52,12 +56,9 @@ function App() {
         data={myData}
         selectMultiple={true}
         label="Multi-select"
-        tagInput={true}
-        inputProps={{
-          inputStyle: 'outline',
-          labelStyle: 'stacked',
-          placeholder: 'Please select...',
-        }}
+        inputStyle="outline"
+        labelStyle="stacked"
+        placeholder="Please select..."
       />
     </Page>
   );

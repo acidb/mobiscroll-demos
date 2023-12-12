@@ -15,7 +15,6 @@ import {
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
 import './resource-filtering-in-header.css';
-
 setOptions({
   // localeJs,
   // themeJs

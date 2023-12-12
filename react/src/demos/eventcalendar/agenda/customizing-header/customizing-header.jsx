@@ -1,15 +1,14 @@
 import React from 'react';
-import {
-  Eventcalendar,
-  getJson,
-  setOptions,
-  CalendarNav,
-  Button,
-  CalendarToday,
-  SegmentedGroup,
-  SegmentedItem /* localeImport */,
-} from '@mobiscroll/react';
-import './customizing-header.css';
+//<demo-only>import { Eventcalendar, getJson, setOptions, CalendarNav, Button, CalendarToday, SegmentedGroup, SegmentedItem/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const getJson = mobiscroll.getJson;
+const setOptions = mobiscroll.setOptions;
+const CalendarNav = mobiscroll.CalendarNav;
+const Button = mobiscroll.Button;
+const CalendarToday = mobiscroll.CalendarToday;
+const SegmentedGroup = mobiscroll.SegmentedGroup;
+const SegmentedItem = mobiscroll.SegmentedItem; //</extra>
 
 setOptions({
   // localeJs,

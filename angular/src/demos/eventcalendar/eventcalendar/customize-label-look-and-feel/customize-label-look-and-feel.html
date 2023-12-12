@@ -1,10 +1,9 @@
-<mbsc-eventcalendar [labelTemplate]="labelTemplate" [data]="myEvents" [options]="eventSettings">
-  <ng-template #labelTemplate let-data>
-    {{logData(data)}}
-    <div *ngIf="data.isMultiDay" [ngStyle]="{background: data.original.color, color: '#000'}" class="multi-day-event">
-      {{data.original.title}}
-    </div>
-    <div *ngIf="!data.isMultiDay" class="single-day-event-dot" [ngStyle]="{background: data.original.color, color: '#000'}"></div>
-    <div *ngIf="!data.isMultiDay" class="single-day-event" [ngStyle]="{color: '#000'}">{{data.original.title}}</div>
-  </ng-template>
-</mbsc-eventcalendar>
+<mbsc-eventcalendar [labelTemplate]="labelTemplate" [data]="myEvents" [options]="eventSettings"></mbsc-eventcalendar>
+
+<ng-template #labelTemplate let-data>
+  <div *ngIf="data.isMultiDay" [ngStyle]="{background: data.original.color, color: '#000'}" class="multi-day-event">
+    {{data.original.title}}
+  </div>
+  <div *ngIf="!data.isMultiDay" class="single-day-event-dot" [ngStyle]="{background: data.original.color, color: '#000'}"></div>
+  <div *ngIf="!data.isMultiDay" class="single-day-event" [ngStyle]="{color: '#000'}">{{data.original.title}}</div>
+</ng-template>

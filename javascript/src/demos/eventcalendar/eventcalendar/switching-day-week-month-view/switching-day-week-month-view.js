@@ -15,7 +15,7 @@ export default {
         renderHeader: function () {
           return (
             '<div mbsc-calendar-nav class="cal-header-nav"></div>' +
-            '<div class="cal-header-picker">' +
+            '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">' +
             '<label><input data-icon="material-event-note" mbsc-segmented type="radio" name="view" value="month" class="md-view-change" checked></label>' +
             '<label><input data-icon="material-date-range" mbsc-segmented type="radio" name="view" value="week" class="md-view-change"></label>' +
             '<label><input data-icon="material-view-day" mbsc-segmented type="radio" name="view" value="day" class="md-view-change"></label>' +

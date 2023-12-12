@@ -7,10 +7,10 @@ setOptions({
   // theme
 })
 
-const now = new Date(),
-  y = now.getFullYear(),
-  m = now.getMonth(),
-  d = now.getDate()
+const now = new Date()
+const y = now.getFullYear()
+const m = now.getMonth()
+const d = now.getDate()
 
 const toastMessage = 'Make sure not to double book'
 const isToastOpen = ref(false)
@@ -61,7 +61,7 @@ const myEvents = ref([
     :dragToResize="true"
     :dragToCreate="true"
     :clickToCreate="true"
-    :eventOverlap="true"
+    :eventOverlap="false"
     :exclusiveEndDates="true"
     @event-update-failed="onEventFailed"
     @event-create-failed="onEventFailed"

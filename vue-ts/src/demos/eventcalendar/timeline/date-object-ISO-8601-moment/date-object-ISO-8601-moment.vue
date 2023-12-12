@@ -120,12 +120,12 @@ function addMoment() {
 
 <template>
   <MbscPage>
-    <div className="mbsc-grid">
-      <div className="mbsc-row">
-        <div className="mbsc-col-sm-12 mbsc-col-md-4">
-          <div className="mbsc-form-group">
-            <div className="mbsc-form-group-title">Date object</div>
-            <div className="mbsc-button-group-block">
+    <div class="mbsc-grid">
+      <div class="mbsc-row">
+        <div class="mbsc-col-sm-12 mbsc-col-md-4">
+          <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">Date object</div>
+            <div class="mbsc-button-group-block">
               <MbscButton @click="addDate">
                 start: new Date(2020, 4, 19, 10, 45) <br />
                 end: new Date(2020, 4, 19, 11, 45)
@@ -140,10 +140,10 @@ function addMoment() {
             />
           </div>
         </div>
-        <div className="mbsc-col-sm-12 mbsc-col-md-4">
-          <div className="mbsc-form-group">
-            <div className="mbsc-form-group-title">ISO string</div>
-            <div className="mbsc-button-group-block">
+        <div class="mbsc-col-sm-12 mbsc-col-md-4">
+          <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">ISO string</div>
+            <div class="mbsc-button-group-block">
               <MbscButton @click="addISO">
                 start: 2020-05-20T12:30:00 <br />
                 end: 2020-05-20T13:00:00
@@ -158,10 +158,10 @@ function addMoment() {
             />
           </div>
         </div>
-        <div className="mbsc-col-sm-12 mbsc-col-md-4">
-          <div className="mbsc-form-group">
-            <div className="mbsc-form-group-title">Moment js</div>
-            <div className="mbsc-button-group-block">
+        <div class="mbsc-col-sm-12 mbsc-col-md-4">
+          <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">Moment js</div>
+            <div class="mbsc-button-group-block">
               <MbscButton @click="addMoment">
                 start: moment([2020, 4, 21, 11]) <br />
                 end: moment([2020, 4, 21, 14])

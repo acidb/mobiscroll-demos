@@ -25,11 +25,12 @@ const d = now.getDate();
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  settings: MbscEventcalendarOptions = {
+  myOptions: MbscEventcalendarOptions = {
     clickToCreate: true,
     dragToCreate: true,
     dragToMove: true,
     dragToResize: true,
+    eventOverlap: false,
     exclusiveEndDates: true,
     onEventUpdateFailed: () => {
       this.notify.toast({
@@ -68,7 +69,7 @@ export class AppComponent {
     },
   ];
 
-  view: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     calendar: { type: 'month', labels: 'all' },
   };
 }

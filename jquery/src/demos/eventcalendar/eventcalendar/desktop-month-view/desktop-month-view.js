@@ -12,7 +12,6 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
-
           view: {
             calendar: { labels: true },
           },
@@ -38,12 +37,5 @@ export default {
   },
   markup: `
 <div id="demo-desktop-month-view" style="height:100%"></div>
-
-  `,
-  css: `
-.md-extra-col {
-    position: absolute;
-    with: 10%
-}
   `,
 };

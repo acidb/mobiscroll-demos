@@ -1,5 +1,9 @@
 import React from 'react';
-import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Datepicker, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const Page = mobiscroll.Page;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -14,7 +18,7 @@ function App() {
         inputProps={{
           label: 'Calendar',
           labelStyle: 'stacked',
-          inputStyle: 'outline',
+          inputStyle: 'box',
           placeholder: 'Please Select...',
         }}
         onCancel={(event, inst) => {
@@ -22,6 +26,12 @@ function App() {
         }}
         onCellClick={(event, inst) => {
           // Logic for event click
+        }}
+        onCellHoverIn={(event, inst) => {
+          // Logic for handling cell hover in
+        }}
+        onCellHoverOut={(event, inst) => {
+          // Logic for handling cell hover out
         }}
         onChange={(event, inst) => {
           // Logic for value change

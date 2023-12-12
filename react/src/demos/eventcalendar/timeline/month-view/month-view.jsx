@@ -1,5 +1,7 @@
 import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Eventcalendar/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;//</extra>
 
 function App() {
   const view = React.useMemo(() => {
@@ -155,24 +157,12 @@ function App() {
     ];
   }, []);
 
-  const renderScheduleEvent = React.useCallback((data) => {
-    const cat = { color: 'red' }; // getCategory(data.original.category);
-
-    return (
-      <div className="md-custom-event-cont" style={{ borderLeft: '5px solid ' + cat.color, background: cat.color, minHeight: '45px' }}>
-        <div className="md-custom-event-title">{data.title}</div>
-      </div>
-    );
-  });
-
   return (
     <Eventcalendar
       // theme
       // locale
       view={view}
-      // data={myEvents}
-      dragToCreate={true}
-      renderScheduleEventContent={renderScheduleEvent}
+      data={myEvents}
       resources={myResources}
     />
   );

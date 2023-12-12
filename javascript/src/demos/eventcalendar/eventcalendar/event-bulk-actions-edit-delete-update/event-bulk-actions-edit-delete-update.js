@@ -7,7 +7,7 @@ export default {
     });
 
     var confirmOpen, firstDay, lastDay, selectedEvent;
-    var formatDate = mobiscroll.util.datetime.formatDate;
+    var formatDate = mobiscroll.formatDate;
     var listElm = document.createElement('ul');
     document.getElementById('selected-event-list').append(listElm);
 

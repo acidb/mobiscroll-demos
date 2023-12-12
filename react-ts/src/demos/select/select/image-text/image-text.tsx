@@ -1,7 +1,6 @@
 import React from 'react';
 import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './image-text.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -66,6 +65,11 @@ const App: React.FC = () => {
     );
   };
 
+  const [myValue, setValue] = React.useState(['42976', '47883']);
+  const onChange = (ev: any) => {
+    setValue(ev.value);
+  };
+
   return (
     <Page>
       <Select
@@ -75,7 +79,8 @@ const App: React.FC = () => {
         display="anchored"
         itemHeight={50}
         selectMultiple={true}
-        value={['42976', '47883']}
+        value={myValue}
+        onChange={onChange}
         renderItem={renderCustomItem}
       />
     </Page>

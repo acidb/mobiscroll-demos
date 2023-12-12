@@ -1,15 +1,14 @@
 import React from 'react';
-import {
-  Datepicker,
-  CalendarPrev,
-  CalendarNav,
-  CalendarNext,
-  CalendarToday,
-  formatDate,
-  getJson,
-  setOptions /* localeImport */,
-} from '@mobiscroll/react';
-import './book-rental-months-ahead.css';
+//<demo-only>import { Datepicker, CalendarPrev, CalendarNav, CalendarNext, CalendarToday, formatDate, getJson, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const CalendarPrev = mobiscroll.CalendarPrev;
+const CalendarNav = mobiscroll.CalendarNav;
+const CalendarNext = mobiscroll.CalendarNext;
+const CalendarToday = mobiscroll.CalendarToday;
+const getJson = mobiscroll.getJson;
+const formatDate = mobiscroll.formatDate;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,

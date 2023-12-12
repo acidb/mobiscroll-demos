@@ -1,6 +1,12 @@
 import React from 'react';
-import { Eventcalendar, Draggable, Dropcontainer, setOptions, getJson, toast /* localeImport */ } from '@mobiscroll/react';
-import './external-drag-drop-schedule-unschedule.css';
+//<demo-only>import { Eventcalendar, Draggable, Dropcontainer, setOptions, getJson, toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Draggable = mobiscroll.Draggable;
+const Dropcontainer = mobiscroll.Dropcontainer;
+const setOptions = mobiscroll.setOptions;
+const getJson = mobiscroll.getJson;
+const toast = mobiscroll.toast; //</extra>
 
 setOptions({
   // localeJs,
@@ -103,7 +109,7 @@ function App() {
 
   React.useEffect(() => {
     getJson(
-      'https://trialdev.mobiscroll.com/drag-drop-events/',
+      'https://trial.mobiscroll.com/drag-drop-events/',
       (events) => {
         setEvents(events);
       },

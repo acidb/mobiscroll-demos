@@ -50,7 +50,6 @@ export default {
                   title: 'Event ' + i,
                 });
               }
-              console.log(myEvents);
               inst.setEvents(myEvents);
             });
           },

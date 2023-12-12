@@ -1,7 +1,6 @@
 import React from 'react';
 import { Eventcalendar, setOptions, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
 import './custom-resource-header-template.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -15,8 +14,8 @@ const App: React.FC = () => {
         allDay: false,
         startDay: 1,
         endDay: 5,
-        startTime: '08:00',
-        endTime: '17:00',
+        startTime: '05:00',
+        endTime: '22:00',
       },
     };
   }, []);

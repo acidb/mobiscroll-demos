@@ -9,7 +9,6 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './week-to-month.css';
-
 setOptions({
   // localeJs,
   // themeJs

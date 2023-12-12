@@ -1,6 +1,113 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { MbscEventcalendar, setOptions, getJson /* localeImport */ } from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myEvents = ref([])
+
+const myInvalid = [
+  {
+    start: '12:00',
+    end: '13:00',
+    title: 'Lunch break',
+    recurring: {
+      repeat: 'weekly',
+      weekDays: 'MO,TU,WE,TH,FR'
+    },
+    cssClass: 'md-lunch-break-class mbsc-flex'
+  }
+]
+
+const myColors = [
+  {
+    start: '03:00',
+    end: '10:00',
+    recurring: {
+      repeat: 'weekly',
+      weekDays: 'MO'
+    },
+    cssClass: 'md-rect-bg'
+  },
+  {
+    start: '16:00',
+    end: '22:00',
+    recurring: {
+      repeat: 'weekly',
+      weekDays: 'TH'
+    },
+    cssClass: 'md-rect-bg'
+  },
+  {
+    start: '15:00',
+    end: '21:00',
+    recurring: {
+      repeat: 'weekly',
+      weekDays: 'MO'
+    },
+    cssClass: 'md-stripes-bg'
+  },
+  {
+    start: '04:00',
+    end: '10:00',
+    recurring: {
+      repeat: 'weekly',
+      weekDays: 'FR'
+    },
+    cssClass: 'md-stripes-bg'
+  },
+  {
+    start: '02:00',
+    end: '09:00',
+    recurring: {
+      repeat: 'weekly',
+      weekDays: 'TU'
+    },
+    cssClass: 'md-dots-bg'
+  },
+  {
+    start: '14:00',
+    end: '20:00',
+    recurring: {
+      repeat: 'weekly',
+      weekDays: 'WE'
+    },
+    cssClass: 'md-dots-bg'
+  }
+]
+
+const myView = {
+  schedule: {
+    allDay: false,
+    type: 'week',
+    startDay: 1,
+    endDay: 5
+  }
+}
+
+onMounted(() => {
+  getJson(
+    'https://trial.mobiscroll.com/workday-events/',
+    (events) => {
+      myEvents.value = events
+    },
+    'jsonp'
+  )
+})
+</script>
+
+<template>
+  <MbscEventcalendar
+    :drag="drag"
+    :view="myView"
+    :data="myEvents"
+    :invalid="myInvalid"
+    :colors="myColors"
+  />
+</template>
 
 <style>
 .md-lunch-break-class.mbsc-schedule-invalid {

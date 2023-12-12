@@ -1,5 +1,12 @@
-<script setup>import { ref, onMounted } from 'vue'
-import { MbscEventcalendar, setOptions, MbscDraggable, MbscDropcontainer, MbscToast/* localeImport */ } from '@mobiscroll/vue'
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscDraggable,
+  MbscDropcontainer,
+  MbscEventcalendar,
+  MbscToast,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 
 setOptions({
   // locale,
@@ -9,6 +16,34 @@ setOptions({
 const now = new Date()
 const today = new Date(now.setMinutes(59))
 const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
+
+const doctors = ref([
+  {
+    id: 1,
+    name: 'Dr. Keila Delores'
+  },
+  {
+    id: 2,
+    name: 'Dr. Gene Cortez'
+  },
+  {
+    id: 3,
+    name: 'Dr. Paula Bush'
+  },
+  {
+    id: 4,
+    name: 'Dr. Pete Nichols'
+  },
+  {
+    id: 5,
+    name: 'Dr. Jean Pearson',
+    color: '#8f1ed6'
+  },
+  {
+    id: 6,
+    name: 'Dr. Thelma Cain'
+  }
+])
 
 const myEvents = ref([
   {
@@ -85,42 +120,14 @@ const myEvents = ref([
   }
 ])
 
-const doctors = ref([
-  {
-    id: 1,
-    name: 'Dr. Keila Delores'
-  },
-  {
-    id: 2,
-    name: 'Dr. Gene Cortez'
-  },
-  {
-    id: 3,
-    name: 'Dr. Paula Bush'
-  },
-  {
-    id: 4,
-    name: 'Dr. Pete Nichols'
-  },
-  {
-    id: 5,
-    name: 'Dr. Jean Pearson',
-    color: '#8f1ed6'
-  },
-  {
-    id: 6,
-    name: 'Dr. Thelma Cain'
-  }
-])
-
 const myAppointments = ref([
   {
     id: 'd1',
     title: 'Winfred Lesley',
     job: 'Teeth whitening',
     color: '#d1891f',
-    start: '2023-07-19T08:00',
-    end: '2023-07-19T09:30',
+    start: 'dyndatetime(y,m,d,8)',
+    end: 'dyndatetime(y,m,d,9,30)',
     unscheduled: true
   },
   {
@@ -128,8 +135,8 @@ const myAppointments = ref([
     title: 'Rosalin Delice',
     job: 'Crown and bridge',
     color: '#1ca11a',
-    start: '2023-07-19T08:00',
-    end: '2023-07-19T10:00',
+    start: 'dyndatetime(y,m,d,8)',
+    end: 'dyndatetime(y,m,d,10)',
     unscheduled: true
   },
   {
@@ -137,8 +144,8 @@ const myAppointments = ref([
     title: 'Macy Steven',
     job: 'Root canal treatment',
     color: '#cb3939',
-    start: '2023-07-19T10:00',
-    end: '2023-07-19T12:30',
+    start: 'dyndatetime(y,m,d,10)',
+    end: 'dyndatetime(y,m,d,12,30)',
     unscheduled: true
   },
   {
@@ -146,8 +153,8 @@ const myAppointments = ref([
     title: 'Lavern Cameron',
     job: 'Tartar removal',
     color: '#a446b5',
-    start: '2023-07-19T12:00',
-    end: '2023-07-19T13:00',
+    start: 'dyndatetime(y,m,d,12)',
+    end: 'dyndatetime(y,m,d,13)',
     unscheduled: true
   }
 ])
@@ -167,8 +174,8 @@ const myInvalid = ref([
 
 const dragElements = ref([])
 const myColors = ref([])
-const contBg = ref()
-const toastMessage = ref(null)
+const contBg = ref('')
+const toastMessage = ref('')
 const isToastOpen = ref(false)
 
 const myView = {
@@ -180,29 +187,33 @@ const myView = {
   }
 }
 
-function hasOverlap(event, inst) {
-  const events = inst
-    .getEvents(event.start, event.end)
-    .filter((e) => e.id !== event.id && e.resource === event.resource)
-  return events.length > 0
-}
-
-function handleEventCreate(args, inst) {
+function handleEventCreate(args) {
   const event = args.event
   event.unscheduled = false
   myColors.value = []
+}
 
-  if (hasOverlap(event, inst)) {
-    toastMessage.value = 'Make sure not to double book'
-    isToastOpen.value = true
-    return false
-  } else if (!(today < event.start)) {
+function handleEventCreated(args) {
+  toastMessage.value = args.event.title + ' added'
+  isToastOpen.value = true
+  myAppointments.value = myAppointments.value.filter((item) => item.id !== args.event.id)
+}
+
+function handleEventCreateFailed(args) {
+  handleFailed(args.event)
+}
+
+function handleEventUpdateFailed(args) {
+  handleFailed(args.event)
+}
+
+function handleFailed(event) {
+  if (event.start <= today) {
     toastMessage.value = "Can't add event in the past"
     isToastOpen.value = true
   } else {
-    toastMessage.value = args.event.title + ' added'
+    toastMessage.value = 'Make sure not to double book'
     isToastOpen.value = true
-    myAppointments.value = myAppointments.value.filter((item) => item.id !== event.id)
   }
 }
 
@@ -211,7 +222,7 @@ function handleEventDelete(args) {
   isToastOpen.value = true
 }
 
-function handleEventDragEnter(args) {
+function handleEventDragEnter() {
   myColors.value = [
     {
       background: '#f1fff24d',
@@ -222,6 +233,10 @@ function handleEventDragEnter(args) {
       }
     }
   ]
+}
+
+function handleEventDragLeave() {
+  myColors.value = []
 }
 
 function handleItemDrop(args) {
@@ -243,10 +258,6 @@ function handleItemDragLeave() {
   contBg.value = ''
 }
 
-function handleEventDragLeave() {
-  contBg.value = ''
-}
-
 function handleToastClose() {
   isToastOpen.value = false
 }
@@ -263,11 +274,13 @@ onMounted(() => {
     event.start = event.start ? new Date(event.start) : event.start
     event.end = event.end ? new Date(event.end) : event.end
     // mark past events as fixed by setting the event.editable property to false
-    event.editable = event.start && today < event.start
+    event.editable = !!(event.start && today < event.start)
   }
-})</script> 
+})
+</script>
 
-<template>  <div className="mbsc-grid mbsc-no-padding">
+<template>
+  <div className="mbsc-grid mbsc-no-padding">
     <div className="mbsc-row">
       <div className="mbsc-col-sm-9 docs-appointment-calendar">
         <MbscEventcalendar
@@ -277,71 +290,81 @@ onMounted(() => {
           :invalid="myInvalid"
           :dragToMove="true"
           :dragToCreate="true"
+          :eventOverlap="false"
           :externalDrop="true"
           :externalDrag="true"
           :colors="myColors"
           @event-create="handleEventCreate"
-          @event-elete="handleEventDelete"
+          @event-created="handleEventCreated"
+          @event-create-failed="handleEventCreateFailed"
+          @event-update-failed="handleEventUpdateFailed"
+          @event-delete="handleEventDelete"
           @event-drag-enter="handleEventDragEnter"
           @event-drag-leave="handleEventDragLeave"
         />
       </div>
-      <div ref="dropCont" class="mbsc-col-sm-3 docs-appointment-cont">
+      <div
+        ref="dropCont"
+        class="mbsc-col-sm-3 docs-appointment-cont"
+        :style="{ background: contBg }"
+      >
         <MbscDropcontainer
           :element="$refs.dropCont"
-          :style="{ background: contBg }"
-          @item-drop="handleItemDrop($event)"
-          @item-drag-enter="handleItemDragEnter($event)"
-          @item-drag-leave="handleItemDragLeave($event)"
+          @item-drop="handleItemDrop"
+          @item-drag-enter="handleItemDragEnter"
+          @item-drag-leave="handleItemDragLeave"
         >
           <div class="mbsc-form-group-title">Unscheduled appointments</div>
 
-          <div v-for="(task, i) in myAppointments">
-            <div
-              ref="dragElements"
-              class="docs-appointment-task"
-              :style="{ background: task.color }"
-            >
-              <div>{{ task.title }} - {{ task.job }}</div>
-              <div>{{ getHours(task) }}</div>
-              <MbscDraggable :element="dragElements[i]" :dragData="task" />
-            </div>
+          <div
+            v-for="(task, i) in myAppointments"
+            ref="dragElements"
+            class="docs-appointment-task"
+            :key="task.id"
+            :style="{ background: task.color }"
+          >
+            <div>{{ task.title }} - {{ task.job }}</div>
+            <div>{{ getHours(task) }}</div>
+            <MbscDraggable :element="dragElements[i]" :dragData="task" />
           </div>
         </MbscDropcontainer>
       </div>
     </div>
   </div>
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
-</template></template>
+</template>
 
-<style>.docs-appointment-calendar {
-    border-right: 1px solid #ccc;
+<style>
+.docs-appointment-calendar {
+  border-right: 1px solid #ccc;
 }
 
 .docs-appointment-calendar .mbsc-readonly-event {
-    opacity: .6;
+  opacity: 0.6;
 }
 
 .docs-appointment-cont {
-    height: 100%;
-    overflow: auto;
+  height: 100%;
+  overflow: auto;
 }
 
 .docs-appointment-task {
-    color: #fff;
-    padding: 10px;
-    margin: 20px;
-    border-radius: 8px;
-    font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-}
-
-.docs-appointment-task {
-    background: #999;
+  color: #fff;
+  background: #999;
+  padding: 10px;
+  margin: 20px;
+  border-radius: 8px;
+  font-family:
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
 }
 
 .demo-doctors-appointment.demo-wrapper,
 .demo-doctors-appointment .mbsc-grid,
 .demo-doctors-appointment .mbsc-row,
 .demo-doctors-appointment .docs-appointment-calendar {
-    height: 100%;
-}</style>
+  height: 100%;
+}
+</style>

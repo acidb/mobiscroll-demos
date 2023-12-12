@@ -115,6 +115,16 @@ export class AppComponent {
     },
   ];
 
+  myData = [
+    { value: '1', text: 'Roly Chester' },
+    { value: '2', text: 'Tucker Wayne' },
+    { value: '3', text: 'Baker Brielle' },
+    { value: '4', text: 'Jami Walter' },
+    { value: '5', text: 'Patrick Toby' },
+    { value: '6', text: 'Tranter Logan' },
+    { value: '7', text: 'Payton Sinclair' },
+  ];
+
   title = '';
   details = '';
   technician = '';

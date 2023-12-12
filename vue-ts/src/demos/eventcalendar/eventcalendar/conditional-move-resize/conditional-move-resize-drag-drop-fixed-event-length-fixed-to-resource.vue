@@ -49,11 +49,5 @@ const myEvents = ref<MbscCalendarEvent[]>([
 </script>
 
 <template>
-  <MbscEventcalendar
-    :view="myView"
-    :data="myEvents"
-    :dragToMove="true"
-    :dragToResize="true"
-    :dragInTime="true"
-  />
+  <MbscEventcalendar :view="myView" :data="myEvents" :dragToMove="true" />
 </template>

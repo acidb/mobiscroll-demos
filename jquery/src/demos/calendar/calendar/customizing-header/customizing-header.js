@@ -14,7 +14,7 @@ export default {
           controls: ['calendar'],
           display: 'inline',
           calendarType: 'week',
-          weeks: 2,
+          calendarSize: 2,
         });
 
       $('#demo-custom')
@@ -54,7 +54,7 @@ export default {
           controls: ['calendar'],
           display: 'inline',
           calendarType: 'week',
-          weeks: 2,
+          calendarSize: 2,
           renderCalendarHeader: function () {
             return (
               '<div mbsc-calendar-nav class="custom-view-nav"></div><div class="custom-view">' +
@@ -88,7 +88,7 @@ export default {
           controls: ['calendar'],
           display: 'inline',
           calendarType: 'week',
-          weeks: 2,
+          calendarSize: 2,
           headerText: 'You selected {value}',
         });
     });

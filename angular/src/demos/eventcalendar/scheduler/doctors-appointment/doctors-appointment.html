@@ -7,20 +7,20 @@
       class="mbsc-col-sm-3 docs-appointment-cont"
       (onItemDrop)="onItemDrop($event)"
       (onItemDragEnter)="onItemDragEnter($event)"
-      (onItemDragLeave)="onItemDragLeave($event)"
-      [ngStyle]="{background: contBg}"
+      (onItemDragLeave)="onItemDragLeave()"
+      [ngStyle]="{ background: contBg }"
     >
       <div class="mbsc-form-group-title">Unscheduled appointments</div>
 
       <div
         mbsc-draggable
-        *ngFor="let task of appointments;"
+        *ngFor="let task of appointments"
         [dragData]="task"
         class="docs-appointment-task"
-        [ngStyle]="{background: task.color}"
+        [ngStyle]="{ background: task.color }"
       >
-        <div>{{task.title}} - {{task.job}}</div>
-        <div>{{getHours(task)}}</div>
+        <div>{{ task.title }} - {{ task.job }}</div>
+        <div>{{ getHours(task) }}</div>
       </div>
     </mbsc-dropcontainer>
   </div>

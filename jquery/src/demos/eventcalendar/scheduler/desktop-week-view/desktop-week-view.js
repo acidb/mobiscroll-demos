@@ -13,7 +13,7 @@ export default {
         .eventcalendar({
           // context,
           view: {
-            schedule: { type: 'week', maxEventStack: 3 },
+            schedule: { type: 'week' },
           },
           onEventClick: function (event, inst) {
             mobiscroll.toast({

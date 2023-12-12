@@ -1,19 +1,18 @@
 import React from 'react';
-import {
-  Eventcalendar,
-  formatDate,
-  setOptions,
-  confirm,
-  toast,
-  momentTimezone,
-  CalendarNav,
-  CalendarPrev,
-  CalendarToday,
-  CalendarNext /* localeImport */,
-} from '@mobiscroll/react';
+//<demo-only>import { Eventcalendar, formatDate, setOptions, confirm, toast, momentTimezone, CalendarNav, CalendarPrev, CalendarToday, CalendarNext/* localeImport */ } from '@mobiscroll/react';
 import './timezone-meeting-planner.css';
+import moment from 'moment-timezone'; //</demo-only>
 
-import moment from 'moment-timezone';
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const CalendarNav = mobiscroll.CalendarNav;
+const CalendarPrev = mobiscroll.CalendarPrev;
+const CalendarToday = mobiscroll.CalendarToday;
+const CalendarNext = mobiscroll.CalendarNext;
+const confirm = mobiscroll.confirm;
+const toast = mobiscroll.toast;
+const formatDate = mobiscroll.formatDate;
+const setOptions = mobiscroll.setOptions;
+const momentTimezone = mobiscroll.momentTimezone; //</extra>
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
@@ -303,8 +302,6 @@ function App() {
 
   return (
     <Eventcalendar
-      theme="ios"
-      themeVariant="light"
       timezonePlugin={momentTimezone}
       dataTimezone="utc"
       displayTimezone="utc"

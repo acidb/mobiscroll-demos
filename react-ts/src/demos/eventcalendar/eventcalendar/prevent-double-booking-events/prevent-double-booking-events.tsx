@@ -13,35 +13,32 @@ const d = now.getDate();
 
 const App: React.FC = () => {
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
-    () => [
-      {
-        start: new Date(y, m, d - 3),
-        end: new Date(y, m, d - 1),
-        title: 'Event 1',
-      },
-      {
-        start: new Date(y, m, d),
-        end: new Date(y, m, d + 2),
-        title: 'Event 2 (no event overlap)',
-        overlap: false,
-      },
-      {
-        start: new Date(y, m, d + 3),
-        end: new Date(y, m, d + 5),
-        title: 'Event 3',
-      },
-      {
-        start: new Date(y, m, d + 5),
-        end: new Date(y, m, d + 7),
-        title: 'Event 4 (no event overlap)',
-        overlap: false,
-      },
-    ],
-    [],
-  );
+  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([
+    {
+      start: new Date(y, m, d - 3),
+      end: new Date(y, m, d - 1),
+      title: 'Event 1',
+    },
+    {
+      start: new Date(y, m, d),
+      end: new Date(y, m, d + 2),
+      title: 'Event 2 (no event overlap)',
+      overlap: false,
+    },
+    {
+      start: new Date(y, m, d + 3),
+      end: new Date(y, m, d + 5),
+      title: 'Event 3',
+    },
+    {
+      start: new Date(y, m, d + 5),
+      end: new Date(y, m, d + 7),
+      title: 'Event 4 (no event overlap)',
+      overlap: false,
+    },
+  ]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
+  const myView = React.useMemo<MbscEventcalendarView>(() => {
     return {
       calendar: { type: 'month', labels: 'all' },
     };
@@ -49,7 +46,7 @@ const App: React.FC = () => {
 
   const onEventFailed = React.useCallback(() => {
     setToastOpen(true);
-  });
+  }, []);
 
   const closeToast = React.useCallback(() => {
     setToastOpen(false);
@@ -59,22 +56,17 @@ const App: React.FC = () => {
     <div>
       <Eventcalendar
         data={myEvents}
-        view={view}
+        view={myView}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
         clickToCreate={true}
-        eventOverlap={true}
+        eventOverlap={false}
         exclusiveEndDates={true}
         onEventUpdateFailed={onEventFailed}
         onEventCreateFailed={onEventFailed}
       />
-      <Toast
-        // theme
-        message="Make sure not to double book"
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Toast message="Make sure not to double book" isOpen={isToastOpen} onClose={closeToast} />
     </div>
   );
 };

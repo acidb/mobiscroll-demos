@@ -1,7 +1,6 @@
 import React from 'react';
 import { Eventcalendar, setOptions, formatDate, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/react';
 import './monthly-timetable-vertical-days-horizontal-times.css';
-
 setOptions({
   // localeJs,
   // themeJs

@@ -1,5 +1,13 @@
 import React from 'react';
-import { Eventcalendar, Page, getJson, jalaliCalendar, hijriCalendar, localeFa, localeAr /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Eventcalendar, Page, getJson, jalaliCalendar, hijriCalendar, localeFa, localeAr/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Page = mobiscroll.Page;
+const getJson = mobiscroll.getJson;
+const jalaliCalendar = mobiscroll.jalaliCalendar;
+const hijriCalendar = mobiscroll.hijriCalendar;
+const localeFa = mobiscroll.locale.fa;
+const localeAr = mobiscroll.locale.fa; //</extra>
 
 function App() {
   const [myEvents, setEvents] = React.useState([]);

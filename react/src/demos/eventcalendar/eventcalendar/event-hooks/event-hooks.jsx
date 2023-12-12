@@ -1,9 +1,9 @@
 import React from 'react';
-import { Eventcalendar, Draggable, getJson/* localeImport */ } from '@mobiscroll/react';
-import './event-hooks.css';
+//<demo-only>import { Eventcalendar, Draggable, getJson/* localeImport */ } from '@mobiscroll/react';//</demo-only>
 
-
-
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Draggable = mobiscroll.Draggable;
+const getJson = mobiscroll.getJson;//</extra>
 
 function App() {
     const [myEvents, setEvents] = React.useState([]);

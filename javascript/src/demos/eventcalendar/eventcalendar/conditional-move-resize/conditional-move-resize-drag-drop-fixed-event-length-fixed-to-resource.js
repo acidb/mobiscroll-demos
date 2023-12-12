@@ -11,8 +11,6 @@ export default {
         calendar: { type: 'month' },
       },
       dragToMove: true,
-      dragToResize: true,
-      dragInTime: true,
       data: [
         {
           color: 'cyan',

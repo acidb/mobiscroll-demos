@@ -10,7 +10,6 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './customizing-header.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -61,17 +60,17 @@ const App: React.FC = () => {
   };
   return (
     <div>
-      <Datepicker controls={['calendar']} display="inline" calendarType="week" weeks={2} />
+      <Datepicker controls={['calendar']} display="inline" calendarType="week" calendarSize={2} />
       <Datepicker controls={['calendar']} display="inline" renderCalendarHeader={calendarHeaderCustom} />
       <Datepicker controls={['calendar']} display="inline" renderCalendarHeader={calendarHeaderToday} />
       <Datepicker
         controls={['calendar']}
         display="inline"
         calendarType={calendarType}
-        weeks={2}
+        calendarSize={2}
         renderCalendarHeader={calendarHeaderSwitch}
       />
-      <Datepicker controls={['calendar']} display="inline" calendarType="week" weeks={2} headerText="You selected {value}" />
+      <Datepicker controls={['calendar']} display="inline" calendarType="week" calendarSize={2} headerText="You selected {value}" />
     </div>
   );
 };

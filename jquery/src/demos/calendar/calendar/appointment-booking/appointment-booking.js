@@ -77,7 +77,7 @@ export default {
         var invalid = [],
           labels = [];
 
-        mobiscroll.util.http.getJson(
+        mobiscroll.getJson(
           'https://trial.mobiscroll.com/getprices/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
           function (bookings) {
             for (var i = 0; i < bookings.length; ++i) {
@@ -104,7 +104,7 @@ export default {
         var invalid = [];
         var labels = [];
 
-        mobiscroll.util.http.getJson(
+        mobiscroll.getJson(
           'https://trial.mobiscroll.com/getbookingtime/?year=' + day.getFullYear() + '&month=' + day.getMonth(),
           function (bookings) {
             for (var i = 0; i < bookings.length; ++i) {
@@ -132,7 +132,7 @@ export default {
         var invalid = [],
           labels = [];
 
-        mobiscroll.util.http.getJson(
+        mobiscroll.getJson(
           'https://trial.mobiscroll.com/getbookings/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
           function (bookings) {
             for (var i = 0; i < bookings.length; ++i) {

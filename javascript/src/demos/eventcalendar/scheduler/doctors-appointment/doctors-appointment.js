@@ -6,13 +6,6 @@ export default {
       // theme
     });
 
-    function hasOverlap(event, inst) {
-      var events = inst.getEvents(event.start, event.end).filter(function (e) {
-        return e.id !== event.id && e.resource === event.resource;
-      });
-      return events.length > 0;
-    }
-
     var externalCont = document.getElementById('md-docs-appointment-cont');
     var now = new Date();
     var today = new Date(now.setMinutes(59));
@@ -103,7 +96,6 @@ export default {
     }
 
     var myCalendar = mobiscroll.eventcalendar('#md-docs-appointment-calendar', {
-      // context,
       view: {
         schedule: {
           type: 'day',
@@ -133,7 +125,6 @@ export default {
         {
           id: 5,
           name: 'Dr. Jean Pearson',
-          color: '#8f1ed6',
         },
         {
           id: 6,
@@ -154,6 +145,7 @@ export default {
       ],
       dragToMove: true,
       dragToCreate: true,
+      eventOverlap: false,
       externalDrop: true,
       externalDrag: true,
       extendDefaultEvent: function () {
@@ -168,29 +160,34 @@ export default {
         myCalendar.setOptions({
           colors: [],
         });
-        if (hasOverlap(event, inst)) {
-          mobiscroll.toast({
-            message: 'Make sure not to double book',
-          });
-          return false;
-        } else if (!(today < event.start)) {
+      },
+      onEventCreated: function (args) {
+        mobiscroll.toast({
+          message: args.event.title + ' added',
+        });
+        var elm = document.getElementById('md-event-' + args.event.id);
+        if (elm) {
+          elm.remove();
+        }
+      },
+      onEventCreateFailed: function (args) {
+        if (!(today < args.event.start)) {
           mobiscroll.toast({
             message: "Can't add event in the past",
           });
         } else {
-          // event.unscheduled = false;
           mobiscroll.toast({
-            message: args.event.title + ' added',
+            message: 'Make sure not to double book',
           });
-          var elm = document.getElementById('md-event-' + args.event.id);
-          if (elm) {
-            elm.remove();
-          }
         }
+      },
+      onEventUpdateFailed: function () {
+        mobiscroll.toast({
+          message: 'Make sure not to double book',
+        });
       },
       onEventDelete: function (args, inst) {
         mobiscroll.toast({
-          // context,
           message: args.event.title + ' unscheduled',
         });
       },
@@ -294,14 +291,11 @@ export default {
 
 .docs-appointment-task {
     color: #fff;
+    background: #999;
     padding: 10px;
     margin: 20px;
     border-radius: 8px;
     font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-}
-
-.docs-appointment-task {
-    background: #999;
 }
 
 .demo-doctors-appointment.demo-wrapper,

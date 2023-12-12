@@ -7,29 +7,6 @@ export default {
       view: {
         schedule: { type: 'week' },
       },
-      colors: [
-        {
-          title: 'Session',
-          start: '09:30',
-          end: '11:30',
-          resource: 1,
-          color: 'red',
-          // cssClass: "md-session-data",
-          background: 'red',
-          recurring: {
-            repeat: 'weekly',
-            weekDays: 'TH',
-          },
-        },
-      ],
-      onCellHoverIn: (ev, inst) => {
-        const cellStart = ev.date;
-        const cellEnd = new Date(+ev.date + 3600000);
-        const events = inst.getEvents(cellStart, cellEnd);
-        const invalids = inst.getInvalids(cellStart, cellEnd);
-        console.log('ev', ev);
-        console.log('cc', events, invalids, inst);
-      },
       onEventClick: function (event, inst) {
         mobiscroll.toast({
           //<hidden>
@@ -49,6 +26,6 @@ export default {
     );
   },
   markup: `
-<div id="demo-desktop-week-view" style="height: 500px;"></div>
+<div id="demo-desktop-week-view"></div>
   `,
 };

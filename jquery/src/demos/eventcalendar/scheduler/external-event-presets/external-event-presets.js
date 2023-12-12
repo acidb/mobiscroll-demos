@@ -53,7 +53,7 @@ export default {
       function fillDialog(args) {
         $title.mobiscroll('getInst').value = args.event.title;
         $details.mobiscroll('getInst').value = args.event.details || '';
-        $tech.mobiscroll('getInst').value = args.event.technician;
+        technician.setVal();
         dialog.setOptions({ anchor: args.target });
         dialog.open();
       }
@@ -105,6 +105,15 @@ export default {
             });
           },
         });
+
+      var technician = $('#external-event-select')
+        .mobiscroll()
+        .select({
+          inputElement: document.getElementById('external-event-select-input'),
+          display: 'anchored',
+          touchUi: false,
+        })
+        .mobiscroll('getInst');
 
       var dialog = $('#external-event-dialog')
         .mobiscroll()
@@ -178,17 +187,19 @@ export default {
         <label for="external-event-details">
             <textarea id="external-event-details" mbsc-textarea data-label="Details" placeholder="Add description..."></textarea>
         </label>
-        <label for="external-event-technician">
-            <select id="external-event-technician" mbsc-dropdown data-label="Technician">
-                <option value="Roly">Roly Chester</option>
-                <option value="Tucker">Tucker Wayne</option>
-                <option value="Baker">Baker Brielle</option>
-                <option value="Jami">Jami Walter</option>
-                <option value="Patrick">Patrick Toby</option>
-                <option value="Tranter">Tranter Logan</option>
-                <option value="Payton">Payton Sinclair</option>
-            </select>
+        <label>
+           Technician
+            <input mbsc-input id="external-event-select-input" placeholder="Please select..." data-dropdown="true" />
         </label>
+        <select id="external-event-select">
+           <option value="1">Roly Chester</option>
+            <option value="2">Tucker Wayne</option>
+            <option value="3">Baker Brielle</option>
+            <option value="4">Jami Walter</option>
+            <option value="5">Patrick Toby</option>
+            <option value="6">Tranter Logan</option>
+            <option value="7">Payton Sinclair</option>
+        </select>
     </div>
 </div>
   `,

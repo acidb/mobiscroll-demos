@@ -9,8 +9,8 @@ setOptions({
 
 <template>
   <MbscPage>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Passengers</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Passengers</div>
       <MbscStepper
         label="Adults"
         description="From 14 years"

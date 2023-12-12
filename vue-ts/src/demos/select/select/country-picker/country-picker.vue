@@ -1,6 +1,49 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { MbscSelect, MbscPage, getJson, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myData = ref([])
+
+onMounted(() => {
+  getJson('https://trial.mobiscroll.com/content/countries.json', (resp: any) => {
+    const countries = []
+    for (let i = 0; i < resp.length; ++i) {
+      const country = resp[i]
+      countries.push({ text: country.text, value: country.value })
+    }
+    myData.value = countries
+  })
+})
+</script>
+
+<template>
+  <MbscPage>
+    <MbscSelect
+      :data="myData"
+      :itemHeight="40"
+      label="Countries"
+      display="anchored"
+      inputStyle="box"
+      labelStyle="stacked"
+      placeholder="Please select..."
+    >
+      <template #item="item">
+        <div class="md-country-picker-item">
+          <img
+            class="md-country-picker-flag"
+            :src="'https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png'"
+          />
+          {{ item.display }}
+        </div>
+      </template>
+    </MbscSelect>
+  </MbscPage>
+</template>
 
 <style>
 .md-country-picker-item {

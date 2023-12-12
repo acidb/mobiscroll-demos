@@ -9,8 +9,8 @@ setOptions({
 
 <template>
   <MbscPage>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Radio buttons</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Radio buttons</div>
       <MbscRadioGroup name="group">
         <MbscRadio
           v-model="radio1"
@@ -27,8 +27,8 @@ setOptions({
         <MbscRadio v-model="radio4" label="Disabled" :disabled="true" />
       </MbscRadioGroup>
     </div>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Radio button colors</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Radio button colors</div>
       <MbscRadioGroup name="colors">
         <MbscRadio v-model="primary" label="Primary" color="primary" />
         <MbscRadio v-model="secondary" label="Secondary" color="secondary" />

@@ -5,15 +5,11 @@ setOptions({
   // locale,
   // theme
 })
-
-const inputProps = {
-  placeholder: 'Please Select...'
-}
 </script>
 
 <template>
   <MbscPage>
-    <MbscDatepicker :controls="['date']" inputComponent="input" :inputProps="inputProps" />
+    <MbscDatepicker :controls="['date']" inputComponent="input" placeholder="Please Select..." />
     <MbscDatepicker
       :controls="['date']"
       label="Calendar"

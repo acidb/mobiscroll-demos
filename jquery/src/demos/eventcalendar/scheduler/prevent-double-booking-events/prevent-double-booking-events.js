@@ -4,7 +4,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      // theme,
     });
 
     $(function () {
@@ -13,10 +13,11 @@ export default {
           message: 'Make sure not to double book',
         });
       }
-      var now = new Date(),
-        y = now.getFullYear(),
-        m = now.getMonth(),
-        d = now.getDate();
+
+      var now = new Date();
+      var y = now.getFullYear();
+      var m = now.getMonth();
+      var d = now.getDate();
 
       $('#demo')
         .mobiscroll()

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './item-templating.css';
-
 setOptions({
   // localeJs,
   // themeJs

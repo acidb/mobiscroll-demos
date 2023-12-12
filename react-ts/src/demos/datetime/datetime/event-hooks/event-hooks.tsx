@@ -14,7 +14,7 @@ const App: React.FC = () => {
         inputProps={{
           label: 'Date',
           labelStyle: 'stacked',
-          inputStyle: 'outline',
+          inputStyle: 'box',
           placeholder: 'Please Select...',
         }}
         onCancel={(event, inst) => {

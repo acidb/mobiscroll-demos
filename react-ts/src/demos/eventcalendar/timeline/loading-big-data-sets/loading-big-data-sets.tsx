@@ -1,7 +1,6 @@
 import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, MbscPageLoadingEvent, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './loading-big-data-sets.css';
-
 setOptions({
   // localeJs,
   // themeJs

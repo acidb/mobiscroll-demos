@@ -10,7 +10,6 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './searching-events-in-sidebar.css';
-
 setOptions({
   // localeJs,
   // themeJs

@@ -22,7 +22,7 @@ const myEvents = ref([
     color: '#35bb5a'
   }
 ])
-const toastMessage = ref(null)
+const toastMessage = ref('')
 const isToastOpen = ref(false)
 const mySelectedDate = ref(now)
 
@@ -60,7 +60,6 @@ function handleToastClose() {
 <template>
   <MbscPage>
     <MbscEventcalendar
-      :drag="drag"
       :view="myView"
       :data="myEvents"
       :selectedDate="mySelectedDate"

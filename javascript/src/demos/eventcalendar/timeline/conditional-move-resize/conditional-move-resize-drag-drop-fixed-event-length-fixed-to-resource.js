@@ -11,9 +11,6 @@ export default {
         timeline: { type: 'day' },
       },
       dragToMove: true,
-      dragToResize: true,
-      dragInTime: true,
-      dragBetweenResources: true,
       data: [
         {
           color: 'cyan',

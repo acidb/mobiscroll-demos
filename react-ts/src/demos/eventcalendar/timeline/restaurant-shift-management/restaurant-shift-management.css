@@ -26,26 +26,20 @@
   height: 40px;
 }
 
-.md-shift-header-controls {
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: end;
-}
-
-.md-shift-header-controls .mbsc-checkbox {
+.md-shift-management-calendar .mbsc-checkbox {
   padding: 18px 0 18px 45px;
 }
 
-.md-shift-cal-view.mbsc-textfield-wrapper {
+.md-shift-management-calendar .mbsc-textfield-wrapper {
   margin: 12px 12px 12px 28px;
 }
 
-.md-shift-cal-view .mbsc-select.mbsc-textfield {
+.md-shift-management-calendar .mbsc-select.mbsc-textfield {
   height: 32px;
   width: 120px;
 }
 
-.md-shift-cal-view .mbsc-icon.mbsc-select-icon {
+.md-shift-management-calendar .mbsc-icon.mbsc-select-icon {
   width: 20px;
   height: 20px;
   top: 7px;

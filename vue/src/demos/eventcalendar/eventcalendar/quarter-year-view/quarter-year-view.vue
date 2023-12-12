@@ -1,6 +1,82 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscEventcalendar,
+  MbscCalendarNav,
+  MbscCalendarPrev,
+  MbscCalendarNext,
+  MbscCalendarToday,
+  setOptions,
+  MbscSegmentedGroup,
+  MbscSegmented,
+  getJson /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myEvents = ref([])
+const calendarType = ref('quarter')
+const calHeight = ref('auto')
+
+const myView = ref({
+  calendar: {
+    type: 'month',
+    size: 3
+  }
+})
+
+function changeView() {
+  switch (calendarType.value) {
+    case 'quarter':
+      myView.value = {
+        calendar: {
+          type: 'month',
+          size: 3
+        }
+      }
+      calHeight.value = 'auto'
+      break
+    case 'year':
+      myView.value = {
+        calendar: {
+          type: 'year'
+        }
+      }
+      calHeight.value = '100%'
+      break
+  }
+}
+
+onMounted(() => {
+  getJson(
+    'https://trial.mobiscroll.com/events/?vers=5',
+    (events) => {
+      myEvents.value = events
+    },
+    'jsonp'
+  )
+})
+</script>
+
+<template>
+  <MbscEventcalendar :data="myEvents" :view="myView" :height="calHeight">
+    <template #header>
+      <MbscCalendarNav />
+      <div class="quarter-year-header-picker">
+        <MbscSegmentedGroup v-model="calendarType" @change="changeView()">
+          <MbscSegmented value="quarter">Quarter</MbscSegmented>
+          <MbscSegmented value="year">Year</MbscSegmented>
+        </MbscSegmentedGroup>
+      </div>
+      <MbscCalendarPrev />
+      <MbscCalendarToday />
+      <MbscCalendarNext />
+    </template>
+  </MbscEventcalendar>
+</template>
 
 <style>
 .mbsc-calendar .quarter-year-header-picker .mbsc-segmented {

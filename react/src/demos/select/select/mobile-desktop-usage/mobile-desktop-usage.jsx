@@ -1,6 +1,10 @@
 import React from 'react';
-import { Select, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './mobile-desktop-usage.css';
+//<demo-only>import { Select, Button, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Select = mobiscroll.Select;
+const setOptions = mobiscroll.setOptions;
+const Button = mobiscroll.Button;
+const Page = mobiscroll.Page; //</extra>
 
 setOptions({
   // localeJs,
@@ -26,11 +30,9 @@ const myData = [
   },
 ];
 
-const invalids = [];
 function App() {
   const [openPicker, setOpenPicker] = React.useState(false);
   const [selected, setSelected] = React.useState('atl');
-  const [invalis, setInvalids] = React.useState(invalids);
 
   const show = () => {
     setOpenPicker(true);

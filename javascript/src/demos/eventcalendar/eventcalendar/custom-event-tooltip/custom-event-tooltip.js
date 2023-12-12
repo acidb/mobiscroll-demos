@@ -7,7 +7,7 @@ export default {
     });
 
     (function () {
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
       var currentEvent;
       var timer;
       var tooltip = document.getElementById('custom-event-tooltip-popup');

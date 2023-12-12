@@ -12,14 +12,6 @@ export default {
 
     mobiscroll.datepicker('#demo-expanded', {
       controls: ['date', 'time'],
-      onChange: (args) => {
-        console.log('here', args, args.value === null);
-        if (args.value === null) {
-          const inst = args.inst;
-          inst.setVal(inst._selectedTime);
-        }
-        // inst.setVal()
-      },
     });
 
     mobiscroll.datepicker('#demo-date', {

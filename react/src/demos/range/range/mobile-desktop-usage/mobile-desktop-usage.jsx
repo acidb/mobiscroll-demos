@@ -1,6 +1,9 @@
 import React from 'react';
-import { Datepicker, Button, Page /* localeImport */ } from '@mobiscroll/react';
-import './mobile-desktop-usage.css';
+//<demo-only>import { Datepicker, Button, Page/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const Button = mobiscroll.Button;
+const Page = mobiscroll.Page; //</extra>
 
 function App() {
   const [openPicker, setOpenPicker] = React.useState(false);
@@ -24,16 +27,7 @@ function App() {
     inputStyle: 'box',
     placeholder: 'Please Select...',
   };
-  const myActiveDateChange = (event, inst) => {
-    const values = inst.getVal();
-    if (event.active === 'end' && (!values.length || values[0] === null)) {
-      console.log(values);
-      setTimeout(() => {
-        inst.setActiveDate('start');
-      });
-    }
-    console.log(event, inst);
-  };
+
   return (
     <Page>
       <div className="mbsc-grid">
@@ -41,7 +35,7 @@ function App() {
           <div className="mbsc-row">
             <div className="mbsc-col-12">
               <div className="mbsc-txt-muted md-mobile-picker-header">Use the picker with any inputs & show on focus/click</div>
-              <Datepicker controls={['calendar']} select="range" onActiveDateChange={myActiveDateChange} />
+              <Datepicker controls={['calendar']} select="range" inputComponent="input" inputProps={inputProps} />
             </div>
           </div>
         </div>

@@ -19,7 +19,6 @@ import {
   MbscEventcalendarView,
 } from '@mobiscroll/react';
 import './recurring-event-add-edit-dialog.css';
-
 setOptions({
   theme: 'ios',
   themeVariant: 'light',

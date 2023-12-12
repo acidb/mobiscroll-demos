@@ -21,7 +21,7 @@ export default {
       select: 'range',
       display: 'inline',
       calendarType: 'week',
-      weeks: 2,
+      calendarSize: 2,
       showWeekNumbers: true,
       calendarScroll: 'vertical',
     });

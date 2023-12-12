@@ -132,86 +132,68 @@ const myConnections = ref([
     from: 1,
     to: 2,
     color: 'green',
-    arrow: 'bidirectional',
-    type: 'fs'
+    arrow: 'bidirectional'
   },
   {
     from: 2,
     to: 3,
     color: 'orange',
-    arrow: 'to',
-    type: 'fs'
+    arrow: 'to'
   },
   {
     from: 3,
     to: 4,
     color: 'olive',
-    arrow: 'to',
-    type: 'ff'
-  },
-  {
-    from: 4,
-    to: 5,
-    color: 'blue',
-    arrow: 'bidirectional',
-    cssClass: 'dashed-line',
-    type: 'sf'
+    arrow: 'to'
   },
   {
     from: 5,
-    to: 6,
-    color: 'green',
-    arrow: 'to',
-    type: 'ss'
+    to: 4,
+    color: 'blue',
+    arrow: 'bidirectional',
+    cssClass: 'dashed-line'
   },
   {
     from: 6,
     to: 8,
     color: 'black',
-    arrow: 'from',
-    type: 'ff'
-  },
-  {
-    from: 8,
-    to: 11,
-    color: 'purple',
-    arrow: 'from',
-    type: 'sf'
+    arrow: 'from'
   },
   {
     from: 7,
+    to: 6,
+    color: 'purple',
+    arrow: false
+  },
+  {
+    from: 8,
     to: 10,
     color: 'green',
-    arrow: 'from',
-    type: 'ss'
+    arrow: false
   },
   {
     from: 9,
     to: 12,
     color: 'brown',
-    arrow: 'from',
-    type: 'fs'
+    arrow: 'from'
   },
   {
     from: 10,
     to: 9,
     color: 'red',
-    arrow: false,
-    type: 'fs'
+    arrow: false
   },
   {
-    from: 11,
-    to: 12,
+    from: 10,
+    to: 11,
     color: 'orange',
-    arrow: 'bidirectional',
-    type: 'sf'
+    arrow: 'bidirectional'
   },
   {
     from: 12,
     to: 14,
     color: 'pink',
-    arrow: 'to',
-    type: 'fs'
+    arrow: 'to'
   }
 ])
 

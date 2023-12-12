@@ -180,12 +180,12 @@ export default {
         </label>
         <select id="external-event-select">
            <option value="1">Roly Chester</option>
-                <option value="2">Tucker Wayne</option>
-                <option value="3">Baker Brielle</option>
-                <option value="4">Jami Walter</option>
-                <option value="5">Patrick Toby</option>
-                <option value="6">Tranter Logan</option>
-                <option value="7">Payton Sinclair</option>
+            <option value="2">Tucker Wayne</option>
+            <option value="3">Baker Brielle</option>
+            <option value="4">Jami Walter</option>
+            <option value="5">Patrick Toby</option>
+            <option value="6">Tranter Logan</option>
+            <option value="7">Payton Sinclair</option>
         </select>
     </div>
 </div>

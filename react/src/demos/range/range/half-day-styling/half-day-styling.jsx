@@ -1,39 +1,22 @@
 import React from 'react';
-import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './half-day-styling.css';
+//<demo-only>import { Datepicker, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const now = new Date();
-const year = now.getFullYear();
-const month = now.getMonth();
+const myColors = [
+  { date: 'dyndatetime(y,m,12)', cellCssClass: 'check-in' },
+  { date: 'dyndatetime(y,m,16)', cellCssClass: 'check-out' },
+  { start: 'dyndatetime(y,m,13)', end: 'dyndatetime(y,m,15)', background: '#46c4f3' },
+];
 
 function App() {
-  return (
-    <Datepicker
-      controls={['calendar']}
-      select="range"
-      display="inline"
-      colors={[
-        {
-          date: new Date(year, month, 12),
-          cellCssClass: 'check-in',
-        },
-        {
-          date: new Date(year, month, 16),
-          cellCssClass: 'check-out',
-        },
-        {
-          start: new Date(year, month, 13),
-          end: new Date(year, month, 15),
-          background: '#46c4f3',
-        },
-      ]}
-    />
-  );
+  return <Datepicker controls={['calendar']} select="range" display="inline" colors={myColors} />;
 }
 
 ReactDOM.render(<App />, document.getElementById('content'));

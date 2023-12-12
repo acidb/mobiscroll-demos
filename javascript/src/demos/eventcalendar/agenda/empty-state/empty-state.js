@@ -5,8 +5,10 @@ export default {
       // locale,
       // theme
     });
-    var inst = mobiscroll.eventcalendar('#demo-custom-empty-agenda', {
-      // context,
+
+    var myElement = document.getElementById('demo-custom-empty-agenda');
+
+    var inst = mobiscroll.eventcalendar(myElement, {
       view: {
         calendar: { type: 'week' },
         agenda: { type: 'week' },
@@ -35,45 +37,25 @@ export default {
       ],
       renderAgendaEmpty: function () {
         return (
-          '<div class="md-empty-agenda-wrapper" >' +
-          '<img src="https://img.mobiscroll.com/demos/smart-empty-tin-can.png" width="200" />' +
-          '<div class="md-bold"> Looks like this can is empty </div>' +
-          '<button mbsc-button class="md-custom-agenda-btn" id="md-agenda-btn"' +
-          'data-color="primary" data-variant="outline">Add something to it!</button>' +
-          '<div class="md-illustration-description">Illustration by <a ' +
+          '<div class="mbsc-align-center mbsc-padding">' +
+          '<img src="https://img.mobiscroll.com/demos/smart-empty-tin-can.png" alt="Empty can" style="width:150px;margin:50px 0;" />' +
+          '<div class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Looks like this can is empty</div>' +
+          '<button mbsc-button id="md-agenda-btn" data-color="primary" data-variant="outline">Add something to it</button>' +
+          '<div class="mbsc-txt-xs" style="padding-top:150px;">Illustration by <a ' +
           'href="https://icons8.com/illustrations/author/zD2oqC8lLBBA">Icons 8</a>' +
           ' from <a href="https://icons8.com/illustrations">Ouch!</a></div>' +
           '</div>'
         );
       },
     });
-    var myElement = document.getElementById('demo-custom-empty-agenda');
+
     myElement.addEventListener('click', function (e) {
       if (e.target.id === 'md-agenda-btn') {
-        mobiscroll.toast({ message: 'Add button clicked!' });
+        mobiscroll.toast({ message: 'Add button clicked' });
       }
     });
   },
   markup: `
 <div id="demo-custom-empty-agenda"></div>
-  `,
-  css: `
-.md-empty-agenda-wrapper {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-}
-
-.md-bold {
-    font-weight: 500;
-}
-
-.md-illustration-description {
-    font-size: 8px;
-}
-
-.md-custom-agenda-btn.mbsc-button {
-    line-height: 20px;
-}
   `,
 };

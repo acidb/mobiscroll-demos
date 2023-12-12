@@ -9,7 +9,6 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './localization.css';
-
 setOptions({
   // localeJs,
   // themeJs

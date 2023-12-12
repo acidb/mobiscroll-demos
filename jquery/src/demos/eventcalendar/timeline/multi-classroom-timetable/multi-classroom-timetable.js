@@ -8,7 +8,7 @@ export default {
     });
 
     $(function () {
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
       var calendar = $('#demo-vertical-time-table')
         .mobiscroll()
         .eventcalendar({

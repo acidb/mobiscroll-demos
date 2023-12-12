@@ -9,7 +9,6 @@ import {
   toast /* localeImport */,
 } from '@mobiscroll/react';
 import './load-resources-on-demand.css';
-
 setOptions({
   // localeJs,
   // themeJs

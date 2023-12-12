@@ -14,7 +14,6 @@ export default {
           view: {
             timeline: {
               type: 'month',
-              maxEventStack: 3,
             },
           },
           data: [

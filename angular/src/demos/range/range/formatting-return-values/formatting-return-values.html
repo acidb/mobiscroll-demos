@@ -1,31 +1,59 @@
 <mbsc-page>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Date</div>
-    <mbsc-datepicker [controls]="['calendar']" select="range" label="Default" [value]="now"></mbsc-datepicker>
-    <mbsc-datepicker [controls]="['calendar']" select="range" dateFormat="DD.MM.YYYY" label="Separator" [value]="now"></mbsc-datepicker>
-    <mbsc-datepicker [controls]="['calendar']" select="range" dateFormat="MMMM" label="Month only" [value]="now"></mbsc-datepicker>
-    <mbsc-datepicker [controls]="['calendar']" select="range" dateFormat="D MMMM YYYY" label="Month name" [value]="now"></mbsc-datepicker>
-    <mbsc-datepicker [controls]="['calendar']" select="range" dateFormat="MM/YYYY" label="Month/year" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['calendar']" select="range" label="Default" [(ngModel)]="rangeValue"></mbsc-datepicker>
+    <mbsc-datepicker
+      [controls]="['calendar']"
+      select="range"
+      dateFormat="DD.MM.YYYY"
+      label="Separator"
+      [(ngModel)]="separatorValue"
+    ></mbsc-datepicker>
+    <mbsc-datepicker
+      [controls]="['calendar']"
+      select="range"
+      dateFormat="D MMMM YYYY"
+      label="Month name"
+      [(ngModel)]="monthValue"
+    ></mbsc-datepicker>
     <mbsc-datepicker
       [controls]="['calendar']"
       select="range"
       dateFormat="DDD DD MMM, YYYY"
       label="Day of week"
-      [value]="now"
+      [(ngModel)]="dayValue"
     ></mbsc-datepicker>
-    <mbsc-datepicker [controls]="['calendar']" select="range" dateFormat="YYYY-MM-DD" label="ATOM" [value]="now"></mbsc-datepicker>
-    <mbsc-datepicker [controls]="['calendar']" select="range" dateFormat="DDD, DD MMM YYYY" label="COOKIE" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker
+      [controls]="['calendar']"
+      select="range"
+      dateFormat="YYYY-MM-DD"
+      label="ATOM"
+      [(ngModel)]="atomValue"
+    ></mbsc-datepicker>
+    <mbsc-datepicker
+      [controls]="['calendar']"
+      select="range"
+      dateFormat="DDD, DD MMM YYYY"
+      label="COOKIE"
+      [(ngModel)]="cookieValue"
+    ></mbsc-datepicker>
   </div>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Time</div>
-    <mbsc-datepicker [controls]="['time']" select="range" label="Default time" [value]="now"></mbsc-datepicker>
-    <mbsc-datepicker [controls]="['time']" select="range" timeFormat="hh:mm A" label="12 h" [value]="now"></mbsc-datepicker>
-    <mbsc-datepicker [controls]="['time']" select="range" timeFormat="HH:mm" label="24 h" [value]="now"></mbsc-datepicker>
-    <mbsc-datepicker [controls]="['time']" select="range" timeFormat="HH:mm:ss" label="Hour, min, sec" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['time']" select="range" label="Default time" [(ngModel)]="timeValue"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['time']" select="range" timeFormat="hh:mm A" label="12 h" [(ngModel)]="h12Value"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['time']" select="range" timeFormat="HH:mm" label="24 h" [(ngModel)]="h24Value"></mbsc-datepicker>
+    <mbsc-datepicker
+      [controls]="['time']"
+      select="range"
+      timeFormat="HH:mm:ss"
+      label="Hour, min, sec"
+      [(ngModel)]="hmsValue"
+    ></mbsc-datepicker>
   </div>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Date & Time</div>
-    <mbsc-datepicker [controls]="['calendar', 'time']" select="range" label="Date & Time" [value]="now"></mbsc-datepicker>
+    <mbsc-datepicker [controls]="['calendar', 'time']" select="range" label="Date & Time" [(ngModel)]="dateTimeValue"></mbsc-datepicker>
     <mbsc-datepicker
       [controls]="['calendar', 'time']"
       select="range"
@@ -33,7 +61,7 @@
       timeFormat="H:mm"
       dateWheels="|DDD D MMM, YYYY|"
       label="Day name"
-      [value]="now"
+      [(ngModel)]="dayNameValue"
     ></mbsc-datepicker>
   </div>
 </mbsc-page>

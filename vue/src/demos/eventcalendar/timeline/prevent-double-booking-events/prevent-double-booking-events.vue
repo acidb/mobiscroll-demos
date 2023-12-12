@@ -7,10 +7,10 @@ setOptions({
   // theme
 })
 
-const now = new Date(),
-  y = now.getFullYear(),
-  m = now.getMonth(),
-  d = now.getDate()
+const now = new Date()
+const y = now.getFullYear()
+const m = now.getMonth()
+const d = now.getDate()
 
 const toastMessage = 'Make sure not to double book'
 const isToastOpen = ref(false)

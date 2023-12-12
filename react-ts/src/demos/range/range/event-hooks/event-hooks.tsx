@@ -15,7 +15,7 @@ const App: React.FC = () => {
         inputProps={{
           label: 'Range',
           labelStyle: 'stacked',
-          inputStyle: 'outline',
+          inputStyle: 'box',
           placeholder: 'Please Select...',
         }}
         onActiveDateChange={(event, inst) => {
@@ -26,6 +26,12 @@ const App: React.FC = () => {
         }}
         onCellClick={(event, inst) => {
           // Logic for event click
+        }}
+        onCellHoverIn={(event, inst) => {
+          // Logic for handling cell hover in
+        }}
+        onCellHoverOut={(event, inst) => {
+          // Logic for handling cell hover out
         }}
         onChange={(event, inst) => {
           // Logic for value change

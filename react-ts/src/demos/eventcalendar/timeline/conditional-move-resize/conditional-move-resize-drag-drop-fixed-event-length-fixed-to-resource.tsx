@@ -116,15 +116,5 @@ const App: React.FC = () => {
     ];
   }, []);
 
-  return (
-    <Eventcalendar
-      view={myView}
-      data={myEvents}
-      resources={myResources}
-      dragToMove={true}
-      dragToResize={true}
-      dragInTime={true}
-      dragBetweenResources={true}
-    />
-  );
+  return <Eventcalendar view={myView} data={myEvents} resources={myResources} dragToMove={true} />;
 };

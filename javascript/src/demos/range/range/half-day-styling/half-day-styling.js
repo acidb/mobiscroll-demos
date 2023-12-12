@@ -6,20 +6,15 @@ export default {
       // theme
     });
 
-    var now = new Date(),
-      year = now.getFullYear(),
-      month = now.getMonth(),
-      coloredDays = [
-        { date: new Date(year, month, 12), cellCssClass: 'check-in' },
-        { date: new Date(year, month, 16), cellCssClass: 'check-out' },
-        { start: new Date(year, month, 13), end: new Date(year, month, 15), background: '#46c4f3' },
-      ];
-
     mobiscroll.datepicker('#demo', {
       controls: ['calendar'],
       select: 'range',
       display: 'inline',
-      colors: coloredDays,
+      colors: [
+        { date: 'dyndatetime(y,m,12)', cellCssClass: 'check-in' },
+        { date: 'dyndatetime(y,m,16)', cellCssClass: 'check-out' },
+        { start: 'dyndatetime(y,m,13)', end: 'dyndatetime(y,m,15)', background: '#46c4f3' },
+      ],
     });
   },
   markup: `

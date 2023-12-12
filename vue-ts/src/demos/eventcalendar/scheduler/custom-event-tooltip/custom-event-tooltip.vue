@@ -472,7 +472,7 @@ const myView = ref<MbscEventcalendarView>({
   }
 })
 
-const toastMessage = ref<string>(null)
+const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 const tooltipOpen = ref<boolean>(false)
 const currentEvent = ref<MbscCalendarEvent>()

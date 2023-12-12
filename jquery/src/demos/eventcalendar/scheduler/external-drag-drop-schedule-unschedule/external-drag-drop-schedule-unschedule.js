@@ -68,7 +68,7 @@ export default {
         },
       });
 
-      $.getJSON('https://trialdev.mobiscroll.com/drag-drop-events/?callback=?', function (events) {
+      $.getJSON('https://trial.mobiscroll.com/drag-drop-events/?callback=?', function (events) {
         myCalendar.setEvents(events);
       });
     });

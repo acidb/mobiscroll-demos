@@ -15,7 +15,6 @@ import {
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
 import './switching-day-week-work-week-timeline.css';
-
 setOptions({
   // localeJs,
   // themeJs

@@ -1,7 +1,5 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, MbscEventcalendarView, setOptions, Popup, Button, formatDate, Toast/* localeImport */ } from '@mobiscroll/react';
-import './custom-event-tooltip.css';
-//</demo-only>
+//<demo-only>import { Eventcalendar, MbscEventcalendarView, setOptions, Popup, Button, formatDate, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
 
 setOptions({
     // localeJs,

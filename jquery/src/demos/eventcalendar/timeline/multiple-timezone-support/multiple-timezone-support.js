@@ -95,11 +95,11 @@ export default {
           ],
           renderHeader: function () {
             return (
-              '<div mbsc-calendar-nav class="md-timezone-nav"></div>' +
+              '<div mbsc-calendar-nav></div>' +
               '<div class="md-timezone-header">' +
-              '<div mbsc-calendar-prev class="md-timezone-prev"></div>' +
-              '<div mbsc-calendar-today class="md-timezone-today"></div>' +
-              '<div mbsc-calendar-next class="md-timezone-next"></div>' +
+              '<div mbsc-calendar-prev></div>' +
+              '<div mbsc-calendar-today></div>' +
+              '<div mbsc-calendar-next></div>' +
               '<label><input id="md-timezone-input" mbsc-input data-dropdown="true" data-input-style="box" /></label>' +
               '<select id="md-timezone-select">' +
               '<option value="America/Los_Angeles">America/Los Angeles</option>' +

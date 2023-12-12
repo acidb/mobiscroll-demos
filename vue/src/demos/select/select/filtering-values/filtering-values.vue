@@ -1,7 +1,9 @@
 <script setup>
-import { MbscSelect, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { ref, onMounted } from 'vue'
+import { MbscSelect, MbscPage, getJson, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
+  // locale,
   // theme
 })
 
@@ -38,7 +40,7 @@ function remoteFiltering(filterText) {
   )
 }
 
-function filter(ev) {
+function handleFilter(ev) {
   remoteFiltering(ev.filterText)
   return false
 }
@@ -73,6 +75,7 @@ onMounted(() => {
             labelStyle="stacked"
             inputStyle="box"
             placeholder="Please select..."
+            @filter="handleFilter"
           />
         </div>
       </div>

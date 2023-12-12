@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MbscPopup, MbscPopupOptions, setOptions } from '@mobiscroll/angular';
+import { MbscPopup, MbscPopupOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   theme: 'ios',

@@ -1,6 +1,8 @@
 import React from 'react';
-import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './resource-data-structure.css';
+//<demo-only>import { Eventcalendar, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -9,14 +11,6 @@ setOptions({
 
 function App() {
   const myResources = [
-    {
-      // base properties
-      fixed: true,
-      id: 'room',
-      name: 'Main hall',
-      // add any property you'd like
-      title: 'Conference room',
-    },
     {
       // base properties
       id: 'team',
@@ -77,51 +71,6 @@ function App() {
           title: 'Product Tactics Agent',
           job: 'Titus Project',
         },
-        {
-          // base properties
-          id: 7,
-          name: 'Phil',
-          color: '#1ac38d',
-          // add any property you'd like
-          title: 'UX Designer',
-          job: 'Titus Project',
-        },
-        {
-          // base properties
-          id: 8,
-          name: 'Vic',
-          color: '#1ac38d',
-          // add any property you'd like
-          title: 'Product Developer',
-          job: 'Yorick Project',
-        },
-        {
-          // base properties
-          id: 9,
-          name: 'Pam',
-          color: '#1ac38d',
-          // add any property you'd like
-          title: 'Help Desk Specialist',
-          job: 'Apollo Project',
-        },
-        {
-          // base properties
-          id: 10,
-          name: 'Suzie',
-          color: '#1ac38d',
-          // add any property you'd like
-          title: 'Data Analyst',
-          job: 'Apollo Project',
-        },
-        {
-          // base properties
-          id: 11,
-          name: 'Nina',
-          color: '#1ac38d',
-          // add any property you'd like
-          title: 'Network Administrator',
-          job: 'Titus Project',
-        },
       ],
     },
   ];
@@ -155,7 +104,16 @@ function App() {
     },
   ];
 
-  return <Eventcalendar view={myView} data={myEvents} height={600} resources={myResources} />;
+  const renderCustomResource = (resource) => {
+    return (
+      <div>
+        <div className="resource-name">{resource.name}</div>
+        {!resource.isParent && <div className="md-resource-data-structure-title">{resource.title}</div>}
+      </div>
+    );
+  };
+
+  return <Eventcalendar view={myView} data={myEvents} resources={myResources} renderResource={renderCustomResource} />;
 }
 
 ReactDOM.render(<App />, document.getElementById('content'));

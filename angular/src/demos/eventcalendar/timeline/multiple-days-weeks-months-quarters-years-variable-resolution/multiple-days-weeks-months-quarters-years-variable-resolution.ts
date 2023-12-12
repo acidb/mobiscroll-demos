@@ -16,8 +16,8 @@ export class AppComponent implements OnInit {
 
   view: MbscEventcalendarView = {
     timeline: {
-      type: 'month',
-      size: 3,
+      type: 'week',
+      size: 2,
     },
   };
 

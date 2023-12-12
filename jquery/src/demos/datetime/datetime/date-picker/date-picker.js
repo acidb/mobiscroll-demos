@@ -14,11 +14,6 @@ export default {
           controls: ['date'],
         });
 
-      $('button').click(() => {
-        $('#demo-date').val('02/02/2024').trigger('change');
-        $('#demo-date').change();
-      });
-
       $('#demo-month-year')
         .mobiscroll()
         .datepicker({
@@ -33,7 +28,6 @@ export default {
     Date picker
     <input id="demo-date" mbsc-input data-input-style="outline" data-label-style="stacked" placeholder="Please select..." />
 </label>
-<button>CHnage</button>
 
 <label>
     Month & year picker

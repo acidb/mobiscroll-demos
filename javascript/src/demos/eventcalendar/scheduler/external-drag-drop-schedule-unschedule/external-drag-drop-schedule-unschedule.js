@@ -55,7 +55,7 @@ export default {
     });
 
     mobiscroll.getJson(
-      'https://trialdev.mobiscroll.com/drag-drop-events/',
+      'https://trial.mobiscroll.com/drag-drop-events/',
       function (events) {
         myCalendar.setEvents(events);
       },

@@ -31,8 +31,8 @@ export default {
           allDay: false,
           startDay: 1,
           endDay: 5,
-          // startTime: '08:00',
-          // endTime: '17:00'
+          startTime: '08:00',
+          endTime: '17:00',
         },
       },
       resources: [
@@ -59,7 +59,7 @@ export default {
       renderDay: function (args) {
         var date = args.date;
         var dayNr = date.getDay();
-        var formatDate = mobiscroll.util.datetime.formatDate;
+        var formatDate = mobiscroll.formatDate;
         var task = milestones.find(function (obj) {
           return +new Date(obj.date) === +date;
         });

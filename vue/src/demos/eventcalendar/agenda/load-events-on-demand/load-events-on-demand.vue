@@ -13,7 +13,7 @@ setOptions({
 })
 
 const myEvents = ref([])
-const toastMessage = ref(null)
+const toastMessage = ref('')
 const isToastOpen = ref(false)
 
 const myView = {
@@ -41,12 +41,7 @@ function handleToastClose() {
 </script>
 
 <template>
-  <MbscEventcalendar
-    :drag="drag"
-    :view="myView"
-    :data="myEvents"
-    @page-loading="handlePageLoading"
-  />
+  <MbscEventcalendar :view="myView" :data="myEvents" @page-loading="handlePageLoading" />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>
 

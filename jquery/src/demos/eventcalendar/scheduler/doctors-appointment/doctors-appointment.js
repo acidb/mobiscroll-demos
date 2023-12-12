@@ -8,13 +8,6 @@ export default {
     });
 
     $(function () {
-      function hasOverlap(event, inst) {
-        var events = inst.getEvents(event.start, event.end).filter(function (e) {
-          return e.id !== event.id && e.resource === event.resource;
-        });
-        return events.length > 0;
-      }
-
       var $externalCont = $('#md-docs-appointment-cont');
       var now = new Date();
       var today = new Date(now.setMinutes(59));
@@ -137,7 +130,6 @@ export default {
             {
               id: 5,
               name: 'Dr. Jean Pearson',
-              color: '#8f1ed6',
             },
             {
               id: 6,
@@ -160,6 +152,7 @@ export default {
           dragToCreate: true,
           externalDrop: true,
           externalDrag: true,
+          eventOverlap: false,
           extendDefaultEvent: function () {
             return {
               job: 'Tartar removal',
@@ -172,24 +165,43 @@ export default {
             myCalendar.setOptions({
               colors: [],
             });
-            if (hasOverlap(event, inst)) {
+          },
+          onEventCreated: function (args) {
+            mobiscroll.toast({
+              // context,
+              message: args.event.title + ' added',
+            });
+            $('#md-event-' + args.event.id).remove();
+          },
+          onEventCreateFailed: function (args) {
+            if (!(today < args.event.start)) {
               mobiscroll.toast({
-                message: 'Make sure not to double book',
-              });
-              return false;
-            } else if (!(today < event.start)) {
-              mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
                 message: "Can't add event in the past",
               });
             } else {
               mobiscroll.toast({
-                message: args.event.title + ' added',
+                //<hidden>
+                // theme,//</hidden>
+                // context,
+                message: 'Make sure not to double book',
               });
-              $('#md-event-' + args.event.id).remove();
             }
+          },
+          onEventUpdateFailed: function () {
+            mobiscroll.toast({
+              //<hidden>
+              // theme,//</hidden>
+              // context,
+              message: 'Make sure not to double book',
+            });
           },
           onEventDelete: function (args, inst) {
             mobiscroll.toast({
+              //<hidden>
+              // theme,//</hidden>
               // context,
               message: args.event.title + ' unscheduled',
             });
@@ -307,14 +319,11 @@ export default {
 
 .docs-appointment-task {
     color: #fff;
+    background: #999;
     padding: 10px;
     margin: 20px;
     border-radius: 8px;
     font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-}
-
-.docs-appointment-task {
-    background: #999;
 }
 
 .demo-doctors-appointment.demo-wrapper,

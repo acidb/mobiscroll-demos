@@ -14,7 +14,7 @@ setOptions({
 })
 
 const myEvents = ref([])
-const toastMessage = ref(null)
+const toastMessage = ref('')
 const isToastOpen = ref(false)
 
 const myView = {

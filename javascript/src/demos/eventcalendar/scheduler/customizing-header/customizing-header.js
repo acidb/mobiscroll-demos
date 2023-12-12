@@ -89,7 +89,7 @@ export default {
     });
   },
   markup: `
-<div id="demo-custom-header" class="md-custom-header" style="height: 800px"></div>
+<div id="demo-custom-header" class="md-custom-header"></div>
   `,
   css: `
 .md-custom-header-controls {

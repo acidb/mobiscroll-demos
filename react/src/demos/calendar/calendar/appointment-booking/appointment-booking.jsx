@@ -1,6 +1,10 @@
 import React from 'react';
-import { Datepicker, Page, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './appointment-booking.css';
+//<demo-only>import { Datepicker, Page, getJson, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const getJson = mobiscroll.getJson;
+const Page = mobiscroll.Page;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,

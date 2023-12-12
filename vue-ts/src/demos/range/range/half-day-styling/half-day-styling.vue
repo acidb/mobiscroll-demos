@@ -1,6 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { MbscDatepicker, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myColors = [
+  { date: 'dyndatetime(y,m,12)', cellCssClass: 'check-in' },
+  { date: 'dyndatetime(y,m,16)', cellCssClass: 'check-out' },
+  { start: 'dyndatetime(y,m,13)', end: 'dyndatetime(y,m,15)', background: '#46c4f3' }
+]
+</script>
+
+<template>
+  <MbscDatepicker :controls="['calendar']" select="range" display="inline" />
+</template>
 
 <style>
 .mbsc-datepicker .mbsc-ltr.check-in {

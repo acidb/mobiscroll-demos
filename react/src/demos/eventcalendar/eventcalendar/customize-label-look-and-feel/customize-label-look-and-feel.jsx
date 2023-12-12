@@ -1,6 +1,9 @@
 import React from 'react';
-import { Eventcalendar, getJson, Toast /* localeImport */ } from '@mobiscroll/react';
-import './customize-label-look-and-feel.css';
+//<demo-only>import { Eventcalendar, getJson, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const getJson = mobiscroll.getJson;
+const Toast = mobiscroll.Toast; //</extra>
 
 function App() {
   const [myEvents, setEvents] = React.useState([]);
@@ -28,7 +31,7 @@ function App() {
 
   const view = React.useMemo(() => {
     return {
-      calendar: { labels: 'all' },
+      calendar: { labels: true },
     };
   }, []);
 

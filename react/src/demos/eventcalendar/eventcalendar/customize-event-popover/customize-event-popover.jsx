@@ -1,6 +1,11 @@
 import React from 'react';
-import { Eventcalendar, getJson, Toast, setOptions, Button /* localeImport */ } from '@mobiscroll/react';
-import './customize-event-popover.css';
+//<demo-only>import { Eventcalendar, getJson, Toast, setOptions,  Button/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const getJson = mobiscroll.getJson;
+const Toast = mobiscroll.Toast;
+const setOptions = mobiscroll.setOptions;
+const Button = mobiscroll.Button; //</extra>
 
 setOptions({
   // localeJs,

@@ -23,6 +23,14 @@ export class AppComponent {
     // Logic for event click
   }
 
+  onCellHoverIn(event: any): void {
+    // Logic for handling cell hover in
+  }
+
+  onCellHoverOut(event: any): void {
+    // Logic for handling cell hover out
+  }
+
   onChange(event: any): void {
     // Logic for value change
   }

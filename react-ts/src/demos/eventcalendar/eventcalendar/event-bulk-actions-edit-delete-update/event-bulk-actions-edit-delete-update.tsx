@@ -12,7 +12,6 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './event-bulk-actions-edit-delete-update.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -164,12 +163,15 @@ const App: React.FC = () => {
     }
   }, [confirmOpen, deleteSelectedEvents]);
 
-  const onPageLoading = React.useCallback(() => {
-    setTimeout(() => {
-      setFirstDay(firstDay);
-      setLastDay(lastDay);
-    });
-  }, [firstDay, lastDay]);
+  const onPageLoading = React.useCallback(
+    (args: any) => {
+      setTimeout(() => {
+        setFirstDay(args.firstDay);
+        setLastDay(args.lastDay);
+      });
+    },
+    [firstDay, lastDay],
+  );
 
   const onSelectedEventsChange = React.useCallback(
     (args) => {

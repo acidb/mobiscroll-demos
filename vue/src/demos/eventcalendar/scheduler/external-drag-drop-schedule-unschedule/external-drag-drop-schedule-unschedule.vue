@@ -1,6 +1,131 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscEventcalendar,
+  setOptions,
+  MbscDraggable,
+  MbscDropcontainer,
+  MbscToast /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myView = {
+  schedule: { type: 'week' }
+}
+
+const myTasks = ref([
+  {
+    id: 1,
+    title: 'Product team meeting',
+    color: '#cf4343',
+    start: 'dyndatetime(y,m,d,8)',
+    end: 'dyndatetime(y,m,d,9,30)'
+  },
+  {
+    id: 2,
+    title: 'General orientation',
+    color: '#e49516',
+    start: 'dyndatetime(y,m,d,8)',
+    end: 'dyndatetime(y,m,d,10)'
+  },
+  {
+    id: 3,
+    title: 'Client Training',
+    color: '#8c429f',
+    start: 'dyndatetime(y,m,d,10)',
+    end: 'dyndatetime(y,m,d,14)'
+  },
+  {
+    id: 4,
+    title: 'CEO Conference',
+    color: '#63b548',
+    start: 'dyndatetime(y,m,d,12)',
+    end: 'dyndatetime(y,m,d,18)'
+  }
+])
+
+const dragElements = ref([])
+const myEvents = ref([])
+const toastMessage = ref(null)
+const isToastOpen = ref(false)
+
+function getHours(event) {
+  const eventLength = Math.abs(new Date(event.end) - new Date(event.start)) / (60 * 60 * 1000)
+  return eventLength + ' hour' + (eventLength > 1 ? 's' : '')
+}
+
+function handleEventCreate(args) {
+  myTasks.value = myTasks.value.filter((item) => item.id !== args.event.id)
+  toastMessage.value = args.event.title + ' added'
+  isToastOpen.value = true
+}
+
+function handleEventDelete(args) {
+  toastMessage.value = args.event.title + ' unscheduled'
+  isToastOpen.value = true
+}
+
+function handleItemDrop(args) {
+  if (args.data) {
+    myTasks.value = [...myTasks.value, args.data]
+  }
+}
+
+function handleToastClose() {
+  isToastOpen.value = false
+}
+
+onMounted(() => {
+  getJson(
+    'https://trial.mobiscroll.com/drag-drop-events/',
+    (events) => {
+      myEvents.value = events
+    },
+    'jsonp'
+  )
+})
+</script>
+
+<template>
+  <div class="mbsc-grid mbsc-no-padding">
+    <div class="mbsc-row">
+      <div class="mbsc-col-sm-9 external-drop-calendar">
+        <MbscEventcalendar
+          :view="myView"
+          :data="myEvents"
+          :dragToMove="true"
+          :dragToCreate="true"
+          :externalDrop="true"
+          :externalDrag="true"
+          @event-create="handleEventCreate"
+          @event-delete="handleEventDelete"
+        />
+      </div>
+      <div ref="dropCont" class="mbsc-col-sm-3 external-drop-cont">
+        <MbscDropcontainer
+          :element="$refs.dropCont"
+          :style="{ background: contBg }"
+          @item-drop="handleItemDrop($event)"
+        >
+          <div class="mbsc-form-group-title">Available tasks</div>
+
+          <div v-for="(task, i) in myTasks">
+            <div ref="dragElements" class="external-drop-task" :style="{ background: task.color }">
+              <div>{{ task.title }}</div>
+              <div>{{ getHours(task) }}</div>
+              <MbscDraggable :element="dragElements[i]" :dragData="task" />
+            </div>
+          </div>
+        </MbscDropcontainer>
+      </div>
+    </div>
+  </div>
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" :close="handleToastClose" />
+</template>
 
 <style>
 .external-drop-calendar {

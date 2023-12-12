@@ -1,6 +1,15 @@
 import React from 'react';
-import { Eventcalendar, Button, Select, Page, getJson, formatDate, confirm, toast, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './event-bulk-actions-edit-delete-update.css';
+//<demo-only>import { Eventcalendar, Button, Select, Page, getJson, formatDate, confirm, toast, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+//<extra>
+const Eventcalendar = mobiscroll.Eventcalendar;
+const getJson = mobiscroll.getJson;
+const Button = mobiscroll.Button;
+const Select = mobiscroll.Select;
+const Page = mobiscroll.Page;
+const confirm = mobiscroll.confirm;
+const setOptions = mobiscroll.setOptions;
+const formatDate = mobiscroll.formatDate;
+const toast = mobiscroll.toast; //</extra>
 
 setOptions({
   // localeJs,
@@ -143,12 +152,15 @@ function App() {
     }
   }, [confirmOpen, deleteSelectedEvents]);
 
-  const onPageLoading = React.useCallback(() => {
-    setTimeout(() => {
-      setFirstDay(firstDay);
-      setLastDay(lastDay);
-    });
-  }, [firstDay, lastDay]);
+  const onPageLoading = React.useCallback(
+    (args) => {
+      setTimeout(() => {
+        setFirstDay(args.firstDay);
+        setLastDay(args.lastDay);
+      });
+    },
+    [firstDay, lastDay],
+  );
 
   const onSelectedEventsChange = React.useCallback(
     (args) => {

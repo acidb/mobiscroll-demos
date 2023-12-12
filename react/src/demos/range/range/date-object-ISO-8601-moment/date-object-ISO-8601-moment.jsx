@@ -1,5 +1,10 @@
 import React from 'react';
-import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Datepicker, Button, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const Button = mobiscroll.Button;
+const Page = mobiscroll.Page;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -11,10 +16,10 @@ function App() {
   const objString = React.useMemo(() => (obj ? obj.toString() : null), [obj]);
   const [iso, setISO] = React.useState();
   const [momentJs, setMoment] = React.useState();
-  const momentString = React.useMemo(() => (momentJs ? moment.toString() : null), [momentJs]);
+  const momentString = React.useMemo(() => (momentJs ? momentJs[0].toString() + ' - ' + momentJs[1].toString() : null), [momentJs]);
 
   const setCustomObj = React.useCallback(() => {
-    setObj(new Date(2020, 10, 15, 10, 45));
+    setObj([new Date(2020, 10, 15), new Date(2020, 10, 21)]);
   });
 
   const objChange = React.useCallback((ev) => {
@@ -22,7 +27,7 @@ function App() {
   });
 
   const setCustomISO = React.useCallback(() => {
-    setISO('2020-05-20T12:30:00');
+    setISO(['2020-05-20', '2020-05-26']);
   });
 
   const isoChange = React.useCallback((ev) => {
@@ -30,7 +35,7 @@ function App() {
   });
 
   const setCustomMoment = React.useCallback(() => {
-    setMoment(moment([2020, 2, 6, 15, 30]));
+    setMoment([moment([2020, 2, 6]), moment([2020, 2, 12])]);
   });
 
   const momentChange = React.useCallback((ev) => {
@@ -42,7 +47,7 @@ function App() {
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Working with Js Date Objects</div>
         <div className="mbsc-button-group-block">
-          <Button onClick={setCustomObj}>Set: Sun Nov 15 2020 10:45:00 GMT</Button>
+          <Button onClick={setCustomObj}>Set: Sun Nov 15 2020 - Sat Nov 21 2020</Button>
         </div>
         <Datepicker controls={['calendar']} select="range" value={obj} onChange={objChange} label="Date object" />
       </div>
@@ -51,7 +56,7 @@ function App() {
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Working with Date strings</div>
         <div className="mbsc-button-group-block">
-          <Button onClick={setCustomISO}>Set: 2020-05-20T12:30:00</Button>
+          <Button onClick={setCustomISO}>Set: 2020-05-20 - 2020-05-26</Button>
         </div>
         <Datepicker controls={['calendar']} select="range" returnFormat="iso8601" value={iso} onChange={isoChange} label="ISO string" />
       </div>
@@ -60,7 +65,7 @@ function App() {
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Working with Moment JS Objects</div>
         <div className="mbsc-button-group-block">
-          <Button onClick={setCustomMoment}>Set: 2018-04-27T12:15:00+03:00</Button>
+          <Button onClick={setCustomMoment}>Set: 2020-03-06 - 2020-03-12</Button>
         </div>
         <Datepicker
           controls={['calendar']}

@@ -6,8 +6,6 @@ export default {
       // theme
     });
 
-    var now = new Date();
-
     mobiscroll.datepicker('#demo-marked', {
       controls: ['calendar'],
       display: 'inline',

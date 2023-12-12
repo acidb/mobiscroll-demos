@@ -59,7 +59,9 @@ const App: React.FC = () => {
           <Input label="Starts" />
           <Input label="Ends" />
           <SegmentedGroup>
-            <SegmentedItem value="busy">Show as busy</SegmentedItem>
+            <SegmentedItem value="busy" defaultChecked={true}>
+              Show as busy
+            </SegmentedItem>
             <SegmentedItem value="free">Show as free</SegmentedItem>
           </SegmentedGroup>
         </div>

@@ -466,7 +466,7 @@ const myView = ref({
   }
 })
 
-const toastMessage = ref(null)
+const toastMessage = ref('')
 const isToastOpen = ref(false)
 const tooltipOpen = ref(false)
 const currentEvent = ref()

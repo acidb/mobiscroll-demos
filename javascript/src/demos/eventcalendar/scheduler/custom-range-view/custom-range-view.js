@@ -6,7 +6,7 @@ export default {
       // theme
     });
 
-    var formatDate = mobiscroll.util.datetime.formatDate;
+    var formatDate = mobiscroll.formatDate;
     var startDate, endDate;
     var tempStart, tempEnd;
 

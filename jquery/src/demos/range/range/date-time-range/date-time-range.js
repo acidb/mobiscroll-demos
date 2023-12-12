@@ -27,7 +27,7 @@ export default {
       $('#demo-date')
         .mobiscroll()
         .datepicker({
-          controls: ['date'],
+          controls: ['datetime'],
           select: 'range',
           display: 'inline',
         });
@@ -35,14 +35,14 @@ export default {
       $('#demo-one-input')
         .mobiscroll()
         .datepicker({
-          controls: ['calendar'],
+          controls: ['datetime'],
           select: 'range',
         });
 
       $('#demo-start-end')
         .mobiscroll()
         .datepicker({
-          controls: ['calendar'],
+          controls: ['datetime'],
           select: 'range',
           startInput: '#demo-start',
           endInput: '#demo-end',

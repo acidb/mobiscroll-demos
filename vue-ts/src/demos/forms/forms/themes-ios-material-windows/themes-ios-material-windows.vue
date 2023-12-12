@@ -23,7 +23,7 @@ setOptions({
 
 <template>
   <MbscPage>
-    <div className="mbsc-form-group">
+    <div class="mbsc-form-group">
       <MbscInput label="Input field" placeholder="Input with label" />
       <MbscTextarea label="Textarea" placeholder="Textarea with label" />
       <MbscDropdown label="Select">

@@ -9,8 +9,8 @@ setOptions({
 
 <template>
   <MbscPage>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Switch</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Switch</div>
       <MbscSwitch label="Switch Off" description="This is description for Switch" />
       <MbscSwitch
         label="Switch On"
@@ -20,8 +20,8 @@ setOptions({
       <MbscSwitch label="Disabled Switch Off" :disabled="true" />
       <MbscSwitch label="Disabled Switch On" :disabled="true" :defaultChecked="true" />
     </div>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Switch colors</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Switch colors</div>
       <MbscSwitch label="Primary" color="primary" :defaultChecked="true" />
       <MbscSwitch label="Secondary" color="secondary" :defaultChecked="true" />
       <MbscSwitch label="Success" color="success" :defaultChecked="true" />

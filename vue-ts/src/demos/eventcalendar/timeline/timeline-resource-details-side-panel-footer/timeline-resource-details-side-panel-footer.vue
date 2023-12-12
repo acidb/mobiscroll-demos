@@ -1,6 +1,171 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { MbscEventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const oneDay: number = 60000 * 60 * 24
+
+const myResources: MbscResource[] = [
+  { id: 1, name: 'Flatiron Room', seats: 90, color: '#fdf500', price: 600 },
+  {
+    id: 2,
+    name: 'The Capital City',
+    seats: 250,
+    color: '#ff0101',
+    price: 800
+  },
+  {
+    id: 3,
+    name: 'Heroes Square',
+    seats: 400,
+    color: '#01adff',
+    price: 1100
+  },
+  {
+    id: 4,
+    name: 'Hall of Faces',
+    seats: 850,
+    color: '#239a21',
+    price: 750
+  },
+  {
+    id: 5,
+    name: 'King’s Landing',
+    seats: 550,
+    color: '#ff4600',
+    price: 950
+  },
+  {
+    id: 6,
+    name: 'Gathering Field',
+    seats: 900,
+    color: '#8f1ed6',
+    price: 700
+  }
+]
+
+const myEvents = ref<MbscCalendarEvent[]>()
+
+const calendarElm = ref<any>(null)
+
+const myView: MbscEventcalendarView = {
+  timeline: {
+    type: 'month'
+  }
+}
+
+function getUTCDateOnly(d: Date) {
+  return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
+}
+
+function getDayDiff(d1: Date, d2: Date) {
+  return Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1
+}
+
+function getRevenue(resource: MbscResource) {
+  if (calendarElm.value) {
+    let days = 0
+    for (const event of calendarElm.value.instance.getEvents()) {
+      if (event.resource === resource.id) {
+        days += getDayDiff(new Date(event.start), new Date(event.end))
+      }
+    }
+    return days * resource.price
+  } else {
+    return 0
+  }
+}
+
+function getTotal() {
+  let total = 0
+  for (const resource of myResources) {
+    total += getRevenue(resource)
+  }
+  return total
+}
+
+function getOccuppancy(data: MbscCalendarEvent[]) {
+  const events = data.events
+  let occuppancy = 0
+  if (events) {
+    var resourceIds = []
+    var nr = 0
+    for (const event of events) {
+      if (resourceIds.indexOf(event.resource) < 0) {
+        nr++
+        resourceIds = [...resourceIds, event.resource]
+      }
+    }
+    occuppancy = ((nr * 100) / myResources.length).toFixed(0)
+  }
+  return occuppancy
+}
+
+onMounted(() => {
+  getJson(
+    'https://trial.mobiscroll.com/multiday-events/',
+    (events: MbscCalendarEvent[]) => {
+      myEvents.value = events
+    },
+    'jsonp'
+  )
+})
+</script>
+
+<template>
+  <MbscEventcalendar
+    ref="calendarElm"
+    className="md-resource-details"
+    :view="myView"
+    :data="myEvents"
+    :resources="myResources"
+  >
+    <template #resourceHeader>
+      <div class="md-resource-details-title">
+        <div class="md-resource-header md-resource-details-name">Room</div>
+        <div class="md-resource-header md-resource-details-seats">Capacity</div>
+        <div class="md-resource-header md-resource-details-seats">Price</div>
+      </div>
+    </template>
+
+    <template #resource="resource">
+      <div class="md-resource-details-cont">
+        <div class="md-resource-header md-resource-details-name">{{ resource.name }}</div>
+        <div class="md-resource-header md-resource-details-seats">
+          {{ resource.seats + ' seats' }}
+        </div>
+        <div class="md-resource-header md-resource-details-seats">{{ '$' + resource.price }}</div>
+      </div>
+    </template>
+
+    <template #sidebar="resource">
+      <div class="md-resource-details-sidebar">{{ getRevenue(resource) }}</div>
+    </template>
+
+    <template #resourceFooter>
+      <div class="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>
+    </template>
+
+    <template #sidebarHeader>
+      <div class="md-resource-details-sidebar-header">Revenue</div>
+    </template>
+
+    <template #dayFooter="data">
+      <div class="md-resource-details-footer md-resource-details-footer-day">
+        {{ getOccuppancy(data) }}%
+      </div>
+    </template>
+
+    <template #sidebarFooter>
+      <div class="md-resource-details-footer md-resource-details-total">${{ getTotal() }}</div>
+    </template>
+  </MbscEventcalendar>
+</template>
 
 <style>
 /*<hidden>*/

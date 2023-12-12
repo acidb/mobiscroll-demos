@@ -8,7 +8,7 @@ export default {
     });
 
     $(function () {
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
       var staff = [
         {
           id: 1,

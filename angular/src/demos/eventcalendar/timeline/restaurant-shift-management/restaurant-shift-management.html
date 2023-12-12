@@ -10,7 +10,7 @@
 >
   <ng-template #headerTemp>
     <mbsc-calendar-nav></mbsc-calendar-nav>
-    <div class="md-shift-header-controls">
+    <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
       <mbsc-checkbox
         *ngFor="let st of shiftTimes;"
         [(ngModel)]="st.checked"
@@ -20,13 +20,7 @@
         theme="material"
       ></mbsc-checkbox>
     </div>
-    <mbsc-select
-      [data]="views"
-      inputStyle="box"
-      [(ngModel)]="viewType"
-      class="md-shift-cal-view"
-      (onChange)="viewChange($event)"
-    ></mbsc-select>
+    <mbsc-select [data]="views" inputStyle="box" [(ngModel)]="viewType" (onChange)="viewChange($event)"></mbsc-select>
     <mbsc-calendar-prev></mbsc-calendar-prev>
     <mbsc-calendar-today></mbsc-calendar-today>
     <mbsc-calendar-next></mbsc-calendar-next>

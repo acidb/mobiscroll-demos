@@ -8,7 +8,7 @@ export default {
     });
 
     $(function () {
-      var calendar = $('#demo-custom-resource-header-template')
+      $('#demo-custom-resource-header-template')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -110,8 +110,7 @@ export default {
               '</div>'
             );
           },
-        })
-        .mobiscroll('getInst');
+        });
     });
   },
   markup: `

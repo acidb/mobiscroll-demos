@@ -1,5 +1,9 @@
 import React from 'react';
-import { Checkbox, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Checkbox, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const setOptions = mobiscroll.setOptions;
+const Checkbox = mobiscroll.Checkbox;
+const Page = mobiscroll.Page; //</extra>
 
 setOptions({
   // localeJs,

@@ -1,6 +1,9 @@
 import React from 'react';
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './image-text.css';
+//<demo-only>import { Select, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Select = mobiscroll.Select;
+const Page = mobiscroll.Page;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -66,6 +69,11 @@ function App() {
     );
   };
 
+  const [myValue, setValue] = React.useState(['42976', '47883']);
+  const onChange = (ev) => {
+    setValue(ev.value);
+  };
+
   return (
     <Page>
       <Select
@@ -75,7 +83,8 @@ function App() {
         display="anchored"
         itemHeight={50}
         selectMultiple={true}
-        value={['42976', '47883']}
+        value={myValue}
+        onChange={onChange}
         renderItem={renderCustomItem}
       />
     </Page>

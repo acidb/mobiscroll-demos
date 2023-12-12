@@ -80,7 +80,7 @@
           inputStyle="outline"
           labelStyle="stacked"
           placeholder="Please Select..."
-          [ngClass]="{ 'mbsc-hidden': trip=='oneway' }"
+          [ngStyle]="{ display: trip == 'oneway' ? 'none' : 'block' }"
         ></mbsc-input>
       </div>
       <div class="mbsc-col-6">
@@ -106,7 +106,7 @@
           [min]="min"
           [max]="max"
           [pages]="2"
-          (onTempChange)="changeTripType($event)"
+          (onTempChange)="changeTripType()"
           label="Pick your flight"
           inputStyle="outline"
           labelStyle="stacked"

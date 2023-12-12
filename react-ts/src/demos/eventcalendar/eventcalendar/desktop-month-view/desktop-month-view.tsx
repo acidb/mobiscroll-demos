@@ -7,7 +7,6 @@ import {
   MbscEventcalendarView,
   MbscEventClickEvent /* localeImport */,
 } from '@mobiscroll/react';
-import './desktop-month-view.css';
 
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);

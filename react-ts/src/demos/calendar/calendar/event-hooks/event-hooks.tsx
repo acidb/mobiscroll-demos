@@ -14,7 +14,7 @@ const App: React.FC = () => {
         inputProps={{
           label: 'Calendar',
           labelStyle: 'stacked',
-          inputStyle: 'outline',
+          inputStyle: 'box',
           placeholder: 'Please Select...',
         }}
         onCancel={(event, inst) => {
@@ -22,6 +22,12 @@ const App: React.FC = () => {
         }}
         onCellClick={(event, inst) => {
           // Logic for event click
+        }}
+        handleCellHoverIn={(event, inst) => {
+          // Logic for handling cell hover in
+        }}
+        handleCellHoverOut={(event, inst) => {
+          // Logic for handling cell hover out
         }}
         onChange={(event, inst) => {
           // Logic for value change

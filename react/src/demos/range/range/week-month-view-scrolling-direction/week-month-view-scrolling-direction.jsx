@@ -1,5 +1,8 @@
 import React from 'react';
-import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Datepicker, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -23,7 +26,7 @@ function App() {
         select="range"
         display="inline"
         calendarType="week"
-        weeks={2}
+        calendarSize={2}
         showWeekNumbers={true}
         calendarScroll="vertical"
       />

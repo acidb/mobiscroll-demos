@@ -1,8 +1,6 @@
 import React from 'react';
 import { Eventcalendar, Page, Select, SegmentedGroup, Segmented, toast, snackbar, setOptions, MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/react';
 import './cut-copy-paste-events-between-calendars.css';
-
-
 setOptions({
     // localeJs,
     // themeJs

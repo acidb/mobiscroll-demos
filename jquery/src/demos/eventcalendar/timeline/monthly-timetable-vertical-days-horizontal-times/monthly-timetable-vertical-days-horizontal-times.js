@@ -14,11 +14,9 @@ export default {
           view: {
             timeline: {
               type: 'month',
+              resolutionHorizontal: 'hour',
               resolutionVertical: 'day',
             },
-          },
-          renderSidebarFooter: (resource) => {
-            return `<div>` + resource.name + `</div>` + `<p>` + resource.description + `</p>` + `<img src="` + resource.img + `"/>`;
           },
         })
         .mobiscroll('getInst');

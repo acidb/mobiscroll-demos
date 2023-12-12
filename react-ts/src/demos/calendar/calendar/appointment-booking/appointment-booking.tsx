@@ -1,8 +1,6 @@
 import React from 'react';
 import { Datepicker, Page, getJson, setOptions/* localeImport */ } from '@mobiscroll/react';
 import './appointment-booking.css';
-
-
 setOptions({
     // localeJs,
     // themeJs

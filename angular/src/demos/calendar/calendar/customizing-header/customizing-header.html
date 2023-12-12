@@ -1,4 +1,4 @@
-<mbsc-datepicker [controls]="['calendar']" display="inline" calendarType="week" [weeks]="2"></mbsc-datepicker>
+<mbsc-datepicker [controls]="['calendar']" display="inline" calendarType="week" [calendarSize]="2"></mbsc-datepicker>
 
 <mbsc-datepicker [controls]="['calendar']" display="inline" [calendarHeaderTemplate]="customHeaderTemplate">
   <ng-template #customHeaderTemplate>
@@ -23,7 +23,7 @@
   [controls]="['calendar']"
   display="inline"
   [calendarType]="calendarType"
-  [weeks]="2"
+  [calendarSize]="2"
   [calendarHeaderTemplate]="switchHeaderTemplate"
 >
   <ng-template #switchHeaderTemplate>
@@ -43,6 +43,6 @@
   [controls]="['calendar']"
   display="inline"
   calendarType="week"
-  [weeks]="2"
+  [calendarSize]="2"
   headerText="You selected {value}"
 ></mbsc-datepicker>

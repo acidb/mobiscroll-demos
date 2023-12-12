@@ -13,7 +13,6 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './switching-calendar-scheduler-agenda.css';
-
 setOptions({
   // localeJs,
   // themeJs

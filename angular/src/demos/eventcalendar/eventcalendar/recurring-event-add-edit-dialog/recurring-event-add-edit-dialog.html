@@ -89,7 +89,6 @@
               returnFormat="iso8601"
               [(ngModel)]="untilDate"
               (click)="condition = 'until'"
-              class="custom-repeat-input custom-specific-date"
               inputStyle="outline"
             ></mbsc-datepicker>
           </span>
@@ -98,12 +97,7 @@
         <mbsc-radio value="count" position="start">
           After
           <span class="md-recurrence-input md-recurrence-input-nr">
-            <mbsc-input
-              class="custom-repeat-input"
-              inputStyle="outline"
-              [(ngModel)]="occurrences"
-              (click)="condition = 'count'"
-            ></mbsc-input>
+            <mbsc-input inputStyle="outline" [(ngModel)]="occurrences" (click)="condition = 'count'"></mbsc-input>
             occurrences
             <span class="mbsc-description">The event will repeat until it reaches a certain amount of occurrences</span>
           </span>

@@ -6,7 +6,7 @@ export default {
       // theme
     });
 
-    var formatDate = mobiscroll.util.datetime.formatDate;
+    var formatDate = mobiscroll.formatDate;
 
     var myResources = [
       {
@@ -629,8 +629,8 @@ export default {
         return (
           '<div class="md-date-header md-date-header-quarter md-date-header-events-' +
           getEventOccurrence(args.events) +
-          '">' +
-          formatDate('MMM', args.date) +
+          '">Quarter ' +
+          (args.date.getMonth() / 3 + 1) +
           '</div>'
         );
       },
@@ -767,7 +767,7 @@ export default {
         <div id="demo-month-header-template"></div>
     </div>
     <div class="mbsc-form-group">
-        <div class="mbsc-form-group-title">Quarter header template</div>
+        <div class="mbsc-form-group-title">Quarterly header template</div>
         <div id="demo-quarter-header-template"></div>
     </div>
     <div class="mbsc-form-group">

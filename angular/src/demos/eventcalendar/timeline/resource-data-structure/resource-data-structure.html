@@ -1,1 +1,6 @@
-<mbsc-eventcalendar [view]="myView" [data]="myEvents" [height]="600" [resources]="myResources"></mbsc-eventcalendar>
+<mbsc-eventcalendar [view]="myView" [data]="myEvents" [resources]="myResources" [resourceTemplate]="resourceTemp">
+  <ng-template #resourceTemp let-resource>
+    <div>{{resource.name}}</div>
+    <div *ngIf="!resource.isParent" class="md-resource-data-structure-title">{{resource.title}}</div>
+  </ng-template>
+</mbsc-eventcalendar>

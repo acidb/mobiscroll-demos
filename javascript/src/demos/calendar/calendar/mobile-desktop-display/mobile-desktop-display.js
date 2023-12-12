@@ -18,8 +18,6 @@ export default {
 
     mobiscroll.datepicker('#demo-top', {
       controls: ['calendar'],
-      min: new Date(2023, 5, 1),
-      max: new Date(2023, 9, 1),
       display: 'top',
     });
 

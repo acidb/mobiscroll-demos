@@ -1,22 +1,22 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
+  MbscCalendarColor,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
-  MbscResource,
   Notifications,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,
   // theme
 });
 
-var now = new Date();
-var today = new Date(now.setMinutes(59));
-var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+type MyEvent = MbscCalendarEvent & { job?: string; unscheduled?: boolean };
+
+const now = new Date();
+const today = new Date(now.setMinutes(59));
+const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
 @Component({
   selector: 'doctors-appointment',
@@ -26,12 +26,9 @@ var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
   providers: [Notifications],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private http: HttpClient,
-    private notify: Notifications,
-  ) {}
+  constructor(private notify: Notifications) {}
 
-  myData: MbscCalendarEvent[] = [
+  myData: MyEvent[] = [
     {
       id: 'job1',
       start: 'dyndatetime(y,m,d,14)',
@@ -106,7 +103,7 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  appointments: MbscCalendarEvent[] = [
+  appointments: MyEvent[] = [
     {
       id: 'd1',
       title: 'Winfred Lesley',
@@ -145,13 +142,8 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  myColors = [];
+  myColors: MbscCalendarColor[] = [];
   contBg = '';
-
-  hasOverlap(event: any, inst: any): any {
-    const events = inst.getEvents(event.start, event.end).filter((e) => e.id !== event.id && e.resource === event.resource);
-    return events.length > 0;
-  }
 
   calendarOptions: MbscEventcalendarOptions = {
     view: {
@@ -203,6 +195,7 @@ export class AppComponent implements OnInit {
     ],
     dragToMove: true,
     dragToCreate: true,
+    eventOverlap: false,
     externalDrop: true,
     externalDrag: true,
     extendDefaultEvent: () => {
@@ -211,25 +204,28 @@ export class AppComponent implements OnInit {
         color: '#a446b5',
       };
     },
-    onEventCreate: (args, inst) => {
-      const event = args.event;
+    onEventCreate: (args) => {
+      const event: MyEvent = args.event;
       event.unscheduled = false;
       this.myColors = [];
-      if (this.hasOverlap(event, inst)) {
-        this.notify.toast({
-          message: 'Make sure not to double book',
-        });
-        return false;
-      } else if (!(today < event.start)) {
-        this.notify.toast({
-          message: "Can't add event in the past",
-        });
-      } else {
+    },
+    onEventCreated: (args) => {
+      setTimeout(() => {
         this.notify.toast({
           message: args.event.title + ' added',
         });
-        this.appointments = this.appointments.filter((item) => item.id !== event.id);
-      }
+        this.appointments = this.appointments.filter((item) => item.id !== args.event.id);
+      });
+    },
+    onEventCreateFailed: (args) => {
+      this.notify.toast({
+        message: args.event.start! <= today ? "Can't add event in the past" : 'Make sure not to double book',
+      });
+    },
+    onEventUpdateFailed: (args) => {
+      this.notify.toast({
+        message: args.event.start! <= today ? "Can't add event in the past" : 'Make sure not to double book',
+      });
     },
     onEventDelete: (args) => {
       this.notify.toast({
@@ -254,36 +250,37 @@ export class AppComponent implements OnInit {
   };
 
   getHours(event: MbscCalendarEvent) {
-    const eventLength = Math.abs(new Date(event.end) - new Date(event.start)) / (60 * 60 * 1000);
+    const eventLength = Math.abs(+new Date(event.end as string) - +new Date(event.start as string)) / (60 * 60 * 1000);
     return eventLength + ' hour' + (eventLength > 1 ? 's' : '');
   }
 
-  onItemDrop(args): void {
+  onItemDrop(args: any): void {
     if (args.data) {
-      const event = args.data;
+      const event: MyEvent = args.data;
       event.unscheduled = true;
       this.appointments = [...this.appointments, event];
     }
     this.contBg = '';
   }
 
-  onItemDragEnter(args): void {
-    if (!(args.data && args.data.unscheduled)) {
+  onItemDragEnter(args: any): void {
+    const event: MyEvent = args.data;
+    if (!(event && event.unscheduled)) {
       this.contBg = '#d0e7d2cc';
     }
   }
 
-  onItemDragLeave(args): void {
+  onItemDragLeave(): void {
     this.contBg = '';
   }
 
   ngOnInit(): void {
     for (const event of this.myData) {
       // convert dates to date objects
-      event.start = event.start ? new Date(event.start) : event.start;
-      event.end = event.end ? new Date(event.end) : event.end;
+      event.start = event.start ? new Date(event.start as string) : event.start;
+      event.end = event.end ? new Date(event.end as string) : event.end;
       // mark past events as fixed by setting the event.editable property to false
-      event.editable = event.start && today < event.start;
+      event.editable = !!(event.start && today < event.start);
     }
   }
 }

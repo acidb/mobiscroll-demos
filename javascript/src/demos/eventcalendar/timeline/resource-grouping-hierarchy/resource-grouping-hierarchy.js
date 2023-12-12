@@ -13,8 +13,6 @@ export default {
       dragToCreate: true,
       dragToMove: true,
       dragToResize: true,
-      height: 600,
-      leftIcon: 'arrow-right2',
       data: [
         {
           start: 'dyndatetime(y,m,2)',
@@ -94,7 +92,6 @@ export default {
           id: 'res1',
           name: 'Resource 1',
           color: '#1dab2f',
-          fixed: true,
         },
         {
           id: 'res2',
@@ -174,36 +171,6 @@ export default {
           id: 'res12',
           name: 'Resource 12',
           color: '#e25dd2',
-        },
-        {
-          id: 'res13',
-          name: 'Resource 13',
-          color: '#4caf00',
-        },
-        {
-          id: 'res14',
-          name: 'Resource 14',
-          color: '#843100',
-        },
-        {
-          id: 'res15',
-          name: 'Resource 15',
-          color: '#843100',
-        },
-        {
-          id: 'res16',
-          name: 'Resource 16',
-          color: '#42bcf5',
-        },
-        {
-          id: 'res17',
-          name: 'Resource 17',
-          color: '#f542ef',
-        },
-        {
-          id: 'res18',
-          name: 'Resource 18',
-          color: '#f59b42',
         },
       ],
     });

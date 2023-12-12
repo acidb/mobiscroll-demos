@@ -1,16 +1,15 @@
 import React from 'react';
-import {
-  Eventcalendar,
-  CalendarPrev,
-  CalendarNav,
-  CalendarNext,
-  CalendarToday,
-  SegmentedGroup,
-  SegmentedItem,
-  getJson,
-  setOptions /* localeImport */,
-} from '@mobiscroll/react';
-import './quarter-year-view.css';
+//<demo-only>import { Eventcalendar, CalendarPrev, CalendarNav, CalendarNext, CalendarToday, SegmentedGroup, SegmentedItem, getJson, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const CalendarPrev = mobiscroll.CalendarPrev;
+const CalendarNav = mobiscroll.CalendarNav;
+const CalendarNext = mobiscroll.CalendarNext;
+const CalendarToday = mobiscroll.CalendarToday;
+const SegmentedGroup = mobiscroll.SegmentedGroup;
+const SegmentedItem = mobiscroll.SegmentedItem;
+const getJson = mobiscroll.getJson;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,

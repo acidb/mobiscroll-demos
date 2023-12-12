@@ -1,5 +1,12 @@
 import React from 'react';
-import { setOptions, Input, Textarea, Datepicker, Dropdown, Page /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { setOptions, Input, Textarea, Datepicker, Dropdown, Page/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const setOptions = mobiscroll.setOptions;
+const Page = mobiscroll.Page;
+const Textarea = mobiscroll.Textarea;
+const Datepicker = mobiscroll.Datepicker;
+const Dropdown = mobiscroll.Dropdown;
+const Input = mobiscroll.Input; //</extra>
 
 setOptions({
   // localeJs,
@@ -15,7 +22,7 @@ function App() {
         <div className="mbsc-form-group-title">Single-line text</div>
         <Input label="Label" placeholder="Text field label" />
         <Input label="Password" type="password" placeholder="Password field with icon" startIcon="lock2" />
-        <Input label="Password Toggle" type="password" placeholder="Password field with icon" startIcon="lock2" passwordToggle="true" />
+        <Input label="Password Toggle" type="password" placeholder="Password field with icon" startIcon="lock2" passwordToggle={true} />
         <Input placeholder="Text field with right icon" endIcon="pencil" />
         <Input placeholder="Text field disabled" disabled={true} />
         <Input placeholder="Text field with error style" error={true} />

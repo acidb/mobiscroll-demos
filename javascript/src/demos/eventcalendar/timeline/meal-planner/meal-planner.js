@@ -11,7 +11,7 @@ export default {
     var oldMeal;
     var tempMeal;
     var deleteMeal;
-    var formatDate = mobiscroll.util.datetime.formatDate;
+    var formatDate = mobiscroll.formatDate;
     var nameInput = document.getElementById('meal-name-input');
     var caloriesInput = document.getElementById('meal-calories-input');
     var notesTextarea = document.getElementById('meal-notes-textarea');

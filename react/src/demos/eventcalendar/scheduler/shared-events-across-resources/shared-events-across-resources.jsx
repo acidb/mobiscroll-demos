@@ -1,5 +1,12 @@
 import React from 'react';
-import { Eventcalendar, Popup, Input, SegmentedGroup, Segmented, setOptions /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Eventcalendar, Popup, Input, SegmentedGroup, Segmented, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Popup = mobiscroll.Popup;
+const Input = mobiscroll.Input;
+const SegmentedGroup = mobiscroll.SegmentedGroup;
+const Segmented = mobiscroll.Segmented;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,

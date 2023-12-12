@@ -10,9 +10,9 @@ export default {
       modules: [mobiscroll.print],
       view: {
         timeline: {
-          type: 'month',
-          // startDay: 1,
-          // endDay: 5,
+          type: 'week',
+          startDay: 1,
+          endDay: 5,
           eventList: true,
         },
       },

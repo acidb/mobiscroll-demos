@@ -93,7 +93,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.jsonp<MbscCalendarEvent[]>('https://trialdev.mobiscroll.com/drag-drop-events/', 'callback').subscribe((resp) => {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/drag-drop-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
   }

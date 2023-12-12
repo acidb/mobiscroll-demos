@@ -1,16 +1,15 @@
 import React from 'react';
-import {
-  Eventcalendar,
-  Datepicker,
-  snackbar,
-  setOptions,
-  Popup,
-  Button,
-  Input,
-  Textarea,
-  formatDate /* localeImport */,
-} from '@mobiscroll/react';
-import './employee-shifts.css';
+//<demo-only>import { Eventcalendar, Datepicker, snackbar, setOptions, Popup, Button, Input, Textarea, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Datepicker = mobiscroll.Datepicker;
+const snackbar = mobiscroll.snackbar;
+const setOptions = mobiscroll.setOptions;
+const Popup = mobiscroll.Popup;
+const Button = mobiscroll.Button;
+const Input = mobiscroll.Input;
+const Textarea = mobiscroll.Textarea;
+const formatDate = mobiscroll.formatDate; //</extra>
 
 setOptions({
   // localeJs,

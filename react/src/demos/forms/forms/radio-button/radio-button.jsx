@@ -1,5 +1,10 @@
 import React from 'react';
-import { Radio, RadioGroup, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Radio, RadioGroup, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const setOptions = mobiscroll.setOptions;
+const Radio = mobiscroll.Radio;
+const RadioGroup = mobiscroll.RadioGroup;
+const Page = mobiscroll.Page; //</extra>
 
 setOptions({
   // localeJs,

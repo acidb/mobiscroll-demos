@@ -1,6 +1,9 @@
 import React from 'react';
-import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './synchronized-views.css';
+//<demo-only>import { Eventcalendar, getJson, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const setOptions = mobiscroll.setOptions;
+const getJson = mobiscroll.getJson; //</extra>
 
 setOptions({
   // localeJs,

@@ -13,6 +13,7 @@
 
 .docs-appointment-task {
   color: #fff;
+  background: #999;
   padding: 10px;
   margin: 20px;
   border-radius: 8px;
@@ -21,10 +22,6 @@
     Segoe UI,
     Roboto,
     sans-serif;
-}
-
-.docs-appointment-task {
-  background: #999;
 }
 
 .demo-doctors-appointment.demo-wrapper,

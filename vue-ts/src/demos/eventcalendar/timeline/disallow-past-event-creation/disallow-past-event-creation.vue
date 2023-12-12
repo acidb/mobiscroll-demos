@@ -25,7 +25,7 @@ const now = new Date()
 const today = new Date(now.setMinutes(59))
 const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
 const myEvents = ref<MbscCalendarEvent[]>([])
-const toastMessage = ref<string>(null)
+const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 
 const myView: MbscEventcalendarView = {

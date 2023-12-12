@@ -11,7 +11,6 @@ setOptions({
   templateUrl: './disabled-invalid-values.html',
 })
 export class AppComponent {
-  selected = 'atl';
   myData = [
     {
       text: 'Atlanta',

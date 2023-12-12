@@ -52,7 +52,7 @@ const myResources = ref<MbscResource[]>([
   }
 ])
 
-const toastMessage = ref<string>(null)
+const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 const mySelectedDate = ref<Date>(now)
 

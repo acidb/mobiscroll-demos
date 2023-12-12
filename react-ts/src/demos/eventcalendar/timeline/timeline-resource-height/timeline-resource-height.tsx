@@ -1,7 +1,6 @@
 import React from 'react';
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
 import './timeline-resource-height.css';
-
 const App: React.FC = () => {
   const view = React.useMemo<MbscEventcalendarView>(() => {
     return {

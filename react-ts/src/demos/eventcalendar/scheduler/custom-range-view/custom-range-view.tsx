@@ -13,7 +13,6 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './custom-range-view.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -95,6 +94,13 @@ const App: React.FC = () => {
     [getFormattedRange],
   );
 
+  const onSelectedDateChange = React.useCallback(
+    (event: any) => {
+      setCurrentDate(event.date);
+    },
+    [setCurrentDate],
+  );
+
   const buttonProps = React.useMemo(() => {
     const content = <span className="mbsc-calendar-title">{buttonText}</span>;
     return {
@@ -147,6 +153,7 @@ const App: React.FC = () => {
       view={calView}
       data={myEvents}
       onPageLoading={onPageLoading}
+      onSelectedDateChange={onSelectedDateChange}
       refDate={refDate}
     />
   );

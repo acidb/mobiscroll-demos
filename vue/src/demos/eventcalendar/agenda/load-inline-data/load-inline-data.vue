@@ -288,7 +288,7 @@ const myView = {
 }
 </script>
 
-<template><MbscEventcalendar :drag="drag" :view="myView" :data="myEvents" /></template>
+<template><MbscEventcalendar :view="myView" :data="myEvents" /></template>
 
 <style>
 /*<hidden>*/

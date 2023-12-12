@@ -1,6 +1,112 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscEventcalendar,
+  formatDate,
+  getJson,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myEvents = ref([])
+
+const myResources = ref([
+  {
+    id: 1,
+    name: 'Ryan',
+    color: '#f7c4b4',
+    img: 'https://img.mobiscroll.com/demos/m1.png'
+  },
+  {
+    id: 2,
+    name: 'Kate',
+    color: '#c6f1c9',
+    img: 'https://img.mobiscroll.com/demos/f1.png'
+  },
+  {
+    id: 3,
+    name: 'John',
+    color: '#e8d0ef',
+    img: 'https://img.mobiscroll.com/demos/m2.png'
+  }
+])
+
+const myView = {
+  schedule: {
+    type: 'week',
+    allDay: false,
+    startDay: 1,
+    endDay: 5,
+    startTime: '08:00',
+    endTime: '17:00'
+  }
+}
+
+const milestones = [
+  {
+    date: 'dyndatetime(y,m,d-2)',
+    name: 'Project review',
+    color: '#f5da7b'
+  },
+  {
+    date: 'dyndatetime(y,m,d-1)',
+    name: 'Product shipping',
+    color: '#acf3a3'
+  },
+  {
+    date: 'dyndatetime(y,m,d+1)',
+    name: 'Cycle finish',
+    color: '#ff84a0'
+  }
+]
+
+function getTask(date) {
+  return this.milestones.find((obj) => +new Date(obj.date) === +date) || {}
+}
+
+onMounted(() => {
+  getJson(
+    'https://trial.mobiscroll.com/resource-events/',
+    (events) => {
+      myEvents.value = events
+    },
+    'jsonp'
+  )
+})
+</script>
+
+<template>
+  <MbscEventcalendar
+    className="md-date-header-template"
+    groupBy="date"
+    :drag="drag"
+    :view="myView"
+    :data="myEvents"
+    :resources="myResources"
+  >
+    <template #day="day">
+      <div class="header-template-container">
+        <div class="header-template-date">
+          <div class="header-template-day-name">{{ formatDate('DDDD', day.date) }}</div>
+          <div class="header-template-day">{{ formatDate('MMMM DD', day.date) }}</div>
+        </div>
+        <div class="header-template-task" :style="{ background: getTask(day.date).color }">
+          {{ getTask(day.date).name }}
+        </div>
+      </div>
+    </template>
+    <template #resource="resource">
+      <div class="header-resource-template-content">
+        <img class="header-resource-avatar" :src="resource.img" />
+        <div class="header-resource-name">{{ resource.name }}</div>
+      </div>
+    </template>
+  </MbscEventcalendar>
+</template>
 
 <style>
 .header-template-container {

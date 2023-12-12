@@ -757,7 +757,7 @@ function getEventOccurrence(args) {
               getEventOccurrence(day)
             "
           >
-            {{ formatDate('MMM', day.date) }}
+            Quarter {{ day.date.getMonth() / 3 + 1 }}
           </div>
         </template>
         <template #quarterFooter="day">

@@ -1,6 +1,11 @@
 import React from 'react';
-import { Eventcalendar, Draggable, Dropcontainer, setOptions, getJson, toast /* localeImport */ } from '@mobiscroll/react';
-import './doctors-appointment.css';
+//<demo-only>import { Draggable, Dropcontainer, Eventcalendar, setOptions, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Draggable = mobiscroll.Draggable;
+const Dropcontainer = mobiscroll.Dropcontainer;
+const Toast = mobiscroll.Toast;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -11,7 +16,7 @@ const now = new Date();
 const today = new Date(now.setMinutes(59));
 const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
-function Appointment(props) {
+const Appointment = (props) => {
   const [draggable, setDraggable] = React.useState();
 
   const setDragElm = React.useCallback((elm) => {
@@ -19,22 +24,79 @@ function Appointment(props) {
   }, []);
 
   const event = props.data;
-  const eventLength = Math.abs(new Date(event.end) - new Date(event.start)) / (60 * 60 * 1000);
+  const eventLength = Math.abs(new Date(event.end).getTime() - new Date(event.start).getTime()) / (60 * 60 * 1000);
 
   return (
     <div>
       {!event.hide && (
         <div ref={setDragElm} className="docs-appointment-task" style={{ background: event.color }}>
-          <div>{event.title + ' - ' + event.job}</div>
+          <div>{event.title}</div>
           <div>{eventLength + ' hour' + (eventLength > 1 ? 's' : '')}</div>
           <Draggable dragData={event} element={draggable} />
         </div>
       )}
     </div>
   );
-}
+};
 
-function App() {
+const App = () => {
+  const doctors = React.useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'Dr. Keila Delores',
+      },
+      {
+        id: 2,
+        name: 'Dr. Gene Cortez',
+      },
+      {
+        id: 3,
+        name: 'Dr. Paula Bush',
+      },
+      {
+        id: 4,
+        name: 'Dr. Pete Nichols',
+      },
+      {
+        id: 5,
+        name: 'Dr. Jean Pearson',
+      },
+      {
+        id: 6,
+        name: 'Dr. Thelma Cain',
+      },
+    ],
+    [],
+  );
+
+  const view = React.useMemo(() => {
+    return {
+      schedule: {
+        type: 'day',
+        startTime: '08:00',
+        endTime: '20:00',
+        allDay: false,
+      },
+    };
+  }, []);
+
+  const myInvalid = React.useMemo(
+    () => [
+      {
+        recurring: {
+          repeat: 'daily',
+          until: yesterday,
+        },
+      },
+      {
+        start: yesterday,
+        end: today,
+      },
+    ],
+    [],
+  );
+
   const [myEvents, setEvents] = React.useState([
     {
       id: 'job1',
@@ -110,34 +172,6 @@ function App() {
     },
   ]);
 
-  const doctors = [
-    {
-      id: 1,
-      name: 'Dr. Keila Delores',
-    },
-    {
-      id: 2,
-      name: 'Dr. Gene Cortez',
-    },
-    {
-      id: 3,
-      name: 'Dr. Paula Bush',
-    },
-    {
-      id: 4,
-      name: 'Dr. Pete Nichols',
-    },
-    {
-      id: 5,
-      name: 'Dr. Jean Pearson',
-      color: '#8f1ed6',
-    },
-    {
-      id: 6,
-      name: 'Dr. Thelma Cain',
-    },
-  ];
-
   const [appointments, setAppointments] = React.useState([
     {
       id: 'd1',
@@ -177,72 +211,56 @@ function App() {
     },
   ]);
 
-  const view = React.useMemo(() => {
-    return {
-      schedule: {
-        type: 'day',
-        startTime: '08:00',
-        endTime: '20:00',
-        allDay: false,
-      },
-    };
-  }, []);
-
-  const myInvalid = [
-    {
-      recurring: {
-        repeat: 'daily',
-        until: yesterday,
-      },
-    },
-    {
-      start: yesterday,
-      end: today,
-    },
-  ];
-
   const [contBg, setContBg] = React.useState('');
   const [myColors, setColors] = React.useState([]);
   const [dropCont, setDropCont] = React.useState();
-
-  const hasOverlap = React.useCallback((event, inst) => {
-    const events = inst.getEvents(event.start, event.end).filter((e) => e.id !== event.id && e.resource === event.resource);
-    return events.length > 0;
-  });
+  const [toastMessage, setToastMessage] = React.useState('');
+  const [isToastOpen, setToastOpen] = React.useState(false);
 
   const setDropElm = React.useCallback((elm) => {
     setDropCont(elm);
   }, []);
 
-  const onEventCreate = React.useCallback(
-    (args, inst) => {
-      const event = args.event;
-      event.unscheduled = false;
-      setColors([]);
+  const onEventCreate = React.useCallback((args) => {
+    const event = args.event;
+    event.unscheduled = false;
+    setColors([]);
+  }, []);
 
-      if (hasOverlap(event, inst)) {
-        toast({
-          message: 'Make sure not to double book',
-        });
-        return false;
-      } else if (!(today < event.start)) {
-        toast({
-          message: "Can't add event in the past",
-        });
-      } else {
-        toast({
-          message: args.event.title + ' added',
-        });
-        setAppointments(appointments.filter((item) => item.id !== event.id));
-      }
+  const onEventCreated = React.useCallback((args) => {
+    setToastMessage(args.event.title + ' added');
+    setToastOpen(true);
+    setEvents((prevEvents) => [...prevEvents, args.event]);
+    setAppointments((prevAppointments) => prevAppointments.filter((item) => item.id !== args.event.id));
+  }, []);
+
+  const handleFailed = React.useCallback((event) => {
+    if (event.start <= today) {
+      setToastMessage("Can't add event in the past");
+    } else {
+      setToastMessage('Make sure not to double book');
+    }
+    setToastOpen(true);
+  }, []);
+
+  const onEventCreateFailed = React.useCallback(
+    (args) => {
+      handleFailed(args.event);
     },
-    [appointments],
+    [handleFailed],
+  );
+
+  const onEventUpdateFailed = React.useCallback(
+    (args) => {
+      handleFailed(args.event);
+    },
+    [handleFailed],
   );
 
   const onEventDelete = React.useCallback((args) => {
-    toast({
-      message: args.event.title + ' unscheduled',
-    });
+    setToastMessage(args.event.title + ' unscheduled');
+    setToastOpen(true);
+    setEvents((prevEvents) => prevEvents.filter((item) => item.id !== args.event.id));
   }, []);
 
   const onEventDragEnter = React.useCallback(() => {
@@ -262,16 +280,13 @@ function App() {
     setColors([]);
   }, []);
 
-  const onItemDrop = React.useCallback(
-    (args) => {
-      if (args.data) {
-        args.data.unscheduled = true;
-        setAppointments([...appointments, args.data]);
-      }
-      setContBg('');
-    },
-    [appointments],
-  );
+  const onItemDrop = React.useCallback((args) => {
+    if (args.data) {
+      args.data.unscheduled = true;
+      setAppointments((prevAppointments) => [...prevAppointments, args.data]);
+    }
+    setContBg('');
+  }, []);
 
   const onItemDragEnter = React.useCallback((args) => {
     if (!(args.data && args.data.unscheduled)) {
@@ -283,15 +298,19 @@ function App() {
     setContBg('');
   }, []);
 
+  const onToastClose = React.useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
   React.useEffect(() => {
     for (const event of myEvents) {
       // convert dates to date objects
       event.start = event.start ? new Date(event.start) : event.start;
       event.end = event.end ? new Date(event.end) : event.end;
       // mark past events as fixed by setting the event.editable property to false
-      event.editable = event.start && today < event.start;
+      event.editable = !!(event.start && today < event.start);
     }
-  }, []);
+  }, [myEvents]);
 
   return (
     <div className="mbsc-grid mbsc-no-padding">
@@ -304,14 +323,19 @@ function App() {
             invalid={myInvalid}
             dragToMove={true}
             dragToCreate={true}
+            eventOverlap={false}
             externalDrop={true}
             externalDrag={true}
             colors={myColors}
             onEventCreate={onEventCreate}
+            onEventCreated={onEventCreated}
+            onEventCreateFailed={onEventCreateFailed}
+            onEventUpdateFailed={onEventUpdateFailed}
             onEventDelete={onEventDelete}
             onEventDragEnter={onEventDragEnter}
             onEventDragLeave={onEventDragLeave}
           />
+          <Toast isOpen={isToastOpen} message={toastMessage} onClose={onToastClose} />
         </div>
         <div className="mbsc-col-sm-3 docs-appointment-cont" ref={setDropElm} style={{ backgroundColor: contBg }}>
           <Dropcontainer onItemDrop={onItemDrop} onItemDragEnter={onItemDragEnter} onItemDragLeave={onItemDragLeave} element={dropCont}>
@@ -324,6 +348,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 ReactDOM.render(<App />, document.getElementById('content'));

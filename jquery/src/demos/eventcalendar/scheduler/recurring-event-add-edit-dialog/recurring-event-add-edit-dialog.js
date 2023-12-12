@@ -45,7 +45,7 @@ export default {
 
         switch (recurrenceCondition) {
           case 'until':
-            text += ' until ' + mobiscroll.util.datetime.formatDate('MMMM D, YYYY', new Date(recurrenceUntil));
+            text += ' until ' + mobiscroll.formatDate('MMMM D, YYYY', new Date(recurrenceUntil));
             break;
           case 'count':
             text += ', ' + recurrenceCount + ' times';

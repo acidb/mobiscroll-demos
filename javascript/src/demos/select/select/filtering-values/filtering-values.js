@@ -72,7 +72,6 @@ export default {
 
     mobiscroll.select('#demo-local-data', {
       display: 'anchored',
-      selectMultiple: true,
       data: names,
       filter: true,
     });

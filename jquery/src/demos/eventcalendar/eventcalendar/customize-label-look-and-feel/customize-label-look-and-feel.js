@@ -63,20 +63,12 @@ export default {
     top: 7px;
 }
 
-.my-label {
-    height: 35px;
-}
-
 .single-day-event {
     margin-left: 8px;
 }
 
 .multi-day-event {
     padding-left: 5px;
-}
-
-.img-calendar {
-    width: 14px;
 }
   `,
 };

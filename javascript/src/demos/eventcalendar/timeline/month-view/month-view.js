@@ -74,6 +74,7 @@ export default {
           resource: 12,
         },
       ],
+
       resources: [
         {
           id: 1,

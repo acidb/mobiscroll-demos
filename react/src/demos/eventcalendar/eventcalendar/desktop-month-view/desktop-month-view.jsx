@@ -1,6 +1,10 @@
 import React from 'react';
-import { Page, Eventcalendar, getJson, Toast /* localeImport */ } from '@mobiscroll/react';
-import './desktop-month-view.css';
+//<demo-only>import { Page, Eventcalendar, getJson, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const getJson = mobiscroll.getJson;
+const Page = mobiscroll.Page;
+const Toast = mobiscroll.Toast; //</extra>
 
 function App() {
   const [myEvents, setEvents] = React.useState([]);

@@ -15,7 +15,6 @@ import {
   formatDate /* localeImport */,
 } from '@mobiscroll/react';
 import './restaurant-shift-management.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -2030,7 +2029,7 @@ function App() {
     return (
       <React.Fragment>
         <CalendarNav />
-        <div className="md-shift-header-controls">
+        <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
           {shiftTimes.map((cs: any) => {
             return (
               <Checkbox key={cs.id} value={cs.id} checked={cs.checked} disabled={cs.disabled} onChange={checkboxChange} theme="material">
@@ -2039,12 +2038,7 @@ function App() {
             );
           })}
         </div>
-        <Select
-          data={views}
-          value={selectedView}
-          onChange={viewChange}
-          inputProps={{ inputStyle: 'box', className: 'md-shift-cal-view' }}
-        />
+        <Select data={views} value={selectedView} onChange={viewChange} inputStyle="box" />
         <CalendarPrev />
         <CalendarToday />
         <CalendarNext />

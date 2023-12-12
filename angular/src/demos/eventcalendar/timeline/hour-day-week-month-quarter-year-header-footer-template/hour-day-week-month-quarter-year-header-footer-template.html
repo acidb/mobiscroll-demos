@@ -77,7 +77,7 @@
     </mbsc-eventcalendar>
   </div>
   <div class="mbsc-form-group">
-    <div class="mbsc-form-group-title">Quarter header template</div>
+    <div class="mbsc-form-group-title">Quarterly header template</div>
     <mbsc-eventcalendar
       [view]="quarterView"
       [data]="quarterEvents"
@@ -87,7 +87,7 @@
     >
       <ng-template #quarterTemp let-day>
         <div [ngClass]="'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(day)">
-          {{formatDate('MMM', day.date)}}
+          Quarter {{ (day.date.getMonth() / 3 + 1) }}
         </div>
       </ng-template>
       <ng-template #quarterFooterTemp let-day>

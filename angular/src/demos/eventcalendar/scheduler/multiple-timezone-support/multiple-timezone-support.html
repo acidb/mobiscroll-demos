@@ -1,10 +1,10 @@
 <mbsc-eventcalendar [data]="myEvents" [options]="eventSettings" [headerTemplate]="myHeaderTemplate" [displayTimezone]="timezone">
   <ng-template #myHeaderTemplate>
-    <mbsc-calendar-nav class="md-timezone-nav"></mbsc-calendar-nav>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
     <div class="md-timezone-header">
-      <mbsc-calendar-prev class="md-work-week-prev"></mbsc-calendar-prev>
-      <mbsc-calendar-today class="md-work-week-today"></mbsc-calendar-today>
-      <mbsc-calendar-next class="md-work-week-next"></mbsc-calendar-next>
+      <mbsc-calendar-prev></mbsc-calendar-prev>
+      <mbsc-calendar-today></mbsc-calendar-today>
+      <mbsc-calendar-next></mbsc-calendar-next>
       <mbsc-select [(ngModel)]="timezone" (onChange)="onChange($event)" [data]="timezones" inputStyle="box" [touchUi]="false"></mbsc-select>
     </div>
   </ng-template>

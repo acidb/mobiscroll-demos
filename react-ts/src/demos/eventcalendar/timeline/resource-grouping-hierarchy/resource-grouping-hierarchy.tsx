@@ -1,7 +1,6 @@
 import React from 'react';
 import { setOptions, Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
 import './resource-grouping-hierarchy.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -91,7 +90,6 @@ const App: React.FC = () => {
         id: 'res1',
         name: 'Resource 1',
         color: '#1dab2f',
-        fixed: true,
       },
       {
         id: 'res2',
@@ -172,36 +170,6 @@ const App: React.FC = () => {
         name: 'Resource 12',
         color: '#e25dd2',
       },
-      {
-        id: 'res13',
-        name: 'Resource 13',
-        color: '#4caf00',
-      },
-      {
-        id: 'res14',
-        name: 'Resource 14',
-        color: '#843100',
-      },
-      {
-        id: 'res15',
-        name: 'Resource 15',
-        color: '#843100',
-      },
-      {
-        id: 'res16',
-        name: 'Resource 16',
-        color: '#42bcf5',
-      },
-      {
-        id: 'res17',
-        name: 'Resource 17',
-        color: '#f542ef',
-      },
-      {
-        id: 'res18',
-        name: 'Resource 18',
-        color: '#f59b42',
-      },
     ];
   }, []);
 
@@ -222,7 +190,6 @@ const App: React.FC = () => {
       dragToCreate={true}
       dragToMove={true}
       dragToResize={true}
-      height={600}
       view={view}
       data={myEvents}
       resources={myResources}

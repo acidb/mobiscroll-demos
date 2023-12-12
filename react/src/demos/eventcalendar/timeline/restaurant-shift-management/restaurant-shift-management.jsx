@@ -1,16 +1,15 @@
 import React from 'react';
-import {
-  Eventcalendar,
-  CalendarNav,
-  CalendarPrev,
-  CalendarNext,
-  CalendarToday,
-  Select,
-  Checkbox,
-  setOptions,
-  formatDate /* localeImport */,
-} from '@mobiscroll/react';
-import './restaurant-shift-management.css';
+//<demo-only>import { Eventcalendar, CalendarNav, CalendarPrev, CalendarNext, CalendarToday, Select, Checkbox, setOptions, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const setOptions = mobiscroll.setOptions;
+const CalendarNav = mobiscroll.CalendarNav;
+const CalendarPrev = mobiscroll.CalendarPrev;
+const CalendarNext = mobiscroll.CalendarNext;
+const CalendarToday = mobiscroll.CalendarToday;
+const Select = mobiscroll.Select;
+const Checkbox = mobiscroll.Checkbox;
+const formatDate = mobiscroll.formatDate; //</extra>
 
 setOptions({
   // localeJs,
@@ -2026,7 +2025,7 @@ function App() {
     return (
       <React.Fragment>
         <CalendarNav />
-        <div className="md-shift-header-controls">
+        <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
           {shiftTimes.map((cs) => {
             return (
               <Checkbox key={cs.id} value={cs.id} checked={cs.checked} disabled={cs.disabled} onChange={checkboxChange} theme="material">
@@ -2035,12 +2034,7 @@ function App() {
             );
           })}
         </div>
-        <Select
-          data={views}
-          value={selectedView}
-          onChange={viewChange}
-          inputProps={{ inputStyle: 'box', className: 'md-shift-cal-view' }}
-        />
+        <Select data={views} value={selectedView} onChange={viewChange} inputStyle="box" />
         <CalendarPrev />
         <CalendarToday />
         <CalendarNext />

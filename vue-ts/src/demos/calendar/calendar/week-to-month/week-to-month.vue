@@ -22,10 +22,10 @@ const myCalendarType = ref<string>('week')
 
 <template>
   <MbscDatepicker
+    display="inline"
     :controls="['calendar']"
     :calendarType="myCalendarType"
     :calendarSize="1"
-    display="inline"
   >
     <template #header>
       <MbscCalendarNav class="custom-view-nav" />

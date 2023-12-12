@@ -14,8 +14,8 @@ setOptions({
 
 <template>
   <MbscPage>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Single select</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Single select</div>
       <MbscSegmentedGroup name="range">
         <MbscSegmented value="day">Day</MbscSegmented>
         <MbscSegmented value="week">Week</MbscSegmented>
@@ -23,8 +23,8 @@ setOptions({
         <MbscSegmented value="year" :defaultChecked="true">Year</MbscSegmented>
       </MbscSegmentedGroup>
     </div>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Multiple select</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Multiple select</div>
       <MbscSegmentedGroup name="days" select="multiple">
         <MbscSegmented value="sun" disabled>S</MbscSegmented>
         <MbscSegmented value="mon" :defaultChecked="true">M</MbscSegmented>
@@ -35,8 +35,8 @@ setOptions({
         <MbscSegmented value="sat" disabled>S</MbscSegmented>
       </MbscSegmentedGroup>
     </div>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Text and icon</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Text and icon</div>
       <MbscSegmentedGroup name="app">
         <MbscSegmented value="featured" icon="material-star" :defaultChecked="true"
           >Featured</MbscSegmented
@@ -45,8 +45,8 @@ setOptions({
         <MbscSegmented value="updates" icon="material-system-update">Updates</MbscSegmented>
       </MbscSegmentedGroup>
     </div>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Icon</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Icon</div>
       <MbscSegmentedGroup name="settings">
         <MbscSegmented value="reply" icon="fa-mail-reply" />
         <MbscSegmented value="retweet" icon="fa-retweet" />
@@ -54,8 +54,8 @@ setOptions({
         <MbscSegmented value="setting" icon="cogs" />
       </MbscSegmentedGroup>
     </div>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Disabled</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Disabled</div>
       <MbscSegmentedGroup name="org" disabled>
         <MbscSegmented value="individual" :defaultChecked="true">Idividual</MbscSegmented>
         <MbscSegmented value="team">Team</MbscSegmented>

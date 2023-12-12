@@ -1,3 +1,34 @@
-<script setup></script>
+<script setup>
+import { MbscDatepicker, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myResponsive = {
+  xsmall: {
+    display: 'bottom'
+  },
+  small: {
+    display: 'anchored'
+  },
+  custom: {
+    // Custom breakpoint
+    breakpoint: 800,
+    display: 'anchored',
+    touchUi: false
+  }
+}
+</script>
+
+<template>
+  <MbscDatepicker
+    :controls="['calendar']"
+    :responsive="myResponsive"
+    :showRangeLabels="true"
+    select="range"
+    labelStyle="stacked"
+    inputStyle="box"
+  />
+</template>

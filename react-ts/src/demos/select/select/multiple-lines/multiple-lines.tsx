@@ -1,7 +1,6 @@
 import React from 'react';
 import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './multiple-lines.css';
-
 setOptions({
   // localeJs,
   // themeJs

@@ -12,7 +12,6 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './multiple-timezone-support.css';
-
 import moment from 'moment-timezone';
 
 // setup Mobiscroll Timezone plugin with Moment
@@ -151,7 +150,7 @@ function App() {
   const myHeader = () => {
     return (
       <React.Fragment>
-        <CalendarNav className="md-timezone-nav" />
+        <CalendarNav />
         <div className="md-timezone-header">
           <CalendarPrev />
           <CalendarToday />

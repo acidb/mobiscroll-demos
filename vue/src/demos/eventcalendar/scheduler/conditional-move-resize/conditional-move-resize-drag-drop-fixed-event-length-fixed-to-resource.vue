@@ -112,13 +112,5 @@ const myResources = ref([
 </script>
 
 <template>
-  <MbscEventcalendar
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-    :dragToMove="true"
-    :dragToResize="true"
-    :dragInTime="true"
-    :dragBetweenResources="true"
-  />
+  <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources" :dragToMove="true" />
 </template>

@@ -14,7 +14,7 @@ setOptions({
 })
 
 const myEvents = ref<MbscCalendarEvent[]>([])
-const toastMessage = ref<string>(null)
+const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 
 const myView: MbscEventcalendarView = {
@@ -74,19 +74,11 @@ onMounted(() => {
   top: 7px;
 }
 
-.my-label {
-  height: 35px;
-}
-
 .single-day-event {
   margin-left: 8px;
 }
 
 .multi-day-event {
   padding-left: 5px;
-}
-
-.img-calendar {
-  width: 14px;
 }
 </style>

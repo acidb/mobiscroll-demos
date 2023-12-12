@@ -14,7 +14,7 @@ setOptions({
 })
 
 const myEvents = ref<MbscCalendarEvent[]>([])
-const toastMessage = ref<string>(null)
+const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 
 const myView: MbscEventcalendarView = {
@@ -45,10 +45,3 @@ onMounted(() => {
   <MbscEventcalendar :drag="drag" :view="myView" :data="myEvents" @event-click="handleEventClick" />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>
-
-<style>
-.md-extra-col {
-  position: absolute;
-  with: 10%;
-}
-</style>

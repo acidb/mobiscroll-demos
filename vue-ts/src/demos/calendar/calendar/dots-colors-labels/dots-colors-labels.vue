@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { MbscDatepicker, MbscPage, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarMarked, MbscCalendarColor, MbscCalendarLabel } from '@mobiscroll/vue'
 

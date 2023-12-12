@@ -14,7 +14,7 @@ function App() {
   ];
 
   React.useEffect(() => {
-    mobiscroll.util.http.getJson(
+    mobiscroll.getJson(
       'https://trial.mobiscroll.com//workday-events/?vers=5',
       (events) => {
         setEvents(events);

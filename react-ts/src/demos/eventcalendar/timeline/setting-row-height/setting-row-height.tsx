@@ -1,8 +1,6 @@
 import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, MbscCalendarEvent, MbscResource, setOptions/* localeImport */ } from '@mobiscroll/react';
 import './setting-row-height.css';
-
-
 setOptions({
     // localeJs,
     // themeJs

@@ -7,7 +7,7 @@ export default {
     });
 
     (function () {
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
       var doctors = [
         {
           id: 1,

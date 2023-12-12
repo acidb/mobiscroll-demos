@@ -2,16 +2,16 @@
   <ng-template #customTemplate>
     <mbsc-calendar-nav class="md-header-filter-nav"></mbsc-calendar-nav>
     <div class="md-header-filter-controls">
-      <mbsc-segmented-group select="multiple" [(ngModel)]="selected" (change)="filter($event)">
-        <mbsc-segmented [value]="1">
+      <mbsc-segmented-group select="multiple" [(ngModel)]="selected">
+        <mbsc-segmented [value]="1" (change)="filter(1)">
           <img class="md-header-filter-img" src="https://img.mobiscroll.com/demos/m1.png" />
           <span class="md-header-filter-name md-header-filter-name-1">Barry</span>
         </mbsc-segmented>
-        <mbsc-segmented [value]="2">
+        <mbsc-segmented [value]="2" (change)="filter(2)">
           <img class="md-header-filter-img" src="https://img.mobiscroll.com/demos/f1.png" />
           <span class="md-header-filter-name md-header-filter-name-2">Hortense</span>
         </mbsc-segmented>
-        <mbsc-segmented [value]="3">
+        <mbsc-segmented [value]="3" (change)="filter(3)">
           <img class="md-header-filter-img" src="https://img.mobiscroll.com/demos/m2.png" />
           <span class="md-header-filter-name md-header-filter-name-3">Carl</span>
         </mbsc-segmented>

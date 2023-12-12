@@ -1,8 +1,6 @@
 import React from 'react';
 import { Eventcalendar, getJson, Toast, MbscCalendarEvent, MbscEventcalendarView, setOptions, CalendarNav, SegmentedGroup, SegmentedItem, CalendarPrev, CalendarNext/* localeImport */ } from '@mobiscroll/react';
 import './resource-filtering-in-header.css';
-
-
 setOptions({
     // localeJs,
     // themeJs

@@ -17,9 +17,7 @@ import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
-  MbscEventCreateEvent,
   MbscEventCreatedEvent,
-  MbscEventDeleteEvent,
   MbscEventDeletedEvent
 } from '@mobiscroll/vue'
 
@@ -31,42 +29,42 @@ setOptions({
 const myEvents = ref<MbscCalendarEvent[]>([
   {
     id: 1,
-    start: '2023-03-08T13:00',
-    end: '2023-03-08T13:45',
+    start: 'dyndatetime(y,m,8,13)',
+    end: 'dyndatetime(y,m,8,13,45)',
     title: "Lunch @ Butcher's",
     description: '',
     allDay: false,
-    status: 'free',
+    free: true,
     color: '#009788'
   },
   {
     id: 2,
-    start: '2023-03-23T15:00',
-    end: '2023-03-23T16:00',
+    start: 'dyndatetime(y,m,d,15)',
+    end: 'dyndatetime(y,m,d,16)',
     title: 'General orientation',
     description: '',
     allDay: false,
-    status: 'busy',
+    free: false,
     color: '#ff9900'
   },
   {
     id: 3,
-    start: '2023-03-22T18:00',
-    end: '2023-03-22T22:00',
+    start: 'dyndatetime(y,m,d-1,18)',
+    end: 'dyndatetime(y,m,d-1,22)',
     title: 'Dexter BD',
     description: '',
     allDay: false,
-    status: 'free',
+    free: true,
     color: '#3f51b5'
   },
   {
     id: 4,
-    start: '2023-03-24T10:30',
-    end: '2023-03-24T11:30',
+    start: 'dyndatetime(y,m,d+1,10,30)',
+    end: 'dyndatetime(y,m,d+1,11,30)',
     title: 'Stakeholder mtg.',
     description: '',
     allDay: false,
-    status: 'busy',
+    free: false,
     color: '#f44437'
   }
 ])

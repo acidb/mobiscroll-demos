@@ -12,7 +12,6 @@ import {
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
 import './switching-day-week-month-view.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -67,7 +66,7 @@ const App: React.FC = () => {
     return (
       <React.Fragment>
         <CalendarNav className="cal-header-nav" />
-        <div className="cal-header-picker">
+        <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
           <SegmentedGroup value={view} onChange={changeView}>
             <SegmentedItem value="month" icon="material-event-note" />
             <SegmentedItem value="week" icon="material-date-range" />

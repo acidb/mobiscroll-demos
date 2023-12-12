@@ -1,16 +1,15 @@
 import React from 'react';
-import {
-  Eventcalendar,
-  getJson,
-  setOptions,
-  CalendarPrev,
-  CalendarNext,
-  CalendarToday,
-  Button,
-  Datepicker,
-  formatDate /* localeImport */,
-} from '@mobiscroll/react';
-import './custom-range-view.css';
+//<demo-only>import { Eventcalendar, getJson, setOptions, CalendarPrev, CalendarNext, CalendarToday, Button, Datepicker, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const getJson = mobiscroll.getJson;
+const setOptions = mobiscroll.setOptions;
+const CalendarPrev = mobiscroll.CalendarPrev;
+const CalendarNext = mobiscroll.CalendarNext;
+const CalendarToday = mobiscroll.CalendarToday;
+const Button = mobiscroll.Button;
+const formatDate = mobiscroll.formatDate;
+const Datepicker = mobiscroll.Datepicker; //</extra>
 
 setOptions({
   // localeJs,
@@ -109,7 +108,7 @@ function App() {
     setRangeVal([startDate.current, endDate.current]);
   }, [getNrDays]);
 
-  const onPageLoading = React.useCallback(
+  const onPageLoaded = React.useCallback(
     (args) => {
       const sDate = args.firstDay;
       const end = args.lastDay;
@@ -128,8 +127,16 @@ function App() {
     [getFormattedRange],
   );
 
+  const onSelectedDateChange = React.useCallback(
+    (event) => {
+      setCurrentDate(event.date);
+    },
+    [setCurrentDate],
+  );
+
   const buttonProps = React.useMemo(() => {
     const content = <span className="mbsc-calendar-title">{buttonText}</span>;
+
     return {
       children: content,
       className: 'mbsc-calendar-button',
@@ -180,7 +187,8 @@ function App() {
       view={calView}
       data={myEvents}
       resources={myResources}
-      onPageLoading={onPageLoading}
+      onPageLoaded={onPageLoaded}
+      onSelectedDateChange={onSelectedDateChange}
       refDate={refDate}
     />
   );

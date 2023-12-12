@@ -8,7 +8,7 @@ export default {
     });
 
     $(function () {
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
       var now = new Date();
       var endDate;
       var monthColors = [
@@ -201,7 +201,8 @@ export default {
           },
         ];
       }
-      mobiscroll.util.http.getJson(
+
+      mobiscroll.getJson(
         'https://trial.mobiscroll.com/getrentals/?year=' + now.getFullYear() + '&month=' + now.getMonth(),
         function (data) {
           var prices = data.prices;

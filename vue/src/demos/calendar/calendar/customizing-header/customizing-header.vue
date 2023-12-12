@@ -1,6 +1,71 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+import {
+  MbscDatepicker,
+  MbscCalendarPrev,
+  MbscCalendarNext,
+  MbscCalendarNav,
+  MbscCalendarToday,
+  MbscSegmentedGroup,
+  MbscSegmented,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myCalendarType = ref('week')
+</script>
+
+<template>
+  <MbscDatepicker :controls="['calendar']" :calendarSize="2" display="inline" calendarType="week" />
+
+  <MbscDatepicker :controls="['calendar']" display="inline">
+    <template #header>
+      <MbscCalendarPrev cssClass="custom-prev" />
+      <MbscCalendarNav cssClass="custom-nav" />
+      <MbscCalendarNext cssClass="custom-next" />
+    </template>
+  </MbscDatepicker>
+
+  <MbscDatepicker :controls="['calendar']" display="inline">
+    <template #header>
+      <MbscCalendarNav />
+      <div class="custom-buttons">
+        <MbscCalendarPrev />
+        <MbscCalendarToday />
+        <MbscCalendarNext />
+      </div>
+    </template>
+  </MbscDatepicker>
+
+  <MbscDatepicker
+    :controls="['calendar']"
+    :calendarSize="2"
+    :calendarType="myCalendarType"
+    display="inline"
+  >
+    <template #header>
+      <MbscCalendarNav cssClass="custom-view-nav" />
+      <div class="custom-view">
+        <MbscSegmentedGroup v-model="myCalendarType">
+          <MbscSegmented value="week" icon="material-date-range"></MbscSegmented>
+          <MbscSegmented value="month" icon="material-event-note"></MbscSegmented>
+        </MbscSegmentedGroup>
+      </div>
+    </template>
+  </MbscDatepicker>
+
+  <MbscDatepicker
+    :controls="['calendar']"
+    :calendarSize="2"
+    display="inline"
+    calendarType="week"
+    headerText="You selected {value}"
+  />
+</template>
 
 <style>
 .custom-buttons,

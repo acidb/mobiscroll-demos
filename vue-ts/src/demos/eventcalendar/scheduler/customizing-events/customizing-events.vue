@@ -33,8 +33,8 @@ const myResponsive: any = ref({
   }
 })
 
-const toastMessage = ref<String>(null)
-const isToastOpen = ref<Boolean>(false)
+const toastMessage = ref<string>('')
+const isToastOpen = ref<boolean>(false)
 
 const myView: MbscEventcalendarView = {
   calendar: { labels: true }

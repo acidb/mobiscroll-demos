@@ -1,6 +1,8 @@
 import React from 'react';
-import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './custom-resource-header-template.css';
+//<demo-only>import { Eventcalendar, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -15,8 +17,8 @@ function App() {
         allDay: false,
         startDay: 1,
         endDay: 5,
-        startTime: '08:00',
-        endTime: '17:00',
+        startTime: '05:00',
+        endTime: '22:00',
       },
     };
   }, []);

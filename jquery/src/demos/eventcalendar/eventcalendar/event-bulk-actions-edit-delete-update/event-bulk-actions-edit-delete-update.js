@@ -9,7 +9,7 @@ export default {
 
     $(function () {
       var confirmOpen, firstDay, lastDay, selectedEvent;
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
 
       function getSelectedEventTitles(events) {
         var eventTitles = [];

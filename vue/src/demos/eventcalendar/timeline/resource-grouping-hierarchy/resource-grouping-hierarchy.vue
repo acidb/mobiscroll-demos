@@ -86,8 +86,7 @@ const myResources = ref([
   {
     id: 'res1',
     name: 'Resource 1',
-    color: '#1dab2f',
-    fixed: true
+    color: '#1dab2f'
   },
   {
     id: 'res2',
@@ -167,36 +166,6 @@ const myResources = ref([
     id: 'res12',
     name: 'Resource 12',
     color: '#e25dd2'
-  },
-  {
-    id: 'res13',
-    name: 'Resource 13',
-    color: '#4caf00'
-  },
-  {
-    id: 'res14',
-    name: 'Resource 14',
-    color: '#843100'
-  },
-  {
-    id: 'res15',
-    name: 'Resource 15',
-    color: '#843100'
-  },
-  {
-    id: 'res16',
-    name: 'Resource 16',
-    color: '#42bcf5'
-  },
-  {
-    id: 'res17',
-    name: 'Resource 17',
-    color: '#f542ef'
-  },
-  {
-    id: 'res18',
-    name: 'Resource 18',
-    color: '#f59b42'
   }
 ])
 
@@ -214,7 +183,6 @@ const myView = {
     :dragToCreate="true"
     :dragToMove="true"
     :dragToResize="true"
-    :height="600"
     :view="myView"
     :data="myEvents"
     :resources="myResources"

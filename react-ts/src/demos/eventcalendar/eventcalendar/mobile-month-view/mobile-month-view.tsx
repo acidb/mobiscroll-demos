@@ -8,7 +8,6 @@ import {
   MbscEventClickEvent /* localeImport */,
 } from '@mobiscroll/react';
 import './mobile-month-view.css';
-
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);

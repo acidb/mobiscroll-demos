@@ -1,7 +1,6 @@
 import React from 'react';
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
 import './load-inline-data.css';
-
 const now = new Date();
 const myEvents: MbscCalendarEvent[] = [
   {

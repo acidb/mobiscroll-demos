@@ -30,14 +30,14 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/custom-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
-      this.filterEvents(resp, this.selected);
+      this.filterEvents();
     });
   }
 
-  filterEvents = (events: MbscCalendarEvent[], selected: number[]) => {
+  filterEvents = () => {
     const ev = [];
-    for (const item of events) {
-      if (selected.indexOf(item.participant) > -1) {
+    for (const item of this.myEvents) {
+      if (this.selected.indexOf(item.participant) > -1) {
         if (item.participant === 1) {
           item.color = '#328e39';
         } else if (item.participant === 2) {
@@ -51,12 +51,15 @@ export class AppComponent implements OnInit {
     this.filteredEvents = ev;
   };
 
-  filter(): void {
-    this.filterEvents(this.myEvents, this.selected);
+  filter(value: any): void {
+    this.filterEvents();
     this.notify.toast({
       //<hidden>
       // theme,//</hidden>
-      message: 'Showing Barry events',
+      message:
+        (this.selected.find((item) => +item === value) ? 'Showing ' : 'Hiding ') +
+        document.querySelector('.md-header-filter-name-' + value).textContent +
+        ' events',
     });
   }
 }

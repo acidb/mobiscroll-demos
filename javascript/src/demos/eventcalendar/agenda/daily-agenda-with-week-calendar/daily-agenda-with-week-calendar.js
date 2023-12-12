@@ -5,7 +5,7 @@ export default {
       // locale,
       // theme,
       view: {
-        schedule: { type: 'week' },
+        calendar: { type: 'week' },
         agenda: { type: 'day' },
       },
       onEventClick: function (event, inst) {

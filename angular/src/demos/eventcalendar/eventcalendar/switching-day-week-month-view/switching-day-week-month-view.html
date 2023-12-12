@@ -2,7 +2,7 @@
   <mbsc-eventcalendar [data]="myEvents" [view]="calView" [headerTemplate]="customTemplate">
     <ng-template #customTemplate>
       <mbsc-calendar-nav class="cal-header-nav"></mbsc-calendar-nav>
-      <div class="cal-header-picker">
+      <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
         <mbsc-segmented-group [(ngModel)]="view" (change)="changeView()">
           <mbsc-segmented value="month" icon="material-event-note"></mbsc-segmented>
           <mbsc-segmented value="week" icon="material-date-range"></mbsc-segmented>

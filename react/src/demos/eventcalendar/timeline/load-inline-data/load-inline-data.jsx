@@ -1,5 +1,7 @@
 import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Eventcalendar/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;//</extra>
 
 const now = new Date();
 const myEvents = [

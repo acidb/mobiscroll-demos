@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { setOptions, MbscEventcalendarView, MbscCalendarEvent, Notifications /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
@@ -8,8 +8,6 @@ setOptions({
 
 @Component({
   selector: 'drag-drop-between-calendar-instances',
-  styleUrl: './drag-drop-between-calendar-instances.css',
-  encapsulation: ViewEncapsulation.None,
   templateUrl: './drag-drop-between-calendar-instances.html',
   providers: [Notifications],
 })
@@ -172,7 +170,7 @@ export class AppComponent {
     },
   ];
 
-  handleFirstCalEventCreated(args: any) {
+  handleFirstCalEventCreated(args: any, calendar: string) {
     if (args.action === 'externalDrop') {
       this.notify.toast({
         //<hidden>
@@ -183,7 +181,7 @@ export class AppComponent {
     }
   }
 
-  handleSecondCalEventCreated(args: any) {
+  handleSecondCalEventCreated(args: any, calendar: string) {
     if (args.action === 'externalDrop') {
       this.notify.toast({
         //<hidden>

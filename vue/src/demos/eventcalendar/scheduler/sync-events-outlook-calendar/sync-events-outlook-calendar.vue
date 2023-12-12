@@ -1,6 +1,341 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscEventcalendar,
+  MbscPage,
+  MbscCalendarNav,
+  MbscCalendarPrev,
+  MbscCalendarNext,
+  MbscCalendarToday,
+  MbscButton,
+  MbscSwitch,
+  MbscToast,
+  MbscConfirm,
+  outlookCalendarSync,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myEvents = ref([])
+const isEditable = ref(false)
+const isLoggedIn = ref(false)
+const isLoading = ref(false)
+const isHidden = ref(true)
+const calendarIds = ref([])
+const myCalendars = ref([])
+const startDate = ref(null)
+const endDate = ref(null)
+const debounce = ref(null)
+const calendarData = ref({})
+const primaryCalendarId = ref('')
+const toastMessage = ref('')
+const isToastOpen = ref(false)
+const confirmTitle = ref('')
+const confirmMessage = ref('')
+const confirmOkText = ref('')
+const isConfirmOpen = ref(false)
+const confirmCallback = ref(null)
+
+const myView = {
+  schedule: { type: 'week' }
+}
+
+function myDefaultEvent() {
+  return { color: calendarData.value[primaryCalendarId.value].color }
+}
+
+function onError(resp) {
+  toastMessage.value = resp.error ? resp.error : resp.result.error.message
+  isToastOpen.value = true
+}
+
+function toggleCalendars(ev, calendarId) {
+  const checked = ev.target.checked
+  calendarData.value[calendarId].checked = checked
+
+  if (checked) {
+    isLoading.value = true
+    calendarIds.value = [...calendarIds.value, calendarId]
+    outlookCalendarSync
+      .getEvents([calendarId], startDate.value, endDate.value)
+      .then((events) => {
+        isLoading.value = false
+        myEvents.value = [...myEvents.value, ...events]
+      })
+      .catch(onError)
+  } else {
+    calendarIds.value = calendarIds.value.filter((id) => id !== calendarId)
+    myEvents.value = myEvents.value.filter((item) => item.outlookCalendarId !== calendarId)
+  }
+}
+
+function logOut() {
+  outlookCalendarSync.signOut().catch((error) => {
+    onError(error)
+  })
+}
+
+function logIn() {
+  if (!outlookCalendarSync.isSignedIn()) {
+    outlookCalendarSync.signIn().catch((error) => {
+      onError(error)
+    })
+  }
+}
+
+function handlePageLoading(args) {
+  clearTimeout(debounce.value)
+  startDate.value = args.viewStart
+  endDate.value = args.viewEnd
+  debounce.value = setTimeout(() => {
+    if (outlookCalendarSync.isSignedIn()) {
+      isLoading.value = true
+      outlookCalendarSync
+        .getEvents(calendarIds.value, startDate.value, endDate.value)
+        .then((events) => {
+          isLoading.value = false
+          myEvents.value = events
+        })
+        .catch(onError)
+    }
+  }, 200)
+}
+
+function handleEventCreate(args) {
+  if (outlookCalendarSync.isSignedIn()) {
+    const event = args.event
+
+    outlookCalendarSync
+      .addEvent(primaryCalendarId.value, event)
+      .then((newEvent) => {
+        newEvent.color = event.color
+        myEvents.value = [...myEvents.value.filter((item) => item.id !== event.id), newEvent]
+        toastMessage.value =
+          'Event created in "' + calendarData.value[primaryCalendarId.value].name + '" calendar'
+        isToastOpen.value = true
+      })
+      .catch((error) => {
+        myEvents.value = myEvents.value.filter((item) => item.id !== event.id)
+        onError(error)
+      })
+  }
+}
+function handleEventUpdate(args) {
+  if (outlookCalendarSync.isSignedIn()) {
+    confirmTitle.value = 'Are you sure you want to update this event?'
+    confirmMessage.value = 'This action will affect your Outlook Calendar event.'
+    confirmOkText.value = 'Update'
+    confirmCallback.value = function (result) {
+      const event = args.event
+      if (result) {
+        const calendarId = event.outlookCalendarId
+        outlookCalendarSync
+          .updateEvent(calendarId, event)
+          .then(() => {
+            myEvents.value = myEvents.value.filter((item) => item.id !== event.id)
+            toastMessage.value =
+              'Event updated on "' + calendarData.value[calendarId].name + '" calendar'
+            isToastOpen.value = true
+          })
+          .catch((error) => {
+            myEvents.value = myEvents.value.filter((item) => item.id !== event.id)
+            myEvents.value = [
+              ...myEvents.value.filter((item) => item.id !== event.id),
+              args.oldEvent
+            ]
+            onError(error)
+          })
+      } else {
+        myEvents.value = [...myEvents.value.filter((item) => item.id !== event.id), args.oldEvent]
+      }
+    }
+  }
+  isConfirmOpen.value = true
+}
+function handleEventDelete(args) {
+  if (outlookCalendarSync.isSignedIn()) {
+    confirmTitle.value = 'Are you sure you want to delete this event?'
+    confirmMessage.value = 'This action will remove the event from your Outlook Calendar as well.'
+    confirmOkText.value = 'Delete'
+    confirmCallback.value = function (result) {
+      if (result) {
+        const event = args.event
+        const calendarId = event.outlookCalendarId
+        outlookCalendarSync
+          .deleteEvent(calendarId, event)
+          .then(() => {
+            myEvents.value = myEvents.value.filter((item) => item.id !== event.id)
+            toastMessage.value =
+              'Event deleted from "' + calendarData.value[calendarId].name + '" calendar'
+            isToastOpen.value = true
+          })
+          .catch(onError)
+      }
+    }
+    isConfirmOpen.value = true
+  }
+  return false
+}
+
+function handleToastClose() {
+  isToastOpen.value = false
+}
+
+function handleConfirmClose() {
+  isConfirmOpen.value = false
+}
+
+onMounted(() => {
+  function onSignedIn() {
+    isLoggedIn.value = true
+    outlookCalendarSync
+      .getCalendars()
+      .then((calendars) => {
+        calendars.sort((c) => (c.isDefaultCalendar ? -1 : 1))
+
+        const calData = {}
+        const primaryCalId = calendars[0].id
+
+        for (const c of calendars) {
+          calData[c.id] = {
+            name: c.name,
+            color: c.hexColor,
+            checked: c.id === primaryCalId
+          }
+        }
+
+        calendarIds.value = [primaryCalId]
+        primaryCalendarId.value = primaryCalId
+        calendarData.value = calData
+        myCalendars.value = calendars
+        isLoading.value = true
+
+        return outlookCalendarSync.getEvents([primaryCalId], startDate.value, endDate.value)
+      })
+      .then((events) => {
+        myEvents.value = events
+        isLoading.value = false
+      })
+      .catch(onError)
+  }
+
+  const onSignedOut = () => {
+    isLoggedIn.value = false
+    myCalendars.value = []
+    calendarIds.value = []
+    calendarData.value = {}
+    myEvents.value = []
+  }
+
+  isHidden.value = false
+
+  // init outlook client
+  outlookCalendarSync.init({
+    clientId: '<YOUR_OUTLOOK_CLIENT_ID>',
+    redirectUri: '<YOUR_OUTLOOK_REDIRECT_URI>',
+    onSignedIn: onSignedIn,
+    onSignedOut: onSignedOut
+  })
+})
+</script>
+
+<template>
+  <MbscPage className="md-sync-events-outlook-cont" :class="{ 'md-loading-events': isLoading }">
+    <div :class="{ 'md-sync-events-outlook-menu': true, 'mbsc-hidden': isHidden }">
+      <template v-if="!isLoggedIn">
+        <div class="mbsc-form-group-inset mbsc-align-center" :aria-hidden="isLoggedIn">
+          <p class="mbsc-italic mbsc-txt-muted">
+            Log into your Outlook account to view and edit your Outlook Calendar events
+          </p>
+          <MbscButton @click="logIn()" className="mbsc-reset md-sync-events-outlook-button">
+            Sign in with Outlook
+          </MbscButton>
+        </div>
+      </template>
+      <template v-if="isLoggedIn">
+        <div :aria-hidden="!isLoggedIn">
+          <div class="mbsc-form-group-inset mbsc-align-center">
+            <p class="mbsc-italic mbsc-txt-muted">
+              Editing events sync back to your calendar when enabled. You'll be asked for
+              confirmation on every action.
+            </p>
+          </div>
+          <div class="mbsc-form-group-inset">
+            <MbscSwitch label="Enable editing" v-model="isEditable" />
+          </div>
+          <div class="mbsc-form-group-inset md-sync-events-outlook-inset">
+            <div class="mbsc-form-group-title">My Calendars</div>
+            <template v-for="cal in myCalendars" :key="cal.id">
+              <MbscSwitch
+                :label="cal.name"
+                v-model="calendarData[cal.id].checked"
+                @change="toggleCalendars($event, cal.id)"
+              />
+            </template>
+          </div>
+          <div class="mbsc-form-group-inset">
+            <MbscButton className="mbsc-button-block" @click="logOut()">
+              Log out of my account
+            </MbscButton>
+          </div>
+        </div>
+      </template>
+    </div>
+    <div class="md-sync-events-outlook-calendar" :class="{ 'md-loading-events': isLoading }">
+      <div class="md-sync-events-overlay"></div>
+      <MbscEventcalendar
+        :view="myView"
+        :data="myEvents"
+        :exclusiveEndDates="true"
+        :extendDefaultEvent="myDefaultEvent"
+        :clickToCreate="isEditable"
+        :dragToCreate="isEditable"
+        :dragToMove="isEditable"
+        :dragToResize="isEditable"
+        @page-loading="handlePageLoading"
+        @event-create="handleEventCreate"
+        @event-update="handleEventUpdate"
+        @event-deleted="handleEventDelete"
+      >
+        <template #header>
+          <MbscCalendarNav />
+          <div class="md-spinner">
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+            <div class="md-spinner-blade"></div>
+          </div>
+          <div class="md-outlook-calendar-header">
+            <MbscCalendarPrev />
+            <MbscCalendarToday />
+            <MbscCalendarNext />
+          </div>
+        </template>
+      </MbscEventcalendar>
+    </div>
+  </MbscPage>
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+  <MbscConfirm
+    :title="confirmTitle"
+    :message="confirmMessage"
+    :okText="confirmOkText"
+    :isOpen="isConfirmOpen"
+    :callback="confirmCallback"
+    @close="handleConfirmClose"
+  />
+</template>
 
 <style>
 .md-sync-events-outlook-cont.mbsc-page {

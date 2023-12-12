@@ -1,30 +1,40 @@
 import React from 'react';
 import {
-  Eventcalendar,
   Draggable,
   Dropcontainer,
-  setOptions,
-  toast,
-  MbscEventcalendarView,
+  Eventcalendar,
+  MbscCalendarColor,
   MbscCalendarEvent,
-  MbscResource /* localeImport */,
+  MbscEventcalendarView,
+  MbscEventCreateEvent,
+  MbscEventCreatedEvent,
+  MbscEventCreateFailedEvent,
+  MbscEventDeleteEvent,
+  MbscEventUpdateFailedEvent,
+  MbscItemDragEvent,
+  MbscResource,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
 import './doctors-appointment.css';
-
 setOptions({
   // localeJs,
-  // themeJsa
+  // themeJs
 });
 
-function Appointment(props: any) {
-  const [draggable, setDraggable] = React.useState<any>();
+const now = new Date();
+const today = new Date(now.setMinutes(59));
+const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
-  const setDragElm = React.useCallback((elm) => {
+const Appointment: React.FC<{ data: MbscCalendarEvent }> = (props) => {
+  const [draggable, setDraggable] = React.useState<HTMLElement | null>();
+
+  const setDragElm = React.useCallback((elm: HTMLElement | null) => {
     setDraggable(elm);
   }, []);
 
   const event = props.data;
-  const eventLength = Math.abs(new Date(event.end).getTime() - new Date(event.start).getTime()) / (60 * 60 * 1000);
+  const eventLength = Math.abs(new Date(event.end as string).getTime() - new Date(event.start as string).getTime()) / (60 * 60 * 1000);
 
   return (
     <div>
@@ -37,9 +47,66 @@ function Appointment(props: any) {
       )}
     </div>
   );
-}
+};
 
 const App: React.FC = () => {
+  const doctors = React.useMemo<MbscResource[]>(
+    () => [
+      {
+        id: 1,
+        name: 'Dr. Keila Delores',
+      },
+      {
+        id: 2,
+        name: 'Dr. Gene Cortez',
+      },
+      {
+        id: 3,
+        name: 'Dr. Paula Bush',
+      },
+      {
+        id: 4,
+        name: 'Dr. Pete Nichols',
+      },
+      {
+        id: 5,
+        name: 'Dr. Jean Pearson',
+      },
+      {
+        id: 6,
+        name: 'Dr. Thelma Cain',
+      },
+    ],
+    [],
+  );
+
+  const view = React.useMemo<MbscEventcalendarView>(() => {
+    return {
+      schedule: {
+        type: 'day',
+        startTime: '08:00',
+        endTime: '20:00',
+        allDay: false,
+      },
+    };
+  }, []);
+
+  const myInvalid = React.useMemo(
+    () => [
+      {
+        recurring: {
+          repeat: 'daily',
+          until: yesterday,
+        },
+      },
+      {
+        start: yesterday,
+        end: today,
+      },
+    ],
+    [],
+  );
+
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([
     {
       id: 'job1',
@@ -115,34 +182,6 @@ const App: React.FC = () => {
     },
   ]);
 
-  const doctors: MbscResource[] = [
-    {
-      id: 1,
-      name: 'Dr. Keila Delores',
-    },
-    {
-      id: 2,
-      name: 'Dr. Gene Cortez',
-    },
-    {
-      id: 3,
-      name: 'Dr. Paula Bush',
-    },
-    {
-      id: 4,
-      name: 'Dr. Pete Nichols',
-    },
-    {
-      id: 5,
-      name: 'Dr. Jean Pearson',
-      color: '#8f1ed6',
-    },
-    {
-      id: 6,
-      name: 'Dr. Thelma Cain',
-    },
-  ];
-
   const [appointments, setAppointments] = React.useState<MbscCalendarEvent[]>([
     {
       id: 'd1',
@@ -182,72 +221,56 @@ const App: React.FC = () => {
     },
   ]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
-      schedule: {
-        type: 'day',
-        startTime: '08:00',
-        endTime: '20:00',
-        allDay: false,
-      },
-    };
-  }, []);
+  const [contBg, setContBg] = React.useState('');
+  const [myColors, setColors] = React.useState<MbscCalendarColor[]>([]);
+  const [dropCont, setDropCont] = React.useState<HTMLElement | null>();
+  const [toastMessage, setToastMessage] = React.useState('');
+  const [isToastOpen, setToastOpen] = React.useState(false);
 
-  const myInvalid = [
-    {
-      recurring: {
-        repeat: 'daily',
-        until: yesterday,
-      },
-    },
-    {
-      start: yesterday,
-      end: today,
-    },
-  ];
-
-  const [contBg, setContBg] = React.useState<string>('');
-  const [myColors, setColors] = React.useState<any>([]);
-  const [dropCont, setDropCont] = React.useState<any>();
-
-  const hasOverlap = React.useCallback((event, inst) => {
-    const events = inst.getEvents(event.start, event.end).filter((e) => e.id !== event.id && e.resource === event.resource);
-    return events.length > 0;
-  });
-
-  const setDropElm = React.useCallback((elm) => {
+  const setDropElm = React.useCallback((elm: HTMLElement | null) => {
     setDropCont(elm);
   }, []);
 
-  const onEventCreate = React.useCallback(
-    (args: any) => {
-      const event = args.event;
-      event.unscheduled = false;
-      setColors([]);
+  const onEventCreate = React.useCallback((args: MbscEventCreateEvent) => {
+    const event = args.event;
+    event.unscheduled = false;
+    setColors([]);
+  }, []);
 
-      if (hasOverlap(event, inst)) {
-        toast({
-          message: 'Make sure not to double book',
-        });
-        return false;
-      } else if (!(today < event.start)) {
-        toast({
-          message: "Can't add event in the past",
-        });
-      } else {
-        toast({
-          message: args.event.title + ' added',
-        });
-        setAppointments(appointments.filter((item) => item.id !== event.id));
-      }
+  const onEventCreated = React.useCallback((args: MbscEventCreatedEvent) => {
+    setToastMessage(args.event.title + ' added');
+    setToastOpen(true);
+    setEvents((prevEvents) => [...prevEvents, args.event]);
+    setAppointments((prevAppointments) => prevAppointments.filter((item) => item.id !== args.event.id));
+  }, []);
+
+  const handleFailed = React.useCallback((event: MbscCalendarEvent) => {
+    if (event.start! <= today) {
+      setToastMessage("Can't add event in the past");
+    } else {
+      setToastMessage('Make sure not to double book');
+    }
+    setToastOpen(true);
+  }, []);
+
+  const onEventCreateFailed = React.useCallback(
+    (args: MbscEventCreateFailedEvent) => {
+      handleFailed(args.event);
     },
-    [appointments],
+    [handleFailed],
   );
 
-  const onEventDelete = React.useCallback((args: any) => {
-    toast({
-      message: args.event.title + ' unscheduled',
-    });
+  const onEventUpdateFailed = React.useCallback(
+    (args: MbscEventUpdateFailedEvent) => {
+      handleFailed(args.event);
+    },
+    [handleFailed],
+  );
+
+  const onEventDelete = React.useCallback((args: MbscEventDeleteEvent) => {
+    setToastMessage(args.event.title + ' unscheduled');
+    setToastOpen(true);
+    setEvents((prevEvents) => prevEvents.filter((item) => item.id !== args.event.id));
   }, []);
 
   const onEventDragEnter = React.useCallback(() => {
@@ -267,18 +290,15 @@ const App: React.FC = () => {
     setColors([]);
   }, []);
 
-  const onItemDrop = React.useCallback(
-    (args: any) => {
-      if (args.data) {
-        args.data.unscheduled = true;
-        setAppointments([...appointments, args.data]);
-      }
-      setContBg('');
-    },
-    [appointments],
-  );
+  const onItemDrop = React.useCallback((args: MbscItemDragEvent) => {
+    if (args.data) {
+      args.data.unscheduled = true;
+      setAppointments((prevAppointments) => [...prevAppointments, args.data]);
+    }
+    setContBg('');
+  }, []);
 
-  const onItemDragEnter = React.useCallback((args: any) => {
+  const onItemDragEnter = React.useCallback((args: MbscItemDragEvent) => {
     if (!(args.data && args.data.unscheduled)) {
       setContBg('#d0e7d2cc');
     }
@@ -288,15 +308,19 @@ const App: React.FC = () => {
     setContBg('');
   }, []);
 
+  const onToastClose = React.useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
   React.useEffect(() => {
     for (const event of myEvents) {
       // convert dates to date objects
-      event.start = event.start ? new Date(event.start) : event.start;
-      event.end = event.end ? new Date(event.end) : event.end;
+      event.start = event.start ? new Date(event.start as string) : event.start;
+      event.end = event.end ? new Date(event.end as string) : event.end;
       // mark past events as fixed by setting the event.editable property to false
-      event.editable = event.start && today < event.start;
+      event.editable = !!(event.start && today < event.start);
     }
-  }, []);
+  }, [myEvents]);
 
   return (
     <div className="mbsc-grid mbsc-no-padding">
@@ -309,14 +333,19 @@ const App: React.FC = () => {
             invalid={myInvalid}
             dragToMove={true}
             dragToCreate={true}
+            eventOverlap={false}
             externalDrop={true}
             externalDrag={true}
             colors={myColors}
             onEventCreate={onEventCreate}
+            onEventCreated={onEventCreated}
+            onEventCreateFailed={onEventCreateFailed}
+            onEventUpdateFailed={onEventUpdateFailed}
             onEventDelete={onEventDelete}
             onEventDragEnter={onEventDragEnter}
             onEventDragLeave={onEventDragLeave}
           />
+          <Toast isOpen={isToastOpen} message={toastMessage} onClose={onToastClose} />
         </div>
         <div className="mbsc-col-sm-3 docs-appointment-cont" ref={setDropElm} style={{ backgroundColor: contBg }}>
           <Dropcontainer onItemDrop={onItemDrop} onItemDragEnter={onItemDragEnter} onItemDragLeave={onItemDragLeave} element={dropCont}>

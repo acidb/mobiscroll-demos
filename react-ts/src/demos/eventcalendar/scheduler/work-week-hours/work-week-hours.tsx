@@ -9,7 +9,6 @@ import {
   MbscEventCreateFailedEvent /* localeImport */,
 } from '@mobiscroll/react';
 import './work-week-hours.css';
-
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);

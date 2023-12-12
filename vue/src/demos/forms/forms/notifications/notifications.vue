@@ -43,9 +43,9 @@ const actionButton = {
 
 <template>
   <MbscPage>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Toast</div>
-      <div className="mbsc-button-group-block">
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Toast</div>
+      <div class="mbsc-button-group-block">
         <MbscToast
           message="Message sent"
           :isOpen="isBottomToastOpen"
@@ -103,9 +103,9 @@ const actionButton = {
         <MbscButton @click="isInfoToastOpen = true">Info toast</MbscButton>
       </div>
     </div>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Snackbar</div>
-      <div className="mbsc-button-group-block">
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Snackbar</div>
+      <div class="mbsc-button-group-block">
         <MbscSnackbar
           message="Your draft has been discarded"
           :isOpen="isBottomSnackbarOpen"

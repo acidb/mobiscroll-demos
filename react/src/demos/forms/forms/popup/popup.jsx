@@ -1,15 +1,15 @@
 import React from 'react';
-import {
-  setOptions,
-  Page,
-  Popup,
-  Button,
-  Input,
-  Textarea,
-  Switch,
-  SegmentedGroup,
-  SegmentedItem /* localeImport */,
-} from '@mobiscroll/react';
+//<demo-only>import { setOptions, Page, Popup, Button, Input, Textarea, Switch, SegmentedGroup, SegmentedItem/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const setOptions = mobiscroll.setOptions;
+const Page = mobiscroll.Page;
+const Popup = mobiscroll.Popup;
+const Button = mobiscroll.Button;
+const Input = mobiscroll.Input;
+const Textarea = mobiscroll.Textarea;
+const Switch = mobiscroll.Switch;
+const SegmentedGroup = mobiscroll.SegmentedGroup;
+const SegmentedItem = mobiscroll.SegmentedItem; //</extra>
 
 setOptions({
   // localeJs,
@@ -59,7 +59,9 @@ function App() {
           <Input label="Starts" />
           <Input label="Ends" />
           <SegmentedGroup>
-            <SegmentedItem value="busy">Show as busy</SegmentedItem>
+            <SegmentedItem value="busy" defaultChecked={true}>
+              Show as busy
+            </SegmentedItem>
             <SegmentedItem value="free">Show as free</SegmentedItem>
           </SegmentedGroup>
         </div>

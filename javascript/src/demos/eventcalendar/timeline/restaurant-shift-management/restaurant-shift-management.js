@@ -1596,7 +1596,7 @@ calendar = mobiscroll.eventcalendar('#demo-restaurant-shift-management', {
     },
     renderHeader: function () {
         return '<div mbsc-calendar-nav></div>' +
-            '<div class="md-shift-header-controls">' +
+            '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">' +
             '<label>Night' +
             '<input mbsc-checkbox type="checkbox" data-theme="material" class="md-shift-filter" value="1" checked>' +
             '</label>' +
@@ -1612,7 +1612,7 @@ calendar = mobiscroll.eventcalendar('#demo-restaurant-shift-management', {
             '<label>After hours' +
             '<input mbsc-checkbox type="checkbox" data-theme="material" class="md-shift-filter" value="5" checked>' +
             '</label>' +
-            '<label class="md-shift-cal-view">' +
+            '<label>' +
             '<input mbsc-input id="shift-management-view" data-dropdown="true" data-input-style="box" />' +
             '</label>' +
             '<select id="shift-management-select">' +
@@ -1688,7 +1688,7 @@ function getShiftsNrs(date, slotId) {
 }
 
 function formatDate(date) {
-    return mobiscroll.util.datetime.formatDate('YYYY-MM-DD', new Date(date));
+    return mobiscroll.formatDate('YYYY-MM-DD', new Date(date));
 }
 
 mobiscroll.select('#shift-management-select', {
@@ -1778,26 +1778,20 @@ css: `
     height: 40px;
 }
 
-.md-shift-header-controls {
-    flex: 1 0 auto;
-    display: flex;
-    justify-content: end;
-}
-
-.md-shift-header-controls .mbsc-checkbox {
+.md-shift-management-calendar .mbsc-checkbox {
     padding: 18px 0 18px 45px;
 }
 
-.md-shift-cal-view.mbsc-textfield-wrapper {
+.md-shift-management-calendar .mbsc-textfield-wrapper {
     margin: 12px 12px 12px 28px;
 }
 
-.md-shift-cal-view .mbsc-select.mbsc-textfield {
+.md-shift-management-calendar .mbsc-select.mbsc-textfield {
     height: 32px;
     width: 120px;
 }
 
-.md-shift-cal-view .mbsc-icon.mbsc-select-icon {
+.md-shift-management-calendar .mbsc-icon.mbsc-select-icon {
     width: 20px;
     height: 20px;
     top: 7px;

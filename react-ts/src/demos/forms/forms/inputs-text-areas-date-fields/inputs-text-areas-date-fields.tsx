@@ -15,7 +15,7 @@ const App: React.FC = () => {
         <div className="mbsc-form-group-title">Single-line text</div>
         <Input label="Label" placeholder="Text field label" />
         <Input label="Password" type="password" placeholder="Password field with icon" startIcon="lock2" />
-        <Input label="Password Toggle" type="password" placeholder="Password field with icon" startIcon="lock2" passwordToggle="true" />
+        <Input label="Password Toggle" type="password" placeholder="Password field with icon" startIcon="lock2" passwordToggle={true} />
         <Input placeholder="Text field with right icon" endIcon="pencil" />
         <Input placeholder="Text field disabled" disabled={true} />
         <Input placeholder="Text field with error style" error={true} />

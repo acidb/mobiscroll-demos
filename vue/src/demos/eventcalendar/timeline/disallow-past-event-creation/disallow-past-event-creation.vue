@@ -16,7 +16,7 @@ const now = new Date()
 const today = new Date(now.setMinutes(59))
 const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
 const myEvents = ref([])
-const toastMessage = ref(null)
+const toastMessage = ref('')
 const isToastOpen = ref(false)
 
 const myView = {

@@ -1,6 +1,96 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscEventcalendar,
+  setOptions,
+  getJson,
+  formatDate /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myEvents = ref([])
+
+const myResources = [
+  {
+    id: 1,
+    name: 'Green Hall'
+  },
+  {
+    id: 2,
+    name: 'White Hall'
+  },
+  {
+    id: 3,
+    name: 'Red Hall'
+  },
+  {
+    id: 4,
+    name: 'Blue Hall'
+  },
+  {
+    id: 5,
+    name: 'Yellow Hall'
+  }
+]
+
+const myView = {
+  timeline: {
+    type: 'week',
+    startDay: 1,
+    endDay: 5,
+    startTime: '08:00',
+    endTime: '20:00',
+    resolutionHorizontal: 'hour',
+    resolutionVertical: 'day'
+  }
+}
+
+function myDefaultEvent() {
+  return {
+    title: 'New class',
+    prof: 'Stacia Jaden',
+    class: 'Junior',
+    color: '#ff0000'
+  }
+}
+
+onMounted(() => {
+  getJson(
+    'https://trial.mobiscroll.com/timetable-events/',
+    (events) => {
+      myEvents.value = events
+    },
+    'jsonp'
+  )
+})
+</script>
+
+<template>
+  <MbscEventcalendar
+    className="md-timetable"
+    :drag="drag"
+    :view="myView"
+    :data="myEvents"
+    :resources="myResources"
+    :extendDefaultEvent="myDefaultEvent"
+  >
+    <template #day="day">
+      <div class="md-timetable-day">
+        <div class="md-timetable-day-name">{{ formatDate('DDDD', day.date) }}</div>
+        <div>{{ formatDate('MM/DD/YYY', day.date) }}</div>
+      </div>
+    </template>
+    <template #scheduleEventContent="event">
+      <div class="md-timetable-event-title">{{ event.title }}</div>
+      <div class="md-timetable-event-prop">Prof. {{ event.original.prof }}</div>
+      <div class="md-timetable-event-class">{{ event.original.class }} year</div>
+    </template>
+  </MbscEventcalendar>
+</template>
 
 <style>
 .md-timetable .mbsc-timeline-row-date-col {

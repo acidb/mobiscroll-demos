@@ -1,7 +1,6 @@
 import React from 'react';
 import { Eventcalendar, setOptions, getJson, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
 import './synchronized-views.css';
-
 setOptions({
   // localeJs,
   // themeJs

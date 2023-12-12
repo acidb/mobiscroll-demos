@@ -1,6 +1,15 @@
 import React from 'react';
-import { Page, Input, Popup, Select, Datepicker, Button, formatDate, setOptions, options /* localeImport */ } from '@mobiscroll/react';
-import './date-filtering-with-predefined-ranges.css';
+//<demo-only>import { Page, Input, Popup, Select, Datepicker, Button, formatDate, setOptions, options /* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const setOptions = mobiscroll.setOptions;
+const options = mobiscroll.options;
+const Page = mobiscroll.Page;
+const Input = mobiscroll.Input;
+const Popup = mobiscroll.Popup;
+const Select = mobiscroll.Select;
+const Datepicker = mobiscroll.Datepicker;
+const Button = mobiscroll.Button;
+const formatDate = mobiscroll.formatDate; //</extra>
 
 setOptions({
   // localeJs,

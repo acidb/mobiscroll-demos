@@ -12,7 +12,6 @@ import {
   formatDate /* localeImport */,
 } from '@mobiscroll/react';
 import './employee-shifts.css';
-
 setOptions({
   // localeJs,
   // themeJs

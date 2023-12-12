@@ -9,7 +9,7 @@ export default {
     document.getElementById('show-alert').addEventListener('click', function () {
       mobiscroll.alert({
         title: 'Cellular Data is Turned Off for "Safari"',
-        message: 'You can turn on cellular data for this app in Settings.',
+        message: `You can turn on cellular data for \n\r this app in Settings.`,
       });
     });
 

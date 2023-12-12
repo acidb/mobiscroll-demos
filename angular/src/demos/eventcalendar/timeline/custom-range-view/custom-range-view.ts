@@ -72,20 +72,23 @@ export class AppComponent implements OnInit {
         color: '#d6d145',
       },
     ],
-    onPageLoading: (args) => {
+    onPageLoaded: (args) => {
       const end = args.lastDay;
       this.startDate = args.firstDay;
       this.endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1, 0);
-      // set button text
-      this.rangeText = this.getFormattedRange(this.startDate, this.endDate);
-      // set range value
-      this.rangeValue = [this.startDate, this.endDate];
-      // navigate the calendar
-      this.selectedDate = this.startDate;
+
+      setTimeout(() => {
+        // set button text
+        this.rangeText = this.getFormattedRange(this.startDate, this.endDate);
+        // set range value
+        this.rangeValue = [this.startDate, this.endDate];
+        // navigate the calendar
+        this.selectedDate = this.startDate;
+      });
     },
   };
 
-  onClose(args: any): void {
+  onClose(): void {
     const date = this.rangeValue;
     if (date[0] && date[1]) {
       // navigate the calendar

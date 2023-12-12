@@ -1,6 +1,10 @@
 import React from 'react';
-import { Button, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './responsive.css';
+//<demo-only>import { Button, Input, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const setOptions = mobiscroll.setOptions;
+const Button = mobiscroll.Button;
+const Input = mobiscroll.Input;
+const Page = mobiscroll.Page; //</extra>
 
 setOptions({
   // localeJs,

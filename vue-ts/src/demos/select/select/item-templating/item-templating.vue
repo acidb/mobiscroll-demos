@@ -85,17 +85,17 @@ const myData = ref([
     placeholder="Please select..."
   >
     <template #item="item">
-      <div className="md-item-template">
+      <div class="md-item-template">
         <img
-          className="md-item-template-img"
+          class="md-item-template-img"
           :src="'https://img.mobiscroll.com/demos/' + item.data.img + '.png'"
           alt="Cover"
         />
-        <div className="md-item-template-title">
+        <div class="md-item-template-title">
           <span>{{ item.data.text }}</span>
-          <span className="md-item-template-year">{{ ' (' + item.data.year + ')' }}</span>
+          <span class="md-item-template-year">{{ ' (' + item.data.year + ')' }}</span>
         </div>
-        <div className="md-item-template-artist">{{ 'by ' + item.data.artist }}</div>
+        <div class="md-item-template-artist">{{ 'by ' + item.data.artist }}</div>
       </div>
     </template>
   </MbscSelect>

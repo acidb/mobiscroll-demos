@@ -41,8 +41,4 @@ export class AppComponent implements OnInit {
       this.myEvents = resp;
     });
   }
-
-  logData(data) {
-    console.log(data);
-  }
 }

@@ -10,7 +10,6 @@ import {
   MbscResourceData /* localeImport */,
 } from '@mobiscroll/react';
 import './dynamic-add-remove-resources-filter.css';
-
 setOptions({
   // localeJs,
   // themeJs

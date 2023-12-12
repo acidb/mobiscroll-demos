@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'desktop-month-view',
-  styleUrl: './desktop-month-view.css',
-  encapsulation: ViewEncapsulation.None,
   templateUrl: './desktop-month-view.html',
   providers: [Notifications],
 })

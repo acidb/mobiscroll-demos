@@ -57,7 +57,6 @@ const myView: MbscEventcalendarView = {
 
 <template>
   <MbscEventcalendar
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :timezonePlugin="momentTimezone"

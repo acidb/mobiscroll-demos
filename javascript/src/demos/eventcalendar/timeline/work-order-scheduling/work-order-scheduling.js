@@ -396,7 +396,7 @@ export default {
         });
       },
       renderDay: function (args) {
-        var formatDate = mobiscroll.util.datetime.formatDate;
+        var formatDate = mobiscroll.formatDate;
         var events = args.events;
         var costs = 0;
 

@@ -14,7 +14,6 @@ import {
   snackbar,
 } from '@mobiscroll/react';
 import './work-order-scheduling.css';
-
 setOptions({
   theme: 'ios',
   themeVariant: 'light',
@@ -561,7 +560,7 @@ const App: React.FC = () => {
                               checked={checkedResources.indexOf(r.id) > -1}
                               onChange={checkboxChange}
                               theme="material"
-                              className="work-order-checkbox-label"
+                              className="md-work-order-checkbox-label"
                             >
                               {r.name}
                             </Checkbox>

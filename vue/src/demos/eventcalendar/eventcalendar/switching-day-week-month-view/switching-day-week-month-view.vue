@@ -64,7 +64,7 @@ onMounted(() => {
   <MbscEventcalendar :drag="drag" :view="myView" :data="myEvents">
     <template #header>
       <MbscCalendarNav />
-      <div class="cal-header-picker">
+      <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
         <MbscSegmentedGroup v-model="view" @change="changeView()">
           <MbscSegmented value="month" icon="material-event-note"></MbscSegmented>
           <MbscSegmented value="week" icon="material-date-range"></MbscSegmented>

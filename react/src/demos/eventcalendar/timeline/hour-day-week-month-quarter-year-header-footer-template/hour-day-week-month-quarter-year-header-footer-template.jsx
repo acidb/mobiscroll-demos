@@ -1,6 +1,9 @@
 import React from 'react';
-import { Eventcalendar, setOptions, formatDate /* localeImport */ } from '@mobiscroll/react';
-import './hour-day-week-month-quarter-year-header-footer-template.css';
+//<demo-only>import { Eventcalendar, setOptions, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const setOptions = mobiscroll.setOptions;
+const formatDate = mobiscroll.formatDate; //</extra>
 
 setOptions({
   // localeJs,
@@ -721,7 +724,7 @@ function App() {
   const renderCustomQuarter = (args) => {
     return (
       <div className={'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(args.events)}>
-        {formatDate('MMM', args.date)}
+        Quarter {args.date.getMonth() / 3 + 1}
       </div>
     );
   };
@@ -785,7 +788,7 @@ function App() {
         />
       </div>
       <div className="mbsc-form-group">
-        <div className="mbsc-form-group-title">Quarter header template</div>
+        <div className="mbsc-form-group-title">Quarterly header template</div>
         <Eventcalendar
           view={quarterView}
           data={quarterEvents}

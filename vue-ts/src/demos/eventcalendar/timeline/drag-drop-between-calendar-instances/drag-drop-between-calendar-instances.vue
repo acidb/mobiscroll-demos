@@ -214,8 +214,8 @@ const secondResources = ref<MbscResource[]>([
   }
 ])
 
-const toastContext = ref<string>(null)
-const toastMessage = ref<string>(null)
+const toastContext = ref<string>('')
+const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 
 function handleFirstCalEventCreated(args: MbscEventCreatedEvent) {
@@ -279,18 +279,3 @@ function handleToastClose() {
     </div>
   </MbscPage>
 </template>
-
-<style>
-.md-drag-drop-first-calendar {
-  border-bottom: 3px dashed #e4e4e4;
-}
-
-.md-drag-drop-calendar {
-  min-height: 500px;
-  height: 100%;
-}
-
-.md-drag-drop-calendar .mbsc-form-group-title {
-  font-size: 1em;
-}
-</style>

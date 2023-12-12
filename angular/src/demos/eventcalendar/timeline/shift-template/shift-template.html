@@ -6,7 +6,7 @@
   class="md-shift-template"
 >
   <ng-template #slotTemp let-args>
-    <div class="md-employees-cont" [ngStyle]="{background: args.slot.id ? '#a5ceff4d' : '#f7f7bb4d', padding:'4px'}">
+    <div class="md-employees-cont" [ngStyle]="{background: args.slot.id === 1 ? '#a5ceff4d' : '#f7f7bb4d', padding:'4px'}">
       <div class="slot-name">{{args.slot.name}}</div>
       <div class="slot-time">{{args.slot.id === 1 ? '7am - 1pm' : '12pm - 6pm'}}</div>
     </div>

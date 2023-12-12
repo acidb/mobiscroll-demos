@@ -47,7 +47,7 @@ export default {
         tooltip.open();
       }
 
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
       var doctors = [
         {
           id: 1,

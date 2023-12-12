@@ -21,15 +21,9 @@ const App: React.FC = () => {
   };
   return (
     <Page>
-      <label>
-        <Input label="Title" placeholder="Name of the event" />
-      </label>
-      <label>
-        <Input label="Location" placeholder="Where will it be?" />
-      </label>
-      <label>
-        <Switch label="All day" value={allDay} onChange={controlChange} />
-      </label>
+      <Input label="Title" placeholder="Name of the event" />
+      <Input label="Location" placeholder="Where will it be?" />
+      <Switch label="All day" value={allDay} onChange={controlChange} />
       <Datepicker controls={controls} select="range" startInput={start} endInput={end} />
       <Input ref={setStart} label="Start" placeholder="Event start" />
       <Input ref={setEnd} label="End " placeholder="Event end" />

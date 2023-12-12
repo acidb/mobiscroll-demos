@@ -1,15 +1,14 @@
 import React from 'react';
-import {
-  Datepicker,
-  CalendarPrev,
-  CalendarNav,
-  CalendarNext,
-  CalendarToday,
-  SegmentedGroup,
-  SegmentedItem,
-  setOptions /* localeImport */,
-} from '@mobiscroll/react';
-import './customizing-header.css';
+//<demo-only>import { Datepicker, CalendarPrev, CalendarNav, CalendarNext, CalendarToday, SegmentedGroup, SegmentedItem, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const CalendarPrev = mobiscroll.CalendarPrev;
+const CalendarNav = mobiscroll.CalendarNav;
+const CalendarNext = mobiscroll.CalendarNext;
+const CalendarToday = mobiscroll.CalendarToday;
+const SegmentedGroup = mobiscroll.SegmentedGroup;
+const SegmentedItem = mobiscroll.SegmentedItem;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -59,17 +58,17 @@ function App() {
   };
   return (
     <div>
-      <Datepicker controls={['calendar']} display="inline" calendarType="week" weeks={2} />
+      <Datepicker controls={['calendar']} display="inline" calendarType="week" calendarSize={2} />
       <Datepicker controls={['calendar']} display="inline" renderCalendarHeader={calendarHeaderCustom} />
       <Datepicker controls={['calendar']} display="inline" renderCalendarHeader={calendarHeaderToday} />
       <Datepicker
         controls={['calendar']}
         display="inline"
         calendarType={calendarType}
-        weeks={2}
+        calendarSize={2}
         renderCalendarHeader={calendarHeaderSwitch}
       />
-      <Datepicker controls={['calendar']} display="inline" calendarType="week" weeks={2} headerText="You selected {value}" />
+      <Datepicker controls={['calendar']} display="inline" calendarType="week" calendarSize={2} headerText="You selected {value}" />
     </div>
   );
 }

@@ -37,7 +37,7 @@ export class AppComponent {
     'set',
   ];
 
-  changeTripType(ev: any): void {
+  changeTripType(): void {
     this.buttons = [
       'cancel',
       {

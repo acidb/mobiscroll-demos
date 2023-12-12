@@ -11,14 +11,6 @@ setOptions({
 const myResources = ref<MbscResource[]>([
   {
     // base properties
-    fixed: true,
-    id: 'room',
-    name: 'Main hall',
-    // add any property you'd like
-    title: 'Conference room'
-  },
-  {
-    // base properties
     id: 'team',
     name: 'Team 1',
     eventCreation: false,
@@ -76,51 +68,6 @@ const myResources = ref<MbscResource[]>([
         // add any property you'd like
         title: 'Product Tactics Agent',
         job: 'Titus Project'
-      },
-      {
-        // base properties
-        id: 7,
-        name: 'Phil',
-        color: '#1ac38d',
-        // add any property you'd like
-        title: 'UX Designer',
-        job: 'Titus Project'
-      },
-      {
-        // base properties
-        id: 8,
-        name: 'Vic',
-        color: '#1ac38d',
-        // add any property you'd like
-        title: 'Product Developer',
-        job: 'Yorick Project'
-      },
-      {
-        // base properties
-        id: 9,
-        name: 'Pam',
-        color: '#1ac38d',
-        // add any property you'd like
-        title: 'Help Desk Specialist',
-        job: 'Apollo Project'
-      },
-      {
-        // base properties
-        id: 10,
-        name: 'Suzie',
-        color: '#1ac38d',
-        // add any property you'd like
-        title: 'Data Analyst',
-        job: 'Apollo Project'
-      },
-      {
-        // base properties
-        id: 11,
-        name: 'Nina',
-        color: '#1ac38d',
-        // add any property you'd like
-        title: 'Network Administrator',
-        job: 'Titus Project'
       }
     ]
   }
@@ -153,13 +100,7 @@ const myView: MbscEventcalendarView = {
 </script>
 
 <template>
-  <MbscEventcalendar
-    :drag="drag"
-    :view="myView"
-    :data="myData"
-    :resources="myResources"
-    :height="600"
-  >
+  <MbscEventcalendar :drag="drag" :view="myView" :data="myData" :resources="myResources">
     <template #resource="resource">
       <div>{{ resource.name }}</div>
       <div v-if="!resource.isParent" class="md-resource-data-structure-title">

@@ -14,6 +14,12 @@ export default {
       onCellClick: function (event, inst) {
         // Logic for event click
       },
+      onCellHoverIn: function (event, inst) {
+        // Logic for handling cell hover in
+      },
+      onCellHoverOut: function (event, inst) {
+        // Logic for handling cell hover out
+      },
       onChange: function (event, inst) {
         // Logic for value change
       },

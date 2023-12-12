@@ -2,6 +2,7 @@
 import { MbscSelect, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
+  // locale,
   // theme
 })
 

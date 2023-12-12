@@ -1,18 +1,17 @@
 import React from 'react';
-import {
-  Eventcalendar,
-  snackbar,
-  setOptions,
-  Popup,
-  Button,
-  Input,
-  Textarea,
-  formatDate,
-  getJson,
-  SegmentedGroup,
-  SegmentedItem /* localeImport */,
-} from '@mobiscroll/react';
-import './meal-planner.css';
+//<demo-only>import { Eventcalendar, snackbar, setOptions, Popup, Button, Input, Textarea, formatDate, getJson, SegmentedGroup, SegmentedItem/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const snackbar = mobiscroll.snackbar;
+const setOptions = mobiscroll.setOptions;
+const Popup = mobiscroll.Popup;
+const Button = mobiscroll.Button;
+const Input = mobiscroll.Input;
+const Textarea = mobiscroll.Textarea;
+const formatDate = mobiscroll.formatDate;
+const getJson = mobiscroll.getJson;
+const SegmentedGroup = mobiscroll.SegmentedGroup;
+const SegmentedItem = mobiscroll.SegmentedItem; //</extra>
 
 setOptions({
   // localeJs,

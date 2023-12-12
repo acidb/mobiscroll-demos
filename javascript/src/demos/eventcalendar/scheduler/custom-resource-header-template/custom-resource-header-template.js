@@ -6,7 +6,7 @@ export default {
       // theme
     });
 
-    var calendar = mobiscroll.eventcalendar('#demo-custom-resource-header-template', {
+    mobiscroll.eventcalendar('#demo-custom-resource-header-template', {
       view: {
         schedule: {
           type: 'week',

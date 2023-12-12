@@ -1,10 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscEventcalendarOptions, MbscEventcalendarView, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import { Component, OnInit } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+
+setOptions({
+  // locale,
+  // theme,
+});
 
 @Component({
   selector: 'empty-state',
-  styleUrl: './empty-state.css',
-  encapsulation: ViewEncapsulation.None,
   templateUrl: './empty-state.html',
   providers: [Notifications],
 })
@@ -34,11 +37,6 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  myOptions: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
-  };
-
   myView: MbscEventcalendarView = {
     calendar: { type: 'week' },
     agenda: { type: 'week' },
@@ -46,9 +44,7 @@ export class AppComponent implements OnInit {
 
   displayToast(): void {
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
-      message: 'Add button clicked!',
+      message: 'Add button clicked',
     });
   }
 }

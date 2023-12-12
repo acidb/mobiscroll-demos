@@ -10,7 +10,6 @@ import {
   MbscCalendarEvent /* localeImport */,
 } from '@mobiscroll/react';
 import './external-drag-drop-schedule-unschedule.css';
-
 setOptions({
   // localeJs,
   // themeJs

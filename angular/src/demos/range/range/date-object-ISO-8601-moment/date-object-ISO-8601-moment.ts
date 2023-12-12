@@ -17,15 +17,15 @@ export class AppComponent {
   momentJs: any;
 
   setDate(): void {
-    this.date = new Date(2020, 10, 15, 10, 45);
+    this.date = [new Date(2020, 10, 15), new Date(2020, 10, 21)];
   }
 
   setISO(): void {
-    this.iso = '2020-05-20T12:30:00';
+    this.iso = ['2020-05-20', '2020-05-26'];
   }
 
   setMoment(): void {
     // make sure that moment js is loaded
-    this.momentJs = moment([2020, 2, 6, 15, 30]);
+    this.momentJs = [moment([2020, 2, 6]), moment([2020, 2, 12])];
   }
 }

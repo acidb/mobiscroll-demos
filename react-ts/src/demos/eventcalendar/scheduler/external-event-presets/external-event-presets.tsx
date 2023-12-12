@@ -5,13 +5,12 @@ import {
   Popup,
   Input,
   Textarea,
-  Dropdown,
+  Select,
   setOptions,
   Toast,
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './external-event-presets.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -60,6 +59,16 @@ const tasks = [
     end: '12:30',
     length: '4.5 h',
   },
+];
+
+const myData = [
+  { value: '1', text: 'Roly Chester' },
+  { value: '2', text: 'Tucker Wayne' },
+  { value: '3', text: 'Baker Brielle' },
+  { value: '4', text: 'Jami Walter' },
+  { value: '5', text: 'Patrick Toby' },
+  { value: '6', text: 'Tranter Logan' },
+  { value: '7', text: 'Payton Sinclair' },
 ];
 
 function Task(props) {
@@ -131,8 +140,13 @@ const App: React.FC = () => {
     [fillDialog],
   );
 
-  const eventUpdateFail = React.useCallback(() => {
+  const eventCreateFail = React.useCallback(() => {
     setToastText("Can't create event on this date");
+    setToastOpen(true);
+  }, []);
+
+  const eventUpdateFail = React.useCallback(() => {
+    setToastText("Can't add event on this date");
     setToastOpen(true);
   }, []);
 
@@ -140,6 +154,10 @@ const App: React.FC = () => {
     setOpen(false);
     setToastText('New task added');
     setToastOpen(true);
+  }, []);
+
+  const changeSelected = React.useCallback((event: any) => {
+    setTechnician(event.value);
   }, []);
 
   const closeToast = React.useCallback(() => {
@@ -156,7 +174,7 @@ const App: React.FC = () => {
             dragToMove={true}
             externalDrop={true}
             onEventCreated={onEventCreated}
-            onEventCreateFailed={eventUpdateFail}
+            onEventCreateFailed={eventCreateFail}
             onEventUpdateFailed={eventUpdateFail}
           />
         </div>
@@ -180,15 +198,15 @@ const App: React.FC = () => {
           <div className="mbsc-form-group">
             <Input label="Task" defaultValue={title} readOnly></Input>
             <Textarea label="Details" defaultValue={details} placeholder="Add description..."></Textarea>
-            <Dropdown label="Technician" defaultValue={technician}>
-              <option value="Roly">Roly Chester</option>
-              <option value="Tucker">Tucker Wayne</option>
-              <option value="Baker">Baker Brielle</option>
-              <option value="Jami">Jami Walter</option>
-              <option value="Patrick">Patrick Toby</option>
-              <option value="Tranter">Tranter Logan</option>
-              <option value="Payton">Payton Sinclair</option>
-            </Dropdown>
+            <Select
+              data={myData}
+              value={technician}
+              onChange={changeSelected}
+              display="anchored"
+              touchUi={false}
+              label="Technician"
+              inputProps={{ placeholder: 'Please select...' }}
+            />
           </div>
         </Popup>
       </div>

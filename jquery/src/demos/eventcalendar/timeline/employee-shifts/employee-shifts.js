@@ -14,7 +14,7 @@ export default {
       var oldShift;
       var tempShift;
       var deleteShift;
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
       var $notes = $('#employee-shifts-notes');
       var $deleteButton = $('#employee-shifts-delete');
 

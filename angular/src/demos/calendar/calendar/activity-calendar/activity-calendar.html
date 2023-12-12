@@ -10,7 +10,7 @@
         <div class="wedge" [ngStyle]="{transform: getActivity(day) ? getTransform(getDeg(getActivity(day).move).rotate2) : ''}"></div>
       </div>
       <div class="marker start"></div>
-      <div class="marker end" [ngStyle]="{transform: a ? getTransform(a.move) : ''}"></div>
+      <div class="marker end" [ngStyle]="{transform: getActivity(day) ? getTransform(getActivity(day).move) : ''}"></div>
     </div>
     <div [ngClass]="{'dial exercise ': getActivity(day)}">
       <div class="dial-background" [ngStyle]="{background: getActivity(day) ? '#4a6915' : ''}"></div>
@@ -21,7 +21,7 @@
         <div class="wedge" [ngStyle]="{transform: getActivity(day) ? getTransform(getDeg(getActivity(day).exercise).rotate2) : ''}"></div>
       </div>
       <div class="marker start"></div>
-      <div class="marker end" [ngStyle]="{transform: a ? getTransform(a.exercise) : ''}"></div>
+      <div class="marker end" [ngStyle]="{transform: getActivity(day) ? getTransform(getActivity(day).exercise) : ''}"></div>
     </div>
     <div [ngClass]="{'dial stand ': getActivity(day)}">
       <div class="dial-background" [ngStyle]="{background: getActivity(day) ? '#157b76' : ''}"></div>
@@ -32,7 +32,7 @@
         <div class="wedge" [ngStyle]="{transform: getActivity(day) ? getTransform(getDeg(getActivity(day).stand).rotate2) : ''}"></div>
       </div>
       <div class="marker start"></div>
-      <div class="marker end" [ngStyle]="{transform: a ? getTransform(a.stand) : ''}"></div>
+      <div class="marker end" [ngStyle]="{transform: getActivity(day) ? getTransform(getActivity(day).stand) : ''}"></div>
     </div>
   </div>
 </ng-template>

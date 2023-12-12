@@ -6,7 +6,13 @@
     labelStyle="stacked"
     placeholder="Please Select..."
   ></mbsc-datepicker>
-  <mbsc-datepicker [(ngModel)]="testDate" (onChange)="onChangeHandler($event)" [controls]="['date', 'time']"></mbsc-datepicker>
+  <mbsc-datepicker
+    [controls]="['date', 'time']"
+    label="Expanded date & time picker"
+    inputStyle="outline"
+    labelStyle="stacked"
+    placeholder="Please Select..."
+  ></mbsc-datepicker>
 
   <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">

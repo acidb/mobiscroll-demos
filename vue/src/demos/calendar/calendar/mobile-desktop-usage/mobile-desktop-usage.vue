@@ -20,12 +20,6 @@ const inputProps = {
   placeholder: 'Please Select...'
 }
 
-const boxInputProps = {
-  className: 'md-mobile-picker-box-label',
-  inputStyle: 'box',
-  placeholder: 'Please Select...'
-}
-
 function openPicker() {
   isPickerOpen.value = true
 }
@@ -91,6 +85,7 @@ function handleClose() {
               className="md-mobile-picker-box-label"
               inputStyle="box"
               placeholder="Please Select..."
+            />
             />
           </div>
         </div>

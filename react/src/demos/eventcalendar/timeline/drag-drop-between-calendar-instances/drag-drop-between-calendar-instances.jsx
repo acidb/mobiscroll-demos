@@ -1,6 +1,9 @@
 import React from 'react';
-import { Eventcalendar, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './drag-drop-between-calendar-instances.css';
+//<demo-only>import { Eventcalendar, Toast, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Toast = mobiscroll.Toast;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,

@@ -17,13 +17,6 @@ export default {
       },
     });
 
-    console.log('here', inst);
-
-    document.getElementById('shot').addEventListener('click', () => {
-      console.log('inst', inst);
-      console.log('here', new Date(inst._viewDate), new Date(inst._selectedDateTime));
-    });
-
     mobiscroll.getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       function (events) {
@@ -33,7 +26,6 @@ export default {
     );
   },
   markup: `
-<div id="demo-desktop-day-view" style="height: 500px"></div>
-<button id="shot">shot</button>
+<div id="demo-desktop-day-view"></div>
   `,
 };

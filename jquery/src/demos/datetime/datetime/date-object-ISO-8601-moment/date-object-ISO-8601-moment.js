@@ -12,7 +12,6 @@ export default {
           .mobiscroll()
           .datepicker({
             controls: ['date'],
-            select: 'range',
             onChange: function (event, inst) {
               updateValue('returnVal', inst);
             },
@@ -22,7 +21,6 @@ export default {
           .mobiscroll()
           .datepicker({
             controls: ['date'],
-            select: 'range',
             returnFormat: 'iso8601',
             onChange: function (event, inst) {
               updateValue('returnISO', inst);
@@ -33,7 +31,6 @@ export default {
           .mobiscroll()
           .datepicker({
             controls: ['date'],
-            select: 'range',
             returnFormat: 'moment',
             onChange: function (event, inst) {
               updateValue('returnMoment', inst);

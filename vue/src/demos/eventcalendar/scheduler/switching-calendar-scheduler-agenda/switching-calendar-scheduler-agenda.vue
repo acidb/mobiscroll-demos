@@ -1,6 +1,100 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscEventcalendar,
+  MbscCalendarToday,
+  MbscCalendarNav,
+  MbscCalendarPrev,
+  MbscCalendarNext,
+  MbscSegmentedGroup,
+  MbscSegmented,
+  getJson,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const myEvents = ref([])
+const view = ref('month')
+const myView = ref({
+  calendar: {
+    labels: true
+  }
+})
+
+function changeView() {
+  let calView
+
+  switch (view.value) {
+    case 'year':
+      calView = {
+        calendar: { type: 'year' }
+      }
+      break
+    case 'month':
+      calView = {
+        calendar: { labels: true }
+      }
+      break
+    case 'week':
+      calView = {
+        schedule: { type: 'week' }
+      }
+      break
+    case 'day':
+      calView = {
+        schedule: { type: 'day' }
+      }
+      break
+    case 'agenda':
+      calView = {
+        calendar: { type: 'week' },
+        agenda: { type: 'week' }
+      }
+      break
+  }
+
+  myView.value = calView
+}
+
+onMounted(() => {
+  getJson(
+    'https://trial.mobiscroll.com/events/?vers=5',
+    (events) => {
+      myEvents.value = events
+    },
+    'jsonp'
+  )
+})
+</script>
+
+<template>
+  <MbscEventcalendar
+    className="md-switching-view-cont"
+    :view="myView"
+    :data="myEvents"
+    :height="750"
+  >
+    <template #header>
+      <MbscCalendarNav className="cal-header-nav" />
+      <div className="cal-header-picker">
+        <MbscSegmentedGroup v-model="view" @change="changeView">
+          <MbscSegmented value="year"> Year </MbscSegmented>
+          <MbscSegmented value="month"> Month </MbscSegmented>
+          <MbscSegmented value="week"> Week </MbscSegmented>
+          <MbscSegmented value="day"> Day </MbscSegmented>
+          <MbscSegmented value="agenda"> Agenda </MbscSegmented>
+        </MbscSegmentedGroup>
+      </div>
+      <MbscCalendarPrev className="cal-header-prev" />
+      <MbscCalendarToday className="cal-header-today" />
+      <MbscCalendarNext className="cal-header-next" />
+    </template>
+  </MbscEventcalendar>
+</template>
 
 <style>
 .md-switching-view-cont .mbsc-segmented {

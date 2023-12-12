@@ -1,5 +1,9 @@
 import React from 'react';
-import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Datepicker, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const Page = mobiscroll.Page;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,
@@ -14,7 +18,7 @@ function App() {
         inputProps={{
           label: 'Date',
           labelStyle: 'stacked',
-          inputStyle: 'outline',
+          inputStyle: 'box',
           placeholder: 'Please Select...',
         }}
         onCancel={(event, inst) => {

@@ -15,7 +15,6 @@ import {
   CalendarNext,
 } from '@mobiscroll/react';
 import './timezone-meeting-planner.css';
-
 import moment from 'moment-timezone';
 
 momentTimezone.moment = moment;

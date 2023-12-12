@@ -1,5 +1,10 @@
 import React from 'react';
-import { Select, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Select, Button, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Select = mobiscroll.Select;
+const Page = mobiscroll.Page;
+const Button = mobiscroll.Button;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,

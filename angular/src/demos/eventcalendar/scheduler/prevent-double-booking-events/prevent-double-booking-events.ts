@@ -26,11 +26,12 @@ const d = now.getDate();
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  settings: MbscEventcalendarOptions = {
+  myOptions: MbscEventcalendarOptions = {
+    clickToCreate: true,
     dragToCreate: true,
     dragToMove: true,
     dragToResize: true,
-    clickToCreate: true,
+    eventOverlap: true,
     onEventUpdateFailed: () => {
       this.notify.toast({
         message: 'Make sure not to double book',
@@ -104,7 +105,7 @@ export class AppComponent {
     },
   ];
 
-  view: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     schedule: { type: 'day' },
   };
 }

@@ -1,6 +1,12 @@
 import React from 'react';
-import { Eventcalendar, setOptions, Popup, Button, formatDate, Toast /* localeImport */ } from '@mobiscroll/react';
-import './custom-event-tooltip.css';
+//<demo-only>import { Eventcalendar, setOptions, Popup, Button, formatDate, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Toast = mobiscroll.Toast;
+const setOptions = mobiscroll.setOptions;
+const Popup = mobiscroll.Popup;
+const Button = mobiscroll.Button;
+const formatDate = mobiscroll.formatDate; //</extra>
 
 setOptions({
   // localeJs,

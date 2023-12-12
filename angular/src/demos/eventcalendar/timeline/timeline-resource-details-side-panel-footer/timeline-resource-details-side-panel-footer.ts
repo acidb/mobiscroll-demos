@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { setOptions, MbscEventcalendarView, MbscCalendarEvent, MbscResource, Notifications /* localeImport */ } from '@mobiscroll/angular';
+import { setOptions, MbscEventcalendarView, MbscCalendarEvent, MbscResource /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
 setOptions({
@@ -14,13 +14,9 @@ const oneDay = 60000 * 60 * 24;
   styleUrl: './timeline-resource-details-side-panel-footer.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-resource-details-side-panel-footer.html',
-  providers: [Notifications],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private http: HttpClient,
-    private notify: Notifications,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   @ViewChild('mycalendar', { static: false })
   mycalendar: any;

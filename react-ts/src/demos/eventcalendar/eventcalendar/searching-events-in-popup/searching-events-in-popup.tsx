@@ -15,7 +15,6 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './searching-events-in-popup.css';
-
 setOptions({
   // localeJs,
   // themeJs

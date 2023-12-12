@@ -88,7 +88,6 @@ export class AppComponent implements OnInit {
   popupEventAllDay = true;
   popupEventDates: any;
   calendarSelectedDate: any = new Date();
-  switchLabel: any = 'All-day';
   myEvents: MbscCalendarEvent[] = [
     {
       id: 1,
@@ -689,7 +688,7 @@ export class AppComponent implements OnInit {
           item.text = 'Monthly on the ' + ordinalList[weekNr] + ' ' + days[weekday].name;
           break;
         case 'yearly-pos':
-          item.text = 'Annually on the ' + ordinalList[weekNr] + ' ' + days[weekday].name + ' of ' + this.months[d.getMonth()];
+          item.text = 'Annually on the ' + ordinalList[weekNr] + ' ' + days[weekday].name + ' of ' + this.months[d.getMonth()].text;
           break;
         default:
       }

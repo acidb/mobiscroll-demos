@@ -282,8 +282,8 @@ const myEvents = ref([
 ])
 
 const myView = {
-  agenda: {
-    calendar: 'week'
+  calendar: {
+    type: 'week'
   },
   schedule: {
     type: 'day'

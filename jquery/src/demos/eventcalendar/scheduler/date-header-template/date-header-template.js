@@ -63,7 +63,7 @@ export default {
           renderDay: function (args) {
             var date = args.date;
             var dayNr = date.getDay();
-            var formatDate = mobiscroll.util.datetime.formatDate;
+            var formatDate = mobiscroll.formatDate;
             var task = milestones.find(function (obj) {
               return +new Date(obj.date) === +new Date(date);
             });

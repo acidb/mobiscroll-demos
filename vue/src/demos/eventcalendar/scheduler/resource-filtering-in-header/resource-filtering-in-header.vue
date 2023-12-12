@@ -1,6 +1,109 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscEventcalendar,
+  getJson,
+  MbscToast,
+  MbscCalendarToday,
+  MbscCalendarNav,
+  MbscCalendarPrev,
+  MbscCalendarNext,
+  MbscSegmentedGroup,
+  MbscSegmented,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const allEvents = ref([])
+const filteredEvents = ref([])
+const selected = ref(['1'])
+
+const toastMessage = ref('')
+const isToastOpen = ref(false)
+
+const myView = {
+  schedule: {
+    type: 'week'
+  }
+}
+
+function filterEvents() {
+  const ev = []
+  for (const event of allEvents.value) {
+    if (selected.value.find((item) => +item === event.participant)) {
+      if (event.participant === 1) {
+        event.color = '#328e39'
+      } else if (event.participant === 2) {
+        event.color = '#00aabb'
+      } else if (event.participant === 3) {
+        event.color = '#ea72c0'
+      }
+      ev.push(event)
+    }
+  }
+  filteredEvents.value = ev
+}
+
+function filter(value) {
+  filterEvents()
+  toastMessage.value =
+    (selected.value.find((item) => +item === value) ? 'Showing ' : 'Hiding ') +
+    document.querySelector('.md-header-filter-name-' + value).textContent +
+    ' events'
+  isToastOpen.value = true
+}
+
+function handleToastClose() {
+  isToastOpen.value = false
+}
+
+onMounted(() => {
+  getJson(
+    'https://trial.mobiscroll.com/custom-events/',
+    (events) => {
+      allEvents.value = events
+      filterEvents()
+    },
+    'jsonp'
+  )
+})
+</script>
+
+<template>
+  <MbscEventcalendar
+    className="md-custom-header-filtering"
+    :drag="drag"
+    :view="myView"
+    :data="filteredEvents"
+  >
+    <template #header>
+      <MbscCalendarNav className="md-header-filter-nav" />
+      <div class="md-header-filter-controls">
+        <MbscSegmentedGroup select="multiple" v-model="selected">
+          <MbscSegmented value="1" @change="filter(1)">
+            <img class="md-header-filter-img" src="https://img.mobiscroll.com/demos/m1.png" />
+            <span class="md-header-filter-name md-header-filter-name-1">Barry</span>
+          </MbscSegmented>
+          <MbscSegmented value="2" @change="filter(2)">
+            <img class="md-header-filter-img" src="https://img.mobiscroll.com/demos/f1.png" />
+            <span class="md-header-filter-name md-header-filter-name-2">Hortense</span>
+          </MbscSegmented>
+          <MbscSegmented value="3" @change="filter(3)">
+            <img class="md-header-filter-img" src="https://img.mobiscroll.com/demos/m2.png" />
+            <span class="md-header-filter-name md-header-filter-name-3">Carl</span>
+          </MbscSegmented>
+        </MbscSegmentedGroup>
+      </div>
+      <MbscCalendarPrev className="md-header-filter-prev" />
+      <MbscCalendarNext className="md-header-filter-next" />
+    </template>
+  </MbscEventcalendar>
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+</template>
 
 <style>
 .md-header-filter-controls {

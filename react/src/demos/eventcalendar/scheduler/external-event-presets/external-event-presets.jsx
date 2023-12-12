@@ -1,6 +1,14 @@
 import React from 'react';
-import { Eventcalendar, Draggable, Popup, Input, Textarea, Dropdown, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
-import './external-event-presets.css';
+//<demo-only>import { Eventcalendar, Draggable, Popup, Input, Textarea, Select, setOptions, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Draggable = mobiscroll.Draggable;
+const Popup = mobiscroll.Popup;
+const Input = mobiscroll.Input;
+const Textarea = mobiscroll.Textarea;
+const Select = mobiscroll.Select;
+const setOptions = mobiscroll.setOptions;
+const Toast = mobiscroll.Toast; //</extra>
 
 setOptions({
   // localeJs,
@@ -50,6 +58,16 @@ const tasks = [
     end: '12:30',
     length: '4.5 h',
   },
+];
+
+const myData = [
+  { value: '1', text: 'Roly Chester' },
+  { value: '2', text: 'Tucker Wayne' },
+  { value: '3', text: 'Baker Brielle' },
+  { value: '4', text: 'Jami Walter' },
+  { value: '5', text: 'Patrick Toby' },
+  { value: '6', text: 'Tranter Logan' },
+  { value: '7', text: 'Payton Sinclair' },
 ];
 
 function Task(props) {
@@ -123,8 +141,13 @@ function App() {
     [fillDialog],
   );
 
-  const eventUpdateFail = React.useCallback(() => {
+  const eventCreateFail = React.useCallback(() => {
     setToastText("Can't create event on this date");
+    setToastOpen(true);
+  }, []);
+
+  const eventUpdateFail = React.useCallback(() => {
+    setToastText("Can't add event on this date");
     setToastOpen(true);
   }, []);
 
@@ -132,6 +155,10 @@ function App() {
     setOpen(false);
     setToastText('New task added');
     setToastOpen(true);
+  }, []);
+
+  const changeSelected = React.useCallback((event) => {
+    setTechnician(event.value);
   }, []);
 
   const closeToast = React.useCallback(() => {
@@ -148,7 +175,7 @@ function App() {
             dragToMove={true}
             externalDrop={true}
             onEventCreated={onEventCreated}
-            onEventCreateFailed={eventUpdateFail}
+            onEventCreateFailed={eventCreateFail}
             onEventUpdateFailed={eventUpdateFail}
           />
         </div>
@@ -172,15 +199,15 @@ function App() {
           <div className="mbsc-form-group">
             <Input label="Task" defaultValue={title} readOnly></Input>
             <Textarea label="Details" defaultValue={details} placeholder="Add description..."></Textarea>
-            <Dropdown label="Technician" defaultValue={technician}>
-              <option value="Roly">Roly Chester</option>
-              <option value="Tucker">Tucker Wayne</option>
-              <option value="Baker">Baker Brielle</option>
-              <option value="Jami">Jami Walter</option>
-              <option value="Patrick">Patrick Toby</option>
-              <option value="Tranter">Tranter Logan</option>
-              <option value="Payton">Payton Sinclair</option>
-            </Dropdown>
+            <Select
+              data={myData}
+              value={technician}
+              onChange={changeSelected}
+              display="anchored"
+              touchUi={false}
+              label="Technician"
+              inputProps={{ placeholder: 'Please select...' }}
+            />
           </div>
         </Popup>
       </div>

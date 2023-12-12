@@ -1,6 +1,11 @@
 import React from 'react';
-import { Eventcalendar, Page, getJson, setOptions, Dropdown /* localeImport */ } from '@mobiscroll/react';
-import './localization.css';
+//<demo-only>import { Eventcalendar, Page, getJson, setOptions, Dropdown/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Page = mobiscroll.Page;
+const getJson = mobiscroll.getJson;
+const setOptions = mobiscroll.setOptions;
+const Dropdown = mobiscroll.Dropdown; //</extra>
 
 setOptions({
   // localeJs,

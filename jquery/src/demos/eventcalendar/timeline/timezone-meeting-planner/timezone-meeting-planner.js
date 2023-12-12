@@ -10,7 +10,7 @@ export default {
     $(function () {
       mobiscroll.momentTimezone.moment = moment;
 
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
 
       var myResources = [
         {

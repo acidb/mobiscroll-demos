@@ -222,18 +222,4 @@ export default {
 </div>
 <!--/hidden-->
   `,
-  css: `
-.md-drag-drop-first-calendar {
-    border-bottom: 3px dashed #e4e4e4;
-}
-
-.md-drag-drop-calendar {
-    min-height: 500px;
-    height: 100%;
-}
-
-.md-drag-drop-calendar .mbsc-form-group-title {
-    font-size: 1em;
-}
-  `,
 };

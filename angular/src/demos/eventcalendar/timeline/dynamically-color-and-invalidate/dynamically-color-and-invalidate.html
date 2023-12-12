@@ -3,7 +3,7 @@
     <div class="mbsc-row">
       <div class="mbsc-col-sm-3">
         <div class="mbsc-form-group-title">Available tasks</div>
-        <div mbsc-draggable *ngFor="let task of myTasks;" [dragData]="task.id" class="dynamically-color-and-invalidate-task">
+        <div mbsc-draggable *ngFor="let task of myTasks;" [dragData]="task" class="dynamically-color-and-invalidate-task">
           <div>{{task.title}}<span class="dynamically-color-and-invalidate-task-type">{{task.category}}</span></div>
         </div>
       </div>

@@ -8,7 +8,6 @@ import {
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
 import './colors-invalids-css-class.css';
-
 setOptions({
   // localeJs,
   // themeJs

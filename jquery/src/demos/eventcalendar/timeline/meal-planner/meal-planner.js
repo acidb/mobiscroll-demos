@@ -13,7 +13,7 @@ export default {
       var oldMeal;
       var tempMeal;
       var deleteMeal;
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
       var $name = $('#meal-name-input');
       var $calories = $('#meal-calories-input');
       var $notes = $('#meal-notes-textarea');

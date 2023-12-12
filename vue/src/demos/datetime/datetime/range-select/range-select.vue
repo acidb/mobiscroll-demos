@@ -1,3 +1,21 @@
-<script setup></script>
+<script setup>
+import { MbscDatepicker, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+</script>
+
+<template>
+  <MbscDatepicker
+    :controls="['datetime']"
+    select="range"
+    display="inline"
+    :showRangeLabels="true"
+    rangeStartLabel="Outbound"
+    rangeEndLabel="Return"
+    :minRange="3"
+    :maxRange="10"
+  />
+</template>

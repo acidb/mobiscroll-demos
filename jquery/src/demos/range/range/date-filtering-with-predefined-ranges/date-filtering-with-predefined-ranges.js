@@ -8,7 +8,7 @@ export default {
     });
 
     $(function () {
-      var formatDate = mobiscroll.util.datetime.formatDate;
+      var formatDate = mobiscroll.formatDate;
       var startDate = 'dyndatetime(y,m,d)';
       var endDate = 'dyndatetime(y,m,d + 6)';
       var $dateInput = $('#date-filtering');

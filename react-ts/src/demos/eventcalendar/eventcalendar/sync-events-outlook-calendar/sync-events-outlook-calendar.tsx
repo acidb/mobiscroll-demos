@@ -16,7 +16,6 @@ import {
   MbscEventcalendarView,
 } from '@mobiscroll/react';
 import './sync-events-outlook-calendar.css';
-
 setOptions({
   // localeJs,
   // themeJs

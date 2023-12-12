@@ -517,6 +517,7 @@ export default {
      border-radius: 15px;
      margin-right: 10px;
      margin-left: 240px;
+    background: #5ac8fa;
  }
 
  .crud-color-row {
@@ -537,6 +538,7 @@ export default {
      margin: 2px;
      cursor: pointer;
      border-radius: 23px;
+    background: #5ac8fa;
  }
 
  .crud-color-c.selected,

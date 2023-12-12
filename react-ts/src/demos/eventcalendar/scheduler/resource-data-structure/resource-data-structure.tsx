@@ -1,7 +1,6 @@
 import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, MbscCalendarEvent, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './resource-data-structure.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -70,5 +69,14 @@ const App: React.FC = () => {
     },
   ];
 
-  return <Eventcalendar view={myView} data={myEvents} resources={myResources} />;
+  const renderCustomResource = (resource) => {
+    return (
+      <div>
+        <div className="resource-name">{resource.name}</div>
+        <div className="md-resource-data-structure-title">{resource.title}</div>
+      </div>
+    );
+  };
+
+  return <Eventcalendar view={myView} data={myEvents} resources={myResources} renderResource={renderCustomResource} />;
 };

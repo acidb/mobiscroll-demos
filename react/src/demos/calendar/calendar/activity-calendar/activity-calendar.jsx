@@ -1,6 +1,7 @@
 import React from 'react';
-import { Datepicker /* localeImport */ } from '@mobiscroll/react';
-import './activity-calendar.css';
+//<demo-only>import { Datepicker/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;//</extra>
 
 const activities = [
   {

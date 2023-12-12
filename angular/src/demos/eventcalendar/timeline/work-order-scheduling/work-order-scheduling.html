@@ -13,7 +13,7 @@
     <div class="md-work-order-date-title">{{getRevenue(day)}}</div>
   </ng-template>
   <ng-template #eventTemp let-event>
-    <div class="my-class">{{event.title}}<span class="md-work-order-price-tag">${{getCostString(event.original.cost)}}</span></div>
+    <div>{{event.title}}<span class="md-work-order-price-tag">${{getCostString(event.original.cost)}}</span></div>
   </ng-template>
 </mbsc-eventcalendar>
 <mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" [headerText]="popupHeaderText" #popup>
@@ -46,7 +46,7 @@
                   label="{{r.name}}"
                   [(ngModel)]="r.checked"
                   theme="material"
-                  class="work-order-checkbox-label"
+                  class="md-work-order-checkbox-label"
                 ></mbsc-checkbox>
               </ng-container>
             </div>

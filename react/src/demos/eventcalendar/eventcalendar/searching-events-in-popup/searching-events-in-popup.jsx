@@ -1,18 +1,17 @@
 import React from 'react';
-import {
-  Eventcalendar,
-  Page,
-  Popup,
-  Input,
-  CalendarNav,
-  CalendarPrev,
-  CalendarNext,
-  CalendarToday,
-  getJson,
-  formatDate,
-  setOptions /* localeImport */,
-} from '@mobiscroll/react';
-import './searching-events-in-popup.css';
+//<demo-only>import { Eventcalendar, Page, Popup, Input, CalendarNav, CalendarPrev, CalendarNext, CalendarToday, getJson, formatDate, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const Page = mobiscroll.Page;
+const getJson = mobiscroll.getJson;
+const Popup = mobiscroll.Popup;
+const Input = mobiscroll.Input;
+const CalendarNav = mobiscroll.CalendarNav;
+const CalendarToday = mobiscroll.CalendarToday;
+const CalendarPrev = mobiscroll.CalendarPrev;
+const CalendarNext = mobiscroll.CalendarNext;
+const setOptions = mobiscroll.setOptions;
+const formatDate = mobiscroll.formatDate; //</extra>
 
 setOptions({
   // localeJs,

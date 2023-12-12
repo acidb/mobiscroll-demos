@@ -1,5 +1,10 @@
 <mbsc-page>
-  <mbsc-select [data]="myData" label="Multi-select" placeholder="Please select..." [selectMultiple]="true"></mbsc-select>
+  <mbsc-select
+    [data]="myData"
+    [selectMultiple]="true"
+    label="Multi-select"
+    labelStyle="stacked"
+    inputStyle="outline"
+    placeholder="Please select..."
+  ></mbsc-select>
 </mbsc-page>
-
-<mbsc-input id="my-custom-input" placeholder="Click to select..." #myInput [tags]="true"></mbsc-input>

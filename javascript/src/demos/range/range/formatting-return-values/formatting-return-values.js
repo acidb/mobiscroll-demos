@@ -6,13 +6,14 @@ export default {
       // theme
     });
 
-    var now = new Date();
+    var currentWeek = ['dyndatetime(y,m,d)', 'dyndatetime(y,m,d+6)'];
+    var currentHour = ['dyndatetime(y,m,d,h)', 'dyndatetime(y,m,d,h+2)'];
 
     mobiscroll.datepicker('#demo-date-def', {
       controls: ['calendar'],
       select: 'range',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentWeek, true);
       },
     });
 
@@ -21,16 +22,7 @@ export default {
       select: 'range',
       dateFormat: 'DD.MM.YYYY',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
-      },
-    });
-
-    mobiscroll.datepicker('#demo-date-month-only', {
-      controls: ['calendar'],
-      select: 'range',
-      dateFormat: 'MMMM',
-      onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentWeek, true);
       },
     });
 
@@ -39,16 +31,7 @@ export default {
       select: 'range',
       dateFormat: 'D MMMM YYYY',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
-      },
-    });
-
-    mobiscroll.datepicker('#demo-date-month-year', {
-      controls: ['calendar'],
-      select: 'range',
-      dateFormat: 'MM/YYYY',
-      onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentWeek, true);
       },
     });
 
@@ -57,7 +40,7 @@ export default {
       select: 'range',
       dateFormat: 'DDD DD MMM, YYYY',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentWeek, true);
       },
     });
 
@@ -66,7 +49,7 @@ export default {
       select: 'range',
       dateFormat: 'YYYY-MM-DD',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentWeek, true);
       },
     });
 
@@ -75,7 +58,7 @@ export default {
       select: 'range',
       dateFormat: 'DDD, DD MMM YYYY',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentWeek, true);
       },
     });
 
@@ -83,7 +66,7 @@ export default {
       controls: ['time'],
       select: 'range',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentHour, true);
       },
     });
 
@@ -92,7 +75,7 @@ export default {
       select: 'range',
       timeFormat: 'hh:mm A',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentHour, true);
       },
     });
 
@@ -101,7 +84,7 @@ export default {
       select: 'range',
       timeFormat: 'HH:mm',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentHour, true);
       },
     });
 
@@ -110,7 +93,7 @@ export default {
       select: 'range',
       timeFormat: 'HH:mm:ss',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentHour, true);
       },
     });
 
@@ -118,7 +101,7 @@ export default {
       controls: ['calendar', 'time'],
       select: 'range',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentHour, true);
       },
     });
 
@@ -129,7 +112,7 @@ export default {
       timeFormat: 'H:mm',
       dateWheels: '|DDD D MMM, YYYY|',
       onInit: function (event, inst) {
-        inst.setVal(now, true);
+        inst.setVal(currentHour, true);
       },
     });
   },
@@ -145,16 +128,8 @@ export default {
         <input mbsc-input id="demo-date-sep" />
     </label>
     <label>
-        Month only
-        <input mbsc-input id="demo-date-month-only" />
-    </label>
-    <label>
         Month name
         <input mbsc-input id="demo-date-month" />
-    </label>
-    <label>
-        Month/year
-        <input mbsc-input id="demo-date-month-year" />
     </label>
     <label>
         Day of week

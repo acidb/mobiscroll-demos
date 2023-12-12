@@ -1,5 +1,9 @@
 import React from 'react';
-import { setOptions, Page, Stepper /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { setOptions, Page, Stepper/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const setOptions = mobiscroll.setOptions;
+const Page = mobiscroll.Page;
+const Stepper = mobiscroll.Stepper; //</extra>
 
 setOptions({
   // localeJs,

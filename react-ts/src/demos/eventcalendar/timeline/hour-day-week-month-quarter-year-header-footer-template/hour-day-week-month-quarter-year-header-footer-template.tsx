@@ -9,7 +9,6 @@ import {
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
 import './hour-day-week-month-quarter-year-header-footer-template.css';
-
 setOptions({
   // localeJs,
   // themeJs
@@ -729,7 +728,7 @@ const App: React.FC = () => {
   const renderCustomQuarter = (args: any) => {
     return (
       <div className={'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(args.events)}>
-        {formatDate('MMM', args.date)}
+        Quarter {args.date.getMonth() / 3 + 1}
       </div>
     );
   };
@@ -793,7 +792,7 @@ const App: React.FC = () => {
         />
       </div>
       <div className="mbsc-form-group">
-        <div className="mbsc-form-group-title">Quarter header template</div>
+        <div className="mbsc-form-group-title">Quarterly header template</div>
         <Eventcalendar
           view={quarterView}
           data={quarterEvents}

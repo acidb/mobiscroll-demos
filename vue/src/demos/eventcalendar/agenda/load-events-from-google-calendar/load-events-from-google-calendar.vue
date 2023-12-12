@@ -1,6 +1,150 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscEventcalendar,
+  MbscCalendarNav,
+  MbscCalendarPrev,
+  MbscCalendarNext,
+  MbscCalendarToday,
+  MbscToast,
+  MbscSegmented,
+  MbscSegmentedGroup,
+  googleCalendarSync,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com'
+
+const myEvents = ref([])
+const isLoading = ref(false)
+const firstDay = ref(null)
+const lastDay = ref(null)
+const toastMessage = ref('')
+const isToastOpen = ref(false)
+const calendarView = ref('agenda')
+const myView = ref({
+  calendar: { type: 'week' },
+  agenda: { type: 'week' }
+})
+
+function onError(resp) {
+  toastMessage.value = resp.error ? resp.error : resp.result.error.message
+  isToastOpen.value = true
+}
+
+function loadEvents() {
+  isLoading.value = true
+  googleCalendarSync
+    .getEvents(CALENDAR_ID, firstDay.value, lastDay.value)
+    .then(function (resp) {
+      isLoading.value = false
+      myEvents.value = resp
+    })
+    .catch(onError)
+}
+
+function handleToastClose() {
+  isToastOpen.value = false
+}
+
+function handlePageLoading(args) {
+  const start = args.viewStart
+  const end = args.viewEnd
+
+  // Calculate dates
+  // (pre-load events for previous and next pages as well)
+  if (calendarView.value === 'month') {
+    firstDay.value = start
+    lastDay.value = end
+  } else {
+    firstDay.value = new Date(start.getFullYear(), start.getMonth(), start.getDate() - 7)
+    lastDay.value = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 7)
+  }
+
+  loadEvents()
+}
+
+onMounted(() => {
+  // init google client
+  googleCalendarSync.init({
+    apiKey: '<YOUR_GOOGLE_API_KEY>',
+    onInit: loadEvents
+  })
+})
+
+function handleViewChange() {
+  switch (calendarView.value) {
+    case 'month':
+      myView.value = {
+        calendar: { labels: true }
+      }
+      break
+    case 'week':
+      myView.value = {
+        schedule: { type: 'week' }
+      }
+      break
+    case 'day':
+      myView.value = {
+        schedule: { type: 'day' }
+      }
+      break
+    case 'agenda':
+    default:
+      myView.value = {
+        calendar: { type: 'week' },
+        agenda: { type: 'week' }
+      }
+      break
+  }
+}
+</script>
+
+<template>
+  <MbscEventcalendar
+    className="md-google-calendar "
+    :class="{ 'md-loading-events': isLoading }"
+    :exclusiveEndDates="true"
+    :view="myView"
+    :data="myEvents"
+    @page-loading="handlePageLoading"
+  >
+    <template #header>
+      <MbscCalendarNav className="google-cal-header-nav" />
+      <div class="md-spinner">
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+        <div class="md-spinner-blade"></div>
+      </div>
+      <div class="google-cal-header-picker">
+        <MbscSegmentedGroup v-model="calendarView" @change="handleViewChange">
+          <MbscSegmented value="month"> Month </MbscSegmented>
+          <MbscSegmented value="week"> Week </MbscSegmented>
+          <MbscSegmented value="day"> Day </MbscSegmented>
+          <MbscSegmented value="agenda"> Agenda </MbscSegmented>
+        </MbscSegmentedGroup>
+      </div>
+      <MbscCalendarPrev className="google-cal-header-prev" />
+      <MbscCalendarToday className="google-cal-header-today" />
+      <MbscCalendarNext className="google-cal-header-next" />
+    </template>
+  </MbscEventcalendar>
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+</template>
 
 <style>
 .md-google-calendar .mbsc-segmented {

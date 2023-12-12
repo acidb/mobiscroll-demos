@@ -52,7 +52,7 @@ export default {
         </label>
         <label>
             Show as busy
-            <input mbsc-segmented name="status" type="radio" />
+            <input mbsc-segmented name="status" type="radio" checked />
         </label>
         <label>
             Show as free

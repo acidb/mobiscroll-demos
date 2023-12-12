@@ -1,6 +1,296 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import {
+  MbscEventcalendar,
+  MbscSegmentedGroup,
+  MbscSegmented,
+  MbscButton,
+  MbscInput,
+  MbscTextarea,
+  MbscSnackbar,
+  MbscPopup,
+  formatDate,
+  getJson,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 
-<template></template>
+setOptions({
+  // locale,
+  // theme
+})
+
+const types = [
+  {
+    id: 1,
+    name: 'Breakfast',
+    color: '#e20f0f',
+    kcal: '300 - 400 kcal',
+    icon: '🍳'
+  },
+  {
+    id: 2,
+    name: 'Elevenses',
+    color: '#157d13',
+    kcal: '100 - 200 kcal',
+    icon: '🍌'
+  },
+  {
+    id: 3,
+    name: 'Lunch',
+    color: '#32a6de',
+    kcal: '500 - 700 kcal',
+    icon: '🍜'
+  },
+  {
+    id: 4,
+    name: 'Dinner',
+    color: '#e29d1d',
+    kcal: '400 - 600 kcal',
+    icon: '🥙'
+  },
+  {
+    id: 5,
+    name: 'Snack',
+    color: '#68169c',
+    kcal: '100 - 200 kcal',
+    icon: '🥨'
+  }
+]
+
+const myView = {
+  timeline: {
+    type: 'week',
+    eventList: true
+  }
+}
+
+const responsivePopup = {
+  medium: {
+    display: 'center',
+    width: 400,
+    fullScreen: false,
+    touchUi: false,
+    showOverlay: false
+  }
+}
+
+const popupAddButtons = [
+  'cancel',
+  {
+    handler: () => {
+      saveEvent()
+    },
+    keyCode: 'enter',
+    text: 'Add',
+    cssClass: 'mbsc-popup-button-primary'
+  }
+]
+
+const popupEditButtons = [
+  'cancel',
+  {
+    handler: () => {
+      saveEvent()
+    },
+    keyCode: 'enter',
+    text: 'Save',
+    cssClass: 'mbsc-popup-button-primary'
+  }
+]
+
+const myMeals = ref([])
+const tempMeal = ref(null)
+const isPopupOpen = ref(false)
+const isEdit = ref(false)
+const name = ref('')
+const calories = ref('')
+const notes = ref('')
+const headerText = ref('')
+const type = ref(1)
+const popupButtons = ref([])
+const isSnackbarOpen = ref(false)
+const snackbarButton = ref({})
+
+function myDefaultEvent() {
+  return {
+    title: 'New meal',
+    allDay: true
+  }
+}
+
+function saveEvent() {
+  tempMeal.value.title = name.value
+  tempMeal.value.calories = calories.value
+  tempMeal.value.notes = notes.value
+  tempMeal.value.allDay = true
+  tempMeal.value.resource = type.value
+  if (isEdit.value) {
+    // update the event in the list
+    myMeals.value = [...myMeals.value]
+  } else {
+    // add the new event to the list
+    myMeals.value = [...myMeals.value, tempMeal.value]
+  }
+  // close the popup
+  isPopupOpen.value = false
+}
+
+function loadPopupForm(event) {
+  name.value = event.title
+  calories.value = event.calories
+  notes.value = event.notes
+}
+
+function deleteEvent(event) {
+  myMeals.value = myMeals.value.filter((item) => item.id !== event.id)
+  snackbarButton.value = {
+    action: () => {
+      myMeals.value = [...myMeals.value, event]
+    },
+    text: 'Undo'
+  }
+  isSnackbarOpen.value = true
+}
+
+function handleEventClick(args) {
+  const event = args.event
+  isEdit.value = true
+  tempMeal.value = event
+  // fill popup form with event data
+  loadPopupForm(event)
+  // set popup options
+  popupButtons.value = popupEditButtons
+  headerText.value =
+    '<div>New meal</div><div class="md-meal-type">' +
+    formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) +
+    '</div>'
+  type.value = event.resource
+  // open the popup
+  isPopupOpen.value = true
+}
+
+function handleEventCreated(args) {
+  const event = args.event
+  const resource = types.find((obj) => {
+    return obj.id === event.resource
+  })
+  isEdit.value = false
+  tempMeal.value = event
+  // fill popup form with event data
+  loadPopupForm(event)
+  // set popup options
+  popupButtons.value = popupAddButtons
+  headerText.value =
+    '<div>' +
+    resource.name +
+    '</div><div class="md-meal-type">' +
+    formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) +
+    '</div>'
+  type.value = event.resource
+  // open the popup
+  isPopupOpen.value = true
+}
+
+function handleEventDeleted(args) {
+  deleteEvent(args.event)
+}
+
+function handleDelete() {
+  deleteEvent(tempMeal)
+  isPopupOpen.value = false
+}
+
+function handlePopupClose() {
+  isPopupOpen.value = false
+}
+
+function handleSnackbarClose() {
+  isSnackbarOpen.value = false
+}
+
+onMounted(() => {
+  getJson(
+    'https://trial.mobiscroll.com/meal-planner/',
+    (events) => {
+      myMeals.value = events
+    },
+    'jsonp'
+  )
+})
+</script>
+
+<template>
+  <MbscEventcalendar
+    cssClass="md-meal-planner-calendar"
+    :view="myView"
+    :data="myMeals"
+    :resources="types"
+    :dragToCreate="false"
+    :dragToResize="false"
+    :dragToMove="true"
+    :clickToCreate="true"
+    :extendDefaultEvent="myDefaultEvent"
+    @event-click="handleEventClick"
+    @event-created="handleEventCreated"
+    @event-deleted="handleEventDeleted"
+  >
+    <template #resource="resource">
+      <div class="md-meal-planner-cont">
+        <div class="md-meal-planner-title" :style="{ color: resource.color }">
+          <span class="md-meal-planner-icon">{{ resource.icon }}</span>
+          {{ resource.name }}
+        </div>
+        <div class="md-meal-planner-kcal">{{ resource.kcal }}</div>
+      </div>
+    </template>
+    <template #scheduleEventContent="args">
+      <div class="md-meal-planner-event">
+        <div class="md-meal-planner-event-title">{{ args.original.title }}</div>
+        <div v-if="args.original.calories" class="md-meal-planner-event-desc">
+          Calories {{ args.original.calories }} kcal
+        </div>
+      </div>
+    </template>
+  </MbscEventcalendar>
+  <MbscPopup
+    cssClass="md-meal-planner-popup"
+    display="bottom"
+    :fullScreen="true"
+    :contentPadding="false"
+    :headerText="headerText"
+    :buttons="popupButtons"
+    :isOpen="isPopupOpen"
+    :responsive="responsivePopup"
+    @close="handlePopupClose"
+  >
+    <MbscSegmentedGroup v-model="type">
+      <template v-for="t in types" :key="t.id">
+        <MbscSegmented :value="t.id">{{ t.name }}</MbscSegmented>
+      </template>
+    </MbscSegmentedGroup>
+    <div class="mbsc-form-group">
+      <MbscInput label="Name" v-model="name" />
+      <MbscInput label="Calories" v-model="calories" />
+      <MbscTextarea label="Notes" v-model="notes" />
+    </div>
+    <div v-if="isEdit" class="mbsc-button-group">
+      <MbscButton
+        className="mbsc-button-block"
+        color="danger"
+        variant="outline"
+        @click="handleDelete"
+      >
+        Delete meal
+      </MbscButton>
+    </div>
+  </MbscPopup>
+  <MbscSnackbar
+    message="Event deleted"
+    :button="snackbarButton"
+    :isOpen="isSnackbarOpen"
+    @close="handleSnackbarClose"
+  />
+</template>
 
 <style>
 .md-meal-type {

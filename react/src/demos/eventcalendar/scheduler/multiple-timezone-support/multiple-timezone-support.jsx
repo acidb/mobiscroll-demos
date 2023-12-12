@@ -1,16 +1,15 @@
 import React from 'react';
-import {
-  Eventcalendar,
-  Select,
-  CalendarNav,
-  CalendarPrev,
-  CalendarNext,
-  CalendarToday,
-  momentTimezone /* localeImport */,
-} from '@mobiscroll/react';
+//<demo-only>import { Eventcalendar, Select, CalendarNav, CalendarPrev, CalendarNext, CalendarToday, momentTimezone/* localeImport */ } from '@mobiscroll/react';
 import './multiple-timezone-support.css';
+import moment from 'moment-timezone'; //</demo-only>
 
-import moment from 'moment-timezone';
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const CalendarNav = mobiscroll.CalendarNav;
+const CalendarPrev = mobiscroll.CalendarPrev;
+const CalendarNext = mobiscroll.CalendarNext;
+const CalendarToday = mobiscroll.CalendarToday;
+const Select = mobiscroll.Select;
+const momentTimezone = mobiscroll.momentTimezone; //</extra>
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
@@ -118,7 +117,7 @@ function App() {
   const myHeader = () => {
     return (
       <React.Fragment>
-        <CalendarNav className="md-timezone-nav" />
+        <CalendarNav />
         <div className="md-timezone-header">
           <CalendarPrev />
           <CalendarToday />

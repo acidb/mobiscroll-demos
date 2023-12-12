@@ -135,5 +135,6 @@ input.md-mobile-picker-input {
 .md-mobile-picker-inline {
     margin: 6px 0 12px 0;
 }
+
   `,
 };

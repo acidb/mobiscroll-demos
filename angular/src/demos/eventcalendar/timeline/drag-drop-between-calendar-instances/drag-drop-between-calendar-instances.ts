@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { setOptions, MbscEventcalendarView, MbscCalendarEvent, MbscResource, Notifications /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
@@ -8,8 +8,6 @@ setOptions({
 
 @Component({
   selector: 'drag-drop-between-calendar-instances',
-  styleUrl: './drag-drop-between-calendar-instances.css',
-  encapsulation: ViewEncapsulation.None,
   templateUrl: './drag-drop-between-calendar-instances.html',
   providers: [Notifications],
 })

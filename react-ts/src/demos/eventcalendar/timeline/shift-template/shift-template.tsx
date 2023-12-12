@@ -1,7 +1,6 @@
 import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, formatDate /* localeImport */ } from '@mobiscroll/react';
 import './shift-template.css';
-
 const staff = [
   {
     id: 1,

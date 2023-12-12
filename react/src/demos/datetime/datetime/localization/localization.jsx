@@ -1,5 +1,9 @@
 import React from 'react';
-import { Datepicker, setOptions, localeEs /* localeImport */ } from '@mobiscroll/react';
+//<demo-only>import { Datepicker, setOptions, localeEs/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+
+//<extra>const Datepicker = mobiscroll.Datepicker;
+const localeEs = mobiscroll.localeEs;
+const setOptions = mobiscroll.setOptions; //</extra>
 
 setOptions({
   // localeJs,

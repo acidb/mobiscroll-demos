@@ -33,7 +33,6 @@ export default {
             touchUi: false,
           },
         },
-        now = new Date(),
         myData = [
           {
             id: 1,

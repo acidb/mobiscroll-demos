@@ -30,15 +30,14 @@
       <div class="mbsc-form-group">
         <mbsc-input label="Task" [(ngModel)]="title" readonly></mbsc-input>
         <mbsc-textarea label="Details" [(ngModel)]="details" placeholder="Add description..."></mbsc-textarea>
-        <mbsc-dropdown label="Technician" [(ngModel)]="technician">
-          <option value="Roly">Roly Chester</option>
-          <option value="Tucker">Tucker Wayne</option>
-          <option value="Baker">Baker Brielle</option>
-          <option value="Jami">Jami Walter</option>
-          <option value="Patrick">Patrick Toby</option>
-          <option value="Tranter">Tranter Logan</option>
-          <option value="Payton">Payton Sinclair</option>
-        </mbsc-dropdown>
+        <mbsc-select
+          [(ngModel)]="technician"
+          [data]="myData"
+          label="Technician"
+          display="anchored"
+          [touchUi]="false"
+          placeholder="Please select..."
+        ></mbsc-select>
       </div>
     </mbsc-popup>
   </div>

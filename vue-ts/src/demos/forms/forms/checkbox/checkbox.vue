@@ -9,8 +9,8 @@ setOptions({
 
 <template>
   <MbscPage>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Checkbox</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Checkbox</div>
       <MbscCheckbox
         v-model="option1"
         label="Option 1"
@@ -32,8 +32,8 @@ setOptions({
         :defaultChecked="true"
       />
     </div>
-    <div className="mbsc-form-group">
-      <div className="mbsc-form-group-title">Checkbox colors</div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Checkbox colors</div>
       <MbscCheckbox v-model="primary" label="Primary" color="primary" :defaultChecked="true" />
       <MbscCheckbox
         v-model="secondary"

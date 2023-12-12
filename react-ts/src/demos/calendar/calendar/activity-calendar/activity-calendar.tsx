@@ -1,7 +1,6 @@
 import React from 'react';
 import { Datepicker /* localeImport */ } from '@mobiscroll/react';
 import './activity-calendar.css';
-
 const activities = [
   {
     date: 'dyndatetime(y,m,d-6)',

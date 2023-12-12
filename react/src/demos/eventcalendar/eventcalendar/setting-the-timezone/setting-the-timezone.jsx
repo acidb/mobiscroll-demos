@@ -1,6 +1,9 @@
 import React from 'react';
-import { Eventcalendar, momentTimezone /* localeImport */ } from '@mobiscroll/react';
-import moment from 'moment-timezone';
+//<demo-only>import { Eventcalendar, momentTimezone/* localeImport */ } from '@mobiscroll/react';
+import moment from 'moment-timezone'; //</demo-only>
+
+//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
+const momentTimezone = mobiscroll.momentTimezone; //</extra>
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
