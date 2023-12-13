@@ -6,7 +6,7 @@ import { enhance } from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.mi
 
 import HomePage from './pages/home/home';
 import WorkWeekHoursPage from './src/demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
-import CompareResourcesPage from './src/demos/eventcalendar/timeline/compare-resources/compare-resources';
+import CompareResourcesPage from './src/demos/eventcalendar/timeline/compare-resources-fixed-at-top/compare-resources-fixed-at-top';
 
 const router = new Router();
 

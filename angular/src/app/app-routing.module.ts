@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent as WorkWeekHours } from '../demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
-import { AppComponent as CompareResources } from '../demos/eventcalendar/timeline/compare-resources/compare-resources';
+import { AppComponent as CompareResources } from '../demos/eventcalendar/timeline/compare-resources-fixed-at-top/compare-resources-fixed-at-top';
 import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [

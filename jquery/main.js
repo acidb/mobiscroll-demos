@@ -7,7 +7,7 @@ import { enhance } from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 
 import HomePage from './pages/home/home';
 import WorkWeekHoursPage from './src/demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
-import CompareResourcesPage from './src/demos/eventcalendar/timeline/compare-resources/compare-resources';
+import CompareResourcesPage from './src/demos/eventcalendar/timeline/compare-resources-fixed-at-top/compare-resources-fixed-at-top';
 
 const router = new Router();
 
