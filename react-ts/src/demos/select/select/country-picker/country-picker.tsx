@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select, Page, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
 import './country-picker.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -41,3 +42,4 @@ const App: React.FC = () => {
     </Page>
   );
 };
+export default App;

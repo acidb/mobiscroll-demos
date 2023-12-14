@@ -1,15 +1,16 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Select, CalendarNav, CalendarPrev, CalendarNext, CalendarToday, momentTimezone/* localeImport */ } from '@mobiscroll/react';
+import {
+  Eventcalendar,
+  Select,
+  CalendarNav,
+  CalendarPrev,
+  CalendarNext,
+  CalendarToday,
+  momentTimezone /* localeImport */,
+} from '@mobiscroll/react';
 import './multiple-timezone-support.css';
-import moment from 'moment-timezone'; //</demo-only>
 
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const CalendarNav = mobiscroll.CalendarNav;
-const CalendarPrev = mobiscroll.CalendarPrev;
-const CalendarNext = mobiscroll.CalendarNext;
-const CalendarToday = mobiscroll.CalendarToday;
-const Select = mobiscroll.Select;
-const momentTimezone = mobiscroll.momentTimezone; //</extra>
+import moment from 'moment-timezone';
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
@@ -147,4 +148,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

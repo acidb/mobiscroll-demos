@@ -1,5 +1,6 @@
 import React from 'react';
 import { Eventcalendar, getJson, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import './work-week-hours.css';
 
 setOptions({
   // localeJs,
@@ -24,7 +25,7 @@ function App() {
   ];
 
   React.useEffect(() => {
-    getJson(
+    mobiscroll.getJson(
       'https://trial.mobiscroll.com//workday-events/?vers=5',
       (events) => {
         setEvents(events);

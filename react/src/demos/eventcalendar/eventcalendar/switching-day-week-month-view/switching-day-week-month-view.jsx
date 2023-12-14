@@ -1,14 +1,15 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, getJson, setOptions, CalendarNav, SegmentedGroup, SegmentedItem, CalendarPrev, CalendarNext/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const getJson = mobiscroll.getJson;
-const setOptions = mobiscroll.setOptions;
-const CalendarNav = mobiscroll.CalendarNav;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const SegmentedItem = mobiscroll.SegmentedItem;
-const CalendarPrev = mobiscroll.CalendarPrev;
-const CalendarNext = mobiscroll.CalendarNext; //</extra>
+import {
+  Eventcalendar,
+  getJson,
+  setOptions,
+  CalendarNav,
+  SegmentedGroup,
+  SegmentedItem,
+  CalendarPrev,
+  CalendarNext /* localeImport */,
+} from '@mobiscroll/react';
+import './switching-day-week-month-view.css';
 
 setOptions({
   // localeJs,
@@ -84,4 +85,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

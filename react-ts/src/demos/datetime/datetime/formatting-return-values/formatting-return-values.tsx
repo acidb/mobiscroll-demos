@@ -134,3 +134,4 @@ function App() {
     </Page>
   );
 }
+export default App;

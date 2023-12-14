@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
 import './daily-weekly-monthly-yearly-timeline.css';
+
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
@@ -72,3 +73,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

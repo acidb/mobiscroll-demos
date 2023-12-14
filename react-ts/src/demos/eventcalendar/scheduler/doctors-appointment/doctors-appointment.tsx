@@ -17,6 +17,7 @@ import {
   Toast /* localeImport */,
 } from '@mobiscroll/react';
 import './doctors-appointment.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -359,3 +360,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

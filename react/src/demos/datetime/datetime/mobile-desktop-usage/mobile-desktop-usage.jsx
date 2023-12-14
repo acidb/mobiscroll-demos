@@ -1,10 +1,6 @@
 import React from 'react';
-//<demo-only>import { Datepicker, Button, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Datepicker = mobiscroll.Datepicker;
-const setOptions = mobiscroll.setOptions;
-const Button = mobiscroll.Button;
-const Page = mobiscroll.Page; //</extra>
+import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import './mobile-desktop-usage.css';
 
 setOptions({
   // localeJs,
@@ -86,4 +82,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

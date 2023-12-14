@@ -1,14 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Draggable, Popup, Input, Textarea, Select, setOptions, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Draggable = mobiscroll.Draggable;
-const Popup = mobiscroll.Popup;
-const Input = mobiscroll.Input;
-const Textarea = mobiscroll.Textarea;
-const Select = mobiscroll.Select;
-const setOptions = mobiscroll.setOptions;
-const Toast = mobiscroll.Toast; //</extra>
+import { Eventcalendar, Draggable, Popup, Input, Textarea, Select, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import './external-event-presets.css';
 
 setOptions({
   // localeJs,
@@ -221,4 +213,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

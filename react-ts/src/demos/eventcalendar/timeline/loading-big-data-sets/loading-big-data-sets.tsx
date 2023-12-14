@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, MbscPageLoadingEvent, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './loading-big-data-sets.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -56,3 +57,4 @@ const App: React.FC = () => {
 
   return <Eventcalendar view={myView} data={myEvents} resources={myResources} onPageLoading={handlePageLoading} />;
 };
+export default App;

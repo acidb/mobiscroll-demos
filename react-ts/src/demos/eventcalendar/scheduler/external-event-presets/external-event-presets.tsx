@@ -11,6 +11,7 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './external-event-presets.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -219,3 +220,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

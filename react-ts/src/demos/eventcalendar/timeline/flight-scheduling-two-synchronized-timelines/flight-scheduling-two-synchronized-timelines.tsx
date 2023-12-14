@@ -11,6 +11,7 @@ import {
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
 import './flight-scheduling-two-synchronized-timelines.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -613,3 +614,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

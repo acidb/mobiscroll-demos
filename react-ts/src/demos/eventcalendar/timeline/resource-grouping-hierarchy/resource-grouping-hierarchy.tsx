@@ -1,6 +1,7 @@
 import React from 'react';
 import { setOptions, Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
 import './resource-grouping-hierarchy.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -196,3 +197,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

@@ -8,6 +8,7 @@ import {
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
 import './timeline-resource-details-side-panel-footer.css';
+
 const oneDay = 60000 * 60 * 24;
 
 const App: React.FC = () => {
@@ -187,3 +188,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

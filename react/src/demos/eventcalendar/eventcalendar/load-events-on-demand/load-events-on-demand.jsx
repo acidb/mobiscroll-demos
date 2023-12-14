@@ -1,10 +1,5 @@
 import React from 'react';
-//<demo-only>import { Page, Eventcalendar, getJson, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const getJson = mobiscroll.getJson;
-const Page = mobiscroll.Page;
-const Toast = mobiscroll.Toast; //</extra>
+import { Page, Eventcalendar, getJson, Toast /* localeImport */ } from '@mobiscroll/react';
 
 function App() {
   const [events, setEvents] = React.useState([]);
@@ -48,4 +43,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

@@ -1,8 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Button/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Button = mobiscroll.Button; //</extra>
+import { Eventcalendar, Button /* localeImport */ } from '@mobiscroll/react';
+import './connecting-linking-events-arrows.css';
 
 function App() {
   const myEvents = React.useMemo(() => {
@@ -221,4 +219,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

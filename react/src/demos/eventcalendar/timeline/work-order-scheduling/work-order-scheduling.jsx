@@ -1,16 +1,17 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, setOptions, Popup, Button, Input, Textarea, Checkbox, Datepicker, snackbar, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const snackbar = mobiscroll.snackbar;
-const setOptions = mobiscroll.setOptions;
-const Popup = mobiscroll.Popup;
-const Button = mobiscroll.Button;
-const Input = mobiscroll.Input;
-const Textarea = mobiscroll.Textarea;
-const Checkbox = mobiscroll.Checkbox;
-const Datepicker = mobiscroll.Datepicker;
-const formatDate = mobiscroll.formatDate; //</extra>
+import {
+  Eventcalendar,
+  setOptions,
+  Popup,
+  Button,
+  Input,
+  Textarea,
+  Checkbox,
+  Datepicker,
+  snackbar,
+  formatDate /* localeImport */,
+} from '@mobiscroll/react';
+import './work-order-scheduling.css';
 
 setOptions({
   // localeJs,
@@ -583,4 +584,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

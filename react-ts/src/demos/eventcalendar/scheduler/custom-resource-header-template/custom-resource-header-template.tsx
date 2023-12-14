@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, setOptions, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
 import './custom-resource-header-template.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -112,3 +113,4 @@ const App: React.FC = () => {
 
   return <Eventcalendar data={myEvents} resources={myResources} view={view} renderResource={renderCustomResource} />;
 };
+export default App;

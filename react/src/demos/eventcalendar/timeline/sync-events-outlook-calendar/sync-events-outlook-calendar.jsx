@@ -1,18 +1,19 @@
 import React from 'react';
-//<demo-only>import { outlookCalendarSync, Eventcalendar, setOptions, Page, Button, Switch, CalendarNav, CalendarPrev, CalendarNext, toast, confirm, Popup/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const setOptions = mobiscroll.setOptions;
-const Page = mobiscroll.Page;
-const Button = mobiscroll.Button;
-const Switch = mobiscroll.Switch;
-const Popup = mobiscroll.Popup;
-const CalendarNav = mobiscroll.CalendarNav;
-const CalendarPrev = mobiscroll.CalendarPrev;
-const CalendarNext = mobiscroll.CalendarNext;
-const CalendarToday = mobiscroll.CalendarToday;
-const toast = mobiscroll.toast;
-const confirm = mobiscroll.confirm; //</extra>
+import {
+  outlookCalendarSync,
+  Eventcalendar,
+  setOptions,
+  Page,
+  Button,
+  Switch,
+  CalendarNav,
+  CalendarPrev,
+  CalendarNext,
+  toast,
+  confirm,
+  Popup /* localeImport */,
+} from '@mobiscroll/react';
+import './sync-events-outlook-calendar.css';
 
 setOptions({
   // localeJs,
@@ -377,3 +378,4 @@ function App() {
     </Page>
   );
 }
+export default App;

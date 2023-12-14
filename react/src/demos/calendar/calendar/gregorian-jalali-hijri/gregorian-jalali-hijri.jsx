@@ -1,12 +1,5 @@
 import React from 'react';
-//<demo-only>import { Datepicker, setOptions, jalaliCalendar, hijriCalendar, localeFa, localeAr/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Datepicker = mobiscroll.Datepicker;
-const jalaliCalendar = mobiscroll.jalaliCalendar;
-const hijriCalendar = mobiscroll.hijriCalendar;
-const localeFa = mobiscroll.locale.fa;
-const localeAr = mobiscroll.locale.ar;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Datepicker, setOptions, jalaliCalendar, hijriCalendar, localeFa, localeAr /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // themeJs
@@ -22,4 +15,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

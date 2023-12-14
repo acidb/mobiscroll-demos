@@ -1,9 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, setOptions, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const setOptions = mobiscroll.setOptions;
-const formatDate = mobiscroll.formatDate; //</extra>
+import { Eventcalendar, setOptions, formatDate /* localeImport */ } from '@mobiscroll/react';
+import './hour-day-week-month-quarter-year-header-footer-template.css';
 
 setOptions({
   // localeJs,
@@ -811,4 +808,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

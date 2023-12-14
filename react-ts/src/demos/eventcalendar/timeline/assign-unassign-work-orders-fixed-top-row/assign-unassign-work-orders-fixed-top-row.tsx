@@ -496,4 +496,4 @@ const App: React.FC = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

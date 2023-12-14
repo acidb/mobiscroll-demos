@@ -1,9 +1,5 @@
 import React from 'react';
-//<demo-only>import { Datepicker, setOptions, localeEs/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Datepicker = mobiscroll.Datepicker;
-const localeEs = mobiscroll.localeEs;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Datepicker, setOptions, localeEs /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // themeJs
@@ -19,4 +15,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

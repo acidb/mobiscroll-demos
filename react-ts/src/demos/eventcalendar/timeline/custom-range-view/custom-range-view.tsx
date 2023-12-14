@@ -14,6 +14,7 @@ import {
   MbscPageLoadingEvent /* localeImport */,
 } from '@mobiscroll/react';
 import './custom-range-view.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -195,3 +196,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

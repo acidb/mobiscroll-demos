@@ -1,14 +1,5 @@
 import React from 'react';
-//<demo-only>import { Datepicker, Input, Switch, SegmentedGroup, SegmentedItem, Textarea, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Datepicker = mobiscroll.Datepicker;
-const Input = mobiscroll.Input;
-const Switch = mobiscroll.Switch;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const SegmentedItem = mobiscroll.SegmentedItem;
-const Textarea = mobiscroll.Textarea;
-const Page = mobiscroll.Page;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Datepicker, Input, Switch, SegmentedGroup, SegmentedItem, Textarea, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // langJs,
@@ -45,4 +36,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

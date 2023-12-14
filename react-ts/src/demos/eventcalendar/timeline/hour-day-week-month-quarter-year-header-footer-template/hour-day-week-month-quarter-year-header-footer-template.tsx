@@ -9,6 +9,7 @@ import {
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
 import './hour-day-week-month-quarter-year-header-footer-template.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -814,3 +815,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

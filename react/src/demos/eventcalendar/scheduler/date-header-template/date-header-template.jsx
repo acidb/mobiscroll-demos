@@ -1,9 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, getJson, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const getJson = mobiscroll.getJson;
-const formatDate = mobiscroll.formatDate; //</extra>
+import { Eventcalendar, getJson, formatDate /* localeImport */ } from '@mobiscroll/react';
+import './date-header-template.css';
 
 const milestones = [
   {
@@ -116,4 +113,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

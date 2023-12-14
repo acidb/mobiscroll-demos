@@ -172,4 +172,4 @@ const App: React.FC = () => {
   return <Eventcalendar data={myEvents} view={myView} resources={myResources} />;
 };
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

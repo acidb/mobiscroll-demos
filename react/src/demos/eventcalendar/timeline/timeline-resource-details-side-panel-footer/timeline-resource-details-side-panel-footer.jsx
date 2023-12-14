@@ -1,9 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, toast, getJson/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const toast = mobiscroll.toast;
-const getJson = mobiscroll.getJson; //</extra>
+import { Eventcalendar, toast, getJson /* localeImport */ } from '@mobiscroll/react';
+import './timeline-resource-details-side-panel-footer.css';
 
 const oneDay = 60000 * 60 * 24;
 
@@ -185,4 +182,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

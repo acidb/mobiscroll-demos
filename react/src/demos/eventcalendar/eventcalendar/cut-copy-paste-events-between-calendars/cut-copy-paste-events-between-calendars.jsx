@@ -1,14 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Page, Select, SegmentedGroup, Segmented, toast, snackbar, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Page = mobiscroll.Page;
-const Select = mobiscroll.Select;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const Segmented = mobiscroll.Segmented;
-const toast = mobiscroll.toast;
-const snackbar = mobiscroll.snackbar;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Eventcalendar, Page, Select, SegmentedGroup, Segmented, toast, snackbar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import './cut-copy-paste-events-between-calendars.css';
 
 setOptions({
   // localeJs,
@@ -592,4 +584,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

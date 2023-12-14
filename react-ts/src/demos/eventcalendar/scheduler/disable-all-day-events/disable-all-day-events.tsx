@@ -30,3 +30,4 @@ const App: React.FC = () => {
 
   return <Eventcalendar data={myEvents} view={view} />;
 };
+export default App;

@@ -1,7 +1,5 @@
 import React from 'react';
-//<demo-only>import { Datepicker/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Datepicker = mobiscroll.Datepicker;//</extra>
+import { Datepicker /* localeImport */ } from '@mobiscroll/react';
 
 function App() {
   const invalids = React.useMemo(() => {
@@ -54,4 +52,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

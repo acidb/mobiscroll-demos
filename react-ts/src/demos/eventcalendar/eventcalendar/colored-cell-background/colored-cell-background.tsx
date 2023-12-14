@@ -53,3 +53,4 @@ const App: React.FC = () => {
 
   return <Eventcalendar data={myEvents} colors={myColors} />;
 };
+export default App;

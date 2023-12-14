@@ -17,6 +17,7 @@ import {
   MbscResource,
 } from '@mobiscroll/react';
 import './sync-events-outlook-calendar.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -380,3 +381,4 @@ const App: React.FC = () => {
     </Page>
   );
 };
+export default App;

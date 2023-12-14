@@ -12,6 +12,7 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './book-rental-months-ahead.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -269,3 +270,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

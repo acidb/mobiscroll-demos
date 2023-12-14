@@ -1,8 +1,6 @@
 import React from 'react';
-//<demo-only>import { Datepicker, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Datepicker = mobiscroll.Datepicker;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
+import './customize-marked-day-shapes.css';
 
 setOptions({
   // localeJs,
@@ -33,4 +31,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

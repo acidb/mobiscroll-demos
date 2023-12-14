@@ -13,6 +13,7 @@ import {
   toast /* localeImport */,
 } from '@mobiscroll/react';
 import './load-events-from-google-calendar.css';
+
 const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
 
 const App: React.FC = () => {
@@ -148,3 +149,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

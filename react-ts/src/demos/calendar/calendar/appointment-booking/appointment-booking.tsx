@@ -1,6 +1,7 @@
 import React from 'react';
 import { Datepicker, Page, getJson, setOptions/* localeImport */ } from '@mobiscroll/react';
 import './appointment-booking.css';
+
 setOptions({
     // localeJs,
     // themeJs
@@ -163,3 +164,4 @@ const App: React.FC = () => {
         </Page>
     );
 }
+export default App;

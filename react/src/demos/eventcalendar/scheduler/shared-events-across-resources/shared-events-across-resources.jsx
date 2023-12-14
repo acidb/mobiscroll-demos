@@ -1,12 +1,5 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Popup, Input, SegmentedGroup, Segmented, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Popup = mobiscroll.Popup;
-const Input = mobiscroll.Input;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const Segmented = mobiscroll.Segmented;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Eventcalendar, Popup, Input, SegmentedGroup, Segmented, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -245,4 +238,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

@@ -76,3 +76,4 @@ const App: React.FC = () => {
 
   return <Eventcalendar view={view} data={myData} dragToCreate={true} dragToMove={true} dragToResize={true} dragTimeStep={15} />;
 };
+export default App;

@@ -1,8 +1,5 @@
 import React from 'react';
-//<demo-only>import { Select, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Select = mobiscroll.Select;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Select, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -90,4 +87,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

@@ -1,15 +1,16 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, getJson, setOptions, CalendarNav, SegmentedGroup, SegmentedItem, CalendarPrev, CalendarToday, CalendarNext/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const getJson = mobiscroll.getJson;
-const setOptions = mobiscroll.setOptions;
-const CalendarNav = mobiscroll.CalendarNav;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const SegmentedItem = mobiscroll.SegmentedItem;
-const CalendarPrev = mobiscroll.CalendarPrev;
-const CalendarToday = mobiscroll.CalendarToday;
-const CalendarNext = mobiscroll.CalendarNext; //</extra>
+import {
+  Eventcalendar,
+  getJson,
+  setOptions,
+  CalendarNav,
+  SegmentedGroup,
+  SegmentedItem,
+  CalendarPrev,
+  CalendarToday,
+  CalendarNext /* localeImport */,
+} from '@mobiscroll/react';
+import './switching-calendar-scheduler-agenda.css';
 
 setOptions({
   // localeJs,
@@ -95,4 +96,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

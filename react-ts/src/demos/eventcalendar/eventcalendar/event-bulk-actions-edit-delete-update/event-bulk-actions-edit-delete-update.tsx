@@ -12,6 +12,7 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './event-bulk-actions-edit-delete-update.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -272,3 +273,4 @@ const App: React.FC = () => {
     </Page>
   );
 };
+export default App;

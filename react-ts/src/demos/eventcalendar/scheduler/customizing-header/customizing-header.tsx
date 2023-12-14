@@ -12,6 +12,7 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './customizing-header.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -121,3 +122,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

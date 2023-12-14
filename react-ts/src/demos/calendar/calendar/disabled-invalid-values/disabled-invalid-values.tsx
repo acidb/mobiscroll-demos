@@ -54,3 +54,4 @@ const App: React.FC = () => {
 
   return <Datepicker controls={['calendar']} display="inline" invalid={invalid} />;
 };
+export default App;

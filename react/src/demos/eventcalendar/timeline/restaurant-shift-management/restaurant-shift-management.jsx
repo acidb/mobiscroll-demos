@@ -1,15 +1,16 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, CalendarNav, CalendarPrev, CalendarNext, CalendarToday, Select, Checkbox, setOptions, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const setOptions = mobiscroll.setOptions;
-const CalendarNav = mobiscroll.CalendarNav;
-const CalendarPrev = mobiscroll.CalendarPrev;
-const CalendarNext = mobiscroll.CalendarNext;
-const CalendarToday = mobiscroll.CalendarToday;
-const Select = mobiscroll.Select;
-const Checkbox = mobiscroll.Checkbox;
-const formatDate = mobiscroll.formatDate; //</extra>
+import {
+  Eventcalendar,
+  CalendarNav,
+  CalendarPrev,
+  CalendarNext,
+  CalendarToday,
+  Select,
+  Checkbox,
+  setOptions,
+  formatDate /* localeImport */,
+} from '@mobiscroll/react';
+import './restaurant-shift-management.css';
 
 setOptions({
   // localeJs,
@@ -2110,4 +2111,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

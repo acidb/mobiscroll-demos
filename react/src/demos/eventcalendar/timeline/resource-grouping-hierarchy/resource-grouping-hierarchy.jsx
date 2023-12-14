@@ -1,8 +1,6 @@
 import React from 'react';
-//<demo-only>import { setOptions, Eventcalendar/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const setOptions = mobiscroll.setOptions;
-const Eventcalendar = mobiscroll.Eventcalendar; //</extra>
+import { setOptions, Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import './resource-grouping-hierarchy.css';
 
 setOptions({
   // localeJs,
@@ -200,4 +198,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

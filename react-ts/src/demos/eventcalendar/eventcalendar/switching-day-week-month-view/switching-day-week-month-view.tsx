@@ -12,6 +12,7 @@ import {
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
 import './switching-day-week-month-view.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -85,3 +86,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

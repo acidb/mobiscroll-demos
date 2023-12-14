@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, Page, getJson, setOptions, Dropdown, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/react';
 import './localization.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -204,3 +205,4 @@ const App: React.FC = () => {
     </Page>
   );
 };
+export default App;

@@ -1,12 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Page, Input, getJson, formatDate, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Page = mobiscroll.Page;
-const getJson = mobiscroll.getJson;
-const Input = mobiscroll.Input;
-const setOptions = mobiscroll.setOptions;
-const formatDate = mobiscroll.formatDate; //</extra>
+import { Eventcalendar, Page, Input, getJson, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
+import './searching-events-in-sidebar.css';
 
 setOptions({
   // localeJs,
@@ -107,4 +101,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

@@ -1,10 +1,6 @@
 import React from 'react';
-//<demo-only>import { Datepicker, Button, Page, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Datepicker = mobiscroll.Datepicker;
-const Button = mobiscroll.Button;
-const Page = mobiscroll.Page;
-const Toast = mobiscroll.Toast; //</extra>
+import { Datepicker, Button, Page, Toast /* localeImport */ } from '@mobiscroll/react';
+import './presets.css';
 
 const now = new Date();
 const curr = new Date();
@@ -90,4 +86,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

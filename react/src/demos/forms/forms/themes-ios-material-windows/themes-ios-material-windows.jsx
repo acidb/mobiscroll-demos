@@ -1,19 +1,19 @@
 import React from 'react';
-//<demo-only>import { Input, Page, Button, Stepper, Radio, RadioGroup, Textarea, Dropdown, Switch, Checkbox, SegmentedGroup, Segmented, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const setOptions = mobiscroll.setOptions;
-const Input = mobiscroll.Input;
-const Textarea = mobiscroll.Textarea;
-const Button = mobiscroll.Button;
-const Stepper = mobiscroll.Stepper;
-const Radio = mobiscroll.Radio;
-const RadioGroup = mobiscroll.RadioGroup;
-const Dropdown = mobiscroll.Dropdown;
-const Switch = mobiscroll.Switch;
-const Checkbox = mobiscroll.Checkbox;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const Segmented = mobiscroll.Segmented;
-const Page = mobiscroll.Page; //</extra>
+import {
+  Input,
+  Page,
+  Button,
+  Stepper,
+  Radio,
+  RadioGroup,
+  Textarea,
+  Dropdown,
+  Switch,
+  Checkbox,
+  SegmentedGroup,
+  Segmented,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -51,4 +51,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

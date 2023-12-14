@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, setOptions, formatDate, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/react';
 import './multi-classroom-timetable.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -99,3 +100,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

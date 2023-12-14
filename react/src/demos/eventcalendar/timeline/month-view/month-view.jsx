@@ -1,7 +1,5 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;//</extra>
+import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
 
 function App() {
   const view = React.useMemo(() => {
@@ -168,4 +166,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

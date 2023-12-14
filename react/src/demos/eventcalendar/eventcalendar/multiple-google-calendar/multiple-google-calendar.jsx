@@ -1,8 +1,7 @@
 import React from 'react';
-import mobiscroll from '@mobiscroll/react';
-import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
 
-mobiscroll.setOptions({
+setOptions({
   // localeJs,
   // themeJs
 });
@@ -237,7 +236,7 @@ class App extends React.Component {
             </div>
             <div className="mbsc-col-sm-12 mbsc-col-md-8">
               <div>
-                <mobiscroll.Eventcalendar
+                <Eventcalendar
                   // locale
                   // theme
                   view={{
@@ -257,4 +256,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

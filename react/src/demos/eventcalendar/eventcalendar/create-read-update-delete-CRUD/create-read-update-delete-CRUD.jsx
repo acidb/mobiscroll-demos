@@ -1,17 +1,18 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, snackbar, setOptions, Popup, Button, Input, Textarea, Switch, Datepicker, SegmentedGroup, SegmentedItem/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const snackbar = mobiscroll.snackbar;
-const setOptions = mobiscroll.setOptions;
-const Popup = mobiscroll.Popup;
-const Button = mobiscroll.Button;
-const Input = mobiscroll.Input;
-const Textarea = mobiscroll.Textarea;
-const Switch = mobiscroll.Switch;
-const Datepicker = mobiscroll.Datepicker;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const SegmentedItem = mobiscroll.SegmentedItem; //</extra>
+import {
+  Eventcalendar,
+  snackbar,
+  setOptions,
+  Popup,
+  Button,
+  Input,
+  Textarea,
+  Switch,
+  Datepicker,
+  SegmentedGroup,
+  SegmentedItem /* localeImport */,
+} from '@mobiscroll/react';
+import './create-read-update-delete-CRUD.css';
 
 setOptions({
   // localeJs,
@@ -455,4 +456,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

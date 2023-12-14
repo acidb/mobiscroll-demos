@@ -15,6 +15,7 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './searching-events-in-popup.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -162,3 +163,4 @@ const App: React.FC = () => {
     </Page>
   );
 };
+export default App;

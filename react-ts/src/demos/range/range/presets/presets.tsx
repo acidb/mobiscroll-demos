@@ -2,6 +2,7 @@ import React from 'react';
 import React from 'react';
 import { Datepicker, Button, Page, Toast /* localeImport */ } from '@mobiscroll/react';
 import './presets.css';
+
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 
 const now = new Date();
@@ -88,4 +89,5 @@ const App: React.FC = () => {
   );
 };
 
+export default App;
 export default App;

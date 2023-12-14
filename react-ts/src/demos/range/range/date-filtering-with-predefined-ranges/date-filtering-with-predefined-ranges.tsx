@@ -1,6 +1,7 @@
 import React from 'react';
 import { Page, Input, Popup, Select, Datepicker, Button, formatDate, options, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './date-filtering-with-predefined-ranges.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -236,3 +237,5 @@ const App: React.FC = () => {
     </Page>
   );
 };
+
+export default App;

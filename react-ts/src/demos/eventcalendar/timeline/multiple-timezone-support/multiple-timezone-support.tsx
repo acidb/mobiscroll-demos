@@ -12,6 +12,7 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './multiple-timezone-support.css';
+
 import moment from 'moment-timezone';
 
 // setup Mobiscroll Timezone plugin with Moment
@@ -178,3 +179,4 @@ function App() {
     />
   );
 }
+export default App;

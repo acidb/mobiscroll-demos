@@ -1,11 +1,7 @@
 import React from 'react';
-//<demo-only>import { Button, Eventcalendar, setOptions, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+import { Button, Eventcalendar, setOptions, Toast/* localeImport */ } from '@mobiscroll/react';
 
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Button = mobiscroll.Button;
-const getJson = mobiscroll.getJson;
-const Toast = mobiscroll.Toast;
-const setOptions = mobiscroll.setOptions;//</extra>
+
 
 setOptions({
     // localeJs,
@@ -76,7 +72,5 @@ function App() {
     ); 
 }
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('content')
-);
+
+export default App;

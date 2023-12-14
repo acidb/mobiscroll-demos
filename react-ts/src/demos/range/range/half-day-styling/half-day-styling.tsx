@@ -1,6 +1,7 @@
 import React from 'react';
 import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './half-day-styling.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -14,3 +15,4 @@ const myColros = [
 const App: React.FC = () => {
   return <Datepicker controls={['calendar']} select="range" display="inline" colors={myColors} />;
 };
+export default App;

@@ -1,8 +1,6 @@
 import React from 'react';
-//<demo-only>import { googleCalendarSync, Eventcalendar, toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const toast = mobiscroll.toast; //</extra>
+import { googleCalendarSync, Eventcalendar, toast /* localeImport */ } from '@mobiscroll/react';
+import './load-events-from-google-calendar.css';
 
 function App() {
   const [events, setEvents] = React.useState([]);
@@ -91,4 +89,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

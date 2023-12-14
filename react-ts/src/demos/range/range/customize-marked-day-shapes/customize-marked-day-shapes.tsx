@@ -1,6 +1,7 @@
 import React from 'react';
 import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './customize-marked-day-shapes.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -30,3 +31,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

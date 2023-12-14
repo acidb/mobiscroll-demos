@@ -1,9 +1,5 @@
 import React from 'react';
-//<demo-only>import { Input, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const setOptions = mobiscroll.setOptions;
-const Input = mobiscroll.Input;
-const Page = mobiscroll.Page; //</extra>
+import { Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -31,4 +27,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

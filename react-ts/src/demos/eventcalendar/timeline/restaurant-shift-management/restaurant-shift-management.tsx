@@ -15,6 +15,7 @@ import {
   formatDate /* localeImport */,
 } from '@mobiscroll/react';
 import './restaurant-shift-management.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -2113,3 +2114,4 @@ function App() {
     />
   );
 }
+export default App;

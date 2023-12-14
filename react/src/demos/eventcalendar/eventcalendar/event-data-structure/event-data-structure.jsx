@@ -1,10 +1,5 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Page, Toast, Button/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Toast = mobiscroll.Toast;
-const Page = mobiscroll.Page;
-const Button = mobiscroll.Button; //</extra>
+import { Eventcalendar, Page, Toast, Button /* localeImport */ } from '@mobiscroll/react';
 
 const now = new Date();
 
@@ -68,4 +63,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Eventcalendar, getJson /* localeImport */ } from '@mobiscroll/react';
+
 function App() {
   const [myEvents, setEvents] = React.useState([]);
   const invalids = [
@@ -14,7 +16,7 @@ function App() {
   ];
 
   React.useEffect(() => {
-    mobiscroll.getJson(
+    getJson(
       'https://trial.mobiscroll.com//workday-events/?vers=5',
       (events) => {
         setEvents(events);
@@ -38,7 +40,7 @@ function App() {
   }, []);
 
   return (
-    <mobiscroll.Eventcalendar
+    <Eventcalendar
       // theme
       // locale
       invalid={invalids}
@@ -48,4 +50,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

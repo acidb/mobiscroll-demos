@@ -1,9 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Draggable, getJson/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Draggable = mobiscroll.Draggable;
-const getJson = mobiscroll.getJson;//</extra>
+import { Eventcalendar, Draggable, getJson/* localeImport */ } from '@mobiscroll/react';
+import './event-hooks.css';
 
 function App() {
     const [myEvents, setEvents] = React.useState([]);
@@ -148,7 +145,5 @@ function App() {
     ); 
 }
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('content')
-);
+
+export default App;

@@ -73,3 +73,4 @@ const App: React.FC = () => {
 
   return <Eventcalendar data={events} view={view} resources={myResources} onPageLoading={onPageLoading} />;
 };
+export default App;

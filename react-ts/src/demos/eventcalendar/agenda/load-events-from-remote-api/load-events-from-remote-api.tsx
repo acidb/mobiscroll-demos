@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
 import './load-events-from-remote-api.css';
+
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
@@ -29,3 +30,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

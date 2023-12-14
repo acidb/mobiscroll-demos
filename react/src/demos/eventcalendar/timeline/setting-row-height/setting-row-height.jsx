@@ -1,8 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import './setting-row-height.css';
 
 setOptions({
   // localeJs,
@@ -210,4 +208,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

@@ -1,8 +1,5 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar,/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -175,4 +172,4 @@ const App = () => {
   return <Eventcalendar data={myEvents} view={myView} resources={myResources} />;
 };
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

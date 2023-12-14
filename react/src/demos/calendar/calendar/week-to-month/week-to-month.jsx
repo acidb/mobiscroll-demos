@@ -1,13 +1,14 @@
 import React from 'react';
-//<demo-only>import { Datepicker, CalendarPrev, CalendarNav, CalendarNext, SegmentedGroup, SegmentedItem, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Datepicker = mobiscroll.Datepicker;
-const CalendarPrev = mobiscroll.CalendarPrev;
-const CalendarNav = mobiscroll.CalendarNav;
-const CalendarNext = mobiscroll.CalendarNext;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const SegmentedItem = mobiscroll.SegmentedItem;
-const setOptions = mobiscroll.setOptions; //</extra>
+import {
+  Datepicker,
+  CalendarPrev,
+  CalendarNav,
+  CalendarNext,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import './week-to-month.css';
 
 setOptions({
   // localeJs,
@@ -45,4 +46,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

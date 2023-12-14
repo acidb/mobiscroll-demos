@@ -8,6 +8,7 @@ import {
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
 import './colors-invalids-css-class.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -205,3 +206,4 @@ const App: React.FC = () => {
 
   return <Eventcalendar view={view} resources={myResources} data={myEvents} invalid={myInvalid} colors={myColors} />;
 };
+export default App;

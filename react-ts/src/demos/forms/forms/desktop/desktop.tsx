@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Dropdown, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './desktop.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -115,3 +116,4 @@ const App: React.FC = () => {
     </Page>
   );
 };
+export default App;

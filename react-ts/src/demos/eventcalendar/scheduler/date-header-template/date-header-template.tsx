@@ -8,6 +8,7 @@ import {
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
 import './date-header-template.css';
+
 const milestones = [
   {
     date: 'dyndatetime(y,m,d-2)',
@@ -117,3 +118,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

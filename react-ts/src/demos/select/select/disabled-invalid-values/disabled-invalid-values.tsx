@@ -50,3 +50,4 @@ const myData = [
 const App: React.FC = () => {
   return <Select data={myData} display="inline" />;
 };
+export default App;

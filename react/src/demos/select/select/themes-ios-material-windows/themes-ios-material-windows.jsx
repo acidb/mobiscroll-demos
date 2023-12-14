@@ -1,7 +1,5 @@
 import React from 'react';
-//<demo-only>import { Select/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Select = mobiscroll.Select;//</extra>
+import { Select /* localeImport */ } from '@mobiscroll/react';
 
 const myData = [
   {
@@ -54,4 +52,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

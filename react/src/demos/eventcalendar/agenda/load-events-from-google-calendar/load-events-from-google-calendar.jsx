@@ -1,14 +1,16 @@
 import React from 'react';
-//<demo-only>import { googleCalendarSync, Eventcalendar, CalendarNav, SegmentedGroup, SegmentedItem, CalendarPrev, CalendarToday, CalendarNext, toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const CalendarNav = mobiscroll.CalendarNav;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const SegmentedItem = mobiscroll.SegmentedItem;
-const CalendarPrev = mobiscroll.CalendarPrev;
-const CalendarToday = mobiscroll.CalendarToday;
-const CalendarNext = mobiscroll.CalendarNext;
-const toast = mobiscroll.toast; //</extra>
+import {
+  googleCalendarSync,
+  Eventcalendar,
+  CalendarNav,
+  SegmentedGroup,
+  SegmentedItem,
+  CalendarPrev,
+  CalendarToday,
+  CalendarNext,
+  toast /* localeImport */,
+} from '@mobiscroll/react';
+import './load-events-from-google-calendar.css';
 
 const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
 
@@ -146,4 +148,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

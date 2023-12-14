@@ -1,9 +1,5 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, toast, Button/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const toast = mobiscroll.toast;
-const Button = mobiscroll.Button; //</extra>
+import { Eventcalendar, toast, Button /* localeImport */ } from '@mobiscroll/react';
 
 function App() {
   const [myEvents, setEvents] = React.useState([
@@ -90,4 +86,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

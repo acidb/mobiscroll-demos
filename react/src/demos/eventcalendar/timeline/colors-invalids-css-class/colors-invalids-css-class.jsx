@@ -1,9 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, getJson, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const getJson = mobiscroll.getJson;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import './colors-invalids-css-class.css';
 
 setOptions({
   // localeJs,
@@ -203,4 +200,4 @@ function App() {
   return <Eventcalendar view={view} resources={myResources} data={myEvents} invalid={myInvalid} colors={myColors} />;
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

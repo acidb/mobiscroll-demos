@@ -16,6 +16,7 @@ import {
   MbscEventcalendarView,
 } from '@mobiscroll/react';
 import './sync-events-google-calendar.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -325,3 +326,4 @@ const App: React.FC = () => {
     </Page>
   );
 };
+export default App;

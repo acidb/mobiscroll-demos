@@ -1,12 +1,5 @@
 import React from 'react';
-//<demo-only>import { setOptions, Alert, Confirm, Prompt, Page, Button/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const setOptions = mobiscroll.setOptions;
-const Page = mobiscroll.Page;
-const Alert = mobiscroll.Alert;
-const Confirm = mobiscroll.Confirm;
-const Prompt = mobiscroll.Prompt;
-const Button = mobiscroll.Button; //</extra>
+import { setOptions, Alert, Confirm, Prompt, Page, Button /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -75,4 +68,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

@@ -1,8 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const formatDate = mobiscroll.formatDate; //</extra>
+import { Eventcalendar, formatDate /* localeImport */ } from '@mobiscroll/react';
+import './shift-template.css';
 
 const staff = [
   {
@@ -234,4 +232,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

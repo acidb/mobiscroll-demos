@@ -1,11 +1,6 @@
 import React from 'react';
-//<demo-only>import { Draggable, Dropcontainer, Eventcalendar, setOptions, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Draggable = mobiscroll.Draggable;
-const Dropcontainer = mobiscroll.Dropcontainer;
-const Toast = mobiscroll.Toast;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Draggable, Dropcontainer, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import './doctors-appointment.css';
 
 setOptions({
   // localeJs,
@@ -350,4 +345,4 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

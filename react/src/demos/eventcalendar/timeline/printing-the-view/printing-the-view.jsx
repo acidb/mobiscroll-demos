@@ -1,12 +1,8 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Page, Button, getJson/* localeImport */ } from '@mobiscroll/react';
-import { print } from '@mobiscroll/print';//</demo-only>
+import { Eventcalendar, Page, Button, getJson/* localeImport */ } from '@mobiscroll/react';
+import { print } from '@mobiscroll/print';
 
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Button = mobiscroll.Button;
-const Page = mobiscroll.Page;
-const getJson = mobiscroll.getJson;
-const setOptions = mobiscroll.setOptions;//</extra>
+
 
 const MY_MODULES = [print];
 
@@ -84,7 +80,4 @@ function App() {
     );
 }
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('content')
-);
+export default App;

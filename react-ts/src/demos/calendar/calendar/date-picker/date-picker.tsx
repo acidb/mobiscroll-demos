@@ -9,3 +9,4 @@ setOptions({
 const App: React.FC = () => {
   return <Datepicker controls={['calendar']} display="inline" />;
 };
+export default App;

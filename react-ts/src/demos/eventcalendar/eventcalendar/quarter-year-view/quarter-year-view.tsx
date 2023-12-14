@@ -13,6 +13,7 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './quarter-year-view.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -74,3 +75,4 @@ const App: React.FC = () => {
 
   return <Eventcalendar data={myEvents} view={view} height={calHeight} renderHeader={calendarHeaderSwitch} />;
 };
+export default App;

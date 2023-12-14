@@ -1,10 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, setOptions, formatDate, getJson/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const setOptions = mobiscroll.setOptions;
-const formatDate = mobiscroll.formatDate;
-const getJson = mobiscroll.getJson; //</extra>
+import { Eventcalendar, setOptions, formatDate, getJson /* localeImport */ } from '@mobiscroll/react';
+import './multi-classroom-timetable.css';
 
 setOptions({
   // localeJs,
@@ -105,4 +101,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

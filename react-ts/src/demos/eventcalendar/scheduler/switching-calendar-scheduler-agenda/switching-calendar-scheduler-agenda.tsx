@@ -13,6 +13,7 @@ import {
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
 import './switching-calendar-scheduler-agenda.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -96,3 +97,4 @@ const App: React.FC = () => {
     <Eventcalendar renderHeader={customWithNavButtons} height={750} view={calView} data={myEvents} cssClass="md-switching-view-cont" />
   );
 };
+export default App;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, Toast, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
 import './drag-drop-between-calendar-instances.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -229,3 +230,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

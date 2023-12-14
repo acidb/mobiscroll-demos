@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, Page, Draggable, toast, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './dynamically-color-and-invalidate.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -256,3 +257,4 @@ const App: React.FC = () => {
     </Page>
   );
 };
+export default App;

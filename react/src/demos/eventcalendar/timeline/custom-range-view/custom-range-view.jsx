@@ -1,15 +1,16 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, getJson, setOptions, CalendarPrev, CalendarNext, CalendarToday, Button, Datepicker, formatDate/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const getJson = mobiscroll.getJson;
-const setOptions = mobiscroll.setOptions;
-const CalendarPrev = mobiscroll.CalendarPrev;
-const CalendarNext = mobiscroll.CalendarNext;
-const CalendarToday = mobiscroll.CalendarToday;
-const Button = mobiscroll.Button;
-const formatDate = mobiscroll.formatDate;
-const Datepicker = mobiscroll.Datepicker; //</extra>
+import {
+  Eventcalendar,
+  getJson,
+  setOptions,
+  CalendarPrev,
+  CalendarNext,
+  CalendarToday,
+  Button,
+  Datepicker,
+  formatDate /* localeImport */,
+} from '@mobiscroll/react';
+import './custom-range-view.css';
 
 setOptions({
   // localeJs,
@@ -194,4 +195,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

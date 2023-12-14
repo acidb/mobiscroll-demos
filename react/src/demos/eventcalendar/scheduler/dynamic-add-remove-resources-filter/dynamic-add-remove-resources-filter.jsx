@@ -1,11 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, getJson, Checkbox, Page, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Checkbox = mobiscroll.Checkbox;
-const Page = mobiscroll.Page;
-const setOptions = mobiscroll.setOptions;
-const getJson = mobiscroll.getJson;//</extra>
+import { Eventcalendar, getJson, Checkbox, Page, setOptions/* localeImport */ } from '@mobiscroll/react';
+import './dynamic-add-remove-resources-filter.css';
 
 setOptions({
     // localeJs,
@@ -83,7 +78,4 @@ const App: React.FC = () => {
     );
 }
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('content')
-);
+export default App;

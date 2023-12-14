@@ -13,6 +13,7 @@ import {
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
 import './event-listing.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -212,3 +213,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

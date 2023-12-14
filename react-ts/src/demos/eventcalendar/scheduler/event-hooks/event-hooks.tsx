@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, Draggable, getJson, MbscCalendarEvent, MbscEventcalendarView/* localeImport */ } from '@mobiscroll/react';
 import './event-hooks.css';
+
 const App: React.FC = () => {
     const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
     const invalid = [{
@@ -146,3 +147,4 @@ const App: React.FC = () => {
         />
     );
 }
+export default App;

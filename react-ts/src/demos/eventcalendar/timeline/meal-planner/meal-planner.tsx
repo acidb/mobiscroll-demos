@@ -15,6 +15,7 @@ import {
   MbscEventcalendarView,
 } from '@mobiscroll/react';
 import './meal-planner.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -337,3 +338,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

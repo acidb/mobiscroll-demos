@@ -10,6 +10,7 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './quarter-year-view.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -115,3 +116,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;

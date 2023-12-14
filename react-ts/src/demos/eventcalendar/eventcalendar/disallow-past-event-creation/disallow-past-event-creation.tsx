@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, getJson, setOptions, toast, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
 import './disallow-past-event-creation.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -97,4 +98,4 @@ const App: React.FC = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

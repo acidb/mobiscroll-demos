@@ -52,3 +52,4 @@ const App: React.FC = () => {
 
   return <Eventcalendar view={myView} data={myEvents} dragToMove={true} />;
 };
+export default App;

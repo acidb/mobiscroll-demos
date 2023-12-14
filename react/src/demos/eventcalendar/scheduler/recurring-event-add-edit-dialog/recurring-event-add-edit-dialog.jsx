@@ -1,21 +1,22 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Select, setOptions, Popup, Button, Input, Textarea, Switch, Radio, RadioGroup, Datepicker, SegmentedGroup, SegmentedItem, formatDate, updateRecurringEvent/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const setOptions = mobiscroll.setOptions;
-const Popup = mobiscroll.Popup;
-const Button = mobiscroll.Button;
-const Input = mobiscroll.Input;
-const Textarea = mobiscroll.Textarea;
-const Switch = mobiscroll.Switch;
-const Radio = mobiscroll.Radio;
-const RadioGroup = mobiscroll.RadioGroup;
-const Datepicker = mobiscroll.Datepicker;
-const Select = mobiscroll.Select;
-const SegmentedGroup = mobiscroll.SegmentedGroup;
-const SegmentedItem = mobiscroll.SegmentedItem;
-const formatDate = mobiscroll.formatDate;
-const updateRecurringEvent = mobiscroll.updateRecurringEvent; //</extra>
+import {
+  Eventcalendar,
+  Select,
+  setOptions,
+  Popup,
+  Button,
+  Input,
+  Textarea,
+  Switch,
+  Radio,
+  RadioGroup,
+  Datepicker,
+  SegmentedGroup,
+  SegmentedItem,
+  formatDate,
+  updateRecurringEvent /* localeImport */,
+} from '@mobiscroll/react';
+import './recurring-event-add-edit-dialog.css';
 
 setOptions({
   // localeJs,
@@ -1228,4 +1229,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

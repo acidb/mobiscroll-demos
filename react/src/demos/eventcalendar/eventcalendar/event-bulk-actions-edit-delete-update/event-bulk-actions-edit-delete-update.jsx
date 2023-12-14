@@ -1,15 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Button, Select, Page, getJson, formatDate, confirm, toast, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-//<extra>
-const Eventcalendar = mobiscroll.Eventcalendar;
-const getJson = mobiscroll.getJson;
-const Button = mobiscroll.Button;
-const Select = mobiscroll.Select;
-const Page = mobiscroll.Page;
-const confirm = mobiscroll.confirm;
-const setOptions = mobiscroll.setOptions;
-const formatDate = mobiscroll.formatDate;
-const toast = mobiscroll.toast; //</extra>
+import { Eventcalendar, Button, Select, Page, getJson, formatDate, confirm, toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import './event-bulk-actions-edit-delete-update.css';
 
 setOptions({
   // localeJs,
@@ -277,4 +268,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

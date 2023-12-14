@@ -8,6 +8,7 @@ import {
   MbscCalendarEventData /* localeImport */,
 } from '@mobiscroll/react';
 import './customize-label-look-and-feel.css';
+
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
@@ -76,3 +77,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

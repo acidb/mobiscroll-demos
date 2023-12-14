@@ -10,6 +10,7 @@ import {
   MbscCalendarEventData /* localeImport */,
 } from '@mobiscroll/react';
 import './customize-event-popover.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -98,3 +99,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

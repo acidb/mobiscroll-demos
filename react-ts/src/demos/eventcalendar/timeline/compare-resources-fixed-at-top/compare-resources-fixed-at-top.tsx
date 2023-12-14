@@ -424,8 +424,8 @@ const App: React.FC = () => {
   const toggleComparison = React.useCallback(
     (resource: MbscResource) => {
       const isFixed = resource.fixed;
-      const origResource = myResources.find((r) => r.id === resource.id)!;
-      let newFixedResources: MbscResource[] = [];
+      const origResource = myResources.find((r) => r.id === resource.id);
+      let newFixedResources = [];
       let newFixedNr = fixedNr;
 
       if (!isFixed) {
@@ -438,7 +438,7 @@ const App: React.FC = () => {
         newFixedNr--;
       }
 
-      const newResources: MbscResource[] = [...newFixedResources];
+      const newResources = [...newFixedResources];
       myResources.forEach(function (r) {
         if (!r.fixed) {
           newResources.push(r);

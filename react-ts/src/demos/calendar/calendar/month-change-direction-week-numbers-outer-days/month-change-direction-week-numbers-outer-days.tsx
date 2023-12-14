@@ -9,3 +9,4 @@ setOptions({
 const App: React.FC = () => {
   return <Datepicker controls={['calendar']} display="inline" calendarScroll="horizontal" showWeekNumbers={true} showOuterDays={true} />;
 };
+export default App;

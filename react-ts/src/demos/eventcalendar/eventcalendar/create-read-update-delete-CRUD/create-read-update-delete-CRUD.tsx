@@ -15,6 +15,7 @@ import {
   MbscEventcalendarView,
 } from '@mobiscroll/react';
 import './create-read-update-delete-CRUD.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -452,3 +453,4 @@ const Home: React.FC = () => {
     </div>
   );
 };
+export default App;

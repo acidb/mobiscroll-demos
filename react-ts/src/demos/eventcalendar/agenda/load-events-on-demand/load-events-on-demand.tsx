@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, getJson, Toast, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
 import './load-events-on-demand.css';
+
 const App: React.FC = () => {
   const [events, setEvents] = React.useState<MbscCalendarEvent[]>([]);
   const [isToastOpen, setToastOpen] = React.useState(false);
@@ -55,3 +56,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

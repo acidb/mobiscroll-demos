@@ -14,6 +14,7 @@ import {
   snackbar,
 } from '@mobiscroll/react';
 import './work-order-scheduling.css';
+
 setOptions({
   theme: 'ios',
   themeVariant: 'light',
@@ -587,3 +588,4 @@ const App: React.FC = () => {
     </div>
   );
 };
+export default App;

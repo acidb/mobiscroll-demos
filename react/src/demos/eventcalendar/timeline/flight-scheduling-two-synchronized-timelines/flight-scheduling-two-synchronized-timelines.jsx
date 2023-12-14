@@ -1,10 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, setOptions, Toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const setOptions = mobiscroll.setOptions;
-const Toast = mobiscroll.Toast;
-const toast = mobiscroll.toast; //</extra>
+import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import './flight-scheduling-two-synchronized-timelines.css';
 
 setOptions({
   // localeJs,
@@ -612,4 +608,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

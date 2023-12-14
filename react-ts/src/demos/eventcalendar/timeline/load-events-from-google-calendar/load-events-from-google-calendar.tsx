@@ -1,6 +1,7 @@
 import React from 'react';
 import { googleCalendarSync, Eventcalendar, MbscEventcalendarView, toast /* localeImport */ } from '@mobiscroll/react';
 import './load-events-from-google-calendar.css';
+
 const App: React.FC = () => {
   const [events, setEvents] = React.useState([]);
   const firstDay = React.useRef<Date>();
@@ -87,3 +88,4 @@ const App: React.FC = () => {
     />
   );
 };
+export default App;
