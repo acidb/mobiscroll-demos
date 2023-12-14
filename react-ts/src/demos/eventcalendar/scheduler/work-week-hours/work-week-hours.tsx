@@ -9,6 +9,7 @@ import {
   MbscEventCreateFailedEvent /* localeImport */,
 } from '@mobiscroll/react';
 import './work-week-hours.css';
+
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
@@ -68,7 +69,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <mobiscroll.Eventcalendar
+      <Eventcalendar
         // theme
         // locale
         dragToCreate={true}
@@ -88,3 +89,5 @@ const App: React.FC = () => {
     </div>
   );
 };
+
+export default App;

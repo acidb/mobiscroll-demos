@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
 import './connecting-linking-events-arrows.css';
+
 const App: React.FC = () => {
   const view = React.useMemo<MbscEventcalendarView>(() => {
     return {
@@ -219,4 +220,4 @@ const App: React.FC = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

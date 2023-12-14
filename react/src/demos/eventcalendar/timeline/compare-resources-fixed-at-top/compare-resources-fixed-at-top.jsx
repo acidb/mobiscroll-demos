@@ -1,10 +1,6 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, Button, Toast, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const Button = mobiscroll.Button;
-const Toast = mobiscroll.Toast;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Eventcalendar, Button, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import './compare-resources-fixed-at-top.css';
 
 setOptions({
   // localeJs,
@@ -491,4 +487,4 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

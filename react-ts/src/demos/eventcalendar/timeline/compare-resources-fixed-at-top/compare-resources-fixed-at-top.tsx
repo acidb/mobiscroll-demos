@@ -1,6 +1,7 @@
 import React from 'react';
 import { Eventcalendar, Button, Toast, setOptions, MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/react';
 import './compare-resources-fixed-at-top.css';
+
 setOptions({
   // localeJs,
   // themeJs
@@ -423,8 +424,8 @@ const App: React.FC = () => {
   const toggleComparison = React.useCallback(
     (resource: MbscResource) => {
       const isFixed = resource.fixed;
-      const origResource = myResources.find((r) => r.id === resource.id);
-      let newFixedResources = [];
+      const origResource = myResources.find((r) => r.id === resource.id)!;
+      let newFixedResources: MbscResource[] = [];
       let newFixedNr = fixedNr;
 
       if (!isFixed) {
@@ -437,7 +438,7 @@ const App: React.FC = () => {
         newFixedNr--;
       }
 
-      const newResources = [...newFixedResources];
+      const newResources: MbscResource[] = [...newFixedResources];
       myResources.forEach(function (r) {
         if (!r.fixed) {
           newResources.push(r);
@@ -486,4 +487,4 @@ const App: React.FC = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;

@@ -1,10 +1,10 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, getJson, Toast, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+import { Eventcalendar, getJson, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
 
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const getJson = mobiscroll.getJson;
-const Toast = mobiscroll.Toast;
-const setOptions = mobiscroll.setOptions; //</extra>
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
   const [myEvents, setEvents] = React.useState([]);
@@ -24,7 +24,7 @@ function App() {
   ];
 
   React.useEffect(() => {
-    mobiscroll.getJson(
+    getJson(
       'https://trial.mobiscroll.com//workday-events/?vers=5',
       (events) => {
         setEvents(events);
@@ -38,14 +38,14 @@ function App() {
       setToastText("Can't create this task on lunch break.");
       setToastOpen(true);
     }
-  });
+  }, []);
 
   const onEventUpdateFailed = React.useCallback((event) => {
     if (event.invalid.type === 'lunch') {
       setToastText("Can't schedule this task on lunch break.");
       setToastOpen(true);
     }
-  });
+  }, []);
 
   const view = React.useMemo(() => {
     return {
@@ -65,7 +65,7 @@ function App() {
 
   return (
     <div>
-      <mobiscroll.Eventcalendar
+      <Eventcalendar
         // theme
         // locale
         dragToCreate={true}
@@ -86,4 +86,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('content'));
+export default App;
