@@ -1,10 +1,10 @@
-const fileRegex = /\.(js)$/;
+const fileRegex = /\.(tsx)$/;
 
 export default function myPlugin() {
   return {
     name: 'transform-file',
 
-    transform(src, id) {
+    transform(src: string, id: string) {
       if (fileRegex.test(id)) {
         return {
           code: compileFileToJS(src),
@@ -15,23 +15,23 @@ export default function myPlugin() {
   };
 }
 const now = new Date();
-const compileFileToJS = (src) => {
-  const str = src.replace(/:.*dyndatetime.*/g, function (i, match) {
+const compileFileToJS = (src: string) => {
+  const str = src.replace(/:.*dyndatetime.*/g, function (i) {
     return parseDatestring(i);
   });
   return str;
 };
 
-const parseDatestring = (s) => {
+const parseDatestring = (s: string) => {
   s = s.replace(/dyndatetime/, '');
   s = s.replace(/\(/, '');
   s = s.replace(/\)/, ''); //ymdhi
-  s = s.replace(/y/, now.getFullYear());
-  s = s.replace(/m/, now.getMonth());
-  s = s.replace(/d/, now.getDate());
-  s = s.replace(/h/, now.getHours());
-  s = s.replace(/i/, now.getMinutes());
-  s = s.replace(/'(.*)'/, function (i, match) {
+  s = s.replace(/y/, now.getFullYear().toString());
+  s = s.replace(/m/, now.getMonth().toString());
+  s = s.replace(/d/, now.getDate().toString());
+  s = s.replace(/h/, now.getHours().toString());
+  s = s.replace(/i/, now.getMinutes().toString());
+  s = s.replace(/'(.*)'/, function (i: string) {
     const dateDict = {
       0: 0,
       1: 0,
@@ -44,7 +44,7 @@ const parseDatestring = (s) => {
     dateArray.forEach((i, index) => {
       const plus = i.includes('+');
       const minus = i.includes('-');
-      const splittedNum = i.split(/[\+|\-]/);
+      const splittedNum = i.split(/[+|-]/);
       let num = 0;
       splittedNum.forEach((element) => {
         if (plus) {

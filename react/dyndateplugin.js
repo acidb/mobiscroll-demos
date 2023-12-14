@@ -1,4 +1,4 @@
-const fileRegex = /\.(js)$/;
+const fileRegex = /\.(jsx)$/;
 
 export default function myPlugin() {
   return {
@@ -16,7 +16,7 @@ export default function myPlugin() {
 }
 const now = new Date();
 const compileFileToJS = (src) => {
-  const str = src.replace(/:.*dyndatetime.*/g, function (i, match) {
+  var str = src.replace(/:.*dyndatetime.*/g, function (i) {
     return parseDatestring(i);
   });
   return str;
@@ -31,7 +31,7 @@ const parseDatestring = (s) => {
   s = s.replace(/d/, now.getDate());
   s = s.replace(/h/, now.getHours());
   s = s.replace(/i/, now.getMinutes());
-  s = s.replace(/'(.*)'/, function (i, match) {
+  s = s.replace(/'(.*)'/, function (i) {
     const dateDict = {
       0: 0,
       1: 0,
@@ -40,11 +40,11 @@ const parseDatestring = (s) => {
       4: 0,
     };
     const date = i.replace(/'/g, '');
-    const dateArray = date.split(',');
+    let dateArray = date.split(',');
     dateArray.forEach((i, index) => {
       const plus = i.includes('+');
       const minus = i.includes('-');
-      const splittedNum = i.split(/[\+|\-]/);
+      const splittedNum = i.split(/[+|-]/);
       let num = 0;
       splittedNum.forEach((element) => {
         if (plus) {

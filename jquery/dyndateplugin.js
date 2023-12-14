@@ -16,7 +16,7 @@ export default function myPlugin() {
 }
 const now = new Date();
 const compileFileToJS = (src) => {
-  const str = src.replace(/:.*dyndatetime.*/g, function (i, match) {
+  const str = src.replace(/:.*dyndatetime.*/g, function (i) {
     return parseDatestring(i);
   });
   return str;
@@ -31,7 +31,7 @@ const parseDatestring = (s) => {
   s = s.replace(/d/, now.getDate());
   s = s.replace(/h/, now.getHours());
   s = s.replace(/i/, now.getMinutes());
-  s = s.replace(/'(.*)'/, function (i, match) {
+  s = s.replace(/'(.*)'/, function (i) {
     const dateDict = {
       0: 0,
       1: 0,

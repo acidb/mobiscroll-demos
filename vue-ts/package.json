@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@mobiscroll/vue": "^5.28.0",
+    "vite-plugin-dts": "^3.6.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
