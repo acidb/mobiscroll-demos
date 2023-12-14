@@ -31,7 +31,7 @@ const parseDatestring = (s: string) => {
   s = s.replace(/d/, now.getDate().toString());
   s = s.replace(/h/, now.getHours().toString());
   s = s.replace(/i/, now.getMinutes().toString());
-  s = s.replace(/'(.*)'/, function (i: string) {
+  s = s.replace(/['|"](.*)['|"]/, function (i: string) {
     const dateDict = {
       0: 0,
       1: 0,
@@ -39,7 +39,7 @@ const parseDatestring = (s: string) => {
       3: 0,
       4: 0,
     };
-    const date = i.replace(/'/g, '');
+    const date = i.replace(/['|"]/g, '');
     const dateArray = date.split(',');
     dateArray.forEach((i, index) => {
       const plus = i.includes('+');

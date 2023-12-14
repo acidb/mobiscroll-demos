@@ -2,7 +2,6 @@
   "compilerOptions": {
     "composite": true,
     "skipLibCheck": true,
-    "lib": ["es6", "dom", "es2017"], // not sure - needed because string.includes didn't work in dindateplugin
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true

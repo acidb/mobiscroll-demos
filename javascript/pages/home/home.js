@@ -3,7 +3,7 @@ export default {
   markup: `
     <div mbsc-page>
       <div class="mbsc-padding">
-        <h1>MOBISCROLL JQUERY DEMOS</h1>
+        <h1>MOBISCROLL JAVASCRIPT DEMOS</h1>
         <h2>EVENTCALENDAR</h2>
         <h3>TIMELINE</h3>
         <ul>
