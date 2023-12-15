@@ -22,6 +22,12 @@ export class AppComponent {
     { text: 'Paris', group: 'FR', value: 'par' },
     { text: 'Lyon', group: 'FR', value: 'lyo' },
   ];
+  groupData = [
+    { text: 'Atlanta', group: 'US', value: 'atl' },
+    { text: 'Boston', group: 'US', value: 'bos' },
+    { text: 'Bath', group: 'UK', value: 'bat' },
+    { text: 'Bristol', group: 'UK', value: 'bri' },
+  ];
 
   multipleData = [
     { text: 'Camera & Photo', group: 'Electronics', value: 1 },

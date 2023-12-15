@@ -24,7 +24,7 @@ export default {
   markup: `
 <label>
     Single select
-    <input mbsc-input id="demo-single-group-select-input" data-dropdown="true" data-input-style="outline" data-label-style="stacked" />
+    <input mbsc-input id="demo-single-group-select-input" placeholder="Please select..." data-dropdown="true" data-input-style="outline" data-label-style="stacked" />
 </label>
 <select id="demo-single-group-select">
     <optgroup label="US">
@@ -61,7 +61,7 @@ export default {
 </select>
 <label>
     Multi-select
-    <input mbsc-input id="demo-multiple-group-select-input" data-dropdown="true" data-input-style="outline" data-label-style="stacked" data-tags="true" />
+    <input mbsc-input id="demo-multiple-group-select-input" placeholder="Please select..." data-dropdown="true" data-input-style="outline" data-label-style="stacked" data-tags="true" />
 </label>
 <select id="demo-multiple-group-select" multiple>
     <optgroup label="Electronics">

@@ -11,6 +11,11 @@ const singleData = [
   { text: 'Boston', group: 'US', value: 'bos' },
   { text: 'Bath', group: 'UK', value: 'bat' },
   { text: 'Bristol', group: 'UK', value: 'bri' },
+  { text: 'Berlin', group: 'DE', value: 'ber' },
+  { text: 'Duisburg', group: 'DE', value: 'dus' },
+  { text: 'Cologne', group: 'DE', value: 'col' },
+  { text: 'Paris', group: 'FR', value: 'par' },
+  { text: 'Lyon', group: 'FR', value: 'lyo' },
 ];
 
 const multipleData = [
@@ -28,6 +33,16 @@ function App() {
       <Select
         data={singleData}
         label="Single select"
+        inputProps={{
+          inputStyle: 'outline',
+          labelStyle: 'stacked',
+          placeholder: 'Please select...',
+        }}
+      />
+      <Select
+        data={singleData}
+        label="Group wheel"
+        showGroupWheel={true}
         inputProps={{
           inputStyle: 'outline',
           labelStyle: 'stacked',
