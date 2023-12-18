@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
+  MbscDateType,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
   formatDate,
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
   startDate!: Date;
   endDate!: Date;
   refDate!: Date;
-  selectedDate = new Date();
+  selectedDate: MbscDateType = new Date();
   rangeValue: any = [];
   rangeText = '';
 
@@ -52,7 +53,7 @@ export class AppComponent implements OnInit {
     },
   };
 
-  onClose(args: any): void {
+  onClose(): void {
     const date = this.rangeValue;
     if (date[0] && date[1]) {
       // navigate the calendar

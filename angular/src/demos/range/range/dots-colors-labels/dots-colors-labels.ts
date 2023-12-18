@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  MbscCalendarColor,
+  MbscCalendarLabel,
+  MbscCalendarMarked,
+  MbscEventcalendarOptions,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -11,7 +17,7 @@ setOptions({
   templateUrl: './dots-colors-labels.html',
 })
 export class AppComponent {
-  markedDays = [
+  markedDays: MbscCalendarMarked[] = [
     { recurring: { repeat: 'yearly', month: 5, day: 1 }, color: '#ffc400' },
     { recurring: { repeat: 'yearly', month: 12, day: 24 }, color: '#ffee00' },
     { recurring: { repeat: 'yearly', month: 12, day: 25 }, color: 'red' },
@@ -31,7 +37,7 @@ export class AppComponent {
     { start: 'dyndatetime(y,m + 1, 15)', end: 'dyndatetime(y,m + 1, 18)', color: '#f4511e' },
   ];
 
-  coloredDays = [
+  coloredDays: MbscCalendarColor[] = [
     { recurring: { repeat: 'yearly', month: 12, day: 8 }, background: '#9ccc65' },
     { recurring: { repeat: 'yearly', month: 5, day: 1 }, background: 'red' },
     { recurring: { repeat: 'yearly', month: 12, day: 24 }, background: '#fff568' },
@@ -52,7 +58,7 @@ export class AppComponent {
     { start: 'dyndatetime(y,m + 1, 15)', end: 'dyndatetime(y,m + 1, 18)', text: 'Conference', background: '#f4511e' },
   ];
 
-  labelDays = [
+  labelDays: MbscCalendarLabel[] = [
     { recurring: { repeat: 'yearly', month: 12, day: 25 }, title: 'Christmas', color: '#f48fb1' },
     { recurring: { repeat: 'yearly', month: 1, day: 1 }, title: 'New year' },
     { recurring: { repeat: 'yearly', month: 12, day: 1 }, title: 'Meeting', color: '#ffc400' },

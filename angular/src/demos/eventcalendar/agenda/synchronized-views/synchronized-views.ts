@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscEventcalendarOptions, setOptions, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import { MbscEventcalendarOptions, setOptions, MbscCalendarEvent /* localeImport */, MbscDateType } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
 setOptions({
@@ -14,7 +14,7 @@ setOptions({
   templateUrl: './synchronized-views.html',
 })
 export class AppComponent implements OnInit {
-  selectedDate: Date;
+  selectedDate: MbscDateType;
 
   constructor(private http: HttpClient) {
     this.selectedDate = new Date();

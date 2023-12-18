@@ -24,8 +24,8 @@ export class AppComponent {
 
   myDefault = 'ber';
   customVal = '';
-  @ViewChild('mySelect', { static: false })
-  selectInst!: any;
+  // @ViewChild('mySelect', { static: false })
+  // selectInst!: any;
 
   customButtons = [
     {

@@ -12,8 +12,8 @@ setOptions({
   templateUrl: './date-object-ISO-8601-moment.html',
 })
 export class AppComponent {
-  date: Date | undefined;
-  iso: string | undefined;
+  date: Date[] | undefined;
+  iso: string[] | undefined;
   momentJs: any;
 
   setDate(): void {

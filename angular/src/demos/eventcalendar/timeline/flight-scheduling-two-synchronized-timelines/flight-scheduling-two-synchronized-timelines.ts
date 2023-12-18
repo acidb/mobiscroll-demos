@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
+  MbscCalendarColor,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscResource,

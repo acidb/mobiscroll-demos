@@ -1,5 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { setOptions, MbscEventcalendar, MbscEventcalendarView, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import {
+  setOptions,
+  MbscEventcalendar,
+  MbscEventcalendarView,
+  MbscCalendarEvent,
+  MbscResource /* localeImport */,
+} from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 import { print } from '@mobiscroll/print';
 
@@ -21,7 +27,7 @@ export class AppComponent implements OnInit {
   calendarModules = [print];
 
   myEvents: MbscCalendarEvent[] = [];
-  myResources: MbscResource = [
+  myResources: MbscResource[] = [
     {
       id: 1,
       name: 'Flatiron Room',

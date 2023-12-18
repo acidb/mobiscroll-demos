@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
@@ -11,7 +11,7 @@ setOptions({
   templateUrl: './empty-state.html',
   providers: [Notifications],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   constructor(private notify: Notifications) {}
 
   myEvents: MbscCalendarEvent[] = [

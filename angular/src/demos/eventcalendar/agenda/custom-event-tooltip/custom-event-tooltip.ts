@@ -452,7 +452,7 @@ export class AppComponent {
   currentEvent: any;
   status = '';
   buttonText = '';
-  buttonType = '';
+  buttonType: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'light' | undefined;
   bgColor = '';
   info = '';
   time = '';
@@ -465,8 +465,8 @@ export class AppComponent {
     view: {
       agenda: {
         type: 'week',
-        startDay: 1,
-        endDay: 5,
+        //startDay: 1,
+        //endDay: 5,
       },
     },
     clickToCreate: false,

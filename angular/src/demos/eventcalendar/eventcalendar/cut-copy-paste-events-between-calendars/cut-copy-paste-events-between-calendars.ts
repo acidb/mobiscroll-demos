@@ -1,5 +1,11 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { setOptions, MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import {
+  setOptions,
+  MbscEventcalendarOptions,
+  Notifications,
+  MbscCalendarEvent /* localeImport */,
+  MbscSelectOptions,
+} from '@mobiscroll/angular';
 
 setOptions({
   // theme,
@@ -346,13 +352,13 @@ export class AppComponent {
       if (this.firstSelectedEvents.length > 0) {
         this.action = 'copy';
         this.selectedEvents = this.firstSelectedEvents;
-        activateAction('copy');
+        this.activateAction('copy');
       }
     } else {
       if (this.secondSelectedEvents.length > 0) {
         this.action = 'copy';
         this.selectedEvents = this.secondSelectedEvents;
-        activateAction('copy');
+        this.activateAction('copy');
       }
     }
   }
@@ -363,7 +369,7 @@ export class AppComponent {
         this.action = 'cut';
         this.selectedEvents = this.firstSelectedEvents;
         this.cutCalendar = this.activeCalendar;
-        activateAction('cut');
+        this.activateAction('cut');
         this.deletedEvents = [];
       }
     } else {
@@ -371,7 +377,7 @@ export class AppComponent {
         this.action = 'cut';
         this.selectedEvents = this.secondSelectedEvents;
         this.cutCalendar = this.activeCalendar;
-        activateAction('cut');
+        this.activateAction('cut');
         this.deletedEvents = [];
       }
     }
@@ -413,7 +419,7 @@ export class AppComponent {
         this.secondEvents = cutEvs;
       }
 
-      this.cutEvents = [];
+      this.cutEvents();
       this.pastedEvents = [];
     }
   }
@@ -438,7 +444,7 @@ export class AppComponent {
     }
   }
 
-  menuSettings = {
+  menuSettings: MbscSelectOptions = {
     touchUi: false,
     showInput: false,
     display: 'anchored',

@@ -19,6 +19,10 @@
     "@angular/platform-browser-dynamic": "^17.0.5",
     "@angular/router": "^17.0.5",
     "@mobiscroll/angular": "npm:@mobiscroll/angular-ivy@^5.28.0",
+    "@mobiscroll/calendar-integration": "^5.28.0",
+    "@mobiscroll/print": "^5.28.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"

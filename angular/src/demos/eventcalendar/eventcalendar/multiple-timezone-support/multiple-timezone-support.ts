@@ -114,7 +114,7 @@ export class AppComponent {
     dataTimezone: 'utc',
   };
 
-  onChange(ev) {
+  onChange(ev: any) {
     this.timezone = ev.value;
   }
 }

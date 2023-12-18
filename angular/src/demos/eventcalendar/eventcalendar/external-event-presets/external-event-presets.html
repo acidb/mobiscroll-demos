@@ -28,7 +28,7 @@
       #popup
     >
       <div class="mbsc-form-group">
-        <mbsc-input label="Task" [(ngModel)]="title" readonly></mbsc-input>
+        <mbsc-input label="Task" [(ngModel)]="title" [readonly]="true"></mbsc-input>
         <mbsc-textarea label="Details" [(ngModel)]="details" placeholder="Add description..."></mbsc-textarea>
         <mbsc-select
           [(ngModel)]="technician"

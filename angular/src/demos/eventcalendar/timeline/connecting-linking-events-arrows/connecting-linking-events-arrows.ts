@@ -1,5 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { setOptions, MbscEventcalendarView, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import {
+  setOptions,
+  MbscEventcalendarView,
+  MbscCalendarEvent /* localeImport */,
+  MbscEventConnection,
+  MbscResource,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -19,7 +25,7 @@ export class AppComponent {
     },
   };
 
-  myResources = [
+  myResources: MbscResource[] = [
     {
       id: 1,
       name: 'Resource 1',
@@ -139,7 +145,7 @@ export class AppComponent {
     },
   ];
 
-  myConnections = [
+  myConnections: MbscEventConnection[] = [
     {
       from: 1,
       to: 2,

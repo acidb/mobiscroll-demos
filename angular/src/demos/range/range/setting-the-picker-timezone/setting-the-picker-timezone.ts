@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MbscDatepickerOptions, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 
 momentTimezone.moment = moment;
 
@@ -18,4 +18,5 @@ export class AppComponent {
     displayTimezone: 'local',
     controls: ['calendar', 'time'],
   };
+  selected = null;
 }

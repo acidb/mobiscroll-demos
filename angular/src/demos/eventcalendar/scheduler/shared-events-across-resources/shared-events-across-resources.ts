@@ -8,6 +8,7 @@ import {
   MbscNewEventData,
   MbscPopupOptions,
   MbscPopup,
+  MbscPopupButton,
   /* localeImport */
 } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
@@ -121,7 +122,7 @@ export class AppComponent {
     width: 350,
   };
 
-  buttons = [
+  buttons: (MbscPopupButton | 'ok' | 'close' | 'set' | 'cancel')[] = [
     'cancel',
     {
       text: 'OK',

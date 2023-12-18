@@ -1847,31 +1847,31 @@ export class AppComponent {
       id: 1,
       name: 'Night',
       checked: true,
-      disabled: 'false',
+      disabled: false,
     },
     {
       id: 2,
       name: 'Breakfast',
       checked: true,
-      disabled: 'false',
+      disabled: false,
     },
     {
       id: 3,
       name: 'Lunch',
       checked: true,
-      disabled: 'false',
+      disabled: false,
     },
     {
       id: 4,
       name: 'Dinner',
       checked: true,
-      disabled: 'false',
+      disabled: false,
     },
     {
       id: 5,
       name: 'After hours',
       checked: true,
-      disabled: 'false',
+      disabled: false,
     },
   ];
 
@@ -1929,13 +1929,13 @@ export class AppComponent {
       const event = args.event;
       if (this.isDouble(event, inst)) {
         return false;
-      } else {
-        const newName = this.getEmployeeName(event);
-        if (newName) {
-          const index = this.shifts.findIndex((x: any) => x.id === event.id);
-          this.shifts[index].title = newName;
-        }
       }
+      const newName = this.getEmployeeName(event);
+      if (newName) {
+        const index = this.shifts.findIndex((x: any) => x.id === event.id);
+        this.shifts[index].title = newName;
+      }
+      return true;
     },
   };
 
@@ -1986,9 +1986,9 @@ export class AppComponent {
     }
 
     if (filteredSlots.length === 1) {
-      this.shiftTimes = this.shiftTimes.map((ut) => (ut.checked ? { ...ut, disabled: 'true' } : ut));
+      this.shiftTimes = this.shiftTimes.map((ut) => (ut.checked ? { ...ut, disabled: true } : ut));
     } else {
-      this.shiftTimes = this.shiftTimes.map((ut) => ({ ...ut, disabled: 'false' }));
+      this.shiftTimes = this.shiftTimes.map((ut) => ({ ...ut, disabled: false }));
     }
 
     this.slots = filteredSlots;

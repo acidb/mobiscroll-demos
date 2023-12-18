@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MbscEventcalendarOptions, MbscCalendarEvent, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscEventcalendarOptions, MbscCalendarEvent, setOptions /* localeImport */, MbscEventcalendarView } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
 setOptions({
@@ -16,12 +16,12 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  allLabelsView = { calendar: { type: 'month', labels: 'all' } };
-  nrLabelsView = { calendar: { type: 'month', labels: 3 } };
-  fitLabelsView = { calendar: { labels: true } };
-  allLabelsWeekView = { calendar: { type: 'week', labels: 'all' } };
-  nrLabelsWeekView = { calendar: { type: 'week', labels: 3 } };
-  fitLabelsWeekView = { calendar: { type: 'week', labels: true } };
+  allLabelsView: MbscEventcalendarView = { calendar: { type: 'month', labels: 'all' } };
+  nrLabelsView: MbscEventcalendarView = { calendar: { type: 'month', labels: 3 } };
+  fitLabelsView: MbscEventcalendarView = { calendar: { labels: true } };
+  allLabelsWeekView: MbscEventcalendarView = { calendar: { type: 'week', labels: 'all' } };
+  nrLabelsWeekView: MbscEventcalendarView = { calendar: { type: 'week', labels: 3 } };
+  fitLabelsWeekView: MbscEventcalendarView = { calendar: { type: 'week', labels: true } };
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {

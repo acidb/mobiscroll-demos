@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Notifications, MbscResource, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
@@ -14,7 +14,7 @@ setOptions({
   templateUrl: './load-resources-on-demand.html',
   providers: [Notifications],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   constructor(
     private http: HttpClient,
     private notify: Notifications,
@@ -158,7 +158,7 @@ export class AppComponent implements OnInit {
     },
   };
 
-  getResourceById(resources: MbscResource[], resourceId: any) {
+  getResourceById(resources: MbscResource[], resourceId: any): any {
     for (let i = 0; i < resources.length; i++) {
       const resource = resources[i];
       if (resource.id === resourceId) {

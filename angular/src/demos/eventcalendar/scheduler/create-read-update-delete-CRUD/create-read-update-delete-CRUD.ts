@@ -216,19 +216,19 @@ export class AppComponent {
   };
   loadPopupForm(event: MbscCalendarEvent): void {
     this.popupEventTitle = event.title;
-    this.popupEventDescription = event.description;
+    this.popupEventDescription = event['description'];
     this.popupEventDates = [event.start, event.end];
     this.popupEventAllDay = event.allDay || false;
-    this.popupEventStatus = event.status || 'busy';
+    this.popupEventStatus = event['status'] || 'busy';
     this.selectedColor = event.color || '';
   }
   saveEvent(): void {
     this.tempEvent.title = this.popupEventTitle;
-    this.tempEvent.description = this.popupEventDescription;
+    this.tempEvent['description'] = this.popupEventDescription;
     this.tempEvent.start = this.popupEventDates[0];
     this.tempEvent.end = this.popupEventDates[1];
     this.tempEvent.allDay = this.popupEventAllDay;
-    this.tempEvent.status = this.popupEventStatus;
+    this.tempEvent['status'] = this.popupEventStatus;
     this.tempEvent.color = this.selectedColor;
     if (this.isEdit) {
       // update the event in the list

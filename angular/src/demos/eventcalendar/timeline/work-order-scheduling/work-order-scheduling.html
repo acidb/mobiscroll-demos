@@ -44,7 +44,7 @@
                 <mbsc-checkbox
                   *ngFor="let r of res.children;"
                   label="{{r.name}}"
-                  [(ngModel)]="r.checked"
+                  [(ngModel)]="r['checked']"
                   theme="material"
                   class="md-work-order-checkbox-label"
                 ></mbsc-checkbox>

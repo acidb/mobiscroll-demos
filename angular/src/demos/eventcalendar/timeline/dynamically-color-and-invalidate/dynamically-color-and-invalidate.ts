@@ -154,8 +154,8 @@ export class AppComponent {
     },
   ];
 
-  myColors = [];
-  myInvalids = [];
+  myColors: any = [];
+  myInvalids: any = [];
 
   calendarOptions: MbscEventcalendarOptions = {
     dragToMove: true,
@@ -184,7 +184,7 @@ export class AppComponent {
       let event = args.event;
 
       if (event) {
-        if (event.category === 'hw') {
+        if (event['category'] === 'hw') {
           this.myInvalids = hwInvalids;
           this.myColors = hwColors;
         } else {

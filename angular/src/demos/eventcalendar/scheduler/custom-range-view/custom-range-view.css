@@ -1,7 +1,7 @@
 .md-custom-range-view-controls {
   display: flex;
   flex: 1 0 auto;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 }
 

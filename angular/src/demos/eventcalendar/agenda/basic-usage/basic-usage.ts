@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { setOptions, Notifications, MbscEventcalendarView, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import {
+  setOptions,
+  Notifications,
+  MbscEventcalendarView,
+  MbscCalendarEvent /* localeImport */,
+  MbscEventClickEvent,
+} from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
 setOptions({
@@ -24,7 +30,7 @@ export class AppComponent implements OnInit {
     agenda: { type: 'month' },
   };
 
-  onEventClick(event: any): void {
+  onEventClick(event: MbscEventClickEvent): void {
     this.notify.toast({
       //<hidden>
       // theme,//</hidden>

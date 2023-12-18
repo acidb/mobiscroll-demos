@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscDatepickerOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscDatepickerOptions, MbscDatepickerPageLoadingEvent, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
 setOptions({
@@ -34,7 +34,7 @@ export class AppComponent {
     min: minDate,
     max: maxDate,
     pages: 'auto',
-    onPageLoading: (event) => {
+    onPageLoading: (event: MbscDatepickerPageLoadingEvent) => {
       this.getPrices(event.firstDay, (bookings: any) => {
         this.singleLabels = bookings.labels;
         this.singleInvalid = bookings.invalid;
@@ -51,7 +51,7 @@ export class AppComponent {
     maxTime: '19:59',
     stepMinute: 60,
     width: undefined,
-    onPageLoading: (event) => {
+    onPageLoading: (event: MbscDatepickerPageLoadingEvent) => {
       this.getDatetimes(event.firstDay, (bookings: any) => {
         this.datetimeLabels = bookings.labels;
         this.datetimeInvalid = bookings.invalid;
@@ -66,7 +66,7 @@ export class AppComponent {
     max: maxDate,
     pages: 'auto',
     selectMultiple: true,
-    onPageLoading: (event) => {
+    onPageLoading: (event: MbscDatepickerPageLoadingEvent) => {
       this.getBookings(event.firstDay, (bookings: any) => {
         this.multipleLabels = bookings.labels;
         this.multipleInvalid = bookings.invalid;

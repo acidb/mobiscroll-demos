@@ -6,8 +6,8 @@
     [invalid]="myInvalids"
     [headerTemplate]="myHeaderTemplate"
     [resourceTemplate]="myResourceTemplate"
-    (onEventCreateFailed)="eventUpdateFail($event)"
-    (onEventUpdateFailed)="eventUpdateFail($event)"
+    (onEventCreateFailed)="eventUpdateFail()"
+    (onEventUpdateFailed)="eventUpdateFail()"
   >
     <ng-template #myHeaderTemplate>
       <mbsc-calendar-nav class="md-work-week-nav"></mbsc-calendar-nav>

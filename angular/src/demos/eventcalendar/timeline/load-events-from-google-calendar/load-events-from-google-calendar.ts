@@ -1,11 +1,12 @@
 import { Component, OnInit, NgZone, ViewEncapsulation } from '@angular/core';
 import {
-  googleCalendarSync,
   MbscEventcalendarOptions,
   MbscCalendarEvent,
   Notifications,
   setOptions /* localeImport */,
+  MbscEventcalendarView,
 } from '@mobiscroll/angular';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 
 setOptions({
   // locale,
@@ -27,6 +28,12 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
   firstDay!: Date;
   lastDay!: Date;
+  calView: MbscEventcalendarView = {
+    timeline: {
+      type: 'month',
+      eventList: true,
+    },
+  };
   calendars: any[] = [
     { id: 'en.french#holiday@group.v.calendar.google.com', name: 'Holidays in France', color: '#D81B60' },
     { id: 'en.german#holiday@group.v.calendar.google.com', name: 'Holidays in Germany', color: '#F4511E' },

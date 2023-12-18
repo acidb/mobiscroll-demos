@@ -12,7 +12,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './quarter-year-view.html',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   viewType = 'q4';
   calType: 'year' | 'month' | 'week' = 'month';
   selectedDate = new Date();
@@ -42,6 +42,9 @@ export class AppComponent implements OnInit {
         this.calType = 'year';
         date = new Date(year, this.selectedDate.getMonth(), 1);
         break;
+      default:
+        this.calType = 'year';
+        date = new Date(year, this.selectedDate.getMonth(), 1);
     }
     this.selectedDate = date;
     this.activeDate = date;

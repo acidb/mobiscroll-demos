@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
-import { googleCalendarSync, MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions } from '@mobiscroll/angular';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 
 setOptions({
   // locale,
@@ -95,7 +96,7 @@ export class AppComponent implements OnInit {
           .then((result) => {
             const event = args.event;
             if (result) {
-              const calendarId = event.googleCalendarId;
+              const calendarId = event['googleCalendarId'];
               googleCalendarSync
                 .updateEvent(calendarId, event)
                 .then(() => {
@@ -105,11 +106,11 @@ export class AppComponent implements OnInit {
                 })
                 .catch(() => {
                   this.zone.run(() => {
-                    this.myEvents = [...this.myEvents.filter((item) => item.id !== event.id), args.oldEvent];
+                    this.myEvents = [...this.myEvents.filter((item) => item.id !== event.id), args.oldEvent!];
                   });
                 });
             } else {
-              this.myEvents = [...this.myEvents.filter((item) => item.id !== event.id), args.oldEvent];
+              this.myEvents = [...this.myEvents.filter((item) => item.id !== event.id), args.oldEvent!];
             }
           });
       }
@@ -125,7 +126,7 @@ export class AppComponent implements OnInit {
           .then((result) => {
             if (result) {
               const event = args.event;
-              const calendarId = event.googleCalendarId;
+              const calendarId = event['googleCalendarId'];
               googleCalendarSync
                 .deleteEvent(calendarId, event)
                 .then(() => {
@@ -223,7 +224,7 @@ export class AppComponent implements OnInit {
         });
     } else {
       this.calendarIds = this.calendarIds.filter((id) => id !== calendarId);
-      this.myEvents = this.myEvents.filter((event) => event.googleCalendarId !== calendarId);
+      this.myEvents = this.myEvents.filter((event) => event['googleCalendarId'] !== calendarId);
     }
   }
 

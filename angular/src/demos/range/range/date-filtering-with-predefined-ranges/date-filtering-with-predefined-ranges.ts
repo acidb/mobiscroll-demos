@@ -34,36 +34,36 @@ export class AppComponent implements OnInit {
   selectedDate: any = [startDate, endDate];
   disableInput = false;
 
-  respPopup = {
-    responsive: {
-      xsmall: {
-        display: 'bottom',
-        touchUi: true,
-        buttons: [
-          {
-            text: 'Apply',
-            handler: function (event) {
-              var date = calendar.getVal();
-
-              setInputValue(date[0], date[1] || date[0], calendar.s.dateFormat);
-              popup.close();
-            },
+  respPopup: any = {
+    xsmall: {
+      display: 'bottom',
+      touchUi: true,
+      buttons: [
+        {
+          text: 'Apply',
+          popup: this.popup,
+          changeInputValue: this.changeInputValue,
+          date: this.selectedDate,
+          handler: function () {
+            this.changeInputValue(this.date[0], this.date[1] || this.date[0]);
+            this.popup.close();
           },
-          'cancel',
-        ],
-      },
-      custom: {
-        breakpoint: 559,
-        buttons: [],
-        display: 'anchored',
-        anchor: document.querySelector('.date-filter-input'),
-        anchorAlign: 'start',
-        touchUi: false,
-        scrollLock: false,
-        showArrow: false,
-        maxWidth: 920,
-      },
+        },
+        'cancel',
+      ],
     },
+    custom: {
+      breakpoint: 559,
+      buttons: [],
+      display: 'anchored',
+      anchor: document.querySelector('.date-filter-input'),
+      anchorAlign: 'start',
+      touchUi: false,
+      scrollLock: false,
+      showArrow: false,
+      maxWidth: 920,
+    },
+    // },
   };
 
   respSelect = {

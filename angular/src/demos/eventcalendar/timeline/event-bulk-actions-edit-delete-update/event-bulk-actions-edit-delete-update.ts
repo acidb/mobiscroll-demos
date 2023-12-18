@@ -35,29 +35,29 @@ export class AppComponent {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  mySelectedEvents = [];
+  mySelectedEvents: any = [];
   eventTitles = [];
-  selectValue;
-  firstDay;
-  lastDay;
-  menuAnchor;
-  confirmOpen: false;
+  selectValue: any;
+  firstDay: any;
+  lastDay: any;
+  menuAnchor: any;
+  confirmOpen: boolean = false;
 
-  getSelectedEventTitles(events) {
-    const titles = [];
+  getSelectedEventTitles(events: any) {
+    let titles: any = [];
     for (const event of events) {
       titles = [...titles, event.title];
     }
     return titles;
   }
 
-  refreshSelectedEvents(events) {
+  refreshSelectedEvents(events: any) {
     this.mySelectedEvents = events;
     this.eventTitles = this.getSelectedEventTitles(events);
   }
 
   updateSelectedEvents() {
-    const events = this.mySelectedEvents.length === 0 ? [this.mySelectedEvents] : this.mySelectedEvents;
+    const events: any = this.mySelectedEvents.length === 0 ? [this.mySelectedEvents] : this.mySelectedEvents;
     let eventsToUpdate = [...this.myEvents];
     for (const event of events) {
       if (event.recurring) {
@@ -178,6 +178,7 @@ export class AppComponent {
         }
         return false;
       }
+      return true;
     },
     onEventDelete: (args, inst) => {
       if (!this.confirmOpen) {
@@ -211,7 +212,7 @@ export class AppComponent {
       if (args.value === 'update') {
         this.updateSelectedEvents();
       } else if (args.value === 'delete') {
-        this.deleteSelectedEvents(this.mySelectedEvents);
+        this.deleteSelectedEvents();
       }
     },
     onClose: () => {
@@ -238,7 +239,7 @@ export class AppComponent {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/timeline-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
-    document.querySelector('.md-bulk-operations').addEventListener('keydown', (ev) => {
+    document.querySelector('.md-bulk-operations')!.addEventListener('keydown', (ev: any) => {
       if (!this.confirmOpen && (ev.keyCode === 8 || ev.keyCode === 46)) {
         this.deleteSelectedEvents();
       }

@@ -1,13 +1,15 @@
 <mbsc-datepicker
   [options]="options"
-  [(ngModel)]="selected"
   inputStyle="outline"
   labelStyle="stacked"
   label="Select Date &amp; Time in Display Timezone"
+  [(ngModel)]="selected"
 ></mbsc-datepicker>
 <div class="mbsc-padding">
-  <p *ngIf="selected">
+  *ngIf="selected"
+  <p>
     Selected date is returned in Data Timezone<br />
-    <code>{{selected}}</code>
+    <code>selected</code>
+    {{selected}}
   </p>
 </div>

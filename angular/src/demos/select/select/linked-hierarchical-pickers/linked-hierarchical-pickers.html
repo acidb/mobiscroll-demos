@@ -3,7 +3,12 @@
     <div class="mbsc-row">
       <div class="mbsc-col-sm-12">
         <div class="mbsc-form-group-inset">
-          <mbsc-select [data]="getData()" label="Region" (onChange)="regChange($event)" placeholder="Please select..."></mbsc-select>
+          <mbsc-select
+            [data]="getData(null, null)"
+            label="Region"
+            (onChange)="regChange($event)"
+            placeholder="Please select..."
+          ></mbsc-select>
           <mbsc-select
             [data]="divData"
             label="Division"

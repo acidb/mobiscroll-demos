@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -11,7 +11,7 @@ setOptions({
   templateUrl: './recurring-events.html',
 })
 export class AppComponent {
-  myEvents = [
+  myEvents: MbscCalendarEvent[] = [
     {
       recurring: {
         repeat: 'daily', // possible values: 'daily', 'weekly', 'monthly', 'yearly'
@@ -39,7 +39,7 @@ export class AppComponent {
     {
       recurring: {
         repeat: 'monthly',
-        day: '15',
+        day: 15,
         count: 12, // the number of occurrences
       },
       title: 'Pay day',
@@ -56,7 +56,7 @@ export class AppComponent {
     },
   ];
 
-  view = {
+  view: MbscEventcalendarView = {
     schedule: { type: 'week' },
   };
 }

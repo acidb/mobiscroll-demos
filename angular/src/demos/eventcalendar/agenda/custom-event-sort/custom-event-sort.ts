@@ -136,7 +136,7 @@ export class AppComponent {
     },
   };
 
-  orderMyEvents(event) {
+  orderMyEvents(event: any) {
     return event.accepted ? 1 : -1;
   }
 }

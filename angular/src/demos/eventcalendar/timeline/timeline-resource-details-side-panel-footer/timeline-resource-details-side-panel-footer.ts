@@ -90,7 +90,7 @@ export class AppComponent implements OnInit {
           days += this.getDayDiff(new Date(event.start), new Date(event.end));
         }
       }
-      return days * resource.price;
+      return days * resource['price'];
     } else {
       return 0;
     }
@@ -106,9 +106,9 @@ export class AppComponent implements OnInit {
 
   getOccuppancy(data: any) {
     const events = data.events;
-    let occuppancy = 0;
+    let occuppancy: any = 0;
     if (events) {
-      var resourceIds = [];
+      var resourceIds: any = [];
       var nr = 0;
       for (const event of events) {
         if (resourceIds.indexOf(event.resource) < 0) {

@@ -45,16 +45,16 @@ export class AppComponent implements OnInit {
       },
     },
     onEventCreateFailed: (event, inst) => {
-      if (event.invalid.type === 'lunch') {
+      if (event.invalid['type'] === 'lunch') {
         this.notify.toast({
-          message: "Can't create this task on " + event.invalid.title.toLowerCase(),
+          message: "Can't create this task on " + event.invalid.title!.toLowerCase(),
         });
       }
     },
     onEventUpdateFailed: (event, inst) => {
-      if (event.invalid.type === 'lunch') {
+      if (event.invalid['type'] === 'lunch') {
         this.notify.toast({
-          message: "Can't schedule this task on " + event.invalid.title.toLowerCase(),
+          message: "Can't schedule this task on " + event.invalid.title!.toLowerCase(),
         });
       }
     },

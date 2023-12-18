@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
 import { AppComponent as DatetimeDatePicker } from '../demos/datetime/datetime/date-picker/date-picker';
 import { AppComponent as DatetimeDisabledInvalidValues } from '../demos/datetime/datetime/disabled-invalid-values/disabled-invalid-values';
 import { AppComponent as DatetimeTimePicker } from '../demos/datetime/datetime/time-picker/time-picker';
@@ -107,6 +108,7 @@ import { AppComponent as RangeCustomizeMarkedDayShapes } from '../demos/range/ra
 import { AppComponent as RangeLocalization } from '../demos/range/range/localization/localization';
 import { AppComponent as RangeAddingEventStartEnd } from '../demos/range/range/adding-event-start-end/adding-event-start-end';
 import { AppComponent as RangeRtlRightToLeft } from '../demos/range/range/rtl-right-to-left/rtl-right-to-left';
+/////////////
 import { AppComponent as RangeDateFilteringWithPredefinedRanges } from '../demos/range/range/date-filtering-with-predefined-ranges/date-filtering-with-predefined-ranges';
 import { AppComponent as RangeBookRentalMonthsAhead } from '../demos/range/range/book-rental-months-ahead/book-rental-months-ahead';
 import { AppComponent as RangeSettingThePickerTimezone } from '../demos/range/range/setting-the-picker-timezone/setting-the-picker-timezone';
@@ -143,7 +145,6 @@ import { AppComponent as EventcalendarEventLabels } from '../demos/eventcalendar
 import { AppComponent as EventcalendarGregorianJalaliHijri } from '../demos/eventcalendar/eventcalendar/gregorian-jalali-hijri/gregorian-jalali-hijri';
 import { AppComponent as EventcalendarEventDataStructure } from '../demos/eventcalendar/eventcalendar/event-data-structure/event-data-structure';
 import { AppComponent as EventcalendarThemesIosMaterialWindows } from '../demos/eventcalendar/eventcalendar/themes-ios-material-windows/themes-ios-material-windows';
-import { AppComponent as EventcalendarMultipleGoogleCalendar } from '../demos/eventcalendar/eventcalendar/multiple-google-calendar/multiple-google-calendar';
 import { AppComponent as EventcalendarRecurringEvents } from '../demos/eventcalendar/eventcalendar/recurring-events/recurring-events';
 import { AppComponent as EventcalendarLoadEventsFromGoogleCalendar } from '../demos/eventcalendar/eventcalendar/load-events-from-google-calendar/load-events-from-google-calendar';
 import { AppComponent as EventcalendarCustomizeEventPopover } from '../demos/eventcalendar/eventcalendar/customize-event-popover/customize-event-popover';
@@ -184,8 +185,6 @@ import { AppComponent as SchedulerSwitchingCalendarSchedulerAgenda } from '../de
 import { AppComponent as SchedulerEventDataStructure } from '../demos/eventcalendar/scheduler/event-data-structure/event-data-structure';
 import { AppComponent as SchedulerLoadEventsOnDemand } from '../demos/eventcalendar/scheduler/load-events-on-demand/load-events-on-demand';
 import { AppComponent as SchedulerLoadEventsFromRemoteApi } from '../demos/eventcalendar/scheduler/load-events-from-remote-api/load-events-from-remote-api';
-import { AppComponent as SchedulerAddDeleteEvent } from '../demos/eventcalendar/scheduler/add-delete-event/add-delete-event';
-import { AppComponent as SchedulerViewUpdateEvent } from '../demos/eventcalendar/scheduler/view-update-event/view-update-event';
 import { AppComponent as SchedulerGregorianJalaliHijri } from '../demos/eventcalendar/scheduler/gregorian-jalali-hijri/gregorian-jalali-hijri';
 import { AppComponent as SchedulerEventHooks } from '../demos/eventcalendar/scheduler/event-hooks/event-hooks';
 import { AppComponent as SchedulerLocalization } from '../demos/eventcalendar/scheduler/localization/localization';
@@ -324,6 +323,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     DatetimeDatePicker,
     DatetimeDisabledInvalidValues,
     DatetimeTimePicker,
@@ -426,6 +426,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     RangeLocalization,
     RangeAddingEventStartEnd,
     RangeRtlRightToLeft,
+    ////////////
     RangeDateFilteringWithPredefinedRanges,
     RangeBookRentalMonthsAhead,
     RangeSettingThePickerTimezone,
@@ -462,7 +463,6 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     EventcalendarGregorianJalaliHijri,
     EventcalendarEventDataStructure,
     EventcalendarThemesIosMaterialWindows,
-    EventcalendarMultipleGoogleCalendar,
     EventcalendarRecurringEvents,
     EventcalendarLoadEventsFromGoogleCalendar,
     EventcalendarCustomizeEventPopover,
@@ -503,8 +503,6 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     SchedulerEventDataStructure,
     SchedulerLoadEventsOnDemand,
     SchedulerLoadEventsFromRemoteApi,
-    SchedulerAddDeleteEvent,
-    SchedulerViewUpdateEvent,
     SchedulerGregorianJalaliHijri,
     SchedulerEventHooks,
     SchedulerLocalization,

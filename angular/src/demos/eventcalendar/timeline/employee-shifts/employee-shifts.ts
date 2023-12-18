@@ -364,7 +364,7 @@ export class AppComponent {
     touchUi: false,
     stepMinute: 30,
     timeWheels: '|h:mm A|',
-    onChange: (args) => {
+    onChange: (args: any) => {
       const date = args.value;
 
       // update shift's start/end date
@@ -431,7 +431,7 @@ export class AppComponent {
     const start = new Date(this.shiftDate[0]);
     const end = new Date(this.shiftDate[1]);
     this.tempShift.title = formatDate('HH:mm', start) + ' - ' + formatDate('HH:mm', end);
-    this.tempShift.notes = this.shiftNotes;
+    this.tempShift['notes'] = this.shiftNotes;
     this.tempShift.start = start;
     this.tempShift.end = end;
 

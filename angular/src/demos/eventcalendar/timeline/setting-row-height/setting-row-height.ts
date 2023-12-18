@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { setOptions, MbscEventcalendarView, MbscCalendarEvent, Notifications /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
@@ -14,7 +14,7 @@ setOptions({
   templateUrl: './setting-row-height.html',
   providers: [Notifications],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   constructor(
     private http: HttpClient,
     private notify: Notifications,

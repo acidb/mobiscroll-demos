@@ -11,7 +11,7 @@ setOptions({
   templateUrl: './event-hooks.html',
 })
 export class AppComponent {
-  onActiveDateChange(event, inst): void {
+  onActiveDateChange(event: any, inst: any): void {
     // Logic for the active date change
   }
 

@@ -1,13 +1,6 @@
 import { Component, NgZone, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
-import {
-  googleCalendarSync,
-  MbscCalendarEvent,
-  MbscEventcalendarOptions,
-  MbscPopup,
-  MbscPopupOptions,
-  Notifications,
-  setOptions,
-} from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarOptions, MbscPopup, MbscPopupOptions, Notifications, setOptions } from '@mobiscroll/angular';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 
 setOptions({
   // locale,
@@ -159,7 +152,7 @@ export class AppComponent implements OnInit {
         });
     } else {
       this.calendarIds = this.calendarIds.filter((id) => id !== calendarId);
-      this.myEvents = this.myEvents.filter((event) => event.googleCalendarId !== calendarId);
+      this.myEvents = this.myEvents.filter((event) => event['googleCalendarId'] !== calendarId);
     }
   }
 

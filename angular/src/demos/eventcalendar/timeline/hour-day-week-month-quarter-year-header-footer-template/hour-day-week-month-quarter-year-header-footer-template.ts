@@ -625,9 +625,9 @@ export class AppComponent {
   formatDate = formatDate;
 
   getOccuppancy(events: any) {
-    let occuppancy = 0;
+    let occuppancy: any = 0;
     if (events) {
-      var resourceIds = [];
+      var resourceIds: any = [];
       var nr = 0;
       for (const event of events) {
         if (resourceIds.indexOf(event.resource) < 0) {

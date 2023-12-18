@@ -37,12 +37,12 @@ export class AppComponent implements OnInit {
   filterEvents = () => {
     const ev = [];
     for (const item of this.myEvents) {
-      if (this.selected.indexOf(item.participant) > -1) {
-        if (item.participant === 1) {
+      if (this.selected.indexOf(item['participant']) > -1) {
+        if (item['participant'] === 1) {
           item.color = '#328e39';
-        } else if (item.participant === 2) {
+        } else if (item['participant'] === 2) {
           item.color = '#00aabb';
-        } else if (item.participant === 3) {
+        } else if (item['participant'] === 3) {
           item.color = '#ea72c0';
         }
         ev.push(item);
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
       // theme,//</hidden>
       message:
         (this.selected.find((item) => +item === value) ? 'Showing ' : 'Hiding ') +
-        document.querySelector('.md-header-filter-name-' + value).textContent +
+        document.querySelector('.md-header-filter-name-' + value)!.textContent +
         ' events',
     });
   }

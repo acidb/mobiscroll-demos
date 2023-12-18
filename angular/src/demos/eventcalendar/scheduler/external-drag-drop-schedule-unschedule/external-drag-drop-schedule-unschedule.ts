@@ -82,11 +82,11 @@ export class AppComponent implements OnInit {
   };
 
   getHours(event: MbscCalendarEvent) {
-    const eventLength = Math.abs(new Date(event.end) - new Date(event.start)) / (60 * 60 * 1000);
+    const eventLength = Math.abs(+new Date(event.end as string) - +new Date(event.start as string)) / (60 * 60 * 1000);
     return eventLength + ' hour' + (eventLength > 1 ? 's' : '');
   }
 
-  onItemDrop(args): void {
+  onItemDrop(args: any): void {
     if (args.data) {
       this.myTasks = [...this.myTasks, args.data];
     }

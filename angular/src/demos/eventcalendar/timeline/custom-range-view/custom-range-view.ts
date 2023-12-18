@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
+  MbscDateType,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
   formatDate,
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
   startDate!: Date;
   endDate!: Date;
   refDate!: Date;
-  selectedDate = new Date();
+  selectedDate: MbscDateType = new Date();
   rangeValue: any = [];
   rangeText = '';
 

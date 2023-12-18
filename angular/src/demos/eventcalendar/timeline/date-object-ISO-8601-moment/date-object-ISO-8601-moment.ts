@@ -80,7 +80,7 @@ export class AppComponent {
     const newEvent = {
       start: new Date(2020, 4, 19, 11, 15),
       end: new Date(2020, 4, 19, 13, 45),
-      text: 'New Event',
+      title: 'New Event',
       resource: 4,
     };
     this.dateObjData = [...this.dateObjData, newEvent];
@@ -91,7 +91,7 @@ export class AppComponent {
     const newEvent = {
       start: '2020-05-20T15:30:00',
       end: '2020-05-20T18:00:00',
-      text: 'New Event',
+      title: 'New Event',
       resource: 1,
     };
     this.dateStrData = [...this.dateStrData, newEvent];
@@ -102,7 +102,7 @@ export class AppComponent {
     const newEvent = {
       start: moment([2020, 4, 21, 12]),
       end: moment([2020, 4, 21, 15]),
-      text: 'New Event',
+      title: 'New Event',
       resource: 5,
     };
     this.momentData = [...this.momentData, newEvent];

@@ -259,10 +259,10 @@ export class AppComponent {
     },
   ];
   tempEvent!: MbscCalendarEvent;
-  getCostString(cost): any {
+  getCostString(cost: any): any {
     return cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
-  getRevenue(args): any {
+  getRevenue(args: any): any {
     const events = args.events;
     let costs = 0;
 
@@ -378,17 +378,17 @@ export class AppComponent {
   isEdit = false;
   loadPopupForm(event: MbscCalendarEvent): void {
     this.popupEventTitle = event.title;
-    this.popupEventLocation = event.location;
-    this.popupEventBill = +event.cost || 0;
-    this.popupEventNotes = event.notes;
+    this.popupEventLocation = event['location'];
+    this.popupEventBill = +event['cost'] || 0;
+    this.popupEventNotes = event['notes'];
     this.popupEventDates = [event.start, event.end];
     this.setCheckboxes(event.resource);
   }
   saveEvent(): void {
     this.tempEvent.title = this.popupEventTitle;
-    this.tempEvent.location = this.popupEventLocation;
-    this.tempEvent.cost = +this.popupEventBill || 0;
-    this.tempEvent.notes = this.popupEventNotes;
+    this.tempEvent['location'] = this.popupEventLocation;
+    this.tempEvent['cost'] = +this.popupEventBill! || 0;
+    this.tempEvent['notes'] = this.popupEventNotes;
     this.tempEvent.start = this.popupEventDates[0];
     this.tempEvent.end = this.popupEventDates[1];
     this.tempEvent.resource = this.getCheckedResources();
@@ -436,8 +436,10 @@ export class AppComponent {
     for (const resources of this.myResources) {
       if (resources.children) {
         for (const res of resources.children) {
-          for (const r of res.children) {
-            r.checked = resource.indexOf(r.id) !== -1;
+          if (res.children) {
+            for (const r of res.children) {
+              r['checked'] = resource.indexOf(r.id) !== -1;
+            }
           }
         }
       }
@@ -449,9 +451,11 @@ export class AppComponent {
     for (const resources of this.myResources) {
       if (resources.children) {
         for (const res of resources.children) {
-          for (const r of res.children) {
-            if (r.checked) {
-              checkedResources.push(r.id);
+          if (res.children) {
+            for (const r of res.children) {
+              if (r['checked']) {
+                checkedResources.push(r.id);
+              }
             }
           }
         }

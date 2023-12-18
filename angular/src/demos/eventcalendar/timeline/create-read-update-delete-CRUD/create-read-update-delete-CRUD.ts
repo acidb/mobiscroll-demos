@@ -122,7 +122,7 @@ export class AppComponent {
       this.tempEvent = args.event;
       // fill popup form with event data
       this.loadPopupForm(args.event);
-      this.selectedColor = args.event.color || this.myResources.find((r) => r.id === args.event.resource).color;
+      this.selectedColor = args.event.color || this.myResources.find((r) => r.id === args.event.resource)!.color;
       // set popup options
       this.popupHeaderText = 'Edit event';
       this.popupButtons = this.popupEditButtons;
@@ -136,7 +136,7 @@ export class AppComponent {
         this.tempEvent = args.event;
         // fill popup form with event data
         this.loadPopupForm(args.event);
-        this.selectedColor = this.myResources.find((r) => r.id === args.event.resource).color;
+        this.selectedColor = this.myResources.find((r) => r.id === args.event.resource)!.color;
         // set popup options
         this.popupHeaderText = 'New Event';
         this.popupButtons = this.popupAddButtons;
@@ -245,18 +245,18 @@ export class AppComponent {
   };
   loadPopupForm(event: MbscCalendarEvent): void {
     this.popupEventTitle = event.title;
-    this.popupEventDescription = event.description;
+    this.popupEventDescription = event['description'];
     this.popupEventDates = [event.start, event.end];
     this.popupEventAllDay = event.allDay || false;
-    this.popupEventStatus = event.status || 'busy';
+    this.popupEventStatus = event['status'] || 'busy';
   }
   saveEvent(): void {
     this.tempEvent.title = this.popupEventTitle;
-    this.tempEvent.description = this.popupEventDescription;
+    this.tempEvent['description'] = this.popupEventDescription;
     this.tempEvent.start = this.popupEventDates[0];
     this.tempEvent.end = this.popupEventDates[1];
     this.tempEvent.allDay = this.popupEventAllDay;
-    this.tempEvent.status = this.popupEventStatus;
+    this.tempEvent['status'] = this.popupEventStatus;
     this.tempEvent.color = this.selectedColor;
     if (this.isEdit) {
       // update the event in the list

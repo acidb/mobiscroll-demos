@@ -1,12 +1,12 @@
 import { Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import {
-  googleCalendarSync,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
   MbscCalendarEvent,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 
 setOptions({
   // locale,
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
         this.firstDay = new Date(start.getFullYear(), start.getMonth(), start.getDate() - 7);
         this.lastDay = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 7);
       }
-      this.loadEvents().bind(this);
+      this.loadEvents.bind(this);
     },
   };
 

@@ -6,6 +6,7 @@ import {
   formatDate,
   Notifications,
   setOptions,
+  MbscButton,
   /* localeImport */
 } from '@mobiscroll/angular';
 
@@ -262,7 +263,7 @@ export class AppComponent {
   currentEvent: any;
   status = '';
   buttonText = '';
-  buttonType = '';
+  buttonType: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'light' | undefined;
   bgColor = '';
   info = '';
   time = '';
