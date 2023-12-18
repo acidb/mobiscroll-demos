@@ -41,11 +41,9 @@ export class AppComponent implements OnInit {
       buttons: [
         {
           text: 'Apply',
-          popup: this.popup,
-          changeInputValue: this.changeInputValue,
           date: this.selectedDate,
-          handler: function () {
-            this.changeInputValue(this.date[0], this.date[1] || this.date[0]);
+          handler: () => {
+            this.changeInputValue(this.selectedDate[0], this.selectedDate[1] || this.selectedDate[0]);
             this.popup.close();
           },
         },
