@@ -13,7 +13,9 @@
 
 .md-bulk-operations,
 .md-bulk-operations .mbsc-grid,
-.md-bulk-operations .mbsc-row {
+.md-bulk-operations .mbsc-row,
+.md-bulk-operations .mbsc-col-sm-9,
+.md-bulk-operations .mbsc-push-sm-3 {
   height: 100%;
 }
 

@@ -1,11 +1,14 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-  MbscEventcalendarOptions,
+  formatDate,
   MbscCalendarEvent,
+  MbscEventcalendar,
+  MbscEventcalendarOptions,
+  MbscSelect,
   MbscSelectOptions,
   Notifications,
   setOptions,
-  formatDate /* localeImport */,
+  /* localeImport */
 } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
@@ -27,54 +30,53 @@ export class AppComponent {
     private notify: Notifications,
   ) {}
 
-  @ViewChild('mycalendar', { static: false })
-  mycalendar: any;
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
 
   @ViewChild('menu', { static: false })
-  menu!: any;
+  menu!: MbscSelect;
 
   myEvents: MbscCalendarEvent[] = [];
 
-  mySelectedEvents: any = [];
-  eventTitles = [];
-  selectValue: any;
-  firstDay: any;
-  lastDay: any;
-  menuAnchor: any;
+  mySelectedEvents: MbscCalendarEvent[] = [];
+  eventTitles: string[] = [];
+  selectValue: string | null = null;
+  firstDay!: Date;
+  lastDay!: Date;
+  menuAnchor!: HTMLElement;
   confirmOpen: boolean = false;
 
-  getSelectedEventTitles(events: any) {
-    let titles: any = [];
+  getSelectedEventTitles(events: MbscCalendarEvent[]) {
+    let titles: string[] = [];
     for (const event of events) {
-      titles = [...titles, event.title];
+      titles = [...titles, event.title!];
     }
     return titles;
   }
 
-  refreshSelectedEvents(events: any) {
+  refreshSelectedEvents(events: MbscCalendarEvent[]) {
     this.mySelectedEvents = events;
     this.eventTitles = this.getSelectedEventTitles(events);
   }
 
   updateSelectedEvents() {
-    const events: any = this.mySelectedEvents.length === 0 ? [this.mySelectedEvents] : this.mySelectedEvents;
+    const events = this.mySelectedEvents;
     let eventsToUpdate = [...this.myEvents];
     for (const event of events) {
       if (event.recurring) {
-        const origEvent = event.original;
-        let exc = origEvent.recurringException || [];
+        const origEvent = event.original!;
+        const exc = (origEvent.recurringException as string[]) || [];
         const newEvent = event;
 
         newEvent.recurring = undefined;
         newEvent.color = 'orange';
-        newEvent.id += '_' + formatDate('YYYY-MM-DD', event.start);
+        newEvent.id += '_' + formatDate('YYYY-MM-DD', new Date(event.start as string));
         eventsToUpdate = [...eventsToUpdate, newEvent];
 
-        exc = [...exc, event.start];
-        origEvent.recurringException = exc;
+        origEvent.recurringException = [...exc, event.start];
 
         // update the event in the list
-        const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id);
+        const index = eventsToUpdate.findIndex((x) => x.id === origEvent['id']);
         eventsToUpdate.splice(index, 1, origEvent);
       } else {
         const newEv = event;
@@ -104,13 +106,12 @@ export class AppComponent {
 
           for (const event of this.mySelectedEvents) {
             if (event.recurring) {
-              const origEvent = event.original;
-              let exc = origEvent.recurringException || [];
-              exc = [...exc, event.start];
-              origEvent.recurringException = exc;
+              const origEvent = event.original!;
+              const exc = (origEvent.recurringException as string[]) || [];
+              origEvent.recurringException = [...exc, event.start];
 
               // update the event in the list
-              const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id);
+              const index = eventsToUpdate.findIndex((x) => x.id === origEvent['id']);
               eventsToUpdate.splice(index, 1, origEvent);
             } else {
               eventsToUpdate = eventsToUpdate.filter((ev) => {
@@ -131,7 +132,7 @@ export class AppComponent {
     });
   }
 
-  calendarSettings: MbscEventcalendarOptions = {
+  calendarOptions: MbscEventcalendarOptions = {
     clickToCreate: true,
     selectMultipleEvents: true,
     view: {
@@ -180,7 +181,7 @@ export class AppComponent {
       }
       return true;
     },
-    onEventDelete: (args, inst) => {
+    onEventDelete: () => {
       if (!this.confirmOpen) {
         this.deleteSelectedEvents();
       }
@@ -204,10 +205,14 @@ export class AppComponent {
     },
   };
 
-  menuSettings: MbscSelectOptions = {
+  menuOptions: MbscSelectOptions = {
     touchUi: false,
     display: 'anchored',
     buttons: [],
+    data: [
+      { value: 'update', text: 'Update' },
+      { value: 'delete', text: 'Delete' },
+    ],
     onChange: (args) => {
       if (args.value === 'update') {
         this.updateSelectedEvents();
@@ -216,13 +221,15 @@ export class AppComponent {
       }
     },
     onClose: () => {
-      // clear selection
-      this.selectValue = '';
+      setTimeout(() => {
+        // clear selection
+        this.selectValue = null;
+      });
     },
   };
 
   selectAllEvents() {
-    this.refreshSelectedEvents(this.mycalendar.getEvents(this.firstDay, this.lastDay));
+    this.refreshSelectedEvents(this.calendar.getEvents(this.firstDay, this.lastDay));
     this.notify.toast({
       message: 'All events selected this month',
     });
