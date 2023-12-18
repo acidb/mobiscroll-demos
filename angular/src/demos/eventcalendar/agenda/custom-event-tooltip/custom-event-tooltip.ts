@@ -1,13 +1,21 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
+  formatDate,
+  MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscPopupOptions,
   MbscPopup,
-  formatDate,
   Notifications,
   setOptions,
   /* localeImport */
 } from '@mobiscroll/angular';
+
+interface MyEvent extends MbscCalendarEvent {
+  age?: number;
+  confirmed?: boolean;
+  location?: string;
+  reason?: string;
+}
 
 setOptions({
   // locale,
@@ -26,7 +34,7 @@ export class AppComponent {
   @ViewChild('popup', { static: false })
   tooltip!: MbscPopup;
 
-  appointments = [
+  appointments: MyEvent[] = [
     {
       title: 'Jude Chester',
       age: 69,
@@ -449,32 +457,30 @@ export class AppComponent {
     },
   ];
 
-  currentEvent: any;
-  status = '';
-  buttonText = '';
-  buttonType: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'light' | undefined;
-  bgColor = '';
-  info = '';
-  time = '';
-  reason = '';
-  location = '';
-  anchor: HTMLElement | undefined;
+  currentEvent!: MyEvent;
+  status?: string;
+  buttonText?: string;
+  buttonType?: 'success' | 'warning';
+  bgColor?: string;
+  info?: string;
+  time?: string;
+  reason?: string;
+  location?: string;
+  anchor?: HTMLElement;
   timer: any;
 
   calendarOptions: MbscEventcalendarOptions = {
     view: {
       agenda: {
         type: 'week',
-        //startDay: 1,
-        //endDay: 5,
       },
     },
     clickToCreate: false,
     dragToCreate: false,
     showEventTooltip: false,
-    onEventHoverIn: (args, inst) => {
-      const event: any = args.event;
-      const time = formatDate('hh:mm A', new Date(event.start)) + ' - ' + formatDate('hh:mm A', new Date(event.end));
+    onEventHoverIn: (args) => {
+      const event: MyEvent = args.event;
+      const time = formatDate('hh:mm A', new Date(event.start as string)) + ' - ' + formatDate('hh:mm A', new Date(event.end as string));
 
       this.currentEvent = event;
 

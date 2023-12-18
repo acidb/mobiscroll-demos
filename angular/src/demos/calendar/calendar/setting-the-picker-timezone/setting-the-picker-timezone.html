@@ -6,10 +6,8 @@
   [(ngModel)]="selected"
 ></mbsc-datepicker>
 <div class="mbsc-padding">
-  *ngIf="selected"
-  <p>
+  <p *ngIf="selected">
     Selected date is returned in Data Timezone<br />
-    <code>selected</code>
-    {{selected}}
+    <code>{{selected}}</code>
   </p>
 </div>

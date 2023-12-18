@@ -624,20 +624,21 @@ export class AppComponent {
 
   formatDate = formatDate;
 
-  getOccuppancy(events: any) {
-    let occuppancy: any = 0;
+  getOccuppancy(events: MbscCalendarEvent[]) {
+    let occuppancy = 0;
     if (events) {
-      var resourceIds: any = [];
-      var nr = 0;
+      let resourceIds: string[] = [];
+      let nr = 0;
       for (const event of events) {
-        if (resourceIds.indexOf(event.resource) < 0) {
+        const resource = event.resource as string;
+        if (resourceIds.indexOf(resource) < 0) {
           nr++;
-          resourceIds = [...resourceIds, event.resource];
+          resourceIds = [...resourceIds, resource];
         }
       }
-      occuppancy = ((nr * 100) / this.myResources.length).toFixed(0);
+      occuppancy = (nr * 100) / this.myResources.length;
     }
-    return occuppancy;
+    return occuppancy.toFixed(0);
   }
 
   getEventOccurrence(args: any): any {

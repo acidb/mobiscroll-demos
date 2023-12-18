@@ -1,13 +1,22 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
+  formatDate,
+  MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscPopupOptions,
   MbscPopup,
-  formatDate,
+  MbscResource,
   Notifications,
   setOptions,
   /* localeImport */
 } from '@mobiscroll/angular';
+
+interface MyEvent extends MbscCalendarEvent {
+  age?: number;
+  confirmed?: boolean;
+  location?: string;
+  reason?: string;
+}
 
 setOptions({
   // locale,
@@ -26,7 +35,7 @@ export class AppComponent {
   @ViewChild('popup', { static: false })
   tooltip!: MbscPopup;
 
-  doctors = [
+  doctors: MbscResource[] = [
     {
       id: 1,
       name: 'Dr. Breanne Lorinda',
@@ -44,7 +53,7 @@ export class AppComponent {
     },
   ];
 
-  appointments = [
+  appointments: MyEvent[] = [
     {
       title: 'Jude Chester',
       age: 69,
@@ -467,16 +476,16 @@ export class AppComponent {
     },
   ];
 
-  currentEvent: any;
-  status = '';
-  buttonText = '';
-  buttonType: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'light' | undefined;
-  bgColor = '';
-  info = '';
-  time = '';
-  reason = '';
-  location = '';
-  anchor: HTMLElement | undefined;
+  currentEvent!: MyEvent;
+  status?: string;
+  buttonText?: string;
+  buttonType?: 'success' | 'warning';
+  bgColor?: string;
+  info?: string;
+  time?: string;
+  reason?: string;
+  location?: string;
+  anchor?: HTMLElement;
   timer: any;
 
   calendarOptions: MbscEventcalendarOptions = {
@@ -493,10 +502,10 @@ export class AppComponent {
     clickToCreate: false,
     dragToCreate: false,
     showEventTooltip: false,
-    onEventHoverIn: (args, inst) => {
-      const event: any = args.event;
-      const resource: any = this.doctors.find((dr) => dr.id === event.resource);
-      const time = formatDate('hh:mm A', new Date(event.start)) + ' - ' + formatDate('hh:mm A', new Date(event.end));
+    onEventHoverIn: (args) => {
+      const event: MyEvent = args.event;
+      const resource: MbscResource = this.doctors.find((dr) => dr.id === event.resource)!;
+      const time = formatDate('hh:mm A', new Date(event.start as string)) + ' - ' + formatDate('hh:mm A', new Date(event.end as string));
 
       this.currentEvent = event;
 
@@ -557,7 +566,7 @@ export class AppComponent {
   }
 
   setStatus(): void {
-    const index = this.appointments.findIndex((item: any) => item.id === this.currentEvent.id);
+    const index = this.appointments.findIndex((item) => item.id === this.currentEvent.id);
     this.appointments[index].confirmed = !this.appointments[index].confirmed;
     this.tooltip.close();
     this.notify.toast({
@@ -573,7 +582,7 @@ export class AppComponent {
   }
 
   deleteApp(): void {
-    this.appointments = this.appointments.filter((item: any) => item.id !== this.currentEvent.id);
+    this.appointments = this.appointments.filter((item) => item.id !== this.currentEvent.id);
     this.tooltip.close();
     this.notify.toast({
       message: 'Appointment deleted',

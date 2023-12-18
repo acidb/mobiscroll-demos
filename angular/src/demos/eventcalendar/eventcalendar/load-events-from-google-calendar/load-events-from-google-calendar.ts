@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
         this.firstDay = new Date(start.getFullYear(), start.getMonth(), start.getDate() - 7);
         this.lastDay = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 7);
       }
-      this.loadEvents.bind(this);
+      this.loadEvents();
     },
   };
 
@@ -79,7 +79,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     googleCalendarSync.init({
       apiKey: '<YOUR_GOOGLE_API_KEY>',
-      onInit: this.loadEvents.bind(this),
+      onInit: () => {
+        this.loadEvents();
+      },
     });
   }
 

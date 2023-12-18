@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscItemDragEvent,
   Notifications,
   setOptions,
   /* localeImport */
@@ -86,7 +87,7 @@ export class AppComponent implements OnInit {
     return eventLength + ' hour' + (eventLength > 1 ? 's' : '');
   }
 
-  onItemDrop(args: any): void {
+  onItemDrop(args: MbscItemDragEvent): void {
     if (args.data) {
       this.myTasks = [...this.myTasks, args.data];
     }

@@ -166,7 +166,7 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  getColors(start: any, end: any) {
+  getColors(start: Date, end: Date) {
     return [
       {
         date: start,

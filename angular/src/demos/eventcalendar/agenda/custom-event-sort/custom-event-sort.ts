@@ -136,7 +136,7 @@ export class AppComponent {
     },
   };
 
-  orderMyEvents(event: any) {
-    return event.accepted ? 1 : -1;
+  orderMyEvents(event: MbscCalendarEvent) {
+    return event['accepted'] ? 1 : -1;
   }
 }

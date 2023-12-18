@@ -158,7 +158,7 @@ export class AppComponent {
     },
   };
 
-  getResourceById(resources: MbscResource[], resourceId: any): any {
+  getResourceById(resources: MbscResource[], resourceId: string): MbscResource | undefined {
     for (let i = 0; i < resources.length; i++) {
       const resource = resources[i];
       if (resource.id === resourceId) {
@@ -172,17 +172,18 @@ export class AppComponent {
         }
       }
     }
+    return;
   }
 
   loadChildResources(args: any) {
-    const resource = this.getResourceById(this.myResources, args.resource);
+    const resource = this.getResourceById(this.myResources, args.resource)!;
 
-    if (!resource.loaded) {
+    if (!resource['loaded']) {
       this.http.jsonp<any>('https://trial.mobiscroll.com/load-resources/?res=' + args.resource, 'callback').subscribe((data) => {
         const newEvents = [...this.myEvents, ...data.events];
 
         resource.children = data.resources;
-        resource.loaded = true;
+        resource['loaded'] = true;
 
         this.myEvents = newEvents;
         this.myResources = [...this.myResources];

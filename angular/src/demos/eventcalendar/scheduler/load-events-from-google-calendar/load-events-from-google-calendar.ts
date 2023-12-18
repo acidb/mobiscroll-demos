@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import {
+  MbscDateType,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
   MbscCalendarEvent,
@@ -38,9 +39,9 @@ export class AppComponent implements OnInit {
 
   calSettings: MbscEventcalendarOptions = {
     exclusiveEndDates: true,
-    onPageLoading: (event: any) => {
-      const start = event.viewStart;
-      const end = event.viewEnd;
+    onPageLoading: (event) => {
+      const start = event.viewStart!;
+      const end = event.viewEnd!;
 
       // Calculate dates
       // (pre-load events for previous and next pages as well)
@@ -51,7 +52,7 @@ export class AppComponent implements OnInit {
         this.firstDay = new Date(start.getFullYear(), start.getMonth(), start.getDate() - 7);
         this.lastDay = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 7);
       }
-      this.loadEvents.bind(this);
+      this.loadEvents();
     },
   };
 
@@ -79,7 +80,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     googleCalendarSync.init({
       apiKey: '<YOUR_GOOGLE_API_KEY>',
-      onInit: this.loadEvents.bind(this),
+      onInit: () => {
+        this.loadEvents();
+      },
     });
   }
 

@@ -1,11 +1,15 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-  setOptions,
   formatDate,
-  MbscSelectOptions,
-  MbscPopup,
   MbscDatepickerOptions,
-  options /* localeImport */,
+  MbscDateType,
+  MbscPopup,
+  MbscPopupOptions,
+  MbscSelectData,
+  MbscSelectOptions,
+  options,
+  setOptions,
+  /* localeImport */
 } from '@mobiscroll/angular';
 
 setOptions({
@@ -31,19 +35,18 @@ export class AppComponent implements OnInit {
 
   dateInput = '';
   selected = 'custom';
-  selectedDate: any = [startDate, endDate];
+  selectedDate: MbscDateType[] = [startDate, endDate];
   disableInput = false;
 
-  respPopup: any = {
+  respPopup: { [key: string]: MbscPopupOptions & { breakpoint?: number } } = {
     xsmall: {
       display: 'bottom',
       touchUi: true,
       buttons: [
         {
           text: 'Apply',
-          date: this.selectedDate,
           handler: () => {
-            this.changeInputValue(this.selectedDate[0], this.selectedDate[1] || this.selectedDate[0]);
+            this.changeInputValue(this.selectedDate[0] as string, (this.selectedDate[1] || this.selectedDate[0]) as string);
             this.popup.close();
           },
         },
@@ -54,14 +57,13 @@ export class AppComponent implements OnInit {
       breakpoint: 559,
       buttons: [],
       display: 'anchored',
-      anchor: document.querySelector('.date-filter-input'),
+      anchor: document.querySelector('.date-filter-input') as HTMLElement,
       anchorAlign: 'start',
       touchUi: false,
       scrollLock: false,
       showArrow: false,
       maxWidth: 920,
     },
-    // },
   };
 
   respSelect = {
@@ -73,7 +75,7 @@ export class AppComponent implements OnInit {
     },
   };
 
-  myData = [
+  myData: MbscSelectData[] = [
     {
       value: 'custom',
       text: 'Custom',
@@ -179,7 +181,7 @@ export class AppComponent implements OnInit {
   applyClick(): void {
     const date = this.selectedDate;
 
-    this.changeInputValue(date[0], date[1] || date[0]);
+    this.changeInputValue(date[0] as string, (date[1] || date[0]) as string);
     this.popup.close();
   }
 

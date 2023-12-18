@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import {
-  setOptions,
   MbscEventcalendarView,
   MbscCalendarEvent,
   MbscEventClickEvent,
@@ -9,6 +8,8 @@ import {
   MbscPopupOptions,
   MbscPopup,
   MbscPopupButton,
+  MbscPopupPredefinedButton,
+  setOptions,
   /* localeImport */
 } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
@@ -122,7 +123,7 @@ export class AppComponent {
     width: 350,
   };
 
-  buttons: (MbscPopupButton | 'ok' | 'close' | 'set' | 'cancel')[] = [
+  buttons: (MbscPopupButton | MbscPopupPredefinedButton)[] = [
     'cancel',
     {
       text: 'OK',

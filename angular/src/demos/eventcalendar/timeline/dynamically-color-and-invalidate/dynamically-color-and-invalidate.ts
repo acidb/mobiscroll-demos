@@ -1,6 +1,9 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import {
+  MbscCalendarColor,
+  MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscResource,
   Notifications,
   setOptions,
   /* localeImport */
@@ -11,7 +14,7 @@ setOptions({
   // theme
 });
 
-const hwInvalids = [
+const hwInvalids: MbscCalendarEvent[] = [
   {
     recurring: {
       repeat: 'daily',
@@ -19,7 +22,7 @@ const hwInvalids = [
     resource: ['res4', 'res5', 'res6'],
   },
 ];
-const swInvalids = [
+const swInvalids: MbscCalendarEvent[] = [
   {
     recurring: {
       repeat: 'daily',
@@ -27,7 +30,7 @@ const swInvalids = [
     resource: ['res1', 'res2', 'res3'],
   },
 ];
-const hwColors = [
+const hwColors: MbscCalendarColor[] = [
   {
     recurring: {
       repeat: 'daily',
@@ -36,7 +39,7 @@ const hwColors = [
     background: '#1ad4041a',
   },
 ];
-const swColors = [
+const swColors: MbscCalendarColor[] = [
   {
     recurring: {
       repeat: 'daily',
@@ -56,7 +59,7 @@ const swColors = [
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  myResources = [
+  myResources: MbscResource[] = [
     {
       id: 'hwt',
       name: 'HW Team',
@@ -103,7 +106,7 @@ export class AppComponent {
     },
   ];
 
-  myTasks = [
+  myTasks: MbscCalendarEvent[] = [
     {
       id: 1,
       title: 'Task 1',
@@ -154,8 +157,8 @@ export class AppComponent {
     },
   ];
 
-  myColors: any = [];
-  myInvalids: any = [];
+  myColors: MbscCalendarColor[] = [];
+  myInvalids: MbscCalendarEvent[] = [];
 
   calendarOptions: MbscEventcalendarOptions = {
     dragToMove: true,
