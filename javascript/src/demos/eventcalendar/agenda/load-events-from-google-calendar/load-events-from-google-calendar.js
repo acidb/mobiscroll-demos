@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
 
 export default {
   init() {
@@ -7,7 +8,7 @@ export default {
       // theme
     });
 
-    var googleCalendarSync = mobiscroll.googleCalendarSync;
+    var googleCalendarSync = googleSync;
     var CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
     var cont = document.getElementById('demo-google-calendar-cont');
     var view = 'agenda';

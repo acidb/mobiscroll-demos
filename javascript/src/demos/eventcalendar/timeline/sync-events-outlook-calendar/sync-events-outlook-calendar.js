@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import { outlookCalendarSync as outlookSync } from '@mobiscroll/calendar-integration';
 
 export default {
   init() {
@@ -7,7 +8,7 @@ export default {
       // theme
     });
 
-    var outlookCalendarSync = mobiscroll.outlookCalendarSync;
+    var outlookCalendarSync = outlookSync;
 
     var calendarElm = document.getElementById('demo-sync-events-outlook-calendar');
     var popupElm = document.getElementById('demo-sync-events-outlook-calendar-popup');

@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
 
 export default {
   init() {
@@ -7,7 +8,7 @@ export default {
       // theme
     });
 
-    var googleCalendarSync = mobiscroll.googleCalendarSync;
+    var googleCalendarSync = googleSync;
     var calendars = [
       { id: 'en.french#holiday@group.v.calendar.google.com', name: 'Holidays in France', color: '#D81B60' },
       { id: 'en.hungarian#holiday@group.v.calendar.google.com', name: 'Holidays in Hungary', color: '#AD1457' },

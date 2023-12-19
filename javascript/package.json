@@ -13,7 +13,10 @@
     "vite": "^5.0.0"
   },
   "dependencies": {
+    "@mobiscroll/calendar-integration": "^5.28.0",
     "@mobiscroll/javascript": "^5.28.0",
-    "html5-history-router": "^1.1.0"
+    "@mobiscroll/print": "^5.28.0",
+    "html5-history-router": "^1.1.0",
+    "moment-timezone": "^0.5.43"
   }
 }
