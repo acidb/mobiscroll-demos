@@ -657,10 +657,10 @@ router
     loadPage(RangeSettingThePickerTimezone);
   })
   .on('/alerts-notifications/alert', () => {
-    loadPage(Alerts - notificationsAlert);
+    loadPage(AlertsNotificationsAlert);
   })
   .on('/alerts-notifications/notifications', () => {
-    loadPage(Alerts - notificationsNotifications);
+    loadPage(AlertsNotificationsNotifications);
   })
   .on('/forms/mobile', () => {
     loadPage(FormsMobile);
