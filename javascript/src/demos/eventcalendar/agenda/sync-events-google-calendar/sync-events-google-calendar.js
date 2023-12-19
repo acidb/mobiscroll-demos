@@ -1,6 +1,8 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
 
+mobiscroll.googleCalendarSync = googleSync;
+
 export default {
   init() {
     mobiscroll.setOptions({
@@ -8,7 +10,7 @@ export default {
       // theme
     });
 
-    var googleCalendarSync = googleSync;
+    var googleCalendarSync = mobiscroll.googleCalendarSync;
 
     var calendarElm = document.getElementById('demo-sync-events-google-calendar');
     var popupElm = document.getElementById('demo-sync-events-google-calendar-popup');
