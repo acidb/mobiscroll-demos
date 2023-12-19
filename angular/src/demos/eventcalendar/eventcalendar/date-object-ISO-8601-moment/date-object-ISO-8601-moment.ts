@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { setOptions, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/angular';
-import * as moment from 'moment';
+import moment from 'moment';
 
 setOptions({
   // locale,

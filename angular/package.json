@@ -1,12 +1,13 @@
 {
-  "name": "angular",
+  "name": "mobiscroll-demos-angular",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "serve:ssr:mobiscroll-demos-angular": "node dist/mobiscroll-demos-angular/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -17,11 +18,13 @@
     "@angular/forms": "^17.0.5",
     "@angular/platform-browser": "^17.0.5",
     "@angular/platform-browser-dynamic": "^17.0.5",
+    "@angular/platform-server": "^17.0.5",
     "@angular/router": "^17.0.5",
+    "@angular/ssr": "^17.0.2",
     "@mobiscroll/angular": "npm:@mobiscroll/angular-ivy@^5.28.0",
     "@mobiscroll/calendar-integration": "^5.28.0",
     "@mobiscroll/print": "^5.28.0",
-    "moment": "^2.29.4",
+    "express": "^4.18.2",
     "moment-timezone": "^0.5.43",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -29,10 +32,12 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.5",
-    "@angular/cli": "~17.0.5",
+    "@angular/cli": "^17.0.5",
     "@angular/compiler-cli": "^17.0.5",
-    "@types/jasmine": "~4.3.0",
-    "jasmine-core": "~4.6.0",
+    "@types/express": "^4.17.17",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^18.18.0",
+    "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",

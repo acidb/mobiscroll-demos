@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MbscEventcalendarOptions, MbscCalendarEvent, MbscResource, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 momentTimezone.moment = moment;
 

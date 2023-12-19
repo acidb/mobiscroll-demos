@@ -1,10 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MbscModule } from '@mobiscroll/angular';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { MbscModule } from '@mobiscroll/angular';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { AppComponent as DatetimeDatePicker } from '../demos/datetime/datetime/date-picker/date-picker';
 import { AppComponent as DatetimeDisabledInvalidValues } from '../demos/datetime/datetime/disabled-invalid-values/disabled-invalid-values';
@@ -318,11 +317,8 @@ import { AppComponent as TimelineAssignUnassignWorkOrdersFixedTopRow } from '../
 import { AppComponent as TimelineControlNumberOfConcurrentlyShownEvents } from '../demos/eventcalendar/timeline/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events';
 import { AppComponent as TimelineFlightSchedulingTwoSynchronizedTimelines } from '../demos/eventcalendar/timeline/flight-scheduling-two-synchronized-timelines/flight-scheduling-two-synchronized-timelines';
 
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-
 @NgModule({
   declarations: [
-    AppComponent,
     HomeComponent,
     DatetimeDatePicker,
     DatetimeDisabledInvalidValues,
@@ -636,8 +632,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
     TimelineControlNumberOfConcurrentlyShownEvents,
     TimelineFlightSchedulingTwoSynchronizedTimelines,
   ],
-  imports: [FormsModule, MbscModule, BrowserModule, AppRoutingModule, HttpClientJsonpModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, MbscModule, HttpClientJsonpModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

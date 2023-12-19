@@ -7,7 +7,7 @@ import {
   formatDate,
   momentTimezone /* localeImport */,
 } from '@mobiscroll/angular';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 setOptions({
   // locale,
