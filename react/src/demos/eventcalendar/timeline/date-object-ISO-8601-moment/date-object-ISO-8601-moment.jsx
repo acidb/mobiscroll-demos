@@ -1,6 +1,6 @@
 import React from 'react';
 import { Eventcalendar, Page, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
-import moment from 'moment-timezone';
+import moment from 'moment';
 
 setOptions({
   // localeJs,
