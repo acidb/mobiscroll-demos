@@ -9,7 +9,6 @@ import {
   momentTimezone /* localeImport */,
 } from '@mobiscroll/react';
 import './multiple-timezone-support.css';
-
 import moment from 'moment-timezone';
 
 // setup Mobiscroll Timezone plugin with Moment
