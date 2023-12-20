@@ -128,7 +128,7 @@ function App() {
       allDay: popupEventAllDay,
       status: popupEventStatus,
       color: tempEvent.color,
-      color: selectedColor,
+      //color: selectedColor,
     };
     if (isEdit) {
       // update the event in the list

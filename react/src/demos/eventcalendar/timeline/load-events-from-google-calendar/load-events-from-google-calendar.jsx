@@ -1,5 +1,6 @@
 import React from 'react';
-import { googleCalendarSync, Eventcalendar, toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, toast /* localeImport */ } from '@mobiscroll/react';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import './load-events-from-google-calendar.css';
 
 function App() {

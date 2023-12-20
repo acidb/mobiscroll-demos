@@ -141,20 +141,20 @@ function App() {
         const startTime = (i < 10 ? '0' : '') + i + ':00';
         const endTime = (i < 9 ? '0' : '') + (i + 1) + ':00';
         const title = hour % 12 === 0 ? 12 : hour < 0 ? 12 + hour : hour <= 12 ? hour : hour % 12;
-        const props = getProps(title + ((title === 12 && !isAM) || (title !== 12 && isAM) ? 0 : 12));
+        const propsValue = getProps(title + ((title === 12 && !isAM) || (title !== 12 && isAM) ? 0 : 12));
 
         colors.push({
           start: startTime,
           end: endTime,
           title: title + (isAM ? ' AM' : ' PM'),
-          background: props.color,
+          background: propsValue.color,
           recurring: {
             repeat: 'daily',
           },
           resource: resource.id,
         });
 
-        if (props.invalid) {
+        if (propsValue.invalid) {
           invalid.push({
             start: startTime,
             end: endTime,

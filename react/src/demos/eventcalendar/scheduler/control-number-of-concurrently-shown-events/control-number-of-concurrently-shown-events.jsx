@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  outlookCalendarSync,
   Eventcalendar,
   setOptions,
   Page,
@@ -12,6 +11,7 @@ import {
   toast,
   Popup /* localeImport */,
 } from '@mobiscroll/react';
+import { outlookCalendarSync } from '@mobiscroll/calendar-integration';
 import './sync-events-outlook-calendar.css';
 
 setOptions({

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  googleCalendarSync,
   Eventcalendar,
   CalendarNav,
   SegmentedGroup,
@@ -10,6 +9,7 @@ import {
   CalendarNext,
   toast /* localeImport */,
 } from '@mobiscroll/react';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import './load-events-from-google-calendar.css';
 
 const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';

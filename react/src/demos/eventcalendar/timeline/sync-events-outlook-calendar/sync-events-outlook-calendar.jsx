@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  outlookCalendarSync,
   Eventcalendar,
   setOptions,
   Page,
@@ -13,6 +12,7 @@ import {
   confirm,
   Popup /* localeImport */,
 } from '@mobiscroll/react';
+import { outlookCalendarSync } from '@mobiscroll/calendar-integration';
 import './sync-events-outlook-calendar.css';
 
 setOptions({
@@ -357,7 +357,7 @@ function App() {
       >
         <div className="mbsc-form-group-inset mbsc-align-center">
           <p className="mbsc-italic mbsc-txt-muted">
-            Editing events sync back to your calendar when enabled. You'll be asked for confirmation on every action.
+            Editing events sync back to your calendar when enabled. You&#39;ll be asked for confirmation on every action.
           </p>
         </div>
         <div className="mbsc-form-group-inset">

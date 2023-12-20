@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  googleCalendarSync,
   Eventcalendar,
   setOptions,
   Page,
@@ -13,6 +12,7 @@ import {
   toast,
   confirm /* localeImport */,
 } from '@mobiscroll/react';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import './sync-events-google-calendar.css';
 
 setOptions({
@@ -266,7 +266,7 @@ function App() {
           <div>
             <div className="mbsc-form-group-inset mbsc-align-center">
               <p className="mbsc-italic mbsc-txt-muted">
-                Editing events sync back to your calendar when enabled. You'll be asked for confirmation on every action.
+                Editing events sync back to your calendar when enabled. You&#39;ll be asked for confirmation on every action.
               </p>
             </div>
             <div className="mbsc-form-group-inset">

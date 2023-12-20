@@ -32,7 +32,6 @@ function App() {
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="underline" labelStyle="stacked" startIcon="empty" placeholder="Without label"></Input>
@@ -74,7 +73,6 @@ function App() {
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="underline" labelStyle="inline" startIcon="empty" placeholder="Without label"></Input>
@@ -116,7 +114,6 @@ function App() {
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="underline" labelStyle="floating" startIcon="empty" placeholder="Without label"></Input>
@@ -160,7 +157,6 @@ function App() {
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="box" labelStyle="stacked" startIcon="empty" placeholder="Without label"></Input>
@@ -202,7 +198,6 @@ function App() {
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="box" labelStyle="inline" startIcon="empty" placeholder="Without label"></Input>
@@ -244,7 +239,6 @@ function App() {
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="box" labelStyle="floating" startIcon="empty" placeholder="Without label"></Input>
@@ -288,7 +282,6 @@ function App() {
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="outline" labelStyle="stacked" startIcon="empty" placeholder="Without label"></Input>
@@ -330,7 +323,6 @@ function App() {
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="outline" labelStyle="inline" startIcon="empty" placeholder="Without label"></Input>
@@ -372,7 +364,6 @@ function App() {
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="outline" labelStyle="floating" startIcon="empty" placeholder="Without label"></Input>

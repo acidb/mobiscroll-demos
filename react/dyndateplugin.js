@@ -16,7 +16,7 @@ export default function myPlugin() {
 }
 const now = new Date();
 const compileFileToJS = (src) => {
-  var str = src.replace(/:.*dyndatetime.*/g, function (i) {
+  var str = src.replace(/['|"]dyndatetime\(([^)])*\)['|"]/g, function (i, match) {
     return parseDatestring(i);
   });
   return str;
