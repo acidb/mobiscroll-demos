@@ -10,7 +10,6 @@ export default {
     mobiscroll.datepicker('#demo-range-selection', {
       controls: ['calendar'],
       display: 'inline',
-      rangeSelectMode: 'wizard',
       select: 'range',
       showRangeLabels: true,
     });

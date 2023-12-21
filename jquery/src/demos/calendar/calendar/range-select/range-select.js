@@ -14,7 +14,6 @@ export default {
         .datepicker({
           controls: ['calendar'],
           display: 'inline',
-          rangeSelectMode: 'wizard',
           select: 'range',
           showRangeLabels: true,
         });

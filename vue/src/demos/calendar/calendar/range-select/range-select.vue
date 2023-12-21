@@ -11,7 +11,6 @@ setOptions({
   <MbscDatepicker
     display="inline"
     select="range"
-    rangeSelectMode="wizard"
     :controls="['calendar']"
     :showRangeLabels="true"
   />

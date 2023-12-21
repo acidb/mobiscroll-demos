@@ -8,7 +8,6 @@ const App: React.FC = () => {
       // theme
       controls={['calendar']}
       display="inline"
-      rangeSelectMode="wizard"
       select="range"
       showRangeLabels={true}
     />
