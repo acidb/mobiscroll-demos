@@ -1,14 +1,18 @@
-<script setup>import { MbscDatepicker, setOptions/* localeImport */ } from '@mobiscroll/vue'
+<script setup>
+import { MbscDatepicker, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
   // locale,
   // theme
-})</script> 
+})
+</script>
 
-<template>  <MbscDatepicker
+<template>
+  <MbscDatepicker
     display="inline"
     select="range"
     rangeSelectMode="wizard"
-    :controls="['calendar']
+    :controls="['calendar']"
     :showRangeLabels="true"
-  /></template>
+  />
+</template>

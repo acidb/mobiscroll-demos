@@ -10,9 +10,9 @@ import {
   MbscButton,
   MbscSwitch,
   MbscToast,
-  googleCalendarSync,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { googleCalendarSync } from '@mobiscroll/calendar-integration'
 
 setOptions({
   // locale,

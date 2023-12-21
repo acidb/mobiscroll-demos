@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import {
   MbscEventcalendar,
   setOptions,
+  getJson,
   MbscDraggable,
   MbscDropcontainer,
   MbscToast /* localeImport */

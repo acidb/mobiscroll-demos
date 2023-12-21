@@ -1616,7 +1616,6 @@ export default function Root() {
           </ul>
         </div>
       </Page>
-      ;
     </>
   );
 }

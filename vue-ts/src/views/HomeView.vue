@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <div style="display: flex; flex-wrap: wrap; flex-direction: column">
-    <ul>
+    <!-- <ul>
       <li>
         <RouterLink to="/">Home</RouterLink>
       </li>
@@ -12,8 +12,8 @@ import { RouterLink } from 'vue-router'
       <li>
         <RouterLink to="/about">About</RouterLink>
       </li>
-    </ul>
-    <h1>Mobiscroll Vue Demos</h1>
+    </ul> -->
+    <h1>Mobiscroll Vue-TS Demos</h1>
     <h2>Event Calendar</h2>
     <h3>Timeline demos</h3>
     <ul>

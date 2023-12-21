@@ -11,9 +11,9 @@ import {
   MbscSwitch,
   MbscToast,
   MbscConfirm,
-  outlookCalendarSync,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { outlookCalendarSync } from '@mobiscroll/calendar-integration'
 
 setOptions({
   // locale,

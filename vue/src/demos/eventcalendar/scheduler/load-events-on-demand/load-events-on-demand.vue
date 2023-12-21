@@ -1,6 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { MbscEventcalendar, setOptions, getJson, MbscToast/* localeImport */ } from '@mobiscroll/vue'
+import {
+  MbscEventcalendar,
+  setOptions,
+  getJson,
+  MbscToast /* localeImport */
+} from '@mobiscroll/vue'
 
 setOptions({
   // locale,
@@ -18,9 +23,10 @@ const myView = {
 function handlePageLoading(args) {
   const year = args.month.getFullYear()
   const month = args.month.getMonth()
+  const day = args.month.getDate()
 
   getJson(
-    'https://trial.mobiscroll.com/weeklyevents/?year=' + year + '&month=' + month + '&day=' + day',
+    'https://trial.mobiscroll.com/weeklyevents/?year=' + year + '&month=' + month + '&day=' + day,
     (data) => {
       myEvents.value = data
       toastMessage.value = 'New events loaded'
