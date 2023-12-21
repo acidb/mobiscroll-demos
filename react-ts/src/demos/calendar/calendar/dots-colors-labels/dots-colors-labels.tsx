@@ -75,19 +75,19 @@ const App: React.FC = () => {
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Marked days</div>
-              <mobiscroll.Datepicker controls={['calendar']} display="inline" marked={marked} />
+              <Datepicker controls={['calendar']} display="inline" marked={marked} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Colored days</div>
-              <mobiscroll.Datepicker controls={['calendar']} display="inline" colors={colors} />
+              <Datepicker controls={['calendar']} display="inline" colors={colors} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Labels</div>
-              <mobiscroll.Datepicker controls={['calendar']} display="inline" labels={labels} />
+              <Datepicker controls={['calendar']} display="inline" labels={labels} />
             </div>
           </div>
         </div>

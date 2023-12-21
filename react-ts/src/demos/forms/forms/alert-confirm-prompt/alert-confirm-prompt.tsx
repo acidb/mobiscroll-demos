@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Button, Confirm, Page, Prompt /* localeImport */ } from '@mobiscroll/react';
+import { Alert, Button, Confirm, Page, Prompt, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,

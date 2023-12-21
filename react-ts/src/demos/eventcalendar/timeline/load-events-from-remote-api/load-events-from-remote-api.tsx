@@ -45,7 +45,7 @@ const App: React.FC = () => {
     getJson(
       'https://trial.mobiscroll.com/timeline-events/',
       (events: MbscCalendarEvent[]) => {
-        setEvents(event);
+        setEvents(events);
       },
       'jsonp',
     );

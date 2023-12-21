@@ -1,10 +1,5 @@
 import React from 'react';
-//<demo-only>import { Eventcalendar, getJson, Toast, setOptions/* localeImport */ } from '@mobiscroll/react';//</demo-only>
-
-//<extra>const Eventcalendar = mobiscroll.Eventcalendar;
-const getJson = mobiscroll.util.http.getJson;
-const Toast = mobiscroll.Toast;
-const setOptions = mobiscroll.setOptions; //</extra>
+import { Eventcalendar, getJson, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,

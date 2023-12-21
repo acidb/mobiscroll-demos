@@ -324,8 +324,7 @@ const App: React.FC = () => {
 
   const deleteRecurringEvent = React.useCallback(() => {
     switch (recurringEditMode) {
-      case 'current':
-      default:
+      case 'current': {
         let currentExceptions = tempEvent.recurringException || [];
         currentExceptions = [...currentExceptions, tempEvent.start];
 
@@ -336,7 +335,8 @@ const App: React.FC = () => {
         newEventList.splice(index, 1, newEv);
         setMyEvents(newEventList);
         break;
-      case 'following':
+      }
+      case 'following': {
         let exceptions = tempEvent.recurringException || [];
         exceptions = [...exceptions, tempEvent.start];
 
@@ -348,6 +348,7 @@ const App: React.FC = () => {
         newEvList.splice(i, 1, newE);
         setMyEvents(newEvList);
         break;
+      }
       case 'all':
         setMyEvents(myEvents.filter((item) => item.id !== tempEvent.id));
         break;
@@ -405,7 +406,6 @@ const App: React.FC = () => {
             pos: weekNr,
           };
           break;
-        default:
       }
     } else {
       switch (selectedRepeat) {

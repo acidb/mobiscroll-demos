@@ -58,7 +58,7 @@ function App() {
 
       loadEvents();
     },
-    [isLoaded, loadEvents],
+    [loadEvents, view],
   );
 
   React.useEffect(() => {

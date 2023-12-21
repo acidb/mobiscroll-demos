@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  googleCalendarSync,
   Eventcalendar,
   Popup,
   setOptions,
@@ -14,6 +13,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarView,
 } from '@mobiscroll/react';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import './sync-events-google-calendar.css';
 
 setOptions({

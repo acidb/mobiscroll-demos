@@ -96,7 +96,7 @@ const App: React.FC = () => {
             }
           }
 
-          setMyEvents(eventsToUpdate);
+          setEvents(eventsToUpdate);
           refreshSelectedEvents([]);
 
           toast({

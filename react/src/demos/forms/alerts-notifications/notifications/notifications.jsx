@@ -1,5 +1,5 @@
 import React from 'react';
-import { setOptions, toast, snackbar, Button /* localeImport */ } from '@mobiscroll/react';
+import { setOptions, toast, snackbar, Button, Page /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,

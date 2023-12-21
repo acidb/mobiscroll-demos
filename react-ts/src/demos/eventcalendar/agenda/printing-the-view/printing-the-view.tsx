@@ -8,6 +8,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
+import { print } from '@mobiscroll/print';
 
 setOptions({
   // localeJs,
@@ -16,6 +17,10 @@ setOptions({
 
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+  const [inst, setInst] = React.useState<Eventcalendar>();
+  const setInstElement = React.useCallback((elm: Eventcalendar) => {
+    setInst(elm);
+  }, []);
 
   React.useEffect(() => {
     getJson(
@@ -27,14 +32,14 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo(() => {
+  const view = React.useMemo<MbscEventcalendarView>(() => {
     return {
       agenda: { type: 'month' },
     };
   }, []);
 
   const printView = () => {
-    inst.print();
+    inst!.print();
   };
 
   return (
@@ -45,8 +50,8 @@ const App: React.FC = () => {
         // locale
         data={myEvents}
         view={view}
-        ref={setInst}
-        modules={MY_MODULES}
+        ref={setInstElement}
+        modules={[print]}
       />
     </Page>
   );

@@ -83,7 +83,7 @@ const colorPopup = {
 };
 const colors = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '', '#009788', '#4baf4f', '#7e5d4e'];
 
-const Home: React.FC = () => {
+const App: React.FC = () => {
   const [myEvents, setMyEvents] = React.useState<MbscCalendarEvent[]>(defaultEvents);
   const [tempEvent, setTempEvent] = React.useState<any>(null);
   const [isOpen, setOpen] = React.useState<boolean>(false);

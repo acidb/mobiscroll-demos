@@ -6,7 +6,8 @@ import {
   setOptions,
   Dropdown,
   MbscCalendarEvent,
-  MbscEventcalendarView /* localeImport */,
+  MbscEventcalendarView,
+  locale /* localeImport */,
 } from '@mobiscroll/react';
 import './localization.css';
 
@@ -207,7 +208,7 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
-        <Eventcalendar locale={mobiscroll.locale[lang]} data={myEvents} view={view} />
+        <Eventcalendar locale={locale[lang]} data={myEvents} view={view} />
       </div>
     </Page>
   );

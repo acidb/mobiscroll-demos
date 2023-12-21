@@ -3,7 +3,7 @@ import { Datepicker /* localeImport */ } from '@mobiscroll/react';
 
 const App: React.FC = () => {
   return (
-    <mobiscroll.Datepicker
+    <Datepicker
       // locale
       // theme
       controls={['datetime']}

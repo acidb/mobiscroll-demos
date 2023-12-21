@@ -6,7 +6,8 @@ import {
   MbscResource,
   getJson,
   MbscCalendarEvent,
-  MbscEventcalendarView /* localeImport */,
+  MbscEventcalendarView,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { print } from '@mobiscroll/print';
 

@@ -7,6 +7,10 @@ setOptions({
 });
 
 const App: React.FC = () => {
+  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [toastText, setToastText] = React.useState();
+  const [toastContext, setToastContext] = React.useState();
+
   const myView = React.useMemo<MbscEventcalendarView>(() => {
     return {
       schedule: {

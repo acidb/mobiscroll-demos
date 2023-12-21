@@ -9,7 +9,7 @@ const App: React.FC = () => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events: MbscCalendarEvent[]) => {
-        setEvents(event);
+        setEvents(events);
       },
       'jsonp',
     );

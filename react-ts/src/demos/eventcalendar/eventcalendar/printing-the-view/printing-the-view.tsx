@@ -1,5 +1,6 @@
 import React from 'react';
 import { Eventcalendar, Page, Button, getJson, setOptions, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/react';
+import { print } from '@mobiscroll/print';
 
 setOptions({
   // localeJs,
@@ -32,7 +33,7 @@ const App: React.FC = () => {
         // locale
         data={myEvents}
         ref={setInst}
-        modules={MY_MODULES}
+        modules={[print]}
       />
     </Page>
   );

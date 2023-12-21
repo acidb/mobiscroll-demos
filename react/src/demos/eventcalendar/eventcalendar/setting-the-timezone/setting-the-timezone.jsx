@@ -7,7 +7,7 @@ momentTimezone.moment = moment;
 
 function App() {
   const myEvents = React.useMemo(
-    [
+    () => [
       {
         start: 'dyndatetime(y, m, d, 7)',
         end: 'dyndatetime(y, m, d, 9)',

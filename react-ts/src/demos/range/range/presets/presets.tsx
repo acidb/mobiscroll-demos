@@ -1,5 +1,4 @@
 import React from 'react';
-import React from 'react';
 import { Datepicker, Button, Page, Toast /* localeImport */ } from '@mobiscroll/react';
 import './presets.css';
 
@@ -89,5 +88,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
 export default App;

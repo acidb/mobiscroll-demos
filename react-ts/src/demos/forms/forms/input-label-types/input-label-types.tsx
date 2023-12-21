@@ -22,19 +22,18 @@ const App: React.FC = () => {
                 labelStyle="stacked"
                 startIcon="material-email"
                 placeholder="With error styling"
-                error="true"
+                error={true}
                 label="Email"
               ></Input>
               <Input
                 inputStyle="underline"
                 labelStyle="stacked"
                 startIcon="lock2"
-                passwordToggle="true"
-                error="true"
+                passwordToggle={true}
+                error={true}
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="underline" labelStyle="stacked" startIcon="empty" placeholder="Without label"></Input>
@@ -66,19 +65,18 @@ const App: React.FC = () => {
                 labelStyle="inline"
                 startIcon="material-email"
                 placeholder="With error styling"
-                error="true"
+                error={true}
                 label="Email"
               ></Input>
               <Input
                 inputStyle="underline"
                 labelStyle="inline"
                 startIcon="lock2"
-                passwordToggle="true"
-                error="true"
+                passwordToggle={true}
+                error={true}
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="underline" labelStyle="inline" startIcon="empty" placeholder="Without label"></Input>
@@ -110,19 +108,18 @@ const App: React.FC = () => {
                 labelStyle="floating"
                 startIcon="material-email"
                 placeholder="With error styling"
-                error="true"
+                error={true}
                 label="Email"
               ></Input>
               <Input
                 inputStyle="underline"
                 labelStyle="floating"
                 startIcon="lock2"
-                passwordToggle="true"
-                error="true"
+                passwordToggle={true}
+                error={true}
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="underline" labelStyle="floating" startIcon="empty" placeholder="Without label"></Input>
@@ -156,19 +153,18 @@ const App: React.FC = () => {
                 labelStyle="stacked"
                 startIcon="material-email"
                 placeholder="With error styling"
-                error="true"
+                error={true}
                 label="Email"
               ></Input>
               <Input
                 inputStyle="box"
                 labelStyle="stacked"
                 startIcon="lock2"
-                passwordToggle="true"
-                error="true"
+                passwordToggle={true}
+                error={true}
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="box" labelStyle="stacked" startIcon="empty" placeholder="Without label"></Input>
@@ -200,19 +196,18 @@ const App: React.FC = () => {
                 labelStyle="inline"
                 startIcon="material-email"
                 placeholder="With error styling"
-                error="true"
+                error={true}
                 label="Email"
               ></Input>
               <Input
                 inputStyle="box"
                 labelStyle="inline"
                 startIcon="lock2"
-                passwordToggle="true"
-                error="true"
+                passwordToggle={true}
+                error={true}
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="box" labelStyle="inline" startIcon="empty" placeholder="Without label"></Input>
@@ -244,19 +239,18 @@ const App: React.FC = () => {
                 labelStyle="floating"
                 startIcon="material-email"
                 placeholder="With error styling"
-                error="true"
+                error={true}
                 label="Email"
               ></Input>
               <Input
                 inputStyle="box"
                 labelStyle="floating"
                 startIcon="lock2"
-                passwordToggle="true"
-                error="true"
+                passwordToggle={true}
+                error={true}
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="box" labelStyle="floating" startIcon="empty" placeholder="Without label"></Input>
@@ -290,19 +284,18 @@ const App: React.FC = () => {
                 labelStyle="stacked"
                 startIcon="material-email"
                 placeholder="With error styling"
-                error="true"
+                error={true}
                 label="Email"
               ></Input>
               <Input
                 inputStyle="outline"
                 labelStyle="stacked"
                 startIcon="lock2"
-                passwordToggle="true"
-                error="true"
+                passwordToggle={true}
+                error={true}
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="outline" labelStyle="stacked" startIcon="empty" placeholder="Without label"></Input>
@@ -334,19 +327,18 @@ const App: React.FC = () => {
                 labelStyle="inline"
                 startIcon="material-email"
                 placeholder="With error styling"
-                error="true"
+                error={true}
                 label="Email"
               ></Input>
               <Input
                 inputStyle="outline"
                 labelStyle="inline"
                 startIcon="lock2"
-                passwordToggle="true"
-                error="true"
+                passwordToggle={true}
+                error={true}
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="outline" labelStyle="inline" startIcon="empty" placeholder="Without label"></Input>
@@ -378,19 +370,18 @@ const App: React.FC = () => {
                 labelStyle="floating"
                 startIcon="material-email"
                 placeholder="With error styling"
-                error="true"
+                error={true}
                 label="Email"
               ></Input>
               <Input
                 inputStyle="outline"
                 labelStyle="floating"
                 startIcon="lock2"
-                passwordToggle="true"
-                error="true"
+                passwordToggle={true}
+                error={true}
                 errorMessage="An error occurred"
                 type="password"
                 placeholder="With icons and error message"
-                error="true"
                 label="Password"
               ></Input>
               <Input inputStyle="outline" labelStyle="floating" startIcon="empty" placeholder="Without label"></Input>

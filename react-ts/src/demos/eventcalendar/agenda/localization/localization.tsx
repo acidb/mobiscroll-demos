@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eventcalendar, Page, getJson, setOptions, Dropdown, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, Page, getJson, setOptions, Dropdown, MbscCalendarEvent, locale /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -192,7 +192,7 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
-        <Eventcalendar locale={mobiscroll.locale[lang]} data={myEvents} />
+        <Eventcalendar locale={locale[lang]} data={myEvents} />
       </div>
     </Page>
   );

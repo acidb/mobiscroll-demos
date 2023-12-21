@@ -16,7 +16,7 @@ export default function myPlugin() {
 }
 const now = new Date();
 const compileFileToJS = (src: string) => {
-  const str = src.replace(/:.*dyndatetime.*/g, function (i) {
+  const str = src.replace(/['|"]dyndatetime\(([^)])*\)['|"]/g, function (i) {
     return parseDatestring(i);
   });
   return str;
@@ -42,8 +42,8 @@ const parseDatestring = (s: string) => {
     const date = i.replace(/['|"]/g, '');
     const dateArray = date.split(',');
     dateArray.forEach((i, index) => {
-      const plus = i.includes('+');
-      const minus = i.includes('-');
+      const plus = i.indexOf('+') >= 0;
+      const minus = i.indexOf('-') >= 0;
       const splittedNum = i.split(/[+|-]/);
       let num = 0;
       splittedNum.forEach((element) => {

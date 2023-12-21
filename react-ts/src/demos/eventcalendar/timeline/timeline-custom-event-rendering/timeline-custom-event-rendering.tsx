@@ -1,9 +1,15 @@
 import React from 'react';
-import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
+import {
+  Eventcalendar,
+  MbscCalendarEvent,
+  MbscCalendarEventData,
+  MbscEventcalendarView,
+  MbscResource /* localeImport */,
+} from '@mobiscroll/react';
 import './timeline-custom-event-rendering.css';
 
 const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+  // const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
   const view = React.useMemo<MbscEventcalendarView>(() => {
     return {
@@ -13,7 +19,7 @@ const App: React.FC = () => {
     };
   }, []);
 
-  const myEvents = React.useMemo<MbscResource[]>(() => {
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
     return [
       {
         start: 'dyndatetime(y,m,d,10,30)',
@@ -93,21 +99,21 @@ const App: React.FC = () => {
     return (
       <div className="md-timeline-template-event" style={{ borderColor: color, background: color }}>
         <div className="md-timeline-template-event-cont">
-          <span className={'mbsc-icon mbsc-font-icon mbsc-icon-' + ev.taskType} style={{ background: color }}></span>
+          <span className={'mbsc-icon mbsc-font-icon mbsc-icon-' + ev!.taskType} style={{ background: color }}></span>
           <span className="md-timeline-template-time" style={{ color: color }}>
             {data.start}
           </span>
-          <span className="md-timeline-template-title">{ev.title}</span>
+          <span className="md-timeline-template-title">{ev!.title}</span>
         </div>
       </div>
     );
-  });
+  }, []);
 
   const myDefaultEvent = React.useCallback(() => {
     return {
       taskType: 'cogs',
     };
-  });
+  }, []);
 
   return (
     <Eventcalendar

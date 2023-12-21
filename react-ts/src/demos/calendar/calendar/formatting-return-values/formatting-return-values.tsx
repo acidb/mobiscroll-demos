@@ -6,7 +6,6 @@ setOptions({
   // themeJs
 });
 
-const Datepicker = mobiscroll.Datepicker;
 const now = new Date();
 
 function App() {

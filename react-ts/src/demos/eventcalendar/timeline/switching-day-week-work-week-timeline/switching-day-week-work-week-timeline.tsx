@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Eventcalendar,
   getJson,
-  toast,
+  Toast,
   setOptions,
   MbscCalendarEvent,
   MbscEventcalendarView,

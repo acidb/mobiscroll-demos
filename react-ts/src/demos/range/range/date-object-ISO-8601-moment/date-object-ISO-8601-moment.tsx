@@ -1,5 +1,6 @@
 import React from 'react';
 import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import moment from 'moment';
 
 setOptions({
   // localeJs,
@@ -10,7 +11,7 @@ const App: React.FC = () => {
   const [obj, setObj] = React.useState<any>();
   const objString = React.useMemo(() => (obj ? obj.toString() : null), [obj]);
   const [iso, setISO] = React.useState<any>();
-  const [moment, setMoment] = React.useState<any>();
+  const [momentJs, setMomentJs] = React.useState<any>();
   const momentString = React.useMemo<any>(() => (momentJs ? momentJs[0].toString() + ' - ' + momentJs[1].toString() : null), [momentJs]);
 
   const setCustomObj = React.useCallback<any>(() => {
@@ -30,11 +31,11 @@ const App: React.FC = () => {
   }, []);
 
   const setCustomMoment = React.useCallback<any>(() => {
-    setMoment([moment([2020, 2, 6]), moment([2020, 2, 12])]);
+    setMomentJs([moment([2020, 2, 6]), moment([2020, 2, 12])]);
   }, []);
 
   const momentChange = React.useCallback<any>((ev: any) => {
-    setMoment(ev.value);
+    setMomentJs(ev.value);
   }, []);
 
   return (
@@ -44,33 +45,34 @@ const App: React.FC = () => {
         <div className="mbsc-button-group-block">
           <Button onClick={setCustomObj}>Set: Sun Nov 15 2020 - Sat Nov 21 2020</Button>
         </div>
-        <Datepicker controls={[calendar]} select="range" value={obj} onChange={objChange} label="Date object" />
+        <Datepicker controls={['calendar']} select="range" value={obj} onChange={objChange} label="Date object" />
       </div>
-      <div className="mbsc-form-group" className="mbsc-padding">
-        Return value: {objString}
-      </div>
+      <div className="mbsc-form-group mbsc-padding">Return value: {objString}</div>
 
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Working with Date strings</div>
         <div className="mbsc-button-group-block">
           <Button onClick={setCustomISO}>Set: 2020-05-20 - 2020-05-26</Button>
         </div>
-        <Datepicker controls={[calendar]} select="range" returnFormat="iso8601" value={iso} onChange={isoChange} label="ISO string" />
+        <Datepicker controls={['calendar']} select="range" returnFormat="iso8601" value={iso} onChange={isoChange} label="ISO string" />
       </div>
-      <div className="mbsc-form-group" className="mbsc-padding">
-        Return value: {iso}
-      </div>
+      <div className="mbsc-form-group mbsc-padding">Return value: {iso}</div>
 
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Working with Moment JS Objects</div>
         <div className="mbsc-button-group-block">
           <Button onClick={setCustomMoment}>Set: 2020-03-06 - 2020-03-12</Button>
         </div>
-        <Datepicker controls={[calendar]} select="range" returnFormat="moment" value={moment} onChange={momentChange} label="Moment JS" />
+        <Datepicker
+          controls={['calendar']}
+          select="range"
+          returnFormat="moment"
+          value={momentJs}
+          onChange={momentChange}
+          label="Moment JS"
+        />
       </div>
-      <div className="mbsc-form-group" className="mbsc-padding">
-        Return value: {momentString}
-      </div>
+      <div className="mbsc-form-group mbsc-padding">Return value: {momentString}</div>
     </Page>
   );
 };
