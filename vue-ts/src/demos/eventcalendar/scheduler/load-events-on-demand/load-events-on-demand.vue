@@ -24,6 +24,7 @@ const myView: MbscEventcalendarView = {
 function handlePageLoading(args) {
   const year = args.month.getFullYear()
   const month = args.month.getMonth()
+  const day = args.month.getDate()
 
   getJson(
     'https://trial.mobiscroll.com/weeklyevents/?year=' + year + '&month=' + month + '&day=' + day,

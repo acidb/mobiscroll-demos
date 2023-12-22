@@ -172,7 +172,7 @@ const myResources = [
 ]
 
 const myView = {
-  schedule: {
+  timeline: {
     allDay: false,
     maxEventStack: 2,
     type: 'week'

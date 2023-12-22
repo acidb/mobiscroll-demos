@@ -9,7 +9,6 @@ import {
   MbscToast,
   MbscSegmented,
   MbscSegmentedGroup,
-  googleCalendarSync,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type {
@@ -17,6 +16,7 @@ import type {
   MbscEventcalendarView,
   MbscPageLoadingEvent
 } from '@mobiscroll/vue'
+import { googleCalendarSync } from '@mobiscroll/calendar-integration'
 
 setOptions({
   // locale,

@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { MbscEventcalendar, setOptions, getJson, MbscDraggable/* localeImport */ } from '@mobiscroll/vue'
+import {
+  MbscEventcalendar,
+  setOptions,
+  getJson,
+  MbscDraggable /* localeImport */
+} from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
   MbscCellClickEvent,
@@ -28,7 +33,6 @@ setOptions({
 
 const myEvents = ref<MbscCalendarEvent[]>([])
 const myView: MbscEventcalendarView = {
-const myView = {
   timeline: {
     type: 'day'
   }
@@ -148,7 +152,6 @@ onMounted(() => {
   <MbscEventcalendar
     :view="myView"
     :data="myEvents"
-    :resources="myResources"
     :invalid="myInvalids"
     :dragToCreate="true"
     :dragToMove="true"
@@ -180,7 +183,7 @@ onMounted(() => {
     @selected-date-change="handleSelectedDateChange"
   ></MbscEventcalendar>
 </template>
-
+<!-- :resources="myResources" -->
 <style>
 .event-hooks-draggable {
   padding: 10px 20px;

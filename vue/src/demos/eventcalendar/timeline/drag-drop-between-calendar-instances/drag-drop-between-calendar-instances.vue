@@ -209,7 +209,7 @@ const secondResources = ref([
 ])
 
 const toastMessage = ref('')
-const toastContext = ref('')
+const toastContext = ref()
 const isToastOpen = ref(false)
 
 function handleFirstCalEventCreated(args) {

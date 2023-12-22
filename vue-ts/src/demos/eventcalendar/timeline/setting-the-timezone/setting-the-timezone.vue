@@ -79,7 +79,7 @@ const myResources: MbscResource[] = [
 ]
 
 const myView: MbscEventcalendarView = {
-  agenda: { type: 'week' }
+  timeline: { type: 'week' }
 }
 </script>
 

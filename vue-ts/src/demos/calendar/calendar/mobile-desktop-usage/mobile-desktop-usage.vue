@@ -86,7 +86,6 @@ function handleClose() {
               inputStyle="box"
               placeholder="Please Select..."
             />
-            />
           </div>
         </div>
       </div>

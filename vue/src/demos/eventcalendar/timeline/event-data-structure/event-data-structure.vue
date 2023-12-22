@@ -55,7 +55,7 @@ const isToastOpen = ref(false)
 const mySelectedDate = ref(now)
 
 const myView = {
-  calendar: { labels: true }
+  timeline: { type: 'week' }
 }
 
 function addEvent() {

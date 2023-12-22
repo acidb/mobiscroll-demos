@@ -8,6 +8,7 @@ import {
   getJson
   /* localeImport */
 } from '@mobiscroll/vue'
+import { print } from '@mobiscroll/print'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 
 setOptions({

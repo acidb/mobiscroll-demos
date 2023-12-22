@@ -57,7 +57,7 @@ const isToastOpen = ref<boolean>(false)
 const mySelectedDate = ref<Date>(now)
 
 const myView: MbscEventcalendarView = {
-  calendar: { labels: true }
+  timeline: { type: 'week' }
 }
 
 function addEvent() {

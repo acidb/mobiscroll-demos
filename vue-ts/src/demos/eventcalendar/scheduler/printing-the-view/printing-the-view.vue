@@ -8,6 +8,7 @@ import {
   getJson
   /* localeImport */
 } from '@mobiscroll/vue'
+import { print } from '@mobiscroll/print'
 import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
 
 setOptions({
@@ -17,6 +18,9 @@ setOptions({
 
 const myEvents = ref<MbscCalendarEvent[]>([])
 const calendarRef = ref(null)
+const setCalendarRef = (inst) => {
+  calendarRef.value = inst
+}
 const myView: MbscEventcalendarView = {
   schedule: {
     type: 'week'
@@ -41,12 +45,6 @@ onMounted(() => {
 <template>
   <MbscPage>
     <MbscButton @click="printView()">Print scheduler</MbscButton>
-    <MbscEventcalendar
-      ref="calendarRef"
-      :drag="drag"
-      :data="myEvents"
-      :view="myView"
-      :modules="[print]"
-    />
+    <MbscEventcalendar :ref="setCalendarRef" :data="myEvents" :view="myView" :modules="[print]" />
   </MbscPage>
 </template>

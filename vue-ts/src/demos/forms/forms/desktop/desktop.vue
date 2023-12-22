@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { MbscPage, MbscInput, MbscDropdown, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import {
+  MbscPage,
+  MbscInput,
+  MbscDropdown,
+  MbscButton,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 
 setOptions({
   // locale,
@@ -113,7 +119,7 @@ setOptions({
                 ></MbscInput>
               </div>
             </div>
-            <mbsc-button>Sign in</mbsc-button>
+            <MbscButton>Sign in</MbscButton>
           </div>
         </div>
       </div>

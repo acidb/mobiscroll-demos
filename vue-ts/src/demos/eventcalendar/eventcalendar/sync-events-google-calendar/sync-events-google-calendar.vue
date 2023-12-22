@@ -11,7 +11,6 @@ import {
   MbscSwitch,
   MbscToast,
   MbscConfirm,
-  googleCalendarSync,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type {
@@ -22,6 +21,7 @@ import type {
   MbscEventUpdateEvent,
   MbscEventDeleteEvent
 } from '@mobiscroll/vue'
+import { googleCalendarSync } from '@mobiscroll/calendar-integration'
 
 setOptions({
   // locale,

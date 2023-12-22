@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MbscEventcalendar, setOptions, formatDate/* localeImport */ } from '@mobiscroll/vue'
+import { MbscEventcalendar, setOptions, formatDate /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 
 setOptions({
@@ -382,7 +382,7 @@ const monthlyEvents = ref<MbscCalendarEvent[]>([
     title: 'Event 12',
     resource: 8
   }
-)]
+])
 
 const quarterView: MbscEventcalendarView = {
   timeline: {
@@ -477,7 +477,7 @@ const quarterEvents = ref<MbscCalendarEvent[]>([
     title: 'Event 12',
     resource: 8
   }
-)]
+])
 
 const yearView: MbscEventcalendarView = {
   timeline: {

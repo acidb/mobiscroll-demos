@@ -171,7 +171,7 @@ const secondEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const toastContext = ref<string>('')
+const toastContext = ref<string>()
 const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 

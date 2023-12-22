@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MbscEventcalendar, setOptions/* localeImport */ } from '@mobiscroll/vue'
+import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 
 setOptions({
@@ -79,7 +79,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     start: 'dyndatetime(y,m,d,13)',
     title: 'Event 9'
   }
-]))
+])
 
 const myResources = ref<MbscResource[]>([
   {

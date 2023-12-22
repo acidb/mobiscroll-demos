@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MbscDatepicker, MbscPage, setOptions/* localeImport */ } from '@mobiscroll/vue'
+import { MbscDatepicker, MbscPage, MbscInput, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
   // locale,
@@ -8,25 +8,25 @@ setOptions({
 
 const now = new Date()
 const until = new Date(now.getFullYear() + 10, now.getMonth())
-</script> 
+</script>
 
 <template>
   <MbscPage>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Add a new credit card</div>
-      <MbscInput label="Name" placeholder="Required"></mbsc-input>
-      <MbscInput label="Card" placeholder="Credit card number"></mbsc-input>
+      <MbscInput label="Name" placeholder="Required"></MbscInput>
+      <MbscInput label="Card" placeholder="Credit card number"></MbscInput>
       <MbscDatepicker
         :controls="['date']"
         dateFormat="MM/YYYY"
         dateWheels="DD MMMM YYYY"
-        :min="today"
         :max="until"
         label="Expiration"
         placeholder="Required"
         value="12/2025"
       />
-      <MbscInput label="Security" placeholder="3-digit CVV"></mbsc-input>
+      <!-- :min="today" -->
+      <MbscInput label="Security" placeholder="3-digit CVV"></MbscInput>
     </div>
   </MbscPage>
 </template>

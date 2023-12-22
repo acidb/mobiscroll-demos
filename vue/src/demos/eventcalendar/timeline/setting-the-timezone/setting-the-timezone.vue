@@ -78,7 +78,7 @@ const myResources = [
 ]
 
 const myView = {
-  agenda: { type: 'week' }
+  timeline: { type: 'week' }
 }
 </script>
 
