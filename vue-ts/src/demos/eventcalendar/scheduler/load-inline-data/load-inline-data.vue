@@ -283,8 +283,8 @@ const myEvents = ref<MbscCalendarEvent[]>([
 ])
 
 const myView: MbscEventcalendarView = {
-  agenda: {
-    calendar: 'week'
+  calendar: {
+    type: 'week'
   },
   schedule: {
     type: 'day'

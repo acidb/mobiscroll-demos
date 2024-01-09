@@ -17,7 +17,7 @@ setOptions({
 })
 
 const myEvents = ref<MbscCalendarEvent[]>([])
-const calendarRef = ref(null)
+const calendarRef = ref<any>()
 const myView: MbscEventcalendarView = {
   agenda: {
     type: 'month'
@@ -25,7 +25,7 @@ const myView: MbscEventcalendarView = {
 }
 
 function printView() {
-  calendarRef.value.instance.print()
+  calendarRef.value!.instance.print()
 }
 
 onMounted(() => {

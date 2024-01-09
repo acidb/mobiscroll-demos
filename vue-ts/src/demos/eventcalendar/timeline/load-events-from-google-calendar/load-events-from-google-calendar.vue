@@ -52,10 +52,7 @@ const calendars: MbscResource[] = [
   }
 ]
 
-const calendarIds = calendars.map(function (cal: MbscResource) {
-  return cal.id
-})
-
+const calendarIds = calendars.map((cal: MbscResource) => cal.id as string)
 const myEvents = ref<MbscCalendarEvent[]>([])
 const firstDay = ref<any>(null)
 const lastDay = ref<any>(null)

@@ -7,12 +7,14 @@ import {
   MbscToast,
   MbscButton /* localeImport */
 } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView, MbscEventClickEvent } from '@mobiscroll/vue'
+import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
 
 setOptions({
   // locale,
   // theme
 })
+
+let cat: any
 
 const myEvents = ref<MbscCalendarEvent[]>([])
 
@@ -33,27 +35,21 @@ const myResponsive: any = ref({
   }
 })
 
-const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 
 const myView: MbscEventcalendarView = {
   calendar: { labels: true }
 }
 
-function handleEventClick(args: MbscEventClickEvent) {
-  toastMessage.value = args.event.title
-  isToastOpen.value = true
-}
-
 function handleToastClose() {
   isToastOpen.value = false
 }
 
-function edit(data: any) {
+function edit() {
   isToastOpen.value = true
 }
 
-function getCategory(id) {
+function getCategory(id: number) {
   switch (id) {
     case 1:
       return {
@@ -88,7 +84,7 @@ function getCategory(id) {
   }
 }
 
-function getParticipant(id) {
+function getParticipant(id: number) {
   switch (id) {
     case 1:
       return {
@@ -180,7 +176,7 @@ onMounted(() => {
               className="md-custom-event-btn"
               color="dark"
               variant="outline"
-              @click="edit(data)"
+              @click="edit()"
               >Edit</MbscButton
             >
             <div class="md-cutom-event-img-cont">
@@ -188,7 +184,7 @@ onMounted(() => {
                 v-for="p in data.original.participants"
                 :key="p.name"
                 class="md-custom-event-img"
-                :src="getParticipant(p).img"
+                :src="getParticipant(p)!.img"
               />
             </div>
           </div>
@@ -219,7 +215,7 @@ onMounted(() => {
   min-height: 135px;
   box-sizing: border-box;
   border-radius: 0 10px 10px 0;
-  transition: background 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out;
 }
 
 .mbsc-schedule-event-hover .md-custom-event-cont .md-custom-event-wrapper {

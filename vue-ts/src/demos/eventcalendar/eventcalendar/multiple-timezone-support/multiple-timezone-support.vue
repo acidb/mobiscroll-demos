@@ -10,7 +10,11 @@ import {
   setOptions,
   momentTimezone /* localeImport */
 } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
+import type {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscSelectChangeEvent
+} from '@mobiscroll/vue'
 import * as moment from 'moment-timezone'
 
 momentTimezone.moment = moment
@@ -110,7 +114,7 @@ const myView: MbscEventcalendarView = {
   }
 }
 
-function handleChange(ev) {
+function handleChange(ev: MbscSelectChangeEvent) {
   timezone.value = ev.value
 }
 </script>

@@ -100,7 +100,7 @@ const popupEditButtons = [
 ]
 
 const myMeals = ref<MbscCalendarEvent[]>([])
-const tempMeal = ref<MbscCalendarEvent>(null)
+const tempMeal = ref<MbscCalendarEvent | null>(null)
 const isPopupOpen = ref<boolean>(false)
 const isEdit = ref<boolean>(false)
 const name = ref<string>('')
@@ -120,24 +120,24 @@ function myDefaultEvent() {
 }
 
 function saveEvent() {
-  tempMeal.value.title = name.value
-  tempMeal.value.calories = calories.value
-  tempMeal.value.notes = notes.value
-  tempMeal.value.allDay = true
-  tempMeal.value.resource = type.value
+  tempMeal.value!.title = name.value
+  tempMeal.value!.calories = calories.value
+  tempMeal.value!.notes = notes.value
+  tempMeal.value!.allDay = true
+  tempMeal.value!.resource = type.value
   if (isEdit.value) {
     // update the event in the list
     myMeals.value = [...myMeals.value]
   } else {
     // add the new event to the list
-    myMeals.value = [...myMeals.value, tempMeal.value]
+    myMeals.value = [...myMeals.value, tempMeal.value!]
   }
   // close the popup
   isPopupOpen.value = false
 }
 
-function loadPopupForm(event) {
-  name.value = event.title
+function loadPopupForm(event: MbscCalendarEvent) {
+  name.value = event.title || ''
   calories.value = event.calories
   notes.value = event.notes
 }
@@ -183,7 +183,7 @@ function handleEventCreated(args: any) {
   popupButtons.value = popupAddButtons
   headerText.value =
     '<div>' +
-    resource.name +
+    resource!.name +
     '</div><div class="md-meal-type">' +
     formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) +
     '</div>'

@@ -15,10 +15,7 @@ import {
 import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscPageLoadingEvent,
-  MbscEventCreateEvent,
-  MbscEventUpdateEvent,
-  MbscEventDeleteEvent
+  MbscPageLoadingEvent
 } from '@mobiscroll/vue'
 import { outlookCalendarSync } from '@mobiscroll/calendar-integration'
 
@@ -135,9 +132,9 @@ onMounted(() => {
       .getCalendars()
       .then((calendars) => {
         const newCalendarIds = []
-        const calData = {}
+        const calData: any = {}
 
-        calendars.sort((c) => (c.primary ? -1 : 1))
+        calendars.sort((c: any) => (c.primary ? -1 : 1))
 
         for (const c of calendars) {
           newCalendarIds.push(c.id)

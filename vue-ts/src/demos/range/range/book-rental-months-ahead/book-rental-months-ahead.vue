@@ -194,7 +194,7 @@ onMounted(() => {
       const bookings = data.bookings
       const labels = []
       const invalids = []
-      let colors = []
+      let colors: any[] = []
       let endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0)
 
       for (const price of prices) {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { MbscEventcalendar, momentTimezone /* localeImport */ } from '@mobiscroll/vue'
+import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
 import * as moment from 'moment-timezone'
 
 momentTimezone.moment = moment

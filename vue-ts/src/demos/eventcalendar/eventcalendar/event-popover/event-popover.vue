@@ -22,7 +22,7 @@ const myView: MbscEventcalendarView = {
 }
 
 function handleEventClick(args: MbscEventClickEvent) {
-  toastMessage.value = args.event.title
+  toastMessage.value = args.event.title || ''
   isToastOpen.value = true
 }
 

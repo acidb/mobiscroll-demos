@@ -1,10 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import {
   MbscEventcalendar,
+  MbscToast,
   setOptions,
-  getJson,
-  MbscToast /* localeImport */
+  getJson /* localeImport */
 } from '@mobiscroll/vue'
 
 setOptions({
@@ -17,8 +17,7 @@ const toastMessage = ref('')
 const isToastOpen = ref(false)
 
 const myView = {
-  calendar: { type: 'month' },
-  agenda: { type: 'month' }
+  timeline: { type: 'day' }
 }
 
 const myResources = ref([
@@ -75,6 +74,7 @@ function handleToastClose() {
     :drag="drag"
     :view="myView"
     :data="myEvents"
+    :resources="myResources"
     @page-loading="handlePageLoading"
   />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />

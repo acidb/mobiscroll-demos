@@ -100,8 +100,8 @@ function handleSearch(ev: any) {
 }
 
 function handlePageLoading(args: MbscPageLoadingEvent) {
-  const start = formatDate('YYYY-MM-DD', args.viewStart)
-  const end = formatDate('YYYY-MM-DD', args.viewEnd)
+  const start = formatDate('YYYY-MM-DD', args.viewStart!)
+  const end = formatDate('YYYY-MM-DD', args.viewEnd!)
 
   setTimeout(() => {
     getJson(

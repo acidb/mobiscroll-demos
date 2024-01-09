@@ -17,7 +17,7 @@ setOptions({
 })
 
 const myEvents = ref<MbscCalendarEvent[]>([])
-const calendarRef = ref(null)
+const calendarRef = ref<any>(null)
 
 const myView: MbscEventcalendarView = {
   timeline: {
@@ -62,7 +62,7 @@ const myResources: MbscResource[] = [
 ]
 
 function printView() {
-  calendarRef.value.instance.print()
+  calendarRef.value!.instance.print()
 }
 
 onMounted(() => {

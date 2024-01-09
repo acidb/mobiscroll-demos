@@ -63,7 +63,7 @@ function handleCellDoubleClick(event: MbscCellClickEvent) {
 function handleCellRightClick(event: MbscCellClickEvent) {
   // Logic for cell right click
 }
-function handleDestroy(event) {
+function handleDestroy(event: any) {
   // Logic for destroying the event calendar
 }
 function handleEventClick(event: MbscEventClickEvent) {
@@ -111,7 +111,7 @@ function handleEventUpdated(event: MbscEventUpdatedEvent) {
 function handleEventUpdateFailed(event: MbscEventUpdateFailedEvent) {
   // Logic for failed event update
 }
-function handleInit(event) {
+function handleInit(event: any) {
   // Logic running on component init
 }
 function handlePageChange(event: MbscPageChangeEvent) {
@@ -183,7 +183,7 @@ onMounted(() => {
     @selected-date-change="handleSelectedDateChange"
   ></MbscEventcalendar>
 </template>
-<!-- :resources="myResources" -->
+
 <style>
 .event-hooks-draggable {
   padding: 10px 20px;

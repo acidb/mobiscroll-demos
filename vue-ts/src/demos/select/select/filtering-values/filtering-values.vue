@@ -7,7 +7,7 @@ setOptions({
   // theme
 })
 
-const remoteData = ref([])
+const remoteData = ref<any>([])
 const names = [
   { text: 'Abigail Hodges', value: 1 },
   { text: 'Adam Robertson', value: 2 },

@@ -114,7 +114,7 @@ const firstToDate = ref<Date>(today)
 const secondToDate = ref<Date>(today)
 const originDate = ref<Date>(today)
 const isMenuOpen = ref<boolean>(false)
-const selectedEvents = ref([])
+const selectedEvents = ref<MbscCalendarEvent[]>([])
 const moveEvents = ref<MbscCalendarEvent[]>([])
 const pastedEvents = ref<MbscCalendarEvent[]>([])
 const deletedEvents = ref<MbscCalendarEvent[]>([])
@@ -140,8 +140,8 @@ function pasteEvents() {
   if (activeSelectedEvents.length > 0) {
     for (const event of activeSelectedEvents) {
       const newEvent = Object.assign({}, event)
-      const startDate = new Date(event.start)
-      const endDate = new Date(event.end)
+      const startDate = new Date(event.start as string)
+      const endDate = new Date(event.end as string)
       const diff = Math.abs(endDate.getTime() - startDate.getTime())
 
       newEvent.start = startDate.setMonth(
@@ -385,11 +385,11 @@ function switchCalendar(ev: any) {
 
 function handlePageLoading(args: MbscPageLoadingEvent) {
   if (activeCalendar.value === 'first') {
-    firstToDate.value = args.month
+    firstToDate.value = args.month!
   } else {
-    secondToDate.value = args.month
+    secondToDate.value = args.month!
   }
-  toDate.value = args.month
+  toDate.value = args.month!
 }
 
 function handleCellRightClick(args: MbscCellClickEvent) {
@@ -417,7 +417,7 @@ function handleEventRightClick(args: MbscEventClickEvent) {
 }
 
 function handleEventDeleted(args: MbscEventDeletedEvent) {
-  deletedEvents.value = args.events
+  deletedEvents.value = args.events!
   action.value = 'delete'
   snackbarButton.value = {
     action: () => {
@@ -458,7 +458,7 @@ function handleSelectChange(args: any) {
 
 function handleSelectClose() {
   isMenuOpen.value = false
-  selectValue.value = null
+  selectValue.value = ''
 }
 
 function handleKeyDown(ev: any) {

@@ -154,7 +154,10 @@ const myView: MbscEventcalendarView = {
   }
 }
 
-function getResourceById(resources: MbscResource[], resourceId: string | number) {
+function getResourceById(
+  resources: MbscResource[],
+  resourceId: string | number
+): MbscResource | undefined {
   for (let i = 0; i < resources.length; i++) {
     const resource = resources[i]
     if (resource.id === resourceId) {
@@ -173,7 +176,7 @@ function getResourceById(resources: MbscResource[], resourceId: string | number)
 function loadChildResources(args: any) {
   const resource = getResourceById(myResources.value, args.resource)
 
-  if (!resource.loaded) {
+  if (resource && !resource.loaded) {
     getJson(
       'https://trial.mobiscroll.com/load-resources/?res=' + args.resource,
       (data: any) => {

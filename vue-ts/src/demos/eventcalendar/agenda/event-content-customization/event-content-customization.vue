@@ -23,7 +23,7 @@ const myView: MbscEventcalendarView = {
   agenda: { type: 'day' }
 }
 
-function getParticipant(id) {
+function getParticipant(id: number) {
   switch (id) {
     case 1:
       return {
@@ -43,7 +43,7 @@ function getParticipant(id) {
   }
 }
 
-function add(ev, data) {
+function add(data: MbscCalendarEvent) {
   toastMessage.value = data.title + ' clicked'
   isToastOpen.value = true
 }
@@ -68,15 +68,15 @@ onMounted(() => {
     <template #eventContent="data">
       <div>{{ data.title }}</div>
       <div class="md-custom-event-cont">
-        <img class="md-custom-event-img" :src="getParticipant(data.original.participant).img" />
+        <img class="md-custom-event-img" :src="getParticipant(data.original.participant)!.img" />
         <div class="mbsc-custom-event-name">
-          {{ getParticipant(data.original.participant).name }}
+          {{ getParticipant(data.original.participant)!.name }}
         </div>
         <MbscButton
           className="md-custom-event-btn"
           color="secondary"
           data-variant="outline"
-          @click="add($event, data.original)"
+          @click="add(data.original)"
         >
           Add participant
         </MbscButton>

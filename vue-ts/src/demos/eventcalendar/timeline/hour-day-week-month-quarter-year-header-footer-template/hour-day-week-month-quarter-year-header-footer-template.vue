@@ -8,7 +8,7 @@ setOptions({
   // theme
 })
 
-const hourView: MbscEventcalendarView = {
+const myHourView: MbscEventcalendarView = {
   timeline: {
     type: 'day'
   }
@@ -101,7 +101,7 @@ const hourlyEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const dayView: MbscEventcalendarView = {
+const myDayView: MbscEventcalendarView = {
   timeline: {
     type: 'month'
   }
@@ -194,7 +194,7 @@ const dailyEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const weekView: MbscEventcalendarView = {
+const myWeekView: MbscEventcalendarView = {
   timeline: {
     type: 'week',
     resolutionHorizontal: 'week',
@@ -289,7 +289,7 @@ const weeklyEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const monthView: MbscEventcalendarView = {
+const myMonthView: MbscEventcalendarView = {
   timeline: {
     type: 'month',
     resolutionHorizontal: 'month',
@@ -384,7 +384,7 @@ const monthlyEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const quarterView: MbscEventcalendarView = {
+const myQuarterView: MbscEventcalendarView = {
   timeline: {
     type: 'year',
     resolutionHorizontal: 'quarter',
@@ -479,7 +479,7 @@ const quarterEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const yearView: MbscEventcalendarView = {
+const myYearView: MbscEventcalendarView = {
   timeline: {
     type: 'year',
     resolutionHorizontal: 'year',
@@ -574,7 +574,7 @@ const yearlyEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const myResources = ref<MbscResource[]>([
+const myResources: MbscResource[] = [
   {
     id: 1,
     name: 'Resource A',
@@ -615,22 +615,22 @@ const myResources = ref<MbscResource[]>([
     name: 'Resource H',
     color: '#34c8e0'
   }
-])
+]
 
 function getOccuppancy(events: any) {
   let occuppancy = 0
   if (events) {
-    var resourceIds = []
-    var nr = 0
+    let resourceIds: number[] = []
+    let nr = 0
     for (const event of events) {
       if (resourceIds.indexOf(event.resource) < 0) {
         nr++
         resourceIds = [...resourceIds, event.resource]
       }
     }
-    occuppancy = ((nr * 100) / this.myResources.length).toFixed(0)
+    occuppancy = (nr * 100) / myResources.length
   }
-  return occuppancy
+  return occuppancy.toFixed(0)
 }
 
 function getEventOccurrence(args: any) {
@@ -713,7 +713,7 @@ function getEventOccurrence(args: any) {
               'md-date-header md-date-header-week md-date-header-events-' + getEventOccurrence(day)
             "
           >
-            {{ formatDate('MMM DD', day.date) }}
+            {{ formatDate('MMM DD', day.startDate) + ' - ' + formatDate('MMM DD', day.endDate) }}
           </div>
         </template>
         <template #weekFooter="day">
@@ -735,7 +735,7 @@ function getEventOccurrence(args: any) {
               'md-date-header md-date-header-month md-date-header-events-' + getEventOccurrence(day)
             "
           >
-            {{ formatDate('MMM', day.startDate) + ' - ' + formatDate('MMM', day.endDate) }}
+            {{ formatDate('MMM', day.date) }}
           </div>
         </template>
         <template #monthFooter="day">

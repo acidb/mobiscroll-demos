@@ -33,10 +33,10 @@ setOptions({
         <option value="Lotus">Lotus</option>
       </MbscDropdown>
       <MbscSwitch label="Switch" :defaultChecked="true" />
-      <MbscCheckbox v-model="checkbox1" label="Checkbox" :defaultChecked="true" />
+      <MbscCheckbox label="Checkbox" :defaultChecked="true" />
       <MbscRadioGroup name="rad">
-        <MbscRadio v-model="radio1" value="1" label="Radio 1" :defaultChecked="true" />
-        <MbscRadio v-model="radio2" value="2" label="Radio 2" />
+        <MbscRadio value="1" label="Radio 1" :defaultChecked="true" />
+        <MbscRadio value="2" label="Radio 2" />
       </MbscRadioGroup>
       <MbscStepper label="Stepper" />
       <div class="mbsc-button-group-block">

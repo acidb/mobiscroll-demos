@@ -91,12 +91,7 @@ const isToastOpen = ref<boolean>(false)
 const calElm = ref<any>()
 
 function getSelectedEventTitles(events: MbscCalendarEvent[]) {
-  let titles = []
-
-  for (const event of events) {
-    titles = [...titles, event.title]
-  }
-  return titles
+  return events.map((e) => e.title || '')
 }
 
 function refreshSelectedEvents(events: MbscCalendarEvent[]) {
@@ -107,13 +102,13 @@ function refreshSelectedEvents(events: MbscCalendarEvent[]) {
 function deleteSelectedEvents() {
   isConfirmOpen.value = true
   confirmMessage.value = getSelectedEventTitles(mySelectedEvents.value).join(', ')
-  confirmCallback.value = function (result) {
+  confirmCallback.value = (result: boolean) => {
     if (result) {
       let eventsToUpdate = [...myEvents.value]
 
       for (const event of mySelectedEvents.value) {
         if (event.recurring) {
-          const origEvent = event.original
+          const origEvent = event.original!
           let exc: any = origEvent.recurringException || []
           exc = [...exc, event.start]
           origEvent.recurringException = exc
@@ -247,7 +242,7 @@ onMounted(() => {
     'jsonp'
   )
 
-  document.querySelector('.md-bulk-operations').addEventListener('keydown', (ev: any) => {
+  document.querySelector('.md-bulk-operations')!.addEventListener('keydown', (ev: any) => {
     if (!isConfirmOpen.value && (ev.keyCode === 8 || ev.keyCode === 46)) {
       deleteSelectedEvents()
     }
@@ -296,8 +291,8 @@ onMounted(() => {
           </div>
           <div class="mbsc-form-group-title">Currently selected</div>
           <div class="mbsc-padding md-selected-event-list">
-            <ul v-for="title in eventTitles">
-              <li>{{ title }}</li>
+            <ul>
+              <li v-for="title in eventTitles" :key="title">{{ title }}</li>
             </ul>
           </div>
         </div>

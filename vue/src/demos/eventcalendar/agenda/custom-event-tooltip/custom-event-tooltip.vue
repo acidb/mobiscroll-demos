@@ -312,7 +312,7 @@ function handleToastClose() {
   isToastOpen.value = false
 }
 
-function handleEventHoverIn(args, inst) {
+function handleEventHoverIn(args) {
   const event = args.event
   const newTime =
     formatDate('hh:mm A', new Date(event.start)) +
@@ -364,9 +364,9 @@ function handleEventClick() {
     :clickToCreate="false"
     :dragToCreate="false"
     :showEventTooltip="false"
-    @event-hover-in="handleEventHoverIn($event)"
-    @event-hover-out="handleEventHoverout($event)"
-    @event-click-in="handleEventClick()"
+    @event-hover-in="handleEventHoverIn"
+    @event-hover-out="handleEventHoverout"
+    @event-click-in="handleEventClick"
   />
   <MbscPopup
     className="md-tooltip"

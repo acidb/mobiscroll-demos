@@ -2,15 +2,13 @@
 import { ref, onMounted } from 'vue'
 import {
   MbscEventcalendar,
-  MbscEventcalendarView,
-  MbscResource,
   setOptions,
   getJson,
   MbscDropdown,
   MbscPage,
   locale
 } from '@mobiscroll/vue'
-import type { MbscCalendarEvent } from '@mobiscroll/vue'
+import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 
 setOptions({
   // theme
@@ -93,7 +91,7 @@ const languages = ref<any[]>([
 ])
 
 const localeStr = ref<string>('en')
-const localeAll: Object = locale
+const localeAll = locale
 
 onMounted(() => {
   getJson(

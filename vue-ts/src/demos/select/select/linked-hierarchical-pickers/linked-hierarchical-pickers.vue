@@ -7,13 +7,13 @@ setOptions({
   // theme
 })
 
-const regions = [
+const regions: any = [
   { value: 'reg-1', text: 'Northeast' },
   { value: 'reg-2', text: 'Midwest' },
   { value: 'reg-3', text: 'South' },
   { value: 'reg-4', text: 'West' }
 ]
-const divisions = {
+const divisions: any = {
   'reg-1': [
     { value: 'div-1', text: 'New England' },
     { value: 'div-2', text: 'Mid-Atlantic' }
@@ -32,7 +32,7 @@ const divisions = {
     { value: 'div-9', text: 'Pacific' }
   ]
 }
-const subdivisions = {
+const subdivisions: any = {
   'div-1': [
     { value: 'sub-1', text: 'Connecticut' },
     { value: 'sub-2', text: 'Maine' },

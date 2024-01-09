@@ -50,6 +50,15 @@ const myView: MbscEventcalendarView = {
   }
 }
 
+function myDefaultEvent() {
+  return {
+    title: 'New class',
+    prof: 'Stacia Jaden',
+    class: 'Junior',
+    color: '#ff0000'
+  }
+}
+
 onMounted(() => {
   getJson(
     'https://trial.mobiscroll.com/timetable-events/',

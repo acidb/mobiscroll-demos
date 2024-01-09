@@ -1861,9 +1861,12 @@ const views = [
   }
 ]
 
-const shifts = ref<MbscCalendarEvent[]>(allShifts)
 const mySlots = ref(allSlots)
+
+const date: string = ''
 const selectedView = ref<string>('week')
+const shifts = ref<MbscCalendarEvent[]>(allShifts)
+const shiftList: number[] = []
 const shiftTimes = ref([
   {
     id: 1,
@@ -1908,10 +1911,10 @@ const myView = ref<MbscEventcalendarView>({
 
 function getEmployeeName(event: MbscCalendarEvent) {
   for (var i = 0; i < myResources.length; ++i) {
-    for (var j = 0; j < myResources[i].children.length; ++j) {
-      var employee = myResources[i].children[j]
+    for (var j = 0; j < myResources[i].children!.length; ++j) {
+      var employee = myResources[i].children![j]
       if (employee.id === event.resource) {
-        return employee.name.substr(0, employee.name.indexOf(' '))
+        return employee.name!.substring(0, employee.name!.indexOf(' '))
       }
     }
   }
@@ -1927,12 +1930,12 @@ function formatMyDate(date: any) {
   return formatDate('YYYY-MM-DD', new Date(date))
 }
 
-function getShiftsNrs(date: any, slotId: number) {
-  const shiftList = []
+function getShiftsNrs(date: string, slotId: number) {
+  const shiftList: number[] = []
 
   for (const shift of shifts.value) {
     // get slot id from resource id
-    const resourceNr = +shift.resource.toString().charAt(0)
+    const resourceNr = +shift.resource!.toString().charAt(0)
     if (shift.slot === slotId && date === formatMyDate(shift.start)) {
       shiftList[resourceNr - 1] = (shiftList[resourceNr - 1] || 0) + 1
     }
@@ -1964,10 +1967,10 @@ function checkboxChange(ev: any) {
 
 function isDouble(event: any, inst: any) {
   const date = event.start.setHours(0)
-  const events = inst.getEvents(date)
+  const events: MbscCalendarEvent[] = inst.getEvents(date)
   const ev = events.find((e) => {
     return (
-      new Date(e.start).setHours(0) === date &&
+      new Date(e.start as string).setHours(0) === date &&
       e.resource === event.resource &&
       e.slot === event.slot
     )

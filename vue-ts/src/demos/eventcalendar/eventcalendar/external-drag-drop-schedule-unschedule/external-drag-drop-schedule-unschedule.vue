@@ -57,8 +57,8 @@ const myTasks = ref<MbscCalendarEvent[]>([
 ])
 
 const dragElements = ref([])
-const myEvents = ref([])
-const toastMessage = ref(null)
+const myEvents = ref<MbscCalendarEvent[]>([])
+const toastMessage = ref('')
 const isToastOpen = ref(false)
 
 function getHours(event: any) {
@@ -116,14 +116,10 @@ onMounted(() => {
         />
       </div>
       <div ref="dropCont" class="mbsc-col-sm-3 external-drop-cont">
-        <MbscDropcontainer
-          :element="$refs.dropCont"
-          :style="{ background: contBg }"
-          @item-drop="handleItemDrop($event)"
-        >
+        <MbscDropcontainer :element="$refs.dropCont" @item-drop="handleItemDrop">
           <div class="mbsc-form-group-title">Available tasks</div>
 
-          <div v-for="(task, i) in myTasks">
+          <div v-for="(task, i) in myTasks" :key="task.id">
             <div ref="dragElements" class="external-drop-task" :style="{ background: task.color }">
               <div>{{ task.title }}</div>
               <div>{{ getHours(task) }}</div>
@@ -134,7 +130,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" :close="handleToastClose" />
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>
 
 <style>

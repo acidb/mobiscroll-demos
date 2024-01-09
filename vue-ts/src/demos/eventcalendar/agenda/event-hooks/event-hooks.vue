@@ -44,7 +44,7 @@ const dragData2: MbscCalendarEvent = {
   color: '#ddfcf7'
 }
 
-function handleDestroy(event) {
+function handleDestroy(event: any) {
   // Logic for destroying the event calendar
 }
 function handleEventClick(event: MbscEventClickEvent) {
@@ -62,7 +62,7 @@ function handleEventHoverOut(event: MbscEventClickEvent) {
 function handleEventRightClick(event: MbscEventClickEvent) {
   // Logic for event right click
 }
-function handleInit(event) {
+function handleInit(event: any) {
   // Logic running on component init
 }
 function handlePageChange(event: MbscPageChangeEvent) {

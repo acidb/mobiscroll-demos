@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 
@@ -413,7 +412,7 @@ const myEvents: MbscCalendarEvent = [
   }
 ]
 
-const myResources: MbscResource = [
+const myResources: MbscResource[] = [
   {
     id: 1,
     name: 'Unassigned',
@@ -467,7 +466,7 @@ const myResources: MbscResource = [
   }
 ]
 
-const min: Date = 'dyndatetime(y,m,d,6)'
+const min = 'dyndatetime(y,m,d,6)'
 
 const myView: MbscEventcalendarView = {
   timeline: {

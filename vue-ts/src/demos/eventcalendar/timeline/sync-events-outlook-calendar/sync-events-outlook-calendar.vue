@@ -76,7 +76,7 @@ function toggleCalendars(ev: any, calendarId: string) {
     calendarIds.value = [...calendarIds.value, calendarId]
     outlookCalendarSync
       .getEvents([calendarId], startDate.value, endDate.value)
-      .then((events) => {
+      .then((events: MbscCalendarEvent[]) => {
         const newResource = calendarData.value[calendarId]
         isLoading.value = false
         myResources.value = [
@@ -183,14 +183,14 @@ function handleEventUpdate(args: MbscEventUpdateEvent) {
           .catch((error: any) => {
             myEvents.value = [
               ...myEvents.value.filter((item: any) => item.id !== event.id),
-              args.oldEvent
+              args.oldEvent!
             ]
             onError(error)
           })
       } else {
         myEvents.value = [
           ...myEvents.value.filter((item: any) => item.id !== event.id),
-          args.oldEvent
+          args.oldEvent!
         ]
       }
     }
@@ -249,10 +249,10 @@ onMounted(() => {
       .then((calendars) => {
         const newCalendarIds = []
         const newResources = []
-        const calData = {}
+        const calData: any = {}
         const readonlyCals = []
 
-        calendars.sort((c) => (c.primary ? -1 : 1))
+        calendars.sort((c: any) => (c.primary ? -1 : 1))
 
         for (const c of calendars) {
           newCalendarIds.push(c.id)
@@ -281,7 +281,7 @@ onMounted(() => {
 
         return outlookCalendarSync.getEvents(newCalendarIds, startDate.value, endDate.value)
       })
-      .then((events) => {
+      .then((events: MbscCalendarEvent[]) => {
         events.forEach((event) => {
           event.resource = event.outlookCalendarId
         })

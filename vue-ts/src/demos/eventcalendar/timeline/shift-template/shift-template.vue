@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { MbscEventcalendar, setOptions, formatDate /* localeImport */ } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
@@ -188,7 +188,7 @@ const myView: MbscEventcalendarView = {
 
 function handleEventUpdate(args: MbscEventUpdateEvent) {
   const event = args.event
-  const index = shifts.findIndex((x) => x.id === event.id)
+  const index = shifts.value.findIndex((x) => x.id === event.id)
   const newShifts = [...shifts.value]
 
   newShifts.splice(index, 1, {
@@ -200,7 +200,7 @@ function handleEventUpdate(args: MbscEventUpdateEvent) {
 }
 
 function myDefaultEvent(ev: MbscCalendarEvent) {
-  const d = ev.start
+  const d = ev.start as Date
   const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), ev.slot === 1 ? 7 : 12)
   const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), ev.slot === 1 ? 13 : 18)
 
@@ -223,8 +223,8 @@ function myDefaultEvent(ev: MbscCalendarEvent) {
     :clickToCreate="true"
     :dragToMove="true"
     :dragToResize="false"
+    :extendDefaultEvent="myDefaultEvent"
     @event-update="handleEventUpdate"
-    extendDefaultEvent="myDefaultEvent"
   >
     <template #slot="args">
       <div

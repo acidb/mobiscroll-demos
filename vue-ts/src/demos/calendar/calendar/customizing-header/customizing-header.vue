@@ -16,8 +16,7 @@ setOptions({
   // theme
 })
 
-const startInput = ref<any>(null)
-const endInput = ref<any>(null)
+const myCalendarType = ref('week')
 </script>
 
 <template>

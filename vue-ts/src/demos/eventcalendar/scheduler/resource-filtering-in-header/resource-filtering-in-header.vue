@@ -4,7 +4,6 @@ import {
   MbscEventcalendar,
   getJson,
   MbscToast,
-  MbscCalendarToday,
   MbscCalendarNav,
   MbscCalendarPrev,
   MbscCalendarNext,
@@ -53,7 +52,7 @@ function filter(value: number) {
   filterEvents()
   toastMessage.value =
     (selected.value.find((item) => +item === value) ? 'Showing ' : 'Hiding ') +
-    document.querySelector('.md-header-filter-name-' + value).textContent +
+    document.querySelector('.md-header-filter-name-' + value)!.textContent +
     ' events'
   isToastOpen.value = true
 }

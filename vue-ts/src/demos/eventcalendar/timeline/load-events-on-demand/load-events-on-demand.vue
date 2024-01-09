@@ -1,7 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { MbscEventcalendar, setOptions, getJson /* localeImport */ } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
+import { ref } from 'vue'
+import {
+  MbscEventcalendar,
+  MbscToast,
+  setOptions,
+  getJson /* localeImport */
+} from '@mobiscroll/vue'
+import type {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscPageLoadingEvent,
+  MbscResource
+} from '@mobiscroll/vue'
 
 setOptions({
   // locale,
@@ -13,8 +23,7 @@ const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 
 const myView: MbscEventcalendarView = {
-  calendar: { type: 'month' },
-  agenda: { type: 'month' }
+  timeline: { type: 'day' }
 }
 
 const myResources = ref<MbscResource[]>([
@@ -45,9 +54,9 @@ const myResources = ref<MbscResource[]>([
   }
 ])
 
-function handlePageLoading(args) {
-  const year = args.month.getFullYear()
-  const month = args.month.getMonth()
+function handlePageLoading(args: MbscPageLoadingEvent) {
+  const year = args.month!.getFullYear()
+  const month = args.month!.getMonth()
   const day = args.firstDay.getDate()
 
   getJson(
@@ -71,6 +80,7 @@ function handleToastClose() {
     :drag="drag"
     :view="myView"
     :data="myEvents"
+    :resources="myResources"
     @page-loading="handlePageLoading"
   />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />

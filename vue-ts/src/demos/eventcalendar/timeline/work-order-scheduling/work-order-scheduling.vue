@@ -274,7 +274,7 @@ const popupEventBill = ref<number>(0)
 const popupEventNotes = ref<string>('')
 const popupEventDates = ref<any>(null)
 const calendarSelectedDate = ref<any>(new Date())
-const tempEvent = ref<MbscCalendarEvent>(null)
+const tempEvent = ref<MbscCalendarEvent | null>(null)
 const isEdit = ref<boolean>(false)
 const popupHeaderText = ref<string>('')
 const popupAnchor = ref<any>(null)
@@ -305,7 +305,7 @@ function setCheckboxes(resource: any) {
   for (const resources of myResources.value) {
     if (resources.children) {
       for (const res of resources.children) {
-        for (const r of res.children) {
+        for (const r of res.children!) {
           r.checked = resource.indexOf(r.id) !== -1
         }
       }
@@ -314,11 +314,11 @@ function setCheckboxes(resource: any) {
 }
 function getCheckedResources() {
   const checkedResources = []
-  const startResource = tempEvent.value.resource
+  const startResource = tempEvent.value!.resource
   for (const resources of myResources.value) {
     if (resources.children) {
       for (const res of resources.children) {
-        for (const r of res.children) {
+        for (const r of res.children!) {
           if (r.checked) {
             checkedResources.push(r.id)
           }
@@ -327,12 +327,12 @@ function getCheckedResources() {
     }
   }
   return checkedResources.findIndex((e) => e === startResource) === -1
-    ? [...checkedResources, tempEvent.value.resource]
+    ? [...checkedResources, tempEvent.value!.resource as string]
     : checkedResources
 }
 
 function loadPopupForm(event: MbscCalendarEvent) {
-  popupEventTitle.value = event.title
+  popupEventTitle.value = event.title || ''
   popupEventLocation.value = event.location
   popupEventBill.value = +event.cost || 0
   popupEventNotes.value = event.notes
@@ -341,7 +341,7 @@ function loadPopupForm(event: MbscCalendarEvent) {
 }
 
 function saveEvent() {
-  const tempEv = tempEvent.value
+  const tempEv = tempEvent.value!
   tempEv.title = popupEventTitle.value
   tempEv.location = popupEventLocation.value
   tempEv.cost = +popupEventBill.value || 0
@@ -356,7 +356,7 @@ function saveEvent() {
     // ...
   } else {
     // add the new event to the list
-    myEvents.value = [...myEvents.value, tempEvent.value]
+    myEvents.value = [...myEvents.value, tempEvent.value!]
     // here you can add the event to your storage as well
     // ...
   }
@@ -451,7 +451,7 @@ function handlePopupClose() {
 }
 
 function handleDelete() {
-  deleteEvent(tempEvent.value)
+  deleteEvent(tempEvent.value!)
   isPopupOpen.value = false
 }
 

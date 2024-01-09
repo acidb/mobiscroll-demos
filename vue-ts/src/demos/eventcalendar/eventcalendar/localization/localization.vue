@@ -56,7 +56,7 @@ const languages = ref<any[]>([
 ])
 
 const localeStr = ref<string>('en')
-const localeAll: Object = locale
+const localeAll = locale
 
 onMounted(() => {
   getJson(

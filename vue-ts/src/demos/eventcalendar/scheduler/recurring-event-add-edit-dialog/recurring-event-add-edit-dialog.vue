@@ -25,7 +25,8 @@ import type {
   MbscEventCreateEvent,
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
-  MbscSelectedDateChangeEvent
+  MbscSelectedDateChangeEvent,
+  MbscRecurrenceRule
 } from '@mobiscroll/vue'
 
 setOptions({
@@ -70,7 +71,7 @@ const days = [
     checked: false
   }
 ]
-const ordinalList = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth' }
+const ordinalList: { [key: number]: string } = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth' }
 const popupEventTitle = ref<string>('')
 const popupEventDescription = ref<string>('')
 const popupEventAllDay = ref<boolean>(true)
@@ -169,7 +170,7 @@ const responsivePopup = {
 }
 const weekDays = ref<string[]>(['SU'])
 const showCustomRepeat = ref<boolean>(false)
-const repeatType = ref<string>('daily')
+const repeatType = ref<'daily' | 'weekly' | 'monthly' | 'yearly'>('daily')
 const repeatNr = ref<number>(1)
 const monthlyDays = ref<number[]>([1])
 const monthlyDay = ref<number>(1)
@@ -393,7 +394,7 @@ function loadPopupForm(event: any) {
 }
 
 function getCustomRule() {
-  let recurringRule
+  let recurringRule: MbscRecurrenceRule = {}
   const d = editFromPopup.value ? popupEventDates.value[0] : new Date(tempEvent.value.start)
   const weekday = d.getDay()
   const monthday = d.getDate()
@@ -648,7 +649,7 @@ function updateCustomForm() {
     selectedRepeat.value === 'custom' || selectedRepeat.value === 'custom-value'
 }
 
-// popuplate data for months
+// populate data for months
 function populateMonthDays(month: number, type: string) {
   const day30 = [2, 4, 6, 9, 11]
   const newValues = []

@@ -24,7 +24,7 @@ const dayView: MbscEventcalendarView = {
 }
 
 function handleSelectedDateChange(event: MbscSelectedDateChangeEvent) {
-  mySelectedDate.value = event.date
+  mySelectedDate.value = event.date as Date
 }
 
 onMounted(() => {

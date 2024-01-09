@@ -125,7 +125,7 @@ function getActivity(day: any) {
               class="wedge"
               :style="{
                 transform: getActivity(day)
-                  ? getTransform(getDeg(getActivity(day).move).rotate1)
+                  ? getTransform(getDeg(getActivity(day)!.move).rotate1)
                   : ''
               }"
             ></div>
@@ -135,7 +135,7 @@ function getActivity(day: any) {
               class="wedge"
               :style="{
                 transform: getActivity(day)
-                  ? getTransform(getDeg(getActivity(day).move).rotate2)
+                  ? getTransform(getDeg(getActivity(day)!.move).rotate2)
                   : ''
               }"
             ></div>
@@ -143,7 +143,7 @@ function getActivity(day: any) {
           <div class="marker start"></div>
           <div
             class="marker end"
-            :style="{ transform: getActivity(day) ? getTransform(getActivity(day).move) : '' }"
+            :style="{ transform: getActivity(day) ? getTransform(getActivity(day)!.move) : '' }"
           ></div>
         </div>
         <div :class="{ 'dial exercise ': getActivity(day) }">
@@ -156,7 +156,7 @@ function getActivity(day: any) {
               class="wedge"
               :style="{
                 transform: getActivity(day)
-                  ? getTransform(getDeg(getActivity(day).exercise).rotate1)
+                  ? getTransform(getDeg(getActivity(day)!.exercise).rotate1)
                   : ''
               }"
             ></div>
@@ -166,7 +166,7 @@ function getActivity(day: any) {
               class="wedge"
               :style="{
                 transform: getActivity(day)
-                  ? getTransform(getDeg(getActivity(day).exercise).rotate2)
+                  ? getTransform(getDeg(getActivity(day)!.exercise).rotate2)
                   : ''
               }"
             ></div>
@@ -174,7 +174,7 @@ function getActivity(day: any) {
           <div class="marker start"></div>
           <div
             class="marker end"
-            :style="{ transform: getActivity(day) ? getTransform(getActivity(day).exercise) : '' }"
+            :style="{ transform: getActivity(day) ? getTransform(getActivity(day)!.exercise) : '' }"
           ></div>
         </div>
         <div :class="{ 'dial stand ': getActivity(day) }">
@@ -187,7 +187,7 @@ function getActivity(day: any) {
               class="wedge"
               :style="{
                 transform: getActivity(day)
-                  ? getTransform(getDeg(getActivity(day).stand).rotate1)
+                  ? getTransform(getDeg(getActivity(day)!.stand).rotate1)
                   : ''
               }"
             ></div>
@@ -197,7 +197,7 @@ function getActivity(day: any) {
               class="wedge"
               :style="{
                 transform: getActivity(day)
-                  ? getTransform(getDeg(getActivity(day).stand).rotate2)
+                  ? getTransform(getDeg(getActivity(day)!.stand).rotate2)
                   : ''
               }"
             ></div>
@@ -205,7 +205,7 @@ function getActivity(day: any) {
           <div class="marker start"></div>
           <div
             class="marker end"
-            :style="{ transform: getActivity(day) ? getTransform(getActivity(day).stand) : '' }"
+            :style="{ transform: getActivity(day) ? getTransform(getActivity(day)!.stand) : '' }"
           ></div>
         </div>
       </div>

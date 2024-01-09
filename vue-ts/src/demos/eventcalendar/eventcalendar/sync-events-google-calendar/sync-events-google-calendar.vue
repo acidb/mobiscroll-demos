@@ -153,12 +153,12 @@ function handleEventUpdate(args: MbscEventUpdateEvent) {
             myEvents.value = myEvents.value.filter((item) => item.id !== event.id)
             myEvents.value = [
               ...myEvents.value.filter((item) => item.id !== event.id),
-              args.oldEvent
+              args.oldEvent!
             ]
             onError(error)
           })
       } else {
-        myEvents.value = [...myEvents.value.filter((item) => item.id !== event.id), args.oldEvent]
+        myEvents.value = [...myEvents.value.filter((item) => item.id !== event.id), args.oldEvent!]
       }
     }
   }
@@ -205,7 +205,7 @@ onMounted(() => {
       .then((calendars: any) => {
         calendars.sort((c: any) => (c.primary ? -1 : 1))
 
-        const calData = {}
+        const calData: any = {}
         const primaryCalId = calendars[0].id
 
         for (const c of calendars) {

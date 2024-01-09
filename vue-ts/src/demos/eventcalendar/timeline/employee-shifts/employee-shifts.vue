@@ -16,7 +16,8 @@ import type {
   MbscEventcalendarView,
   MbscResource,
   MbscEventClickEvent,
-  MbscEventDeletedEvent
+  MbscEventDeletedEvent,
+  MbscEventCreatedEvent
 } from '@mobiscroll/vue'
 
 setOptions({
@@ -285,7 +286,7 @@ const responsivePopup = {
   }
 }
 
-const tempShift = ref<MbscCalendarEvent>(null)
+const tempShift = ref<MbscCalendarEvent | null>(null)
 const startInput = ref<any>(null)
 const endInput = ref<any>(null)
 const minTime = ref<string>('')
@@ -303,17 +304,17 @@ function saveShift() {
   const start = new Date(shiftDate.value[0])
   const end = new Date(shiftDate.value[1])
   const newEvent: MbscCalendarEvent = {
-    id: tempShift.value.id,
+    id: tempShift.value!.id,
     title: formatDate('HH:mm', start) + ' - ' + formatDate('HH:mm', end),
     notes: shiftNotes.value,
     start: start,
     end: end,
-    resource: tempShift.value.resource,
-    slot: tempShift.value.slot
+    resource: tempShift.value!.resource,
+    slot: tempShift.value!.slot
   }
   if (isEdit.value) {
     // update the event in the list
-    const index = shifts.value.findIndex((x) => x.id === tempShift.value.id)
+    const index = shifts.value.findIndex((x) => x.id === tempShift.value!.id)
     const newEventList = [...shifts.value]
 
     newEventList.splice(index, 1, newEvent)
@@ -350,7 +351,7 @@ function notesChange(ev: any) {
 }
 
 function handleDelete() {
-  deleteEvent(tempShift.value)
+  deleteEvent(tempShift.value!)
   isPopupOpen.value = false
 }
 
@@ -376,11 +377,11 @@ function handleEventClick(args: MbscEventClickEvent) {
   ]
   headerText.value =
     '<div>Edit ' +
-    resource.name +
+    resource!.name +
     '\'s hours</div><div class="employee-shifts-day">' +
     formatDate('DDDD', new Date(event.start)) +
     ' ' +
-    slot.name +
+    slot!.name +
     ',' +
     formatDate('DD MMMM YYYY', new Date(event.start)) +
     '</div>'
@@ -393,7 +394,7 @@ function handleEventClick(args: MbscEventClickEvent) {
   isPopupOpen.value = true
 }
 
-function handleEventCreated(args) {
+function handleEventCreated(args: MbscEventCreatedEvent) {
   const event = args.event
   const slot = mySlots.find((s) => {
     return s.id === event.slot
@@ -411,11 +412,11 @@ function handleEventCreated(args) {
   ]
   headerText.value =
     '<div>New shift</div><div class="employee-shifts-day">' +
-    formatDate('DDDD', new Date(event.start)) +
+    formatDate('DDDD', new Date(event.start as string)) +
     ' ' +
-    slot.name +
+    slot!.name +
     ',' +
-    formatDate('DD MMMM YYYY', new Date(event.start)) +
+    formatDate('DD MMMM YYYY', new Date(event.start as string)) +
     '</div>'
   isEdit.value = false
   minTime.value = event.slot === 1 ? '07:00' : '12:00'

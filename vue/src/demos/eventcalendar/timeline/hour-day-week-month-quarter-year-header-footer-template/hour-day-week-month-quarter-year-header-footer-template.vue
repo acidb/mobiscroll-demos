@@ -7,7 +7,7 @@ setOptions({
   // theme
 })
 
-const hourView = {
+const myHourView = {
   timeline: {
     type: 'day'
   }
@@ -100,7 +100,7 @@ const hourlyEvents = ref([
   }
 ])
 
-const dayView = {
+const myDayView = {
   timeline: {
     type: 'month'
   }
@@ -193,7 +193,7 @@ const dailyEvents = ref([
   }
 ])
 
-const weekView = {
+const myWeekView = {
   timeline: {
     type: 'week',
     resolutionHorizontal: 'week',
@@ -288,7 +288,7 @@ const weeklyEvents = ref([
   }
 ])
 
-const monthView = {
+const myMonthView = {
   timeline: {
     type: 'month',
     resolutionHorizontal: 'month',
@@ -383,7 +383,7 @@ const monthlyEvents = ref([
   }
 ])
 
-const quarterView = {
+const myQuarterView = {
   timeline: {
     type: 'year',
     resolutionHorizontal: 'quarter',
@@ -478,7 +478,7 @@ const quarterEvents = ref([
   }
 ])
 
-const yearView = {
+const myYearView = {
   timeline: {
     type: 'year',
     resolutionHorizontal: 'year',
@@ -573,7 +573,7 @@ const yearlyEvents = ref([
   }
 ])
 
-const myResources = ref([
+const myResources = [
   {
     id: 1,
     name: 'Resource A',
@@ -614,22 +614,22 @@ const myResources = ref([
     name: 'Resource H',
     color: '#34c8e0'
   }
-])
+]
 
 function getOccuppancy(events) {
   let occuppancy = 0
   if (events) {
-    var resourceIds = []
-    var nr = 0
+    let resourceIds = []
+    let nr = 0
     for (const event of events) {
       if (resourceIds.indexOf(event.resource) < 0) {
         nr++
         resourceIds = [...resourceIds, event.resource]
       }
     }
-    occuppancy = ((nr * 100) / this.myResources.length).toFixed(0)
+    occuppancy = (nr * 100) / myResources.length
   }
-  return occuppancy
+  return occuppancy.toFixed(0)
 }
 
 function getEventOccurrence(args) {

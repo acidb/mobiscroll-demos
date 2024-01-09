@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import {
   MbscEventcalendar,
   setOptions,
   getJson,
   MbscToast /* localeImport */
 } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
+import type {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscPageLoadingEvent
+} from '@mobiscroll/vue'
 
 setOptions({
   // locale,
@@ -22,9 +26,9 @@ const myView: MbscEventcalendarView = {
   agenda: { type: 'month' }
 }
 
-function handlePageLoading(args) {
-  const year = args.month.getFullYear()
-  const month = args.month.getMonth()
+function handlePageLoading(args: MbscPageLoadingEvent) {
+  const year = args.month!.getFullYear()
+  const month = args.month!.getMonth()
 
   getJson(
     'https://trial.mobiscroll.com/monthlyevents/?year=' + year + '&month=' + month + '&vers=5',

@@ -9,7 +9,8 @@ import {
   MbscPage,
   formatDate,
   options,
-  setOptions /* localeImport */
+  setOptions /* localeImport */,
+  type MbscSelectChangeEvent
 } from '@mobiscroll/vue'
 
 setOptions({
@@ -103,7 +104,7 @@ const myData = [
   }
 ]
 
-function handleSelectChange(event) {
+function handleSelectChange(event: MbscSelectChangeEvent) {
   const s = event.value
 
   if (s === 'custom') {
@@ -148,7 +149,7 @@ function handleInputClick() {
   isPopupOpen.value = true
 }
 
-function changeInputValue(start, end) {
+function changeInputValue(start: string, end: string) {
   const locale = options.locale || {}
   const dateFormat = locale.dateFormat || 'DD/MM/YYYY'
 

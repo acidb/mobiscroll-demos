@@ -528,7 +528,7 @@ function handleEventDragStart(args: MbscEventDragEvent) {
   jets.forEach(function (group) {
     group.children.forEach(function (jet) {
       if (unavailable[jet.id]) {
-        inv.resource.push(jet.id)
+        ;(inv.resource as number[]).push(jet.id)
       }
     })
   })

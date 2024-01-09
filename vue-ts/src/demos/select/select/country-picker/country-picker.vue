@@ -7,7 +7,7 @@ setOptions({
   // theme
 })
 
-const myData = ref([])
+const myData = ref<any>([])
 
 onMounted(() => {
   getJson('https://trial.mobiscroll.com/content/countries.json', (resp: any) => {

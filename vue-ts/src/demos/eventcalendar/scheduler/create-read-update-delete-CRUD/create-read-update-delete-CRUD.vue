@@ -76,8 +76,8 @@ const myView: MbscEventcalendarView = {
 const isEdit = ref<boolean>(false)
 const popupEventColor = ref<string>('')
 const mySelectedDate = ref<Date>()
-let addedEvent: MbscCalendarEvent = null
-let editedEvent: MbscCalendarEvent = null
+let addedEvent: MbscCalendarEvent | null = null
+let editedEvent: MbscCalendarEvent | null = null
 
 // Popup
 const myResponsive: any = {
@@ -160,14 +160,14 @@ const colorResponsive: any = {
 const isSnackbarOpen = ref<boolean>(false)
 const snackbarButton: any = {
   action: () => {
-    myEvents.value = [...myEvents.value, editedEvent]
+    myEvents.value = [...myEvents.value, editedEvent!]
   },
   text: 'Undo'
 }
 
 // Fills the popup with the event's data
 function fillPopup(event: MbscCalendarEvent) {
-  popupEventTitle.value = event.title
+  popupEventTitle.value = event.title || ''
   popupEventDescription.value = event.description
   popupEventAllDay.value = event.allDay || false
   popupEventDates.value = [event.start, event.end]
@@ -190,7 +190,7 @@ function createAddPopup(event: MbscCalendarEvent, target: any) {
       keyCode: 'enter',
       handler: () => {
         const newEvent: MbscCalendarEvent = {
-          id: addedEvent.id,
+          id: addedEvent!.id,
           title: popupEventTitle.value,
           description: popupEventDescription.value,
           allDay: popupEventAllDay.value,
@@ -228,7 +228,7 @@ function createEditPopup(event: MbscCalendarEvent, target: any) {
       text: 'Save',
       keyCode: 'enter',
       handler: () => {
-        const updatedEvent: MbscCalendarEvent = editedEvent
+        const updatedEvent: MbscCalendarEvent = editedEvent!
         updatedEvent.title = popupEventTitle.value
         updatedEvent.description = popupEventDescription.value
         updatedEvent.allDay = popupEventAllDay.value
@@ -272,7 +272,7 @@ function handleEventDeleted(args: MbscEventDeletedEvent) {
 }
 
 function handleDeleteClick() {
-  deleteEvent(editedEvent)
+  deleteEvent(editedEvent!)
 }
 
 function handlePopupClose() {
@@ -290,7 +290,7 @@ function openColorPicker(event: MbscCalendarEvent) {
   isColorPickerOpen.value = true
 }
 
-function handleColorClick(event) {
+function handleColorClick(event: any) {
   const color = event.currentTarget.getAttribute('data-value')
   tempColor.value = color
 
@@ -384,13 +384,13 @@ function handleSnackbarClose() {
     :isOpen="isColorPickerOpen"
   >
     <div class="crud-color-row">
-      <div v-for="(color, i) in colors" :key="color.value">
+      <div v-for="(color, i) in colors" :key="color">
         <div
           v-if="i < 5"
           class="crud-color-c"
           :class="{ selected: tempColor === color }"
           :data-value="color"
-          @click="handleColorClick($event)"
+          @click="handleColorClick"
         >
           <div
             class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check"
@@ -400,13 +400,13 @@ function handleSnackbarClose() {
       </div>
     </div>
     <div class="crud-color-row">
-      <div v-for="(color, i) in colors" :key="color.value">
+      <div v-for="(color, i) in colors" :key="color">
         <div
           v-if="i >= 5"
           class="crud-color-c"
           :class="{ selected: tempColor === color }"
           :data-value="color"
-          @click="handleColorClick($event)"
+          @click="handleColorClick"
         >
           <div
             class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check"

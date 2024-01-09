@@ -283,10 +283,10 @@ function mouseLeave() {
 }
 
 function setStatus() {
-  const index = appointments.value.findIndex((item) => item.id === currentEvent.value.id)
+  const index = appointments.value.findIndex((item) => item.id === currentEvent.value!.id)
   appointments.value[index].confirmed = !appointments.value[index].confirmed
   tooltipOpen.value = false
-  toastMessage.value = 'Appointment ' + (currentEvent.value.confirmed ? 'confirmed' : 'canceled')
+  toastMessage.value = 'Appointment ' + (currentEvent.value!.confirmed ? 'confirmed' : 'canceled')
   isToastOpen.value = true
 }
 
@@ -297,7 +297,7 @@ function viewFile() {
 }
 
 function deleteApp() {
-  appointments.value = appointments.value.filter((item) => item.id !== currentEvent.value.id)
+  appointments.value = appointments.value.filter((item) => item.id !== currentEvent.value!.id)
   tooltipOpen.value = false
   toastMessage.value = 'Appointment deleted'
   isToastOpen.value = true
@@ -364,9 +364,9 @@ function handleEventClick() {
     :dragToCreate="false"
     :showEventTooltip="false"
     :height="260"
-    @event-hover-in="handleEventHoverIn($event)"
-    @event-hover-out="handleEventHoverout($event)"
-    @event-click-in="handleEventClick()"
+    @event-hover-in="handleEventHoverIn"
+    @event-hover-out="handleEventHoverout"
+    @event-click-in="handleEventClick"
   />
   <MbscPopup
     className="md-tooltip"

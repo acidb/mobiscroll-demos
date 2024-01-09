@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import {
-  MbscEventcalendar,
-  setOptions,
-  getJson,
-  MbscToast /* localeImport */
-} from '@mobiscroll/vue'
+import { ref } from 'vue'
+import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 
 setOptions({
@@ -14,7 +9,7 @@ setOptions({
 })
 
 const myData = ref<MbscCalendarEvent[]>([
-  ({
+  {
     title: 'Fixed event',
     start: 'dyndatetime(y,m,d-1,16)',
     end: 'dyndatetime(y,m,d-1,20)',
@@ -79,8 +74,9 @@ const myData = ref<MbscCalendarEvent[]>([
     end: 'dyndatetime(y,m,d+1,11)',
     color: '#339966',
     resource: 2
-  })
+  }
 ])
+
 const myResource = ref<MbscResource[]>([
   {
     id: 1,
@@ -113,6 +109,7 @@ const myResource = ref<MbscResource[]>([
     color: '#01adff'
   }
 ])
+
 const myView = ref<MbscEventcalendarView>({
   timeline: { type: 'day' }
 })

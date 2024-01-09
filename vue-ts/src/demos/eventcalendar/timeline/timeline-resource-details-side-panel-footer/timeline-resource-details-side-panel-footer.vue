@@ -89,21 +89,20 @@ function getTotal() {
   return total
 }
 
-function getOccuppancy(data: MbscCalendarEvent[]) {
-  const events = data.events
+function getOccuppancy(events: MbscCalendarEvent[]) {
   let occuppancy = 0
   if (events) {
-    var resourceIds = []
-    var nr = 0
+    let resourceIds: string[] = []
+    let nr = 0
     for (const event of events) {
-      if (resourceIds.indexOf(event.resource) < 0) {
+      if (resourceIds.indexOf(event.resource as string) < 0) {
         nr++
-        resourceIds = [...resourceIds, event.resource]
+        resourceIds = [...resourceIds, event.resource as string]
       }
     }
-    occuppancy = ((nr * 100) / myResources.length).toFixed(0)
+    occuppancy = (nr * 100) / myResources.length
   }
-  return occuppancy
+  return occuppancy.toFixed(0)
 }
 
 onMounted(() => {
@@ -157,7 +156,7 @@ onMounted(() => {
 
     <template #dayFooter="data">
       <div class="md-resource-details-footer md-resource-details-footer-day">
-        {{ getOccuppancy(data) }}%
+        {{ getOccuppancy(data.events) }}%
       </div>
     </template>
 

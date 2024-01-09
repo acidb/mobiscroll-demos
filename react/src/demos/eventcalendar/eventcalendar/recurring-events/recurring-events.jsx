@@ -31,7 +31,7 @@ function App() {
       {
         recurring: {
           repeat: 'monthly',
-          day: '15',
+          day: 15,
           count: 12, // the number of occurrences
         },
         title: 'Pay day',

@@ -16,7 +16,7 @@ setOptions({
 
 const myEvents = ref<MbscCalendarEvent[]>([])
 
-const myView: MbscEventcalendarView = ref({
+const myView = ref<MbscEventcalendarView>({
   schedule: {
     type: 'week',
     allDay: false,
@@ -46,14 +46,14 @@ const resources: MbscResource[] = [
 ]
 const myResources = ref<MbscResource[]>(resources)
 
-const participants = {
+const participants: { [key: number]: boolean } = {
   1: true,
   2: true,
   3: true
 }
 
 function filter() {
-  myResources.value = resources.filter((r: number) => participants[r.id])
+  myResources.value = resources.filter((r) => participants[r.id as number])
 }
 
 onMounted(() => {

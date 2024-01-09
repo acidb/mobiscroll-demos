@@ -35,11 +35,6 @@ function changeView() {
         calendar: { type: 'year' }
       }
       break
-    case 'month':
-      calView = {
-        calendar: { labels: true }
-      }
-      break
     case 'week':
       calView = {
         schedule: { type: 'week' }
@@ -54,6 +49,11 @@ function changeView() {
       calView = {
         calendar: { type: 'week' },
         agenda: { type: 'week' }
+      }
+      break
+    default:
+      calView = {
+        calendar: { labels: true }
       }
       break
   }

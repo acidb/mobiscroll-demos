@@ -58,8 +58,8 @@ function handleToastClose() {
 }
 
 function handlePageLoading(args: MbscPageLoadingEvent) {
-  const start = args.viewStart
-  const end = args.viewEnd
+  const start = args.viewStart!
+  const end = args.viewEnd!
 
   // Calculate dates
   // (pre-load events for previous and next pages as well)
