@@ -5,8 +5,7 @@ import {
   MbscEventcalendarOptions,
   MbscResource,
   Notifications,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 
 setOptions({

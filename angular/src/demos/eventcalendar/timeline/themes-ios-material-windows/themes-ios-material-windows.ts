@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MbscEventcalendarView, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+
+setOptions({
+  // locale,
+});
 
 @Component({
   selector: 'themes-ios-material-windows',
@@ -42,12 +46,13 @@ export class AppComponent implements OnInit {
       color: '#01adff',
     },
   ];
-  view: MbscEventcalendarView = {
-    // locale,
-    timeline: { type: 'day' },
-  };
+
   theme = 'material'; // can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', it will automatically be set based on the platform
   themeVariant: any = 'dark'; // can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
+
+  view: MbscEventcalendarView = {
+    timeline: { type: 'day' },
+  };
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/timeline-events/', 'callback').subscribe((resp) => {

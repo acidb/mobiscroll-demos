@@ -7,8 +7,7 @@ import {
   MbscPopup,
   MbscPopupOptions,
   setOptions,
-  updateRecurringEvent,
-  /* localeImport */
+  updateRecurringEvent /* localeImport */,
 } from '@mobiscroll/angular';
 
 setOptions({

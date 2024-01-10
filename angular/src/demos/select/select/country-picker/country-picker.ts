@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { setOptions, getJson /* localeImport */ } from '@mobiscroll/angular';
+import { setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
 setOptions({

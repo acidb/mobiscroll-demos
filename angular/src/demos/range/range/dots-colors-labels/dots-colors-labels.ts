@@ -1,11 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  MbscCalendarColor,
-  MbscCalendarLabel,
-  MbscCalendarMarked,
-  MbscEventcalendarOptions,
-  setOptions /* localeImport */,
-} from '@mobiscroll/angular';
+import { MbscCalendarColor, MbscCalendarLabel, MbscCalendarMarked, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,

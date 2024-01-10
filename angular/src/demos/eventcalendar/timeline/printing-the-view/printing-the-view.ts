@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  setOptions,
+  MbscCalendarEvent,
   MbscEventcalendar,
   MbscEventcalendarView,
-  MbscCalendarEvent,
-  MbscResource /* localeImport */,
+  MbscResource,
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 import { print } from '@mobiscroll/print';

@@ -6,8 +6,7 @@ import {
   MbscPopup,
   MbscPopupOptions,
   Notifications,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 
 setOptions({

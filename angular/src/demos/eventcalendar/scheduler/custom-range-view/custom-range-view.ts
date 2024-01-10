@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
+  formatDate,
   MbscCalendarEvent,
   MbscDateType,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
-  formatDate,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 

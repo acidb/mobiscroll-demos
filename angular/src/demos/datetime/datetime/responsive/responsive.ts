@@ -11,7 +11,7 @@ setOptions({
   templateUrl: './responsive.html',
 })
 export class AppComponent {
-  responsiveDrop: any = {
+  responsiveDrop: { [key: string]: MbscDatepickerOptions & { breakpoint?: number } } = {
     xsmall: {
       display: 'bottom',
     },
@@ -26,7 +26,7 @@ export class AppComponent {
     },
   };
 
-  responsiveCal: any = {
+  responsiveCal: { [key: string]: MbscDatepickerOptions & { breakpoint?: number } } = {
     xsmall: {
       controls: ['date'],
       display: 'bottom',

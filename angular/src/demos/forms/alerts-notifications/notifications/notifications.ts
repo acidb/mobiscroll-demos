@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { setOptions, Notifications } from '@mobiscroll/angular';
+import { Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
+  // locale,
   // theme
 });
 

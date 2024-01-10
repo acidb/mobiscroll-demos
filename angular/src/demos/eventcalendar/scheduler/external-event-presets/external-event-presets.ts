@@ -1,11 +1,5 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import {
-  MbscEventcalendarOptions,
-  Notifications,
-  MbscPopup,
-  setOptions,
-  /* localeImport */
-} from '@mobiscroll/angular';
+import { MbscEventcalendarOptions, MbscPopup, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,

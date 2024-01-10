@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Notifications, setOptions } from '@mobiscroll/angular';
+import { Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
+  // locale,
   // theme
 });
 
@@ -14,16 +15,10 @@ export class AppComponent {
 
   showAlert = () => {
     this.notify.alert({
-      //<hidden>
-      // theme,//</hidden>
-      // context,
       title: 'Cellular Data is Turned Off for "Safari"',
       message: 'You can turn on cellular data for this app in Settings.',
       callback: () => {
         this.notify.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: 'Alert closed',
         });
       },
@@ -32,18 +27,12 @@ export class AppComponent {
 
   showConfirm = () => {
     this.notify.confirm({
-      //<hidden>
-      // theme,//</hidden>
-      // context,
       title: 'Use location service?',
       message: 'Help apps determine location. This means sending anonymous location data, even when no apps are running.',
       okText: 'Agree',
       cancelText: 'Disagree',
       callback: (res) => {
         this.notify.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: res ? 'Agreed' : 'Disagreed',
         });
       },
@@ -52,18 +41,12 @@ export class AppComponent {
 
   showPrompt = () => {
     this.notify.prompt({
-      //<hidden>
-      // theme,//</hidden>
-      // context,
       title: 'Sign in to iTunes Store',
       message: 'Enter the Apple ID password for "hello@mobiscroll.com".',
       placeholder: 'Password',
       inputType: 'password',
       callback: (value) => {
         this.notify.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: value === null ? 'Cancel was pressed.' : 'The password: ' + value,
         });
       },

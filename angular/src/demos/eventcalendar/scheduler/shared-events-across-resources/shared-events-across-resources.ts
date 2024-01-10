@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import {
-  MbscEventcalendarView,
   MbscCalendarEvent,
+  MbscEventcalendarView,
   MbscEventClickEvent,
   MbscEventCreatedEvent,
   MbscNewEventData,
@@ -9,10 +9,8 @@ import {
   MbscPopup,
   MbscPopupButton,
   MbscPopupPredefinedButton,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,

@@ -1,5 +1,6 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
+  formatDate,
   MbscCalendarEvent,
   MbscDatepickerOptions,
   MbscEventcalendarOptions,
@@ -7,9 +8,7 @@ import {
   MbscPopupOptions,
   MbscResource,
   Notifications,
-  formatDate,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 
 setOptions({

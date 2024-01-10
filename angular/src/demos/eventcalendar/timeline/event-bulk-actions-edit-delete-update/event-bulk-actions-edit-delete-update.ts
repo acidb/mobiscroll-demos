@@ -7,8 +7,7 @@ import {
   MbscSelect,
   MbscSelectOptions,
   Notifications,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
-  setOptions,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
-  MbscResource /* localeImport */,
+  MbscResource,
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 
 setOptions({

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+
+setOptions({
+  // locale,
+  // theme,
+});
 
 @Component({
   selector: 'mobile-day-view',
@@ -16,15 +21,11 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
 
   eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
     view: {
       schedule: { type: 'day' },
     },
     onEventClick: (event) => {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         message: event.event.title,
       });
     },

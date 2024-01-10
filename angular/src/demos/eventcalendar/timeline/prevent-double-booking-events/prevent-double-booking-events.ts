@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {
-  Notifications,
-  setOptions,
-  MbscEventcalendarOptions,
   MbscCalendarEvent,
+  MbscEventcalendarOptions,
+  MbscEventcalendarView,
   MbscResource,
-  MbscEventcalendarView /* localeImport */,
+  Notifications,
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 
 setOptions({

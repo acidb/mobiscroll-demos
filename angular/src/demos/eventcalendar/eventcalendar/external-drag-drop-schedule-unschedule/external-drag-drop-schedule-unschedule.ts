@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscItemDragEvent,
   Notifications,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 

@@ -8,8 +8,7 @@ import {
   MbscSelectData,
   MbscSelectOptions,
   options,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 
 setOptions({

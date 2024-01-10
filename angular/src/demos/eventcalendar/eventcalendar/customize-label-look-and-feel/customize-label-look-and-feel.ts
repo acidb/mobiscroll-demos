@@ -2,10 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
-const now = new Date();
-const year = now.getFullYear();
-const month = now.getMonth();
-
 @Component({
   selector: 'customize-label-look-and-feel',
   styleUrl: './customize-label-look-and-feel.css',

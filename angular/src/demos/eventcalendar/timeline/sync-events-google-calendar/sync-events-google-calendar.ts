@@ -6,7 +6,7 @@ import {
   MbscPopupOptions,
   MbscResource,
   Notifications,
-  setOptions,
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 

@@ -6,8 +6,7 @@ import {
   MbscPopupOptions,
   MbscPopup,
   Notifications,
-  setOptions,
-  /* localeImport */
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 
 interface MyEvent extends MbscCalendarEvent {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { setOptions, localeEs /* localeImport */ } from '@mobiscroll/angular';
+import { setOptions, localeEs } from '@mobiscroll/angular';
 
 setOptions({
   // theme

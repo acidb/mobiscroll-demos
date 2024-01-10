@@ -1,8 +1,8 @@
 import { Component, OnInit, NgZone, ViewEncapsulation } from '@angular/core';
 import {
+  MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
-  MbscCalendarEvent,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';

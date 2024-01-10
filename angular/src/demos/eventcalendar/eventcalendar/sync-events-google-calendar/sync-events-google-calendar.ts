@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 
 setOptions({

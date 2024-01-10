@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+
+setOptions({
+  // locale,
+  // theme,
+});
 
 const now = new Date();
 
@@ -283,8 +288,6 @@ export class AppComponent {
   ];
 
   eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
     view: {
       calendar: { type: 'week' },
       schedule: { type: 'day' },

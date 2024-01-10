@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, formatDate, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { formatDate, MbscCalendarEvent, MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,

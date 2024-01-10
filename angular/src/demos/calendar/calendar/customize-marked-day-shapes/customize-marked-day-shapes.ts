@@ -6,10 +6,6 @@ setOptions({
   // theme
 });
 
-const now = new Date();
-const year = now.getFullYear();
-const month = now.getMonth();
-
 @Component({
   selector: 'customize-marked-day-shapes',
   styleUrl: './customize-marked-day-shapes.css',

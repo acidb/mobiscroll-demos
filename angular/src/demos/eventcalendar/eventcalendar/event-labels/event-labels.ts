@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+
+setOptions({
+  // locale,
+  // theme,
+});
 
 @Component({
   selector: 'event-labels',
@@ -16,8 +21,6 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
 
   eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
     view: {
       calendar: {
         labels: true,
@@ -25,8 +28,6 @@ export class AppComponent implements OnInit {
     },
     onEventClick: (event, inst) => {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         message: event.event.title,
       });
     },

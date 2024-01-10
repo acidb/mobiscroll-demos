@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
-import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+
+setOptions({
+  // locale,
+  // theme,
+});
 
 @Component({
   selector: 'load-events-on-demand',
@@ -16,8 +21,6 @@ export class AppComponent {
   myEvents: MbscCalendarEvent[] = [];
 
   eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
     view: {
       schedule: { type: 'day' },
     },

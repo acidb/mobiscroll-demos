@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { setOptions, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/angular';
 import moment from 'moment';
 

@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
 
   gregorianSettings: MbscEventcalendarOptions = {
-    // locale,
+    locale: localeEn,
     view: {
       schedule: { type: 'day' },
     },

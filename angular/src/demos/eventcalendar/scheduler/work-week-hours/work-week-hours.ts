@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-// import { MbscEventcalendarOptions, /* localeImport */ } from '@mobiscroll/angular';
-import { setOptions, MbscEventcalendarOptions, Notifications /* localeImport */ } from '@mobiscroll/angular';
+import { MbscEventcalendarOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+
+setOptions({
+  // locale,
+  // theme,
+});
 
 @Component({
   selector: 'work-week-hours',
@@ -19,8 +23,6 @@ export class AppComponent implements OnInit {
   events: any;
 
   eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
     dragToCreate: true,
     dragToMove: true,
     invalid: [

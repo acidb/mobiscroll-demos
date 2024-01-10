@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
-import { MbscEventcalendarOptions, MbscCalendarEvent, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarOptions, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import moment from 'moment-timezone';
 
 momentTimezone.moment = moment;
+
+setOptions({
+  // locale,
+  // theme,
+});
 
 @Component({
   selector: 'setting-the-timezone',
@@ -55,8 +60,6 @@ export class AppComponent {
   ];
 
   eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
     view: {
       calendar: {
         popover: true,

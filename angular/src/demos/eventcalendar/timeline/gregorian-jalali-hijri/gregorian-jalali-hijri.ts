@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  setOptions,
   MbscEventcalendarOptions,
   MbscCalendarEvent,
   jalaliCalendar,
@@ -8,6 +7,7 @@ import {
   localeFa,
   localeAr,
   localeEn,
+  setOptions,
 } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
   ];
 
   gregorianSettings: MbscEventcalendarOptions = {
-    // locale,
+    locale: localeEn,
     view: {
       timeline: { type: 'day' },
     },

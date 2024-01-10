@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MbscEventcalendarOptions, Notifications, setOptions, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
 
 setOptions({

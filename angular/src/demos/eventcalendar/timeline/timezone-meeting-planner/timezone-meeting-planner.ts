@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
+  formatDate,
   MbscEventcalendarOptions,
   MbscCalendarEvent,
-  setOptions,
+  momentTimezone,
   Notifications,
-  formatDate,
-  momentTimezone /* localeImport */,
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import moment from 'moment-timezone';
 

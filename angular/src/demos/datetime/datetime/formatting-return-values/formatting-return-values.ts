@@ -6,7 +6,7 @@ setOptions({
   // theme
 });
 
-var now = new Date();
+const now = new Date();
 
 @Component({
   selector: 'formatting-return-values',
