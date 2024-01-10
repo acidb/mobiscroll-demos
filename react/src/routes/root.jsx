@@ -5,7 +5,7 @@ export default function Root() {
     <>
       <Page>
         <div className="mbsc-padding">
-          <h1>Mobiscroll REACT Demos</h1>
+          <h1>Mobiscroll React Demos</h1>
 
           <h2>Event Calendar</h2>
 

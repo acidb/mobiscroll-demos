@@ -1,13 +1,10 @@
-const fileRegex = /\.(jsx)$/;
-
 export default function myPlugin() {
   return {
     name: 'transform-file',
-
     transform(src, id) {
-      if (fileRegex.test(id)) {
+      if (/\.(jsx)$/.test(id)) {
         return {
-          code: compileFileToJS(src),
+          code: replaceDynamicDates(src),
           map: null, // provide source map if available
         };
       }
@@ -15,7 +12,8 @@ export default function myPlugin() {
   };
 }
 const now = new Date();
-const compileFileToJS = (src) => {
+
+const replaceDynamicDates = (src) => {
   var str = src.replace(/['|"]dyndatetime\(([^)])*\)['|"]/g, function (i) {
     return parseDatestring(i);
   });
@@ -25,7 +23,7 @@ const compileFileToJS = (src) => {
 const parseDatestring = (s) => {
   s = s.replace(/dyndatetime/, '');
   s = s.replace(/\(/, '');
-  s = s.replace(/\)/, ''); //ymdhi
+  s = s.replace(/\)/, '');
   s = s.replace(/y/, now.getFullYear());
   s = s.replace(/m/, now.getMonth());
   s = s.replace(/d/, now.getDate());
@@ -57,7 +55,30 @@ const parseDatestring = (s) => {
       });
       return (dateDict[index] = num);
     });
-    return "'" + new Date(dateDict[0], dateDict[1], dateDict[2], dateDict[3], dateDict[4]).toISOString() + "'";
+    const dd = new Date(dateDict[0], dateDict[1], dateDict[2], dateDict[3], dateDict[4]);
+    const y = dd.getFullYear();
+    const m = dd.getMonth() + 1;
+    const d = dd.getDate();
+    const h = dd.getHours();
+    const mm = dd.getMinutes();
+    return (
+      "'" +
+      y +
+      '-' +
+      (m < 10 ? '0' : '') +
+      m +
+      '-' +
+      (d < 10 ? '0' : '') +
+      d +
+      'T' +
+      (h < 10 ? '0' : '') +
+      h +
+      ':' +
+      (mm < 10 ? '0' : '') +
+      mm +
+      "'"
+    );
+    // return "'" + new Date(dateDict[0], dateDict[1], dateDict[2], dateDict[3], dateDict[4]).toISOString() + "'";
   });
   return s;
 };

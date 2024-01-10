@@ -1,5 +1,7 @@
+/* eslint-disable import/order */
 import { StrictMode } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import Root from './routes/root';
 import DatetimeDatePicker from './demos/datetime/datetime/date-picker/date-picker';
 import DatetimeDisabledInvalidValues from './demos/datetime/datetime/disabled-invalid-values/disabled-invalid-values';

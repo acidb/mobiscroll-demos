@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 import './half-day-styling.css';
 
 setOptions({
@@ -7,14 +7,21 @@ setOptions({
   // themeJs
 });
 
-const myColors = [
-  { date: 'dyndatetime(y,m,12)', cellCssClass: 'check-in' },
-  { date: 'dyndatetime(y,m,16)', cellCssClass: 'check-out' },
-  { start: 'dyndatetime(y,m,13)', end: 'dyndatetime(y,m,15)', background: '#46c4f3' },
-];
-
 function App() {
-  return <Datepicker controls={['calendar']} display="inline" colors={myColors} />;
+  const myColors = useMemo(
+    () => [
+      { date: 'dyndatetime(y,m,12)', cellCssClass: 'check-in' },
+      { date: 'dyndatetime(y,m,16)', cellCssClass: 'check-out' },
+      { start: 'dyndatetime(y,m,13)', end: 'dyndatetime(y,m,15)', background: '#46c4f3' },
+    ],
+    [],
+  );
+
+  return (
+    <div>
+      <Datepicker display="inline" colors={myColors} />
+    </div>
+  );
 }
 
 export default App;

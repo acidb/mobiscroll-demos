@@ -1,13 +1,13 @@
-import React from 'react';
 import {
-  Datepicker,
-  CalendarPrev,
   CalendarNav,
   CalendarNext,
+  CalendarPrev,
+  Datepicker,
   SegmentedGroup,
   SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useState } from 'react';
 import './week-to-month.css';
 
 setOptions({
@@ -16,33 +16,32 @@ setOptions({
 });
 
 function App() {
-  const [calendarType, setCalendarType] = React.useState('week');
-  const calendarHeaderSwitch = () => {
+  const [calendarType, setCalendarType] = useState('week');
+
+  const handleChange = useCallback((event) => {
+    setCalendarType(event.target.value);
+  }, []);
+
+  const calendarHeaderSwitch = useCallback(() => {
     return (
-      <React.Fragment>
+      <>
         <CalendarNav className="custom-view-nav" />
         <div className="custom-view">
-          <SegmentedGroup value={calendarType} onChange={changeView}>
+          <SegmentedGroup value={calendarType} onChange={handleChange}>
             <SegmentedItem value="week" icon="material-date-range" />
             <SegmentedItem value="month" icon="material-event-note" />
           </SegmentedGroup>
         </div>
         <CalendarPrev />
         <CalendarNext />
-      </React.Fragment>
+      </>
     );
-  };
-  const changeView = (event) => {
-    setCalendarType(event.target.value);
-  };
+  }, [calendarType, handleChange]);
+
   return (
-    <Datepicker
-      controls={['calendar']}
-      display="inline"
-      calendarType={calendarType}
-      calendarSize={1}
-      renderCalendarHeader={calendarHeaderSwitch}
-    />
+    <div>
+      <Datepicker display="inline" calendarType={calendarType} calendarSize={1} renderCalendarHeader={calendarHeaderSwitch} />
+    </div>
   );
 }
 

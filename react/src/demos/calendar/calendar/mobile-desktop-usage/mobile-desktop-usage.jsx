@@ -1,5 +1,5 @@
-import React from 'react';
-import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './mobile-desktop-usage.css';
 
 setOptions({
@@ -8,27 +8,32 @@ setOptions({
 });
 
 function App() {
-  const [openPicker, setOpenPicker] = React.useState(false);
-  const [date, setDate] = React.useState(new Date());
+  const [openPicker, setOpenPicker] = useState(false);
 
-  const show = () => {
-    setOpenPicker(true);
-  };
-
-  const onClose = () => {
+  const handleClose = useCallback(() => {
     setOpenPicker(false);
-  };
+  }, []);
 
-  const inputProps = {
-    className: 'md-mobile-picker-input',
-    placeholder: 'Please Select...',
-  };
+  const handleClick = useCallback(() => {
+    setOpenPicker(true);
+  }, []);
 
-  const boxInputProps = {
-    className: 'md-mobile-picker-box-label',
-    inputStyle: 'box',
-    placeholder: 'Please Select...',
-  };
+  const inputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-input',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
+
+  const boxInputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-box-label',
+      inputStyle: 'box',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
 
   return (
     <Page>
@@ -37,7 +42,7 @@ function App() {
           <div className="mbsc-row">
             <div className="mbsc-col-12">
               <div className="mbsc-txt-muted md-mobile-picker-header">Use the picker with any inputs & show on focus/click</div>
-              <Datepicker controls={['calendar']} inputComponent="input" inputProps={inputProps} />
+              <Datepicker inputComponent="input" inputProps={inputProps} />
             </div>
           </div>
         </div>
@@ -48,18 +53,16 @@ function App() {
             </div>
             <div className="mbsc-col-8">
               <Datepicker
-                controls={['calendar']}
                 inputComponent="input"
                 inputProps={inputProps}
                 showOnClick={false}
                 showOnFocus={false}
                 isOpen={openPicker}
-                onClose={onClose}
-                defaultValue={date}
+                onClose={handleClose}
               />
             </div>
             <div className="mbsc-col-4">
-              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={show}>
+              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={handleClick}>
                 Show picker
               </Button>
             </div>
@@ -69,14 +72,14 @@ function App() {
           <div className="mbsc-row">
             <div className="mbsc-col-12">
               <div className="mbsc-txt-muted md-mobile-picker-header">Use the picker with a Mobiscroll input</div>
-              <Datepicker controls={['calendar']} inputProps={boxInputProps} />
+              <Datepicker inputProps={boxInputProps} />
             </div>
           </div>
         </div>
         <div className="mbsc-txt-muted md-mobile-picker-header">Use the picker inline in any page</div>
       </div>
       <div className="md-mobile-picker-inline">
-        <Datepicker display="inline" controls={['calendar']} />
+        <Datepicker display="inline" />
       </div>
     </Page>
   );

@@ -1,14 +1,14 @@
-import React from 'react';
 import {
-  Datepicker,
-  CalendarPrev,
   CalendarNav,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
+  Datepicker,
   SegmentedGroup,
   SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import { useState } from 'react';
 import './customizing-header.css';
 
 setOptions({
@@ -19,29 +19,29 @@ setOptions({
 function App() {
   const calendarHeaderCustom = () => {
     return (
-      <React.Fragment>
+      <>
         <CalendarPrev className="custom-prev" />
         <CalendarNav className="custom-nav" />
         <CalendarNext className="custom-next" />
-      </React.Fragment>
+      </>
     );
   };
   const calendarHeaderToday = () => {
     return (
-      <React.Fragment>
+      <>
         <CalendarNav />
         <div className="custom-buttons">
           <CalendarPrev />
           <CalendarToday />
           <CalendarNext />
         </div>
-      </React.Fragment>
+      </>
     );
   };
-  const [calendarType, setCalendarType] = React.useState('week');
+  const [calendarType, setCalendarType] = useState('week');
   const calendarHeaderSwitch = () => {
     return (
-      <React.Fragment>
+      <>
         <CalendarNav className="custom-view-nav" />
         <div className="custom-view">
           <SegmentedGroup value={calendarType} onChange={changeView}>
@@ -51,7 +51,7 @@ function App() {
         </div>
         <CalendarPrev />
         <CalendarNext />
-      </React.Fragment>
+      </>
     );
   };
   const changeView = (event) => {

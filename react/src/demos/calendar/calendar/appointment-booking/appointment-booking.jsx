@@ -1,5 +1,5 @@
-import React from 'react';
-import { Datepicker, Page, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Datepicker, getJson, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useState } from 'react';
 import './appointment-booking.css';
 
 setOptions({
@@ -8,40 +8,20 @@ setOptions({
 });
 
 function App() {
-  const [multiple, setMultiple] = React.useState(['dyndatetime(y,m,11)', 'dyndatetime(y,m,16)', 'dyndatetime(y,m,17)']);
+  const [multiple, setMultiple] = useState(['dyndatetime(y,m,11)', 'dyndatetime(y,m,16)', 'dyndatetime(y,m,17)']);
   const min = 'dyndatetime(y,m,d)';
   const max = 'dyndatetime(y,m+6,d)';
-  const [singleLabels, setSingleLabels] = React.useState([]);
-  const [singleInvalid, setSingleInvalid] = React.useState([]);
-  const [datetimeLabels, setDatetimeLabels] = React.useState([]);
-  const [datetimeInvalid, setDatetimeInvalid] = React.useState([]);
-  const [multipleLabels, setMultipleLabels] = React.useState([]);
-  const [multipleInvalid, setMultipleInvalid] = React.useState([]);
+  const [singleLabels, setSingleLabels] = useState([]);
+  const [singleInvalid, setSingleInvalid] = useState([]);
+  const [datetimeLabels, setDatetimeLabels] = useState([]);
+  const [datetimeInvalid, setDatetimeInvalid] = useState([]);
+  const [multipleLabels, setMultipleLabels] = useState([]);
+  const [multipleInvalid, setMultipleInvalid] = useState([]);
 
-  const onPageLoadingSingle = React.useCallback((event, inst) => {
-    getPrices(event.firstDay, (bookings) => {
-      setSingleLabels(bookings.labels);
-      setSingleInvalid(bookings.invalid);
-    });
-  }, []);
-
-  const onPageLoadingDatetime = React.useCallback((event, inst) => {
-    getDatetimes(event.firstDay, (bookings) => {
-      setDatetimeLabels(bookings.labels);
-      setDatetimeInvalid(bookings.invalid);
-    });
-  }, []);
-
-  const onPageLoadingMultiple = React.useCallback((event, inst) => {
-    getBookings(event.firstDay, (bookings) => {
-      setMultipleLabels(bookings.labels);
-      setMultipleInvalid(bookings.invalid);
-    });
-  }, []);
-
-  const getPrices = (d, callback) => {
-    let invalid = [];
-    let labels = [];
+  const handlePageLoadingSingle = useCallback((args) => {
+    const d = args.firstDay;
+    const invalid = [];
+    const labels = [];
 
     getJson(
       'https://trial.mobiscroll.com/getprices/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
@@ -60,43 +40,47 @@ function App() {
             invalid.push(d);
           }
         }
-        callback({ labels: labels, invalid: invalid });
+        setSingleLabels(labels);
+        setSingleInvalid(invalid);
       },
       'jsonp',
     );
-  };
+  }, []);
 
-  const getDatetimes = (d, callback) => {
-    let invalid = [];
-    let labels = [];
+  const handlePageLoadingDatetime = useCallback((args) => {
+    const d = args.firstDay;
+    const invalid = [];
+    const labels = [];
 
     getJson(
       'https://trial.mobiscroll.com/getbookingtime/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
       (bookings) => {
         for (let i = 0; i < bookings.length; ++i) {
           const booking = bookings[i];
-          const bDate = new Date(booking.d);
+          const d = new Date(booking.d);
 
           if (booking.nr > 0) {
             labels.push({
-              start: bDate,
+              start: d,
               title: booking.nr + ' SPOTS',
               textColor: '#e1528f',
             });
-            invalid = [...invalid, ...booking.invalid];
+            invalid.push(...booking.invalid);
           } else {
             invalid.push(d);
           }
         }
-        callback({ labels: labels, invalid: invalid });
+        setDatetimeLabels(labels);
+        setDatetimeInvalid(invalid);
       },
       'jsonp',
     );
-  };
+  }, []);
 
-  const getBookings = (d, callback) => {
-    let invalid = [];
-    let labels = [];
+  const handlePageLoadingMultiple = useCallback((args) => {
+    const d = args.firstDay;
+    const invalid = [];
+    const labels = [];
 
     getJson(
       'https://trial.mobiscroll.com/getbookings/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
@@ -115,11 +99,16 @@ function App() {
             invalid.push(d);
           }
         }
-        callback({ labels: labels, invalid: invalid });
+        setMultipleLabels(labels);
+        setMultipleInvalid(invalid);
       },
       'jsonp',
     );
-  };
+  }, []);
+
+  const handleChangeMultiple = useCallback((args) => {
+    setMultiple(args.value);
+  }, []);
 
   return (
     <Page className="md-calendar-booking">
@@ -133,7 +122,7 @@ function App() {
           labels={singleLabels}
           invalid={singleInvalid}
           pages="auto"
-          onPageLoading={onPageLoadingSingle}
+          onPageLoading={handlePageLoadingSingle}
         />
       </div>
       <div className="mbsc-form-group">
@@ -149,7 +138,7 @@ function App() {
           width={null}
           labels={datetimeLabels}
           invalid={datetimeInvalid}
-          onPageLoading={onPageLoadingDatetime}
+          onPageLoading={handlePageLoadingDatetime}
           cssClass="booking-datetime"
         />
       </div>
@@ -165,7 +154,8 @@ function App() {
           invalid={multipleInvalid}
           pages="auto"
           selectMultiple={true}
-          onPageLoading={onPageLoadingMultiple}
+          onChange={handleChangeMultiple}
+          onPageLoading={handlePageLoadingMultiple}
         />
       </div>
     </Page>

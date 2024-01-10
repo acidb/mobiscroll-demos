@@ -1,17 +1,15 @@
-import React from 'react';
-import { Datepicker /* localeImport */ } from '@mobiscroll/react';
+import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
   return (
-    <Datepicker
-      // locale
-      // theme
-      controls={['calendar']}
-      display="inline"
-      select="preset-range"
-      firstSelectDay={1}
-      selectSize={14}
-    />
+    <div>
+      <Datepicker display="inline" select="preset-range" firstSelectDay={1} selectSize={14} />
+    </div>
   );
 }
 

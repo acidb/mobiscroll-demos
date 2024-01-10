@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,7 +7,7 @@ setOptions({
 });
 
 function App() {
-  const [marked] = React.useState([
+  const [marked] = useState([
     { recurring: { repeat: 'yearly', month: 5, day: 1 }, color: '#ffc400' },
     { recurring: { repeat: 'yearly', month: 12, day: 24 }, color: '#ffee00' },
     { recurring: { repeat: 'yearly', month: 12, day: 25 }, color: 'red' },
@@ -27,7 +27,7 @@ function App() {
     { start: 'dyndatetime(y,m + 1, 15)', end: 'dyndatetime(y,m + 1, 18)', color: '#f4511e' },
   ]);
 
-  const [colors] = React.useState([
+  const [colors] = useState([
     { recurring: { repeat: 'yearly', month: 12, day: 8 }, background: '#9ccc65' },
     { recurring: { repeat: 'yearly', month: 5, day: 1 }, background: 'red' },
     { recurring: { repeat: 'yearly', month: 12, day: 24 }, background: '#fff568' },
@@ -48,7 +48,7 @@ function App() {
     { start: 'dyndatetime(y,m + 1, 15)', end: 'dyndatetime(y,m + 1, 18)', text: 'Conference', background: '#f4511e' },
   ]);
 
-  const [labels] = React.useState([
+  const [labels] = useState([
     { recurring: { repeat: 'yearly', month: 12, day: 25 }, title: 'Christmas', color: '#f48fb1' },
     { recurring: { repeat: 'yearly', month: 1, day: 1 }, title: 'New year' },
     { recurring: { repeat: 'yearly', month: 12, day: 1 }, title: 'Meeting', color: '#ffc400' },
@@ -75,19 +75,19 @@ function App() {
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Marked days</div>
-              <Datepicker controls={['calendar']} display="inline" marked={marked} />
+              <Datepicker display="inline" marked={marked} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Colored days</div>
-              <Datepicker controls={['calendar']} display="inline" colors={colors} />
+              <Datepicker display="inline" colors={colors} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Labels</div>
-              <Datepicker controls={['calendar']} display="inline" labels={labels} />
+              <Datepicker display="inline" labels={labels} />
             </div>
           </div>
         </div>

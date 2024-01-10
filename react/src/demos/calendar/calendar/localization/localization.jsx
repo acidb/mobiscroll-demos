@@ -1,5 +1,4 @@
-import React from 'react';
-import { Datepicker, setOptions, localeEs /* localeImport */ } from '@mobiscroll/react';
+import { Datepicker, localeEs, setOptions } from '@mobiscroll/react';
 
 setOptions({
   // themeJs
@@ -7,11 +6,9 @@ setOptions({
 
 function App() {
   return (
-    <Datepicker
-      controls={['calendar']}
-      display="inline"
-      locale={localeEs} // sets the language of the component
-    />
+    <div>
+      <Datepicker display="inline" locale={localeEs} />
+    </div>
   );
 }
 

@@ -1,14 +1,14 @@
-import React from 'react';
 import {
-  Datepicker,
-  CalendarPrev,
   CalendarNav,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
+  Datepicker,
   SegmentedGroup,
   SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './quarter-year-view.css';
 
 setOptions({
@@ -17,12 +17,13 @@ setOptions({
 });
 
 function App() {
-  const [type, setType] = React.useState('q4');
-  const calType = React.useMemo(() => (type === 'year' ? 'year' : 'month'), [type]);
-  const [selectedDate, setDate] = React.useState(new Date());
-  const [activeDate, setActiveDate] = React.useState(new Date());
+  const [type, setType] = useState('q4');
+  const [selectedDate, setDate] = useState(new Date());
+  const [activeDate, setActiveDate] = useState(new Date());
 
-  const changeView = React.useCallback(
+  const calType = useMemo(() => (type === 'year' ? 'year' : 'month'), [type]);
+
+  const handleTypeChange = useCallback(
     (event) => {
       const tp = event.target.value;
       const year = activeDate.getFullYear();
@@ -53,7 +54,7 @@ function App() {
     [activeDate],
   );
 
-  const onPageChange = React.useCallback(
+  const handlePageChange = useCallback(
     (event) => {
       let t = '';
       if (type === 'year') {
@@ -78,16 +79,16 @@ function App() {
     [type],
   );
 
-  const onChange = React.useCallback((event) => {
+  const handleDateChange = useCallback((event) => {
     setDate(event.value);
   }, []);
 
-  const calendarHeaderSwitch = React.useCallback(() => {
+  const calendarHeaderSwitch = useCallback(() => {
     return (
-      <React.Fragment>
+      <>
         <CalendarNav />
         <div className="quarter-year-header-picker">
-          <SegmentedGroup value={type} onChange={changeView}>
+          <SegmentedGroup value={type} onChange={handleTypeChange}>
             <SegmentedItem value="q1">Q1</SegmentedItem>
             <SegmentedItem value="q2">Q2</SegmentedItem>
             <SegmentedItem value="q3">Q3</SegmentedItem>
@@ -98,19 +99,18 @@ function App() {
         <CalendarPrev />
         <CalendarToday />
         <CalendarNext />
-      </React.Fragment>
+      </>
     );
-  }, [changeView, type]);
+  }, [handleTypeChange, type]);
 
   return (
     <Datepicker
-      controls={['calendar']}
       display="inline"
       calendarType={calType}
       calendarSize={3}
       renderCalendarHeader={calendarHeaderSwitch}
-      onPageChange={onPageChange}
-      onChange={onChange}
+      onPageChange={handlePageChange}
+      onChange={handleDateChange}
       showWeekNumbers={true}
       value={selectedDate}
     />

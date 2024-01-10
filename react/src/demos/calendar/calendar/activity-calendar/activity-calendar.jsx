@@ -1,6 +1,10 @@
-import React from 'react';
-import { Datepicker /* localeImport */ } from '@mobiscroll/react';
+import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './activity-calendar.css';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const activities = [
   {
@@ -146,14 +150,9 @@ function App() {
   };
 
   return (
-    <Datepicker
-      // theme
-      // locale
-      controls={['calendar']}
-      touchUi={true}
-      display="inline"
-      renderDayContent={customDay}
-    />
+    <div>
+      <Datepicker controls={['calendar']} touchUi={true} display="inline" renderDayContent={customDay} />
+    </div>
   );
 }
 
