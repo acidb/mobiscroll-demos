@@ -2,14 +2,12 @@
 import { ref } from 'vue'
 import {
   MbscDatepicker,
-  MbscPage,
-  setOptions,
   MbscSegmentedGroup,
   MbscSegmented,
   MbscCalendarNav,
   MbscCalendarPrev,
-  MbscCalendarNext
-  /* localeImport */
+  MbscCalendarNext,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
 
 setOptions({
