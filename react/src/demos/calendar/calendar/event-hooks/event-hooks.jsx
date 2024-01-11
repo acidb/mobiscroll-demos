@@ -9,13 +9,10 @@ function App() {
   return (
     <Page>
       <Datepicker
-        controls={['calendar']}
-        inputProps={{
-          label: 'Calendar',
-          labelStyle: 'stacked',
-          inputStyle: 'box',
-          placeholder: 'Please Select...',
-        }}
+        label="Calendar"
+        labelStyle="stacked"
+        inputStyle="box"
+        placeholder="Please Select..."
         onCancel={() => {
           // Logic for cancel button click
         }}

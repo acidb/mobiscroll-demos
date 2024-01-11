@@ -1,5 +1,9 @@
-import React from 'react';
-import { Datepicker, Input, Page /* localeImport */ } from '@mobiscroll/react';
+import { Datepicker, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
   const now = new Date();
@@ -14,10 +18,10 @@ function App() {
         <Datepicker
           controls={['date']}
           dateFormat="MM/YYYY"
-          dateWheels="DD MMMM YYYY"
+          dateWheels="MMMM YYYY"
+          defaultValue="12/2025"
           min={now}
           max={until}
-          value="12/2025"
           label="Expiration"
           placeholder="Required"
         ></Datepicker>

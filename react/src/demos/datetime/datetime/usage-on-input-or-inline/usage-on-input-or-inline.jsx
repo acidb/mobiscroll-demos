@@ -1,4 +1,3 @@
-import React from 'react';
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
@@ -7,21 +6,10 @@ setOptions({
 });
 
 function App() {
-  const inputProps = {
-    placeholder: 'Please Select...',
-  };
-
-  const boxInputProps = {
-    label: 'Range',
-    labelStyle: 'stacked',
-    inputStyle: 'outline',
-    placeholder: 'Please Select...',
-  };
-
   return (
     <Page>
-      <Datepicker controls={['date']} inputComponent="input" inputProps={inputProps} />
-      <Datepicker controls={['date']} inputProps={boxInputProps} />
+      <Datepicker controls={['date']} inputComponent="input" inputProps={{ placeholder: 'Please Select...' }} />
+      <Datepicker controls={['date']} inputStyle="outline" label="Date" labelStyle="stacked" placeholder="Please Select..." />
       <Datepicker controls={['date']} display="inline" />
     </Page>
   );

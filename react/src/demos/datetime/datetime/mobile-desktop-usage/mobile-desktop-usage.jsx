@@ -1,5 +1,5 @@
-import React from 'react';
-import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './mobile-desktop-usage.css';
 
 setOptions({
@@ -8,27 +8,32 @@ setOptions({
 });
 
 function App() {
-  const [openPicker, setOpenPicker] = React.useState(false);
-  const [date, setDate] = React.useState(new Date());
+  const [openPicker, setOpenPicker] = useState(false);
 
-  const show = () => {
-    setOpenPicker(true);
-  };
-
-  const onClose = () => {
+  const handleClose = useCallback(() => {
     setOpenPicker(false);
-  };
+  }, []);
 
-  const inputProps = {
-    className: 'md-mobile-picker-input',
-    placeholder: 'Please Select...',
-  };
+  const handleClick = useCallback(() => {
+    setOpenPicker(true);
+  }, []);
 
-  const boxInputProps = {
-    className: 'md-mobile-picker-box-label',
-    inputStyle: 'box',
-    placeholder: 'Please Select...',
-  };
+  const inputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-input',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
+
+  const boxInputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-box-label',
+      inputStyle: 'box',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
 
   return (
     <Page>
@@ -54,12 +59,11 @@ function App() {
                 showOnClick={false}
                 showOnFocus={false}
                 isOpen={openPicker}
-                onClose={onClose}
-                defaultValue={date}
+                onClose={handleClose}
               />
             </div>
             <div className="mbsc-col-4">
-              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={show}>
+              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={handleClick}>
                 Show picker
               </Button>
             </div>

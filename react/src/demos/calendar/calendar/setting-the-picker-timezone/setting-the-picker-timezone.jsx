@@ -1,8 +1,13 @@
-import { Datepicker, momentTimezone } from '@mobiscroll/react';
+import { Datepicker, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment-timezone';
 import { useCallback, useState } from 'react';
 
 momentTimezone.moment = moment;
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
   const [selected, setSelected] = useState(null);

@@ -69,7 +69,7 @@ function App() {
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Working with Moment JS Objects</div>
         <div className="mbsc-button-group-block">
-          <Button onClick={setCustomMoment}>Set: 2020-03-06T15:30:00+03:00</Button>
+          <Button onClick={setCustomMoment}>Set: 2020-03-06T15:30:00</Button>
         </div>
         <Datepicker
           returnFormat="moment"

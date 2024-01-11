@@ -1,9 +1,14 @@
-import React from 'react';
-import { Datepicker /* localeImport */ } from '@mobiscroll/react';
+import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const invalids = React.useMemo(() => {
-    return [
+  const myInvalid = useMemo(
+    () => [
       {
         recurring: {
           repeat: 'daily', // possible values: 'daily', 'weekly', 'monthly', 'yearly'
@@ -37,17 +42,14 @@ function App() {
           month: 1,
         },
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
-    <Datepicker
-      // locale
-      // theme
-      controls={['date']}
-      display="inline"
-      invalid={invalids}
-    />
+    <div>
+      <Datepicker controls={['date']} display="inline" invalid={myInvalid} />
+    </div>
   );
 }
 
