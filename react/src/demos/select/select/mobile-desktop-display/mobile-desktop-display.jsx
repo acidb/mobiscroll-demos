@@ -1,95 +1,62 @@
-import React from 'react';
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const myData = [
-  {
-    text: 'Atlanta',
-    value: 'atl',
-  },
-  {
-    text: 'Berlin',
-    value: 'ber',
-  },
-  {
-    text: 'Boston',
-    value: 'bos',
-  },
-  {
-    text: 'Chicago',
-    value: 'chi',
-  },
-  {
-    text: 'London',
-    value: 'lon',
-  },
-  {
-    text: 'Los Angeles',
-    value: 'la',
-  },
-  {
-    text: 'New York',
-    value: 'ny',
-  },
-  {
-    text: 'Paris',
-    value: 'par',
-  },
-  {
-    text: 'San Francisco',
-    value: 'sf',
-  },
-];
-
 function App() {
+  const myData = useMemo(
+    () => [
+      {
+        text: 'Atlanta',
+        value: 'atl',
+      },
+      {
+        text: 'Berlin',
+        value: 'ber',
+      },
+      {
+        text: 'Boston',
+        value: 'bos',
+      },
+      {
+        text: 'Chicago',
+        value: 'chi',
+      },
+      {
+        text: 'London',
+        value: 'lon',
+      },
+      {
+        text: 'Los Angeles',
+        value: 'la',
+      },
+      {
+        text: 'New York',
+        value: 'ny',
+      },
+      {
+        text: 'Paris',
+        value: 'par',
+      },
+      {
+        text: 'San Francisco',
+        value: 'sf',
+      },
+    ],
+    [],
+  );
+
   return (
-    <Page>
+    <>
       <Select data={myData} display="inline" />
-      <Select
-        data={myData}
-        display="anchored"
-        inputProps={{
-          label: 'Anchored',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Select
-        data={myData}
-        display="top"
-        inputProps={{
-          label: 'Top',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Select
-        data={myData}
-        display="bottom"
-        inputProps={{
-          label: 'Bottom',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Select
-        data={myData}
-        display="center"
-        inputProps={{
-          label: 'Center',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-    </Page>
+      <Select data={myData} display="anchored" label="Anchored" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+      <Select data={myData} display="top" label="Top" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+      <Select data={myData} display="bottom" label="Bottom" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+      <Select data={myData} display="center" label="Center" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+    </>
   );
 }
 

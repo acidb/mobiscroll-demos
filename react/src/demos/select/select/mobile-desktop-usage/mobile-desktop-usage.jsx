@@ -1,56 +1,69 @@
-import React from 'react';
-import { Select, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './mobile-desktop-usage.css';
+import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const myData = [
-  {
-    text: 'Atlanta',
-    value: 'atl',
-  },
-  {
-    text: 'Berlin',
-    value: 'ber',
-  },
-  {
-    text: 'Chicago',
-    value: 'chi',
-  },
-  {
-    text: 'London',
-    value: 'lon',
-  },
-];
-
 function App() {
-  const [openPicker, setOpenPicker] = React.useState(false);
-  const [selected, setSelected] = React.useState('atl');
+  const [openPicker, setOpenPicker] = useState(false);
+  const [selected, setSelected] = useState('atl');
 
-  const show = () => {
+  const myData = useMemo(
+    () => [
+      {
+        text: 'Atlanta',
+        value: 'atl',
+      },
+      {
+        text: 'Berlin',
+        value: 'ber',
+      },
+      {
+        text: 'Chicago',
+        value: 'chi',
+      },
+      {
+        text: 'London',
+        value: 'lon',
+      },
+    ],
+    [],
+  );
+
+  const handleClick = useCallback(() => {
     setOpenPicker(true);
-  };
+  }, []);
 
-  const onClose = () => {
+  const handleChange = useCallback((ev) => {
+    setSelected(ev.value);
+  }, []);
+
+  const handleClose = useCallback(() => {
     setOpenPicker(false);
-  };
+  }, []);
 
-  const inputProps = {
-    className: 'md-mobile-picker-input',
-    placeholder: 'Please Select...',
-  };
+  const inputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-input',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
 
-  const boxInputProps = {
-    className: 'md-mobile-picker-box-label',
-    inputStyle: 'box',
-    placeholder: 'Please Select...',
-  };
+  const boxInputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-box-label',
+      inputStyle: 'outline',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
 
   return (
-    <Page>
+    <>
       <div className="mbsc-grid">
         <div className="mbsc-form-group">
           <div className="mbsc-row">
@@ -73,12 +86,13 @@ function App() {
                 showOnClick={false}
                 showOnFocus={false}
                 isOpen={openPicker}
-                onClose={onClose}
-                defaultValue={selected}
+                value={selected}
+                onChange={handleChange}
+                onClose={handleClose}
               />
             </div>
             <div className="mbsc-col-4">
-              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={show}>
+              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={handleClick}>
                 Show picker
               </Button>
             </div>
@@ -97,7 +111,7 @@ function App() {
       <div className="md-mobile-picker-inline">
         <Select display="inline" data={myData} />
       </div>
-    </Page>
+    </>
   );
 }
 

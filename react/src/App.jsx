@@ -1,4 +1,5 @@
 /* eslint-disable import/order */
+import { Page } from '@mobiscroll/react';
 import { StrictMode } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -1212,7 +1213,9 @@ function App() {
   return (
     <>
       <StrictMode>
-        <RouterProvider router={router} />
+        <Page>
+          <RouterProvider router={router} />
+        </Page>
       </StrictMode>
     </>
   );

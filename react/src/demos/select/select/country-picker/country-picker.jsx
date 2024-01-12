@@ -1,5 +1,5 @@
-import React from 'react';
-import { Select, Page, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
+import { getJson, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useState } from 'react';
 import './country-picker.css';
 
 setOptions({
@@ -8,38 +8,35 @@ setOptions({
 });
 
 function App() {
-  const [myData, setMyData] = React.useState([]);
+  const [myData, setMyData] = useState([]);
 
-  const inputProps = {
-    inputStyle: 'box',
-    labelStyle: 'stacked',
-    placeholder: 'Please select...',
-  };
-
-  React.useEffect(() => {
-    getJson('https://trial.mobiscroll.com/content/countries.json', (resp) => {
-      const countries = [];
-      for (let i = 0; i < resp.length; ++i) {
-        const country = resp[i];
-        countries.push({ text: country.text, value: country.value });
-      }
-      setMyData(countries);
-    });
-  }, []);
-
-  const renderCustomItem = (item) => {
-    return (
+  const renderCustomItem = useCallback(
+    (item) => (
       <div className="md-country-picker-item">
         <img className="md-country-picker-flag" src={'https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png'} alt="Flag" />
         {item.display}
       </div>
-    );
-  };
+    ),
+    [],
+  );
+
+  useEffect(() => {
+    getJson('https://trial.mobiscroll.com/content/countries.json', (resp) => {
+      setMyData(resp.map((country) => ({ text: country.text, value: country.value })));
+    });
+  }, []);
 
   return (
-    <Page>
-      <Select data={myData} label="Countries" inputProps={inputProps} display="anchored" itemHeight={40} renderItem={renderCustomItem} />
-    </Page>
+    <Select
+      data={myData}
+      display="anchored"
+      inputStyle="outline"
+      itemHeight={40}
+      label="Countries"
+      labelStyle="stacked"
+      placeholder="Please select..."
+      renderItem={renderCustomItem}
+    />
   );
 }
 
