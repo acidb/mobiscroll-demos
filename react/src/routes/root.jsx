@@ -1,4 +1,5 @@
 import { Page } from '@mobiscroll/react';
+import { Link } from 'react-router-dom';
 
 export default function Root() {
   return (
@@ -13,144 +14,88 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/agenda/daily-agenda-with-week-calendar">
-                Compact daily schedule
-              </a>
+              <Link to="/agenda/daily-agenda-with-week-calendar">Compact daily schedule</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/basic-usage">
-                How to initialize
-              </a>
+              <Link to="/agenda/basic-usage">How to initialize</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/daily-weekly-monthly-annual-agenda">
-                Customize the range
-              </a>
+              <Link to="/agenda/daily-weekly-monthly-annual-agenda">Customize the range</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/printing-the-view">
-                Print mode
-              </a>
+              <Link to="/agenda/printing-the-view">Print mode</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/synchronized-views">
-                Synchronized views
-              </a>
+              <Link to="/agenda/synchronized-views">Synchronized views</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/custom-event-sort">
-                Custom event order
-              </a>
+              <Link to="/agenda/custom-event-sort">Custom event order</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/setting-the-timezone">
-                Timezones
-              </a>
+              <Link to="/agenda/setting-the-timezone">Timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/searching-events-in-popup">
-                Event search with popup
-              </a>
+              <Link to="/agenda/searching-events-in-popup">Event search with popup</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/event-content-customization">
-                Content customization
-              </a>
+              <Link to="/agenda/event-content-customization">Content customization</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/full-event-customization">
-                Full event customization
-              </a>
+              <Link to="/agenda/full-event-customization">Full event customization</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/customizing-header">
-                Customizing the header
-              </a>
+              <Link to="/agenda/customizing-header">Customizing the header</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/custom-event-tooltip">
-                Custom event tooltip
-              </a>
+              <Link to="/agenda/custom-event-tooltip">Custom event tooltip</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/resource-filtering-in-header">
-                In-header filtering
-              </a>
+              <Link to="/agenda/resource-filtering-in-header">In-header filtering</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/empty-state">
-                Empty state
-              </a>
+              <Link to="/agenda/empty-state">Empty state</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/event-data-structure">
-                Event properties
-              </a>
+              <Link to="/agenda/event-data-structure">Event properties</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/date-object-ISO-8601-moment">
-                Supported date formats
-              </a>
+              <Link to="/agenda/date-object-ISO-8601-moment">Supported date formats</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/recurring-events">
-                Recurrence rules
-              </a>
+              <Link to="/agenda/recurring-events">Recurrence rules</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/load-inline-data">
-                Loading inline data
-              </a>
+              <Link to="/agenda/load-inline-data">Loading inline data</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/load-events-from-remote-api">
-                Events from a remote API
-              </a>
+              <Link to="/agenda/load-events-from-remote-api">Events from a remote API</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/load-events-on-demand">
-                Loading events on demand
-              </a>
+              <Link to="/agenda/load-events-on-demand">Loading events on demand</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/sync-events-google-calendar">
-                Sync events to google calendar
-              </a>
+              <Link to="/agenda/sync-events-google-calendar">Sync events to google calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/sync-events-outlook-calendar">
-                Sync events to outlook calendar
-              </a>
+              <Link to="/agenda/sync-events-outlook-calendar">Sync events to outlook calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/load-events-from-google-calendar">
-                Load events from public google calendar
-              </a>
+              <Link to="/agenda/load-events-from-google-calendar">Load events from public google calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/event-bulk-actions-edit-delete-update">
-                Multiple select & bulk operations
-              </a>
+              <Link to="/agenda/event-bulk-actions-edit-delete-update">Multiple select & bulk operations</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/themes-ios-material-windows">
-                Theming capabilities
-              </a>
+              <Link to="/agenda/themes-ios-material-windows">Theming capabilities</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/event-hooks">
-                Lifecycle events
-              </a>
+              <Link to="/agenda/event-hooks">Lifecycle events</Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/gregorian-jalali-hijri">
-                Calendar systems{' '}
-              </a>
+              <Link to="/agenda/gregorian-jalali-hijri">Calendar systems </Link>
             </li>
             <li>
-              <a className="app-link" href="/agenda/localization">
-                Localization
-              </a>
+              <Link to="/agenda/localization">Localization</Link>
             </li>
           </ul>
 
@@ -158,234 +103,142 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/eventcalendar/mobile-month-view">
-                Mobile month view
-              </a>
+              <Link to="/eventcalendar/mobile-month-view">Mobile month view</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/desktop-month-view">
-                Desktop month view
-              </a>
+              <Link to="/eventcalendar/desktop-month-view">Desktop month view</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/responsive-month-view">
-                Responsive
-              </a>
+              <Link to="/eventcalendar/responsive-month-view">Responsive</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/printing-the-view">
-                Print mode
-              </a>
+              <Link to="/eventcalendar/printing-the-view">Print mode</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/event-labels">
-                Events as labels
-              </a>
+              <Link to="/eventcalendar/event-labels">Events as labels</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/event-popover">
-                Events in popover
-              </a>
+              <Link to="/eventcalendar/event-popover">Events in popover</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/custom-event-sort">
-                Custom event order
-              </a>
+              <Link to="/eventcalendar/custom-event-sort">Custom event order</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/setting-the-timezone">
-                Timezones
-              </a>
+              <Link to="/eventcalendar/setting-the-timezone">Timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/multiple-timezone-support">
-                Switching timezones
-              </a>
+              <Link to="/eventcalendar/multiple-timezone-support">Switching timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/searching-events-in-popup">
-                Event search with popup
-              </a>
+              <Link to="/eventcalendar/searching-events-in-popup">Event search with popup</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/searching-events-in-sidebar">
-                Event search with sidebar
-              </a>
+              <Link to="/eventcalendar/searching-events-in-sidebar">Event search with sidebar</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/month-week-view">
-                Month or week view
-              </a>
+              <Link to="/eventcalendar/month-week-view">Month or week view</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/quarter-year-view">
-                Multi-month or year view
-              </a>
+              <Link to="/eventcalendar/quarter-year-view">Multi-month or year view</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/show-more-all-labels">
-                Displaying labels
-              </a>
+              <Link to="/eventcalendar/show-more-all-labels">Displaying labels</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/colored-cell-background">
-                Colored backgrounds
-              </a>
+              <Link to="/eventcalendar/colored-cell-background">Colored backgrounds</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/switching-day-week-month-view">
-                Switching views
-              </a>
+              <Link to="/eventcalendar/switching-day-week-month-view">Switching views</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/customize-label-look-and-feel">
-                Custom event labels
-              </a>
+              <Link to="/eventcalendar/customize-label-look-and-feel">Custom event labels</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/customize-event-popover">
-                Custom events in popover
-              </a>
+              <Link to="/eventcalendar/customize-event-popover">Custom events in popover</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/customizing-header">
-                Customizing the header
-              </a>
+              <Link to="/eventcalendar/customizing-header">Customizing the header</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/custom-event-tooltip">
-                Custom event tooltip
-              </a>
+              <Link to="/eventcalendar/custom-event-tooltip">Custom event tooltip</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/move-resize-drag-drop-to-create-events">
-                Move, resize & create
-              </a>
+              <Link to="/eventcalendar/move-resize-drag-drop-to-create-events">Move, resize & create</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/conditional-move-resize">
-                Conditional move & resize per event or globally
-              </a>
+              <Link to="/eventcalendar/conditional-move-resize">Conditional move & resize per event or globally</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/drag-drop-between-calendar-instances">
-                Drag & drop between calendars
-              </a>
+              <Link to="/eventcalendar/drag-drop-between-calendar-instances">Drag & drop between calendars</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/blocked-days-ranges">
-                Manage blocked out dates
-              </a>
+              <Link to="/eventcalendar/blocked-days-ranges">Manage blocked out dates</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/prevent-double-booking-events">
-                Prevent event overlap
-              </a>
+              <Link to="/eventcalendar/prevent-double-booking-events">Prevent event overlap</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/external-drag-drop-schedule-unschedule">
-                External drag and drop
-              </a>
+              <Link to="/eventcalendar/external-drag-drop-schedule-unschedule">External drag and drop</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/external-event-presets">
-                External d&d presets
-              </a>
+              <Link to="/eventcalendar/external-event-presets">External d&d presets</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/resource-filtering-in-header">
-                In-header filtering
-              </a>
+              <Link to="/eventcalendar/resource-filtering-in-header">In-header filtering</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/event-data-structure">
-                Event properties
-              </a>
+              <Link to="/eventcalendar/event-data-structure">Event properties</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/date-object-ISO-8601-moment">
-                Supported date formats
-              </a>
+              <Link to="/eventcalendar/date-object-ISO-8601-moment">Supported date formats</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/recurring-events">
-                Recurrence rules
-              </a>
+              <Link to="/eventcalendar/recurring-events">Recurrence rules</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/load-inline-data">
-                Loading inline data
-              </a>
+              <Link to="/eventcalendar/load-inline-data">Loading inline data</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/load-events-from-remote-api">
-                Events from remote API{' '}
-              </a>
+              <Link to="/eventcalendar/load-events-from-remote-api">Events from remote API </Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/load-events-on-demand">
-                Loading events on demand
-              </a>
+              <Link to="/eventcalendar/load-events-on-demand">Loading events on demand</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/sync-events-google-calendar">
-                Sync events to google calendar
-              </a>
+              <Link to="/eventcalendar/sync-events-google-calendar">Sync events to google calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/sync-events-outlook-calendar">
-                Sync events to outlook calendar
-              </a>
+              <Link to="/eventcalendar/sync-events-outlook-calendar">Sync events to outlook calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/load-events-from-google-calendar">
-                Load events from public google calendar
-              </a>
+              <Link to="/eventcalendar/load-events-from-google-calendar">Load events from public google calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/create-read-update-delete-CRUD">
-                Add/edit/delete events
-              </a>
+              <Link to="/eventcalendar/create-read-update-delete-CRUD">Add/edit/delete events</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/recurring-event-add-edit-dialog">
-                Recurring event editor
-              </a>
+              <Link to="/eventcalendar/recurring-event-add-edit-dialog">Recurring event editor</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/disallow-past-event-creation">
-                Disable past event creation
-              </a>
+              <Link to="/eventcalendar/disallow-past-event-creation">Disable past event creation</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/event-bulk-actions-edit-delete-update">
-                Multiple select & bulk operations
-              </a>
+              <Link to="/eventcalendar/event-bulk-actions-edit-delete-update">Multiple select & bulk operations</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/cut-copy-paste-events-between-calendars">
-                Move events between calendars
-              </a>
+              <Link to="/eventcalendar/cut-copy-paste-events-between-calendars">Move events between calendars</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/themes-ios-material-windows">
-                Theming capabilities
-              </a>
+              <Link to="/eventcalendar/themes-ios-material-windows">Theming capabilities</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/localization">
-                Localization
-              </a>
+              <Link to="/eventcalendar/localization">Localization</Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/gregorian-jalali-hijri">
-                Calendar systems{' '}
-              </a>
+              <Link to="/eventcalendar/gregorian-jalali-hijri">Calendar systems </Link>
             </li>
             <li>
-              <a className="app-link" href="/eventcalendar/event-hooks">
-                Lifecycle events
-              </a>
+              <Link to="/eventcalendar/event-hooks">Lifecycle events</Link>
             </li>
           </ul>
 
@@ -393,279 +246,169 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/scheduler/mobile-day-view">
-                Mobile daily schedule
-              </a>
+              <Link to="/scheduler/mobile-day-view">Mobile daily schedule</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/desktop-day-view">
-                Desktop daily schedule
-              </a>
+              <Link to="/scheduler/desktop-day-view">Desktop daily schedule</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/mobile-week-view">
-                Mobile weekly schedule
-              </a>
+              <Link to="/scheduler/mobile-week-view">Mobile weekly schedule</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/desktop-week-view">
-                Desktop weekly schedule
-              </a>
+              <Link to="/scheduler/desktop-week-view">Desktop weekly schedule</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/responsive-day-week-schedule">
-                Responsive behavior
-              </a>
+              <Link to="/scheduler/responsive-day-week-schedule">Responsive behavior</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/printing-the-view">
-                Print mode
-              </a>
+              <Link to="/scheduler/printing-the-view">Print mode</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/work-week-hours">
-                Work calendar
-              </a>
+              <Link to="/scheduler/work-week-hours">Work calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/doctors-appointment">
-                Doctor&#39;s appointment
-              </a>
+              <Link to="/scheduler/doctors-appointment">Doctor&#39;s appointment</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/custom-range-view">
-                Custom range view
-              </a>
+              <Link to="/scheduler/custom-range-view">Custom range view</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/control-number-of-concurrently-shown-events">
-                Set event stack size
-              </a>
+              <Link to="/scheduler/control-number-of-concurrently-shown-events">Set event stack size</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/display-multiple-days-weeks">
-                Customize view range
-              </a>
+              <Link to="/scheduler/display-multiple-days-weeks">Customize view range</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/disable-all-day-events">
-                Show/hide all-day events
-              </a>
+              <Link to="/scheduler/disable-all-day-events">Show/hide all-day events</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/colored-cell-background">
-                Colored backgrounds
-              </a>
+              <Link to="/scheduler/colored-cell-background">Colored backgrounds</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/colors-invalids-css-class">
-                CSS class for colors and invalids
-              </a>
+              <Link to="/scheduler/colors-invalids-css-class">CSS class for colors and invalids</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/switching-calendar-scheduler-agenda">
-                Switching views
-              </a>
+              <Link to="/scheduler/switching-calendar-scheduler-agenda">Switching views</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/show-hide-hours-days">
-                Visible hours and days
-              </a>
+              <Link to="/scheduler/show-hide-hours-days">Visible hours and days</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/setting-the-timezone">
-                Timezones
-              </a>
+              <Link to="/scheduler/setting-the-timezone">Timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/multiple-timezone-support">
-                Switching timezones
-              </a>
+              <Link to="/scheduler/multiple-timezone-support">Switching timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/show-multiple-timezones">
-                Display time for multiple timezones
-              </a>
+              <Link to="/scheduler/show-multiple-timezones">Display time for multiple timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/searching-events-in-sidebar">
-                Event search with sidebar
-              </a>
+              <Link to="/scheduler/searching-events-in-sidebar">Event search with sidebar</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/custom-event-tooltip">
-                Custom event tooltip
-              </a>
+              <Link to="/scheduler/custom-event-tooltip">Custom event tooltip</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/customizing-events">
-                Event customization
-              </a>
+              <Link to="/scheduler/customizing-events">Event customization</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/date-header-template">
-                Date header template
-              </a>
+              <Link to="/scheduler/date-header-template">Date header template</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/custom-resource-header-template">
-                Resource template
-              </a>
+              <Link to="/scheduler/custom-resource-header-template">Resource template</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/customizing-header">
-                Customizing the header
-              </a>
+              <Link to="/scheduler/customizing-header">Customizing the header</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/move-resize-drag-drop-to-create-events">
-                Move, resize & create
-              </a>
+              <Link to="/scheduler/move-resize-drag-drop-to-create-events">Move, resize & create</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/conditional-move-resize">
-                Conditional move & resize per event, resource or globally
-              </a>
+              <Link to="/scheduler/conditional-move-resize">Conditional move & resize per event, resource or globally</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/drag-drop-between-calendar-instances">
-                Drag & drop between schedulers
-              </a>
+              <Link to="/scheduler/drag-drop-between-calendar-instances">Drag & drop between schedulers</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/time-off-blocked-ranges">
-                Blocked out times
-              </a>
+              <Link to="/scheduler/time-off-blocked-ranges">Blocked out times</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/prevent-double-booking-events">
-                Prevent event overlap
-              </a>
+              <Link to="/scheduler/prevent-double-booking-events">Prevent event overlap</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/external-drag-drop-schedule-unschedule">
-                External drag and drop
-              </a>
+              <Link to="/scheduler/external-drag-drop-schedule-unschedule">External drag and drop</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/external-event-presets">
-                External d&d presets
-              </a>
+              <Link to="/scheduler/external-event-presets">External d&d presets</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/resource-view">
-                Multiple resources
-              </a>
+              <Link to="/scheduler/resource-view">Multiple resources</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/group-by-resource-by-day">
-                Resource grouping
-              </a>
+              <Link to="/scheduler/group-by-resource-by-day">Resource grouping</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/shared-events-across-resources">
-                Shared events
-              </a>
+              <Link to="/scheduler/shared-events-across-resources">Shared events</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/dynamic-add-remove-resources-filter">
-                Show/hide resources
-              </a>
+              <Link to="/scheduler/dynamic-add-remove-resources-filter">Show/hide resources</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/resource-data-structure">
-                Resource properties
-              </a>
+              <Link to="/scheduler/resource-data-structure">Resource properties</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/event-data-structure">
-                Event properties
-              </a>
+              <Link to="/scheduler/event-data-structure">Event properties</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/date-object-ISO-8601-moment">
-                Supported date formats
-              </a>
+              <Link to="/scheduler/date-object-ISO-8601-moment">Supported date formats</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/recurring-events">
-                Recurrence rules
-              </a>
+              <Link to="/scheduler/recurring-events">Recurrence rules</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/load-inline-data">
-                Loading inline data
-              </a>
+              <Link to="/scheduler/load-inline-data">Loading inline data</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/load-events-from-remote-api">
-                Events from remote API{' '}
-              </a>
+              <Link to="/scheduler/load-events-from-remote-api">Events from remote API </Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/load-events-on-demand">
-                Loading events on demand
-              </a>
+              <Link to="/scheduler/load-events-on-demand">Loading events on demand</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/sync-events-google-calendar">
-                Sync events to google calendar
-              </a>
+              <Link to="/scheduler/sync-events-google-calendar">Sync events to google calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/sync-events-outlook-calendar">
-                Sync events to outlook calendar
-              </a>
+              <Link to="/scheduler/sync-events-outlook-calendar">Sync events to outlook calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/load-events-from-google-calendar">
-                Load events from public google calendar
-              </a>
+              <Link to="/scheduler/load-events-from-google-calendar">Load events from public google calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/create-read-update-delete-CRUD">
-                Add/edit/delete events
-              </a>
+              <Link to="/scheduler/create-read-update-delete-CRUD">Add/edit/delete events</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/event-bulk-actions-edit-delete-update">
-                Multiple select & bulk operations
-              </a>
+              <Link to="/scheduler/event-bulk-actions-edit-delete-update">Multiple select & bulk operations</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/recurring-event-add-edit-dialog">
-                Recurring event editor
-              </a>
+              <Link to="/scheduler/recurring-event-add-edit-dialog">Recurring event editor</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/disallow-past-event-creation">
-                Disable past event creation
-              </a>
+              <Link to="/scheduler/disallow-past-event-creation">Disable past event creation</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/resource-filtering-in-header">
-                Custom component in header
-              </a>
+              <Link to="/scheduler/resource-filtering-in-header">Custom component in header</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/themes-ios-material-windows">
-                Theming capabilities
-              </a>
+              <Link to="/scheduler/themes-ios-material-windows">Theming capabilities</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/gregorian-jalali-hijri">
-                Calendar systems{' '}
-              </a>
+              <Link to="/scheduler/gregorian-jalali-hijri">Calendar systems </Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/event-hooks">
-                Lifecycle events
-              </a>
+              <Link to="/scheduler/event-hooks">Lifecycle events</Link>
             </li>
             <li>
-              <a className="app-link" href="/scheduler/localization">
-                Localization
-              </a>
+              <Link to="/scheduler/localization">Localization</Link>
             </li>
           </ul>
 
@@ -673,294 +416,180 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/timeline/month-view">
-                Monthly timeline
-              </a>
+              <Link to="/timeline/month-view">Monthly timeline</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/timeline-time-grid">
-                Timeline vs time grid
-              </a>
+              <Link to="/timeline/timeline-time-grid">Timeline vs time grid</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/printing-the-view">
-                Print mode
-              </a>
+              <Link to="/timeline/printing-the-view">Print mode</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/employee-shifts">
-                Employee shift planning
-              </a>
+              <Link to="/timeline/employee-shifts">Employee shift planning</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/work-order-scheduling">
-                Work order scheduling
-              </a>
+              <Link to="/timeline/work-order-scheduling">Work order scheduling</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/timezone-meeting-planner">
-                Meeting planner across timezones
-              </a>
+              <Link to="/timeline/timezone-meeting-planner">Meeting planner across timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/restaurant-shift-management">
-                Restaurant shift management
-              </a>
+              <Link to="/timeline/restaurant-shift-management">Restaurant shift management</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/meal-planner">
-                Weekly meal planner
-              </a>
+              <Link to="/timeline/meal-planner">Weekly meal planner</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/dynamically-color-and-invalidate">
-                Dynamically color & invalidate
-              </a>
+              <Link to="/timeline/dynamically-color-and-invalidate">Dynamically color & invalidate</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/multi-classroom-timetable">
-                Multiple classroom scheduling
-              </a>
+              <Link to="/timeline/multi-classroom-timetable">Multiple classroom scheduling</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/monthly-timetable-vertical-days-horizontal-times">
-                Single resource timetable
-              </a>
+              <Link to="/timeline/monthly-timetable-vertical-days-horizontal-times">Single resource timetable</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/compare-resources-fixed-at-top">
-                Compare resources
-              </a>
+              <Link to="/timeline/compare-resources-fixed-at-top">Compare resources</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/assign-unassign-work-orders-fixed-top-row">
-                Assign/unassign work orders
-              </a>
+              <Link to="/timeline/assign-unassign-work-orders-fixed-top-row">Assign/unassign work orders</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/flight-scheduling-two-synchronized-timelines">
-                Flight scheduling with two timelines
-              </a>
+              <Link to="/timeline/flight-scheduling-two-synchronized-timelines">Flight scheduling with two timelines</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/daily-weekly-monthly-yearly-timeline">
-                Configure the timeline
-              </a>
+              <Link to="/timeline/daily-weekly-monthly-yearly-timeline">Configure the timeline</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/multiple-days-weeks-months-quarters-years-variable-resolution">
-                Configure the page, size, resolution
-              </a>
+              <Link to="/timeline/multiple-days-weeks-months-quarters-years-variable-resolution">Configure the page, size, resolution</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/control-number-of-concurrently-shown-events">
-                Set event stack size
-              </a>
+              <Link to="/timeline/control-number-of-concurrently-shown-events">Set event stack size</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/custom-range-view">
-                View with custom range picker
-              </a>
+              <Link to="/timeline/custom-range-view">View with custom range picker</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/colors-invalids-css-class">
-                CSS class for colors and invalids
-              </a>
+              <Link to="/timeline/colors-invalids-css-class">CSS class for colors and invalids</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/timeline-resource-height">
-                Equal row height
-              </a>
+              <Link to="/timeline/timeline-resource-height">Equal row height</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/event-listing">
-                Daily event summary
-              </a>
+              <Link to="/timeline/event-listing">Daily event summary</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/switching-day-week-work-week-timeline">
-                Day, week, work week
-              </a>
+              <Link to="/timeline/switching-day-week-work-week-timeline">Day, week, work week</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/setting-the-timezone">
-                Timezones
-              </a>
+              <Link to="/timeline/setting-the-timezone">Timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/multiple-timezone-support">
-                Switching timezones
-              </a>
+              <Link to="/timeline/multiple-timezone-support">Switching timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/searching-events-in-sidebar">
-                Event search with sidebar
-              </a>
+              <Link to="/timeline/searching-events-in-sidebar">Event search with sidebar</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/timeline-custom-event-rendering">
-                Timeline event template
-              </a>
+              <Link to="/timeline/timeline-custom-event-rendering">Timeline event template</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/hour-day-week-month-quarter-year-header-footer-template">
+              <Link to="/timeline/hour-day-week-month-quarter-year-header-footer-template">
                 Hour, day, week, month, year header and footer template
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/shift-template">
-                Time slot template
-              </a>
+              <Link to="/timeline/shift-template">Time slot template</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/resource-header-template">
-                Resource header template
-              </a>
+              <Link to="/timeline/resource-header-template">Resource header template</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/custom-event-tooltip">
-                Custom event tooltip
-              </a>
+              <Link to="/timeline/custom-event-tooltip">Custom event tooltip</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/setting-row-height">
-                Controlling the row height
-              </a>
+              <Link to="/timeline/setting-row-height">Controlling the row height</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/move-resize-drag-drop-to-create-events">
-                Move, resize & create
-              </a>
+              <Link to="/timeline/move-resize-drag-drop-to-create-events">Move, resize & create</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/conditional-move-resize">
-                Conditional move & resize per event, resource or globally
-              </a>
+              <Link to="/timeline/conditional-move-resize">Conditional move & resize per event, resource or globally</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/drag-drop-between-calendar-instances">
-                Drag & drop between timelines
-              </a>
+              <Link to="/timeline/drag-drop-between-calendar-instances">Drag & drop between timelines</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/prevent-double-booking-events">
-                Prevent event overlap
-              </a>
+              <Link to="/timeline/prevent-double-booking-events">Prevent event overlap</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/timeline-resource-details-side-panel-footer">
-                Resource grid
-              </a>
+              <Link to="/timeline/timeline-resource-details-side-panel-footer">Resource grid</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/resource-grouping-hierarchy">
-                Resource grouping & hierarchy
-              </a>
+              <Link to="/timeline/resource-grouping-hierarchy">Resource grouping & hierarchy</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/resource-data-structure">
-                Resource properties
-              </a>
+              <Link to="/timeline/resource-data-structure">Resource properties</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/event-data-structure">
-                Event properties
-              </a>
+              <Link to="/timeline/event-data-structure">Event properties</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/connecting-linking-events-arrows">
-                Event connections
-              </a>
+              <Link to="/timeline/connecting-linking-events-arrows">Event connections</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/date-object-ISO-8601-moment">
-                Supported date formats
-              </a>
+              <Link to="/timeline/date-object-ISO-8601-moment">Supported date formats</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/recurring-events">
-                Recurrence rules
-              </a>
+              <Link to="/timeline/recurring-events">Recurrence rules</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/load-inline-data">
-                Loading inline data
-              </a>
+              <Link to="/timeline/load-inline-data">Loading inline data</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/load-events-from-remote-api">
-                Events from remote API{' '}
-              </a>
+              <Link to="/timeline/load-events-from-remote-api">Events from remote API </Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/load-events-on-demand">
-                Loading events on demand
-              </a>
+              <Link to="/timeline/load-events-on-demand">Loading events on demand</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/load-resources-on-demand">
-                Loading resources on demand
-              </a>
+              <Link to="/timeline/load-resources-on-demand">Loading resources on demand</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/loading-big-data-sets">
-                Working with large data sets
-              </a>
+              <Link to="/timeline/loading-big-data-sets">Working with large data sets</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/sync-events-google-calendar">
-                Sync events to google calendar
-              </a>
+              <Link to="/timeline/sync-events-google-calendar">Sync events to google calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/sync-events-outlook-calendar">
-                Sync events to outlook calendar
-              </a>
+              <Link to="/timeline/sync-events-outlook-calendar">Sync events to outlook calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/load-events-from-google-calendar">
-                Load events from public google calendar
-              </a>
+              <Link to="/timeline/load-events-from-google-calendar">Load events from public google calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/create-read-update-delete-CRUD">
-                Add/edit/delete events
-              </a>
+              <Link to="/timeline/create-read-update-delete-CRUD">Add/edit/delete events</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/disallow-past-event-creation">
-                Disable past event creation
-              </a>
+              <Link to="/timeline/disallow-past-event-creation">Disable past event creation</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/event-bulk-actions-edit-delete-update">
-                Multiple select & bulk operations
-              </a>
+              <Link to="/timeline/event-bulk-actions-edit-delete-update">Multiple select & bulk operations</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/themes-ios-material-windows">
-                Theming capabilities
-              </a>
+              <Link to="/timeline/themes-ios-material-windows">Theming capabilities</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/gregorian-jalali-hijri">
-                Calendar systems{' '}
-              </a>
+              <Link to="/timeline/gregorian-jalali-hijri">Calendar systems </Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/event-hooks">
-                Lifecycle events
-              </a>
+              <Link to="/timeline/event-hooks">Lifecycle events</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/localization">
-                Localization
-              </a>
+              <Link to="/timeline/localization">Localization</Link>
             </li>
             <li>
-              <a className="app-link" href="/timeline/rtl-right-to-left">
-                RTL mode
-              </a>
+              <Link to="/timeline/rtl-right-to-left">RTL mode</Link>
             </li>
           </ul>
 
@@ -970,169 +599,103 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/calendar/mobile-desktop-usage">
-                Mobile & Desktop usage
-              </a>
+              <Link to="/calendar/mobile-desktop-usage">Mobile & Desktop usage</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/usage-on-input-or-inline">
-                Initializing the picker
-              </a>
+              <Link to="/calendar/usage-on-input-or-inline">Initializing the picker</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/responsive">
-                Responsive behavior
-              </a>
+              <Link to="/calendar/responsive">Responsive behavior</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/mobile-desktop-display">
-                Understanding display modes
-              </a>
+              <Link to="/calendar/mobile-desktop-display">Understanding display modes</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/appointment-booking">
-                Appointment booking
-              </a>
+              <Link to="/calendar/appointment-booking">Appointment booking</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/activity-calendar">
-                Activity calendar
-              </a>
+              <Link to="/calendar/activity-calendar">Activity calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/date-picker">
-                Date selection
-              </a>
+              <Link to="/calendar/date-picker">Date selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/date-time-picker">
-                Date & Time picker
-              </a>
+              <Link to="/calendar/date-time-picker">Date & Time picker</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/week-view">
-                Variable week view
-              </a>
+              <Link to="/calendar/week-view">Variable week view</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/multiple-months">
-                Multi month view
-              </a>
+              <Link to="/calendar/multiple-months">Multi month view</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/quarter-year-view">
-                Quarter or year view
-              </a>
+              <Link to="/calendar/quarter-year-view">Quarter or year view</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/week-to-month">
-                Switching views
-              </a>
+              <Link to="/calendar/week-to-month">Switching views</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/dots-colors-labels">
-                Marked, colored & labels
-              </a>
+              <Link to="/calendar/dots-colors-labels">Marked, colored & labels</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/month-change-direction-week-numbers-outer-days">
-                Customizing the view
-              </a>
+              <Link to="/calendar/month-change-direction-week-numbers-outer-days">Customizing the view</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/single-select">
-                Single value selection
-              </a>
+              <Link to="/calendar/single-select">Single value selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/multiple-select">
-                Multiple date selection
-              </a>
+              <Link to="/calendar/multiple-select">Multiple date selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/week-select">
-                Week selection
-              </a>
+              <Link to="/calendar/week-select">Week selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/range-select">
-                Start-end selection
-              </a>
+              <Link to="/calendar/range-select">Start-end selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/date-object-ISO-8601-moment">
-                Date types
-              </a>
+              <Link to="/calendar/date-object-ISO-8601-moment">Date types</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/formatting-return-values">
-                Formatting values
-              </a>
+              <Link to="/calendar/formatting-return-values">Formatting values</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/setting-values-defaults">
-                Setting values
-              </a>
+              <Link to="/calendar/setting-values-defaults">Setting values</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/setting-the-picker-timezone">
-                Timezones
-              </a>
+              <Link to="/calendar/setting-the-picker-timezone">Timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/min-max-restrictions">
-                Min & max values
-              </a>
+              <Link to="/calendar/min-max-restrictions">Min & max values</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/disabled-invalid-values">
-                Disabled values
-              </a>
+              <Link to="/calendar/disabled-invalid-values">Disabled values</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/recurring-values">
-                Recurring values
-              </a>
+              <Link to="/calendar/recurring-values">Recurring values</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/themes-ios-material-windows">
-                Theming capabilities
-              </a>
+              <Link to="/calendar/themes-ios-material-windows">Theming capabilities</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/customizing-header">
-                Customizing the header
-              </a>
+              <Link to="/calendar/customizing-header">Customizing the header</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/customize-marked-day-shapes">
-                Marked day classes
-              </a>
+              <Link to="/calendar/customize-marked-day-shapes">Marked day classes</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/half-day-styling">
-                Half days
-              </a>
+              <Link to="/calendar/half-day-styling">Half days</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/event-hooks">
-                Lifecycle events
-              </a>
+              <Link to="/calendar/event-hooks">Lifecycle events</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/gregorian-jalali-hijri">
-                Calendar systems{' '}
-              </a>
+              <Link to="/calendar/gregorian-jalali-hijri">Calendar systems </Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/localization">
-                Localization
-              </a>
+              <Link to="/calendar/localization">Localization</Link>
             </li>
             <li>
-              <a className="app-link" href="/calendar/rtl-right-to-left">
-                RTL mode
-              </a>
+              <Link to="/calendar/rtl-right-to-left">RTL mode</Link>
             </li>
           </ul>
 
@@ -1140,119 +703,73 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/datetime/mobile-desktop-usage">
-                Mobile & Desktop usage
-              </a>
+              <Link to="/datetime/mobile-desktop-usage">Mobile & Desktop usage</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/usage-on-input-or-inline">
-                Initializing the picker
-              </a>
+              <Link to="/datetime/usage-on-input-or-inline">Initializing the picker</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/responsive">
-                Responsive behavior
-              </a>
+              <Link to="/datetime/responsive">Responsive behavior</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/mobile-desktop-display">
-                Understanding display modes
-              </a>
+              <Link to="/datetime/mobile-desktop-display">Understanding display modes</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/date-picker">
-                Date selection
-              </a>
+              <Link to="/datetime/date-picker">Date selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/time-picker">
-                Time selection
-              </a>
+              <Link to="/datetime/time-picker">Time selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/date-time-picker">
-                Date & time selection
-              </a>
+              <Link to="/datetime/date-time-picker">Date & time selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/time-value-steps">
-                Setting time select steps
-              </a>
+              <Link to="/datetime/time-value-steps">Setting time select steps</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/single-select">
-                Single value selection
-              </a>
+              <Link to="/datetime/single-select">Single value selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/range-select">
-                Start-end selection
-              </a>
+              <Link to="/datetime/range-select">Start-end selection</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/date-object-ISO-8601-moment">
-                Date types
-              </a>
+              <Link to="/datetime/date-object-ISO-8601-moment">Date types</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/formatting-return-values">
-                Formatting values
-              </a>
+              <Link to="/datetime/formatting-return-values">Formatting values</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/month-year-picker">
-                Credit card expiration
-              </a>
+              <Link to="/datetime/month-year-picker">Credit card expiration</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/setting-values-defaults">
-                Setting values
-              </a>
+              <Link to="/datetime/setting-values-defaults">Setting values</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/setting-the-picker-timezone">
-                Timezones
-              </a>
+              <Link to="/datetime/setting-the-picker-timezone">Timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/min-max-restrictions">
-                Min & max values
-              </a>
+              <Link to="/datetime/min-max-restrictions">Min & max values</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/disabled-invalid-values">
-                Disabled values
-              </a>
+              <Link to="/datetime/disabled-invalid-values">Disabled values</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/recurring-values">
-                Recurring values
-              </a>
+              <Link to="/datetime/recurring-values">Recurring values</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/themes-ios-material-windows">
-                Theming capabilities
-              </a>
+              <Link to="/datetime/themes-ios-material-windows">Theming capabilities</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/event-hooks">
-                Lifecycle events
-              </a>
+              <Link to="/datetime/event-hooks">Lifecycle events</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/gregorian-jalali-hijri">
-                Calendar systems{' '}
-              </a>
+              <Link to="/datetime/gregorian-jalali-hijri">Calendar systems </Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/localization">
-                Localization
-              </a>
+              <Link to="/datetime/localization">Localization</Link>
             </li>
             <li>
-              <a className="app-link" href="/datetime/rtl-right-to-left">
-                RTL mode
-              </a>
+              <Link to="/datetime/rtl-right-to-left">RTL mode</Link>
             </li>
           </ul>
 
@@ -1260,154 +777,94 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/range/mobile-desktop-usage">
-                Mobile & Desktop usage
-              </a>
+              <Link to="/range/mobile-desktop-usage">Mobile & Desktop usage</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/usage-on-input-or-inline">
-                Initializing the picker
-              </a>
+              <Link to="/range/usage-on-input-or-inline">Initializing the picker</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/responsive">
-                Responsive behavior
-              </a>
+              <Link to="/range/responsive">Responsive behavior</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/calendar-scroller-dropdown">
-                Understanding the controls
-              </a>
+              <Link to="/range/calendar-scroller-dropdown">Understanding the controls</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/mobile-desktop-display">
-                Understanding display modes
-              </a>
+              <Link to="/range/mobile-desktop-display">Understanding display modes</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/date-filtering-with-predefined-ranges">
-                Date filtering with presets
-              </a>
+              <Link to="/range/date-filtering-with-predefined-ranges">Date filtering with presets</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/flight-booking">
-                Flight booking
-              </a>
+              <Link to="/range/flight-booking">Flight booking</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/book-rental-months-ahead">
-                Vacation property availability
-              </a>
+              <Link to="/range/book-rental-months-ahead">Vacation property availability</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/adding-event-start-end">
-                New event creation
-              </a>
+              <Link to="/range/adding-event-start-end">New event creation</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/date-range">
-                Date range
-              </a>
+              <Link to="/range/date-range">Date range</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/time-range">
-                Time range
-              </a>
+              <Link to="/range/time-range">Time range</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/date-time-range">
-                Date & time range
-              </a>
+              <Link to="/range/date-time-range">Date & time range</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/week-month-view-scrolling-direction">
-                Customizing the calendar
-              </a>
+              <Link to="/range/week-month-view-scrolling-direction">Customizing the calendar</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/customizing-labels-selection">
-                Customizing the range
-              </a>
+              <Link to="/range/customizing-labels-selection">Customizing the range</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/dots-colors-labels">
-                Marked, colored & labels
-              </a>
+              <Link to="/range/dots-colors-labels">Marked, colored & labels</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/presets">
-                Presets
-              </a>
+              <Link to="/range/presets">Presets</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/date-object-ISO-8601-moment">
-                Date types
-              </a>
+              <Link to="/range/date-object-ISO-8601-moment">Date types</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/formatting-return-values">
-                Formatting values
-              </a>
+              <Link to="/range/formatting-return-values">Formatting values</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/setting-the-picker-timezone">
-                Timezones
-              </a>
+              <Link to="/range/setting-the-picker-timezone">Timezones</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/min-max-length">
-                Setting the allowed range length
-              </a>
+              <Link to="/range/min-max-length">Setting the allowed range length</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/min-max-restrictions">
-                Min & max values
-              </a>
+              <Link to="/range/min-max-restrictions">Min & max values</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/disabled-invalid-values">
-                Disabled values
-              </a>
+              <Link to="/range/disabled-invalid-values">Disabled values</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/recurring-values">
-                Recurring values
-              </a>
+              <Link to="/range/recurring-values">Recurring values</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/themes-ios-material-windows">
-                Theming capabilities
-              </a>
+              <Link to="/range/themes-ios-material-windows">Theming capabilities</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/customize-marked-day-shapes">
-                Marked day classes
-              </a>
+              <Link to="/range/customize-marked-day-shapes">Marked day classes</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/half-day-styling">
-                Half days
-              </a>
+              <Link to="/range/half-day-styling">Half days</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/event-hooks">
-                Lifecycle events
-              </a>
+              <Link to="/range/event-hooks">Lifecycle events</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/gregorian-jalali-hijri">
-                Calendar systems{' '}
-              </a>
+              <Link to="/range/gregorian-jalali-hijri">Calendar systems </Link>
             </li>
             <li>
-              <a className="app-link" href="/range/localization">
-                Localization
-              </a>
+              <Link to="/range/localization">Localization</Link>
             </li>
             <li>
-              <a className="app-link" href="/range/rtl-right-to-left">
-                RTL mode
-              </a>
+              <Link to="/range/rtl-right-to-left">RTL mode</Link>
             </li>
           </ul>
 
@@ -1417,99 +874,61 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/select/mobile-desktop-usage">
-                Mobile & Desktop usage
-              </a>
+              <Link to="/select/mobile-desktop-usage">Mobile & Desktop usage</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/responsive">
-                Responsive behavior
-              </a>
+              <Link to="/select/responsive">Responsive behavior</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/mobile-desktop-display">
-                Understanding display modes
-              </a>
+              <Link to="/select/mobile-desktop-display">Understanding display modes</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/data-sources">
-                Populating the picker
-              </a>
+              <Link to="/select/data-sources">Populating the picker</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/item-templating">
-                Templating
-              </a>
+              <Link to="/select/item-templating">Templating</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/country-picker">
-                Country Dropdown
-              </a>
+              <Link to="/select/country-picker">Country Dropdown</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/image-text">
-                Image & text
-              </a>
+              <Link to="/select/image-text">Image & text</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/multiple-lines">
-                Multiline select
-              </a>
+              <Link to="/select/multiple-lines">Multiline select</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/single-select">
-                Single select
-              </a>
+              <Link to="/select/single-select">Single select</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/multiple-select">
-                Multiple select
-              </a>
+              <Link to="/select/multiple-select">Multiple select</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/group-options">
-                Group options
-              </a>
+              <Link to="/select/group-options">Group options</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/filtering-values">
-                Filtering
-              </a>
+              <Link to="/select/filtering-values">Filtering</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/linked-hierarchical-pickers">
-                Multi level hierarchy
-              </a>
+              <Link to="/select/linked-hierarchical-pickers">Multi level hierarchy</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/setting-values-defaults">
-                Setting values
-              </a>
+              <Link to="/select/setting-values-defaults">Setting values</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/disabled-invalid-values">
-                Disabled values
-              </a>
+              <Link to="/select/disabled-invalid-values">Disabled values</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/themes-ios-material-windows">
-                Theming capabilities
-              </a>
+              <Link to="/select/themes-ios-material-windows">Theming capabilities</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/event-hooks">
-                Event hooks
-              </a>
+              <Link to="/select/event-hooks">Event hooks</Link>
             </li>
             <li>
-              <a className="app-link" href="/select/localization">
-                Localization{' '}
-              </a>
+              <Link to="/select/localization">Localization </Link>
             </li>
             <li>
-              <a className="app-link" href="/select/rtl-right-to-left">
-                RTL support
-              </a>
+              <Link to="/select/rtl-right-to-left">RTL support</Link>
             </li>
           </ul>
 
@@ -1519,84 +938,52 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/forms/mobile">
-                Mobile form
-              </a>
+              <Link to="/forms/mobile">Mobile form</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/desktop">
-                Inline desktop form
-              </a>
+              <Link to="/forms/desktop">Inline desktop form</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/responsive">
-                Responsive form
-              </a>
+              <Link to="/forms/responsive">Responsive form</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/popup">
-                Inside a modal
-              </a>
+              <Link to="/forms/popup">Inside a modal</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/alert-confirm-prompt">
-                Alert, confirm & prompt
-              </a>
+              <Link to="/forms/alert-confirm-prompt">Alert, confirm & prompt</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/notifications">
-                Toast & snackbar
-              </a>
+              <Link to="/forms/notifications">Toast & snackbar</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/buttons">
-                Buttons
-              </a>
+              <Link to="/forms/buttons">Buttons</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/segmented">
-                Segmented
-              </a>
+              <Link to="/forms/segmented">Segmented</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/stepper">
-                Stepper
-              </a>
+              <Link to="/forms/stepper">Stepper</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/button-segmented-stepper-colors">
-                Colors
-              </a>
+              <Link to="/forms/button-segmented-stepper-colors">Colors</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/inputs-text-areas-date-fields">
-                Field types
-              </a>
+              <Link to="/forms/inputs-text-areas-date-fields">Field types</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/input-label-types">
-                Customize the input
-              </a>
+              <Link to="/forms/input-label-types">Customize the input</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/checkbox">
-                Checkbox
-              </a>
+              <Link to="/forms/checkbox">Checkbox</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/switch">
-                Switch
-              </a>
+              <Link to="/forms/switch">Switch</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/radio-button">
-                Radio buttons
-              </a>
+              <Link to="/forms/radio-button">Radio buttons</Link>
             </li>
             <li>
-              <a className="app-link" href="/forms/themes-ios-material-windows">
-                Theming capabilities
-              </a>
+              <Link to="/forms/themes-ios-material-windows">Theming capabilities</Link>
             </li>
           </ul>
 
@@ -1604,14 +991,10 @@ export default function Root() {
 
           <ul>
             <li>
-              <a className="app-link" href="/alerts-notifications/alert">
-                Alert
-              </a>
+              <Link to="/alerts-notifications/alert">Alert</Link>
             </li>
             <li>
-              <a className="app-link" href="/alerts-notifications/notifications">
-                Notifications
-              </a>
+              <Link to="/alerts-notifications/notifications">Notifications</Link>
             </li>
           </ul>
         </div>
