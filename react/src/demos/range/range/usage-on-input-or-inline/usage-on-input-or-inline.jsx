@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,24 +7,30 @@ setOptions({
 });
 
 function App() {
-  const [start, startRef] = React.useState(null);
-  const [end, endRef] = React.useState(null);
+  const [start, startRef] = useState(null);
+  const [end, endRef] = useState(null);
 
-  const inputProps = {
-    placeholder: 'Please Select...',
-  };
+  const inputProps = useMemo(
+    () => ({
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
 
-  const boxInputProps = {
-    label: 'Range',
-    labelStyle: 'stacked',
-    inputStyle: 'outline',
-    placeholder: 'Please Select...',
-  };
+  const boxInputProps = useMemo(
+    () => ({
+      label: 'Range',
+      labelStyle: 'stacked',
+      inputStyle: 'outline',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
 
   return (
     <Page>
-      <Datepicker controls={['calendar']} select="range" inputComponent="input" inputProps={inputProps} />
-      <Datepicker controls={['calendar']} select="range" inputProps={boxInputProps} />
+      <Datepicker select="range" inputComponent="input" inputProps={inputProps} />
+      <Datepicker select="range" inputProps={boxInputProps} />
       <div className="mbsc-grid mbsc-no-padding">
         <div className="mbsc-row">
           <div className="mbsc-col-6">
@@ -36,7 +42,7 @@ function App() {
         </div>
       </div>
       <Datepicker select="range" startInput={start} endInput={end} />
-      <Datepicker controls={['calendar']} select="range" display="inline" />
+      <Datepicker select="range" display="inline" />
     </Page>
   );
 }

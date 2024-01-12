@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,8 +7,8 @@ setOptions({
 });
 
 function App() {
-  const [responsive] = React.useState([
-    {
+  const myResponsive = useMemo(
+    () => ({
       xsmall: {
         display: 'bottom',
       },
@@ -21,21 +21,13 @@ function App() {
         display: 'anchored',
         touchUi: false,
       },
-    },
-  ]);
+    }),
+    [],
+  );
 
   return (
     <Page>
-      <Datepicker
-        controls={['calendar']}
-        responsive={responsive}
-        select="range"
-        showRangeLabels={true}
-        inputProps={{
-          inputStyle: 'box',
-          placeholder: 'Please Select...',
-        }}
-      />
+      <Datepicker responsive={myResponsive} select="range" showRangeLabels={true} inputStyle="box" placeholder="Please Select..." />
     </Page>
   );
 }

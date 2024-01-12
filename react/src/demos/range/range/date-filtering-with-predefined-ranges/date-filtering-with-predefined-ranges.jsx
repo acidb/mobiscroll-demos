@@ -1,5 +1,5 @@
-import React from 'react';
-import { Page, Input, Popup, Select, Datepicker, Button, formatDate, setOptions, options /* localeImport */ } from '@mobiscroll/react';
+import { Button, Datepicker, formatDate, Input, options, Page, Popup, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './date-filtering-with-predefined-ranges.css';
 
 setOptions({
@@ -8,113 +8,41 @@ setOptions({
 });
 
 const startDate = 'dyndatetime(y,m,d)';
-const endDate = 'dyndatetime(y,m,d + 6)';
+const endDate = 'dyndatetime(y,m,d+6)';
 const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day === 0 ? -6 : 1);
 
-const respSelect = {
-  xsmall: {
-    touchUi: true,
-  },
-  small: {
-    touchUi: false,
-  },
-};
-
-const myData = [
-  {
-    value: 'custom',
-    text: 'Custom',
-  },
-  {
-    value: 'today',
-    text: 'Today',
-  },
-  {
-    value: 'yesterday',
-    text: 'Yesterday',
-  },
-  {
-    value: 'last-week',
-    text: 'Last week',
-  },
-  {
-    value: 'last-month',
-    text: 'Last month',
-  },
-  {
-    value: 'last-7-days',
-    text: 'Last 7 days',
-  },
-  {
-    value: 'last-30-days',
-    text: 'Last 30 days',
-  },
-];
-
 function App() {
-  const [isOpen, setOpen] = React.useState(false);
-  const [start, startRef] = React.useState(null);
-  const [end, endRef] = React.useState(null);
-  const [selected, setSelected] = React.useState('custom');
-  const [selectedDate, setSelectedDate] = React.useState([startDate, endDate]);
-  const [inputValue, setInputValue] = React.useState();
-  const [disabledInput, setDisabledInput] = React.useState(false);
+  const [isOpen, setOpen] = useState(false);
+  const [start, startRef] = useState(null);
+  const [end, endRef] = useState(null);
+  const [selected, setSelected] = useState('custom');
+  const [selectedDate, setSelectedDate] = useState([startDate, endDate]);
+  const [inputValue, setInputValue] = useState();
+  const [disabledInput, setDisabledInput] = useState(false);
+  const [input, inputRef] = useState(null);
 
-  const respPopup = {
-    xsmall: {
-      display: 'bottom',
-      touchUi: true,
-      buttons: [
-        {
-          text: 'Apply',
-          handler: () => {
-            const date = selectedDate;
-
-            changeInputValue(date[0], date[1] || date[0]);
-            setOpen(false);
-          },
-        },
-        'cancel',
-      ],
-    },
-    custom: {
-      breakpoint: 559,
-      buttons: [],
-      display: 'anchored',
-      anchor: document.querySelector('.date-filter-input'),
-      anchorAlign: 'start',
-      touchUi: false,
-      scrollLock: false,
-      showArrow: false,
-      maxWidth: 920,
-    },
-  };
-
-  const inputClick = React.useCallback(() => {
+  const inputClick = useCallback(() => {
     setOpen(true);
   }, []);
 
-  const changeInputValue = React.useCallback((start, end) => {
+  const changeInputValue = useCallback((start, end) => {
     const locale = options.locale || {};
     const dateFormat = locale.dateFormat || 'DD/MM/YYYY';
-
     setInputValue(formatDate(dateFormat, new Date(start)) + ' - ' + formatDate(dateFormat, new Date(end)));
   }, []);
 
-  const applyClick = React.useCallback(() => {
-    const date = selectedDate;
-
-    changeInputValue(date[0], date[1] || date[0]);
+  const applyClick = useCallback(() => {
+    changeInputValue(selectedDate[0], selectedDate[1] || selectedDate[0]);
     setOpen(false);
   }, [selectedDate, changeInputValue]);
 
-  const cancelClick = React.useCallback(() => {
+  const cancelClick = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const onChange = React.useCallback((event) => {
+  const onChange = useCallback((event) => {
     const s = event.value;
 
     if (s === 'custom') {
@@ -151,26 +79,101 @@ function App() {
     setSelected(s);
   }, []);
 
-  const onDateChange = React.useCallback((ev) => {
-    const date = ev.value;
-
+  const onDateChange = useCallback((ev) => {
     setDisabledInput(false);
     setSelected('custom');
-    setSelectedDate(date);
+    setSelectedDate(ev.value);
   }, []);
 
-  const onClose = React.useCallback(() => {
+  const onClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  React.useEffect(() => {
-    changeInputValue(startDate, endDate, 'DD/MM/YYYY');
-  });
+  const myData = useMemo(
+    () => [
+      {
+        value: 'custom',
+        text: 'Custom',
+      },
+      {
+        value: 'today',
+        text: 'Today',
+      },
+      {
+        value: 'yesterday',
+        text: 'Yesterday',
+      },
+      {
+        value: 'last-week',
+        text: 'Last week',
+      },
+      {
+        value: 'last-month',
+        text: 'Last month',
+      },
+      {
+        value: 'last-7-days',
+        text: 'Last 7 days',
+      },
+      {
+        value: 'last-30-days',
+        text: 'Last 30 days',
+      },
+    ],
+    [],
+  );
+
+  const respSelect = useMemo(
+    () => ({
+      xsmall: {
+        touchUi: true,
+      },
+      small: {
+        touchUi: false,
+      },
+    }),
+    [],
+  );
+
+  const respPopup = useMemo(
+    () => ({
+      xsmall: {
+        display: 'bottom',
+        touchUi: true,
+        buttons: [
+          {
+            text: 'Apply',
+            handler: () => {
+              changeInputValue(selectedDate[0], selectedDate[1] || selectedDate[0]);
+              setOpen(false);
+            },
+          },
+          'cancel',
+        ],
+      },
+      custom: {
+        breakpoint: 559,
+        buttons: [],
+        display: 'anchored',
+        anchor: input && input.nativeElement,
+        anchorAlign: 'start',
+        touchUi: false,
+        scrollLock: false,
+        showArrow: false,
+        maxWidth: 920,
+      },
+    }),
+    [changeInputValue, input, selectedDate],
+  );
+
+  useEffect(() => {
+    changeInputValue(startDate, endDate);
+  }, [changeInputValue]);
 
   return (
     <Page>
       <div className="mbsc-form-group">
-        <Input inputStyle="box" onClick={inputClick} defaultValue={inputValue} className="date-filter-input" readOnly></Input>
+        <Input ref={inputRef} inputStyle="box" onClick={inputClick} defaultValue={inputValue} readOnly />
       </div>
       <Popup isOpen={isOpen} onClose={onClose} responsive={respPopup} cssClass="demo-date-filtering-popup">
         <div className="mbsc-grid mbsc-no-padding">
@@ -180,10 +183,8 @@ function App() {
                 <Select
                   data={myData}
                   label="Date range"
-                  inputProps={{
-                    labelStyle: 'stacked',
-                    inputStyle: 'box',
-                  }}
+                  labelStyle="stacked"
+                  inputStyle="box"
                   responsive={respSelect}
                   value={selected}
                   onChange={onChange}
@@ -196,7 +197,7 @@ function App() {
                   inputStyle="box"
                   className="demo-date-filtering-range-input"
                   placeholder="Please Select..."
-                ></Input>
+                />
                 <Input
                   ref={endRef}
                   disabled={disabledInput}
@@ -205,7 +206,7 @@ function App() {
                   inputStyle="box"
                   className="demo-date-filtering-range-input"
                   placeholder="Please Select..."
-                ></Input>
+                />
               </div>
               <div className="demo-date-filtering-desktop-buttons mbsc-button-group-justified">
                 <Button className="apply-button" onClick={applyClick}>
@@ -218,7 +219,6 @@ function App() {
             </div>
             <div className="mbsc-col-sm-8 mbsc-pull-sm-4">
               <Datepicker
-                controls={['calendar']}
                 select="range"
                 display="inline"
                 showRangeLabels={false}
@@ -230,7 +230,7 @@ function App() {
                 showOnFocus={false}
                 value={selectedDate}
                 onChange={onDateChange}
-              ></Datepicker>
+              />
             </div>
           </div>
         </div>

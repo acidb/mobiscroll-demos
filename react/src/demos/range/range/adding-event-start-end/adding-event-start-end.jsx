@@ -1,5 +1,5 @@
-import React from 'react';
-import { Datepicker, Input, Switch, SegmentedGroup, SegmentedItem, Textarea, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Datepicker, Input, Page, Switch, SegmentedGroup, SegmentedItem, setOptions, Textarea /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useCallback } from 'react';
 
 setOptions({
   // langJs,
@@ -7,18 +7,21 @@ setOptions({
 });
 
 function App() {
-  const [start, setStart] = React.useState(null);
-  const [end, setEnd] = React.useState(null);
-  const [allDay, setAllDay] = React.useState(false);
-  const [showAs, setShowAs] = React.useState('busy');
+  const [start, setStart] = useState(null);
+  const [end, setEnd] = useState(null);
+  const [allDay, setAllDay] = useState(false);
+  const [showAs, setShowAs] = useState('busy');
 
-  const controls = React.useMemo(() => (allDay ? ['date'] : ['datetime']));
-  const controlChange = (ev) => {
+  const controls = useMemo(() => (allDay ? ['date'] : ['datetime']), [allDay]);
+
+  const controlChange = useCallback((ev) => {
     setAllDay(ev.target.checked);
-  };
-  const showAsChange = (ev) => {
+  }, []);
+
+  const showAsChange = useCallback((ev) => {
     setShowAs(ev.target.value);
-  };
+  }, []);
+
   return (
     <Page>
       <Input label="Title" placeholder="Name of the event" />

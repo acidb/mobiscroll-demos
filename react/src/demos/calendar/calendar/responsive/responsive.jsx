@@ -7,29 +7,27 @@ setOptions({
 });
 
 function App() {
-  const [responsive] = useMemo(
-    () => [
-      {
-        xsmall: {
-          display: 'bottom',
-        },
-        small: {
-          display: 'anchored',
-        },
-        custom: {
-          // Custom breakpoint
-          breakpoint: 800,
-          display: 'anchored',
-          touchUi: false,
-        },
+  const myResponsive = useMemo(
+    () => ({
+      xsmall: {
+        display: 'bottom',
       },
-    ],
+      small: {
+        display: 'anchored',
+      },
+      custom: {
+        // Custom breakpoint
+        breakpoint: 800,
+        display: 'anchored',
+        touchUi: false,
+      },
+    }),
     [],
   );
 
   return (
     <Page>
-      <Datepicker responsive={responsive} inputStyle="box" placeholder="Please Select..." />
+      <Datepicker responsive={myResponsive} inputStyle="box" placeholder="Please Select..." />
     </Page>
   );
 }

@@ -1,6 +1,11 @@
-import React from 'react';
-import { Datepicker, Button, Page, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Button, Datepicker, Page, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useState } from 'react';
 import './presets.css';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const now = new Date();
 const curr = new Date();
@@ -11,43 +16,43 @@ const startMonth = new Date(curr.getFullYear(), curr.getMonth() - 1, 1);
 const endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0);
 
 function App() {
-  const [value, setValue] = React.useState(null);
-  const [isOpen, setOpen] = React.useState(false);
-  const [toastMsg, setMsg] = React.useState('');
+  const [value, setValue] = useState(null);
+  const [isOpen, setOpen] = useState(false);
+  const [toastMsg, setMsg] = useState('');
 
-  const openToast = React.useCallback((message) => {
+  const openToast = useCallback((message) => {
     setMsg(message);
     setOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const closeToast = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const setToday = () => {
+  const setToday = useCallback(() => {
     setValue([now, now]);
     openToast('Today Selected');
-  };
+  }, [openToast]);
 
-  const setYesterday = () => {
+  const setYesterday = useCallback(() => {
     setValue([yesterday, yesterday]);
     openToast('Yesterday Selected');
-  };
+  }, [openToast]);
 
-  const setWeek = () => {
+  const setWeek = useCallback(() => {
     setValue([startWeek, endWeek]);
     openToast('This Week Selected');
-  };
+  }, [openToast]);
 
-  const setMonth = () => {
+  const setMonth = useCallback(() => {
     setValue([startMonth, endMonth]);
     openToast('Last Mont Selected');
-  };
+  }, [openToast]);
 
-  const clear = () => {
+  const clear = useCallback(() => {
     setValue(null);
     openToast('Clear Value');
-  };
+  }, [openToast]);
 
   return (
     <Page className="md-range-filter">
@@ -71,15 +76,7 @@ function App() {
       </div>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Or by a custom range</div>
-        <Datepicker
-          // theme
-          // locale
-          controls={['calendar']}
-          select="range"
-          display="inline"
-          showRangeLabels={false}
-          value={value}
-        />
+        <Datepicker select="range" display="inline" showRangeLabels={false} value={value} />
       </div>
       <Toast message={toastMsg} isOpen={isOpen} onClose={closeToast} />
     </Page>

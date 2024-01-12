@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,26 +7,21 @@ setOptions({
 });
 
 function App() {
-  const [start, startRef] = React.useState(null);
-  const [end, endRef] = React.useState(null);
+  const [start, startRef] = useState(null);
+  const [end, endRef] = useState(null);
 
   return (
     <Page>
       <Datepicker controls={['time']} select="range" display="inline" />
-
       <Datepicker controls={['timegrid']} select="range" display="inline" />
-
       <Datepicker
         controls={['time']}
         select="range"
-        inputProps={{
-          label: 'Range',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
+        label="Range"
+        labelStyle="stacked"
+        inputStyle="outline"
+        placeholder="Please Select..."
       />
-
       <Datepicker controls={['time']} select="range" startInput={start} endInput={end} />
       <div className="mbsc-grid mbsc-no-padding">
         <div className="mbsc-row">

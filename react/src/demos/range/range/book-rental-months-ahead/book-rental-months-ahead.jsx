@@ -1,15 +1,15 @@
-import React from 'react';
 import {
   Datepicker,
-  CalendarPrev,
   CalendarNav,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
   formatDate,
   getJson,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './book-rental-months-ahead.css';
+import { useCallback, useEffect, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -19,11 +19,11 @@ setOptions({
 const now = new Date();
 
 function App() {
-  const [labels, setLabels] = React.useState([]);
-  const [invalid, setInvalid] = React.useState([]);
-  const [colors, setColors] = React.useState([]);
+  const [labels, setLabels] = useState([]);
+  const [invalid, setInvalid] = useState([]);
+  const [colors, setColors] = useState([]);
 
-  const getColors = React.useCallback((start, end) => {
+  const getColors = useCallback((start, end) => {
     return [
       {
         date: start,
@@ -42,7 +42,24 @@ function App() {
     ];
   }, []);
 
-  React.useEffect(() => {
+  const calendarHeader = useCallback(() => {
+    return (
+      <>
+        <CalendarNav />
+        <div className="md-book-rental-header">
+          <div className="md-book-rental-zone md-book-rental-pre">pre-season</div>
+          <div className="md-book-rental-zone md-book-rental-in">in-season</div>
+          <div className="md-book-rental-zone md-book-rental-off">off-season</div>
+          <div className="md-book-rental-zone md-book-rental-booked">booked</div>
+        </div>
+        <CalendarPrev />
+        <CalendarToday />
+        <CalendarNext />
+      </>
+    );
+  }, []);
+
+  useEffect(() => {
     const monthColors = [
       {
         background: '#b2f1c080',
@@ -187,6 +204,8 @@ function App() {
       },
     ];
 
+    console.log(monthColors);
+
     getJson(
       'https://trial.mobiscroll.com/getrentals/?year=' + now.getFullYear() + '&month=' + now.getMonth(),
       (data) => {
@@ -231,23 +250,6 @@ function App() {
       'jsonp',
     );
   }, [getColors]);
-
-  const calendarHeader = React.useCallback(() => {
-    return (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="md-book-rental-header">
-          <div className="md-book-rental-zone md-book-rental-pre">pre-season</div>
-          <div className="md-book-rental-zone md-book-rental-in">in-season</div>
-          <div className="md-book-rental-zone md-book-rental-off">off-season</div>
-          <div className="md-book-rental-zone md-book-rental-booked">booked</div>
-        </div>
-        <CalendarPrev />
-        <CalendarToday />
-        <CalendarNext />
-      </React.Fragment>
-    );
-  }, []);
 
   return (
     <Datepicker
