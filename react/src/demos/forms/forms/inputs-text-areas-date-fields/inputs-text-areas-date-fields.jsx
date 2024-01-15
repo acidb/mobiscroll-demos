@@ -1,5 +1,4 @@
-import React from 'react';
-import { setOptions, Input, Textarea, Datepicker, Dropdown, Page /* localeImport */ } from '@mobiscroll/react';
+import { Datepicker, Dropdown, Input, Page, setOptions, Textarea /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -7,8 +6,6 @@ setOptions({
 });
 
 function App() {
-  const props1 = { placeholder: 'Please Select...', label: 'Calendar' };
-  const props2 = { placeholder: 'Please Select...', label: 'Date scroller' };
   return (
     <Page>
       <div className="mbsc-form-group">
@@ -33,8 +30,8 @@ function App() {
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Input fields for date entry</div>
         <Input type="date" label="Date field" placeholder="Please Select..." />
-        <Datepicker controls={['calendar']} inputProps={props1} />
-        <Datepicker controls={['date']} inputProps={props2} />
+        <Datepicker label="Calendar" placeholder="Please select..." />
+        <Datepicker controls={['date']} label="Date scroller" placeholder="Please select..." />
       </div>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Input fields for number entry</div>

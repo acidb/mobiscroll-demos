@@ -1,4 +1,3 @@
-import React from 'react';
 import { Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({

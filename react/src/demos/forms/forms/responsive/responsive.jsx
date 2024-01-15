@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './responsive.css';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Dropdown, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './desktop.css';
 

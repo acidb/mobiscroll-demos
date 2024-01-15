@@ -1,15 +1,5 @@
-import React from 'react';
-import {
-  setOptions,
-  Page,
-  Popup,
-  Button,
-  Input,
-  Textarea,
-  Switch,
-  SegmentedGroup,
-  SegmentedItem /* localeImport */,
-} from '@mobiscroll/react';
+import { Button, Input, Page, Popup, Segmented, SegmentedGroup, setOptions, Switch, Textarea /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -28,17 +18,21 @@ const responsivePopup = {
 };
 
 function App() {
-  const [isOpen, setOpen] = React.useState(false);
-  const [anchor, setAnchor] = React.useState(null);
+  const [isOpen, setOpen] = useState(false);
+  const [anchor, setAnchor] = useState(null);
 
-  const onBtnClick = React.useCallback((args) => {
+  const handleBtnClick = useCallback((args) => {
     setAnchor(args.target);
     setOpen(true);
   }, []);
 
+  const handlePopupClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
   return (
     <Page>
-      <Button onClick={onBtnClick}>Show modal</Button>
+      <Button onClick={handleBtnClick}>Show modal</Button>
       <Popup
         display="anchored"
         contentPadding={false}
@@ -46,9 +40,7 @@ function App() {
         buttons={popupButtons}
         isOpen={isOpen}
         responsive={responsivePopup}
-        onClose={() => {
-          setOpen(false);
-        }}
+        onClose={handlePopupClose}
       >
         <div className="mbsc-form-group">
           <Input label="Title" />
@@ -59,10 +51,10 @@ function App() {
           <Input label="Starts" />
           <Input label="Ends" />
           <SegmentedGroup>
-            <SegmentedItem value="busy" defaultChecked={true}>
+            <Segmented value="busy" defaultChecked={true}>
               Show as busy
-            </SegmentedItem>
-            <SegmentedItem value="free">Show as free</SegmentedItem>
+            </Segmented>
+            <Segmented value="free">Show as free</Segmented>
           </SegmentedGroup>
         </div>
       </Popup>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { setOptions, Toast, Page, Button /* localeImport */ } from '@mobiscroll/react';
+import { Button, Page, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,15 +7,15 @@ setOptions({
 });
 
 function App() {
-  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
+  const actionToast = useCallback(() => {
+    setToastOpen(true);
   }, []);
 
-  const actionToast = () => {
-    setToastOpen(true);
-  };
+  const closeToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
 
   return (
     <Page>

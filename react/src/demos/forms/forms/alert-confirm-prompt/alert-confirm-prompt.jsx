@@ -1,5 +1,5 @@
-import React from 'react';
-import { setOptions, Alert, Confirm, Prompt, Page, Button /* localeImport */ } from '@mobiscroll/react';
+import { Alert, Button, Confirm, Page, Prompt, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,31 +7,31 @@ setOptions({
 });
 
 function App() {
-  const [isAlertOpen, setAlertOpen] = React.useState(false);
-  const [isConfirmOpen, setConfirmOpen] = React.useState(false);
-  const [isPromptOpen, setPromptOpen] = React.useState(false);
+  const [isAlertOpen, setAlertOpen] = useState(false);
+  const [isConfirmOpen, setConfirmOpen] = useState(false);
+  const [isPromptOpen, setPromptOpen] = useState(false);
 
-  const showAlert = () => {
+  const showAlert = useCallback(() => {
     setAlertOpen(true);
-  };
+  }, []);
 
-  const closeAlert = React.useCallback(() => {
+  const showConfirm = useCallback(() => {
+    setConfirmOpen(true);
+  }, []);
+
+  const showPrompt = useCallback(() => {
+    setPromptOpen(true);
+  }, []);
+
+  const closeAlert = useCallback(() => {
     setAlertOpen(false);
   }, []);
 
-  const showConfirm = () => {
-    setConfirmOpen(true);
-  };
-
-  const closeConfirm = React.useCallback(() => {
+  const closeConfirm = useCallback(() => {
     setConfirmOpen(false);
   }, []);
 
-  const showPrompt = () => {
-    setPromptOpen(true);
-  };
-
-  const closePrompt = React.useCallback((value) => {
+  const closePrompt = useCallback((value) => {
     setPromptOpen(false);
     console.log('The password is: ' + value);
   }, []);
@@ -60,7 +60,6 @@ function App() {
         isOpen={isPromptOpen}
         onClose={closePrompt}
       />
-
       <Button onClick={showAlert}>Alert</Button>
       <Button onClick={showConfirm}>Confirm</Button>
       <Button onClick={showPrompt}>Prompt</Button>

@@ -1,5 +1,4 @@
-import React from 'react';
-import { setOptions, Page, Button, Stepper, Segmented, SegmentedGroup /* localeImport */ } from '@mobiscroll/react';
+import { Button, Page, Segmented, SegmentedGroup, setOptions, Stepper /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
