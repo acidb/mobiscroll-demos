@@ -1,9 +1,14 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         recurring: {
           repeat: 'daily', // possible values: 'daily', 'weekly', 'monthly', 'yearly'
@@ -46,23 +51,13 @@ function App() {
         title: "New Year's Eve",
         color: 'blue',
       },
-    ];
-  }, []);
-
-  const view = React.useMemo(() => {
-    return {
-      agenda: { type: 'month' },
-    };
-  }, []);
-
-  return (
-    <Eventcalendar
-      // locale
-      // theme
-      data={myEvents}
-      view={view}
-    />
+    ],
+    [],
   );
+
+  const myView = useMemo(() => ({ agenda: { type: 'month' } }), []);
+
+  return <Eventcalendar data={myEvents} view={myView} />;
 }
 
 export default App;

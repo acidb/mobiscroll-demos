@@ -1,5 +1,5 @@
-import React from 'react';
 import { Button, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,7 +7,9 @@ setOptions({
 });
 
 function App() {
-  const myEvents = React.useMemo(
+  const [isToastOpen, setToastOpen] = useState(false);
+
+  const myEvents = useMemo(
     () => [
       {
         title: 'Zumba Class',
@@ -33,9 +35,7 @@ function App() {
     [],
   );
 
-  const [isToastOpen, setToastOpen] = React.useState(false);
-
-  const calView = React.useMemo(
+  const calView = useMemo(
     () => ({
       calendar: { type: 'week' },
       agenda: { type: 'week' },
@@ -43,15 +43,15 @@ function App() {
     [],
   );
 
-  const displayToast = React.useCallback(() => {
+  const displayToast = useCallback(() => {
     setToastOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const closeToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const renderAgendaEmpty = React.useCallback(() => {
+  const renderAgendaEmpty = useCallback(() => {
     return (
       <div className="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/smart-empty-tin-can.png" alt="Empty can" style={{ width: 150, margin: '50px 0' }} />
@@ -65,7 +65,7 @@ function App() {
         </div>
       </div>
     );
-  });
+  }, [displayToast]);
 
   return (
     <>

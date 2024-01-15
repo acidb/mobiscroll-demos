@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './full-event-customization.css';
 
 setOptions({
@@ -8,10 +8,11 @@ setOptions({
 });
 
 function App() {
-  const [view, setView] = React.useState('month');
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  React.useEffect(() => {
+  const myView = useMemo(() => ({ agenda: { type: 'month' } }), []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/agenda-events/',
       (events) => {
@@ -21,12 +22,8 @@ function App() {
     );
   }, []);
 
-  const [calView, setCalView] = React.useState({
-    agenda: { type: 'month' },
-  });
-
-  const renderEvent = React.useCallback((data) => {
-    return (
+  const renderEvent = useCallback(
+    (data) => (
       <div className="md-full-event">
         <img className="md-full-event-img" src={'https://img.mobiscroll.com/demos/' + data.original.img} />
         <div className="md-full-event-details">
@@ -41,10 +38,11 @@ function App() {
           </div>
         </div>
       </div>
-    );
-  });
+    ),
+    [],
+  );
 
-  return <Eventcalendar renderEvent={renderEvent} view={calView} data={myEvents} />;
+  return <Eventcalendar renderEvent={renderEvent} view={myView} data={myEvents} />;
 }
 
 export default App;

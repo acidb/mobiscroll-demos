@@ -1,5 +1,10 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const now = new Date();
 const day = now.getDay();
@@ -120,27 +125,18 @@ const myEvents = [
 ];
 
 function App() {
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       agenda: {
         type: 'week',
       },
-    };
-  }, []);
-
-  const orderMyEvents = React.useCallback((event) => {
-    return event.accepted ? 1 : -1;
-  }, []);
-
-  return (
-    <Eventcalendar
-      // theme
-      // locale
-      view={view}
-      data={myEvents}
-      eventOrder={orderMyEvents}
-    />
+    }),
+    [],
   );
+
+  const orderMyEvents = useCallback((event) => (event.accepted ? 1 : -1), []);
+
+  return <Eventcalendar view={myView} data={myEvents} eventOrder={orderMyEvents} />;
 }
 
 export default App;

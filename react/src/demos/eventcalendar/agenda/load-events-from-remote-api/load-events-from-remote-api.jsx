@@ -1,11 +1,18 @@
-import React from 'react';
-import { Eventcalendar, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useEffect, useMemo, useState } from 'react';
 import './load-events-from-remote-api.css';
 
-function App() {
-  const [myEvents, setEvents] = React.useState([]);
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  React.useEffect(() => {
+function App() {
+  const [myEvents, setEvents] = useState([]);
+
+  const myView = useMemo(() => ({ agenda: { type: 'month' } }), []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -15,21 +22,7 @@ function App() {
     );
   }, []);
 
-  const view = React.useMemo(() => {
-    return {
-      agenda: { type: 'month' },
-    };
-  }, []);
-
-  return (
-    <Eventcalendar
-      // theme
-      // locale
-      height={600}
-      data={myEvents}
-      view={view}
-    />
-  );
+  return <Eventcalendar height={600} data={myEvents} view={myView} />;
 }
 
 export default App;

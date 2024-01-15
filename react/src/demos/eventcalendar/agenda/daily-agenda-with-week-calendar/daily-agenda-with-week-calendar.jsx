@@ -1,12 +1,34 @@
-import React from 'react';
-import { Eventcalendar, getJson, Toast /* localeImport */ } from '@mobiscroll/react';
+import { getJson, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [toastText, setToastText] = React.useState();
+  const [myEvents, setEvents] = useState([]);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastText, setToastText] = useState();
 
-  React.useEffect(() => {
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const handleEventClick = useCallback((event) => {
+    setToastText(event.event.title);
+    setToastOpen(true);
+  }, []);
+
+  const myView = useMemo(
+    () => ({
+      calendar: { type: 'week' },
+      agenda: { type: 'day' },
+    }),
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -16,37 +38,10 @@ function App() {
     );
   }, []);
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const onEventClick = React.useCallback((event) => {
-    setToastText(event.event.title);
-    setToastOpen(true);
-  }, []);
-
-  const view = React.useMemo(() => {
-    return {
-      calendar: { type: 'week' },
-      agenda: { type: 'day' },
-    };
-  }, []);
-
   return (
     <div>
-      <Eventcalendar
-        // theme
-        // locale
-        data={myEvents}
-        view={view}
-        onEventClick={onEventClick}
-      />
-      <Toast
-        // theme
-        message={toastText}
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Eventcalendar data={myEvents} view={myView} onEventClick={handleEventClick} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
     </div>
   );
 }

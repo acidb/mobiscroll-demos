@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './synchronized-views.css';
 
 setOptions({
@@ -8,10 +8,17 @@ setOptions({
 });
 
 function App() {
-  const [mySelectedDate, setSelectedDate] = React.useState(new Date());
-  const [myEvents, setEvents] = React.useState([]);
+  const [mySelectedDate, setSelectedDate] = useState(new Date());
+  const [myEvents, setEvents] = useState([]);
 
-  React.useEffect(() => {
+  const monthView = useMemo(() => ({ calendar: { popover: false, labels: false } }), []);
+  const dayView = useMemo(() => ({ agenda: { type: 'day' } }), []);
+
+  const handleDateChange = useCallback((event) => {
+    setSelectedDate(event.date);
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -21,29 +28,15 @@ function App() {
     );
   }, []);
 
-  const handleDateChange = React.useCallback((event, inst) => {
-    setSelectedDate(event.date);
-  }, []);
-
-  const monthView = React.useMemo(() => {
-    return {
-      calendar: { popover: false, labels: false },
-    };
-  }, []);
-
-  const dayView = React.useMemo(() => {
-    return {
-      agenda: { type: 'day' },
-    };
-  }, []);
-
   return (
     <div className="mbsc-grid md-demo-synchronized-views">
       <div className="mbsc-row mbsc-no-padding">
-        <div className="mbsc-col-md-8 mbsc-col-12">
-          <Eventcalendar view={monthView} data={myEvents} selectedDate={mySelectedDate} onSelectedDateChange={handleDateChange} />
+        <div className="mbsc-col-md-4 mbsc-col-12">
+          <div>
+            <Eventcalendar view={monthView} data={myEvents} selectedDate={mySelectedDate} onSelectedDateChange={handleDateChange} />
+          </div>
         </div>
-        <div className="mbsc-col-md-4 mbsc-col-12 md-col-right">
+        <div className="mbsc-col-md-8 mbsc-col-12 md-col-right">
           <Eventcalendar view={dayView} data={myEvents} selectedDate={mySelectedDate} onSelectedDateChange={handleDateChange} />
         </div>
       </div>

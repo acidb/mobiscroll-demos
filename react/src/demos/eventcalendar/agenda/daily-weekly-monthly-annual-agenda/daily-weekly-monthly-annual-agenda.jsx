@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, Page, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
+import { getJson, Eventcalendar, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useEffect, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,9 +7,13 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  React.useEffect(() => {
+  const dayView = useMemo(() => ({ agenda: { type: 'day' } }), []);
+  const weekView = useMemo(() => ({ agenda: { type: 'week' } }), []);
+  const monthView = useMemo(() => ({ agenda: { type: 'month' } }), []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -17,24 +21,6 @@ function App() {
       },
       'jsonp',
     );
-  }, []);
-
-  const dayView = React.useMemo(() => {
-    return {
-      agenda: { type: 'day' },
-    };
-  }, []);
-
-  const weekView = React.useMemo(() => {
-    return {
-      agenda: { type: 'week' },
-    };
-  }, []);
-
-  const monthView = React.useMemo(() => {
-    return {
-      agenda: { type: 'month' },
-    };
   }, []);
 
   return (
