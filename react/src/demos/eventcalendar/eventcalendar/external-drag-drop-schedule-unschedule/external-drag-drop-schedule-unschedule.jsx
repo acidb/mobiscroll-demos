@@ -1,5 +1,6 @@
-import React from 'react';
-import { Eventcalendar, Draggable, Dropcontainer, setOptions, getJson, toast /* localeImport */ } from '@mobiscroll/react';
+import { Draggable, Dropcontainer, Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import PropTypes from 'prop-types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './external-drag-drop-schedule-unschedule.css';
 
 setOptions({
@@ -7,33 +8,34 @@ setOptions({
   // themeJs
 });
 
-function Task(props) {
-  const [draggable, setDraggable] = React.useState();
+function Task({ data }) {
+  const [draggable, setDraggable] = useState();
 
-  const setDragElm = React.useCallback((elm) => {
-    setDraggable(elm);
-  }, []);
-
-  const event = props.data;
-  const eventLength = Math.round(Math.abs(new Date(event.end).getTime() - new Date(event.start).getTime()) / (60 * 60 * 1000));
+  const eventLength = Math.round(Math.abs(new Date(data.end).getTime() - new Date(data.start).getTime()) / (60 * 60 * 1000));
 
   return (
     <div>
-      {!event.hide && (
-        <div ref={setDragElm} className="external-drop-task" style={{ background: event.color }}>
-          <div>{event.title}</div>
+      {!data.hide && (
+        <div ref={setDraggable} className="external-drop-task" style={{ background: data.color }}>
+          <div>{data.title}</div>
           <div>{eventLength + ' hour' + (eventLength > 1 ? 's' : '')}</div>
-          <Draggable dragData={event} element={draggable} />
+          <Draggable dragData={data} element={draggable} />
         </div>
       )}
     </div>
   );
 }
 
-function App() {
-  const [myEvents, setEvents] = React.useState([]);
+Task.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
-  const [myTasks, setTasks] = React.useState([
+function App() {
+  const [dropCont, setDropCont] = useState();
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState();
+  const [myEvents, setEvents] = useState([]);
+  const [myTasks, setTasks] = useState([
     {
       id: 1,
       title: 'Product team meeting',
@@ -64,44 +66,33 @@ function App() {
     },
   ]);
 
-  const view = React.useMemo(() => {
-    return {
-      calendar: { labels: true },
-    };
-  }, []);
+  const myView = useMemo(() => ({ calendar: { labels: true } }), []);
 
-  const [dropCont, setDropCont] = React.useState();
-  const setDropElm = React.useCallback((elm) => {
-    setDropCont(elm);
-  }, []);
-
-  const onEventCreate = React.useCallback(
+  const handleEventCreate = useCallback(
     (args) => {
       setTasks(myTasks.filter((item) => item.id !== args.event.id));
-
-      toast({
-        message: args.event.title + ' added',
-      });
+      setToastMessage(args.event.title + ' added');
+      setToastOpen(true);
     },
     [myTasks],
   );
 
-  const onEventDelete = React.useCallback((args) => {
-    toast({
-      message: args.event.title + ' unscheduled',
-    });
+  const handleEventDelete = useCallback((args) => {
+    setToastMessage(args.event.title + ' unscheduled');
+    setToastOpen(true);
   }, []);
 
-  const onItemDrop = React.useCallback(
-    (args) => {
-      if (args.data) {
-        setTasks([...myTasks, args.data]);
-      }
-    },
-    [myTasks],
-  );
+  const handleItemDrop = useCallback((args) => {
+    if (args.data) {
+      setTasks((myTasks) => [...myTasks, args.data]);
+    }
+  }, []);
 
-  React.useEffect(() => {
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/drag-drop-events/',
       (events) => {
@@ -117,17 +108,17 @@ function App() {
         <div className="mbsc-col-sm-9 external-drop-calendar">
           <Eventcalendar
             data={myEvents}
-            view={view}
+            view={myView}
             dragToMove={true}
             dragToCreate={true}
             externalDrop={true}
             externalDrag={true}
-            onEventCreate={onEventCreate}
-            onEventDelete={onEventDelete}
+            onEventCreate={handleEventCreate}
+            onEventDelete={handleEventDelete}
           />
         </div>
-        <div className="mbsc-col-sm-3 external-drop-cont" ref={setDropElm}>
-          <Dropcontainer onItemDrop={onItemDrop} element={dropCont}>
+        <div className="mbsc-col-sm-3 external-drop-cont" ref={setDropCont}>
+          <Dropcontainer onItemDrop={handleItemDrop} element={dropCont}>
             <div className="mbsc-form-group-title">Available tasks</div>
             {myTasks.map((task) => (
               <Task key={task.id} data={task} />
@@ -135,6 +126,7 @@ function App() {
           </Dropcontainer>
         </div>
       </div>
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleToastClose} />
     </div>
   );
 }

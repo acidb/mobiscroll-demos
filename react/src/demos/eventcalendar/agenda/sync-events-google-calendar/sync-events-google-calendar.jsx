@@ -207,7 +207,7 @@ function App() {
         renderHeader={renderMyHeader}
         onPageLoading={handlePageLoading}
         onSelectedDateChange={handleSelectedDateChange}
-      ></Eventcalendar>
+      />
       <Popup
         isOpen={isOpen}
         anchor={myAnchor}

@@ -7,7 +7,6 @@ import {
   formatDate,
   getJson,
   Input,
-  Page,
   Popup,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
@@ -113,7 +112,7 @@ function App() {
   );
 
   return (
-    <Page>
+    <>
       <Eventcalendar
         className="md-search-events"
         selectMultipleEvents={true}
@@ -146,7 +145,7 @@ function App() {
           onEventClick={handleEventClick}
         />
       </Popup>
-    </Page>
+    </>
   );
 }
 

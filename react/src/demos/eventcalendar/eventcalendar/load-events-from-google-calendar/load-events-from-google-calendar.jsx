@@ -1,36 +1,42 @@
-import React from 'react';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import {
-  Eventcalendar,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext,
-  toast /* localeImport */,
+  Eventcalendar,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { googleCalendarSync } from '@mobiscroll/calendar-integration';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import './load-events-from-google-calendar.css';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
 
 function App() {
-  const [events, setEvents] = React.useState([]);
-  const [isLoading, setLoading] = React.useState(false);
-  const [view, setView] = React.useState('month');
-  const [calView, setCalView] = React.useState({
-    calendar: { labels: true },
-  });
-  const firstDay = React.useRef();
-  const lastDay = React.useRef();
+  const [events, setEvents] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [view, setView] = useState('month');
+  const [calView, setCalView] = useState({ calendar: { labels: true } });
 
-  const onError = React.useCallback((resp) => {
-    toast({
-      message: resp.error ? resp.error : resp.result.error.message,
-    });
+  const firstDay = useRef();
+  const lastDay = useRef();
+
+  const onError = useCallback((resp) => {
+    setToastMessage(resp.error ? resp.error : resp.result.error.message);
+    setToastOpen(true);
   }, []);
 
-  const loadEvents = React.useCallback(() => {
+  const loadEvents = useCallback(() => {
     setLoading(true);
     googleCalendarSync
       .getEvents(CALENDAR_ID, firstDay.current, lastDay.current)
@@ -41,34 +47,7 @@ function App() {
       .catch(onError);
   }, [firstDay, lastDay, onError]);
 
-  const onPageLoading = React.useCallback(
-    (event) => {
-      const start = event.viewStart;
-      const end = event.viewEnd;
-
-      // Calculate dates
-      // (pre-load events for previous and next pages as well)
-      if (view === 'month') {
-        firstDay.current = start;
-        lastDay.current = end;
-      } else {
-        firstDay.current = new Date(start.getFullYear(), start.getMonth(), start.getDate() - 7);
-        lastDay.current = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 7);
-      }
-
-      loadEvents();
-    },
-    [loadEvents, view],
-  );
-
-  React.useEffect(() => {
-    googleCalendarSync.init({
-      apiKey: '<YOUR_GOOGLE_API_KEY>',
-      onInit: loadEvents,
-    });
-  }, [loadEvents]);
-
-  const changeView = (event) => {
+  const changeView = useCallback((event) => {
     let calView;
 
     switch (event.target.value) {
@@ -98,52 +77,82 @@ function App() {
 
     setView(event.target.value);
     setCalView(calView);
-  };
+  }, []);
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav className="google-cal-header-nav" />
-        <div className="md-spinner">
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-        </div>
-        <div className="google-cal-header-picker">
-          <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="month">Month</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="day">Day</SegmentedItem>
-            <SegmentedItem value="agenda">Agenda</SegmentedItem>
-          </SegmentedGroup>
-        </div>
-        <CalendarPrev className="google-cal-header-prev" />
-        <CalendarToday className="google-cal-header-today" />
-        <CalendarNext className="google-cal-header-next" />
-      </React.Fragment>
-    );
-  };
+  const customWithNavButtons = useCallback(() => {
+    <>
+      <CalendarNav className="google-cal-header-nav" />
+      <div className="md-spinner">
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+      </div>
+      <div className="google-cal-header-picker">
+        <SegmentedGroup value={view} onChange={changeView}>
+          <SegmentedItem value="month">Month</SegmentedItem>
+          <SegmentedItem value="week">Week</SegmentedItem>
+          <SegmentedItem value="day">Day</SegmentedItem>
+          <SegmentedItem value="agenda">Agenda</SegmentedItem>
+        </SegmentedGroup>
+      </div>
+      <CalendarPrev className="google-cal-header-prev" />
+      <CalendarToday className="google-cal-header-today" />
+      <CalendarNext className="google-cal-header-next" />
+    </>;
+  }, [changeView, view]);
+
+  const handlePageLoading = useCallback(
+    (event) => {
+      const start = event.viewStart;
+      const end = event.viewEnd;
+
+      // Calculate dates
+      // (pre-load events for previous and next pages as well)
+      if (view === 'month') {
+        firstDay.current = start;
+        lastDay.current = end;
+      } else {
+        firstDay.current = new Date(start.getFullYear(), start.getMonth(), start.getDate() - 7);
+        lastDay.current = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 7);
+      }
+
+      loadEvents();
+    },
+    [loadEvents, view],
+  );
+
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  useEffect(() => {
+    googleCalendarSync.init({
+      apiKey: '<YOUR_GOOGLE_API_KEY>',
+      onInit: loadEvents,
+    });
+  }, [loadEvents]);
 
   return (
-    <Eventcalendar
-      // locale
-      // theme
-      className={'md-google-calendar ' + (isLoading ? 'md-loading-events' : '')}
-      exclusiveEndDates={true}
-      view={calView}
-      data={events}
-      onPageLoading={onPageLoading}
-      renderHeader={customWithNavButtons}
-    />
+    <>
+      <Eventcalendar
+        className={'md-google-calendar ' + (isLoading ? 'md-loading-events' : '')}
+        exclusiveEndDates={true}
+        view={calView}
+        data={events}
+        onPageLoading={handlePageLoading}
+        renderHeader={customWithNavButtons}
+      />
+      <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
+    </>
   );
 }
 

@@ -17,9 +17,9 @@ function App() {
     setToastOpen(false);
   }, []);
 
-  const handlePageLoading = useCallback((event) => {
-    const year = event.month.getFullYear();
-    const month = event.month.getMonth();
+  const handlePageLoading = useCallback((args) => {
+    const year = args.month.getFullYear();
+    const month = args.month.getMonth();
 
     getJson(
       'https://trial.mobiscroll.com/monthlyevents/?year=' + year + '&month=' + month + '&vers=5',

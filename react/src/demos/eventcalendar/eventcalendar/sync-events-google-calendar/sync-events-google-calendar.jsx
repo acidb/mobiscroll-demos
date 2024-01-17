@@ -1,18 +1,17 @@
-import React from 'react';
-import {
-  Eventcalendar,
-  setOptions,
-  Page,
-  Button,
-  Switch,
-  CalendarNav,
-  CalendarPrev,
-  CalendarNext,
-  CalendarToday,
-  toast,
-  confirm /* localeImport */,
-} from '@mobiscroll/react';
 import { googleCalendarSync } from '@mobiscroll/calendar-integration';
+import {
+  Button,
+  CalendarNav,
+  CalendarNext,
+  CalendarPrev,
+  CalendarToday,
+  Eventcalendar,
+  Page,
+  setOptions,
+  Switch,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import './sync-events-google-calendar.css';
 
 setOptions({
@@ -21,35 +20,201 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [myCalendars, setCalendars] = React.useState([]);
-  const [calendarIds, setCalendarIds] = React.useState([]);
-  const [calendarData, setCalendarData] = React.useState([]);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [editable, setEditable] = React.useState(false);
-  const [isLoading, setLoading] = React.useState(false);
-  const [isHidden, setHidden] = React.useState(true);
-  const [primaryCalendarId, setPrimaryCalendarId] = React.useState();
+  const [myEvents, setEvents] = useState([]);
+  const [myCalendars, setCalendars] = useState([]);
+  const [calendarIds, setCalendarIds] = useState([]);
+  const [calendarData, setCalendarData] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [editable, setEditable] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [isHidden, setHidden] = useState(true);
+  const [primaryCalendarId, setPrimaryCalendarId] = useState();
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
-  const { current: view } = React.useRef({ calendar: { labels: true } });
+  const { current: view } = useRef({ calendar: { labels: true } });
+  const debounce = useRef();
+  const startDate = useRef();
+  const endDate = useRef();
 
-  const debounce = React.useRef();
-  const startDate = React.useRef();
-  const endDate = React.useRef();
-
-  const onError = React.useCallback((resp) => {
-    toast({
-      message: resp.error ? resp.error : resp.result.error.message,
-    });
+  const handleError = useCallback((resp) => {
+    setToastMessage(resp.error ? resp.error : resp.result.error.message);
+    setToastOpen(true);
   }, []);
 
-  const extendDefaultEvent = React.useCallback(() => {
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const handlePageLoading = useCallback(
+    (args) => {
+      clearTimeout(debounce.current);
+      startDate.current = args.viewStart;
+      endDate.current = args.viewEnd;
+      debounce.current = setTimeout(() => {
+        if (googleCalendarSync.isSignedIn()) {
+          setLoading(true);
+          googleCalendarSync
+            .getEvents(calendarIds, startDate.current, endDate.current)
+            .then((events) => {
+              setLoading(false);
+              setEvents(events);
+            })
+            .catch(handleError);
+        }
+      }, 200);
+    },
+    [calendarIds, handleError],
+  );
+
+  const handleEventCreate = useCallback(
+    (args) => {
+      if (googleCalendarSync.isSignedIn()) {
+        const event = args.event;
+        googleCalendarSync
+          .addEvent(primaryCalendarId, event)
+          .then((newEvent) => {
+            newEvent.color = event.color;
+            setEvents((oldEvents) => [...oldEvents, newEvent]);
+            setToastMessage('Event created in "' + calendarData[primaryCalendarId].name + '" calendar');
+            setToastOpen(true);
+          })
+          .catch((error) => {
+            setEvents((oldEvents) => [...oldEvents]);
+            handleError(error);
+          });
+      }
+    },
+    [calendarData, handleError, primaryCalendarId],
+  );
+
+  const handleEventUpdate = useCallback(
+    (args) => {
+      if (googleCalendarSync.isSignedIn()) {
+        confirm({
+          title: 'Are you sure you want to update this event?',
+          message: 'This action will affect your Google Calendar event.',
+          okText: 'Update',
+        }).then((result) => {
+          const event = args.event;
+          if (result) {
+            const calendarId = event.googleCalendarId;
+            googleCalendarSync
+              .updateEvent(calendarId, event)
+              .then(() => {
+                setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
+                setToastOpen(true);
+              })
+              .catch((error) => {
+                setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
+                handleError(error);
+              });
+          } else {
+            setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
+          }
+        });
+      }
+    },
+    [calendarData, handleError],
+  );
+
+  const handleEventDelete = useCallback(
+    (args) => {
+      if (googleCalendarSync.isSignedIn()) {
+        confirm({
+          title: 'Are you sure you want to delete this event?',
+          message: 'This action will remove the event from your Google Calendar as well.',
+          okText: 'Delete',
+        }).then((result) => {
+          if (result) {
+            const event = args.event;
+            const calendarId = event.googleCalendarId;
+            googleCalendarSync
+              .deleteEvent(calendarId, event)
+              .then(() => {
+                setEvents((oldEvents) => oldEvents.filter((item) => item.id !== event.id));
+                setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
+                setToastOpen(true);
+              })
+              .catch(handleError);
+          }
+        });
+      }
+      return false;
+    },
+    [calendarData, handleError],
+  );
+
+  const extendDefaultEvent = useCallback(() => {
     return {
       color: calendarData[primaryCalendarId].color,
     };
   }, [calendarData, primaryCalendarId]);
 
-  React.useEffect(() => {
+  const signIn = useCallback(() => {
+    googleCalendarSync.signIn().catch(handleError);
+  }, [handleError]);
+
+  const signOut = useCallback(() => {
+    googleCalendarSync.signOut().catch(handleError);
+  }, [handleError]);
+
+  const toggleEditing = useCallback((ev) => {
+    setEditable(ev.target.checked);
+  }, []);
+
+  const toggleCalendar = useCallback(
+    (ev) => {
+      const checked = ev.target.checked;
+      const calendarId = ev.target.value;
+      calendarData[calendarId].checked = checked;
+      if (checked) {
+        setLoading(true);
+        setCalendarIds((calIds) => [...calIds, calendarId]);
+        googleCalendarSync
+          .getEvents([calendarId], startDate.current, endDate.current)
+          .then((events) => {
+            setLoading(false);
+            setEvents((oldEvents) => [...oldEvents, ...events]);
+          })
+          .catch(handleError);
+      } else {
+        setCalendarIds((calIds) => calIds.filter((item) => item !== calendarId));
+        setEvents((oldEvents) => oldEvents.filter((item) => item.googleCalendarId !== calendarId));
+      }
+    },
+    [calendarData, handleError],
+  );
+
+  const renderMyHeader = useCallback(
+    () => (
+      <>
+        <CalendarNav />
+        <div className="md-spinner">
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+          <div className="md-spinner-blade"></div>
+        </div>
+        <div className="md-google-calendar-header">
+          <CalendarPrev />
+          <CalendarToday />
+          <CalendarNext />
+        </div>
+      </>
+    ),
+    [],
+  );
+
+  useEffect(() => {
     const onSignedIn = () => {
       setIsLoggedIn(true);
       googleCalendarSync
@@ -76,7 +241,7 @@ function App() {
           setEvents(events);
           setLoading(false);
         })
-        .catch(onError);
+        .catch(handleError);
     };
 
     const onSignedOut = () => {
@@ -96,171 +261,7 @@ function App() {
       onSignedIn: onSignedIn,
       onSignedOut: onSignedOut,
     });
-  }, [onError]);
-
-  const signIn = React.useCallback(() => {
-    googleCalendarSync.signIn().catch(onError);
-  }, [onError]);
-
-  const signOut = React.useCallback(() => {
-    googleCalendarSync.signOut().catch(onError);
-  }, [onError]);
-
-  const toggleEditing = React.useCallback((ev) => {
-    setEditable(ev.target.checked);
-  }, []);
-
-  const toggleCalendar = React.useCallback(
-    (ev) => {
-      const checked = ev.target.checked;
-      const calendarId = ev.target.value;
-      calendarData[calendarId].checked = checked;
-      if (checked) {
-        setLoading(true);
-        setCalendarIds((calIds) => [...calIds, calendarId]);
-        googleCalendarSync
-          .getEvents([calendarId], startDate.current, endDate.current)
-          .then((events) => {
-            setLoading(false);
-            setEvents((oldEvents) => [...oldEvents, ...events]);
-          })
-          .catch(onError);
-      } else {
-        setCalendarIds((calIds) => calIds.filter((item) => item !== calendarId));
-        setEvents((oldEvents) => oldEvents.filter((item) => item.googleCalendarId !== calendarId));
-      }
-    },
-    [calendarData, onError],
-  );
-
-  const renderMyHeader = React.useCallback(() => {
-    return (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="md-spinner">
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-        </div>
-        <div className="md-google-calendar-header">
-          <CalendarPrev />
-          <CalendarToday />
-          <CalendarNext />
-        </div>
-      </React.Fragment>
-    );
-  }, []);
-
-  const onPageLoading = React.useCallback(
-    (args) => {
-      clearTimeout(debounce.current);
-      startDate.current = args.viewStart;
-      endDate.current = args.viewEnd;
-      debounce.current = setTimeout(() => {
-        if (googleCalendarSync.isSignedIn()) {
-          setLoading(true);
-          googleCalendarSync
-            .getEvents(calendarIds, startDate.current, endDate.current)
-            .then((events) => {
-              setLoading(false);
-              setEvents(events);
-            })
-            .catch(onError);
-        }
-      }, 200);
-    },
-    [calendarIds, onError],
-  );
-
-  const onEventCreate = React.useCallback(
-    (args) => {
-      if (googleCalendarSync.isSignedIn()) {
-        const event = args.event;
-        googleCalendarSync
-          .addEvent(primaryCalendarId, event)
-          .then((newEvent) => {
-            newEvent.color = event.color;
-            setEvents((oldEvents) => [...oldEvents, newEvent]);
-            toast({
-              message: 'Event created in "' + calendarData[primaryCalendarId].name + '" calendar',
-            });
-          })
-          .catch((error) => {
-            setEvents((oldEvents) => [...oldEvents]);
-            onError(error);
-          });
-      }
-    },
-    [calendarData, onError, primaryCalendarId],
-  );
-
-  const onEventUpdate = React.useCallback(
-    (args) => {
-      if (googleCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to update this event?',
-          message: 'This action will affect your Google Calendar event.',
-          okText: 'Update',
-        }).then((result) => {
-          const event = args.event;
-          if (result) {
-            const calendarId = event.googleCalendarId;
-            googleCalendarSync
-              .updateEvent(calendarId, event)
-              .then(() => {
-                toast({
-                  message: 'Event updated on "' + calendarData[calendarId].name + '" calendar',
-                });
-              })
-              .catch((error) => {
-                setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-                onError(error);
-              });
-          } else {
-            setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-          }
-        });
-      }
-    },
-    [calendarData, onError],
-  );
-
-  const onEventDelete = React.useCallback(
-    (args) => {
-      if (googleCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to delete this event?',
-          message: 'This action will remove the event from your Google Calendar as well.',
-          okText: 'Delete',
-        }).then((result) => {
-          if (result) {
-            const event = args.event;
-            const calendarId = event.googleCalendarId;
-            googleCalendarSync
-              .deleteEvent(calendarId, event)
-              .then(() => {
-                setEvents((oldEvents) => oldEvents.filter((item) => item.id !== event.id));
-                toast({
-                  message: 'Event deleted from "' + calendarData[calendarId].name + '" calendar',
-                });
-              })
-              .catch(onError);
-          }
-        });
-      }
-      return false;
-    },
-    [calendarData, onError],
-  );
+  }, [handleError]);
 
   return (
     <Page className="md-sync-events-google-cont">
@@ -318,12 +319,13 @@ function App() {
           dragToResize={editable}
           extendDefaultEvent={extendDefaultEvent}
           renderHeader={renderMyHeader}
-          onPageLoading={onPageLoading}
-          onEventCreate={onEventCreate}
-          onEventUpdate={onEventUpdate}
-          onEventDelete={onEventDelete}
-        ></Eventcalendar>
+          onPageLoading={handlePageLoading}
+          onEventCreate={handleEventCreate}
+          onEventUpdate={handleEventUpdate}
+          onEventDelete={handleEventDelete}
+        />
       </div>
+      <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
     </Page>
   );
 }

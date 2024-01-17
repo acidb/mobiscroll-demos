@@ -1,17 +1,16 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  Page,
-  Popup,
-  Input,
   CalendarNav,
-  CalendarPrev,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
-  getJson,
+  Eventcalendar,
   formatDate,
+  getJson,
+  Input,
+  Popup,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './searching-events-in-popup.css';
 
 setOptions({
@@ -20,33 +19,23 @@ setOptions({
 });
 
 function App() {
-  const [calEvents, setCalEvents] = React.useState([]);
-  const [listEvents, setListEvents] = React.useState([]);
-  const [mySelectedEvent, setSelectedEvent] = React.useState([]);
-  const [isOpen, setOpen] = React.useState(false);
-  const [currentDate, setCurrentDate] = React.useState(new Date());
-  const [searchInput, setSearchInput] = React.useState(null);
-  const inputRef = React.useRef();
-  const timerRef = React.useRef(null);
+  const [calEvents, setCalEvents] = useState([]);
+  const [listEvents, setListEvents] = useState([]);
+  const [mySelectedEvent, setSelectedEvent] = useState([]);
+  const [isOpen, setOpen] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [searchInput, setSearchInput] = useState(null);
 
-  const calView = React.useMemo(() => {
-    return {
-      calendar: {
-        labels: true,
-      },
-    };
+  const timerRef = useRef(null);
+
+  const calView = useMemo(() => ({ calendar: { labels: true } }), []);
+  const listView = useMemo(() => ({ agenda: { type: 'year', size: 5 } }), []);
+
+  const searchInputRef = useCallback((input) => {
+    setSearchInput(input && input.nativeElement);
   }, []);
 
-  const listView = React.useMemo(() => {
-    return {
-      agenda: {
-        type: 'year',
-        size: 5,
-      },
-    };
-  }, []);
-
-  const onSearch = React.useCallback((ev) => {
+  const handleInputChange = useCallback((ev) => {
     const text = ev.target.value;
 
     if (timerRef.current) {
@@ -69,34 +58,13 @@ function App() {
     }, 200);
   }, []);
 
-  const onFocus = React.useCallback((ev) => {
+  const handleInputFocus = useCallback((ev) => {
     if (ev.target.value.length > 0) {
       setOpen(true);
     }
   }, []);
 
-  const myHeader = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="md-seach-header-bar mbsc-flex-1-0">
-          <Input
-            startIcon="material-search"
-            ref={inputRef}
-            onChange={onSearch}
-            onFocus={onFocus}
-            inputStyle="box"
-            placeholder="Search events"
-          />
-        </div>
-        <CalendarPrev />
-        <CalendarToday />
-        <CalendarNext />
-      </React.Fragment>
-    );
-  };
-
-  const onPageLoading = React.useCallback((args) => {
+  const handlePageLoading = useCallback((args) => {
     const start = formatDate('YYYY-MM-DD', args.viewStart);
     const end = formatDate('YYYY-MM-DD', args.viewEnd);
 
@@ -111,22 +79,40 @@ function App() {
     });
   }, []);
 
-  const popupInit = React.useCallback(() => {
-    setSearchInput(inputRef.current.nativeElement);
-  }, []);
-
-  const popupClose = React.useCallback(() => {
+  const handlePopupClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const eventClick = React.useCallback((args) => {
+  const handleEventClick = useCallback((args) => {
     setCurrentDate(args.event.start);
     setSelectedEvent([args.event]);
     setOpen(false);
   }, []);
 
+  const myHeader = useCallback(
+    () => (
+      <>
+        <CalendarNav />
+        <div className="md-seach-header-bar mbsc-flex-1-0">
+          <Input
+            startIcon="material-search"
+            ref={searchInputRef}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            inputStyle="box"
+            placeholder="Search events"
+          />
+        </div>
+        <CalendarPrev />
+        <CalendarToday />
+        <CalendarNext />
+      </>
+    ),
+    [handleInputChange, handleInputFocus, searchInputRef],
+  );
+
   return (
-    <Page>
+    <>
       <Eventcalendar
         className="md-search-events"
         clickToCreate={false}
@@ -139,7 +125,7 @@ function App() {
         selectedEvents={mySelectedEvent}
         selectedDate={currentDate}
         renderHeader={myHeader}
-        onPageLoading={onPageLoading}
+        onPageLoading={handlePageLoading}
       />
       <Popup
         className="md-search-popup"
@@ -153,12 +139,17 @@ function App() {
         anchor={searchInput}
         focusElm={searchInput}
         isOpen={isOpen}
-        onInit={popupInit}
-        onClose={popupClose}
+        onClose={handlePopupClose}
       >
-        <Eventcalendar className="mbsc-popover-list" view={listView} data={listEvents} showControls={false} onEventClick={eventClick} />
+        <Eventcalendar
+          className="mbsc-popover-list"
+          view={listView}
+          data={listEvents}
+          showControls={false}
+          onEventClick={handleEventClick}
+        />
       </Popup>
-    </Page>
+    </>
   );
 }
 

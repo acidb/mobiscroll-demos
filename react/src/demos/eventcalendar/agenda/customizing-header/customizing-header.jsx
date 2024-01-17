@@ -20,9 +20,7 @@ function App() {
   const [view, setView] = useState('agenda');
   const [myEvents, setEvents] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [calView, setCalView] = useState({
-    agenda: { type: 'month' },
-  });
+  const [calView, setCalView] = useState({ agenda: { type: 'month' } });
 
   const changeView = useCallback((event) => {
     let view;
@@ -94,15 +92,14 @@ function App() {
   }, []);
 
   return (
-    <div className="md-custom-header">
-      <Eventcalendar
-        onSelectedDateChange={handleSelectedDateChange}
-        selectedDate={currentDate}
-        renderHeader={customWithNavButtons}
-        view={calView}
-        data={myEvents}
-      />
-    </div>
+    <Eventcalendar
+      cssClass="md-custom-header"
+      onSelectedDateChange={handleSelectedDateChange}
+      selectedDate={currentDate}
+      renderHeader={customWithNavButtons}
+      view={calView}
+      data={myEvents}
+    />
   );
 }
 

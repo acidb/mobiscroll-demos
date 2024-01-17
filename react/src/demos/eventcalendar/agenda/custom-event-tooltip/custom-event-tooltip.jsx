@@ -445,17 +445,10 @@ function App() {
   const [bgColor, setBgColor] = useState('');
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+
   const timerRef = useRef(null);
 
-  const view = useMemo(() => {
-    return {
-      agenda: {
-        type: 'week',
-        startDay: 1,
-        endDay: 5,
-      },
-    };
-  }, []);
+  const view = useMemo(() => ({ agenda: { type: 'week', startDay: 1, endDay: 5 } }), []);
 
   const handleEventHoverIn = useCallback((args) => {
     const event = args.event;
@@ -537,7 +530,7 @@ function App() {
   }, [appointments, currentEvent]);
 
   return (
-    <div>
+    <>
       <Eventcalendar
         view={view}
         data={appointments}
@@ -587,7 +580,7 @@ function App() {
         </div>
       </Popup>
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
-    </div>
+    </>
   );
 }
 

@@ -1,14 +1,14 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  getJson,
-  setOptions,
-  CalendarNav,
   Button,
+  CalendarNav,
   CalendarToday,
+  getJson,
+  Eventcalendar,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem /* localeImport */,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useEffect, useState } from 'react';
 import './customizing-header.css';
 
 setOptions({
@@ -17,64 +17,44 @@ setOptions({
 });
 
 function App() {
-  const [view, setView] = React.useState('calendar');
-  const [myEvents, setEvents] = React.useState([]);
-  const [currentDate, setCurrentDate] = React.useState(new Date());
-  const [calView, setCalView] = React.useState({
-    calendar: {
-      labels: true,
-    },
-  });
+  const [view, setView] = useState('calendar');
+  const [myEvents, setEvents] = useState([]);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [calView, setCalView] = useState({ calendar: { labels: true } });
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/events/?vers=5',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
+  const changeView = useCallback((event) => {
+    let calendarView;
+    switch (event.target.value) {
+      case 'calendar':
+        calendarView = {
+          calendar: {
+            labels: true,
+          },
+        };
+        break;
+      case 'schedule':
+        calendarView = {
+          schedule: {
+            type: 'week',
+          },
+        };
+        break;
+    }
+    setView(event.target.value);
+    setCalView(calendarView);
   }, []);
 
-  const changeView = React.useCallback(
-    (event) => {
-      let calendarView;
-      switch (event.target.value) {
-        case 'calendar':
-          calendarView = {
-            calendar: {
-              labels: true,
-            },
-          };
-          break;
-        case 'schedule':
-          calendarView = {
-            schedule: {
-              type: 'week',
-            },
-          };
-          break;
-      }
-      setView(event.target.value);
-      setCalView(calendarView);
-    },
-    [setView, setCalView],
-  );
+  const handleSelectedDateChange = useCallback((event) => {
+    setCurrentDate(event.date);
+  }, []);
 
-  const onSelectedDateChange = React.useCallback(
-    (event) => {
-      setCurrentDate(event.date);
-    },
-    [setCurrentDate],
-  );
-
-  const getFirstDayOfWeek = React.useCallback((d, prev) => {
+  const getFirstDayOfWeek = useCallback((d, prev) => {
     const day = d.getDay();
     const diff = d.getDate() - day + (prev ? -7 : 7);
     return new Date(d.setDate(diff));
   }, []);
 
-  const navigatePage = React.useCallback(
+  const navigatePage = useCallback(
     (prev) => {
       if (view == 'calendar') {
         const prevNextPage = new Date(currentDate.getFullYear(), currentDate.getMonth() + (prev ? -1 : 1), 1);
@@ -84,12 +64,12 @@ function App() {
         setCurrentDate(prevNextSunday);
       }
     },
-    [view, currentDate, setCurrentDate, getFirstDayOfWeek],
+    [view, currentDate, getFirstDayOfWeek],
   );
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
+  const customWithNavButtons = useCallback(
+    () => (
+      <>
         <CalendarNav className="md-custom-header-nav" />
         <div className="md-custom-header-controls">
           <Button onClick={() => navigatePage(true)} icon="material-arrow-back" variant="flat" className="md-custom-header-button"></Button>
@@ -103,22 +83,33 @@ function App() {
         </div>
         <div className="md-custom-header-view">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="calendar" icon="calendar" />
-            <SegmentedItem value="schedule" icon="material-list" />
+            <Segmented value="calendar" icon="calendar" />
+            <Segmented value="schedule" icon="material-list" />
           </SegmentedGroup>
         </div>
-      </React.Fragment>
+      </>
+    ),
+    [changeView, navigatePage, view],
+  );
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/events/?vers=5',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
     );
-  };
+  }, []);
 
   return (
     <Eventcalendar
-      onSelectedDateChange={onSelectedDateChange}
+      cssClass="md-custom-header"
+      onSelectedDateChange={handleSelectedDateChange}
       selectedDate={currentDate}
       renderHeader={customWithNavButtons}
       view={calView}
       data={myEvents}
-      cssClass="md-custom-header"
     />
   );
 }

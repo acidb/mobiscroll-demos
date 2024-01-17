@@ -1,10 +1,15 @@
-import React from 'react';
-import { Eventcalendar, Page, Toast, Button /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, Page, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const now = new Date();
 
 function App() {
-  const [myEvents, setEvents] = React.useState([
+  const [myEvents, setEvents] = useState([
     {
       start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
       end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
@@ -12,20 +17,17 @@ function App() {
       color: '#35bb5a',
     },
   ]);
+  const [selectedDate, setSelectedDate] = useState();
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  const [selectedDate, setSelectedDate] = React.useState();
-  const [isToastOpen, setToastOpen] = React.useState(false);
+  const myView = useMemo(() => ({ calendar: { labels: true } }), []);
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
+  const handleSelectedDateChange = useCallback((args) => {
+    setSelectedDate(args.date);
   }, []);
 
-  const view = React.useMemo(() => {
-    return {
-      calendar: {
-        labels: true,
-      },
-    };
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
   }, []);
 
   const addEvent = () => {
@@ -48,17 +50,11 @@ function App() {
 
   return (
     <Page>
-      <Eventcalendar
-        // theme
-        // locale
-        data={myEvents}
-        view={view}
-        selectedDate={selectedDate}
-      />
+      <Eventcalendar data={myEvents} view={myView} selectedDate={selectedDate} onSelectedDateChange={handleSelectedDateChange} />
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>
-      <Toast message="Event added" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={handleToastClose} />
     </Page>
   );
 }

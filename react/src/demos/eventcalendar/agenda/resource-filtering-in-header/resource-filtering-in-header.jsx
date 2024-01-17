@@ -5,8 +5,8 @@ import {
   CalendarToday,
   Eventcalendar,
   getJson,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
@@ -80,28 +80,27 @@ function App() {
     [events, filterEvents, selected],
   );
 
-  const customWithNavButtons = useCallback(() => {
-    return (
+  const customWithNavButtons = useCallback(
+    () => (
       <>
         <CalendarNav className="md-header-filter-nav" />
         <div className="md-header-filter-controls">
           <SegmentedGroup select="multiple">
-            {myResources.map((res) => {
-              return (
-                <SegmentedItem key={res.id} value={res.id} checked={selected[res.id]} onChange={filter}>
-                  <img className="md-header-filter-img" src={res.img} alt={res.name} />
-                  <span className={'md-header-filter-name md-header-filter-name-' + res.id}>{res.name}</span>
-                </SegmentedItem>
-              );
-            })}
+            {myResources.map((res) => (
+              <Segmented key={res.id} value={res.id} checked={selected[res.id]} onChange={filter}>
+                <img className="md-header-filter-img" src={res.img} alt={res.name} />
+                <span className={'md-header-filter-name md-header-filter-name-' + res.id}>{res.name}</span>
+              </Segmented>
+            ))}
           </SegmentedGroup>
         </div>
         <CalendarPrev className="md-header-filter-prev" />
         <CalendarToday />
         <CalendarNext className="md-header-filter-next" />
       </>
-    );
-  }, [filter, myResources, selected]);
+    ),
+    [filter, myResources, selected],
+  );
 
   useEffect(() => {
     getJson(

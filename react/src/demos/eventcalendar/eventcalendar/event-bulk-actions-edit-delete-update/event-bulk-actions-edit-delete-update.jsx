@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, Button, Select, Page, getJson, formatDate, confirm, toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Confirm, Eventcalendar, formatDate, getJson, Page, Select, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './event-bulk-actions-edit-delete-update.css';
 
 setOptions({
@@ -7,87 +7,36 @@ setOptions({
   // themeJs
 });
 
-const contextMenu = [
-  {
-    text: 'Update',
-    value: 'update',
-  },
-  {
-    text: 'Delete',
-    value: 'delete',
-  },
-];
-
 function App() {
-  const [myEvents, setMyEvents] = React.useState([]);
-  const [mySelectedEvents, setSelectedEvents] = React.useState([]);
-  const [eventTitles, setEventTitles] = React.useState([]);
-  const { current: view } = React.useRef({ calendar: { labels: 'all' } });
-  const [firstDay, setFirstDay] = React.useState();
-  const [lastDay, setLastDay] = React.useState();
-  const [menuAnchor, setMenuAnchor] = React.useState();
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const [selectedValue, setSelected] = React.useState(false);
-  const [confirmOpen, setConfirmOpen] = React.useState(false);
-  const calRef = React.useRef();
+  const [myEvents, setMyEvents] = useState([]);
+  const [mySelectedEvents, setSelectedEvents] = useState([]);
+  const [firstDay, setFirstDay] = useState();
+  const [lastDay, setLastDay] = useState();
+  const [menuAnchor, setMenuAnchor] = useState();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [selectedValue, setSelected] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [toastOpen, setToastOpen] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
 
-  const getSelectedEventTitles = React.useCallback((events) => {
-    let titles = [];
+  const { current: view } = useRef({ calendar: { labels: 'all' } });
+  const calRef = useRef();
 
-    for (const event of events) {
-      titles = [...titles, event.title];
-    }
-    return titles;
-  }, []);
-
-  const refreshSelectedEvents = React.useCallback(
-    (events) => {
-      setSelectedEvents(events);
-      setEventTitles(getSelectedEventTitles(events));
-    },
-    [getSelectedEventTitles],
+  const selectData = useMemo(
+    () => [
+      { text: 'Update', value: 'update' },
+      { text: 'Delete', value: 'delete' },
+    ],
+    [],
   );
 
-  const deleteSelectedEvents = React.useCallback(() => {
+  const deleteSelectedEvents = useCallback(() => {
+    setConfirmMessage(mySelectedEvents.map((e) => e.title).join(', '));
     setConfirmOpen(true);
-    confirm({
-      title: 'Are you sure you want to delete the following events?',
-      message: getSelectedEventTitles(mySelectedEvents).join(', '),
-      okText: 'Delete',
-      callback: (result) => {
-        if (result) {
-          let eventsToUpdate = [...myEvents];
+  }, [mySelectedEvents]);
 
-          for (const event of mySelectedEvents) {
-            if (event.recurring) {
-              const origEvent = event.original;
-              let exc = origEvent.recurringException || [];
-              exc = [...exc, event.start];
-              origEvent.recurringException = exc;
-
-              // update the event in the list
-              const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id);
-              eventsToUpdate.splice(index, 1, origEvent);
-            } else {
-              eventsToUpdate = eventsToUpdate.filter((ev) => {
-                return ev.id !== event.id;
-              });
-            }
-          }
-
-          setMyEvents(eventsToUpdate);
-          refreshSelectedEvents([]);
-
-          toast({
-            message: 'Deleted',
-          });
-        }
-        setConfirmOpen(false);
-      },
-    });
-  }, [getSelectedEventTitles, myEvents, mySelectedEvents, refreshSelectedEvents]);
-
-  const updateSelectedEvents = React.useCallback(() => {
+  const updateSelectedEvents = useCallback(() => {
     const events = mySelectedEvents.length === 0 ? [mySelectedEvents] : mySelectedEvents;
     let eventsToUpdate = [...myEvents];
 
@@ -116,15 +65,49 @@ function App() {
       }
     }
 
-    toast({
-      message: "All selected event's color changed to orange",
-    });
-
+    setToastMessage("All selected event's color changed to orange");
+    setToastOpen(true);
     setMyEvents(eventsToUpdate);
-    refreshSelectedEvents([]);
-  }, [myEvents, mySelectedEvents, refreshSelectedEvents]);
+    setSelectedEvents([]);
+  }, [myEvents, mySelectedEvents]);
 
-  const onEventUpdate = React.useCallback(
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const handleConfirmClose = useCallback(
+    (result) => {
+      if (result) {
+        let eventsToUpdate = [...myEvents];
+
+        for (const event of mySelectedEvents) {
+          if (event.recurring) {
+            const origEvent = event.original;
+            let exc = origEvent.recurringException || [];
+            exc = [...exc, event.start];
+            origEvent.recurringException = exc;
+
+            // update the event in the list
+            const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id);
+            eventsToUpdate.splice(index, 1, origEvent);
+          } else {
+            eventsToUpdate = eventsToUpdate.filter((ev) => {
+              return ev.id !== event.id;
+            });
+          }
+        }
+
+        setMyEvents(eventsToUpdate);
+        setSelectedEvents([]);
+        setToastMessage('Deleted');
+        setToastOpen(true);
+      }
+      setConfirmOpen(false);
+    },
+    [myEvents, mySelectedEvents],
+  );
+
+  const handleEventUpdate = useCallback(
     (args) => {
       if (args.isDelete) {
         if (!confirmOpen) {
@@ -136,31 +119,25 @@ function App() {
     [confirmOpen, deleteSelectedEvents],
   );
 
-  const onEventDelete = React.useCallback(() => {
+  const handleEventDelete = useCallback(() => {
     if (!confirmOpen) {
       deleteSelectedEvents();
       return false;
     }
   }, [confirmOpen, deleteSelectedEvents]);
 
-  const onPageLoading = React.useCallback(
-    (args) => {
-      setTimeout(() => {
-        setFirstDay(args.firstDay);
-        setLastDay(args.lastDay);
-      });
-    },
-    [firstDay, lastDay],
-  );
+  const handlePageLoading = useCallback((args) => {
+    setTimeout(() => {
+      setFirstDay(args.firstDay);
+      setLastDay(args.lastDay);
+    });
+  }, []);
 
-  const onSelectedEventsChange = React.useCallback(
-    (args) => {
-      refreshSelectedEvents(args.events);
-    },
-    [refreshSelectedEvents],
-  );
+  const handleSelectedEventsChange = useCallback((args) => {
+    setSelectedEvents(args.events);
+  }, []);
 
-  const onEventRightClick = React.useCallback((args) => {
+  const handleEventRightClick = useCallback((args) => {
     args.domEvent.preventDefault();
     setMenuAnchor(args.domEvent.target);
     setTimeout(() => {
@@ -168,22 +145,20 @@ function App() {
     });
   }, []);
 
-  const selectAllEvents = React.useCallback(() => {
+  const selectAllEvents = useCallback(() => {
     const selectedEvents = calRef.current.getEvents(firstDay, lastDay);
-    refreshSelectedEvents(selectedEvents);
-    toast({
-      message: 'All events selected from view',
-    });
-  }, [firstDay, lastDay, refreshSelectedEvents]);
+    setSelectedEvents(selectedEvents);
+    setToastMessage('All events selected from view');
+    setToastOpen(true);
+  }, [firstDay, lastDay]);
 
-  const resetSelection = React.useCallback(() => {
-    refreshSelectedEvents([]);
-    toast({
-      message: 'Selection cleared',
-    });
-  }, [refreshSelectedEvents]);
+  const resetSelection = useCallback(() => {
+    setSelectedEvents([]);
+    setToastMessage('Selection cleared');
+    setToastOpen(true);
+  }, []);
 
-  const selectChange = React.useCallback(
+  const handleSelectChange = useCallback(
     (args) => {
       setSelected(args.value);
       if (args.value === 'update') {
@@ -195,12 +170,21 @@ function App() {
     [deleteSelectedEvents, updateSelectedEvents],
   );
 
-  const menuClose = React.useCallback(() => {
+  const handleSelectClose = useCallback(() => {
     setSelected('');
     setMenuOpen(false);
   }, []);
 
-  React.useEffect(() => {
+  const handleDeleteKey = useCallback(
+    (ev) => {
+      if (!confirmOpen && (ev.keyCode === 8 || ev.keyCode === 46)) {
+        deleteSelectedEvents();
+      }
+    },
+    [confirmOpen, deleteSelectedEvents],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -208,15 +192,10 @@ function App() {
       },
       'jsonp',
     );
-    document.querySelector('.md-bulk-operations').addEventListener('keydown', (ev) => {
-      if (!confirmOpen && (ev.keyCode === 8 || ev.keyCode === 46)) {
-        deleteSelectedEvents();
-      }
-    });
   }, []);
 
   return (
-    <Page className="md-bulk-operations">
+    <Page className="md-bulk-operations" onKeyDown={handleDeleteKey}>
       <div className="mbsc-grid mbsc-no-padding">
         <div className="mbsc-row">
           <div className="mbsc-col-sm-9 mbsc-push-sm-3">
@@ -228,21 +207,22 @@ function App() {
               clickToCreate={true}
               selectMultipleEvents={true}
               selectedEvents={mySelectedEvents}
-              onEventDelete={onEventDelete}
-              onPageLoading={onPageLoading}
-              onSelectedEventsChange={onSelectedEventsChange}
-              onEventRightClick={onEventRightClick}
+              onEventDelete={handleEventDelete}
+              onEventUpdate={handleEventUpdate}
+              onEventRightClick={handleEventRightClick}
+              onPageLoading={handlePageLoading}
+              onSelectedEventsChange={handleSelectedEventsChange}
             />
             <Select
               inputProps={{ type: 'hidden' }}
               display="anchored"
               touchUi={false}
               anchor={menuAnchor}
-              data={contextMenu}
+              data={selectData}
               value={selectedValue}
               isOpen={menuOpen}
-              onChange={selectChange}
-              onClose={menuClose}
+              onChange={handleSelectChange}
+              onClose={handleSelectClose}
             />
           </div>
           <div className="mbsc-col-sm-3 mbsc-pull-sm-9">
@@ -256,14 +236,22 @@ function App() {
             <div className="mbsc-form-group-title">Currently selected</div>
             <div className="mbsc-padding md-selected-event-list">
               <ul>
-                {eventTitles.map((title, index) => {
-                  return <li key={index}>{title}</li>;
-                })}
+                {mySelectedEvents.map((e, i) => (
+                  <li key={i}>{e.title}</li>
+                ))}
               </ul>
             </div>
           </div>
         </div>
       </div>
+      <Confirm
+        isOpen={confirmOpen}
+        title="Are you sure you want to delete the following events?"
+        message={confirmMessage}
+        okText="Delete"
+        onClose={handleConfirmClose}
+      />
+      <Toast isOpen={toastOpen} message={toastMessage} onClose={handleToastClose} />
     </Page>
   );
 }

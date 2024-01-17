@@ -20,6 +20,10 @@ function App() {
     [],
   );
 
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
   const getParticipant = useCallback((id) => {
     switch (id) {
       case 1:
@@ -46,26 +50,20 @@ function App() {
   }, []);
 
   const renderEventContent = useCallback(
-    (data) => {
-      return (
-        <>
-          <div>{data.title}</div>
-          <div className="md-custom-event-cont">
-            <img className="md-custom-event-img" src={getParticipant(data.original.participant).img} />
-            <div className="mbsc-custom-event-name">{getParticipant(data.original.participant).name}</div>
-            <Button className="md-custom-event-btn" color="secondary" variant="outline" onClick={() => add(data.original)}>
-              Add participant
-            </Button>
-          </div>
-        </>
-      );
-    },
+    (data) => (
+      <>
+        <div>{data.title}</div>
+        <div className="md-custom-event-cont">
+          <img className="md-custom-event-img" src={getParticipant(data.original.participant).img} />
+          <div className="mbsc-custom-event-name">{getParticipant(data.original.participant).name}</div>
+          <Button className="md-custom-event-btn" color="secondary" variant="outline" onClick={() => add(data.original)}>
+            Add participant
+          </Button>
+        </div>
+      </>
+    ),
     [add, getParticipant],
   );
-
-  const handleToastClose = useCallback(() => {
-    setToastOpen(false);
-  }, []);
 
   useEffect(() => {
     getJson(
@@ -78,12 +76,10 @@ function App() {
   }, []);
 
   return (
-    <div className="md-switching-view-cont">
-      <div className="md-switching-view-cal-cont">
-        <Eventcalendar renderEventContent={renderEventContent} view={myView} data={myEvents} />
-      </div>
+    <>
+      <Eventcalendar renderEventContent={renderEventContent} view={myView} data={myEvents} />
       <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
-    </div>
+    </>
   );
 }
 

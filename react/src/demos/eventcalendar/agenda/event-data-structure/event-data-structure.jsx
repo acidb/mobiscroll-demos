@@ -1,4 +1,4 @@
-import { Button, Eventcalendar, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, Page, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
@@ -49,13 +49,13 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <Page>
       <Eventcalendar data={myEvents} view={myView} selectedDate={selectedDate} onSelectedDateChange={handleSelectedDateChange} />
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>
       <Toast message="Event added" isOpen={isToastOpen} onClose={handleToastClose} />
-    </div>
+    </Page>
   );
 }
 

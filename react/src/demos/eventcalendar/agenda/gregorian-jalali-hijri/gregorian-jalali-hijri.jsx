@@ -8,7 +8,7 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const view = useMemo(
+  const myView = useMemo(
     () => ({
       calendar: { type: 'week' },
       agenda: { type: 'day' },
@@ -33,19 +33,19 @@ function App() {
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Gregorian calendar</div>
-              <Eventcalendar data={myEvents} view={view} />
+              <Eventcalendar data={myEvents} view={myView} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Jalali calendar</div>
-              <Eventcalendar data={myEvents} calendarSystem={jalaliCalendar} locale={localeFa} view={view} />
+              <Eventcalendar data={myEvents} calendarSystem={jalaliCalendar} locale={localeFa} view={myView} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Hijri calendar</div>
-              <Eventcalendar data={myEvents} calendarSystem={hijriCalendar} locale={localeAr} view={view} />
+              <Eventcalendar data={myEvents} calendarSystem={hijriCalendar} locale={localeAr} view={myView} />
             </div>
           </div>
         </div>

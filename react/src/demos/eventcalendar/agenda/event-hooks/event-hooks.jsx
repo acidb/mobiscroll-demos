@@ -23,8 +23,6 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       data={myEvents}
       view={myView}
       onDestroy={() => {

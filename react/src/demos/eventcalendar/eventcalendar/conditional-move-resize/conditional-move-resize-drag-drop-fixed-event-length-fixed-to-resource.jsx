@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,14 +7,10 @@ setOptions({
 });
 
 function App() {
-  const myView = React.useMemo(() => {
-    return {
-      calendar: { type: 'month' },
-    };
-  }, []);
+  const myView = useMemo(() => ({ calendar: { type: 'month' } }), []);
 
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         color: 'cyan',
         end: 'dyndatetime(y,m,d-5)',
@@ -47,8 +43,9 @@ function App() {
         start: 'dyndatetime(y,m,d+5)',
         title: 'Event 5',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return <Eventcalendar view={myView} data={myEvents} dragToMove={true} />;
 }

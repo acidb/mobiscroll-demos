@@ -5,8 +5,8 @@ import {
   CalendarPrev,
   CalendarToday,
   Eventcalendar,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
@@ -22,10 +22,10 @@ const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.
 
 function App() {
   const [myEvents, setEvents] = useState([]);
-  const [view, setView] = useState('agenda');
   const [isLoading, setLoading] = useState(false);
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [view, setView] = useState('agenda');
   const [myView, setCalView] = useState({
     calendar: { type: 'week' },
     agenda: { type: 'week' },
@@ -103,11 +103,11 @@ function App() {
           <div className="md-spinner-blade"></div>
         </div>
         <div className="google-cal-header-picker">
-          <SegmentedGroup value={myView} onChange={changeView}>
-            <SegmentedItem value="month">Month</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="day">Day</SegmentedItem>
-            <SegmentedItem value="agenda">Agenda</SegmentedItem>
+          <SegmentedGroup value={view} onChange={changeView}>
+            <Segmented value="month">Month</Segmented>
+            <Segmented value="week">Week</Segmented>
+            <Segmented value="day">Day</Segmented>
+            <Segmented value="agenda">Agenda</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="google-cal-header-prev" />
@@ -115,7 +115,7 @@ function App() {
         <CalendarNext className="google-cal-header-next" />
       </>
     ),
-    [myView, changeView],
+    [changeView, view],
   );
 
   const handlePageLoading = useCallback(

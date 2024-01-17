@@ -1,13 +1,44 @@
-import React from 'react';
-import { Eventcalendar, getJson, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './customize-label-look-and-feel.css';
 
-function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [toastText, setToastText] = React.useState();
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  React.useEffect(() => {
+function App() {
+  const [myEvents, setEvents] = useState([]);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastText, setToastText] = useState();
+
+  const myView = useMemo(() => ({ calendar: { labels: true } }), []);
+
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const handleEventClick = useCallback((event) => {
+    setToastText(event.event.title);
+    setToastOpen(true);
+  }, []);
+
+  const renderLabel = useCallback((data) => {
+    return data.isMultiDay ? (
+      <div style={{ background: data.original.color, color: '#000' }} className="multi-day-event">
+        {data.original.title}
+      </div>
+    ) : (
+      <>
+        <div className="single-day-event-dot" style={{ background: data.original.color }}></div>
+        <div className="single-day-event" style={{ color: '#000' }}>
+          {data.original.title}
+        </div>
+      </>
+    );
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -17,57 +48,11 @@ function App() {
     );
   }, []);
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const onEventClick = React.useCallback((event) => {
-    setToastText(event.event.title);
-    setToastOpen(true);
-  }, []);
-
-  const view = React.useMemo(() => {
-    return {
-      calendar: { labels: true },
-    };
-  }, []);
-
-  const renderLabel = React.useCallback((data) => {
-    if (data.isMultiDay) {
-      return (
-        <div style={{ background: data.original.color, color: '#000' }} className="multi-day-event">
-          {data.original.title}
-        </div>
-      );
-    } else {
-      return (
-        <React.Fragment>
-          <div className="single-day-event-dot" style={{ background: data.original.color }}></div>
-          <div className="single-day-event" style={{ color: '#000' }}>
-            {data.original.title}
-          </div>
-        </React.Fragment>
-      );
-    }
-  });
-
   return (
-    <div>
-      <Eventcalendar
-        // theme
-        // locale
-        renderLabel={renderLabel}
-        data={myEvents}
-        view={view}
-        onEventClick={onEventClick}
-      />
-      <Toast
-        // theme
-        message={toastText}
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
-    </div>
+    <>
+      <Eventcalendar renderLabel={renderLabel} data={myEvents} view={myView} onEventClick={handleEventClick} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
+    </>
   );
 }
 

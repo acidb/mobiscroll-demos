@@ -10,7 +10,6 @@ setOptions({
 function App() {
   const [myEvents, setMyEvents] = useState([]);
   const [mySelectedEvents, setSelectedEvents] = useState([]);
-  const [eventTitles, setEventTitles] = useState([]);
   const [firstDay, setFirstDay] = useState();
   const [lastDay, setLastDay] = useState();
   const [menuAnchor, setMenuAnchor] = useState();
@@ -26,39 +25,16 @@ function App() {
 
   const selectData = useMemo(
     () => [
-      {
-        text: 'Update',
-        value: 'update',
-      },
-      {
-        text: 'Delete',
-        value: 'delete',
-      },
+      { text: 'Update', value: 'update' },
+      { text: 'Delete', value: 'delete' },
     ],
     [],
   );
 
-  const getSelectedEventTitles = useCallback((events) => {
-    let titles = [];
-
-    for (const event of events) {
-      titles = [...titles, event.title];
-    }
-    return titles;
-  }, []);
-
-  const refreshSelectedEvents = useCallback(
-    (events) => {
-      setSelectedEvents(events);
-      setEventTitles(getSelectedEventTitles(events));
-    },
-    [getSelectedEventTitles],
-  );
-
   const deleteSelectedEvents = useCallback(() => {
-    setConfirmMessage(getSelectedEventTitles(mySelectedEvents).join(', '));
+    setConfirmMessage(mySelectedEvents.map((e) => e.title).join(', '));
     setConfirmOpen(true);
-  }, [getSelectedEventTitles, mySelectedEvents]);
+  }, [mySelectedEvents]);
 
   const updateSelectedEvents = useCallback(() => {
     const events = mySelectedEvents.length === 0 ? [mySelectedEvents] : mySelectedEvents;
@@ -91,8 +67,8 @@ function App() {
     setToastMessage("All selected event's color changed to orange");
     setToastOpen(true);
     setMyEvents(eventsToUpdate);
-    refreshSelectedEvents([]);
-  }, [myEvents, mySelectedEvents, refreshSelectedEvents]);
+    setSelectedEvents([]);
+  }, [myEvents, mySelectedEvents]);
 
   const handleToastClose = useCallback(() => {
     setToastOpen(false);
@@ -121,14 +97,13 @@ function App() {
         }
 
         setMyEvents(eventsToUpdate);
-        refreshSelectedEvents([]);
-
+        setSelectedEvents([]);
         setToastMessage('Deleted');
         setToastOpen(true);
       }
       setConfirmOpen(false);
     },
-    [myEvents, mySelectedEvents, refreshSelectedEvents],
+    [myEvents, mySelectedEvents],
   );
 
   const handleEventUpdate = useCallback(
@@ -157,12 +132,9 @@ function App() {
     });
   }, [firstDay, lastDay]);
 
-  const handleSelectedEventsChange = useCallback(
-    (args) => {
-      refreshSelectedEvents(args.events);
-    },
-    [refreshSelectedEvents],
-  );
+  const handleSelectedEventsChange = useCallback((args) => {
+    setSelectedEvents(args.events);
+  }, []);
 
   const handleEventRightClick = useCallback((args) => {
     args.domEvent.preventDefault();
@@ -174,16 +146,16 @@ function App() {
 
   const selectAllEvents = useCallback(() => {
     const selectedEvents = calRef.current.getEvents(firstDay, lastDay);
-    refreshSelectedEvents(selectedEvents);
+    setSelectedEvents(selectedEvents);
     setToastMessage('All events selected from view');
     setToastOpen(true);
-  }, [firstDay, lastDay, refreshSelectedEvents]);
+  }, [firstDay, lastDay]);
 
   const resetSelection = useCallback(() => {
-    refreshSelectedEvents([]);
+    setSelectedEvents([]);
     setToastMessage('Selection cleared');
     setToastOpen(true);
-  }, [refreshSelectedEvents]);
+  }, []);
 
   const handleSelectChange = useCallback(
     (args) => {
@@ -263,8 +235,8 @@ function App() {
             <div className="mbsc-form-group-title">Currently selected</div>
             <div className="mbsc-padding md-selected-event-list">
               <ul>
-                {eventTitles.map((title, index) => (
-                  <li key={index}>{title}</li>
+                {mySelectedEvents.map((e, i) => (
+                  <li key={i}>{e.title}</li>
                 ))}
               </ul>
             </div>

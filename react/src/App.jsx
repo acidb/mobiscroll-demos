@@ -1214,7 +1214,7 @@ function App() {
   return (
     <>
       <StrictMode>
-        <Page>
+        <Page cssClass="main-page">
           <RouterProvider router={router} />
         </Page>
       </StrictMode>

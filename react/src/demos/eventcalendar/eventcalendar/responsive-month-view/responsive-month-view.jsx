@@ -1,10 +1,34 @@
-import React from 'react';
-import { Eventcalendar, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useEffect, useMemo, useState } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  React.useEffect(() => {
+  const myResponsive = useMemo(
+    () => ({
+      xsmall: {
+        view: {
+          calendar: { type: 'week' },
+          agenda: { type: 'day' },
+        },
+      },
+      custom: {
+        // Custom breakpoint
+        breakpoint: 600,
+        view: {
+          calendar: { labels: true },
+        },
+      },
+    }),
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -14,38 +38,7 @@ function App() {
     );
   }, []);
 
-  const responsive = React.useMemo(() => {
-    return {
-      xsmall: {
-        view: {
-          calendar: {
-            type: 'week',
-          },
-          agenda: {
-            type: 'day',
-          },
-        },
-      },
-      custom: {
-        // Custom breakpoint
-        breakpoint: 600,
-        view: {
-          calendar: {
-            labels: true,
-          },
-        },
-      },
-    };
-  }, []);
-
-  return (
-    <Eventcalendar
-      // locale
-      // theme
-      data={myEvents}
-      responsive={responsive}
-    />
-  );
+  return <Eventcalendar data={myEvents} responsive={myResponsive} />;
 }
 
 export default App;

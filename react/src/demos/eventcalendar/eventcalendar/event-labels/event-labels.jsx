@@ -1,12 +1,28 @@
-import React from 'react';
-import { Page, Eventcalendar, getJson, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [toastText, setToastText] = React.useState();
+  const [myEvents, setEvents] = useState([]);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastText, setToastText] = useState();
 
-  React.useEffect(() => {
+  const myView = useMemo(() => ({ calendar: { labels: true } }), []);
+
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const handleEventClick = useCallback((args) => {
+    setToastText(args.event.title);
+    setToastOpen(true);
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -16,32 +32,11 @@ function App() {
     );
   }, []);
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const onEventClick = React.useCallback((event) => {
-    setToastText(event.event.title);
-    setToastOpen(true);
-  }, []);
-
-  const view = React.useMemo(() => {
-    return {
-      calendar: { labels: true },
-    };
-  }, []);
-
   return (
-    <Page>
-      <Eventcalendar
-        // locale
-        // theme
-        data={myEvents}
-        view={view}
-        onEventClick={onEventClick}
-      />
-      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
-    </Page>
+    <>
+      <Eventcalendar data={myEvents} view={myView} onEventClick={handleEventClick} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
+    </>
   );
 }
 
