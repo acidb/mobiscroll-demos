@@ -28,10 +28,6 @@ const myResources: MbscResource[] = [
   }
 ]
 
-const dayView: MbscEventcalendarView = {
-  agenda: { type: 'day' }
-}
-
 const myView: MbscEventcalendarView = {
   schedule: {
     type: 'week',

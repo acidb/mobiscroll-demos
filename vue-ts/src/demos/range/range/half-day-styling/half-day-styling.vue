@@ -14,7 +14,7 @@ const myColors = [
 </script>
 
 <template>
-  <MbscDatepicker :controls="['calendar']" select="range" display="inline" />
+  <MbscDatepicker :colors="myColors" select="range" display="inline" />
 </template>
 
 <style>

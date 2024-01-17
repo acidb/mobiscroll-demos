@@ -44,38 +44,49 @@ const dragData2: MbscCalendarEvent = {
   color: '#ddfcf7'
 }
 
-function handleDestroy(event: any) {
+function handleDestroy(args: any) {
   // Logic for destroying the event calendar
+  console.log(args)
 }
-function handleEventClick(event: MbscEventClickEvent) {
+function handleEventClick(args: MbscEventClickEvent) {
   // Logic for event click
+  console.log(args)
 }
-function handleEventDoubleClick(event: MbscEventClickEvent) {
+function handleEventDoubleClick(args: MbscEventClickEvent) {
   // Logic for event double click
+  console.log(args)
 }
-function handleEventHoverIn(event: MbscEventClickEvent) {
+function handleEventHoverIn(args: MbscEventClickEvent) {
   // Logic for event hover in
+  console.log(args)
 }
-function handleEventHoverOut(event: MbscEventClickEvent) {
+function handleEventHoverOut(args: MbscEventClickEvent) {
   // Logic for event hover out
+  console.log(args)
 }
-function handleEventRightClick(event: MbscEventClickEvent) {
+function handleEventRightClick(args: MbscEventClickEvent) {
   // Logic for event right click
+  console.log(args)
 }
-function handleInit(event: any) {
+function handleInit(args: any) {
   // Logic running on component init
+  console.log(args)
 }
-function handlePageChange(event: MbscPageChangeEvent) {
+function handlePageChange(args: MbscPageChangeEvent) {
   // Your custom event handler goes here
+  console.log(args)
 }
-function handlePageLoaded(event: MbscPageLoadedEvent) {
+function handlePageLoaded(args: MbscPageLoadedEvent) {
   // Use it to inject custom markup & attach custom listeners
+  console.log(args)
 }
-function handlePageLoading(event: MbscPageLoadingEvent) {
+function handlePageLoading(args: MbscPageLoadingEvent) {
   // Use it to load data on demand
+  console.log(args)
 }
-function handleSelectedDateChange(event: MbscSelectedEventsChangeEvent) {
+function handleSelectedDateChange(args: MbscSelectedEventsChangeEvent) {
   // Use it to keep track of the selected date externally
+  console.log(args)
 }
 
 onMounted(() => {

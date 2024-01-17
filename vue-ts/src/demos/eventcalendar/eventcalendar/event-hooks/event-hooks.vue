@@ -54,86 +54,113 @@ const dragData2: MbscCalendarEvent = {
   color: '#ddfcf7'
 }
 
-function handleCellClick(event: MbscCellClickEvent) {
+function handleCellClick(args: MbscCellClickEvent) {
   // Logic for event click
+  console.log(args)
 }
-function handleCellDoubleClick(event: MbscCellClickEvent) {
+function handleCellDoubleClick(args: MbscCellClickEvent) {
   // Logic for cell double click
+  console.log(args)
 }
-function handleCellRightClick(event: MbscCellClickEvent) {
+function handleCellRightClick(args: MbscCellClickEvent) {
   // Logic for cell right click
+  console.log(args)
 }
-function handleCellHoverIn(event: MbscCellHoverEvent) {
+function handleCellHoverIn(args: MbscCellHoverEvent) {
   // Logic for cell hover in
+  console.log(args)
 }
-function handleCellHoverOut(event: MbscCellHoverEvent) {
+function handleCellHoverOut(args: MbscCellHoverEvent) {
   // Logic for cell hover out
+  console.log(args)
 }
-function handleDestroy(event: any) {
+function handleDestroy(args: any) {
   // Logic for destroying the event calendar
+  console.log(args)
 }
-function handleEventClick(event: MbscEventClickEvent) {
+function handleEventClick(args: MbscEventClickEvent) {
   // Logic for event click
+  console.log(args)
 }
-function handleEventCreate(event: MbscEventCreateEvent) {
+function handleEventCreate(args: MbscEventCreateEvent) {
   // Logic for event create
+  console.log(args)
 }
-function handleEventCreated(event: MbscEventCreatedEvent) {
+function handleEventCreated(args: MbscEventCreatedEvent) {
   // Logic for event created
+  console.log(args)
 }
-function handleEventCreateFailed(event: MbscEventCreateFailedEvent) {
+function handleEventCreateFailed(args: MbscEventCreateFailedEvent) {
   // Logic for failed event create
+  console.log(args)
 }
-function handleEventDelete(event: MbscEventDeleteEvent) {
+function handleEventDelete(args: MbscEventDeleteEvent) {
   // Logic for event delete
+  console.log(args)
 }
-function handleEventDeleted(event: MbscEventDeletedEvent) {
+function handleEventDeleted(args: MbscEventDeletedEvent) {
   // Logic for event deleted
+  console.log(args)
 }
-function handleEventDoubleClick(event: MbscEventClickEvent) {
+function handleEventDoubleClick(args: MbscEventClickEvent) {
   // Logic for event double click
+  console.log(args)
 }
-function handleEventDragStart(event: MbscEventDragEvent) {
+function handleEventDragStart(args: MbscEventDragEvent) {
   // Logic for event drag start
+  console.log(args)
 }
-function handleEventDragEnd(event: MbscEventDragEvent) {
+function handleEventDragEnd(args: MbscEventDragEvent) {
   // Logic for event drag end
+  console.log(args)
 }
-function handleEventHoverIn(event: MbscEventClickEvent) {
+function handleEventHoverIn(args: MbscEventClickEvent) {
   // Logic for event hover in
+  console.log(args)
 }
-function handleEventHoverOut(event: MbscEventClickEvent) {
+function handleEventHoverOut(args: MbscEventClickEvent) {
   // Logic for event hover out
+  console.log(args)
 }
-function handleEventRightClick(event: MbscEventClickEvent) {
+function handleEventRightClick(args: MbscEventClickEvent) {
   // Logic for event right click
+  console.log(args)
 }
-function handleEventUpdate(event: MbscEventUpdateEvent) {
+function handleEventUpdate(args: MbscEventUpdateEvent) {
   // Logic for event update
+  console.log(args)
 }
-function handleEventUpdated(event: MbscEventUpdatedEvent) {
+function handleEventUpdated(args: MbscEventUpdatedEvent) {
   // Logic for event updated
+  console.log(args)
 }
-function handleEventUpdateFailed(event: MbscEventUpdateFailedEvent) {
+function handleEventUpdateFailed(args: MbscEventUpdateFailedEvent) {
   // Logic for failed event update
+  console.log(args)
 }
-function handleInit(event: any) {
+function handleInit(args: any) {
   // Logic running on component init
+  console.log(args)
 }
-function handleLabelClick(event: MbscLabelClickEvent) {
+function handleLabelClick(args: MbscLabelClickEvent) {
   // Logic for label click
+  console.log(args)
 }
-function handlePageChange(event: MbscPageChangeEvent) {
+function handlePageChange(args: MbscPageChangeEvent) {
   // Your custom event handler goes here
+  console.log(args)
 }
-function handlePageLoaded(event: MbscPageLoadedEvent) {
+function handlePageLoaded(args: MbscPageLoadedEvent) {
   // Use it to inject custom markup & attach custom listeners
+  console.log(args)
 }
-function handlePageLoading(event: MbscPageLoadingEvent) {
+function handlePageLoading(args: MbscPageLoadingEvent) {
   // Use it to load data on demand
+  console.log(args)
 }
-function handleSelectedDateChange(event: MbscSelectedEventsChangeEvent) {
+function handleSelectedDateChange(args: MbscSelectedEventsChangeEvent) {
   // Use it to keep track of the selected date externally
+  console.log(args)
 }
 
 onMounted(() => {

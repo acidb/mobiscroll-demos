@@ -11,6 +11,7 @@ export default function myPlugin() {
     }
   }
 }
+
 const now = new Date()
 
 const replaceDynamicDates = (src) => {
@@ -37,7 +38,7 @@ const parseDatestring = (s) => {
       4: 0
     }
     const date = i.replace(/['|"]/g, '')
-    let dateArray = date.split(',')
+    const dateArray = date.split(',')
     dateArray.forEach((i, index) => {
       const splittedNum = i.split(/[/+|/-]/)
       if (splittedNum.length > 1) {

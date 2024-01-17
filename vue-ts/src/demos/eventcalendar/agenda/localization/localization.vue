@@ -8,7 +8,7 @@ import {
   MbscPage,
   locale
 } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView, MbscLocale } from '@mobiscroll/vue'
+import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
 
 setOptions({
   // theme

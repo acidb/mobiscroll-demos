@@ -1,31 +1,29 @@
-const fileRegex = /\.(vue)$/
-
 export default function myPlugin() {
   return {
     name: 'transform-file',
-
     transform(src: string, id: string) {
-      if (fileRegex.test(id)) {
+      if (/\.(vue)$/.test(id)) {
         return {
-          code: compileFileToJS(src),
+          code: replaceDynamicDates(src),
           map: null // provide source map if available
         }
       }
     }
   }
 }
+
 const now = new Date()
-const compileFileToJS = (src: string) => {
-  const str = src.replace(/['|"]dyndatetime\(([^)])*\)['|"]/g, function (i) {
+
+const replaceDynamicDates = (src: string) => {
+  return src.replace(/['|"]dyndatetime\(([^)])*\)['|"]/g, function (i) {
     return parseDatestring(i)
   })
-  return str
 }
 
 const parseDatestring = (s: string) => {
   s = s.replace(/dyndatetime/, '')
   s = s.replace(/\(/, '')
-  s = s.replace(/\)/, '') //ymdhi
+  s = s.replace(/\)/, '')
   s = s.replace(/y/, now.getFullYear().toString())
   s = s.replace(/m/, now.getMonth().toString())
   s = s.replace(/d/, now.getDate().toString())
@@ -42,24 +40,37 @@ const parseDatestring = (s: string) => {
     const date = i.replace(/['|"]/g, '')
     const dateArray = date.split(',')
     dateArray.forEach((i, index) => {
-      const plus = i.includes('+')
-      const minus = i.includes('-')
-      const splittedNum = i.split(/[+|-]/)
-      let num = 0
-      splittedNum.forEach((element) => {
-        if (plus) {
-          return (num += parseInt(element))
-        }
-        if (minus) {
-          return index === 0 ? (num += parseInt(element)) : (num -= parseInt(element))
-        }
-        num += parseInt(element)
-      })
-      return (dateDict[index] = num)
+      const splittedNum = i.split(/[/+|/-]/)
+      if (splittedNum.length > 1) {
+        const minus = i.indexOf('-') !== -1
+        dateDict[index] = minus
+          ? +splittedNum[0] - +splittedNum[1]
+          : +splittedNum[0] + +splittedNum[1]
+      } else {
+        dateDict[index] = +splittedNum[0]
+      }
     })
+    const dd = new Date(dateDict[0], dateDict[1] - 1, dateDict[2], dateDict[3], dateDict[4])
+    const y = dd.getFullYear()
+    const m = dd.getMonth() + 1
+    const d = dd.getDate()
+    const h = dd.getHours()
+    const mm = dd.getMinutes()
     return (
       "'" +
-      new Date(dateDict[0], dateDict[1], dateDict[2], dateDict[3], dateDict[4]).toISOString() +
+      y +
+      '-' +
+      (m < 10 ? '0' : '') +
+      m +
+      '-' +
+      (d < 10 ? '0' : '') +
+      d +
+      'T' +
+      (h < 10 ? '0' : '') +
+      h +
+      ':' +
+      (mm < 10 ? '0' : '') +
+      mm +
       "'"
     )
   })
