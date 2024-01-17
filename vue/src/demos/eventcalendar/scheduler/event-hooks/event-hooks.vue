@@ -35,76 +35,76 @@ const dragData2 = {
   color: '#ddfcf7'
 }
 
-function handleCellClick(event) {
+function handleCellClick() {
   // Logic for event click
 }
-function handleCellDoubleClick(event) {
+function handleCellDoubleClick() {
   // Logic for cell double click
 }
-function handleCellRightClick(event) {
+function handleCellRightClick() {
   // Logic for cell right click
 }
-function handleDestroy(event) {
+function handleDestroy() {
   // Logic for destroying the event calendar
 }
-function handleEventClick(event) {
+function handleEventClick() {
   // Logic for event click
 }
-function handleEventCreate(event) {
+function handleEventCreate() {
   // Logic for event create
 }
-function handleEventCreated(event) {
+function handleEventCreated() {
   // Logic for event created
 }
-function handleEventCreateFailed(event) {
+function handleEventCreateFailed() {
   // Logic for failed event create
 }
-function handleEventDelete(event) {
+function handleEventDelete() {
   // Logic for event delete
 }
-function handleEventDeleted(event) {
+function handleEventDeleted() {
   // Logic for event deleted
 }
-function handleEventDoubleClick(event) {
+function handleEventDoubleClick() {
   // Logic for event double click
 }
-function handleEventDragStart(event) {
+function handleEventDragStart() {
   // Logic for event drag start
 }
-function handleEventDragEnd(event) {
+function handleEventDragEnd() {
   // Logic for event drag end
 }
-function handleEventHoverIn(event) {
+function handleEventHoverIn() {
   // Logic for event hover in
 }
-function handleEventHoverOut(event) {
+function handleEventHoverOut() {
   // Logic for event hover out
 }
-function handleEventRightClick(event) {
+function handleEventRightClick() {
   // Logic for event right click
 }
-function handleEventUpdate(event) {
+function handleEventUpdate() {
   // Logic for event update
 }
-function handleEventUpdated(event) {
+function handleEventUpdated() {
   // Logic for event updated
 }
-function handleEventUpdateFailed(event) {
+function handleEventUpdateFailed() {
   // Logic for failed event update
 }
-function handleInit(event) {
+function handleInit() {
   // Logic running on component init
 }
-function handlePageChange(event) {
+function handlePageChange() {
   // Your custom event handler goes here
 }
-function handlePageLoaded(event) {
+function handlePageLoaded() {
   // Use it to inject custom markup & attach custom listeners
 }
-function handlePageLoading(event) {
+function handlePageLoading() {
   // Use it to load data on demand
 }
-function handleSelectedDateChange(event) {
+function handleSelectedDateChange() {
   // Use it to keep track of the selected date externally
 }
 

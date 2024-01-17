@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({

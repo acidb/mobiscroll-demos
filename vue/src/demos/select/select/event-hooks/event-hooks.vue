@@ -7,77 +7,50 @@ setOptions({
 })
 
 const myData = [
-  {
-    text: 'Atlanta',
-    value: 'atl'
-  },
-  {
-    text: 'Berlin',
-    value: 'ber'
-  },
-  {
-    text: 'Boston',
-    value: 'bos'
-  },
-  {
-    text: 'Chicago',
-    value: 'chi'
-  },
-  {
-    text: 'London',
-    value: 'lon'
-  },
-  {
-    text: 'Los Angeles',
-    value: 'la'
-  },
-  {
-    text: 'New York',
-    value: 'ny'
-  },
-  {
-    text: 'Paris',
-    value: 'par'
-  },
-  {
-    text: 'San Francisco',
-    value: 'sf'
-  }
+  { text: 'Atlanta', value: 'atl' },
+  { text: 'Berlin', value: 'ber' },
+  { text: 'Boston', value: 'bos' },
+  { text: 'Chicago', value: 'chi' },
+  { text: 'London', value: 'lon' },
+  { text: 'Los Angeles', value: 'la' },
+  { text: 'New York', value: 'ny' },
+  { text: 'Paris', value: 'par' },
+  { text: 'San Francisco', value: 'sf' }
 ]
 
-function handleCancel(event) {
+function handleCancel() {
   // Logic for cancel button click
 }
 
-function handleChange(event) {
+function handleChange() {
   // Logic for value change
 }
 
-function handleClose(event) {
+function handleClose() {
   // Your custom event handler goes here
 }
 
-function handleDestroy(event) {
+function handleDestroy() {
   // Your custom event handler goes here
 }
 
-function handleFilter(event) {
+function handleFilter() {
   // Your custom event handler goes here
 }
 
-function handleInit(event) {
+function handleInit() {
   // Logic running on component init
 }
 
-function handleOpen(event) {
+function handleOpen() {
   // Your custom event handler goes here
 }
 
-function handlePosition(event) {
+function handlePosition() {
   // Logic for component positioning
 }
 
-function handleTempChange(event) {
+function handleTempChange() {
   // Logic for temporary value change
 }
 </script>

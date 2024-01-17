@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { MbscEventcalendar, setOptions, formatDate /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
@@ -180,7 +180,7 @@ const myView = {
 
 function handleEventUpdate(args) {
   const event = args.event
-  const index = shifts.findIndex((x) => x.id === event.id)
+  const index = shifts.value.findIndex((x) => x.id === event.id)
   const newShifts = [...shifts.value]
 
   newShifts.splice(index, 1, {
@@ -215,8 +215,8 @@ function myDefaultEvent(ev) {
     :clickToCreate="true"
     :dragToMove="true"
     :dragToResize="false"
+    :extendDefaultEvent="myDefaultEvent"
     @event-update="handleEventUpdate"
-    extendDefaultEvent="myDefaultEvent"
   >
     <template #slot="args">
       <div

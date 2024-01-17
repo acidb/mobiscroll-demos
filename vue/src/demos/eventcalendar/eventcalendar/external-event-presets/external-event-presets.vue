@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import {
   MbscEventcalendar,
   setOptions,
@@ -149,8 +149,7 @@ function handleToastClose() {
         </div>
         <div class="mbsc-col-sm-3">
           <div class="mbsc-form-group-title">Available tasks</div>
-
-          <div v-for="(task, i) in myTasks">
+          <div v-for="(task, i) in myTasks" :key="task.id">
             <div ref="dragElements" class="external-event-task" :style="{ background: task.color }">
               <div>{{ task.title }}</div>
               <div>{{ task.length }}</div>

@@ -32,23 +32,17 @@ const myResponsive = ref({
   }
 })
 
-const toastMessage = ref('')
 const isToastOpen = ref(false)
 
 const myView = {
   calendar: { labels: true }
 }
 
-function handleEventClick(args) {
-  toastMessage.value = args.event.title
-  isToastOpen.value = true
-}
-
 function handleToastClose() {
   isToastOpen.value = false
 }
 
-function edit(data) {
+function edit() {
   isToastOpen.value = true
 }
 
@@ -175,11 +169,7 @@ onMounted(() => {
           <div class="md-custom-event-details">
             <div class="md-custom-event-title">{{ data.title }}</div>
             <div class="md-custom-event-time">{{ data.start }} - {{ data.end }}</div>
-            <MbscButton
-              className="md-custom-event-btn"
-              color="dark"
-              variant="outline"
-              @click="edit(data)"
+            <MbscButton className="md-custom-event-btn" color="dark" variant="outline" @click="edit"
               >Edit</MbscButton
             >
             <div class="md-cutom-event-img-cont">

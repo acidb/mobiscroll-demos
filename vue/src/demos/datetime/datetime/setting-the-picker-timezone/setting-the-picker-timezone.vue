@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import { MbscDatepicker, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import * as moment from 'moment-timezone'
 
+momentTimezone.moment = moment
+
 setOptions({
   // locale,
   // theme
@@ -14,6 +16,7 @@ const selected = ref()
 <template>
   <MbscDatepicker
     :controls="['datetime']"
+    :timezonePlugin="momentTimezone"
     v-model="selected"
     dataTimezone="utc"
     displayTimezone="local"

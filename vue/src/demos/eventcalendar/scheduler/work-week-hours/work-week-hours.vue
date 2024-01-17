@@ -39,15 +39,15 @@ const myInvalid = [
   }
 ]
 
-function handleEventCreateFailed(event) {
-  if (event.invalid.type == 'lunch') {
+function handleEventCreateFailed(args) {
+  if (args.invalid.type == 'lunch') {
     toastMessage.value = "Can't create this task on lunch break."
     isToastOpen.value = true
   }
 }
 
 function handleEventUpdateFailed(args) {
-  if (event.invalid.type == 'lunch') {
+  if (args.invalid.type == 'lunch') {
     toastMessage.value = "Can't schedule this task on lunch break."
     isToastOpen.value = true
   }

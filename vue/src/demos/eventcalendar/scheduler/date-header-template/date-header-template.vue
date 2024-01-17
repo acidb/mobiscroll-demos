@@ -65,7 +65,7 @@ const milestones = [
 ]
 
 function getTask(date) {
-  return this.milestones.find((obj) => +new Date(obj.date) === +date) || {}
+  return milestones.find((obj) => +new Date(obj.date) === +date) || {}
 }
 
 onMounted(() => {

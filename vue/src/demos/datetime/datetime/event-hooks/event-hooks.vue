@@ -6,47 +6,47 @@ setOptions({
   // theme
 })
 
-function handleCancel(event) {
+function handleCancel() {
   // Logic for cancel button click
 }
 
-function handleChange(event) {
+function handleChange() {
   // Logic for value change
 }
 
-function handleClose(event) {
+function handleClose() {
   // Your custom event handler goes here
 }
 
-function handleDestroy(event) {
+function handleDestroy() {
   // Your custom event handler goes here
 }
 
-function handleInit(event) {
+function handleInit() {
   // Logic running on component init
 }
 
-function handleOpen(event) {
+function handleOpen() {
   // Your custom event handler goes here
 }
 
-function handlePageChange(event) {
+function handlePageChange() {
   // Your custom event handler goes here
 }
 
-function handlePageLoaded(event) {
+function handlePageLoaded() {
   // Use it to inject custom markup & attach custom listeners
 }
 
-function handlePageLoading(event) {
+function handlePageLoading() {
   // Use it to load data on demand
 }
 
-function handlePosition(event) {
+function handlePosition() {
   // Logic for component positioning
 }
 
-function handleTempChange(event) {
+function handleTempChange() {
   // Logic for temporary value change
 }
 </script>

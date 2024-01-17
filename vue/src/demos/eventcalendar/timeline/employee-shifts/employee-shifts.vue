@@ -62,7 +62,7 @@ const staff = [
   }
 ]
 
-const defaultShifts = ref([
+const shifts = ref([
   {
     start: 'dyndatetime(y,m,d-2,7)',
     end: 'dyndatetime(y,m,d-2,13)',

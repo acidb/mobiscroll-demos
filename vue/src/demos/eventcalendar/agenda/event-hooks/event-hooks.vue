@@ -35,37 +35,37 @@ const dragData2 = {
   color: '#ddfcf7'
 }
 
-function handleDestroy(event) {
+function handleDestroy() {
   // Logic for destroying the event calendar
 }
-function handleEventClick(event) {
+function handleEventClick() {
   // Logic for event click
 }
-function handleEventDoubleClick(event) {
+function handleEventDoubleClick() {
   // Logic for event double click
 }
-function handleEventHoverIn(event) {
+function handleEventHoverIn() {
   // Logic for event hover in
 }
-function handleEventHoverOut(event) {
+function handleEventHoverOut() {
   // Logic for event hover out
 }
-function handleEventRightClick(event) {
+function handleEventRightClick() {
   // Logic for event right click
 }
-function handleInit(event) {
+function handleInit() {
   // Logic running on component init
 }
-function handlePageChange(event) {
+function handlePageChange() {
   // Your custom event handler goes here
 }
-function handlePageLoaded(event) {
+function handlePageLoaded() {
   // Use it to inject custom markup & attach custom listeners
 }
-function handlePageLoading(event) {
+function handlePageLoading() {
   // Use it to load data on demand
 }
-function handleSelectedDateChange(event) {
+function handleSelectedDateChange() {
   // Use it to keep track of the selected date externally
 }
 

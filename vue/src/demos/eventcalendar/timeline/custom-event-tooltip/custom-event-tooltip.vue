@@ -523,7 +523,7 @@ function handleToastClose() {
   isToastOpen.value = false
 }
 
-function handleEventHoverIn(args, inst) {
+function handleEventHoverIn(args) {
   const event = args.event
   const resource = doctors.find((dr) => dr.id === event.resource)
   const newTime =

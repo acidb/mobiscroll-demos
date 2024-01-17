@@ -14,10 +14,9 @@ export default function myPlugin() {
 const now = new Date();
 
 const replaceDynamicDates = (src) => {
-  var str = src.replace(/['|"]dyndatetime\(([^)])*\)['|"]/g, function (i) {
+  return src.replace(/['|"]dyndatetime\(([^)])*\)['|"]/g, function (i) {
     return parseDatestring(i);
   });
-  return str;
 };
 
 const parseDatestring = (s) => {

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { MbscSelect, MbscButton, MbscPage, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { MbscSelect, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
   // locale,

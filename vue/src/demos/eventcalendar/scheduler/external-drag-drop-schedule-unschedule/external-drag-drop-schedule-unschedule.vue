@@ -113,8 +113,7 @@ onMounted(() => {
           @item-drop="handleItemDrop($event)"
         >
           <div class="mbsc-form-group-title">Available tasks</div>
-
-          <div v-for="(task, i) in myTasks">
+          <div v-for="(task, i) in myTasks" :key="task.id">
             <div ref="dragElements" class="external-drop-task" :style="{ background: task.color }">
               <div>{{ task.title }}</div>
               <div>{{ getHours(task) }}</div>

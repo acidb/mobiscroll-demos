@@ -310,7 +310,7 @@ function handleToastClose() {
   isToastOpen.value = false
 }
 
-function handleEventHoverIn(args, inst) {
+function handleEventHoverIn(args) {
   const event = args.event
   const newTime =
     formatDate('hh:mm A', new Date(event.start)) +

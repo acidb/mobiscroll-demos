@@ -27,7 +27,7 @@ const myResources = [
   }
 ]
 
-const myVie = {
+const myView = {
   schedule: {
     type: 'week',
     allDay: false,

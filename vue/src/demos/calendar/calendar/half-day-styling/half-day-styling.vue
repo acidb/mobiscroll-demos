@@ -13,7 +13,7 @@ const myColors = [
 ]
 </script>
 
-<template><MbscDatepicker :controls="['calendar']" display="inline" /></template>
+<template><MbscDatepicker :colors="myColors" display="inline" /></template>
 
 <style>
 .mbsc-datepicker .mbsc-calendar-cell.mbsc-ltr.check-in {
