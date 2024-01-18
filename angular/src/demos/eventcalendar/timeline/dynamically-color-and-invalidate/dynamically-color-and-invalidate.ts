@@ -183,7 +183,7 @@ export class AppComponent {
       }
     },
     onEventDragStart: (args) => {
-      let event = args.event;
+      const event = args.event;
 
       if (event) {
         if (event['category'] === 'hw') {
@@ -199,7 +199,7 @@ export class AppComponent {
       this.myInvalids = [];
       this.myColors = [];
     },
-    onEventCreated: (args) => {
+    onEventCreated: () => {
       this.notify.toast({
         message: 'Event created',
       });

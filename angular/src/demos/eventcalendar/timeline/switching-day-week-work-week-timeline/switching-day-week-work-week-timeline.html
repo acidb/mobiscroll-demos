@@ -27,7 +27,7 @@
     <div class="md-work-week-cont">
       <div class="md-work-week-name">{{resource.name}}</div>
       <div class="md-work-week-title">{{resource.title}}</div>
-      <img class="md-work-week-avatar" [src]="resource.img" />
+      <img class="md-work-week-avatar" [attr.alt]="resource.name" [src]="resource.img" />
     </div>
   </ng-template>
 </div>

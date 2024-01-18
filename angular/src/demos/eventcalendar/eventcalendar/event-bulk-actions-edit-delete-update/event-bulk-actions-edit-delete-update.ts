@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
@@ -23,7 +23,7 @@ setOptions({
   templateUrl: './event-bulk-actions-edit-delete-update.html',
   providers: [Notifications],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private notify: Notifications,

@@ -4,7 +4,6 @@ import {
   MbscEventcalendarView,
   MbscEventClickEvent,
   MbscEventCreatedEvent,
-  MbscNewEventData,
   MbscPopupOptions,
   MbscPopup,
   MbscPopupButton,
@@ -16,8 +15,6 @@ setOptions({
   // locale,
   // theme
 });
-
-const now = new Date();
 
 @Component({
   selector: 'app-scheduler-shared-events-across-resources',
@@ -170,7 +167,7 @@ export class AppComponent {
     this.showPopup(args);
   }
 
-  extendDefaultEvent(args: MbscNewEventData): MbscCalendarEvent {
+  extendDefaultEvent(): MbscCalendarEvent {
     return { color: '#4a9e42' };
   }
 

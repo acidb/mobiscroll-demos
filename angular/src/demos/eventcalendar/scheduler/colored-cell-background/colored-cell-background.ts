@@ -7,11 +7,6 @@ setOptions({
   // theme
 });
 
-const now = new Date();
-const year = now.getFullYear();
-const month = now.getMonth();
-const today = now.getDate();
-
 @Component({
   selector: 'app-scheduler-colored-cell-background',
   templateUrl: './colored-cell-background.html',

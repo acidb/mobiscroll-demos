@@ -1971,8 +1971,8 @@ export class AppComponent {
     return formatDate('YYYY-MM-DD', new Date(date));
   }
 
-  checkboxChange(ev: any): void {
-    let filteredSlots: any = [];
+  checkboxChange(): void {
+    const filteredSlots: any = [];
 
     for (const slot of defaultSlots) {
       if (this.shiftTimes.find((us: { id: number; checked: any }) => us.id === slot.id && us.checked)) {

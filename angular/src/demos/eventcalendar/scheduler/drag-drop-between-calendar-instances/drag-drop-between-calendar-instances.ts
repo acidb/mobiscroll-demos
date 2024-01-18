@@ -170,22 +170,18 @@ export class AppComponent {
     },
   ];
 
-  handleFirstCalEventCreated(args: any, calendar: string) {
+  handleFirstCalEventCreated(args: any) {
     if (args.action === 'externalDrop') {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         context: '.md-drag-drop-first-calendar',
         message: 'Event dropped to Calendar 1',
       });
     }
   }
 
-  handleSecondCalEventCreated(args: any, calendar: string) {
+  handleSecondCalEventCreated(args: any) {
     if (args.action === 'externalDrop') {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         context: '.md-drag-drop-second-calendar',
         message: 'Event dropped to Calendar 2',
       });

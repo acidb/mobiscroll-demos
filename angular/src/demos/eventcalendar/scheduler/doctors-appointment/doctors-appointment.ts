@@ -232,7 +232,7 @@ export class AppComponent implements OnInit {
         message: args.event.title + ' unscheduled',
       });
     },
-    onEventDragEnter: (args) => {
+    onEventDragEnter: () => {
       this.myColors = [
         {
           background: '#f1fff24d',

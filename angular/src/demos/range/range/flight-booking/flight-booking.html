@@ -63,7 +63,7 @@
       <div class="mbsc-col-6">
         <mbsc-datepicker
           [controls]="['calendar']"
-          [select]="trip == 'oneway' ? 'date' : 'range'"
+          [select]="trip === 'oneway' ? 'date' : 'range'"
           [min]="min"
           [max]="max"
           [pages]="2"
@@ -80,7 +80,7 @@
           inputStyle="outline"
           labelStyle="stacked"
           placeholder="Please Select..."
-          [ngStyle]="{ display: trip == 'oneway' ? 'none' : 'block' }"
+          [ngStyle]="{ display: trip === 'oneway' ? 'none' : 'block' }"
         ></mbsc-input>
       </div>
       <div class="mbsc-col-6">
@@ -90,7 +90,7 @@
           inputStyle="outline"
           labelStyle="stacked"
           placeholder="Please Select..."
-          [disabled]="trip == 'oneway'"
+          [disabled]="trip === 'oneway'"
         ></mbsc-input>
       </div>
     </div>

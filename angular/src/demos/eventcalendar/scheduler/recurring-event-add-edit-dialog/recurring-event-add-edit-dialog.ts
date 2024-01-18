@@ -342,7 +342,7 @@ export class AppComponent implements OnInit {
         this.deleteEvent(args.event);
       });
     },
-    onEventUpdated: (args: any) => {
+    onEventUpdated: () => {
       // here you can update the event in your storage as well, after drag & drop or resize
       // ...
     },
@@ -478,23 +478,25 @@ export class AppComponent implements OnInit {
   isEdit = false;
   deleteRecurringEvent(): void {
     switch (this.recurringEditMode) {
-      case 'current':
-      default:
-        let currentExceptions = this.tempEvent.recurringException || [];
-        currentExceptions = [...currentExceptions, this.tempEvent.start];
-        this.originalRecurringEvent.recurringException = currentExceptions;
-        this.myEvents = [...this.myEvents];
-        break;
-      case 'following':
+      case 'following': {
         let followingExceptions = this.tempEvent.recurringException || [];
         followingExceptions = [...followingExceptions, this.tempEvent.start];
         this.originalRecurringEvent.recurringException = followingExceptions;
         this.originalRecurringEvent.recurring.until = this.tempEvent.start;
         this.myEvents = [...this.myEvents];
         break;
+      }
       case 'all':
         this.myEvents = this.myEvents.filter((item) => item.id !== this.tempEvent.id);
         break;
+      case 'current':
+      default: {
+        let currentExceptions = this.tempEvent.recurringException || [];
+        currentExceptions = [...currentExceptions, this.tempEvent.start];
+        this.originalRecurringEvent.recurringException = currentExceptions;
+        this.myEvents = [...this.myEvents];
+        break;
+      }
     }
     this.popup.close();
     this.recurringEditModePopup.close();

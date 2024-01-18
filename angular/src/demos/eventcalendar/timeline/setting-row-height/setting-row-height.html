@@ -13,7 +13,7 @@
     <div class="md-timeline-row-height-cont" *ngIf="!resource.children">
       <div class="md-timeline-row-height-name">{{resource.name}}</div>
       <div class="md-timeline-row-height-title">{{resource.title}}</div>
-      <img class="md-timeline-row-height-avatar" [src]="resource.img" />
+      <img class="md-timeline-row-height-avatar" [attr.alt]="resource.name" [src]="resource.img" />
     </div>
     <div *ngIf="resource.children">{{resource.name}}</div>
   </ng-template>

@@ -8,7 +8,7 @@
 >
   <ng-template #resourceTemp let-resource>
     <div class="header-resource-template-content">
-      <img class="header-resource-avatar" [src]="resource.img" />
+      <img class="header-resource-avatar" [attr.alt]="resource.name" [src]="resource.img" />
       <div class="header-resource-name">{{resource.name}}</div>
     </div>
   </ng-template>

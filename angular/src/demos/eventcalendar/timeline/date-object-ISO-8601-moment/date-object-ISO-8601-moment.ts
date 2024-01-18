@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-timeline-date-object-ISO-8601-moment',
+  selector: 'app-timeline-date-object-iso-8601-moment',
   templateUrl: './date-object-ISO-8601-moment.html',
 })
 export class AppComponent {

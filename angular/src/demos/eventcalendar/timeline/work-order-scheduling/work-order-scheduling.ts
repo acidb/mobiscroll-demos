@@ -316,7 +316,7 @@ export class AppComponent {
         this.deleteEvent(args.event);
       });
     },
-    onEventUpdated: (args) => {
+    onEventUpdated: () => {
       // here you can update the event in your storage as well, after drag & drop or resize
       // ...
     },

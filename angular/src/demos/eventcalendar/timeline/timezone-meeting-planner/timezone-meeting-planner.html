@@ -32,7 +32,7 @@
         <span *ngIf="resource.organizer">Organizer </span>
         <span class="md-meeting-participant-offset">{{resource.utcOffset}}</span>
       </div>
-      <img class="md-meeting-participant-avatar" [src]="resource.img" />
+      <img class="md-meeting-participant-avatar" [attr.alt]="resource.name" [src]="resource.img" />
     </div>
   </ng-template>
 </mbsc-eventcalendar>

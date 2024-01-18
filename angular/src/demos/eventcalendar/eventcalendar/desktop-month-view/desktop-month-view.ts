@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     view: {
       calendar: { labels: true },
     },
-    onEventClick: (event, inst) => {
+    onEventClick: (event) => {
       this.notify.toast({
         //<hidden>
         // theme,//</hidden>

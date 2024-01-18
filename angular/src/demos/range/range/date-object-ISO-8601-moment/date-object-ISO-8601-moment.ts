@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-range-date-object-ISO-8601-moment',
+  selector: 'app-range-date-object-iso-8601-moment',
   templateUrl: './date-object-ISO-8601-moment.html',
 })
 export class AppComponent {

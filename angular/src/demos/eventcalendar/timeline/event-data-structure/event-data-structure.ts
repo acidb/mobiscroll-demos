@@ -6,8 +6,6 @@ setOptions({
   // theme
 });
 
-const now = new Date();
-
 @Component({
   selector: 'app-timeline-event-data-structure',
   templateUrl: './event-data-structure.html',

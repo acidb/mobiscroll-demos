@@ -11,7 +11,7 @@
   ></mbsc-select>
   <ng-template #itemTemp let-item>
     <div class="md-item-template">
-      <img class="md-item-template-img" [src]="'https://img.mobiscroll.com/demos/' + item.data.img + '.png'" />
+      <img class="md-item-template-img" alt="Album" [src]="'https://img.mobiscroll.com/demos/' + item.data.img + '.png'" />
       <div class="md-item-template-title">
         <span>{{item.data.text}}</span>
         <span class="md-item-template-year">{{' (' + item.data.year + ')'}}</span>

@@ -3,6 +3,6 @@
   <div class="resource-template-content">
     <div class="resource-name">{{resource.name}}</div>
     <div class="resource-description">{{resource.description}}</div>
-    <img class="resource-avatar" [src]="resource.img" />
+    <img class="resource-avatar" [attr.alt]="resource.name" [src]="resource.img" />
   </div>
 </ng-template>

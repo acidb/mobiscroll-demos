@@ -2,7 +2,7 @@
 
 <ng-template #eventTemplate let-data>
   <div class="md-full-event">
-    <img class="md-full-event-img" src="https://img.mobiscroll.com/demos/{{data.original.img}}" />
+    <img class="md-full-event-img" [attr.alt]="data.title" src="https://img.mobiscroll.com/demos/{{data.original.img}}" />
     <div class="md-full-event-details">
       <div class="md-full-event-title">{{data.title}}</div>
       <div class="md-full-event-location">

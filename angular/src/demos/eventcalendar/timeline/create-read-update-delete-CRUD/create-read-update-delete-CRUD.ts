@@ -15,7 +15,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-timeline-create-read-update-delete-CRUD',
+  selector: 'app-timeline-create-read-update-delete-crud',
   styleUrl: './create-read-update-delete-CRUD.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './create-read-update-delete-CRUD.html',
@@ -149,7 +149,7 @@ export class AppComponent {
         this.deleteEvent(args.event);
       });
     },
-    onEventUpdated: (args) => {
+    onEventUpdated: () => {
       // here you can update the event in your storage as well, after drag & drop or resize
       // ...
     },
@@ -228,7 +228,7 @@ export class AppComponent {
       {
         text: 'Set',
         keyCode: 'enter',
-        handler: (ev) => {
+        handler: () => {
           this.selectedColor = this.tempColor;
           this.colorPicker.close();
         },

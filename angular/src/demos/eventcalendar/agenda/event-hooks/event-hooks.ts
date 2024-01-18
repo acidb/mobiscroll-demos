@@ -22,37 +22,37 @@ export class AppComponent implements OnInit {
     },
   };
 
-  onDestroy(event: any): void {
+  onDestroy(): void {
     // Your custom event handler goes here
   }
-  onEventClick(event: any): void {
+  onEventClick(): void {
     // Logic for event click
   }
-  onEventDoubleClick(event: any): void {
+  onEventDoubleClick(): void {
     // Logic for event double click
   }
-  onEventHoverIn(event: any): void {
+  onEventHoverIn(): void {
     // Logic for event hover in
   }
-  onEventHoverOut(event: any): void {
+  onEventHoverOut(): void {
     // Logic for event hover out
   }
-  onEventRightClick(event: any): void {
+  onEventRightClick(): void {
     // Logic for event right click
   }
-  onInit(event: any): void {
+  onInit(): void {
     // Logic running on component init
   }
-  onPageChange(event: any): void {
+  onPageChange(): void {
     // Your custom event handler goes here
   }
-  onPageLoaded(event: any): void {
+  onPageLoaded(): void {
     // Use it to inject custom markup & attach custom listeners
   }
-  onPageLoading(event: any): void {
+  onPageLoading(): void {
     // Use it to load data on demand
   }
-  onSelectedDateChange(event: any): void {
+  onSelectedDateChange(): void {
     // Use it to keep track of the selected date externally
   }
 

@@ -4,7 +4,7 @@
     <div class="md-header-filter-controls">
       <mbsc-segmented-group select="multiple" [(ngModel)]="selected" (change)="filter($event)">
         <mbsc-segmented *ngFor="let res of myResources" [value]="res.id">
-          <img class="md-header-filter-img" src="{{res.img}}" />
+          <img class="md-header-filter-img" [attr.alt]="res.name" src="{{res.img}}" />
           <span [ngClass]="'md-header-filter-name md-header-filter-name-' + res.id">{{res.name}}</span>
         </mbsc-segmented>
       </mbsc-segmented-group>

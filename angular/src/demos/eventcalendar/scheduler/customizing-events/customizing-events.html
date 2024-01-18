@@ -23,7 +23,7 @@
         <div class="md-custom-event-time">{{data.start + ' - ' + data.end}}</div>
         <mbsc-button class="md-custom-event-btn" color="dark" variant="outline" (click)="edit()">Edit</mbsc-button>
         <div class="md-cutom-event-img-cont">
-          <img *ngFor="let p of data.original.participants" class="md-custom-event-img" [src]="getParticipant(p).img" />
+          <img *ngFor="let p of data.original.participants" class="md-custom-event-img" alt="Participant" [src]="getParticipant(p).img" />
         </div>
       </div>
     </div>

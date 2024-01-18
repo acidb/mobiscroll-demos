@@ -31,85 +31,85 @@ export class AppComponent implements OnInit {
     calendar: { labels: true },
   };
 
-  onCellClick(event: any): void {
+  onCellClick(): void {
     // Logic for event click
   }
-  onCellDoubleClick(event: any): void {
+  onCellDoubleClick(): void {
     /* Logic for cell double click */
   }
-  onCellRightClick(event: any): void {
+  onCellRightClick(): void {
     /* Logic for cell right click */
   }
-  onCellHoverIn(event: any): void {
+  onCellHoverIn(): void {
     /* Logic for cell hover in */
   }
-  onCellHoverOut(event: any): void {
+  onCellHoverOut(): void {
     /* Logic for cell hover in */
   }
-  onDestroy(event: any): void {
+  onDestroy(): void {
     // Logic for destroying the event calendar
   }
-  onEventClick(event: any): void {
+  onEventClick(): void {
     // Logic for event click
   }
-  onEventCreate(event: any): void {
+  onEventCreate(): void {
     // Logic for event create
   }
-  onEventCreated(event: any): void {
+  onEventCreated(): void {
     // Logic for event created
   }
-  onEventCreateFailed(event: any): void {
+  onEventCreateFailed(): void {
     // Logic for failed event create
   }
-  onEventDelete(event: any): void {
+  onEventDelete(): void {
     // Logic for event delete
   }
-  onEventDeleted(event: any): void {
+  onEventDeleted(): void {
     // Logic for event deleted
   }
-  onEventDoubleClick(event: any): void {
+  onEventDoubleClick(): void {
     // Logic for event double click
   }
-  onEventDragStart(event: any): void {
+  onEventDragStart(): void {
     // Logic for event drag start
   }
-  onEventDragEnd(event: any): void {
+  onEventDragEnd(): void {
     // Logic for event drag end
   }
-  onEventHoverIn(event: any): void {
+  onEventHoverIn(): void {
     // Logic for event hover in
   }
-  onEventHoverOut(event: any): void {
+  onEventHoverOut(): void {
     // Logic for event hover out
   }
-  onEventUpdate(event: any): void {
+  onEventUpdate(): void {
     // Logic for event update
   }
-  onEventUpdated(event: any): void {
+  onEventUpdated(): void {
     // Logic for event updated
   }
-  onEventUpdateFailed(event: any): void {
+  onEventUpdateFailed(): void {
     // Logic for failed event update
   }
-  onEventRightClick(event: any): void {
+  onEventRightClick(): void {
     // Logic for event right click
   }
-  onInit(event: any): void {
+  onInit(): void {
     // Logic running on component init
   }
-  onLabelClick(event: any): void {
+  onLabelClick(): void {
     // Logic for label click
   }
-  onPageChange(event: any): void {
+  onPageChange(): void {
     // Your custom event handler goes here
   }
-  onPageLoaded(event: any): void {
+  onPageLoaded(): void {
     // Use it to inject custom markup & attach custom listeners
   }
-  onPageLoading(event: any): void {
+  onPageLoading(): void {
     // Use it to load data on demand
   }
-  onSelectedDateChange(event: any): void {
+  onSelectedDateChange(): void {
     // Use it to keep track of the selected date externally
   }
 

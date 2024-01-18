@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
       calendar: { type: 'month' },
       agenda: { type: 'month' },
     },
-    onEventClick: (event, inst) => {
+    onEventClick: (event) => {
       this.notify.toast({
         message: event.event.title,
       });

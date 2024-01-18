@@ -9,7 +9,7 @@
     <div class="employee-shifts-cont">
       <div class="employee-shifts-name">{{resource.name}}</div>
       <div class="employee-shifts-title">{{resource.title}}</div>
-      <img class="employee-shifts-avatar" [src]="resource.img" />
+      <img class="employee-shifts-avatar" [attr.alt]="resource.name" [src]="resource.img" />
     </div>
   </ng-template>
 </mbsc-eventcalendar>

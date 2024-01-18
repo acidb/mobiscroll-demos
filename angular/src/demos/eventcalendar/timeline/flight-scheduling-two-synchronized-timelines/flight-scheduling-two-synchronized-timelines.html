@@ -17,7 +17,7 @@
   >
     <ng-template #myResourceTemplate let-resource>
       <div *ngIf="!resource.children; else elseBlock" class="mbsc-flex mbsc-align-items-center mbsc-justify-content-start">
-        <img class="md-drag-drop-bw-inst-avatar" [src]="resource.img" />
+        <img class="md-drag-drop-bw-inst-avatar" [attr.alt]="resource.name" [src]="resource.img" />
         <div class="md-drag-drop-bw-inst-details mbsc-flex-col mbsc-flex-1-0">
           <div class="md-drag-drop-bw-inst-name">{{ resource.name }}</div>
           <div class="md-aircraft-code mbsc-flex mbsc-justify-content-between">

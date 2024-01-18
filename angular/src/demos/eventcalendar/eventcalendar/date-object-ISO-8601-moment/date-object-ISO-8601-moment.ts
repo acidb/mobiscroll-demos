@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-eventcalendar-date-object-ISO-8601-moment',
+  selector: 'app-eventcalendar-date-object-iso-8601-moment',
   templateUrl: './date-object-ISO-8601-moment.html',
 })
 export class AppComponent {

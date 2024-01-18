@@ -127,7 +127,7 @@ export class AppComponent implements OnInit {
     dragToResize: false,
     dragToMove: true,
     clickToCreate: true,
-    extendDefaultEvent: (ev) => {
+    extendDefaultEvent: () => {
       return {
         title: 'New meal',
         allDay: true,

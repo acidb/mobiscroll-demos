@@ -11,67 +11,67 @@ setOptions({
   templateUrl: './event-hooks.html',
 })
 export class AppComponent {
-  onActiveDateChange(event: any, inst: any): void {
+  onActiveDateChange(): void {
     // Logic for the active date change
   }
 
-  onCancel(event: any): void {
+  onCancel(): void {
     // Logic for cancel button click
   }
 
-  onCellClick(event: any): void {
+  onCellClick(): void {
     // Logic for event click
   }
 
-  onCellHoverIn(event: any): void {
+  onCellHoverIn(): void {
     // Logic for handling cell hover in
   }
 
-  onCellHoverOut(event: any): void {
+  onCellHoverOut(): void {
     // Logic for handling cell hover out
   }
 
-  onChange(event: any): void {
+  onChange(): void {
     // Logic for value change
   }
 
-  onClose(event: any): void {
+  onClose(): void {
     // Your custom event handler goes here
   }
 
-  onDestroy(event: any): void {
+  onDestroy(): void {
     // Your custom event handler goes here
   }
 
-  onInit(event: any): void {
+  onInit(): void {
     // Logic running on component init
   }
 
-  onLabelClick(event: any): void {
+  onLabelClick(): void {
     // Logic for label click
   }
 
-  onOpen(event: any): void {
+  onOpen(): void {
     // Your custom event handler goes here
   }
 
-  onPageChange(event: any): void {
+  onPageChange(): void {
     // Your custom event handler goes here
   }
 
-  onPageLoaded(event: any): void {
+  onPageLoaded(): void {
     // Use it to inject custom markup & attach custom listeners
   }
 
-  onPageLoading(event: any): void {
+  onPageLoading(): void {
     // Use it to load data on demand
   }
 
-  onPosition(event: any): void {
+  onPosition(): void {
     // Logic for component positioning
   }
 
-  onTempChange(event: any): void {
+  onTempChange(): void {
     // Logic for temporary value change
   }
 }
