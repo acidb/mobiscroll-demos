@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { RouterLink } from '@angular/router';
 import { MbscModule } from '@mobiscroll/angular';
 
 import { HomeComponent } from './components/home/home.component';
@@ -632,7 +633,7 @@ import { AppComponent as TimelineFlightSchedulingTwoSynchronizedTimelines } from
     TimelineControlNumberOfConcurrentlyShownEvents,
     TimelineFlightSchedulingTwoSynchronizedTimelines,
   ],
-  imports: [CommonModule, FormsModule, MbscModule, HttpClientJsonpModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, MbscModule, HttpClientJsonpModule, HttpClientModule, RouterLink],
   providers: [],
 })
 export class AppModule {}
