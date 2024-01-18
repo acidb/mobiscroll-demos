@@ -25,7 +25,7 @@ const parseDatestring = (s: string) => {
   s = s.replace(/\(/, '')
   s = s.replace(/\)/, '')
   s = s.replace(/y/, now.getFullYear().toString())
-  s = s.replace(/m/, now.getMonth().toString())
+  s = s.replace(/m/, (now.getMonth() + 1).toString())
   s = s.replace(/d/, now.getDate().toString())
   s = s.replace(/h/, now.getHours().toString())
   s = s.replace(/i/, now.getMinutes().toString())

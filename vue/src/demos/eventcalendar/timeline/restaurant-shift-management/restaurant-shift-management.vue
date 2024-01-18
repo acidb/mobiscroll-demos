@@ -1899,6 +1899,9 @@ const myView = ref({
   }
 })
 
+let date = ''
+let shiftList = []
+
 function getEmployeeName(event) {
   for (var i = 0; i < myResources.length; ++i) {
     for (var j = 0; j < myResources[i].children.length; ++j) {

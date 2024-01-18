@@ -1863,10 +1863,8 @@ const views = [
 
 const mySlots = ref(allSlots)
 
-const date: string = ''
-const selectedView = ref<string>('week')
+const selectedView = ref('week')
 const shifts = ref<MbscCalendarEvent[]>(allShifts)
-const shiftList: number[] = []
 const shiftTimes = ref([
   {
     id: 1,
@@ -1908,6 +1906,9 @@ const myView = ref<MbscEventcalendarView>({
     endDay: 5
   }
 })
+
+let date: string = ''
+let shiftList: number[] = []
 
 function getEmployeeName(event: MbscCalendarEvent) {
   for (var i = 0; i < myResources.length; ++i) {
