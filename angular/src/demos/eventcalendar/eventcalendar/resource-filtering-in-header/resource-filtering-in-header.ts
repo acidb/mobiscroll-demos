@@ -21,8 +21,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   myEvents: MbscCalendarEvent[] = [];
-  filteredEvents: MbscCalendarEvent[] = [];
-  selected: any = ['1'];
+
   myResources = [
     {
       id: '1',
@@ -47,38 +46,28 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  calView: MbscEventcalendarView = {
-    calendar: {
-      labels: true,
-    },
-  };
+  myView: MbscEventcalendarView = { calendar: { labels: true } };
+
+  filteredEvents: MbscCalendarEvent[] = [];
+
+  selectedResources = ['1'];
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/filter-resource-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
-      this.filterEvents();
+      this.filteredEvents = this.myEvents.filter((e) => this.selectedResources.indexOf('' + e.resource) !== -1);
     });
   }
-
-  filterEvents = () => {
-    const evs = [];
-    for (const value of this.myEvents) {
-      const item = value;
-      if (this.selected.indexOf('' + item.resource) > -1) {
-        evs.push(item);
-      }
-    }
-    this.filteredEvents = evs;
-  };
 
   filter(ev: any): void {
     const value = ev.target.value;
     const checked = ev.target.checked;
-    const name = document.querySelector('.md-header-filter-name-' + value);
+    const resource = this.myResources.find((r) => r.id === value);
 
-    this.filterEvents();
+    this.filteredEvents = this.myEvents.filter((e) => this.selectedResources.indexOf('' + e.resource) !== -1);
+
     this.notify.toast({
-      message: (checked ? 'Showing ' : 'Hiding ') + (name ? name.textContent : '') + ' events',
+      message: (checked ? 'Showing ' : 'Hiding ') + (resource ? resource.name : '') + ' events',
     });
   }
 }

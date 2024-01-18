@@ -1,8 +1,8 @@
 <mbsc-page>
   <div class="mbsc-form-group">
-    <mbsc-input [(ngModel)]="dateInput" inputStyle="box" labelStyle="stacked" (click)="inputClick()"></mbsc-input>
+    <mbsc-input #input [(ngModel)]="dateInput" inputStyle="box" labelStyle="stacked" (click)="inputClick()"></mbsc-input>
   </div>
-  <mbsc-popup class="demo-date-filtering-popup" [responsive]="respPopup" #popup>
+  <mbsc-popup class="demo-date-filtering-popup" [anchor]="inputElm" [responsive]="respPopup" #popup>
     <div class="mbsc-grid mbsc-no-padding">
       <div class="mbsc-row">
         <div class="mbsc-col-sm-4 mbsc-push-sm-8 demo-date-filtering-dates">

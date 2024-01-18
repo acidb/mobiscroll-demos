@@ -21,11 +21,36 @@ export class AppComponent implements OnInit {
   ) {}
 
   myEvents: MbscCalendarEvent[] = [];
+
+  myResources = [
+    {
+      id: '1',
+      name: 'Barry',
+      color: '#328e39',
+      img: 'https://img.mobiscroll.com/demos/m1.png',
+      checked: true,
+    },
+    {
+      id: '2',
+      name: 'Hortense',
+      color: '#00aabb',
+      img: 'https://img.mobiscroll.com/demos/f1.png',
+      checked: false,
+    },
+    {
+      id: '3',
+      name: 'Carl',
+      color: '#ea72c0',
+      img: 'https://img.mobiscroll.com/demos/m2.png',
+      checked: false,
+    },
+  ];
+
+  myView: MbscEventcalendarView = { schedule: { type: 'week' } };
+
   filteredEvents: MbscCalendarEvent[] = [];
-  selected: number[] = [1];
-  calView: MbscEventcalendarView = {
-    schedule: { type: 'week' },
-  };
+
+  selected = ['1'];
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/custom-events/', 'callback').subscribe((resp) => {
@@ -34,10 +59,10 @@ export class AppComponent implements OnInit {
     });
   }
 
-  filterEvents = () => {
+  filterEvents(): void {
     const ev = [];
     for (const item of this.myEvents) {
-      if (this.selected.indexOf(item['participant']) > -1) {
+      if (this.selected.indexOf('' + item['participant']) > -1) {
         if (item['participant'] === 1) {
           item.color = '#328e39';
         } else if (item['participant'] === 2) {
@@ -49,17 +74,17 @@ export class AppComponent implements OnInit {
       }
     }
     this.filteredEvents = ev;
-  };
+  }
 
-  filter(value: any): void {
+  filter(ev: any): void {
+    const value = ev.target.value;
+    const checked = ev.target.checked;
+    const resource = this.myResources.find((r) => r.id === value);
+
     this.filterEvents();
+
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
-      message:
-        (this.selected.find((item) => +item === value) ? 'Showing ' : 'Hiding ') +
-        document.querySelector('.md-header-filter-name-' + value)!.textContent +
-        ' events',
+      message: (checked ? 'Showing ' : 'Hiding ') + (resource ? resource.name : '') + ' events',
     });
   }
 }

@@ -209,14 +209,15 @@ export class AppComponent {
     });
   }
 
+  onKeyDown(ev: any) {
+    if (!this.confirmOpen && (ev.keyCode === 8 || ev.keyCode === 46)) {
+      this.deleteSelectedEvents();
+    }
+  }
+
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
       this.myEvents = resp;
-    });
-    document.querySelector('.md-bulk-operations')!.addEventListener('keydown', (ev: any) => {
-      if (!this.confirmOpen && (ev.keyCode === 8 || ev.keyCode === 46)) {
-        this.deleteSelectedEvents();
-      }
     });
   }
 }

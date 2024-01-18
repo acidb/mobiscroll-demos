@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscDatepickerOptions,
   MbscDateType,
+  MbscInput,
   MbscPopup,
   MbscPopupOptions,
   MbscSelectData,
@@ -20,7 +21,7 @@ const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day === 0 ? -6 : 1);
 const startDate = 'dyndatetime(y,m,d)';
-const endDate = 'dyndatetime(y,m,d + 6)';
+const endDate = 'dyndatetime(y,m,d+6)';
 
 @Component({
   selector: 'date-filtering-with-predefined-ranges',
@@ -28,10 +29,14 @@ const endDate = 'dyndatetime(y,m,d + 6)';
   encapsulation: ViewEncapsulation.None,
   templateUrl: './date-filtering-with-predefined-ranges.html',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
 
+  @ViewChild('input', { static: false })
+  input!: MbscInput;
+
+  inputElm!: HTMLElement;
   dateInput = '';
   selected = 'custom';
   selectedDate: MbscDateType[] = [startDate, endDate];
@@ -56,7 +61,6 @@ export class AppComponent implements OnInit {
       breakpoint: 559,
       buttons: [],
       display: 'anchored',
-      anchor: document.querySelector('.date-filter-input') as HTMLElement,
       anchorAlign: 'start',
       touchUi: false,
       scrollLock: false,
@@ -190,5 +194,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeInputValue(startDate, endDate);
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.inputElm = this.input.nativeElement;
+    });
   }
 }

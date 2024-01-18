@@ -1,14 +1,14 @@
 <mbsc-eventcalendar
   [data]="filteredEvents"
   [resources]="myResources"
-  [view]="calView"
+  [view]="myView"
   [headerTemplate]="customTemplate"
   class="md-custom-header-filtering"
 >
   <ng-template #customTemplate>
     <mbsc-calendar-nav class="md-header-filter-nav"></mbsc-calendar-nav>
     <div class="md-header-filter-controls">
-      <mbsc-segmented-group select="multiple" [(ngModel)]="selected" (change)="filter($event)">
+      <mbsc-segmented-group select="multiple" [(ngModel)]="selectedResources" (change)="filter($event)">
         <mbsc-segmented *ngFor="let res of myResources" [value]="res.id">
           <img class="md-header-filter-img" src="{{res.img}}" />
           <span [ngClass]="'md-header-filter-name md-header-filter-name-' + res.id">{{res.name}}</span>
