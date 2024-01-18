@@ -3,7 +3,7 @@ import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImp
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'event-content-customization',
+  selector: 'app-agenda-event-content-customization',
   styleUrl: './event-content-customization.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-content-customization.html',

@@ -9,7 +9,7 @@ setOptions({
 const now = new Date();
 
 @Component({
-  selector: 'event-data-structure',
+  selector: 'app-eventcalendar-event-data-structure',
   templateUrl: './event-data-structure.html',
   providers: [Notifications],
 })

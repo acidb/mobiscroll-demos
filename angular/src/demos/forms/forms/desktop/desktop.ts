@@ -6,7 +6,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'desktop',
+  selector: 'app-forms-desktop',
   styleUrl: './desktop.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './desktop.html',

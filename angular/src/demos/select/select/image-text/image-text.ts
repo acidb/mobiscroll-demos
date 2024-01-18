@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'image-text',
+  selector: 'app-select-image-text',
   styleUrl: './image-text.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './image-text.html',

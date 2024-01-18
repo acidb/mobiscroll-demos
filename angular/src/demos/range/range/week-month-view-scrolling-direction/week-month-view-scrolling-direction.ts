@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'week-month-view-scrolling-direction',
+  selector: 'app-range-week-month-view-scrolling-direction',
   templateUrl: './week-month-view-scrolling-direction.html',
 })
 export class AppComponent {}

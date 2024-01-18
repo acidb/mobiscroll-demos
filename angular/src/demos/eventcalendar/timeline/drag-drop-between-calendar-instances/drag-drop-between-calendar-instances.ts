@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'drag-drop-between-calendar-instances',
+  selector: 'app-timeline-drag-drop-between-calendar-instances',
   templateUrl: './drag-drop-between-calendar-instances.html',
   providers: [Notifications],
 })

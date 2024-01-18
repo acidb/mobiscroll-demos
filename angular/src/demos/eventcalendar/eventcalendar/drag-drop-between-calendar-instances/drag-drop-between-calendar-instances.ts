@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'drag-drop-between-calendar-instances',
+  selector: 'app-eventcalendar-drag-drop-between-calendar-instances',
   styleUrl: './drag-drop-between-calendar-instances.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './drag-drop-between-calendar-instances.html',

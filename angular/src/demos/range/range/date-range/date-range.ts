@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'date-range',
+  selector: 'app-range-date-range',
   templateUrl: './date-range.html',
 })
 export class AppComponent {}

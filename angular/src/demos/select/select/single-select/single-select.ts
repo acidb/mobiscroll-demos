@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'single-select',
+  selector: 'app-select-single-select',
   templateUrl: './single-select.html',
 })
 export class AppComponent {

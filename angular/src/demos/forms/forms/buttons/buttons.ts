@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'buttons',
+  selector: 'app-forms-buttons',
   templateUrl: './buttons.html',
 })
 export class AppComponent {

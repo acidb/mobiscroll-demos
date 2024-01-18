@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource',
+  selector: 'app-scheduler-conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource',
   templateUrl: './conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource.html',
 })
 export class AppComponent {

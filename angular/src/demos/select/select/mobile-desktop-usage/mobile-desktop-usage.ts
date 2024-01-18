@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'mobile-desktop-usage',
+  selector: 'app-select-mobile-desktop-usage',
   styleUrl: './mobile-desktop-usage.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile-desktop-usage.html',

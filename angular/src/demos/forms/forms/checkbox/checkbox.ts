@@ -6,7 +6,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'checkbox',
+  selector: 'app-forms-checkbox',
   templateUrl: './checkbox.html',
 })
 export class AppComponent {

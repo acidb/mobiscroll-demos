@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'timeline-custom-event-rendering',
+  selector: 'app-timeline-timeline-custom-event-rendering',
   styleUrl: './timeline-custom-event-rendering.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-custom-event-rendering.html',

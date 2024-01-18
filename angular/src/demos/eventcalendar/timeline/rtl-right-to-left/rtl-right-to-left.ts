@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'rtl-right-to-left',
+  selector: 'app-timeline-rtl-right-to-left',
   templateUrl: './rtl-right-to-left.html',
 })
 export class AppComponent implements OnInit {

@@ -6,7 +6,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'inputs-text-areas-date-fields',
+  selector: 'app-forms-inputs-text-areas-date-fields',
   templateUrl: './inputs-text-areas-date-fields.html',
 })
 export class AppComponent {

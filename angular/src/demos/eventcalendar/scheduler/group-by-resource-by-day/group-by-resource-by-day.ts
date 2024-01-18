@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'group-by-resource-by-day',
+  selector: 'app-scheduler-group-by-resource-by-day',
   templateUrl: './group-by-resource-by-day.html',
 })
 export class AppComponent implements OnInit {

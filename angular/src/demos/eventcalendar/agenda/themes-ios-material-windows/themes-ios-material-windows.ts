@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'themes-ios-material-windows',
+  selector: 'app-agenda-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
 })
 export class AppComponent implements OnInit {

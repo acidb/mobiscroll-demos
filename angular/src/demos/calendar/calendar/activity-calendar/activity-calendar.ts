@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'activity-calendar',
+  selector: 'app-calendar-activity-calendar',
   styleUrl: './activity-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './activity-calendar.html',

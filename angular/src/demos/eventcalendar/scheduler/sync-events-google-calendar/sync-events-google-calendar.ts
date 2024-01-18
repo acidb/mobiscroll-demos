@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'sync-events-google-calendar',
+  selector: 'app-scheduler-sync-events-google-calendar',
   styleUrl: './sync-events-google-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './sync-events-google-calendar.html',

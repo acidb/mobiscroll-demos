@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'multiple-lines',
+  selector: 'app-select-multiple-lines',
   styleUrl: './multiple-lines.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './multiple-lines.html',

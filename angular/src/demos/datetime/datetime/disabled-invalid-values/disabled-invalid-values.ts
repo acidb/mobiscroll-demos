@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'disabled-invalid-values',
+  selector: 'app-datetime-disabled-invalid-values',
   templateUrl: './disabled-invalid-values.html',
 })
 export class AppComponent {

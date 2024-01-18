@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'input-label-types',
+  selector: 'app-forms-input-label-types',
   templateUrl: './input-label-types.html',
 })
 export class AppComponent {}

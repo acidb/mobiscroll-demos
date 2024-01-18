@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'multiple-months',
+  selector: 'app-calendar-multiple-months',
   templateUrl: './multiple-months.html',
 })
 export class AppComponent {}

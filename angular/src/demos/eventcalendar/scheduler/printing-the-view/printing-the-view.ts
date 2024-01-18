@@ -9,7 +9,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'printing-the-view',
+  selector: 'app-scheduler-printing-the-view',
   templateUrl: './printing-the-view.html',
 })
 export class AppComponent implements OnInit {

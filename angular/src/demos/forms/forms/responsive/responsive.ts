@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'responsive',
+  selector: 'app-forms-responsive',
   styleUrl: './responsive.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './responsive.html',

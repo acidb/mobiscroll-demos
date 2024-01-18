@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'resource-data-structure',
+  selector: 'app-timeline-resource-data-structure',
   styleUrl: './resource-data-structure.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-data-structure.html',

@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'load-events-on-demand',
+  selector: 'app-timeline-load-events-on-demand',
   templateUrl: './load-events-on-demand.html',
   providers: [Notifications],
 })

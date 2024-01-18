@@ -9,7 +9,7 @@ setOptions({
 const now = new Date();
 
 @Component({
-  selector: 'formatting-return-values',
+  selector: 'app-calendar-formatting-return-values',
   templateUrl: './formatting-return-values.html',
 })
 export class AppComponent {

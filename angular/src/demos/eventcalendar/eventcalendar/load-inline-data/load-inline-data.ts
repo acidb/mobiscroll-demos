@@ -4,7 +4,7 @@ import { MbscCalendarEvent, MbscEventcalendarOptions /* localeImport */ } from '
 const now = new Date();
 
 @Component({
-  selector: 'load-inline-data',
+  selector: 'app-eventcalendar-load-inline-data',
   templateUrl: './load-inline-data.html',
 })
 export class AppComponent {

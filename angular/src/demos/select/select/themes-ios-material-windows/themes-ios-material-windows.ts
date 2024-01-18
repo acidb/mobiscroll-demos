@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MbscSelectOptions /* localeImport */ } from '@mobiscroll/angular';
 
 @Component({
-  selector: 'themes-ios-material-windows',
+  selector: 'app-select-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
 })
 export class AppComponent {

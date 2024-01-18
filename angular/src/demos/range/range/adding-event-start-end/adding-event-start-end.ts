@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'adding-event-start-end',
+  selector: 'app-range-adding-event-start-end',
   templateUrl: './adding-event-start-end.html',
 })
 export class AppComponent {

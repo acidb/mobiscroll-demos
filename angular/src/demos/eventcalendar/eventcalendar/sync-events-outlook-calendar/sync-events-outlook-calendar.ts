@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'sync-events-outlook-calendar',
+  selector: 'app-eventcalendar-sync-events-outlook-calendar',
   styleUrl: './sync-events-outlook-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './sync-events-outlook-calendar.html',

@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'segmented',
+  selector: 'app-forms-segmented',
   templateUrl: './segmented.html',
 })
 export class AppComponent {

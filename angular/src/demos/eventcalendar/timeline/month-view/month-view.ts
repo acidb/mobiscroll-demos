@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'month-view',
+  selector: 'app-timeline-month-view',
   templateUrl: './month-view.html',
 })
 export class AppComponent {

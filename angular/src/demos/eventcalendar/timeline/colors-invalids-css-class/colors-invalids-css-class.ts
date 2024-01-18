@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'colors-invalids-css-class',
+  selector: 'app-timeline-colors-invalids-css-class',
   styleUrl: './colors-invalids-css-class.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './colors-invalids-css-class.html',

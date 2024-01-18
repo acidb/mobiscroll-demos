@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'customizing-labels-selection',
+  selector: 'app-range-customizing-labels-selection',
   templateUrl: './customizing-labels-selection.html',
 })
 export class AppComponent {}

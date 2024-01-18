@@ -5,7 +5,7 @@ import moment from 'moment-timezone';
 momentTimezone.moment = moment;
 
 @Component({
-  selector: 'setting-the-picker-timezone',
+  selector: 'app-datetime-setting-the-picker-timezone',
   templateUrl: './setting-the-picker-timezone.html',
 })
 export class AppComponent {

@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'rtl-right-to-left',
+  selector: 'app-range-rtl-right-to-left',
   templateUrl: './rtl-right-to-left.html',
 })
 export class AppComponent {}

@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'min-max-length',
+  selector: 'app-range-min-max-length',
   templateUrl: './min-max-length.html',
 })
 export class AppComponent {}

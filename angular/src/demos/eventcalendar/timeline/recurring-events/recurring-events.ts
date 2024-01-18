@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'recurring-events',
+  selector: 'app-timeline-recurring-events',
   templateUrl: './recurring-events.html',
 })
 export class AppComponent {

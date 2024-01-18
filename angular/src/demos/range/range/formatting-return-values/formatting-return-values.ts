@@ -10,7 +10,7 @@ const currentWeek: any = ['dyndatetime(y,m,d)', 'dyndatetime(y,m,d+6)'];
 const currentTime: any = ['dyndatetime(y,m,d,h)', 'dyndatetime(y,m,d,h+2)'];
 
 @Component({
-  selector: 'formatting-return-values',
+  selector: 'app-range-formatting-return-values',
   templateUrl: './formatting-return-values.html',
 })
 export class AppComponent {

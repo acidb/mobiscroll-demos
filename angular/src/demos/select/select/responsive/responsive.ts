@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'responsive',
+  selector: 'app-select-responsive',
   templateUrl: './responsive.html',
 })
 export class AppComponent {

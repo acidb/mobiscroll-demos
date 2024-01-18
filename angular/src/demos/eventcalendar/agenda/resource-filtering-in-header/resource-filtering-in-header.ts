@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'resource-filtering-in-header',
+  selector: 'app-agenda-resource-filtering-in-header',
   styleUrl: './resource-filtering-in-header.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-filtering-in-header.html',

@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'work-week-hours',
+  selector: 'app-scheduler-work-week-hours',
   styleUrl: './work-week-hours.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './work-week-hours.html',

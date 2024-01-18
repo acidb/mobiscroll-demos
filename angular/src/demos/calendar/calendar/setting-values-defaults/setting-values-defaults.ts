@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'setting-values-defaults',
+  selector: 'app-calendar-setting-values-defaults',
   templateUrl: './setting-values-defaults.html',
 })
 export class AppComponent {

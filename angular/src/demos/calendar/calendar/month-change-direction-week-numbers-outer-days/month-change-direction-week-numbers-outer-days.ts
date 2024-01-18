@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'month-change-direction-week-numbers-outer-days',
+  selector: 'app-calendar-month-change-direction-week-numbers-outer-days',
   templateUrl: './month-change-direction-week-numbers-outer-days.html',
 })
 export class AppComponent {}

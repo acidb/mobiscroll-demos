@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'multiple-select',
+  selector: 'app-calendar-multiple-select',
   templateUrl: './multiple-select.html',
 })
 export class AppComponent {}

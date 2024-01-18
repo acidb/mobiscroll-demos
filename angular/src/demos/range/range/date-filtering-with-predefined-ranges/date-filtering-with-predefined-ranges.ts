@@ -24,7 +24,7 @@ const startDate = 'dyndatetime(y,m,d)';
 const endDate = 'dyndatetime(y,m,d+6)';
 
 @Component({
-  selector: 'date-filtering-with-predefined-ranges',
+  selector: 'app-range-date-filtering-with-predefined-ranges',
   styleUrl: './date-filtering-with-predefined-ranges.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './date-filtering-with-predefined-ranges.html',

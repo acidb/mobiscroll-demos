@@ -3,7 +3,7 @@ import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImp
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'event-popover',
+  selector: 'app-eventcalendar-event-popover',
   templateUrl: './event-popover.html',
   providers: [Notifications],
 })

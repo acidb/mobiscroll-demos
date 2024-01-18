@@ -26,7 +26,7 @@ const resources = [
 ];
 
 @Component({
-  selector: 'dynamic-add-remove-resources-filter',
+  selector: 'app-scheduler-dynamic-add-remove-resources-filter',
   styleUrl: './dynamic-add-remove-resources-filter.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamic-add-remove-resources-filter.html',

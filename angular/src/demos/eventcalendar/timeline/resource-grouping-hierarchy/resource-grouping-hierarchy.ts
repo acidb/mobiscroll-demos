@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'resource-grouping-hierarchy',
+  selector: 'app-timeline-resource-grouping-hierarchy',
   styleUrl: './resource-grouping-hierarchy.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-grouping-hierarchy.html',

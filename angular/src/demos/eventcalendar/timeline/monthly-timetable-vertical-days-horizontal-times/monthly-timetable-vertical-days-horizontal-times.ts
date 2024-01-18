@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'monthly-timetable-vertical-days-horizontal-times',
+  selector: 'app-timeline-monthly-timetable-vertical-days-horizontal-times',
   styleUrl: './monthly-timetable-vertical-days-horizontal-times.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './monthly-timetable-vertical-days-horizontal-times.html',

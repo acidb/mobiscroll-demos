@@ -11,7 +11,7 @@ const day = now.getDay();
 const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 
 @Component({
-  selector: 'custom-event-sort',
+  selector: 'app-agenda-custom-event-sort',
   templateUrl: './custom-event-sort.html',
 })
 export class AppComponent {

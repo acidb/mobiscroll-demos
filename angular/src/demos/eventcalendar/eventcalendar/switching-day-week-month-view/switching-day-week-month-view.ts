@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'switching-day-week-month-view',
+  selector: 'app-eventcalendar-switching-day-week-month-view',
   styleUrl: './switching-day-week-month-view.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './switching-day-week-month-view.html',

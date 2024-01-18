@@ -10,7 +10,7 @@ setOptions({
 const today = new Date();
 
 @Component({
-  selector: 'disallow-past-event-creation',
+  selector: 'app-eventcalendar-disallow-past-event-creation',
   styleUrl: './disallow-past-event-creation.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './disallow-past-event-creation.html',

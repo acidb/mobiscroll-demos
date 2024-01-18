@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'group-options',
+  selector: 'app-select-group-options',
   templateUrl: './group-options.html',
 })
 export class AppComponent {

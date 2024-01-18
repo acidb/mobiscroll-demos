@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'switching-day-week-work-week-timeline',
+  selector: 'app-timeline-switching-day-week-work-week-timeline',
   styleUrl: './switching-day-week-work-week-timeline.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './switching-day-week-work-week-timeline.html',

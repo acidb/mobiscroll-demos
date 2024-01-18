@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'show-hide-hours-days',
+  selector: 'app-scheduler-show-hide-hours-days',
   templateUrl: './show-hide-hours-days.html',
 })
 export class AppComponent implements OnInit {

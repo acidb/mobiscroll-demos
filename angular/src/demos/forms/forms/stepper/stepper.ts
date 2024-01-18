@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'stepper',
+  selector: 'app-forms-stepper',
   templateUrl: './stepper.html',
 })
 export class AppComponent {}

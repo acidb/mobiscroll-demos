@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'daily-weekly-monthly-yearly-timeline',
+  selector: 'app-timeline-daily-weekly-monthly-yearly-timeline',
   styleUrl: './daily-weekly-monthly-yearly-timeline.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './daily-weekly-monthly-yearly-timeline.html',

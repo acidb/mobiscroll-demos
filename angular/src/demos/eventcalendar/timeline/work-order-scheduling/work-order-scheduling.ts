@@ -17,7 +17,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'work-order-scheduling',
+  selector: 'app-timeline-work-order-scheduling',
   styleUrl: './work-order-scheduling.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './work-order-scheduling.html',

@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'load-resources-on-demand',
+  selector: 'app-timeline-load-resources-on-demand',
   styleUrl: './load-resources-on-demand.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-resources-on-demand.html',

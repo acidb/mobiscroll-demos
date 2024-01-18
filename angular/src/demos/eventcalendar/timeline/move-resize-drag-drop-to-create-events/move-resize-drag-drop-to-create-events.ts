@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'move-resize-drag-drop-to-create-events',
+  selector: 'app-timeline-move-resize-drag-drop-to-create-events',
   templateUrl: './move-resize-drag-drop-to-create-events.html',
 })
 export class AppComponent {

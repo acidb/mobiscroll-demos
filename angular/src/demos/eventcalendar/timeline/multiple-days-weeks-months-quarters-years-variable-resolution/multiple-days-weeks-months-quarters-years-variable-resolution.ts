@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'multiple-days-weeks-months-quarters-years-variable-resolution',
+  selector: 'app-timeline-multiple-days-weeks-months-quarters-years-variable-resolution',
   templateUrl: './multiple-days-weeks-months-quarters-years-variable-resolution.html',
 })
 export class AppComponent implements OnInit {

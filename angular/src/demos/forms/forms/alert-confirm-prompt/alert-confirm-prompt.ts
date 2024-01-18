@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'alert-confirm-prompt',
+  selector: 'app-forms-alert-confirm-prompt',
   templateUrl: './alert-confirm-prompt.html',
 })
 export class AppComponent {

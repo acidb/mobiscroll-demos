@@ -5,7 +5,7 @@ import moment from 'moment-timezone';
 momentTimezone.moment = moment;
 
 @Component({
-  selector: 'setting-the-timezone',
+  selector: 'app-agenda-setting-the-timezone',
   templateUrl: './setting-the-timezone.html',
 })
 export class AppComponent {

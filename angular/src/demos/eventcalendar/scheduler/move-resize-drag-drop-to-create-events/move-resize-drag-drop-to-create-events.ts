@@ -9,7 +9,7 @@ setOptions({
 const now = new Date();
 
 @Component({
-  selector: 'move-resize-drag-drop-to-create-events',
+  selector: 'app-scheduler-move-resize-drag-drop-to-create-events',
   templateUrl: './move-resize-drag-drop-to-create-events.html',
 })
 export class AppComponent {

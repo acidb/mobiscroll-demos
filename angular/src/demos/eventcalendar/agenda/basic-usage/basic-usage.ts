@@ -14,7 +14,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'basic-usage',
+  selector: 'app-agenda-basic-usage',
   templateUrl: './basic-usage.html',
   providers: [Notifications],
 })

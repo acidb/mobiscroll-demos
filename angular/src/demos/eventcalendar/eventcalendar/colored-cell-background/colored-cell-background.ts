@@ -13,7 +13,7 @@ const month = now.getMonth();
 const today = now.getDate();
 
 @Component({
-  selector: 'colored-cell-background',
+  selector: 'app-eventcalendar-colored-cell-background',
   templateUrl: './colored-cell-background.html',
 })
 export class AppComponent implements OnInit {

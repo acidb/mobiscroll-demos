@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'shift-template',
+  selector: 'app-timeline-shift-template',
   styleUrl: './shift-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './shift-template.html',

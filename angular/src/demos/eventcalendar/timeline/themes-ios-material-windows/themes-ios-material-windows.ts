@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'themes-ios-material-windows',
+  selector: 'app-timeline-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
 })
 export class AppComponent implements OnInit {

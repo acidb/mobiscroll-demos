@@ -3,7 +3,7 @@ import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImp
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'load-events-on-demand',
+  selector: 'app-agenda-load-events-on-demand',
   styleUrl: './load-events-on-demand.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-on-demand.html',

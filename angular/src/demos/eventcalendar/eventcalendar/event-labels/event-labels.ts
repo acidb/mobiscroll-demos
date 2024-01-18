@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'event-labels',
+  selector: 'app-eventcalendar-event-labels',
   templateUrl: './event-labels.html',
   providers: [Notifications],
 })

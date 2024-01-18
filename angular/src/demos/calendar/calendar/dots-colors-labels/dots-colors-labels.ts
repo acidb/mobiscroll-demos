@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'dots-colors-labels',
+  selector: 'app-calendar-dots-colors-labels',
   templateUrl: './dots-colors-labels.html',
 })
 export class AppComponent {

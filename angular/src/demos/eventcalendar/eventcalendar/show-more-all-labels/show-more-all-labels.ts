@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'show-more-all-labels',
+  selector: 'app-eventcalendar-show-more-all-labels',
   templateUrl: './show-more-all-labels.html',
 })
 export class AppComponent implements OnInit {

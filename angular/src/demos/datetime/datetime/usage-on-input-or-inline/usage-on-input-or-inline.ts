@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'usage-on-input-or-inline',
+  selector: 'app-datetime-usage-on-input-or-inline',
   templateUrl: './usage-on-input-or-inline.html',
 })
 export class AppComponent {}

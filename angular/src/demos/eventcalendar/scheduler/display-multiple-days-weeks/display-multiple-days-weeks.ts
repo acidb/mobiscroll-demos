@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'display-multiple-days-weeks',
+  selector: 'app-scheduler-display-multiple-days-weeks',
   templateUrl: './display-multiple-days-weeks.html',
 })
 export class AppComponent implements OnInit {

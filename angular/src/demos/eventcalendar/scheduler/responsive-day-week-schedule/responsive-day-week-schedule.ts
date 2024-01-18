@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'responsive-day-week-schedule',
+  selector: 'app-scheduler-responsive-day-week-schedule',
   templateUrl: './responsive-day-week-schedule.html',
 })
 export class AppComponent implements OnInit {

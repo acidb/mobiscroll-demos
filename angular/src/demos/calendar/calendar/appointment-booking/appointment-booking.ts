@@ -11,7 +11,7 @@ const minDate = 'dyndatetime(y,m,d)';
 const maxDate = 'dyndatetime(y,m+6,d)';
 
 @Component({
-  selector: 'appointment-booking',
+  selector: 'app-calendar-appointment-booking',
   styleUrl: './appointment-booking.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './appointment-booking.html',

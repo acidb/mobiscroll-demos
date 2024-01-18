@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'button-segmented-stepper-colors',
+  selector: 'app-forms-button-segmented-stepper-colors',
   templateUrl: './button-segmented-stepper-colors.html',
 })
 export class AppComponent {

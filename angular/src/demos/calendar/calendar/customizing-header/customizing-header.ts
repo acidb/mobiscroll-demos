@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'customizing-header',
+  selector: 'app-calendar-customizing-header',
   styleUrl: './customizing-header.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customizing-header.html',

@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'mobile-desktop-display',
+  selector: 'app-select-mobile-desktop-display',
   templateUrl: './mobile-desktop-display.html',
 })
 export class AppComponent {

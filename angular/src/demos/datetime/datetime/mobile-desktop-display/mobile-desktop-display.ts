@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'mobile-desktop-display',
+  selector: 'app-datetime-mobile-desktop-display',
   templateUrl: './mobile-desktop-display.html',
 })
 export class AppComponent {}

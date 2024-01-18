@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'synchronized-views',
+  selector: 'app-agenda-synchronized-views',
   styleUrl: './synchronized-views.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './synchronized-views.html',

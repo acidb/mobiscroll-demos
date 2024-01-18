@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'rtl-right-to-left',
+  selector: 'app-calendar-rtl-right-to-left',
   templateUrl: './rtl-right-to-left.html',
 })
 export class AppComponent {}

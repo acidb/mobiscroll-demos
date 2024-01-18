@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'desktop-week-view',
+  selector: 'app-scheduler-desktop-week-view',
   templateUrl: './desktop-week-view.html',
   providers: [Notifications],
 })

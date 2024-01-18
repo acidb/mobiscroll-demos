@@ -12,7 +12,7 @@ const month = now.getMonth();
 const day = now.getDate();
 
 @Component({
-  selector: 'control-number-of-concurrently-shown-events',
+  selector: 'app-scheduler-control-number-of-concurrently-shown-events',
   templateUrl: './control-number-of-concurrently-shown-events.html',
 })
 export class AppComponent {

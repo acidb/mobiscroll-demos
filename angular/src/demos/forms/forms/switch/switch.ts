@@ -6,7 +6,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'switch',
+  selector: 'app-forms-switch',
   templateUrl: './switch.html',
 })
 export class AppComponent {

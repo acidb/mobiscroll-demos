@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'date-header-template',
+  selector: 'app-scheduler-date-header-template',
   styleUrl: './date-header-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './date-header-template.html',

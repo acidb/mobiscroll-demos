@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'mobile-week-view',
+  selector: 'app-scheduler-mobile-week-view',
   templateUrl: './mobile-week-view.html',
   providers: [Notifications],
 })

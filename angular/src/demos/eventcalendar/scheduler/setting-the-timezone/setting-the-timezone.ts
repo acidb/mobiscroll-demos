@@ -10,7 +10,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'setting-the-timezone',
+  selector: 'app-scheduler-setting-the-timezone',
   templateUrl: './setting-the-timezone.html',
 })
 export class AppComponent {

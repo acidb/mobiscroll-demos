@@ -6,7 +6,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'gregorian-jalali-hijri',
+  selector: 'app-datetime-gregorian-jalali-hijri',
   templateUrl: './gregorian-jalali-hijri.html',
 })
 export class AppComponent {

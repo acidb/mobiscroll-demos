@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'half-day-styling',
+  selector: 'app-calendar-half-day-styling',
   styleUrl: './half-day-styling.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './half-day-styling.html',

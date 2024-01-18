@@ -17,7 +17,7 @@ setOptions({
 momentTimezone.moment = moment;
 
 @Component({
-  selector: 'timezone-meeting-planner',
+  selector: 'app-timeline-timezone-meeting-planner',
   styleUrl: './timezone-meeting-planner.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timezone-meeting-planner.html',

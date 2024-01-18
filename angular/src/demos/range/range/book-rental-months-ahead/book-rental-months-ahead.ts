@@ -10,7 +10,7 @@ setOptions({
 const now = new Date();
 
 @Component({
-  selector: 'book-rental-months-ahead',
+  selector: 'app-range-book-rental-months-ahead',
   styleUrl: './book-rental-months-ahead.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './book-rental-months-ahead.html',

@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'customize-marked-day-shapes',
+  selector: 'app-calendar-customize-marked-day-shapes',
   styleUrl: './customize-marked-day-shapes.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customize-marked-day-shapes.html',

@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'setting-row-height',
+  selector: 'app-timeline-setting-row-height',
   styleUrl: './setting-row-height.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './setting-row-height.html',

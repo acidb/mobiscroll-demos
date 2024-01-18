@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'empty-state',
+  selector: 'app-agenda-empty-state',
   templateUrl: './empty-state.html',
   providers: [Notifications],
 })

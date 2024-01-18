@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'timeline-time-grid',
+  selector: 'app-timeline-timeline-time-grid',
   styleUrl: './timeline-time-grid.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-time-grid.html',

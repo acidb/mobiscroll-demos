@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'setting-values-defaults',
+  selector: 'app-datetime-setting-values-defaults',
   templateUrl: './setting-values-defaults.html',
 })
 export class AppComponent {

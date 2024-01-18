@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'time-off-blocked-ranges',
+  selector: 'app-scheduler-time-off-blocked-ranges',
   templateUrl: './time-off-blocked-ranges.html',
   providers: [Notifications],
 })

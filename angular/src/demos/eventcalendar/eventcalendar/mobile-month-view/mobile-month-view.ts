@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'mobile-month-view',
+  selector: 'app-eventcalendar-mobile-month-view',
   styleUrl: './mobile-month-view.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile-month-view.html',

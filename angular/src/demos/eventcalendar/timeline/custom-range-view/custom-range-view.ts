@@ -15,7 +15,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'custom-range-view',
+  selector: 'app-timeline-custom-range-view',
   styleUrl: './custom-range-view.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './custom-range-view.html',

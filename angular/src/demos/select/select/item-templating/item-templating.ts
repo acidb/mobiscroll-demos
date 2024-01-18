@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'item-templating',
+  selector: 'app-select-item-templating',
   styleUrl: './item-templating.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './item-templating.html',

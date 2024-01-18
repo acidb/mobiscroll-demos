@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'load-events-from-remote-api',
+  selector: 'app-timeline-load-events-from-remote-api',
   templateUrl: './load-events-from-remote-api.html',
 })
 export class AppComponent implements OnInit {

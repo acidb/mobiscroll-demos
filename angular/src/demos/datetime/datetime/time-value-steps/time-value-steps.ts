@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'time-value-steps',
+  selector: 'app-datetime-time-value-steps',
   templateUrl: './time-value-steps.html',
 })
 export class AppComponent {}

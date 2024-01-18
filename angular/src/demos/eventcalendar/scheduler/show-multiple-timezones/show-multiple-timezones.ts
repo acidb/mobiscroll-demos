@@ -10,7 +10,7 @@ setOptions({
 momentTimezone.moment = moment;
 
 @Component({
-  selector: 'show-multiple-timezones',
+  selector: 'app-scheduler-show-multiple-timezones',
   templateUrl: './show-multiple-timezones.html',
 })
 export class AppComponent {

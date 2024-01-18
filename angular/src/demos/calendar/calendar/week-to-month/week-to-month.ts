@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'week-to-month',
+  selector: 'app-calendar-week-to-month',
   styleUrl: './week-to-month.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './week-to-month.html',

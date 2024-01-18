@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'mobile-day-view',
+  selector: 'app-scheduler-mobile-day-view',
   templateUrl: './mobile-day-view.html',
   providers: [Notifications],
 })

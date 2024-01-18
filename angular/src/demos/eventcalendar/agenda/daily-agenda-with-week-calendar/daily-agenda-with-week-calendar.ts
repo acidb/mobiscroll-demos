@@ -3,7 +3,7 @@ import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImp
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'daily-agenda-with-week-calendar',
+  selector: 'app-agenda-daily-agenda-with-week-calendar',
   templateUrl: './daily-agenda-with-week-calendar.html',
 })
 export class AppComponent implements OnInit {

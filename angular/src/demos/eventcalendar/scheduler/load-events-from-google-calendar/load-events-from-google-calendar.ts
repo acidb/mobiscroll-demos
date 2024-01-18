@@ -16,7 +16,7 @@ setOptions({
 const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
 
 @Component({
-  selector: 'load-events-from-google-calendar',
+  selector: 'app-scheduler-load-events-from-google-calendar',
   styleUrl: './load-events-from-google-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-from-google-calendar.html',

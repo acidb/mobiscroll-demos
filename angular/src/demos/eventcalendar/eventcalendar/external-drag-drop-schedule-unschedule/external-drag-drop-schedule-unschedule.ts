@@ -14,7 +14,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'external-drag-drop-schedule-unschedule',
+  selector: 'app-eventcalendar-external-drag-drop-schedule-unschedule',
   styleUrl: './external-drag-drop-schedule-unschedule.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './external-drag-drop-schedule-unschedule.html',

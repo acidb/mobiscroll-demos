@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'localization',
+  selector: 'app-agenda-localization',
   templateUrl: './localization.html',
 })
 export class AppComponent implements OnInit {

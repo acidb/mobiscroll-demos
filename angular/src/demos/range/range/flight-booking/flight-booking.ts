@@ -9,7 +9,7 @@ setOptions({
 const now = new Date();
 
 @Component({
-  selector: 'flight-booking',
+  selector: 'app-range-flight-booking',
   templateUrl: './flight-booking.html',
 })
 export class AppComponent {

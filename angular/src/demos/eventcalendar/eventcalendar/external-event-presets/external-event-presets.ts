@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'external-event-presets',
+  selector: 'app-eventcalendar-external-event-presets',
   styleUrl: './external-event-presets.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './external-event-presets.html',

@@ -9,7 +9,7 @@ setOptions({
 const now = new Date();
 
 @Component({
-  selector: 'load-inline-data',
+  selector: 'app-timeline-load-inline-data',
   templateUrl: './load-inline-data.html',
 })
 export class AppComponent {

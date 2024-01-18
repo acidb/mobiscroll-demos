@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'timeline-resource-height',
+  selector: 'app-timeline-timeline-resource-height',
   styleUrl: './timeline-resource-height.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-resource-height.html',

@@ -16,7 +16,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'employee-shifts',
+  selector: 'app-timeline-employee-shifts',
   styleUrl: './employee-shifts.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './employee-shifts.html',

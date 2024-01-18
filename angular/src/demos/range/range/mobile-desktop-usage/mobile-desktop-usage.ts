@@ -10,7 +10,7 @@ const now = new Date();
 const week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
 
 @Component({
-  selector: 'mobile-desktop-usage',
+  selector: 'app-range-mobile-desktop-usage',
   styleUrl: './mobile-desktop-usage.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile-desktop-usage.html',

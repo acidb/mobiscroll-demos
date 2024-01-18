@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'custom-resource-header-template',
+  selector: 'app-scheduler-custom-resource-header-template',
   styleUrl: './custom-resource-header-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './custom-resource-header-template.html',

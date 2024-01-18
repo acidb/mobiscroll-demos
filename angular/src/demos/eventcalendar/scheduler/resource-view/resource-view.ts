@@ -11,7 +11,7 @@ const day = now.getDay();
 const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 
 @Component({
-  selector: 'resource-view',
+  selector: 'app-scheduler-resource-view',
   templateUrl: './resource-view.html',
 })
 export class AppComponent {

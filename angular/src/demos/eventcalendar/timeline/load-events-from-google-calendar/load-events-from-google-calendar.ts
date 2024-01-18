@@ -14,7 +14,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'load-events-from-google-calendar',
+  selector: 'app-timeline-load-events-from-google-calendar',
   styleUrl: './load-events-from-google-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-from-google-calendar.html',

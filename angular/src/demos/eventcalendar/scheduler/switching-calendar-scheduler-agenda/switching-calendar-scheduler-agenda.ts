@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'switching-calendar-scheduler-agenda',
+  selector: 'app-scheduler-switching-calendar-scheduler-agenda',
   styleUrl: './switching-calendar-scheduler-agenda.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './switching-calendar-scheduler-agenda.html',

@@ -6,7 +6,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'localization',
+  selector: 'app-range-localization',
   templateUrl: './localization.html',
 })
 export class AppComponent {

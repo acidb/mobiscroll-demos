@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'event-hooks',
+  selector: 'app-agenda-event-hooks',
   templateUrl: './event-hooks.html',
 })
 export class AppComponent implements OnInit {

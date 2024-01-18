@@ -20,7 +20,7 @@ setOptions({
 const now = new Date();
 
 @Component({
-  selector: 'shared-events-across-resources',
+  selector: 'app-scheduler-shared-events-across-resources',
   templateUrl: './shared-events-across-resources.html',
 })
 export class AppComponent {

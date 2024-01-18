@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'event-listing',
+  selector: 'app-timeline-event-listing',
   styleUrl: './event-listing.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-listing.html',

@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'searching-events-in-sidebar',
+  selector: 'app-eventcalendar-searching-events-in-sidebar',
   styleUrl: './searching-events-in-sidebar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './searching-events-in-sidebar.html',

@@ -27,7 +27,7 @@ const disabledMenu = [
 ];
 
 @Component({
-  selector: 'cut-copy-paste-events-between-calendars',
+  selector: 'app-eventcalendar-cut-copy-paste-events-between-calendars',
   styleUrl: './cut-copy-paste-events-between-calendars.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './cut-copy-paste-events-between-calendars.html',

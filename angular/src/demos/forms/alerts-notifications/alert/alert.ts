@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'alert',
+  selector: 'app-alerts-alert',
   templateUrl: './alert.html',
 })
 export class AppComponent {

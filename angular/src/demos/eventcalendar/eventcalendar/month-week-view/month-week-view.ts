@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'month-week-view',
+  selector: 'app-eventcalendar-month-week-view',
   templateUrl: './month-week-view.html',
 })
 export class AppComponent implements OnInit {

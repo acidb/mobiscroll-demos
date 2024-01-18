@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MbscDatepickerOptions /* localeImport */ } from '@mobiscroll/angular';
 
 @Component({
-  selector: 'themes-ios-material-windows',
+  selector: 'app-calendar-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
 })
 export class AppComponent {

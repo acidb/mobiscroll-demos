@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'recurring-values',
+  selector: 'app-calendar-recurring-values',
   templateUrl: './recurring-values.html',
 })
 export class AppComponent {

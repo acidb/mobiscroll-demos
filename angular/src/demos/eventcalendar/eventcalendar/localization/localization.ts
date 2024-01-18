@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'localization',
+  selector: 'app-eventcalendar-localization',
   styleUrl: './localization.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './localization.html',

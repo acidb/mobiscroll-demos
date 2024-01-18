@@ -16,7 +16,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'meal-planner',
+  selector: 'app-timeline-meal-planner',
   styleUrl: './meal-planner.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './meal-planner.html',

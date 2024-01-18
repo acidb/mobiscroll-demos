@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'hour-day-week-month-quarter-year-header-footer-template',
+  selector: 'app-timeline-hour-day-week-month-quarter-year-header-footer-template',
   styleUrl: './hour-day-week-month-quarter-year-header-footer-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './hour-day-week-month-quarter-year-header-footer-template.html',

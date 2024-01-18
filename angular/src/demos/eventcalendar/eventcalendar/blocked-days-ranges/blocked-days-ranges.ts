@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'blocked-days-ranges',
+  selector: 'app-eventcalendar-blocked-days-ranges',
   templateUrl: './blocked-days-ranges.html',
   providers: [Notifications],
 })

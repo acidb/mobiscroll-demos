@@ -6,7 +6,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'themes-ios-material-windows',
+  selector: 'app-forms-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
 })
 export class AppComponent {

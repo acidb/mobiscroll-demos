@@ -15,7 +15,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'create-read-update-delete-CRUD',
+  selector: 'app-scheduler-create-read-update-delete-CRUD',
   styleUrl: './create-read-update-delete-CRUD.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './create-read-update-delete-CRUD.html',

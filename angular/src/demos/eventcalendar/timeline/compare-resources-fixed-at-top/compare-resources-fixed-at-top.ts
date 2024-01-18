@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'compare-resources-fixed-at-top',
+  selector: 'app-timeline-compare-resources-fixed-at-top',
   styleUrl: './compare-resources-fixed-at-top.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './compare-resources-fixed-at-top.html',

@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'popup',
+  selector: 'app-forms-popup',
   templateUrl: './popup.html',
 })
 export class AppComponent {

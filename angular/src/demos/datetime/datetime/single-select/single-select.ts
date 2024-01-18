@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'single-select',
+  selector: 'app-datetime-single-select',
   templateUrl: './single-select.html',
 })
 export class AppComponent {}

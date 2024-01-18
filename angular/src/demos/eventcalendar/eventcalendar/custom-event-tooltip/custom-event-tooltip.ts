@@ -22,7 +22,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'custom-event-tooltip',
+  selector: 'app-eventcalendar-custom-event-tooltip',
   styleUrl: './custom-event-tooltip.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './custom-event-tooltip.html',

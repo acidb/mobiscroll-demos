@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'resource-header-template',
+  selector: 'app-timeline-resource-header-template',
   styleUrl: './resource-header-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-header-template.html',

@@ -17,7 +17,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'event-bulk-actions-edit-delete-update',
+  selector: 'app-eventcalendar-event-bulk-actions-edit-delete-update',
   styleUrl: './event-bulk-actions-edit-delete-update.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-bulk-actions-edit-delete-update.html',

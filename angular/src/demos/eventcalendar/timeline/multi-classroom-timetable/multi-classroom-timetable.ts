@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'multi-classroom-timetable',
+  selector: 'app-timeline-multi-classroom-timetable',
   styleUrl: './multi-classroom-timetable.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './multi-classroom-timetable.html',

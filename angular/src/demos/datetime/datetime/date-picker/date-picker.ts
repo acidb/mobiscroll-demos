@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'date-picker',
+  selector: 'app-datetime-date-picker',
   templateUrl: './date-picker.html',
 })
 export class AppComponent {}

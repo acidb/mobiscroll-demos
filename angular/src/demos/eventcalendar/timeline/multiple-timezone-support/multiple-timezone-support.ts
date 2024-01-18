@@ -16,7 +16,7 @@ setOptions({
 momentTimezone.moment = moment;
 
 @Component({
-  selector: 'multiple-timezone-support',
+  selector: 'app-timeline-multiple-timezone-support',
   styleUrl: './multiple-timezone-support.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './multiple-timezone-support.html',

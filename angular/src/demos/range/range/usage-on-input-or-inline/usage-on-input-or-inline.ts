@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'usage-on-input-or-inline',
+  selector: 'app-range-usage-on-input-or-inline',
   templateUrl: './usage-on-input-or-inline.html',
 })
 export class AppComponent {}

@@ -15,7 +15,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'searching-events-in-popup',
+  selector: 'app-agenda-searching-events-in-popup',
   styleUrl: './searching-events-in-popup.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './searching-events-in-popup.html',

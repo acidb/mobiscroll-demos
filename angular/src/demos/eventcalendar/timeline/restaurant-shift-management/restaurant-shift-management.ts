@@ -35,7 +35,7 @@ const defaultSlots = [
 ];
 
 @Component({
-  selector: 'restaurant-shift-management',
+  selector: 'app-timeline-restaurant-shift-management',
   styleUrl: './restaurant-shift-management.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './restaurant-shift-management.html',

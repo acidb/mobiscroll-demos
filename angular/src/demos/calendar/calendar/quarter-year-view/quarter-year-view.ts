@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'quarter-year-view',
+  selector: 'app-calendar-quarter-year-view',
   styleUrl: './quarter-year-view.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './quarter-year-view.html',

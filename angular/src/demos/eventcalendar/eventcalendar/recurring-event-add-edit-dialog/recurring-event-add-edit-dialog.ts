@@ -74,7 +74,7 @@ function getWeekDayNum(date: Date): number {
 }
 
 @Component({
-  selector: 'recurring-event-add-edit-dialog',
+  selector: 'app-eventcalendar-recurring-event-add-edit-dialog',
   styleUrl: './recurring-event-add-edit-dialog.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './recurring-event-add-edit-dialog.html',

@@ -15,7 +15,7 @@ const startMonth = new Date(curr.getFullYear(), curr.getMonth() - 1, 1);
 const endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0);
 
 @Component({
-  selector: 'presets',
+  selector: 'app-range-presets',
   styleUrl: './presets.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './presets.html',

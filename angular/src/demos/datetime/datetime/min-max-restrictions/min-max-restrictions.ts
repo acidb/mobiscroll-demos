@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'min-max-restrictions',
+  selector: 'app-datetime-min-max-restrictions',
   templateUrl: './min-max-restrictions.html',
 })
 export class AppComponent {}

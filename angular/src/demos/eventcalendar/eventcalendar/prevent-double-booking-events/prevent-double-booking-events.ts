@@ -18,7 +18,7 @@ const m = now.getMonth();
 const d = now.getDate();
 
 @Component({
-  selector: 'prevent-double-booking-events',
+  selector: 'app-eventcalendar-prevent-double-booking-events',
   templateUrl: './prevent-double-booking-events.html',
   providers: [Notifications],
 })

@@ -13,7 +13,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'connecting-linking-events-arrows',
+  selector: 'app-timeline-connecting-linking-events-arrows',
   styleUrl: './connecting-linking-events-arrows.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './connecting-linking-events-arrows.html',

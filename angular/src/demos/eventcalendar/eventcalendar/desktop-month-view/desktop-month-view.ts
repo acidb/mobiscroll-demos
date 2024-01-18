@@ -3,7 +3,7 @@ import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImp
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'desktop-month-view',
+  selector: 'app-eventcalendar-desktop-month-view',
   templateUrl: './desktop-month-view.html',
   providers: [Notifications],
 })

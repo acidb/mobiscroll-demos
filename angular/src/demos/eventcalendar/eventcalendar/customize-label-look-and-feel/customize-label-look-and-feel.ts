@@ -3,7 +3,7 @@ import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImp
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'customize-label-look-and-feel',
+  selector: 'app-eventcalendar-customize-label-look-and-feel',
   styleUrl: './customize-label-look-and-feel.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customize-label-look-and-feel.html',

@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'event-hooks',
+  selector: 'app-calendar-event-hooks',
   templateUrl: './event-hooks.html',
 })
 export class AppComponent {

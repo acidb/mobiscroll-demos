@@ -6,7 +6,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'mobile',
+  selector: 'app-forms-mobile',
   templateUrl: './mobile.html',
 })
 export class AppComponent {}

@@ -12,7 +12,7 @@ const today = new Date(now.setMinutes(59));
 const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
 @Component({
-  selector: 'disallow-past-event-creation',
+  selector: 'app-timeline-disallow-past-event-creation',
   styleUrl: './disallow-past-event-creation.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './disallow-past-event-creation.html',

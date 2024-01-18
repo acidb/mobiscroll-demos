@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'data-sources',
+  selector: 'app-select-data-sources',
   templateUrl: './data-sources.html',
 })
 export class AppComponent implements OnInit {

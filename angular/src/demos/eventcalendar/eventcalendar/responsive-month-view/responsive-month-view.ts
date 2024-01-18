@@ -3,7 +3,7 @@ import { MbscCalendarEvent, MbscEventcalendarOptions /* localeImport */ } from '
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'responsive-month-view',
+  selector: 'app-eventcalendar-responsive-month-view',
   templateUrl: './responsive-month-view.html',
 })
 export class AppComponent implements OnInit {

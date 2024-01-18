@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'disable-all-day-events',
+  selector: 'app-scheduler-disable-all-day-events',
   templateUrl: './disable-all-day-events.html',
 })
 export class AppComponent implements OnInit {

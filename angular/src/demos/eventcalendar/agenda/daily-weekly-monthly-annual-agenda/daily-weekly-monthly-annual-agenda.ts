@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'daily-weekly-monthly-annual-agenda',
+  selector: 'app-agenda-daily-weekly-monthly-annual-agenda',
   templateUrl: './daily-weekly-monthly-annual-agenda.html',
 })
 export class AppComponent implements OnInit {

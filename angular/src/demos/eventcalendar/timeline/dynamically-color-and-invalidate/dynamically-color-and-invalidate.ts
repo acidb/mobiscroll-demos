@@ -49,7 +49,7 @@ const swColors: MbscCalendarColor[] = [
 ];
 
 @Component({
-  selector: 'dynamically-color-and-invalidate',
+  selector: 'app-timeline-dynamically-color-and-invalidate',
   styleUrl: './dynamically-color-and-invalidate.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamically-color-and-invalidate.html',

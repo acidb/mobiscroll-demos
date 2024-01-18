@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'filtering-values',
+  selector: 'app-select-filtering-values',
   templateUrl: './filtering-values.html',
 })
 export class AppComponent implements OnInit {

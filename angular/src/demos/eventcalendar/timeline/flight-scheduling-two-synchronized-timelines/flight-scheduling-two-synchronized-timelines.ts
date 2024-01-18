@@ -14,7 +14,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'flight-scheduling-two-synchronized-timelines',
+  selector: 'app-timeline-flight-scheduling-two-synchronized-timelines',
   styleUrl: './flight-scheduling-two-synchronized-timelines.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './flight-scheduling-two-synchronized-timelines.html',

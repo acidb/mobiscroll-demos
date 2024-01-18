@@ -10,7 +10,7 @@ setOptions({
 const oneDay = 60000 * 60 * 24;
 
 @Component({
-  selector: 'timeline-resource-details-side-panel-footer',
+  selector: 'app-timeline-timeline-resource-details-side-panel-footer',
   styleUrl: './timeline-resource-details-side-panel-footer.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-resource-details-side-panel-footer.html',

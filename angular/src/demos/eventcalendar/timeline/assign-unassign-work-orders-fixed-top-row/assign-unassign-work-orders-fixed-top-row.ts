@@ -13,7 +13,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'assign-unassign-work-orders-fixed-top-row',
+  selector: 'app-timeline-assign-unassign-work-orders-fixed-top-row',
   templateUrl: './assign-unassign-work-orders-fixed-top-row.html',
 })
 export class AppComponent {

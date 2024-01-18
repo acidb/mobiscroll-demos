@@ -9,7 +9,7 @@ setOptions({
 const now = new Date();
 
 @Component({
-  selector: 'month-year-picker',
+  selector: 'app-datetime-month-year-picker',
   templateUrl: './month-year-picker.html',
 })
 export class AppComponent {

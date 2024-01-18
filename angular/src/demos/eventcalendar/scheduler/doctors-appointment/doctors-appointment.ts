@@ -19,7 +19,7 @@ const today = new Date(now.setMinutes(59));
 const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
 @Component({
-  selector: 'doctors-appointment',
+  selector: 'app-scheduler-doctors-appointment',
   styleUrl: './doctors-appointment.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './doctors-appointment.html',

@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'event-hooks',
+  selector: 'app-eventcalendar-event-hooks',
   styleUrl: './event-hooks.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-hooks.html',

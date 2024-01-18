@@ -20,7 +20,7 @@ for (var i = 1; i <= resourceNr; i++) {
 }
 
 @Component({
-  selector: 'loading-big-data-sets',
+  selector: 'app-timeline-loading-big-data-sets',
   styleUrl: './loading-big-data-sets.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './loading-big-data-sets.html',

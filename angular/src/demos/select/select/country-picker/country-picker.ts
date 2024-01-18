@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'country-picker',
+  selector: 'app-select-country-picker',
   styleUrl: './country-picker.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './country-picker.html',
