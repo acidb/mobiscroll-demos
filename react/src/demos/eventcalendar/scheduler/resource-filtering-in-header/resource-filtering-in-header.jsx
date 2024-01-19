@@ -106,13 +106,14 @@ function App() {
 
   return (
     <div>
-      <Eventcalendar renderHeader={customWithNavButtons} view={calView} data={filteredEvents} cssClass="md-custom-header-filtering" />
-      <Toast
-        // theme
-        message={toastText}
-        isOpen={isToastOpen}
-        onClose={closeToast}
+      <Eventcalendar
+        // drag
+        renderHeader={customWithNavButtons}
+        view={calView}
+        data={filteredEvents}
+        cssClass="md-custom-header-filtering"
       />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
     </div>
   );
 }

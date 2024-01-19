@@ -71,7 +71,15 @@ function App() {
     };
   }, []);
 
-  return <Eventcalendar data={events} view={view} resources={myResources} onPageLoading={onPageLoading} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={events}
+      view={view}
+      resources={myResources}
+      onPageLoading={onPageLoading}
+    />
+  );
 }
 
 export default App;

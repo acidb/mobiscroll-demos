@@ -114,6 +114,7 @@ function App() {
   return (
     <Eventcalendar
       className="md-custom-header"
+      // drag
       onSelectedDateChange={onSelectedDateChange}
       selectedDate={currentDate}
       renderHeader={customWithNavButtons}

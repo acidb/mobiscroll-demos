@@ -254,11 +254,11 @@ function App() {
           <div className="mbsc-col-sm-9 mbsc-push-sm-3">
             <Eventcalendar
               className="md-bulk-operations-border"
+              // drag
               ref={calRef}
               view={view}
               data={myEvents}
               resources={myResources}
-              clickToCreate={true}
               selectMultipleEvents={true}
               selectedEvents={mySelectedEvents}
               onEventDelete={onEventDelete}

@@ -42,7 +42,11 @@ function App() {
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Three week view</div>
-              <Eventcalendar view={threeWeekView} data={myEvents} />
+              <Eventcalendar
+                // drag
+                view={threeWeekView}
+                data={myEvents}
+              />
             </div>
           </div>
         </div>

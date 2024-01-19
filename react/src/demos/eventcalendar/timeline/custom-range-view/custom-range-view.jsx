@@ -183,6 +183,7 @@ function App() {
 
   return (
     <Eventcalendar
+      // drag
       selectedDate={currentDate}
       renderHeader={customWithNavButtons}
       view={calView}

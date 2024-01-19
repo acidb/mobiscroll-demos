@@ -91,6 +91,7 @@ function App() {
   return (
     <Eventcalendar
       className="md-timetable"
+      // drag
       view={view}
       data={myEvents}
       resources={myResources}

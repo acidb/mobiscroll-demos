@@ -169,7 +169,14 @@ const App = () => {
     };
   }, []);
 
-  return <Eventcalendar data={myEvents} view={myView} resources={myResources} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      view={myView}
+      resources={myResources}
+    />
+  );
 };
 
 export default App;

@@ -116,7 +116,7 @@ function App() {
     ];
   }, []);
 
-  return <Eventcalendar view={myView} data={myEvents} resources={myResources} dragToMove={true} />;
+  return <Eventcalendar view={myView} data={myEvents} resources={myResources} dragToMove={true} dragToResize={true} />;
 }
 
 export default App;

@@ -101,7 +101,15 @@ function App() {
     };
   }, []);
 
-  return <Eventcalendar view={view} data={myEvents} invalid={myInvalid} colors={myColors} />;
+  return (
+    <Eventcalendar
+      // drag
+      view={view}
+      data={myEvents}
+      invalid={myInvalid}
+      colors={myColors}
+    />
+  );
 }
 
 export default App;

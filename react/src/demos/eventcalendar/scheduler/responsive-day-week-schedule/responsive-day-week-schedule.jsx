@@ -35,6 +35,7 @@ function App() {
     <Eventcalendar
       // locale
       // theme
+      // drag
       data={myEvents}
       responsive={responsive}
     />

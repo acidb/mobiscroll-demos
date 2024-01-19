@@ -43,6 +43,7 @@ function App() {
     <Eventcalendar
       // theme
       // locale
+      // drag
       invalid={invalids}
       data={myEvents}
       view={view}

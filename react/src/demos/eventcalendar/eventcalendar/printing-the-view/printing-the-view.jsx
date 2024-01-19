@@ -30,7 +30,12 @@ function App() {
   return (
     <Page>
       <Button onClick={printView}>Print calendar</Button>
-      <Eventcalendar data={myEvents} ref={setInst} modules={MY_MODULES} />
+      <Eventcalendar
+        // drag
+        data={myEvents}
+        ref={setInst}
+        modules={MY_MODULES}
+      />
     </Page>
   );
 }

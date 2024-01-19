@@ -166,6 +166,7 @@ function App() {
     <Eventcalendar
       // theme
       // locale
+      // drag
       ref={calRef}
       view={view}
       data={myEvents}

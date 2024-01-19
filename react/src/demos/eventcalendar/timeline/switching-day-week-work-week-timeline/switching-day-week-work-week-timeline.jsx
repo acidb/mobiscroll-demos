@@ -178,6 +178,7 @@ function App() {
       <Eventcalendar
         // theme
         // locale
+        // drag
         view={calView}
         data={myEvents}
         invalid={myInvalids}
@@ -188,12 +189,7 @@ function App() {
         onEventUpdateFailed={eventUpdateFail}
         cssClass="md-switching-timeline-view-cont"
       />
-      <Toast
-        // theme
-        message="Can't schedule outside of working hours"
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Toast message="Can't schedule outside of working hours" isOpen={isToastOpen} onClose={closeToast} />
     </div>
   );
 }

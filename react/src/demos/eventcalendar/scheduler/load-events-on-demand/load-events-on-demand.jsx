@@ -47,6 +47,7 @@ function App() {
       <Eventcalendar
         // theme
         // locale
+        // drag
         data={events}
         view={view}
         onPageLoading={onPageLoading}

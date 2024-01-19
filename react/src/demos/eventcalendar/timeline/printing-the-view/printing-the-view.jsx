@@ -79,6 +79,7 @@ function App() {
       <Eventcalendar
         // theme
         // locale
+        // drag
         data={myEvents}
         resources={myResources}
         view={view}

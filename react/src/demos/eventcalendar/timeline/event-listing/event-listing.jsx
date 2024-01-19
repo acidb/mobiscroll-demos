@@ -203,6 +203,7 @@ function App() {
     <Eventcalendar
       // theme
       // locale
+      // drag
       view={calView}
       data={myEvents}
       resources={myResources}

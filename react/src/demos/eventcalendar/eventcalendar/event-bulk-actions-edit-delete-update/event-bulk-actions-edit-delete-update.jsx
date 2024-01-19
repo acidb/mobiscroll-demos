@@ -202,9 +202,9 @@ function App() {
             <Eventcalendar
               className="md-bulk-operations-border"
               ref={calRef}
+              // drag
               data={myEvents}
               view={view}
-              clickToCreate={true}
               selectMultipleEvents={true}
               selectedEvents={mySelectedEvents}
               onEventDelete={handleEventDelete}

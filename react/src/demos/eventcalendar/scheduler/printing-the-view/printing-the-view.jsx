@@ -36,7 +36,13 @@ function App() {
   return (
     <Page>
       <Button onClick={printView}>Print scheduler</Button>
-      <Eventcalendar data={myEvents} view={view} ref={setInst} modules={MY_MODULES} />
+      <Eventcalendar
+        // drag
+        data={myEvents}
+        view={view}
+        ref={setInst}
+        modules={MY_MODULES}
+      />
     </Page>
   );
 }

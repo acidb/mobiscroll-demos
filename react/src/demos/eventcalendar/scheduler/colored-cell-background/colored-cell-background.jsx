@@ -27,6 +27,7 @@ function App() {
 
   return (
     <Eventcalendar
+      // drag
       data={myEvents}
       view={view}
       colors={[

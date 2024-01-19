@@ -36,17 +36,12 @@ function App() {
       <Eventcalendar
         // locale
         // theme
+        // drag
         data={myEvents}
         view={view}
         onEventClick={onEventClick}
       />
-      <Toast
-        // locale
-        // theme
-        message={toastText}
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
     </Page>
   );
 }

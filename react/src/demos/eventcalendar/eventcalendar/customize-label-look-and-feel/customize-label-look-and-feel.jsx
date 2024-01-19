@@ -50,7 +50,13 @@ function App() {
 
   return (
     <>
-      <Eventcalendar renderLabel={renderLabel} data={myEvents} view={myView} onEventClick={handleEventClick} />
+      <Eventcalendar
+        // drag
+        renderLabel={renderLabel}
+        data={myEvents}
+        view={myView}
+        onEventClick={handleEventClick}
+      />
       <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );

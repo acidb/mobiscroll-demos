@@ -191,6 +191,7 @@ function App() {
 
   return (
     <Eventcalendar
+      // drag
       view={view}
       resources={myResources}
       data={myEvents}

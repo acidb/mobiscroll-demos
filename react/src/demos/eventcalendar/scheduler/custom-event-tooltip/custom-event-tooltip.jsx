@@ -582,6 +582,8 @@ function App() {
         data={appointments}
         clickToCreate={false}
         dragToCreate={false}
+        dragToMove={true}
+        dragToResize={false}
         showEventTooltip={false}
         onEventHoverIn={onEventHoverIn}
         onEventHoverOut={onEventHoverOut}

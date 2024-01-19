@@ -38,7 +38,13 @@ function App() {
     );
   }, []);
 
-  return <Eventcalendar data={myEvents} responsive={myResponsive} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      responsive={myResponsive}
+    />
+  );
 }
 
 export default App;

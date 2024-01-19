@@ -79,7 +79,12 @@ function App() {
 
   return (
     <div className="md-switching-view-cont">
-      <Eventcalendar renderHeader={customWithNavButtons} view={calView} data={myEvents} />
+      <Eventcalendar
+        // drag
+        renderHeader={customWithNavButtons}
+        view={calView}
+        data={myEvents}
+      />
     </div>
   );
 }

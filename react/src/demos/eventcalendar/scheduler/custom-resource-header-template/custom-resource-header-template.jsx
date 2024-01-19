@@ -111,7 +111,15 @@ function App() {
     );
   };
 
-  return <Eventcalendar data={myEvents} resources={myResources} view={view} renderResource={renderCustomResource} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      resources={myResources}
+      view={view}
+      renderResource={renderCustomResource}
+    />
+  );
 }
 
 export default App;
