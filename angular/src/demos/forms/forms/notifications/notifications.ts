@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { setOptions, Notifications } from '@mobiscroll/angular';
 
 setOptions({
-  theme: 'ios',
-  themeVariant: 'light',
+  // theme,
 });
 
 @Component({

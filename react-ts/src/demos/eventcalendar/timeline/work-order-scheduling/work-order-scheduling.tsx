@@ -16,8 +16,7 @@ import {
 import './work-order-scheduling.css';
 
 setOptions({
-  theme: 'ios',
-  themeVariant: 'light',
+  // theme,
 });
 
 const defaultEvents = [

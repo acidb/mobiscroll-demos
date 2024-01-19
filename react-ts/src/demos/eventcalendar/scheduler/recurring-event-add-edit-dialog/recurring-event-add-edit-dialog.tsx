@@ -21,8 +21,7 @@ import {
 import './recurring-event-add-edit-dialog.css';
 
 setOptions({
-  theme: 'ios',
-  themeVariant: 'light',
+  // theme,
 });
 
 const defaultEvents: MbscCalendarEvent[] = [
