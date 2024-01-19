@@ -83,7 +83,6 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
-          // drag,
           view: {
             schedule: {
               type: 'week',
@@ -517,8 +516,6 @@ export default {
               resource: 3,
             },
           ],
-          clickToCreate: false,
-          dragToCreate: false,
           showEventTooltip: false,
           onEventHoverIn: function (args) {
             openTooltip(args, false);

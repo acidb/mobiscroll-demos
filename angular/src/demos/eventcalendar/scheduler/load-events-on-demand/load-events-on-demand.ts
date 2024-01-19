@@ -21,6 +21,7 @@ export class AppComponent {
   myEvents: MbscCalendarEvent[] = [];
 
   eventSettings: MbscEventcalendarOptions = {
+    // drag,
     view: {
       schedule: { type: 'day' },
     },

@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
 
   eventSettings: MbscEventcalendarOptions = {
+    // drag,
     responsive: {
       xsmall: {
         view: {

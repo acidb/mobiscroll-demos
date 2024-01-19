@@ -285,6 +285,7 @@ export class AppComponent {
   eventSettings: MbscEventcalendarOptions = {
     // locale,
     // theme,
+    // drag,
     view: {
       calendar: {
         labels: true,

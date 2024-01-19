@@ -288,6 +288,7 @@ export class AppComponent {
   ];
 
   eventSettings: MbscEventcalendarOptions = {
+    // drag,
     view: {
       calendar: { type: 'week' },
       schedule: { type: 'day' },

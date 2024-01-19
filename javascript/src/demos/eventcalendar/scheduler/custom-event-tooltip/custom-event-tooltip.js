@@ -78,7 +78,6 @@ export default {
       var loc = document.getElementById('tooltip-event-location');
 
       var calendar = mobiscroll.eventcalendar('#demo-custom-event-tooltip', {
-        // drag,
         view: {
           schedule: {
             type: 'week',
@@ -514,6 +513,8 @@ export default {
         ],
         clickToCreate: false,
         dragToCreate: false,
+        dragToMove: true,
+        dragToResize: false,
         showEventTooltip: false,
         onEventHoverIn: function (args) {
           openTooltip(args, false);

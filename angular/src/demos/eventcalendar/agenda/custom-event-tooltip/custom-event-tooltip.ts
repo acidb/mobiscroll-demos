@@ -474,8 +474,6 @@ export class AppComponent {
         type: 'week',
       },
     },
-    clickToCreate: false,
-    dragToCreate: false,
     showEventTooltip: false,
     onEventHoverIn: (args) => {
       const event: MyEvent = args.event;

@@ -60,6 +60,7 @@ export class AppComponent {
   ];
 
   eventSettings: MbscEventcalendarOptions = {
+    // drag,
     view: {
       calendar: {
         popover: true,

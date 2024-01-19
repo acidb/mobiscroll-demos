@@ -132,7 +132,7 @@ export class AppComponent implements OnInit {
   }
 
   calendarOptions: MbscEventcalendarOptions = {
-    clickToCreate: true,
+    // drag,
     selectMultipleEvents: true,
     view: {
       timeline: {

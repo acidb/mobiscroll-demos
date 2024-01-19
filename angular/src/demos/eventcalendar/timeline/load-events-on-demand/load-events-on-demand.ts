@@ -48,6 +48,7 @@ export class AppComponent {
   ];
 
   eventSettings: MbscEventcalendarOptions = {
+    // drag,
     view: {
       timeline: { type: 'day' },
     },

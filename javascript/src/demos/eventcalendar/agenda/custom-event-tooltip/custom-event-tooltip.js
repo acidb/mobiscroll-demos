@@ -452,8 +452,6 @@ export default {
             color: '#c77c0a',
           },
         ],
-        clickToCreate: false,
-        dragToCreate: false,
         showEventTooltip: false,
         onEventHoverIn: function (args) {
           var event = args.event;

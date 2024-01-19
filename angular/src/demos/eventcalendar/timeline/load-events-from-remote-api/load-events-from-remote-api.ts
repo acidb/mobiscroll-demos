@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
   ];
 
   eventSettings: MbscEventcalendarOptions = {
+    // drag,
     view: {
       timeline: { type: 'day' },
     },

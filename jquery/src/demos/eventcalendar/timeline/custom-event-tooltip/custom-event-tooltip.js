@@ -44,7 +44,6 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
-          // drag,
           view: {
             timeline: {
               type: 'day',
@@ -480,6 +479,8 @@ export default {
           ],
           clickToCreate: false,
           dragToCreate: false,
+          dragToMove: true,
+          dragToResize: false,
           showEventTooltip: false,
           onEventHoverIn: function (args) {
             var event = args.event;

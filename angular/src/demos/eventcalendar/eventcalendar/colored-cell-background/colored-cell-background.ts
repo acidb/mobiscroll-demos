@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
 
   settings: MbscEventcalendarOptions = {
+    // drag,
     colors: [
       {
         start: 'dyndatetime(y,m,0)',

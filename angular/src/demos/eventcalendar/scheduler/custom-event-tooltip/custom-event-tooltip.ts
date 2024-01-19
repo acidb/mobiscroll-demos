@@ -523,6 +523,8 @@ export class AppComponent {
     },
     clickToCreate: false,
     dragToCreate: false,
+    dragToMove: true,
+    dragToResize: false,
     showEventTooltip: false,
     onEventHoverIn: (args) => {
       this.openTooltip(args, false);

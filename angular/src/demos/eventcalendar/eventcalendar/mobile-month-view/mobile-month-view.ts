@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
 
   eventSettings: MbscEventcalendarOptions = {
+    // drag,
     view: {
       calendar: { type: 'month' },
       agenda: { type: 'month' },

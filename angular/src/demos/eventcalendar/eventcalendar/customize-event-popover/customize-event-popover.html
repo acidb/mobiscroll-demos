@@ -7,8 +7,8 @@
   <div class="md-custom-event-cont">
     <img class="md-custom-event-img" alt="Participant" [src]="getParticipant(data.original.participant).img" />
     <div class="mbsc-custom-event-name">{{getParticipant(data.original.participant).name}}</div>
-    <mbsc-button class="md-custom-event-btn" color="primary" data-variant="outline" (click)="add($event, data.original)"
-      >Add participant</mbsc-button
-    >
+    <mbsc-button class="md-custom-event-btn" color="primary" data-variant="outline" (click)="add($event, data.original)">
+      Add participant
+    </mbsc-button>
   </div>
 </ng-template>

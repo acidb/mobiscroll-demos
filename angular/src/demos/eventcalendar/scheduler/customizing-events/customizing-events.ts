@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   eventSettings: MbscEventcalendarOptions = {
     // locale,
     // theme,
+    // drag,
     responsive: {
       xsmall: {
         view: {

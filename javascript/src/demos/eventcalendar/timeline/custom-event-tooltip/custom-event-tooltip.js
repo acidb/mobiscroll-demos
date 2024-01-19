@@ -40,7 +40,6 @@ export default {
       var loc = document.getElementById('tooltip-event-location');
 
       var calendar = mobiscroll.eventcalendar('#demo-custom-event-tooltip', {
-        // drag,
         view: {
           timeline: {
             type: 'day',
@@ -476,6 +475,8 @@ export default {
         ],
         clickToCreate: false,
         dragToCreate: false,
+        dragToMove: true,
+        dragToResize: false,
         showEventTooltip: false,
         onEventHoverIn: function (args) {
           var event = args.event;
