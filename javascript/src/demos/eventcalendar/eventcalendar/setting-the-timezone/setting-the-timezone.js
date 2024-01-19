@@ -8,7 +8,6 @@ export default {
     mobiscroll.eventcalendar('#demo-showing-events-timezone', {
       // theme,
       // locale,
-      // drag,
       timezonePlugin: mobiscroll.momentTimezone,
       dataTimezone: 'utc',
       displayTimezone: 'local',
@@ -18,6 +17,9 @@ export default {
           type: 'month',
         },
       },
+      dragToCreate: true,
+      dragToMove: true,
+      dragToResize: true,
       data: [
         {
           start: 'dyndatetime(y, m, d, 7)',

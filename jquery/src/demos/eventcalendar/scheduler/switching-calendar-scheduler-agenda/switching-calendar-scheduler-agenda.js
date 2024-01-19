@@ -12,6 +12,7 @@ export default {
       var calendar = $('#demo-day-week-view')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             calendar: {
               labels: true,

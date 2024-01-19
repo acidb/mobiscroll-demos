@@ -217,7 +217,7 @@ export default {
             tempEvent = args.event;
             createAddPopup(args.target);
           },
-          onEventDeleted: function () {
+          onEventDeleted: function (args) {
             mobiscroll.snackbar({
               //<hidden>
               // theme,//</hidden>
@@ -341,7 +341,7 @@ export default {
             {
               text: 'Set',
               keyCode: 'enter',
-              handler: function (ev) {
+              handler: function () {
                 setSelectedColor();
               },
               cssClass: 'mbsc-popup-button-primary',

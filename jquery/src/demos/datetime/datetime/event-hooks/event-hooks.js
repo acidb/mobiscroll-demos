@@ -13,37 +13,37 @@ export default {
         .mobiscroll()
         .datepicker({
           controls: ['date'],
-          onCancel: function (event, inst) {
+          onCancel: function () {
             // Logic for cancel button click
           },
-          onChange: function (event, inst) {
+          onChange: function () {
             // Logic for value change
           },
-          onClose: function (event, inst) {
+          onClose: function () {
             // Your custom event handler goes here
           },
-          onDestroy: function (event, inst) {
+          onDestroy: function () {
             // Your custom event handler goes here
           },
-          onInit: function (event, inst) {
+          onInit: function () {
             // Logic running on component init
           },
-          onOpen: function (event, inst) {
+          onOpen: function () {
             // Your custom event handler goes here
           },
-          onPageChange: function (event, inst) {
+          onPageChange: function () {
             // Your custom event handler goes here
           },
-          onPageLoaded: function (event, inst) {
+          onPageLoaded: function () {
             // Use it to inject custom markup & attach custom listeners
           },
-          onPageLoading: function (event, inst) {
+          onPageLoading: function () {
             // Use it to load data on demand
           },
-          onPosition: function (event, inst) {
+          onPosition: function () {
             // Logic for component positioning
           },
-          onTempChange: function (event, inst) {
+          onTempChange: function () {
             // Logic for temporary value change
           },
         });

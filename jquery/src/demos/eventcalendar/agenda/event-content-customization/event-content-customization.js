@@ -33,7 +33,7 @@ export default {
               '</div>'
             );
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function (event) {
             const ev = event.event.original || event.event;
             if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
               mobiscroll.toast({

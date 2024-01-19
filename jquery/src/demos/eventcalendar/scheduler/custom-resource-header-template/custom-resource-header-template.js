@@ -12,6 +12,7 @@ export default {
       $('#demo-custom-resource-header-template')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             schedule: {
               type: 'week',

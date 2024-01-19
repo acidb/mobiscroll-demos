@@ -92,7 +92,7 @@ export default {
               colors: [],
             });
           },
-          onEventCreated: function (args) {
+          onEventCreated: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -100,7 +100,7 @@ export default {
               message: 'Event created',
             });
           },
-          onEventUpdated: function (args) {
+          onEventUpdated: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -108,7 +108,7 @@ export default {
               message: 'Event moved',
             });
           },
-          onEventCreateFailed: function (event) {
+          onEventCreateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -116,7 +116,7 @@ export default {
               message: "Can't create event",
             });
           },
-          onEventUpdateFailed: function (event) {
+          onEventUpdateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>

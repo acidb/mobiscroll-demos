@@ -3,6 +3,10 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 
 export default {
   init() {
+    mobiscroll.setOptions({
+      // locale,
+    });
+
     $(function () {
       var inst = $('#demo')
         .mobiscroll()
@@ -51,7 +55,7 @@ export default {
       $.getJSON(
         'https://trial.mobiscroll.com/timeline-events/?callback=?',
         function (events) {
-          cal.setEvents(events);
+          inst.setEvents(events);
         },
         'jsonp',
       );

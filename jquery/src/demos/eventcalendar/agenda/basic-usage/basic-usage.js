@@ -15,7 +15,7 @@ export default {
           view: {
             agenda: { type: 'month' },
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function (event) {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>

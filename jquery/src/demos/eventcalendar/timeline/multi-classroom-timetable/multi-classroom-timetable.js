@@ -13,6 +13,7 @@ export default {
       var calendar = $('#demo-vertical-time-table')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               type: 'week',

@@ -83,6 +83,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             schedule: {
               type: 'week',
@@ -549,20 +550,20 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $tooltip.mouseenter(function (ev) {
+      $tooltip.mouseenter(function () {
         if (timer) {
           clearTimeout(timer);
           timer = null;
         }
       });
 
-      $tooltip.mouseleave(function (ev) {
+      $tooltip.mouseleave(function () {
         timer = setTimeout(function () {
           tooltip.close();
         }, 200);
       });
 
-      $statusButton.on('click', function (ev) {
+      $statusButton.on('click', function () {
         tooltip.close();
         currentEvent.confirmed = !currentEvent.confirmed;
         calendar.updateEvent(currentEvent);
@@ -575,7 +576,7 @@ export default {
         });
       });
 
-      $fileButton.on('click', function (ev) {
+      $fileButton.on('click', function () {
         tooltip.close();
 
         mobiscroll.toast({
@@ -586,7 +587,7 @@ export default {
         });
       });
 
-      $deleteButton.on('click', function (ev) {
+      $deleteButton.on('click', function () {
         calendar.removeEvent(currentEvent);
 
         tooltip.close();

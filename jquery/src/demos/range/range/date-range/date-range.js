@@ -31,7 +31,6 @@ export default {
         .mobiscroll()
         .datepicker({
           controls: ['calendar'],
-          select: 'range',
           select: 'preset-range',
           display: 'inline',
           pages: 2,

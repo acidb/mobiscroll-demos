@@ -13,6 +13,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           responsive: {
             xsmall: {
               view: {
@@ -62,7 +63,7 @@ export default {
               );
             }
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function (event) {
             if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
               mobiscroll.toast({
                 //<hidden>

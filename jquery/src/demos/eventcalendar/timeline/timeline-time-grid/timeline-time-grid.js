@@ -12,6 +12,7 @@ export default {
       var calendar = $('#demo-timeline-time-grid')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               type: 'week',

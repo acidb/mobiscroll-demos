@@ -53,7 +53,7 @@ export default {
               },
             },
           ],
-          onEventCreateFailed: function (event, inst) {
+          onEventCreateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -61,7 +61,7 @@ export default {
               message: "Can't create event on this date",
             });
           },
-          onEventUpdateFailed: function (event, inst) {
+          onEventUpdateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>

@@ -1,7 +1,8 @@
 import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
 
+var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
@@ -69,7 +70,7 @@ export default {
             },
           },
           exclusiveEndDates: true,
-          onPageLoading: function (event, inst) {
+          onPageLoading: function (event) {
             var start = event.viewStart;
             var end = event.viewEnd;
 

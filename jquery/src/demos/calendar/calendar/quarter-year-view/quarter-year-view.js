@@ -31,7 +31,7 @@ export default {
               '<div mbsc-calendar-next></div>'
             );
           },
-          onPageChange: function (event, inst) {
+          onPageChange: function (event) {
             selectedDate = event.firstDay;
             setType($('.md-quarter-year-view-change[value="year"]').mobiscroll('getInst').checked);
           },

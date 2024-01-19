@@ -16,6 +16,7 @@ export default {
             timeline: { type: 'day' },
           },
           dragToMove: true,
+          dragToResize: true,
           data: [
             {
               color: 'cyan',

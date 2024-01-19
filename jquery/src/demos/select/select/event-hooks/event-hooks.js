@@ -14,31 +14,31 @@ export default {
         .select({
           inputElement: document.getElementById('demo-input'),
           filter: true,
-          onCancel: function (event, inst) {
+          onCancel: function () {
             // Logic for cancel button click
           },
-          onChange: function (event, inst) {
+          onChange: function () {
             // Logic for value change
           },
-          onClose: function (event, inst) {
+          onClose: function () {
             // Your custom event handler goes here
           },
-          onDestroy: function (event, inst) {
+          onDestroy: function () {
             // Your custom event handler goes here
           },
-          onFilter: function (event, inst) {
+          onFilter: function () {
             // Your custom event handler goes here
           },
-          onInit: function (event, inst) {
+          onInit: function () {
             // Logic running on component init
           },
-          onOpen: function (event, inst) {
+          onOpen: function () {
             // Your custom event handler goes here
           },
-          onPosition: function (event, inst) {
+          onPosition: function () {
             // Logic for component positioning
           },
-          onTempChange: function (event, inst) {
+          onTempChange: function () {
             // Logic for temporary value change
           },
         });

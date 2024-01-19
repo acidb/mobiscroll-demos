@@ -49,7 +49,6 @@ export default {
       ];
       var $title = $('#external-event-job');
       var $details = $('#external-event-details');
-      var $tech = $('#external-event-technician');
 
       function fillDialog(args) {
         $title.mobiscroll('getInst').value = args.event.title;

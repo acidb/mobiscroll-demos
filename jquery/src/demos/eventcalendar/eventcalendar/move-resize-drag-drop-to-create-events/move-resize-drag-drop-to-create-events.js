@@ -10,7 +10,7 @@ export default {
 
     $(function () {
       var now = new Date();
-      var inst = $('#demo-drag-drop-events')
+      $('#demo-drag-drop-events')
         .mobiscroll()
         .eventcalendar({
           // context,

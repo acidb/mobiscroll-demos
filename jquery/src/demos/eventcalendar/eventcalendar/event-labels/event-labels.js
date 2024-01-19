@@ -13,12 +13,13 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             calendar: {
               labels: true,
             },
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function (event) {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>

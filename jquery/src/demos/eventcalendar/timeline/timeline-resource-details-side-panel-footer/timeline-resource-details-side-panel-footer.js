@@ -88,6 +88,7 @@ export default {
       var calendar = $('#demo-resource-details')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               type: 'month',

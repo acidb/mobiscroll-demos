@@ -16,6 +16,7 @@ export default {
       $('#demo-resource-view')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             schedule: {
               type: 'week',

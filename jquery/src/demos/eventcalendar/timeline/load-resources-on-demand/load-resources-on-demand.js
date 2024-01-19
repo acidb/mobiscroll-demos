@@ -190,6 +190,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             timeline: {
               type: 'day',

@@ -12,6 +12,7 @@ export default {
       var calendar = $('#demo-group-by-resource-by-day')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             schedule: {
               type: 'week',

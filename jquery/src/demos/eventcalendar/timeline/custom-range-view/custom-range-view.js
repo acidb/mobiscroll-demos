@@ -15,6 +15,7 @@ export default {
       var myCalendar = $('#demo-custom-range-view')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           resources: [
             {
               id: 1,

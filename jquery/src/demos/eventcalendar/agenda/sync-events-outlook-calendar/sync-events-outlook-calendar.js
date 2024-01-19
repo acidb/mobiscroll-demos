@@ -1,7 +1,8 @@
 import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { outlookCalendarSync as outlookSync } from '@mobiscroll/calendar-integration';
 
+var mobiscroll = m;
 mobiscroll.outlookCalendarSync = outlookSync;
 
 export default {

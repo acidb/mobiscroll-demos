@@ -30,7 +30,7 @@ export default {
           view: {
             agenda: { type: 'day' },
           },
-          onPageChange: function (event, inst) {
+          onPageChange: function (event) {
             monthInst.navigate(event.firstDay);
           },
         })

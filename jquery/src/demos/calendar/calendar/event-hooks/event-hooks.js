@@ -13,49 +13,49 @@ export default {
         .mobiscroll()
         .datepicker({
           controls: ['calendar'],
-          onCancel: function (event, inst) {
+          onCancel: function () {
             // Logic for cancel button click
           },
-          onCellClick: function (event, inst) {
+          onCellClick: function () {
             // Logic for event click
           },
-          onCellHoverIn: function (event, inst) {
+          onCellHoverIn: function () {
             // Logic for handling cell hover in
           },
-          onCellHoverOut: function (event, inst) {
+          onCellHoverOut: function () {
             // Logic for handling cell hover out
           },
-          onChange: function (event, inst) {
+          onChange: function () {
             // Logic for value change
           },
-          onClose: function (event, inst) {
+          onClose: function () {
             // Your custom event handler goes here
           },
-          onDestroy: function (event, inst) {
+          onDestroy: function () {
             // Your custom event handler goes here
           },
-          onInit: function (event, inst) {
+          onInit: function () {
             // Logic running on component init
           },
-          onLabelClick: function (event, inst) {
+          onLabelClick: function () {
             // Logic for label click
           },
-          onOpen: function (event, inst) {
+          onOpen: function () {
             // Your custom event handler goes here
           },
-          onPageChange: function (event, inst) {
+          onPageChange: function () {
             // Your custom event handler goes here
           },
-          onPageLoaded: function (event, inst) {
+          onPageLoaded: function () {
             // Use it to inject custom markup & attach custom listeners
           },
-          onPageLoading: function (event, inst) {
+          onPageLoading: function () {
             // Use it to load data on demand
           },
-          onPosition: function (event, inst) {
+          onPosition: function () {
             // Logic for component positioning
           },
-          onTempChange: function (event, inst) {
+          onTempChange: function () {
             // Logic for temporary value change
           },
         });

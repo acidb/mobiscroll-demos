@@ -13,6 +13,7 @@ export default {
         cal = $('#demo')
           .mobiscroll()
           .eventcalendar({
+            // drag,
             view: {
               calendar: {
                 labels: true,

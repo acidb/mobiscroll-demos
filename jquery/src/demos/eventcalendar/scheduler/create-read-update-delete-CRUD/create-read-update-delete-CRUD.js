@@ -340,7 +340,7 @@ export default {
             {
               text: 'Set',
               keyCode: 'enter',
-              handler: function (ev) {
+              handler: function () {
                 setSelectedColor();
               },
               cssClass: 'mbsc-popup-button-primary',

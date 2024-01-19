@@ -12,6 +12,7 @@ export default {
       var calendar = $('#demo-day-work-week-view')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               type: 'week',

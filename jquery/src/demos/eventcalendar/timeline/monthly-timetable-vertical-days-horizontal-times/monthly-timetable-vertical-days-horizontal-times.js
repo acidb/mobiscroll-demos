@@ -12,6 +12,7 @@ export default {
       var calendar = $('#demo-vertical-resolution')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               type: 'month',

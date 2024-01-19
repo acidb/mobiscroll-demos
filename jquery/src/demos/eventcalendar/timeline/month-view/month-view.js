@@ -12,6 +12,7 @@ export default {
       $('#demo-month-view')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               type: 'month',

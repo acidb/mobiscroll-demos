@@ -459,7 +459,7 @@ export default {
           clickToCreate: false,
           dragToCreate: false,
           showEventTooltip: false,
-          onEventHoverIn: function (args, inst) {
+          onEventHoverIn: function (args) {
             var event = args.event;
             var time = formatDate('hh:mm A', new Date(event.start)) + ' - ' + formatDate('hh:mm A', new Date(event.end));
             var button = {};
@@ -491,14 +491,14 @@ export default {
             tooltip.setOptions({ anchor: args.domEvent.target });
             tooltip.open();
           },
-          onEventHoverOut: function (args) {
+          onEventHoverOut: function () {
             if (!timer) {
               timer = setTimeout(function () {
                 tooltip.close();
               }, 200);
             }
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function () {
             tooltip.open();
           },
         })
@@ -516,20 +516,20 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $tooltip.mouseenter(function (ev) {
+      $tooltip.mouseenter(function () {
         if (timer) {
           clearTimeout(timer);
           timer = null;
         }
       });
 
-      $tooltip.mouseleave(function (ev) {
+      $tooltip.mouseleave(function () {
         timer = setTimeout(function () {
           tooltip.close();
         }, 200);
       });
 
-      $statusButton.on('click', function (ev) {
+      $statusButton.on('click', function () {
         tooltip.close();
         currentEvent.confirmed = !currentEvent.confirmed;
         calendar.updateEvent(currentEvent);
@@ -542,7 +542,7 @@ export default {
         });
       });
 
-      $fileButton.on('click', function (ev) {
+      $fileButton.on('click', function () {
         tooltip.close();
 
         mobiscroll.toast({
@@ -553,7 +553,7 @@ export default {
         });
       });
 
-      $deleteButton.on('click', function (ev) {
+      $deleteButton.on('click', function () {
         calendar.removeEvent(currentEvent);
 
         tooltip.close();

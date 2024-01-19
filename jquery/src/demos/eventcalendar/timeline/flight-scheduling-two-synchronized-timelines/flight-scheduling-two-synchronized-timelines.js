@@ -421,13 +421,12 @@ export default {
       ];
 
       var firstDay;
-      var lastDay;
       var $firstCalCont;
       var $secondCalCont;
       var skipFirstScroll;
       var skipSecondScroll;
 
-      var firstCalendar = $('#demo-drag-drop-bw-inst-first')
+      $('#demo-drag-drop-bw-inst-first')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -445,7 +444,6 @@ export default {
           resources: reservations,
           onPageLoading: function (args) {
             firstDay = args.firstDay;
-            lastDay = args.lastDay;
             if (secondCalendar) {
               secondCalendar.navigate(firstDay);
             }

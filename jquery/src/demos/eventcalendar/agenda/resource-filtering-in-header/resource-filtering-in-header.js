@@ -46,7 +46,7 @@ export default {
             },
           },
           resources: myResources,
-          renderHeader: function (a, b) {
+          renderHeader: function () {
             var header = '<div mbsc-calendar-nav class="md-header-filter-nav"></div>' + '<div class="md-header-filter-controls">';
 
             for (var i = 0; i < myResources.length; ++i) {

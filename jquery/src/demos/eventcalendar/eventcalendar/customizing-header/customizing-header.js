@@ -14,12 +14,13 @@ export default {
         calendar = $('#demo-custom-header')
           .mobiscroll()
           .eventcalendar({
+            // drag,
             view: {
               calendar: {
                 labels: true,
               },
             },
-            onSelectedDateChange: function (event, inst) {
+            onSelectedDateChange: function (event) {
               currentDate = event.date;
             },
             renderHeader: function () {
@@ -86,11 +87,11 @@ export default {
         }
       });
 
-      $('#nav-to-prev-page').on('click', function (ev) {
+      $('#nav-to-prev-page').on('click', function () {
         navigatePage(true);
       });
 
-      $('#nav-to-next-page').on('click', function (ev) {
+      $('#nav-to-next-page').on('click', function () {
         navigatePage(false);
       });
     });

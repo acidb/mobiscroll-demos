@@ -1,7 +1,8 @@
 import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
 
+var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
@@ -287,7 +288,7 @@ export default {
                           message: 'Event updated on "' + calendarData[calendarId].name + '" calendar',
                         });
                       })
-                      .catch(function () {
+                      .catch(function (error) {
                         inst.updateEvent(args.oldEvent);
                         onError(error);
                       });
@@ -311,7 +312,7 @@ export default {
                     var calendarId = event.googleCalendarId;
                     googleCalendarSync
                       .deleteEvent(calendarId, event)
-                      .then(function (resp) {
+                      .then(function () {
                         inst.removeEvent(event);
                         events = events.filter(function (ev) {
                           return event.id !== ev.id;

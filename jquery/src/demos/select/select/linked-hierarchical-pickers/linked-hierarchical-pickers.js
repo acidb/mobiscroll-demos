@@ -127,7 +127,7 @@ export default {
       $region.mobiscroll().select({
         touchUi: false,
         data: getData(),
-        onChange: function (event, inst) {
+        onChange: function (event) {
           divisionInst.setOptions({ data: getData(event.value), disabled: false });
           subdivisionInst.setOptions({ disabled: true });
           mobiscroll.getInst($division[0], true).setOptions({ disabled: false });
@@ -140,7 +140,7 @@ export default {
         .select({
           touchUi: false,
           disabled: true,
-          onChange: function (event, inst) {
+          onChange: function (event) {
             if (event.value) {
               subdivisionInst.setOptions({ data: getData(null, event.value), disabled: false });
               mobiscroll.getInst($subdivision[0], true).setOptions({ disabled: false });

@@ -110,7 +110,7 @@ export default {
               buttons: [
                 {
                   text: 'Apply',
-                  handler: function (event) {
+                  handler: function () {
                     var date = calendar.getVal();
 
                     setInputValue(date[0], date[1] || date[0], calendar.s.dateFormat);
@@ -139,18 +139,18 @@ export default {
         $dateInput.val(formatDate(dateFormat, new Date(start)) + ' - ' + formatDate(dateFormat, new Date(end)));
       }
 
-      $dateInput.on('click', function (ev) {
+      $dateInput.on('click', function () {
         popup.open();
       });
 
-      $('.apply-button').on('click', function (ev) {
+      $('.apply-button').on('click', function () {
         var date = calendar.getVal();
 
         setInputValue(date[0], date[1] || date[0], calendar.s.dateFormat);
         popup.close();
       });
 
-      $('.cancel-button').on('click', function (ev) {
+      $('.cancel-button').on('click', function () {
         popup.close();
       });
     });

@@ -12,6 +12,7 @@ export default {
       $('#demo-timeline-template')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               type: 'day',

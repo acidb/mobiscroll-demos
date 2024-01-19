@@ -12,6 +12,7 @@ export default {
       var inst = $('#demo-colored')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             schedule: { type: 'week' },
           },

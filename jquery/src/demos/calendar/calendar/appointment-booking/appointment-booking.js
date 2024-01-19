@@ -60,7 +60,6 @@ export default {
           max: max,
           pages: 'auto',
           selectMultiple: true,
-          pages: 'auto',
           onInit: function (event, inst) {
             inst.setVal(['dyndatetime(y,m,11)', 'dyndatetime(y,m,16)', 'dyndatetime(y,m,17)'], true);
           },

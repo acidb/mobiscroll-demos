@@ -11,7 +11,6 @@ export default {
     $(function () {
       var formatDate = mobiscroll.formatDate;
       var now = new Date();
-      var endDate;
       var monthColors = [
         {
           background: '#b2f1c080',

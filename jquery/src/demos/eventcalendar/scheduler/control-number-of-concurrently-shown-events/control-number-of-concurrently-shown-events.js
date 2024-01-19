@@ -4,6 +4,11 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 export default {
   init() {
     $(function () {
+      mobiscroll.setOptions({
+        // locale,
+        // theme
+      });
+
       var now = new Date();
       var year = now.getFullYear();
       var month = now.getMonth();
@@ -12,6 +17,7 @@ export default {
       $('#demo-more-events')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             schedule: {
               allDay: false,

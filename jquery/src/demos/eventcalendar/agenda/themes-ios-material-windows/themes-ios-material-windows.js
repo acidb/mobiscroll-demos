@@ -4,10 +4,13 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 export default {
   init() {
     $(function () {
+      mobiscroll.setOptions({
+        // locale,
+      });
+
       var inst = $('#demo')
         .mobiscroll()
         .eventcalendar({
-          // locale,
           view: {
             agenda: { type: 'month' },
           },

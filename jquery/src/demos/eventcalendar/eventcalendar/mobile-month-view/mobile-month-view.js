@@ -13,11 +13,12 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             calendar: { type: 'month' },
             agenda: { type: 'month' },
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function (event) {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>

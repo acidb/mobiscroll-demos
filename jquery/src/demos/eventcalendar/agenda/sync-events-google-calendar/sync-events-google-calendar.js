@@ -1,7 +1,8 @@
 import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
 
+var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
@@ -76,8 +77,8 @@ export default {
           .then(function (calendars) {
             var calList = '';
 
-            calendars.sort(function (a, b) {
-              return a.primary ? -1 : 1;
+            calendars.sort(function (event) {
+              return event.primary ? -1 : 1;
             });
 
             for (var i = 0; i < calendars.length; ++i) {
@@ -123,7 +124,7 @@ export default {
         $('#google-cal-list').empty();
       }
 
-      function onError(error) {
+      function onError(resp) {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>

@@ -160,7 +160,7 @@ export default {
               color: '#a446b5',
             };
           },
-          onEventCreate: function (args, inst) {
+          onEventCreate: function (args) {
             var event = args.event;
             event.unscheduled = false;
             myCalendar.setOptions({
@@ -199,7 +199,7 @@ export default {
               message: 'Make sure not to double book',
             });
           },
-          onEventDelete: function (args, inst) {
+          onEventDelete: function (args) {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -207,7 +207,7 @@ export default {
               message: args.event.title + ' unscheduled',
             });
           },
-          onEventDragEnter: function (args) {
+          onEventDragEnter: function () {
             myCalendar.setOptions({
               colors: [
                 {
@@ -268,7 +268,7 @@ export default {
             $externalCont.css('background', '#d0e7d2cc');
           }
         },
-        onItemDragLeave: function (args) {
+        onItemDragLeave: function () {
           $externalCont.css('background', '');
         },
       });

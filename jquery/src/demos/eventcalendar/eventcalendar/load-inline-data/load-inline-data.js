@@ -11,10 +11,11 @@ export default {
     var now = new Date();
 
     $(function () {
-      var inst = $('#demo-loading-inline-data')
+      $('#demo-loading-inline-data')
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             calendar: {
               labels: true,

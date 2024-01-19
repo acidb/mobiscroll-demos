@@ -35,7 +35,6 @@ export default {
       var deleteEvent;
       var $title = $('#demo-shared-events-title');
       var $segmented = $('[name="demo-shared-events-select"]');
-      var now = new Date();
 
       var calendar = $('#demo-shared-events-across-resources')
         .mobiscroll()

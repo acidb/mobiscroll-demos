@@ -9,7 +9,7 @@ export default {
     });
 
     $(function () {
-      var inst = $('#demo-drag-drop-events')
+      $('#demo-drag-drop-events')
         .mobiscroll()
         .eventcalendar({
           // context,

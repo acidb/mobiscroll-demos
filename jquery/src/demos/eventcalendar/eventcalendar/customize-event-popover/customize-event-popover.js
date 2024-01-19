@@ -13,6 +13,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             calendar: {
               labels: false,
@@ -36,7 +37,7 @@ export default {
               '</div>'
             );
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function (event) {
             if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
               event.domEvent.stopPropagation();
               mobiscroll.toast({

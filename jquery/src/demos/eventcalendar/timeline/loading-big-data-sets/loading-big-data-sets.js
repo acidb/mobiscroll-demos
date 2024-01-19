@@ -25,6 +25,7 @@ export default {
       $('#demo-big-data')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           resources: myResources,
           view: {
             timeline: {

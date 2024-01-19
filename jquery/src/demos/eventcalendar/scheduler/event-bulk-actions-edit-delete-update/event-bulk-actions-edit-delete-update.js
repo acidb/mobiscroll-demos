@@ -120,7 +120,7 @@ export default {
       var calendar = $('#demo-multiple-event-selection')
         .mobiscroll()
         .eventcalendar({
-          clickToCreate: true,
+          // drag,
           selectMultipleEvents: true,
           view: {
             schedule: {
@@ -135,7 +135,7 @@ export default {
               return false;
             }
           },
-          onEventDelete: function (args, inst) {
+          onEventDelete: function () {
             if (!confirmOpen) {
               deleteSelectedEvents();
               return false;

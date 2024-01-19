@@ -15,6 +15,7 @@ export default {
       var oldShift;
       var tempShift;
       var deleteShift;
+      var restoreShift;
       var formatDate = mobiscroll.formatDate;
       var $notes = $('#employee-shifts-notes');
       var $deleteButton = $('#employee-shifts-delete');
@@ -261,7 +262,7 @@ export default {
         },
       ];
 
-      function createAddPopup(args) {
+      function createAddPopup() {
         // hide delete button inside add popup
         $deleteButton.hide();
         deleteShift = true;
@@ -397,14 +398,14 @@ export default {
               resource: ev.resource,
             };
           },
-          onEventCreate: function (args, inst) {
+          onEventCreate: function (args) {
             // store temporary event
             tempShift = args.event;
             setTimeout(function () {
               createAddPopup(args);
             }, 100);
           },
-          onEventClick: function (args, inst) {
+          onEventClick: function (args) {
             oldShift = $.extend({}, args.event);
             tempShift = args.event;
 

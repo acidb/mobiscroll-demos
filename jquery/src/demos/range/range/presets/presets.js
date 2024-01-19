@@ -26,7 +26,7 @@ export default {
           })
           .mobiscroll('getInst');
 
-      $('.md-today').on('click', function (ev) {
+      $('.md-today').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -36,7 +36,7 @@ export default {
         inst.setVal([now, now]);
       });
 
-      $('.md-yesterday').on('click', function (ev) {
+      $('.md-yesterday').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -46,7 +46,7 @@ export default {
         inst.setVal([yesterday, yesterday]);
       });
 
-      $('.md-week').on('click', function (ev) {
+      $('.md-week').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -56,7 +56,7 @@ export default {
         inst.setVal([startWeek, endWeek]);
       });
 
-      $('.md-month').on('click', function (ev) {
+      $('.md-month').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -66,7 +66,7 @@ export default {
         inst.setVal([startMonth, endMonth]);
       });
 
-      $('.md-clear').on('click', function (ev) {
+      $('.md-clear').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>

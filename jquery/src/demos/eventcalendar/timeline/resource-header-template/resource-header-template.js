@@ -12,6 +12,7 @@ export default {
       var calendar = $('#demo-resource-header-template')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               type: 'week',

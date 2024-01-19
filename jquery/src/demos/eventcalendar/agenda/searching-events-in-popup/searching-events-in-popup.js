@@ -48,7 +48,7 @@ export default {
               '<div mbsc-calendar-next></div>'
             );
           },
-          onPageLoading: function (args, inst) {
+          onPageLoading: function (args) {
             var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
             var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
 

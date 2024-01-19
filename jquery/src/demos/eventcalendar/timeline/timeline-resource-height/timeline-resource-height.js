@@ -12,6 +12,7 @@ export default {
       $('#demo-resource-height')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               rowHeight: 'equal',

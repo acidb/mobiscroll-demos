@@ -135,7 +135,7 @@ export default {
               return false;
             }
           },
-          onEventDelete: function (args, inst) {
+          onEventDelete: function () {
             if (!confirmOpen) {
               deleteSelectedEvents();
               return false;

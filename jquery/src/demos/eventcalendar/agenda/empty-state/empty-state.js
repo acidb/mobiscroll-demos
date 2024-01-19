@@ -9,7 +9,7 @@ export default {
     });
 
     $(function () {
-      var inst = $('#demo-custom-empty-agenda')
+      $('#demo-custom-empty-agenda')
         .mobiscroll()
         .eventcalendar({
           // context,

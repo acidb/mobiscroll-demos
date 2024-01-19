@@ -30,6 +30,7 @@ export default {
       var calendar = $('#demo-date-header-template')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             schedule: {
               type: 'week',
@@ -63,7 +64,6 @@ export default {
           groupBy: 'date',
           renderDay: function (args) {
             var date = args.date;
-            var dayNr = date.getDay();
             var formatDate = mobiscroll.formatDate;
             var task = milestones.find(function (obj) {
               return +new Date(obj.date) === +new Date(date);

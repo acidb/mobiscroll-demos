@@ -3,11 +3,14 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 
 export default {
   init() {
+    mobiscroll.setOptions({
+      // locale,
+    });
+
     $(function () {
       $('#demo')
         .mobiscroll()
         .datepicker({
-          // locale,
           controls: ['calendar'],
           select: 'range',
           display: 'inline',

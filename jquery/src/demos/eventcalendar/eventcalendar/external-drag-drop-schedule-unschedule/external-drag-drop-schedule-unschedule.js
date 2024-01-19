@@ -22,14 +22,14 @@ export default {
           dragToCreate: true,
           externalDrop: true,
           externalDrag: true,
-          onEventCreate: function (args, inst) {
+          onEventCreate: function (args) {
             $('#md-event-' + args.event.id).remove();
             mobiscroll.toast({
               // context,
               message: args.event.title + ' added',
             });
           },
-          onEventDelete: function (args, inst) {
+          onEventDelete: function (args) {
             mobiscroll.toast({
               // context,
               message: args.event.title + ' unscheduled',

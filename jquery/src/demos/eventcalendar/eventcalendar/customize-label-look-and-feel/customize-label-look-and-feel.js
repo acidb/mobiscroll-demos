@@ -12,6 +12,7 @@ export default {
       var inst = $('#demo-mobile-month-view')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             calendar: { labels: true },
           },
@@ -31,7 +32,7 @@ export default {
               );
             }
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function (event) {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>

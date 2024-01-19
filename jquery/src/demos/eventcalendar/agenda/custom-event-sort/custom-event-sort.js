@@ -13,7 +13,7 @@ export default {
     var monday = now.getDate() - day + (day == 0 ? -6 : 1);
 
     $(function () {
-      var inst = $('#demo-custom-event-sort')
+      $('#demo-custom-event-sort')
         .mobiscroll()
         .eventcalendar({
           // context,

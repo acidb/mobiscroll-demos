@@ -12,12 +12,13 @@ export default {
       var inst = $('#demo-event-popover')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             calendar: {
               count: true,
             },
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function (event) {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>

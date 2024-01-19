@@ -13,6 +13,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             calendar: {
               labels: true,
@@ -40,7 +41,7 @@ export default {
               end: 'dyndatetime(y,m,27)',
             },
           ],
-          onEventCreateFailed: function (event, inst) {
+          onEventCreateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -48,7 +49,7 @@ export default {
               message: "Can't create event on this date",
             });
           },
-          onEventUpdateFailed: function (event, inst) {
+          onEventUpdateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>

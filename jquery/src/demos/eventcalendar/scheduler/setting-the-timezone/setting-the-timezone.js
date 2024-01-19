@@ -7,7 +7,7 @@ export default {
     $(function () {
       mobiscroll.momentTimezone.moment = moment;
 
-      var inst = $('#demo-showing-events-timezone')
+      $('#demo-showing-events-timezone')
         .mobiscroll()
         .eventcalendar({
           timezonePlugin: mobiscroll.momentTimezone,

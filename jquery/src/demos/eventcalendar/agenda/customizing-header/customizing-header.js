@@ -16,7 +16,7 @@ export default {
             view: {
               agenda: { type: 'month' },
             },
-            onSelectedDateChange: function (event, inst) {
+            onSelectedDateChange: function (event) {
               currentDate = event.date;
             },
             renderHeader: function () {
@@ -63,7 +63,7 @@ export default {
         }
       });
 
-      $('#nav-to-prev-page').on('click', function (ev) {
+      $('#nav-to-prev-page').on('click', function () {
         var prevPage = new Date(currentDate);
 
         prevPage.setDate(1);
@@ -72,7 +72,7 @@ export default {
         currentDate = prevPage;
       });
 
-      $('#nav-to-next-page').on('click', function (ev) {
+      $('#nav-to-next-page').on('click', function () {
         var nextPage = new Date(currentDate);
 
         nextPage.setDate(1);
