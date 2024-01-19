@@ -130,18 +130,14 @@ const App: React.FC = () => {
   return (
     <div>
       <Eventcalendar
+        // drag
         renderHeader={customWithNavButtons}
         view={calView}
         resources={myResources}
         data={filteredEvents}
         cssClass="md-custom-header-filtering"
       />
-      <Toast
-        // theme
-        message={toastText}
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
     </div>
   );
 };

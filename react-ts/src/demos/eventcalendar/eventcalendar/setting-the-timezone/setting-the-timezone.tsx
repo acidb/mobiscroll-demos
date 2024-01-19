@@ -66,6 +66,7 @@ const App: React.FC = () => {
     <Eventcalendar
       // theme
       // locale
+      // drag
       dataTimezone="utc"
       displayTimezone="local"
       timezonePlugin={momentTimezone}

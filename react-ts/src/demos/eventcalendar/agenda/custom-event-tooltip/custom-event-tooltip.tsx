@@ -537,8 +537,6 @@ function App() {
       <Eventcalendar
         view={view}
         data={appointments}
-        clickToCreate={false}
-        dragToCreate={false}
         showEventTooltip={false}
         onEventHoverIn={onEventHoverIn}
         onEventHoverOut={onEventHoverOut}

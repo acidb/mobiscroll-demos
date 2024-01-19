@@ -79,6 +79,7 @@ function App() {
     <Eventcalendar
       // theme
       // locale
+      // drag
       dataTimezone="utc"
       displayTimezone="America/New_York"
       timezonePlugin={momentTimezone}

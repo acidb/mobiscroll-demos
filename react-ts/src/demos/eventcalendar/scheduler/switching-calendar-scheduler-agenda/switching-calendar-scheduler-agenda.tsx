@@ -94,7 +94,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <Eventcalendar renderHeader={customWithNavButtons} height={750} view={calView} data={myEvents} cssClass="md-switching-view-cont" />
+    <Eventcalendar
+      // drag
+      renderHeader={customWithNavButtons}
+      height={750}
+      view={calView}
+      data={myEvents}
+      cssClass="md-switching-view-cont"
+    />
   );
 };
 export default App;

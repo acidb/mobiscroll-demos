@@ -27,6 +27,7 @@ const App: React.FC = () => {
 
   return (
     <Eventcalendar
+      // drag
       data={myEvents}
       view={view}
       colors={[

@@ -285,6 +285,7 @@ const App: React.FC = () => {
     <Eventcalendar
       // theme
       // locale
+      // drag
       data={myEvents}
       view={view}
     />

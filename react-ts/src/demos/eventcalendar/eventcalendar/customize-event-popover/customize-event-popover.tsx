@@ -94,7 +94,12 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <Eventcalendar renderEventContent={renderEventContent} data={myEvents} view={view} />
+      <Eventcalendar
+        // drag
+        renderEventContent={renderEventContent}
+        data={myEvents}
+        view={view}
+      />
       <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
     </div>
   );

@@ -35,6 +35,7 @@ const App: React.FC = () => {
     <Eventcalendar
       // locale
       // theme
+      // drag
       data={myEvents}
       responsive={responsive}
     />

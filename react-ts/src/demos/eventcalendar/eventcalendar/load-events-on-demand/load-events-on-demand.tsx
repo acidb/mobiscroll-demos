@@ -41,6 +41,7 @@ const App: React.FC = () => {
       <Eventcalendar
         // theme
         // locale
+        // drag
         data={events}
         view={view}
         onPageLoading={onPageLoading}

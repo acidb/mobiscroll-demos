@@ -113,6 +113,7 @@ const App: React.FC = () => {
 
   return (
     <Eventcalendar
+      // drag
       onSelectedDateChange={onSelectedDateChange}
       selectedDate={currentDate}
       renderHeader={customWithNavButtons}

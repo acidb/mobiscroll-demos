@@ -219,6 +219,7 @@ function App() {
           <div className="mbsc-col-sm-9 mbsc-push-sm-3">
             <Eventcalendar
               className="md-bulk-operations-border"
+              // drag
               ref={calRef}
               data={myEvents}
               view={view}

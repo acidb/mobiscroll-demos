@@ -177,13 +177,13 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <Eventcalendar renderScheduleEvent={renderScheduleEvent} responsive={resp} data={myEvents} />
-      <Toast
-        // theme
-        message="Edit clicked"
-        isOpen={isToastOpen}
-        onClose={closeToast}
+      <Eventcalendar
+        // drag
+        renderScheduleEvent={renderScheduleEvent}
+        responsive={resp}
+        data={myEvents}
       />
+      <Toast message="Edit clicked" isOpen={isToastOpen} onClose={closeToast} />
     </div>
   );
 };

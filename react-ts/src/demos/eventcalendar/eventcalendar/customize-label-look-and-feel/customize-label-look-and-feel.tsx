@@ -62,18 +62,13 @@ const App: React.FC = () => {
       <Eventcalendar
         // theme
         // locale
+        // drag
         renderLabel={renderLabel}
         data={myEvents}
         view={view}
         onEventClick={onEventClick}
       />
-      <Toast
-        // locale
-        // theme
-        message={toastText}
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
     </div>
   );
 };

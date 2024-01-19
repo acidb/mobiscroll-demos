@@ -43,6 +43,7 @@ const App: React.FC = () => {
       <Eventcalendar
         // locale
         // theme
+        // drag
         data={myEvents}
         view={view}
         onEventClick={onEventClick}

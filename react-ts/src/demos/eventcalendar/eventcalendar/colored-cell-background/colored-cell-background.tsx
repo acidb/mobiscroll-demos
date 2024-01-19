@@ -51,6 +51,12 @@ const App: React.FC = () => {
     );
   }, []);
 
-  return <Eventcalendar data={myEvents} colors={myColors} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      colors={myColors}
+    />
+  );
 };
 export default App;
