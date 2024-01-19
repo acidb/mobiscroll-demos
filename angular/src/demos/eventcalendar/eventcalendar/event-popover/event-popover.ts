@@ -27,8 +27,6 @@ export class AppComponent implements OnInit {
     },
     onEventClick: (event) => {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         message: event.event.title,
       });
     },

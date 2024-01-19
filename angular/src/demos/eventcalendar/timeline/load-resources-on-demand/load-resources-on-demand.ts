@@ -189,8 +189,6 @@ export class AppComponent {
         this.myResources = [...this.myResources];
 
         this.notify.toast({
-          //<hidden>
-          // theme,//</hidden>
           message: 'Resources loaded',
         });
       });

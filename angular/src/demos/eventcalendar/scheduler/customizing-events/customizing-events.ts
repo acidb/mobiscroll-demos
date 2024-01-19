@@ -121,8 +121,6 @@ export class AppComponent implements OnInit {
 
   edit(): void {
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: 'Edit clicked',
     });
   }

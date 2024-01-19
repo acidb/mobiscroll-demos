@@ -63,15 +63,11 @@ export class AppComponent implements OnInit {
     ],
     onEventCreateFailed: () => {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         message: "Can't create event on this date",
       });
     },
     onEventUpdateFailed: () => {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         message: "Can't add event on this date",
       });
     },

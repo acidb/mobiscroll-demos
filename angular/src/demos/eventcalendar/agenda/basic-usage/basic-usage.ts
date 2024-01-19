@@ -32,8 +32,6 @@ export class AppComponent implements OnInit {
 
   onEventClick(event: MbscEventClickEvent): void {
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: event.event.title,
     });
   }

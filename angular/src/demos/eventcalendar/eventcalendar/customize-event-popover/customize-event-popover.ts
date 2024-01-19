@@ -53,8 +53,6 @@ export class AppComponent implements OnInit {
   add(ev: any, data: any): void {
     ev.stopPropagation();
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: this.getParticipant(data.participant).name + "'s event clicked",
     });
   }

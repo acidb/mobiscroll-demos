@@ -48,8 +48,6 @@ export class AppComponent implements OnInit {
 
   add(ev: any, data: any): void {
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: data.title + ' clicked',
     });
   }

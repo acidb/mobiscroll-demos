@@ -75,8 +75,6 @@ export class AppComponent {
     this.myEvents = [...this.myEvents, newEvent];
 
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: 'Event added',
     });
   }
