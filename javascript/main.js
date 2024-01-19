@@ -291,6 +291,7 @@ import TimelineEventHooks from './src/demos/eventcalendar/timeline/event-hooks/e
 import TimelineLocalization from './src/demos/eventcalendar/timeline/localization/localization';
 import TimelineRtlRightToLeft from './src/demos/eventcalendar/timeline/rtl-right-to-left/rtl-right-to-left';
 import TimelineLoadInlineData from './src/demos/eventcalendar/timeline/load-inline-data/load-inline-data';
+import TimelineEventBuffer from './src/demos/eventcalendar/timeline/event-buffer/event-buffer';
 import TimelineSyncEventsGoogleCalendar from './src/demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar';
 import TimelineSyncEventsOutlookCalendar from './src/demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import TimelineDisallowPastEventCreation from './src/demos/eventcalendar/timeline/disallow-past-event-creation/disallow-past-event-creation';
@@ -776,6 +777,9 @@ router
   .on('/eventcalendar/load-inline-data', () => {
     loadPage(EventcalendarLoadInlineData);
   })
+.on('/timeline/printing-the-view', () => {
+    loadPage(TimelinePrintingTheView);
+  })
   .on('/eventcalendar/move-resize-drag-drop-to-create-events', () => {
     loadPage(EventcalendarMoveResizeDragDropToCreateEvents);
   })
@@ -1165,6 +1169,9 @@ router
   })
   .on('/timeline/event-data-structure', () => {
     loadPage(TimelineEventDataStructure);
+  })
+  .on('/timeline/event-buffer', () => {
+    loadPage(TimelineEventBuffer);
   })
   .on('/timeline/date-object-ISO-8601-moment', () => {
     loadPage(TimelineDateObjectISO8601Moment);

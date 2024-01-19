@@ -201,6 +201,7 @@ export default {
       <li><a class="app-link" href="/timeline/resource-grouping-hierarchy">Resource grouping & hierarchy</a></li>
       <li><a class="app-link" href="/timeline/resource-data-structure">Resource properties</a></li>
       <li><a class="app-link" href="/timeline/event-data-structure">Event properties</a></li>
+      <li><a class="app-link" href="/timeline/event-buffer">Event buffer</a></li>
       <li><a class="app-link" href="/timeline/connecting-linking-events-arrows">Event connections</a></li>
       <li><a class="app-link" href="/timeline/date-object-ISO-8601-moment">Supported date formats</a></li>
       <li><a class="app-link" href="/timeline/recurring-events">Recurrence rules</a></li>

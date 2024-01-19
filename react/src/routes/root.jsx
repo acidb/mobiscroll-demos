@@ -547,6 +547,9 @@ export default function Root() {
               <Link to="/timeline/load-inline-data">Loading inline data</Link>
             </li>
             <li>
+              <Link to="/timeline/event-buffer">Event buffer</Link>
+            </li>
+            <li>
               <Link to="/timeline/load-events-from-remote-api">Events from remote API </Link>
             </li>
             <li>

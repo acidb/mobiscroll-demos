@@ -205,6 +205,7 @@ export default {
       <li><a class="app-link" href="/timeline/date-object-ISO-8601-moment">Supported date formats</a></li>
       <li><a class="app-link" href="/timeline/recurring-events">Recurrence rules</a></li>
       <li><a class="app-link" href="/timeline/load-inline-data">Loading inline data</a></li>
+      <li><a class="app-link" href="/timeline/event-buffer">Event buffer</a></li>
       <li><a class="app-link" href="/timeline/load-events-from-remote-api">Events from remote API </a></li>
       <li><a class="app-link" href="/timeline/load-events-on-demand">Loading events on demand</a></li>
       <li><a class="app-link" href="/timeline/load-resources-on-demand">Loading resources on demand</a></li>
