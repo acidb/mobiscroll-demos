@@ -8,6 +8,7 @@ export default {
     var day = now.getDate();
 
     mobiscroll.eventcalendar('#demo-more-events', {
+      // drag,
       view: {
         timeline: {
           maxEventStack: 2,

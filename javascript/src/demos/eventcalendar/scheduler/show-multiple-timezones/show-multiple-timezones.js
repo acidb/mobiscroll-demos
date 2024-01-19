@@ -10,7 +10,8 @@ export default {
 
     mobiscroll.momentTimezone.moment = moment;
 
-    var calendarInst = mobiscroll.eventcalendar('#demo-showing-multiple-timezone', {
+    mobiscroll.eventcalendar('#demo-showing-multiple-timezone', {
+      // drag,
       timezonePlugin: mobiscroll.momentTimezone,
       dataTimezone: 'utc',
       displayTimezone: 'America/New_York',

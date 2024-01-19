@@ -35,19 +35,13 @@ export default {
           end: 'dyndatetime(y,m,27)',
         },
       ],
-      onEventCreateFailed: function (event, inst) {
+      onEventCreateFailed: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: "Can't create event on this date",
         });
       },
-      onEventUpdateFailed: function (event, inst) {
+      onEventUpdateFailed: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: "Can't add event on this date",
         });
       },

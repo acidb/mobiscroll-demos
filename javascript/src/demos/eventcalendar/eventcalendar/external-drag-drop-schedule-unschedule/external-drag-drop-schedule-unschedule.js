@@ -7,7 +7,6 @@ export default {
       // theme
     });
 
-    var externalCont = document.getElementById('external-drop-cont');
     var myCalendar = mobiscroll.eventcalendar('#external-drop-calendar', {
       view: {
         calendar: { labels: true },
@@ -16,19 +15,17 @@ export default {
       dragToCreate: true,
       externalDrop: true,
       externalDrag: true,
-      onEventCreate: function (args, inst) {
+      onEventCreate: function (args) {
         var elm = document.getElementById('md-event-' + args.event.id);
         if (elm) {
           elm.remove();
         }
         mobiscroll.toast({
-          // context,
           message: args.event.title + ' added',
         });
       },
-      onEventDelete: function (args, inst) {
+      onEventDelete: function (args) {
         mobiscroll.toast({
-          // context,
           message: args.event.title + ' unscheduled',
         });
       },

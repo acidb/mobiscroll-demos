@@ -215,8 +215,6 @@ export default {
       },
       onEventDeleted: function (args) {
         mobiscroll.snackbar({
-          //<hidden>
-          // theme,//</hidden>
           button: {
             action: function () {
               calendar.addEvent(args.event);
@@ -303,8 +301,6 @@ export default {
       var deletedEvent = tempEvent;
 
       mobiscroll.snackbar({
-        //<hidden>
-        // theme,//</hidden>
         button: {
           action: function () {
             calendar.addEvent(deletedEvent);
@@ -325,7 +321,7 @@ export default {
         {
           text: 'Set',
           keyCode: 'enter',
-          handler: function (ev) {
+          handler: function () {
             setSelectedColor();
           },
           cssClass: 'mbsc-popup-button-primary',

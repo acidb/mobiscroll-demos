@@ -5,6 +5,7 @@ export default {
     mobiscroll.eventcalendar('#demo-resource-grouping-hierarchy', {
       // locale,
       // theme,
+      // drag,
       view: {
         timeline: {
           type: 'month',

@@ -68,9 +68,6 @@ export default {
       onEventCreateFailed: function (event) {
         if (!event.originEvent) {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't create event in the past",
           });
         }
@@ -78,9 +75,6 @@ export default {
       onEventUpdateFailed: function (event) {
         if (!event.oldEventOccurrence) {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't move event in the past",
           });
         }
@@ -93,9 +87,6 @@ export default {
         if (start && start < today) {
           inst.updateEvent(oldEvent);
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't move past event",
           });
           return false;

@@ -177,9 +177,6 @@ export default {
             });
 
             mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               message: 'Resources loaded',
             });
           },
@@ -189,7 +186,7 @@ export default {
     }
 
     var myCalendar = mobiscroll.eventcalendar('#demo', {
-      // context,
+      // drag,
       view: {
         timeline: {
           type: 'day',

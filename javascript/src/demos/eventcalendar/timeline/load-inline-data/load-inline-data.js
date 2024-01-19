@@ -10,6 +10,7 @@ export default {
     var now = new Date();
 
     mobiscroll.eventcalendar('#demo-loading-inline-data', {
+      // drag,
       view: {
         timeline: { type: 'day' },
       },

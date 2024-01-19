@@ -60,7 +60,7 @@ export default {
 
     var details = getDetails();
 
-    calendar = mobiscroll.eventcalendar('#demo-timezone-meeting-planner', {
+    var calendar = mobiscroll.eventcalendar('#demo-timezone-meeting-planner', {
       timezonePlugin: mobiscroll.momentTimezone,
       dataTimezone: 'utc',
       displayTimezone: 'utc',
@@ -86,8 +86,8 @@ export default {
         },
       ],
       resources: myResources,
-      colors: getDetails().colors,
-      invalid: getDetails().invalid,
+      colors: details.colors,
+      invalid: details.invalid,
       extendDefaultEvent: function () {
         return { resource: [1, 2, 3, 4, 5, 6] };
       },
@@ -116,13 +116,11 @@ export default {
       },
       onEventCreated: function () {
         mobiscroll.toast({
-          // context,
           message: 'Event created',
         });
       },
       onEventUpdated: function () {
         mobiscroll.toast({
-          // context,
           message: 'Event updated',
         });
       },
@@ -166,8 +164,6 @@ export default {
 
     function createUpdateEvent(event, isNew) {
       mobiscroll.confirm({
-        // theme,
-        // context,
         title: 'Are you sure you want to proceed?',
         message: "It looks like someone from the team won't be able to join the meeting.",
         okText: 'Yes',
@@ -181,8 +177,6 @@ export default {
             }
 
             mobiscroll.toast({
-              // theme,
-              // context,
               message: isNew ? 'Event added' : 'Event updated',
             });
           }

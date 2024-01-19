@@ -5,6 +5,7 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-responsive-month-view', {
       // locale,
       // theme,
+      // drag,
       responsive: {
         xsmall: {
           view: {

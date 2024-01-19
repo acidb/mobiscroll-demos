@@ -8,6 +8,7 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-colors-invalids-css-class', {
+      // drag,
       view: {
         schedule: {
           allDay: false,

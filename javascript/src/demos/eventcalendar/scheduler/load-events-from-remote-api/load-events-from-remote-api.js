@@ -5,6 +5,7 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-remote-api', {
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: { type: 'week' },
         schedule: { type: 'day' },

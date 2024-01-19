@@ -22,6 +22,7 @@ export default {
       }
 
       mobiscroll.eventcalendar('#demo-big-data', {
+        // drag,
         resources: myResources,
         view: {
           timeline: {

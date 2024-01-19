@@ -5,6 +5,7 @@ export default {
     mobiscroll.eventcalendar('#demo', {
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: { labels: true },
       },

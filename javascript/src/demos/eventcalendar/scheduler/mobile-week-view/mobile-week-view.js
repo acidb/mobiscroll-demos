@@ -5,14 +5,12 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-mobile-week-view', {
       // locale,
       // theme,
+      // drag,
       view: {
         schedule: { type: 'week' },
       },
-      onEventClick: function (event, inst) {
+      onEventClick: function (event) {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: event.event.title,
         });
       },

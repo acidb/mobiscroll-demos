@@ -8,6 +8,7 @@ export default {
     });
 
     var calendar = mobiscroll.eventcalendar('#demo-day-week-view', {
+      // drag,
       view: {
         calendar: {
           labels: true,

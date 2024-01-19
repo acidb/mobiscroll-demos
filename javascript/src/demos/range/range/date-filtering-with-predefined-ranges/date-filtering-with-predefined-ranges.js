@@ -100,7 +100,7 @@ export default {
           buttons: [
             {
               text: 'Apply',
-              handler: function (event) {
+              handler: function () {
                 var date = calendar.getVal();
 
                 setInputValue(date[0], date[1] || date[0], calendar.s.dateFormat);

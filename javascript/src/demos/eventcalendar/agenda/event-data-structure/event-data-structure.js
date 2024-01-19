@@ -38,9 +38,6 @@ export default {
       cal.navigateToEvent(newEvent);
 
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: 'Event added',
       });
     });

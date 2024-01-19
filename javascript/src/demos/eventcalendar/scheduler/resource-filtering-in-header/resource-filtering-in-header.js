@@ -10,7 +10,7 @@ export default {
     var selected = [1];
     var events = [];
     var calendar = mobiscroll.eventcalendar('#demo-header-functionality', {
-      // context,
+      // drag,
       view: {
         schedule: {
           type: 'week',
@@ -83,9 +83,6 @@ export default {
         filterEvents(events, selected);
 
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message:
             (ev.target.checked ? 'Showing ' : 'Hiding ') +
             document.getElementsByClassName('md-header-filter-name-' + ev.target.value)[0].textContent +

@@ -69,7 +69,6 @@ export default {
         value: 15,
       },
     ];
-    myData = [];
 
     mobiscroll.select('#demo-local-data', {
       display: 'anchored',

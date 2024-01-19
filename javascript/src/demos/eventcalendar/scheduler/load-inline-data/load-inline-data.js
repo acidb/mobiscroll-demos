@@ -7,6 +7,7 @@ export default {
     mobiscroll.eventcalendar('#demo-loading-inline-data', {
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: { type: 'week' },
         schedule: { type: 'day' },

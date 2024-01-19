@@ -10,12 +10,13 @@ export default {
     var currentDate = new Date(),
       view = 'calendar',
       calendar = mobiscroll.eventcalendar('#demo-custom-header', {
+        // drag,
         view: {
           calendar: {
             labels: true,
           },
         },
-        onSelectedDateChange: function (event, inst) {
+        onSelectedDateChange: function (event) {
           currentDate = event.date;
         },
         renderHeader: function () {

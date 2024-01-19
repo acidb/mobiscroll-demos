@@ -23,9 +23,6 @@ export default {
 
     document.querySelector('.md-today').addEventListener('click', function () {
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: 'Today Selected',
       });
       inst.setVal([now, now]);
@@ -33,9 +30,6 @@ export default {
 
     document.querySelector('.md-yesterday').addEventListener('click', function () {
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: 'Yesterday Selected',
       });
       inst.setVal([yesterday, yesterday]);
@@ -43,9 +37,6 @@ export default {
 
     document.querySelector('.md-week').addEventListener('click', function () {
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: 'This Week Selected',
       });
       inst.setVal([startWeek, endWeek]);
@@ -53,9 +44,6 @@ export default {
 
     document.querySelector('.md-month').addEventListener('click', function () {
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: 'Last Month Selected',
       });
       inst.setVal([startMonth, endMonth]);
@@ -63,9 +51,6 @@ export default {
 
     document.querySelector('.md-clear').addEventListener('click', function () {
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: 'Clear Value',
       });
       inst.setVal(null);

@@ -32,9 +32,6 @@ export default {
             inst.setEvents(events);
 
             mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               message: 'New events loaded',
             });
           },
@@ -45,14 +42,5 @@ export default {
   },
   markup: `
 <div id="demo-on-demand-api"></div>
-  `,
-  css: `
-/*<hidden>*/
-
-.demo-load-events-on-demand {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

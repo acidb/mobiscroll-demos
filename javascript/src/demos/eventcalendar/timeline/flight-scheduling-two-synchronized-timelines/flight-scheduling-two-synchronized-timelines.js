@@ -419,13 +419,12 @@ export default {
     ];
 
     var firstDay;
-    var lastDay;
     var firstCalCont;
     var secondCalCont;
     var skipFirstScroll;
     var skipSecondScroll;
 
-    var firstCalendar = mobiscroll.eventcalendar('#demo-drag-drop-bw-inst-first', {
+    mobiscroll.eventcalendar('#demo-drag-drop-bw-inst-first', {
       view: {
         timeline: {
           type: 'day',
@@ -441,7 +440,6 @@ export default {
       resources: reservations,
       onPageLoading: function (args) {
         firstDay = args.firstDay;
-        lastDay = args.lastDay;
         if (secondCalendar) {
           secondCalendar.navigate(firstDay);
         }
@@ -506,12 +504,9 @@ export default {
         }
         return '<div>' + resource.name + '</div>';
       },
-      onEventCreated: function (args, inst) {
+      onEventCreated: function (args) {
         flights.push(args.event);
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           display: 'center',
           message: 'Flight scheduled',
         });
@@ -521,20 +516,14 @@ export default {
           return flight.id !== args.event.id;
         });
       },
-      onEventCreateFailed: function (args, inst) {
+      onEventCreateFailed: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           display: 'center',
           message: "There's already a flight on this date",
         });
       },
-      onEventUpdateFailed: function (args, inst) {
+      onEventUpdateFailed: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           display: 'center',
           message: "There's already a flight on this date",
         });

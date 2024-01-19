@@ -5,14 +5,12 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-desktop-month-view', {
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: { labels: true },
       },
-      onEventClick: function (event, inst) {
+      onEventClick: function (event) {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: event.event.title,
         });
       },

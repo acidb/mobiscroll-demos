@@ -7,6 +7,7 @@ export default {
     mobiscroll.eventcalendar('#demo-loading-inline-data', {
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: {
           labels: true,

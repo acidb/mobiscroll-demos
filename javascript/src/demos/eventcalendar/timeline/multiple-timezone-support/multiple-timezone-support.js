@@ -11,6 +11,7 @@ export default {
     mobiscroll.momentTimezone.moment = moment;
 
     var calendarInst = mobiscroll.eventcalendar('#demo-multiple-timezone-support', {
+      // drag,
       timezonePlugin: mobiscroll.momentTimezone,
       dataTimezone: 'utc',
       displayTimezone: 'utc',

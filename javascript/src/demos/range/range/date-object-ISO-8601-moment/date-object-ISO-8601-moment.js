@@ -13,7 +13,6 @@ export default {
         select: 'range',
         onChange: function (event, inst) {
           updateValue('returnVal', inst);
-          returnMoment;
         },
       }),
       isoInstance = mobiscroll.datepicker('#demo-iso', {

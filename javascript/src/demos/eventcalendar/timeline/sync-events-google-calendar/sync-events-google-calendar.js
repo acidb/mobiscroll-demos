@@ -1,6 +1,7 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
 
+var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
@@ -23,7 +24,6 @@ export default {
     var readonlyCals = [];
     var debounce;
     var calendarData = {};
-    var myResources = [];
 
     function toggleContainers(loggedIn) {
       var loggedOutCont = document.getElementById('google-cal-sign-in');
@@ -161,7 +161,6 @@ export default {
       calendarData = [];
       events = [];
       readonlyCals = [];
-      myResources = [];
       inst.setOptions({ resources: undefined, invalid: undefined, data: [] });
     }
 
@@ -270,7 +269,7 @@ export default {
                       message: 'Event updated on "' + calendarData[calendarId].name + '" calendar',
                     });
                   })
-                  .catch(function () {
+                  .catch(function (error) {
                     inst.updateEvent(args.oldEvent);
                     onError(error);
                   });
@@ -294,7 +293,7 @@ export default {
                 var calendarId = event.googleCalendarId;
                 googleCalendarSync
                   .deleteEvent(calendarId, event)
-                  .then(function (resp) {
+                  .then(function () {
                     inst.removeEvent(event);
                     events = events.filter(function (ev) {
                       return event.id !== ev.id;

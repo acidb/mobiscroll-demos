@@ -8,6 +8,7 @@ export default {
     });
 
     var calendar = mobiscroll.eventcalendar('#demo-group-by-resource-by-day', {
+      // drag,
       view: {
         schedule: {
           type: 'week',

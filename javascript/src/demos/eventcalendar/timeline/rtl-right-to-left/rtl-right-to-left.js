@@ -8,6 +8,7 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-rtl-right-to-left', {
+      // drag,
       rtl: true,
       view: {
         timeline: { type: 'week' },

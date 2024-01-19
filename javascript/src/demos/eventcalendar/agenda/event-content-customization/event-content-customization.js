@@ -8,7 +8,6 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-custom-event-content', {
-      // context,
       view: {
         calendar: { type: 'week' },
         agenda: { type: 'day' },
@@ -29,14 +28,11 @@ export default {
           '</div>'
         );
       },
-      onEventClick: function (event, inst) {
+      onEventClick: function (event) {
         const ev = event.event.original || event.event;
 
         if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: ev.title + ' clicked',
           });
         }
@@ -99,13 +95,5 @@ export default {
 .md-custom-event .mbsc-material.mbsc-event-time {
     margin-top: 5px;
 }
-
-/*<hidden>*/
-
-.demo-event-content-customization {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

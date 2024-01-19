@@ -8,6 +8,7 @@ export default {
     });
 
     var calendar = mobiscroll.eventcalendar('#demo-resource-header-template', {
+      // drag,
       view: {
         timeline: {
           type: 'week',
@@ -87,14 +88,6 @@ export default {
 <div id="demo-resource-header-template" class="md-resource-header-template"></div>
   `,
   css: `
-/*<hidden>*/
-
-.demo-timeline-resource-header-template {
-    height: 100%;
-}
-
-/*</hidden>*/
-
 .md-resource-header-template .mbsc-timeline-resource-col {
     width: 230px;
 }

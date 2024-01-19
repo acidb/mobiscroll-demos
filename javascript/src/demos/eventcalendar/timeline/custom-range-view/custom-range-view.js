@@ -8,9 +8,10 @@ export default {
     });
 
     var formatDate = mobiscroll.formatDate;
-    var startDate, endDate;
+    var startDate, endDate, end;
 
     var myCalendar = mobiscroll.eventcalendar('#demo-custom-range-view', {
+      // drag,
       resources: [
         {
           id: 1,

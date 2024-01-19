@@ -150,11 +150,13 @@ export default {
             if (weekDays.split(',').length > 1) {
               return 'custom-value';
             }
+            break;
           case 'monthly':
           case 'yearly':
             if (recurringRule.pos) {
               return repeat + '-pos';
             }
+            break;
           default:
             return repeat;
         }

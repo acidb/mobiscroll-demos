@@ -51,9 +51,6 @@ export default {
             calendar.removeEvent(eventsToDelete);
             calendar.setSelectedEvents([]);
             mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               message: 'Deleted',
             });
           }
@@ -93,15 +90,12 @@ export default {
       calendar.setSelectedEvents([]);
 
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: "All selected event's color changed to orange",
       });
     }
 
     var calendar = mobiscroll.eventcalendar('#demo-multiple-event-selection', {
-      clickToCreate: true,
+      // drag,
       selectMultipleEvents: true,
       view: {
         timeline: {
@@ -148,7 +142,7 @@ export default {
           return false;
         }
       },
-      onEventDelete: function (args, inst) {
+      onEventDelete: function () {
         if (!confirmOpen) {
           deleteSelectedEvents();
           return false;
@@ -171,7 +165,6 @@ export default {
     });
 
     var menu = mobiscroll.select('#demo-context-menu', {
-      // context,
       touchUi: false,
       display: 'anchored',
       buttons: [],
@@ -192,9 +185,6 @@ export default {
     document.getElementById('select-all-events').addEventListener('click', function () {
       calendar.setSelectedEvents(calendar.getEvents(firstDay, lastDay));
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: 'All events selected this month',
       });
     });
@@ -202,9 +192,6 @@ export default {
     document.getElementById('reset-selection').addEventListener('click', function () {
       calendar.setSelectedEvents([]);
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: 'Selection cleared',
       });
     });
@@ -265,15 +252,5 @@ export default {
     padding-top: 0;
     padding-bottom: 0;
 }
-
-/*<hidden>*/
-
-.md-bulk-operations,
-.md-bulk-operations .mbsc-grid,
-.md-bulk-operations .mbsc-row {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

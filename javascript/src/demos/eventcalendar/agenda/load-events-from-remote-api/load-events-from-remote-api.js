@@ -21,13 +21,4 @@ export default {
   markup: `
 <div id="demo-remote-api"></div>
   `,
-  css: `
-/*<hidden>*/
-
-.demo-load-events-from-remote-api {
-    height: 100%;
-}
-
-/*</hidden>*/
-  `,
 };

@@ -9,6 +9,7 @@ export default {
 
     var formatDate = mobiscroll.formatDate;
     var calendar = mobiscroll.eventcalendar('#demo-vertical-time-table', {
+      // drag,
       view: {
         timeline: {
           type: 'week',

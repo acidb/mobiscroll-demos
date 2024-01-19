@@ -124,7 +124,7 @@ export default {
     mobiscroll.select('#demo-hierarchical-pickers-region', {
       touchUi: false,
       data: getData(),
-      onChange: function (event, inst) {
+      onChange: function (event) {
         divisionInst.setOptions({ data: getData(event.value), disabled: false });
         subdivisionInst.setOptions({ disabled: true });
         mobiscroll.getInst(divisionElm, true).setOptions({ disabled: false });
@@ -135,7 +135,7 @@ export default {
     divisionInst = mobiscroll.select('#demo-hierarchical-pickers-division', {
       touchUi: false,
       disabled: true,
-      onChange: function (event, inst) {
+      onChange: function (event) {
         if (event.value) {
           subdivisionInst.setOptions({ data: getData(null, event.value), disabled: false });
           mobiscroll.getInst(subdivisionElm, true).setOptions({ disabled: false });
@@ -157,17 +157,17 @@ export default {
         <div class="mbsc-col-sm-12">
             <div class="mbsc-form-group-inset">
                 <label>
-                        Region
-                        <input mbsc-input id="demo-hierarchical-pickers-region" data-dropdown="true" placeholder="Please select..." />
-                    </label>
+                    Region
+                    <input mbsc-input id="demo-hierarchical-pickers-region" data-dropdown="true" placeholder="Please select..." />
+                </label>
                 <label>
-                        Division
-                        <input mbsc-input id="demo-hierarchical-pickers-division" data-dropdown="true" placeholder="Please select..." disabled />
-                    </label>
+                    Division
+                    <input mbsc-input id="demo-hierarchical-pickers-division" data-dropdown="true" placeholder="Please select..." disabled />
+                </label>
                 <label>
-                        Subdivision
-                        <input mbsc-input id="demo-hierarchical-pickers-subdivision" data-dropdown="true" placeholder="Please select..." disabled />
-                    </label>
+                    Subdivision
+                    <input mbsc-input id="demo-hierarchical-pickers-subdivision" data-dropdown="true" placeholder="Please select..." disabled />
+                </label>
             </div>
         </div>
     </div>

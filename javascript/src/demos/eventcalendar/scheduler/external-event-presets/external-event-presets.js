@@ -84,7 +84,7 @@ export default {
       ],
       dragToMove: true,
       externalDrop: true,
-      onEventCreated: function (args, inst) {
+      onEventCreated: function (args) {
         fillDialog(args);
       },
       onEventCreateFailed: function () {

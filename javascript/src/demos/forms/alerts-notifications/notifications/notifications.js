@@ -8,8 +8,6 @@ export default {
 
     document.getElementById('md-toast-bottom').addEventListener('click', function () {
       mobiscroll.toast({
-        //<hidden>
-        // theme, //</hidden>
         message: 'Message sent',
       });
     });

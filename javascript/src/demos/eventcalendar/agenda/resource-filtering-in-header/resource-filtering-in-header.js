@@ -34,7 +34,6 @@ export default {
       },
     ];
     var calendar = mobiscroll.eventcalendar('#demo-header-functionality', {
-      // context,
       view: {
         agenda: {
           type: 'month',
@@ -104,9 +103,6 @@ export default {
         filterEvents(events, selected);
 
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message:
             (ev.target.checked ? 'Showing ' : 'Hiding ') +
             document.getElementsByClassName('md-header-filter-name-' + ev.target.value)[0].textContent +

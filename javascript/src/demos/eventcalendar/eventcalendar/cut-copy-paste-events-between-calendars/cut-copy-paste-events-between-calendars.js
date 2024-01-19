@@ -19,7 +19,9 @@ export default {
     var toDate, originDate;
     var firstToDate = today;
     var secondToDate = today;
-    var activeInst, originInst;
+    var activeInst;
+    var originInst;
+    var cutInst;
     var menuOpen;
     var action;
     var menuData = [
@@ -93,9 +95,6 @@ export default {
         originInst = inst;
         action = 'delete';
         mobiscroll.snackbar({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           button: {
             action: function () {
               inst.addEvent(deletedEvents);
@@ -184,7 +183,6 @@ export default {
       ),
     );
     var menu = mobiscroll.select('#copy-cut-paste-menu', {
-      // context,
       touchUi: false,
       display: 'anchored',
       buttons: [],
@@ -225,17 +223,11 @@ export default {
           cutInst = activeInst;
           originInst.removeEvent(selectedEvents);
           mobiscroll.snackbar({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             button: {
               action: function () {
                 originInst.addEvent(cutEvents);
                 cutInst.removeEvent(pastedEvents);
                 mobiscroll.toast({
-                  //<hidden>
-                  // theme,//</hidden>
-                  // context,
                   message: 'Event' + (cutEvents.length === 1 ? '' : 's') + ' reverted',
                 });
               },
@@ -246,9 +238,6 @@ export default {
           });
         } else {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: 'Event' + (evLength === 1 ? '' : 's') + ' pasted',
           });
         }
@@ -269,9 +258,6 @@ export default {
             activeInst.removeEvent(selEvs);
             deletedEvents = selEvs;
             mobiscroll.snackbar({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               button: {
                 action: function () {
                   activeInst.addEvent(selEvs);
@@ -293,9 +279,6 @@ export default {
               originInst = activeInst;
               originDate = toDate;
               mobiscroll.toast({
-                //<hidden>
-                // theme,//</hidden>
-                // context,
                 message: 'Event' + (selectedEvents.length === 1 ? '' : 's') + ' copied',
               });
             }
@@ -310,9 +293,6 @@ export default {
               deletedEvents = [];
               originDate = toDate;
               mobiscroll.toast({
-                //<hidden>
-                // theme,//</hidden>
-                // context,
                 message: 'Event' + (selectedEvents.length === 1 ? '' : 's') + ' cut',
               });
             }
@@ -392,18 +372,6 @@ export default {
 </div>
   `,
   css: `
-/*<hidden>*/
-
-.demo-copy-cut-paste,
-.demo-copy-cut-paste .mbsc-page,
-.md-copy-cut-paste,
-.md-copy-cut-paste-cont,
-.md-copy-cut-paste-cont+div {
-    height: 100%;
-}
-
-/*</hidden>*/
-
 .md-copy-cut-paste .mbsc-segmented {
     width: 300px;
     margin-left: auto;

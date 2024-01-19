@@ -1,6 +1,7 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { print } from '@mobiscroll/print';
 
+var mobiscroll = m;
 mobiscroll.print = print;
 
 export default {
@@ -11,6 +12,7 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-printing-the-view', {
+      // drag,
       modules: [mobiscroll.print],
       view: {
         schedule: { type: 'day' },

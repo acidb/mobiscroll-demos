@@ -22,16 +22,10 @@ export default {
       view: {
         agenda: { type: 'day' },
       },
-      onPageChange: function (event, inst) {
+      onPageChange: function (event) {
         monthInst.navigate(event.firstDay);
       },
     });
-
-    function navigate(inst, val) {
-      if (inst) {
-        inst.navigate(val);
-      }
-    }
 
     mobiscroll.getJson(
       'https://trial.mobiscroll.com/events/?vers=5',

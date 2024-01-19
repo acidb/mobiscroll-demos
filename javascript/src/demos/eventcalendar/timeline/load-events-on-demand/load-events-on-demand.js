@@ -2,10 +2,8 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 
 export default {
   init() {
-    var inst = mobiscroll.eventcalendar('#demo', {
-      view: {
-        timeline: { type: 'day' },
-      },
+    mobiscroll.eventcalendar('#demo', {
+      // drag,
       view: {
         timeline: { type: 'day' },
       },
@@ -37,9 +35,9 @@ export default {
         },
       ],
       onPageLoading: function (event, inst) {
-        var year = event.firstDay.getFullYear(),
-          month = event.firstDay.getMonth(),
-          day = event.firstDay.getDate();
+        var year = event.firstDay.getFullYear();
+        var month = event.firstDay.getMonth();
+        var day = event.firstDay.getDate();
 
         mobiscroll.getJson(
           'https://trial.mobiscroll.com/weeklyevents/?year=' + year + '&month=' + month + '&day=' + day,
@@ -59,9 +57,6 @@ export default {
             inst.setEvents(events);
 
             mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               message: 'New events loaded',
             });
           },

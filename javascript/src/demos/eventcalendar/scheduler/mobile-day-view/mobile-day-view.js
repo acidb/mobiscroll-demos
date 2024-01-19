@@ -5,6 +5,7 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-mobile-day-view', {
       // locale,
       // theme,
+      // drag,
       view: {
         schedule: { type: 'day' },
       },

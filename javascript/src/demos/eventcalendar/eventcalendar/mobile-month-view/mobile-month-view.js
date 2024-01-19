@@ -5,15 +5,13 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-mobile-month-view', {
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: { type: 'month' },
         agenda: { type: 'month' },
       },
-      onEventClick: function (event, inst) {
+      onEventClick: function (event) {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: event.event.title,
         });
       },
@@ -29,14 +27,5 @@ export default {
   },
   markup: `
 <div id="demo-mobile-month-view"></div>
-  `,
-  css: `
-/*<hidden>*/
-
-.demo-mobile-month-view {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

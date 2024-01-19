@@ -8,6 +8,7 @@ export default {
     });
 
     mobiscroll.eventcalendar('#demo-custom-resource-header-template', {
+      // drag,
       view: {
         schedule: {
           type: 'week',

@@ -8,7 +8,8 @@ export default {
     });
 
     var now = new Date();
-    var inst = mobiscroll.eventcalendar('#demo-drag-drop-events', {
+
+    mobiscroll.eventcalendar('#demo-drag-drop-events', {
       view: {
         calendar: { labels: true },
       },

@@ -5,6 +5,7 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-mobile-month-view', {
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: { labels: true },
       },
@@ -22,11 +23,8 @@ export default {
           );
         }
       },
-      onEventClick: function (event, inst) {
+      onEventClick: function (event) {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: event.event.title,
         });
       },

@@ -385,8 +385,6 @@ export default {
       },
       onEventDeleted: function (args) {
         mobiscroll.snackbar({
-          //<hidden>
-          // theme,//</hidden>
           button: {
             action: function () {
               calendar.addEvent(args.event);
@@ -481,13 +479,6 @@ export default {
       },
     });
 
-    document.querySelectorAll('input[name=event-status]').forEach(function (elm) {
-      elm.addEventListener('change', function () {
-        // update current event's free property
-        tempEvent.free = mobiscroll.getInst(freeSegmented).checked;
-      });
-    });
-
     deleteButton.addEventListener('click', function () {
       // delete current event on button click
       calendar.removeEvent(tempEvent);
@@ -497,8 +488,6 @@ export default {
       var deletedEvent = tempEvent;
 
       mobiscroll.snackbar({
-        //<hidden>
-        // theme,//</hidden>
         button: {
           action: function () {
             calendar.addEvent(deletedEvent);

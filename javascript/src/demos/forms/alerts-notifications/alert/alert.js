@@ -40,9 +40,6 @@ export default {
         inputType: 'password',
         callback: function (value) {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: value === null ? 'Cancel was pressed.' : 'The password: ' + value,
           });
         },

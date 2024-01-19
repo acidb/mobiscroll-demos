@@ -84,6 +84,7 @@ export default {
       },
     ];
     var calendar = mobiscroll.eventcalendar('#demo-resource-details', {
+      // drag,
       view: {
         timeline: {
           type: 'month',
@@ -159,14 +160,6 @@ export default {
 </div>
   `,
   css: `
-/*<hidden>*/
-
-.demo-timeline-resource-details {
-    height: 100%;
-}
-
-/*</hidden>*/
-
 /* Header */
 
 .md-resource-details .mbsc-timeline-resource-col {

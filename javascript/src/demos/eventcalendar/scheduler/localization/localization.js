@@ -9,7 +9,7 @@ export default {
       },
     });
 
-    document.getElementById('dm-localization-select').addEventListener('change', function (e) {
+    document.getElementById('dm-localization-select').addEventListener('change', function () {
       var la = this[this.selectedIndex].value;
 
       calInst.setOptions({

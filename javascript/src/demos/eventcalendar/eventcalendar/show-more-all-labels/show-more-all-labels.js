@@ -7,40 +7,37 @@ export default {
       // theme
     });
 
-    var allLabels, nrLabels, fitLabels;
-    var allLabelsWeeks, nrLabelsWeek, labelsWeeks;
-
-    allLabels = mobiscroll.eventcalendar('#demo-labels-all', {
+    var allLabels = mobiscroll.eventcalendar('#demo-labels-all', {
       view: {
         calendar: { type: 'month', labels: 'all' },
       },
     });
 
-    nrLabels = mobiscroll.eventcalendar('#demo-labels-nr', {
+    var nrLabels = mobiscroll.eventcalendar('#demo-labels-nr', {
       view: {
         calendar: { type: 'month', labels: 3 },
       },
     });
 
-    fitLabels = mobiscroll.eventcalendar('#demo-labels-fit', {
+    var fitLabels = mobiscroll.eventcalendar('#demo-labels-fit', {
       view: {
         calendar: { type: 'month', labels: true },
       },
     });
 
-    allLabelsWeeks = mobiscroll.eventcalendar('#demo-labels-all-w', {
+    var allLabelsWeeks = mobiscroll.eventcalendar('#demo-labels-all-w', {
       view: {
         calendar: { type: 'week', labels: 'all' },
       },
     });
 
-    nrLabelsWeeks = mobiscroll.eventcalendar('#demo-labels-nr-w', {
+    var nrLabelsWeeks = mobiscroll.eventcalendar('#demo-labels-nr-w', {
       view: {
         calendar: { type: 'week', labels: 3 },
       },
     });
 
-    labelsWeek = mobiscroll.eventcalendar('#demo-labels-fit-w', {
+    var labelsWeeks = mobiscroll.eventcalendar('#demo-labels-fit-w', {
       view: {
         calendar: { type: 'week', labels: true },
       },
@@ -52,7 +49,7 @@ export default {
         fitLabels.setEvents(events);
         allLabels.setEvents(events);
         nrLabels.setEvents(events);
-        labelsWeek.setEvents(events);
+        labelsWeeks.setEvents(events);
         allLabelsWeeks.setEvents(events);
         nrLabelsWeeks.setEvents(events);
       },

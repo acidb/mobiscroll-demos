@@ -12,6 +12,7 @@ export default {
     var oldMeal;
     var tempMeal;
     var deleteMeal;
+    var restoreMeal;
     var formatDate = mobiscroll.formatDate;
     var nameInput = document.getElementById('meal-name-input');
     var caloriesInput = document.getElementById('meal-calories-input');
@@ -98,9 +99,6 @@ export default {
 
     function editMealPopup(args) {
       var ev = args.event;
-      var resource = types.find(function (obj) {
-        return obj.id === ev.resource;
-      });
 
       // show delete button inside edit popup
       deleteButton.style.display = 'block';
@@ -162,19 +160,19 @@ export default {
       dragToResize: false,
       dragToMove: true,
       clickToCreate: true,
-      extendDefaultEvent: function (ev) {
+      extendDefaultEvent: function () {
         return {
           title: 'New meal',
         };
       },
-      onEventCreated: function (args, inst) {
+      onEventCreated: function (args) {
         // store temporary event
         tempMeal = args.event;
         setTimeout(function () {
           addMealPopup();
         }, 100);
       },
-      onEventClick: function (args, inst) {
+      onEventClick: function (args) {
         oldMeal = Object.assign({}, args.event);
         tempMeal = args.event;
 
@@ -233,7 +231,6 @@ export default {
       },
       responsive: {
         medium: {
-          // context,
           display: 'center',
           width: 400,
           fullScreen: false,
@@ -242,19 +239,6 @@ export default {
         },
       },
     });
-
-    function getTypes() {
-      var data = [];
-
-      for (var i = 0; i < types.length; ++i) {
-        var type = types[i];
-        data.push({
-          text: type.name,
-          value: type.id,
-        });
-      }
-      return data;
-    }
 
     function appendTypes() {
       var segmented = '<div mbsc-segmented-group>';
@@ -304,8 +288,6 @@ export default {
       var deletedMeal = tempMeal;
 
       mobiscroll.snackbar({
-        //<hidden>
-        // theme,//</hidden>
         button: {
           action: function () {
             calendar.addEvent(deletedMeal);

@@ -9,11 +9,8 @@ export default {
         calendar: { type: 'week' },
         agenda: { type: 'day' },
       },
-      onEventClick: function (event, inst) {
+      onEventClick: function (event) {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: event.event.title,
         });
       },

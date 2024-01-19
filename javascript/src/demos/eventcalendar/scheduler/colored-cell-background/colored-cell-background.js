@@ -8,6 +8,7 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-colored', {
+      // drag,
       view: {
         schedule: { type: 'week' },
       },

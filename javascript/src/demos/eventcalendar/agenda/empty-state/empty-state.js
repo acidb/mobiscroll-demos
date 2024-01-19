@@ -9,7 +9,7 @@ export default {
 
     var myElement = document.getElementById('demo-custom-empty-agenda');
 
-    var inst = mobiscroll.eventcalendar(myElement, {
+    mobiscroll.eventcalendar(myElement, {
       view: {
         calendar: { type: 'week' },
         agenda: { type: 'week' },

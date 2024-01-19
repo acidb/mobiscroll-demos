@@ -31,22 +31,16 @@ export default {
           endTime: '18:00',
         },
       },
-      onEventCreateFailed: function (event, inst) {
+      onEventCreateFailed: function (event) {
         if (event.invalid.type == 'lunch') {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't create this task on lunch break.",
           });
         }
       },
-      onEventUpdateFailed: function (event, inst) {
+      onEventUpdateFailed: function (event) {
         if (event.invalid.type == 'lunch') {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't schedule this task on lunch break.",
           });
         }
@@ -63,14 +57,5 @@ export default {
   },
   markup: `
 <div id="demo-work-week-hours"></div>
-  `,
-  css: `
-/*<hidden>*/
-
-.demo-work-week-hours {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

@@ -5,6 +5,7 @@ export default {
     mobiscroll.eventcalendar('#demo', {
       // locale,
       // theme,
+      // drag,
       view: {
         schedule: { type: 'day' },
       },
@@ -31,9 +32,6 @@ export default {
             inst.setEvents(events);
 
             mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               message: 'New events loaded',
             });
           },

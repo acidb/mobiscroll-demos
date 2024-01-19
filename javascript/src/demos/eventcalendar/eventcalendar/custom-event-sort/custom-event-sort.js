@@ -12,6 +12,7 @@ export default {
     var monday = now.getDate() - day + (day == 0 ? -6 : 1);
 
     mobiscroll.eventcalendar('#demo-custom-event-sort', {
+      // drag,
       view: {
         calendar: {
           type: 'week',

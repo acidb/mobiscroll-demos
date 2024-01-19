@@ -6,7 +6,7 @@ export default {
       // theme
     });
 
-    document.getElementById('demo-localization-select').addEventListener('change', function (e) {
+    document.getElementById('demo-localization-select').addEventListener('change', function () {
       var la = this[this.selectedIndex].value;
 
       calInst.setOptions({

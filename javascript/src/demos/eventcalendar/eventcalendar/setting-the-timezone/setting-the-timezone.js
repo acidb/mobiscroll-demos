@@ -6,6 +6,9 @@ export default {
     mobiscroll.momentTimezone.moment = moment;
 
     mobiscroll.eventcalendar('#demo-showing-events-timezone', {
+      // theme,
+      // locale,
+      // drag,
       timezonePlugin: mobiscroll.momentTimezone,
       dataTimezone: 'utc',
       displayTimezone: 'local',

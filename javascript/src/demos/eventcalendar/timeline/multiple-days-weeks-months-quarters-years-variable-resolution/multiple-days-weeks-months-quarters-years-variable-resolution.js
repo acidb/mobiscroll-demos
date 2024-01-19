@@ -8,6 +8,7 @@ export default {
     });
 
     var calendar = mobiscroll.eventcalendar('#demo-display-multiple-days-weeks-months', {
+      // drag,
       view: {
         timeline: {
           type: 'week',

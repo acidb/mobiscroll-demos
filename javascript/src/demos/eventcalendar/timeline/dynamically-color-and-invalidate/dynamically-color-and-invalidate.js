@@ -62,7 +62,7 @@ export default {
           }
         }
       },
-      onEventDragStart: function (args, inst) {
+      onEventDragStart: function (args) {
         var event = args.event;
 
         if (event) {
@@ -81,41 +81,29 @@ export default {
           }
         }
       },
-      onEventDragEnd: function (args, inst) {
+      onEventDragEnd: function () {
         calendarInst.setOptions({
           invalid: [],
           colors: [],
         });
       },
-      onEventCreated: function (args) {
+      onEventCreated: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: 'Event created',
         });
       },
-      onEventUpdated: function (args) {
+      onEventUpdated: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: 'Event moved',
         });
       },
-      onEventCreateFailed: function (event) {
+      onEventCreateFailed: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: "Can't create event",
         });
       },
-      onEventUpdateFailed: function (event) {
+      onEventUpdateFailed: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: "Can't move event",
         });
       },
@@ -225,15 +213,5 @@ export default {
 .dynamically-color-and-invalidate-calendar .mbsc-timeline-parent {
     height: 32px;
 }
-
-/*<hidden>*/
-
-.md-dynamically-color-and-invalidate,
-.md-dynamically-color-and-invalidate .mbsc-grid,
-.md-dynamically-color-and-invalidate .mbsc-row {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

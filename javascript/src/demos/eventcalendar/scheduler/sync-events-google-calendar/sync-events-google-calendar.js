@@ -1,6 +1,7 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
 
+var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
@@ -254,7 +255,7 @@ export default {
                 var calendarId = event.googleCalendarId;
                 googleCalendarSync
                   .deleteEvent(calendarId, event)
-                  .then(function (resp) {
+                  .then(function () {
                     inst.removeEvent(event);
                     events = events.filter(function (ev) {
                       return event.id !== ev.id;

@@ -23,7 +23,6 @@ export default {
 
     mobiscroll.datepicker('#demo-range-presets', {
       controls: ['calendar'],
-      select: 'range',
       select: 'preset-range',
       display: 'inline',
       pages: 2,

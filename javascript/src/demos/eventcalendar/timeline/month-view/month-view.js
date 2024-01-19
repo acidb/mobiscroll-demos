@@ -8,6 +8,7 @@ export default {
     });
 
     mobiscroll.eventcalendar('#demo-month-view', {
+      // drag,
       view: {
         timeline: {
           type: 'month',

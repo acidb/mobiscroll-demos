@@ -95,7 +95,6 @@ export default {
     ];
 
     mobiscroll.datepicker('#demo-activity-calendar', {
-      // context,
       controls: ['calendar'],
       touchUi: true,
       display: 'inline',

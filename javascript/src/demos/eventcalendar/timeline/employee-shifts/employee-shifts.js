@@ -13,6 +13,7 @@ export default {
     var oldShift;
     var tempShift;
     var deleteShift;
+    var restoreShift;
     var formatDate = mobiscroll.formatDate;
     var notes = document.getElementById('employee-shifts-notes');
     var deleteButton = document.getElementById('employee-shifts-delete');
@@ -259,7 +260,7 @@ export default {
       },
     ];
 
-    function createAddPopup(args) {
+    function createAddPopup() {
       // hide delete button inside add popup
       deleteButton.style.display = 'none';
       deleteShift = true;
@@ -393,14 +394,14 @@ export default {
           resource: ev.resource,
         };
       },
-      onEventCreate: function (args, inst) {
+      onEventCreate: function (args) {
         // store temporary event
         tempShift = args.event;
         setTimeout(function () {
           createAddPopup(args);
         }, 100);
       },
-      onEventClick: function (args, inst) {
+      onEventClick: function (args) {
         oldShift = Object.assign({}, args.event);
         tempShift = args.event;
 
@@ -438,7 +439,6 @@ export default {
       },
       responsive: {
         medium: {
-          // context,
           display: 'center',
           width: 400,
           fullScreen: false,
@@ -483,9 +483,6 @@ export default {
       popup.close();
 
       mobiscroll.snackbar({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         button: {
           action: function () {
             calendar.addEvent(deletedShift);

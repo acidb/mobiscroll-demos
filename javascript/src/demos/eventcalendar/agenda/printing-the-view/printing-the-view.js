@@ -1,6 +1,7 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { print } from '@mobiscroll/print';
 
+var mobiscroll = m;
 mobiscroll.print = print;
 
 export default {

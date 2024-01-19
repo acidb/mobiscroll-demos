@@ -79,14 +79,5 @@ export default {
     font-weight: 600;
     color: #aaa;
 }
-
-/*<hidden>*/
-
-.demo-full-event-customization,
-mbsc-page.mbsc-page {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

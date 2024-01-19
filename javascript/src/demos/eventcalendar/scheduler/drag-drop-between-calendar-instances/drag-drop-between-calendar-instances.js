@@ -95,8 +95,6 @@ export default {
       onEventCreated: function (args) {
         if (args.action === 'externalDrop') {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
             context: '#demo-drag-drop-first-calendar',
             message: 'Event dropped to Calendar 1',
           });
@@ -192,8 +190,6 @@ export default {
       onEventCreated: function (args) {
         if (args.action === 'externalDrop') {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
             context: '#demo-drag-drop-second-calendar',
             message: 'Event dropped to Calendar 2',
           });

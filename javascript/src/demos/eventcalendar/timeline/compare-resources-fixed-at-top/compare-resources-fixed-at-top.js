@@ -449,7 +449,6 @@ export default {
           fixedResources.push(resource);
           if (fixedNr > 2) {
             mobiscroll.toast({
-              // context,
               message: 'Comparing up to 3 schedules',
             });
           }

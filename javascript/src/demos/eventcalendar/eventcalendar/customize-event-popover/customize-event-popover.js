@@ -3,9 +3,9 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 export default {
   init() {
     var inst = mobiscroll.eventcalendar('#demo-custom-event-popover', {
-      // context,
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: {
           labels: false,
@@ -29,13 +29,10 @@ export default {
           '</div>'
         );
       },
-      onEventClick: function (event, inst) {
+      onEventClick: function (event) {
         if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
           event.domEvent.stopPropagation();
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: getParticipant(event.event.participant).name + "'s event clicked",
           });
         }

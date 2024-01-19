@@ -288,13 +288,4 @@ export default {
   markup: `
 <div id="demo-loading-inline-data"></div>
   `,
-  css: `
-/*<hidden>*/
-
-.demo-load-inline-data {
-    height: 100%;
-}
-
-/*</hidden>*/
-  `,
 };

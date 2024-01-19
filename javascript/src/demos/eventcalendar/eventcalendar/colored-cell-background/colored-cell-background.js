@@ -8,6 +8,7 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-colored', {
+      // drag,
       colors: [
         {
           start: 'dyndatetime(y,m,0)',

@@ -33,7 +33,6 @@ export default {
     var deleteEvent;
     var titleInput = document.getElementById('demo-shared-events-title');
     var nameSegmented = document.getElementsByName('demo-shared-events-select');
-    var now = new Date();
 
     var calendar = mobiscroll.eventcalendar('#demo-shared-events-across-resources', {
       clickToCreate: true,

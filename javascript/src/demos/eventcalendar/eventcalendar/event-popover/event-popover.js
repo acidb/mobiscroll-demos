@@ -5,17 +5,15 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-event-popover', {
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: {
           popover: true,
           count: true,
         },
       },
-      onEventClick: function (event, inst) {
+      onEventClick: function (event) {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: event.event.title,
         });
       },

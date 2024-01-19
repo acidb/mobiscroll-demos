@@ -8,6 +8,7 @@ export default {
     });
 
     var calendar = mobiscroll.eventcalendar('#demo-daily-weekly-timeline', {
+      // drag,
       view: {
         timeline: {
           type: 'week',
@@ -61,14 +62,5 @@ export default {
   },
   markup: `
 <div id="demo-daily-weekly-timeline"></div>
-  `,
-  css: `
-/*<hidden>*/
-
-.demo-daily-weekly-timeline {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

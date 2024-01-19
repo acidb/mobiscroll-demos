@@ -41,7 +41,7 @@ export default {
       buttons: [
         {
           text: '05 Jan 2020',
-          handler: function (event, inst) {
+          handler: function () {
             customCal.setVal(new Date(2020, 0, 5));
             customCal.close();
           },

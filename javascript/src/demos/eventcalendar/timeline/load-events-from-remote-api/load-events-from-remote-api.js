@@ -8,6 +8,7 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-remote-api', {
+      // drag,
       view: {
         timeline: { type: 'day' },
       },

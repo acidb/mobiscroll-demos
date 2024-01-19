@@ -8,6 +8,10 @@ export default {
     });
 
     var calendar = mobiscroll.eventcalendar('#demo-day-work-week-view', {
+      clickToCreate: true,
+      dragToCreate: true,
+      dragToMove: true,
+      dragToResize: true,
       view: {
         timeline: {
           type: 'week',

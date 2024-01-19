@@ -12,7 +12,7 @@ export default {
         view: {
           agenda: { type: 'month' },
         },
-        onSelectedDateChange: function (event, inst) {
+        onSelectedDateChange: function (event) {
           currentDate = event.date;
         },
         renderHeader: function () {
