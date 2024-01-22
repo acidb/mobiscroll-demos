@@ -673,6 +673,9 @@ import { MbscPage } from '@mobiscroll/vue'
           <RouterLink to="/timeline/event-data-structure">Event properties</RouterLink>
         </li>
         <li>
+          <RouterLink to="/timeline/event-buffer">Event buffer</RouterLink>
+        </li>
+        <li>
           <RouterLink to="/timeline/connecting-linking-events-arrows">Event connections</RouterLink>
         </li>
         <li>

@@ -868,6 +868,11 @@ export default function Root() {
               </a>
             </li>
             <li>
+              <a className="app-link" href="/timeline/event-buffer">
+                Event buffer
+              </a>
+            </li>
+            <li>
               <a className="app-link" href="/timeline/connecting-linking-events-arrows">
                 Event connections
               </a>

@@ -291,6 +291,7 @@ import TimelineTimelineResourceDetailsSidePanelFooter from '../demos/eventcalend
 import TimelineResourceGroupingHierarchy from '../demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy.vue'
 import TimelineResourceDataStructure from '../demos/eventcalendar/timeline/resource-data-structure/resource-data-structure.vue'
 import TimelineEventDataStructure from '../demos/eventcalendar/timeline/event-data-structure/event-data-structure.vue'
+import TimelineEventBuffer from '../demos/eventcalendar/timeline/event-buffer/event-buffer.vue'
 import TimelineConnectingLinkingEventsArrows from '../demos/eventcalendar/timeline/connecting-linking-events-arrows/connecting-linking-events-arrows.vue'
 import TimelineDateObjectISO8601Moment from '../demos/eventcalendar/timeline/date-object-ISO-8601-moment/date-object-ISO-8601-moment.vue'
 import TimelineRecurringEvents from '../demos/eventcalendar/timeline/recurring-events/recurring-events.vue'
@@ -1769,6 +1770,12 @@ const router = createRouter({
       name: 'timeline/event-data-structure',
       component: TimelineEventDataStructure
     },
+    {
+      path: '/timeline/event-buffer',
+      name: 'timeline/event-buffer',
+      component: TimelineEventBuffer
+    },
+    // 
     {
       path: '/timeline/connecting-linking-events-arrows',
       name: 'timeline/connecting-linking-events-arrows',

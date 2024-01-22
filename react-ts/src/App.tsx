@@ -277,6 +277,7 @@ import TimelinePrintingTheView from './demos/eventcalendar/timeline/printing-the
 import TimelineMultipleDaysWeeksMonthsQuartersYearsVariableResolution from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
 import TimelineMoveResizeDragDropToCreateEvents from './demos/eventcalendar/timeline/move-resize-drag-drop-to-create-events/move-resize-drag-drop-to-create-events';
 import TimelineEventDataStructure from './demos/eventcalendar/timeline/event-data-structure/event-data-structure';
+import TimelineEventBuffer from './demos/eventcalendar/timeline/event-buffer/event-buffer';
 import TimelineDateObjectISO8601Moment from './demos/eventcalendar/timeline/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
 import TimelineRecurringEvents from './demos/eventcalendar/timeline/recurring-events/recurring-events';
 import TimelineLoadEventsFromRemoteApi from './demos/eventcalendar/timeline/load-events-from-remote-api/load-events-from-remote-api';
@@ -1086,6 +1087,10 @@ function App() {
     {
       path: '/timeline/event-data-structure',
       element: <TimelineEventDataStructure />,
+    },
+    {
+      path: '/timeline/event-buffer',
+      element: <TimelineEventBuffer />,
     },
     {
       path: '/timeline/date-object-ISO-8601-moment',
