@@ -292,6 +292,7 @@ import TimelineLocalization from './src/demos/eventcalendar/timeline/localizatio
 import TimelineRtlRightToLeft from './src/demos/eventcalendar/timeline/rtl-right-to-left/rtl-right-to-left';
 import TimelineLoadInlineData from './src/demos/eventcalendar/timeline/load-inline-data/load-inline-data';
 import TimelineEventBuffer from './src/demos/eventcalendar/timeline/event-buffer/event-buffer';
+import SchedulerEventBuffer from './src/demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import TimelineSyncEventsGoogleCalendar from './src/demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar';
 import TimelineSyncEventsOutlookCalendar from './src/demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import TimelineDisallowPastEventCreation from './src/demos/eventcalendar/timeline/disallow-past-event-creation/disallow-past-event-creation';
@@ -1172,6 +1173,9 @@ router
   })
   .on('/timeline/event-buffer', () => {
     loadPage(TimelineEventBuffer);
+  })
+  .on('/scheduler/event-buffer', () => {
+    loadPage(SchedulerEventBuffer);
   })
   .on('/timeline/date-object-ISO-8601-moment', () => {
     loadPage(TimelineDateObjectISO8601Moment);

@@ -277,6 +277,7 @@ import { AppComponent as TimelineMultipleDaysWeeksMonthsQuartersYearsVariableRes
 import { AppComponent as TimelineMoveResizeDragDropToCreateEvents } from '../demos/eventcalendar/timeline/move-resize-drag-drop-to-create-events/move-resize-drag-drop-to-create-events';
 import { AppComponent as TimelineEventDataStructure } from '../demos/eventcalendar/timeline/event-data-structure/event-data-structure';
 import { AppComponent as TimelineEventBuffer } from '../demos/eventcalendar/timeline/event-buffer/event-buffer';
+import { AppComponent as ScheduleEventBuffer } from '../demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import { AppComponent as TimelineDateObjectISO8601Moment } from '../demos/eventcalendar/timeline/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
 import { AppComponent as TimelineRecurringEvents } from '../demos/eventcalendar/timeline/recurring-events/recurring-events';
 import { AppComponent as TimelineLoadEventsFromRemoteApi } from '../demos/eventcalendar/timeline/load-events-from-remote-api/load-events-from-remote-api';
@@ -1078,6 +1079,10 @@ export const routes: Routes = [
   {
     path: 'timeline/event-buffer',
     component: TimelineEventBuffer
+  },
+  {
+    path: 'scheduler/event-buffer',
+    component: ScheduleEventBuffer
   },
   {
     path: 'timeline/event-data-structure',

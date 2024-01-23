@@ -132,6 +132,7 @@ export default {
       <li><a class="app-link" href="/scheduler/dynamic-add-remove-resources-filter">Show/hide resources</a></li>
       <li><a class="app-link" href="/scheduler/resource-data-structure">Resource properties</a></li>
       <li><a class="app-link" href="/scheduler/event-data-structure">Event properties</a></li>
+      <li><a class="app-link" href="/scheduler/event-buffer">Event buffer</a></li>
       <li><a class="app-link" href="/scheduler/date-object-ISO-8601-moment">Supported date formats</a></li>
       <li><a class="app-link" href="/scheduler/recurring-events">Recurrence rules</a></li>
       <li><a class="app-link" href="/scheduler/load-inline-data">Loading inline data</a></li>

@@ -14,6 +14,7 @@ function App() {
   const myEvents = React.useMemo(() => {
     return [
       {
+        bufferAfter: 20,
         start: 'dyndatetime(y,m,d,10,30)',
         end: 'dyndatetime(y,m,d,13)',
         title: 'Tire change',
@@ -22,6 +23,8 @@ function App() {
         resource: 1,
       },
       {
+        bufferAfter: 60,
+        bufferBefore: 20,
         start: 'dyndatetime(y,m,d,7)',
         end: 'dyndatetime(y,m,d,10)',
         title: 'Brake maintenance',
@@ -38,6 +41,8 @@ function App() {
         resource: 1,
       },
       {
+        bufferAfter: 30,
+        bufferBefore: 10,
         start: 'dyndatetime(y,m,d,11)',
         end: 'dyndatetime(y,m,d,14)',
         title: 'Oil change',
@@ -46,6 +51,8 @@ function App() {
         resource: 3,
       },
       {
+        bufferAfter: 60,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,8)',
         end: 'dyndatetime(y,m,d,12)',
         title: 'Engine inspection',
@@ -54,6 +61,8 @@ function App() {
         resource: 3,
       },
       {
+        bufferAfter: 45,
+        bufferBefore: 20,
         start: 'dyndatetime(y,m,d,14)',
         end: 'dyndatetime(y,m,d,19)',
         title: 'Car painting',

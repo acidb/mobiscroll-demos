@@ -438,6 +438,9 @@ import { MbscPage } from '@mobiscroll/vue'
           <RouterLink to="/scheduler/event-data-structure">Event properties</RouterLink>
         </li>
         <li>
+          <RouterLink to="/scheduler/event-buffer">Event buffer</RouterLink>
+        </li>
+        <li>
           <RouterLink to="/scheduler/date-object-ISO-8601-moment"
             >Supported date formats</RouterLink
           >

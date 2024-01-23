@@ -218,6 +218,7 @@ import { AppComponent as SchedulerCustomEventTooltip } from '../demos/eventcalen
 import { AppComponent as SchedulerPrintingTheView } from '../demos/eventcalendar/scheduler/printing-the-view/printing-the-view';
 import { AppComponent as SchedulerDisplayMultipleDaysWeeks } from '../demos/eventcalendar/scheduler/display-multiple-days-weeks/display-multiple-days-weeks';
 import { AppComponent as SchedulerRecurringEventAddEditDialog } from '../demos/eventcalendar/scheduler/recurring-event-add-edit-dialog/recurring-event-add-edit-dialog';
+import { AppComponent as ScheduleEventBuffer } from '../demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import { AppComponent as SchedulerSyncEventsGoogleCalendar } from '../demos/eventcalendar/scheduler/sync-events-google-calendar/sync-events-google-calendar';
 import { AppComponent as SchedulerSyncEventsOutlookCalendar } from '../demos/eventcalendar/scheduler/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import { AppComponent as SchedulerDisallowPastEventCreation } from '../demos/eventcalendar/scheduler/disallow-past-event-creation/disallow-past-event-creation';
@@ -499,6 +500,7 @@ import { AppComponent as TimelineFlightSchedulingTwoSynchronizedTimelines } from
     SchedulerResponsiveDayWeekSchedule,
     SchedulerSwitchingCalendarSchedulerAgenda,
     SchedulerEventDataStructure,
+    ScheduleEventBuffer,
     SchedulerLoadEventsOnDemand,
     SchedulerLoadEventsFromRemoteApi,
     SchedulerGregorianJalaliHijri,

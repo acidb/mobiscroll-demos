@@ -360,6 +360,9 @@ export default function Root() {
               <Link to="/scheduler/event-data-structure">Event properties</Link>
             </li>
             <li>
+              <Link to="/scheduler/event-buffer">Event buffer</Link>
+            </li>
+            <li>
               <Link to="/scheduler/date-object-ISO-8601-moment">Supported date formats</Link>
             </li>
             <li>
