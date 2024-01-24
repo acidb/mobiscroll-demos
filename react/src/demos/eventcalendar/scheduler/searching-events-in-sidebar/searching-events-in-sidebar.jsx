@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, Page, Input, getJson, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useRef, useMemo, useCallback } from 'react';
 import './searching-events-in-sidebar.css';
 
 setOptions({
@@ -8,14 +8,14 @@ setOptions({
 });
 
 function App() {
-  const [calEvents, setCalEvents] = React.useState([]);
-  const [listEvents, setListEvents] = React.useState([]);
-  const [mySelectedEvent, setSelectedEvent] = React.useState([]);
-  const [showList, setShowList] = React.useState(false);
-  const [currentDate, setCurrentDate] = React.useState(new Date());
-  const timerRef = React.useRef(null);
+  const [calEvents, setCalEvents] = useState([]);
+  const [listEvents, setListEvents] = useState([]);
+  const [mySelectedEvent, setSelectedEvent] = useState([]);
+  const [showList, setShowList] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const timerRef = useRef(null);
 
-  const calView = React.useMemo(() => {
+  const calView = useMemo(() => {
     return {
       schedule: {
         type: 'month',
@@ -23,7 +23,7 @@ function App() {
     };
   }, []);
 
-  const listView = React.useMemo(() => {
+  const listView = useMemo(() => {
     return {
       agenda: {
         type: 'year',
@@ -32,7 +32,7 @@ function App() {
     };
   }, []);
 
-  const onSearch = React.useCallback((ev) => {
+  const onSearch = useCallback((ev) => {
     const text = ev.target.value;
 
     if (timerRef.current) {
@@ -55,7 +55,7 @@ function App() {
     }, 200);
   }, []);
 
-  const onPageLoading = React.useCallback((args) => {
+  const handlePageLoading = useCallback((args) => {
     const start = formatDate('YYYY-MM-DD', args.viewStart);
     const end = formatDate('YYYY-MM-DD', args.viewEnd);
 
@@ -70,7 +70,7 @@ function App() {
     });
   }, []);
 
-  const eventClick = React.useCallback((args) => {
+  const eventClick = useCallback((args) => {
     setCurrentDate(args.event.start);
     setSelectedEvent([args.event]);
   }, []);
@@ -93,7 +93,7 @@ function App() {
             data={calEvents}
             selectedEvents={mySelectedEvent}
             selectedDate={currentDate}
-            onPageLoading={onPageLoading}
+            onPageLoading={handlePageLoading}
           />
         </div>
       </div>

@@ -1,8 +1,13 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         type: 'month',
@@ -10,7 +15,7 @@ function App() {
     };
   }, []);
 
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         start: 'dyndatetime(y,m,2)',
@@ -75,7 +80,7 @@ function App() {
     ];
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -157,10 +162,8 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
     />

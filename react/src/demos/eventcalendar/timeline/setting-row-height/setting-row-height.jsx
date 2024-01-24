@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo, useCallback } from 'react';
 import './setting-row-height.css';
 
 setOptions({
@@ -8,7 +8,7 @@ setOptions({
 });
 
 function App() {
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         type: 'month',
@@ -16,7 +16,7 @@ function App() {
     };
   }, []);
 
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         start: 'dyndatetime(y,m,2)',
@@ -93,7 +93,7 @@ function App() {
     ];
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 'gro1',
@@ -177,7 +177,7 @@ function App() {
     ];
   }, []);
 
-  const renderMyResource = (resource) => {
+  const renderMyResource = useCallback((resource) => {
     return (
       <div>
         {resource.children ? (
@@ -191,12 +191,12 @@ function App() {
         )}
       </div>
     );
-  };
+  }, []);
 
   return (
     <Eventcalendar
       className="md-timeline-row-height"
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderResource={renderMyResource}

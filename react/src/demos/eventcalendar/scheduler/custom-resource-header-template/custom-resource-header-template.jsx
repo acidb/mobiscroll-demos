@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 import './custom-resource-header-template.css';
 
 setOptions({
@@ -8,7 +8,7 @@ setOptions({
 });
 
 function App() {
-  const view = React.useMemo(() => {
+  const calView = useMemo(() => {
     return {
       schedule: {
         type: 'week',
@@ -21,7 +21,7 @@ function App() {
     };
   }, []);
 
-  const [myEvents, setEvents] = React.useState(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         start: 'dyndatetime(y,m,d-3,10)',
@@ -75,7 +75,7 @@ function App() {
     ];
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -116,7 +116,7 @@ function App() {
       // drag
       data={myEvents}
       resources={myResources}
-      view={view}
+      view={calView}
       renderResource={renderCustomResource}
     />
   );

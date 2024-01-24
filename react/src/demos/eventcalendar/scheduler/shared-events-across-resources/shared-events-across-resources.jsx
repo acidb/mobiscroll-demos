@@ -1,15 +1,13 @@
-import React from 'react';
 import { Eventcalendar, Popup, Input, SegmentedGroup, Segmented, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useCallback } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const now = new Date();
-
 function App() {
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       schedule: {
         type: 'week',
@@ -22,7 +20,7 @@ function App() {
     };
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -41,14 +39,14 @@ function App() {
       },
     ];
   }, []);
-  const [tempEvent, setTempEvent] = React.useState(null);
-  const [title, setTitle] = React.useState('New event');
-  const [participants, setParticipants] = React.useState([]);
-  const [anchor, setAnchor] = React.useState(null);
-  const [isNewEvent, setIsNewEvent] = React.useState(false);
-  const [isOpen, setOpen] = React.useState(false);
+  const [tempEvent, setTempEvent] = useState(null);
+  const [title, setTitle] = useState('New event');
+  const [participants, setParticipants] = useState([]);
+  const [anchor, setAnchor] = useState(null);
+  const [isNewEvent, setIsNewEvent] = useState(false);
+  const [isOpen, setOpen] = useState(false);
 
-  const [myEvents, setEvents] = React.useState(() => {
+  const [myEvents, setEvents] = useState(() => {
     return [
       {
         start: 'dyndatetime(y,m,d-3,10)',
@@ -102,7 +100,7 @@ function App() {
     ];
   }, []);
 
-  const showPopup = React.useCallback((args) => {
+  const showPopup = useCallback((args) => {
     const event = args.event;
     const resources = Array.isArray(event.resource) ? event.resource : [event.resource];
 
@@ -118,7 +116,7 @@ function App() {
     setOpen(true);
   }, []);
 
-  const onEventCreated = React.useCallback(
+  const handleEventCreated = useCallback(
     (args) => {
       setIsNewEvent(true);
       showPopup(args);
@@ -126,7 +124,7 @@ function App() {
     [showPopup],
   );
 
-  const onEventDoubleClick = React.useCallback(
+  const handleEventDoubleClick = useCallback(
     (args) => {
       setIsNewEvent(false);
       showPopup(args);
@@ -134,18 +132,18 @@ function App() {
     [showPopup],
   );
 
-  const onEventDeleted = React.useCallback(
+  const handleEventDeleted = useCallback(
     (args) => {
       setEvents(myEvents.filter((item) => item.id !== args.event.id));
     },
     [myEvents],
   );
 
-  const extendDefaultEvent = React.useCallback((args) => {
+  const handleExtendDefaultEvent = useCallback(() => {
     return { color: '#4a9e42' };
   }, []);
 
-  const popupButtons = React.useMemo(() => {
+  const popupButtons = useMemo(() => {
     return [
       'cancel',
       {
@@ -171,18 +169,18 @@ function App() {
     ];
   }, [myEvents, participants, tempEvent, title]);
 
-  const onClose = React.useCallback(() => {
+  const popupClose = useCallback(() => {
     if (isNewEvent) {
       setEvents(myEvents.filter((item) => item.id !== tempEvent.id));
     }
     setOpen(false);
   }, [isNewEvent, myEvents, tempEvent]);
 
-  const titleChange = React.useCallback((ev) => {
+  const titleChange = useCallback((ev) => {
     setTitle(ev.target.value);
   }, []);
 
-  const changeParticipants = React.useCallback(
+  const changeParticipants = useCallback(
     (ev) => {
       const value = +ev.target.value;
       let p;
@@ -202,15 +200,15 @@ function App() {
       <Eventcalendar
         data={myEvents}
         resources={myResources}
-        view={view}
+        view={myView}
         clickToCreate={true}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
-        onEventCreated={onEventCreated}
-        onEventDoubleClick={onEventDoubleClick}
-        onEventDeleted={onEventDeleted}
-        extendDefaultEvent={extendDefaultEvent}
+        onEventCreated={handleEventCreated}
+        onEventDoubleClick={handleEventDoubleClick}
+        onEventDeleted={handleEventDeleted}
+        extendDefaultEvent={handleExtendDefaultEvent}
       />
       <Popup
         display="anchored"
@@ -218,7 +216,7 @@ function App() {
         touchUi={false}
         width={350}
         buttons={popupButtons}
-        onClose={onClose}
+        onClose={popupClose}
         isOpen={isOpen}
         anchor={anchor}
       >

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -12,7 +12,7 @@ const month = now.getMonth();
 const day = now.getDate();
 
 const App = () => {
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       { title: 'Product team mtg.', start: '10:00', end: '14:00', recurring: 'FREQ=WEEKLY;BYDAY=MO', color: '#913aa7' },
       { title: 'Employment (Semi-weekly)', start: '11:00', end: '17:00', recurring: 'FREQ=WEEKLY;BYDAY=WE', color: '#228c73' },
@@ -149,7 +149,7 @@ const App = () => {
     ];
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       { id: 1, name: 'Jude Chester' },
       { id: 2, name: 'Natalie Racquel' },
@@ -158,7 +158,7 @@ const App = () => {
     ];
   }, []);
 
-  const myView = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         maxEventStack: 2,

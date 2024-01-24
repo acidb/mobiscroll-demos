@@ -1,22 +1,57 @@
-import React from 'react';
-import { Eventcalendar, Draggable, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, Draggable, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useEffect } from 'react';
 import './event-hooks.css';
 
-function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const invalid = [
-    {
-      start: '12:00',
-      end: '13:00',
-      title: 'Lunch break',
-      recurring: {
-        repeat: 'weekly',
-        weekDays: 'MO,TU,WE,TH,FR',
-      },
-    },
-  ];
+setOptions({
+  // theme
+  // locale
+});
 
-  React.useEffect(() => {
+function App() {
+  const [myEvents, setEvents] = useState([]);
+  const [draggable1, setDraggable1] = useState();
+  const [draggable2, setDraggable2] = useState();
+
+  const invalid = useMemo(
+    () => [
+      {
+        start: '12:00',
+        end: '13:00',
+        title: 'Lunch break',
+        recurring: {
+          repeat: 'weekly',
+          weekDays: 'MO,TU,WE,TH,FR',
+        },
+      },
+    ],
+    [],
+  );
+
+  const myView = useMemo(() => {
+    return {
+      schedule: {
+        type: 'day',
+      },
+    };
+  }, []);
+
+  const dragData1 = useMemo(
+    () => ({
+      title: 'External drag 1',
+      color: '#ffdab8',
+    }),
+    [],
+  );
+
+  const dragData2 = useMemo(
+    () => ({
+      title: 'External drag 2',
+      color: '#ddfcf7',
+    }),
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -25,35 +60,6 @@ function App() {
       'jsonp',
     );
   }, []);
-
-  const view = React.useMemo(() => {
-    return {
-      schedule: {
-        type: 'day',
-      },
-    };
-  }, []);
-
-  const [draggable1, setDraggable1] = React.useState();
-  const [draggable2, setDraggable2] = React.useState();
-
-  const setDragElm1 = React.useCallback((elm) => {
-    setDraggable1(elm);
-  }, []);
-
-  const setDragElm2 = React.useCallback((elm) => {
-    setDraggable2(elm);
-  }, []);
-
-  const dragData1 = {
-    title: 'External drag 1',
-    color: '#ffdab8',
-  };
-
-  const dragData2 = {
-    title: 'External drag 2',
-    color: '#ddfcf7',
-  };
 
   return (
     <>
@@ -68,13 +74,11 @@ function App() {
         <Draggable dragData={dragData2} element={draggable2} />
       </div>
       <Eventcalendar
-        // theme
-        // locale
         data={myEvents}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
-        view={view}
+        view={myView}
         invalid={invalid}
         onCellClick={(event, inst) => {
           /* Logic for cell click */

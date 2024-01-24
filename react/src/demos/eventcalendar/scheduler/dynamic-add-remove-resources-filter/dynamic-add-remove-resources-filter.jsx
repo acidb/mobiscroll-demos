@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, Checkbox, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import './dynamic-add-remove-resources-filter.css';
 
 setOptions({
@@ -8,7 +8,7 @@ setOptions({
 });
 
 const App = () => {
-  const resources = React.useMemo(() => {
+  const resources = useMemo(() => {
     return [
       {
         id: 1,
@@ -27,7 +27,12 @@ const App = () => {
       },
     ];
   }, []);
-  const view = React.useMemo(() => {
+
+  const [myEvents, setEvents] = useState([]);
+  const [myResources, setResources] = useState(resources);
+  const [participants, setParticipants] = useState({ 1: true, 2: true, 3: true });
+
+  const myView = useMemo(() => {
     return {
       schedule: {
         type: 'week',
@@ -39,11 +44,8 @@ const App = () => {
       },
     };
   }, []);
-  const [myEvents, setEvents] = React.useState([]);
-  const [myResources, setResources] = React.useState(resources);
-  const [participants, setParticipants] = React.useState({ 1: true, 2: true, 3: true });
 
-  const filter = React.useCallback(
+  const filter = useCallback(
     (ev) => {
       participants[+ev.target.value] = ev.target.checked;
       setParticipants({ ...participants });
@@ -52,7 +54,7 @@ const App = () => {
     [participants, resources],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/resource-events-shared/',
       (events) => {
@@ -70,7 +72,7 @@ const App = () => {
             <Eventcalendar
               data={myEvents}
               resources={myResources}
-              view={view}
+              view={myView}
               clickToCreate={true}
               dragToCreate={true}
               dragToMove={true}

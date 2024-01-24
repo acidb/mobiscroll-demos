@@ -1,18 +1,19 @@
-import React from 'react';
 import {
   Eventcalendar,
   formatDate,
   setOptions,
-  confirm,
-  toast,
+  Confirm,
+  Toast,
   momentTimezone,
   CalendarNav,
   CalendarPrev,
   CalendarToday,
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
+import { useState, useMemo, useCallback } from 'react';
 import './timezone-meeting-planner.css';
 
+// eslint-disable-next-line import/order
 import moment from 'moment-timezone';
 
 // setup Mobiscroll Timezone plugin with Moment
@@ -34,9 +35,14 @@ const defaultEvents = [
 ];
 
 function App() {
-  const [myEvents, setMyEvents] = React.useState(defaultEvents);
+  const [myEvents, setMyEvents] = useState(defaultEvents);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [isConfirmOpen, setConfirmOpen] = useState(false);
+  const [tempEvent, setTempEvent] = useState(null);
+  const [isNewEvent, setIsNewEvent] = useState(false);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -84,7 +90,7 @@ function App() {
     ];
   }, []);
 
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         type: 'week',
@@ -93,7 +99,7 @@ function App() {
     };
   }, []);
 
-  const getUtcOffset = React.useCallback((timezone) => {
+  const getUtcOffset = useCallback((timezone) => {
     switch (timezone) {
       case 'America/Los_Angeles':
         return -7;
@@ -116,7 +122,7 @@ function App() {
     }
   }, []);
 
-  const getProps = React.useCallback((h) => {
+  const getProps = useCallback((h) => {
     if (h < 6) {
       return { color: '#ffbaba4d', invalid: true };
     } else if (h < 8) {
@@ -128,7 +134,7 @@ function App() {
     } else return { color: '#ffbaba4d', invalid: true };
   }, []);
 
-  const details = React.useMemo(() => {
+  const details = useMemo(() => {
     const colors = [];
     const invalid = [];
 
@@ -169,7 +175,7 @@ function App() {
     return { colors, invalid };
   }, [getProps, getUtcOffset, myResources]);
 
-  const myScheduleEvent = React.useCallback((data) => {
+  const myScheduleEvent = useCallback((data) => {
     const start = data.startDate.clone();
     const end = data.endDate.clone();
 
@@ -188,9 +194,9 @@ function App() {
     );
   }, []);
 
-  const myHeader = () => {
+  const myHeader = useCallback(() => {
     return (
-      <React.Fragment>
+      <>
         <CalendarNav />
         <div className="md-meeting-planner-header">
           <div className="md-meeting-planner-zone md-meeting-planner-work">working hours</div>
@@ -200,11 +206,11 @@ function App() {
           <CalendarToday />
           <CalendarNext />
         </div>
-      </React.Fragment>
+      </>
     );
-  };
+  }, []);
 
-  const myResource = (resource) => {
+  const myResource = useCallback((resource) => {
     return (
       <div className="md-meeting-participant-cont">
         <div className="md-meeting-participant-name">{resource.name}</div>
@@ -215,27 +221,26 @@ function App() {
         <img className="md-meeting-participant-avatar" src={resource.img} alt="avatar" />
       </div>
     );
-  };
+  }, []);
 
-  const myDefaultEvent = React.useCallback(() => {
+  const myDefaultEvent = useCallback(() => {
     return {
       resource: [1, 2, 3, 4, 5, 6],
     };
   }, []);
 
-  const onEventCreated = React.useCallback(
+  const handleEventCreated = useCallback(
     (args) => {
       setMyEvents([...myEvents, args.event]);
       setTimeout(() => {
-        toast({
-          message: 'Event created',
-        });
+        setToastMessage('Event created');
+        setToastOpen(true);
       });
     },
     [myEvents],
   );
 
-  const onEventUpdated = React.useCallback(
+  const handleEventUpdated = useCallback(
     (args) => {
       const index = myEvents.findIndex((x) => x.id === args.event.id);
       const newEventList = [...myEvents];
@@ -243,90 +248,99 @@ function App() {
       newEventList.splice(index, 1, args.event);
       setMyEvents(newEventList);
       setTimeout(() => {
-        toast({
-          message: 'Event updated',
-        });
+        setToastMessage('Event updated');
+        setToastOpen(true);
       });
     },
     [myEvents],
   );
 
-  const onEventDeleted = React.useCallback(
+  const handleEventDeleted = useCallback(
     (args) => {
       setMyEvents(myEvents.filter((item) => item.id !== args.event.id));
     },
     [myEvents],
   );
 
-  const createUpdateEvent = React.useCallback(
-    (event, isNew) => {
-      confirm({
-        title: 'Are you sure you want to proceed?',
-        message: "It looks like someone from the team won't be able to join the meeting.",
-        okText: 'Yes',
-        cancelText: 'No',
-        callback: function (res) {
-          if (res) {
-            if (isNew) {
-              setMyEvents([...myEvents, event]);
-            } else {
-              const index = myEvents.findIndex((x) => x.id === event.id);
-              const newEventList = [...myEvents];
+  const createUpdateEvent = useCallback((event, isNew) => {
+    setTempEvent(event);
+    setIsNewEvent(isNew);
+    setConfirmOpen(true);
+  }, []);
 
-              newEventList.splice(index, 1, event);
-              setMyEvents(newEventList);
-            }
-
-            toast({
-              message: isNew ? 'Event created' : 'Event updated',
-            });
-          }
-        },
-      });
-    },
-    [myEvents],
-  );
-
-  const onEventCreateFailed = React.useCallback(
+  const handleEventCreateFailed = useCallback(
     (args) => {
       createUpdateEvent(args.event, true);
     },
     [createUpdateEvent],
   );
 
-  const onEventUpdateFailed = React.useCallback(
+  const handleEventUpdateFailed = useCallback(
     (args) => {
       createUpdateEvent(args.event);
     },
     [createUpdateEvent],
   );
 
+  const closeToast = useCallback(() => setToastOpen(false), []);
+
+  const handleConfirmClose = useCallback(
+    (res) => {
+      if (res) {
+        if (isNewEvent) {
+          setMyEvents([...myEvents, tempEvent]);
+        } else {
+          const index = myEvents.findIndex((x) => x.id === tempEvent.id);
+          const newEventList = [...myEvents];
+
+          newEventList.splice(index, 1, tempEvent);
+          setMyEvents(newEventList);
+        }
+        setToastMessage(isNewEvent ? 'Event created' : 'Event updated');
+        setToastOpen(true);
+      }
+      setConfirmOpen(false);
+    },
+    [isNewEvent, myEvents, tempEvent],
+  );
+
   return (
-    <Eventcalendar
-      timezonePlugin={momentTimezone}
-      dataTimezone="utc"
-      displayTimezone="utc"
-      clickToCreate={true}
-      dragToCreate={true}
-      dragToMove={true}
-      dragToResize={true}
-      dragTimeStep={60}
-      height={400}
-      view={view}
-      data={myEvents}
-      resources={myResources}
-      colors={details.colors}
-      invalid={details.invalid}
-      extendDefaultEvent={myDefaultEvent}
-      renderScheduleEvent={myScheduleEvent}
-      renderHeader={myHeader}
-      renderResource={myResource}
-      onEventCreated={onEventCreated}
-      onEventUpdated={onEventUpdated}
-      onEventDeleted={onEventDeleted}
-      onEventCreateFailed={onEventCreateFailed}
-      onEventUpdateFailed={onEventUpdateFailed}
-    />
+    <>
+      <Eventcalendar
+        timezonePlugin={momentTimezone}
+        dataTimezone="utc"
+        displayTimezone="utc"
+        clickToCreate={true}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
+        dragTimeStep={60}
+        height={400}
+        view={myView}
+        data={myEvents}
+        resources={myResources}
+        colors={details.colors}
+        invalid={details.invalid}
+        extendDefaultEvent={myDefaultEvent}
+        renderScheduleEvent={myScheduleEvent}
+        renderHeader={myHeader}
+        renderResource={myResource}
+        onEventCreated={handleEventCreated}
+        onEventUpdated={handleEventUpdated}
+        onEventDeleted={handleEventDeleted}
+        onEventCreateFailed={handleEventCreateFailed}
+        onEventUpdateFailed={handleEventUpdateFailed}
+      />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
+      <Confirm
+        isOpen={isConfirmOpen}
+        title="Are you sure you want to proceed?"
+        message="It looks like someone from the team won't be able to join the meeting."
+        okText="Yes"
+        cancelText="No"
+        onClose={handleConfirmClose}
+      />
+    </>
   );
 }
 

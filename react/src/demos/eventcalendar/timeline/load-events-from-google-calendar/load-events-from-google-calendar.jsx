@@ -1,14 +1,21 @@
-import React from 'react';
-import { Eventcalendar, toast /* localeImport */ } from '@mobiscroll/react';
 import { googleCalendarSync } from '@mobiscroll/calendar-integration';
+import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import './load-events-from-google-calendar.css';
 
-function App() {
-  const [events, setEvents] = React.useState([]);
-  const firstDay = React.useRef();
-  const lastDay = React.useRef();
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  const calView = React.useMemo(() => {
+function App() {
+  const [events, setEvents] = useState([]);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const firstDay = useRef();
+  const lastDay = useRef();
+
+  const calView = useMemo(() => {
     return {
       timeline: {
         type: 'month',
@@ -17,7 +24,7 @@ function App() {
     };
   }, []);
 
-  const calendars = React.useMemo(() => {
+  const calendars = useMemo(() => {
     return [
       { id: 'en.french#holiday@group.v.calendar.google.com', name: 'Holidays in France', color: '#D81B60' },
       { id: 'en.german#holiday@group.v.calendar.google.com', name: 'Holidays in Germany', color: '#F4511E' },
@@ -29,19 +36,18 @@ function App() {
     ];
   }, []);
 
-  const calendarIds = React.useMemo(() => {
+  const calendarIds = useMemo(() => {
     return calendars.map(function (cal) {
       return cal.id;
     });
   }, [calendars]);
 
-  const onError = React.useCallback((resp) => {
-    toast({
-      message: resp.error ? resp.error : resp.result.error.message,
-    });
+  const onError = useCallback((resp) => {
+    setToastMessage(resp.error ? resp.error : resp.result.error.message);
+    setToastOpen(true);
   }, []);
 
-  const loadEvents = React.useCallback(() => {
+  const loadEvents = useCallback(() => {
     googleCalendarSync
       .getEvents(calendarIds, firstDay.current, lastDay.current)
       .then(function (resp) {
@@ -53,7 +59,7 @@ function App() {
       .catch(onError);
   }, [calendarIds, firstDay, lastDay, onError]);
 
-  const onPageLoading = React.useCallback(
+  const handlePageLoading = useCallback(
     (args) => {
       const start = args.firstDay;
       const end = args.lastDay;
@@ -68,7 +74,9 @@ function App() {
     [loadEvents],
   );
 
-  React.useEffect(() => {
+  const closeToast = useCallback(() => setToastOpen(false), []);
+
+  useEffect(() => {
     googleCalendarSync.init({
       apiKey: '<YOUR_GOOGLE_API_KEY>',
       onInit: loadEvents,
@@ -76,17 +84,18 @@ function App() {
   }, [loadEvents]);
 
   return (
-    <Eventcalendar
-      // locale
-      // theme
-      clickToCreate={false}
-      dragToCreate={false}
-      exclusiveEndDates={true}
-      resources={calendars}
-      view={calView}
-      data={events}
-      onPageLoading={onPageLoading}
-    />
+    <>
+      <Eventcalendar
+        clickToCreate={false}
+        dragToCreate={false}
+        exclusiveEndDates={true}
+        resources={calendars}
+        view={calView}
+        data={events}
+        onPageLoading={handlePageLoading}
+      />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
+    </>
   );
 }
 

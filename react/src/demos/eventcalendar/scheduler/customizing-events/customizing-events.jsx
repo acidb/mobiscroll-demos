@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, Toast, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import './customizing-events.css';
 
 setOptions({
@@ -8,10 +8,69 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [myEvents, setEvents] = useState([]);
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  React.useEffect(() => {
+  const resp = useMemo(() => {
+    return {
+      xsmall: {
+        view: {
+          schedule: {
+            type: 'day',
+          },
+        },
+      },
+      medium: {
+        view: {
+          schedule: {
+            type: 'week',
+          },
+        },
+      },
+    };
+  }, []);
+
+  const closeToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const customScheduleEvent = useCallback((data) => {
+    const cat = getCategory(data.original.category);
+    if (data.allDay) {
+      return (
+        <div style={{ background: cat.color }} className="md-custom-event-allday-title">
+          {data.title}
+        </div>
+      );
+    } else {
+      return (
+        <div className="md-custom-event-cont" style={{ borderLeft: '5px solid ' + cat.color, background: cat.color }}>
+          <div className="md-custom-event-wrapper">
+            <div style={{ background: cat.color }} className="md-custom-event-category">
+              {cat.name}
+            </div>
+            <div className="md-custom-event-details">
+              <div className="md-custom-event-title">{data.title}</div>
+              <div className="md-custom-event-time">
+                {data.start} - {data.end}
+              </div>
+              <Button className="md-custom-event-btn" color="dark" variant="outline" onClick={edit}>
+                Edit
+              </Button>
+              <div className="md-cutom-event-img-cont">
+                {data.original.participants &&
+                  data.original.participants.map(function (p) {
+                    return <img key={p} className="md-custom-event-img" src={getParticipant(p).img} />;
+                  })}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/multi-events/',
       (events) => {
@@ -19,27 +78,6 @@ function App() {
       },
       'jsonp',
     );
-  }, []);
-
-  const [resp, setResp] = React.useState({
-    xsmall: {
-      view: {
-        schedule: {
-          type: 'day',
-        },
-      },
-    },
-    medium: {
-      view: {
-        schedule: {
-          type: 'week',
-        },
-      },
-    },
-  });
-
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
   }, []);
 
   const getCategory = (id) => {
@@ -126,47 +164,11 @@ function App() {
     setToastOpen(true);
   };
 
-  const renderScheduleEvent = React.useCallback((data) => {
-    const cat = getCategory(data.original.category);
-    if (data.allDay) {
-      return (
-        <div style={{ background: cat.color }} className="md-custom-event-allday-title">
-          {data.title}
-        </div>
-      );
-    } else {
-      return (
-        <div className="md-custom-event-cont" style={{ borderLeft: '5px solid ' + cat.color, background: cat.color }}>
-          <div className="md-custom-event-wrapper">
-            <div style={{ background: cat.color }} className="md-custom-event-category">
-              {cat.name}
-            </div>
-            <div className="md-custom-event-details">
-              <div className="md-custom-event-title">{data.title}</div>
-              <div className="md-custom-event-time">
-                {data.start} - {data.end}
-              </div>
-              <Button className="md-custom-event-btn" color="dark" variant="outline" onClick={edit}>
-                Edit
-              </Button>
-              <div className="md-cutom-event-img-cont">
-                {data.original.participants &&
-                  data.original.participants.map(function (p) {
-                    return <img key={p} className="md-custom-event-img" src={getParticipant(p).img} />;
-                  })}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-  });
-
   return (
     <div>
       <Eventcalendar
         // drag
-        renderScheduleEvent={renderScheduleEvent}
+        renderScheduleEvent={customScheduleEvent}
         responsive={resp}
         data={myEvents}
       />

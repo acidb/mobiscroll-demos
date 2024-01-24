@@ -1,6 +1,11 @@
-import React from 'react';
-import { Eventcalendar, getJson, formatDate /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions, formatDate /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import './date-header-template.css';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const milestones = [
   {
@@ -21,9 +26,9 @@ const milestones = [
 ];
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  const view = React.useMemo(() => {
+  const calView = useMemo(() => {
     return {
       schedule: {
         type: 'week',
@@ -36,7 +41,7 @@ function App() {
     };
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -59,19 +64,9 @@ function App() {
     ];
   }, []);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/resource-events/',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const renderDay = (args) => {
+  const renderCustomDay = useCallback((args) => {
     const date = args.date;
-    const dayNr = date.getDay();
+    // const dayNr = date.getDay();
     const task =
       milestones.find((obj) => {
         return +new Date(obj.date) === +date;
@@ -88,27 +83,35 @@ function App() {
         </div>
       </div>
     );
-  };
+  }, []);
 
-  const renderCustomResource = (resource) => {
+  const renderCustomResource = useCallback((resource) => {
     return (
       <div className="header-resource-template-content">
         <img className="header-resource-avatar" src={resource.img} />
         <div className="header-resource-name">{resource.name}</div>
       </div>
     );
-  };
+  }, []);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/resource-events/',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
-      view={view}
+      view={calView}
       data={myEvents}
       resources={myResources}
       groupBy="date"
-      renderDay={renderDay}
+      renderDay={renderCustomDay}
       renderResource={renderCustomResource}
     />
   );

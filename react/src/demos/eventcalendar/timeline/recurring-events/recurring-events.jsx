@@ -1,8 +1,13 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         recurring: {
@@ -49,35 +54,38 @@ function App() {
     ];
   }, []);
 
-  const myResources = [
-    {
-      id: 1,
-      name: 'Resource A',
-      color: '#fdf500',
-    },
-    {
-      id: 2,
-      name: 'Resource B',
-      color: '#ff0101',
-    },
-    {
-      id: 3,
-      name: 'Resource C',
-      color: '#01adff',
-    },
-    {
-      id: 4,
-      name: 'Resource D',
-      color: '#239a21',
-    },
-    {
-      id: 5,
-      name: 'Resource E',
-      color: '#ff4600',
-    },
-  ];
+  const myResources = useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'Resource A',
+        color: '#fdf500',
+      },
+      {
+        id: 2,
+        name: 'Resource B',
+        color: '#ff0101',
+      },
+      {
+        id: 3,
+        name: 'Resource C',
+        color: '#01adff',
+      },
+      {
+        id: 4,
+        name: 'Resource D',
+        color: '#239a21',
+      },
+      {
+        id: 5,
+        name: 'Resource E',
+        color: '#ff4600',
+      },
+    ],
+    [],
+  );
 
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: { type: 'week' },
     };
@@ -85,11 +93,9 @@ function App() {
 
   return (
     <Eventcalendar
-      // locale
-      // theme
       // drag
       data={myEvents}
-      view={view}
+      view={myView}
       resources={myResources}
     />
   );

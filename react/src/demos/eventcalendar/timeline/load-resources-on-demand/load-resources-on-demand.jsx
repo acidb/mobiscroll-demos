@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, setOptions, toast /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useCallback } from 'react';
 import './load-resources-on-demand.css';
 
 setOptions({
@@ -8,13 +8,7 @@ setOptions({
 });
 
 function App() {
-  const view = React.useMemo(() => {
-    return {
-      timeline: { type: 'day' },
-    };
-  }, []);
-
-  const [myResources, setResources] = React.useState([
+  const [myResources, setResources] = useState([
     {
       id: 1,
       name: 'Group 1',
@@ -119,7 +113,7 @@ function App() {
     },
   ]);
 
-  const [myEvents, setEvents] = React.useState([
+  const [myEvents, setEvents] = useState([
     {
       start: 'dyndatetime(y,m,d,10)',
       end: 'dyndatetime(y,m,d,13)',
@@ -146,7 +140,13 @@ function App() {
     },
   ]);
 
-  const getResourceById = React.useCallback((resources, resourceId) => {
+  const myView = useMemo(() => {
+    return {
+      timeline: { type: 'day' },
+    };
+  }, []);
+
+  const getResourceById = useCallback((resources, resourceId) => {
     for (let i = 0; i < resources.length; i++) {
       const resource = resources[i];
       if (resource.id === resourceId) {
@@ -162,7 +162,7 @@ function App() {
     }
   }, []);
 
-  const loadChildResources = React.useCallback(
+  const loadChildResources = useCallback(
     (args) => {
       const resource = getResourceById(myResources, args.resource);
 
@@ -192,7 +192,7 @@ function App() {
   return (
     <Eventcalendar
       // drag
-      view={view}
+      view={myView}
       resources={myResources}
       data={myEvents}
       onResourceExpand={loadChildResources}

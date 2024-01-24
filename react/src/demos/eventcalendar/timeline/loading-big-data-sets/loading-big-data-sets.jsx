@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useCallback } from 'react';
 import './loading-big-data-sets.css';
 
 setOptions({
@@ -21,9 +21,9 @@ for (var i = 1; i <= resourceNr; i++) {
 }
 
 function App() {
-  const [myEvents, setMyEvents] = React.useState([]);
+  const [myEvents, setMyEvents] = useState([]);
 
-  const myView = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         type: 'year',
@@ -32,7 +32,7 @@ function App() {
     };
   }, []);
 
-  const handlePageLoading = React.useCallback((args) => {
+  const handlePageLoading = useCallback((args) => {
     setTimeout(() => {
       const year = args.firstDay.getFullYear();
       const newEvents = [];

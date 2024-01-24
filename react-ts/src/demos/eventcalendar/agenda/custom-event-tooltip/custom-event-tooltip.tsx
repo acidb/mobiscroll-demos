@@ -1,12 +1,22 @@
-import React from 'react';
-import { Eventcalendar, MbscEventcalendarView, setOptions, Popup, Button, formatDate, toast /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useRef, useCallback } from 'react';
+import {
+  Eventcalendar,
+  MbscEventcalendarView,
+  setOptions,
+  Popup,
+  Button,
+  formatDate,
+  Toast /* localeImport */,
+  MbscCalendarEvent,
+  MbscEventClickEvent,
+} from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const defaultAppointments = [
+const defaultAppointments: MbscCalendarEvent[] = [
   {
     title: 'Jude Chester',
     age: 69,
@@ -430,21 +440,26 @@ const defaultAppointments = [
 ];
 
 function App() {
-  const [appointments, setAppointments] = React.useState<any>(defaultAppointments);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [anchor, setAnchor] = React.useState<any>(null);
-  const [currentEvent, setCurrentEvent] = React.useState<any>(null);
-  const [info, setInfo] = React.useState<string>('');
-  const [time, setTime] = React.useState<string>('');
-  const [status, setStatus] = React.useState<string>('');
-  const [reason, setReason] = React.useState<string>('');
-  const [location, setLocation] = React.useState<string>('');
-  const [buttonText, setButtonText] = React.useState<string>('');
-  const [buttonType, setButtonType] = React.useState<any>('');
-  const [bgColor, setBgColor] = React.useState<string>('');
-  const timerRef = React.useRef<any>(null);
+  const [appointments, setAppointments] = useState<MbscCalendarEvent[]>(defaultAppointments);
+  const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
+  const [anchor, setAnchor] = useState();
+  const [currentEvent, setCurrentEvent] = useState<MbscCalendarEvent>();
+  const [info, setInfo] = useState<string>('');
+  const [time, setTime] = useState<string>('');
+  const [status, setStatus] = useState<string>('');
+  const [reason, setReason] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [buttonText, setButtonText] = useState<string>('');
+  const [buttonType, setButtonType] = useState<
+    'info' | 'warning' | 'success' | 'light' | 'dark' | 'primary' | 'secondary' | 'danger' | undefined
+  >();
+  const [bgColor, setBgColor] = useState<string | undefined>();
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
+  const timerRef = useRef<number | null>(null);
+
+  const myView = useMemo<MbscEventcalendarView>(() => {
     return {
       agenda: {
         type: 'week',
@@ -454,9 +469,9 @@ function App() {
     };
   }, []);
 
-  const onEventHoverIn = React.useCallback((args) => {
-    const event = args.event;
-    const time = formatDate('hh:mm A', new Date(event.start)) + ' - ' + formatDate('hh:mm A', new Date(event.end));
+  const handleEventHoverIn = useCallback((args: MbscEventClickEvent) => {
+    const event: MbscCalendarEvent = args.event;
+    const time = formatDate('hh:mm A', new Date(event.start! as string)) + ' - ' + formatDate('hh:mm A', new Date(event.end! as string));
 
     setCurrentEvent(event);
 
@@ -481,70 +496,70 @@ function App() {
     }
 
     setAnchor(args.domEvent.target);
-    setOpen(true);
+    setPopupOpen(true);
   }, []);
 
-  const onEventHoverOut = React.useCallback(() => {
+  const handleEventHoverOut = useCallback(() => {
     timerRef.current = setTimeout(() => {
-      setOpen(false);
+      setPopupOpen(false);
     }, 200);
   }, []);
 
-  const onEventClick = React.useCallback(() => {
-    setOpen(true);
+  const handleEventClick = useCallback(() => {
+    setPopupOpen(true);
   }, []);
 
-  const onMouseEnter = React.useCallback(() => {
+  const onMouseEnter = useCallback(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
   }, []);
 
-  const onMouseLeave = React.useCallback(() => {
+  const onMouseLeave = useCallback(() => {
     timerRef.current = setTimeout(() => {
-      setOpen(false);
+      setPopupOpen(false);
     }, 200);
   }, []);
 
-  const setStatusButton = React.useCallback(() => {
-    setOpen(false);
-    const index = appointments.findIndex((item: any) => item.id === currentEvent.id);
+  const setStatusButton = useCallback(() => {
+    setPopupOpen(false);
+    const index = appointments.findIndex((item: MbscCalendarEvent) => item.id === currentEvent!.id);
     const newApp = [...appointments];
     newApp[index].confirmed = !appointments[index].confirmed;
     setAppointments(newApp);
-    toast({
-      message: 'Appointment ' + (currentEvent.confirmed ? 'confirmed' : 'canceled'),
-    });
+    setToastMessage('Appointment ' + (currentEvent!.confirmed ? 'confirmed' : 'canceled'));
+    setToastOpen(true);
   }, [appointments, currentEvent]);
 
-  const viewFile = React.useCallback(() => {
-    setOpen(false);
-    toast({
-      message: 'View file',
-    });
+  const viewFile = useCallback(() => {
+    setPopupOpen(false);
+    setToastMessage('View file');
+    setToastOpen(true);
   }, []);
 
-  const deleteApp = React.useCallback(() => {
-    setAppointments(appointments.filter((item: any) => item.id !== currentEvent.id));
-    setOpen(false);
-    toast({
-      message: 'Appointment deleted',
-    });
+  const deleteApp = useCallback(() => {
+    setAppointments(appointments.filter((item: MbscCalendarEvent) => item.id !== currentEvent!.id));
+    setPopupOpen(false);
+    setToastMessage('Appointment deleted');
+    setToastOpen(true);
   }, [appointments, currentEvent]);
+
+  const closeToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <div>
       <Eventcalendar
-        view={view}
+        view={myView}
         data={appointments}
         showEventTooltip={false}
-        onEventHoverIn={onEventHoverIn}
-        onEventHoverOut={onEventHoverOut}
-        onEventClick={onEventClick}
+        onEventHoverIn={handleEventHoverIn}
+        onEventHoverOut={handleEventHoverOut}
+        onEventClick={handleEventClick}
       />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
       <Popup
         display="anchored"
-        isOpen={isOpen}
+        isOpen={isPopupOpen}
         anchor={anchor}
         touchUi={false}
         showOverlay={false}

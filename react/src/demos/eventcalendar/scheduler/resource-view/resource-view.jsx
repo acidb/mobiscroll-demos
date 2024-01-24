@@ -1,12 +1,17 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 
 function App() {
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         start: new Date(now.getFullYear(), now.getMonth(), monday + 1, 11),
@@ -47,7 +52,7 @@ function App() {
     ];
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -78,7 +83,7 @@ function App() {
     ];
   }, []);
 
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       schedule: {
         type: 'week',
@@ -91,7 +96,7 @@ function App() {
     };
   }, []);
 
-  const myColors = React.useMemo(
+  const myColors = useMemo(
     () => [
       {
         start: '05:00',
@@ -108,10 +113,8 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
       colors={myColors}

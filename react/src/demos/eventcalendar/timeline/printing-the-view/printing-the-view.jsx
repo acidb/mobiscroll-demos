@@ -1,6 +1,6 @@
-import React from 'react';
-import { Eventcalendar, Page, Button, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { print } from '@mobiscroll/print';
+import { Eventcalendar, Button, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 
 const MY_MODULES = [print];
 
@@ -10,10 +10,10 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [inst, setInst] = React.useState(null);
+  const [myEvents, setEvents] = useState([]);
+  const [inst, setInst] = useState(null);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -48,17 +48,7 @@ function App() {
     ];
   }, []);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/daily-weekly-events/',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         type: 'week',
@@ -69,24 +59,32 @@ function App() {
     };
   }, []);
 
-  const printView = () => {
+  const printView = useCallback(() => {
     inst.print();
-  };
+  }, [inst]);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/daily-weekly-events/',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
 
   return (
-    <Page>
+    <>
       <Button onClick={printView}>Print timeline</Button>
       <Eventcalendar
-        // theme
-        // locale
         // drag
         data={myEvents}
         resources={myResources}
-        view={view}
+        view={myView}
         ref={setInst}
         modules={MY_MODULES}
       />
-    </Page>
+    </>
   );
 }
 

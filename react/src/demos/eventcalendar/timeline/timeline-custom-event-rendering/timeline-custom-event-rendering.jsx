@@ -1,9 +1,14 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo, useCallback } from 'react';
 import './timeline-custom-event-rendering.css';
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         type: 'day',
@@ -11,7 +16,7 @@ function App() {
     };
   }, []);
 
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         start: 'dyndatetime(y,m,d,10,30)',
@@ -64,7 +69,7 @@ function App() {
     ];
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -84,7 +89,7 @@ function App() {
     ];
   }, []);
 
-  const myScheduleEvent = React.useCallback((data) => {
+  const myScheduleEvent = useCallback((data) => {
     const ev = data.original;
     const color = data.color;
 
@@ -99,20 +104,18 @@ function App() {
         </div>
       </div>
     );
-  });
+  }, []);
 
-  const myDefaultEvent = React.useCallback(() => {
+  const myDefaultEvent = useCallback(() => {
     return {
       taskType: 'cogs',
     };
-  });
+  }, []);
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderScheduleEvent={myScheduleEvent}

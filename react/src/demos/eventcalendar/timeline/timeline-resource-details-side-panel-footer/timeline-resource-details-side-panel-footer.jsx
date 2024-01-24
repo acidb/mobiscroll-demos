@@ -1,14 +1,19 @@
-import React from 'react';
-import { Eventcalendar, toast, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import './timeline-resource-details-side-panel-footer.css';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const oneDay = 60000 * 60 * 24;
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const calRef = React.useRef();
+  const [myEvents, setEvents] = useState([]);
+  const calRef = useRef();
 
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         type: 'month',
@@ -16,7 +21,7 @@ function App() {
     };
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -63,28 +68,18 @@ function App() {
     ];
   }, []);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/multiday-events/',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const getUTCDateOnly = React.useCallback((d) => {
+  const getUTCDateOnly = useCallback((d) => {
     return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
   }, []);
 
-  const getDayDiff = React.useCallback(
+  const getDayDiff = useCallback(
     (d1, d2) => {
       return Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1;
     },
     [getUTCDateOnly],
   );
 
-  const getRevenue = React.useCallback(
+  const getRevenue = useCallback(
     (resource) => {
       if (calRef.current) {
         let days = 0;
@@ -101,7 +96,7 @@ function App() {
     [getDayDiff],
   );
 
-  const getTotal = React.useCallback(() => {
+  const getTotal = useCallback(() => {
     let total = 0;
     for (const resource of myResources) {
       total += getRevenue(resource);
@@ -109,7 +104,7 @@ function App() {
     return total;
   }, [getRevenue, myResources]);
 
-  const myCustomResourceHeader = () => {
+  const myCustomResourceHeader = useCallback(() => {
     return (
       <div className="md-resource-details-title">
         <div className="md-resource-header md-resource-details-name">Room</div>
@@ -117,9 +112,9 @@ function App() {
         <div className="md-resource-header md-resource-details-price">Price</div>
       </div>
     );
-  };
+  }, []);
 
-  const myCustomResource = (resource) => {
+  const myCustomResource = useCallback((resource) => {
     return (
       <div className="md-resource-details-cont">
         <div className="md-resource-header md-resource-details-name">{resource.name}</div>
@@ -127,48 +122,62 @@ function App() {
         <div className="md-resource-header md-resource-details-price">{'$' + resource.price}</div>
       </div>
     );
-  };
+  }, []);
 
-  const myCustomSidebarHeader = () => {
+  const myCustomSidebarHeader = useCallback(() => {
     return <div className="md-resource-details-sidebar-header">Revenue</div>;
-  };
+  }, []);
 
-  const myCustomSidebar = (resource) => {
-    return <div className="md-resource-details-sidebar">{'$' + getRevenue(resource)}</div>;
-  };
+  const myCustomSidebar = useCallback(
+    (resource) => {
+      return <div className="md-resource-details-sidebar">{'$' + getRevenue(resource)}</div>;
+    },
+    [getRevenue],
+  );
 
-  const myCustomResourceFooter = () => {
+  const myCustomResourceFooter = useCallback(() => {
     return <div className="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>;
-  };
+  }, []);
 
-  const myCustomDayFooter = (data) => {
-    const events = data.events;
-    let occuppancy = 0;
-    if (events) {
-      var resourceIds = [];
-      var nr = 0;
-      for (const event of myEvents) {
-        if (resourceIds.indexOf(event.resource) < 0) {
-          nr++;
-          resourceIds = [...resourceIds, event.resource];
+  const myCustomDayFooter = useCallback(
+    (data) => {
+      const events = data.events;
+      let occuppancy = 0;
+      if (events) {
+        var resourceIds = [];
+        var nr = 0;
+        for (const event of myEvents) {
+          if (resourceIds.indexOf(event.resource) < 0) {
+            nr++;
+            resourceIds = [...resourceIds, event.resource];
+          }
         }
+        occuppancy = ((nr * 100) / myResources.length).toFixed(0);
       }
-      occuppancy = ((nr * 100) / myResources.length).toFixed(0);
-    }
-    return <div className="md-resource-details-footer md-resource-details-footer-day">{occuppancy + '%'}</div>;
-  };
+      return <div className="md-resource-details-footer md-resource-details-footer-day">{occuppancy + '%'}</div>;
+    },
+    [myEvents, myResources.length],
+  );
 
-  const myCustomSidebarFooter = () => {
+  const myCustomSidebarFooter = useCallback(() => {
     return <div className="md-resource-details-footer md-resource-details-total">{'$' + getTotal()}</div>;
-  };
+  }, [getTotal]);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/multiday-events/',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
       ref={calRef}
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
       cssClass="md-resource-details"

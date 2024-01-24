@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions, formatDate, getJson /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import './multi-classroom-timetable.css';
 
 setOptions({
@@ -8,9 +8,9 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         type: 'week',
@@ -24,7 +24,7 @@ function App() {
     };
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -49,17 +49,7 @@ function App() {
     ];
   }, []);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/timetable-events/',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const myCustomDay = React.useCallback((day) => {
+  const myCustomDay = useCallback((day) => {
     const date = day.date;
     return (
       <div className="md-timetable-day">
@@ -69,7 +59,7 @@ function App() {
     );
   }, []);
 
-  const myCustomEvent = React.useCallback((args) => {
+  const myCustomEvent = useCallback((args) => {
     return (
       <div>
         <div className="md-timetable-event-title">{args.title}</div>
@@ -79,7 +69,7 @@ function App() {
     );
   }, []);
 
-  const myDefaultEvent = React.useCallback(() => {
+  const myDefaultEvent = useCallback(() => {
     return {
       title: 'New class',
       prof: 'Stacia Jaden',
@@ -88,11 +78,21 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/timetable-events/',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
+
   return (
     <Eventcalendar
       className="md-timetable"
       // drag
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderDay={myCustomDay}

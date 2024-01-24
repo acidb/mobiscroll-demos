@@ -1,22 +1,87 @@
-import React from 'react';
-import { Eventcalendar, Draggable, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, Draggable, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useEffect } from 'react';
 import './event-hooks.css';
 
-function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const invalid = [
-    {
-      start: '12:00',
-      end: '13:00',
-      title: 'Lunch break',
-      recurring: {
-        repeat: 'weekly',
-        weekDays: 'MO,TU,WE,TH,FR',
-      },
-    },
-  ];
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  React.useEffect(() => {
+const dragData1 = {
+  title: 'External drag 1',
+  color: '#ffdab8',
+};
+
+const dragData2 = {
+  title: 'External drag 2',
+  color: '#ddfcf7',
+};
+
+function App() {
+  const [myEvents, setEvents] = useState([]);
+  const [draggable1, setDraggable1] = useState();
+  const [draggable2, setDraggable2] = useState();
+
+  const myInvalid = useMemo(
+    () => [
+      {
+        start: '12:00',
+        end: '13:00',
+        title: 'Lunch break',
+        recurring: {
+          repeat: 'weekly',
+          weekDays: 'MO,TU,WE,TH,FR',
+        },
+      },
+    ],
+    [],
+  );
+
+  const myView = useMemo(() => {
+    return {
+      timeline: {
+        type: 'day',
+      },
+    };
+  }, []);
+
+  const myResources = useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'Ryan',
+        color: '#fdf500',
+      },
+      {
+        id: 2,
+        name: 'Kate',
+        color: '#ff4600',
+      },
+      {
+        id: 3,
+        name: 'John',
+        color: '#ff0101',
+      },
+      {
+        id: 4,
+        name: 'Mark',
+        color: '#239a21',
+      },
+      {
+        id: 5,
+        name: 'Sharon',
+        color: '#8f1ed6',
+      },
+      {
+        id: 6,
+        name: 'Ashley',
+        color: '#01adff',
+      },
+    ],
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/timeline-events/',
       (events) => {
@@ -25,68 +90,6 @@ function App() {
       'jsonp',
     );
   }, []);
-
-  const view = React.useMemo(() => {
-    return {
-      timeline: {
-        type: 'day',
-      },
-    };
-  }, []);
-
-  const myResources = [
-    {
-      id: 1,
-      name: 'Ryan',
-      color: '#fdf500',
-    },
-    {
-      id: 2,
-      name: 'Kate',
-      color: '#ff4600',
-    },
-    {
-      id: 3,
-      name: 'John',
-      color: '#ff0101',
-    },
-    {
-      id: 4,
-      name: 'Mark',
-      color: '#239a21',
-    },
-    {
-      id: 5,
-      name: 'Sharon',
-      color: '#8f1ed6',
-    },
-    {
-      id: 6,
-      name: 'Ashley',
-      color: '#01adff',
-    },
-  ];
-
-  const [draggable1, setDraggable1] = React.useState();
-  const [draggable2, setDraggable2] = React.useState();
-
-  const setDragElm1 = React.useCallback((elm) => {
-    setDraggable1(elm);
-  }, []);
-
-  const setDragElm2 = React.useCallback((elm) => {
-    setDraggable2(elm);
-  }, []);
-
-  const dragData1 = {
-    title: 'External drag 1',
-    color: '#ffdab8',
-  };
-
-  const dragData2 = {
-    title: 'External drag 2',
-    color: '#ddfcf7',
-  };
 
   return (
     <>
@@ -101,15 +104,13 @@ function App() {
         <Draggable dragData={dragData2} element={draggable2} />
       </div>
       <Eventcalendar
-        // theme
-        // locale
         data={myEvents}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
-        view={view}
+        view={myView}
         resources={myResources}
-        invalid={invalid}
+        invalid={myInvalid}
         onCellClick={(event, inst) => {
           /* Logic for cell click */
         }}

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Select,
@@ -7,17 +6,23 @@ import {
   CalendarNext,
   CalendarToday,
   momentTimezone /* localeImport */,
+  setOptions,
 } from '@mobiscroll/react';
-import './multiple-timezone-support.css';
-
 import moment from 'moment-timezone';
+import { useState, useMemo, useCallback } from 'react';
+import './multiple-timezone-support.css';
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const [timezone, setTimezone] = React.useState('utc');
-  const myEvents = React.useMemo(() => {
+  const [timezone, setTimezone] = useState('utc');
+  const myEvents = useMemo(() => {
     return [
       {
         start: 'dyndatetime(y,m,d-2,7)',
@@ -64,7 +69,7 @@ function App() {
     ];
   }, []);
 
-  const timezones = React.useMemo(() => {
+  const timezones = useMemo(() => {
     return [
       {
         text: 'America/Los Angeles',
@@ -105,39 +110,37 @@ function App() {
     ];
   }, []);
 
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       schedule: { type: 'week' },
     };
   }, []);
 
-  const onChange = React.useCallback((ev) => {
+  const handleOnChange = useCallback((ev) => {
     setTimezone(ev.value);
   }, []);
 
-  const myHeader = () => {
+  const myHeader = useCallback(() => {
     return (
-      <React.Fragment>
+      <>
         <CalendarNav />
         <div className="md-timezone-header">
           <CalendarPrev />
           <CalendarToday />
           <CalendarNext />
-          <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={onChange} />
+          <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={handleOnChange} />
         </div>
-      </React.Fragment>
+      </>
     );
-  };
+  }, [handleOnChange, timezone, timezones]);
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       dataTimezone="utc"
       displayTimezone={timezone}
       timezonePlugin={momentTimezone}
       data={myEvents}
-      view={view}
+      view={myView}
       dragToCreate={true}
       dragToMove={true}
       dragToResize={true}

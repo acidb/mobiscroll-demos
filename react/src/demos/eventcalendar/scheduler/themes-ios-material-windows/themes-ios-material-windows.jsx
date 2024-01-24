@@ -1,10 +1,21 @@
-import React from 'react';
-import { Eventcalendar, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useEffect } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  React.useEffect(() => {
+  const myView = useMemo(() => {
+    return {
+      schedule: { type: 'week' },
+    };
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -14,17 +25,10 @@ function App() {
     );
   }, []);
 
-  const view = React.useMemo(() => {
-    return {
-      schedule: { type: 'week' },
-    };
-  }, []);
-
   return (
     <Eventcalendar
-      // locale
       data={myEvents}
-      view={view}
+      view={myView}
       theme="material" // can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', the theme will automatically be set based on the platform
       themeVariant="dark" // can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
     />

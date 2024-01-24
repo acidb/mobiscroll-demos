@@ -1,6 +1,6 @@
-import React from 'react';
 import { Eventcalendar, Page, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment';
+import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -8,7 +8,7 @@ setOptions({
 });
 
 function App() {
-  const [dateObjData, setDateObjData] = React.useState([
+  const [dateObjData, setDateObjData] = useState([
     {
       start: new Date(2020, 4, 19, 7),
       end: new Date(2020, 4, 19, 8),
@@ -16,9 +16,9 @@ function App() {
       color: '#35bb5a',
     },
   ]);
-  const [selectedObj, setSelectedObj] = React.useState(new Date(2020, 4, 19));
+  const [selectedObj, setSelectedObj] = useState(new Date(2020, 4, 19));
 
-  const [isoData, setISOData] = React.useState([
+  const [isoData, setISOData] = useState([
     {
       start: '2020-05-20T07:00:00',
       end: '2020-05-20T08:00:00',
@@ -26,9 +26,9 @@ function App() {
       color: '#a71111',
     },
   ]);
-  const [selectedISO, setSelectedISO] = React.useState('2020-05-20');
+  const [selectedISO, setSelectedISO] = useState('2020-05-20');
 
-  const [momentData, setMomentData] = React.useState([
+  const [momentData, setMomentData] = useState([
     {
       start: moment([2020, 4, 21, 7]),
       end: moment([2020, 4, 21, 8]),
@@ -36,9 +36,17 @@ function App() {
       color: '#913aa7',
     },
   ]);
-  const [selectedMoment, setSelectedMoment] = React.useState(moment([2020, 4, 21]));
+  const [selectedMoment, setSelectedMoment] = useState(moment([2020, 4, 21]));
 
-  const addDate = React.useCallback(() => {
+  const myView = useMemo(() => {
+    return {
+      schedule: {
+        type: 'week',
+      },
+    };
+  }, []);
+
+  const addDate = useCallback(() => {
     const newEvent = {
       start: new Date(2020, 4, 19, 10, 45),
       end: new Date(2020, 4, 19, 11, 45),
@@ -46,9 +54,9 @@ function App() {
     };
     setDateObjData([...dateObjData, newEvent]);
     setSelectedObj(new Date(2020, 4, 19));
-  });
+  }, []);
 
-  const addISO = React.useCallback(() => {
+  const addISO = useCallback(() => {
     const newEvent = {
       start: '2020-05-20T12:30:00',
       end: '2020-05-20T13:00:00',
@@ -56,9 +64,9 @@ function App() {
     };
     setISOData([...isoData, newEvent]);
     setSelectedISO('2020-05-20');
-  });
+  }, []);
 
-  const addMoment = React.useCallback(() => {
+  const addMoment = useCallback(() => {
     const newEvent = {
       start: moment([2020, 4, 21, 11]),
       end: moment([2020, 4, 21, 14]),
@@ -66,14 +74,6 @@ function App() {
     };
     setMomentData([...momentData, newEvent]);
     setSelectedMoment(moment([2020, 4, 21]));
-  });
-
-  const view = React.useMemo(() => {
-    return {
-      schedule: {
-        type: 'week',
-      },
-    };
   }, []);
 
   return (
@@ -88,7 +88,7 @@ function App() {
                   start: new Date(2020, 4, 19, 10, 45) <br /> end: new Date(2020, 4, 19, 11, 45)
                 </Button>
               </div>
-              <Eventcalendar data={dateObjData} view={view} selectedDate={selectedObj} />
+              <Eventcalendar data={dateObjData} view={myView} selectedDate={selectedObj} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
@@ -99,7 +99,7 @@ function App() {
                   start: 2020-05-20T12:30:00 <br /> end: 2020-05-20T13:00:00
                 </Button>
               </div>
-              <Eventcalendar data={isoData} view={view} selectedDate={selectedISO} />
+              <Eventcalendar data={isoData} view={myView} selectedDate={selectedISO} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
@@ -110,7 +110,7 @@ function App() {
                   start: moment([2020, 4, 21, 11]) <br /> end: moment([2020, 4, 21, 14])
                 </Button>
               </div>
-              <Eventcalendar data={momentData} view={view} selectedDate={selectedMoment} />
+              <Eventcalendar data={momentData} view={myView} selectedDate={selectedMoment} />
             </div>
           </div>
         </div>

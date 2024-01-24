@@ -1,8 +1,13 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         recurring: {
@@ -49,7 +54,7 @@ function App() {
     ];
   }, []);
 
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       schedule: { type: 'week' },
     };
@@ -57,11 +62,9 @@ function App() {
 
   return (
     <Eventcalendar
-      // locale
-      // theme
       // drag
       data={myEvents}
-      view={view}
+      view={myView}
     />
   );
 }

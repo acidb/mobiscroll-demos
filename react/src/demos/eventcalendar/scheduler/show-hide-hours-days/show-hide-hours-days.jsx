@@ -1,31 +1,29 @@
-import React from 'react';
-import { Eventcalendar, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useEffect } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const invalids = [
-    {
-      start: '12:00',
-      end: '13:00',
-      title: 'Lunch break',
-      recurring: {
-        repeat: 'weekly',
-        weekDays: 'MO,TU,WE,TH,FR',
+  const [myEvents, setEvents] = useState([]);
+  const myInvalids = useMemo(
+    () => [
+      {
+        start: '12:00',
+        end: '13:00',
+        title: 'Lunch break',
+        recurring: {
+          repeat: 'weekly',
+          weekDays: 'MO,TU,WE,TH,FR',
+        },
       },
-    },
-  ];
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com//workday-events/?vers=5',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       schedule: {
         type: 'week',
@@ -39,14 +37,22 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com//workday-events/?vers=5',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
+
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
-      invalid={invalids}
+      invalid={myInvalids}
       data={myEvents}
-      view={view}
+      view={myView}
     />
   );
 }

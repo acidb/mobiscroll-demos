@@ -1,9 +1,14 @@
-import React from 'react';
-import { Eventcalendar, Button /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 import './connecting-linking-events-arrows.css';
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         id: 1,
@@ -92,7 +97,7 @@ function App() {
     ];
   }, []);
 
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       timeline: {
         type: 'month',
@@ -100,7 +105,7 @@ function App() {
     };
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -135,7 +140,7 @@ function App() {
     ];
   }, []);
 
-  const myConnections = React.useMemo(() => {
+  const myConnections = useMemo(() => {
     return [
       {
         from: 1,
@@ -209,10 +214,8 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
       connections={myConnections}

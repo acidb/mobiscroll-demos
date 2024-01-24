@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   setOptions,
@@ -9,6 +8,7 @@ import {
   CalendarToday,
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
+import { useState, useMemo, useCallback } from 'react';
 import './event-listing.css';
 
 setOptions({
@@ -17,16 +17,16 @@ setOptions({
 });
 
 function App() {
-  const [view, setView] = React.useState('month');
+  const [view, setView] = useState('month');
 
-  const [calView, setCalView] = React.useState({
+  const [calView, setCalView] = useState({
     timeline: {
       type: 'month',
       eventList: true,
     },
   });
 
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         start: 'dyndatetime(y,m,d-1,8)',
@@ -107,9 +107,9 @@ function App() {
         resource: 6,
       },
     ];
-  });
+  }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -144,7 +144,7 @@ function App() {
     ];
   }, []);
 
-  const changeView = (event) => {
+  const changeView = useCallback((event) => {
     let calView;
 
     switch (event.target.value) {
@@ -179,11 +179,11 @@ function App() {
 
     setView(event.target.value);
     setCalView(calView);
-  };
+  }, []);
 
-  const renderMyHeader = () => {
+  const renderMyHeader = useCallback(() => {
     return (
-      <React.Fragment>
+      <>
         <CalendarNav className="md-event-listing-nav" />
         <div className="md-event-listing-picker">
           <SegmentedGroup value={view} onChange={changeView}>
@@ -195,14 +195,12 @@ function App() {
         <CalendarPrev className="md-event-listing-prev" />
         <CalendarToday className="md-event-listing-today" />
         <CalendarNext className="md-event-listing-next" />
-      </React.Fragment>
+      </>
     );
-  };
+  }, [changeView, view]);
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
       view={calView}
       data={myEvents}

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -11,6 +10,7 @@ import {
   CalendarToday,
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import './resource-filtering-in-header.css';
 
 setOptions({
@@ -19,18 +19,17 @@ setOptions({
 });
 
 function App() {
-  const [selected, setSelected] = React.useState({ 1: true });
-  const [events, setEvents] = React.useState([]);
-  const [filteredEvents, setFilteredEvents] = React.useState([]);
-  const [view, setView] = React.useState('month');
-  const [toastText, setToastText] = React.useState();
-  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [selected, setSelected] = useState({ 1: true });
+  const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [toastText, setToastText] = useState();
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  const closeToast = React.useCallback(() => {
+  const closeToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/custom-events/',
       (events) => {
@@ -41,7 +40,7 @@ function App() {
     );
   }, []);
 
-  const filterEvents = (events, selected) => {
+  const filterEvents = useCallback((events, selected) => {
     let ev = [];
     for (let i = 0; i < events.length; ++i) {
       const item = events[i];
@@ -58,29 +57,35 @@ function App() {
     }
 
     setFilteredEvents(ev);
-  };
+  }, []);
 
-  const [calView, setCalView] = React.useState({
-    schedule: { type: 'week' },
-  });
+  const calView = useMemo(
+    () => ({
+      schedule: { type: 'week' },
+    }),
+    [],
+  );
 
-  const filter = (ev) => {
-    const value = ev.target.value;
-    const checked = ev.target.checked;
+  const filter = useCallback(
+    (ev) => {
+      const value = ev.target.value;
+      const checked = ev.target.checked;
 
-    selected[value] = checked;
+      selected[value] = checked;
 
-    setSelected(selected);
+      setSelected(selected);
 
-    filterEvents(events, selected);
+      filterEvents(events, selected);
 
-    setToastText((checked ? 'Showing ' : 'Hiding ') + document.querySelector('.md-header-filter-name-' + value).textContent + ' events');
-    setToastOpen(true);
-  };
+      setToastText((checked ? 'Showing ' : 'Hiding ') + document.querySelector('.md-header-filter-name-' + value).textContent + ' events');
+      setToastOpen(true);
+    },
+    [events, filterEvents, selected],
+  );
 
-  const customWithNavButtons = () => {
+  const customWithNavButtons = useCallback(() => {
     return (
-      <React.Fragment>
+      <>
         <CalendarNav className="md-header-filter-nav" />
         <div className="md-header-filter-controls">
           <SegmentedGroup select="multiple">
@@ -99,10 +104,11 @@ function App() {
           </SegmentedGroup>
         </div>
         <CalendarPrev className="md-header-filter-prev" />
+        <CalendarToday className="md-header-filter-today" />
         <CalendarNext className="md-header-filter-next" />
-      </React.Fragment>
+      </>
     );
-  };
+  }, [filter, selected]);
 
   return (
     <div>

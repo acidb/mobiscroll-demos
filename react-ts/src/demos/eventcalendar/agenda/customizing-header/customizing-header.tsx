@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, useState, useCallback, useEffect, ChangeEvent } from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -10,6 +10,7 @@ import {
   SegmentedItem,
   MbscCalendarEvent,
   MbscEventcalendarView /* localeImport */,
+  MbscSelectedDateChangeEvent,
 } from '@mobiscroll/react';
 import './customizing-header.css';
 
@@ -18,29 +19,16 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const cal = React.useRef();
-  const [view, setView] = React.useState('schedule');
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [currentDate, setCurrentDate] = React.useState(new Date());
+const App: FC = () => {
+  const [view, setView] = useState('agenda');
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/events/?vers=5',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const [calView, setCalView] = React.useState<MbscEventcalendarView>({
-    schedule: {
-      type: 'week',
-    },
+  const [calView, setCalView] = useState<MbscEventcalendarView>({
+    agenda: { type: 'month' },
   });
 
-  const changeView = (event: any) => {
+  const changeView = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     let view = {};
     switch (event.target.value) {
       case 'calendar':
@@ -50,42 +38,40 @@ const App: React.FC = () => {
           },
         };
         break;
-      case 'schedule':
+      case 'agenda':
         view = {
-          schedule: {
-            type: 'week',
-          },
+          agenda: { type: 'month' },
         };
         break;
     }
 
     setView(event.target.value);
     setCalView(view);
-  };
-
-  const onSelectedDateChange = React.useCallback((event, inst) => {
-    setCurrentDate(event.date);
   }, []);
 
-  const navigateToPrevPage = () => {
+  const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
+    setCurrentDate(args.date as Date);
+  }, []);
+
+  const navigateToPrevPage = useCallback(() => {
     const prevPage = new Date(currentDate);
 
     prevPage.setDate(1);
     prevPage.setMonth(prevPage.getMonth() - 1);
     setCurrentDate(prevPage);
-  };
+  }, [currentDate]);
 
-  const navigateToNextPage = () => {
+  const navigateToNextPage = useCallback(() => {
     const nextPage = new Date(currentDate);
 
     nextPage.setDate(1);
     nextPage.setMonth(nextPage.getMonth() + 1);
     setCurrentDate(nextPage);
-  };
+  }, [currentDate]);
 
-  const customWithNavButtons = () => {
+  const customWithNavButtons = useCallback(() => {
     return (
-      <React.Fragment>
+      <>
         <CalendarNav className="md-custom-header-nav" />
         <div className="md-custom-header-controls">
           <Button onClick={navigateToPrevPage} icon="material-arrow-back" variant="flat" className="md-custom-header-button"></Button>
@@ -94,18 +80,28 @@ const App: React.FC = () => {
         </div>
         <div className="md-custom-header-view">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="schedule" icon="material-list" />
+            <SegmentedItem value="agenda" icon="material-view-day" />
             <SegmentedItem value="calendar" icon="calendar" />
           </SegmentedGroup>
         </div>
-      </React.Fragment>
+      </>
     );
-  };
+  }, [changeView, navigateToNextPage, navigateToPrevPage, view]);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/events/?vers=5',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
 
   return (
     <div className="md-custom-header">
       <Eventcalendar
-        onSelectedDateChange={onSelectedDateChange}
+        onSelectedDateChange={handleSelectedDateChange}
         selectedDate={currentDate}
         renderHeader={customWithNavButtons}
         view={calView}

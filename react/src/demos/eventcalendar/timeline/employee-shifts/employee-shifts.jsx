@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Datepicker,
@@ -10,6 +9,7 @@ import {
   Textarea,
   formatDate /* localeImport */,
 } from '@mobiscroll/react';
+import { useState, useMemo, useCallback } from 'react';
 import './employee-shifts.css';
 
 setOptions({
@@ -233,7 +233,7 @@ const defaultShifts = [
   },
 ];
 
-const slots = [
+const mySlots = [
   {
     id: 1,
     name: 'Morning',
@@ -244,7 +244,7 @@ const slots = [
   },
 ];
 
-const invalid = [
+const myInvalid = [
   {
     start: 'dyndatetime(y,m,d+1,0)',
     end: 'dyndatetime(y,m,d+1,23,59)',
@@ -279,19 +279,19 @@ const responsivePopup = {
 };
 
 function App() {
-  const [shifts, setShifts] = React.useState(defaultShifts);
-  const [tempShift, setTempShift] = React.useState(null);
-  const [start, startRef] = React.useState(null);
-  const [end, endRef] = React.useState(null);
-  const [min, setMinTime] = React.useState('');
-  const [max, setMaxTime] = React.useState('');
-  const [isOpen, setOpen] = React.useState(false);
-  const [isEdit, setEdit] = React.useState(false);
-  const [headerText, setHeader] = React.useState('');
-  const [shiftDate, setDate] = React.useState([]);
-  const [shiftNotes, setNotes] = React.useState('');
+  const [shifts, setShifts] = useState(defaultShifts);
+  const [tempShift, setTempShift] = useState(null);
+  const [start, startRef] = useState(null);
+  const [end, endRef] = useState(null);
+  const [min, setMinTime] = useState('');
+  const [max, setMaxTime] = useState('');
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isEdit, setEdit] = useState(false);
+  const [headerText, setHeader] = useState('');
+  const [shiftDate, setDate] = useState([]);
+  const [shiftNotes, setNotes] = useState('');
 
-  const saveEvent = React.useCallback(() => {
+  const saveEvent = useCallback(() => {
     const start = new Date(shiftDate[0]);
     const end = new Date(shiftDate[1]);
     const newEvent = {
@@ -315,10 +315,10 @@ function App() {
       setShifts([...shifts, newEvent]);
     }
     // close the popup
-    setOpen(false);
+    setPopupOpen(false);
   }, [isEdit, shifts, shiftNotes, tempShift, shiftDate]);
 
-  const deleteEvent = React.useCallback(
+  const deleteEvent = useCallback(
     (event) => {
       setShifts(shifts.filter((item) => item.id !== event.id));
       setTimeout(() => {
@@ -336,29 +336,29 @@ function App() {
     [shifts],
   );
 
-  const loadPopupForm = React.useCallback((event) => {
+  const loadPopupForm = useCallback((event) => {
     setDate([event.start, event.end]);
     setNotes(event.notes);
   }, []);
 
   // handle popup form changes
-  const notesChange = React.useCallback((ev) => {
+  const notesChange = useCallback((ev) => {
     setNotes(ev.target.value);
   }, []);
 
-  const onDeleteClick = React.useCallback(() => {
+  const onDeleteClick = useCallback(() => {
     deleteEvent(tempShift);
-    setOpen(false);
+    setPopupOpen(false);
   }, [deleteEvent, tempShift]);
 
   // scheduler options
-  const onEventClick = React.useCallback(
+  const handleEventClick = useCallback(
     (args) => {
       const event = args.event;
       const resource = staff.find((r) => {
         return r.id === event.resource;
       });
-      const slot = slots.find((s) => {
+      const slot = mySlots.find((s) => {
         return s.id === event.slot;
       });
       setHeader(
@@ -378,15 +378,15 @@ function App() {
       setTempShift({ ...event });
       // fill popup form with event data
       loadPopupForm(event);
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const onEventCreated = React.useCallback(
+  const handleEventCreated = useCallback(
     (args) => {
       const event = args.event;
-      const slot = slots.find((s) => {
+      const slot = mySlots.find((s) => {
         return s.id === event.slot;
       });
       setHeader(
@@ -405,12 +405,12 @@ function App() {
       // fill popup form with event data
       loadPopupForm(event);
       // open the popup
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const onEventDeleted = React.useCallback(
+  const handleEventDeleted = useCallback(
     (args) => {
       deleteEvent(args.event);
     },
@@ -418,7 +418,7 @@ function App() {
   );
 
   // popup options
-  const popupButtons = React.useMemo(() => {
+  const popupButtons = useMemo(() => {
     if (isEdit) {
       return [
         'cancel',
@@ -446,15 +446,15 @@ function App() {
     }
   }, [isEdit, saveEvent]);
 
-  const onClose = React.useCallback(() => {
+  const onPopupClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setShifts([...shifts]);
     }
-    setOpen(false);
+    setPopupOpen(false);
   }, [isEdit, shifts]);
 
-  const extendDefaultEvent = React.useCallback((args) => {
+  const handleExtendDefaultEvent = useCallback((args) => {
     const d = args.start;
     const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), args.slot === 1 ? 7 : 12);
     const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), args.slot === 1 ? 13 : 18);
@@ -467,7 +467,7 @@ function App() {
     };
   }, []);
 
-  const renderMyResource = (resource) => {
+  const renderMyResource = useCallback((resource) => {
     return (
       <div className="employee-shifts-cont">
         <div className="employee-shifts-name">{resource.name}</div>
@@ -475,9 +475,9 @@ function App() {
         <img className="employee-shifts-avatar" src={resource.img} alt="Avatar" />
       </div>
     );
-  };
+  }, []);
 
-  const dateChange = React.useCallback((args) => {
+  const dateChange = useCallback((args) => {
     setDate(args.value);
   }, []);
 
@@ -487,16 +487,16 @@ function App() {
         view={viewSettings}
         data={shifts}
         resources={staff}
-        slots={slots}
-        invalid={invalid}
+        slots={mySlots}
+        invalid={myInvalid}
         dragToCreate={false}
         dragToResize={false}
         dragToMove={true}
         clickToCreate={true}
-        extendDefaultEvent={extendDefaultEvent}
-        onEventClick={onEventClick}
-        onEventCreated={onEventCreated}
-        onEventDeleted={onEventDeleted}
+        extendDefaultEvent={handleExtendDefaultEvent}
+        onEventClick={handleEventClick}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDeleted}
         renderResource={renderMyResource}
         cssClass="md-employee-shifts"
       />
@@ -506,8 +506,8 @@ function App() {
         contentPadding={false}
         headerText={headerText}
         buttons={popupButtons}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isPopupOpen}
+        onClose={onPopupClose}
         responsive={responsivePopup}
         cssClass="employee-shifts-popup"
       >

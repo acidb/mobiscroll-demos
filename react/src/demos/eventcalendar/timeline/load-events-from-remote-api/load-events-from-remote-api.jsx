@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useMemo, useEffect } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,41 +7,50 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const myResources = [
-    {
-      id: 1,
-      name: 'Ryan',
-      color: '#fdf500',
-    },
-    {
-      id: 2,
-      name: 'Kate',
-      color: '#ff4600',
-    },
-    {
-      id: 3,
-      name: 'John',
-      color: '#ff0101',
-    },
-    {
-      id: 4,
-      name: 'Mark',
-      color: '#239a21',
-    },
-    {
-      id: 5,
-      name: 'Sharon',
-      color: '#8f1ed6',
-    },
-    {
-      id: 6,
-      name: 'Ashley',
-      color: '#01adff',
-    },
-  ];
+  const [myEvents, setEvents] = useState([]);
+  const myResources = useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'Ryan',
+        color: '#fdf500',
+      },
+      {
+        id: 2,
+        name: 'Kate',
+        color: '#ff4600',
+      },
+      {
+        id: 3,
+        name: 'John',
+        color: '#ff0101',
+      },
+      {
+        id: 4,
+        name: 'Mark',
+        color: '#239a21',
+      },
+      {
+        id: 5,
+        name: 'Sharon',
+        color: '#8f1ed6',
+      },
+      {
+        id: 6,
+        name: 'Ashley',
+        color: '#01adff',
+      },
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
+  const myView = useMemo(() => {
+    return {
+      timeline: { type: 'day' },
+    };
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/timeline-events/',
       (events) => {
@@ -51,19 +60,11 @@ function App() {
     );
   }, []);
 
-  const view = React.useMemo(() => {
-    return {
-      timeline: { type: 'day' },
-    };
-  }, []);
-
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
       data={myEvents}
-      view={view}
+      view={myView}
       resources={myResources}
     />
   );

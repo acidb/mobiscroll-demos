@@ -20,8 +20,9 @@ function App() {
   const [confirmMessage, setConfirmMessage] = useState('');
   const [toastMessage, setToastMessage] = useState('');
 
-  const { current: myView } = useRef({ agenda: { type: 'month' } });
   const calRef = useRef();
+
+  const myView = useMemo(() => ({ agenda: { type: 'month' } }), []);
 
   const selectData = useMemo(
     () => [

@@ -1,10 +1,15 @@
-import React from 'react';
-import { Eventcalendar, Toast, Button /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, Toast, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useState, useCallback, useMemo } from 'react';
 
 const now = new Date();
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const [myEvents, setEvents] = React.useState([
+  const [myEvents, setEvents] = useState([
     {
       start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
       end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
@@ -13,14 +18,10 @@ function App() {
     },
   ]);
 
-  const [selectedDate, setSelectedDate] = React.useState();
-  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [mySelectedDate, setMySelectedDate] = useState();
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const view = React.useMemo(() => {
+  const myView = useMemo(() => {
     return {
       schedule: {
         type: 'day',
@@ -28,7 +29,11 @@ function App() {
     };
   }, []);
 
-  const addEvent = () => {
+  const closeToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const addEvent = useCallback(() => {
     const newEvent = {
       // base properties
       title: 'Product planning',
@@ -41,20 +46,14 @@ function App() {
       location: 'Office',
     };
 
-    setSelectedDate(new Date(2018, 11, 21));
+    setMySelectedDate(new Date(2018, 11, 21));
     setEvents([...myEvents, newEvent]);
     setToastOpen(true);
-  };
+  }, []);
 
   return (
     <div>
-      <Eventcalendar
-        // theme
-        // locale
-        data={myEvents}
-        view={view}
-        selectedDate={selectedDate}
-      />
+      <Eventcalendar data={myEvents} view={myView} selectedDate={mySelectedDate} />
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>
