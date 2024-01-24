@@ -5,6 +5,7 @@ import {
   CalendarNext,
   CalendarPrev,
   CalendarToday,
+  Confirm,
   Eventcalendar,
   Page,
   setOptions,
@@ -31,6 +32,10 @@ function App() {
   const [primaryCalendarId, setPrimaryCalendarId] = useState();
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [confirmEvent, setConfirmEvent] = useState();
+  const [confirmOldEvent, setConfirmOldEvent] = useState();
+  const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
+  const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const { current: view } = useRef({ calendar: { labels: true } });
   const debounce = useRef();
@@ -45,6 +50,46 @@ function App() {
   const handleToastClose = useCallback(() => {
     setToastOpen(false);
   }, []);
+
+  const handleUpdateConfirmClose = useCallback(
+    (result) => {
+      if (result) {
+        const calendarId = confirmEvent.googleCalendarId;
+        googleCalendarSync
+          .updateEvent(calendarId, confirmEvent)
+          .then(() => {
+            setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
+            setToastOpen(true);
+          })
+          .catch((error) => {
+            setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== confirmEvent.id), confirmOldEvent]);
+            handleError(error);
+          });
+      } else {
+        setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== confirmEvent.id), confirmOldEvent]);
+      }
+      setUpdateConfirmOpen(false);
+    },
+    [calendarData, confirmEvent, confirmOldEvent, handleError],
+  );
+
+  const handleDeleteConfirmClose = useCallback(
+    (result) => {
+      if (result) {
+        const calendarId = confirmEvent.googleCalendarId;
+        googleCalendarSync
+          .deleteEvent(calendarId, confirmEvent)
+          .then(() => {
+            setEvents((oldEvents) => oldEvents.filter((item) => item.id !== confirmEvent.id));
+            setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
+            setToastOpen(true);
+          })
+          .catch(handleError);
+      }
+      setDeleteConfirmOpen(false);
+    },
+    [calendarData, confirmEvent, handleError],
+  );
 
   const handlePageLoading = useCallback(
     (args) => {
@@ -88,62 +133,21 @@ function App() {
     [calendarData, handleError, primaryCalendarId],
   );
 
-  const handleEventUpdate = useCallback(
-    (args) => {
-      if (googleCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to update this event?',
-          message: 'This action will affect your Google Calendar event.',
-          okText: 'Update',
-        }).then((result) => {
-          const event = args.event;
-          if (result) {
-            const calendarId = event.googleCalendarId;
-            googleCalendarSync
-              .updateEvent(calendarId, event)
-              .then(() => {
-                setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
-                setToastOpen(true);
-              })
-              .catch((error) => {
-                setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-                handleError(error);
-              });
-          } else {
-            setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-          }
-        });
-      }
-    },
-    [calendarData, handleError],
-  );
+  const handleEventUpdate = useCallback((args) => {
+    if (googleCalendarSync.isSignedIn()) {
+      setConfirmEvent(args.event);
+      setConfirmOldEvent(args.oldEvent);
+      setUpdateConfirmOpen(true);
+    }
+  }, []);
 
-  const handleEventDelete = useCallback(
-    (args) => {
-      if (googleCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to delete this event?',
-          message: 'This action will remove the event from your Google Calendar as well.',
-          okText: 'Delete',
-        }).then((result) => {
-          if (result) {
-            const event = args.event;
-            const calendarId = event.googleCalendarId;
-            googleCalendarSync
-              .deleteEvent(calendarId, event)
-              .then(() => {
-                setEvents((oldEvents) => oldEvents.filter((item) => item.id !== event.id));
-                setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
-                setToastOpen(true);
-              })
-              .catch(handleError);
-          }
-        });
-      }
-      return false;
-    },
-    [calendarData, handleError],
-  );
+  const handleEventDelete = useCallback((args) => {
+    if (googleCalendarSync.isSignedIn()) {
+      setConfirmEvent(args.event);
+      setUpdateConfirmOpen(true);
+    }
+    return false;
+  }, []);
 
   const extendDefaultEvent = useCallback(() => {
     return {
@@ -326,6 +330,20 @@ function App() {
         />
       </div>
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
+      <Confirm
+        isOpen={isUpdateConfirmOpen}
+        title="Are you sure you want to update this event?"
+        message="This action will affect your Google Calendar event."
+        okText="Update"
+        onClose={handleUpdateConfirmClose}
+      />
+      <Confirm
+        isOpen={isDeleteConfirmOpen}
+        title="Are you sure you want to delete this event?"
+        message="This action will remove the event from your Google Calendar as well."
+        okText="Delete"
+        onClose={handleDeleteConfirmClose}
+      />
     </Page>
   );
 }
