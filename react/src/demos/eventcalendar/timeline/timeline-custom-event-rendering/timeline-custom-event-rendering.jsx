@@ -14,7 +14,8 @@ function App() {
   const myEvents = React.useMemo(() => {
     return [
       {
-        bufferAfter: 20,
+        bufferBefore: 30,
+        bufferAfter: 30,
         start: 'dyndatetime(y,m,d,10,30)',
         end: 'dyndatetime(y,m,d,13)',
         title: 'Tire change',
@@ -24,7 +25,7 @@ function App() {
       },
       {
         bufferAfter: 60,
-        bufferBefore: 20,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,7)',
         end: 'dyndatetime(y,m,d,10)',
         title: 'Brake maintenance',
@@ -33,6 +34,8 @@ function App() {
         resource: 2,
       },
       {
+        bufferAfter: 30,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,13,30)',
         end: 'dyndatetime(y,m,d,16,30)',
         title: 'Fluid maintenance',
@@ -42,7 +45,7 @@ function App() {
       },
       {
         bufferAfter: 30,
-        bufferBefore: 10,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,11)',
         end: 'dyndatetime(y,m,d,14)',
         title: 'Oil change',
@@ -55,14 +58,14 @@ function App() {
         bufferBefore: 30,
         start: 'dyndatetime(y,m,d,8)',
         end: 'dyndatetime(y,m,d,12)',
-        title: 'Engine inspection',
+        title: 'Engine repair',
         color: '#6c5d45',
         taskType: 'material-search',
         resource: 3,
       },
       {
         bufferAfter: 45,
-        bufferBefore: 20,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,14)',
         end: 'dyndatetime(y,m,d,19)',
         title: 'Car painting',
@@ -110,6 +113,26 @@ function App() {
     );
   });
 
+  const myBeforeBuffer = React.useCallback((data) => {
+    const color = data.event.color;
+
+    return (
+      <div className="md-buffer md-before-buffer" style={{background: color}}>
+        Car arrival
+      </div>
+    );
+  });
+
+  const myAfterBuffer = React.useCallback((data) => {
+    const color = data.event.color;
+
+    return (
+      <div className="md-buffer md-after-buffer" style={{background: color}}>
+        Final inspection
+      </div>
+    );
+  });
+
   const myDefaultEvent = React.useCallback(() => {
     return {
       taskType: 'cogs',
@@ -124,6 +147,8 @@ function App() {
       data={myEvents}
       resources={myResources}
       renderScheduleEvent={myScheduleEvent}
+      renderBufferBefore={myBeforeBuffer}
+      renderBufferAfter={myAfterBuffer}
       extendDefaultEvent={myDefaultEvent}
       cssClass="md-timeline-template"
     />

@@ -43,6 +43,20 @@ export default {
               '</span></div></div>'
             );
           },
+          renderBufferBefore: function (data) {
+            var color = data.event.color;
+        
+            return `<div class="md-buffer md-before-buffer" style="background: ${color}">
+               Car arrival
+            </div>`;
+          },
+          renderBufferAfter: function (data) {
+            var color = data.event.color;
+        
+            return `<div class="md-buffer md-after-buffer" style="background: ${color}">
+                Final inspection
+            </div>`;
+          },
           extendDefaultEvent: function () {
             return {
               taskType: 'cogs',
@@ -50,6 +64,8 @@ export default {
           },
           data: [
             {
+              bufferBefore: 30,
+              bufferAfter: 30,
               start: 'dyndatetime(y,m,d,10,30)',
               end: 'dyndatetime(y,m,d,13)',
               title: 'Tire change',
@@ -58,6 +74,8 @@ export default {
               resource: 1,
             },
             {
+              bufferAfter: 60,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,7)',
               end: 'dyndatetime(y,m,d,10)',
               title: 'Brake maintenance',
@@ -66,6 +84,8 @@ export default {
               resource: 2,
             },
             {
+              bufferAfter: 30,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,13,30)',
               end: 'dyndatetime(y,m,d,16,30)',
               title: 'Fluid maintenance',
@@ -74,6 +94,8 @@ export default {
               resource: 1,
             },
             {
+              bufferAfter: 30,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,11)',
               end: 'dyndatetime(y,m,d,14)',
               title: 'Oil change',
@@ -82,14 +104,18 @@ export default {
               resource: 3,
             },
             {
+              bufferAfter: 60,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,8)',
               end: 'dyndatetime(y,m,d,12)',
-              title: 'Engine inspection',
+              title: 'Engine repair',
               color: '#6c5d45',
               taskType: 'material-search',
               resource: 3,
             },
             {
+              bufferAfter: 45,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,14)',
               end: 'dyndatetime(y,m,d,19)',
               title: 'Car painting',
@@ -154,16 +180,34 @@ export default {
     box-sizing: content-box;
 }
 
-.mbsc-timeline-event-start .md-timeline-template-event,
-.mbsc-timeline-event-start .md-timeline-template-event-cont,
-.mbsc-timeline-event-start .md-timeline-template-event-cont .mbsc-icon {
+
+.md-timeline-template .mbsc-timeline-event-buffer {
+   overflow: visible; 
+   opacity: 1; 
+   background: transparent;
+}
+
+.md-buffer {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    font-size: 10px;
+    top: 2px;
+    bottom: 2px;
+    color: #fff;
+    padding: 0 8px;
+    align-items: center;
+    justify-content: center;
+    opacity: .5;
+    box-sizing: border-box;
+}
+
+.md-before-buffer {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
 }
 
-.mbsc-timeline-event-end .md-timeline-template-event,
-.mbsc-timeline-event-end .md-timeline-template-event-cont,
-.mbsc-timeline-event-end .md-timeline-template-event-cont .mbsc-icon {
+.md-after-buffer {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
