@@ -11,34 +11,34 @@ export default {
 
     $(function () {
       var dateInstance = $('#demo-date')
-          .mobiscroll()
-          .datepicker({
-            controls: ['calendar'],
-            onChange: function (event, inst) {
-              updateValue('returnVal', inst);
-            },
-          })
-          .mobiscroll('getInst'),
-        isoInstance = $('#demo-iso')
-          .mobiscroll()
-          .datepicker({
-            controls: ['calendar'],
-            returnFormat: 'iso8601',
-            onChange: function (event, inst) {
-              updateValue('returnISO', inst);
-            },
-          })
-          .mobiscroll('getInst'),
-        momentInstance = $('#demo-moment')
-          .mobiscroll()
-          .datepicker({
-            controls: ['calendar'],
-            returnFormat: 'moment',
-            onChange: function (event, inst) {
-              updateValue('returnMoment', inst);
-            },
-          })
-          .mobiscroll('getInst');
+        .mobiscroll()
+        .datepicker({
+          controls: ['calendar'],
+          onChange: function (event, inst) {
+            updateValue('returnVal', inst);
+          },
+        })
+        .mobiscroll('getInst');
+      var isoInstance = $('#demo-iso')
+        .mobiscroll()
+        .datepicker({
+          controls: ['calendar'],
+          returnFormat: 'iso8601',
+          onChange: function (event, inst) {
+            updateValue('returnISO', inst);
+          },
+        })
+        .mobiscroll('getInst');
+      var momentInstance = $('#demo-moment')
+        .mobiscroll()
+        .datepicker({
+          controls: ['calendar'],
+          returnFormat: 'moment',
+          onChange: function (event, inst) {
+            updateValue('returnMoment', inst);
+          },
+        })
+        .mobiscroll('getInst');
 
       $('#setDate').click(function () {
         $('#demo-date').mobiscroll('setVal', new Date(2020, 10, 15, 10, 45), true);

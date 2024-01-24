@@ -42,8 +42,8 @@ export default {
     );
 
     function getFirstDayOfWeek(d, prev) {
-      var day = d.getDay(),
-        diff = d.getDate() - day + (prev ? -7 : 7);
+      var day = d.getDay();
+      var diff = d.getDate() - day + (prev ? -7 : 7);
       return new Date(d.setDate(diff));
     }
 

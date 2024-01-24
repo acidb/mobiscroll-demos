@@ -18,9 +18,9 @@ export default {
             schedule: { type: 'day' },
           },
           onPageLoading: function (event, inst) {
-            var year = event.firstDay.getFullYear(),
-              month = event.firstDay.getMonth(),
-              day = event.firstDay.getDate();
+            var year = event.firstDay.getFullYear();
+            var month = event.firstDay.getMonth();
+            var day = event.firstDay.getDate();
 
             $.getJSON(
               'https://trial.mobiscroll.com/weeklyevents/?year=' + year + '&month=' + month + '&day=' + day + '&callback=?',

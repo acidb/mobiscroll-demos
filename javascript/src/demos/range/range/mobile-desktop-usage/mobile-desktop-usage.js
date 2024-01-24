@@ -7,8 +7,8 @@ export default {
       // theme
     });
 
-    var now = new Date(),
-      week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
+    var now = new Date();
+    var week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
 
     mobiscroll.datepicker('#demo-mobile-picker-input', {
       controls: ['calendar'],

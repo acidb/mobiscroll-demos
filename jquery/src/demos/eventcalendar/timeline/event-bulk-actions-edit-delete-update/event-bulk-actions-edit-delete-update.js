@@ -9,7 +9,10 @@ export default {
     });
 
     $(function () {
-      var confirmOpen, firstDay, lastDay, selectedEvent;
+      var confirmOpen;
+      var firstDay;
+      var lastDay;
+      var selectedEvent;
       var formatDate = mobiscroll.formatDate;
 
       function getSelectedEventTitles(events) {

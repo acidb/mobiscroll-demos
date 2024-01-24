@@ -9,22 +9,22 @@ export default {
     });
 
     $(function () {
-      var now = new Date(),
-        curr = new Date(),
-        yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1),
-        startWeek = new Date(curr.setDate(curr.getDate() - curr.getDay())),
-        endWeek = new Date(curr.setDate(curr.getDate() - curr.getDay() + 6)),
-        startMonth = new Date(curr.getFullYear(), curr.getMonth() - 1, 1),
-        endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0),
-        inst = $('#demo')
-          .mobiscroll()
-          .datepicker({
-            controls: ['calendar'],
-            select: 'range',
-            display: 'inline',
-            showRangeLabels: false,
-          })
-          .mobiscroll('getInst');
+      var now = new Date();
+      var curr = new Date();
+      var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+      var startWeek = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+      var endWeek = new Date(curr.setDate(curr.getDate() - curr.getDay() + 6));
+      var startMonth = new Date(curr.getFullYear(), curr.getMonth() - 1, 1);
+      var endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0);
+      var inst = $('#demo')
+        .mobiscroll()
+        .datepicker({
+          controls: ['calendar'],
+          select: 'range',
+          display: 'inline',
+          showRangeLabels: false,
+        })
+        .mobiscroll('getInst');
 
       $('.md-today').on('click', function () {
         mobiscroll.toast({

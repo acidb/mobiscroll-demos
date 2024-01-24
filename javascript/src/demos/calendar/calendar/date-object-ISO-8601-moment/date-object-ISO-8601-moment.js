@@ -9,24 +9,24 @@ export default {
     });
 
     var dateInstance = mobiscroll.datepicker('#demo-date', {
-        controls: ['calendar'],
-        onChange: function (event, inst) {
-          updateValue('returnVal', inst);
-        },
-      }),
-      isoInstance = mobiscroll.datepicker('#demo-iso', {
-        controls: ['calendar'],
-        returnFormat: 'iso8601',
-        onChange: function (event, inst) {
-          updateValue('returnISO', inst);
-        },
-      }),
-      momentInstance = mobiscroll.datepicker('#demo-moment', {
-        returnFormat: 'moment',
-        onChange: function (event, inst) {
-          updateValue('returnMoment', inst);
-        },
-      });
+      controls: ['calendar'],
+      onChange: function (event, inst) {
+        updateValue('returnVal', inst);
+      },
+    });
+    var isoInstance = mobiscroll.datepicker('#demo-iso', {
+      controls: ['calendar'],
+      returnFormat: 'iso8601',
+      onChange: function (event, inst) {
+        updateValue('returnISO', inst);
+      },
+    });
+    var momentInstance = mobiscroll.datepicker('#demo-moment', {
+      returnFormat: 'moment',
+      onChange: function (event, inst) {
+        updateValue('returnMoment', inst);
+      },
+    });
 
     document.getElementById('setDate').addEventListener(
       'click',

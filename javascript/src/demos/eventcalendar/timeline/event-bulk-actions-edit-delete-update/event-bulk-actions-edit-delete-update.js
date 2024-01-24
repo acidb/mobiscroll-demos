@@ -7,7 +7,10 @@ export default {
       // theme
     });
 
-    var confirmOpen, firstDay, lastDay, selectedEvent;
+    var confirmOpen;
+    var firstDay;
+    var lastDay;
+    var selectedEvent;
     var formatDate = mobiscroll.formatDate;
     var listElm = document.createElement('ul');
     document.getElementById('selected-event-list').append(listElm);

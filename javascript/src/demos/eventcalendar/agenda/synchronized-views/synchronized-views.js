@@ -7,7 +7,8 @@ export default {
       // theme
     });
 
-    var monthInst, dayInst;
+    var monthInst;
+    var dayInst;
 
     monthInst = mobiscroll.eventcalendar('#demo-month', {
       view: {

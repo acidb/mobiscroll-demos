@@ -74,15 +74,15 @@ export default {
         });
 
       function getPrices(d, callback) {
-        var invalid = [],
-          labels = [];
+        var invalid = [];
+        var labels = [];
 
         mobiscroll.getJson(
           'https://trial.mobiscroll.com/getprices/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
           function (bookings) {
             for (var i = 0; i < bookings.length; ++i) {
-              var booking = bookings[i],
-                d = new Date(booking.d);
+              var booking = bookings[i];
+              var d = new Date(booking.d);
 
               if (booking.price > 0) {
                 labels.push({
@@ -129,15 +129,15 @@ export default {
       }
 
       function getBookings(d, callback) {
-        var invalid = [],
-          labels = [];
+        var invalid = [];
+        var labels = [];
 
         mobiscroll.getJson(
           'https://trial.mobiscroll.com/getbookings/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
           function (bookings) {
             for (var i = 0; i < bookings.length; ++i) {
-              var booking = bookings[i],
-                d = new Date(booking.d);
+              var booking = bookings[i];
+              var d = new Date(booking.d);
 
               if (booking.nr > 0) {
                 labels.push({

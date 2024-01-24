@@ -15,7 +15,8 @@ export default {
     var CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
     var cont = document.getElementById('demo-google-calendar-cont');
     var view = 'week';
-    var firstDay, lastDay;
+    var firstDay;
+    var lastDay;
 
     googleCalendarSync.init({
       apiKey: '<YOUR_GOOGLE_API_KEY>',

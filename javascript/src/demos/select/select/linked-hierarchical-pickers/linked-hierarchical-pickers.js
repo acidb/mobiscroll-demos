@@ -7,7 +7,8 @@ export default {
       // theme
     });
 
-    var divisionInst, subdivisionInst;
+    var divisionInst;
+    var subdivisionInst;
     var divisionElm = document.getElementById('demo-hierarchical-pickers-division');
     var subdivisionElm = document.getElementById('demo-hierarchical-pickers-subdivision');
     var regions = [

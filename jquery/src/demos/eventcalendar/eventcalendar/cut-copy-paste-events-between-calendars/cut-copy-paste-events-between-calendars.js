@@ -18,10 +18,13 @@ export default {
       var cutEvents = [];
       var pastedEvents = [];
       var today = new Date();
-      var toDate, originDate;
+      var toDate;
+      var originDate;
       var firstToDate = today;
       var secondToDate = today;
-      var activeInst, originInst, cutInst;
+      var activeInst;
+      var originInst;
+      var cutInst;
       var menuOpen;
       var action;
       var menuData = [

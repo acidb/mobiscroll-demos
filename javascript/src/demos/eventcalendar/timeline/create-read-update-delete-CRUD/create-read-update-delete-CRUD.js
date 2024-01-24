@@ -7,78 +7,78 @@ export default {
       // theme
     });
 
-    var calendar,
-      popup,
-      range,
-      oldEvent,
-      tempEvent = {},
-      deleteEvent,
-      restoreEvent,
-      colorPicker,
-      tempColor,
-      titleInput = document.getElementById('event-title'),
-      descriptionTextarea = document.getElementById('event-desc'),
-      allDaySwitch = document.getElementById('event-all-day'),
-      freeSegmented = document.getElementById('event-status-free'),
-      busySegmented = document.getElementById('event-status-busy'),
-      deleteButton = document.getElementById('event-delete'),
-      colorSelect = document.getElementById('event-color-picker'),
-      pickedColor = document.getElementById('event-color'),
-      colorElms = document.querySelectorAll('.crud-color-c'),
-      datePickerResponsive = {
-        medium: {
-          controls: ['calendar'],
-          touchUi: false,
-        },
+    var calendar;
+    var popup;
+    var range;
+    var oldEvent;
+    var tempEvent = {};
+    var deleteEvent;
+    var restoreEvent;
+    var colorPicker;
+    var tempColor;
+    var titleInput = document.getElementById('event-title');
+    var descriptionTextarea = document.getElementById('event-desc');
+    var allDaySwitch = document.getElementById('event-all-day');
+    var freeSegmented = document.getElementById('event-status-free');
+    var busySegmented = document.getElementById('event-status-busy');
+    var deleteButton = document.getElementById('event-delete');
+    var colorSelect = document.getElementById('event-color-picker');
+    var pickedColor = document.getElementById('event-color');
+    var colorElms = document.querySelectorAll('.crud-color-c');
+    var datePickerResponsive = {
+      medium: {
+        controls: ['calendar'],
+        touchUi: false,
       },
-      datetimePickerResponsive = {
-        medium: {
-          controls: ['calendar', 'time'],
-          touchUi: false,
-        },
+    };
+    var datetimePickerResponsive = {
+      medium: {
+        controls: ['calendar', 'time'],
+        touchUi: false,
       },
-      myData = [
-        {
-          id: 1,
-          start: 'dyndatetime(y,m,d,13)',
-          end: 'dyndatetime(y,m,d,15)',
-          title: "Lunch @ Butcher's",
-          description: '',
-          allDay: false,
-          free: true,
-          resource: 3,
-        },
-        {
-          id: 2,
-          start: 'dyndatetime(y,m,d,14)',
-          end: 'dyndatetime(y,m,d,16)',
-          title: 'General orientation',
-          description: '',
-          allDay: false,
-          free: false,
-          resource: 5,
-        },
-        {
-          id: 3,
-          start: 'dyndatetime(y,m,d,18)',
-          end: 'dyndatetime(y,m,d,22)',
-          title: 'Dexter BD',
-          description: '',
-          allDay: false,
-          free: true,
-          resource: 4,
-        },
-        {
-          id: 4,
-          start: 'dyndatetime(y,m,d,10,30)',
-          end: 'dyndatetime(y,m,d,13)',
-          title: 'Stakeholder mtg.',
-          description: '',
-          allDay: false,
-          free: false,
-          resource: 1,
-        },
-      ];
+    };
+    var myData = [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,15)',
+        title: "Lunch @ Butcher's",
+        description: '',
+        allDay: false,
+        free: true,
+        resource: 3,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,16)',
+        title: 'General orientation',
+        description: '',
+        allDay: false,
+        free: false,
+        resource: 5,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m,d,18)',
+        end: 'dyndatetime(y,m,d,22)',
+        title: 'Dexter BD',
+        description: '',
+        allDay: false,
+        free: true,
+        resource: 4,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m,d,10,30)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Stakeholder mtg.',
+        description: '',
+        allDay: false,
+        free: false,
+        resource: 1,
+      },
+    ];
 
     var myResources = [
       {

@@ -2,24 +2,24 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 
 export default {
   init() {
-    var now = new Date(),
-      cal = mobiscroll.eventcalendar('#demo', {
-        // locale,
-        // theme,
-        view: {
-          agenda: {
-            type: 'month',
-          },
+    var now = new Date();
+    var cal = mobiscroll.eventcalendar('#demo', {
+      // locale,
+      // theme,
+      view: {
+        agenda: {
+          type: 'month',
         },
-        data: [
-          {
-            start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
-            end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
-            title: 'General orientation',
-            color: '#35bb5a',
-          },
-        ],
-      });
+      },
+      data: [
+        {
+          start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
+          end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
+          title: 'General orientation',
+          color: '#35bb5a',
+        },
+      ],
+    });
 
     document.getElementById('add-event').addEventListener('click', function () {
       var newEvent = {

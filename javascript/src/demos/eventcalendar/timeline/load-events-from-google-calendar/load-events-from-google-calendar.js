@@ -24,7 +24,8 @@ export default {
     var calendarIds = calendars.map(function (cal) {
       return cal.id;
     });
-    var firstDay, lastDay;
+    var firstDay;
+    var lastDay;
 
     googleCalendarSync.init({
       apiKey: '<YOUR_GOOGLE_API_KEY>',

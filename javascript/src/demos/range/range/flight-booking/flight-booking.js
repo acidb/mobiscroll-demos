@@ -7,9 +7,9 @@ export default {
       // theme
     });
 
-    var now = new Date(),
-      min = now,
-      max = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
+    var now = new Date();
+    var min = now;
+    var max = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
 
     mobiscroll.datepicker('#demo-flight-booking-single', {
       controls: ['calendar'],

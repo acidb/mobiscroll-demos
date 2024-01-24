@@ -11,19 +11,19 @@ export default {
       return cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
-    var calendar,
-      popup,
-      range,
-      oldEvent,
-      tempEvent = {},
-      deleteEvent,
-      restoreEvent,
-      titleInput = document.getElementById('work-order-title'),
-      locationInput = document.getElementById('work-order-location'),
-      billInput = document.getElementById('work-order-bill'),
-      notesTextarea = document.getElementById('work-order-notes'),
-      deleteButton = document.getElementById('work-order-delete'),
-      resourceCont = document.getElementById('work-order-resources');
+    var calendar;
+    var popup;
+    var range;
+    var oldEvent;
+    var tempEvent = {};
+    var deleteEvent;
+    var restoreEvent;
+    var titleInput = document.getElementById('work-order-title');
+    var locationInput = document.getElementById('work-order-location');
+    var billInput = document.getElementById('work-order-bill');
+    var notesTextarea = document.getElementById('work-order-notes');
+    var deleteButton = document.getElementById('work-order-delete');
+    var resourceCont = document.getElementById('work-order-resources');
 
     var myResources = [
       {

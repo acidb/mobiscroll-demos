@@ -7,8 +7,8 @@ export default {
       // theme
     });
 
-    var now = new Date(),
-      until = new Date(now.getFullYear() + 10, now.getMonth());
+    var now = new Date();
+    var until = new Date(now.getFullYear() + 10, now.getMonth());
 
     mobiscroll.datepicker('#picker', {
       controls: ['date'],

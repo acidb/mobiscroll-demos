@@ -9,7 +9,8 @@ export default {
     });
 
     $(function () {
-      var divisionInst, subdivisionInst;
+      var divisionInst;
+      var subdivisionInst;
       var $region = $('#demo-hierarchical-pickers-region');
       var $division = $('#demo-hierarchical-pickers-division');
       var $subdivision = $('#demo-hierarchical-pickers-subdivision');

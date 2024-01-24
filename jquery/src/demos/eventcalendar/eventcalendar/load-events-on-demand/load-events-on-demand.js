@@ -20,8 +20,8 @@ export default {
             },
           },
           onPageLoading: function (event, inst) {
-            var year = event.month.getFullYear(),
-              month = event.month.getMonth();
+            var year = event.month.getFullYear();
+            var month = event.month.getMonth();
 
             $.getJSON(
               'https://trial.mobiscroll.com/monthlyevents/?year=' + year + '&month=' + month + '&vers=5' + '&callback=?',

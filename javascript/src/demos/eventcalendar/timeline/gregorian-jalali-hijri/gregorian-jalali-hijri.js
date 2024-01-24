@@ -2,7 +2,9 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 
 export default {
   init() {
-    var gregorian, jalali, hijri;
+    var gregorian;
+    var jalali;
+    var hijri;
     var myResources = [
       {
         id: 1,

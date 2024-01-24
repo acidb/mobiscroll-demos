@@ -9,8 +9,12 @@ export default {
     });
 
     $(function () {
-      var allLabels, nrLabels, fitLabels;
-      var allLabelsWeeks, nrLabelsWeeks, labelsWeek;
+      var allLabels;
+      var nrLabels;
+      var fitLabels;
+      var allLabelsWeeks;
+      var nrLabelsWeeks;
+      var labelsWeek;
 
       allLabels = $('#demo-labels-all')
         .mobiscroll()

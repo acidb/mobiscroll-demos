@@ -10,7 +10,8 @@ export default {
 
     $(function () {
       var formatDate = mobiscroll.formatDate;
-      var startDate, endDate;
+      var startDate;
+      var endDate;
 
       var myCalendar = $('#demo-custom-range-view')
         .mobiscroll()

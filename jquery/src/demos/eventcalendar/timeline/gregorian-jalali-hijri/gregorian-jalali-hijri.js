@@ -8,7 +8,9 @@ export default {
     });
 
     $(function () {
-      var gregorian, jalali, hijri;
+      var gregorian;
+      var jalali;
+      var hijri;
       var myResources = [
         {
           id: 1,

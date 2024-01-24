@@ -9,26 +9,26 @@ export default {
     });
 
     $(function () {
-      var now = new Date(),
-        cal = $('#demo')
-          .mobiscroll()
-          .eventcalendar({
-            // drag,
-            view: {
-              calendar: {
-                labels: true,
-              },
+      var now = new Date();
+      var cal = $('#demo')
+        .mobiscroll()
+        .eventcalendar({
+          // drag,
+          view: {
+            calendar: {
+              labels: true,
             },
-            data: [
-              {
-                start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
-                end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
-                title: 'General orientation',
-                color: '#35bb5a',
-              },
-            ],
-          })
-          .mobiscroll('getInst');
+          },
+          data: [
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
+              end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
+              title: 'General orientation',
+              color: '#35bb5a',
+            },
+          ],
+        })
+        .mobiscroll('getInst');
 
       $('#add-event').on('click', function () {
         var newEvent = {

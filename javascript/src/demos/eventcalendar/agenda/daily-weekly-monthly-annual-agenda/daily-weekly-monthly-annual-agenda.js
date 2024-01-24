@@ -7,7 +7,9 @@ export default {
       // theme
     });
 
-    var daily, weekly, monthly;
+    var daily;
+    var weekly;
+    var monthly;
 
     daily = mobiscroll.eventcalendar('#demo-agenda-daily', {
       view: {

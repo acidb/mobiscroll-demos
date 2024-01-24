@@ -12,150 +12,150 @@ export default {
       function getCostString(cost) {
         return cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       }
-      var calendar,
-        popup,
-        range,
-        oldEvent,
-        tempEvent = {},
-        deleteEvent,
-        restoreEvent,
-        $title = $('#work-order-title'),
-        $location = $('#work-order-location'),
-        $bill = $('#work-order-bill'),
-        $notes = $('#work-order-notes'),
-        $deleteButton = $('#work-order-delete'),
-        $resources = $('#work-order-resources'),
-        myResources = [
-          {
-            id: 'contractors',
-            name: 'Contractors',
-            collapsed: true,
-            eventCreation: false,
-            children: [
-              {
-                id: 'builders',
-                name: 'Builders',
-                eventCreation: false,
-                children: [
-                  {
-                    id: 'b1',
-                    name: 'Jude Chester',
-                  },
-                  {
-                    id: 'b2',
-                    name: 'Willis Kane',
-                  },
-                ],
-              },
-              {
-                id: 'carpenters',
-                name: 'Carpenters',
-                eventCreation: false,
-                children: [
-                  {
-                    id: 'c1',
-                    name: 'Derek Austyn',
-                  },
-                  {
-                    id: 'c2',
-                    name: 'Merv Kenny',
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: 'employees',
-            name: 'Employees',
-            eventCreation: false,
-            children: [
-              {
-                id: 'cement_masons',
-                name: 'Cement masons',
-                eventCreation: false,
-                children: [
-                  {
-                    id: 'ce1',
-                    name: 'Ford Kaiden',
-                  },
-                  {
-                    id: 'ce2',
-                    name: 'Jewell Ryder',
-                  },
-                ],
-              },
-              {
-                id: 'divers',
-                name: 'Drivers',
-                eventCreation: false,
-                children: [
-                  {
-                    id: 'd1',
-                    name: 'Fred Valdez',
-                  },
-                  {
-                    id: 'd2',
-                    name: 'Jon Drake',
-                  },
-                  {
-                    id: 'd3',
-                    name: 'Lou Andie',
-                  },
-                  {
-                    id: 'd4',
-                    name: 'Leon Porter',
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            id: 'equipment',
-            name: 'Equipment',
-            collapsed: true,
-            eventCreation: false,
-            children: [
-              {
-                id: 'concrete_mixers',
-                name: 'Concrete mixers',
-                eventCreation: false,
-                children: [
-                  {
-                    id: 'cm1',
-                    name: 'AL 45 RFT',
-                  },
-                  {
-                    id: 'cm2',
-                    name: 'KQ 62 PVZ',
-                  },
-                  {
-                    id: 'cm3',
-                    name: 'RG 91 ZAL',
-                  },
-                  {
-                    id: 'cm4',
-                    name: 'XF 83 GFM',
-                  },
-                ],
-              },
-              {
-                id: 'concrete_pumps',
-                name: 'Concrete pumps',
-                eventCreation: false,
-                children: [
-                  {
-                    id: 'cp1',
-                    name: 'GF 61 BVM',
-                  },
-                  {
-                    id: 'cp2',
-                    name: 'YC 55 ECT',
-                  },
-                ],
-              },
-            ],
-          },
-        ];
+      var calendar;
+      var popup;
+      var range;
+      var oldEvent;
+      var tempEvent = {};
+      var deleteEvent;
+      var restoreEvent;
+      var $title = $('#work-order-title');
+      var $location = $('#work-order-location');
+      var $bill = $('#work-order-bill');
+      var $notes = $('#work-order-notes');
+      var $deleteButton = $('#work-order-delete');
+      var $resources = $('#work-order-resources');
+      var myResources = [
+        {
+          id: 'contractors',
+          name: 'Contractors',
+          collapsed: true,
+          eventCreation: false,
+          children: [
+            {
+              id: 'builders',
+              name: 'Builders',
+              eventCreation: false,
+              children: [
+                {
+                  id: 'b1',
+                  name: 'Jude Chester',
+                },
+                {
+                  id: 'b2',
+                  name: 'Willis Kane',
+                },
+              ],
+            },
+            {
+              id: 'carpenters',
+              name: 'Carpenters',
+              eventCreation: false,
+              children: [
+                {
+                  id: 'c1',
+                  name: 'Derek Austyn',
+                },
+                {
+                  id: 'c2',
+                  name: 'Merv Kenny',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: 'employees',
+          name: 'Employees',
+          eventCreation: false,
+          children: [
+            {
+              id: 'cement_masons',
+              name: 'Cement masons',
+              eventCreation: false,
+              children: [
+                {
+                  id: 'ce1',
+                  name: 'Ford Kaiden',
+                },
+                {
+                  id: 'ce2',
+                  name: 'Jewell Ryder',
+                },
+              ],
+            },
+            {
+              id: 'divers',
+              name: 'Drivers',
+              eventCreation: false,
+              children: [
+                {
+                  id: 'd1',
+                  name: 'Fred Valdez',
+                },
+                {
+                  id: 'd2',
+                  name: 'Jon Drake',
+                },
+                {
+                  id: 'd3',
+                  name: 'Lou Andie',
+                },
+                {
+                  id: 'd4',
+                  name: 'Leon Porter',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: 'equipment',
+          name: 'Equipment',
+          collapsed: true,
+          eventCreation: false,
+          children: [
+            {
+              id: 'concrete_mixers',
+              name: 'Concrete mixers',
+              eventCreation: false,
+              children: [
+                {
+                  id: 'cm1',
+                  name: 'AL 45 RFT',
+                },
+                {
+                  id: 'cm2',
+                  name: 'KQ 62 PVZ',
+                },
+                {
+                  id: 'cm3',
+                  name: 'RG 91 ZAL',
+                },
+                {
+                  id: 'cm4',
+                  name: 'XF 83 GFM',
+                },
+              ],
+            },
+            {
+              id: 'concrete_pumps',
+              name: 'Concrete pumps',
+              eventCreation: false,
+              children: [
+                {
+                  id: 'cp1',
+                  name: 'GF 61 BVM',
+                },
+                {
+                  id: 'cp2',
+                  name: 'YC 55 ECT',
+                },
+              ],
+            },
+          ],
+        },
+      ];
 
       calendar = $('#demo-work-order-scheduling')
         .mobiscroll()

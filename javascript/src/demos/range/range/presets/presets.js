@@ -7,19 +7,19 @@ export default {
       // theme
     });
 
-    var now = new Date(),
-      curr = new Date(),
-      yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1),
-      startWeek = new Date(curr.setDate(curr.getDate() - curr.getDay())),
-      endWeek = new Date(curr.setDate(curr.getDate() - curr.getDay() + 6)),
-      startMonth = new Date(curr.getFullYear(), curr.getMonth() - 1, 1),
-      endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0),
-      inst = mobiscroll.datepicker('#demo', {
-        controls: ['calendar'],
-        select: 'range',
-        display: 'inline',
-        showRangeLabels: false,
-      });
+    var now = new Date();
+    var curr = new Date();
+    var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+    var startWeek = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+    var endWeek = new Date(curr.setDate(curr.getDate() - curr.getDay() + 6));
+    var startMonth = new Date(curr.getFullYear(), curr.getMonth() - 1, 1);
+    var endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0);
+    var inst = mobiscroll.datepicker('#demo', {
+      controls: ['calendar'],
+      select: 'range',
+      display: 'inline',
+      showRangeLabels: false,
+    });
 
     document.querySelector('.md-today').addEventListener('click', function () {
       mobiscroll.toast({

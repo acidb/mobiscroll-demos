@@ -9,34 +9,34 @@ export default {
     });
 
     $(function () {
-      var currentDate = new Date(),
-        view = 'schedule',
-        calendar = $('#demo-custom-header')
-          .mobiscroll()
-          .eventcalendar({
-            // drag,
-            view: {
-              schedule: { type: 'week' },
-            },
-            onSelectedDateChange: function (event) {
-              currentDate = event.date;
-            },
-            renderHeader: function () {
-              return (
-                '<div mbsc-calendar-nav class="md-custom-header-nav"></div>' +
-                '<div class="md-custom-header-controls">' +
-                '<button id="nav-to-prev-page" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="md-custom-header-button"></button>' +
-                '<div mbsc-calendar-today class="md-custom-header-today"></div>' +
-                '<button id="nav-to-next-page" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="md-custom-header-button"></button>' +
-                '</div>' +
-                '<div class="md-custom-header-view">' +
-                '<label><input data-icon="material-list" mbsc-segmented type="radio" name="custom-header-view" value="schedule" class="md-custom-header-view-change" checked></label>' +
-                '<label><input data-icon="calendar" mbsc-segmented type="radio" name="custom-header-view" value="calendar" class="md-custom-header-view-change"></label>' +
-                '</div>'
-              );
-            },
-          })
-          .mobiscroll('getInst');
+      var currentDate = new Date();
+      var view = 'schedule';
+      var calendar = $('#demo-custom-header')
+        .mobiscroll()
+        .eventcalendar({
+          // drag,
+          view: {
+            schedule: { type: 'week' },
+          },
+          onSelectedDateChange: function (event) {
+            currentDate = event.date;
+          },
+          renderHeader: function () {
+            return (
+              '<div mbsc-calendar-nav class="md-custom-header-nav"></div>' +
+              '<div class="md-custom-header-controls">' +
+              '<button id="nav-to-prev-page" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="md-custom-header-button"></button>' +
+              '<div mbsc-calendar-today class="md-custom-header-today"></div>' +
+              '<button id="nav-to-next-page" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="md-custom-header-button"></button>' +
+              '</div>' +
+              '<div class="md-custom-header-view">' +
+              '<label><input data-icon="material-list" mbsc-segmented type="radio" name="custom-header-view" value="schedule" class="md-custom-header-view-change" checked></label>' +
+              '<label><input data-icon="calendar" mbsc-segmented type="radio" name="custom-header-view" value="calendar" class="md-custom-header-view-change"></label>' +
+              '</div>'
+            );
+          },
+        })
+        .mobiscroll('getInst');
 
       $.getJSON(
         'https://trial.mobiscroll.com/events/?vers=5&callback=?',
@@ -47,8 +47,8 @@ export default {
       );
 
       function getFirstDayOfWeek(d, prev) {
-        var day = d.getDay(),
-          diff = d.getDate() - day + (prev ? -7 : 7);
+        var day = d.getDay();
+        var diff = d.getDate() - day + (prev ? -7 : 7);
         return new Date(d.setDate(diff));
       }
 

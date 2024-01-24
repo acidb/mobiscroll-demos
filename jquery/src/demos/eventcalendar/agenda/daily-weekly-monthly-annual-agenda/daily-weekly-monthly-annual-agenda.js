@@ -9,7 +9,9 @@ export default {
     });
 
     $(function () {
-      var daily, weekly, monthly;
+      var daily;
+      var weekly;
+      var monthly;
 
       daily = $('#demo-agenda-daily')
         .mobiscroll()

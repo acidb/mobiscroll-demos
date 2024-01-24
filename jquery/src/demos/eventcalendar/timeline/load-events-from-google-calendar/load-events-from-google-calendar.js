@@ -26,7 +26,9 @@ export default {
       var calendarIds = calendars.map(function (cal) {
         return cal.id;
       });
-      var firstDay, lastDay, apiLoaded;
+      var firstDay;
+      var lastDay;
+      var apiLoaded;
 
       //<hidden>
       if (window.gapi) {

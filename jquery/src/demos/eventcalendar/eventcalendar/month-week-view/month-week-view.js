@@ -9,7 +9,9 @@ export default {
     });
 
     $(function () {
-      var one, two, three;
+      var one;
+      var two;
+      var three;
 
       one = $('#demo-one-week-view')
         .mobiscroll()

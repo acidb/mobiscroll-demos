@@ -9,8 +9,8 @@ export default {
     });
 
     $(function () {
-      var now = new Date(),
-        week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
+      var now = new Date();
+      var week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
 
       $('#demo-mobile-picker-input')
         .mobiscroll()

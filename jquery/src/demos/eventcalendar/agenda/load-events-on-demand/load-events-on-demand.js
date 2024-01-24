@@ -19,8 +19,8 @@ export default {
             },
           },
           onPageLoading: function (event, inst) {
-            var year = event.firstDay.getFullYear(),
-              month = event.firstDay.getMonth();
+            var year = event.firstDay.getFullYear();
+            var month = event.firstDay.getMonth();
 
             $.getJSON(
               'https://trial.mobiscroll.com/monthlyevents/?year=' + year + '&month=' + month + '&vers=5' + '&callback=?',

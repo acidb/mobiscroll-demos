@@ -17,7 +17,9 @@ export default {
       var CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
       var $cont = $('#demo-google-cal');
       var view = 'month';
-      var firstDay, lastDay, apiLoaded;
+      var firstDay;
+      var lastDay;
+      var apiLoaded;
 
       //<hidden>
       if (window.gapi) {
