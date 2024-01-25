@@ -6,7 +6,9 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['import', 'react-refresh'],
   rules: {
+    'arrow-body-style': ['warn', 'as-needed'],
     'import/order': ['warn', { alphabetize: { order: 'asc', caseInsensitive: true } }],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'sort-imports': ['warn', { ignoreCase: true, ignoreDeclarationSort: true }],
   },
 };
