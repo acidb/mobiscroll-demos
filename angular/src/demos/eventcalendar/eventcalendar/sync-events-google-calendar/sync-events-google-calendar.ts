@@ -38,11 +38,9 @@ export class AppComponent implements OnInit {
     view: {
       calendar: { labels: true },
     },
-    extendDefaultEvent: () => {
-      return {
-        color: this.calendarData[this.primaryCalendarId].color,
-      };
-    },
+    extendDefaultEvent: () => ({
+      color: this.calendarData[this.primaryCalendarId].color,
+    }),
     onPageLoading: (args: any) => {
       this.startDate = args.viewStart;
       this.endDate = args.viewEnd;

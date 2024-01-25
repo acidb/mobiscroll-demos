@@ -1900,11 +1900,9 @@ export class AppComponent {
     resources: this.resources,
     clickToCreate: true,
     dragToMove: true,
-    extendDefaultEvent: (event: any) => {
-      return {
-        title: this.getEmployeeName(event),
-      };
-    },
+    extendDefaultEvent: (event: any) => ({
+      title: this.getEmployeeName(event),
+    }),
     onEventCreate: (args: any, inst: any) => {
       if (this.isDouble(args.event, inst)) {
         return false;
@@ -1937,9 +1935,7 @@ export class AppComponent {
   isDouble(event: any, inst: any): any {
     const date = event.start.setHours(0);
     const events = inst.getEvents(date);
-    const ev = events.find((e: any) => {
-      return new Date(e.start).setHours(0) === date && e.resource === event.resource && e.slot === event.slot;
-    });
+    const ev = events.find((e: any) => new Date(e.start).setHours(0) === date && e.resource === event.resource && e.slot === event.slot);
     return ev;
   }
 

@@ -112,8 +112,6 @@ export class AppComponent {
   }
 
   getActivity(day: any) {
-    return this.activities.find((obj) => {
-      return +new Date(obj.date) === +day.date;
-    });
+    return this.activities.find((obj) => +new Date(obj.date) === +day.date);
   }
 }

@@ -127,12 +127,10 @@ export class AppComponent implements OnInit {
     dragToResize: false,
     dragToMove: true,
     clickToCreate: true,
-    extendDefaultEvent: () => {
-      return {
-        title: 'New meal',
-        allDay: true,
-      };
-    },
+    extendDefaultEvent: () => ({
+      title: 'New meal',
+      allDay: true,
+    }),
     onEventClick: (args: any) => {
       const event = args.event;
       this.isEdit = true;

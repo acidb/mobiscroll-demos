@@ -173,9 +173,7 @@ export class AppComponent {
             const activeEvents = this.activeCalendar === 'first' ? this.firstEvents : this.secondEvents;
             let eventsToUpdate = [...activeEvents];
             for (const event of this.deletedEvents) {
-              eventsToUpdate = eventsToUpdate.filter((ev) => {
-                return ev.id !== event.id;
-              });
+              eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
             }
 
             if (this.activeCalendar === 'first') {
@@ -230,9 +228,7 @@ export class AppComponent {
         let cutEvs = this.cutCalendar === 'first' ? this.firstEvents : this.secondEvents;
         this.moveEvents = [...this.selectedEvents];
         for (const event of this.selectedEvents) {
-          cutEvs = cutEvs.filter((ev) => {
-            return ev.id !== event.id;
-          });
+          cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
         }
         if (this.cutCalendar === 'first') {
           this.firstEvents = cutEvs;
@@ -255,9 +251,7 @@ export class AppComponent {
 
               let cutEvs = this.getActiveEvents();
               for (const event of this.pastedEvents) {
-                cutEvs = cutEvs.filter((ev) => {
-                  return ev.id !== event.id;
-                });
+                cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
               }
               if (this.activeCalendar === 'first') {
                 this.firstEvents = cutEvs;
@@ -304,9 +298,7 @@ export class AppComponent {
       this.deletedEvents = activeSelectedEvents;
 
       for (const event of activeSelectedEvents) {
-        eventsToUpdate = eventsToUpdate.filter((ev) => {
-          return ev.id !== event.id;
-        });
+        eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
       }
 
       if (this.activeCalendar === 'first') {
@@ -409,9 +401,7 @@ export class AppComponent {
 
       let cutEvs = this.getActiveEvents();
       for (const event of this.pastedEvents) {
-        cutEvs = cutEvs.filter((ev) => {
-          return ev.id !== event.id;
-        });
+        cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
       }
       if (this.activeCalendar === 'first') {
         this.firstEvents = cutEvs;
