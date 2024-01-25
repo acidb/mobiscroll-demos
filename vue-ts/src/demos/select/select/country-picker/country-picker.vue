@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { MbscSelect, MbscPage, getJson, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { getJson, MbscPage, MbscSelect, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
+  MbscButton,
   MbscDatepicker,
   MbscPage,
-  MbscButton,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import moment from 'moment'
+import { ref } from 'vue'
 
 setOptions({
   // locale,

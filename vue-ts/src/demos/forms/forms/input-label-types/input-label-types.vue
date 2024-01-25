@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {
-  MbscPage,
-  MbscInput,
-  MbscTextarea,
   MbscDropdown,
+  MbscInput,
+  MbscPage,
+  MbscTextarea,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 

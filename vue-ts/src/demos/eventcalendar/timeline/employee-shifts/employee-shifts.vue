@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
-  MbscEventcalendar,
-  MbscPopup,
-  MbscDatepicker,
-  MbscInput,
+  formatDate,
   MbscButton,
-  MbscTextarea,
-  setOptions,
+  MbscDatepicker,
+  MbscEventcalendar,
+  MbscInput,
+  MbscPopup,
   MbscSnackbar,
-  formatDate /* localeImport */
+  MbscTextarea,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscResource,
   MbscEventClickEvent,
+  MbscEventCreatedEvent,
   MbscEventDeletedEvent,
-  MbscEventCreatedEvent
+  MbscResource
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -358,12 +358,8 @@ function handleDelete() {
 // scheduler options
 function handleEventClick(args: MbscEventClickEvent) {
   const event: any = args.event
-  const resource = staff.find((r) => {
-    return r.id === event.resource
-  })
-  const slot = mySlots.find((s) => {
-    return s.id === event.slot
-  })
+  const resource = staff.find((r) => r.id === event.resource)
+  const slot = mySlots.find((s) => s.id === event.slot)
   popupButtons.value = [
     'cancel',
     {
@@ -396,9 +392,7 @@ function handleEventClick(args: MbscEventClickEvent) {
 
 function handleEventCreated(args: MbscEventCreatedEvent) {
   const event = args.event
-  const slot = mySlots.find((s) => {
-    return s.id === event.slot
-  })
+  const slot = mySlots.find((s) => s.id === event.slot)
   popupButtons.value = [
     'cancel',
     {

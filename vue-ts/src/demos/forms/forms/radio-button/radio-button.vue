@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { MbscPage, MbscRadio, MbscRadioGroup, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import { ref } from 'vue'
-import { MbscRadioGroup, MbscRadio, MbscPage, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
   // locale,

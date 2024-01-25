@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import {
-  MbscInput,
-  MbscTextarea,
-  MbscDropdown,
-  MbscSwitch,
-  MbscCheckbox,
-  MbscRadioGroup,
-  MbscRadio,
-  MbscStepper,
   MbscButton,
-  MbscSegmentedGroup,
-  MbscSegmented,
+  MbscCheckbox,
+  MbscDropdown,
+  MbscInput,
   MbscPage,
+  MbscRadio,
+  MbscRadioGroup,
+  MbscSegmented,
+  MbscSegmentedGroup,
+  MbscStepper,
+  MbscSwitch,
+  MbscTextarea,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 

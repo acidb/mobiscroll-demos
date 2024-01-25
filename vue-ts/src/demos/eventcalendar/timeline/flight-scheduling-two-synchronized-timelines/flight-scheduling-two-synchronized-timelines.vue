@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { MbscEventcalendar, setOptions, MbscToast /* localeImport */ } from '@mobiscroll/vue'
+import { MbscEventcalendar, MbscToast, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
   MbscEventCreatedEvent,
@@ -10,6 +9,7 @@ import type {
   MbscResource,
   MbscSelectedDateChangeEvent
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,

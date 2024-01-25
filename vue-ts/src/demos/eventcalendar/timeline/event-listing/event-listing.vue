@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
-  MbscEventcalendar,
   MbscCalendarNav,
-  MbscCalendarPrev,
   MbscCalendarNext,
+  MbscCalendarPrev,
   MbscCalendarToday,
-  MbscSegmentedGroup,
+  MbscEventcalendar,
   MbscSegmented,
+  MbscSegmentedGroup,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,

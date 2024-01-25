@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
-  MbscSegmentedGroup,
-  MbscSegmented,
-  MbscButton,
-  MbscInput,
-  MbscTextarea,
-  MbscSnackbar,
-  MbscPopup,
   formatDate,
   getJson,
+  MbscButton,
+  MbscEventcalendar,
+  MbscInput,
+  MbscPopup,
+  MbscSegmented,
+  MbscSegmentedGroup,
+  MbscSnackbar,
+  MbscTextarea,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -172,9 +172,7 @@ function handleEventClick(args: any) {
 
 function handleEventCreated(args: any) {
   const event = args.event
-  const resource = types.find((obj) => {
-    return obj.id === event.resource
-  })
+  const resource = types.find((obj) => obj.id === event.resource)
   isEdit.value = false
   tempMeal.value = event
   // fill popup form with event data

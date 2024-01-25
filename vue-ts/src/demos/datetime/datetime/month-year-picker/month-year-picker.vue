@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MbscDatepicker, MbscPage, MbscInput, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { MbscDatepicker, MbscInput, MbscPage, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
   // locale,

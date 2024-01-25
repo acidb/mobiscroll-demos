@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
-  MbscPage,
   MbscButton,
-  MbscSegmentedGroup,
+  MbscPage,
   MbscSegmented,
+  MbscSegmentedGroup,
   MbscStepper,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
