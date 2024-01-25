@@ -1,5 +1,5 @@
-import { useMemo, useCallback } from 'react';
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo, useCallback } from 'react';
 
 setOptions({
   // localeJs,

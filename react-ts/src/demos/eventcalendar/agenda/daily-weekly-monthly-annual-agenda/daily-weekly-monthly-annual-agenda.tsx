@@ -1,5 +1,5 @@
-import { FC, useState, useMemo, useEffect } from 'react';
 import { Eventcalendar, Page, getJson, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useState, useMemo, useEffect } from 'react';
 
 setOptions({
   // localeJs,
