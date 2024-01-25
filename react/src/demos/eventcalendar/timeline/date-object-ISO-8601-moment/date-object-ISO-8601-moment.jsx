@@ -66,14 +66,6 @@ function App() {
   ]);
   const [selectedMoment, setSelectedMoment] = useState(moment([2020, 4, 21]));
 
-  const myView = useMemo(() => {
-    return {
-      timeline: {
-        type: 'day',
-      },
-    };
-  }, []);
-
   const addDate = useCallback(() => {
     const newEvent = {
       start: new Date(2020, 4, 19, 11, 15),
@@ -81,9 +73,9 @@ function App() {
       text: 'New Event',
       resource: 4,
     };
-    setDateObjData([...dateObjData, newEvent]);
+    setDateObjData((dateObjData) => [...dateObjData, newEvent]);
     setSelectedObj(new Date(2020, 4, 19));
-  }, [dateObjData]);
+  }, []);
 
   const addISO = useCallback(() => {
     const newEvent = {
@@ -92,9 +84,9 @@ function App() {
       text: 'New Event',
       resource: 1,
     };
-    setISOData([...isoData, newEvent]);
+    setISOData((isoData) => [...isoData, newEvent]);
     setSelectedISO('2020-05-20');
-  }, [isoData]);
+  }, []);
 
   const addMoment = useCallback(() => {
     const newEvent = {
@@ -103,9 +95,11 @@ function App() {
       text: 'New Event',
       resource: 5,
     };
-    setMomentData([...momentData, newEvent]);
+    setMomentData((momentData) => [...momentData, newEvent]);
     setSelectedMoment(moment([2020, 4, 21]));
-  }, [momentData]);
+  }, []);
+
+  const myView = useMemo(() => ({ timeline: { type: 'day' } }), []);
 
   return (
     <Page>
