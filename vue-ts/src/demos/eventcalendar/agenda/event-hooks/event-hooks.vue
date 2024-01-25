@@ -130,5 +130,5 @@ onMounted(() => {
     @page-loaded="handlePageLoaded"
     @page-oading="handlePageLoading"
     @selected-date-change="handleSelectedDateChange"
-  ></MbscEventcalendar>
+  />
 </template>

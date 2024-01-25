@@ -92,7 +92,7 @@ function handleToastClose() {
       :data="myEvents"
       :resources="myResources"
       :selectedDate="mySelectedDate"
-    ></MbscEventcalendar>
+    />
     <div class="mbsc-button-group-block">
       <MbscButton @click="addEvent()">Add event to calendar</MbscButton>
     </div>

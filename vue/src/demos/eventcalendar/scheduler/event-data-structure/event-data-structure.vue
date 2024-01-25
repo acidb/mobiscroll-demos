@@ -59,11 +59,7 @@ function handleToastClose() {
 
 <template>
   <MbscPage>
-    <MbscEventcalendar
-      :view="myView"
-      :data="myEvents"
-      :selectedDate="mySelectedDate"
-    ></MbscEventcalendar>
+    <MbscEventcalendar :view="myView" :data="myEvents" :selectedDate="mySelectedDate" />
     <div class="mbsc-button-group-block">
       <MbscButton @click="addEvent()">Add event to calendar</MbscButton>
     </div>
