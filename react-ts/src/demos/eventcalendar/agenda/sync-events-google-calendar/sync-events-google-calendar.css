@@ -10,39 +10,15 @@
   visibility: hidden;
 }
 
+.md-loading-events .md-loader {
+  visibility: visible;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-.md-loading-events .md-loader {
-  visibility: visible;
-}
-
-@-webkit-keyframes md-spinner-fade {
-  0% {
-    opacity: 0.85;
-  }
-  50% {
-    opacity: 0.25;
-  }
-  100% {
-    opacity: 0.25;
-  }
-}
-
-@keyframes md-spinner-fade {
-  0% {
-    opacity: 0.85;
-  }
-  50% {
-    opacity: 0.25;
-  }
-  100% {
-    opacity: 0.25;
   }
 }
