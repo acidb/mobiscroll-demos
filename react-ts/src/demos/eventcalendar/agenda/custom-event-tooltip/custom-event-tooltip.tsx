@@ -549,7 +549,7 @@ function App() {
   const closeToast = useCallback(() => setToastOpen(false), []);
 
   return (
-    <div>
+    <>
       <Eventcalendar
         view={myView}
         data={appointments}
@@ -597,7 +597,7 @@ function App() {
           </div>
         </div>
       </Popup>
-    </div>
+    </>
   );
 }
 export default App;

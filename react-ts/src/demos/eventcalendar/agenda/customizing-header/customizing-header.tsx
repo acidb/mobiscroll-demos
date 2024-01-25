@@ -99,15 +99,14 @@ const App: FC = () => {
   }, []);
 
   return (
-    <div className="md-custom-header">
-      <Eventcalendar
-        onSelectedDateChange={handleSelectedDateChange}
-        selectedDate={currentDate}
-        renderHeader={customWithNavButtons}
-        view={calView}
-        data={myEvents}
-      />
-    </div>
+    <Eventcalendar
+      cssClass="md-custom-header"
+      onSelectedDateChange={handleSelectedDateChange}
+      selectedDate={currentDate}
+      renderHeader={customWithNavButtons}
+      view={calView}
+      data={myEvents}
+    />
   );
 };
 export default App;
