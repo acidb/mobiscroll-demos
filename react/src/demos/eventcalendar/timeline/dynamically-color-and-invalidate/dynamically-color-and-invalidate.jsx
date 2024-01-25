@@ -1,4 +1,5 @@
 import { Eventcalendar, Page, Draggable, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import PropTypes from 'prop-types';
 import { useState, useCallback } from 'react';
 import './dynamically-color-and-invalidate.css';
 
@@ -158,6 +159,10 @@ function Task(props) {
     </div>
   );
 }
+
+Task.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 function App() {
   const [myInvalids, setInvalids] = useState([]);

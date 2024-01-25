@@ -1,4 +1,5 @@
 import { Eventcalendar, Draggable, Popup, Input, Textarea, Select, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from 'react';
 import './external-event-presets.css';
 
@@ -77,6 +78,10 @@ function Task(props) {
     </div>
   );
 }
+
+Task.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 function App() {
   const [isOpen, setOpen] = useState(false);

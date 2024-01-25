@@ -80,76 +80,76 @@ function App() {
         dragToResize={true}
         view={myView}
         invalid={invalid}
-        onCellClick={(event, inst) => {
+        onCellClick={() => {
           /* Logic for cell click */
         }}
-        onCellDoubleClick={(event, inst) => {
+        onCellDoubleClick={() => {
           /* Logic for cell double click */
         }}
-        onCellRightClick={(event, inst) => {
+        onCellRightClick={() => {
           /* Logic for cell right click */
         }}
-        onDestroy={(event, inst) => {
+        onDestroy={() => {
           // Your custom event handler goes here
         }}
-        onEventClick={(event, inst) => {
+        onEventClick={() => {
           // Logic for event click
         }}
-        onEventCreate={(event, inst) => {
+        onEventCreate={() => {
           // Logic for event create
         }}
-        onEventCreated={(event, inst) => {
+        onEventCreated={() => {
           // Logic for event created
         }}
-        onEventCreateFailed={(event, inst) => {
+        onEventCreateFailed={() => {
           // Logic for failed event create
         }}
-        onEventDelete={(event, inst) => {
+        onEventDelete={() => {
           // Logic for event delete
         }}
-        onEventDeleted={(event, inst) => {
+        onEventDeleted={() => {
           // Logic for event deleted
         }}
-        onEventDoubleClick={(event, inst) => {
+        onEventDoubleClick={() => {
           // Logic for event double click
         }}
-        onEventDragStart={(event, inst) => {
+        onEventDragStart={() => {
           // Logic for event drag start
         }}
-        onEventDragEnd={(event, inst) => {
+        onEventDragEnd={() => {
           // Logic for event drag end
         }}
-        onEventHoverIn={(event, inst) => {
+        onEventHoverIn={() => {
           // Logic for event hover in
         }}
-        onEventHoverOut={(event, inst) => {
+        onEventHoverOut={() => {
           // Logic for event hover out
         }}
-        onEventUpdate={(event, inst) => {
+        onEventUpdate={() => {
           // Logic for event update
         }}
-        onEventUpdated={(event, inst) => {
+        onEventUpdated={() => {
           // Logic for event updated
         }}
-        onEventUpdateFailed={(event, inst) => {
+        onEventUpdateFailed={() => {
           // Logic for failed event update
         }}
-        onEventRightClick={(event, inst) => {
+        onEventRightClick={() => {
           // Logic for event right click
         }}
-        onInit={(event, inst) => {
+        onInit={() => {
           // Logic running on component init
         }}
-        onPageChange={(event, inst) => {
+        onPageChange={() => {
           // Your custom event handler goes here
         }}
-        onPageLoaded={(event, inst) => {
+        onPageLoaded={() => {
           // Use it to inject custom markup & attach custom listeners
         }}
-        onPageLoading={(event, inst) => {
+        onPageLoading={() => {
           // Use it to load data on demand
         }}
-        onSelectedDateChange={(event, inst) => {
+        onSelectedDateChange={() => {
           // Use it to keep track of the selected date externally
         }}
       />

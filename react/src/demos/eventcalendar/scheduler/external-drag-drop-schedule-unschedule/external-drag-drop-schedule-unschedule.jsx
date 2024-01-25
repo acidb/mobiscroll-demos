@@ -1,4 +1,5 @@
 import { Eventcalendar, Draggable, Dropcontainer, Toast, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
+import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import './external-drag-drop-schedule-unschedule.css';
 
@@ -29,6 +30,10 @@ function Task(props) {
     </div>
   );
 }
+
+Task.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 function App() {
   const [myEvents, setEvents] = useState([]);

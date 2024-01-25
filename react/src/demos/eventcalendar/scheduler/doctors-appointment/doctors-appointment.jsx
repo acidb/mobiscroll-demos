@@ -1,4 +1,5 @@
 import { Draggable, Dropcontainer, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import './doctors-appointment.css';
 
@@ -32,6 +33,10 @@ const Appointment = (props) => {
       )}
     </div>
   );
+};
+
+Appointment.propTypes = {
+  data: PropTypes.object.isRequired,
 };
 
 const App = () => {
