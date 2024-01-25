@@ -130,7 +130,7 @@ export class AppComponent {
     },
   ];
 
-  view: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     agenda: {
       type: 'week',
     },

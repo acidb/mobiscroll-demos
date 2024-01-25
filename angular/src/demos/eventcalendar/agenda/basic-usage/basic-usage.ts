@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  view: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     agenda: { type: 'month' },
   };
 
@@ -37,8 +37,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp: any) => {
-      this.myEvents = resp;
-    });
+    this.http
+      .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback')
+      .subscribe((resp: MbscCalendarEvent[]) => {
+        this.myEvents = resp;
+      });
   }
 }
