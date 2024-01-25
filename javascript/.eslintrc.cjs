@@ -5,6 +5,7 @@ module.exports = {
     node: true,
   },
   extends: ['eslint:recommended', 'prettier'],
+  ignorePatterns: '/dist',
   plugins: ['import', 'promise'],
   parserOptions: {
     ecmaVersion: 'latest',
