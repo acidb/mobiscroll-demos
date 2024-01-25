@@ -5,8 +5,8 @@ import {
   CalendarToday,
   Eventcalendar,
   getJson,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useEffect, useState } from 'react';
@@ -67,11 +67,11 @@ function App() {
         <CalendarNav className="cal-header-nav" />
         <div className="cal-header-picker">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="year">Year</SegmentedItem>
-            <SegmentedItem value="month">Month</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="day">Day</SegmentedItem>
-            <SegmentedItem value="agenda">Agenda</SegmentedItem>
+            <Segmented value="year">Year</Segmented>
+            <Segmented value="month">Month</Segmented>
+            <Segmented value="week">Week</Segmented>
+            <Segmented value="day">Day</Segmented>
+            <Segmented value="agenda">Agenda</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="cal-header-prev" />

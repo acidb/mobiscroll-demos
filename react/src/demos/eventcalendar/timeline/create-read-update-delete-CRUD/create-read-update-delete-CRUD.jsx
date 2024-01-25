@@ -4,8 +4,8 @@ import {
   Eventcalendar,
   Input,
   Popup,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions,
   snackbar,
   Switch,
@@ -422,12 +422,12 @@ function App() {
             <div className="event-color" style={{ background: selectedColor }}></div>
           </div>
           <SegmentedGroup onChange={statusChange}>
-            <SegmentedItem value="busy" checked={popupEventStatus === 'busy'}>
+            <Segmented value="busy" checked={popupEventStatus === 'busy'}>
               Show as busy
-            </SegmentedItem>
-            <SegmentedItem value="free" checked={popupEventStatus === 'free'}>
+            </Segmented>
+            <Segmented value="free" checked={popupEventStatus === 'free'}>
               Show as free
-            </SegmentedItem>
+            </Segmented>
           </SegmentedGroup>
           {isEdit && (
             <div className="mbsc-button-group">

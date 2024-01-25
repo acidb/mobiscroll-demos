@@ -5,8 +5,8 @@ import {
   CalendarToday,
   Eventcalendar,
   getJson,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
@@ -89,18 +89,18 @@ function App() {
         <CalendarNav className="md-header-filter-nav" />
         <div className="md-header-filter-controls">
           <SegmentedGroup select="multiple">
-            <SegmentedItem value={1} checked={selected[1]} onChange={filter}>
+            <Segmented value={1} checked={selected[1]} onChange={filter}>
               <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/m1.png" />
               <span className="md-header-filter-name md-header-filter-name-1">Barry</span>
-            </SegmentedItem>
-            <SegmentedItem value={2} checked={selected[2]} onChange={filter}>
+            </Segmented>
+            <Segmented value={2} checked={selected[2]} onChange={filter}>
               <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/f1.png" />
               <span className="md-header-filter-name md-header-filter-name-2">Hortense</span>
-            </SegmentedItem>
-            <SegmentedItem value={3} checked={selected[3]} onChange={filter}>
+            </Segmented>
+            <Segmented value={3} checked={selected[3]} onChange={filter}>
               <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/m2.png" />
               <span className="md-header-filter-name md-header-filter-name-3">Carl</span>
-            </SegmentedItem>
+            </Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="md-header-filter-prev" />

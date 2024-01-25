@@ -5,8 +5,8 @@ import {
   getJson,
   Input,
   Popup,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions,
   snackbar,
   Textarea /* localeImport */,
@@ -311,9 +311,9 @@ function App() {
         <SegmentedGroup onChange={typeChange} value={type}>
           {types.map((type) => {
             return (
-              <SegmentedItem value={type.id} key={type.id}>
+              <Segmented value={type.id} key={type.id}>
                 {type.name}
-              </SegmentedItem>
+              </Segmented>
             );
           })}
         </SegmentedGroup>

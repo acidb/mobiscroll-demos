@@ -1,4 +1,4 @@
-import { Datepicker, Input, Page, SegmentedGroup, SegmentedItem, setOptions, Switch, Textarea /* localeImport */ } from '@mobiscroll/react';
+import { Datepicker, Input, Page, Segmented, SegmentedGroup, setOptions, Switch, Textarea /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
@@ -31,8 +31,8 @@ function App() {
       <Input ref={setStart} label="Start" placeholder="Event start" />
       <Input ref={setEnd} label="End " placeholder="Event end" />
       <SegmentedGroup value={showAs} onChange={showAsChange}>
-        <SegmentedItem value="busy">Show as busy</SegmentedItem>
-        <SegmentedItem value="free">Show as free</SegmentedItem>
+        <Segmented value="busy">Show as busy</Segmented>
+        <Segmented value="free">Show as free</Segmented>
       </SegmentedGroup>
       <Textarea label="Notes" placeholder="Enter notes, URL, comments" />
     </Page>

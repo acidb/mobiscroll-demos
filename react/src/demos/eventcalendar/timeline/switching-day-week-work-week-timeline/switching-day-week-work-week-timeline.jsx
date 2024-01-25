@@ -5,8 +5,8 @@ import {
   CalendarToday,
   Eventcalendar,
   getJson,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
@@ -133,9 +133,9 @@ function App() {
         <CalendarNav className="md-work-week-nav" />
         <div className="md-work-week-picker">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="day">Day</SegmentedItem>
-            <SegmentedItem value="workweek">Work week</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
+            <Segmented value="day">Day</Segmented>
+            <Segmented value="workweek">Work week</Segmented>
+            <Segmented value="week">Week</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="md-work-week-prev" />

@@ -4,8 +4,8 @@ import {
   CalendarToday,
   Eventcalendar,
   getJson,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useEffect, useState } from 'react';
@@ -93,8 +93,8 @@ function App() {
         </div>
         <div className="md-custom-header-view">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="schedule" icon="material-list" />
-            <SegmentedItem value="calendar" icon="calendar" />
+            <Segmented value="schedule" icon="material-list" />
+            <Segmented value="calendar" icon="calendar" />
           </SegmentedGroup>
         </div>
       </>

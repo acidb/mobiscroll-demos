@@ -4,8 +4,8 @@ import {
   CalendarPrev,
   CalendarToday,
   Eventcalendar,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -187,9 +187,9 @@ function App() {
         <CalendarNav className="md-event-listing-nav" />
         <div className="md-event-listing-picker">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="workweek">Work week</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="month">Month</SegmentedItem>
+            <Segmented value="workweek">Work week</Segmented>
+            <Segmented value="week">Week</Segmented>
+            <Segmented value="month">Month</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="md-event-listing-prev" />

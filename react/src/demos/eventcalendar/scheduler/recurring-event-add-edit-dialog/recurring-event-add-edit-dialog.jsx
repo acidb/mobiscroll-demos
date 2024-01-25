@@ -7,8 +7,8 @@ import {
   Popup,
   Radio,
   RadioGroup,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   Select,
   setOptions,
   Switch,
@@ -1068,18 +1068,18 @@ function App() {
             <div>
               <div>
                 <SegmentedGroup onChange={repeatTypeChange}>
-                  <SegmentedItem value="daily" checked={repeatType === 'daily'}>
+                  <Segmented value="daily" checked={repeatType === 'daily'}>
                     Daily
-                  </SegmentedItem>
-                  <SegmentedItem value="weekly" checked={repeatType === 'weekly'}>
+                  </Segmented>
+                  <Segmented value="weekly" checked={repeatType === 'weekly'}>
                     Weekly
-                  </SegmentedItem>
-                  <SegmentedItem value="monthly" checked={repeatType === 'monthly'}>
+                  </Segmented>
+                  <Segmented value="monthly" checked={repeatType === 'monthly'}>
                     Monthly
-                  </SegmentedItem>
-                  <SegmentedItem value="yearly" checked={repeatType === 'yearly'}>
+                  </Segmented>
+                  <Segmented value="yearly" checked={repeatType === 'yearly'}>
                     Yearly
-                  </SegmentedItem>
+                  </Segmented>
                 </SegmentedGroup>
 
                 <div className="md-recurrence-options">
@@ -1127,27 +1127,27 @@ function App() {
 
                 {repeatType === 'weekly' && (
                   <SegmentedGroup select="multiple" onChange={weekDayChange}>
-                    <SegmentedItem value="SU" checked={weekDays.indexOf('SU') >= 0}>
+                    <Segmented value="SU" checked={weekDays.indexOf('SU') >= 0}>
                       Sun
-                    </SegmentedItem>
-                    <SegmentedItem value="MO" checked={weekDays.indexOf('MO') >= 0}>
+                    </Segmented>
+                    <Segmented value="MO" checked={weekDays.indexOf('MO') >= 0}>
                       Mon
-                    </SegmentedItem>
-                    <SegmentedItem value="TU" checked={weekDays.indexOf('TU') >= 0}>
+                    </Segmented>
+                    <Segmented value="TU" checked={weekDays.indexOf('TU') >= 0}>
                       Tue
-                    </SegmentedItem>
-                    <SegmentedItem value="WE" checked={weekDays.indexOf('WE') >= 0}>
+                    </Segmented>
+                    <Segmented value="WE" checked={weekDays.indexOf('WE') >= 0}>
                       Wed
-                    </SegmentedItem>
-                    <SegmentedItem value="TH" checked={weekDays.indexOf('TH') >= 0}>
+                    </Segmented>
+                    <Segmented value="TH" checked={weekDays.indexOf('TH') >= 0}>
                       Thu
-                    </SegmentedItem>
-                    <SegmentedItem value="FR" checked={weekDays.indexOf('FR') >= 0}>
+                    </Segmented>
+                    <Segmented value="FR" checked={weekDays.indexOf('FR') >= 0}>
                       Fri
-                    </SegmentedItem>
-                    <SegmentedItem value="SA" checked={weekDays.indexOf('SA') >= 0}>
+                    </Segmented>
+                    <Segmented value="SA" checked={weekDays.indexOf('SA') >= 0}>
                       Sat
-                    </SegmentedItem>
+                    </Segmented>
                   </SegmentedGroup>
                 )}
 
