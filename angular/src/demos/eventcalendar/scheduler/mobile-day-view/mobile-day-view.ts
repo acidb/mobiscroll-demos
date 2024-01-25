@@ -25,9 +25,9 @@ export class AppComponent implements OnInit {
     view: {
       schedule: { type: 'day' },
     },
-    onEventClick: (event) => {
+    onEventClick: (args) => {
       this.notify.toast({
-        message: event.event.title,
+        message: args.event.title,
       });
     },
   };

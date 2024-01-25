@@ -118,8 +118,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         touchUi: false,
       },
     },
-    onChange: (event) => {
-      const s = event.value;
+    onChange: (args) => {
+      const s = args.value;
 
       if (s === 'custom') {
         this.disableInput = false;

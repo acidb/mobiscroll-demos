@@ -34,9 +34,9 @@ export default {
               '</div>'
             );
           },
-          onEventClick: function (event) {
-            var ev = event.event.original || event.event;
-            if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
+          onEventClick: function (args) {
+            var ev = args.event.original || args.event;
+            if (args.domEvent.target.classList.contains('md-custom-event-btn')) {
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>

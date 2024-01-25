@@ -27,9 +27,9 @@ export class AppComponent implements OnInit {
         labels: true,
       },
     },
-    onEventClick: (event) => {
+    onEventClick: (args) => {
       this.notify.toast({
-        message: event.event.title,
+        message: args.event.title,
       });
     },
   };

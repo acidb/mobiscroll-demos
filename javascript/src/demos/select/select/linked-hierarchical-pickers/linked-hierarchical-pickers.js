@@ -126,8 +126,8 @@ export default {
     mobiscroll.select('#demo-hierarchical-pickers-region', {
       touchUi: false,
       data: getData(),
-      onChange: function (event) {
-        divisionInst.setOptions({ data: getData(event.value), disabled: false });
+      onChange: function (args) {
+        divisionInst.setOptions({ data: getData(args.value), disabled: false });
         subdivisionInst.setOptions({ disabled: true });
         mobiscroll.getInst(divisionElm, true).setOptions({ disabled: false });
         mobiscroll.getInst(subdivisionElm, true).setOptions({ disabled: true });
@@ -137,9 +137,9 @@ export default {
     divisionInst = mobiscroll.select('#demo-hierarchical-pickers-division', {
       touchUi: false,
       disabled: true,
-      onChange: function (event) {
+      onChange: function (args) {
         if (event.value) {
-          subdivisionInst.setOptions({ data: getData(null, event.value), disabled: false });
+          subdivisionInst.setOptions({ data: getData(null, args.value), disabled: false });
           mobiscroll.getInst(subdivisionElm, true).setOptions({ disabled: false });
         } else {
           subdivisionInst.setOptions({ data: [], disabled: true });

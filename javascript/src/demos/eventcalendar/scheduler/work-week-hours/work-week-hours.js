@@ -32,15 +32,15 @@ export default {
           endTime: '18:00',
         },
       },
-      onEventCreateFailed: function (event) {
-        if (event.invalid.type == 'lunch') {
+      onEventCreateFailed: function (args) {
+        if (args.invalid.type == 'lunch') {
           mobiscroll.toast({
             message: "Can't create this task on lunch break.",
           });
         }
       },
-      onEventUpdateFailed: function (event) {
-        if (event.invalid.type == 'lunch') {
+      onEventUpdateFailed: function (args) {
+        if (args.invalid.type == 'lunch') {
           mobiscroll.toast({
             message: "Can't schedule this task on lunch break.",
           });

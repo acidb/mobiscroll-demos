@@ -28,15 +28,15 @@ export default {
       dragToCreate: true,
       dragToMove: true,
       dragToResize: true,
-      onEventCreateFailed: function (event) {
-        if (!event.originEvent) {
+      onEventCreateFailed: function (args) {
+        if (!args.originEvent) {
           mobiscroll.toast({
             message: "Can't create event in the past",
           });
         }
       },
-      onEventUpdateFailed: function (event) {
-        if (!event.oldEventOccurrence) {
+      onEventUpdateFailed: function (args) {
+        if (!args.oldEventOccurrence) {
           mobiscroll.toast({
             message: "Can't move event in the past",
           });

@@ -30,11 +30,11 @@ export default {
           '</div>'
         );
       },
-      onEventClick: function (event) {
-        if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
-          event.domEvent.stopPropagation();
+      onEventClick: function (args) {
+        if (args.domEvent.target.classList.contains('md-custom-event-btn')) {
+          args.domEvent.stopPropagation();
           mobiscroll.toast({
-            message: getParticipant(event.event.participant).name + "'s event clicked",
+            message: getParticipant(args.event.participant).name + "'s event clicked",
           });
         }
       },

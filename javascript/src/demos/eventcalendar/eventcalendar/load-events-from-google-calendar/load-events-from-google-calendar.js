@@ -56,9 +56,9 @@ export default {
         },
       },
       exclusiveEndDates: true,
-      onPageLoading: function (event) {
-        var start = event.viewStart;
-        var end = event.viewEnd;
+      onPageLoading: function (args) {
+        var start = args.viewStart;
+        var end = args.viewEnd;
 
         // Calculate dates
         // (pre-load events for previous and next pages as well)

@@ -52,10 +52,10 @@ export class AppComponent {
     view: {
       timeline: { type: 'day' },
     },
-    onPageLoading: (event) => {
-      const year = event.firstDay.getFullYear();
-      const month = event.firstDay.getMonth();
-      const day = event.firstDay.getDate();
+    onPageLoading: (args) => {
+      const year = args.firstDay.getFullYear();
+      const month = args.firstDay.getMonth();
+      const day = args.firstDay.getDate();
 
       this.http
         .jsonp<MbscCalendarEvent[]>(

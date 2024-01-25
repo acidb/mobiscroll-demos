@@ -18,8 +18,8 @@ export default {
           view: {
             calendar: { popover: false, labels: false },
           },
-          onSelectedDateChange: function (event) {
-            dayInst.navigate(event.date);
+          onSelectedDateChange: function (args) {
+            dayInst.navigate(args.date);
           },
         })
         .mobiscroll('getInst');
@@ -31,8 +31,8 @@ export default {
           view: {
             agenda: { type: 'day' },
           },
-          onPageChange: function (event) {
-            monthInst.navigate(event.firstDay);
+          onPageChange: function (args) {
+            monthInst.navigate(args.firstDay);
           },
         })
         .mobiscroll('getInst');

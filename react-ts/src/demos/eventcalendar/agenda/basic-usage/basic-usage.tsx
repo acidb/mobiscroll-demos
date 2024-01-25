@@ -21,8 +21,8 @@ const App: FC = () => {
 
   const myView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
 
-  const onEventClick = useCallback((event: MbscEventClickEvent) => {
-    setToastText(event.event.title);
+  const onEventClick = useCallback((args: MbscEventClickEvent) => {
+    setToastText(args.event.title);
     setToastOpen(true);
   }, []);
 

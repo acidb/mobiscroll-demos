@@ -18,8 +18,8 @@ function App() {
     setToastOpen(false);
   }, []);
 
-  const handleEventClick = useCallback((event) => {
-    setToastText(event.event.title);
+  const handleEventClick = useCallback((args) => {
+    setToastText(args.event.title);
     setToastOpen(true);
   }, []);
 

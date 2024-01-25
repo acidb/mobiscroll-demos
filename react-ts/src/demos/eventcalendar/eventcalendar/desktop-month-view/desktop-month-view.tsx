@@ -27,8 +27,8 @@ const App: React.FC = () => {
     setToastOpen(false);
   }, []);
 
-  const onEventClick = React.useCallback((event: MbscEventClickEvent) => {
-    setToastText(event.event.title);
+  const onEventClick = React.useCallback((args: MbscEventClickEvent) => {
+    setToastText(args.event.title);
     setToastOpen(true);
   }, []);
 

@@ -21,8 +21,8 @@ export default {
               labels: true,
             },
           },
-          onSelectedDateChange: function (event) {
-            currentDate = event.date;
+          onSelectedDateChange: function (args) {
+            currentDate = args.date;
           },
           renderHeader: function () {
             return (

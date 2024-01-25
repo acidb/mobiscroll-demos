@@ -9,9 +9,9 @@ export default {
       view: {
         agenda: { type: 'month' },
       },
-      onEventClick: function (event) {
+      onEventClick: function (args) {
         mobiscroll.toast({
-          message: event.event.title,
+          message: args.event.title,
         });
       },
     });

@@ -15,8 +15,8 @@ export default {
       view: {
         schedule: { type: 'week' },
       },
-      onSelectedDateChange: function (event) {
-        currentDate = event.date;
+      onSelectedDateChange: function (args) {
+        currentDate = args.date;
       },
       renderHeader: function () {
         return (

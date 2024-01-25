@@ -13,8 +13,8 @@ function App() {
 
   const myView = useMemo(() => ({ agenda: { type: 'month' } }), []);
 
-  const onEventClick = useCallback((event) => {
-    setToastText(event.event.title);
+  const onEventClick = useCallback((args) => {
+    setToastText(args.event.title);
     setToastOpen(true);
   }, []);
 

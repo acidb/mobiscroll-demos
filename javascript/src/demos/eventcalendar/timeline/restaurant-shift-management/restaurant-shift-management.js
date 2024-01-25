@@ -2004,8 +2004,8 @@ export default {
     mobiscroll.select('#shift-management-select', {
       inputElement: document.getElementById('shift-management-view'),
       touchUi: false,
-      onChange: function (event) {
-        if (event.value == 'day') {
+      onChange: function (args) {
+        if (args.value == 'day') {
           calendar.setOptions({
             view: {
               timeline: {

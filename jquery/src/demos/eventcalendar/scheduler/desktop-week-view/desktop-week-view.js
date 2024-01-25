@@ -18,12 +18,12 @@ export default {
           view: {
             schedule: { type: 'week' },
           },
-          onEventClick: function (event) {
+          onEventClick: function (args) {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
               // context,
-              message: event.event.title,
+              message: args.event.title,
             });
           },
         })

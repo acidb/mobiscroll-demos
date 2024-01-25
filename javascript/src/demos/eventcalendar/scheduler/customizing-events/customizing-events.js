@@ -59,8 +59,8 @@ export default {
           );
         }
       },
-      onEventClick: function (event) {
-        if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
+      onEventClick: function (args) {
+        if (args.domEvent.target.classList.contains('md-custom-event-btn')) {
           mobiscroll.toast({
             message: 'Edit clicked',
           });

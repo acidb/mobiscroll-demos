@@ -1,10 +1,11 @@
 import {
   Eventcalendar,
   getJson,
-  Toast,
   MbscCalendarEvent,
+  MbscCalendarEventData,
   MbscEventcalendarView,
-  MbscCalendarEventData /* localeImport */,
+  MbscEventClickEvent,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
 import React from 'react';
 import './customize-label-look-and-feel.css';
@@ -53,8 +54,8 @@ const App: React.FC = () => {
     setToastOpen(false);
   }, []);
 
-  const onEventClick = React.useCallback((event: MbscEventClickEvent) => {
-    setToastText(event.event.title);
+  const onEventClick = React.useCallback((args: MbscEventClickEvent) => {
+    setToastText(args.event.title);
     setToastOpen(true);
   }, []);
 

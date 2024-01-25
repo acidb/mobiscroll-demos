@@ -30,9 +30,9 @@ export class AppComponent implements OnInit {
     agenda: { type: 'month' },
   };
 
-  onEventClick(event: MbscEventClickEvent): void {
+  onEventClick(args: MbscEventClickEvent): void {
     this.notify.toast({
-      message: event.event.title,
+      message: args.event.title,
     });
   }
 

@@ -38,9 +38,9 @@ export class AppComponent implements OnInit {
 
   calSettings: MbscEventcalendarOptions = {
     exclusiveEndDates: true,
-    onPageLoading: (event) => {
-      const start = event.viewStart!;
-      const end = event.viewEnd!;
+    onPageLoading: (args) => {
+      const start = args.viewStart!;
+      const end = args.viewEnd!;
 
       // Calculate dates
       // (pre-load events for previous and next pages as well)

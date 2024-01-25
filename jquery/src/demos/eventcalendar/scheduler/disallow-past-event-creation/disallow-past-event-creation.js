@@ -39,8 +39,8 @@ export default {
           dragToCreate: true,
           dragToMove: true,
           dragToResize: true,
-          onEventCreateFailed: function (event) {
-            if (!event.originEvent) {
+          onEventCreateFailed: function (args) {
+            if (!args.originEvent) {
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
@@ -49,8 +49,8 @@ export default {
               });
             }
           },
-          onEventUpdateFailed: function (event) {
-            if (!event.oldEventOccurrence) {
+          onEventUpdateFailed: function (args) {
+            if (!args.oldEventOccurrence) {
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>

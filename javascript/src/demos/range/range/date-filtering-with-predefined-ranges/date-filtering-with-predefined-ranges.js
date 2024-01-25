@@ -29,8 +29,8 @@ export default {
           touchUi: false,
         },
       },
-      onChange: function (event) {
-        var selected = event.value;
+      onChange: function (args) {
+        var selected = args.value;
 
         if (selected === 'custom') {
           disableInputs(false);

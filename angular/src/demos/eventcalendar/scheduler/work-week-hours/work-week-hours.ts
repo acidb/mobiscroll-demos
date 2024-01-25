@@ -46,17 +46,17 @@ export class AppComponent implements OnInit {
         endTime: '18:00',
       },
     },
-    onEventCreateFailed: (event) => {
-      if (event.invalid['type'] === 'lunch') {
+    onEventCreateFailed: (args) => {
+      if (args.invalid['type'] === 'lunch') {
         this.notify.toast({
-          message: "Can't create this task on " + event.invalid.title!.toLowerCase(),
+          message: "Can't create this task on " + args.invalid.title!.toLowerCase(),
         });
       }
     },
-    onEventUpdateFailed: (event) => {
-      if (event.invalid['type'] === 'lunch') {
+    onEventUpdateFailed: (args) => {
+      if (args.invalid['type'] === 'lunch') {
         this.notify.toast({
-          message: "Can't schedule this task on " + event.invalid.title!.toLowerCase(),
+          message: "Can't schedule this task on " + args.invalid.title!.toLowerCase(),
         });
       }
     },

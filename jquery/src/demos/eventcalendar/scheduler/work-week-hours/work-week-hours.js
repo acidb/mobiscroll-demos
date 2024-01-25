@@ -37,8 +37,8 @@ export default {
               endTime: '18:00',
             },
           },
-          onEventCreateFailed: function (event) {
-            if (event.invalid.type == 'lunch') {
+          onEventCreateFailed: function (args) {
+            if (args.invalid.type == 'lunch') {
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
@@ -47,8 +47,8 @@ export default {
               });
             }
           },
-          onEventUpdateFailed: function (event) {
-            if (event.invalid.type == 'lunch') {
+          onEventUpdateFailed: function (args) {
+            if (args.invalid.type == 'lunch') {
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
