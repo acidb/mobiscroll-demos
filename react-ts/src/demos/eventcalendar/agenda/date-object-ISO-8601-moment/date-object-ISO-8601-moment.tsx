@@ -8,7 +8,7 @@ import {
   MbscCalendarEvent,
 } from '@mobiscroll/react';
 import moment from 'moment';
-import { FC, useState, useMemo, useCallback } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -76,13 +76,14 @@ const App: FC = () => {
     setSelectedMoment(moment([2020, 4, 21]));
   }, [momentData]);
 
-  const myView = useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Page>

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Select, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -47,8 +47,8 @@ const App: React.FC = () => {
     setCustomSelected('lon');
   }, []);
 
-  const customButtons = React.useMemo(() => {
-    return [
+  const customButtons = React.useMemo(
+    () => [
       {
         text: 'Custom',
         handler: () => {
@@ -57,8 +57,9 @@ const App: React.FC = () => {
       },
       'set',
       'cancel',
-    ];
-  }, []);
+    ],
+    [],
+  );
   return (
     <Page>
       <div className="mbsc-form-group">

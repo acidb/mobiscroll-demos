@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, setOptions, Popup, Button, formatDate, Toast /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -465,8 +465,8 @@ function App() {
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
   const [toastText, setToastText] = React.useState<string>();
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         startDay: 1,
@@ -475,8 +475,9 @@ function App() {
         endTime: '16:00',
         allDay: false,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const openTooltip = React.useCallback((args, closeOption) => {
     const event = args.event;

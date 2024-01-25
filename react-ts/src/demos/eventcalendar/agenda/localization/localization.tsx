@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, Page, getJson, setOptions, Dropdown, MbscCalendarEvent, locale /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -181,13 +181,11 @@ const App: React.FC = () => {
           <div className="mbsc-row mbsc-justify-content-center">
             <div className="mbsc-col-sm-8">
               <Dropdown inputStyle="box" value={lang} onChange={onChange}>
-                {languages.map((lang) => {
-                  return (
-                    <option key={lang.value} value={lang.value}>
-                      {lang.text}
-                    </option>
-                  );
-                })}
+                {languages.map((lang) => (
+                  <option key={lang.value} value={lang.value}>
+                    {lang.text}
+                  </option>
+                ))}
               </Dropdown>
             </div>
           </div>

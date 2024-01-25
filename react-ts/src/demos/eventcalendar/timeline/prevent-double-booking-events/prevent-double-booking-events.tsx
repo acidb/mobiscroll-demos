@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Toast,
@@ -7,6 +6,7 @@ import {
   MbscResource,
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -84,11 +84,12 @@ const App: React.FC = () => {
     [],
   );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onEventFailed = React.useCallback(() => {
     setToastOpen(true);

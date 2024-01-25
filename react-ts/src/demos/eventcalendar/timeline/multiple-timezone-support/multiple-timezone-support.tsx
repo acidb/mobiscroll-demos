@@ -20,8 +20,8 @@ momentTimezone.moment = moment;
 
 function App() {
   const [timezone, setTimezone] = React.useState<string>('utc');
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = React.useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,7)',
         end: 'dyndatetime(y,m,d,9)',
@@ -64,11 +64,12 @@ function App() {
         title: 'Team-Building',
         resource: [1, 2, 3, 4, 5],
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource>(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -94,11 +95,12 @@ function App() {
         name: 'Resource E',
         color: '#ff4600',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const timezones = React.useMemo(() => {
-    return [
+  const timezones = React.useMemo(
+    () => [
       {
         text: 'America/Los Angeles',
         value: 'America/Los_Angeles',
@@ -135,32 +137,32 @@ function App() {
         text: 'Asia/Tokyo',
         value: 'Asia/Tokyo',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onChange = React.useCallback((ev) => {
     setTimezone(ev.value);
   }, []);
 
-  const myHeader = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="md-timezone-header">
-          <CalendarPrev />
-          <CalendarToday />
-          <CalendarNext />
-          <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={onChange} />
-        </div>
-      </React.Fragment>
-    );
-  };
+  const myHeader = () => (
+    <React.Fragment>
+      <CalendarNav />
+      <div className="md-timezone-header">
+        <CalendarPrev />
+        <CalendarToday />
+        <CalendarNext />
+        <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={onChange} />
+      </div>
+    </React.Fragment>
+  );
 
   return (
     <Eventcalendar

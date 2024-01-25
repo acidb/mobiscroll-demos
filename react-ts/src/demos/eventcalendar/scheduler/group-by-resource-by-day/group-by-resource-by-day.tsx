@@ -1,11 +1,11 @@
-import React from 'react';
 import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResourceData /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -14,11 +14,12 @@ const App: React.FC = () => {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResourceData[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResourceData[]>(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -34,8 +35,9 @@ const App: React.FC = () => {
         name: 'John',
         color: '#e8d0ef',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   React.useEffect(() => {
     getJson(

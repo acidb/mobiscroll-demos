@@ -1,4 +1,4 @@
-import React from 'react';
+import { print } from '@mobiscroll/print';
 import {
   Eventcalendar,
   Page,
@@ -8,7 +8,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
-import { print } from '@mobiscroll/print';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -32,11 +32,12 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: { type: 'month' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const printView = () => {
     inst!.print();

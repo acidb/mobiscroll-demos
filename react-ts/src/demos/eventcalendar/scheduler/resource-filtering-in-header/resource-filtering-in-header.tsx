@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -12,6 +11,7 @@ import {
   CalendarPrev,
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './resource-filtering-in-header.css';
 
 setOptions({
@@ -46,7 +46,7 @@ const App: React.FC = () => {
   });
 
   const filterEvents = (events: any, selected: any) => {
-    let ev = [];
+    const ev = [];
     for (let i = 0; i < events.length; ++i) {
       const item = events[i];
       if (selected[item.participant]) {
@@ -78,31 +78,29 @@ const App: React.FC = () => {
     setToastOpen(true);
   };
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav className="md-header-filter-nav" />
-        <div className="md-header-filter-controls">
-          <SegmentedGroup select="multiple">
-            <SegmentedItem value={1} checked={selected[1]} onChange={filter}>
-              <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/m1.png" />
-              <span className="md-header-filter-name md-header-filter-name-1">Barry</span>
-            </SegmentedItem>
-            <SegmentedItem value={2} checked={selected[2]} onChange={filter}>
-              <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/f1.png" />
-              <span className="md-header-filter-name md-header-filter-name-2">Hortense</span>
-            </SegmentedItem>
-            <SegmentedItem value={3} checked={selected[3]} onChange={filter}>
-              <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/m2.png" />
-              <span className="md-header-filter-name md-header-filter-name-3">Carl</span>
-            </SegmentedItem>
-          </SegmentedGroup>
-        </div>
-        <CalendarPrev className="md-header-filter-prev" />
-        <CalendarNext className="md-header-filter-next" />
-      </React.Fragment>
-    );
-  };
+  const customWithNavButtons = () => (
+    <React.Fragment>
+      <CalendarNav className="md-header-filter-nav" />
+      <div className="md-header-filter-controls">
+        <SegmentedGroup select="multiple">
+          <SegmentedItem value={1} checked={selected[1]} onChange={filter}>
+            <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/m1.png" />
+            <span className="md-header-filter-name md-header-filter-name-1">Barry</span>
+          </SegmentedItem>
+          <SegmentedItem value={2} checked={selected[2]} onChange={filter}>
+            <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/f1.png" />
+            <span className="md-header-filter-name md-header-filter-name-2">Hortense</span>
+          </SegmentedItem>
+          <SegmentedItem value={3} checked={selected[3]} onChange={filter}>
+            <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/m2.png" />
+            <span className="md-header-filter-name md-header-filter-name-3">Carl</span>
+          </SegmentedItem>
+        </SegmentedGroup>
+      </div>
+      <CalendarPrev className="md-header-filter-prev" />
+      <CalendarNext className="md-header-filter-next" />
+    </React.Fragment>
+  );
 
   return (
     <>

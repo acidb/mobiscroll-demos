@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 const now = new Date();
 const day = now.getDay();
@@ -120,17 +120,16 @@ const myEvents = [
 ];
 
 function App() {
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const orderMyEvents = React.useCallback((event) => {
-    return event.accepted ? 1 : -1;
-  }, []);
+  const orderMyEvents = React.useCallback((event) => (event.accepted ? 1 : -1), []);
 
   return (
     <Eventcalendar

@@ -1,18 +1,18 @@
 import React from 'react';
 import {
-  Eventcalendar,
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-  formatDate,
-  momentTimezone,
-  setOptions,
-  MbscResource,
-  confirm,
-  toast,
   CalendarNav,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext,
+  confirm,
+  Eventcalendar,
+  formatDate,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscResource,
+  momentTimezone,
+  setOptions,
+  toast,
 } from '@mobiscroll/react';
 import './timezone-meeting-planner.css';
 
@@ -37,17 +37,18 @@ const defaultEvents = [
 const App: React.FC = () => {
   const [myEvents, setMyEvents] = React.useState<MbscCalendarEvent[]>([defaultEvents]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'week',
         timeLabelStep: 1440,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Keila Delores',
@@ -91,8 +92,9 @@ const App: React.FC = () => {
         img: 'https://img.mobiscroll.com/demos/f3.png',
         utcOffset: 'UTC + 3',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const getUtcOffset = React.useCallback((timezone) => {
     switch (timezone) {
@@ -133,7 +135,7 @@ const App: React.FC = () => {
     const colors: any = [];
     const invalid: any = [];
 
-    for (var j = 0; j < myResources.length; ++j) {
+    for (let j = 0; j < myResources.length; ++j) {
       const resource = myResources[j];
 
       for (let i = 0; i < 24; ++i) {
@@ -189,40 +191,37 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const myHeader = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="md-meeting-planner-header">
-          <div className="md-meeting-planner-zone md-meeting-planner-work">working hours</div>
-          <div className="md-meeting-planner-zone md-meeting-planner-flex">flex hours</div>
-          <div className="md-meeting-planner-zone md-meeting-planner-off">time off</div>
-          <CalendarPrev />
-          <CalendarToday />
-          <CalendarNext />
-        </div>
-      </React.Fragment>
-    );
-  };
-
-  const myResource = (resource: any) => {
-    return (
-      <div className="md-meeting-participant-cont">
-        <div className="md-meeting-participant-name">{resource.name}</div>
-        <div>
-          {resource.organizer && <span>Organizer </span>}
-          <span className="md-meeting-participant-offset">{resource.utcOffset}</span>
-        </div>
-        <img className="md-meeting-participant-avatar" src={resource.img} alt="avatar" />
+  const myHeader = () => (
+    <React.Fragment>
+      <CalendarNav />
+      <div className="md-meeting-planner-header">
+        <div className="md-meeting-planner-zone md-meeting-planner-work">working hours</div>
+        <div className="md-meeting-planner-zone md-meeting-planner-flex">flex hours</div>
+        <div className="md-meeting-planner-zone md-meeting-planner-off">time off</div>
+        <CalendarPrev />
+        <CalendarToday />
+        <CalendarNext />
       </div>
-    );
-  };
+    </React.Fragment>
+  );
 
-  const myDefaultEvent = React.useCallback(() => {
-    return {
+  const myResource = (resource: any) => (
+    <div className="md-meeting-participant-cont">
+      <div className="md-meeting-participant-name">{resource.name}</div>
+      <div>
+        {resource.organizer && <span>Organizer </span>}
+        <span className="md-meeting-participant-offset">{resource.utcOffset}</span>
+      </div>
+      <img className="md-meeting-participant-avatar" src={resource.img} alt="avatar" />
+    </div>
+  );
+
+  const myDefaultEvent = React.useCallback(
+    () => ({
       resource: [1, 2, 3, 4, 5, 6],
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onEventCreate = React.useCallback((args, inst) => {
     args.event.resource = [1, 2, 3, 4, 5, 6];

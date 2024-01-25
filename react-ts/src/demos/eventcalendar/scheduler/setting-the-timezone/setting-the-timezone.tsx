@@ -1,12 +1,12 @@
-import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, MbscCalendarEvent, momentTimezone /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment-timezone';
+import React from 'react';
 
 momentTimezone.moment = moment;
 
 const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y, m, d, 7)',
         end: 'dyndatetime(y, m, d, 9)',
@@ -49,14 +49,16 @@ const App: React.FC = () => {
         color: '#5bb7c5',
         title: 'Team-Building',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Draggable,
@@ -9,6 +8,7 @@ import {
   MbscEventcalendarView,
   MbscCalendarEvent /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './external-drag-drop-schedule-unschedule.css';
 
 setOptions({
@@ -73,11 +73,12 @@ const App: React.FC = () => {
     },
   ]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const [dropCont, setDropCont] = React.useState<any>();
   const setDropElm = React.useCallback((elm: any) => {

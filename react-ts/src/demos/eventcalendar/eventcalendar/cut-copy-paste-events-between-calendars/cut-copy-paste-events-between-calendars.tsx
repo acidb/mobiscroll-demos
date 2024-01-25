@@ -1,20 +1,20 @@
-import React from 'react';
 import {
   Eventcalendar,
-  Page,
-  Select,
-  SegmentedGroup,
-  Segmented,
-  toast,
-  snackbar,
-  setOptions,
   MbscCalendarEvent,
-  MbscEventcalendarView,
-  MbscPageLoadingEvent,
   MbscCellClickEvent,
+  MbscEventcalendarView,
   MbscEventDeleteEvent,
+  MbscPageLoadingEvent,
   MbscSelectChangeEvent,
+  Page,
+  Segmented,
+  SegmentedGroup,
+  Select,
+  setOptions,
+  snackbar,
+  toast,
 } from '@mobiscroll/react';
+import React from 'react';
 import './cut-copy-paste-events-between-calendars.css';
 
 setOptions({
@@ -180,9 +180,7 @@ const App: React.FC = () => {
               const activeEvents = activeCalendar === 'first' ? firstEvents : secondEvents;
               let eventsToUpdate = [...activeEvents];
               for (const event of deletedEvents) {
-                eventsToUpdate = eventsToUpdate.filter((ev) => {
-                  return ev.id !== event.id;
-                });
+                eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
               }
 
               if (activeCalendar === 'first') {
@@ -204,17 +202,17 @@ const App: React.FC = () => {
     [activeCalendar, deletedEvents, firstEvents, secondEvents],
   );
 
-  const getActiveEvents = React.useCallback(() => {
-    return activeCalendar === 'first' ? firstEvents : secondEvents;
-  }, [activeCalendar, firstEvents, secondEvents]);
+  const getActiveEvents = React.useCallback(
+    () => (activeCalendar === 'first' ? firstEvents : secondEvents),
+    [activeCalendar, firstEvents, secondEvents],
+  );
 
-  const getActiveSelectedEvents = React.useCallback(() => {
-    return activeCalendar === 'first' ? firstSelectedEvents : secondSelectedEvents;
-  }, [activeCalendar, firstSelectedEvents, secondSelectedEvents]);
+  const getActiveSelectedEvents = React.useCallback(
+    () => (activeCalendar === 'first' ? firstSelectedEvents : secondSelectedEvents),
+    [activeCalendar, firstSelectedEvents, secondSelectedEvents],
+  );
 
-  const monthDiff = React.useCallback((d1, d2) => {
-    return d2.getMonth() - d1.getMonth() + 12 * (d2.getFullYear() - d1.getFullYear());
-  }, []);
+  const monthDiff = React.useCallback((d1, d2) => d2.getMonth() - d1.getMonth() + 12 * (d2.getFullYear() - d1.getFullYear()), []);
 
   const pasteEvents = React.useCallback(() => {
     const activeEvents = getActiveEvents();
@@ -247,9 +245,7 @@ const App: React.FC = () => {
         let cutEvs = activeCalendar === cutCalendar ? eventsToUpdate : cutCalendar === 'first' ? firstEvents : secondEvents;
         setMoveEvents([...selectedEvents]);
         for (const event of selectedEvents) {
-          cutEvs = cutEvs.filter((ev) => {
-            return ev.id !== event.id;
-          });
+          cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
         }
         if (cutCalendar === 'first') {
           setFirstEvents(cutEvs);
@@ -273,9 +269,7 @@ const App: React.FC = () => {
 
                 let cutEvs = getActiveEvents();
                 for (const event of pastedEvents) {
-                  cutEvs = cutEvs.filter((ev) => {
-                    return ev.id !== event.id;
-                  });
+                  cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
                 }
                 if (activeCalendar === 'first') {
                   setFirstEvents(cutEvs);
@@ -328,9 +322,7 @@ const App: React.FC = () => {
       setDeletedEvents(activeSelectedEvents);
 
       for (const event of activeSelectedEvents) {
-        eventsToUpdate = eventsToUpdate.filter((ev) => {
-          return ev.id !== event.id;
-        });
+        eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
       }
 
       if (activeCalendar === 'first') {
@@ -437,9 +429,7 @@ const App: React.FC = () => {
 
       let cutEvs = getActiveEvents();
       for (const event of pastedEvents) {
-        cutEvs = cutEvs.filter((ev) => {
-          return ev.id !== event.id;
-        });
+        cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
       }
       if (activeCalendar === 'first') {
         setFirstEvents(cutEvs);

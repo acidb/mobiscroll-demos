@@ -1,5 +1,5 @@
-import React from 'react';
 import { setOptions, Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './resource-grouping-hierarchy.css';
 
 setOptions({
@@ -8,8 +8,8 @@ setOptions({
 });
 
 const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,2)',
         end: 'dyndatetime(y,m,5)',
@@ -82,11 +82,12 @@ const App: React.FC = () => {
         title: 'Event 12',
         resource: 'res7',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 'res1',
         name: 'Resource 1',
@@ -171,16 +172,18 @@ const App: React.FC = () => {
         name: 'Resource 12',
         color: '#e25dd2',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

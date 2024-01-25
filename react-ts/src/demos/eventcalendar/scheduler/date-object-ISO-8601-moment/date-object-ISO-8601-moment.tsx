@@ -1,6 +1,6 @@
-import React from 'react';
 import { Eventcalendar, Page, Button, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -68,13 +68,14 @@ const App: React.FC = () => {
     setSelectedMoment(moment([2020, 4, 21]));
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Page>

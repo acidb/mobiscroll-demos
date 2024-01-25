@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, setOptions, Popup, Button, formatDate, toast /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -254,13 +254,14 @@ function App() {
   const [bgColor, setBgColor] = React.useState<string>('');
   const timerRef = React.useRef<any>(null);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onEventHoverIn = React.useCallback((args) => {
     const event = args.event;

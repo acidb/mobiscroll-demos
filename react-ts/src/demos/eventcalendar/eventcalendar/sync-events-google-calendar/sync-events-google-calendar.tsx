@@ -1,20 +1,20 @@
-import React from 'react';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import {
-  Eventcalendar,
-  setOptions,
-  Page,
   Button,
-  Switch,
   CalendarNav,
-  CalendarPrev,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
-  toast,
   confirm,
+  Eventcalendar,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  Page,
+  setOptions,
+  Switch,
+  toast,
 } from '@mobiscroll/react';
-import { googleCalendarSync } from '@mobiscroll/calendar-integration';
+import React from 'react';
 import './sync-events-google-calendar.css';
 
 setOptions({
@@ -45,11 +45,12 @@ const App: React.FC = () => {
     });
   }, []);
 
-  const extendDefaultEvent = React.useCallback(() => {
-    return {
+  const extendDefaultEvent = React.useCallback(
+    () => ({
       color: calendarData[primaryCalendarId].color,
-    };
-  }, [calendarData, primaryCalendarId]);
+    }),
+    [calendarData, primaryCalendarId],
+  );
 
   React.useEffect(() => {
     const onSignedIn = () => {
@@ -135,8 +136,8 @@ const App: React.FC = () => {
     [calendarData, onError],
   );
 
-  const renderMyHeader = React.useCallback(() => {
-    return (
+  const renderMyHeader = React.useCallback(
+    () => (
       <React.Fragment>
         <CalendarNav />
         <div className="md-spinner">
@@ -159,8 +160,9 @@ const App: React.FC = () => {
           <CalendarNext />
         </div>
       </React.Fragment>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   const onPageLoading = React.useCallback(
     (args) => {
@@ -279,17 +281,9 @@ const App: React.FC = () => {
             </div>
             <div className="mbsc-form-group-inset md-sync-events-google-inset">
               <div className="mbsc-form-group-title">My Calendars</div>
-              {myCalendars.map((cal) => {
-                return (
-                  <Switch
-                    label={cal.summary}
-                    key={cal.id}
-                    value={cal.id}
-                    checked={calendarData[cal.id].checked}
-                    onChange={toggleCalendar}
-                  />
-                );
-              })}
+              {myCalendars.map((cal) => (
+                <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+              ))}
             </div>
             <div className="mbsc-form-group-inset">
               <Button className="mbsc-button-block" onClick={signOut}>

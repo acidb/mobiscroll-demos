@@ -1,6 +1,6 @@
-import React from 'react';
-import { Eventcalendar, Page, Button, getJson, setOptions, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/react';
 import { print } from '@mobiscroll/print';
+import { Eventcalendar, Page, Button, getJson, setOptions, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,

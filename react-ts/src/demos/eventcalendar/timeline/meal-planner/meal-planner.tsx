@@ -1,19 +1,19 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  snackbar,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
+  Eventcalendar,
   formatDate,
   getJson,
-  SegmentedGroup,
-  SegmentedItem,
+  Input,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  Popup,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions,
+  snackbar,
+  Textarea,
 } from '@mobiscroll/react';
+import React from 'react';
 import './meal-planner.css';
 
 setOptions({
@@ -185,9 +185,7 @@ const App: React.FC = () => {
   const onEventCreated = React.useCallback(
     (args) => {
       const event = args.event;
-      const resource: any = types.find((obj) => {
-        return obj.id === event.resource;
-      });
+      const resource: any = types.find((obj) => obj.id === event.resource);
       setHeader(
         '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>',
       );
@@ -255,24 +253,23 @@ const App: React.FC = () => {
     setOpen(false);
   }, [isEdit, myMeals]);
 
-  const extendDefaultEvent = React.useCallback((args) => {
-    return {
+  const extendDefaultEvent = React.useCallback(
+    (args) => ({
       title: 'New meal',
       allDay: true,
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const renderMyResource = (resource: any) => {
-    return (
-      <div className="md-meal-planner-cont">
-        <div className="md-meal-planner-title" style={{ color: resource.color }}>
-          <span className="md-meal-planner-icon" dangerouslySetInnerHTML={{ __html: resource.icon }}></span>
-          {resource.name}
-        </div>
-        <div className="md-meal-planner-kcal">{resource.kcal}</div>
+  const renderMyResource = (resource: any) => (
+    <div className="md-meal-planner-cont">
+      <div className="md-meal-planner-title" style={{ color: resource.color }}>
+        <span className="md-meal-planner-icon" dangerouslySetInnerHTML={{ __html: resource.icon }}></span>
+        {resource.name}
       </div>
-    );
-  };
+      <div className="md-meal-planner-kcal">{resource.kcal}</div>
+    </div>
+  );
 
   const myScheduleEvent = React.useCallback((args) => {
     const event = args.original;
@@ -314,13 +311,11 @@ const App: React.FC = () => {
         cssClass="md-meal-planner-popup"
       >
         <SegmentedGroup onChange={typeChange} value={type}>
-          {types.map((type) => {
-            return (
-              <SegmentedItem value={type.id.toString()} key={type.id}>
-                {type.name}
-              </SegmentedItem>
-            );
-          })}
+          {types.map((type) => (
+            <SegmentedItem value={type.id.toString()} key={type.id}>
+              {type.name}
+            </SegmentedItem>
+          ))}
         </SegmentedGroup>
         <div className="mbsc-form-group">
           <Input label="Name" value={name} onChange={nameChange} />

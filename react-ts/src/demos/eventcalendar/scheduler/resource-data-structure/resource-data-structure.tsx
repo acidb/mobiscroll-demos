@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, MbscCalendarEvent, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './resource-data-structure.css';
 
 setOptions({
@@ -41,13 +41,14 @@ const App: React.FC = () => {
     },
   ];
 
-  const myView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const myEvents: MbscCalendarEvent[] = [
     {
@@ -70,14 +71,12 @@ const App: React.FC = () => {
     },
   ];
 
-  const renderCustomResource = (resource) => {
-    return (
-      <div>
-        <div className="resource-name">{resource.name}</div>
-        <div className="md-resource-data-structure-title">{resource.title}</div>
-      </div>
-    );
-  };
+  const renderCustomResource = (resource) => (
+    <div>
+      <div className="resource-name">{resource.name}</div>
+      <div className="md-resource-data-structure-title">{resource.title}</div>
+    </div>
+  );
 
   return <Eventcalendar view={myView} data={myEvents} resources={myResources} renderResource={renderCustomResource} />;
 };

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   setOptions,
@@ -12,6 +11,7 @@ import {
   CalendarToday,
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './event-listing.css';
 
 setOptions({
@@ -28,91 +28,89 @@ const App: React.FC = () => {
       eventList: true,
     },
   });
-  const myEvents = React.useState<MbscCalendarEvent[]>(() => {
-    return [
-      {
-        start: 'dyndatetime(y,m,d-1,8)',
-        end: 'dyndatetime(y,m,d-1,15)',
-        title: 'Event 1',
-        resource: 1,
-      },
-      {
-        start: 'dyndatetime(y,m,d-1,10)',
-        end: 'dyndatetime(y,m,d-1,13)',
-        title: 'Event 2',
-        resource: 1,
-      },
-      {
-        start: 'dyndatetime(y,m,d,7)',
-        end: 'dyndatetime(y,m,d,14)',
-        title: 'Event 3',
-        resource: 1,
-      },
-      {
-        start: 'dyndatetime(y,m,d-2,9)',
-        end: 'dyndatetime(y,m,d-2,15)',
-        title: 'Event 4',
-        resource: 2,
-      },
-      {
-        start: 'dyndatetime(y,m,d+1,7)',
-        end: 'dyndatetime(y,m,d+1,12)',
-        title: 'Event 5',
-        resource: 2,
-      },
-      {
-        start: 'dyndatetime(y,m,d+2,11)',
-        end: 'dyndatetime(y,m,d+2,16)',
-        title: 'Event 6',
-        resource: 3,
-      },
-      {
-        start: 'dyndatetime(y,m,d-3,8)',
-        end: 'dyndatetime(y,m,d-3,20)',
-        title: 'Event 7',
-        resource: 4,
-      },
-      {
-        start: 'dyndatetime(y,m,d,9)',
-        end: 'dyndatetime(y,m,d,15)',
-        title: 'Event 8',
-        resource: 4,
-      },
-      {
-        start: 'dyndatetime(y,m,d,13)',
-        end: 'dyndatetime(y,m,d,19)',
-        title: 'Event 9',
-        resource: 5,
-      },
-      {
-        start: 'dyndatetime(y,m,d+1,12)',
-        end: 'dyndatetime(y,m,d+1,20)',
-        title: 'Event 10',
-        resource: 5,
-      },
-      {
-        start: 'dyndatetime(y,m,d+2,18)',
-        end: 'dyndatetime(y,m,d+2,22)',
-        title: 'Event 11',
-        resource: 5,
-      },
-      {
-        start: 'dyndatetime(y,m,d-4,10)',
-        end: 'dyndatetime(y,m,d-4,16)',
-        title: 'Event 12',
-        resource: 6,
-      },
-      {
-        start: 'dyndatetime(y,m,d-3,15)',
-        end: 'dyndatetime(y,m,d-3,20)',
-        title: 'Event 13',
-        resource: 6,
-      },
-    ];
-  });
+  const myEvents = React.useState<MbscCalendarEvent[]>(() => [
+    {
+      start: 'dyndatetime(y,m,d-1,8)',
+      end: 'dyndatetime(y,m,d-1,15)',
+      title: 'Event 1',
+      resource: 1,
+    },
+    {
+      start: 'dyndatetime(y,m,d-1,10)',
+      end: 'dyndatetime(y,m,d-1,13)',
+      title: 'Event 2',
+      resource: 1,
+    },
+    {
+      start: 'dyndatetime(y,m,d,7)',
+      end: 'dyndatetime(y,m,d,14)',
+      title: 'Event 3',
+      resource: 1,
+    },
+    {
+      start: 'dyndatetime(y,m,d-2,9)',
+      end: 'dyndatetime(y,m,d-2,15)',
+      title: 'Event 4',
+      resource: 2,
+    },
+    {
+      start: 'dyndatetime(y,m,d+1,7)',
+      end: 'dyndatetime(y,m,d+1,12)',
+      title: 'Event 5',
+      resource: 2,
+    },
+    {
+      start: 'dyndatetime(y,m,d+2,11)',
+      end: 'dyndatetime(y,m,d+2,16)',
+      title: 'Event 6',
+      resource: 3,
+    },
+    {
+      start: 'dyndatetime(y,m,d-3,8)',
+      end: 'dyndatetime(y,m,d-3,20)',
+      title: 'Event 7',
+      resource: 4,
+    },
+    {
+      start: 'dyndatetime(y,m,d,9)',
+      end: 'dyndatetime(y,m,d,15)',
+      title: 'Event 8',
+      resource: 4,
+    },
+    {
+      start: 'dyndatetime(y,m,d,13)',
+      end: 'dyndatetime(y,m,d,19)',
+      title: 'Event 9',
+      resource: 5,
+    },
+    {
+      start: 'dyndatetime(y,m,d+1,12)',
+      end: 'dyndatetime(y,m,d+1,20)',
+      title: 'Event 10',
+      resource: 5,
+    },
+    {
+      start: 'dyndatetime(y,m,d+2,18)',
+      end: 'dyndatetime(y,m,d+2,22)',
+      title: 'Event 11',
+      resource: 5,
+    },
+    {
+      start: 'dyndatetime(y,m,d-4,10)',
+      end: 'dyndatetime(y,m,d-4,16)',
+      title: 'Event 12',
+      resource: 6,
+    },
+    {
+      start: 'dyndatetime(y,m,d-3,15)',
+      end: 'dyndatetime(y,m,d-3,20)',
+      title: 'Event 13',
+      resource: 6,
+    },
+  ]);
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -143,8 +141,9 @@ const App: React.FC = () => {
         name: 'Resource F',
         color: '#1ac38d',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const changeView = (event: any) => {
     let calView: MbscEventcalendarView;
@@ -183,23 +182,21 @@ const App: React.FC = () => {
     setCalView(calView);
   };
 
-  const renderMyHeader = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav className="md-event-listing-nav" />
-        <div className="md-event-listing-picker">
-          <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="workweek">Work week</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="month">Month</SegmentedItem>
-          </SegmentedGroup>
-        </div>
-        <CalendarPrev className="md-event-listing-prev" />
-        <CalendarToday className="md-event-listing-today" />
-        <CalendarNext className="md-event-listing-next" />
-      </React.Fragment>
-    );
-  };
+  const renderMyHeader = () => (
+    <React.Fragment>
+      <CalendarNav className="md-event-listing-nav" />
+      <div className="md-event-listing-picker">
+        <SegmentedGroup value={view} onChange={changeView}>
+          <SegmentedItem value="workweek">Work week</SegmentedItem>
+          <SegmentedItem value="week">Week</SegmentedItem>
+          <SegmentedItem value="month">Month</SegmentedItem>
+        </SegmentedGroup>
+      </div>
+      <CalendarPrev className="md-event-listing-prev" />
+      <CalendarToday className="md-event-listing-today" />
+      <CalendarNext className="md-event-listing-next" />
+    </React.Fragment>
+  );
 
   return (
     <Eventcalendar

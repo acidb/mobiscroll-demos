@@ -1,5 +1,5 @@
-import React from 'react';
 import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -45,21 +45,19 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
-  return (
-    <Page>
-      <Select
-        data={myData}
-        label="Select"
-        rtl={true}
-        display="bottom"
-        inputProps={{
-          inputStyle: 'box',
-          labelStyle: 'stacked',
-          placeholder: 'Please select...',
-        }}
-      />
-    </Page>
-  );
-};
+const App: React.FC = () => (
+  <Page>
+    <Select
+      data={myData}
+      label="Select"
+      rtl={true}
+      display="bottom"
+      inputProps={{
+        inputStyle: 'box',
+        labelStyle: 'stacked',
+        placeholder: 'Please select...',
+      }}
+    />
+  </Page>
+);
 export default App;

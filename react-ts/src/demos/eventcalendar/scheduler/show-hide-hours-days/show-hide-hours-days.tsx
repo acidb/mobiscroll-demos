@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, toast /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
@@ -25,8 +25,8 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         startDay: 1,
@@ -36,8 +36,9 @@ const App: React.FC = () => {
         timeCellStep: 30,
         timeLabelStep: 30,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return <Eventcalendar dragToCreatse={true} dragToResize={true} dragToMove={true} invalid={invalids} data={myEvents} view={view} />;
 };

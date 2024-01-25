@@ -1,20 +1,21 @@
-import React from 'react';
 import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './timeline-time-grid.css';
 
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -45,8 +46,9 @@ const App: React.FC = () => {
         name: 'Ashley',
         color: '#01adff',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   React.useEffect(() => {
     getJson(

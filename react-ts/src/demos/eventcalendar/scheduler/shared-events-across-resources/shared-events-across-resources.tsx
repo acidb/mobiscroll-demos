@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Popup,
@@ -10,6 +9,7 @@ import {
   MbscEventcalendarView,
   MbscResourceData /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -26,8 +26,8 @@ const App: React.FC = () => {
   const [isNewEvent, setIsNewEvent] = React.useState<boolean>(false);
   const [isOpen, setOpen] = React.useState<boolean>(false);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -36,11 +36,12 @@ const App: React.FC = () => {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent>(() => {
-    return [
+  const [myEvents, setEvents] = React.useState<MbscCalendarEvent>(
+    () => [
       {
         start: 'dyndatetime(y,m,d-3,10)',
         end: 'dyndatetime(y,m,d-3,15)',
@@ -90,11 +91,12 @@ const App: React.FC = () => {
         resource: [1, 2],
         color: '#de3d83',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResourceData[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResourceData[]>(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -110,8 +112,9 @@ const App: React.FC = () => {
         name: 'John',
         color: '#e8d0ef',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const showPopup = React.useCallback((args) => {
     const event = args.event;
@@ -152,8 +155,8 @@ const App: React.FC = () => {
     [myEvents],
   );
 
-  const popupButtons = React.useMemo<any>(() => {
-    return [
+  const popupButtons = React.useMemo<any>(
+    () => [
       'cancel',
       {
         text: 'OK',
@@ -175,8 +178,9 @@ const App: React.FC = () => {
         },
         cssClass: 'mbsc-popup-button-primary',
       },
-    ];
-  }, [myEvents, participants, tempEvent, title, isNewEvent]);
+    ],
+    [myEvents, participants, tempEvent, title, isNewEvent],
+  );
 
   const onClose = React.useCallback(() => {
     if (isNewEvent) {

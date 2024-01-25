@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Toast,
@@ -8,6 +7,7 @@ import {
   MbscEventUpdateFailedEvent,
   MbscEventCreateFailedEvent /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './work-week-hours.css';
 
 const App: React.FC = () => {
@@ -51,8 +51,8 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         startDay: 1,
@@ -60,8 +60,9 @@ const App: React.FC = () => {
         startTime: '09:00',
         endTime: '18:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const closeToast = React.useCallback(() => {
     setToastOpen(false);

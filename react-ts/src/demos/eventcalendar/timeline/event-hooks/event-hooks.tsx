@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, Draggable, getJson, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './event-hooks.css';
 
 const App: React.FC = () => {
@@ -26,13 +26,14 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const myResources = [
     {

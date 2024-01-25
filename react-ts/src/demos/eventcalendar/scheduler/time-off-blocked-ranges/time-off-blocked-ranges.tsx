@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -54,11 +54,12 @@ function App() {
     );
   }, []);
 
-  const view = React.useMemo(() => {
-    return {
+  const view = React.useMemo(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onEventCreateFailed = React.useCallback((event) => {
     setToastText("Can't create event on this date");

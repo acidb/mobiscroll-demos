@@ -1,13 +1,13 @@
-import React from 'react';
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResourceData /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 
 const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: new Date(now.getFullYear(), now.getMonth(), monday + 1, 11),
         end: new Date(now.getFullYear(), now.getMonth(), monday + 1, 12, 30),
@@ -44,11 +44,12 @@ const App: React.FC = () => {
         title: 'Stakeholder mtg.',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResourceData[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResourceData[]>(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -75,11 +76,12 @@ const App: React.FC = () => {
         name: 'King’s Landing',
         color: '#bacded',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -88,8 +90,9 @@ const App: React.FC = () => {
         startTime: '05:00',
         endTime: '22:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const myColors = React.useMemo<any>(
     () => [

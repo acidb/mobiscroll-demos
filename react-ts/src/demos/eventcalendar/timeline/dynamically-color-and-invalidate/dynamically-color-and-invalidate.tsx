@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, Page, Draggable, toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './dynamically-color-and-invalidate.css';
 
 setOptions({

@@ -9,7 +9,7 @@ import {
   MbscCalendarEvent,
   MbscEventClickEvent,
 } from '@mobiscroll/react';
-import { useState, useMemo, useRef, useCallback } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -459,15 +459,16 @@ function App() {
 
   const timerRef = useRef<number | null>(null);
 
-  const myView = useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: {
         type: 'week',
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const handleEventHoverIn = useCallback((args: MbscEventClickEvent) => {
     const event: MbscCalendarEvent = args.event;

@@ -1,4 +1,4 @@
-import React from 'react';
+import { print } from '@mobiscroll/print';
 import {
   Eventcalendar,
   Page,
@@ -9,7 +9,7 @@ import {
   MbscEventcalendarView,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import { print } from '@mobiscroll/print';
+import React from 'react';
 
 const MY_MODULES = [print];
 
@@ -21,8 +21,8 @@ setOptions({
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
   const [inst, setInst] = React.useState<any>(null);
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -53,8 +53,9 @@ const App: React.FC = () => {
         name: 'Gathering Field',
         color: '#8f1ed6',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   React.useEffect(() => {
     getJson(
@@ -66,16 +67,17 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'week',
         allDay: false,
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const printView = () => {
     inst.print();

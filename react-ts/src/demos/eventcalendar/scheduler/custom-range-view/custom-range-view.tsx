@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -12,6 +11,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './custom-range-view.css';
 
 setOptions({
@@ -36,18 +36,16 @@ const App: React.FC = () => {
   const endDate: any = React.useRef();
 
   // returns the number of days between two dates
-  const getNrDays = React.useCallback((start, end) => {
-    return Math.round(Math.abs((end.setHours(0) - start.setHours(0)) / (24 * 60 * 60 * 1000))) + 1;
-  }, []);
+  const getNrDays = React.useCallback(
+    (start, end) => Math.round(Math.abs((end.setHours(0) - start.setHours(0)) / (24 * 60 * 60 * 1000))) + 1,
+    [],
+  );
 
   // returns the formatted date
   const getFormattedRange = React.useCallback(
-    (start, end) => {
-      return (
-        formatDate('MMM D, YYYY', new Date(start)) +
-        (end && getNrDays(start, end) > 1 ? ' - ' + formatDate('MMM D, YYYY', new Date(end)) : '')
-      );
-    },
+    (start, end) =>
+      formatDate('MMM D, YYYY', new Date(start)) +
+      (end && getNrDays(start, end) > 1 ? ' - ' + formatDate('MMM D, YYYY', new Date(end)) : ''),
     [getNrDays],
   );
 
@@ -121,31 +119,29 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
-        <div>
-          <Datepicker
-            select="range"
-            display="anchored"
-            showOverlay={false}
-            touchUi={true}
-            buttons={[]}
-            inputComponent={Button}
-            inputProps={buttonProps}
-            onClose={onClose}
-            onChange={onChange}
-            value={rangeVal}
-          />
-        </div>
-        <div className="md-custom-range-view-controls">
-          <CalendarPrev />
-          <CalendarToday />
-          <CalendarNext />
-        </div>
-      </React.Fragment>
-    );
-  };
+  const customWithNavButtons = () => (
+    <React.Fragment>
+      <div>
+        <Datepicker
+          select="range"
+          display="anchored"
+          showOverlay={false}
+          touchUi={true}
+          buttons={[]}
+          inputComponent={Button}
+          inputProps={buttonProps}
+          onClose={onClose}
+          onChange={onChange}
+          value={rangeVal}
+        />
+      </div>
+      <div className="md-custom-range-view-controls">
+        <CalendarPrev />
+        <CalendarToday />
+        <CalendarNext />
+      </div>
+    </React.Fragment>
+  );
 
   return (
     <Eventcalendar

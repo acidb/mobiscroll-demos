@@ -1,4 +1,4 @@
-import React from 'react';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import {
   Eventcalendar,
   CalendarNav,
@@ -11,7 +11,7 @@ import {
   MbscEventcalendarView,
   toast /* localeImport */,
 } from '@mobiscroll/react';
-import { googleCalendarSync } from '@mobiscroll/calendar-integration';
+import React from 'react';
 import './load-events-from-google-calendar.css';
 
 const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
@@ -102,38 +102,36 @@ const App: React.FC = () => {
     setCalView(calView);
   };
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav className="google-cal-header-nav" />
-        <div className="md-spinner">
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-        </div>
-        <div className="google-cal-header-picker">
-          <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="month">Month</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="day">Day</SegmentedItem>
-            <SegmentedItem value="agenda">Agenda</SegmentedItem>
-          </SegmentedGroup>
-        </div>
-        <CalendarPrev className="google-cal-header-prev" />
-        <CalendarToday className="google-cal-header-today" />
-        <CalendarNext className="google-cal-header-next" />
-      </React.Fragment>
-    );
-  };
+  const customWithNavButtons = () => (
+    <React.Fragment>
+      <CalendarNav className="google-cal-header-nav" />
+      <div className="md-spinner">
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+        <div className="md-spinner-blade"></div>
+      </div>
+      <div className="google-cal-header-picker">
+        <SegmentedGroup value={view} onChange={changeView}>
+          <SegmentedItem value="month">Month</SegmentedItem>
+          <SegmentedItem value="week">Week</SegmentedItem>
+          <SegmentedItem value="day">Day</SegmentedItem>
+          <SegmentedItem value="agenda">Agenda</SegmentedItem>
+        </SegmentedGroup>
+      </div>
+      <CalendarPrev className="google-cal-header-prev" />
+      <CalendarToday className="google-cal-header-today" />
+      <CalendarNext className="google-cal-header-next" />
+    </React.Fragment>
+  );
 
   return (
     <Eventcalendar

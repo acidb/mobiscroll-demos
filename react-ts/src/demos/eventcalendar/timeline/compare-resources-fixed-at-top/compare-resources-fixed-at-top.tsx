@@ -1,5 +1,5 @@
+import { Button, Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions, Toast } from '@mobiscroll/react';
 import React from 'react';
-import { Eventcalendar, Button, Toast, setOptions, MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/react';
 import './compare-resources-fixed-at-top.css';
 
 setOptions({
@@ -81,8 +81,8 @@ const App: React.FC = () => {
   const [fixedResources, setFixedResources] = React.useState<MbscResource[]>([]);
   const [isToastOpen, setIsToastOpen] = React.useState<boolean>(false);
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,d,9)',
         end: 'dyndatetime(y,m,d,12)',
@@ -401,11 +401,12 @@ const App: React.FC = () => {
         title: 'Task 52',
         resource: 13,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'week',
         resolutionHorizontal: 'hour',
@@ -414,8 +415,9 @@ const App: React.FC = () => {
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const closeToast = React.useCallback(() => {
     setIsToastOpen(false);
@@ -457,25 +459,23 @@ const App: React.FC = () => {
   );
 
   const renderResource = React.useCallback(
-    (r: MbscResource) => {
-      return (
-        <div className="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
-          <div>{r.name}</div>
-          {r.fixed || (!r.fixed && fixedNr <= 2) ? (
-            <Button
-              className="md-compare-button"
-              color={r.fixed ? 'danger' : 'success'}
-              variant="outline"
-              onClick={() => toggleComparison(r)}
-            >
-              {r.fixed ? 'Remove' : 'Compare'}
-            </Button>
-          ) : (
-            ''
-          )}
-        </div>
-      );
-    },
+    (r: MbscResource) => (
+      <div className="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
+        <div>{r.name}</div>
+        {r.fixed || (!r.fixed && fixedNr <= 2) ? (
+          <Button
+            className="md-compare-button"
+            color={r.fixed ? 'danger' : 'success'}
+            variant="outline"
+            onClick={() => toggleComparison(r)}
+          >
+            {r.fixed ? 'Remove' : 'Compare'}
+          </Button>
+        ) : (
+          ''
+        )}
+      </div>
+    ),
     [fixedNr, toggleComparison],
   );
 

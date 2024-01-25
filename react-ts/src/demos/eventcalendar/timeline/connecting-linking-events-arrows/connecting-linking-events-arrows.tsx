@@ -1,19 +1,20 @@
-import React from 'react';
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './connecting-linking-events-arrows.css';
 
 const App: React.FC = () => {
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'month',
         eventList: true,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         id: 1,
         start: 'dyndatetime(y,m,1)',
@@ -98,11 +99,12 @@ const App: React.FC = () => {
         title: 'Event 12',
         resource: 6,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Resource 1',
@@ -133,11 +135,12 @@ const App: React.FC = () => {
         name: 'Resource 6',
         color: '#01adff',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myConnections = React.useMemo(() => {
-    return [
+  const myConnections = React.useMemo(
+    () => [
       {
         from: 1,
         to: 2,
@@ -205,8 +208,9 @@ const App: React.FC = () => {
         color: 'pink',
         arrow: 'to',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Eventcalendar

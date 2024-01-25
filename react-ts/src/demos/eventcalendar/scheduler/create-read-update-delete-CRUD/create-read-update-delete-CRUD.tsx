@@ -1,19 +1,19 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  snackbar,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
-  Switch,
   Datepicker,
-  SegmentedGroup,
-  SegmentedItem,
+  Eventcalendar,
+  Input,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  Popup,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions,
+  snackbar,
+  Switch,
+  Textarea,
 } from '@mobiscroll/react';
+import React from 'react';
 import './create-read-update-delete-CRUD.css';
 
 setOptions({

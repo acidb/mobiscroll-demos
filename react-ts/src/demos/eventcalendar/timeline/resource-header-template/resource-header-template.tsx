@@ -1,22 +1,23 @@
-import React from 'react';
 import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './resource-header-template.css';
 
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'week',
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -53,8 +54,9 @@ const App: React.FC = () => {
         seats: 900,
         color: '#8f1ed6',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   React.useEffect(() => {
     getJson(
@@ -66,23 +68,19 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const renderCustomResource = (resource: MbscResource) => {
-    return (
-      <div className="md-resource-header-template-title">
-        <div className="md-resource-header-template-name">Room</div>
-        <div className="md-resource-header-template-seats">Capacity</div>
-      </div>
-    );
-  };
+  const renderCustomResource = (resource: MbscResource) => (
+    <div className="md-resource-header-template-title">
+      <div className="md-resource-header-template-name">Room</div>
+      <div className="md-resource-header-template-seats">Capacity</div>
+    </div>
+  );
 
-  const renderCustomHeader = () => {
-    return (
-      <div className="md-resource-header-template-title">
-        <div className="md-resource-header-template-name">Room</div>
-        <div className="md-resource-header-template-seats">Capacity</div>
-      </div>
-    );
-  };
+  const renderCustomHeader = () => (
+    <div className="md-resource-header-template-title">
+      <div className="md-resource-header-template-name">Room</div>
+      <div className="md-resource-header-template-seats">Capacity</div>
+    </div>
+  );
 
   return (
     <Eventcalendar

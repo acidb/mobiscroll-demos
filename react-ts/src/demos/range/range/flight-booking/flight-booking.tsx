@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, Input, RadioGroup, Radio, Page /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 const App: React.FC = () => {
   const now = new Date();
@@ -40,8 +40,8 @@ const App: React.FC = () => {
   const changeTripType = (ev: any) => {
     setDisabled(nrOfValues(inst) < 1);
   };
-  const buttons = React.useMemo(() => {
-    return [
+  const buttons = React.useMemo(
+    () => [
       'cancel',
       {
         disabled,
@@ -53,8 +53,9 @@ const App: React.FC = () => {
         text: 'One way only',
       },
       'set',
-    ];
-  }, [disabled, inst]);
+    ],
+    [disabled, inst],
+  );
 
   function nrOfValues(instance: any) {
     const tempVal = (instance && instance.getTempVal()) || [];

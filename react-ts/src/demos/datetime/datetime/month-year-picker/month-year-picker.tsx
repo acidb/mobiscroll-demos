@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, Input, Page /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 const App: React.FC = () => {
   const now = new Date();

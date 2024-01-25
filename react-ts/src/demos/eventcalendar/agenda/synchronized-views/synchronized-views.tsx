@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions, getJson, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './synchronized-views.css';
 
 setOptions({
@@ -25,17 +25,19 @@ const App: React.FC = () => {
     setSelectedDate(event.date);
   }, []);
 
-  const monthView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const monthView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: { popover: false },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const dayView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const dayView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <div className="mbsc-grid md-demo-synchronized-views">

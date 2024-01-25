@@ -19,8 +19,8 @@ momentTimezone.moment = moment;
 
 function App() {
   const [timezone, setTimezone] = React.useState<string>('utc');
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,d-2,7)',
         end: 'dyndatetime(y,m,d-2,9)',
@@ -63,11 +63,12 @@ function App() {
         color: '#50b166',
         title: 'Team-Building',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const timezones = React.useMemo(() => {
-    return [
+  const timezones = React.useMemo(
+    () => [
       {
         text: 'America/Los Angeles',
         value: 'America/Los_Angeles',
@@ -104,32 +105,32 @@ function App() {
         text: 'Asia/Tokyo',
         value: 'Asia/Tokyo',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onChange = React.useCallback((ev) => {
     setTimezone(ev.value);
   }, []);
 
-  const myHeader = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="md-timezone-header">
-          <CalendarPrev />
-          <CalendarToday />
-          <CalendarNext />
-          <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={onChange} />
-        </div>
-      </React.Fragment>
-    );
-  };
+  const myHeader = () => (
+    <React.Fragment>
+      <CalendarNav />
+      <div className="md-timezone-header">
+        <CalendarPrev />
+        <CalendarToday />
+        <CalendarNext />
+        <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={onChange} />
+      </div>
+    </React.Fragment>
+  );
 
   return (
     <Eventcalendar

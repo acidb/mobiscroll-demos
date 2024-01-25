@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -11,6 +10,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './customizing-header.css';
 
 setOptions({
@@ -87,29 +87,27 @@ const App: React.FC = () => {
     [view, currentDate, setCurrentDate, getFirstDayOfWeek],
   );
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav className="md-custom-header-nav" />
-        <div className="md-custom-header-controls">
-          <Button onClick={() => navigatePage(true)} icon="material-arrow-back" variant="flat" className="md-custom-header-button"></Button>
-          <CalendarToday className="md-custom-header-today" />
-          <Button
-            onClick={() => navigatePage(false)}
-            icon="material-arrow-forward"
-            variant="flat"
-            className="md-custom-header-button"
-          ></Button>
-        </div>
-        <div className="md-custom-header-view">
-          <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="schedule" icon="material-list" />
-            <SegmentedItem value="calendar" icon="calendar" />
-          </SegmentedGroup>
-        </div>
-      </React.Fragment>
-    );
-  };
+  const customWithNavButtons = () => (
+    <React.Fragment>
+      <CalendarNav className="md-custom-header-nav" />
+      <div className="md-custom-header-controls">
+        <Button onClick={() => navigatePage(true)} icon="material-arrow-back" variant="flat" className="md-custom-header-button"></Button>
+        <CalendarToday className="md-custom-header-today" />
+        <Button
+          onClick={() => navigatePage(false)}
+          icon="material-arrow-forward"
+          variant="flat"
+          className="md-custom-header-button"
+        ></Button>
+      </div>
+      <div className="md-custom-header-view">
+        <SegmentedGroup value={view} onChange={changeView}>
+          <SegmentedItem value="schedule" icon="material-list" />
+          <SegmentedItem value="calendar" icon="calendar" />
+        </SegmentedGroup>
+      </div>
+    </React.Fragment>
+  );
 
   return (
     <Eventcalendar

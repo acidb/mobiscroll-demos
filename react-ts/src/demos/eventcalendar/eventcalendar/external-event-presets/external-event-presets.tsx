@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Draggable,
@@ -10,6 +9,7 @@ import {
   Toast,
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './external-event-presets.css';
 
 setOptions({
@@ -97,22 +97,24 @@ const App: React.FC = () => {
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
   const [toastText, setToastText] = React.useState<string>();
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: { labels: true },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const invalid = React.useMemo(() => {
-    return [
+  const invalid = React.useMemo(
+    () => [
       {
         recurring: {
           repeat: 'weekly',
           weekDays: 'SA,SU',
         },
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const fillDialog = React.useCallback((args) => {
     setTitle(args.event.title);

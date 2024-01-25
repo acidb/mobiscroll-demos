@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -7,6 +6,7 @@ import {
   MbscEventcalendarView,
   MbscEventClickEvent /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
@@ -32,11 +32,12 @@ const App: React.FC = () => {
     setToastOpen(true);
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: { labels: true },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <>

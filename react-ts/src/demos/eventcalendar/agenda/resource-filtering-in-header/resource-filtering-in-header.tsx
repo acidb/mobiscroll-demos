@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -14,6 +13,7 @@ import {
   MbscEventcalendarView,
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './resource-filtering-in-header.css';
 
 setOptions({
@@ -32,15 +32,16 @@ const App: React.FC = () => {
     setToastOpen(false);
   }, []);
 
-  const calView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const calView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: {
         type: 'month',
       },
-    };
-  }, []);
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+    }),
+    [],
+  );
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Barry',
@@ -62,12 +63,13 @@ const App: React.FC = () => {
         img: 'https://img.mobiscroll.com/demos/m2.png',
         checked: false,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const filterEvents = React.useCallback(
     (events: MbscCalendarEvent, selected: any) => {
-      let evs = [];
+      const evs = [];
       for (let i = 0; i < events.length; ++i) {
         const item = events[i];
         if (selected[item.resource]) {
@@ -104,28 +106,24 @@ const App: React.FC = () => {
     setToastOpen(true);
   };
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav className="md-header-filter-nav" />
-        <div className="md-header-filter-controls">
-          <SegmentedGroup select="multiple">
-            {myResources.map((res: any) => {
-              return (
-                <SegmentedItem key={res.id} value={res.id} checked={selected[res.id]} onChange={filter}>
-                  <img className="md-header-filter-img" src={res.img} alt={res.name} />
-                  <span className={'md-header-filter-name md-header-filter-name-' + res.id}>{res.name}</span>
-                </SegmentedItem>
-              );
-            })}
-          </SegmentedGroup>
-        </div>
-        <CalendarPrev className="md-header-filter-prev" />
-        <CalendarToday />
-        <CalendarNext className="md-header-filter-next" />
-      </React.Fragment>
-    );
-  };
+  const customWithNavButtons = () => (
+    <React.Fragment>
+      <CalendarNav className="md-header-filter-nav" />
+      <div className="md-header-filter-controls">
+        <SegmentedGroup select="multiple">
+          {myResources.map((res: any) => (
+            <SegmentedItem key={res.id} value={res.id} checked={selected[res.id]} onChange={filter}>
+              <img className="md-header-filter-img" src={res.img} alt={res.name} />
+              <span className={'md-header-filter-name md-header-filter-name-' + res.id}>{res.name}</span>
+            </SegmentedItem>
+          ))}
+        </SegmentedGroup>
+      </div>
+      <CalendarPrev className="md-header-filter-prev" />
+      <CalendarToday />
+      <CalendarNext className="md-header-filter-next" />
+    </React.Fragment>
+  );
 
   return (
     <div>

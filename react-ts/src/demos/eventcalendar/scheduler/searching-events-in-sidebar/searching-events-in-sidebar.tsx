@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Page,
@@ -9,6 +8,7 @@ import {
   MbscEventcalendarView,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './searching-events-in-sidebar.css';
 
 setOptions({
@@ -24,22 +24,24 @@ const App: React.FC = () => {
   const [currentDate, setCurrentDate] = React.useState<any>(new Date());
   const timerRef = React.useRef<any>(null);
 
-  const calView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const calView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const listView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const listView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: {
         type: 'year',
         size: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onSearch = React.useCallback((ev: any) => {
     const text = ev.target.value;
