@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   MbscCalendarEvent,
@@ -11,6 +10,7 @@ import {
   Textarea,
   formatDate /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './employee-shifts.css';
 
 setOptions({
@@ -356,12 +356,8 @@ function App() {
   const onEventClick = React.useCallback(
     (args) => {
       const event = args.event;
-      const resource: any = staff.find((r) => {
-        return r.id === event.resource;
-      });
-      const slot: any = slots.find((s) => {
-        return s.id === event.slot;
-      });
+      const resource: any = staff.find((r) => r.id === event.resource);
+      const slot: any = slots.find((s) => s.id === event.slot);
       setHeader(
         '<div>Edit ' +
           resource.name +
@@ -387,9 +383,7 @@ function App() {
   const onEventCreated = React.useCallback(
     (args) => {
       const event = args.event;
-      const slot: any = slots.find((s) => {
-        return s.id === event.slot;
-      });
+      const slot: any = slots.find((s) => s.id === event.slot);
       setHeader(
         '<div>New shift</div><div class="employee-shifts-day">' +
           formatDate('DDDD', new Date(event.start)) +
@@ -466,15 +460,13 @@ function App() {
     };
   }, []);
 
-  const renderMyResource = (resource: any) => {
-    return (
-      <div className="md-staff-cont">
-        <div className="md-staff-name">{resource.name}</div>
-        <div className="md-staff-title">{resource.title}</div>
-        <img className="md-staff-avatar" src={resource.img} alt="Avatar" />
-      </div>
-    );
-  };
+  const renderMyResource = (resource: any) => (
+    <div className="md-staff-cont">
+      <div className="md-staff-name">{resource.name}</div>
+      <div className="md-staff-title">{resource.title}</div>
+      <img className="md-staff-avatar" src={resource.img} alt="Avatar" />
+    </div>
+  );
 
   const dateChange = React.useCallback((args) => {
     setDate(args.value);

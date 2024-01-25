@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, Draggable, getJson, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './event-hooks.css';
 
 const App: React.FC = () => {
@@ -24,11 +24,12 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: { labels: true },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const [draggable1, setDraggable1] = React.useState<any>();
   const [draggable2, setDraggable2] = React.useState<any>();

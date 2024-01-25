@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Checkbox,
@@ -9,6 +8,7 @@ import {
   MbscEventcalendarView,
   MbscResourceData /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './dynamic-add-remove-resources-filter.css';
 
 setOptions({
@@ -17,8 +17,8 @@ setOptions({
 });
 
 function App() {
-  const resources = React.useMemo<MbscResourceData[]>(() => {
-    return [
+  const resources = React.useMemo<MbscResourceData[]>(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -34,10 +34,11 @@ function App() {
         name: 'John',
         color: '#e8d0ef',
       },
-    ];
-  }, []);
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+    ],
+    [],
+  );
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -46,8 +47,9 @@ function App() {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
   const [myResources, setResources] = React.useState<MbscResourceData[]>(resources);
   const [participants, setParticipants] = React.useState<{ [key: number]: boolean }>({ 1: true, 2: true, 3: true });

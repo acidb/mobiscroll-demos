@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -7,14 +7,15 @@ setOptions({
 });
 
 const App: React.FC = () => {
-  const myView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: { type: 'month' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         color: 'cyan',
         end: 'dyndatetime(y,m,d-5)',
@@ -47,8 +48,9 @@ const App: React.FC = () => {
         start: 'dyndatetime(y,m,d+5)',
         title: 'Event 5',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return <Eventcalendar view={myView} data={myEvents} dragToMove={true} dragToResize={true} />;
 };

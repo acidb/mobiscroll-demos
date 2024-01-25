@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -7,6 +6,7 @@ import {
   MbscEventcalendarView,
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './date-header-template.css';
 
 const milestones = [
@@ -30,8 +30,8 @@ const milestones = [
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -40,11 +40,12 @@ const App: React.FC = () => {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -63,8 +64,9 @@ const App: React.FC = () => {
         color: '#e8d0ef',
         img: 'https://img.mobiscroll.com/demos/m2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   React.useEffect(() => {
     getJson(
@@ -78,10 +80,7 @@ const App: React.FC = () => {
 
   const renderDay = (args: any) => {
     const date = args.date;
-    const task: any =
-      milestones.find((obj) => {
-        return +new Date(obj.date) === +date;
-      }) || {};
+    const task: any = milestones.find((obj) => +new Date(obj.date) === +date) || {};
 
     return (
       <div className="header-template-container">
@@ -96,14 +95,12 @@ const App: React.FC = () => {
     );
   };
 
-  const renderCustomResource = (resource: MbscResource) => {
-    return (
-      <div className="header-resource-template-content">
-        <img className="header-resource-avatar" src={resource.img} alt="Avatar" />
-        <div className="header-resource-name">{resource.name}</div>
-      </div>
-    );
-  };
+  const renderCustomResource = (resource: MbscResource) => (
+    <div className="header-resource-template-content">
+      <img className="header-resource-avatar" src={resource.img} alt="Avatar" />
+      <div className="header-resource-name">{resource.name}</div>
+    </div>
+  );
 
   return (
     <Eventcalendar

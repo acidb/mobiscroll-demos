@@ -8,7 +8,7 @@ import {
   MbscEventcalendarView,
   MbscCalendarEventData /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useState, useMemo, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './event-content-customization.css';
 
 setOptions({

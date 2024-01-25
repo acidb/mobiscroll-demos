@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, Toast, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './drag-drop-between-calendar-instances.css';
 
 setOptions({
@@ -12,16 +12,17 @@ const App: React.FC = () => {
   const [toastContext, setToastContext] = React.useState<any>();
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
 
-  const myView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const firstEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const firstEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m-1,18)',
         end: 'dyndatetime(y,m-1,20)',
@@ -94,11 +95,12 @@ const App: React.FC = () => {
         title: 'Event 12',
         color: '#152d2b',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const secondEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m-1,20)',
         end: 'dyndatetime(y,m-1,20)',
@@ -171,8 +173,9 @@ const App: React.FC = () => {
         title: 'Event 12',
         color: '#d6d145',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const closeToast = React.useCallback(() => {
     setToastOpen(false);

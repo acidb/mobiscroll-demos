@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -7,14 +7,15 @@ setOptions({
 });
 
 const App: React.FC = () => {
-  const myView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         color: 'cyan',
         end: 'dyndatetime(y,m,d,14)',
@@ -81,11 +82,12 @@ const App: React.FC = () => {
         start: 'dyndatetime(y,m,d,13)',
         title: 'Event 9',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -113,8 +115,9 @@ const App: React.FC = () => {
         name: 'Resource F (Events cannot be resized)',
         eventResize: false,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return <Eventcalendar view={myView} data={myEvents} resources={myResources} dragToMove={true} />;
 };

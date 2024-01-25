@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, Toast, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -11,16 +11,17 @@ const App: React.FC = () => {
   const [toastText, setToastText] = React.useState();
   const [toastContext, setToastContext] = React.useState();
 
-  const myView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const firstEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const firstEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,d-5,10)',
         end: 'dyndatetime(y,m,d-5,14)',
@@ -93,11 +94,12 @@ const App: React.FC = () => {
         title: 'Event 12',
         color: '#8b1a1a',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const secondEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,d-5,14)',
         end: 'dyndatetime(y,m,d-5,17)',
@@ -170,8 +172,9 @@ const App: React.FC = () => {
         title: 'Event 12',
         color: '#ee9572',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const closeToast = React.useCallback(() => {
     setToastOpen(false);

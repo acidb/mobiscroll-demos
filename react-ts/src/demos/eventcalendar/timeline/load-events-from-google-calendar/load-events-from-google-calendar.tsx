@@ -1,6 +1,6 @@
-import React from 'react';
-import { Eventcalendar, MbscEventcalendarView, toast /* localeImport */ } from '@mobiscroll/react';
 import { googleCalendarSync } from '@mobiscroll/calendar-integration';
+import { Eventcalendar, MbscEventcalendarView, toast /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './load-events-from-google-calendar.css';
 
 const App: React.FC = () => {
@@ -8,17 +8,18 @@ const App: React.FC = () => {
   const firstDay = React.useRef<Date>();
   const lastDay = React.useRef<Date>();
 
-  const calView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const calView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'month',
         eventList: true,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const calendars = React.useMemo(() => {
-    return [
+  const calendars = React.useMemo(
+    () => [
       { id: 'en.french#holiday@group.v.calendar.google.com', name: 'Holidays in France', color: '#D81B60' },
       { id: 'en.german#holiday@group.v.calendar.google.com', name: 'Holidays in Germany', color: '#F4511E' },
       { id: 'en.hungarian#holiday@group.v.calendar.google.com', name: 'Holidays in Hungary', color: '#AD1457' },
@@ -26,14 +27,17 @@ const App: React.FC = () => {
       { id: 'en.romanian#holiday@group.v.calendar.google.com', name: 'Holidays in Romania', color: '#0B8043' },
       { id: 'en.uk#holiday@group.v.calendar.google.com', name: 'Holidays in United Kingdom', color: '#3F51B5' },
       { id: 'en.usa#holiday@group.v.calendar.google.com', name: 'Holidays in United States', color: '#8E24AA' },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const calendarIds = React.useMemo(() => {
-    return calendars.map(function (cal) {
-      return cal.id;
-    });
-  }, [calendars]);
+  const calendarIds = React.useMemo(
+    () =>
+      calendars.map(function (cal) {
+        return cal.id;
+      }),
+    [calendars],
+  );
 
   const onError = React.useCallback((resp) => {
     toast({

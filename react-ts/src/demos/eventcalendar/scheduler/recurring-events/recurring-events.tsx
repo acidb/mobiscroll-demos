@@ -1,9 +1,9 @@
-import React from 'react';
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         recurring: {
           repeat: 'daily', // possible values: 'daily', 'weekly', 'monthly', 'yearly'
@@ -46,14 +46,16 @@ const App: React.FC = () => {
         title: "New Year's Eve",
         color: 'blue',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   CalendarPrev,
@@ -12,6 +11,7 @@ import {
   MbscEventcalendarView,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './quarter-year-view.css';
 
 setOptions({
@@ -42,22 +42,20 @@ const App: React.FC = () => {
 
   const calHeight = React.useMemo<string>(() => (calendarType === 'quarter' ? 'auto' : 'height:100%'), [calendarType]);
 
-  const calendarHeaderSwitch = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="quarter-year-header-picker">
-          <SegmentedGroup value={calendarType} onChange={changeView}>
-            <SegmentedItem value="quarter">Quarter</SegmentedItem>
-            <SegmentedItem value="year">Year</SegmentedItem>
-          </SegmentedGroup>
-        </div>
-        <CalendarPrev />
-        <CalendarToday />
-        <CalendarNext />
-      </React.Fragment>
-    );
-  };
+  const calendarHeaderSwitch = () => (
+    <React.Fragment>
+      <CalendarNav />
+      <div className="quarter-year-header-picker">
+        <SegmentedGroup value={calendarType} onChange={changeView}>
+          <SegmentedItem value="quarter">Quarter</SegmentedItem>
+          <SegmentedItem value="year">Year</SegmentedItem>
+        </SegmentedGroup>
+      </div>
+      <CalendarPrev />
+      <CalendarToday />
+      <CalendarNext />
+    </React.Fragment>
+  );
 
   const changeView = (event: any) => {
     setCalendarType(event.target.value);

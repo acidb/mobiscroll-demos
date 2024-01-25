@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Toast,
@@ -7,6 +6,7 @@ import {
   MbscEventcalendarView,
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -18,16 +18,17 @@ const App: React.FC = () => {
   const [toastText, setToastText] = React.useState();
   const [toastContext, setToastContext] = React.useState();
 
-  const myView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const firstEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const firstEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,2)',
         end: 'dyndatetime(y,m,5)',
@@ -98,11 +99,12 @@ const App: React.FC = () => {
         color: '#152d2b',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const firstResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const firstResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -123,11 +125,12 @@ const App: React.FC = () => {
         id: 5,
         name: 'Resource E',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const secondEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,5)',
         end: 'dyndatetime(y,m,9)',
@@ -198,11 +201,12 @@ const App: React.FC = () => {
         color: '#d6d145',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const secondResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -223,8 +227,9 @@ const App: React.FC = () => {
         id: 5,
         name: 'Resource E',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const closeToast = React.useCallback(() => {
     setToastOpen(false);

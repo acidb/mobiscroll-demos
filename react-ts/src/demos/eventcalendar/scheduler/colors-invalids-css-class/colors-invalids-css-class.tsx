@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './colors-invalids-css-class.css';
 
 setOptions({
@@ -80,16 +80,17 @@ const myColors = [
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         allDay: false,
         type: 'week',
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   React.useEffect(() => {
     getJson(

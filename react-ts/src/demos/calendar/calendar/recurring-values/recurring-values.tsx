@@ -1,9 +1,9 @@
-import React from 'react';
 import { Datepicker /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 const App: React.FC = () => {
-  const invalids = React.useMemo<any>(() => {
-    return [
+  const invalids = React.useMemo<any>(
+    () => [
       {
         recurring: {
           repeat: 'daily', // possible values: 'daily', 'weekly', 'monthly', 'yearly'
@@ -37,8 +37,9 @@ const App: React.FC = () => {
           month: 1,
         },
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Datepicker

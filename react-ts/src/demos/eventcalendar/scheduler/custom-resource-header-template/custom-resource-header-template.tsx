@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './custom-resource-header-template.css';
 
 setOptions({
@@ -8,8 +8,8 @@ setOptions({
 });
 
 const App: React.FC = () => {
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -18,11 +18,12 @@ const App: React.FC = () => {
         startTime: '05:00',
         endTime: '22:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,d-3,10)',
         end: 'dyndatetime(y,m,d-3,15)',
@@ -72,11 +73,12 @@ const App: React.FC = () => {
         resource: [1, 2],
         color: '#de3d83',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -98,18 +100,17 @@ const App: React.FC = () => {
         description: 'Territory sales manager',
         img: 'https://img.mobiscroll.com/demos/m2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const renderCustomResource = (resource: MbscResource) => {
-    return (
-      <div className="resource-template-content">
-        <div className="resource-name">{resource.name}</div>
-        <div className="resource-description">{resource.description}</div>
-        <img className="resource-avatar" src={resource.img} alt="Avatar" />
-      </div>
-    );
-  };
+  const renderCustomResource = (resource: MbscResource) => (
+    <div className="resource-template-content">
+      <div className="resource-name">{resource.name}</div>
+      <div className="resource-description">{resource.description}</div>
+      <img className="resource-avatar" src={resource.img} alt="Avatar" />
+    </div>
+  );
 
   return (
     <Eventcalendar

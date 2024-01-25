@@ -7,7 +7,7 @@ import {
   MbscEventClickEvent,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useCallback, useEffect, FC } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -19,11 +19,12 @@ const App: FC = () => {
   const [toastText, setToastText] = useState<string>();
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  const myView = useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: { type: 'month' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onEventClick = useCallback((event: MbscEventClickEvent) => {
     setToastText(event.event.title);

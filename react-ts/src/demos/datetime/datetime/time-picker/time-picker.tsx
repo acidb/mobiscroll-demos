@@ -1,55 +1,53 @@
-import React from 'react';
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  return (
-    <Page>
-      <Datepicker
-        controls={['time']}
-        inputProps={{
-          label: 'Time picker',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Datepicker
-        controls={['time']}
-        timeFormat="HH:mm"
-        inputProps={{
-          label: '24 hour picker',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Datepicker
-        controls={['time']}
-        timeFormat="h:mm A"
-        inputProps={{
-          label: '12 h picker with AM/PM',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Datepicker
-        controls={['time']}
-        timeFormat="HH:mm:ss"
-        headerText="Time: {value}"
-        inputProps={{
-          label: 'Hour, Min, Sec',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-    </Page>
-  );
-};
+const App: React.FC = () => (
+  <Page>
+    <Datepicker
+      controls={['time']}
+      inputProps={{
+        label: 'Time picker',
+        labelStyle: 'stacked',
+        inputStyle: 'outline',
+        placeholder: 'Please Select...',
+      }}
+    />
+    <Datepicker
+      controls={['time']}
+      timeFormat="HH:mm"
+      inputProps={{
+        label: '24 hour picker',
+        labelStyle: 'stacked',
+        inputStyle: 'outline',
+        placeholder: 'Please Select...',
+      }}
+    />
+    <Datepicker
+      controls={['time']}
+      timeFormat="h:mm A"
+      inputProps={{
+        label: '12 h picker with AM/PM',
+        labelStyle: 'stacked',
+        inputStyle: 'outline',
+        placeholder: 'Please Select...',
+      }}
+    />
+    <Datepicker
+      controls={['time']}
+      timeFormat="HH:mm:ss"
+      headerText="Time: {value}"
+      inputProps={{
+        label: 'Hour, Min, Sec',
+        labelStyle: 'stacked',
+        inputStyle: 'outline',
+        placeholder: 'Please Select...',
+      }}
+    />
+  </Page>
+);
 export default App;

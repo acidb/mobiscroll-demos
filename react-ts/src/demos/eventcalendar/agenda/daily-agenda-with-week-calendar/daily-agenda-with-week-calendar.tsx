@@ -7,7 +7,7 @@ import {
   setOptions /* localeImport */,
   MbscEventClickEvent,
 } from '@mobiscroll/react';
-import { FC, useState, useMemo, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -28,12 +28,13 @@ const App: FC = () => {
     setToastOpen(true);
   }, []);
 
-  const myView = useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: { type: 'week' },
       agenda: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   useEffect(() => {
     getJson(

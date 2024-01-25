@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Page,
@@ -14,6 +13,7 @@ import {
   formatDate,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './searching-events-in-popup.css';
 
 setOptions({
@@ -31,22 +31,24 @@ const App: React.FC = () => {
   const inputRef = React.useRef<any>();
   const timerRef = React.useRef<any>(null);
 
-  const calView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const calView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const listView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const listView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: {
         type: 'year',
         size: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onSearch = React.useCallback((ev: any) => {
     const text = ev.target.value;
@@ -77,26 +79,24 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const myHeader = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="md-seach-header-bar mbsc-flex-1-0">
-          <Input
-            startIcon="material-search"
-            ref={inputRef}
-            onChange={onSearch}
-            onFocus={onFocus}
-            inputStyle="box"
-            placeholder="Search events"
-          />
-        </div>
-        <CalendarPrev />
-        <CalendarToday />
-        <CalendarNext />
-      </React.Fragment>
-    );
-  };
+  const myHeader = () => (
+    <React.Fragment>
+      <CalendarNav />
+      <div className="md-seach-header-bar mbsc-flex-1-0">
+        <Input
+          startIcon="material-search"
+          ref={inputRef}
+          onChange={onSearch}
+          onFocus={onFocus}
+          inputStyle="box"
+          placeholder="Search events"
+        />
+      </div>
+      <CalendarPrev />
+      <CalendarToday />
+      <CalendarNext />
+    </React.Fragment>
+  );
 
   const onPageLoading = React.useCallback((args: any) => {
     const start = formatDate('YYYY-MM-DD', args.viewStart);

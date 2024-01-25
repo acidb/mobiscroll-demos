@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Button,
@@ -9,6 +8,7 @@ import {
   MbscEventcalendarView,
   MbscCalendarEventData /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './customize-event-popover.css';
 
 setOptions({
@@ -35,15 +35,16 @@ const App: React.FC = () => {
     setToastOpen(false);
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: {
         labels: false,
         popover: true,
         popoverClass: 'custom-event-popover',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const getParticipant = (id: number) => {
     switch (id) {

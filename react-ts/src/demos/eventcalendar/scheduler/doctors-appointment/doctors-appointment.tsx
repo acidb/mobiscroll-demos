@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Draggable,
   Dropcontainer,
@@ -16,6 +15,7 @@ import {
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './doctors-appointment.css';
 
 setOptions({
@@ -81,16 +81,17 @@ const App: React.FC = () => {
     [],
   );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'day',
         startTime: '08:00',
         endTime: '20:00',
         allDay: false,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const myInvalid = React.useMemo(
     () => [

@@ -1,5 +1,5 @@
 import { Button, Eventcalendar, setOptions, Toast, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
-import { FC, useState, useMemo, useCallback } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -51,8 +51,8 @@ const App: FC = () => {
     setToastOpen(false);
   }, []);
 
-  const customAgendaEmpty = useCallback(() => {
-    return (
+  const customAgendaEmpty = useCallback(
+    () => (
       <div className="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/smart-empty-tin-can.png" alt="Empty can" style={{ width: 150, margin: '50px 0' }} />
         <div className="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Looks like this can is empty</div>
@@ -64,8 +64,9 @@ const App: FC = () => {
           &nbsp;from&nbsp;<a href="https://icons8.com/illustrations">Ouch!</a>
         </div>
       </div>
-    );
-  }, [displayToast]);
+    ),
+    [displayToast],
+  );
 
   return (
     <>

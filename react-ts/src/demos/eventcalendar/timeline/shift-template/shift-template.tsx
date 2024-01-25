@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, formatDate /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './shift-template.css';
 
 const staff = [
@@ -166,16 +166,17 @@ const slots = [
 
 function App() {
   const [shifts, setShifts] = React.useState(defaultShifts);
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'week',
         eventList: true,
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const renderMySlot = (args: any) => {
     const slotId = args.slot.id;

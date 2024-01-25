@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -7,6 +6,7 @@ import {
   MbscEventcalendarView,
   MbscEventClickEvent /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './mobile-month-view.css';
 
 const App: React.FC = () => {
@@ -28,12 +28,13 @@ const App: React.FC = () => {
     setToastOpen(false);
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: { type: 'month' },
       agenda: { type: 'month' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onEventClick = React.useCallback((event: MbscEventClickEvent) => {
     setToastText(event.event.title);

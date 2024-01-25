@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, Toast, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './load-events-on-demand.css';
 
 const App: React.FC = () => {
@@ -37,11 +37,12 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: { labels: 'month' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <div>

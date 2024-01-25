@@ -11,7 +11,7 @@ import {
   MbscEventcalendarView /* localeImport */,
   MbscSelectedDateChangeEvent,
 } from '@mobiscroll/react';
-import { FC, useState, useCallback, useEffect, ChangeEvent } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import './customizing-header.css';
 
 setOptions({
@@ -69,8 +69,8 @@ const App: FC = () => {
     setCurrentDate(nextPage);
   }, [currentDate]);
 
-  const customWithNavButtons = useCallback(() => {
-    return (
+  const customWithNavButtons = useCallback(
+    () => (
       <>
         <CalendarNav className="md-custom-header-nav" />
         <div className="md-custom-header-controls">
@@ -85,8 +85,9 @@ const App: FC = () => {
           </SegmentedGroup>
         </div>
       </>
-    );
-  }, [changeView, navigateToNextPage, navigateToPrevPage, view]);
+    ),
+    [changeView, navigateToNextPage, navigateToPrevPage, view],
+  );
 
   useEffect(() => {
     getJson(

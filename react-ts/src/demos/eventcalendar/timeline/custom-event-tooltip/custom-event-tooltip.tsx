@@ -1,13 +1,13 @@
 import {
-  Eventcalendar,
-  MbscEventcalendarView,
-  formatDate,
-  setOptions,
-  Popup,
   Button,
-  Toast,
+  Eventcalendar,
+  formatDate,
   MbscCalendarEvent,
+  MbscEventcalendarView,
   MbscResource,
+  Popup,
+  setOptions,
+  Toast,
 } from '@mobiscroll/react';
 import React from 'react';
 //<demo-only>import { , MbscEventcalendarView, setOptions, Popup, Button, formatDate, toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
@@ -477,8 +477,8 @@ function App() {
   const [toastText, setToastText] = React.useState<string>('');
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'day',
         startDay: 1,
@@ -487,8 +487,9 @@ function App() {
         endTime: '16:00',
         allDay: false,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onEventHoverIn = React.useCallback((args: MbscCalendarEvent) => {
     const event = args.event;

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   setOptions,
@@ -10,6 +9,7 @@ import {
   MbscEventDragEvent,
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './flight-scheduling-two-synchronized-timelines.css';
 
 setOptions({
@@ -422,14 +422,15 @@ const App: React.FC = () => {
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
   const [toastText, setToastText] = React.useState<string>('');
 
-  const myView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'day',
         size: 1,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const renderMyResource = (resource: MbscResource) => {
     if (!resource.children) {

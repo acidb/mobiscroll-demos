@@ -1,6 +1,6 @@
-import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, MbscCalendarEvent, momentTimezone /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment-timezone';
+import React from 'react';
 
 momentTimezone.moment = moment;
 
@@ -53,11 +53,12 @@ const App: React.FC = () => {
     [],
   );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

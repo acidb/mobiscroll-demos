@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -7,6 +6,7 @@ import {
   MbscEventcalendarView,
   MbscCalendarEventData /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './customize-label-look-and-feel.css';
 
 const App: React.FC = () => {
@@ -24,11 +24,12 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: { labels: true },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const renderLabel = React.useCallback<(data: MbscCalendarEventData) => any>((data: MbscCalendarEventData) => {
     const original = data.original!;

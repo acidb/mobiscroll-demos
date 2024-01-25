@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -11,6 +10,7 @@ import {
   CalendarPrev,
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './switching-day-week-month-view.css';
 
 setOptions({
@@ -63,22 +63,20 @@ const App: React.FC = () => {
     setCalView(view);
   };
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav className="cal-header-nav" />
-        <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
-          <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="month" icon="material-event-note" />
-            <SegmentedItem value="week" icon="material-date-range" />
-            <SegmentedItem value="day" icon="material-view-day" />
-          </SegmentedGroup>
-        </div>
-        <CalendarPrev className="cal-header-prev" />
-        <CalendarNext className="cal-header-next" />
-      </React.Fragment>
-    );
-  };
+  const customWithNavButtons = () => (
+    <React.Fragment>
+      <CalendarNav className="cal-header-nav" />
+      <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
+        <SegmentedGroup value={view} onChange={changeView}>
+          <SegmentedItem value="month" icon="material-event-note" />
+          <SegmentedItem value="week" icon="material-date-range" />
+          <SegmentedItem value="day" icon="material-view-day" />
+        </SegmentedGroup>
+      </div>
+      <CalendarPrev className="cal-header-prev" />
+      <CalendarNext className="cal-header-next" />
+    </React.Fragment>
+  );
 
   return (
     <div className="md-switching-view-cont">

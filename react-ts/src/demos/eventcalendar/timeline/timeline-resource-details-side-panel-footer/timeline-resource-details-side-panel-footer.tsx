@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -7,6 +6,7 @@ import {
   toast,
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './timeline-resource-details-side-panel-footer.css';
 
 const oneDay = 60000 * 60 * 24;
@@ -15,16 +15,17 @@ const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
   const calRef = React.useRef();
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -67,8 +68,9 @@ const App: React.FC = () => {
         color: '#8f1ed6',
         price: 700,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   React.useEffect(() => {
     getJson(
@@ -80,14 +82,10 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const getUTCDateOnly = React.useCallback((d: Date) => {
-    return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
-  }, []);
+  const getUTCDateOnly = React.useCallback((d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()), []);
 
   const getDayDiff = React.useCallback(
-    (d1: Date, d2: Date) => {
-      return Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1;
-    },
+    (d1: Date, d2: Date) => Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1,
     [getUTCDateOnly],
   );
 
@@ -116,44 +114,34 @@ const App: React.FC = () => {
     return total;
   }, [getRevenue, myResources]);
 
-  const myCustomResourceHeader = () => {
-    return (
-      <div className="md-resource-details-title">
-        <div className="md-resource-header md-resource-details-name">Room</div>
-        <div className="md-resource-header md-resource-details-seats">Capacity</div>
-        <div className="md-resource-header md-resource-details-price">Price</div>
-      </div>
-    );
-  };
+  const myCustomResourceHeader = () => (
+    <div className="md-resource-details-title">
+      <div className="md-resource-header md-resource-details-name">Room</div>
+      <div className="md-resource-header md-resource-details-seats">Capacity</div>
+      <div className="md-resource-header md-resource-details-price">Price</div>
+    </div>
+  );
 
-  const myCustomResource = (resource: MbscResource) => {
-    return (
-      <div className="md-resource-details-cont">
-        <div className="md-resource-header md-resource-details-name">{resource.name}</div>
-        <div className="md-resource-header md-resource-details-seats">{resource.seats} seats</div>
-        <div className="md-resource-header md-resource-details-price">{'$' + resource.price}</div>
-      </div>
-    );
-  };
+  const myCustomResource = (resource: MbscResource) => (
+    <div className="md-resource-details-cont">
+      <div className="md-resource-header md-resource-details-name">{resource.name}</div>
+      <div className="md-resource-header md-resource-details-seats">{resource.seats} seats</div>
+      <div className="md-resource-header md-resource-details-price">{'$' + resource.price}</div>
+    </div>
+  );
 
-  const myCustomSidebarHeader = () => {
-    return <div className="md-resource-details-sidebar-header">Revenue</div>;
-  };
+  const myCustomSidebarHeader = () => <div className="md-resource-details-sidebar-header">Revenue</div>;
 
-  const myCustomSidebar = (resource: MbscResource) => {
-    return <div className="md-resource-details-sidebar">{'$' + getRevenue(resource)}</div>;
-  };
+  const myCustomSidebar = (resource: MbscResource) => <div className="md-resource-details-sidebar">{'$' + getRevenue(resource)}</div>;
 
-  const myCustomResourceFooter = () => {
-    return <div className="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>;
-  };
+  const myCustomResourceFooter = () => <div className="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>;
 
   const myCustomDayFooter = (data: any) => {
     const events = data.events;
     let occuppancy = 0;
     if (events) {
-      var resourceIds = [];
-      var nr = 0;
+      let resourceIds = [];
+      let nr = 0;
       for (const event of myEvents) {
         if (resourceIds.indexOf(event.resource) < 0) {
           nr++;
@@ -165,9 +153,7 @@ const App: React.FC = () => {
     return <div className="md-resource-details-footer md-resource-details-footer-day">{occuppancy + '%'}</div>;
   };
 
-  const myCustomSidebarFooter = () => {
-    return <div className="md-resource-details-footer md-resource-details-total">{'$' + getTotal()}</div>;
-  };
+  const myCustomSidebarFooter = () => <div className="md-resource-details-footer md-resource-details-total">{'$' + getTotal()}</div>;
 
   return (
     <Eventcalendar

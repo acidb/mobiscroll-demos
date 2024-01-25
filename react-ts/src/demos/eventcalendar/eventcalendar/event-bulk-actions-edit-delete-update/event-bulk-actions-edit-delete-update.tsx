@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   Button,
@@ -11,6 +10,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarView /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './event-bulk-actions-edit-delete-update.css';
 
 setOptions({
@@ -90,9 +90,7 @@ const App: React.FC = () => {
               const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id);
               eventsToUpdate.splice(index, 1, origEvent);
             } else {
-              eventsToUpdate = eventsToUpdate.filter((ev) => {
-                return ev.id !== event.id;
-              });
+              eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
             }
           }
 
@@ -262,9 +260,9 @@ const App: React.FC = () => {
             <div className="mbsc-form-group-title">Currently selected</div>
             <div className="mbsc-padding md-selected-event-list">
               <ul>
-                {eventTitles.map((title, index) => {
-                  return <li key={index}>{title}</li>;
-                })}
+                {eventTitles.map((title, index) => (
+                  <li key={index}>{title}</li>
+                ))}
               </ul>
             </div>
           </div>

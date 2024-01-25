@@ -1,23 +1,23 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  Select,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
-  Switch,
-  Radio,
-  RadioGroup,
   Datepicker,
-  SegmentedGroup,
-  SegmentedItem,
+  Eventcalendar,
   formatDate,
-  updateRecurringEvent,
+  Input,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  Popup,
+  Radio,
+  RadioGroup,
+  SegmentedGroup,
+  SegmentedItem,
+  Select,
+  setOptions,
+  Switch,
+  Textarea,
+  updateRecurringEvent,
 } from '@mobiscroll/react';
+import React from 'react';
 import './recurring-event-add-edit-dialog.css';
 
 setOptions({
@@ -694,7 +694,7 @@ const App: React.FC = () => {
   const populateMonthDays = React.useCallback(
     (month, type) => {
       const day30 = [2, 4, 6, 9, 11];
-      let newValues: any = [];
+      const newValues: any = [];
 
       for (let i = 1; i <= 31; i++) {
         if (!(i === 31 && day30.includes(month)) && !(i === 30 && month === 2)) {
@@ -920,8 +920,8 @@ const App: React.FC = () => {
     setOpen(false);
   }, [isEdit, myEvents, repeatData]);
 
-  const recurringEditButtons = React.useMemo<any>(() => {
-    return [
+  const recurringEditButtons = React.useMemo<any>(
+    () => [
       'cancel',
       {
         handler: () => {
@@ -971,23 +971,24 @@ const App: React.FC = () => {
         text: 'Ok',
         cssClass: 'mbsc-popup-button-primary',
       },
-    ];
-  }, [
-    deleteRecurringEvent,
-    editFromPopup,
-    eventOccurrence,
-    getCustomRule,
-    myEvents,
-    newEvent,
-    originalRecurringEvent,
-    popupEventAllDay,
-    popupEventDate,
-    popupEventDescription,
-    popupEventTitle,
-    recurringDelete,
-    recurringEditMode,
-    tempEvent,
-  ]);
+    ],
+    [
+      deleteRecurringEvent,
+      editFromPopup,
+      eventOccurrence,
+      getCustomRule,
+      myEvents,
+      newEvent,
+      originalRecurringEvent,
+      popupEventAllDay,
+      popupEventDate,
+      popupEventDescription,
+      popupEventTitle,
+      recurringDelete,
+      recurringEditMode,
+      tempEvent,
+    ],
+  );
 
   const recurringEditModeChange = React.useCallback((ev) => {
     setRecurringEditMode(ev.target.value);

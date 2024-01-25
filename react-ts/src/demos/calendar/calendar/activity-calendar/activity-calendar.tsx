@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './activity-calendar.css';
 
 const activities = [
@@ -90,21 +90,15 @@ const activities = [
 ];
 
 const App: React.FC = () => {
-  const getDeg = (nr: number) => {
-    return {
-      rotate1: nr > 180 ? 180 : nr,
-      rotate2: nr > 180 ? nr - 180 : 0,
-    };
-  };
+  const getDeg = (nr: number) => ({
+    rotate1: nr > 180 ? 180 : nr,
+    rotate2: nr > 180 ? nr - 180 : 0,
+  });
 
-  const getTransform = (rotate: number) => {
-    return 'rotateZ(' + rotate + 'deg)';
-  };
+  const getTransform = (rotate: number) => 'rotateZ(' + rotate + 'deg)';
 
   const customDay = (args: any) => {
-    const a = activities.find((obj) => {
-      return +new Date(obj.date) === +args.date;
-    });
+    const a = activities.find((obj) => +new Date(obj.date) === +args.date);
 
     return (
       <div className="screen">

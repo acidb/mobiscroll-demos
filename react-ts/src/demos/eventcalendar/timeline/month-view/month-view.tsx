@@ -1,17 +1,18 @@
-import React from 'react';
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 const App: React.FC = () => {
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,2)',
         end: 'dyndatetime(y,m,5)',
@@ -72,11 +73,12 @@ const App: React.FC = () => {
         title: 'Event 10',
         resource: 12,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -152,8 +154,9 @@ const App: React.FC = () => {
         name: 'Resource O',
         color: '#4caf00',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Eventcalendar
