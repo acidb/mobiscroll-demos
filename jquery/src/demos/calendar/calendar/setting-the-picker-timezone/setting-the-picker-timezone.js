@@ -15,9 +15,9 @@ export default {
           displayTimezone: 'local',
           controls: ['calendar', 'time'],
           onChange: function (ev, inst) {
-            const valueSpan = $('#selected-value')[0];
+            var valueSpan = $('#selected-value')[0];
+            var value = inst.getVal();
             valueSpan.parentElement.classList.remove('hidden');
-            const value = inst.getVal();
             valueSpan.innerText = value;
           },
         });

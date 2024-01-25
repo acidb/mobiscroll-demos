@@ -64,8 +64,8 @@ export default {
       pages: 2,
     });
 
-    document.querySelectorAll('.demo-flight-type').forEach((item) => {
-      item.addEventListener('change', (event) => {
+    document.querySelectorAll('.demo-flight-type').forEach(function (item) {
+      item.addEventListener('change', function (event) {
         var oneWay = event.target.value == 'oneway';
 
         mobiscroll.getInst(document.getElementById('demo-flight-booking-type-return')).setOptions({ disabled: oneWay });

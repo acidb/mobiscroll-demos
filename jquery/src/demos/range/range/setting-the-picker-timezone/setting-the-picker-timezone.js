@@ -16,10 +16,10 @@ export default {
           controls: ['calendar', 'time'],
           select: 'range',
           onChange: function (ev, inst) {
-            const valueSpan = $('#selected-value')[0];
+            var valueSpan = $('#selected-value')[0];
+            var value = inst.getVal();
             valueSpan.parentElement.classList.remove('hidden');
-            const [from, to] = inst.getVal();
-            valueSpan.innerHTML = 'from: <code>' + from + '</code><br>to:<code>' + to + '</code>';
+            valueSpan.innerHTML = 'from: <code>' + value[0] + '</code><br>to:<code>' + value[1] + '</code>';
           },
         });
     });

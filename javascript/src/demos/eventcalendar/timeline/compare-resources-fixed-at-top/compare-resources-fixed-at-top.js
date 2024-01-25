@@ -437,7 +437,7 @@ export default {
       })
       .getInst();
 
-    document.getElementById('demo-compare-resources').addEventListener('click', (e) => {
+    document.getElementById('demo-compare-resources').addEventListener('click', function (e) {
       if (e.target.classList.contains('md-compare-button')) {
         var id = +e.target.dataset.id;
         var isFixed = fixedResourceMap[id];
