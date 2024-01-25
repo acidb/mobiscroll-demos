@@ -18,7 +18,11 @@ module.exports = {
       extends: ['plugin:cypress/recommended']
     }
   ],
+  plugins: ['import'],
   rules: {
+    'arrow-body-style': ['warn', 'as-needed'],
+    'import/order': ['warn', { alphabetize: { order: 'asc', caseInsensitive: true } }],
+    'sort-imports': ['warn', { ignoreCase: true, ignoreDeclarationSort: true }],
     'vue/multi-word-component-names': 'off'
   },
   parserOptions: {

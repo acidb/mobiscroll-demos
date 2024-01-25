@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
-  MbscSelect,
-  MbscPopup,
+  formatDate,
   MbscButton,
+  MbscDatepicker,
+  MbscEventcalendar,
   MbscInput,
-  MbscTextarea,
-  MbscSwitch,
+  MbscPopup,
   MbscRadio,
   MbscRadioGroup,
-  MbscDatepicker,
-  MbscSegmentedGroup,
   MbscSegmented,
-  formatDate,
-  updateRecurringEvent,
-  setOptions /* localeImport */
+  MbscSegmentedGroup,
+  MbscSelect,
+  MbscSwitch,
+  MbscTextarea,
+  setOptions,
+  updateRecurringEvent /* localeImport */
 } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
-  MbscEventUpdateEvent,
-  MbscEventCreateEvent,
   MbscEventCreatedEvent,
+  MbscEventCreateEvent,
   MbscEventDeletedEvent,
-  MbscSelectedDateChangeEvent,
-  MbscRecurrenceRule
+  MbscEventUpdateEvent,
+  MbscRecurrenceRule,
+  MbscSelectedDateChangeEvent
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

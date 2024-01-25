@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
-  MbscEventcalendar,
+  formatDate,
   MbscCalendarNav,
-  MbscCalendarPrev,
   MbscCalendarNext,
+  MbscCalendarPrev,
   MbscCalendarToday,
   MbscCheckbox,
+  MbscEventcalendar,
   MbscSelect,
-  formatDate,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscResource,
   MbscEventCreateEvent,
+  MbscEventDeletedEvent,
   MbscEventUpdateEvent,
-  MbscEventDeletedEvent
+  MbscResource
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -1969,13 +1969,12 @@ function checkboxChange(ev: any) {
 function isDouble(event: any, inst: any) {
   const date = event.start.setHours(0)
   const events: MbscCalendarEvent[] = inst.getEvents(date)
-  const ev = events.find((e) => {
-    return (
+  const ev = events.find(
+    (e) =>
       new Date(e.start as string).setHours(0) === date &&
       e.resource === event.resource &&
       e.slot === event.slot
-    )
-  })
+  )
   return ev
 }
 

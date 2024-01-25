@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import {
   MbscDraggable,
   MbscDropcontainer,
@@ -11,14 +10,15 @@ import type {
   MbscCalendarColor,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscEventCreateEvent,
   MbscEventCreatedEvent,
+  MbscEventCreateEvent,
   MbscEventCreateFailedEvent,
   MbscEventDeleteEvent,
   MbscEventUpdateFailedEvent,
   MbscItemDragEvent,
   MbscResource
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

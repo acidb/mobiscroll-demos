@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {
-  MbscDatepicker,
-  setOptions,
-  jalaliCalendar,
   hijriCalendar,
+  jalaliCalendar,
+  localeAr,
   localeFa,
-  localeAr
+  MbscDatepicker,
+  setOptions
 } from '@mobiscroll/vue'
 
 setOptions({

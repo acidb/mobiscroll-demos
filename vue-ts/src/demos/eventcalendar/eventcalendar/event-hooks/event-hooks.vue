@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
-  setOptions,
   getJson,
-  MbscDraggable /* localeImport */
+  MbscDraggable,
+  MbscEventcalendar,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
@@ -12,14 +11,14 @@ import type {
   MbscCellHoverEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
-  MbscEventCreateEvent,
   MbscEventCreatedEvent,
+  MbscEventCreateEvent,
   MbscEventCreateFailedEvent,
-  MbscEventDeleteEvent,
   MbscEventDeletedEvent,
+  MbscEventDeleteEvent,
   MbscEventDragEvent,
-  MbscEventUpdateEvent,
   MbscEventUpdatedEvent,
+  MbscEventUpdateEvent,
   MbscEventUpdateFailedEvent,
   MbscLabelClickEvent,
   MbscPageChangeEvent,
@@ -27,6 +26,7 @@ import type {
   MbscPageLoadingEvent,
   MbscSelectedEventsChangeEvent
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

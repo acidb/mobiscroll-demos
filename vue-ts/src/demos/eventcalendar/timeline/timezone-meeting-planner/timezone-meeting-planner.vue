@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
-  MbscEventcalendar,
+  formatDate,
   MbscCalendarNav,
+  MbscCalendarNext,
   MbscCalendarPrev,
   MbscCalendarToday,
-  MbscCalendarNext,
   MbscConfirm,
+  MbscEventcalendar,
   MbscToast,
   momentTimezone,
-  formatDate,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscResource,
   MbscEventCreatedEvent,
-  MbscEventUpdatedEvent,
-  MbscEventDeletedEvent,
   MbscEventCreateFailedEvent,
-  MbscEventUpdateFailedEvent
+  MbscEventDeletedEvent,
+  MbscEventUpdatedEvent,
+  MbscEventUpdateFailedEvent,
+  MbscResource
 } from '@mobiscroll/vue'
 import * as moment from 'moment-timezone'
+import { ref } from 'vue'
 
 momentTimezone.moment = moment
 

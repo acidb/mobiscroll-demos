@@ -1,16 +1,16 @@
 <script setup>
-import { ref } from 'vue'
 import {
-  MbscEventcalendar,
-  setOptions,
   MbscDraggable,
-  MbscPopup,
+  MbscEventcalendar,
   MbscInput,
-  MbscTextarea,
-  MbscSelect,
   MbscPage,
-  MbscToast /* localeImport */
+  MbscPopup,
+  MbscSelect,
+  MbscTextarea,
+  MbscToast,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,

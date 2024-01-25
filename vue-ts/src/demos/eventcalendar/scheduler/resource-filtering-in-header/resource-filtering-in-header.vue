@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
   getJson,
-  MbscToast,
   MbscCalendarNav,
-  MbscCalendarPrev,
   MbscCalendarNext,
-  MbscSegmentedGroup,
+  MbscCalendarPrev,
+  MbscEventcalendar,
   MbscSegmented,
+  MbscSegmentedGroup,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

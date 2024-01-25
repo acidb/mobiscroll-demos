@@ -1,16 +1,16 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
-  MbscDatepicker,
-  MbscSelect,
-  MbscButton,
-  MbscInput,
-  MbscPopup,
-  MbscPage,
   formatDate,
+  MbscButton,
+  MbscDatepicker,
+  MbscInput,
+  MbscPage,
+  MbscPopup,
+  MbscSelect,
   options,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

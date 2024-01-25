@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MbscStepper, MbscPage, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { MbscPage, MbscStepper, setOptions /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
   // locale,

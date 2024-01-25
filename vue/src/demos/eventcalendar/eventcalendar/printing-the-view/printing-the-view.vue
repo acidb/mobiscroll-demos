@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { print } from '@mobiscroll/print'
 import {
   getJson,
   MbscButton,
@@ -7,7 +7,7 @@ import {
   MbscPage,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { print } from '@mobiscroll/print'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

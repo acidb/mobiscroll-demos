@@ -1,19 +1,19 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { outlookCalendarSync } from '@mobiscroll/calendar-integration'
 import {
+  MbscButton,
+  MbscCalendarNav,
+  MbscCalendarNext,
+  MbscCalendarPrev,
+  MbscCalendarToday,
+  MbscConfirm,
   MbscEventcalendar,
   MbscPage,
-  MbscCalendarNav,
-  MbscCalendarPrev,
-  MbscCalendarNext,
-  MbscCalendarToday,
-  MbscButton,
   MbscSwitch,
   MbscToast,
-  MbscConfirm,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { outlookCalendarSync } from '@mobiscroll/calendar-integration'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { print } from '@mobiscroll/print'
 import {
   getJson,
   MbscButton,
@@ -7,8 +7,8 @@ import {
   MbscPage,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { print } from '@mobiscroll/print'
 import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

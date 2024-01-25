@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
   MbscEventcalendar,
   MbscPage,
-  MbscSelect,
-  MbscSegmentedGroup,
   MbscSegmented,
-  MbscToast,
+  MbscSegmentedGroup,
+  MbscSelect,
   MbscSnackbar,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
+  MbscCellClickEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
-  MbscCellClickEvent,
-  MbscSelectedEventsChangeEvent,
+  MbscEventDeletedEvent,
   MbscPageLoadingEvent,
-  MbscEventDeletedEvent
+  MbscSelectedEventsChangeEvent
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -166,9 +166,7 @@ function pasteEvents() {
       let cutEvs = cutCalendar.value === 'first' ? firstEvents.value : secondEvents.value
       moveEvents.value = [...selectedEvents.value]
       for (const event of selectedEvents.value) {
-        cutEvs = cutEvs.filter((ev) => {
-          return ev.id !== event.id
-        })
+        cutEvs = cutEvs.filter((ev) => ev.id !== event.id)
       }
       if (cutCalendar.value === 'first') {
         firstEvents.value = cutEvs
@@ -190,9 +188,7 @@ function pasteEvents() {
 
           let cutEvs = getActiveEvents()
           for (const event of pastedEvents.value) {
-            cutEvs = cutEvs.filter((ev) => {
-              return ev.id !== event.id
-            })
+            cutEvs = cutEvs.filter((ev) => ev.id !== event.id)
           }
           if (activeCalendar.value === 'first') {
             firstEvents.value = cutEvs
@@ -237,9 +233,7 @@ function deleteEvents() {
     deletedEvents.value = activeSelectedEvents
 
     for (const event of activeSelectedEvents) {
-      eventsToUpdate = eventsToUpdate.filter((ev) => {
-        return ev.id !== event.id
-      })
+      eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id)
     }
 
     if (activeCalendar.value === 'first') {
@@ -339,9 +333,7 @@ function undoEvents() {
 
     let cutEvs = getActiveEvents()
     for (const event of pastedEvents.value) {
-      cutEvs = cutEvs.filter((ev) => {
-        return ev.id !== event.id
-      })
+      cutEvs = cutEvs.filter((ev) => ev.id !== event.id)
     }
     if (activeCalendar.value === 'first') {
       firstEvents.value = cutEvs
@@ -424,9 +416,7 @@ function handleEventDeleted(args: MbscEventDeletedEvent) {
       const activeEvents = activeCalendar.value === 'first' ? firstEvents.value : secondEvents.value
       let eventsToUpdate = [...activeEvents]
       for (const event of deletedEvents.value) {
-        eventsToUpdate = eventsToUpdate.filter((ev) => {
-          return ev.id !== event.id
-        })
+        eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id)
       }
 
       if (activeCalendar.value === 'first') {
