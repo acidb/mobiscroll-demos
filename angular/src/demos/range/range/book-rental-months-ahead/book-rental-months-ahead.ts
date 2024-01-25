@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { setOptions, formatDate /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { formatDate, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,

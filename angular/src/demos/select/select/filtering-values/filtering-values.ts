@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { setOptions, MbscSelectOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { MbscSelectOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,

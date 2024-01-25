@@ -1,15 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
-  MbscEventcalendarOptions,
-  MbscCalendarEvent,
-  jalaliCalendar,
   hijriCalendar,
-  localeFa,
+  jalaliCalendar,
   localeAr,
   localeEn,
+  localeFa,
+  MbscCalendarEvent,
+  MbscEventcalendarOptions,
   setOptions,
 } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // theme
