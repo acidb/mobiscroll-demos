@@ -538,18 +538,18 @@ function App() {
     newApp[index].confirmed = !appointments[index].confirmed;
     setAppointments(newApp);
     +showToast('Appointment ' + (currentEvent.confirmed ? 'confirmed' : 'canceled'));
-  }, [appointments, currentEvent]);
+  }, [appointments, currentEvent.confirmed, currentEvent.id, showToast]);
 
   const viewFile = useCallback(() => {
     setOpen(false);
     showToast('View file');
-  }, []);
+  }, [showToast]);
 
   const deleteApp = useCallback(() => {
     setAppointments(appointments.filter((item) => item.id !== currentEvent.id));
     setOpen(false);
     showToast('Appointment deleted');
-  }, [appointments, currentEvent]);
+  }, [appointments, currentEvent.id, showToast]);
 
   const closeToast = useCallback(() => {
     setToastOpen(false);

@@ -167,7 +167,7 @@ function App() {
         cssClass: 'mbsc-popup-button-primary',
       },
     ];
-  }, [myEvents, participants, tempEvent, title]);
+  }, [isNewEvent, myEvents, participants, tempEvent, title]);
 
   const popupClose = useCallback(() => {
     if (isNewEvent) {

@@ -470,18 +470,19 @@ function App() {
     }
     return recurringRule;
   }, [
-    selectedRepeat,
-    deleteRecurringEvent,
     editFromPopup,
-    repeatType,
-    weekDays,
-    eventOccurrence,
-    myEvents,
-    newEvent,
-    originalRecurringEvent,
-    recurringDelete,
-    recurringEditMode,
+    popupEventDate,
     tempEvent,
+    selectedRepeat,
+    repeatType,
+    repeatNr,
+    condition,
+    weekDays,
+    monthlyDay,
+    yearlyDay,
+    selectedMonth,
+    untilDate,
+    occurrences,
   ]);
 
   const saveEvent = useCallback(() => {
@@ -657,7 +658,7 @@ function App() {
         resetCustomValues();
       }
     },
-    [repeatData, weekDays, resetCustomValues],
+    [repeatData, resetCustomValues],
   );
 
   // handle popup form changes

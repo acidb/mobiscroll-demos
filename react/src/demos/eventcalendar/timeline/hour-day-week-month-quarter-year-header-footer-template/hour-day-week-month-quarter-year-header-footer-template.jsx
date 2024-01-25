@@ -668,23 +668,26 @@ function App() {
     return eventOccurrence;
   }, []);
 
-  const getOccuppancy = useCallback((events) => {
-    let occuppancy = 0;
+  const getOccuppancy = useCallback(
+    (events) => {
+      let occuppancy = 0;
 
-    if (events) {
-      var resourceIds = [];
-      var nr = 0;
-      for (const event of events) {
-        if (resourceIds.indexOf(event.resource) < 0) {
-          nr++;
-          resourceIds = [...resourceIds, event.resource];
+      if (events) {
+        var resourceIds = [];
+        var nr = 0;
+        for (const event of events) {
+          if (resourceIds.indexOf(event.resource) < 0) {
+            nr++;
+            resourceIds = [...resourceIds, event.resource];
+          }
         }
+        occuppancy = ((nr * 100) / myResources.length).toFixed(0);
       }
-      occuppancy = ((nr * 100) / myResources.length).toFixed(0);
-    }
 
-    return occuppancy;
-  }, []);
+      return occuppancy;
+    },
+    [myResources.length],
+  );
 
   const renderCustomHour = useCallback(
     (args) => {

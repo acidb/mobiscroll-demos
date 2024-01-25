@@ -213,7 +213,7 @@ function App() {
         deleteSelectedEvents();
       }
     });
-  }, []);
+  }, [confirmOpen, deleteSelectedEvents]);
 
   return (
     <Page className="md-bulk-operations">

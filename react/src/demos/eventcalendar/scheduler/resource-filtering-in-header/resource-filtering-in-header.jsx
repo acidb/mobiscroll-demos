@@ -38,7 +38,7 @@ function App() {
       },
       'jsonp',
     );
-  }, []);
+  }, [filterEvents, selected]);
 
   const filterEvents = useCallback((events, selected) => {
     let ev = [];

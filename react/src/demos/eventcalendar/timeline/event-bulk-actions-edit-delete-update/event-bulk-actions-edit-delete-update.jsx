@@ -88,7 +88,7 @@ function App() {
 
   const deleteSelectedEvents = useCallback(() => {
     setConfirmOpen(true);
-  }, [getSelectedEventTitles, myEvents, mySelectedEvents, refreshSelectedEvents]);
+  }, []);
 
   const updateSelectedEvents = useCallback(() => {
     const events = mySelectedEvents.length === 0 ? [mySelectedEvents] : mySelectedEvents;
@@ -243,7 +243,7 @@ function App() {
         deleteSelectedEvents();
       }
     });
-  }, []);
+  }, [confirmOpen, deleteSelectedEvents]);
 
   return (
     <Page className="md-bulk-operations">

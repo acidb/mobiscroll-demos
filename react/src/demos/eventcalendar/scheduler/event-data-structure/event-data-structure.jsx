@@ -49,7 +49,7 @@ function App() {
     setMySelectedDate(new Date(2018, 11, 21));
     setEvents([...myEvents, newEvent]);
     setToastOpen(true);
-  }, []);
+  }, [myEvents]);
 
   return (
     <div>

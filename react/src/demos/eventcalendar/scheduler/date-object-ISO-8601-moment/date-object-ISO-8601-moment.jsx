@@ -54,7 +54,7 @@ function App() {
     };
     setDateObjData([...dateObjData, newEvent]);
     setSelectedObj(new Date(2020, 4, 19));
-  }, []);
+  }, [dateObjData]);
 
   const addISO = useCallback(() => {
     const newEvent = {
@@ -64,7 +64,7 @@ function App() {
     };
     setISOData([...isoData, newEvent]);
     setSelectedISO('2020-05-20');
-  }, []);
+  }, [isoData]);
 
   const addMoment = useCallback(() => {
     const newEvent = {
@@ -74,7 +74,7 @@ function App() {
     };
     setMomentData([...momentData, newEvent]);
     setSelectedMoment(moment([2020, 4, 21]));
-  }, []);
+  }, [momentData]);
 
   return (
     <Page>
