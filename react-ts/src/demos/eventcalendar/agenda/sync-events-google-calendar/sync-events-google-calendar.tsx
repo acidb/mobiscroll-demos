@@ -9,11 +9,10 @@ import {
   MbscEventcalendarView,
   MbscPageLoadingEvent,
   MbscSelectedDateChangeEvent,
-  Page,
   Popup,
   setOptions,
   Switch,
-  Toast,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
 import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import './sync-events-google-calendar.css';
@@ -25,9 +24,9 @@ setOptions({
 
 const App: FC = () => {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
-  const [myCalendars, setCalendars] = useState([]);
+  const [myCalendars, setCalendars] = useState<Array<{ summary: string; id: number }>>([]);
   const [calendarIds, setCalendarIds] = useState<string[]>([]);
-  const [calendarData, setCalendarData] = useState<{ [key: string]: { [key: string]: boolean } }>({});
+  const [calendarData, setCalendarData] = useState<{ [key: string]: { checked: boolean } }>({});
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -42,7 +41,7 @@ const App: FC = () => {
   const startDate = useRef<Date>();
   const endDate = useRef<Date>();
 
-  const handleError = useCallback((resp: { error: string | undefined; result: { error: { message: string } } }) => {
+  const handleError = useCallback((resp: { error?: string; result: { error: { message: string } } }) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);
     setToastOpen(true);
   }, []);
@@ -125,35 +124,20 @@ const App: FC = () => {
   const renderMyHeader = useCallback(
     () => (
       <>
-        <CalendarNav className="md-sync-events-google-nav" />
-        <div className="md-spinner">
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-          <div className="md-spinner-blade"></div>
-        </div>
-        <div className="md-google-calendar-buttons">
+        <CalendarNav />
+        <div className="md-loader"></div>
+        <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
           {isLoggedIn ? (
-            <Button ref={buttonRef} onClick={openPopup} className="md-sync-events-google-button">
+            <Button ref={buttonRef} onClick={openPopup}>
               My Calendars
             </Button>
           ) : (
-            <Button onClick={signIn} className="md-sync-events-google-button">
-              Sync my google calendars
-            </Button>
+            <Button onClick={signIn}>Sync my google calendars</Button>
           )}
           <Button onClick={navigate}>Today</Button>
-          <CalendarPrev />
-          <CalendarNext />
         </div>
+        <CalendarPrev />
+        <CalendarNext />
       </>
     ),
     [isLoggedIn, navigate, openPopup, signIn],
@@ -166,7 +150,7 @@ const App: FC = () => {
         .getCalendars()
         .then((calendars) => {
           const newCalendarIds: string[] = [];
-          const calData: { [key: string]: { [key: string]: boolean } } = {};
+          const calData: { [key: string]: { checked: boolean } } = {};
 
           calendars.sort((c: { primary: boolean }) => (c.primary ? -1 : 1));
 
@@ -197,7 +181,7 @@ const App: FC = () => {
       setOpen(false);
     };
 
-    // init google client
+    // Init Google client
     googleCalendarSync.init({
       apiKey: '<YOUR_GOOGLE_API_KEY>',
       clientId: '<YOUR_GOOGLE_CLIENT_ID>',
@@ -207,8 +191,9 @@ const App: FC = () => {
   }, [handleError]);
 
   return (
-    <Page className={'md-sync-events-google-cont ' + (isLoading ? 'md-loading-events' : '')}>
+    <>
       <Eventcalendar
+        cssClass={isLoading ? 'md-loading-events' : ''}
         view={view}
         data={myEvents}
         exclusiveEndDates={true}
@@ -228,20 +213,20 @@ const App: FC = () => {
         contentPadding={false}
         display="anchored"
       >
-        <div className="mbsc-form-group-inset md-sync-events-google-inset">
+        <div className="mbsc-form-group-inset">
           <div className="mbsc-form-group-title">My Calendars</div>
-          {myCalendars.map((cal: { summary: string; id: number }) => (
-            <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id]['checked']} onChange={toggleCalendar} />
+          {myCalendars.map((cal) => (
+            <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
           ))}
         </div>
         <div className="mbsc-form-group-inset">
-          <Button className="md-sync-events-google-button mbsc-button-block" onClick={signOut}>
+          <Button className="mbsc-button-block" onClick={signOut}>
             Log out of my account
           </Button>
         </div>
       </Popup>
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={closeToast} />
-    </Page>
+    </>
   );
 };
 export default App;
