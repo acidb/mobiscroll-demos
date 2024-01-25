@@ -80,10 +80,10 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     className="md-date-header-template"
     groupBy="date"
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"

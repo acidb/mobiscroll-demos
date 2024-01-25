@@ -144,9 +144,9 @@ function pasteEvents() {
       const endDate = new Date(event.end as string)
       const diff = Math.abs(endDate.getTime() - startDate.getTime())
 
-      newEvent.start = startDate.setMonth(
-        startDate.getMonth() - monthDiff(toDate.value, originDate.value)
-      )
+      startDate.setMonth(startDate.getMonth() - monthDiff(toDate.value, originDate.value))
+
+      newEvent.start = startDate
       newEvent.end = new Date(startDate.getTime() + diff)
 
       delete newEvent.id

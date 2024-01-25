@@ -92,9 +92,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     cssClass="md-custom-header-filtering"
-    :drag="drag"
     :view="myView"
     :data="filteredEvents"
     :resources="myResources"

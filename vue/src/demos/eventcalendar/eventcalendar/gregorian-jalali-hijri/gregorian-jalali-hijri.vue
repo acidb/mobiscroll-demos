@@ -35,14 +35,14 @@ onMounted(() => {
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Gregorian calendar</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Jalali calendar</div>
             <MbscEventcalendar
-              :drag="drag"
               :data="myEvents"
               :calendarSystem="jalaliCalendar"
               :locale="localeFa"
@@ -53,7 +53,6 @@ onMounted(() => {
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Hijri calendar</div>
             <MbscEventcalendar
-              :drag="drag"
               :data="myEvents"
               :calendarSystem="hijriCalendar"
               :locale="localeAr"

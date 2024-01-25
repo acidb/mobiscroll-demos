@@ -119,7 +119,6 @@ onMounted(() => {
         </div>
       </div>
       <MbscEventcalendar
-        :drag="drag"
         :data="myEvents"
         :resources="myResources"
         :view="myView"

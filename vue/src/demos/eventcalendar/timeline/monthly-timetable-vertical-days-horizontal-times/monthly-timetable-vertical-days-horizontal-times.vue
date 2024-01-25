@@ -28,7 +28,10 @@ onMounted(() => {
 })
 </script>
 
-<template><MbscEventcalendar :drag="drag" :view="myView" :data="myEvents" /></template>
+<template>
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents" />
+</template>
 
 <style>
 .md-vertical-timeline .mbsc-timeline-row-gutter {

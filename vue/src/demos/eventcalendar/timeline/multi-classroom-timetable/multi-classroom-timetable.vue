@@ -70,9 +70,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     className="md-timetable"
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"

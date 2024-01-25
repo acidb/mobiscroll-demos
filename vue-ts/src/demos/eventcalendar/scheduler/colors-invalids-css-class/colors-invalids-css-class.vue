@@ -101,13 +101,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar
-    :drag="drag"
-    :view="myView"
-    :data="myEvents"
-    :invalid="myInvalid"
-    :colors="myColors"
-  />
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents" :invalid="myInvalid" :colors="myColors" />
 </template>
 
 <style>

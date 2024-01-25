@@ -132,7 +132,6 @@ function addMoment() {
               </MbscButton>
             </div>
             <MbscEventcalendar
-              :drag="drag"
               :data="dateObjData"
               :resources="myResources"
               :view="myView"
@@ -150,7 +149,6 @@ function addMoment() {
               </MbscButton>
             </div>
             <MbscEventcalendar
-              :drag="drag"
               :data="isoData"
               :resources="myResources"
               :view="myView"
@@ -168,7 +166,6 @@ function addMoment() {
               </MbscButton>
             </div>
             <MbscEventcalendar
-              :drag="drag"
               :data="momentData"
               :resources="myResources"
               :view="myView"

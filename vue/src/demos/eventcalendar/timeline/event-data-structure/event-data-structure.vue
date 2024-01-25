@@ -86,7 +86,6 @@ function handleToastClose() {
 <template>
   <MbscPage>
     <MbscEventcalendar
-      :drag="drag"
       :view="myView"
       :data="myEvents"
       :resources="myResources"

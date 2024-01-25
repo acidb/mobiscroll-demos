@@ -42,11 +42,7 @@ function handleToastClose() {
 </script>
 
 <template>
-  <MbscEventcalendar
-    :drag="drag"
-    :view="myView"
-    :data="myEvents"
-    @page-loading="handlePageLoading"
-  />
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents" @page-loading="handlePageLoading" />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>

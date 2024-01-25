@@ -77,11 +77,11 @@ const myView: MbscEventcalendarView = {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     dataTimezone="utc"
     displayTimezone="America/New_York"
     :timezonePlugin="momentTimezone"
-    :drag="drag"
     :view="myView"
     :data="myEvents"
   />

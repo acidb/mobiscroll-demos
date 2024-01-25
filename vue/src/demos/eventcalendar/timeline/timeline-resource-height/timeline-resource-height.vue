@@ -102,9 +102,9 @@ const myView = {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     className="md-timeline-height"
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"

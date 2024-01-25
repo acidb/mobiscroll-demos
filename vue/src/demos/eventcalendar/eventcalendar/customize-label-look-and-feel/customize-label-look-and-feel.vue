@@ -41,7 +41,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar :drag="drag" :view="myView" :data="myEvents" @event-click="handleEventClick">
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents" @event-click="handleEventClick">
     <template #label="data">
       <div
         v-if="data.isMultiDay"

@@ -35,6 +35,7 @@ onMounted(() => {
 <template>
   <MbscPage>
     <MbscButton @click="printView()">Print calendar</MbscButton>
-    <MbscEventcalendar ref="calendarRef" :drag="drag" :data="myEvents" :modules="[print]" />
+    <!-- dragOptions -->
+    <MbscEventcalendar ref="calendarRef" :data="myEvents" :modules="[print]" />
   </MbscPage>
 </template>

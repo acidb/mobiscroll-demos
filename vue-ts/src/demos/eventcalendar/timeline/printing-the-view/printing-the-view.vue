@@ -78,9 +78,9 @@ onMounted(() => {
 <template>
   <MbscPage>
     <MbscButton @click="printView()">Print timeline</MbscButton>
+    <!-- dragOptions -->
     <MbscEventcalendar
       ref="calendarRef"
-      :drag="drag"
       :data="myEvents"
       :resources="myResources"
       :view="myView"

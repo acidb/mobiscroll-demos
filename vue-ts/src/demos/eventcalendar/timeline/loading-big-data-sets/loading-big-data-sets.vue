@@ -60,8 +60,8 @@ function handlePageLoading(args: MbscPageLoadingEvent) {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"

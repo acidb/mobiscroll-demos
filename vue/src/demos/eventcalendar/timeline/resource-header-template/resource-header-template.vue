@@ -67,9 +67,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     className="md-resource-header-template"
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"

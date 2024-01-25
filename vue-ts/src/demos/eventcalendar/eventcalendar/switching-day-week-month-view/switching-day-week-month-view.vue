@@ -62,7 +62,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar :drag="drag" :view="myView" :data="myEvents">
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents">
     <template #header>
       <MbscCalendarNav />
       <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">

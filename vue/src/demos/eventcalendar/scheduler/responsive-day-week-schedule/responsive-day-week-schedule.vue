@@ -39,4 +39,7 @@ onMounted(() => {
 })
 </script>
 
-<template><MbscEventcalendar :drag="drag" :data="myEvents" :responsive="myResponsive" /></template>
+<template>
+  <!-- dragOptions -->
+  <MbscEventcalendar :data="myEvents" :responsive="myResponsive" />
+</template>

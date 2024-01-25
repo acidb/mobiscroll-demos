@@ -202,9 +202,9 @@ function handleToastClose() {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     className="md-load-resources-on-demand"
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"

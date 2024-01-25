@@ -73,12 +73,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar
-    className="md-custom-header-filtering"
-    :drag="drag"
-    :view="myView"
-    :data="filteredEvents"
-  >
+  <!-- dragOptions -->
+  <MbscEventcalendar className="md-custom-header-filtering" :view="myView" :data="filteredEvents">
     <template #header>
       <MbscCalendarNav className="md-header-filter-nav" />
       <div class="md-header-filter-controls">

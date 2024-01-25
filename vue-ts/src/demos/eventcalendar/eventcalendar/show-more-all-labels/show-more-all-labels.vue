@@ -39,19 +39,22 @@ onMounted(() => {
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">All labels</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="allLabelsView" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" :view="allLabelsView" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Up to 3 labels</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="nrLabelsView" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" :view="nrLabelsView" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Labels fitting the row</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="fitLabelsView" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" :view="fitLabelsView" />
           </div>
         </div>
       </div>
@@ -59,19 +62,22 @@ onMounted(() => {
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">All labels</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="allLabelsWeekView" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" :view="allLabelsWeekView" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Up to 3 labels</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="nrLabelsWeekView" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" :view="nrLabelsWeekView" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Labels fitting the row</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="fitLabelsWeekView" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" :view="fitLabelsWeekView" />
           </div>
         </div>
       </div>

@@ -138,5 +138,6 @@ function orderMyEvents(event: MbscCalendarEvent) {
 </script>
 
 <template>
-  <MbscEventcalendar :drag="drag" :view="myView" :data="myEvents" :eventOrder="orderMyEvents" />
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents" :eventOrder="orderMyEvents" />
 </template>

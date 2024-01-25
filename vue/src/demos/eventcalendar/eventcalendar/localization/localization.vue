@@ -82,7 +82,8 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <MbscEventcalendar :drag="drag" :data="myEvents" :locale="localeAll[localeStr]" />
+      <!-- dragOptions -->
+      <MbscEventcalendar :data="myEvents" :locale="localeAll[localeStr]" />
     </div>
   </MbscPage>
 </template>

@@ -70,12 +70,12 @@ onMounted(() => {
   <MbscPage>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Gregorian calendar</div>
-      <MbscEventcalendar :drag="drag" :data="myEvents" :resources="myResources" :view="myView" />
+      <!-- dragOptions -->
+      <MbscEventcalendar :data="myEvents" :resources="myResources" :view="myView" />
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Jalali calendar</div>
       <MbscEventcalendar
-        :drag="drag"
         :data="myEvents"
         :resources="myResources"
         :view="myView"
@@ -86,7 +86,6 @@ onMounted(() => {
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Hijri calendar</div>
       <MbscEventcalendar
-        :drag="drag"
         :data="myEvents"
         :resources="myResources"
         :view="myView"

@@ -131,9 +131,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     cssClass="md-switching-timeline-view-cont"
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :invalid="myInvalid"

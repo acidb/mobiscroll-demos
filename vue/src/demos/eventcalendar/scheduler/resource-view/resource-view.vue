@@ -104,11 +104,6 @@ const myView = {
 </script>
 
 <template>
-  <MbscEventcalendar
-    :drag="drag"
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-    :colors="myColors"
-  />
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources" :colors="myColors" />
 </template>

@@ -24,7 +24,6 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :theme="myTheme"
