@@ -80,11 +80,12 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const handleEventFailed = useCallback(() => {
     setToastOpen(true);

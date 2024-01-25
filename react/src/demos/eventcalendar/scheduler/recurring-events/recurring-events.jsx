@@ -7,8 +7,8 @@ setOptions({
 });
 
 function App() {
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         recurring: {
           repeat: 'daily', // possible values: 'daily', 'weekly', 'monthly', 'yearly'
@@ -51,14 +51,16 @@ function App() {
         title: "New Year's Eve",
         color: 'blue',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

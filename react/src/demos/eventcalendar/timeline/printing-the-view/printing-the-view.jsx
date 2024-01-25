@@ -13,8 +13,8 @@ function App() {
   const [myEvents, setEvents] = useState([]);
   const [inst, setInst] = useState(null);
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -45,19 +45,21 @@ function App() {
         name: 'Gathering Field',
         color: '#8f1ed6',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         startDay: 1,
         endDay: 5,
         eventList: true,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const printView = useCallback(() => {
     inst.print();

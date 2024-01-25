@@ -23,8 +23,8 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         startDay: 1,
@@ -34,8 +34,9 @@ function App() {
         timeCellStep: 30,
         timeLabelStep: 30,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   useEffect(() => {
     getJson(

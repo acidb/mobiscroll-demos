@@ -11,16 +11,17 @@ function App() {
   const [toastText, setToastText] = useState();
   const [toastContext, setToastContext] = useState();
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const firstEvents = useMemo(() => {
-    return [
+  const firstEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,2)',
         end: 'dyndatetime(y,m,5)',
@@ -91,11 +92,12 @@ function App() {
         color: '#152d2b',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const firstResources = useMemo(() => {
-    return [
+  const firstResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -116,11 +118,12 @@ function App() {
         id: 5,
         name: 'Resource E',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondEvents = useMemo(() => {
-    return [
+  const secondEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,5)',
         end: 'dyndatetime(y,m,9)',
@@ -191,11 +194,12 @@ function App() {
         color: '#d6d145',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondResources = useMemo(() => {
-    return [
+  const secondResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -216,8 +220,9 @@ function App() {
         id: 5,
         name: 'Resource E',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const closeToast = useCallback(() => {
     setToastOpen(false);

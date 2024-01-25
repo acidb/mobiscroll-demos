@@ -8,13 +8,14 @@ setOptions({
 });
 
 function App() {
-  const hourView = useMemo(() => {
-    return {
+  const hourView = useMemo(
+    () => ({
       timeline: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const hourlyEvents = useMemo(
     () => [
@@ -106,13 +107,14 @@ function App() {
     [],
   );
 
-  const dayView = useMemo(() => {
-    return {
+  const dayView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const dailyEvents = useMemo(
     () => [
@@ -204,15 +206,16 @@ function App() {
     [],
   );
 
-  const weekView = useMemo(() => {
-    return {
+  const weekView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         resolutionHorizontal: 'week',
         size: 6,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const weeklyEvents = useMemo(
     () => [
@@ -304,15 +307,16 @@ function App() {
     [],
   );
 
-  const monthView = useMemo(() => {
-    return {
+  const monthView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
         resolutionHorizontal: 'month',
         size: 6,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const monthlyEvents = useMemo(
     () => [
@@ -404,15 +408,16 @@ function App() {
     [],
   );
 
-  const quarterView = useMemo(() => {
-    return {
+  const quarterView = useMemo(
+    () => ({
       timeline: {
         type: 'year',
         resolutionHorizontal: 'quarter',
         size: 1,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const quarterEvents = useMemo(
     () => [
@@ -504,15 +509,16 @@ function App() {
     [],
   );
 
-  const yearView = useMemo(() => {
-    return {
+  const yearView = useMemo(
+    () => ({
       timeline: {
         type: 'year',
         resolutionHorizontal: 'year',
         size: 6,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const yearlyEvents = useMemo(
     () => [
@@ -604,8 +610,8 @@ function App() {
     [],
   );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -646,8 +652,9 @@ function App() {
         name: 'Resource H',
         color: '#34c8e0',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const getEventOccurrence = useCallback((events) => {
     let eventOccurrence = 'none';
@@ -690,20 +697,16 @@ function App() {
   );
 
   const renderCustomHour = useCallback(
-    (args) => {
-      return (
-        <div className={'md-date-header md-date-header-hour md-date-header-events-' + getEventOccurrence(args.events)}>
-          {formatDate('h:mm A', args.date)}
-        </div>
-      );
-    },
+    (args) => (
+      <div className={'md-date-header md-date-header-hour md-date-header-events-' + getEventOccurrence(args.events)}>
+        {formatDate('h:mm A', args.date)}
+      </div>
+    ),
     [getEventOccurrence],
   );
 
   const renderCustomHourFooter = useCallback(
-    (args) => {
-      return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-    },
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
     [getOccuppancy],
   );
 
@@ -721,81 +724,63 @@ function App() {
   );
 
   const renderCustomDayFooter = useCallback(
-    (args) => {
-      return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-    },
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
     [getOccuppancy],
   );
 
   const renderCustomWeek = useCallback(
-    (args) => {
-      return (
-        <div className={'md-date-header md-date-header-week md-date-header-events-' + getEventOccurrence(args.events)}>
-          {formatDate('MMM DD', args.startDate) + ' - ' + formatDate('MMM DD', args.endDate)}
-        </div>
-      );
-    },
+    (args) => (
+      <div className={'md-date-header md-date-header-week md-date-header-events-' + getEventOccurrence(args.events)}>
+        {formatDate('MMM DD', args.startDate) + ' - ' + formatDate('MMM DD', args.endDate)}
+      </div>
+    ),
     [getEventOccurrence],
   );
 
   const renderCustomWeekFooter = useCallback(
-    (args) => {
-      return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-    },
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
     [getOccuppancy],
   );
 
   const renderCustomMonth = useCallback(
-    (args) => {
-      return (
-        <div className={'md-date-header md-date-header-month md-date-header-events-' + getEventOccurrence(args.events)}>
-          {formatDate('MMM', args.date)}
-        </div>
-      );
-    },
+    (args) => (
+      <div className={'md-date-header md-date-header-month md-date-header-events-' + getEventOccurrence(args.events)}>
+        {formatDate('MMM', args.date)}
+      </div>
+    ),
     [getEventOccurrence],
   );
 
   const renderCustomMonthFooter = useCallback(
-    (args) => {
-      return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-    },
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
     [getOccuppancy],
   );
 
   const renderCustomQuarter = useCallback(
-    (args) => {
-      return (
-        <div className={'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(args.events)}>
-          Quarter {args.date.getMonth() / 3 + 1}
-        </div>
-      );
-    },
+    (args) => (
+      <div className={'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(args.events)}>
+        Quarter {args.date.getMonth() / 3 + 1}
+      </div>
+    ),
     [getEventOccurrence],
   );
 
   const renderCustomQuarterFooter = useCallback(
-    (args) => {
-      return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-    },
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
     [getOccuppancy],
   );
 
   const renderCustomYear = useCallback(
-    (args) => {
-      return (
-        <div className={'md-date-header md-date-header-year md-date-header-events-' + getEventOccurrence(args.events)}>
-          {formatDate('YYYY', args.date)}
-        </div>
-      );
-    },
+    (args) => (
+      <div className={'md-date-header md-date-header-year md-date-header-events-' + getEventOccurrence(args.events)}>
+        {formatDate('YYYY', args.date)}
+      </div>
+    ),
     [getEventOccurrence],
   );
 
   const renderCustomYearFooter = useCallback(
-    (args) => {
-      return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-    },
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
     [getOccuppancy],
   );
 

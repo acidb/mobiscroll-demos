@@ -190,16 +190,17 @@ const App = () => {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'day',
         startTime: '08:00',
         endTime: '20:00',
         allDay: false,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const myInvalid = useMemo(
     () => [

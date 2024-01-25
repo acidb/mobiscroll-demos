@@ -57,14 +57,15 @@ function App() {
     [],
   );
 
-  const renderCustomItem = useCallback((item) => {
-    return (
+  const renderCustomItem = useCallback(
+    (item) => (
       <div className="md-image-text-item">
         <img className="md-image-text-avatar" src={'https://img.mobiscroll.com/demos/' + item.data.avatar + '.png'} alt="Cover" />
         <div className="md-image-text-name">{item.display}</div>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   const onChange = useCallback((ev) => {
     setValue(ev.value);

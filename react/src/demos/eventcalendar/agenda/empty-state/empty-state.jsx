@@ -51,8 +51,8 @@ function App() {
     setToastOpen(false);
   }, []);
 
-  const renderAgendaEmpty = useCallback(() => {
-    return (
+  const renderAgendaEmpty = useCallback(
+    () => (
       <div className="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/smart-empty-tin-can.png" alt="Empty can" style={{ width: 150, margin: '50px 0' }} />
         <div className="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Looks like this can is empty</div>
@@ -64,8 +64,9 @@ function App() {
           &nbsp;from&nbsp;<a href="https://icons8.com/illustrations">Ouch!</a>
         </div>
       </div>
-    );
-  }, [displayToast]);
+    ),
+    [displayToast],
+  );
 
   return (
     <>

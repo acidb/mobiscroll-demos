@@ -9,8 +9,8 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const responsive = useMemo(() => {
-    return {
+  const responsive = useMemo(
+    () => ({
       xsmall: {
         view: {
           schedule: { type: 'day' },
@@ -23,8 +23,9 @@ function App() {
           schedule: { type: 'week' },
         },
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   useEffect(() => {
     getJson(

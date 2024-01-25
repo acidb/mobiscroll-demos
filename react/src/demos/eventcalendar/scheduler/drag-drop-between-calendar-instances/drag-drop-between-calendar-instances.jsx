@@ -11,16 +11,17 @@ function App() {
   const [toastText, setToastText] = useState();
   const [toastContext, setToastContext] = useState();
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const firstEvents = useMemo(() => {
-    return [
+  const firstEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d-5,10)',
         end: 'dyndatetime(y,m,d-5,14)',
@@ -93,11 +94,12 @@ function App() {
         title: 'Event 12',
         color: '#8b1a1a',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondEvents = useMemo(() => {
-    return [
+  const secondEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d-5,14)',
         end: 'dyndatetime(y,m,d-5,17)',
@@ -170,8 +172,9 @@ function App() {
         title: 'Event 12',
         color: '#ee9572',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const closeToast = useCallback(() => {
     setToastOpen(false);

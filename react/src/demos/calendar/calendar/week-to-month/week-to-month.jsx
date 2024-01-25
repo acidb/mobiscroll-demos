@@ -22,8 +22,8 @@ function App() {
     setCalendarType(event.target.value);
   }, []);
 
-  const calendarHeaderSwitch = useCallback(() => {
-    return (
+  const calendarHeaderSwitch = useCallback(
+    () => (
       <>
         <CalendarNav className="custom-view-nav" />
         <div className="custom-view">
@@ -35,8 +35,9 @@ function App() {
         <CalendarPrev />
         <CalendarNext />
       </>
-    );
-  }, [calendarType, handleChange]);
+    ),
+    [calendarType, handleChange],
+  );
 
   return (
     <div>

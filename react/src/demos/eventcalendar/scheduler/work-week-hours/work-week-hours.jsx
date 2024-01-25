@@ -28,8 +28,8 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         startDay: 1,
@@ -37,8 +37,9 @@ function App() {
         startTime: '09:00',
         endTime: '18:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const handleEventCreateFailed = useCallback((args) => {
     if (args.invalid.type === 'lunch') {

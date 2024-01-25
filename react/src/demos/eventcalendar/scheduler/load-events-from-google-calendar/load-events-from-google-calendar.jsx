@@ -102,8 +102,8 @@ function App() {
 
   const closeToast = useCallback(() => setToastOpen(false), []);
 
-  const customWithNavButtons = useCallback(() => {
-    return (
+  const customWithNavButtons = useCallback(
+    () => (
       <>
         <CalendarNav className="google-cal-header-nav" />
         <div className="md-spinner">
@@ -132,8 +132,9 @@ function App() {
         <CalendarToday className="google-cal-header-today" />
         <CalendarNext className="google-cal-header-next" />
       </>
-    );
-  }, [view]);
+    ),
+    [view],
+  );
 
   useEffect(() => {
     googleCalendarSync.init({

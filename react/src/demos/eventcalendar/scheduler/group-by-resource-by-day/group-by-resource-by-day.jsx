@@ -9,8 +9,8 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -19,11 +19,12 @@ function App() {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -39,8 +40,9 @@ function App() {
         name: 'John',
         color: '#e8d0ef',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   useEffect(() => {
     getJson(

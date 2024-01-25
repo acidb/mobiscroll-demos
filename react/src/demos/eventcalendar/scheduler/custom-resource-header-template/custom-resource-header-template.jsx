@@ -8,8 +8,8 @@ setOptions({
 });
 
 function App() {
-  const calView = useMemo(() => {
-    return {
+  const calView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -18,11 +18,12 @@ function App() {
         startTime: '05:00',
         endTime: '22:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d-3,10)',
         end: 'dyndatetime(y,m,d-3,15)',
@@ -72,11 +73,12 @@ function App() {
         resource: [1, 2],
         color: '#de3d83',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -98,18 +100,17 @@ function App() {
         description: 'Territory sales manager',
         img: 'https://img.mobiscroll.com/demos/m2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const renderCustomResource = (resource) => {
-    return (
-      <div className="resource-template-content">
-        <div className="resource-name">{resource.name}</div>
-        <div className="resource-description">{resource.description}</div>
-        <img className="resource-avatar" src={resource.img} />
-      </div>
-    );
-  };
+  const renderCustomResource = (resource) => (
+    <div className="resource-template-content">
+      <div className="resource-name">{resource.name}</div>
+      <div className="resource-description">{resource.description}</div>
+      <img className="resource-avatar" src={resource.img} />
+    </div>
+  );
 
   return (
     <Eventcalendar

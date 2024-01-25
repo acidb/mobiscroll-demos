@@ -10,15 +10,16 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
         resolutionHorizontal: 'hour',
         resolutionVertical: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   useEffect(() => {
     getJson(

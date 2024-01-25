@@ -91,9 +91,7 @@ function App() {
             const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id);
             eventsToUpdate.splice(index, 1, origEvent);
           } else {
-            eventsToUpdate = eventsToUpdate.filter((ev) => {
-              return ev.id !== event.id;
-            });
+            eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
           }
         }
 

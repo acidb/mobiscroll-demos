@@ -8,8 +8,8 @@ setOptions({
 });
 
 const App = () => {
-  const resources = useMemo(() => {
-    return [
+  const resources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -25,15 +25,16 @@ const App = () => {
         name: 'John',
         color: '#e8d0ef',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const [myEvents, setEvents] = useState([]);
   const [myResources, setResources] = useState(resources);
   const [participants, setParticipants] = useState({ 1: true, 2: true, 3: true });
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -42,8 +43,9 @@ const App = () => {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const filter = useCallback(
     (ev) => {

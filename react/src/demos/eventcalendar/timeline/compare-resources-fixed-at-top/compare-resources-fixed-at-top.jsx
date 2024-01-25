@@ -81,8 +81,8 @@ const App = () => {
   const [fixedResources, setFixedResources] = useState([]);
   const [isToastOpen, setIsToastOpen] = useState(false);
 
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,9)',
         end: 'dyndatetime(y,m,d,12)',
@@ -401,11 +401,12 @@ const App = () => {
         title: 'Task 52',
         resource: 13,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = useMemo(() => {
-    return {
+  const view = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         resolutionHorizontal: 'hour',
@@ -414,8 +415,9 @@ const App = () => {
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const closeToast = useCallback(() => {
     setIsToastOpen(false);
@@ -457,25 +459,23 @@ const App = () => {
   );
 
   const customResource = useCallback(
-    (r) => {
-      return (
-        <div className="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
-          <div>{r.name}</div>
-          {r.fixed || (!r.fixed && fixedNr <= 2) ? (
-            <Button
-              className="md-compare-button"
-              color={r.fixed ? 'danger' : 'success'}
-              variant="outline"
-              onClick={() => toggleComparison(r)}
-            >
-              {r.fixed ? 'Remove' : 'Compare'}
-            </Button>
-          ) : (
-            ''
-          )}
-        </div>
-      );
-    },
+    (r) => (
+      <div className="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
+        <div>{r.name}</div>
+        {r.fixed || (!r.fixed && fixedNr <= 2) ? (
+          <Button
+            className="md-compare-button"
+            color={r.fixed ? 'danger' : 'success'}
+            variant="outline"
+            onClick={() => toggleComparison(r)}
+          >
+            {r.fixed ? 'Remove' : 'Compare'}
+          </Button>
+        ) : (
+          ''
+        )}
+      </div>
+    ),
     [fixedNr, toggleComparison],
   );
 

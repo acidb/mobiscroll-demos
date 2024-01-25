@@ -11,8 +11,8 @@ function App() {
   const [myEvents, setEvents] = useState([]);
   const [isToastOpen, setToastOpen] = useState(false);
 
-  const resp = useMemo(() => {
-    return {
+  const resp = useMemo(
+    () => ({
       xsmall: {
         view: {
           schedule: {
@@ -27,8 +27,9 @@ function App() {
           },
         },
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const closeToast = useCallback(() => {
     setToastOpen(false);

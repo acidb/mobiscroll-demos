@@ -78,18 +78,16 @@ function App() {
   }, [buttonText]);
 
   // returns the number of days between two dates
-  const getNrDays = useCallback((start, end) => {
-    return Math.round(Math.abs((end.setHours(0) - start.setHours(0)) / (24 * 60 * 60 * 1000))) + 1;
-  }, []);
+  const getNrDays = useCallback(
+    (start, end) => Math.round(Math.abs((end.setHours(0) - start.setHours(0)) / (24 * 60 * 60 * 1000))) + 1,
+    [],
+  );
 
   // returns the formatted date
   const getFormattedRange = useCallback(
-    (start, end) => {
-      return (
-        formatDate('MMM D, YYYY', new Date(start)) +
-        (end && getNrDays(start, end) > 1 ? ' - ' + formatDate('MMM D, YYYY', new Date(end)) : '')
-      );
-    },
+    (start, end) =>
+      formatDate('MMM D, YYYY', new Date(start)) +
+      (end && getNrDays(start, end) > 1 ? ' - ' + formatDate('MMM D, YYYY', new Date(end)) : ''),
     [getNrDays],
   );
 
@@ -145,8 +143,8 @@ function App() {
     [setCurrentDate],
   );
 
-  const customWithNavButtons = useCallback(() => {
-    return (
+  const customWithNavButtons = useCallback(
+    () => (
       <>
         <div>
           <Datepicker
@@ -168,8 +166,9 @@ function App() {
           <CalendarNext />
         </div>
       </>
-    );
-  }, [buttonProps, onChange, onClose, rangeVal]);
+    ),
+    [buttonProps, onChange, onClose, rangeVal],
+  );
 
   useEffect(() => {
     getJson(

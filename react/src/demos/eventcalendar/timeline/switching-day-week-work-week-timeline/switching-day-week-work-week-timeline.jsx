@@ -28,8 +28,8 @@ function App() {
     },
   });
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -65,11 +65,12 @@ function App() {
         title: 'Data Quality Manager',
         img: 'https://img.mobiscroll.com/demos/f2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myInvalids = useMemo(() => {
-    return [
+  const myInvalids = useMemo(
+    () => [
       {
         start: '00:00',
         end: '06:00',
@@ -92,8 +93,9 @@ function App() {
           weekDays: 'SA,SU',
         },
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const changeView = useCallback((event) => {
     let calView;
@@ -127,8 +129,8 @@ function App() {
     setCalView(calView);
   }, []);
 
-  const renderMyHeader = useCallback(() => {
-    return (
+  const renderMyHeader = useCallback(
+    () => (
       <>
         <CalendarNav className="md-work-week-nav" />
         <div className="md-work-week-picker">
@@ -142,18 +144,20 @@ function App() {
         <CalendarToday className="md-work-week-today" />
         <CalendarNext className="md-work-week-next" />
       </>
-    );
-  }, [changeView, view]);
+    ),
+    [changeView, view],
+  );
 
-  const renderMyResource = useCallback((resource) => {
-    return (
+  const renderMyResource = useCallback(
+    (resource) => (
       <div className="md-work-week-cont">
         <div className="md-work-week-name">{resource.name}</div>
         <div className="md-work-week-title">{resource.title}</div>
         <img className="md-work-week-avatar" src={resource.img} alt="Avatar" />
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   const eventUpdateFail = useCallback(() => {
     setToastOpen(true);

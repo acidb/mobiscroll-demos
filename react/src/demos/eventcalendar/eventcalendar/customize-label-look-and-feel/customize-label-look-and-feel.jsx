@@ -23,20 +23,22 @@ function App() {
     setToastOpen(true);
   }, []);
 
-  const renderLabel = useCallback((data) => {
-    return data.isMultiDay ? (
-      <div style={{ background: data.original.color, color: '#000' }} className="multi-day-event">
-        {data.original.title}
-      </div>
-    ) : (
-      <>
-        <div className="single-day-event-dot" style={{ background: data.original.color }}></div>
-        <div className="single-day-event" style={{ color: '#000' }}>
+  const renderLabel = useCallback(
+    (data) =>
+      data.isMultiDay ? (
+        <div style={{ background: data.original.color, color: '#000' }} className="multi-day-event">
           {data.original.title}
         </div>
-      </>
-    );
-  }, []);
+      ) : (
+        <>
+          <div className="single-day-event-dot" style={{ background: data.original.color }}></div>
+          <div className="single-day-event" style={{ color: '#000' }}>
+            {data.original.title}
+          </div>
+        </>
+      ),
+    [],
+  );
 
   useEffect(() => {
     getJson(

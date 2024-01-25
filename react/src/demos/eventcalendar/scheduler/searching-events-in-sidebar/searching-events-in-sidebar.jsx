@@ -15,22 +15,24 @@ function App() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const timerRef = useRef(null);
 
-  const calView = useMemo(() => {
-    return {
+  const calView = useMemo(
+    () => ({
       schedule: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const listView = useMemo(() => {
-    return {
+  const listView = useMemo(
+    () => ({
       agenda: {
         type: 'year',
         size: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onSearch = useCallback((ev) => {
     const text = ev.target.value;

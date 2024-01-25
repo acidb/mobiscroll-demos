@@ -170,9 +170,7 @@ function App() {
   const handleEventCreated = useCallback(
     (args) => {
       const event = args.event;
-      const resource = types.find((obj) => {
-        return obj.id === event.resource;
-      });
+      const resource = types.find((obj) => obj.id === event.resource);
       setHeader(
         '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>',
       );
@@ -240,24 +238,23 @@ function App() {
     setPopupOpen(false);
   }, [isEdit, myMeals]);
 
-  const extendMyDefaultEvent = useCallback(() => {
-    return {
+  const extendMyDefaultEvent = useCallback(
+    () => ({
       title: 'New meal',
       allDay: true,
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const renderMyResource = (resource) => {
-    return (
-      <div className="md-meal-planner-cont">
-        <div className="md-meal-planner-title" style={{ color: resource.color }}>
-          <span className="md-meal-planner-icon" dangerouslySetInnerHTML={{ __html: resource.icon }}></span>
-          {resource.name}
-        </div>
-        <div className="md-meal-planner-kcal">{resource.kcal}</div>
+  const renderMyResource = (resource) => (
+    <div className="md-meal-planner-cont">
+      <div className="md-meal-planner-title" style={{ color: resource.color }}>
+        <span className="md-meal-planner-icon" dangerouslySetInnerHTML={{ __html: resource.icon }}></span>
+        {resource.name}
       </div>
-    );
-  };
+      <div className="md-meal-planner-kcal">{resource.kcal}</div>
+    </div>
+  );
 
   const myScheduleEvent = useCallback((args) => {
     const event = args.original;
@@ -309,13 +306,11 @@ function App() {
         cssClass="md-meal-planner-popup"
       >
         <SegmentedGroup onChange={typeChange} value={type}>
-          {types.map((type) => {
-            return (
-              <Segmented value={type.id} key={type.id}>
-                {type.name}
-              </Segmented>
-            );
-          })}
+          {types.map((type) => (
+            <Segmented value={type.id} key={type.id}>
+              {type.name}
+            </Segmented>
+          ))}
         </SegmentedGroup>
         <div className="mbsc-form-group">
           <Input label="Name" value={name} onChange={nameChange} />

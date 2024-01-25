@@ -13,16 +13,17 @@ function App() {
   const [myEvents, setEvents] = useState([]);
   const calRef = useRef();
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -65,19 +66,13 @@ function App() {
         color: '#8f1ed6',
         price: 700,
       },
-    ];
-  }, []);
-
-  const getUTCDateOnly = useCallback((d) => {
-    return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
-  }, []);
-
-  const getDayDiff = useCallback(
-    (d1, d2) => {
-      return Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1;
-    },
-    [getUTCDateOnly],
+    ],
+    [],
   );
+
+  const getUTCDateOnly = useCallback((d) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()), []);
+
+  const getDayDiff = useCallback((d1, d2) => Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1, [getUTCDateOnly]);
 
   const getRevenue = useCallback(
     (resource) => {
@@ -104,40 +99,39 @@ function App() {
     return total;
   }, [getRevenue, myResources]);
 
-  const myCustomResourceHeader = useCallback(() => {
-    return (
+  const myCustomResourceHeader = useCallback(
+    () => (
       <div className="md-resource-details-title">
         <div className="md-resource-header md-resource-details-name">Room</div>
         <div className="md-resource-header md-resource-details-seats">Capacity</div>
         <div className="md-resource-header md-resource-details-price">Price</div>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
-  const myCustomResource = useCallback((resource) => {
-    return (
+  const myCustomResource = useCallback(
+    (resource) => (
       <div className="md-resource-details-cont">
         <div className="md-resource-header md-resource-details-name">{resource.name}</div>
         <div className="md-resource-header md-resource-details-seats">{resource.seats} seats</div>
         <div className="md-resource-header md-resource-details-price">{'$' + resource.price}</div>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
-  const myCustomSidebarHeader = useCallback(() => {
-    return <div className="md-resource-details-sidebar-header">Revenue</div>;
-  }, []);
+  const myCustomSidebarHeader = useCallback(() => <div className="md-resource-details-sidebar-header">Revenue</div>, []);
 
   const myCustomSidebar = useCallback(
-    (resource) => {
-      return <div className="md-resource-details-sidebar">{'$' + getRevenue(resource)}</div>;
-    },
+    (resource) => <div className="md-resource-details-sidebar">{'$' + getRevenue(resource)}</div>,
     [getRevenue],
   );
 
-  const myCustomResourceFooter = useCallback(() => {
-    return <div className="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>;
-  }, []);
+  const myCustomResourceFooter = useCallback(
+    () => <div className="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>,
+    [],
+  );
 
   const myCustomDayFooter = useCallback(
     (data) => {
@@ -159,9 +153,10 @@ function App() {
     [myEvents, myResources.length],
   );
 
-  const myCustomSidebarFooter = useCallback(() => {
-    return <div className="md-resource-details-footer md-resource-details-total">{'$' + getTotal()}</div>;
-  }, [getTotal]);
+  const myCustomSidebarFooter = useCallback(
+    () => <div className="md-resource-details-footer md-resource-details-total">{'$' + getTotal()}</div>,
+    [getTotal],
+  );
 
   useEffect(() => {
     getJson(

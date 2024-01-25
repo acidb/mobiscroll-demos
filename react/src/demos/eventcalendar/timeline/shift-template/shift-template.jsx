@@ -171,16 +171,17 @@ const mySlots = [
 
 function App() {
   const [shifts, setShifts] = useState(defaultShifts);
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         eventList: true,
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const renderMySlot = useCallback((args) => {
     const slotId = args.slot.id;

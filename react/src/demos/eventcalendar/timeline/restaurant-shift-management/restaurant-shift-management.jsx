@@ -1922,17 +1922,13 @@ function App() {
   }, []);
 
   const extendMyDefaultEvent = useCallback(
-    (event) => {
-      return {
-        title: getEmployeeName(event),
-      };
-    },
+    (event) => ({
+      title: getEmployeeName(event),
+    }),
     [getEmployeeName],
   );
 
-  const formatMyDate = useCallback((date) => {
-    return formatDate('YYYY-MM-DD', new Date(date));
-  }, []);
+  const formatMyDate = useCallback((date) => formatDate('YYYY-MM-DD', new Date(date)), []);
 
   const getShiftsNrs = useCallback(
     (date, slotId) => {
@@ -2025,33 +2021,27 @@ function App() {
     setView(event.value);
   }, []);
 
-  const renderMyHeader = () => {
-    return (
-      <Fragment>
-        <CalendarNav />
-        <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
-          {shiftTimes.map((cs) => {
-            return (
-              <Checkbox key={cs.id} value={cs.id} checked={cs.checked} disabled={cs.disabled} onChange={checkboxChange} theme="material">
-                {cs.name}
-              </Checkbox>
-            );
-          })}
-        </div>
-        <Select data={views} value={selectedView} onChange={viewChange} inputStyle="box" />
-        <CalendarPrev />
-        <CalendarToday />
-        <CalendarNext />
-      </Fragment>
-    );
-  };
+  const renderMyHeader = () => (
+    <Fragment>
+      <CalendarNav />
+      <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
+        {shiftTimes.map((cs) => (
+          <Checkbox key={cs.id} value={cs.id} checked={cs.checked} disabled={cs.disabled} onChange={checkboxChange} theme="material">
+            {cs.name}
+          </Checkbox>
+        ))}
+      </div>
+      <Select data={views} value={selectedView} onChange={viewChange} inputStyle="box" />
+      <CalendarPrev />
+      <CalendarToday />
+      <CalendarNext />
+    </Fragment>
+  );
 
   const isDouble = useCallback((event, inst) => {
     const date = event.start.setHours(0);
     const events = inst.getEvents(date);
-    const ev = events.find((e) => {
-      return new Date(e.start).setHours(0) === date && e.resource === event.resource && e.slot === event.slot;
-    });
+    const ev = events.find((e) => new Date(e.start).setHours(0) === date && e.resource === event.resource && e.slot === event.slot);
     return ev;
   }, []);
 

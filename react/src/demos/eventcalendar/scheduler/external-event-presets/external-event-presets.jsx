@@ -92,19 +92,20 @@ function App() {
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastText, setToastText] = useState();
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
         startTime: '06:00',
         endTime: '20:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myInvalid = useMemo(() => {
-    return [
+  const myInvalid = useMemo(
+    () => [
       {
         recurring: {
           repeat: 'weekly',
@@ -120,8 +121,9 @@ function App() {
           weekDays: 'MO,TU,WE,TH,FR',
         },
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const fillDialog = useCallback((args) => {
     setTitle(args.event.title);

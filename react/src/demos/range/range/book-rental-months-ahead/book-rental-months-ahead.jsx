@@ -23,8 +23,8 @@ function App() {
   const [invalid, setInvalid] = useState([]);
   const [colors, setColors] = useState([]);
 
-  const getColors = useCallback((start, end) => {
-    return [
+  const getColors = useCallback(
+    (start, end) => [
       {
         date: start,
         cellCssClass: 'vacation-check-in',
@@ -39,11 +39,12 @@ function App() {
         background: '#ffbaba80',
         cellCssClass: 'vacation-booked',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const calendarHeader = useCallback(() => {
-    return (
+  const calendarHeader = useCallback(
+    () => (
       <>
         <CalendarNav />
         <div className="md-book-rental-header">
@@ -56,8 +57,9 @@ function App() {
         <CalendarToday />
         <CalendarNext />
       </>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   useEffect(() => {
     const monthColors = [

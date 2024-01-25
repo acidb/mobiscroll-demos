@@ -11,8 +11,8 @@ setOptions({
 momentTimezone.moment = moment;
 
 function App() {
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,7)',
         end: 'dyndatetime(y,m,d,9)',
@@ -55,11 +55,12 @@ function App() {
         title: 'Team-Building',
         resource: [1, 2, 3, 4, 5],
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -85,14 +86,16 @@ function App() {
         name: 'Resource E',
         color: '#ff4600',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

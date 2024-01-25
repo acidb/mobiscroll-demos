@@ -7,8 +7,8 @@ setOptions({
 });
 
 function App() {
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         recurring: {
           repeat: 'daily', // possible values: 'daily', 'weekly', 'monthly', 'yearly'
@@ -51,8 +51,9 @@ function App() {
         title: "New Year's Eve",
         resource: 2,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const myResources = useMemo(
     () => [
@@ -85,11 +86,12 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

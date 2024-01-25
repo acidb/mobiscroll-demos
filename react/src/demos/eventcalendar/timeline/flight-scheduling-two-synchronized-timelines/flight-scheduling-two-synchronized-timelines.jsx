@@ -415,14 +415,15 @@ function App() {
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastText, setToastText] = useState();
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'day',
         size: 1,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const renderMyResource = useCallback((resource) => {
     if (!resource.children) {

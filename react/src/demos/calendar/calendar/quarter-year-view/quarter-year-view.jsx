@@ -83,8 +83,8 @@ function App() {
     setDate(event.value);
   }, []);
 
-  const calendarHeaderSwitch = useCallback(() => {
-    return (
+  const calendarHeaderSwitch = useCallback(
+    () => (
       <>
         <CalendarNav />
         <div className="quarter-year-header-picker">
@@ -100,8 +100,9 @@ function App() {
         <CalendarToday />
         <CalendarNext />
       </>
-    );
-  }, [handleTypeChange, type]);
+    ),
+    [handleTypeChange, type],
+  );
 
   return (
     <Datepicker

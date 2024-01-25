@@ -42,8 +42,8 @@ function App() {
   const [tempEvent, setTempEvent] = useState(null);
   const [isNewEvent, setIsNewEvent] = useState(false);
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Keila Delores',
@@ -87,17 +87,19 @@ function App() {
         img: 'https://img.mobiscroll.com/demos/f3.png',
         utcOffset: 'UTC + 3',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         timeLabelStep: 1440,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const getUtcOffset = useCallback((timezone) => {
     switch (timezone) {
@@ -194,8 +196,8 @@ function App() {
     );
   }, []);
 
-  const myHeader = useCallback(() => {
-    return (
+  const myHeader = useCallback(
+    () => (
       <>
         <CalendarNav />
         <div className="md-meeting-planner-header">
@@ -207,11 +209,12 @@ function App() {
           <CalendarNext />
         </div>
       </>
-    );
-  }, []);
+    ),
+    [],
+  );
 
-  const myResource = useCallback((resource) => {
-    return (
+  const myResource = useCallback(
+    (resource) => (
       <div className="md-meeting-participant-cont">
         <div className="md-meeting-participant-name">{resource.name}</div>
         <div>
@@ -220,14 +223,16 @@ function App() {
         </div>
         <img className="md-meeting-participant-avatar" src={resource.img} alt="avatar" />
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
-  const myDefaultEvent = useCallback(() => {
-    return {
+  const myDefaultEvent = useCallback(
+    () => ({
       resource: [1, 2, 3, 4, 5, 6],
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const handleEventCreated = useCallback(
     (args) => {

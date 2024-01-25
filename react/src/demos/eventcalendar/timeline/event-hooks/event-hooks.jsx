@@ -37,13 +37,14 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const myResources = useMemo(
     () => [

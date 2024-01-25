@@ -448,17 +448,16 @@ function App() {
     setPopupOpen(false);
   }, [isEdit, myEvents]);
 
-  const extendMyDefaultEvent = useCallback(() => {
-    return {
+  const extendMyDefaultEvent = useCallback(
+    () => ({
       title: 'Work order',
       location: '',
       cost: 0,
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const getCostString = useCallback((cost) => {
-    return cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }, []);
+  const getCostString = useCallback((cost) => cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), []);
 
   const renderCustomDay = useCallback(
     (args) => {
@@ -482,14 +481,12 @@ function App() {
   );
 
   const myScheduleEvent = useCallback(
-    (event) => {
-      return (
-        <div>
-          {event.title}
-          <span className="md-work-order-price-tag">${getCostString(event.original.cost)}</span>
-        </div>
-      );
-    },
+    (event) => (
+      <div>
+        {event.title}
+        <span className="md-work-order-price-tag">${getCostString(event.original.cost)}</span>
+      </div>
+    ),
     [getCostString],
   );
 
@@ -548,31 +545,27 @@ function App() {
         <div className="mbsc-form-group">
           <div className="mbsc-grid mbsc-no-padding">
             <div className="mbsc-row">
-              {myResources.map((resources) => {
-                return resources.children.map((res) => {
-                  return (
-                    <div className="mbsc-col-sm-4" key={res.id}>
-                      <>
-                        <div className="mbsc-form-group-title">{res.name}</div>
-                        {res.children.map((r) => {
-                          return (
-                            <Checkbox
-                              key={r.id}
-                              value={r.id}
-                              checked={checkedResources.indexOf(r.id) > -1}
-                              onChange={checkboxChange}
-                              theme="material"
-                              className="md-work-order-checkbox-label"
-                            >
-                              {r.name}
-                            </Checkbox>
-                          );
-                        })}
-                      </>
-                    </div>
-                  );
-                });
-              })}
+              {myResources.map((resources) =>
+                resources.children.map((res) => (
+                  <div className="mbsc-col-sm-4" key={res.id}>
+                    <>
+                      <div className="mbsc-form-group-title">{res.name}</div>
+                      {res.children.map((r) => (
+                        <Checkbox
+                          key={r.id}
+                          value={r.id}
+                          checked={checkedResources.indexOf(r.id) > -1}
+                          onChange={checkboxChange}
+                          theme="material"
+                          className="md-work-order-checkbox-label"
+                        >
+                          {r.name}
+                        </Checkbox>
+                      ))}
+                    </>
+                  </div>
+                )),
+              )}
             </div>
           </div>
         </div>

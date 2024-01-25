@@ -355,12 +355,8 @@ function App() {
   const handleEventClick = useCallback(
     (args) => {
       const event = args.event;
-      const resource = staff.find((r) => {
-        return r.id === event.resource;
-      });
-      const slot = mySlots.find((s) => {
-        return s.id === event.slot;
-      });
+      const resource = staff.find((r) => r.id === event.resource);
+      const slot = mySlots.find((s) => s.id === event.slot);
       setHeader(
         '<div>Edit ' +
           resource.name +
@@ -386,9 +382,7 @@ function App() {
   const handleEventCreated = useCallback(
     (args) => {
       const event = args.event;
-      const slot = mySlots.find((s) => {
-        return s.id === event.slot;
-      });
+      const slot = mySlots.find((s) => s.id === event.slot);
       setHeader(
         '<div>New shift</div><div class="employee-shifts-day">' +
           formatDate('DDDD', new Date(event.start)) +
@@ -467,15 +461,16 @@ function App() {
     };
   }, []);
 
-  const renderMyResource = useCallback((resource) => {
-    return (
+  const renderMyResource = useCallback(
+    (resource) => (
       <div className="employee-shifts-cont">
         <div className="employee-shifts-name">{resource.name}</div>
         <div className="employee-shifts-title">{resource.title}</div>
         <img className="employee-shifts-avatar" src={resource.img} alt="Avatar" />
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   const dateChange = useCallback((args) => {
     setDate(args.value);

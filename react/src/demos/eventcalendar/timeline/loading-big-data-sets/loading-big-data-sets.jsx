@@ -23,14 +23,15 @@ for (var i = 1; i <= resourceNr; i++) {
 function App() {
   const [myEvents, setMyEvents] = useState([]);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'year',
         eventList: true,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const handlePageLoading = useCallback((args) => {
     setTimeout(() => {

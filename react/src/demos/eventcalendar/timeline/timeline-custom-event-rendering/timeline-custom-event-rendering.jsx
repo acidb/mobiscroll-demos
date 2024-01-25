@@ -8,16 +8,17 @@ setOptions({
 });
 
 function App() {
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,10,30)',
         end: 'dyndatetime(y,m,d,13)',
@@ -66,11 +67,12 @@ function App() {
         taskType: 'material-format-paint',
         resource: 2,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -86,8 +88,9 @@ function App() {
         name: 'John',
         color: '#ff0101',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const myScheduleEvent = useCallback((data) => {
     const ev = data.original;
@@ -106,11 +109,12 @@ function App() {
     );
   }, []);
 
-  const myDefaultEvent = useCallback(() => {
-    return {
+  const myDefaultEvent = useCallback(
+    () => ({
       taskType: 'cogs',
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

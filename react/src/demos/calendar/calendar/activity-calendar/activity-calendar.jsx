@@ -94,21 +94,15 @@ const activities = [
 ];
 
 function App() {
-  const getDeg = (nr) => {
-    return {
-      rotate1: nr > 180 ? 180 : nr,
-      rotate2: nr > 180 ? nr - 180 : 0,
-    };
-  };
+  const getDeg = (nr) => ({
+    rotate1: nr > 180 ? 180 : nr,
+    rotate2: nr > 180 ? nr - 180 : 0,
+  });
 
-  const getTransform = (rotate) => {
-    return 'rotateZ(' + rotate + 'deg)';
-  };
+  const getTransform = (rotate) => 'rotateZ(' + rotate + 'deg)';
 
   const customDay = (args) => {
-    const a = activities.find((obj) => {
-      return +new Date(obj.date) === +args.date;
-    });
+    const a = activities.find((obj) => +new Date(obj.date) === +args.date);
 
     return (
       <div className="screen">

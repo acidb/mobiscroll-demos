@@ -10,18 +10,19 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -58,26 +59,29 @@ function App() {
         seats: 900,
         color: '#8f1ed6',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const renderCustomResource = useCallback((resource) => {
-    return (
+  const renderCustomResource = useCallback(
+    (resource) => (
       <div className="md-resource-header-template-cont">
         <div className="md-resource-header-template-name">{resource.name}</div>
         <div className="md-resource-header-template-seats">{resource.seats} seats</div>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
-  const renderCustomHeader = useCallback(() => {
-    return (
+  const renderCustomHeader = useCallback(
+    () => (
       <div className="md-resource-header-template-title">
         <div className="md-resource-header-template-name">Room</div>
         <div className="md-resource-header-template-seats">Capacity</div>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   useEffect(() => {
     getJson(

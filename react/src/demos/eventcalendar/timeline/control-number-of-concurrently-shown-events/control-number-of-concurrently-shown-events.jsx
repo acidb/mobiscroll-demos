@@ -12,8 +12,8 @@ const month = now.getMonth();
 const day = now.getDate();
 
 const App = () => {
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       { title: 'Product team mtg.', start: '10:00', end: '14:00', recurring: 'FREQ=WEEKLY;BYDAY=MO', color: '#913aa7' },
       { title: 'Employment (Semi-weekly)', start: '11:00', end: '17:00', recurring: 'FREQ=WEEKLY;BYDAY=WE', color: '#228c73' },
       { title: 'Pizza Night', start: '16:00', end: '22:00', recurring: 'FREQ=WEEKLY;BYDAY=FR', color: '#d7be0d' },
@@ -146,28 +146,31 @@ const App = () => {
         color: '#ff6d42',
         resource: [3, 4],
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       { id: 1, name: 'Jude Chester' },
       { id: 2, name: 'Natalie Racquel' },
       { id: 3, name: 'Jon Drake' },
       { id: 4, name: 'Meredith Chantelle' },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         maxEventStack: 2,
         type: 'week',
         resolutionHorizontal: 'day',
         eventList: true,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

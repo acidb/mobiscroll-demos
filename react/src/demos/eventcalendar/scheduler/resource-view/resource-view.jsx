@@ -11,8 +11,8 @@ const day = now.getDay();
 const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 
 function App() {
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: new Date(now.getFullYear(), now.getMonth(), monday + 1, 11),
         end: new Date(now.getFullYear(), now.getMonth(), monday + 1, 12, 30),
@@ -49,11 +49,12 @@ function App() {
         title: 'Stakeholder mtg.',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -80,11 +81,12 @@ function App() {
         name: 'King’s Landing',
         color: '#bacded',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -93,8 +95,9 @@ function App() {
         startTime: '05:00',
         endTime: '22:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const myColors = useMemo(
     () => [

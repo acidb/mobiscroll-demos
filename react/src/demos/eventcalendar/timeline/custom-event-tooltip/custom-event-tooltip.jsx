@@ -465,8 +465,8 @@ function App() {
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastText, setToastText] = useState();
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'day',
         startDay: 1,
@@ -475,8 +475,9 @@ function App() {
         endTime: '16:00',
         allDay: false,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const handleEventHoverIn = useCallback((args) => {
     const event = args.event;

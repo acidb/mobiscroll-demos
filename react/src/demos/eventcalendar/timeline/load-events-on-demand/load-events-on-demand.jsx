@@ -39,11 +39,12 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const handlePageLoading = useCallback((args) => {
     const year = args.month.getFullYear();

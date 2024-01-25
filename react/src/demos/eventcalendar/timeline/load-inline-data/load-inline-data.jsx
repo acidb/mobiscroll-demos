@@ -308,11 +308,12 @@ const myResources = [
 ];
 
 function App() {
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

@@ -140,11 +140,12 @@ function App() {
     },
   ]);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const getResourceById = useCallback((resources, resourceId) => {
     for (let i = 0; i < resources.length; i++) {

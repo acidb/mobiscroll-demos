@@ -26,8 +26,8 @@ function App() {
     },
   });
 
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d-1,8)',
         end: 'dyndatetime(y,m,d-1,15)',
@@ -106,11 +106,12 @@ function App() {
         title: 'Event 13',
         resource: 6,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -141,8 +142,9 @@ function App() {
         name: 'Resource F',
         color: '#1ac38d',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const changeView = useCallback((event) => {
     let calView;
@@ -181,8 +183,8 @@ function App() {
     setCalView(calView);
   }, []);
 
-  const renderMyHeader = useCallback(() => {
-    return (
+  const renderMyHeader = useCallback(
+    () => (
       <>
         <CalendarNav className="md-event-listing-nav" />
         <div className="md-event-listing-picker">
@@ -196,8 +198,9 @@ function App() {
         <CalendarToday className="md-event-listing-today" />
         <CalendarNext className="md-event-listing-next" />
       </>
-    );
-  }, [changeView, view]);
+    ),
+    [changeView, view],
+  );
 
   return (
     <Eventcalendar

@@ -149,11 +149,12 @@ function App() {
     return false;
   }, []);
 
-  const extendDefaultEvent = useCallback(() => {
-    return {
+  const extendDefaultEvent = useCallback(
+    () => ({
       color: calendarData[primaryCalendarId].color,
-    };
-  }, [calendarData, primaryCalendarId]);
+    }),
+    [calendarData, primaryCalendarId],
+  );
 
   const signIn = useCallback(() => {
     googleCalendarSync.signIn().catch(handleError);
@@ -282,17 +283,9 @@ function App() {
             </div>
             <div className="mbsc-form-group-inset md-sync-events-google-inset">
               <div className="mbsc-form-group-title">My Calendars</div>
-              {myCalendars.map((cal) => {
-                return (
-                  <Switch
-                    label={cal.summary}
-                    key={cal.id}
-                    value={cal.id}
-                    checked={calendarData[cal.id].checked}
-                    onChange={toggleCalendar}
-                  />
-                );
-              })}
+              {myCalendars.map((cal) => (
+                <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+              ))}
             </div>
             <div className="mbsc-form-group-inset">
               <Button className="mbsc-button-block" onClick={signOut}>

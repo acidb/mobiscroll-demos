@@ -7,8 +7,8 @@ setOptions({
 });
 
 function App() {
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,16)',
         end: 'dyndatetime(y,m,d,18)',
@@ -411,11 +411,12 @@ function App() {
         title: 'Work order #44331',
         resource: 10,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         resolutionHorizontal: 'hour',
@@ -424,11 +425,12 @@ function App() {
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Unassigned',
@@ -480,8 +482,9 @@ function App() {
         name: 'John',
         color: '#f542ef',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Eventcalendar

@@ -42,11 +42,12 @@ function App() {
     setIsToastOpen(true);
   }, []);
 
-  const extendMyDefaultEvent = useCallback(() => {
-    return {
+  const extendMyDefaultEvent = useCallback(
+    () => ({
       color: calendarData[primaryCalendarId].color,
-    };
-  }, [calendarData, primaryCalendarId]);
+    }),
+    [calendarData, primaryCalendarId],
+  );
 
   useEffect(() => {
     const onSignedIn = () => {
@@ -130,8 +131,8 @@ function App() {
     [calendarData, onError],
   );
 
-  const renderMyHeader = useCallback(() => {
-    return (
+  const renderMyHeader = useCallback(
+    () => (
       <>
         <CalendarNav />
         <div className="md-spinner">
@@ -154,8 +155,9 @@ function App() {
           <CalendarNext />
         </div>
       </>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   const handlePageLoading = useCallback(
     (args) => {
@@ -273,17 +275,9 @@ function App() {
             </div>
             <div className="mbsc-form-group-inset md-sync-events-google-inset">
               <div className="mbsc-form-group-title">My Calendars</div>
-              {myCalendars.map((cal) => {
-                return (
-                  <Switch
-                    label={cal.summary}
-                    key={cal.id}
-                    value={cal.id}
-                    checked={calendarData[cal.id].checked}
-                    onChange={toggleCalendar}
-                  />
-                );
-              })}
+              {myCalendars.map((cal) => (
+                <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+              ))}
             </div>
             <div className="mbsc-form-group-inset">
               <Button className="md-sync-events-google-button mbsc-button-block" onClick={signOut}>

@@ -72,11 +72,12 @@ function App() {
   const [toastText, setToastText] = useState('');
   const [isToastOpen, setIsToastOpen] = useState(false);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const setDropElm = useCallback((elm) => {
     setDropCont(elm);

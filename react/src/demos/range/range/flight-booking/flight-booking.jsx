@@ -49,8 +49,8 @@ function App() {
     setDisabled(nrOfValues(inst) < 1);
   }, [inst]);
 
-  const buttons = useMemo(() => {
-    return [
+  const buttons = useMemo(
+    () => [
       'cancel',
       {
         disabled,
@@ -62,8 +62,9 @@ function App() {
         text: 'One way only',
       },
       'set',
-    ];
-  }, [disabled, inst]);
+    ],
+    [disabled, inst],
+  );
 
   function nrOfValues(instance) {
     const tempVal = (instance && instance.getTempVal()) || [];

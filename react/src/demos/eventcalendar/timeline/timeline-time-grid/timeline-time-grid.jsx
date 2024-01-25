@@ -10,16 +10,17 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -50,8 +51,9 @@ function App() {
         name: 'Ashley',
         color: '#01adff',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   useEffect(() => {
     getJson(

@@ -13,11 +13,12 @@ function App() {
   const [myEvents, setEvents] = useState([]);
   const [inst, setInst] = useState(null);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const printView = useCallback(() => {
     inst.print();

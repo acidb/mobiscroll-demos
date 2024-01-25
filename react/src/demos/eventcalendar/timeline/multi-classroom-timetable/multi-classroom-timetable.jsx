@@ -10,8 +10,8 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         startDay: 1,
@@ -21,11 +21,12 @@ function App() {
         resolutionHorizontal: 'hour',
         resolutionVertical: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Green Hall',
@@ -46,8 +47,9 @@ function App() {
         id: 5,
         name: 'Yellow Hall',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const myCustomDay = useCallback((day) => {
     const date = day.date;
@@ -59,24 +61,26 @@ function App() {
     );
   }, []);
 
-  const myCustomEvent = useCallback((args) => {
-    return (
+  const myCustomEvent = useCallback(
+    (args) => (
       <div>
         <div className="md-timetable-event-title">{args.title}</div>
         <div className="md-timetable-event-prop">Prof. {args.original.prof}</div>
         <div className="md-timetable-event-class">{args.original.class} year</div>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
-  const myDefaultEvent = useCallback(() => {
-    return {
+  const myDefaultEvent = useCallback(
+    () => ({
       title: 'New class',
       prof: 'Stacia Jaden',
       class: 'Junior',
       color: '#ff0000',
-    };
-  }, []);
+    }),
+    [],
+  );
 
   useEffect(() => {
     getJson(

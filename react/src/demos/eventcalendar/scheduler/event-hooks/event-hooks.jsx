@@ -27,13 +27,14 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const dragData1 = useMemo(
     () => ({

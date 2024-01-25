@@ -10,11 +10,12 @@ function App() {
   const [myEvents, setEvents] = useState([]);
   const [lang, setLang] = useState('ios');
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const languages = useMemo(
     () => [
@@ -191,13 +192,11 @@ function App() {
           <div className="mbsc-row mbsc-justify-content-center">
             <div className="mbsc-col-sm-8">
               <Dropdown inputStyle="box" value={lang} onChange={handleOnChange}>
-                {languages.map((lang) => {
-                  return (
-                    <option key={lang.value} value={lang.value}>
-                      {lang.text}
-                    </option>
-                  );
-                })}
+                {languages.map((lang) => (
+                  <option key={lang.value} value={lang.value}>
+                    {lang.text}
+                  </option>
+                ))}
               </Dropdown>
             </div>
           </div>

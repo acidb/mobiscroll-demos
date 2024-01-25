@@ -8,19 +8,20 @@ setOptions({
 });
 
 function App() {
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         rowHeight: 'equal',
         type: 'week',
         timeCellStep: 240,
         timeLabelStep: 240,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,4)',
         end: 'dyndatetime(y,m,d,22)',
@@ -75,11 +76,12 @@ function App() {
         title: 'Event9',
         resource: 4,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -105,8 +107,9 @@ function App() {
         name: 'King’s Landing',
         color: '#ff4600',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Eventcalendar

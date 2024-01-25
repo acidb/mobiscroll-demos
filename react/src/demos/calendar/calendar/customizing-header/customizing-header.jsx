@@ -17,43 +17,37 @@ setOptions({
 });
 
 function App() {
-  const calendarHeaderCustom = () => {
-    return (
-      <>
-        <CalendarPrev className="custom-prev" />
-        <CalendarNav className="custom-nav" />
-        <CalendarNext className="custom-next" />
-      </>
-    );
-  };
-  const calendarHeaderToday = () => {
-    return (
-      <>
-        <CalendarNav />
-        <div className="custom-buttons">
-          <CalendarPrev />
-          <CalendarToday />
-          <CalendarNext />
-        </div>
-      </>
-    );
-  };
-  const [calendarType, setCalendarType] = useState('week');
-  const calendarHeaderSwitch = () => {
-    return (
-      <>
-        <CalendarNav className="custom-view-nav" />
-        <div className="custom-view">
-          <SegmentedGroup value={calendarType} onChange={changeView}>
-            <Segmented value="week" icon="material-date-range" />
-            <Segmented value="month" icon="material-event-note" />
-          </SegmentedGroup>
-        </div>
+  const calendarHeaderCustom = () => (
+    <>
+      <CalendarPrev className="custom-prev" />
+      <CalendarNav className="custom-nav" />
+      <CalendarNext className="custom-next" />
+    </>
+  );
+  const calendarHeaderToday = () => (
+    <>
+      <CalendarNav />
+      <div className="custom-buttons">
         <CalendarPrev />
+        <CalendarToday />
         <CalendarNext />
-      </>
-    );
-  };
+      </div>
+    </>
+  );
+  const [calendarType, setCalendarType] = useState('week');
+  const calendarHeaderSwitch = () => (
+    <>
+      <CalendarNav className="custom-view-nav" />
+      <div className="custom-view">
+        <SegmentedGroup value={calendarType} onChange={changeView}>
+          <Segmented value="week" icon="material-date-range" />
+          <Segmented value="month" icon="material-event-note" />
+        </SegmentedGroup>
+      </div>
+      <CalendarPrev />
+      <CalendarNext />
+    </>
+  );
   const changeView = (event) => {
     setCalendarType(event.target.value);
   };

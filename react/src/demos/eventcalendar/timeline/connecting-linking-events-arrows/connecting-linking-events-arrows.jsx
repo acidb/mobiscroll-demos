@@ -8,8 +8,8 @@ setOptions({
 });
 
 function App() {
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         id: 1,
         start: 'dyndatetime(y,m,1)',
@@ -94,19 +94,21 @@ function App() {
         title: 'Event 12',
         resource: 6,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource 1',
@@ -137,11 +139,12 @@ function App() {
         name: 'Resource 6',
         color: '#01adff',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myConnections = useMemo(() => {
-    return [
+  const myConnections = useMemo(
+    () => [
       {
         from: 1,
         to: 2,
@@ -209,8 +212,9 @@ function App() {
         color: 'pink',
         arrow: 'to',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Eventcalendar

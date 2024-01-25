@@ -15,17 +15,18 @@ function App() {
   const firstDay = useRef();
   const lastDay = useRef();
 
-  const calView = useMemo(() => {
-    return {
+  const calView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
         eventList: true,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const calendars = useMemo(() => {
-    return [
+  const calendars = useMemo(
+    () => [
       { id: 'en.french#holiday@group.v.calendar.google.com', name: 'Holidays in France', color: '#D81B60' },
       { id: 'en.german#holiday@group.v.calendar.google.com', name: 'Holidays in Germany', color: '#F4511E' },
       { id: 'en.hungarian#holiday@group.v.calendar.google.com', name: 'Holidays in Hungary', color: '#AD1457' },
@@ -33,14 +34,17 @@ function App() {
       { id: 'en.romanian#holiday@group.v.calendar.google.com', name: 'Holidays in Romania', color: '#0B8043' },
       { id: 'en.uk#holiday@group.v.calendar.google.com', name: 'Holidays in United Kingdom', color: '#3F51B5' },
       { id: 'en.usa#holiday@group.v.calendar.google.com', name: 'Holidays in United States', color: '#8E24AA' },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const calendarIds = useMemo(() => {
-    return calendars.map(function (cal) {
-      return cal.id;
-    });
-  }, [calendars]);
+  const calendarIds = useMemo(
+    () =>
+      calendars.map(function (cal) {
+        return cal.id;
+      }),
+    [calendars],
+  );
 
   const onError = useCallback((resp) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);

@@ -22,8 +22,8 @@ momentTimezone.moment = moment;
 
 function App() {
   const [timezone, setTimezone] = useState('utc');
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,7)',
         end: 'dyndatetime(y,m,d,9)',
@@ -66,11 +66,12 @@ function App() {
         title: 'Team-Building',
         resource: [1, 2, 3, 4, 5],
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -96,11 +97,12 @@ function App() {
         name: 'Resource E',
         color: '#ff4600',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const timezones = useMemo(() => {
-    return [
+  const timezones = useMemo(
+    () => [
       {
         text: 'America/Los Angeles',
         value: 'America/Los_Angeles',
@@ -137,21 +139,23 @@ function App() {
         text: 'Asia/Tokyo',
         value: 'Asia/Tokyo',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const onChange = useCallback((ev) => {
     setTimezone(ev.value);
   }, []);
 
-  const myHeader = useCallback(() => {
-    return (
+  const myHeader = useCallback(
+    () => (
       <>
         <CalendarNav />
         <div className="md-timezone-header">
@@ -161,8 +165,9 @@ function App() {
           <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={onChange} />
         </div>
       </>
-    );
-  }, [onChange, timezone, timezones]);
+    ),
+    [onChange, timezone, timezones],
+  );
 
   return (
     <Eventcalendar

@@ -83,8 +83,8 @@ function App() {
     [events, filterEvents, selected],
   );
 
-  const customWithNavButtons = useCallback(() => {
-    return (
+  const customWithNavButtons = useCallback(
+    () => (
       <>
         <CalendarNav className="md-header-filter-nav" />
         <div className="md-header-filter-controls">
@@ -107,8 +107,9 @@ function App() {
         <CalendarToday className="md-header-filter-today" />
         <CalendarNext className="md-header-filter-next" />
       </>
-    );
-  }, [filter, selected]);
+    ),
+    [filter, selected],
+  );
 
   return (
     <div>

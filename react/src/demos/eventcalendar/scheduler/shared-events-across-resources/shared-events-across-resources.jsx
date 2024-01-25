@@ -7,8 +7,8 @@ setOptions({
 });
 
 function App() {
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -17,11 +17,12 @@ function App() {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -37,8 +38,9 @@ function App() {
         name: 'John',
         color: '#e8d0ef',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
   const [tempEvent, setTempEvent] = useState(null);
   const [title, setTitle] = useState('New event');
   const [participants, setParticipants] = useState([]);
@@ -46,8 +48,8 @@ function App() {
   const [isNewEvent, setIsNewEvent] = useState(false);
   const [isOpen, setOpen] = useState(false);
 
-  const [myEvents, setEvents] = useState(() => {
-    return [
+  const [myEvents, setEvents] = useState(
+    () => [
       {
         start: 'dyndatetime(y,m,d-3,10)',
         end: 'dyndatetime(y,m,d-3,15)',
@@ -97,8 +99,9 @@ function App() {
         resource: [1, 2],
         color: '#de3d83',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const showPopup = useCallback((args) => {
     const event = args.event;
@@ -139,12 +142,10 @@ function App() {
     [myEvents],
   );
 
-  const handleExtendDefaultEvent = useCallback(() => {
-    return { color: '#4a9e42' };
-  }, []);
+  const handleExtendDefaultEvent = useCallback(() => ({ color: '#4a9e42' }), []);
 
-  const popupButtons = useMemo(() => {
-    return [
+  const popupButtons = useMemo(
+    () => [
       'cancel',
       {
         text: 'OK',
@@ -166,8 +167,9 @@ function App() {
         },
         cssClass: 'mbsc-popup-button-primary',
       },
-    ];
-  }, [isNewEvent, myEvents, participants, tempEvent, title]);
+    ],
+    [isNewEvent, myEvents, participants, tempEvent, title],
+  );
 
   const popupClose = useCallback(() => {
     if (isNewEvent) {

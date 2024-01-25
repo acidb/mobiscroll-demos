@@ -11,8 +11,8 @@ setOptions({
 momentTimezone.moment = moment;
 
 function App() {
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = React.useMemo(
+    () => [
       {
         start: 'dyndatetime(y, m, d, 7)',
         end: 'dyndatetime(y, m, d, 9)',
@@ -55,14 +55,16 @@ function App() {
         color: '#5bb7c5',
         title: 'Team-Building',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = React.useMemo(() => {
-    return {
+  const myView = React.useMemo(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

@@ -179,8 +179,8 @@ function App() {
     [calendarData, onError],
   );
 
-  const renderMyHeader = useCallback(() => {
-    return (
+  const renderMyHeader = useCallback(
+    () => (
       <>
         <CalendarNav className="md-sync-events-outlook-nav" />
         <div className="md-spinner">
@@ -212,8 +212,9 @@ function App() {
           <CalendarNext />
         </div>
       </>
-    );
-  }, [isLoggedIn, navigate, openPopup, signIn]);
+    ),
+    [isLoggedIn, navigate, openPopup, signIn],
+  );
 
   const handlePageLoading = useCallback(
     (args) => {
@@ -366,9 +367,9 @@ function App() {
         </div>
         <div className="mbsc-form-group-inset md-sync-events-outlook-inset">
           <div className="mbsc-form-group-title">My Calendars</div>
-          {myCalendars.map((cal) => {
-            return <Switch label={cal.name} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />;
-          })}
+          {myCalendars.map((cal) => (
+            <Switch label={cal.name} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+          ))}
         </div>
         <div className="mbsc-form-group-inset">
           <Button className="md-sync-events-outlook-button mbsc-button-block" onClick={signOut}>

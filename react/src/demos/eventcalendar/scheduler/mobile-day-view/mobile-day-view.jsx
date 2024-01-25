@@ -11,11 +11,12 @@ function App() {
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastText, setToastText] = useState();
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const closeToast = useCallback(() => {
     setToastOpen(false);

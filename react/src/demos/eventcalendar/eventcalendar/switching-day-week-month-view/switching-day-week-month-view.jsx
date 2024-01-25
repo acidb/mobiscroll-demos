@@ -50,8 +50,8 @@ function App() {
     setCalView(view);
   }, []);
 
-  const customWithNavButtons = useCallback(() => {
-    return (
+  const customWithNavButtons = useCallback(
+    () => (
       <>
         <CalendarNav className="cal-header-nav" />
         <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
@@ -64,8 +64,9 @@ function App() {
         <CalendarPrev className="cal-header-prev" />
         <CalendarNext className="cal-header-next" />
       </>
-    );
-  }, [changeView, view]);
+    ),
+    [changeView, view],
+  );
 
   useEffect(() => {
     getJson(

@@ -76,13 +76,14 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const myEvents = useMemo(
     () => [
@@ -108,14 +109,15 @@ function App() {
     [],
   );
 
-  const renderCustomResource = useCallback((resource) => {
-    return (
+  const renderCustomResource = useCallback(
+    (resource) => (
       <div>
         <div className="resource-name">{resource.name}</div>
         {!resource.isParent && <div className="md-resource-data-structure-title">{resource.title}</div>}
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   return <Eventcalendar view={myView} data={myEvents} resources={myResources} renderResource={renderCustomResource} />;
 }

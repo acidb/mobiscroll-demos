@@ -47,11 +47,12 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const handleEventCreateFailed = useCallback(() => {
     setToastText("Can't create event on this date");

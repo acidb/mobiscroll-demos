@@ -9,17 +9,18 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         size: 2,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -50,8 +51,9 @@ function App() {
         name: 'Gathering Field',
         color: '#8f1ed6',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   useEffect(() => {
     getJson(

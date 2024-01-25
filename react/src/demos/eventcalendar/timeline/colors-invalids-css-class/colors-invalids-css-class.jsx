@@ -174,8 +174,8 @@ const myColors = [
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         allDay: false,
         type: 'week',
@@ -184,8 +184,9 @@ function App() {
         startTime: '09:00',
         endTime: '18:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   useEffect(() => {
     getJson(

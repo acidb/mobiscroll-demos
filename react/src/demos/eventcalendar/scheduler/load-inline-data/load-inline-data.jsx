@@ -280,12 +280,13 @@ const myEvents = [
 ];
 
 function App() {
-  const myView = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       calendar: { type: 'week' },
       schedule: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

@@ -28,8 +28,8 @@ const milestones = [
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const calView = useMemo(() => {
-    return {
+  const calView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -38,11 +38,12 @@ function App() {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -61,16 +62,14 @@ function App() {
         color: '#e8d0ef',
         img: 'https://img.mobiscroll.com/demos/m2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const renderCustomDay = useCallback((args) => {
     const date = args.date;
     // const dayNr = date.getDay();
-    const task =
-      milestones.find((obj) => {
-        return +new Date(obj.date) === +date;
-      }) || {};
+    const task = milestones.find((obj) => +new Date(obj.date) === +date) || {};
 
     return (
       <div className="header-template-container">
@@ -85,14 +84,15 @@ function App() {
     );
   }, []);
 
-  const renderCustomResource = useCallback((resource) => {
-    return (
+  const renderCustomResource = useCallback(
+    (resource) => (
       <div className="header-resource-template-content">
         <img className="header-resource-avatar" src={resource.img} />
         <div className="header-resource-name">{resource.name}</div>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   useEffect(() => {
     getJson(
