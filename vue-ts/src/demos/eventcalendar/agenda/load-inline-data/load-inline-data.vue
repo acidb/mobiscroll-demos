@@ -292,13 +292,3 @@ const myView: MbscEventcalendarView = {
 <template>
   <MbscEventcalendar :view="myView" :data="myEvents" />
 </template>
-
-<style>
-/*<hidden>*/
-
-.demo-load-inline-data {
-  height: 100%;
-}
-
-/*</hidden>*/
-</style>

@@ -126,13 +126,4 @@ onMounted(() => {
 .cal-header-nav .mbsc-calendar-title.mbsc-material {
   font-size: 16px;
 }
-
-/*<hidden>*/
-
-.demo-switching-day-week-month-view,
-mbsc-page > .mbsc-page {
-  height: 100%;
-}
-
-/*</hidden>*/
 </style>

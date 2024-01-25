@@ -117,14 +117,6 @@ const myView = {
 </template>
 
 <style>
-/*<hidden>*/
-
-.demo-timeline-template {
-  height: 100%;
-}
-
-/*</hidden>*/
-
 .md-timeline-template .mbsc-schedule-event.mbsc-ltr {
   height: auto !important;
 }

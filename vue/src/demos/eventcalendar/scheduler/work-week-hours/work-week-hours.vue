@@ -80,13 +80,3 @@ onMounted(() => {
   />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>
-
-<style>
-/*<hidden>*/
-
-.demo-work-week-hours {
-  height: 100%;
-}
-
-/*</hidden>*/
-</style>

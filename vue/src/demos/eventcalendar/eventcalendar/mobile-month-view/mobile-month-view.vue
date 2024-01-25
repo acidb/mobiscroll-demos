@@ -45,13 +45,3 @@ onMounted(() => {
   <MbscEventcalendar :drag="drag" :view="myView" :data="myEvents" @event-click="handleEventClick" />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>
-
-<style>
-/*<hidden>*/
-
-.demo-mobile-month-view {
-  height: 100%;
-}
-
-/*</hidden>*/
-</style>

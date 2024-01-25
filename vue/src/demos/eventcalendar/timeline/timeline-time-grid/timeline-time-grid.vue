@@ -62,14 +62,3 @@ onMounted(() => {
 <template>
   <MbscEventcalendar :drag="drag" :view="myView" :data="myEvents" :resources="myResources" />
 </template>
-
-<style>
-/*<hidden>*/
-
-.demo-timeline-time-grid,
-.demo-timeline-time-grid .mbsc-page {
-  height: 100%;
-}
-
-/*</hidden>*/
-</style>

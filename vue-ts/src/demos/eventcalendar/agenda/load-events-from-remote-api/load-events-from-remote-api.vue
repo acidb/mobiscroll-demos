@@ -28,13 +28,3 @@ onMounted(() => {
 <template>
   <MbscEventcalendar :view="myView" :data="myEvents" />
 </template>
-
-<style>
-/*<hidden>*/
-
-.demo-load-events-from-remote-api {
-  height: 100%;
-}
-
-/*</hidden>*/
-</style>

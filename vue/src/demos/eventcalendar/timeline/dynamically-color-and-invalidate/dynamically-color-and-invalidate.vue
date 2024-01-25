@@ -281,14 +281,4 @@ function handleToastClose() {
 .dynamically-color-and-invalidate-calendar .mbsc-timeline-parent {
   height: 32px;
 }
-
-/*<hidden>*/
-
-.md-dynamically-color-and-invalidate,
-.md-dynamically-color-and-invalidate .mbsc-grid,
-.md-dynamically-color-and-invalidate .mbsc-row {
-  height: 100%;
-}
-
-/*</hidden>*/
 </style>

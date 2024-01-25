@@ -1,15 +1,3 @@
-/*<hidden>*/
-
-.demo-copy-cut-paste,
-.demo-copy-cut-paste .mbsc-page,
-.md-copy-cut-paste,
-.md-copy-cut-paste-cont,
-.md-copy-cut-paste-cont + div {
-  height: 100%;
-}
-
-/*</hidden>*/
-
 .md-copy-cut-paste .mbsc-segmented {
   width: 300px;
   margin-left: auto;

@@ -110,12 +110,4 @@ onMounted(() => {
 .md-custom-event .mbsc-material.mbsc-event-time {
   margin-top: 5px;
 }
-
-/*<hidden>*/
-
-.demo-event-content-customization {
-  height: 100%;
-}
-
-/*</hidden>*/
 </style>

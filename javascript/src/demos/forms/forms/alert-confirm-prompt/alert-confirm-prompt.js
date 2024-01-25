@@ -21,8 +21,6 @@ export default {
         message: 'Help apps determine location. This means sending anonymous location data, even when no apps are running.',
         okText: 'Agree',
         cancelText: 'Disagree',
-        cssClass: 'teszt',
-        duration: 1000000000000000,
       });
     });
 

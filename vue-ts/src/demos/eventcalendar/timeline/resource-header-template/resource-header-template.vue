@@ -91,14 +91,6 @@ onMounted(() => {
 </template>
 
 <style>
-/*<hidden>*/
-
-.demo-timeline-resource-header-template {
-  height: 100%;
-}
-
-/*</hidden>*/
-
 .md-resource-header-template .mbsc-timeline-resource-col {
   width: 230px;
 }

@@ -319,14 +319,4 @@ onMounted(() => {
   padding-top: 0;
   padding-bottom: 0;
 }
-
-/*<hidden>*/
-
-.md-bulk-operations,
-.md-bulk-operations .mbsc-grid,
-.md-bulk-operations .mbsc-row {
-  height: 100%;
-}
-
-/*</hidden>*/
 </style>
