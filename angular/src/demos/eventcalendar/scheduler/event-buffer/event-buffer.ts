@@ -124,8 +124,6 @@ export class AppComponent {
     },
   ];
 
-  selectedDate: any;
-
   view: MbscEventcalendarView = {
     schedule: {
       type: 'day',

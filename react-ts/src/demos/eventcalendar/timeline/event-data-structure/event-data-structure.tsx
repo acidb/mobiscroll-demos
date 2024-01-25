@@ -10,6 +10,8 @@ const App: React.FC = () => {
       end: 'dyndatetime(y,m,d,13)',
       title: 'General orientation',
       resource: 2,
+      bufferBefore: 20,
+      bufferAfter: 30,
     },
   ]);
 
@@ -56,6 +58,8 @@ const App: React.FC = () => {
       start: 'dyndatetime(y,m,d,15)',
       end: 'dyndatetime(y,m,d,17)',
       resource: 4,
+      bufferBefore: 20,
+      bufferAfter: 30,
       // add any property you'd like
       busy: true,
       description: 'Weekly meeting with team',

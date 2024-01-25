@@ -22,6 +22,8 @@ export class AppComponent {
       end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
       title: 'General orientation',
       color: '#35bb5a',
+      bufferBefore: 20,
+      bufferAfter: 30,
     },
   ];
 
@@ -40,6 +42,8 @@ export class AppComponent {
       color: '#56ca70',
       start: new Date(2018, 11, 21, 13),
       end: new Date(2018, 11, 21, 14),
+      bufferBefore: 20,
+      bufferAfter: 30,
       // add any property you'd like
       busy: true,
       description: 'Weekly meeting with team',

@@ -19,6 +19,8 @@ export default {
           end: 'dyndatetime(y,m,d,13)',
           title: 'General orientation',
           resource: 2,
+          bufferBefore: 20,
+          bufferAfter: 30,
         },
       ],
       resources: [
@@ -57,6 +59,8 @@ export default {
         start: 'dyndatetime(y,m,d,15)',
         end: 'dyndatetime(y,m,d,17)',
         resource: 4,
+        bufferBefore: 20,
+        bufferAfter: 30,
         // add any property you'd like
         busy: true,
         description: 'Weekly meeting with team',
