@@ -174,7 +174,7 @@ export default {
       }
 
       $.getJSON(
-        'http://trial.dev.mobiscroll.com/multi-events/?callback=?',
+        'https://trial.dev.mobiscroll.com/multi-events/?callback=?',
         function (events) {
           inst.setEvents(events);
         },
