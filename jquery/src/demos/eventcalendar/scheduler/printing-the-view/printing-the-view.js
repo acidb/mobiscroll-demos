@@ -1,6 +1,6 @@
-import $ from 'jquery';
 import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { print } from '@mobiscroll/print';
+import $ from 'jquery';
 
 var mobiscroll = m;
 mobiscroll.print = print;

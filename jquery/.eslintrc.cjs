@@ -11,6 +11,8 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'import/order': ['warn', { alphabetize: { order: 'asc', caseInsensitive: true } }],
     'one-var': ['error', 'never'],
+    'sort-imports': ['warn', { ignoreCase: true, ignoreDeclarationSort: true }],
   },
 };

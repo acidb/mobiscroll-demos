@@ -1,5 +1,5 @@
-import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { outlookCalendarSync as outlookSync } from '@mobiscroll/calendar-integration';
+import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 var mobiscroll = m;
 mobiscroll.outlookCalendarSync = outlookSync;

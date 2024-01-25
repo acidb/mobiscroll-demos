@@ -1,6 +1,6 @@
-import $ from 'jquery';
-import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
