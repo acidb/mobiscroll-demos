@@ -1,5 +1,5 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { setOptions, MbscDatepicker /* localeImport */ } from '@mobiscroll/angular';
+import { MbscDatepicker, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,

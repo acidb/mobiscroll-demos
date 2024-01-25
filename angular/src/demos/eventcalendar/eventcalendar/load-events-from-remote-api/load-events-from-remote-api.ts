@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MbscEventcalendarOptions, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendarOptions /* localeImport */ } from '@mobiscroll/angular';
 
 @Component({
   selector: 'app-eventcalendar-load-events-from-remote-api',

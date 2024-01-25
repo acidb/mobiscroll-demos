@@ -4,9 +4,9 @@ import {
   MbscEventcalendarView,
   MbscEventClickEvent,
   MbscEventCreatedEvent,
-  MbscPopupOptions,
   MbscPopup,
   MbscPopupButton,
+  MbscPopupOptions,
   MbscPopupPredefinedButton,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';

@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
-  MbscEventcalendarOptions,
   MbscCalendarEvent,
+  MbscEventcalendarOptions,
   momentTimezone,
   Notifications,
   setOptions /* localeImport */,

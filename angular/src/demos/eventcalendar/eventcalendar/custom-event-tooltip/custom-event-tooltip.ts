@@ -3,8 +3,8 @@ import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
-  MbscPopupOptions,
   MbscPopup,
+  MbscPopupOptions,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
