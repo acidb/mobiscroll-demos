@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -208,6 +209,7 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div class="demo-inline" mbsc-page>
@@ -228,6 +230,7 @@ export default {
 </div>
 <!--/hidden-->
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-drag-drop-calendar-border {
     border-right: 3px dashed #e4e4e4;

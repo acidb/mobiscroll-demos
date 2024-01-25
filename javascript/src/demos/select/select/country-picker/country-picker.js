@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -32,12 +33,14 @@ export default {
       inst.setOptions({ data: countries });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <label>
     Countries
     <input mbsc-input id="demo-country-picker" data-dropdown="true" data-input-style="box" data-label-style="stacked" placeholder="Please select..." />
 </label>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-country-picker-item {
     position: relative;

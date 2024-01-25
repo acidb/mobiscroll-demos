@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     var calInst = mobiscroll.eventcalendar('#demo-localization', {
       // theme,
@@ -25,6 +26,7 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="md-localization">
     <div class="mbsc-grid">
@@ -77,6 +79,7 @@ export default {
     <div id="demo-localization"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-localization span.flag {
     min-width: 22px;

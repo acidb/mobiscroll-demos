@@ -315,9 +315,9 @@ import SelectSettingValuesDefaults from './src/demos/select/select/setting-value
 import SelectSingleSelect from './src/demos/select/select/single-select/single-select';
 import SelectThemesIosMaterialWindows from './src/demos/select/select/themes-ios-material-windows/themes-ios-material-windows';
 
-const router = new Router();
+var router = new Router();
 
-const app = document.getElementById('app');
+var app = document.getElementById('app');
 
 function loadPage(page) {
   app.innerHTML = "<div id='javascript-demo-placeholder'>" + page.markup + '</div>';
@@ -337,942 +337,942 @@ function loadPage(page) {
 }
 
 router
-  .on('/', () => {
+  .on('/', function () {
     loadPage(HomePage);
   })
-  .on('/datetime/date-picker', () => {
+  .on('/datetime/date-picker', function () {
     loadPage(DatetimeDatePicker);
   })
-  .on('/datetime/disabled-invalid-values', () => {
+  .on('/datetime/disabled-invalid-values', function () {
     loadPage(DatetimeDisabledInvalidValues);
   })
-  .on('/datetime/time-picker', () => {
+  .on('/datetime/time-picker', function () {
     loadPage(DatetimeTimePicker);
   })
-  .on('/datetime/month-year-picker', () => {
+  .on('/datetime/month-year-picker', function () {
     loadPage(DatetimeMonthYearPicker);
   })
-  .on('/datetime/date-time-picker', () => {
+  .on('/datetime/date-time-picker', function () {
     loadPage(DatetimeDateTimePicker);
   })
-  .on('/datetime/event-hooks', () => {
+  .on('/datetime/event-hooks', function () {
     loadPage(DatetimeEventHooks);
   })
-  .on('/datetime/time-value-steps', () => {
+  .on('/datetime/time-value-steps', function () {
     loadPage(DatetimeTimeValueSteps);
   })
-  .on('/datetime/formatting-return-values', () => {
+  .on('/datetime/formatting-return-values', function () {
     loadPage(DatetimeFormattingReturnValues);
   })
-  .on('/datetime/setting-values-defaults', () => {
+  .on('/datetime/setting-values-defaults', function () {
     loadPage(DatetimeSettingValuesDefaults);
   })
-  .on('/datetime/date-object-ISO-8601-moment', () => {
+  .on('/datetime/date-object-ISO-8601-moment', function () {
     loadPage(DatetimeDateObjectISO8601Moment);
   })
-  .on('/datetime/themes-ios-material-windows', () => {
+  .on('/datetime/themes-ios-material-windows', function () {
     loadPage(DatetimeThemesIosMaterialWindows);
   })
-  .on('/datetime/mobile-desktop-usage', () => {
+  .on('/datetime/mobile-desktop-usage', function () {
     loadPage(DatetimeMobileDesktopUsage);
   })
-  .on('/datetime/localization', () => {
+  .on('/datetime/localization', function () {
     loadPage(DatetimeLocalization);
   })
-  .on('/datetime/gregorian-jalali-hijri', () => {
+  .on('/datetime/gregorian-jalali-hijri', function () {
     loadPage(DatetimeGregorianJalaliHijri);
   })
-  .on('/datetime/responsive', () => {
+  .on('/datetime/responsive', function () {
     loadPage(DatetimeResponsive);
   })
-  .on('/datetime/mobile-desktop-display', () => {
+  .on('/datetime/mobile-desktop-display', function () {
     loadPage(DatetimeMobileDesktopDisplay);
   })
-  .on('/datetime/min-max-restrictions', () => {
+  .on('/datetime/min-max-restrictions', function () {
     loadPage(DatetimeMinMaxRestrictions);
   })
-  .on('/datetime/single-select', () => {
+  .on('/datetime/single-select', function () {
     loadPage(DatetimeSingleSelect);
   })
-  .on('/datetime/recurring-values', () => {
+  .on('/datetime/recurring-values', function () {
     loadPage(DatetimeRecurringValues);
   })
-  .on('/datetime/range-select', () => {
+  .on('/datetime/range-select', function () {
     loadPage(DatetimeRangeSelect);
   })
-  .on('/datetime/usage-on-input-or-inline', () => {
+  .on('/datetime/usage-on-input-or-inline', function () {
     loadPage(DatetimeUsageOnInputOrInline);
   })
-  .on('/datetime/rtl-right-to-left', () => {
+  .on('/datetime/rtl-right-to-left', function () {
     loadPage(DatetimeRtlRightToLeft);
   })
-  .on('/datetime/setting-the-picker-timezone', () => {
+  .on('/datetime/setting-the-picker-timezone', function () {
     loadPage(DatetimeSettingThePickerTimezone);
   })
-  .on('/calendar/date-time-picker', () => {
+  .on('/calendar/date-time-picker', function () {
     loadPage(CalendarDateTimePicker);
   })
-  .on('/calendar/event-hooks', () => {
+  .on('/calendar/event-hooks', function () {
     loadPage(CalendarEventHooks);
   })
-  .on('/calendar/week-view', () => {
+  .on('/calendar/week-view', function () {
     loadPage(CalendarWeekView);
   })
-  .on('/calendar/dots-colors-labels', () => {
+  .on('/calendar/dots-colors-labels', function () {
     loadPage(CalendarDotsColorsLabels);
   })
-  .on('/calendar/formatting-return-values', () => {
+  .on('/calendar/formatting-return-values', function () {
     loadPage(CalendarFormattingReturnValues);
   })
-  .on('/calendar/disabled-invalid-values', () => {
+  .on('/calendar/disabled-invalid-values', function () {
     loadPage(CalendarDisabledInvalidValues);
   })
-  .on('/calendar/setting-values-defaults', () => {
+  .on('/calendar/setting-values-defaults', function () {
     loadPage(CalendarSettingValuesDefaults);
   })
-  .on('/calendar/date-object-ISO-8601-moment', () => {
+  .on('/calendar/date-object-ISO-8601-moment', function () {
     loadPage(CalendarDateObjectISO8601Moment);
   })
-  .on('/calendar/themes-ios-material-windows', () => {
+  .on('/calendar/themes-ios-material-windows', function () {
     loadPage(CalendarThemesIosMaterialWindows);
   })
-  .on('/calendar/week-to-month', () => {
+  .on('/calendar/week-to-month', function () {
     loadPage(CalendarWeekToMonth);
   })
-  .on('/calendar/localization', () => {
+  .on('/calendar/localization', function () {
     loadPage(CalendarLocalization);
   })
-  .on('/calendar/mobile-desktop-usage', () => {
+  .on('/calendar/mobile-desktop-usage', function () {
     loadPage(CalendarMobileDesktopUsage);
   })
-  .on('/calendar/gregorian-jalali-hijri', () => {
+  .on('/calendar/gregorian-jalali-hijri', function () {
     loadPage(CalendarGregorianJalaliHijri);
   })
-  .on('/calendar/responsive', () => {
+  .on('/calendar/responsive', function () {
     loadPage(CalendarResponsive);
   })
-  .on('/calendar/mobile-desktop-display', () => {
+  .on('/calendar/mobile-desktop-display', function () {
     loadPage(CalendarMobileDesktopDisplay);
   })
-  .on('/calendar/date-picker', () => {
+  .on('/calendar/date-picker', function () {
     loadPage(CalendarDatePicker);
   })
-  .on('/calendar/multiple-months', () => {
+  .on('/calendar/multiple-months', function () {
     loadPage(CalendarMultipleMonths);
   })
-  .on('/calendar/month-change-direction-week-numbers-outer-days', () => {
+  .on('/calendar/month-change-direction-week-numbers-outer-days', function () {
     loadPage(CalendarMonthChangeDirectionWeekNumbersOuterDays);
   })
-  .on('/calendar/min-max-restrictions', () => {
+  .on('/calendar/min-max-restrictions', function () {
     loadPage(CalendarMinMaxRestrictions);
   })
-  .on('/calendar/single-select', () => {
+  .on('/calendar/single-select', function () {
     loadPage(CalendarSingleSelect);
   })
-  .on('/calendar/multiple-select', () => {
+  .on('/calendar/multiple-select', function () {
     loadPage(CalendarMultipleSelect);
   })
-  .on('/calendar/recurring-values', () => {
+  .on('/calendar/recurring-values', function () {
     loadPage(CalendarRecurringValues);
   })
-  .on('/calendar/customizing-header', () => {
+  .on('/calendar/customizing-header', function () {
     loadPage(CalendarCustomizingHeader);
   })
-  .on('/calendar/range-select', () => {
+  .on('/calendar/range-select', function () {
     loadPage(CalendarRangeSelect);
   })
-  .on('/calendar/half-day-styling', () => {
+  .on('/calendar/half-day-styling', function () {
     loadPage(CalendarHalfDayStyling);
   })
-  .on('/calendar/customize-marked-day-shapes', () => {
+  .on('/calendar/customize-marked-day-shapes', function () {
     loadPage(CalendarCustomizeMarkedDayShapes);
   })
-  .on('/calendar/usage-on-input-or-inline', () => {
+  .on('/calendar/usage-on-input-or-inline', function () {
     loadPage(CalendarUsageOnInputOrInline);
   })
-  .on('/calendar/rtl-right-to-left', () => {
+  .on('/calendar/rtl-right-to-left', function () {
     loadPage(CalendarRtlRightToLeft);
   })
-  .on('/calendar/appointment-booking', () => {
+  .on('/calendar/appointment-booking', function () {
     loadPage(CalendarAppointmentBooking);
   })
-  .on('/calendar/activity-calendar', () => {
+  .on('/calendar/activity-calendar', function () {
     loadPage(CalendarActivityCalendar);
   })
-  .on('/calendar/week-select', () => {
+  .on('/calendar/week-select', function () {
     loadPage(CalendarWeekSelect);
   })
-  .on('/calendar/quarter-year-view', () => {
+  .on('/calendar/quarter-year-view', function () {
     loadPage(CalendarQuarterYearView);
   })
-  .on('/calendar/setting-the-picker-timezone', () => {
+  .on('/calendar/setting-the-picker-timezone', function () {
     loadPage(CalendarSettingThePickerTimezone);
   })
-  .on('/select/multiple-select', () => {
+  .on('/select/multiple-select', function () {
     loadPage(SelectMultipleSelect);
   })
-  .on('/select/multiple-lines', () => {
+  .on('/select/multiple-lines', function () {
     loadPage(SelectMultipleLines);
   })
-  .on('/select/country-picker', () => {
+  .on('/select/country-picker', function () {
     loadPage(SelectCountryPicker);
   })
-  .on('/select/event-hooks', () => {
+  .on('/select/event-hooks', function () {
     loadPage(SelectEventHooks);
   })
-  .on('/select/themes-ios-material-windows', () => {
+  .on('/select/themes-ios-material-windows', function () {
     loadPage(SelectThemesIosMaterialWindows);
   })
-  .on('/select/setting-values-defaults', () => {
+  .on('/select/setting-values-defaults', function () {
     loadPage(SelectSettingValuesDefaults);
   })
-  .on('/select/mobile-desktop-usage', () => {
+  .on('/select/mobile-desktop-usage', function () {
     loadPage(SelectMobileDesktopUsage);
   })
-  .on('/select/group-options', () => {
+  .on('/select/group-options', function () {
     loadPage(SelectGroupOptions);
   })
-  .on('/select/localization', () => {
+  .on('/select/localization', function () {
     loadPage(SelectLocalization);
   })
-  .on('/select/mobile-desktop-display', () => {
+  .on('/select/mobile-desktop-display', function () {
     loadPage(SelectMobileDesktopDisplay);
   })
-  .on('/select/single-select', () => {
+  .on('/select/single-select', function () {
     loadPage(SelectSingleSelect);
   })
-  .on('/select/responsive', () => {
+  .on('/select/responsive', function () {
     loadPage(SelectResponsive);
   })
-  .on('/select/rtl-right-to-left', () => {
+  .on('/select/rtl-right-to-left', function () {
     loadPage(SelectRtlRightToLeft);
   })
-  .on('/select/disabled-invalid-values', () => {
+  .on('/select/disabled-invalid-values', function () {
     loadPage(SelectDisabledInvalidValues);
   })
-  .on('/select/filtering-values', () => {
+  .on('/select/filtering-values', function () {
     loadPage(SelectFilteringValues);
   })
-  .on('/select/data-sources', () => {
+  .on('/select/data-sources', function () {
     loadPage(SelectDataSources);
   })
-  .on('/select/linked-hierarchical-pickers', () => {
+  .on('/select/linked-hierarchical-pickers', function () {
     loadPage(SelectLinkedHierarchicalPickers);
   })
-  .on('/select/item-templating', () => {
+  .on('/select/item-templating', function () {
     loadPage(SelectItemTemplating);
   })
-  .on('/select/image-text', () => {
+  .on('/select/image-text', function () {
     loadPage(SelectImageText);
   })
-  .on('/range/disabled-invalid-values', () => {
+  .on('/range/disabled-invalid-values', function () {
     loadPage(RangeDisabledInvalidValues);
   })
-  .on('/range/flight-booking', () => {
+  .on('/range/flight-booking', function () {
     loadPage(RangeFlightBooking);
   })
-  .on('/range/presets', () => {
+  .on('/range/presets', function () {
     loadPage(RangePresets);
   })
-  .on('/range/event-hooks', () => {
+  .on('/range/event-hooks', function () {
     loadPage(RangeEventHooks);
   })
-  .on('/range/dots-colors-labels', () => {
+  .on('/range/dots-colors-labels', function () {
     loadPage(RangeDotsColorsLabels);
   })
-  .on('/range/date-object-ISO-8601-moment', () => {
+  .on('/range/date-object-ISO-8601-moment', function () {
     loadPage(RangeDateObjectISO8601Moment);
   })
-  .on('/range/themes-ios-material-windows', () => {
+  .on('/range/themes-ios-material-windows', function () {
     loadPage(RangeThemesIosMaterialWindows);
   })
-  .on('/range/gregorian-jalali-hijri', () => {
+  .on('/range/gregorian-jalali-hijri', function () {
     loadPage(RangeGregorianJalaliHijri);
   })
-  .on('/range/mobile-desktop-usage', () => {
+  .on('/range/mobile-desktop-usage', function () {
     loadPage(RangeMobileDesktopUsage);
   })
-  .on('/range/responsive', () => {
+  .on('/range/responsive', function () {
     loadPage(RangeResponsive);
   })
-  .on('/range/mobile-desktop-display', () => {
+  .on('/range/mobile-desktop-display', function () {
     loadPage(RangeMobileDesktopDisplay);
   })
-  .on('/range/min-max-restrictions', () => {
+  .on('/range/min-max-restrictions', function () {
     loadPage(RangeMinMaxRestrictions);
   })
-  .on('/range/calendar-scroller-dropdown', () => {
+  .on('/range/calendar-scroller-dropdown', function () {
     loadPage(RangeCalendarScrollerDropdown);
   })
-  .on('/range/usage-on-input-or-inline', () => {
+  .on('/range/usage-on-input-or-inline', function () {
     loadPage(RangeUsageOnInputOrInline);
   })
-  .on('/range/date-range', () => {
+  .on('/range/date-range', function () {
     loadPage(RangeDateRange);
   })
-  .on('/range/time-range', () => {
+  .on('/range/time-range', function () {
     loadPage(RangeTimeRange);
   })
-  .on('/range/date-time-range', () => {
+  .on('/range/date-time-range', function () {
     loadPage(RangeDateTimeRange);
   })
-  .on('/range/week-month-view-scrolling-direction', () => {
+  .on('/range/week-month-view-scrolling-direction', function () {
     loadPage(RangeWeekMonthViewScrollingDirection);
   })
-  .on('/range/formatting-return-values', () => {
+  .on('/range/formatting-return-values', function () {
     loadPage(RangeFormattingReturnValues);
   })
-  .on('/range/customizing-labels-selection', () => {
+  .on('/range/customizing-labels-selection', function () {
     loadPage(RangeCustomizingLabelsSelection);
   })
-  .on('/range/min-max-length', () => {
+  .on('/range/min-max-length', function () {
     loadPage(RangeMinMaxLength);
   })
-  .on('/range/recurring-values', () => {
+  .on('/range/recurring-values', function () {
     loadPage(RangeRecurringValues);
   })
-  .on('/range/half-day-styling', () => {
+  .on('/range/half-day-styling', function () {
     loadPage(RangeHalfDayStyling);
   })
-  .on('/range/customize-marked-day-shapes', () => {
+  .on('/range/customize-marked-day-shapes', function () {
     loadPage(RangeCustomizeMarkedDayShapes);
   })
-  .on('/range/localization', () => {
+  .on('/range/localization', function () {
     loadPage(RangeLocalization);
   })
-  .on('/range/adding-event-start-end', () => {
+  .on('/range/adding-event-start-end', function () {
     loadPage(RangeAddingEventStartEnd);
   })
-  .on('/range/rtl-right-to-left', () => {
+  .on('/range/rtl-right-to-left', function () {
     loadPage(RangeRtlRightToLeft);
   })
-  .on('/range/date-filtering-with-predefined-ranges', () => {
+  .on('/range/date-filtering-with-predefined-ranges', function () {
     loadPage(RangeDateFilteringWithPredefinedRanges);
   })
-  .on('/range/book-rental-months-ahead', () => {
+  .on('/range/book-rental-months-ahead', function () {
     loadPage(RangeBookRentalMonthsAhead);
   })
-  .on('/range/setting-the-picker-timezone', () => {
+  .on('/range/setting-the-picker-timezone', function () {
     loadPage(RangeSettingThePickerTimezone);
   })
-  .on('/alerts-notifications/alert', () => {
+  .on('/alerts-notifications/alert', function () {
     loadPage(AlertsNotificationsAlert);
   })
-  .on('/alerts-notifications/notifications', () => {
+  .on('/alerts-notifications/notifications', function () {
     loadPage(AlertsNotificationsNotifications);
   })
-  .on('/forms/mobile', () => {
+  .on('/forms/mobile', function () {
     loadPage(FormsMobile);
   })
-  .on('/forms/responsive', () => {
+  .on('/forms/responsive', function () {
     loadPage(FormsResponsive);
   })
-  .on('/forms/themes-ios-material-windows', () => {
+  .on('/forms/themes-ios-material-windows', function () {
     loadPage(FormsThemesIosMaterialWindows);
   })
-  .on('/forms/desktop', () => {
+  .on('/forms/desktop', function () {
     loadPage(FormsDesktop);
   })
-  .on('/forms/popup', () => {
+  .on('/forms/popup', function () {
     loadPage(FormsPopup);
   })
-  .on('/forms/alert-confirm-prompt', () => {
+  .on('/forms/alert-confirm-prompt', function () {
     loadPage(FormsAlertConfirmPrompt);
   })
-  .on('/forms/notifications', () => {
+  .on('/forms/notifications', function () {
     loadPage(FormsNotifications);
   })
-  .on('/forms/buttons', () => {
+  .on('/forms/buttons', function () {
     loadPage(FormsButtons);
   })
-  .on('/forms/segmented', () => {
+  .on('/forms/segmented', function () {
     loadPage(FormsSegmented);
   })
-  .on('/forms/stepper', () => {
+  .on('/forms/stepper', function () {
     loadPage(FormsStepper);
   })
-  .on('/forms/button-segmented-stepper-colors', () => {
+  .on('/forms/button-segmented-stepper-colors', function () {
     loadPage(FormsButtonSegmentedStepperColors);
   })
-  .on('/forms/inputs-text-areas-date-fields', () => {
+  .on('/forms/inputs-text-areas-date-fields', function () {
     loadPage(FormsInputsTextAreasDateFields);
   })
-  .on('/forms/input-label-types', () => {
+  .on('/forms/input-label-types', function () {
     loadPage(FormsInputLabelTypes);
   })
-  .on('/forms/checkbox', () => {
+  .on('/forms/checkbox', function () {
     loadPage(FormsCheckbox);
   })
-  .on('/forms/switch', () => {
+  .on('/forms/switch', function () {
     loadPage(FormsSwitch);
   })
-  .on('/forms/radio-button', () => {
+  .on('/forms/radio-button', function () {
     loadPage(FormsRadioButton);
   })
-  .on('/eventcalendar/event-hooks', () => {
+  .on('/eventcalendar/event-hooks', function () {
     loadPage(EventcalendarEventHooks);
   })
-  .on('/eventcalendar/load-events-from-remote-api', () => {
+  .on('/eventcalendar/load-events-from-remote-api', function () {
     loadPage(EventcalendarLoadEventsFromRemoteApi);
   })
-  .on('/eventcalendar/desktop-month-view', () => {
+  .on('/eventcalendar/desktop-month-view', function () {
     loadPage(EventcalendarDesktopMonthView);
   })
-  .on('/eventcalendar/load-events-on-demand', () => {
+  .on('/eventcalendar/load-events-on-demand', function () {
     loadPage(EventcalendarLoadEventsOnDemand);
   })
-  .on('/eventcalendar/mobile-month-view', () => {
+  .on('/eventcalendar/mobile-month-view', function () {
     loadPage(EventcalendarMobileMonthView);
   })
-  .on('/eventcalendar/month-week-view', () => {
+  .on('/eventcalendar/month-week-view', function () {
     loadPage(EventcalendarMonthWeekView);
   })
-  .on('/eventcalendar/date-object-ISO-8601-moment', () => {
+  .on('/eventcalendar/date-object-ISO-8601-moment', function () {
     loadPage(EventcalendarDateObjectISO8601Moment);
   })
-  .on('/eventcalendar/switching-day-week-month-view', () => {
+  .on('/eventcalendar/switching-day-week-month-view', function () {
     loadPage(EventcalendarSwitchingDayWeekMonthView);
   })
-  .on('/eventcalendar/responsive-month-view', () => {
+  .on('/eventcalendar/responsive-month-view', function () {
     loadPage(EventcalendarResponsiveMonthView);
   })
-  .on('/eventcalendar/event-popover', () => {
+  .on('/eventcalendar/event-popover', function () {
     loadPage(EventcalendarEventPopover);
   })
-  .on('/eventcalendar/localization', () => {
+  .on('/eventcalendar/localization', function () {
     loadPage(EventcalendarLocalization);
   })
-  .on('/eventcalendar/event-labels', () => {
+  .on('/eventcalendar/event-labels', function () {
     loadPage(EventcalendarEventLabels);
   })
-  .on('/eventcalendar/gregorian-jalali-hijri', () => {
+  .on('/eventcalendar/gregorian-jalali-hijri', function () {
     loadPage(EventcalendarGregorianJalaliHijri);
   })
-  .on('/eventcalendar/event-data-structure', () => {
+  .on('/eventcalendar/event-data-structure', function () {
     loadPage(EventcalendarEventDataStructure);
   })
-  .on('/eventcalendar/themes-ios-material-windows', () => {
+  .on('/eventcalendar/themes-ios-material-windows', function () {
     loadPage(EventcalendarThemesIosMaterialWindows);
   })
-  .on('/eventcalendar/recurring-events', () => {
+  .on('/eventcalendar/recurring-events', function () {
     loadPage(EventcalendarRecurringEvents);
   })
-  .on('/eventcalendar/load-events-from-google-calendar', () => {
+  .on('/eventcalendar/load-events-from-google-calendar', function () {
     loadPage(EventcalendarLoadEventsFromGoogleCalendar);
   })
-  .on('/eventcalendar/customize-event-popover', () => {
+  .on('/eventcalendar/customize-event-popover', function () {
     loadPage(EventcalendarCustomizeEventPopover);
   })
-  .on('/eventcalendar/customize-label-look-and-feel', () => {
+  .on('/eventcalendar/customize-label-look-and-feel', function () {
     loadPage(EventcalendarCustomizeLabelLookAndFeel);
   })
-  .on('/eventcalendar/customizing-header', () => {
+  .on('/eventcalendar/customizing-header', function () {
     loadPage(EventcalendarCustomizingHeader);
   })
-  .on('/eventcalendar/resource-filtering-in-header', () => {
+  .on('/eventcalendar/resource-filtering-in-header', function () {
     loadPage(EventcalendarResourceFilteringInHeader);
   })
-  .on('/eventcalendar/load-inline-data', () => {
+  .on('/eventcalendar/load-inline-data', function () {
     loadPage(EventcalendarLoadInlineData);
   })
-  .on('/eventcalendar/move-resize-drag-drop-to-create-events', () => {
+  .on('/eventcalendar/move-resize-drag-drop-to-create-events', function () {
     loadPage(EventcalendarMoveResizeDragDropToCreateEvents);
   })
-  .on('/eventcalendar/create-read-update-delete-CRUD', () => {
+  .on('/eventcalendar/create-read-update-delete-CRUD', function () {
     loadPage(EventcalendarCreateReadUpdateDeleteCRUD);
   })
-  .on('/eventcalendar/blocked-days-ranges', () => {
+  .on('/eventcalendar/blocked-days-ranges', function () {
     loadPage(EventcalendarBlockedDaysRanges);
   })
-  .on('/eventcalendar/external-drag-drop-schedule-unschedule', () => {
+  .on('/eventcalendar/external-drag-drop-schedule-unschedule', function () {
     loadPage(EventcalendarExternalDragDropScheduleUnschedule);
   })
-  .on('/eventcalendar/external-event-presets', () => {
+  .on('/eventcalendar/external-event-presets', function () {
     loadPage(EventcalendarExternalEventPresets);
   })
-  .on('/eventcalendar/colored-cell-background', () => {
+  .on('/eventcalendar/colored-cell-background', function () {
     loadPage(EventcalendarColoredCellBackground);
   })
-  .on('/eventcalendar/custom-event-sort', () => {
+  .on('/eventcalendar/custom-event-sort', function () {
     loadPage(EventcalendarCustomEventSort);
   })
-  .on('/eventcalendar/setting-the-timezone', () => {
+  .on('/eventcalendar/setting-the-timezone', function () {
     loadPage(EventcalendarSettingTheTimezone);
   })
-  .on('/eventcalendar/multiple-timezone-support', () => {
+  .on('/eventcalendar/multiple-timezone-support', function () {
     loadPage(EventcalendarMultipleTimezoneSupport);
   })
-  .on('/eventcalendar/recurring-event-add-edit-dialog', () => {
+  .on('/eventcalendar/recurring-event-add-edit-dialog', function () {
     loadPage(EventcalendarRecurringEventAddEditDialog);
   })
-  .on('/eventcalendar/quarter-year-view', () => {
+  .on('/eventcalendar/quarter-year-view', function () {
     loadPage(EventcalendarQuarterYearView);
   })
-  .on('/eventcalendar/custom-event-tooltip', () => {
+  .on('/eventcalendar/custom-event-tooltip', function () {
     loadPage(EventcalendarCustomEventTooltip);
   })
-  .on('/eventcalendar/printing-the-view', () => {
+  .on('/eventcalendar/printing-the-view', function () {
     loadPage(EventcalendarPrintingTheView);
   })
-  .on('/eventcalendar/show-more-all-labels', () => {
+  .on('/eventcalendar/show-more-all-labels', function () {
     loadPage(EventcalendarShowMoreAllLabels);
   })
-  .on('/eventcalendar/sync-events-google-calendar', () => {
+  .on('/eventcalendar/sync-events-google-calendar', function () {
     loadPage(EventcalendarSyncEventsGoogleCalendar);
   })
-  .on('/eventcalendar/sync-events-outlook-calendar', () => {
+  .on('/eventcalendar/sync-events-outlook-calendar', function () {
     loadPage(EventcalendarSyncEventsOutlookCalendar);
   })
-  .on('/eventcalendar/disallow-past-event-creation', () => {
+  .on('/eventcalendar/disallow-past-event-creation', function () {
     loadPage(EventcalendarDisallowPastEventCreation);
   })
-  .on('/eventcalendar/event-bulk-actions-edit-delete-update', () => {
+  .on('/eventcalendar/event-bulk-actions-edit-delete-update', function () {
     loadPage(EventcalendarEventBulkActionsEditDeleteUpdate);
   })
-  .on('/eventcalendar/cut-copy-paste-events-between-calendars', () => {
+  .on('/eventcalendar/cut-copy-paste-events-between-calendars', function () {
     loadPage(EventcalendarCutCopyPasteEventsBetweenCalendars);
   })
-  .on('/eventcalendar/searching-events-in-popup', () => {
+  .on('/eventcalendar/searching-events-in-popup', function () {
     loadPage(EventcalendarSearchingEventsInPopup);
   })
-  .on('/eventcalendar/searching-events-in-sidebar', () => {
+  .on('/eventcalendar/searching-events-in-sidebar', function () {
     loadPage(EventcalendarSearchingEventsInSidebar);
   })
-  .on('/eventcalendar/conditional-move-resize', () => {
+  .on('/eventcalendar/conditional-move-resize', function () {
     loadPage(EventcalendarConditionalMoveResize);
   })
-  .on('/eventcalendar/drag-drop-between-calendar-instances', () => {
+  .on('/eventcalendar/drag-drop-between-calendar-instances', function () {
     loadPage(EventcalendarDragDropBetweenCalendarInstances);
   })
-  .on('/eventcalendar/prevent-double-booking-events', () => {
+  .on('/eventcalendar/prevent-double-booking-events', function () {
     loadPage(EventcalendarPreventDoubleBookingEvents);
   })
-  .on('/scheduler/mobile-day-view', () => {
+  .on('/scheduler/mobile-day-view', function () {
     loadPage(SchedulerMobileDayView);
   })
-  .on('/scheduler/desktop-day-view', () => {
+  .on('/scheduler/desktop-day-view', function () {
     loadPage(SchedulerDesktopDayView);
   })
-  .on('/scheduler/desktop-week-view', () => {
+  .on('/scheduler/desktop-week-view', function () {
     loadPage(SchedulerDesktopWeekView);
   })
-  .on('/scheduler/mobile-week-view', () => {
+  .on('/scheduler/mobile-week-view', function () {
     loadPage(SchedulerMobileWeekView);
   })
-  .on('/scheduler/responsive-day-week-schedule', () => {
+  .on('/scheduler/responsive-day-week-schedule', function () {
     loadPage(SchedulerResponsiveDayWeekSchedule);
   })
-  .on('/scheduler/switching-calendar-scheduler-agenda', () => {
+  .on('/scheduler/switching-calendar-scheduler-agenda', function () {
     loadPage(SchedulerSwitchingCalendarSchedulerAgenda);
   })
-  .on('/scheduler/event-data-structure', () => {
+  .on('/scheduler/event-data-structure', function () {
     loadPage(SchedulerEventDataStructure);
   })
-  .on('/scheduler/load-events-on-demand', () => {
+  .on('/scheduler/load-events-on-demand', function () {
     loadPage(SchedulerLoadEventsOnDemand);
   })
-  .on('/scheduler/load-events-from-remote-api', () => {
+  .on('/scheduler/load-events-from-remote-api', function () {
     loadPage(SchedulerLoadEventsFromRemoteApi);
   })
-  .on('/scheduler/gregorian-jalali-hijri', () => {
+  .on('/scheduler/gregorian-jalali-hijri', function () {
     loadPage(SchedulerGregorianJalaliHijri);
   })
-  .on('/scheduler/event-hooks', () => {
+  .on('/scheduler/event-hooks', function () {
     loadPage(SchedulerEventHooks);
   })
-  .on('/scheduler/localization', () => {
+  .on('/scheduler/localization', function () {
     loadPage(SchedulerLocalization);
   })
-  .on('/scheduler/themes-ios-material-windows', () => {
+  .on('/scheduler/themes-ios-material-windows', function () {
     loadPage(SchedulerThemesIosMaterialWindows);
   })
-  .on('/scheduler/recurring-events', () => {
+  .on('/scheduler/recurring-events', function () {
     loadPage(SchedulerRecurringEvents);
   })
-  .on('/scheduler/load-events-from-google-calendar', () => {
+  .on('/scheduler/load-events-from-google-calendar', function () {
     loadPage(SchedulerLoadEventsFromGoogleCalendar);
   })
-  .on('/scheduler/date-object-ISO-8601-moment', () => {
+  .on('/scheduler/date-object-ISO-8601-moment', function () {
     loadPage(SchedulerDateObjectISO8601Moment);
   })
-  .on('/scheduler/customizing-events', () => {
+  .on('/scheduler/customizing-events', function () {
     loadPage(SchedulerCustomizingEvents);
   })
-  .on('/scheduler/resource-filtering-in-header', () => {
+  .on('/scheduler/resource-filtering-in-header', function () {
     loadPage(SchedulerResourceFilteringInHeader);
   })
-  .on('/scheduler/customizing-header', () => {
+  .on('/scheduler/customizing-header', function () {
     loadPage(SchedulerCustomizingHeader);
   })
-  .on('/scheduler/load-inline-data', () => {
+  .on('/scheduler/load-inline-data', function () {
     loadPage(SchedulerLoadInlineData);
   })
-  .on('/scheduler/move-resize-drag-drop-to-create-events', () => {
+  .on('/scheduler/move-resize-drag-drop-to-create-events', function () {
     loadPage(SchedulerMoveResizeDragDropToCreateEvents);
   })
-  .on('/scheduler/create-read-update-delete-CRUD', () => {
+  .on('/scheduler/create-read-update-delete-CRUD', function () {
     loadPage(SchedulerCreateReadUpdateDeleteCRUD);
   })
-  .on('/scheduler/prevent-double-booking-events', () => {
+  .on('/scheduler/prevent-double-booking-events', function () {
     loadPage(SchedulerPreventDoubleBookingEvents);
   })
-  .on('/scheduler/time-off-blocked-ranges', () => {
+  .on('/scheduler/time-off-blocked-ranges', function () {
     loadPage(SchedulerTimeOffBlockedRanges);
   })
-  .on('/scheduler/work-week-hours', () => {
+  .on('/scheduler/work-week-hours', function () {
     loadPage(SchedulerWorkWeekHours);
   })
-  .on('/scheduler/show-hide-hours-days', () => {
+  .on('/scheduler/show-hide-hours-days', function () {
     loadPage(SchedulerShowHideHoursDays);
   })
-  .on('/scheduler/disable-all-day-events', () => {
+  .on('/scheduler/disable-all-day-events', function () {
     loadPage(SchedulerDisableAllDayEvents);
   })
-  .on('/scheduler/external-drag-drop-schedule-unschedule', () => {
+  .on('/scheduler/external-drag-drop-schedule-unschedule', function () {
     loadPage(SchedulerExternalDragDropScheduleUnschedule);
   })
-  .on('/scheduler/external-event-presets', () => {
+  .on('/scheduler/external-event-presets', function () {
     loadPage(SchedulerExternalEventPresets);
   })
-  .on('/scheduler/colored-cell-background', () => {
+  .on('/scheduler/colored-cell-background', function () {
     loadPage(SchedulerColoredCellBackground);
   })
-  .on('/scheduler/resource-view', () => {
+  .on('/scheduler/resource-view', function () {
     loadPage(SchedulerResourceView);
   })
-  .on('/scheduler/group-by-resource-by-day', () => {
+  .on('/scheduler/group-by-resource-by-day', function () {
     loadPage(SchedulerGroupByResourceByDay);
   })
-  .on('/scheduler/shared-events-across-resources', () => {
+  .on('/scheduler/shared-events-across-resources', function () {
     loadPage(SchedulerSharedEventsAcrossResources);
   })
-  .on('/scheduler/dynamic-add-remove-resources-filter', () => {
+  .on('/scheduler/dynamic-add-remove-resources-filter', function () {
     loadPage(SchedulerDynamicAddRemoveResourcesFilter);
   })
-  .on('/scheduler/custom-resource-header-template', () => {
+  .on('/scheduler/custom-resource-header-template', function () {
     loadPage(SchedulerCustomResourceHeaderTemplate);
   })
-  .on('/scheduler/setting-the-timezone', () => {
+  .on('/scheduler/setting-the-timezone', function () {
     loadPage(SchedulerSettingTheTimezone);
   })
-  .on('/scheduler/multiple-timezone-support', () => {
+  .on('/scheduler/multiple-timezone-support', function () {
     loadPage(SchedulerMultipleTimezoneSupport);
   })
-  .on('/scheduler/date-header-template', () => {
+  .on('/scheduler/date-header-template', function () {
     loadPage(SchedulerDateHeaderTemplate);
   })
-  .on('/scheduler/custom-event-tooltip', () => {
+  .on('/scheduler/custom-event-tooltip', function () {
     loadPage(SchedulerCustomEventTooltip);
   })
-  .on('/scheduler/printing-the-view', () => {
+  .on('/scheduler/printing-the-view', function () {
     loadPage(SchedulerPrintingTheView);
   })
-  .on('/scheduler/display-multiple-days-weeks', () => {
+  .on('/scheduler/display-multiple-days-weeks', function () {
     loadPage(SchedulerDisplayMultipleDaysWeeks);
   })
-  .on('/scheduler/recurring-event-add-edit-dialog', () => {
+  .on('/scheduler/recurring-event-add-edit-dialog', function () {
     loadPage(SchedulerRecurringEventAddEditDialog);
   })
-  .on('/scheduler/sync-events-google-calendar', () => {
+  .on('/scheduler/sync-events-google-calendar', function () {
     loadPage(SchedulerSyncEventsGoogleCalendar);
   })
-  .on('/scheduler/sync-events-outlook-calendar', () => {
+  .on('/scheduler/sync-events-outlook-calendar', function () {
     loadPage(SchedulerSyncEventsOutlookCalendar);
   })
-  .on('/scheduler/disallow-past-event-creation', () => {
+  .on('/scheduler/disallow-past-event-creation', function () {
     loadPage(SchedulerDisallowPastEventCreation);
   })
-  .on('/scheduler/custom-range-view', () => {
+  .on('/scheduler/custom-range-view', function () {
     loadPage(SchedulerCustomRangeView);
   })
-  .on('/scheduler/show-multiple-timezones', () => {
+  .on('/scheduler/show-multiple-timezones', function () {
     loadPage(SchedulerShowMultipleTimezones);
   })
-  .on('/scheduler/event-bulk-actions-edit-delete-update', () => {
+  .on('/scheduler/event-bulk-actions-edit-delete-update', function () {
     loadPage(SchedulerEventBulkActionsEditDeleteUpdate);
   })
-  .on('/scheduler/searching-events-in-sidebar', () => {
+  .on('/scheduler/searching-events-in-sidebar', function () {
     loadPage(SchedulerSearchingEventsInSidebar);
   })
-  .on('/scheduler/colors-invalids-css-class', () => {
+  .on('/scheduler/colors-invalids-css-class', function () {
     loadPage(SchedulerColorsInvalidsCssClass);
   })
-  .on('/scheduler/resource-data-structure', () => {
+  .on('/scheduler/resource-data-structure', function () {
     loadPage(SchedulerResourceDataStructure);
   })
-  .on('/scheduler/doctors-appointment', () => {
+  .on('/scheduler/doctors-appointment', function () {
     loadPage(SchedulerDoctorsAppointment);
   })
-  .on('/scheduler/conditional-move-resize', () => {
+  .on('/scheduler/conditional-move-resize', function () {
     loadPage(SchedulerConditionalMoveResize);
   })
-  .on('/scheduler/drag-drop-between-calendar-instances', () => {
+  .on('/scheduler/drag-drop-between-calendar-instances', function () {
     loadPage(SchedulerDragDropBetweenCalendarInstances);
   })
-  .on('/scheduler/control-number-of-concurrently-shown-events', () => {
+  .on('/scheduler/control-number-of-concurrently-shown-events', function () {
     loadPage(SchedulerControlNumberOfConcurrentlyShownEvents);
   })
-  .on('/agenda/load-events-from-remote-api', () => {
+  .on('/agenda/load-events-from-remote-api', function () {
     loadPage(AgendaLoadEventsFromRemoteApi);
   })
-  .on('/agenda/load-events-on-demand', () => {
+  .on('/agenda/load-events-on-demand', function () {
     loadPage(AgendaLoadEventsOnDemand);
   })
-  .on('/agenda/load-events-from-google-calendar', () => {
+  .on('/agenda/load-events-from-google-calendar', function () {
     loadPage(AgendaLoadEventsFromGoogleCalendar);
   })
-  .on('/agenda/event-data-structure', () => {
+  .on('/agenda/event-data-structure', function () {
     loadPage(AgendaEventDataStructure);
   })
-  .on('/agenda/event-hooks', () => {
+  .on('/agenda/event-hooks', function () {
     loadPage(AgendaEventHooks);
   })
-  .on('/agenda/date-object-ISO-8601-moment', () => {
+  .on('/agenda/date-object-ISO-8601-moment', function () {
     loadPage(AgendaDateObjectISO8601Moment);
   })
-  .on('/agenda/recurring-events', () => {
+  .on('/agenda/recurring-events', function () {
     loadPage(AgendaRecurringEvents);
   })
-  .on('/agenda/daily-weekly-monthly-annual-agenda', () => {
+  .on('/agenda/daily-weekly-monthly-annual-agenda', function () {
     loadPage(AgendaDailyWeeklyMonthlyAnnualAgenda);
   })
-  .on('/agenda/event-content-customization', () => {
+  .on('/agenda/event-content-customization', function () {
     loadPage(AgendaEventContentCustomization);
   })
-  .on('/agenda/full-event-customization', () => {
+  .on('/agenda/full-event-customization', function () {
     loadPage(AgendaFullEventCustomization);
   })
-  .on('/agenda/resource-filtering-in-header', () => {
+  .on('/agenda/resource-filtering-in-header', function () {
     loadPage(AgendaResourceFilteringInHeader);
   })
-  .on('/agenda/customizing-header', () => {
+  .on('/agenda/customizing-header', function () {
     loadPage(AgendaCustomizingHeader);
   })
-  .on('/agenda/load-inline-data', () => {
+  .on('/agenda/load-inline-data', function () {
     loadPage(AgendaLoadInlineData);
   })
-  .on('/agenda/daily-agenda-with-week-calendar', () => {
+  .on('/agenda/daily-agenda-with-week-calendar', function () {
     loadPage(AgendaDailyAgendaWithWeekCalendar);
   })
-  .on('/agenda/synchronized-views', () => {
+  .on('/agenda/synchronized-views', function () {
     loadPage(AgendaSynchronizedViews);
   })
-  .on('/agenda/themes-ios-material-windows', () => {
+  .on('/agenda/themes-ios-material-windows', function () {
     loadPage(AgendaThemesIosMaterialWindows);
   })
-  .on('/agenda/gregorian-jalali-hijri', () => {
+  .on('/agenda/gregorian-jalali-hijri', function () {
     loadPage(AgendaGregorianJalaliHijri);
   })
-  .on('/agenda/basic-usage', () => {
+  .on('/agenda/basic-usage', function () {
     loadPage(AgendaBasicUsage);
   })
-  .on('/agenda/custom-event-sort', () => {
+  .on('/agenda/custom-event-sort', function () {
     loadPage(AgendaCustomEventSort);
   })
-  .on('/agenda/localization', () => {
+  .on('/agenda/localization', function () {
     loadPage(AgendaLocalization);
   })
-  .on('/agenda/setting-the-timezone', () => {
+  .on('/agenda/setting-the-timezone', function () {
     loadPage(AgendaSettingTheTimezone);
   })
-  .on('/agenda/custom-event-tooltip', () => {
+  .on('/agenda/custom-event-tooltip', function () {
     loadPage(AgendaCustomEventTooltip);
   })
-  .on('/agenda/printing-the-view', () => {
+  .on('/agenda/printing-the-view', function () {
     loadPage(AgendaPrintingTheView);
   })
-  .on('/agenda/sync-events-google-calendar', () => {
+  .on('/agenda/sync-events-google-calendar', function () {
     loadPage(AgendaSyncEventsGoogleCalendar);
   })
-  .on('/agenda/sync-events-outlook-calendar', () => {
+  .on('/agenda/sync-events-outlook-calendar', function () {
     loadPage(AgendaSyncEventsOutlookCalendar);
   })
-  .on('/agenda/event-bulk-actions-edit-delete-update', () => {
+  .on('/agenda/event-bulk-actions-edit-delete-update', function () {
     loadPage(AgendaEventBulkActionsEditDeleteUpdate);
   })
-  .on('/agenda/searching-events-in-popup', () => {
+  .on('/agenda/searching-events-in-popup', function () {
     loadPage(AgendaSearchingEventsInPopup);
   })
-  .on('/agenda/empty-state', () => {
+  .on('/agenda/empty-state', function () {
     loadPage(AgendaEmptyState);
   })
-  .on('/timeline/timeline-time-grid', () => {
+  .on('/timeline/timeline-time-grid', function () {
     loadPage(TimelineTimelineTimeGrid);
   })
-  .on('/timeline/daily-weekly-monthly-yearly-timeline', () => {
+  .on('/timeline/daily-weekly-monthly-yearly-timeline', function () {
     loadPage(TimelineDailyWeeklyMonthlyYearlyTimeline);
   })
-  .on('/timeline/switching-day-week-work-week-timeline', () => {
+  .on('/timeline/switching-day-week-work-week-timeline', function () {
     loadPage(TimelineSwitchingDayWeekWorkWeekTimeline);
   })
-  .on('/timeline/timeline-resource-details-side-panel-footer', () => {
+  .on('/timeline/timeline-resource-details-side-panel-footer', function () {
     loadPage(TimelineTimelineResourceDetailsSidePanelFooter);
   })
-  .on('/timeline/timeline-resource-height', () => {
+  .on('/timeline/timeline-resource-height', function () {
     loadPage(TimelineTimelineResourceHeight);
   })
-  .on('/timeline/timeline-custom-event-rendering', () => {
+  .on('/timeline/timeline-custom-event-rendering', function () {
     loadPage(TimelineTimelineCustomEventRendering);
   })
-  .on('/timeline/month-view', () => {
+  .on('/timeline/month-view', function () {
     loadPage(TimelineMonthView);
   })
-  .on('/timeline/event-listing', () => {
+  .on('/timeline/event-listing', function () {
     loadPage(TimelineEventListing);
   })
-  .on('/timeline/employee-shifts', () => {
+  .on('/timeline/employee-shifts', function () {
     loadPage(TimelineEmployeeShifts);
   })
-  .on('/timeline/resource-grouping-hierarchy', () => {
+  .on('/timeline/resource-grouping-hierarchy', function () {
     loadPage(TimelineResourceGroupingHierarchy);
   })
-  .on('/timeline/work-order-scheduling', () => {
+  .on('/timeline/work-order-scheduling', function () {
     loadPage(TimelineWorkOrderScheduling);
   })
-  .on('/timeline/timezone-meeting-planner', () => {
+  .on('/timeline/timezone-meeting-planner', function () {
     loadPage(TimelineTimezoneMeetingPlanner);
   })
-  .on('/timeline/meal-planner', () => {
+  .on('/timeline/meal-planner', function () {
     loadPage(TimelineMealPlanner);
   })
-  .on('/timeline/shift-template', () => {
+  .on('/timeline/shift-template', function () {
     loadPage(TimelineShiftTemplate);
   })
-  .on('/timeline/restaurant-shift-management', () => {
+  .on('/timeline/restaurant-shift-management', function () {
     loadPage(TimelineRestaurantShiftManagement);
   })
-  .on('/timeline/resource-header-template', () => {
+  .on('/timeline/resource-header-template', function () {
     loadPage(TimelineResourceHeaderTemplate);
   })
-  .on('/timeline/setting-the-timezone', () => {
+  .on('/timeline/setting-the-timezone', function () {
     loadPage(TimelineSettingTheTimezone);
   })
-  .on('/timeline/multiple-timezone-support', () => {
+  .on('/timeline/multiple-timezone-support', function () {
     loadPage(TimelineMultipleTimezoneSupport);
   })
-  .on('/timeline/custom-event-tooltip', () => {
+  .on('/timeline/custom-event-tooltip', function () {
     loadPage(TimelineCustomEventTooltip);
   })
-  .on('/timeline/printing-the-view', () => {
+  .on('/timeline/printing-the-view', function () {
     loadPage(TimelinePrintingTheView);
   })
-  .on('/timeline/multiple-days-weeks-months-quarters-years-variable-resolution', () => {
+  .on('/timeline/multiple-days-weeks-months-quarters-years-variable-resolution', function () {
     loadPage(TimelineMultipleDaysWeeksMonthsQuartersYearsVariableResolution);
   })
-  .on('/timeline/move-resize-drag-drop-to-create-events', () => {
+  .on('/timeline/move-resize-drag-drop-to-create-events', function () {
     loadPage(TimelineMoveResizeDragDropToCreateEvents);
   })
-  .on('/timeline/event-data-structure', () => {
+  .on('/timeline/event-data-structure', function () {
     loadPage(TimelineEventDataStructure);
   })
-  .on('/timeline/date-object-ISO-8601-moment', () => {
+  .on('/timeline/date-object-ISO-8601-moment', function () {
     loadPage(TimelineDateObjectISO8601Moment);
   })
-  .on('/timeline/recurring-events', () => {
+  .on('/timeline/recurring-events', function () {
     loadPage(TimelineRecurringEvents);
   })
-  .on('/timeline/load-events-from-remote-api', () => {
+  .on('/timeline/load-events-from-remote-api', function () {
     loadPage(TimelineLoadEventsFromRemoteApi);
   })
-  .on('/timeline/load-events-on-demand', () => {
+  .on('/timeline/load-events-on-demand', function () {
     loadPage(TimelineLoadEventsOnDemand);
   })
-  .on('/timeline/create-read-update-delete-CRUD', () => {
+  .on('/timeline/create-read-update-delete-CRUD', function () {
     loadPage(TimelineCreateReadUpdateDeleteCRUD);
   })
-  .on('/timeline/themes-ios-material-windows', () => {
+  .on('/timeline/themes-ios-material-windows', function () {
     loadPage(TimelineThemesIosMaterialWindows);
   })
-  .on('/timeline/gregorian-jalali-hijri', () => {
+  .on('/timeline/gregorian-jalali-hijri', function () {
     loadPage(TimelineGregorianJalaliHijri);
   })
-  .on('/timeline/event-hooks', () => {
+  .on('/timeline/event-hooks', function () {
     loadPage(TimelineEventHooks);
   })
-  .on('/timeline/localization', () => {
+  .on('/timeline/localization', function () {
     loadPage(TimelineLocalization);
   })
-  .on('/timeline/rtl-right-to-left', () => {
+  .on('/timeline/rtl-right-to-left', function () {
     loadPage(TimelineRtlRightToLeft);
   })
-  .on('/timeline/load-inline-data', () => {
+  .on('/timeline/load-inline-data', function () {
     loadPage(TimelineLoadInlineData);
   })
-  .on('/timeline/sync-events-google-calendar', () => {
+  .on('/timeline/sync-events-google-calendar', function () {
     loadPage(TimelineSyncEventsGoogleCalendar);
   })
-  .on('/timeline/sync-events-outlook-calendar', () => {
+  .on('/timeline/sync-events-outlook-calendar', function () {
     loadPage(TimelineSyncEventsOutlookCalendar);
   })
-  .on('/timeline/disallow-past-event-creation', () => {
+  .on('/timeline/disallow-past-event-creation', function () {
     loadPage(TimelineDisallowPastEventCreation);
   })
-  .on('/timeline/load-events-from-google-calendar', () => {
+  .on('/timeline/load-events-from-google-calendar', function () {
     loadPage(TimelineLoadEventsFromGoogleCalendar);
   })
-  .on('/timeline/custom-range-view', () => {
+  .on('/timeline/custom-range-view', function () {
     loadPage(TimelineCustomRangeView);
   })
-  .on('/timeline/dynamically-color-and-invalidate', () => {
+  .on('/timeline/dynamically-color-and-invalidate', function () {
     loadPage(TimelineDynamicallyColorAndInvalidate);
   })
-  .on('/timeline/event-bulk-actions-edit-delete-update', () => {
+  .on('/timeline/event-bulk-actions-edit-delete-update', function () {
     loadPage(TimelineEventBulkActionsEditDeleteUpdate);
   })
-  .on('/timeline/loading-big-data-sets', () => {
+  .on('/timeline/loading-big-data-sets', function () {
     loadPage(TimelineLoadingBigDataSets);
   })
-  .on('/timeline/connecting-linking-events-arrows', () => {
+  .on('/timeline/connecting-linking-events-arrows', function () {
     loadPage(TimelineConnectingLinkingEventsArrows);
   })
-  .on('/timeline/searching-events-in-sidebar', () => {
+  .on('/timeline/searching-events-in-sidebar', function () {
     loadPage(TimelineSearchingEventsInSidebar);
   })
-  .on('/timeline/colors-invalids-css-class', () => {
+  .on('/timeline/colors-invalids-css-class', function () {
     loadPage(TimelineColorsInvalidsCssClass);
   })
-  .on('/timeline/hour-day-week-month-quarter-year-header-footer-template', () => {
+  .on('/timeline/hour-day-week-month-quarter-year-header-footer-template', function () {
     loadPage(TimelineHourDayWeekMonthQuarterYearHeaderFooterTemplate);
   })
-  .on('/timeline/setting-row-height', () => {
+  .on('/timeline/setting-row-height', function () {
     loadPage(TimelineSettingRowHeight);
   })
-  .on('/timeline/monthly-timetable-vertical-days-horizontal-times', () => {
+  .on('/timeline/monthly-timetable-vertical-days-horizontal-times', function () {
     loadPage(TimelineMonthlyTimetableVerticalDaysHorizontalTimes);
   })
-  .on('/timeline/multi-classroom-timetable', () => {
+  .on('/timeline/multi-classroom-timetable', function () {
     loadPage(TimelineMultiClassroomTimetable);
   })
-  .on('/timeline/load-resources-on-demand', () => {
+  .on('/timeline/load-resources-on-demand', function () {
     loadPage(TimelineLoadResourcesOnDemand);
   })
-  .on('/timeline/resource-data-structure', () => {
+  .on('/timeline/resource-data-structure', function () {
     loadPage(TimelineResourceDataStructure);
   })
-  .on('/timeline/conditional-move-resize', () => {
+  .on('/timeline/conditional-move-resize', function () {
     loadPage(TimelineConditionalMoveResize);
   })
-  .on('/timeline/drag-drop-between-calendar-instances', () => {
+  .on('/timeline/drag-drop-between-calendar-instances', function () {
     loadPage(TimelineDragDropBetweenCalendarInstances);
   })
-  .on('/timeline/prevent-double-booking-events', () => {
+  .on('/timeline/prevent-double-booking-events', function () {
     loadPage(TimelinePreventDoubleBookingEvents);
   })
-  .on('/timeline/compare-resources-fixed-at-top', () => {
+  .on('/timeline/compare-resources-fixed-at-top', function () {
     loadPage(TimelineCompareResourcesFixedAtTop);
   })
-  .on('/timeline/assign-unassign-work-orders-fixed-top-row', () => {
+  .on('/timeline/assign-unassign-work-orders-fixed-top-row', function () {
     loadPage(TimelineAssignUnassignWorkOrdersFixedTopRow);
   })
-  .on('/timeline/control-number-of-concurrently-shown-events', () => {
+  .on('/timeline/control-number-of-concurrently-shown-events', function () {
     loadPage(TimelineControlNumberOfConcurrentlyShownEvents);
   })
-  .on('/timeline/flight-scheduling-two-synchronized-timelines', () => {
+  .on('/timeline/flight-scheduling-two-synchronized-timelines', function () {
     loadPage(TimelineFlightSchedulingTwoSynchronizedTimelines);
   });
 
-document.addEventListener('click', (ev) => {
-  const link = ev.target.closest('.app-link');
+document.addEventListener('click', function (ev) {
+  var link = ev.target.closest('.app-link');
   if (link) {
     ev.preventDefault();
     router.pushState(link.getAttribute('href'));

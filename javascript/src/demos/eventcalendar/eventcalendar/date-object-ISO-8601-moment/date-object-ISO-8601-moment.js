@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 import moment from 'moment';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -108,6 +109,7 @@ export default {
       false,
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid">
     <div class="mbsc-row">

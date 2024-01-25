@@ -1,5 +1,7 @@
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {},
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
     <div mbsc-page>
     <div class="mbsc-padding">

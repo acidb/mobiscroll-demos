@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -78,11 +79,13 @@ export default {
       currentDate = nextPage;
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="md-custom-header">
     <div id="demo-custom-header"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-custom-header-controls {
     display: flex;

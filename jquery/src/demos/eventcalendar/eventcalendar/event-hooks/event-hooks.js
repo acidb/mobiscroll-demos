@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -120,6 +121,7 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-draggable data-drag-data='{"title": "External drag 1", "color": "#ffdab8"}' class="event-hooks-draggable" style="background: #ffdab8;">
     <div class="draggable-title">External drag 1</div>
@@ -131,6 +133,7 @@ export default {
 </div>
 <div id="demo"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .event-hooks-draggable {
     padding: 10px 20px;

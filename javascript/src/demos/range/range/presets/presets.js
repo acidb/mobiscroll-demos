@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -56,6 +57,7 @@ export default {
       inst.setVal(null);
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="md-range-filter">
     <h4 class="md-header">Filter Results by</h4>
@@ -72,6 +74,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-range-filter .md-header {
     text-align: center;

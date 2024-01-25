@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -70,6 +71,7 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
@@ -94,6 +96,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .dynamic-resources-calendar {
     border-right: 1px solid #ccc;

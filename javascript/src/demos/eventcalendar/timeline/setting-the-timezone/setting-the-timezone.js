@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.momentTimezone.moment = moment;
 
@@ -88,6 +89,7 @@ export default {
       ],
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-setting-the-timezone"></div>
   `,

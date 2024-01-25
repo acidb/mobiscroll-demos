@@ -6,6 +6,7 @@ var mobiscroll = m;
 mobiscroll.outlookCalendarSync = outlookSync;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -325,6 +326,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-page class="md-sync-events-outlook-cont">
     <div class="md-sync-events-outlook-menu">
@@ -355,6 +357,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-sync-events-outlook-cont.mbsc-page {
     display: flex;

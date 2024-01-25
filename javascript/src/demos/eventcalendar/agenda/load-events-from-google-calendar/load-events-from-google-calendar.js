@@ -5,6 +5,7 @@ var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -139,9 +140,11 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-google-cal" class="md-google-calendar"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-google-calendar .mbsc-segmented {
     max-width: 300px;

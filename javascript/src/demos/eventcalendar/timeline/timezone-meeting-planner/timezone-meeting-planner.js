@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -260,9 +261,11 @@ export default {
       return { colors: colors, invalid: invalid };
     }
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-timezone-meeting-planner" class="md-timezone-meeting-planner"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-timezone-meeting-planner .mbsc-schedule-color-text {
     padding: 16px 0;

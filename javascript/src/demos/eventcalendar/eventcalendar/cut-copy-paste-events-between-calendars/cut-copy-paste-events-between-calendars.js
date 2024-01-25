@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -346,6 +347,7 @@ export default {
     secondContainer.classList.add('md-hide-calendar');
     activeInst = firstInst;
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-page id="demo-copy-cut-paste-cont">
     <div class="mbsc-flex-col md-copy-cut-paste">
@@ -372,6 +374,7 @@ export default {
     <div id="my-focus" tabindex="-1"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-copy-cut-paste .mbsc-segmented {
     width: 300px;

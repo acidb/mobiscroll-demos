@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -198,6 +199,7 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-page class="md-bulk-operations">
     <div class="mbsc-grid mbsc-no-padding">
@@ -225,6 +227,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-bulk-operations-border {
     border-left: 1px solid #ccc;

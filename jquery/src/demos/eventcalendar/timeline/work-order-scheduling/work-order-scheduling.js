@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -275,7 +276,7 @@ export default {
             };
           },
           onEventClick: function (args) {
-            oldEvent = { ...args.event };
+            oldEvent = $.extend({}, args.event);
             tempEvent = args.event;
 
             if (!popup.isVisible()) {
@@ -571,6 +572,7 @@ export default {
       appendChekboxes();
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-work-order-scheduling" class="md-work-order-scheduling"></div>
 
@@ -615,6 +617,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-work-order-checkbox-label.mbsc-checkbox {
     padding-top: 5px;

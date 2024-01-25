@@ -1,12 +1,14 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
       // theme
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <label> <input id="chboxDeductFromStore" mbsc-switch data-label="Deduct Product/Consumable From Store" data-description="Remove the Product/Consumable from your store by work order product" type="checkbox" checked /></label>
 

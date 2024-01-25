@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -319,7 +320,7 @@ export default {
         $('#recurrence-repeat-' + recurrenceRepeat).mobiscroll('getInst').checked = true;
         $('#recurrence-condition-' + recurrenceCondition).mobiscroll('getInst').checked = true;
         $recurrenceWeekDays.each(function () {
-          $(this).mobiscroll('getInst').checked = recurrenceWeekDays.includes(this.value);
+          $(this).mobiscroll('getInst').checked = recurrenceWeekDays.indexOf(this.value) !== -1;
         });
         toggleRecurrenceText(recurrenceRepeat);
       }
@@ -779,6 +780,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-add-delete-event"></div>
 
@@ -952,6 +954,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-recurring-event-editor-popup .md-recurrence-input .mbsc-textfield-wrapper {
     display: inline-block;

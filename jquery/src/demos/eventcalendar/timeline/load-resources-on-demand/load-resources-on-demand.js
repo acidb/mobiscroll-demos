@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -205,9 +206,11 @@ export default {
         .mobiscroll('getInst');
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo" class="md-load-resources-on-demand"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-load-resources-on-demand .mbsc-timeline-parent {
     height: 34px;

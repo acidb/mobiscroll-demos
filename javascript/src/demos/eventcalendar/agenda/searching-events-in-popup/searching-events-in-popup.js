@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -95,6 +96,7 @@ export default {
       }
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-search-events" class="md-search-events"></div>
 <div id="demo-search-popup" class="md-search-popup">
@@ -103,6 +105,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-seach-header-bar .mbsc-textfield-wrapper.mbsc-form-control-wrapper {
     width: 400px;

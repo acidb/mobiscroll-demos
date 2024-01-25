@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -596,12 +597,14 @@ export default {
         .mobiscroll('getInst');
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-flex-col md-drag-drop-bw-inst-cont">
     <div id="demo-drag-drop-bw-inst-first" class="md-drag-drop-bw-inst-first"></div>
     <div id="demo-drag-drop-bw-inst-second" class="md-drag-drop-bw-inst-second"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-drag-drop-bw-inst-cont .mbsc-eventcalendar {
     height: 500px;

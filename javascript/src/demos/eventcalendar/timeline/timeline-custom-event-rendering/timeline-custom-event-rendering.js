@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -114,11 +115,13 @@ export default {
       ],
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="md-timeline-template">
     <div id="demo-timeline-template"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-timeline-template .mbsc-schedule-event.mbsc-ltr {
     height: auto !important;

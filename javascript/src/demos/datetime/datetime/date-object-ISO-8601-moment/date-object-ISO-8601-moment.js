@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 import moment from 'moment';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -67,6 +68,7 @@ export default {
       });
     }
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Working with Js Date Objects</div>

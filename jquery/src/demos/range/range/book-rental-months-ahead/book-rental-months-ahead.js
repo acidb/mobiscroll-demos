@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js
 import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -247,9 +248,11 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-book-rental-months-ahead" class="md-book-rental"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .mbsc-datepicker .md-book-rental-bg-off.vacation-check-in.mbsc-ltr {
     background: linear-gradient( to left top, #ffbaba80 50%, #b2f1c080 50%) no-repeat;

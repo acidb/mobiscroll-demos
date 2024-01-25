@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -30,6 +31,7 @@ export default {
       popup.open();
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <button mbsc-button id="show-popup">Show modal</button>
 <div id="my-popup">

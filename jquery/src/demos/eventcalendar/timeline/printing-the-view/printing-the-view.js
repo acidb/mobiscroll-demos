@@ -6,6 +6,7 @@ var mobiscroll = m;
 mobiscroll.print = print;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -75,6 +76,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <button id="print-button" mbsc-button>Print timeline</button>
 <div id="demo-printing-the-view"></div>

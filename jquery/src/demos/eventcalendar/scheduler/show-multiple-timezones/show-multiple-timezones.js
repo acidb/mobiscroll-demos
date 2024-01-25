@@ -3,6 +3,7 @@ import $ from 'jquery';
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -86,6 +87,7 @@ export default {
         .mobiscroll('getInst');
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-showing-multiple-timezone"></div>
   `,

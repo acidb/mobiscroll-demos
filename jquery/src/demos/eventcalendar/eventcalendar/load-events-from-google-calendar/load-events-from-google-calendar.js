@@ -6,6 +6,7 @@ var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -159,6 +160,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div class="demo-inline demo-max-width-1100">
@@ -168,6 +170,7 @@ export default {
 </div>
 <!--/hidden-->
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-google-calendar .mbsc-segmented {
     max-width: 300px;
