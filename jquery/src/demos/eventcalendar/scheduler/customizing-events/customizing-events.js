@@ -62,7 +62,15 @@ export default {
               );
             }
           },
-          onEventClick: function (event, inst) {
+          renderBufferBefore: function (data) {
+            var cat = getCategory(data.event.category);
+            return `<div class="md-buffer md-before-buffer" style="background: ${cat.color}"></div>`;
+          },
+          renderBufferAfter: function (data) {
+            var cat = getCategory(data.event.category);
+            return `<div class="md-buffer md-after-buffer" style="background: ${cat.color}"></div>`;
+          },
+          onEventClick: function (event) {
             if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
               mobiscroll.toast({
                 //<hidden>
@@ -166,7 +174,7 @@ export default {
       }
 
       $.getJSON(
-        'https://trial.mobiscroll.com/multi-events/?callback=?',
+        'http://trial.dev.mobiscroll.com/multi-events/?callback=?',
         function (events) {
           inst.setEvents(events);
         },
@@ -175,7 +183,7 @@ export default {
     });
   },
   markup: `
-<div id="demo-customize-events"></div>
+<div id="demo-customize-events" class="md-schedule-template"></div>
   `,
   css: `
 .md-custom-event-cont {
@@ -268,6 +276,37 @@ export default {
     width: 25px;
     height: 25px;
     margin: 0 2px;
+}
+
+.md-schedule-template .mbsc-schedule-event-buffer {
+  overflow: visible; 
+  opacity: 1; 
+  background: transparent;
+}
+
+.md-buffer {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  font-size: 10px;
+  left: 5px;
+  right: 5px;
+  color: #fff;
+  padding: 0 8px;
+  align-items: center;
+  justify-content: center;
+  opacity: .2;
+  box-sizing: border-box;
+}
+
+.md-before-buffer {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.md-after-buffer {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
   `,
 };
