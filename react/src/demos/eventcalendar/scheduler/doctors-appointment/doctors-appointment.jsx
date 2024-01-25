@@ -1,6 +1,6 @@
 import { Draggable, Dropcontainer, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import PropTypes from 'prop-types';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './doctors-appointment.css';
 
 setOptions({

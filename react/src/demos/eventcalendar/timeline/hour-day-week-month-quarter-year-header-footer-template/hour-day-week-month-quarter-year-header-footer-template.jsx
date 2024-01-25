@@ -1,5 +1,5 @@
-import { Eventcalendar, setOptions, formatDate /* localeImport */ } from '@mobiscroll/react';
-import { useMemo, useCallback } from 'react';
+import { Eventcalendar, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo } from 'react';
 import './hour-day-week-month-quarter-year-header-footer-template.css';
 
 setOptions({

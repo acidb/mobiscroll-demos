@@ -1,5 +1,5 @@
-import { Eventcalendar, Button, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useCallback } from 'react';
+import { Button, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './compare-resources-fixed-at-top.css';
 
 setOptions({

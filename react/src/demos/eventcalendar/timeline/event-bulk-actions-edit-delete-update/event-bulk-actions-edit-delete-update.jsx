@@ -1,5 +1,5 @@
-import { Eventcalendar, Button, Select, Page, getJson, formatDate, Confirm, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useState, useRef, useMemo, useCallback, useEffect } from 'react';
+import { Button, Confirm, Eventcalendar, formatDate, getJson, Page, Select, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './event-bulk-actions-edit-delete-update.css';
 
 setOptions({

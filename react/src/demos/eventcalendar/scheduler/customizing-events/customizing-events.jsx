@@ -1,5 +1,5 @@
-import { Eventcalendar, getJson, Toast, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { Button, Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './customizing-events.css';
 
 setOptions({

@@ -1,16 +1,16 @@
 import {
-  Eventcalendar,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
   Checkbox,
   Datepicker,
+  Eventcalendar,
+  formatDate,
+  Input,
+  Popup,
+  setOptions,
   snackbar,
-  formatDate /* localeImport */,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './work-order-scheduling.css';
 
 setOptions({

@@ -1,14 +1,14 @@
 import {
   Eventcalendar,
-  Page,
   getJson,
-  jalaliCalendar,
   hijriCalendar,
-  localeFa,
+  jalaliCalendar,
   localeAr,
+  localeFa,
+  Page,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,

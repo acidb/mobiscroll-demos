@@ -1,9 +1,9 @@
 import {
-  Datepicker,
   CalendarNav,
   CalendarNext,
   CalendarPrev,
   CalendarToday,
+  Datepicker,
   formatDate,
   getJson,
   setOptions /* localeImport */,

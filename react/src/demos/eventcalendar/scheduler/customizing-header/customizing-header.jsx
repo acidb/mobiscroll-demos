@@ -1,12 +1,12 @@
 import {
+  Button,
+  CalendarNav,
+  CalendarToday,
   Eventcalendar,
   getJson,
-  setOptions,
-  CalendarNav,
-  Button,
-  CalendarToday,
   SegmentedGroup,
-  SegmentedItem /* localeImport */,
+  SegmentedItem,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useEffect, useState } from 'react';
 import './customizing-header.css';

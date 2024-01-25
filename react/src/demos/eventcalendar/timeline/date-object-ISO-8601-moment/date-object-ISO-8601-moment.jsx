@@ -1,6 +1,6 @@
-import { Eventcalendar, Page, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment';
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,

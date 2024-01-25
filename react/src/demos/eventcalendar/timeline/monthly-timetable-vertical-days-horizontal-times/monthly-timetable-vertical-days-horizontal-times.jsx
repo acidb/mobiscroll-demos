@@ -1,5 +1,5 @@
-import { Eventcalendar, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useEffect } from 'react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useEffect, useMemo, useState } from 'react';
 import './monthly-timetable-vertical-days-horizontal-times.css';
 
 setOptions({

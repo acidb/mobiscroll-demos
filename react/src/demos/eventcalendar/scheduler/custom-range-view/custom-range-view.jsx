@@ -1,15 +1,15 @@
 import {
-  Eventcalendar,
-  getJson,
-  setOptions,
-  CalendarPrev,
-  CalendarNext,
-  CalendarToday,
   Button,
+  CalendarNext,
+  CalendarPrev,
+  CalendarToday,
   Datepicker,
-  formatDate /* localeImport */,
+  Eventcalendar,
+  formatDate,
+  getJson,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './custom-range-view.css';
 
 setOptions({

@@ -1,9 +1,8 @@
-import { Eventcalendar, getJson, setOptions, Dropdown, locale /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { Dropdown, Eventcalendar, getJson, locale, setOptions } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './localization.css';
 
 setOptions({
-  // localeJs,
   // themeJs
 });
 

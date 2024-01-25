@@ -1,5 +1,5 @@
 import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './timeline-resource-details-side-panel-footer.css';
 
 setOptions({

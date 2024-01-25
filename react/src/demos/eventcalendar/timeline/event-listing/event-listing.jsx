@@ -1,14 +1,14 @@
 import {
-  Eventcalendar,
-  setOptions,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext /* localeImport */,
+  Eventcalendar,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './event-listing.css';
 
 setOptions({

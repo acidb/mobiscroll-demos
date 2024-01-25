@@ -1,16 +1,16 @@
 import {
-  Eventcalendar,
-  getJson,
-  Toast,
-  setOptions,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext /* localeImport */,
+  Eventcalendar,
+  getJson,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './resource-filtering-in-header.css';
 
 setOptions({

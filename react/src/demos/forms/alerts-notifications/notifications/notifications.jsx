@@ -1,4 +1,4 @@
-import { Button, Page, Snackbar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Button, Page, setOptions, Snackbar, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo, useState } from 'react';
 
 setOptions({

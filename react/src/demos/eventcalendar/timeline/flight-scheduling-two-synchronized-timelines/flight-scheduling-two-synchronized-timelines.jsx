@@ -1,5 +1,5 @@
 import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
-import { useState, useRef, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './flight-scheduling-two-synchronized-timelines.css';
 
 setOptions({

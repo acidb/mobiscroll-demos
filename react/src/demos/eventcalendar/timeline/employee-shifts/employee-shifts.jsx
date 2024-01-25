@@ -1,15 +1,15 @@
 import {
-  Eventcalendar,
-  Datepicker,
-  snackbar,
-  setOptions,
-  Popup,
   Button,
+  Datepicker,
+  Eventcalendar,
+  formatDate,
   Input,
-  Textarea,
-  formatDate /* localeImport */,
+  Popup,
+  setOptions,
+  snackbar,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './employee-shifts.css';
 
 setOptions({

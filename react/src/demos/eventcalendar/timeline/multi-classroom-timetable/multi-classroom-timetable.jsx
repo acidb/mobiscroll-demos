@@ -1,5 +1,5 @@
-import { Eventcalendar, setOptions, formatDate, getJson /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { Eventcalendar, formatDate, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './multi-classroom-timetable.css';
 
 setOptions({

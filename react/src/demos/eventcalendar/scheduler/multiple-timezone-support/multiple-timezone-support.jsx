@@ -1,18 +1,17 @@
 import {
-  Eventcalendar,
-  Select,
   CalendarNav,
-  CalendarPrev,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
-  momentTimezone /* localeImport */,
-  setOptions,
+  Eventcalendar,
+  momentTimezone,
+  Select,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import moment from 'moment-timezone';
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './multiple-timezone-support.css';
 
-// setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
 setOptions({

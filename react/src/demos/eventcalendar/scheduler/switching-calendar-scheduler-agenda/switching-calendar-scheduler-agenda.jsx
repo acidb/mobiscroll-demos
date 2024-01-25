@@ -1,15 +1,15 @@
 import {
-  Eventcalendar,
-  getJson,
-  setOptions,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext /* localeImport */,
+  Eventcalendar,
+  getJson,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './switching-calendar-scheduler-agenda.css';
 
 setOptions({

@@ -1,5 +1,5 @@
-import { Datepicker, Input, Page, Switch, SegmentedGroup, SegmentedItem, setOptions, Textarea /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useCallback } from 'react';
+import { Datepicker, Input, Page, SegmentedGroup, SegmentedItem, setOptions, Switch, Textarea /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // langJs,

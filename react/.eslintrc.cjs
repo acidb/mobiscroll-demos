@@ -9,5 +9,6 @@ module.exports = {
   rules: {
     'import/order': ['warn', { alphabetize: { order: 'asc', caseInsensitive: true } }],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'sort-imports': ['warn', { ignoreCase: true, ignoreDeclarationSort: true }],
   },
 };

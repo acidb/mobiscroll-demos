@@ -1,5 +1,5 @@
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useMemo, useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import './setting-row-height.css';
 
 setOptions({

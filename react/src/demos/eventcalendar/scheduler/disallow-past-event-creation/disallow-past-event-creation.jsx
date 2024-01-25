@@ -1,4 +1,4 @@
-import { Eventcalendar, Toast, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import './disallow-past-event-creation.css';
 

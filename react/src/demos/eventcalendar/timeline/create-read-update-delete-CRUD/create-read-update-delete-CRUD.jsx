@@ -1,17 +1,17 @@
 import {
-  Eventcalendar,
-  snackbar,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
-  Switch,
   Datepicker,
+  Eventcalendar,
+  Input,
+  Popup,
   SegmentedGroup,
-  SegmentedItem /* localeImport */,
+  SegmentedItem,
+  setOptions,
+  snackbar,
+  Switch,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useRef, useCallback } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './create-read-update-delete-CRUD.css';
 
 setOptions({

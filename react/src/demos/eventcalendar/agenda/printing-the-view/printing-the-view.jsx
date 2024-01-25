@@ -1,6 +1,6 @@
 import { print } from '@mobiscroll/print';
 import { Button, Eventcalendar, getJson, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useEffect, useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 const MY_MODULES = [print];
 

@@ -1,6 +1,6 @@
-import { Eventcalendar, Draggable, Popup, Input, Textarea, Select, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Draggable, Eventcalendar, Input, Popup, Select, setOptions, Textarea, Toast /* localeImport */ } from '@mobiscroll/react';
 import PropTypes from 'prop-types';
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './external-event-presets.css';
 
 setOptions({

@@ -1,4 +1,4 @@
-import { Eventcalendar, getJson, hijriCalendar, jalaliCalendar, localeFa, localeAr, Page, setOptions } from '@mobiscroll/react';
+import { Eventcalendar, getJson, hijriCalendar, jalaliCalendar, localeAr, localeFa, Page, setOptions } from '@mobiscroll/react';
 import { useEffect, useMemo, useState } from 'react';
 
 setOptions({

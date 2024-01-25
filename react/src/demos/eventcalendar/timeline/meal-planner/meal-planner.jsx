@@ -1,17 +1,17 @@
 import {
-  Eventcalendar,
-  snackbar,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
+  Eventcalendar,
   formatDate,
   getJson,
+  Input,
+  Popup,
   SegmentedGroup,
-  SegmentedItem /* localeImport */,
+  SegmentedItem,
+  setOptions,
+  snackbar,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './meal-planner.css';
 
 setOptions({

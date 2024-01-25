@@ -1,4 +1,4 @@
-import { Eventcalendar, Page, SegmentedGroup, Segmented, Select, setOptions, Snackbar, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, Page, Segmented, SegmentedGroup, Select, setOptions, Snackbar, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import './cut-copy-paste-events-between-calendars.css';
 

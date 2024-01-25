@@ -1,5 +1,5 @@
 import { Eventcalendar, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './shift-template.css';
 
 setOptions({

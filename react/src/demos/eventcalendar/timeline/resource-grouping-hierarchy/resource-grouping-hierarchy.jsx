@@ -1,4 +1,4 @@
-import { setOptions, Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useMemo } from 'react';
 import './resource-grouping-hierarchy.css';
 

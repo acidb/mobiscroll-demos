@@ -1,16 +1,16 @@
 import {
-  Eventcalendar,
-  formatDate,
-  setOptions,
-  Confirm,
-  Toast,
-  momentTimezone,
   CalendarNav,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext /* localeImport */,
+  Confirm,
+  Eventcalendar,
+  formatDate,
+  momentTimezone,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './timezone-meeting-planner.css';
 
 // eslint-disable-next-line import/order

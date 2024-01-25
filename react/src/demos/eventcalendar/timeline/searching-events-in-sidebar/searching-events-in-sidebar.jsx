@@ -1,5 +1,5 @@
-import { Eventcalendar, Page, Input, getJson, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useRef, useCallback } from 'react';
+import { Eventcalendar, formatDate, getJson, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './searching-events-in-sidebar.css';
 
 setOptions({

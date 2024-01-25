@@ -1,16 +1,16 @@
 import {
-  Eventcalendar,
-  getJson,
-  Toast,
-  setOptions,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext /* localeImport */,
+  Eventcalendar,
+  getJson,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './switching-day-week-work-week-timeline.css';
 
 setOptions({

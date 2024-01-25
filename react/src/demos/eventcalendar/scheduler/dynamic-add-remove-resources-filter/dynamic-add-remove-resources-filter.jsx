@@ -1,5 +1,5 @@
-import { Eventcalendar, getJson, Checkbox, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { Checkbox, Eventcalendar, getJson, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './dynamic-add-remove-resources-filter.css';
 
 setOptions({

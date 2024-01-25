@@ -1,21 +1,21 @@
 import {
-  Eventcalendar,
-  Select,
-  setOptions,
-  Popup,
   Button,
+  Datepicker,
+  Eventcalendar,
+  formatDate,
   Input,
-  Textarea,
-  Switch,
+  Popup,
   Radio,
   RadioGroup,
-  Datepicker,
   SegmentedGroup,
   SegmentedItem,
-  formatDate,
+  Select,
+  setOptions,
+  Switch,
+  Textarea,
   updateRecurringEvent /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './recurring-event-add-edit-dialog.css';
 
 setOptions({

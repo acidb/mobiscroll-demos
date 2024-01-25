@@ -1,5 +1,5 @@
 import { Button, Eventcalendar, formatDate, Popup, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useMemo, useState, useRef } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './custom-event-tooltip.css';
 
 setOptions({

@@ -1,17 +1,17 @@
 import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import {
-  Eventcalendar,
-  setOptions,
-  Page,
   Button,
-  Switch,
   CalendarNav,
-  CalendarPrev,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
+  Eventcalendar,
+  Page,
+  setOptions,
+  Switch,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './sync-events-google-calendar.css';
 
 setOptions({
