@@ -1,4 +1,4 @@
-import { Button, Eventcalendar, setOptions, Toast, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({

@@ -7,13 +7,15 @@ import {
   Eventcalendar,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscPageLoadingEvent,
+  MbscSelectedDateChangeEvent,
   Page,
   Popup,
   setOptions,
   Switch,
-  toast,
+  Toast,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import './sync-events-google-calendar.css';
 
 setOptions({
@@ -21,128 +23,108 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [myCalendars, setCalendars] = React.useState<any>([]);
-  const [calendarIds, setCalendarIds] = React.useState<any>([]);
-  const [calendarData, setCalendarData] = React.useState<any>([]);
-  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
-  const [isLoading, setLoading] = React.useState<boolean>(false);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const buttonRef = React.useRef<any>(null);
-  const [myAnchor, setAnchor] = React.useState<any>(null);
-  const [mySelectedDate, setSelectedDate] = React.useState<any>(new Date());
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [myCalendars, setCalendars] = useState([]);
+  const [calendarIds, setCalendarIds] = useState<string[]>([]);
+  const [calendarData, setCalendarData] = useState<{ [key: string]: { [key: string]: boolean } }>({});
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [myAnchor, setAnchor] = useState<HTMLElement>();
+  const [mySelectedDate, setSelectedDate] = useState(new Date());
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
 
-  const { current: view } = React.useRef<MbscEventcalendarView>({ agenda: { type: 'month' } });
+  const { current: view } = useRef<MbscEventcalendarView>({ agenda: { type: 'month' } });
+  const buttonRef = useRef<Button>(null);
+  const debounce = useRef<number>();
+  const startDate = useRef<Date>();
+  const endDate = useRef<Date>();
 
-  const debounce: any = React.useRef();
-  const startDate: any = React.useRef();
-  const endDate: any = React.useRef();
-
-  const onError = React.useCallback((resp) => {
-    toast({
-      message: resp.error ? resp.error : resp.result.error.message,
-    });
+  const handleError = useCallback((resp: { error: string | undefined; result: { error: { message: string } } }) => {
+    setToastMessage(resp.error ? resp.error : resp.result.error.message);
+    setToastOpen(true);
   }, []);
 
-  React.useEffect(() => {
-    const onSignedIn = () => {
-      setIsLoggedIn(true);
-      googleCalendarSync
-        .getCalendars()
-        .then((calendars: any) => {
-          const newCalendarIds = [];
-          const calData: any = {};
+  const closeToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
 
-          calendars.sort((c: { primary: boolean }) => (c.primary ? -1 : 1));
-
-          for (const c of calendars) {
-            newCalendarIds.push(c.id);
-            calData[c.id] = { checked: true };
-          }
-
-          setCalendarIds(newCalendarIds);
-          setCalendarData(calData);
-          setCalendars(calendars);
-          setLoading(true);
-          return googleCalendarSync.getEvents(newCalendarIds, startDate.current, endDate.current);
-        })
-        .then((events: any) => {
-          setEvents(events);
-          setLoading(false);
-        })
-        .catch(onError);
-    };
-
-    const onSignedOut = () => {
-      setIsLoggedIn(false);
-      setCalendars([]);
-      setCalendarIds([]);
-      setCalendarData({});
-      setEvents([]);
-      setOpen(false);
-    };
-
-    // init google client
-    googleCalendarSync.init({
-      apiKey: '<YOUR_GOOGLE_API_KEY>',
-      clientId: '<YOUR_GOOGLE_CLIENT_ID>',
-      onSignedIn: onSignedIn,
-      onSignedOut: onSignedOut,
-    });
-  }, [onError]);
-
-  const onClose = React.useCallback(() => {
+  const popupClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const openPopup = React.useCallback(() => {
-    setAnchor(buttonRef.current.nativeElement);
+  const handlePageLoading = useCallback(
+    (args: MbscPageLoadingEvent) => {
+      clearTimeout(debounce.current);
+      startDate.current = args.viewStart;
+      endDate.current = args.viewEnd;
+      debounce.current = setTimeout(() => {
+        if (googleCalendarSync.isSignedIn()) {
+          setLoading(true);
+          googleCalendarSync
+            .getEvents(calendarIds, startDate.current!, endDate.current!)
+            .then((resp) => {
+              setEvents(resp);
+              setLoading(false);
+            })
+            .catch(handleError);
+        }
+      }, 200);
+    },
+    [calendarIds, handleError],
+  );
+
+  const openPopup = useCallback(() => {
+    setAnchor(buttonRef.current!.nativeElement);
     setOpen(true);
   }, []);
 
-  const navigate = React.useCallback(() => {
+  const navigate = useCallback(() => {
     setSelectedDate(new Date());
   }, []);
 
-  const onSelectedDateChange = React.useCallback((event) => {
-    setSelectedDate(event.date);
+  const handleSelectedDateChange = useCallback((event: MbscSelectedDateChangeEvent) => {
+    setSelectedDate(new Date(event.date as string));
   }, []);
 
-  const signIn = React.useCallback(() => {
-    googleCalendarSync.signIn().catch(onError);
-  }, [onError]);
+  const signIn = useCallback(() => {
+    googleCalendarSync.signIn().catch(handleError);
+  }, [handleError]);
 
-  const signOut = React.useCallback(() => {
-    googleCalendarSync.signOut().catch(onError);
-  }, [onError]);
+  const signOut = useCallback(() => {
+    googleCalendarSync.signOut().catch(handleError);
+  }, [handleError]);
 
-  const toggleCalendar = React.useCallback(
-    (ev) => {
+  const toggleCalendar = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
-      calendarData[calendarId].checked = checked;
+      if (calendarData) {
+        calendarData[calendarId].checked = checked;
+      }
       if (checked) {
         setLoading(true);
-        setCalendarIds((calIds: any) => [...calIds, calendarId]);
+        setCalendarIds((calIds) => [...calIds, calendarId]);
         googleCalendarSync
-          .getEvents([calendarId], startDate.current, endDate.current)
-          .then((events: any) => {
+          .getEvents([calendarId], startDate.current!, endDate.current!)
+          .then((events) => {
             setLoading(false);
             setEvents((oldEvents) => [...oldEvents, ...events]);
           })
-          .catch(onError);
+          .catch(handleError);
       } else {
-        setCalendarIds((calIds: any) => calIds.filter((item: any) => item !== calendarId));
+        setCalendarIds((calIds) => calIds.filter((item) => item !== calendarId));
         setEvents((oldEvents) => oldEvents.filter((item) => item.googleCalendarId !== calendarId));
       }
     },
-    [calendarData, onError],
+    [calendarData, handleError],
   );
 
-  const renderMyHeader = React.useCallback(
+  const renderMyHeader = useCallback(
     () => (
-      <React.Fragment>
+      <>
         <CalendarNav className="md-sync-events-google-nav" />
         <div className="md-spinner">
           <div className="md-spinner-blade"></div>
@@ -172,31 +154,57 @@ const App: React.FC = () => {
           <CalendarPrev />
           <CalendarNext />
         </div>
-      </React.Fragment>
+      </>
     ),
     [isLoggedIn, navigate, openPopup, signIn],
   );
 
-  const onPageLoading = React.useCallback(
-    (args) => {
-      clearTimeout(debounce.current);
-      startDate.current = args.viewStart;
-      endDate.current = args.viewEnd;
-      debounce.current = setTimeout(() => {
-        if (googleCalendarSync.isSignedIn()) {
+  useEffect(() => {
+    const onSignedIn = () => {
+      setIsLoggedIn(true);
+      googleCalendarSync
+        .getCalendars()
+        .then((calendars) => {
+          const newCalendarIds: string[] = [];
+          const calData: { [key: string]: { [key: string]: boolean } } = {};
+
+          calendars.sort((c: { primary: boolean }) => (c.primary ? -1 : 1));
+
+          for (const c of calendars) {
+            newCalendarIds.push(c.id);
+            calData[c.id] = { checked: true };
+          }
+
+          setCalendarIds(newCalendarIds);
+          setCalendarData(calData);
+          setCalendars(calendars);
           setLoading(true);
-          googleCalendarSync
-            .getEvents(calendarIds, startDate.current, endDate.current)
-            .then((resp: any) => {
-              setEvents(resp);
-              setLoading(false);
-            })
-            .catch(onError);
-        }
-      }, 200);
-    },
-    [calendarIds, onError],
-  );
+          return googleCalendarSync.getEvents(newCalendarIds, startDate.current!, endDate.current!);
+        })
+        .then((events) => {
+          setEvents(events);
+          setLoading(false);
+        })
+        .catch(handleError);
+    };
+
+    const onSignedOut = () => {
+      setIsLoggedIn(false);
+      setCalendars([]);
+      setCalendarIds([]);
+      setCalendarData({});
+      setEvents([]);
+      setOpen(false);
+    };
+
+    // init google client
+    googleCalendarSync.init({
+      apiKey: '<YOUR_GOOGLE_API_KEY>',
+      clientId: '<YOUR_GOOGLE_CLIENT_ID>',
+      onSignedIn: onSignedIn,
+      onSignedOut: onSignedOut,
+    });
+  }, [handleError]);
 
   return (
     <Page className={'md-sync-events-google-cont ' + (isLoading ? 'md-loading-events' : '')}>
@@ -206,13 +214,13 @@ const App: React.FC = () => {
         exclusiveEndDates={true}
         selectedDate={mySelectedDate}
         renderHeader={renderMyHeader}
-        onPageLoading={onPageLoading}
-        onSelectedDateChange={onSelectedDateChange}
+        onPageLoading={handlePageLoading}
+        onSelectedDateChange={handleSelectedDateChange}
       ></Eventcalendar>
       <Popup
         isOpen={isOpen}
         anchor={myAnchor}
-        onClose={onClose}
+        onClose={popupClose}
         width={400}
         touchUi={false}
         showOverlay={false}
@@ -222,8 +230,8 @@ const App: React.FC = () => {
       >
         <div className="mbsc-form-group-inset md-sync-events-google-inset">
           <div className="mbsc-form-group-title">My Calendars</div>
-          {myCalendars.map((cal: any) => (
-            <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+          {myCalendars.map((cal: { summary: string; id: number }) => (
+            <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id]['checked']} onChange={toggleCalendar} />
           ))}
         </div>
         <div className="mbsc-form-group-inset">
@@ -232,6 +240,7 @@ const App: React.FC = () => {
           </Button>
         </div>
       </Popup>
+      <Toast isOpen={isToastOpen} message={toastMessage} onClose={closeToast} />
     </Page>
   );
 };

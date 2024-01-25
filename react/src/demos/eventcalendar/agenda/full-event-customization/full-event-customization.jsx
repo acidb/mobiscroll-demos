@@ -12,17 +12,7 @@ function App() {
 
   const myView = useMemo(() => ({ agenda: { type: 'month' } }), []);
 
-  useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/agenda-events/',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const renderEvent = useCallback(
+  const customEvent = useCallback(
     (data) => (
       <div className="md-full-event">
         <img className="md-full-event-img" src={'https://img.mobiscroll.com/demos/' + data.original.img} />
@@ -42,7 +32,17 @@ function App() {
     [],
   );
 
-  return <Eventcalendar renderEvent={renderEvent} view={myView} data={myEvents} />;
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/agenda-events/',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
+
+  return <Eventcalendar renderEvent={customEvent} view={myView} data={myEvents} />;
 }
 
 export default App;

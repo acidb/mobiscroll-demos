@@ -1,28 +1,38 @@
 import { print } from '@mobiscroll/print';
 import {
-  Eventcalendar,
-  Page,
   Button,
+  Eventcalendar,
   getJson,
-  setOptions,
   MbscCalendarEvent,
-  MbscEventcalendarView /* localeImport */,
+  MbscEventcalendarView,
+  Page,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+
+const MY_MODULES = [print];
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [inst, setInst] = React.useState<Eventcalendar>();
-  const setInstElement = React.useCallback((elm: Eventcalendar) => {
-    setInst(elm);
-  }, []);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [inst, setInst] = useState<Eventcalendar | null>(null);
 
-  React.useEffect(() => {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
+      agenda: { type: 'month' },
+    }),
+    [],
+  );
+
+  const printView = useCallback(() => {
+    inst!.print();
+  }, [inst]);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events: MbscCalendarEvent[]) => {
@@ -32,28 +42,10 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'month' },
-    }),
-    [],
-  );
-
-  const printView = () => {
-    inst!.print();
-  };
-
   return (
     <Page>
       <Button onClick={printView}>Print agenda</Button>
-      <Eventcalendar
-        // theme
-        // locale
-        data={myEvents}
-        view={view}
-        ref={setInstElement}
-        modules={[print]}
-      />
+      <Eventcalendar data={myEvents} view={myView} ref={setInst} modules={MY_MODULES} />
     </Page>
   );
 };

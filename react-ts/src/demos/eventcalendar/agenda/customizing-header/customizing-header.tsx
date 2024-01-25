@@ -1,15 +1,15 @@
 import {
+  Button,
+  CalendarNav,
+  CalendarToday,
   Eventcalendar,
   getJson,
-  setOptions,
-  CalendarNav,
-  Button,
-  CalendarToday,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscSelectedDateChangeEvent,
   SegmentedGroup,
   SegmentedItem,
-  MbscCalendarEvent,
-  MbscEventcalendarView /* localeImport */,
-  MbscSelectedDateChangeEvent,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import './customizing-header.css';
@@ -20,10 +20,9 @@ setOptions({
 });
 
 const App: FC = () => {
-  const [view, setView] = useState('agenda');
+  const [view, setView] = useState<string>('agenda');
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
-
   const [calView, setCalView] = useState<MbscEventcalendarView>({
     agenda: { type: 'month' },
   });

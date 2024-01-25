@@ -13,7 +13,7 @@ function App() {
   const [myEvents, setEvents] = useState([]);
   const [inst, setInst] = useState(null);
 
-  const view = useMemo(() => ({ agenda: { type: 'month' } }), []);
+  const myView = useMemo(() => ({ agenda: { type: 'month' } }), []);
 
   const printView = useCallback(() => {
     inst.print();
@@ -32,7 +32,7 @@ function App() {
   return (
     <Page>
       <Button onClick={printView}>Print agenda</Button>
-      <Eventcalendar data={myEvents} view={view} ref={setInst} modules={MY_MODULES} />
+      <Eventcalendar data={myEvents} view={myView} ref={setInst} modules={MY_MODULES} />
     </Page>
   );
 }

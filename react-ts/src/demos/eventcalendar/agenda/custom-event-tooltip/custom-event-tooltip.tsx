@@ -1,15 +1,16 @@
 import {
-  Eventcalendar,
-  MbscEventcalendarView,
-  setOptions,
-  Popup,
   Button,
+  Eventcalendar,
   formatDate,
-  Toast /* localeImport */,
   MbscCalendarEvent,
+  MbscEventcalendarView,
   MbscEventClickEvent,
+  Popup,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
+import './custom-event-tooltip.css';
 
 setOptions({
   // localeJs,
@@ -25,7 +26,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Headaches morning & afternoon',
     location: 'Topmed, Building A, Room 203',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Leon Porter',
@@ -35,7 +36,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Left abdominal pain',
     location: 'Topmed, Building D, Room 360',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Merv Kenny',
@@ -45,7 +46,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Itchy, red rashes',
     location: 'Topmed, Building D, Room 360',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Derek Austyn',
@@ -55,7 +56,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Nausea & weakness',
     location: 'Rose Medical Center, Room 18',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Jenifer Kalyn',
@@ -65,7 +66,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Cough & fever',
     location: 'Rose Medical Center, Room 18',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Lily Racquel',
@@ -75,7 +76,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Dry, persistent cough & headache',
     location: 'Procare, Building C, Room 12',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Mia Sawyer',
@@ -85,7 +86,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Difficulty sleeping & loss of appetite',
     location: 'Procare, Building C, Room 12',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Fred Valdez',
@@ -95,7 +96,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'High blood pressure',
     location: 'Procare, Building C, Room 40',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Sylvia Cale',
@@ -105,7 +106,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Fever & sore throat',
     location: 'MedStar, Building A, Room 1',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Isadora Lyric',
@@ -115,7 +116,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Constant tiredness & weakness',
     location: 'MedStar, Building A, Room 1',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Jon Candace',
@@ -125,7 +126,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Nausea & weakness',
     location: 'MedStar, Building A, Room 1',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Layton Drake',
@@ -135,7 +136,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Headaches & loss of appetite',
     location: 'Vitalife, Room 160',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Florence Amy',
@@ -145,7 +146,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Dry, persistent cough & headache',
     location: 'Vitalife, Room 160',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Willis Kane',
@@ -155,7 +156,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Back pain',
     location: 'Care Cente, Room 320r',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Theo Calanthia',
@@ -165,7 +166,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Anxiousness & sleeping disorder',
     location: 'Care Center, Room 320',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Ford Kaiden',
@@ -175,7 +176,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Nausea & vomiting',
     location: 'Care Center, Room 206',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Jewell Ryder',
@@ -185,7 +186,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'High blood pressure',
     location: 'Care Center, Room 206',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Antonia Cindra',
@@ -195,7 +196,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Dry, persistent cough',
     location: 'Medica Zone, Building C, Room 2',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Gerry Irma',
@@ -205,7 +206,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Fever & sore throat',
     location: 'Medica Zone, Building C, Room 2',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Carlyn Dorothy',
@@ -215,7 +216,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Tiredness & muscle pain',
     location: 'Medica Zone, Building C, Room 2',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Alma Potter',
@@ -225,7 +226,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'High blood pressure',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Debra Aguilar',
@@ -235,7 +236,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Fever & sore throat',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Tommie Love',
@@ -245,7 +246,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Dry, persistent cough & headache',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Marjorie White',
@@ -255,7 +256,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Back pain',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Brandon Perkins',
@@ -265,7 +266,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Swollen ankles',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Lora Wilson',
@@ -275,7 +276,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Fever & headache',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Ismael Bates',
@@ -285,7 +286,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Tiredness & muscle pain',
     location: 'Care Center, Room 300',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Archie Wilkins',
@@ -295,7 +296,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Fever & headache',
     location: 'Care Center, Room 300',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Christie Baker',
@@ -305,7 +306,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Headaches morning & afternoon',
     location: 'Care Center, Room 300',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Laura Shelton',
@@ -315,7 +316,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: false,
     reason: 'Dry, persistent cough',
     location: 'Care Center, Room 300',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Mary Hudson',
@@ -325,7 +326,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Fever & sore throat',
     location: 'Medica Zone, Room 45',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Ralph Rice',
@@ -335,7 +336,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Left abdominal pain',
     location: 'Medica Zone, Room 45',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Marc Hoffman',
@@ -345,7 +346,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Dry, persistent cough & headache',
     location: 'Medica Zone, Room 45',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Arlene Lyons',
@@ -355,7 +356,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Nausea & weakness',
     location: 'Care Center, Room 202',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Thelma Shaw',
@@ -365,7 +366,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Anxiousness & sleeping disorder',
     location: 'Care Center, Room 202',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Dory Edie',
@@ -375,7 +376,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Right abdominal pain',
     location: 'Vitacure, Building A, Room 203',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Kaylin Toni',
@@ -385,7 +386,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Itchy, red rashes',
     location: 'Vitacure, Building A, Room 203',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Gray Kestrel',
@@ -395,7 +396,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Cough & fever',
     location: 'Vitacure, Building A, Room 203',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Reg Izabelle',
@@ -405,7 +406,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Fever & headache',
     location: 'Medica Zone, Room 13',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Lou Andie',
@@ -415,7 +416,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'High blood pressure',
     location: 'Medica Zone, Room 13',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Yancy Dustin',
@@ -425,7 +426,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Fever & headache',
     location: 'Vitacure, Building E, Room 50',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Terry Clark',
@@ -435,7 +436,7 @@ const defaultAppointments: MbscCalendarEvent[] = [
     confirmed: true,
     reason: 'Swollen ankles',
     location: 'Vitacure, Building E, Room 50',
-    resource: 3,
+    color: '#c77c0a',
   },
 ];
 
@@ -453,7 +454,7 @@ function App() {
   const [buttonType, setButtonType] = useState<
     'info' | 'warning' | 'success' | 'light' | 'dark' | 'primary' | 'secondary' | 'danger' | undefined
   >();
-  const [bgColor, setBgColor] = useState<string | undefined>();
+  const [bgColor, setBgColor] = useState<string>('');
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
 
@@ -486,7 +487,7 @@ function App() {
       setButtonType('success');
     }
 
-    setBgColor(event.color);
+    setBgColor(event.color!);
     setInfo(event.title + ', Age: ' + event.age);
     setTime(time);
     setReason(event.reason);
@@ -510,13 +511,13 @@ function App() {
     setPopupOpen(true);
   }, []);
 
-  const onMouseEnter = useCallback(() => {
+  const handleMouseEnter = useCallback(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
   }, []);
 
-  const onMouseLeave = useCallback(() => {
+  const handleMouseLeave = useCallback(() => {
     timerRef.current = setTimeout(() => {
       setPopupOpen(false);
     }, 200);
@@ -569,7 +570,7 @@ function App() {
         width={350}
         cssClass="md-tooltip"
       >
-        <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <div className="md-tooltip-header" style={{ backgroundColor: bgColor }}>
             <span className="md-tooltip-name-age">{info}</span>
             <span className="md-tooltip-time">{time}</span>

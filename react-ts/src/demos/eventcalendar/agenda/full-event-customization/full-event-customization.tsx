@@ -1,5 +1,12 @@
-import { Eventcalendar, getJson, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Eventcalendar,
+  getJson,
+  MbscCalendarEvent,
+  MbscCalendarEventData,
+  MbscEventcalendarView,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './full-event-customization.css';
 
 setOptions({
@@ -7,32 +14,25 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/agenda-events/',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
+      agenda: { type: 'month' },
+    }),
+    [],
+  );
 
-  const [calView, setCalView] = React.useState<MbscEventcalendarView>({
-    agenda: { type: 'month' },
-  });
-
-  const renderEvent = React.useCallback(
-    (data) => (
+  const customEvent = useCallback(
+    (data: MbscCalendarEventData) => (
       <div className="md-full-event">
-        <img className="md-full-event-img" src={'https://img.mobiscroll.com/demos/' + data.original.img} />
+        <img className="md-full-event-img" src={'https://img.mobiscroll.com/demos/' + data.original!.img} />
         <div className="md-full-event-details">
           <div className="md-full-event-title">{data.title}</div>
           <div className="md-full-event-location">
             <div className="md-full-event-label">Location</div>
-            <div>{data.original.location}</div>
+            <div>{data.original!.location}</div>
           </div>
           <div className="md-full-event-time">
             <div className="md-full-event-label">Time</div>
@@ -44,6 +44,16 @@ const App: React.FC = () => {
     [],
   );
 
-  return <Eventcalendar renderEvent={renderEvent} view={calView} data={myEvents} />;
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/agenda-events/',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
+
+  return <Eventcalendar renderEvent={customEvent} view={myView} data={myEvents} />;
 };
 export default App;

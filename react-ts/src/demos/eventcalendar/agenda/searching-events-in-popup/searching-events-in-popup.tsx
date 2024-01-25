@@ -1,19 +1,21 @@
 import {
-  Eventcalendar,
-  Page,
-  Popup,
-  Input,
   CalendarNav,
-  CalendarPrev,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-  getJson,
+  Eventcalendar,
   formatDate,
+  getJson,
+  Input,
+  MbscCalendarEvent,
+  MbscDateType,
+  MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscPageLoadingEvent,
+  Popup,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react';
 import './searching-events-in-popup.css';
 
 setOptions({
@@ -21,17 +23,16 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [calEvents, setCalEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [listEvents, setListEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [mySelectedEvent, setSelectedEvent] = React.useState<MbscCalendarEvent[]>([]);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [currentDate, setCurrentDate] = React.useState<any>(new Date());
-  const [searchInput, setSearchInput] = React.useState<any>(null);
-  const inputRef = React.useRef<any>();
-  const timerRef = React.useRef<any>(null);
+const App: FC = () => {
+  const [calEvents, setCalEvents] = useState<MbscCalendarEvent[]>([]);
+  const [listEvents, setListEvents] = useState<MbscCalendarEvent[]>([]);
+  const [mySelectedEvent, setSelectedEvent] = useState<MbscCalendarEvent[]>([]);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [currentDate, setCurrentDate] = useState<MbscDateType>(new Date());
+  const [searchInput, setSearchInput] = useState<HTMLElement>();
+  const timerRef = useRef<number>();
 
-  const calView = React.useMemo<MbscEventcalendarView>(
+  const calView = useMemo<MbscEventcalendarView>(
     () => ({
       agenda: {
         type: 'month',
@@ -40,7 +41,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const listView = React.useMemo<MbscEventcalendarView>(
+  const listView = useMemo<MbscEventcalendarView>(
     () => ({
       agenda: {
         type: 'year',
@@ -50,7 +51,11 @@ const App: React.FC = () => {
     [],
   );
 
-  const onSearch = React.useCallback((ev: any) => {
+  const searchInputRef = useCallback((input: Input) => {
+    setSearchInput(input && input.nativeElement);
+  }, []);
+
+  const handleInputChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     const text = ev.target.value;
 
     if (timerRef.current) {
@@ -73,20 +78,20 @@ const App: React.FC = () => {
     }, 200);
   }, []);
 
-  const onFocus = React.useCallback((ev: any) => {
+  const onFocus = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     if (ev.target.value.length > 0) {
       setOpen(true);
     }
   }, []);
 
   const myHeader = () => (
-    <React.Fragment>
+    <>
       <CalendarNav />
       <div className="md-seach-header-bar mbsc-flex-1-0">
         <Input
           startIcon="material-search"
-          ref={inputRef}
-          onChange={onSearch}
+          ref={searchInputRef}
+          onChange={handleInputChange}
           onFocus={onFocus}
           inputStyle="box"
           placeholder="Search events"
@@ -95,12 +100,12 @@ const App: React.FC = () => {
       <CalendarPrev />
       <CalendarToday />
       <CalendarNext />
-    </React.Fragment>
+    </>
   );
 
-  const onPageLoading = React.useCallback((args: any) => {
-    const start = formatDate('YYYY-MM-DD', args.viewStart);
-    const end = formatDate('YYYY-MM-DD', args.viewEnd);
+  const handlePageLoading = useCallback((args: MbscPageLoadingEvent) => {
+    const start = formatDate('YYYY-MM-DD', args.viewStart!);
+    const end = formatDate('YYYY-MM-DD', args.viewEnd!);
 
     setTimeout(() => {
       getJson(
@@ -113,22 +118,18 @@ const App: React.FC = () => {
     });
   }, []);
 
-  const popupInit = React.useCallback(() => {
-    setSearchInput(inputRef.current.nativeElement);
-  }, []);
-
-  const popupClose = React.useCallback(() => {
+  const popupClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const eventClick = React.useCallback((args: any) => {
-    setCurrentDate(args.event.start);
+  const eventClick = useCallback((args: MbscEventClickEvent) => {
+    setCurrentDate(args.event.start!);
     setSelectedEvent([args.event]);
     setOpen(false);
   }, []);
 
   return (
-    <Page>
+    <>
       <Eventcalendar
         className="md-search-events"
         selectMultipleEvents={true}
@@ -137,7 +138,7 @@ const App: React.FC = () => {
         selectedDate={currentDate}
         selectedEvents={mySelectedEvent}
         renderHeader={myHeader}
-        onPageLoading={onPageLoading}
+        onPageLoading={handlePageLoading}
       />
       <Popup
         className="md-search-popup"
@@ -151,12 +152,11 @@ const App: React.FC = () => {
         anchor={searchInput}
         focusElm={searchInput}
         isOpen={isOpen}
-        onInit={popupInit}
         onClose={popupClose}
       >
         <Eventcalendar className="mbsc-popover-list" view={listView} data={listEvents} showControls={false} onEventClick={eventClick} />
       </Popup>
-    </Page>
+    </>
   );
 };
 export default App;

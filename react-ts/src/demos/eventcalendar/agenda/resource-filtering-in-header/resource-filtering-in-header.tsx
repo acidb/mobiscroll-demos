@@ -1,19 +1,19 @@
 import {
-  Eventcalendar,
-  getJson,
-  Toast,
-  setOptions,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext,
+  Eventcalendar,
+  getJson,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscResource /* localeImport */,
+  MbscResource,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './resource-filtering-in-header.css';
 
 setOptions({
@@ -21,18 +21,14 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [selected, setSelected] = React.useState<any>({ 1: true });
-  const [events, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [filteredEvents, setFilteredEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>();
+const App: FC = () => {
+  const [selected, setSelected] = useState<{ [key: number | string]: boolean }>({ 1: true });
+  const [events, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>();
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const calView = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       agenda: {
         type: 'month',
@@ -40,7 +36,7 @@ const App: React.FC = () => {
     }),
     [],
   );
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -67,8 +63,12 @@ const App: React.FC = () => {
     [],
   );
 
-  const filterEvents = React.useCallback(
-    (events: MbscCalendarEvent, selected: any) => {
+  const closeToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const filterEvents = useCallback(
+    (events: MbscCalendarEvent, selected: { [key: number | string]: boolean }) => {
       const evs = [];
       for (let i = 0; i < events.length; ++i) {
         const item = events[i];
@@ -81,7 +81,7 @@ const App: React.FC = () => {
     [myResources],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/filter-resource-events/',
       (events: MbscCalendarEvent[]) => {
@@ -92,7 +92,7 @@ const App: React.FC = () => {
     );
   }, [filterEvents, selected]);
 
-  const filter = (ev: any) => {
+  const filter = (ev: ChangeEvent<HTMLInputElement>) => {
     const value = ev.target.value;
     const checked = ev.target.checked;
 
@@ -102,16 +102,16 @@ const App: React.FC = () => {
 
     filterEvents(events, selected);
 
-    setToastText((checked ? 'Showing ' : 'Hiding ') + document.querySelector('.md-header-filter-name-' + value).textContent + ' events');
+    setToastText((checked ? 'Showing ' : 'Hiding ') + document.querySelector('.md-header-filter-name-' + value)!.textContent + ' events');
     setToastOpen(true);
   };
 
   const customWithNavButtons = () => (
-    <React.Fragment>
+    <>
       <CalendarNav className="md-header-filter-nav" />
       <div className="md-header-filter-controls">
         <SegmentedGroup select="multiple">
-          {myResources.map((res: any) => (
+          {myResources.map((res: MbscResource) => (
             <SegmentedItem key={res.id} value={res.id} checked={selected[res.id]} onChange={filter}>
               <img className="md-header-filter-img" src={res.img} alt={res.name} />
               <span className={'md-header-filter-name md-header-filter-name-' + res.id}>{res.name}</span>
@@ -122,14 +122,14 @@ const App: React.FC = () => {
       <CalendarPrev className="md-header-filter-prev" />
       <CalendarToday />
       <CalendarNext className="md-header-filter-next" />
-    </React.Fragment>
+    </>
   );
 
   return (
     <div>
       <Eventcalendar
         renderHeader={customWithNavButtons}
-        view={calView}
+        view={myView}
         resources={myResources}
         data={filteredEvents}
         cssClass="md-custom-header-filtering"
@@ -143,4 +143,5 @@ const App: React.FC = () => {
     </div>
   );
 };
+
 export default App;

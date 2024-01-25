@@ -1,12 +1,12 @@
 import {
   Eventcalendar,
   getJson,
-  Toast,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
-  setOptions /* localeImport */,
-} from '@mobiscroll/react';
+  setOptions,
+  Toast,
+} from /* localeImport */ '@mobiscroll/react';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 setOptions({
@@ -15,16 +15,11 @@ setOptions({
 });
 
 const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastText, setToastText] = useState<string>();
-  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'month' },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
 
   const onEventClick = useCallback((event: MbscEventClickEvent) => {
     setToastText(event.event.title);
@@ -48,12 +43,7 @@ const App: FC = () => {
   return (
     <div>
       <Eventcalendar data={myEvents} view={myView} onEventClick={onEventClick} />
-      <Toast
-        // theme
-        message={toastText}
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
     </div>
   );
 };

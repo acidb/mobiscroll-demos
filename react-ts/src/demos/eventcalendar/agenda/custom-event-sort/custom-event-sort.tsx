@@ -9,7 +9,7 @@ setOptions({
 const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day == 0 ? -6 : 1);
-const myEvents = [
+const myEvents: MbscCalendarEvent[] = [
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
     title: 'Kate OFF (PROPOSED)',

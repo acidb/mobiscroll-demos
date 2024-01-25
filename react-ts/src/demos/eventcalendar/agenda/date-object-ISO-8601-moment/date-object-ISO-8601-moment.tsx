@@ -1,11 +1,11 @@
 import {
-  Eventcalendar,
-  Page,
   Button,
-  setOptions,
-  MbscEventcalendarView /* localeImport */,
-  MbscDateType,
+  Eventcalendar,
   MbscCalendarEvent,
+  MbscDateType,
+  MbscEventcalendarView,
+  Page,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import moment from 'moment';
 import { FC, useCallback, useMemo, useState } from 'react';
@@ -52,9 +52,9 @@ const App: FC = () => {
       end: new Date(2020, 4, 19, 11, 45),
       text: 'New Event',
     };
-    setDateObjData([...dateObjData, newEvent]);
+    setDateObjData((dateObjData) => [...dateObjData, newEvent]);
     setSelectedObj(new Date(2020, 4, 19));
-  }, [dateObjData]);
+  }, []);
 
   const addISO = useCallback(() => {
     const newEvent = {
@@ -62,9 +62,9 @@ const App: FC = () => {
       end: '2020-05-20T13:00:00',
       text: 'New Event',
     };
-    setISOData([...isoData, newEvent]);
+    setISOData((isoData) => [...isoData, newEvent]);
     setSelectedISO('2020-05-20');
-  }, [isoData]);
+  }, []);
 
   const addMoment = useCallback(() => {
     const newEvent = {
@@ -72,9 +72,9 @@ const App: FC = () => {
       end: moment([2020, 4, 21, 14]),
       text: 'New Event',
     };
-    setMomentData([...momentData, newEvent]);
+    setMomentData((momentData) => [...momentData, newEvent]);
     setSelectedMoment(moment([2020, 4, 21]));
-  }, [momentData]);
+  }, []);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({

@@ -51,7 +51,7 @@ function App() {
     setToastOpen(false);
   }, []);
 
-  const renderAgendaEmpty = useCallback(
+  const customAgendaEmpty = useCallback(
     () => (
       <div className="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/smart-empty-tin-can.png" alt="Empty can" style={{ width: 150, margin: '50px 0' }} />
@@ -70,7 +70,7 @@ function App() {
 
   return (
     <>
-      <Eventcalendar renderAgendaEmpty={renderAgendaEmpty} view={calView} data={myEvents} />
+      <Eventcalendar renderAgendaEmpty={customAgendaEmpty} view={calView} data={myEvents} />
       <Toast message="Add button clicked" isOpen={isToastOpen} onClose={closeToast} />
     </>
   );

@@ -1,12 +1,12 @@
 import {
-  Eventcalendar,
   Button,
+  Eventcalendar,
   getJson,
-  setOptions,
-  Toast,
   MbscCalendarEvent,
+  MbscCalendarEventData,
   MbscEventcalendarView,
-  MbscCalendarEventData /* localeImport */,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './event-content-customization.css';
@@ -58,10 +58,10 @@ const App: FC = () => {
     }
   }, []);
 
-  const add = (data: MbscCalendarEvent) => {
+  const add = useCallback((data: MbscCalendarEvent) => {
     setToastText(data.title + ' clicked');
     setToastOpen(true);
-  };
+  }, []);
 
   const customEventContent = useCallback(
     (data: MbscCalendarEventData) => {
@@ -79,7 +79,7 @@ const App: FC = () => {
         </>
       );
     },
-    [getParticipant],
+    [add, getParticipant],
   );
 
   useEffect(() => {

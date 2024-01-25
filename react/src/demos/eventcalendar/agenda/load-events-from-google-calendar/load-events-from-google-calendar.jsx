@@ -138,7 +138,7 @@ function App() {
     [loadEvents, view],
   );
 
-  const handleToastClose = useCallback(() => {
+  const closeToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -159,7 +159,7 @@ function App() {
         onPageLoading={handlePageLoading}
         renderHeader={customWithNavButtons}
       />
-      <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
+      <Toast isOpen={isToastOpen} message={toastMessage} onClose={closeToast} />
     </>
   );
 }

@@ -26,7 +26,7 @@ function App() {
     setSelectedDate(args.date);
   }, []);
 
-  const handleToastClose = useCallback(() => {
+  const closeToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -54,7 +54,7 @@ function App() {
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>
-      <Toast message="Event added" isOpen={isToastOpen} onClose={handleToastClose} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={closeToast} />
     </Page>
   );
 }

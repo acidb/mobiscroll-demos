@@ -315,6 +315,7 @@ import Root from './routes/root';
 
 import './App.css';
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+import '@mobiscroll/print/dist/css/mobiscroll.min.css';
 
 function App() {
   const router = createBrowserRouter([
