@@ -1,13 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
-  setOptions,
   getJson,
+  locale,
   MbscDropdown,
+  MbscEventcalendar,
   MbscPage,
-  locale
+  setOptions
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // theme

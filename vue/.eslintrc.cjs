@@ -8,7 +8,11 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-prettier/skip-formatting'
   ],
+  plugins: ['import'],
   rules: {
+    'arrow-body-style': ['warn', 'as-needed'],
+    'import/order': ['warn', { alphabetize: { order: 'asc', caseInsensitive: true } }],
+    'sort-imports': ['warn', { ignoreCase: true, ignoreDeclarationSort: true }],
     'vue/multi-word-component-names': 'off'
   },
   parserOptions: {

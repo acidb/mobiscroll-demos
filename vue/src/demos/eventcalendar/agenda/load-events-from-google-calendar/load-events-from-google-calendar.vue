@@ -1,17 +1,17 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { googleCalendarSync } from '@mobiscroll/calendar-integration'
 import {
-  MbscEventcalendar,
   MbscCalendarNav,
-  MbscCalendarPrev,
   MbscCalendarNext,
+  MbscCalendarPrev,
   MbscCalendarToday,
-  MbscToast,
+  MbscEventcalendar,
   MbscSegmented,
   MbscSegmentedGroup,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { googleCalendarSync } from '@mobiscroll/calendar-integration'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

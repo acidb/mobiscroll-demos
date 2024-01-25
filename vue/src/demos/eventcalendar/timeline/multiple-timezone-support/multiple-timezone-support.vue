@@ -1,16 +1,16 @@
 <script setup>
-import { ref } from 'vue'
 import {
+  MbscCalendarNav,
+  MbscCalendarNext,
+  MbscCalendarPrev,
+  MbscCalendarToday,
   MbscEventcalendar,
   MbscSelect,
-  MbscCalendarNav,
-  MbscCalendarPrev,
-  MbscCalendarNext,
-  MbscCalendarToday,
-  setOptions,
-  momentTimezone /* localeImport */
+  momentTimezone,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import * as moment from 'moment-timezone'
+import { ref } from 'vue'
 
 momentTimezone.moment = moment
 

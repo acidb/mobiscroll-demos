@@ -1,5 +1,5 @@
 <script setup>
-import { MbscSelect, localeEs, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { localeEs, MbscSelect, setOptions } from '@mobiscroll/vue'
 
 setOptions({
   // theme
@@ -46,7 +46,6 @@ const myData = [
 </script>
 
 <template>
-  <!-- sets the language of the component -->
   <MbscSelect
     :locale="localeEs"
     :data="myData"
