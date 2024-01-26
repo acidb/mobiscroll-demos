@@ -43,14 +43,13 @@ export default {
         var event = args.original;
         var color = event.color;
 
-        return `<div class="md-buffer md-before-buffer" style={{background: color}}>
+        return `<div class="md-buffer md-before-buffer" style="background: ${color}">
           Prep
-          <span class='mbsc-bold'>{event.bufferBefore} min</span>
+          <span class='mbsc-bold'>${event.bufferBefore} min</span>
           <div class='md-buffer-tail' 
             style="background: radial-gradient(circle at right, transparent 70%, ${color} 0)"
           ></div>
         </div>`
-  
       },
       renderBufferAfter: function (args) {
         var event = args.original;
