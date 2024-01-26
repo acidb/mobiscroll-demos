@@ -59,7 +59,7 @@ export default {
             var event = args.original;
             var color = event.color;
 
-            return ` <div classN="md-buffer md-after-buffer" style="background: ${color}">
+            return ` <div class="md-buffer md-after-buffer" style="background: ${color}">
               Inspection
               <span class='mbsc-bold'>${event.bufferAfter} min</span>
               <div 
