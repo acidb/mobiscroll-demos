@@ -1,4 +1,10 @@
-<mbsc-eventcalendar [data]="myEvents" [view]="view" [selectedDate]="selectedDate"></mbsc-eventcalendar>
-<div class="mbsc-button-group-block">
-  <mbsc-button (click)="addEvent()">Add event to calendar</mbsc-button>
-</div>
+<mbsc-page class="mds-event-data-page">
+  <div class="mds-event-data-cont mbsc-flex-col">
+    <div class="mbsc-flex-none">
+      <mbsc-button (click)="addEvent()" startIcon="plus">Add event to calendar</mbsc-button>
+    </div>
+    <div class="mds-event-data-cal mbsc-flex-1-1">
+      <mbsc-eventcalendar [data]="myEvents" [(selectedDate)]="mySelectedDate" [view]="myView"></mbsc-eventcalendar>
+    </div>
+  </div>
+</mbsc-page>

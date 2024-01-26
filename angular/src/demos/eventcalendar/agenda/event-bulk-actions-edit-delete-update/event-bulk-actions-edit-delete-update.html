@@ -1,27 +1,26 @@
-<mbsc-page class="md-bulk-operations" (keydown)="onKeyDown($event)">
+<mbsc-page class="mds-bulk-actions" (keydown)="onKeyDown($event)">
   <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
-      <div class="mbsc-col-sm-9 mbsc-push-sm-3 md-bulk-operations-border">
+      <div class="mds-bulk-actions-calendar mbsc-col-sm-9 mbsc-push-sm-3">
         <mbsc-eventcalendar
           #calendar
-          [(selectedEvents)]="mySelectedEvents"
           [data]="myEvents"
           [options]="calendarOptions"
+          [(selectedEvents)]="mySelectedEvents"
+          [selectMultipleEvents]="true"
         ></mbsc-eventcalendar>
-        <mbsc-select style="display: none" #menu [(ngModel)]="selectValue" [anchor]="menuAnchor" [options]="menuOptions"> </mbsc-select>
+        <mbsc-select style="display: none" #menu [(ngModel)]="menuAction" [anchor]="menuAnchor" [options]="menuOptions"> </mbsc-select>
       </div>
-      <div class="mbsc-col-sm-3 mbsc-pull-sm-9">
-        <div class="mbsc-form-group">
-          <div class="mbsc-button-group-block">
-            <mbsc-button (click)="selectAllEvents()">Select all from view</mbsc-button>
-            <mbsc-button (click)="resetSelection()">Reset selection</mbsc-button>
-            <mbsc-button (click)="updateSelectedEvents()">Update selected</mbsc-button>
-          </div>
+      <div class="mbsc-col-sm-3 mbsc-pull-sm-9 mbsc-flex-col">
+        <div class="mbsc-button-group-block">
+          <mbsc-button (click)="selectAllEvents()">Select all from view</mbsc-button>
+          <mbsc-button (click)="resetSelection()">Reset selection</mbsc-button>
+          <mbsc-button (click)="updateSelectedEvents()">Update selected</mbsc-button>
         </div>
         <div class="mbsc-form-group-title">Currently selected</div>
-        <div class="mbsc-padding md-selected-event-list">
+        <div class="mds-bulk-actions-event-list mbsc-padding mbsc-flex-1-1">
           <ul>
-            <li *ngFor="let title of eventTitles;">{{title}}</li>
+            <li *ngFor="let event of mySelectedEvents;">{{event.title}}</li>
           </ul>
         </div>
       </div>

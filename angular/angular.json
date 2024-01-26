@@ -20,7 +20,11 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["node_modules/@mobiscroll/angular/dist/css/mobiscroll.min.css", "src/styles.css"],
+            "styles": [
+              "node_modules/@mobiscroll/angular/dist/css/mobiscroll.min.css",
+              "node_modules/@mobiscroll/print/dist/css/mobiscroll.min.css",
+              "src/styles.css"
+            ],
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": false,

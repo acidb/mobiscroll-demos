@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
 import moment from 'moment-timezone';
 
 momentTimezone.moment = moment;
@@ -54,14 +54,6 @@ export class AppComponent {
     },
   ];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
-    view: {
-      agenda: { type: 'week' },
-    },
-    timezonePlugin: momentTimezone,
-    dataTimezone: 'utc',
-    displayTimezone: 'local',
-  };
+  myView: MbscEventcalendarView = { agenda: { type: 'week' } };
+  myTimezonePlugin = momentTimezone;
 }

@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+
+setOptions({
+  // locale,
+  // theme
+});
 
 @Component({
   selector: 'app-agenda-event-content-customization',
@@ -17,43 +22,25 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
-    view: {
-      calendar: { type: 'week' },
-      agenda: { type: 'day' },
-    },
+  myParticipants: { [key: number]: { img: string; name: string } } = {
+    1: { name: 'Barry L.', img: 'https://img.mobiscroll.com/demos/m1.png' },
+    2: { name: 'Hortense T.', img: 'https://img.mobiscroll.com/demos/f1.png' },
+    3: { name: 'Carl H.', img: 'https://img.mobiscroll.com/demos/m2.png' },
   };
 
-  getParticipant(id: number): any {
-    switch (id) {
-      case 1:
-        return {
-          img: 'https://img.mobiscroll.com/demos/m1.png',
-          name: 'Barry L.',
-        };
-      case 2:
-        return {
-          img: 'https://img.mobiscroll.com/demos/f1.png',
-          name: 'Hortense T.',
-        };
-      case 3:
-        return {
-          img: 'https://img.mobiscroll.com/demos/m2.png',
-          name: 'Carl H.',
-        };
-    }
-  }
+  myView: MbscEventcalendarView = {
+    calendar: { type: 'week' },
+    agenda: { type: 'day' },
+  };
 
-  add(ev: any, data: any): void {
+  add(data: MbscCalendarEvent): void {
     this.notify.toast({
       message: data.title + ' clicked',
     });
   }
 
   ngOnInit(): void {
-    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/custom-events/', 'callback').subscribe((resp: any) => {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/custom-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
   }

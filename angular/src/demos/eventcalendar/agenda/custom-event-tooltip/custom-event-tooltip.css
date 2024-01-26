@@ -1,22 +1,22 @@
-.md-tooltip {
+.mds-tooltip {
   font-size: 15px;
   font-weight: 600;
 }
 
-.md-tooltip-header {
+.mds-tooltip-header {
   padding: 12px 16px;
   color: #eee;
 }
 
-.md-tooltip-label {
+.mds-tooltip-label {
   line-height: 32px;
 }
 
-.md-tooltip-button.mbsc-button {
+.mds-tooltip-button.mbsc-button {
   font-size: 14px;
   margin: 0;
 }
 
-.md-tooltip-button.mbsc-material {
+.mds-tooltip-button.mbsc-material {
   font-size: 12px;
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscDateType, MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscDateType, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -14,28 +14,15 @@ setOptions({
   templateUrl: './synchronized-views.html',
 })
 export class AppComponent implements OnInit {
-  selectedDate: MbscDateType;
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-    this.selectedDate = new Date();
-  }
-
+  dayView: MbscEventcalendarView = { agenda: { type: 'day' } };
+  monthView: MbscEventcalendarView = { calendar: { popover: false, labels: false } };
   myEvents: MbscCalendarEvent[] = [];
-
-  monthSettings: MbscEventcalendarOptions = {
-    view: {
-      calendar: { popover: false, labels: false },
-    },
-  };
-
-  daySettings: MbscEventcalendarOptions = {
-    view: {
-      agenda: { type: 'day' },
-    },
-  };
+  selectedDate: MbscDateType = new Date();
 
   ngOnInit(): void {
-    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp: any) => {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
   }

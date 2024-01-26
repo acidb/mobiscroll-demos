@@ -3,20 +3,20 @@
     <div class="mbsc-row">
       <div class="mbsc-col-sm-12 mbsc-col-md-4">
         <div class="mbsc-form-group">
-          <div class="mbsc-form-group-title">Daily schedule</div>
-          <mbsc-eventcalendar [data]="myEvents" [options]="dailySettings"></mbsc-eventcalendar>
+          <div class="mbsc-form-group-title">Daily agenda</div>
+          <mbsc-eventcalendar [data]="myEvents" [view]="dayView"></mbsc-eventcalendar>
         </div>
       </div>
       <div class="mbsc-col-sm-12 mbsc-col-md-4">
         <div class="mbsc-form-group">
-          <div class="mbsc-form-group-title">Weekly schedule</div>
-          <mbsc-eventcalendar [data]="myEvents" [options]="weeklySettings"></mbsc-eventcalendar>
+          <div class="mbsc-form-group-title">Weekly agenda</div>
+          <mbsc-eventcalendar [data]="myEvents" [view]="weekView"></mbsc-eventcalendar>
         </div>
       </div>
       <div class="mbsc-col-sm-12 mbsc-col-md-4">
         <div class="mbsc-form-group">
-          <div class="mbsc-form-group-title">Monthly schedule</div>
-          <mbsc-eventcalendar [data]="myEvents" [options]="monthlySettings"></mbsc-eventcalendar>
+          <div class="mbsc-form-group-title">Monthly agenda</div>
+          <mbsc-eventcalendar [data]="myEvents" [view]="monthView"></mbsc-eventcalendar>
         </div>
       </div>
     </div>

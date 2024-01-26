@@ -1,16 +1,23 @@
-<mbsc-eventcalendar [data]="myEvents" [options]="calSettings" [view]="calView" [headerTemplate]="customTemplate" class="md-google-calendar">
-  <ng-template #customTemplate>
-    <mbsc-calendar-nav class="google-cal-header-nav"></mbsc-calendar-nav>
-    <div class="google-cal-header-picker">
-      <mbsc-segmented-group [(ngModel)]="view" (change)="changeView()">
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [exclusiveEndDates]="true"
+  [headerTemplate]="customHeaderTemplate"
+  [view]="myView"
+  (onPageLoading)="onPageLoading($event)"
+>
+  <ng-template #customHeaderTemplate>
+    <mbsc-calendar-nav class="mds-google-cal-nav"></mbsc-calendar-nav>
+    <div [style.visibility]="isLoading ? 'visible' : 'hidden'" class="mds-loader"></div>
+    <div class="mds-google-cal-switch mbsc-flex-1-0">
+      <mbsc-segmented-group [(ngModel)]="currentView" (change)="changeView()">
         <mbsc-segmented value="month">Month</mbsc-segmented>
         <mbsc-segmented value="week">Week</mbsc-segmented>
         <mbsc-segmented value="day">Day</mbsc-segmented>
         <mbsc-segmented value="agenda">Agenda</mbsc-segmented>
       </mbsc-segmented-group>
     </div>
-    <mbsc-calendar-prev class="google-cal-header-prev"></mbsc-calendar-prev>
-    <mbsc-calendar-today class="google-cal-header-today"></mbsc-calendar-today>
-    <mbsc-calendar-next class="google-cal-header-next"></mbsc-calendar-next>
+    <mbsc-calendar-prev class="mds-google-cal-prev"></mbsc-calendar-prev>
+    <mbsc-calendar-today class="mds-google-cal-today"></mbsc-calendar-today>
+    <mbsc-calendar-next class="mds-google-cal-next"></mbsc-calendar-next>
   </ng-template>
 </mbsc-eventcalendar>

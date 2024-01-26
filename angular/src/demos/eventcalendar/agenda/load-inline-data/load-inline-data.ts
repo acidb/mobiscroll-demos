@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/angular';
 
 const now = new Date();
 
@@ -282,13 +282,5 @@ export class AppComponent {
     },
   ];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
-    view: {
-      agenda: {
-        type: 'month',
-      },
-    },
-  };
+  myView: MbscEventcalendarView = { agenda: { type: 'month' } };
 }

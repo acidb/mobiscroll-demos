@@ -130,11 +130,7 @@ export class AppComponent {
     },
   ];
 
-  myView: MbscEventcalendarView = {
-    agenda: {
-      type: 'week',
-    },
-  };
+  myView: MbscEventcalendarView = { agenda: { type: 'week' } };
 
   orderMyEvents(event: MbscCalendarEvent) {
     return event['accepted'] ? 1 : -1;

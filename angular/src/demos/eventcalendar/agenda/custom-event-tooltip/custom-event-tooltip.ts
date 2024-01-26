@@ -466,10 +466,9 @@ export class AppComponent {
   appointmentTime?: string;
   buttonText?: string;
   buttonType?: 'success' | 'warning';
+  myView: MbscEventcalendarView = { agenda: { type: 'week' } };
   popupAnchor?: HTMLElement;
   timer?: ReturnType<typeof setTimeout>;
-
-  myView: MbscEventcalendarView = { agenda: { type: 'week' } };
 
   onEventHoverIn(args: MbscEventClickEvent): void {
     const event: Appointment = args.event;

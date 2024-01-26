@@ -1,45 +1,36 @@
-<mbsc-page>
+<mbsc-eventcalendar
+  [data]="calEvents"
+  [headerTemplate]="customHeader"
+  [(selectedDate)]="selectedDate"
+  [(selectedEvents)]="selectedEvent"
+  [selectMultipleEvents]="true"
+  [view]="calView"
+  (onPageLoading)="onPageLoading($event)"
+>
+  <ng-template #customHeader>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
+    <div class="mds-search-bar mbsc-flex-1-0">
+      <mbsc-input
+        #searchInput
+        autocomplete="off"
+        inputStyle="box"
+        placeholder="Search events"
+        startIcon="material-search"
+        (input)="onInput($event)"
+        (focusin)="onFocus($event)"
+      ></mbsc-input>
+    </div>
+    <mbsc-calendar-prev></mbsc-calendar-prev>
+    <mbsc-calendar-today></mbsc-calendar-today>
+    <mbsc-calendar-next></mbsc-calendar-next>
+  </ng-template>
+</mbsc-eventcalendar>
+<mbsc-popup #popup [anchor]="searchInput" [focusElm]="searchInput" [options]="popupOptions">
   <mbsc-eventcalendar
-    [data]="calEvents"
-    [view]="calView"
-    [headerTemplate]="myHeader"
-    [selectMultipleEvents]="true"
-    [(selectedDate)]="currentDate"
-    [(selectedEvents)]="mySelectedEvent"
-    class="md-search-events"
-    (onPageLoading)="onPageLoading($event)"
-  >
-    <ng-template #myHeader>
-      <mbsc-calendar-nav></mbsc-calendar-nav>
-      <div class="md-seach-header-bar mbsc-flex-1-0">
-        <mbsc-input
-          #searchInput
-          (input)="onSearch($event)"
-          (focusin)="onFocus($event)"
-          startIcon="material-search"
-          inputStyle="box"
-          placeholder="Search events"
-        ></mbsc-input>
-      </div>
-      <mbsc-calendar-prev></mbsc-calendar-prev>
-      <mbsc-calendar-today></mbsc-calendar-today>
-      <mbsc-calendar-next></mbsc-calendar-next>
-    </ng-template>
-  </mbsc-eventcalendar>
-  <mbsc-popup
-    [options]="popupOptions"
-    class="md-search-popup"
-    [anchor]="searchInput"
-    [focusElm]="searchInput"
-    #popup
-    (onInit)="initPopup()"
-  >
-    <mbsc-eventcalendar
-      [data]="listEvents"
-      [view]="listView"
-      [showControls]="false"
-      class="mbsc-popover-list"
-      (onEventClick)="eventClick($event)"
-    ></mbsc-eventcalendar>
-  </mbsc-popup>
-</mbsc-page>
+    class="mds-search-results"
+    [data]="listEvents"
+    [showControls]="false"
+    [view]="listView"
+    (onEventClick)="onEventClick($event)"
+  ></mbsc-eventcalendar>
+</mbsc-popup>

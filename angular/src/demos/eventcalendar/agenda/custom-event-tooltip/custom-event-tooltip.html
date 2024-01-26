@@ -15,25 +15,25 @@
   [showOverlay]="false"
   [touchUi]="false"
   [width]="350"
-  class="md-tooltip"
+  class="mds-tooltip"
   display="anchored"
 >
   <div (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
-    <div class="md-tooltip-header" [style.background]="appointmentColor">
+    <div class="mds-tooltip-header" [style.background]="appointmentColor">
       <span>{{appointmentInfo}}</span>
       <span class="mbsc-pull-right">{{appointmentTime}}</span>
     </div>
     <div class="mbsc-padding">
-      <div class="md-tooltip-label mbsc-margin">
+      <div class="mds-tooltip-label mbsc-margin">
         Status: <span class="mbsc-light">{{appointmentStatus}}</span>
-        <mbsc-button [color]="buttonType" variant="outline" class="md-tooltip-button mbsc-pull-right" (click)="setAppointmentStatus()">
+        <mbsc-button [color]="buttonType" variant="outline" class="mds-tooltip-button mbsc-pull-right" (click)="setAppointmentStatus()">
           {{buttonText}}
         </mbsc-button>
       </div>
-      <div class="md-tooltip-label mbsc-margin">Reason for visit: <span class="mbsc-light">{{appointmentReason}}</span></div>
-      <div class="md-tooltip-label mbsc-margin">Location: <span class="mbsc-light">{{appointmentLocation}}</span></div>
-      <mbsc-button color="secondary" class="md-tooltip-button" (click)="viewAppointmentFile()">View patient file</mbsc-button>
-      <mbsc-button color="danger" variant="outline" class="md-tooltip-button mbsc-pull-right" (click)="deleteAppointment()">
+      <div class="mds-tooltip-label mbsc-margin">Reason for visit: <span class="mbsc-light">{{appointmentReason}}</span></div>
+      <div class="mds-tooltip-label mbsc-margin">Location: <span class="mbsc-light">{{appointmentLocation}}</span></div>
+      <mbsc-button color="secondary" class="mds-tooltip-button" (click)="viewAppointmentFile()">View patient file</mbsc-button>
+      <mbsc-button color="danger" variant="outline" class="mds-tooltip-button mbsc-pull-right" (click)="deleteAppointment()">
         Delete appointment
       </mbsc-button>
     </div>
