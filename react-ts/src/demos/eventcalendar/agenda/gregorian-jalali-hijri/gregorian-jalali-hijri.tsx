@@ -3,7 +3,7 @@ import {
   getJson,
   hijriCalendar,
   jalaliCalendar,
-  localeAr /* localeImport */,
+  localeAr,
   localeFa,
   MbscCalendarEvent,
   MbscEventcalendarView,

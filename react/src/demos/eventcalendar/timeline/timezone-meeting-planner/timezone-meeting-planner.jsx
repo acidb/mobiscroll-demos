@@ -287,7 +287,7 @@ function App() {
     [createUpdateEvent],
   );
 
-  const closeToast = useCallback(() => setToastOpen(false), []);
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   const handleConfirmClose = useCallback(
     (res) => {
@@ -336,7 +336,7 @@ function App() {
         onEventCreateFailed={handleEventCreateFailed}
         onEventUpdateFailed={handleEventUpdateFailed}
       />
-      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
       <Confirm
         isOpen={isConfirmOpen}
         title="Are you sure you want to proceed?"

@@ -91,7 +91,7 @@ function App() {
     setToastOpen(true);
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -109,7 +109,7 @@ function App() {
         onEventUpdateFailed={handleEventFailed}
         onEventCreateFailed={handleEventFailed}
       />
-      <Toast message="Make sure not to double book" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Make sure not to double book" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

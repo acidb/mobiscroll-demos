@@ -564,7 +564,7 @@ const App: React.FC = () => {
     setInvalid([]);
   }, [flights]);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -611,7 +611,7 @@ const App: React.FC = () => {
         onPageLoaded={handleSecondScroll}
         onDestroy={detachSecondScroll}
       />
-      <Toast display="center" message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast display="center" message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 };

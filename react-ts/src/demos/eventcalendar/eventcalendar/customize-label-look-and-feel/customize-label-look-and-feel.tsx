@@ -5,34 +5,30 @@ import {
   MbscCalendarEventData,
   MbscEventcalendarView,
   MbscEventClickEvent,
+  setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './customize-label-look-and-feel.css';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>();
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/events/?vers=5',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>();
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       calendar: { labels: true },
     }),
     [],
   );
 
-  const renderLabel = React.useCallback<(data: MbscCalendarEventData) => any>((data: MbscCalendarEventData) => {
+  const customLabel = useCallback((data: MbscCalendarEventData) => {
     const original = data.original!;
     if (data.isMultiDay) {
       return (
@@ -42,35 +38,43 @@ const App: React.FC = () => {
       );
     } else {
       return (
-        <React.Fragment>
+        <>
           <div className="single-day-event-dot" style={{ background: original.color }}></div>
           <div className="single-day-event">{original.title}</div>
-        </React.Fragment>
+        </>
       );
     }
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleToastClose = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const onEventClick = React.useCallback((args: MbscEventClickEvent) => {
+  const onEventClick = useCallback((args: MbscEventClickEvent) => {
     setToastText(args.event.title);
     setToastOpen(true);
+  }, []);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/events/?vers=5',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
   }, []);
 
   return (
     <div>
       <Eventcalendar
-        // theme
-        // locale
         // drag
-        renderLabel={renderLabel}
+        renderLabel={customLabel}
         data={myEvents}
-        view={view}
+        view={myView}
         onEventClick={onEventClick}
       />
-      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
     </div>
   );
 };

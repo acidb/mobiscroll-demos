@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const [selectedDate, setSelectedDate] = React.useState<Date>();
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -58,7 +58,7 @@ const App: React.FC = () => {
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>
-      <Toast message="Event added" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 };

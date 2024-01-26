@@ -71,7 +71,7 @@ function App() {
     setToastOpen(true);
   });
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -92,7 +92,7 @@ function App() {
         // theme
         message={toastText}
         isOpen={isToastOpen}
-        onClose={closeToast}
+        onClose={handleCloseToast}
       />
     </div>
   );

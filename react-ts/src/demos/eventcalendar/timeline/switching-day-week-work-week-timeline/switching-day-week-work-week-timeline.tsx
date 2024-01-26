@@ -170,7 +170,7 @@ const App: React.FC = () => {
     setToastOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -193,7 +193,7 @@ const App: React.FC = () => {
         // theme
         message="Can't schedule outside of working hours"
         isOpen={isToastOpen}
-        onClose={closeToast}
+        onClose={handleCloseToast}
       />
     </div>
   );

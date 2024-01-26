@@ -552,7 +552,7 @@ function App() {
     showToast('Appointment deleted');
   }, [appointments, currentEvent.id, showToast]);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -614,7 +614,7 @@ function App() {
           </div>
         </div>
       </Popup>
-      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

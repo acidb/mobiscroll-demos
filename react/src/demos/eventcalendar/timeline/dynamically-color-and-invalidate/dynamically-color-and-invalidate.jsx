@@ -227,7 +227,7 @@ function App() {
     setToastOpen(true);
   }, []);
 
-  const closeToast = useCallback(() => setToastOpen(false), []);
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <Page>
@@ -258,7 +258,7 @@ function App() {
           </div>
         </div>
       </div>
-      <Toast message={toasterMessage} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toasterMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 }

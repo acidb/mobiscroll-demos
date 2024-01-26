@@ -325,7 +325,7 @@ function App() {
     [calendarData, onError],
   );
 
-  const closeToast = useCallback(() => setToastOpen(false), []);
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <Page className={'md-sync-events-outlook-cont ' + (isLoading ? 'md-loading-events' : '')}>
@@ -377,7 +377,7 @@ function App() {
           </Button>
         </div>
       </Popup>
-      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 }

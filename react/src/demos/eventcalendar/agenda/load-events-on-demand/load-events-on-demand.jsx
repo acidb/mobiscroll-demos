@@ -13,7 +13,7 @@ function App() {
 
   const myView = useMemo(() => ({ agenda: { labels: 'month' } }), []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -34,7 +34,7 @@ function App() {
   return (
     <>
       <Eventcalendar data={events} view={myView} onPageLoading={handlePageLoading} />
-      <Toast message="New events loaded" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="New events loaded" isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 }

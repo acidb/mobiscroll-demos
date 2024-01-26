@@ -28,7 +28,7 @@ const App: React.FC = () => {
   const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
   const [toastText, setToastText] = React.useState<string>();
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -135,7 +135,7 @@ const App: React.FC = () => {
         data={filteredEvents}
         cssClass="md-custom-header-filtering"
       />
-      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 };

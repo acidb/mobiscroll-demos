@@ -419,7 +419,7 @@ const App = () => {
     [],
   );
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setIsToastOpen(false);
   }, []);
 
@@ -482,7 +482,7 @@ const App = () => {
   return (
     <>
       <Eventcalendar data={myEvents} resources={myResources} dragToMove={true} renderResource={customResource} view={view} />
-      <Toast message="Comparing up to 3 schedules" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Comparing up to 3 schedules" isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 };

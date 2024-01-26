@@ -3,18 +3,20 @@ import {
   MbscCalendarEvent,
   MbscCellClickEvent,
   MbscEventcalendarView,
-  MbscEventDeleteEvent,
+  MbscEventClickEvent,
+  MbscEventDeletedEvent,
   MbscPageLoadingEvent,
   MbscSelectChangeEvent,
+  MbscSelectedEventsChangeEvent,
   Page,
   Segmented,
   SegmentedGroup,
   Select,
   setOptions,
-  snackbar,
-  toast,
+  Snackbar,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, KeyboardEvent, useCallback, useRef, useState } from 'react';
 import './cut-copy-paste-events-between-calendars.css';
 
 setOptions({
@@ -23,6 +25,7 @@ setOptions({
 });
 
 const today = new Date();
+
 const viewSettings: MbscEventcalendarView = {
   calendar: { labels: 'all' },
 };
@@ -39,28 +42,30 @@ const disabledMenu = [
   { text: 'Delete', value: 'delete', disabled: true },
 ];
 
-const App: React.FC = () => {
-  const [selectValue, setSelectValue] = React.useState<any>();
-  const [menuAnchor, setMenuAnchor] = React.useState<any>();
-  const [activeCalendar, setActiveCalendar] = React.useState<string>('first');
-  const [cutCalendar, setCutCalendar] = React.useState<string>('first');
-  const [toDate, setToDate] = React.useState<any>(new Date());
-  const [firstToDate, setFirstToDate] = React.useState<any>(today);
-  const [secondToDate, setSecondToDate] = React.useState<any>(today);
-  const [originDate, setOriginDate] = React.useState<any>(today);
-  const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
-  const [menuData, setMenuData] = React.useState<any>(menu);
-  const [firstSelectedEvents, setFirstSelectedEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [secondSelectedEvents, setSecondSelectedEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [selectedEvents, setSelectedEvents] = React.useState<any>([]);
-  const [moveEvents, setMoveEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [pastedEvents, setPastedEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [deletedEvents, setDeletedEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const dummyRef: any = React.useRef();
-  const isMenuOpen: any = React.useRef();
-  const action: any = React.useRef();
+const App: FC = () => {
+  const [selectValue, setSelectValue] = useState(null);
+  const [menuAnchor, setMenuAnchor] = useState();
+  const [activeCalendar, setActiveCalendar] = useState<string>('first');
+  const [cutCalendar, setCutCalendar] = useState<string>('first');
+  const [toDate, setToDate] = useState(new Date());
+  const [firstToDate, setFirstToDate] = useState(today);
+  const [secondToDate, setSecondToDate] = useState(today);
+  const [originDate, setOriginDate] = useState(today);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [menuData, setMenuData] = useState(menu);
+  const [firstSelectedEvents, setFirstSelectedEvents] = useState<MbscCalendarEvent[]>([]);
+  const [secondSelectedEvents, setSecondSelectedEvents] = useState<MbscCalendarEvent[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<MbscCalendarEvent[]>([]);
+  const [moveEvents, setMoveEvents] = useState<MbscCalendarEvent[]>([]);
+  const [pastedEvents, setPastedEvents] = useState<MbscCalendarEvent[]>([]);
+  const [deletedEvents, setDeletedEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarButton, setSnackbarButton] = useState<{ action: () => void; text: string }>();
 
-  const [firstEvents, setFirstEvents] = React.useState<MbscCalendarEvent[]>([
+  const [firstEvents, setFirstEvents] = useState<MbscCalendarEvent[]>([
     {
       start: 'dyndatetime(y,m,2,9)',
       end: 'dyndatetime(y,m,6,18)',
@@ -93,7 +98,7 @@ const App: React.FC = () => {
     },
   ]);
 
-  const [secondEvents, setSecondEvents] = React.useState<MbscCalendarEvent[]>([
+  const [secondEvents, setSecondEvents] = useState<MbscCalendarEvent[]>([
     {
       start: 'dyndatetime(y,m,4,8,45)',
       end: 'dyndatetime(y,m,4,10)',
@@ -120,8 +125,20 @@ const App: React.FC = () => {
     },
   ]);
 
-  const onPageLoading = React.useCallback(
-    (args) => {
+  const dummyRef = useRef<HTMLDivElement>(null);
+  const isMenuOpen = useRef<boolean>();
+  const action = useRef<string>();
+
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const handleSnackbarClose = useCallback(() => {
+    setSnackbarOpen(false);
+  }, []);
+
+  const handlePageLoading = useCallback(
+    (args: MbscPageLoadingEvent) => {
       setTimeout(() => {
         if (activeCalendar === 'first') {
           setFirstToDate(args.month!);
@@ -134,8 +151,8 @@ const App: React.FC = () => {
     [activeCalendar],
   );
 
-  const onCellRightClick = React.useCallback(
-    (args) => {
+  const handleCellRightClick = useCallback(
+    (args: MbscCellClickEvent) => {
       if (!isMenuOpen.current) {
         args.domEvent.preventDefault();
         setMenuData(disabledMenu);
@@ -148,14 +165,14 @@ const App: React.FC = () => {
     [isMenuOpen],
   );
 
-  const onEventRightClick = React.useCallback(
-    (args) => {
+  const handleEventRightClick = useCallback(
+    (args: MbscEventClickEvent) => {
       const activeEvents = activeCalendar === 'first' ? firstEvents : secondEvents;
       if (activeEvents.length <= 1) {
         if (activeCalendar === 'first') {
-          setFirstEvents([args.events]); //event
+          setFirstEvents([args.event]);
         } else {
-          setSecondEvents([args.events]); //event
+          setSecondEvents([args.event]);
         }
       }
       args.domEvent.preventDefault();
@@ -169,63 +186,61 @@ const App: React.FC = () => {
     [activeCalendar, firstEvents, secondEvents],
   );
 
-  const onEventDeleted = React.useCallback(
-    (args) => {
-      setDeletedEvents(args.events);
+  const handleEventDeleted = useCallback(
+    (args: MbscEventDeletedEvent) => {
+      setDeletedEvents(args.events!);
       action.current = 'delete';
       setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              const activeEvents = activeCalendar === 'first' ? firstEvents : secondEvents;
-              let eventsToUpdate = [...activeEvents];
-              for (const event of deletedEvents) {
-                eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
-              }
+        setSnackbarButton({
+          action: () => {
+            const activeEvents = activeCalendar === 'first' ? firstEvents : secondEvents;
+            let eventsToUpdate = [...activeEvents];
+            for (const event of deletedEvents) {
+              eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
+            }
 
-              if (activeCalendar === 'first') {
-                setFirstEvents(eventsToUpdate);
-              } else {
-                setSecondEvents(eventsToUpdate);
-              }
+            if (activeCalendar === 'first') {
+              setFirstEvents(eventsToUpdate);
+            } else {
+              setSecondEvents(eventsToUpdate);
+            }
 
-              setDeletedEvents([]);
-            },
-            text: 'Undo',
+            setDeletedEvents([]);
           },
-          duration: 3000,
-          message: 'Event' + (deletedEvents.length === 1 ? '' : 's') + ' deleted',
+          text: 'Undo',
         });
+        setSnackbarMessage('Event' + (deletedEvents.length === 1 ? '' : 's') + ' deleted');
+        setSnackbarOpen(true);
       });
       dummyRef.current!.focus();
     },
     [activeCalendar, deletedEvents, firstEvents, secondEvents],
   );
 
-  const getActiveEvents = React.useCallback(
+  const getActiveEvents = useCallback(
     () => (activeCalendar === 'first' ? firstEvents : secondEvents),
     [activeCalendar, firstEvents, secondEvents],
   );
 
-  const getActiveSelectedEvents = React.useCallback(
+  const getActiveSelectedEvents = useCallback(
     () => (activeCalendar === 'first' ? firstSelectedEvents : secondSelectedEvents),
     [activeCalendar, firstSelectedEvents, secondSelectedEvents],
   );
 
-  const monthDiff = React.useCallback((d1, d2) => d2.getMonth() - d1.getMonth() + 12 * (d2.getFullYear() - d1.getFullYear()), []);
+  const monthDiff = useCallback((d1: Date, d2: Date) => d2.getMonth() - d1.getMonth() + 12 * (d2.getFullYear() - d1.getFullYear()), []);
 
-  const pasteEvents = React.useCallback(() => {
+  const pasteEvents = useCallback(() => {
     const activeEvents = getActiveEvents();
     const activeSelectedEvents = selectedEvents;
     let eventsToUpdate = [...activeEvents];
     if (activeSelectedEvents.length > 0) {
       for (const event of activeSelectedEvents) {
         const newEvent = Object.assign({}, event);
-        const startDate = new Date(event.start!);
-        const endDate = new Date(event.end!);
+        const startDate = new Date(event.start as string);
+        const endDate = new Date(event.end as string);
         const diff = Math.abs(+endDate - +startDate);
 
-        newEvent.start = startDate.setMonth(startDate.getMonth() - monthDiff(toDate, originDate));
+        newEvent.start = new Date(startDate.setMonth(startDate.getMonth() - monthDiff(toDate, originDate)));
         newEvent.end = new Date(startDate.getTime() + diff);
 
         delete newEvent.id;
@@ -254,44 +269,39 @@ const App: React.FC = () => {
         }
 
         setTimeout(() => {
-          snackbar({
-            button: {
-              action: () => {
-                let revertEvs = cutCalendar === 'first' ? firstEvents : secondEvents;
-                for (const event of moveEvents) {
-                  revertEvs = [...revertEvs, event];
-                }
-                if (cutCalendar === 'first') {
-                  setFirstEvents(revertEvs);
-                } else {
-                  setSecondEvents(revertEvs);
-                }
+          setSnackbarButton({
+            action: () => {
+              let revertEvs = cutCalendar === 'first' ? firstEvents : secondEvents;
+              for (const event of moveEvents) {
+                revertEvs = [...revertEvs, event];
+              }
+              if (cutCalendar === 'first') {
+                setFirstEvents(revertEvs);
+              } else {
+                setSecondEvents(revertEvs);
+              }
 
-                let cutEvs = getActiveEvents();
-                for (const event of pastedEvents) {
-                  cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
-                }
-                if (activeCalendar === 'first') {
-                  setFirstEvents(cutEvs);
-                } else {
-                  setSecondEvents(cutEvs);
-                }
-
-                toast({
-                  message: 'Event' + (selectedEvents.length === 1 ? '' : 's') + ' reverted',
-                });
-              },
-              text: 'Undo',
+              let cutEvs = getActiveEvents();
+              for (const event of pastedEvents) {
+                cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
+              }
+              if (activeCalendar === 'first') {
+                setFirstEvents(cutEvs);
+              } else {
+                setSecondEvents(cutEvs);
+              }
+              setToastMessage('Event' + (selectedEvents.length === 1 ? '' : 's') + ' reverted');
+              setToastOpen(true);
             },
-            duration: 3000,
-            message: 'Event' + (selectedEvents.length === 1 ? '' : 's') + ' pasted',
+            text: 'Undo',
           });
+          setSnackbarMessage('Event' + (selectedEvents.length === 1 ? '' : 's') + ' pasted');
+          setSnackbarOpen(true);
         });
         dummyRef.current!.focus();
       } else {
-        toast({
-          message: 'Event' + (activeSelectedEvents.length === 1 ? '' : 's') + ' pasted',
-        });
+        setToastMessage('Event' + (activeSelectedEvents.length === 1 ? '' : 's') + ' pasted');
+        setToastOpen(true);
       }
       if (action.current !== 'copy') {
         setSelectedEvents([]);
@@ -312,7 +322,7 @@ const App: React.FC = () => {
     toDate,
   ]);
 
-  const deleteEvents = React.useCallback(() => {
+  const deleteEvents = useCallback(() => {
     const activeEvents = getActiveEvents();
     let eventsToUpdate = [...activeEvents];
     action.current = 'delete';
@@ -331,43 +341,40 @@ const App: React.FC = () => {
         setSecondEvents(eventsToUpdate);
       }
       setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              for (const event of activeSelectedEvents) {
-                eventsToUpdate = [...eventsToUpdate, event];
-              }
-              if (activeCalendar === 'first') {
-                setFirstEvents(eventsToUpdate);
-              } else {
-                setSecondEvents(eventsToUpdate);
-              }
-              setDeletedEvents([]);
-            },
-            text: 'Undo',
+        setSnackbarButton({
+          action: () => {
+            for (const event of activeSelectedEvents) {
+              eventsToUpdate = [...eventsToUpdate, event];
+            }
+            if (activeCalendar === 'first') {
+              setFirstEvents(eventsToUpdate);
+            } else {
+              setSecondEvents(eventsToUpdate);
+            }
+            setDeletedEvents([]);
           },
-          duration: 3000,
-          message: 'Event' + (activeSelectedEvents.length === 1 ? '' : 's') + ' deleted',
+          text: 'Undo',
         });
+        setSnackbarMessage('Event' + (activeSelectedEvents.length === 1 ? '' : 's') + ' deleted');
+        setSnackbarOpen(true);
       });
       dummyRef.current!.focus();
     }
   }, [activeCalendar, getActiveEvents, getActiveSelectedEvents]);
 
-  const activateAction = React.useCallback(
-    (type) => {
+  const activateAction = useCallback(
+    (type: string) => {
       if (selectedEvents.length > 0) {
         const act = type == 'copy' ? ' copied' : ' cut';
         setOriginDate(toDate);
-        toast({
-          message: 'Event' + (selectedEvents.length === 1 ? '' : 's') + act,
-        });
+        setToastMessage('Event' + (selectedEvents.length === 1 ? '' : 's') + act);
+        setToastOpen(true);
       }
     },
     [selectedEvents, toDate],
   );
 
-  const copyEvents = React.useCallback(() => {
+  const copyEvents = useCallback(() => {
     if (activeCalendar === 'first') {
       if (firstSelectedEvents.length > 0) {
         action.current = 'copy';
@@ -383,7 +390,7 @@ const App: React.FC = () => {
     }
   }, [activeCalendar, firstSelectedEvents, secondSelectedEvents, selectedEvents.length, toDate]);
 
-  const cutEvents = React.useCallback(() => {
+  const cutEvents = useCallback(() => {
     if (activeCalendar === 'first') {
       if (firstSelectedEvents.length > 0) {
         action.current = 'cut';
@@ -403,7 +410,7 @@ const App: React.FC = () => {
     }
   }, [activeCalendar, firstSelectedEvents, secondSelectedEvents, selectedEvents.length, toDate]);
 
-  const undoEvents = React.useCallback(() => {
+  const undoEvents = useCallback(() => {
     const activeEvents = getActiveEvents();
     let eventsToUpdate = [...activeEvents];
     if (action.current === 'delete') {
@@ -442,8 +449,8 @@ const App: React.FC = () => {
     }
   }, [action, activeCalendar, cutCalendar, deletedEvents, firstEvents, getActiveEvents, moveEvents, pastedEvents, secondEvents]);
 
-  const detectAction = React.useCallback(
-    (key) => {
+  const detectAction = useCallback(
+    (key: string) => {
       switch (key) {
         case 'delete': // delete
           deleteEvents();
@@ -466,31 +473,31 @@ const App: React.FC = () => {
     [copyEvents, cutEvents, deleteEvents, pasteEvents, undoEvents],
   );
 
-  const onFirstSelectedEventsChange = React.useCallback((args) => {
+  const onFirstSelectedEventsChange = useCallback((args: MbscSelectedEventsChangeEvent) => {
     setFirstSelectedEvents(args.events);
   }, []);
 
-  const onSecondSelectedEventsChange = React.useCallback((args) => {
+  const onSecondSelectedEventsChange = useCallback((args: MbscSelectedEventsChangeEvent) => {
     setSecondSelectedEvents(args.events);
   }, []);
 
-  const onSelectChange = React.useCallback(
-    (args) => {
+  const onSelectChange = useCallback(
+    (args: MbscSelectChangeEvent) => {
       setSelectValue(args.value);
       detectAction(args.value);
     },
     [detectAction],
   );
 
-  const onSelectClose = React.useCallback(() => {
+  const onSelectClose = useCallback(() => {
     isMenuOpen.current = false;
     setMenuOpen(false);
     // clear selection
     setSelectValue(null);
   }, []);
 
-  const switchCalendar = React.useCallback(
-    (ev) => {
+  const switchCalendar = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
       setActiveCalendar(ev.target.value);
       if (ev.target.value === 'first') {
         setToDate(firstToDate);
@@ -503,7 +510,7 @@ const App: React.FC = () => {
     [firstToDate, secondToDate, setFirstSelectedEvents, setSecondSelectedEvents],
   );
 
-  const handleKeyDown = (ev: any) => {
+  const handleKeyDown = (ev: KeyboardEvent<HTMLDivElement>) => {
     if (ev.ctrlKey || ev.metaKey) {
       detectAction(ev.key);
     }
@@ -539,10 +546,10 @@ const App: React.FC = () => {
                 data={firstEvents}
                 selectedEvents={firstSelectedEvents}
                 onSelectedEventsChange={onFirstSelectedEventsChange}
-                onPageLoading={onPageLoading}
-                onCellRightClick={onCellRightClick}
-                onEventRightClick={onEventRightClick}
-                onEventDeleted={onEventDeleted}
+                onPageLoading={handlePageLoading}
+                onCellRightClick={handleCellRightClick}
+                onEventRightClick={handleEventRightClick}
+                onEventDeleted={handleEventDeleted}
               />
             </div>
             <div id="demo-copy-cut-paste-second-cont" className="mbsc-flex-1-1 md-copy-cut-paste-cont">
@@ -557,10 +564,10 @@ const App: React.FC = () => {
                 data={secondEvents}
                 selectedEvents={secondSelectedEvents}
                 onSelectedEventsChange={onSecondSelectedEventsChange}
-                onPageLoading={onPageLoading}
-                onCellRightClick={onCellRightClick}
-                onEventRightClick={onEventRightClick}
-                onEventDeleted={onEventDeleted}
+                onPageLoading={handlePageLoading}
+                onCellRightClick={handleCellRightClick}
+                onEventRightClick={handleEventRightClick}
+                onEventDeleted={handleEventDeleted}
               />
             </div>
             <Select
@@ -579,6 +586,8 @@ const App: React.FC = () => {
         </div>
         <div tabIndex={-1} ref={dummyRef}></div>
       </div>
+      <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
+      <Snackbar isOpen={isSnackbarOpen} duration={3000} message={snackbarMessage} button={snackbarButton} onClose={handleSnackbarClose} />
     </Page>
   );
 };

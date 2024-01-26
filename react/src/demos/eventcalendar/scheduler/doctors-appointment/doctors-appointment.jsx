@@ -299,7 +299,7 @@ const App = () => {
     setContBg('');
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -336,7 +336,7 @@ const App = () => {
             onEventDragEnter={handleEventDragEnter}
             onEventDragLeave={handleEventDragLeave}
           />
-          <Toast isOpen={isToastOpen} message={toastMessage} onClose={closeToast} />
+          <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleCloseToast} />
         </div>
         <div className="mbsc-col-sm-3 docs-appointment-cont" ref={setDropElm} style={{ backgroundColor: contBg }}>
           <Dropcontainer

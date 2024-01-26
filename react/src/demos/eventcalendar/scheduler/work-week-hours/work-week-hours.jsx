@@ -55,7 +55,7 @@ function App() {
     }
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -84,7 +84,7 @@ function App() {
         // theme
         message={toastText}
         isOpen={isToastOpen}
-        onClose={closeToast}
+        onClose={handleCloseToast}
       />
     </div>
   );

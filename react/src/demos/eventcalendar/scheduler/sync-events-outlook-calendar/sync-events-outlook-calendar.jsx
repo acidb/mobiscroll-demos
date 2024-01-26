@@ -258,7 +258,7 @@ function App() {
     [calendarData, onError],
   );
 
-  const closeToast = useCallback(() => setToastOpen(false), []);
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <Page className="md-sync-events-outlook-cont">
@@ -314,7 +314,7 @@ function App() {
           onEventDelete={handleEventDelete}
         ></Eventcalendar>
       </div>
-      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 }

@@ -556,7 +556,7 @@ function App() {
     setInvalid([]);
   }, [flights]);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -602,7 +602,7 @@ function App() {
         onPageLoaded={handleSecondScroll}
         onDestroy={detachSecondScroll}
       />
-      <Toast display="center" message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast display="center" message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

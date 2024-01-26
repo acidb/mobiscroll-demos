@@ -31,7 +31,7 @@ function App() {
     [],
   );
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -173,7 +173,7 @@ function App() {
         responsive={resp}
         data={myEvents}
       />
-      <Toast message="Edit clicked" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Edit clicked" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

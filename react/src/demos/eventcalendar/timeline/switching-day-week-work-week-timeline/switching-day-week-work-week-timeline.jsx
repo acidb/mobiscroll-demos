@@ -163,7 +163,7 @@ function App() {
     setToastOpen(true);
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -191,7 +191,7 @@ function App() {
         onEventUpdateFailed={eventUpdateFail}
         cssClass="md-switching-timeline-view-cont"
       />
-      <Toast message="Can't schedule outside of working hours" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Can't schedule outside of working hours" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

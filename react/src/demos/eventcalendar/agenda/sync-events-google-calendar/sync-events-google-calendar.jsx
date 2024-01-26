@@ -43,7 +43,7 @@ function App() {
     setToastOpen(true);
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -231,7 +231,7 @@ function App() {
           </Button>
         </div>
       </Popup>
-      <Toast isOpen={isToastOpen} message={toastMessage} onClose={closeToast} />
+      <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleCloseToast} />
     </Page>
   );
 }

@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [isToastOpen, setToastOpen] = React.useState(false);
   const [toastColor, setToastColor] = React.useState('');
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -113,7 +113,7 @@ const App: React.FC = () => {
     <Page>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Toast</div>
-        <Toast message="Message sent" color={toastColor} display={position} isOpen={isToastOpen} onClose={closeToast} />
+        <Toast message="Message sent" color={toastColor} display={position} isOpen={isToastOpen} onClose={handleCloseToast} />
         <div className="mbsc-button-group-block">
           <Button onClick={bottomToast}>Bottom toast</Button>
           <Button onClick={topToast}>Top toast</Button>

@@ -194,7 +194,7 @@ function App() {
     setMenuOpen(false);
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setIsToastOpen(false);
   }, []);
 
@@ -270,7 +270,7 @@ function App() {
         okText="Delete"
         onClose={handleConfirmClose}
       />
-      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 }

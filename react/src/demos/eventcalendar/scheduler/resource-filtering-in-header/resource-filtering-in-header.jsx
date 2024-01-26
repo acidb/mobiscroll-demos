@@ -25,7 +25,7 @@ function App() {
   const [toastText, setToastText] = useState();
   const [isToastOpen, setToastOpen] = useState(false);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -120,7 +120,7 @@ function App() {
         data={filteredEvents}
         cssClass="md-custom-header-filtering"
       />
-      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

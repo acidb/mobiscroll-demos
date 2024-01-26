@@ -546,7 +546,7 @@ function App() {
     setToastOpen(true);
   }, [appointments, currentEvent]);
 
-  const closeToast = useCallback(() => setToastOpen(false), []);
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <>
@@ -558,7 +558,7 @@ function App() {
         onEventHoverOut={handleEventHoverOut}
         onEventClick={handleEventClick}
       />
-      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
       <Popup
         display="anchored"
         isOpen={isPopupOpen}

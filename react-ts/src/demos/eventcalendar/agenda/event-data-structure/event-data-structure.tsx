@@ -42,7 +42,7 @@ const App: FC = () => {
     setSelectedDate(new Date(args.date as string));
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -70,7 +70,7 @@ const App: FC = () => {
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>
-      <Toast message="Event added" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 };

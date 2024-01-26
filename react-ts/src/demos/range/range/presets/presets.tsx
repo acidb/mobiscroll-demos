@@ -22,7 +22,7 @@ const App: React.FC = () => {
     setOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setOpen(false);
   }, []);
 
@@ -83,7 +83,7 @@ const App: React.FC = () => {
           value={value}
         />
       </div>
-      <Toast message={toastMsg} isOpen={isOpen} onClose={closeToast} />
+      <Toast message={toastMsg} isOpen={isOpen} onClose={handleCloseToast} />
     </Page>
   );
 };

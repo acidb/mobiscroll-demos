@@ -1,15 +1,18 @@
 import {
-  Eventcalendar,
   Draggable,
-  Popup,
+  Eventcalendar,
   Input,
-  Textarea,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscEventCreatedEvent,
+  MbscSelectChangeEvent,
+  Popup,
   Select,
   setOptions,
-  Toast,
-  MbscEventcalendarView /* localeImport */,
+  Textarea,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import './external-event-presets.css';
 
 setOptions({
@@ -17,7 +20,7 @@ setOptions({
   // themeJs
 });
 
-const tasks = [
+const myTasks = [
   {
     title: 'Small wrap',
     color: '#637e57',
@@ -72,10 +75,10 @@ const myData = [
   { value: '7', text: 'Payton Sinclair' },
 ];
 
-function Task(props) {
-  const [draggable, setDraggable] = React.useState();
+function Task(props: { data: MbscCalendarEvent }) {
+  const [draggable, setDraggable] = useState<HTMLDivElement>();
 
-  const setDragElm = React.useCallback((elm) => {
+  const setDragElm = useCallback((elm: HTMLDivElement) => {
     setDraggable(elm);
   }, []);
 
@@ -88,23 +91,23 @@ function Task(props) {
   );
 }
 
-const App: React.FC = () => {
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [title, setTitle] = React.useState<string>('');
-  const [details, setDetails] = React.useState<string>('');
-  const [technician, setTechnician] = React.useState<string>('');
-  const [anchor, setAnchor] = React.useState<any>(null);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>();
+const App: FC = () => {
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('');
+  const [details, setDetails] = useState<string>('');
+  const [technician, setTechnician] = useState<string>('');
+  const [anchor, setAnchor] = useState<HTMLElement>();
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>();
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       calendar: { labels: true },
     }),
     [],
   );
 
-  const invalid = React.useMemo(
+  const myInvalid = useMemo(
     () => [
       {
         recurring: {
@@ -116,37 +119,37 @@ const App: React.FC = () => {
     [],
   );
 
-  const fillDialog = React.useCallback((args) => {
-    setTitle(args.event.title);
+  const fillDialog = useCallback((args: MbscEventCreatedEvent) => {
+    setTitle(args.event.title!);
     setDetails(args.event.details);
     setTechnician(args.event.technician);
-    setAnchor(args.target);
+    setAnchor(args.target!);
     setOpen(true);
   }, []);
 
-  const onEventCreated = React.useCallback(
-    (args) => {
+  const handleEventCreated = useCallback(
+    (args: MbscEventCreatedEvent) => {
       fillDialog(args);
     },
     [fillDialog],
   );
 
-  const eventUpdateFail = React.useCallback(() => {
-    setToastText("Can't create event on this date");
+  const handleEventUpdateFailed = useCallback(() => {
+    setToastMessage("Can't create event on this date");
     setToastOpen(true);
   }, []);
 
-  const onClose = React.useCallback(() => {
+  const handlePopupClose = useCallback(() => {
     setOpen(false);
-    setToastText('New task added');
+    setToastMessage('New task added');
     setToastOpen(true);
   }, []);
 
-  const changeSelected = React.useCallback((event: any) => {
+  const handleSelectChange = useCallback((event: MbscSelectChangeEvent) => {
     setTechnician(event.value);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleToastClose = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -155,18 +158,18 @@ const App: React.FC = () => {
       <div className="mbsc-row">
         <div className="mbsc-col-sm-9 external-event-calendar">
           <Eventcalendar
-            view={view}
-            invalid={invalid}
+            view={myView}
+            invalid={myInvalid}
             dragToMove={true}
             externalDrop={true}
-            onEventCreated={onEventCreated}
-            onEventCreateFailed={eventUpdateFail}
-            onEventUpdateFailed={eventUpdateFail}
+            onEventCreated={handleEventCreated}
+            onEventCreateFailed={handleEventUpdateFailed}
+            onEventUpdateFailed={handleEventUpdateFailed}
           />
         </div>
         <div className="mbsc-col-sm-3">
           <div className="mbsc-form-group-title">Available tasks</div>
-          {tasks.map((task, i) => (
+          {myTasks.map((task, i) => (
             <Task key={i} data={task} />
           ))}
         </div>
@@ -179,7 +182,7 @@ const App: React.FC = () => {
           buttons={['ok']}
           anchor={anchor}
           isOpen={isOpen}
-          onClose={onClose}
+          onClose={handlePopupClose}
         >
           <div className="mbsc-form-group">
             <Input label="Task" defaultValue={title} readOnly></Input>
@@ -187,7 +190,7 @@ const App: React.FC = () => {
             <Select
               data={myData}
               value={technician}
-              onChange={changeSelected}
+              onChange={handleSelectChange}
               display="anchored"
               touchUi={false}
               label="Technician"
@@ -196,12 +199,7 @@ const App: React.FC = () => {
           </div>
         </Popup>
       </div>
-      <Toast
-        // theme
-        message={toastText}
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleToastClose} />
     </div>
   );
 };

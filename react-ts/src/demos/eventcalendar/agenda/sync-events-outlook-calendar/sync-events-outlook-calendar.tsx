@@ -6,14 +6,17 @@ import {
   CalendarPrev,
   Eventcalendar,
   MbscCalendarEvent,
+  MbscDateType,
   MbscEventcalendarView,
+  MbscPageLoadingEvent,
+  MbscSelectedDateChangeEvent,
   Page,
   Popup,
   setOptions,
   Switch,
-  toast,
+  toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import './sync-events-outlook-calendar.css';
 
 setOptions({
@@ -21,38 +24,38 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [myCalendars, setCalendars] = React.useState<any>([]);
-  const [calendarIds, setCalendarIds] = React.useState<any>([]);
-  const [calendarData, setCalendarData] = React.useState<any>([]);
-  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
-  const [isLoading, setLoading] = React.useState<boolean>(false);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const buttonRef = React.useRef<any>(null);
-  const [myAnchor, setAnchor] = React.useState<any>(null);
-  const [mySelectedDate, setSelectedDate] = React.useState<any>(new Date());
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [myCalendars, setCalendars] = useState<Array<{ name: string; id: number }>>([]);
+  const [calendarIds, setCalendarIds] = useState<string[]>([]);
+  const [calendarData, setCalendarData] = useState<{ [key: string]: { checked: boolean } }>({});
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const buttonRef = useRef<Button>(null);
+  const [myAnchor, setAnchor] = useState<HTMLElement>();
+  const [mySelectedDate, setSelectedDate] = useState(new Date());
 
-  const { current: view } = React.useRef<MbscEventcalendarView>({ agenda: { type: 'month' } });
+  const { current: view } = useRef<MbscEventcalendarView>({ agenda: { type: 'month' } });
 
-  const debounce: any = React.useRef();
-  const startDate: any = React.useRef();
-  const endDate: any = React.useRef();
+  const debounce = useRef<number>();
+  const startDate = useRef<MbscDateType>();
+  const endDate = useRef<MbscDateType>();
 
-  const onError = React.useCallback((resp) => {
+  const onError = useCallback((resp: { message: string }) => {
     toast({
       message: resp.message,
     });
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const onSignedIn = () => {
       setIsLoggedIn(true);
       outlookCalendarSync
         .getCalendars()
-        .then((calendars: any) => {
+        .then((calendars) => {
           const newCalendarIds = [];
-          const calData: any = {};
+          const calData: { [key: string]: { checked: boolean } } = {};
 
           calendars.sort((c: { isDefaultCalendar: boolean }) => (c.isDefaultCalendar ? -1 : 1));
 
@@ -65,9 +68,9 @@ const App: React.FC = () => {
           setCalendarData(calData);
           setCalendars(calendars);
           setLoading(true);
-          return outlookCalendarSync.getEvents(newCalendarIds, startDate.current, endDate.current);
+          return outlookCalendarSync.getEvents(newCalendarIds, startDate.current as Date, endDate.current as Date);
         })
-        .then((events: any) => {
+        .then((events) => {
           setEvents(events);
           setLoading(false);
         })
@@ -92,57 +95,57 @@ const App: React.FC = () => {
     });
   }, [onError]);
 
-  const onClose = React.useCallback(() => {
+  const onClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const openPopup = React.useCallback(() => {
-    setAnchor(buttonRef.current.nativeElement);
+  const openPopup = useCallback(() => {
+    setAnchor(buttonRef.current!.nativeElement);
     setOpen(true);
   }, []);
 
-  const navigate = React.useCallback(() => {
+  const navigate = useCallback(() => {
     setSelectedDate(new Date());
   }, []);
 
-  const onSelectedDateChange = React.useCallback((event) => {
-    setSelectedDate(event.date);
+  const onSelectedDateChange = useCallback((event: MbscSelectedDateChangeEvent) => {
+    setSelectedDate(new Date(event.date as string));
   }, []);
 
-  const signIn = React.useCallback(() => {
+  const signIn = useCallback(() => {
     outlookCalendarSync.signIn().catch(onError);
   }, [onError]);
 
-  const signOut = React.useCallback(() => {
+  const signOut = useCallback(() => {
     outlookCalendarSync.signOut().catch(onError);
   }, [onError]);
 
-  const toggleCalendar = React.useCallback(
-    (ev) => {
+  const toggleCalendar = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
       calendarData[calendarId].checked = checked;
       if (checked) {
         setLoading(true);
-        setCalendarIds((calIds: any) => [...calIds, calendarId]);
+        setCalendarIds((calIds) => [...calIds, calendarId]);
         outlookCalendarSync
-          .getEvents([calendarId], startDate.current, endDate.current)
-          .then((events: any) => {
+          .getEvents([calendarId], startDate.current as Date, endDate.current as Date)
+          .then((events) => {
             setLoading(false);
             setEvents((oldEvents) => [...oldEvents, ...events]);
           })
           .catch(onError);
       } else {
-        setCalendarIds((calIds: any) => calIds.filter((item: any) => item !== calendarId));
+        setCalendarIds((calIds) => calIds.filter((item) => item !== calendarId));
         setEvents((oldEvents) => oldEvents.filter((item) => item.outlookCalendarId !== calendarId));
       }
     },
     [calendarData, onError],
   );
 
-  const renderMyHeader = React.useCallback(
+  const renderMyHeader = useCallback(
     () => (
-      <React.Fragment>
+      <>
         <CalendarNav className="md-sync-events-outlook-nav" />
         <div className="md-spinner">
           <div className="md-spinner-blade"></div>
@@ -172,13 +175,13 @@ const App: React.FC = () => {
           <CalendarPrev />
           <CalendarNext />
         </div>
-      </React.Fragment>
+      </>
     ),
     [isLoggedIn, navigate, openPopup, signIn],
   );
 
-  const onPageLoading = React.useCallback(
-    (args) => {
+  const onPageLoading = useCallback(
+    (args: MbscPageLoadingEvent) => {
       clearTimeout(debounce.current);
       startDate.current = args.viewStart;
       endDate.current = args.viewEnd;
@@ -186,8 +189,8 @@ const App: React.FC = () => {
         if (outlookCalendarSync.isSignedIn()) {
           setLoading(true);
           outlookCalendarSync
-            .getEvents(calendarIds, startDate.current, endDate.current)
-            .then((resp: any) => {
+            .getEvents(calendarIds, startDate.current as Date, endDate.current as Date)
+            .then((resp) => {
               setEvents(resp);
               setLoading(false);
             })
@@ -222,7 +225,7 @@ const App: React.FC = () => {
       >
         <div className="mbsc-form-group-inset md-sync-events-outlook-inset">
           <div className="mbsc-form-group-title">My Calendars</div>
-          {myCalendars.map((cal: any) => (
+          {myCalendars.map((cal: { name: string; id: number }) => (
             <Switch label={cal.name} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
           ))}
         </div>

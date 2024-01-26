@@ -170,7 +170,7 @@ function App() {
     [],
   );
 
-  const closeToast = useCallback(() => {
+  const handlehandleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -222,7 +222,7 @@ function App() {
           />
         </div>
       </div>
-      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={handlehandleCloseToast} />
     </div>
   );
 }

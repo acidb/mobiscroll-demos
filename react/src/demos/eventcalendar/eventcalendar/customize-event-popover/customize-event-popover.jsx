@@ -56,7 +56,7 @@ function App() {
     [getParticipant],
   );
 
-  const renderEventContent = useCallback(
+  const customEventContent = useCallback(
     (data) => (
       <>
         <div>{data.title}</div>
@@ -86,7 +86,7 @@ function App() {
     <>
       <Eventcalendar
         // drag
-        renderEventContent={renderEventContent}
+        renderEventContent={customEventContent}
         data={myEvents}
         view={myView}
       />

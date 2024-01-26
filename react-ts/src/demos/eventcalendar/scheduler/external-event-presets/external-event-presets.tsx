@@ -163,7 +163,7 @@ const App: React.FC = () => {
     setTechnician(event.value);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -217,7 +217,7 @@ const App: React.FC = () => {
         // theme
         message={toastText}
         isOpen={isToastOpen}
-        onClose={closeToast}
+        onClose={handleCloseToast}
       />
     </div>
   );

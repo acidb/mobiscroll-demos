@@ -419,7 +419,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setIsToastOpen(false);
   }, []);
 
@@ -482,7 +482,7 @@ const App: React.FC = () => {
   return (
     <React.Fragment>
       <Eventcalendar data={myEvents} resources={resources} dragToMove={true} renderResource={renderResource} view={view} />
-      <Toast message="Comparing up to 3 schedules" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Comparing up to 3 schedules" isOpen={isToastOpen} onClose={handleCloseToast} />
     </React.Fragment>
   );
 };

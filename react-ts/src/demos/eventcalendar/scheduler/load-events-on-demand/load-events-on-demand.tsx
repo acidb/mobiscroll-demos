@@ -5,7 +5,7 @@ const App: React.FC = () => {
   const [events, setEvents] = React.useState<MbscCalendarEvent[]>([]);
   const [isToastOpen, setToastOpen] = React.useState(false);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -53,7 +53,7 @@ const App: React.FC = () => {
         view={view}
         onPageLoading={onPageLoading}
       />
-      <Toast message="New events loaded" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="New events loaded" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 };

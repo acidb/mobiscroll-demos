@@ -78,7 +78,7 @@ function App() {
     [loadEvents],
   );
 
-  const closeToast = useCallback(() => setToastOpen(false), []);
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   useEffect(() => {
     googleCalendarSync.init({
@@ -98,7 +98,7 @@ function App() {
         data={events}
         onPageLoading={handlePageLoading}
       />
-      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 }

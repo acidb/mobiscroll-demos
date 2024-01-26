@@ -49,7 +49,7 @@ const App: React.FC = () => {
     setToastOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -67,7 +67,7 @@ const App: React.FC = () => {
         onEventUpdateFailed={onEventFailed}
         onEventCreateFailed={onEventFailed}
       />
-      <Toast message="Make sure not to double book" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Make sure not to double book" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 };

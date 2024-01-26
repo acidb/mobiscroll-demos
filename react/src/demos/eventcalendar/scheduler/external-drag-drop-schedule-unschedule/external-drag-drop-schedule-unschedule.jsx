@@ -106,7 +106,7 @@ function App() {
     [myTasks],
   );
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setIsToastOpen(false);
   }, []);
 
@@ -134,7 +134,7 @@ function App() {
             onEventCreate={handleEventCreate}
             onEventDelete={handleEventDelete}
           />
-          <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+          <Toast message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
         </div>
         <div className="mbsc-col-sm-3 external-drop-cont" ref={setDropElm}>
           <Dropcontainer onItemDrop={handleItemDrop} element={dropCont}>

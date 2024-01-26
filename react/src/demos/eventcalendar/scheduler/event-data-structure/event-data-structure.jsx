@@ -30,7 +30,7 @@ function App() {
     [],
   );
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -58,7 +58,7 @@ function App() {
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>
-      <Toast message="Event added" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

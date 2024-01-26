@@ -196,7 +196,7 @@ function App() {
     setMenuOpen(false);
   }, []);
 
-  const closeToast = useCallback(() => setToastOpen(false), []);
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   const handleConfirmClose = useCallback(
     (result) => {
@@ -295,7 +295,7 @@ function App() {
           </div>
         </div>
       </div>
-      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
       <Confirm
         isOpen={confirmOpen}
         title="Are you sure you want to delete the following events?"

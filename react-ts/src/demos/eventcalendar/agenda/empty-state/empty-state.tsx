@@ -47,7 +47,7 @@ const App: FC = () => {
     setToastOpen(true);
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -71,7 +71,7 @@ const App: FC = () => {
   return (
     <>
       <Eventcalendar renderAgendaEmpty={customAgendaEmpty} view={calView} data={myEvents} />
-      <Toast message="Add button clicked" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Add button clicked" isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 };

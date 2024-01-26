@@ -29,7 +29,7 @@ const App: FC = () => {
     [],
   );
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -101,7 +101,7 @@ const App: FC = () => {
         // theme
         message={toastText}
         isOpen={isToastOpen}
-        onClose={closeToast}
+        onClose={handleCloseToast}
       />
     </div>
   );

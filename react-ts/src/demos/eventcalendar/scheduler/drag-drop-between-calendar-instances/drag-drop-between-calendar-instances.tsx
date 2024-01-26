@@ -176,7 +176,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -223,7 +223,7 @@ const App: React.FC = () => {
         onEventCreated={handleSecondCalEventCreated}
         className="md-drag-drop-second-calendar"
       />
-      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 };

@@ -1,14 +1,17 @@
 import {
-  Eventcalendar,
   Draggable,
   Dropcontainer,
-  setOptions,
+  Eventcalendar,
   getJson,
-  toast,
+  MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscCalendarEvent /* localeImport */,
+  MbscEventCreateEvent,
+  MbscEventDeleteEvent,
+  MbscItemDragEvent,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './external-drag-drop-schedule-unschedule.css';
 
 setOptions({
@@ -16,15 +19,17 @@ setOptions({
   // themeJs
 });
 
-function Task(props: any) {
-  const [draggable, setDraggable] = React.useState<any>();
+function Task(props: { data: MbscCalendarEvent }) {
+  const [draggable, setDraggable] = useState<HTMLDivElement>();
 
-  const setDragElm = React.useCallback((elm) => {
+  const setDragElm = useCallback((elm: HTMLDivElement) => {
     setDraggable(elm);
   }, []);
 
   const event = props.data;
-  const eventLength = Math.round(Math.abs(new Date(event.end).getTime() - new Date(event.start).getTime()) / (60 * 60 * 1000));
+  const eventLength = Math.round(
+    Math.abs(new Date(event.end as string).getTime() - new Date(event.start as string).getTime()) / (60 * 60 * 1000),
+  );
 
   return (
     <div>
@@ -39,10 +44,12 @@ function Task(props: any) {
   );
 }
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-
-  const [myTasks, setTasks] = React.useState<MbscCalendarEvent[]>([
+const App: FC = () => {
+  const [dropCont, setDropCont] = useState<HTMLDivElement | null>(null);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [myTasks, setTasks] = useState<MbscCalendarEvent[]>([
     {
       id: 1,
       title: 'Product team meeting',
@@ -73,37 +80,33 @@ const App: React.FC = () => {
     },
   ]);
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       calendar: { labels: true },
     }),
     [],
   );
 
-  const [dropCont, setDropCont] = React.useState<any>();
-  const setDropElm = React.useCallback((elm: any) => {
-    setDropCont(elm);
-  }, []);
+  // const setDropElm = useCallback((elm: any) => {
+  //   setDropCont(elm);
+  // }, []);
 
-  const onEventCreate = React.useCallback(
-    (args: any) => {
+  const handleEventCreate = useCallback(
+    (args: MbscEventCreateEvent) => {
       setTasks(myTasks.filter((item) => item.id !== args.event.id));
-
-      toast({
-        message: args.event.title + ' added',
-      });
+      setToastMessage(args.event.title + ' added');
+      setToastOpen(true);
     },
     [myTasks],
   );
 
-  const onEventDelete = React.useCallback((args: any) => {
-    toast({
-      message: args.event.title + ' unscheduled',
-    });
+  const handleEventDelete = useCallback((args: MbscEventDeleteEvent) => {
+    setToastMessage(args.event.title + ' unscheduled');
+    setToastOpen(true);
   }, []);
 
-  const onItemDrop = React.useCallback(
-    (args: any) => {
+  const handleItemDrop = useCallback(
+    (args: MbscItemDragEvent) => {
       if (args.data) {
         setTasks([...myTasks, args.data]);
       }
@@ -111,7 +114,11 @@ const App: React.FC = () => {
     [myTasks],
   );
 
-  React.useEffect(() => {
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/drag-drop-events/5',
       (events: MbscCalendarEvent[]) => {
@@ -127,17 +134,17 @@ const App: React.FC = () => {
         <div className="mbsc-col-sm-9 external-drop-calendar">
           <Eventcalendar
             data={myEvents}
-            view={view}
+            view={myView}
             dragToMove={true}
             dragToCreate={true}
             externalDrop={true}
             externalDrag={true}
-            onEventCreate={onEventCreate}
-            onEventDelete={onEventDelete}
+            onEventCreate={handleEventCreate}
+            onEventDelete={handleEventDelete}
           />
         </div>
-        <div className="mbsc-col-sm-3 external-drop-cont" ref={setDropElm}>
-          <Dropcontainer onItemDrop={onItemDrop} element={dropCont}>
+        <div className="mbsc-col-sm-3 external-drop-cont" ref={setDropCont}>
+          <Dropcontainer onItemDrop={handleItemDrop} element={dropCont}>
             <div className="mbsc-form-group-title">Available tasks</div>
             {myTasks.map((task) => (
               <Task key={task.id} data={task} />
@@ -145,6 +152,7 @@ const App: React.FC = () => {
           </Dropcontainer>
         </div>
       </div>
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleToastClose} />
     </div>
   );
 };

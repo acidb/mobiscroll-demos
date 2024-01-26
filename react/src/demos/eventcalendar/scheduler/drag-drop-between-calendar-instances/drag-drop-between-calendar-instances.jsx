@@ -176,7 +176,7 @@ function App() {
     [],
   );
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -223,7 +223,7 @@ function App() {
         onEventCreated={handleSecondCalEventCreated}
         className="md-drag-drop-second-calendar"
       />
-      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

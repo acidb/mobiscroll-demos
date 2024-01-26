@@ -73,12 +73,12 @@ function App() {
     setEvents([...myEvents, newEvent]);
     setToastOpen(true);
   }, [myEvents]);
-  const closeToast = useCallback(() => setToastOpen(false), []);
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <div>
       <Eventcalendar data={myEvents} view={myView} resources={myResources} />
-      <Toast message="Event added" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={handleCloseToast} />
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>

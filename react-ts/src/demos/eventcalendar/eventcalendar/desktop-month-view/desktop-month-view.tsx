@@ -1,19 +1,25 @@
 import {
   Eventcalendar,
   getJson,
-  Toast,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscEventClickEvent /* localeImport */,
+  MbscEventClickEvent,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>();
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  React.useEffect(() => {
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>();
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events: MbscCalendarEvent[]) => {
@@ -23,16 +29,16 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleToastClose = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const onEventClick = React.useCallback((args: MbscEventClickEvent) => {
+  const handleEventClick = useCallback((args: MbscEventClickEvent) => {
     setToastText(args.event.title);
     setToastOpen(true);
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const view = useMemo<MbscEventcalendarView>(
     () => ({
       calendar: { labels: true },
     }),
@@ -42,14 +48,12 @@ const App: React.FC = () => {
   return (
     <>
       <Eventcalendar
-        // locale
-        // theme
         // drag
         data={myEvents}
         view={view}
-        onEventClick={onEventClick}
+        onEventClick={handleEventClick}
       />
-      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );
 };

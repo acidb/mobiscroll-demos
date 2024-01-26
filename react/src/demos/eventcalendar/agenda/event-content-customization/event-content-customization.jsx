@@ -20,7 +20,7 @@ function App() {
     [],
   );
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -78,7 +78,7 @@ function App() {
   return (
     <>
       <Eventcalendar renderEventContent={customEventContent} view={myView} data={myEvents} />
-      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 }

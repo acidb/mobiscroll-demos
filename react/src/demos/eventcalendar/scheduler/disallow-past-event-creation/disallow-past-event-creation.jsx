@@ -96,7 +96,7 @@ function App() {
     }
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -116,7 +116,7 @@ function App() {
         onEventCreate={handleEventCreate}
         onEventUpdate={handleEventUpdate}
       />
-      <Toast isOpen={isToastOpen} message={toastMessage} onClose={closeToast} />
+      <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleCloseToast} />
     </>
   );
 }

@@ -100,7 +100,7 @@ function App() {
     setCalView(calView);
   };
 
-  const closeToast = useCallback(() => setToastOpen(false), []);
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   const customWithNavButtons = useCallback(
     () => (
@@ -153,7 +153,7 @@ function App() {
         onPageLoading={handlePageLoading}
         renderHeader={customWithNavButtons}
       />
-      <Toast message={toastMessage} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 }

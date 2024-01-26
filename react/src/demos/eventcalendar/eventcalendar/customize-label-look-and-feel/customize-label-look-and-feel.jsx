@@ -23,7 +23,7 @@ function App() {
     setToastOpen(true);
   }, []);
 
-  const renderLabel = useCallback(
+  const customLabel = useCallback(
     (data) =>
       data.isMultiDay ? (
         <div style={{ background: data.original.color, color: '#000' }} className="multi-day-event">
@@ -54,7 +54,7 @@ function App() {
     <>
       <Eventcalendar
         // drag
-        renderLabel={renderLabel}
+        renderLabel={customLabel}
         data={myEvents}
         view={myView}
         onEventClick={handleEventClick}
