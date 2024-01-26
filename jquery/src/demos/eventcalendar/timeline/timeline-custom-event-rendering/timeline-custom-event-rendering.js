@@ -43,29 +43,43 @@ export default {
               '</span></div></div>'
             );
           },
-          renderBufferBefore: function (data) {
-            var color = data.event.color;
-        
-            return `<div class="md-buffer md-before-buffer" style="background: ${color}">
-               Car arrival
-            </div>`;
+          renderBufferBefore: function (args) {
+            var event = args.original;
+            var color = event.color;
+
+            return `<div class="md-buffer md-before-buffer" style={{background: color}}>
+              Prep
+              <span class='mbsc-bold'>{event.bufferBefore} min</span>
+              <div class='md-buffer-tail' 
+                style="background: radial-gradient(circle at right, transparent 70%, ${color} 0)"
+              ></div>
+            </div>`
+      
           },
-          renderBufferAfter: function (data) {
-            var color = data.event.color;
-        
-            return `<div class="md-buffer md-after-buffer" style="background: ${color}">
-                Final inspection
-            </div>`;
+          renderBufferAfter: function (args) {
+            var event = args.original;
+            var color = event.color;
+
+            return ` <div classN="md-buffer md-after-buffer" style="background: ${color}">
+              Inspection
+              <span class='mbsc-bold'>${event.bufferAfter} min</span>
+              <div 
+                class='md-buffer-tail' 
+                style="background: radial-gradient(circle at left, transparent 70%, ${color} 0)"
+              ></div>
+             </div>`;
           },
           extendDefaultEvent: function () {
             return {
               taskType: 'cogs',
+              bufferAfter: 60,
+              bufferBefore: 30,
             };
           },
           data: [
             {
               bufferBefore: 30,
-              bufferAfter: 30,
+              bufferAfter: 35,
               start: 'dyndatetime(y,m,d,10,30)',
               end: 'dyndatetime(y,m,d,13)',
               title: 'Tire change',
@@ -74,7 +88,7 @@ export default {
               resource: 1,
             },
             {
-              bufferAfter: 60,
+              bufferAfter: 40,
               bufferBefore: 30,
               start: 'dyndatetime(y,m,d,7)',
               end: 'dyndatetime(y,m,d,10)',
@@ -84,7 +98,7 @@ export default {
               resource: 2,
             },
             {
-              bufferAfter: 30,
+              bufferAfter: 45,
               bufferBefore: 30,
               start: 'dyndatetime(y,m,d,13,30)',
               end: 'dyndatetime(y,m,d,16,30)',
@@ -94,7 +108,7 @@ export default {
               resource: 1,
             },
             {
-              bufferAfter: 30,
+              bufferAfter: 35,
               bufferBefore: 30,
               start: 'dyndatetime(y,m,d,11)',
               end: 'dyndatetime(y,m,d,14)',
@@ -180,36 +194,51 @@ export default {
     box-sizing: content-box;
 }
 
+.md-before-buffer,
+.mbsc-timeline-event-start .md-timeline-template-event,
+.mbsc-timeline-event-start .md-timeline-template-event-cont,
+.mbsc-timeline-event-start .md-timeline-template-event-cont .mbsc-icon {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
 
-.md-timeline-template .mbsc-timeline-event-buffer {
-   overflow: visible; 
-   opacity: 1; 
-   background: transparent;
+.md-after-buffer,
+.mbsc-timeline-event-end .md-timeline-template-event,
+.mbsc-timeline-event-end .md-timeline-template-event-cont,
+.mbsc-timeline-event-end .md-timeline-template-event-cont .mbsc-icon {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .md-buffer {
-    position: absolute;
-    display: flex;
-    width: 100%;
-    font-size: 10px;
-    top: 2px;
-    bottom: 2px;
-    color: #fff;
-    padding: 0 8px;
-    align-items: center;
-    justify-content: center;
-    opacity: .5;
-    box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  font-size: 10px;
+  top: 2px;
+  bottom: 2px;
+  color: #fff;
+  padding: 0 8px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: .5;
+  box-sizing: border-box;
 }
 
-.md-before-buffer {
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+.md-buffer-tail {
+  position: absolute;
+  width: 14px;
+  height: 100%;
+  top: 0;
 }
 
-.md-after-buffer {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+.md-before-buffer .md-buffer-tail {
+  left: 100%;
+}
+
+.md-after-buffer .md-buffer-tail {
+  right: 100%;
 }
 
 .md-timeline-template-event-cont .mbsc-icon:before {

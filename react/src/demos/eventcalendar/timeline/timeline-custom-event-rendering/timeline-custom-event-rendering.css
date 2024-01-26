@@ -29,11 +29,20 @@
   box-sizing: content-box;
 }
 
-.md-timeline-template .mbsc-timeline-event-buffer {
-  /* TODO these might be removed form the product */
-   overflow: visible; 
-   opacity: 1; 
-   background: transparent;
+.md-before-buffer,
+.mbsc-timeline-event-start .md-timeline-template-event,
+.mbsc-timeline-event-start .md-timeline-template-event-cont,
+.mbsc-timeline-event-start .md-timeline-template-event-cont .mbsc-icon {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.md-after-buffer,
+.mbsc-timeline-event-end .md-timeline-template-event,
+.mbsc-timeline-event-end .md-timeline-template-event-cont,
+.mbsc-timeline-event-end .md-timeline-template-event-cont .mbsc-icon {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .md-buffer {
@@ -45,20 +54,26 @@
   bottom: 2px;
   color: #fff;
   padding: 0 8px;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   opacity: .5;
   box-sizing: border-box;
 }
 
-.md-before-buffer {
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+.md-buffer-tail {
+  position: absolute;
+  width: 14px;
+  height: 100%;
+  top: 0;
 }
 
-.md-after-buffer {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+.md-before-buffer .md-buffer-tail {
+  left: 100%;
+}
+
+.md-after-buffer .md-buffer-tail {
+  right: 100%;
 }
 
 .md-timeline-template-event-cont .mbsc-icon:before {

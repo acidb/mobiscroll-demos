@@ -62,12 +62,12 @@ export default {
               );
             }
           },
-          renderBufferBefore: function (data) {
-            var cat = getCategory(data.event.category);
+          renderBufferBefore: function (event) {
+            var cat = getCategory(event.original.category);
             return `<div class="md-buffer md-before-buffer" style="background: ${cat.color}"></div>`;
           },
-          renderBufferAfter: function (data) {
-            var cat = getCategory(data.event.category);
+          renderBufferAfter: function (event) {
+            var cat = getCategory(event.original.category);
             return `<div class="md-buffer md-after-buffer" style="background: ${cat.color}"></div>`;
           },
           onEventClick: function (event) {

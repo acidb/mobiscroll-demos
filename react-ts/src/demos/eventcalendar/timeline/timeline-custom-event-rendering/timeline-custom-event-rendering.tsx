@@ -1,5 +1,6 @@
-import React from 'react';
+import { useCallback, useMemo, FC } from 'react';
 import {
+  setOptions,
   Eventcalendar,
   MbscCalendarEvent,
   MbscCalendarEventData,
@@ -8,10 +9,15 @@ import {
 } from '@mobiscroll/react';
 import './timeline-custom-event-rendering.css';
 
-const App: React.FC = () => {
-  // const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+setOptions({
+  // theme,
+  // lang
+})
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
+const App: FC = () => {
+  // const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+
+  const view = useMemo<MbscEventcalendarView>(() => {
     return {
       timeline: {
         type: 'day',
@@ -19,9 +25,11 @@ const App: React.FC = () => {
     };
   }, []);
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
+  const myEvents = useMemo<MbscCalendarEvent[]>(() => {
     return [
       {
+        bufferBefore: 30,
+        bufferAfter: 35,
         start: 'dyndatetime(y,m,d,10,30)',
         end: 'dyndatetime(y,m,d,13)',
         title: 'Tire change',
@@ -30,6 +38,8 @@ const App: React.FC = () => {
         resource: 1,
       },
       {
+        bufferAfter: 40,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,7)',
         end: 'dyndatetime(y,m,d,10)',
         title: 'Brake maintenance',
@@ -38,6 +48,8 @@ const App: React.FC = () => {
         resource: 2,
       },
       {
+        bufferAfter: 45,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,13,30)',
         end: 'dyndatetime(y,m,d,16,30)',
         title: 'Fluid maintenance',
@@ -46,6 +58,8 @@ const App: React.FC = () => {
         resource: 1,
       },
       {
+        bufferAfter: 35,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,11)',
         end: 'dyndatetime(y,m,d,14)',
         title: 'Oil change',
@@ -54,14 +68,18 @@ const App: React.FC = () => {
         resource: 3,
       },
       {
+        bufferAfter: 60,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,8)',
         end: 'dyndatetime(y,m,d,12)',
-        title: 'Engine inspection',
+        title: 'Engine repair',
         color: '#6c5d45',
         taskType: 'material-search',
         resource: 3,
       },
       {
+        bufferAfter: 45,
+        bufferBefore: 30,
         start: 'dyndatetime(y,m,d,14)',
         end: 'dyndatetime(y,m,d,19)',
         title: 'Car painting',
@@ -72,7 +90,7 @@ const App: React.FC = () => {
     ];
   }, []);
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
+  const myResources = useMemo<MbscResource[]>(() => {
     return [
       {
         id: 1,
@@ -92,26 +110,59 @@ const App: React.FC = () => {
     ];
   }, []);
 
-  const myScheduleEvent = React.useCallback((data) => {
-    const ev = data.original;
-    const color = data.color;
-
+  const myScheduleEvent = useCallback((args: MbscCalendarEventData) => {
+    const ev = args.original!;
+    const color = args.color;
     return (
       <div className="md-timeline-template-event" style={{ borderColor: color, background: color }}>
         <div className="md-timeline-template-event-cont">
-          <span className={'mbsc-icon mbsc-font-icon mbsc-icon-' + ev!.taskType} style={{ background: color }}></span>
+          <span className={'mbsc-icon mbsc-font-icon mbsc-icon-' + ev.taskType} style={{ background: color }}></span>
           <span className="md-timeline-template-time" style={{ color: color }}>
-            {data.start}
+            {args.start}
           </span>
-          <span className="md-timeline-template-title">{ev!.title}</span>
+          <span className="md-timeline-template-title">{ev.title}</span>
         </div>
       </div>
     );
   }, []);
 
-  const myDefaultEvent = React.useCallback(() => {
+  const myBeforeBuffer = useCallback((args: MbscCalendarEventData) => {
+    const event = args.original!;
+    console.log('event?', event)
+    const color = event.color;
+
+    return (
+      <div className="md-buffer md-before-buffer" style={{background: color}}>
+        Prep
+        <span className='mbsc-bold'>{event.bufferBefore} min</span>
+        <div className='md-buffer-tail' 
+          style={{background: `radial-gradient(circle at right, transparent 70%, ${color} 0)`}}
+        ></div>
+      </div>
+    );
+  }, []);
+
+  const myAfterBuffer = useCallback((args: MbscCalendarEventData) => {
+    const event = args.original!;
+    const color = event.color;
+
+    return (
+      <div className="md-buffer md-after-buffer" style={{background: color}}>
+        Inspection
+        <span className='mbsc-bold'>{event.bufferAfter} min</span>
+        <div 
+          className='md-buffer-tail' 
+          style={{background: `radial-gradient(circle at left, transparent 70%, ${color} 0)`}}
+        ></div>
+      </div>
+    );
+  }, []);
+
+  const myDefaultEvent = useCallback(() => {
     return {
       taskType: 'cogs',
+      bufferAfter: 60,
+      bufferBefore: 30,
     };
   }, []);
 
@@ -123,6 +174,8 @@ const App: React.FC = () => {
       data={myEvents}
       resources={myResources}
       renderScheduleEvent={myScheduleEvent}
+      renderBufferBefore={myBeforeBuffer}
+      renderBufferAfter={myAfterBuffer}
       extendDefaultEvent={myDefaultEvent}
       cssClass="md-timeline-template"
     />

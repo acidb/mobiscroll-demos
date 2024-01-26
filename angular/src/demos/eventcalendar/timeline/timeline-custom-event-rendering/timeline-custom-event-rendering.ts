@@ -21,6 +21,8 @@ export class AppComponent {
 
   myEvents: MbscCalendarEvent[] = [
     {
+      bufferBefore: 30,
+      bufferAfter: 35,
       start: 'dyndatetime(y,m,d,10,30)',
       end: 'dyndatetime(y,m,d,13)',
       title: 'Tire change',
@@ -29,6 +31,8 @@ export class AppComponent {
       resource: 1,
     },
     {
+      bufferAfter: 40,
+      bufferBefore: 30,
       start: 'dyndatetime(y,m,d,7)',
       end: 'dyndatetime(y,m,d,10)',
       title: 'Brake maintenance',
@@ -37,6 +41,8 @@ export class AppComponent {
       resource: 2,
     },
     {
+      bufferAfter: 45,
+      bufferBefore: 30,
       start: 'dyndatetime(y,m,d,13,30)',
       end: 'dyndatetime(y,m,d,16,30)',
       title: 'Fluid maintenance',
@@ -45,6 +51,8 @@ export class AppComponent {
       resource: 1,
     },
     {
+      bufferAfter: 35,
+      bufferBefore: 30,
       start: 'dyndatetime(y,m,d,11)',
       end: 'dyndatetime(y,m,d,14)',
       title: 'Oil change',
@@ -53,14 +61,18 @@ export class AppComponent {
       resource: 3,
     },
     {
+      bufferAfter: 60,
+      bufferBefore: 30,
       start: 'dyndatetime(y,m,d,8)',
       end: 'dyndatetime(y,m,d,12)',
-      title: 'Engine inspection',
+      title: 'Engine repair',
       color: '#6c5d45',
       taskType: 'material-search',
       resource: 3,
     },
     {
+      bufferAfter: 45,
+      bufferBefore: 30,
       start: 'dyndatetime(y,m,d,14)',
       end: 'dyndatetime(y,m,d,19)',
       title: 'Car painting',
@@ -91,6 +103,8 @@ export class AppComponent {
   myDefaultEvent() {
     return {
       taskType: 'cogs',
+      bufferAfter: 60,
+      bufferBefore: 30,
     };
   }
 }

@@ -1,9 +1,14 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo } from 'react';
+import { setOptions, Eventcalendar /* localeImport */ } from '@mobiscroll/react';
 import './timeline-custom-event-rendering.css';
 
+setOptions({
+  // theme,
+  // lang
+})
+
 function App() {
-  const view = React.useMemo(() => {
+  const view = useMemo(() => {
     return {
       timeline: {
         type: 'day',
@@ -11,11 +16,11 @@ function App() {
     };
   }, []);
 
-  const myEvents = React.useMemo(() => {
+  const myEvents = useMemo(() => {
     return [
       {
         bufferBefore: 30,
-        bufferAfter: 30,
+        bufferAfter: 35,
         start: 'dyndatetime(y,m,d,10,30)',
         end: 'dyndatetime(y,m,d,13)',
         title: 'Tire change',
@@ -24,7 +29,7 @@ function App() {
         resource: 1,
       },
       {
-        bufferAfter: 60,
+        bufferAfter: 40,
         bufferBefore: 30,
         start: 'dyndatetime(y,m,d,7)',
         end: 'dyndatetime(y,m,d,10)',
@@ -34,7 +39,7 @@ function App() {
         resource: 2,
       },
       {
-        bufferAfter: 30,
+        bufferAfter: 45,
         bufferBefore: 30,
         start: 'dyndatetime(y,m,d,13,30)',
         end: 'dyndatetime(y,m,d,16,30)',
@@ -44,7 +49,7 @@ function App() {
         resource: 1,
       },
       {
-        bufferAfter: 30,
+        bufferAfter: 35,
         bufferBefore: 30,
         start: 'dyndatetime(y,m,d,11)',
         end: 'dyndatetime(y,m,d,14)',
@@ -76,7 +81,7 @@ function App() {
     ];
   }, []);
 
-  const myResources = React.useMemo(() => {
+  const myResources = useMemo(() => {
     return [
       {
         id: 1,
@@ -96,16 +101,16 @@ function App() {
     ];
   }, []);
 
-  const myScheduleEvent = React.useCallback((data) => {
-    const ev = data.original;
-    const color = data.color;
+  const myScheduleEvent = useCallback((args) => {
+    const ev = args.original;
+    const color = args.color;
 
     return (
       <div className="md-timeline-template-event" style={{ borderColor: color, background: color }}>
         <div className="md-timeline-template-event-cont">
           <span className={'mbsc-icon mbsc-font-icon mbsc-icon-' + ev.taskType} style={{ background: color }}></span>
           <span className="md-timeline-template-time" style={{ color: color }}>
-            {data.start}
+            {args.start}
           </span>
           <span className="md-timeline-template-title">{ev.title}</span>
         </div>
@@ -113,36 +118,48 @@ function App() {
     );
   });
 
-  const myBeforeBuffer = React.useCallback((data) => {
-    const color = data.event.color;
+  const myBeforeBuffer = useCallback((args) => {
+    const event = args.original;
+    const color = event.color;
 
     return (
       <div className="md-buffer md-before-buffer" style={{background: color}}>
-        Car arrival
+        Prep
+        <span className='mbsc-bold'>{event.bufferBefore} min</span>
+        <div className='md-buffer-tail' 
+          style={{background: `radial-gradient(circle at right, transparent 70%, ${color} 0)`}}
+        ></div>
       </div>
     );
-  });
+  }, []);
 
-  const myAfterBuffer = React.useCallback((data) => {
-    const color = data.event.color;
+  const myAfterBuffer = useCallback((args) => {
+    const event = args.original;
+    const color = event.color;
 
     return (
       <div className="md-buffer md-after-buffer" style={{background: color}}>
-        Final inspection
+        Inspection
+        <span className='mbsc-bold'>{event.bufferAfter} min</span>
+        <div 
+          className='md-buffer-tail' 
+          style={{background: `radial-gradient(circle at left, transparent 70%, ${color} 0)`}}
+        ></div>
       </div>
     );
-  });
+  }, []);
 
-  const myDefaultEvent = React.useCallback(() => {
+  const myDefaultEvent = useCallback(() => {
     return {
       taskType: 'cogs',
+      bufferAfter: 60,
+      bufferBefore: 30,
     };
-  });
+  }, []);
 
   return (
     <Eventcalendar
-      // theme
-      // locale
+    dragToCreate={true}
       view={view}
       data={myEvents}
       resources={myResources}

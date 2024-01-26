@@ -3,6 +3,8 @@
   [data]="myEvents"
   [resources]="myResources"
   [scheduleEventTemplate]="eventTemplate"
+  [bufferBeforeTemplate]="bufferBefore"
+  [bufferAfterTemplate]="bufferAfter"
   [extendDefaultEvent]="myDefaultEvent"
   class="md-timeline-template"
 ></mbsc-eventcalendar>
@@ -14,5 +16,27 @@
       <span class="md-timeline-template-time" [ngStyle]="{color: data.color}">{{data.start}}</span>
       <span class="md-timeline-template-title">{{data.original.title}}</span>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #bufferBefore let-data>
+  <div class="md-buffer md-after-buffer" [ngStyle]="{background: data.original.color}">
+    Inspection
+    <span class="mbsc-bold">{{ data.original.bufferAfter}}min</span>
+    <div
+      class="md-buffer-tail"
+      [ngStyle]="{ background: 'radial-gradient(circle at left, transparent 70%,' + data.original.color +' 0)'}"
+    ></div>
+  </div>
+</ng-template>
+
+<ng-template #bufferAfter let-data>
+  <div class="md-buffer md-after-buffer" [ngStyle]="{background: data.original.color}">
+    Prep
+    <span class="mbsc-bold">{{ data.original.bufferBefore}}min</span>
+    <div
+      class="md-buffer-tail"
+      [ngStyle]="{ background: 'radial-gradient(circle at right, transparent 70%,' + data.original.color +' 0)'}"
+    ></div>
   </div>
 </ng-template>
