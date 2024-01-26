@@ -84,6 +84,44 @@ export class AppComponent implements OnInit {
     });
   }
 
+  onSignedIn(): void {
+    this.isLoggedIn = true;
+    this.calendarIds = [];
+    googleCalendarSync
+      .getCalendars()
+      .then((calendars) => {
+        calendars.sort((a: { primary: boolean }) => (a.primary ? -1 : 1));
+
+        for (const c of calendars) {
+          this.calendarIds.push(c.id);
+          this.calendarData[c.id] = { checked: true };
+        }
+
+        this.myCalendars = calendars;
+        this.isLoading = true;
+
+        return googleCalendarSync.getEvents(this.calendarIds, this.startDate, this.endDate);
+      })
+      .then((resp) => {
+        this.zone.run(() => {
+          this.myEvents = resp;
+          this.isLoading = false;
+        });
+      })
+      .catch((error) => {
+        this.onError(error);
+      });
+  }
+
+  onSignedOut(): void {
+    this.calendarIds = [];
+    this.calendarData = {};
+    this.isLoggedIn = false;
+    this.myCalendars = [];
+    this.myEvents = [];
+    this.popup.close();
+  }
+
   toggleCalendars(ev: Event, calendarId: string): void {
     const checked = (ev.target as HTMLInputElement).checked;
     this.calendarData[calendarId].checked = checked;
@@ -117,13 +155,13 @@ export class AppComponent implements OnInit {
     this.selectedDate = new Date();
   }
 
-  logOut(): void {
+  signOut(): void {
     googleCalendarSync.signOut().catch((error) => {
       this.onError(error);
     });
   }
 
-  logIn(): void {
+  signIn(): void {
     if (!googleCalendarSync.isSignedIn()) {
       googleCalendarSync.signIn().catch((error) => {
         this.onError(error);
@@ -136,39 +174,10 @@ export class AppComponent implements OnInit {
       apiKey: '<YOUR_GOOGLE_API_KEY>',
       clientId: '<YOUR_GOOGLE_CLIENT_ID>',
       onSignedIn: () => {
-        this.isLoggedIn = true;
-        googleCalendarSync
-          .getCalendars()
-          .then((calendars) => {
-            calendars.sort((a: { primary: boolean }) => (a.primary ? -1 : 1));
-
-            for (const c of calendars) {
-              this.calendarIds = [...this.calendarIds, c.id];
-              this.calendarData[c.id] = { checked: true };
-            }
-
-            this.myCalendars = calendars;
-            this.isLoading = true;
-
-            return googleCalendarSync.getEvents(this.calendarIds, this.startDate, this.endDate);
-          })
-          .then((resp) => {
-            this.zone.run(() => {
-              this.myEvents = resp;
-              this.isLoading = false;
-            });
-          })
-          .catch((error) => {
-            this.onError(error);
-          });
+        this.onSignedIn();
       },
       onSignedOut: () => {
-        this.calendarIds = [];
-        this.calendarData = {};
-        this.isLoggedIn = false;
-        this.myCalendars = [];
-        this.myEvents = [];
-        this.popup.close();
+        this.onSignedOut();
       },
     });
   }

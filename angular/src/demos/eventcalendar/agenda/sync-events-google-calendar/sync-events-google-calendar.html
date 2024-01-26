@@ -10,7 +10,7 @@
     <mbsc-calendar-nav></mbsc-calendar-nav>
     <div [style.visibility]="isLoading ? 'visible' : 'hidden'" class="mds-loader"></div>
     <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
-      <mbsc-button (click)="logIn()" *ngIf="!isLoggedIn">Sync my Google calendars</mbsc-button>
+      <mbsc-button (click)="signIn()" *ngIf="!isLoggedIn">Sync my Google calendars</mbsc-button>
       <mbsc-button #calButton (click)="openPopup()" *ngIf="isLoggedIn">My Calendars</mbsc-button>
       <mbsc-button (click)="navigate()">Today</mbsc-button>
     </div>
@@ -31,6 +31,6 @@
     </ng-container>
   </div>
   <div class="mbsc-form-group-inset">
-    <mbsc-button class="mbsc-button-block" (click)="logOut()">Log out of my account</mbsc-button>
+    <mbsc-button class="mbsc-button-block" (click)="signOut()">Sign out of my account</mbsc-button>
   </div>
 </mbsc-popup>

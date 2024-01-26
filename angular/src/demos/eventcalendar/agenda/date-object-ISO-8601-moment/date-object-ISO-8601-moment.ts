@@ -16,7 +16,7 @@ export class AppComponent {
 
   selectedDateObj = new Date(2020, 4, 19);
   selectedDateISO = '2020-05-20';
-  selectedDateMoment: any = moment([2020, 4, 21]);
+  selectedDateMoment: moment.Moment = moment([2020, 4, 21]);
 
   dateObjEvents: MbscCalendarEvent[] = [
     {
