@@ -91,6 +91,7 @@ function myDefaultEvent() {
     taskType: 'cogs',
     bufferAfter: 60,
     bufferBefore: 30,
+    color: '#239a21'
   }
 }
 
@@ -127,7 +128,7 @@ const myView = {
     <template #bufferAfter="data">
       <div class="md-buffer md-after-buffer" :style="{background: data.original.color}">
         Inspection
-        <span class='mbsc-bold'>{{data.original.bufferAfter}} min</span>
+        <span class='md-buffer-time'>{{data.original.bufferAfter}} min</span>
         <div 
           class='md-buffer-tail' 
           :style="{background: `radial-gradient(circle at left, transparent 70%, ${data.original.color} 0)`}"
@@ -137,7 +138,7 @@ const myView = {
     <template #bufferBefore="data">
       <div class="md-buffer md-after-buffer" :style="{background: data.original.color}">
         Prep
-        <span class='mbsc-bold'>{{data.original.bufferBefore}} min</span>
+        <span class='md-buffer-time'>{{data.original.bufferBefore}} min</span>
         <div 
           class='md-buffer-tail' 
           :style="{background: `radial-gradient(circle at right, transparent 70%, ${data.original.color} 0)`}"
@@ -204,9 +205,11 @@ const myView = {
   bottom: 2px;
   color: #fff;
   padding: 0 8px;
+  line-height: 12px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   opacity: .5;
   box-sizing: border-box;
 }

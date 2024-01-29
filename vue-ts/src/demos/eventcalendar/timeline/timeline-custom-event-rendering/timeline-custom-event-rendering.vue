@@ -79,7 +79,10 @@ const myResources = ref<MbscResource[]>([
 
 function myDefaultEvent() {
   return {
-    taskType: 'cogs'
+    taskType: 'cogs',
+    bufferAfter: 60,
+    bufferBefore: 30,
+    color: '#239a21',
   }
 }
 
@@ -112,6 +115,26 @@ const myView: MbscEventcalendarView = {
           }}</span>
           <span class="md-timeline-template-title">{{ data.original.title }}</span>
         </div>
+      </div>
+    </template>
+    <template #bufferAfter="data">
+      <div class="md-buffer md-after-buffer" :style="{background: data.original.color}">
+        Inspection
+        <span class='md-buffer-time'>{{data.original.bufferAfter}} min</span>
+        <div 
+          class='md-buffer-tail' 
+          :style="{background: `radial-gradient(circle at left, transparent 70%, ${data.original.color} 0)`}"
+        ></div>
+      </div>
+    </template>
+    <template #bufferBefore="data">
+      <div class="md-buffer md-after-buffer" :style="{background: data.original.color}">
+        Prep
+        <span class='md-buffer-time'>{{data.original.bufferBefore}} min</span>
+        <div 
+          class='md-buffer-tail' 
+          :style="{background: `radial-gradient(circle at right, transparent 70%, ${data.original.color} 0)`}"
+        ></div>
       </div>
     </template>
   </MbscEventcalendar>

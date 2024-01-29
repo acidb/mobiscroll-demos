@@ -22,7 +22,7 @@
 <ng-template #bufferBefore let-data>
   <div class="md-buffer md-after-buffer" [ngStyle]="{background: data.original.color}">
     Inspection
-    <span class="mbsc-bold">{{ data.original.bufferAfter}}min</span>
+    <span class="md-buffer-time">{{ data.original.bufferAfter}}min</span>
     <div
       class="md-buffer-tail"
       [ngStyle]="{ background: 'radial-gradient(circle at left, transparent 70%,' + data.original.color +' 0)'}"
@@ -33,7 +33,7 @@
 <ng-template #bufferAfter let-data>
   <div class="md-buffer md-after-buffer" [ngStyle]="{background: data.original.color}">
     Prep
-    <span class="mbsc-bold">{{ data.original.bufferBefore}}min</span>
+    <span class="md-buffer-time">{{ data.original.bufferBefore}}min</span>
     <div
       class="md-buffer-tail"
       [ngStyle]="{ background: 'radial-gradient(circle at right, transparent 70%,' + data.original.color +' 0)'}"

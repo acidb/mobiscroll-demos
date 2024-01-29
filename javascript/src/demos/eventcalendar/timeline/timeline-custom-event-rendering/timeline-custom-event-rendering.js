@@ -45,7 +45,7 @@ export default {
 
         return `<div class="md-buffer md-before-buffer" style="background: ${color}">
           Prep
-          <span class='mbsc-bold'>${event.bufferBefore} min</span>
+          <span class='md-buffer-time'>${event.bufferBefore} min</span>
           <div class='md-buffer-tail' 
             style="background: radial-gradient(circle at right, transparent 70%, ${color} 0)"
           ></div>
@@ -55,9 +55,9 @@ export default {
         var event = args.original;
         var color = event.color;
 
-        return ` <div class="md-buffer md-after-buffer" style="background: ${color}">
+        return `<div class="md-buffer md-after-buffer" style="background: ${color}">
           Inspection
-          <span class='mbsc-bold'>${event.bufferAfter} min</span>
+          <span class='md-buffer-time'>${event.bufferAfter} min</span>
           <div 
             class='md-buffer-tail' 
             style="background: radial-gradient(circle at left, transparent 70%, ${color} 0)"
@@ -69,6 +69,7 @@ export default {
           taskType: 'cogs',
           bufferAfter: 60,
           bufferBefore: 30,
+          color: '#239a21'
         };
       },
       data: [
@@ -214,9 +215,11 @@ export default {
   bottom: 2px;
   color: #fff;
   padding: 0 8px;
+  line-height: 12px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   opacity: .5;
   box-sizing: border-box;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Eventcalendar, getJson, Toast, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './customizing-events.css';
 
@@ -8,12 +8,12 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [myEvents, setEvents] = useState([]);
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
-      'https://trial.mobiscroll.com/multi-events/',
+      'https://trial.dev.mobiscroll.com/multi-events/',
       (events) => {
         setEvents(events);
       },
@@ -21,7 +21,7 @@ function App() {
     );
   }, []);
 
-  const [resp, setResp] = React.useState({
+  const [resp, setResp] = useState({
     xsmall: {
       view: {
         schedule: {
@@ -38,7 +38,7 @@ function App() {
     },
   });
 
-  const closeToast = React.useCallback(() => {
+  const closeToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -126,7 +126,7 @@ function App() {
     setToastOpen(true);
   };
 
-  const renderScheduleEvent = React.useCallback((data) => {
+  const renderScheduleEvent = useCallback((data) => {
     const cat = getCategory(data.original.category);
     if (data.allDay) {
       return (
@@ -160,11 +160,38 @@ function App() {
         </div>
       );
     }
-  });
+  }, []);
+
+  const myBeforeBuffer = useCallback((args) => {
+    var cat = getCategory(args.original.category);
+
+    return (
+      <div className="md-schedule-buffer md-schedule-before-buffer">
+        <div className=' md-schedule-buffer-background' style={{ background: cat.color }}></div>
+        Travel time: <span className='md-buffer-time'>{args.original.bufferBefore} min</span>
+      </div>
+    );
+  }, []);
+
+  const myAfterBuffer = useCallback((args) => {
+    var cat = getCategory(args.original.category);
+
+    return (
+      <div className="md-schedule-buffer md-schedule-after-buffer" style={{ background: cat.color }}></div>
+    );
+  }, []);
+
 
   return (
     <div>
-      <Eventcalendar renderScheduleEvent={renderScheduleEvent} responsive={resp} data={myEvents} />
+      <Eventcalendar
+        dragToMove={true}
+        renderScheduleEvent={renderScheduleEvent}
+        renderBufferAfter={myAfterBuffer}
+        renderBufferBefore={myBeforeBuffer}
+        responsive={resp} 
+        data={myEvents} 
+      />
       <Toast
         // theme
         message="Edit clicked"

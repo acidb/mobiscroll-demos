@@ -54,9 +54,11 @@
   bottom: 2px;
   color: #fff;
   padding: 0 8px;
+  line-height: 12px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   opacity: .5;
   box-sizing: border-box;
 }

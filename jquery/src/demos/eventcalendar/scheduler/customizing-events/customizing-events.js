@@ -62,12 +62,15 @@ export default {
               );
             }
           },
-          renderBufferBefore: function (event) {
-            var cat = getCategory(event.original.category);
-            return `<div class="md-buffer md-before-buffer" style="background: ${cat.color}"></div>`;
+          renderBufferBefore: function (args) {
+            var cat = getCategory(args.original.category);
+            return `<div class="md-schedule-buffer md-schedule-before-buffer">
+              <div class="md-schedule-buffer-background" style="background: ${cat.color}"></div>
+              Travel time: <span class="md-buffer-time">${args.original.bufferBefore} min</span>
+            </div>`;
           },
-          renderBufferAfter: function (event) {
-            var cat = getCategory(event.original.category);
+          renderBufferAfter: function (args) {
+            var cat = getCategory(args.original.category);
             return `<div class="md-buffer md-after-buffer" style="background: ${cat.color}"></div>`;
           },
           onEventClick: function (event) {
@@ -278,35 +281,46 @@ export default {
     margin: 0 2px;
 }
 
-.md-schedule-template .mbsc-schedule-event-buffer {
-  overflow: visible; 
-  opacity: 1; 
-  background: transparent;
-}
 
-.md-buffer {
+.md-schedule-buffer {
   position: absolute;
   display: flex;
   height: 100%;
   font-size: 10px;
-  left: 5px;
-  right: 5px;
-  color: #fff;
-  padding: 0 8px;
-  align-items: center;
+  left: 6px;
+  right: 6px;
+  color:#000;
+  padding: 7px 4px;
+  align-items: start;
   justify-content: center;
-  opacity: .2;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
-.md-before-buffer {
+.md-schedule-buffer-background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: .3;
+  z-index: -1;
+}
+
+.md-schedule-before-buffer {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
-.md-after-buffer {
+.md-schedule-after-buffer {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  opacity: .3;
+} 
+
+.md-buffer-time {
+  padding: 0 3px;
+  font-weight: 600;
 }
   `,
 };
