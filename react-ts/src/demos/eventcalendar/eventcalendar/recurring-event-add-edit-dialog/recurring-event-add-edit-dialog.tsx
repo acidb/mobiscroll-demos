@@ -6,10 +6,18 @@ import {
   Input,
   MbscCalendarEvent,
   MbscDatepickerChangeEvent,
+  MbscDatepickerControl,
   MbscDateType,
   MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscEventCreatedEvent,
+  MbscEventCreateEvent,
   MbscEventDeletedEvent,
+  MbscEventUpdateEvent,
+  MbscPopupButton,
   MbscRecurrenceRule,
+  MbscSelectChangeEvent,
+  MbscSelectedDateChangeEvent,
   Popup,
   Radio,
   RadioGroup,
@@ -21,7 +29,7 @@ import {
   Textarea,
   updateRecurringEvent /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './recurring-event-add-edit-dialog.css';
 
 setOptions({
@@ -78,6 +86,7 @@ const defaultEvents: MbscCalendarEvent[] = [
 const myView: MbscEventcalendarView = {
   calendar: { labels: true },
 };
+
 const responsivePopup = {
   medium: {
     display: 'anchored',
@@ -97,92 +106,28 @@ const responsiveSelect = {
 };
 
 const days = [
-  {
-    name: 'Sunday',
-    short: 'SU',
-    checked: true,
-  },
-  {
-    name: 'Monday',
-    short: 'MO',
-    checked: false,
-  },
-  {
-    name: 'Tuesday',
-    short: 'TU',
-    checked: false,
-  },
-  {
-    name: 'Wednesday',
-    short: 'WE',
-    checked: false,
-  },
-  {
-    name: 'Thursday',
-    short: 'TH',
-    checked: false,
-  },
-  {
-    name: 'Friday',
-    short: 'FR',
-    checked: false,
-  },
-  {
-    name: 'Saturday',
-    short: 'SA',
-    checked: false,
-  },
+  { name: 'Sunday', short: 'SU', checked: true },
+  { name: 'Monday', short: 'MO', checked: false },
+  { name: 'Tuesday', short: 'TU', checked: false },
+  { name: 'Wednesday', short: 'WE', checked: false },
+  { name: 'Thursday', short: 'TH', checked: false },
+  { name: 'Friday', short: 'FR', checked: false },
+  { name: 'Saturday', short: 'SA', checked: false },
 ];
 
 const months = [
-  {
-    value: 1,
-    text: 'January',
-  },
-  {
-    value: 2,
-    text: 'February',
-  },
-  {
-    value: 3,
-    text: 'March',
-  },
-  {
-    value: 4,
-    text: 'April',
-  },
-  {
-    value: 5,
-    text: 'May',
-  },
-  {
-    value: 6,
-    text: 'June',
-  },
-  {
-    value: 7,
-    text: 'July',
-  },
-  {
-    value: 8,
-    text: 'August',
-  },
-  {
-    value: 9,
-    text: 'September',
-  },
-  {
-    value: 10,
-    text: 'October',
-  },
-  {
-    value: 11,
-    text: 'November',
-  },
-  {
-    value: 12,
-    text: 'December',
-  },
+  { value: 1, text: 'January' },
+  { value: 2, text: 'February' },
+  { value: 3, text: 'March' },
+  { value: 4, text: 'April' },
+  { value: 5, text: 'May' },
+  { value: 6, text: 'June' },
+  { value: 7, text: 'July' },
+  { value: 8, text: 'August' },
+  { value: 9, text: 'September' },
+  { value: 10, text: 'October' },
+  { value: 11, text: 'November' },
+  { value: 12, text: 'December' },
 ];
 
 const ordinalList: { [key: number]: string } = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth' };
@@ -226,9 +171,9 @@ const App: FC = () => {
   const [tempEvent, setTempEvent] = useState<MbscCalendarEvent>();
   const [isOpen, setOpen] = useState<boolean>(false);
   const [isEdit, setEdit] = useState<boolean>(false);
-  const [anchor, setAnchor] = useState(null);
-  const [start, startRef] = useState(null);
-  const [end, endRef] = useState(null);
+  const [anchor, setAnchor] = useState<HTMLElement>();
+  const [start, startRef] = useState<Input | null>(null);
+  const [end, endRef] = useState<Input | null>(null);
   const [popupEventTitle, setTitle] = useState<string | undefined>('');
   const [popupEventDescription, setDescription] = useState<string>('');
   const [popupEventAllDay, setAllDay] = useState<boolean>(true);
@@ -237,47 +182,18 @@ const App: FC = () => {
 
   // recurring editor data
   const [repeatData, setRepeatData] = useState([
-    {
-      value: 'norepeat',
-      text: 'Does not repeat',
-    },
-    {
-      value: 'daily',
-      text: 'Daily',
-    },
-    {
-      value: 'weekly',
-      text: 'Weekly',
-    },
-    {
-      value: 'monthly',
-      text: 'Monthly',
-    },
-    {
-      value: 'monthly-pos',
-      text: 'Monthly',
-    },
-    {
-      value: 'yearly',
-      text: 'Yearly',
-    },
-    {
-      value: 'yearly-pos',
-      text: 'Yearly',
-    },
-    {
-      value: 'weekday',
-      text: 'Every weekday (Monday to Friday)',
-    },
-    {
-      value: 'custom',
-      text: 'Custom',
-    },
+    { value: 'norepeat', text: 'Does not repeat' },
+    { value: 'daily', text: 'Daily' },
+    { value: 'weekly', text: 'Weekly' },
+    { value: 'monthly', text: 'Monthly' },
+    { value: 'monthly-pos', text: 'Monthly' },
+    { value: 'yearly', text: 'Yearly' },
+    { value: 'yearly-pos', text: 'Yearly' },
+    { value: 'weekday', text: 'Every weekday (Monday to Friday)' },
+    { value: 'custom', text: 'Custom' },
   ]);
   const [selectedRepeat, setSelectedRepeat] = useState<string>('norepeat');
-  const [repeatType, setRepeatType] = useState<((count: number) => string) | 'daily' | 'weekly' | 'monthly' | 'yearly' | undefined>(
-    'daily',
-  );
+  const [repeatType, setRepeatType] = useState<'daily' | 'weekly' | 'monthly' | 'yearly' | undefined>('daily');
   const [repeatNr, setRepeatNr] = useState<number>(1);
   const [condition, setCondition] = useState<string>('never');
   const [untilDate, setUntilDate] = useState<string>();
@@ -290,12 +206,12 @@ const App: FC = () => {
   const [weekDays, setWeekDays] = useState<string[]>(['SU']);
 
   const [originalRecurringEvent, setOriginalRecurringEvent] = useState<MbscCalendarEvent>();
-  const [eventOccurrence, setEventOccurrence] = useState();
+  const [eventOccurrence, setEventOccurrence] = useState<MbscCalendarEvent>();
   const [recurringText, setRecurringText] = useState<string>();
   const [recurringDelete, setRecurringDelete] = useState<boolean>();
   const [isRecurringEditOpen, setRecurringEditOpen] = useState<boolean>();
   const [newEvent, setNewEvent] = useState<MbscCalendarEvent>();
-  const [recurringEditMode, setRecurringEditMode] = useState<string>('current');
+  const [recurringEditMode, setRecurringEditMode] = useState<'all' | 'current' | 'following'>('current');
   const [editFromPopup, setEditFromPopup] = useState<boolean>(false);
 
   // set custom values to default
@@ -366,10 +282,10 @@ const App: FC = () => {
 
   const getCustomRule = useCallback(() => {
     let recurringRule: MbscRecurrenceRule = {};
-    const d = editFromPopup ? popupEventDate[0] : new Date(tempEvent!.start as string);
-    const weekday = (d as Date).getDay();
-    const monthday = (d as Date).getDate();
-    const weekNr = getWeekDayNum(d as Date);
+    const d = editFromPopup ? (popupEventDate[0] as Date) : new Date(tempEvent!.start as string);
+    const weekday = d.getDay();
+    const monthday = d.getDate();
+    const weekNr = getWeekDayNum(d);
 
     if (editFromPopup && tempEvent!.start && tempEvent!.recurring) {
       switch (selectedRepeat) {
@@ -402,7 +318,7 @@ const App: FC = () => {
           recurringRule = {
             repeat: 'yearly',
             day: monthday,
-            month: (d as Date).getMonth() + 1,
+            month: d.getMonth() + 1,
           };
           break;
         case 'yearly-pos':
@@ -410,7 +326,7 @@ const App: FC = () => {
             ...e,
             recurring: {
               repeat: 'yearly',
-              month: (d as Date).getMonth() + 1,
+              month: d.getMonth() + 1,
               weekDays: days[weekday].short,
               pos: weekNr,
             },
@@ -423,19 +339,19 @@ const App: FC = () => {
           recurringRule = { repeat: 'daily' };
           break;
         case 'weekly':
-          recurringRule = { repeat: 'weekly', weekDays: days[(d as Date).getDay()].short };
+          recurringRule = { repeat: 'weekly', weekDays: days[d.getDay()].short };
           break;
         case 'monthly':
-          recurringRule = { repeat: 'monthly', day: (d as Date).getDate() };
+          recurringRule = { repeat: 'monthly', day: d.getDate() };
           break;
         case 'monthly-pos':
           recurringRule = { repeat: 'monthly', weekDays: days[weekday].short, pos: weekNr };
           break;
         case 'yearly':
-          recurringRule = { repeat: 'yearly', month: (d as Date).getMonth() + 1 };
+          recurringRule = { repeat: 'yearly', month: d.getMonth() + 1 };
           break;
         case 'yearly-pos':
-          recurringRule = { repeat: 'yearly', month: (d as Date).getMonth() + 1, weekDays: days[weekday].short, pos: weekNr };
+          recurringRule = { repeat: 'yearly', month: d.getMonth() + 1, weekDays: days[weekday].short, pos: weekNr };
           break;
         case 'weekday':
           recurringRule = { repeat: 'weekly', weekDays: 'MO,TU,WE,TH,FR' };
@@ -449,14 +365,14 @@ const App: FC = () => {
 
           switch (repeatType) {
             case 'weekly':
-              recurringRule = { ...recurringRule, weekDays: weekDays.join(',') };
+              recurringRule.weekDays = weekDays.join(',');
               break;
             case 'monthly':
-              recurringRule = { ...recurringRule, day: monthlyDay };
+              recurringRule.day = monthlyDay;
               break;
             case 'yearly':
-              recurringRule = { ...recurringRule, day: yearlyDay };
-              recurringRule = { ...recurringRule, month: selectedMonth };
+              recurringRule.day = yearlyDay;
+              recurringRule.month = selectedMonth;
               break;
 
             default:
@@ -464,10 +380,10 @@ const App: FC = () => {
 
           switch (condition) {
             case 'until':
-              recurringRule = { ...recurringRule, until: untilDate };
+              recurringRule.until = untilDate;
               break;
             case 'count':
-              recurringRule = { ...recurringRule, count: occurrences };
+              recurringRule.count = occurrences;
               break;
             default:
           }
@@ -606,11 +522,11 @@ const App: FC = () => {
 
       setRepeatData(newData);
 
-      const rec = event.recurring;
+      const rec = event.recurring as MbscRecurrenceRule;
 
       if (rec) {
         setRepeatType(rec.repeat);
-        setWeekDays(rec.repeat === 'weekly' ? rec.weekDays.split(',') : ['SU']);
+        setWeekDays(rec.repeat === 'weekly' ? rec.weekDays!.split(',') : ['SU']);
         if (rec.interval) {
           // set custom text
           let customText = '';
@@ -627,23 +543,23 @@ const App: FC = () => {
               customText += ' on ' + rec.weekDays;
               break;
             case 'monthly':
-              setMonthlyDay(rec.day);
+              setMonthlyDay(rec.day as number);
               customText = nr > 1 ? 'Every ' + nr + ' months' : 'Monthly';
               customText += ' on day ' + rec.day;
               break;
             case 'yearly':
-              setYearlyDay(rec.day);
-              setMonth(rec.month);
+              setYearlyDay(rec.day as number);
+              setMonth(rec.month as number);
               customText = nr > 1 ? 'Every ' + nr + ' years' : 'Annualy';
-              customText += ' on ' + months[rec.month - 1].text + ' ' + rec.day;
+              customText += ' on ' + months[+rec.month! - 1].text + ' ' + rec.day;
               break;
             default:
           }
 
           if (rec.until) {
             setCondition('until');
-            setUntilDate(rec.until);
-            customText += ' until ' + formatDate('MMMM D, YYYY', new Date(rec.until));
+            setUntilDate(rec.until as string);
+            customText += ' until ' + formatDate('MMMM D, YYYY', new Date(rec.until as string));
           } else if (rec.count) {
             setCondition('count');
             setOccurrences(rec.count);
@@ -670,21 +586,21 @@ const App: FC = () => {
 
   // handle popup form changes
 
-  const titleChange = useCallback((ev) => {
+  const titleChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setTitle(ev.target.value);
   }, []);
 
-  const descriptionChange = useCallback((ev) => {
+  const descriptionChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setDescription(ev.target.value);
   }, []);
 
-  const allDayChange = useCallback((ev) => {
+  const allDayChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setAllDay(ev.target.checked);
   }, []);
 
   const dateChange = useCallback(
     (args: MbscDatepickerChangeEvent) => {
-      const d = args.value;
+      const d = args.value as Date[];
       setDate(d);
       updateOptionDates(d[0]);
     },
@@ -697,19 +613,19 @@ const App: FC = () => {
       setRecurringDelete(true);
       setRecurringEditOpen(true);
     } else {
-      deleteEvent(tempEvent);
+      deleteEvent(tempEvent!);
       setOpen(false);
     }
   }, [deleteEvent, tempEvent]);
 
   const populateMonthDays = useCallback(
-    (month, type) => {
+    (month: number, type: string) => {
       const day30 = [2, 4, 6, 9, 11];
-      let newValues = [];
+      const newValues = [];
 
       for (let i = 1; i <= 31; i++) {
         if (!(i === 31 && day30.includes(month)) && !(i === 30 && month === 2)) {
-          newValues.push(i.toString());
+          newValues.push(i);
         }
       }
 
@@ -724,48 +640,48 @@ const App: FC = () => {
     [setMonthlyDays, setYearlyDays],
   );
 
-  const repeatChange = useCallback((ev) => {
-    setSelectedRepeat(ev.value);
+  const repeatChange = useCallback((args: MbscSelectChangeEvent) => {
+    setSelectedRepeat(args.value);
   }, []);
 
-  const repeatTypeChange = useCallback((ev) => {
-    setRepeatType(ev.target.value);
+  const repeatTypeChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    setRepeatType(ev.target.value as 'daily' | 'weekly' | 'monthly' | 'yearly');
   }, []);
 
-  const repeatNrChange = useCallback((ev) => {
-    setRepeatNr(ev.target.value);
+  const repeatNrChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    setRepeatNr(+ev.target.value);
   }, []);
 
-  const conditionChange = useCallback((ev) => {
+  const conditionChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setCondition(ev.target.value);
   }, []);
 
-  const untilDateChange = useCallback((ev) => {
-    setUntilDate(ev.value);
+  const untilDateChange = useCallback((args: MbscDatepickerChangeEvent) => {
+    setUntilDate(args.value as string);
   }, []);
 
-  const occurrancesChange = useCallback((ev) => {
-    setOccurrences(ev.target.value);
+  const occurrancesChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    setOccurrences(+ev.target.value);
   }, []);
 
   const monthsChange = useCallback(
-    (ev) => {
-      setMonth(ev.value);
-      populateMonthDays(ev.value, 'yearly');
+    (args: MbscSelectChangeEvent) => {
+      setMonth(args.value);
+      populateMonthDays(args.value, 'yearly');
     },
     [populateMonthDays],
   );
 
-  const monthlyDayChange = useCallback((ev) => {
-    setMonthlyDay(ev.value);
+  const monthlyDayChange = useCallback((args: MbscSelectChangeEvent) => {
+    setMonthlyDay(args.value);
   }, []);
 
-  const yearlyDayChange = useCallback((ev) => {
-    setYearlyDay(ev.value);
+  const yearlyDayChange = useCallback((args: MbscSelectChangeEvent) => {
+    setYearlyDay(args.value);
   }, []);
 
   const weekDayChange = useCallback(
-    (ev) => {
+    (ev: ChangeEvent<HTMLInputElement>) => {
       const value = ev.target.value;
       if (ev.target.checked) {
         setWeekDays([...weekDays, ev.target.value]);
@@ -776,16 +692,16 @@ const App: FC = () => {
     [weekDays],
   );
 
-  const onSelectedDateChange = useCallback((event) => {
-    setSelectedDate(event.date);
+  const onSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
+    setSelectedDate(args.date);
   }, []);
 
   const onEventClick = useCallback(
-    (args) => {
+    (args: MbscEventClickEvent) => {
       const event = args.event;
 
       setEdit(true);
-      setTempEvent({ ...args.event });
+      setTempEvent({ ...event });
 
       // recurring event
       if (event.recurring) {
@@ -803,7 +719,7 @@ const App: FC = () => {
     [loadPopupForm],
   );
 
-  const onEventUpdate = useCallback((args) => {
+  const onEventUpdate = useCallback((args: MbscEventUpdateEvent) => {
     const event = args.event;
     if (event.recurring) {
       setOriginalRecurringEvent(args.oldEvent);
@@ -822,7 +738,7 @@ const App: FC = () => {
     }
   }, []);
 
-  const onEventCreate = useCallback((args) => {
+  const onEventCreate = useCallback((args: MbscEventCreateEvent) => {
     const originEvent = args.originEvent;
     if (originEvent && originEvent.recurring) {
       setNewEvent(args.event);
@@ -831,13 +747,13 @@ const App: FC = () => {
   }, []);
 
   const onEventCreated = useCallback(
-    (args) => {
+    (args: MbscEventCreatedEvent) => {
       setEdit(false);
       resetCustomValues();
       setTempEvent(args.event);
       // fill popup form with event data
       loadPopupForm(args.event);
-      setAnchor(args.target);
+      setAnchor(args.target!);
       // open the popup
       setOpen(true);
     },
@@ -857,7 +773,7 @@ const App: FC = () => {
   }, []);
 
   // datepicker options
-  const controls = useMemo(() => (popupEventAllDay ? ['calendar'] : ['calendar', 'time']), [popupEventAllDay]);
+  const controls = useMemo<MbscDatepickerControl[]>(() => (popupEventAllDay ? ['calendar'] : ['calendar', 'time']), [popupEventAllDay]);
   const respSetting = useMemo(
     () =>
       popupEventAllDay
@@ -884,13 +800,13 @@ const App: FC = () => {
 
   // popup options
   const headerText = useMemo(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
-  const popupButtons = useMemo(() => {
+  const popupButtons = useMemo<Array<string | MbscPopupButton>>(() => {
     if (isEdit) {
       return [
         'cancel',
         {
           handler: () => {
-            if (Object.keys(originalRecurringEvent).length !== 0) {
+            if (Object.keys(originalRecurringEvent!).length !== 0) {
               setEditFromPopup(true);
               setRecurringText('Edit');
               setRecurringDelete(false);
@@ -929,7 +845,7 @@ const App: FC = () => {
     setOpen(false);
   }, [isEdit, myEvents, repeatData]);
 
-  const recurringEditButtons = useMemo(
+  const recurringEditButtons = useMemo<Array<string | MbscPopupButton>>(
     () => [
       'cancel',
       {
@@ -938,25 +854,25 @@ const App: FC = () => {
             deleteRecurringEvent();
           } else {
             if (editFromPopup) {
-              tempEvent.title = popupEventTitle;
-              tempEvent.description = popupEventDescription;
-              tempEvent.start = popupEventDate[0];
-              tempEvent.end = popupEventDate[1];
-              tempEvent.allDay = popupEventAllDay;
-              tempEvent.recurring = getCustomRule();
+              tempEvent!.title = popupEventTitle;
+              tempEvent!.description = popupEventDescription;
+              tempEvent!.start = popupEventDate[0];
+              tempEvent!.end = popupEventDate[1];
+              tempEvent!.allDay = popupEventAllDay;
+              tempEvent!.recurring = getCustomRule();
             }
 
             if (recurringEditMode === 'current') {
-              delete tempEvent.id;
-              delete tempEvent.recurring;
-              delete tempEvent.recurringException;
+              delete tempEvent!.id;
+              delete tempEvent!.recurring;
+              delete tempEvent!.recurringException;
             }
 
             const events = updateRecurringEvent(
-              originalRecurringEvent,
-              eventOccurrence,
-              editFromPopup ? null : newEvent,
-              editFromPopup ? tempEvent : null,
+              originalRecurringEvent!,
+              eventOccurrence!,
+              editFromPopup ? null : newEvent!,
+              editFromPopup ? tempEvent! : null,
               recurringEditMode,
             );
 
@@ -999,8 +915,8 @@ const App: FC = () => {
     ],
   );
 
-  const recurringEditModeChange = useCallback((ev) => {
-    setRecurringEditMode(ev.target.value);
+  const recurringEditModeChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    setRecurringEditMode(ev.target.value as 'all' | 'current' | 'following');
   }, []);
 
   const onRecurringEditClose = useCallback(() => {
@@ -1090,7 +1006,7 @@ const App: FC = () => {
                 <div className="md-recurrence-options">
                   <span>Repeat every</span>
                   <span className="md-recurrence-input md-recurrence-input-nr">
-                    <Input min="1" value={repeatNr} onChange={repeatNrChange} inputStyle="outline" />
+                    <Input min="1" value={repeatNr.toString()} onChange={repeatNrChange} inputStyle="outline" />
                   </span>
                   {repeatType === 'daily' && <span>days</span>}
                   {repeatType === 'weekly' && <span>weeks</span>}
@@ -1190,7 +1106,7 @@ const App: FC = () => {
                       <span className="md-recurrence-input md-recurrence-input-nr">
                         <Input
                           inputStyle="outline"
-                          value={occurrences}
+                          value={occurrences.toString()}
                           onChange={occurrancesChange}
                           onClick={() => setCondition('count')}
                         />
