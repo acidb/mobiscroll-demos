@@ -1,14 +1,17 @@
 import {
   Eventcalendar,
-  Page,
-  Input,
-  getJson,
   formatDate,
+  getJson,
+  Input,
   MbscCalendarEvent,
+  MbscDateType,
   MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscPageLoadingEvent,
+  Page,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react';
 import './searching-events-in-sidebar.css';
 
 setOptions({
@@ -16,15 +19,15 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [calEvents, setCalEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [listEvents, setListEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [mySelectedEvent, setSelectedEvent] = React.useState<MbscCalendarEvent[]>([]);
-  const [showList, setShowList] = React.useState<boolean>(false);
-  const [currentDate, setCurrentDate] = React.useState<any>(new Date());
-  const timerRef = React.useRef<any>(null);
+const App: FC = () => {
+  const [calEvents, setCalEvents] = useState<MbscCalendarEvent[]>([]);
+  const [listEvents, setListEvents] = useState<MbscCalendarEvent[]>([]);
+  const [mySelectedEvent, setSelectedEvent] = useState<MbscCalendarEvent[]>([]);
+  const [showList, setShowList] = useState<boolean>(false);
+  const [currentDate, setCurrentDate] = useState<MbscDateType>(new Date());
+  const timerRef = useRef<number>();
 
-  const calView = React.useMemo<MbscEventcalendarView>(
+  const calView = useMemo<MbscEventcalendarView>(
     () => ({
       calendar: {
         labels: true,
@@ -33,7 +36,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const listView = React.useMemo<MbscEventcalendarView>(
+  const listView = useMemo<MbscEventcalendarView>(
     () => ({
       agenda: {
         type: 'year',
@@ -43,7 +46,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const onSearch = React.useCallback((ev: any) => {
+  const handleInputCgange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     const text = ev.target.value;
 
     if (timerRef.current) {
@@ -66,9 +69,9 @@ const App: React.FC = () => {
     }, 200);
   }, []);
 
-  const onPageLoading = React.useCallback((args: any) => {
-    const start = formatDate('YYYY-MM-DD', args.viewStart);
-    const end = formatDate('YYYY-MM-DD', args.viewEnd);
+  const handlePageLoading = useCallback((args: MbscPageLoadingEvent) => {
+    const start = formatDate('YYYY-MM-DD', args.viewStart!);
+    const end = formatDate('YYYY-MM-DD', args.viewEnd!);
 
     setTimeout(() => {
       getJson(
@@ -81,8 +84,8 @@ const App: React.FC = () => {
     });
   }, []);
 
-  const eventClick = React.useCallback((args: any) => {
-    setCurrentDate(args.event.start);
+  const handleEventClick = useCallback((args: MbscEventClickEvent) => {
+    setCurrentDate(args.event.start!);
     setSelectedEvent([args.event]);
   }, []);
 
@@ -90,8 +93,8 @@ const App: React.FC = () => {
     <Page>
       <div className="md-search-events-sidebar mbsc-flex">
         <div className="md-search-events-cont mbsc-flex-col mbsc-flex-none">
-          <Input startIcon="material-search" onChange={onSearch} inputStyle="outline" placeholder="Search events" />
-          {showList && <Eventcalendar view={listView} data={listEvents} showControls={false} onEventClick={eventClick} />}
+          <Input startIcon="material-search" onChange={handleInputCgange} inputStyle="outline" placeholder="Search events" />
+          {showList && <Eventcalendar view={listView} data={listEvents} showControls={false} onEventClick={handleEventClick} />}
         </div>
         <div className="md-search-events-calendar mbsc-flex-1-1">
           <Eventcalendar
@@ -104,7 +107,7 @@ const App: React.FC = () => {
             data={calEvents}
             selectedEvents={mySelectedEvent}
             selectedDate={currentDate}
-            onPageLoading={onPageLoading}
+            onPageLoading={handlePageLoading}
           />
         </div>
       </div>
