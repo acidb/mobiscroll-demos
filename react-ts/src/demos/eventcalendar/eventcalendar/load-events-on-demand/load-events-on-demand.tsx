@@ -1,22 +1,28 @@
 import {
   Eventcalendar,
   getJson,
-  Toast,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscPageLoadingEvent /* localeImport */,
+  MbscPageLoadingEvent,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
-const App: React.FC = () => {
-  const [events, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState(false);
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  const handleCloseToast = React.useCallback(() => {
+const App: FC = () => {
+  const [events, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState(false);
+
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const onPageLoading = React.useCallback((event: MbscPageLoadingEvent) => {
+  const onPageLoading = useCallback((event: MbscPageLoadingEvent) => {
     const year = event.firstDay.getFullYear();
     const month = event.firstDay.getMonth();
 
@@ -30,7 +36,7 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       calendar: { labels: true },
     }),
@@ -40,11 +46,9 @@ const App: React.FC = () => {
   return (
     <>
       <Eventcalendar
-        // theme
-        // locale
         // drag
         data={events}
-        view={view}
+        view={myView}
         onPageLoading={onPageLoading}
       />
       <Toast message="New events loaded" isOpen={isToastOpen} onClose={handleCloseToast} />

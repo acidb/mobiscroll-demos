@@ -1,25 +1,31 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  Select,
   CalendarNav,
-  CalendarPrev,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
-  momentTimezone,
+  Eventcalendar,
   MbscCalendarEvent,
-  MbscEventcalendarView /* localeImport */,
+  MbscEventcalendarView,
+  MbscSelectChangeEvent,
+  momentTimezone,
+  Select,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import './multiple-timezone-support.css';
-
 import moment from 'moment-timezone';
+import { useCallback, useMemo, useState } from 'react';
 
-// setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const [timezone, setTimezone] = React.useState<string>('utc');
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+  const [timezone, setTimezone] = useState<string>('utc');
+
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         start: 'dyndatetime(y,m,d-2,7)',
@@ -67,7 +73,7 @@ function App() {
     [],
   );
 
-  const timezones = React.useMemo(
+  const timezones = useMemo(
     () => [
       {
         text: 'America/Los Angeles',
@@ -109,7 +115,7 @@ function App() {
     [],
   );
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       calendar: {
         labels: true,
@@ -118,31 +124,32 @@ function App() {
     [],
   );
 
-  const onChange = React.useCallback((ev) => {
+  const handleChange = useCallback((ev: MbscSelectChangeEvent) => {
     setTimezone(ev.value);
   }, []);
 
-  const myHeader = () => (
-    <React.Fragment>
-      <CalendarNav />
-      <div className="md-timezone-header">
-        <CalendarPrev />
-        <CalendarToday />
-        <CalendarNext />
-        <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={onChange} />
-      </div>
-    </React.Fragment>
+  const myHeader = useCallback(
+    () => (
+      <>
+        <CalendarNav />
+        <div className="md-timezone-header">
+          <CalendarPrev />
+          <CalendarToday />
+          <CalendarNext />
+          <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={handleChange} />
+        </div>
+      </>
+    ),
+    [handleChange, timezone, timezones],
   );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       dataTimezone="utc"
       displayTimezone={timezone}
       timezonePlugin={momentTimezone}
       data={myEvents}
-      view={view}
+      view={myView}
       dragToCreate={true}
       dragToMove={true}
       dragToResize={true}
@@ -150,4 +157,5 @@ function App() {
     />
   );
 }
+
 export default App;
