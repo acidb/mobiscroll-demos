@@ -71,7 +71,7 @@ export default {
           },
           renderBufferAfter: function (args) {
             var cat = getCategory(args.original.category);
-            return `<div class="md-buffer md-after-buffer" style="background: ${cat.color}"></div>`;
+            return `<div class="md-schedule-buffer md-schedule-after-buffer" style="background: ${cat.color}"></div>`;
           },
           onEventClick: function (event) {
             if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
