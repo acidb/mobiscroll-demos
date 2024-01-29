@@ -1,13 +1,13 @@
 import {
+  Button,
   Eventcalendar,
   getJson,
-  Toast,
-  Button,
-  setOptions,
   MbscCalendarEvent,
   MbscCalendarEventData /* localeImport */,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './customizing-events.css';
 
 setOptions({
@@ -15,38 +15,31 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/multi-events/',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const [resp, setResp] = React.useState({
-    xsmall: {
-      view: {
-        schedule: {
-          type: 'day',
+  const resp = useMemo(
+    () => ({
+      xsmall: {
+        view: {
+          schedule: {
+            type: 'day',
+          },
         },
       },
-    },
-    medium: {
-      view: {
-        schedule: {
-          type: 'week',
+      medium: {
+        view: {
+          schedule: {
+            type: 'week',
+          },
         },
       },
-    },
-  });
+    }),
+    [],
+  );
 
-  const handleCloseToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -139,7 +132,7 @@ const App: React.FC = () => {
     setToastOpen(true);
   };
 
-  const renderScheduleEvent = React.useCallback<(data: MbscCalendarEventData) => any>((data: MbscCalendarEventData) => {
+  const customScheduleEvent = useCallback((data: MbscCalendarEventData) => {
     const original = data.original!;
     const cat = getCategory(original.category);
     if (data.allDay) {
@@ -164,7 +157,7 @@ const App: React.FC = () => {
                 Edit
               </Button>
               <div className="md-cutom-event-img-cont">
-                {original.participants.map(function (p: any) {
+                {original.participants.map(function (p: number) {
                   return <img key={p} className="md-custom-event-img" src={getParticipant(p).img} />;
                 })}
               </div>
@@ -175,11 +168,21 @@ const App: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/multi-events/',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
+
   return (
     <div>
       <Eventcalendar
         // drag
-        renderScheduleEvent={renderScheduleEvent}
+        renderScheduleEvent={customScheduleEvent}
         responsive={resp}
         data={myEvents}
       />

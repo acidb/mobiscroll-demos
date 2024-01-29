@@ -1,17 +1,22 @@
 import {
-  Eventcalendar,
-  getJson,
-  setOptions,
-  CalendarPrev,
-  CalendarNext,
-  CalendarToday,
   Button,
+  CalendarNext,
+  CalendarPrev,
+  CalendarToday,
   Datepicker,
+  Eventcalendar,
   formatDate,
+  getJson,
   MbscCalendarEvent,
-  MbscEventcalendarView /* localeImport */,
+  MbscDatepickerChangeEvent,
+  MbscDatepickerValue,
+  MbscDateType,
+  MbscEventcalendarView,
+  MbscPageLoadingEvent,
+  MbscSelectedDateChangeEvent,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './custom-range-view.css';
 
 setOptions({
@@ -19,38 +24,38 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [refDate, setRefDate] = React.useState<any>();
-  const [currentDate, setCurrentDate] = React.useState<any>(new Date());
-  const [rangeVal, setRangeVal] = React.useState<any>([]);
-  const [buttonText, setButtonText] = React.useState<string>();
-  const [calView, setCalView] = React.useState<MbscEventcalendarView>({
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [myRefDate, setRefDate] = useState<MbscDateType>();
+  const [currentDate, setCurrentDate] = useState<MbscDateType>(new Date());
+  const [rangeVal, setRangeVal] = useState<MbscDatepickerValue>([]);
+  const [buttonText, setButtonText] = useState<string>();
+  const [calView, setCalView] = useState<MbscEventcalendarView>({
     schedule: {
       type: 'day',
       size: 14,
     },
   });
 
-  const startDate: any = React.useRef();
-  const endDate: any = React.useRef();
+  const startDate = useRef<Date>();
+  const endDate = useRef<Date>();
 
   // returns the number of days between two dates
-  const getNrDays = React.useCallback(
-    (start, end) => Math.round(Math.abs((end.setHours(0) - start.setHours(0)) / (24 * 60 * 60 * 1000))) + 1,
+  const getNrDays = useCallback(
+    (start: Date, end: Date) => Math.round(Math.abs((new Date(end).setHours(0) - start.setHours(0)) / (24 * 60 * 60 * 1000))) + 1,
     [],
   );
 
   // returns the formatted date
-  const getFormattedRange = React.useCallback(
-    (start, end) =>
+  const getFormattedRange = useCallback(
+    (start: Date, end: Date) =>
       formatDate('MMM D, YYYY', new Date(start)) +
       (end && getNrDays(start, end) > 1 ? ' - ' + formatDate('MMM D, YYYY', new Date(end)) : ''),
     [getNrDays],
   );
 
-  const onChange = React.useCallback((args) => {
-    const date = args.value;
+  const onChange = useCallback((args: MbscDatepickerChangeEvent) => {
+    const date = args.value as Date[];
     setRangeVal(date);
     if (date[0] && date[1]) {
       startDate.current = date[0];
@@ -58,7 +63,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const onClose = React.useCallback(() => {
+  const onClose = useCallback(() => {
     if (startDate.current && endDate.current) {
       // navigate the calendar
       setCurrentDate(startDate.current);
@@ -74,8 +79,8 @@ const App: React.FC = () => {
     setRangeVal([startDate.current, endDate.current]);
   }, [getNrDays]);
 
-  const onPageLoading = React.useCallback(
-    (args) => {
+  const handlePageLoading = useCallback(
+    (args: MbscPageLoadingEvent) => {
       const sDate = args.firstDay;
       const end = args.lastDay;
       const eDate = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1, 0);
@@ -93,14 +98,14 @@ const App: React.FC = () => {
     [getFormattedRange],
   );
 
-  const onSelectedDateChange = React.useCallback(
-    (event: any) => {
+  const handleSelectedDateChange = useCallback(
+    (event: MbscSelectedDateChangeEvent) => {
       setCurrentDate(event.date);
     },
     [setCurrentDate],
   );
 
-  const buttonProps = React.useMemo(() => {
+  const buttonProps = useMemo(() => {
     const content = <span className="mbsc-calendar-title">{buttonText}</span>;
     return {
       children: content,
@@ -109,7 +114,7 @@ const App: React.FC = () => {
     };
   }, [buttonText]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events: MbscCalendarEvent[]) => {
@@ -120,7 +125,7 @@ const App: React.FC = () => {
   }, []);
 
   const customWithNavButtons = () => (
-    <React.Fragment>
+    <>
       <div>
         <Datepicker
           select="range"
@@ -140,7 +145,7 @@ const App: React.FC = () => {
         <CalendarToday />
         <CalendarNext />
       </div>
-    </React.Fragment>
+    </>
   );
 
   return (
@@ -150,9 +155,9 @@ const App: React.FC = () => {
       renderHeader={customWithNavButtons}
       view={calView}
       data={myEvents}
-      onPageLoading={onPageLoading}
-      onSelectedDateChange={onSelectedDateChange}
-      refDate={refDate}
+      onPageLoading={handlePageLoading}
+      onSelectedDateChange={handleSelectedDateChange}
+      refDate={myRefDate}
     />
   );
 };

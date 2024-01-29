@@ -1,5 +1,16 @@
-import { Eventcalendar, MbscEventcalendarView, setOptions, Popup, Button, formatDate, Toast /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Button,
+  Eventcalendar,
+  formatDate,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscEventClickEvent,
+  Popup,
+  setOptions,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import './custom-event-tooltip.css';
 
 setOptions({
   // localeJs,
@@ -24,7 +35,7 @@ const doctors = [
   },
 ];
 
-const defaultAppointments = [
+const defaultAppointments: MbscCalendarEvent[] = [
   {
     title: 'Jude Chester',
     age: 69,
@@ -448,24 +459,26 @@ const defaultAppointments = [
 ];
 
 function App() {
-  const [appointments, setAppointments] = React.useState<any>(defaultAppointments);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [anchor, setAnchor] = React.useState<any>(null);
-  const [currentEvent, setCurrentEvent] = React.useState<any>(null);
-  const [closeOnOverlay, setCloseOnOverlay] = React.useState(false);
-  const [info, setInfo] = React.useState<string>('');
-  const [time, setTime] = React.useState<string>('');
-  const [status, setStatus] = React.useState<string>('');
-  const [reason, setReason] = React.useState<string>('');
-  const [location, setLocation] = React.useState<string>('');
-  const [buttonText, setButtonText] = React.useState<string>('');
-  const [buttonType, setButtonType] = React.useState<any>('');
-  const [bgColor, setBgColor] = React.useState<string>('');
-  const timerRef = React.useRef<any>(null);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>();
+  const [appointments, setAppointments] = useState<MbscCalendarEvent[]>(defaultAppointments);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [anchor, setAnchor] = useState<HTMLElement>();
+  const [currentEvent, setCurrentEvent] = useState<MbscCalendarEvent>();
+  const [closeOnOverlay, setCloseOnOverlay] = useState<boolean>(false);
+  const [info, setInfo] = useState<string>('');
+  const [time, setTime] = useState<string>('');
+  const [status, setStatus] = useState<string>('');
+  const [reason, setReason] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [buttonText, setButtonText] = useState<string>('');
+  const [buttonType, setButtonType] = useState<
+    'info' | 'warning' | 'success' | 'light' | 'dark' | 'primary' | 'secondary' | 'danger' | undefined
+  >();
+  const [bgColor, setBgColor] = useState<string>('');
+  const timerRef = useRef<number>();
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>();
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const view = useMemo<MbscEventcalendarView>(
     () => ({
       schedule: {
         type: 'week',
@@ -479,10 +492,15 @@ function App() {
     [],
   );
 
-  const openTooltip = React.useCallback((args, closeOption) => {
+  const showToast = useCallback((message: string) => {
+    setToastText(message);
+    setToastOpen(true);
+  }, []);
+
+  const openTooltip = useCallback((args: MbscEventClickEvent, closeOption: boolean) => {
     const event = args.event;
     const resource = doctors.find((dr) => dr.id === event.resource);
-    const time = formatDate('hh:mm A', new Date(event.start)) + ' - ' + formatDate('hh:mm A', new Date(event.end));
+    const time = formatDate('hh:mm A', new Date(event.start as string)) + ' - ' + formatDate('hh:mm A', new Date(event.end as string));
 
     setCurrentEvent(event);
 
@@ -496,7 +514,7 @@ function App() {
       setButtonType('success');
     }
 
-    setBgColor(resource.color);
+    setBgColor(resource!.color);
     setInfo(event.title + ', Age: ' + event.age);
     setTime(time);
     setReason(event.reason);
@@ -511,64 +529,62 @@ function App() {
     setOpen(true);
   }, []);
 
-  const onEventHoverIn = React.useCallback(
-    (args, closeOption) => {
+  const handleEventHoverIn = useCallback(
+    (args: MbscEventClickEvent) => {
       openTooltip(args, false);
     },
     [openTooltip],
   );
 
-  const onEventHoverOut = React.useCallback(() => {
+  const handleEventHoverOut = useCallback(() => {
     timerRef.current = setTimeout(() => {
       setOpen(false);
     }, 200);
   }, []);
 
-  const onEventClick = React.useCallback(() => {
-    if (!isOpen) {
-      openTooltip(args, true);
-    }
-  }, [openTooltip]);
+  const handleEventClick = useCallback(
+    (args: MbscEventClickEvent) => {
+      if (!isOpen) {
+        openTooltip(args, true);
+      }
+    },
+    [isOpen, openTooltip],
+  );
 
-  const onMouseEnter = React.useCallback(() => {
+  const onMouseEnter = useCallback(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
   }, []);
 
-  const onMouseLeave = React.useCallback(() => {
+  const onMouseLeave = useCallback(() => {
     timerRef.current = setTimeout(() => {
       setOpen(false);
     }, 200);
   }, []);
 
-  const setStatusButton = React.useCallback(() => {
+  const setStatusButton = useCallback(() => {
     setOpen(false);
-    const index = appointments.findIndex((item: any) => item.id === currentEvent.id);
+    const index = appointments.findIndex((item) => item.id === currentEvent!.id);
     const newApp = [...appointments];
     newApp[index].confirmed = !appointments[index].confirmed;
     setAppointments(newApp);
-    showToast('Appointment ' + (currentEvent.confirmed ? 'confirmed' : 'canceled'));
-  }, [appointments, currentEvent]);
+    showToast('Appointment ' + (currentEvent!.confirmed ? 'confirmed' : 'canceled'));
+  }, [appointments, currentEvent, showToast]);
 
-  const viewFile = React.useCallback(() => {
+  const viewFile = useCallback(() => {
     setOpen(false);
     showToast('View file');
-  }, []);
+  }, [showToast]);
 
-  const deleteApp = React.useCallback(() => {
-    setAppointments(appointments.filter((item: any) => item.id !== currentEvent.id));
+  const deleteApp = useCallback(() => {
+    setAppointments(appointments.filter((item) => item.id !== currentEvent!.id));
     setOpen(false);
     showToast('Appointment deleted');
-  }, [appointments, currentEvent]);
+  }, [appointments, currentEvent, showToast]);
 
-  const handleCloseToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
-  }, []);
-
-  const showToast = React.useCallback((message: string) => {
-    setToastText(message);
-    setToastOpen(true);
   }, []);
 
   return (
@@ -582,9 +598,9 @@ function App() {
         dragToMove={true}
         dragToResize={false}
         showEventTooltip={false}
-        onEventHoverIn={onEventHoverIn}
-        onEventHoverOut={onEventHoverOut}
-        onEventClick={onEventClick}
+        onEventHoverIn={handleEventHoverIn}
+        onEventHoverOut={handleEventHoverOut}
+        onEventClick={handleEventClick}
       />
       <Popup
         display="anchored"
@@ -593,7 +609,7 @@ function App() {
         touchUi={false}
         showOverlay={false}
         contentPadding={false}
-        closeOnOverlayClick={false}
+        closeOnOverlayClick={closeOnOverlay}
         width={350}
         cssClass="md-tooltip"
       >

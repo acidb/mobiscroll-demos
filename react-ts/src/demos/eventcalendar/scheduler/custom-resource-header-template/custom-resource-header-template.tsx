@@ -1,5 +1,5 @@
-import { Eventcalendar, setOptions, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo } from 'react';
 import './custom-resource-header-template.css';
 
 setOptions({
@@ -7,8 +7,8 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const view = React.useMemo<MbscEventcalendarView>(
+const App: FC = () => {
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       schedule: {
         type: 'week',
@@ -22,7 +22,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         start: 'dyndatetime(y,m,d-3,10)',
@@ -77,7 +77,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -104,12 +104,15 @@ const App: React.FC = () => {
     [],
   );
 
-  const renderCustomResource = (resource: MbscResource) => (
-    <div className="resource-template-content">
-      <div className="resource-name">{resource.name}</div>
-      <div className="resource-description">{resource.description}</div>
-      <img className="resource-avatar" src={resource.img} alt="Avatar" />
-    </div>
+  const renderCustomResource = useCallback(
+    (resource: MbscResource) => (
+      <div className="resource-template-content">
+        <div className="resource-name">{resource.name}</div>
+        <div className="resource-description">{resource.description}</div>
+        <img className="resource-avatar" src={resource.img} alt="Avatar" />
+      </div>
+    ),
+    [],
   );
 
   return (
@@ -117,7 +120,7 @@ const App: React.FC = () => {
       // drag
       data={myEvents}
       resources={myResources}
-      view={view}
+      view={myView}
       renderResource={renderCustomResource}
     />
   );

@@ -1,6 +1,7 @@
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useMemo } from 'react';
 import './custom-resource-header-template.css';
+import { useCallback } from 'react';
 
 setOptions({
   // localeJs,
@@ -8,7 +9,7 @@ setOptions({
 });
 
 function App() {
-  const calView = useMemo(
+  const myView = useMemo(
     () => ({
       schedule: {
         type: 'week',
@@ -104,12 +105,15 @@ function App() {
     [],
   );
 
-  const renderCustomResource = (resource) => (
-    <div className="resource-template-content">
-      <div className="resource-name">{resource.name}</div>
-      <div className="resource-description">{resource.description}</div>
-      <img className="resource-avatar" src={resource.img} />
-    </div>
+  const renderCustomResource = useCallback(
+    (resource) => (
+      <div className="resource-template-content">
+        <div className="resource-name">{resource.name}</div>
+        <div className="resource-description">{resource.description}</div>
+        <img className="resource-avatar" src={resource.img} />
+      </div>
+    ),
+    [],
   );
 
   return (
@@ -117,7 +121,7 @@ function App() {
       // drag
       data={myEvents}
       resources={myResources}
-      view={calView}
+      view={myView}
       renderResource={renderCustomResource}
     />
   );

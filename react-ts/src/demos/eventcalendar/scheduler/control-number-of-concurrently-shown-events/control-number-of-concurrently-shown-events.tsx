@@ -1,5 +1,5 @@
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -11,8 +11,8 @@ const year = now.getFullYear();
 const month = now.getMonth();
 const day = now.getDate();
 
-const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+const App: FC = () => {
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       { title: 'Employment (Semi-weekly)', start: '09:30', end: '11:00', recurring: 'FREQ=WEEKLY;BYDAY=WE', color: '#228c73' },
       { title: 'Product team mtg.', start: '10:00', end: '12:00', recurring: 'FREQ=WEEKLY;BYDAY=FR', color: '#913aa7' },
@@ -40,7 +40,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myView = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       schedule: {
         allDay: false,
