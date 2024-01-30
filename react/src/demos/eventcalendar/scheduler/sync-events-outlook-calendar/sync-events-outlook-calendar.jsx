@@ -5,6 +5,7 @@ import {
   CalendarNext,
   CalendarPrev,
   CalendarToday,
+  Confirm,
   Eventcalendar,
   Page,
   setOptions,

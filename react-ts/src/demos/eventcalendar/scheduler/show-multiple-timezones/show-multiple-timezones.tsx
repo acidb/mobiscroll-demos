@@ -1,12 +1,17 @@
-import { Eventcalendar, momentTimezone, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment-timezone';
-import React from 'react';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
 function App() {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         start: 'dyndatetime(y,m,d-2,7)',
@@ -54,7 +59,7 @@ function App() {
     [],
   );
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       schedule: {
         type: 'week',
@@ -79,14 +84,12 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       // drag
       dataTimezone="utc"
       displayTimezone="America/New_York"
       timezonePlugin={momentTimezone}
       data={myEvents}
-      view={view}
+      view={myView}
     />
   );
 }

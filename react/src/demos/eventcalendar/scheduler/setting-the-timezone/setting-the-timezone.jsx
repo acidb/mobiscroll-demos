@@ -1,6 +1,6 @@
 import { Eventcalendar, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment-timezone';
-import React from 'react';
+import { useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -11,7 +11,7 @@ setOptions({
 momentTimezone.moment = moment;
 
 function App() {
-  const myEvents = React.useMemo(
+  const myEvents = useMemo(
     () => [
       {
         start: 'dyndatetime(y, m, d, 7)',
@@ -59,7 +59,7 @@ function App() {
     [],
   );
 
-  const myView = React.useMemo(
+  const myView = useMemo(
     () => ({
       schedule: { type: 'week' },
     }),

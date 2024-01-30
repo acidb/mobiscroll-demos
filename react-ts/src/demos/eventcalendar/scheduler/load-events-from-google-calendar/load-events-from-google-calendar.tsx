@@ -1,41 +1,49 @@
 import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import {
-  Eventcalendar,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext,
+  Eventcalendar,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  toast /* localeImport */,
+  MbscPageLoadingEvent,
+  SegmentedGroup,
+  SegmentedItem,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import './load-events-from-google-calendar.css';
 
 const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
 
-const App: React.FC = () => {
-  const [events, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isLoading, setLoading] = React.useState<boolean>(false);
-  const [view, setView] = React.useState<string>('week');
-  const [calView, setCalView] = React.useState<MbscEventcalendarView>({
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [view, setView] = useState<string>('week');
+  const [calView, setCalView] = useState<MbscEventcalendarView>({
     schedule: { type: 'week' },
   });
-  const firstDay: any = React.useRef();
-  const lastDay: any = React.useRef();
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const firstDay = useRef<Date>();
+  const lastDay = useRef<Date>();
 
-  const onError = React.useCallback((resp: any) => {
-    toast({
-      message: resp.error ? resp.error : resp.result.error.message,
-    });
+  const onError = useCallback((resp: { error?: string; result: { error: { message: string } } }) => {
+    setToastMessage(resp.error ? resp.error : resp.result.error.message);
+    setToastOpen(true);
   }, []);
 
-  const loadEvents = React.useCallback(() => {
+  const loadEvents = useCallback(() => {
     setLoading(true);
     googleCalendarSync
-      .getEvents(CALENDAR_ID, firstDay, lastDay)
+      .getEvents(CALENDAR_ID, firstDay.current!, lastDay.current!)
       .then(function (resp) {
         setLoading(false);
         setEvents(resp);
@@ -43,8 +51,8 @@ const App: React.FC = () => {
       .catch(onError);
   }, [firstDay, lastDay, onError]);
 
-  const onPageLoading = React.useCallback(
-    (event: any) => {
+  const handlePageLoading = useCallback(
+    (event: MbscPageLoadingEvent) => {
       const start = event.viewStart;
       const end = event.viewEnd;
 
@@ -63,14 +71,7 @@ const App: React.FC = () => {
     [loadEvents, view],
   );
 
-  React.useEffect(() => {
-    googleCalendarSync.init({
-      apiKey: '<YOUR_GOOGLE_API_KEY>',
-      onInit: loadEvents,
-    });
-  }, [loadEvents]);
-
-  const changeView = (event: any) => {
+  const changeView = (event: ChangeEvent<HTMLInputElement>) => {
     let calView: MbscEventcalendarView;
 
     switch (event.target.value) {
@@ -102,8 +103,10 @@ const App: React.FC = () => {
     setCalView(calView);
   };
 
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
+
   const customWithNavButtons = () => (
-    <React.Fragment>
+    <>
       <CalendarNav className="google-cal-header-nav" />
       <div className="md-spinner">
         <div className="md-spinner-blade"></div>
@@ -130,18 +133,28 @@ const App: React.FC = () => {
       <CalendarPrev className="google-cal-header-prev" />
       <CalendarToday className="google-cal-header-today" />
       <CalendarNext className="google-cal-header-next" />
-    </React.Fragment>
+    </>
   );
 
+  useEffect(() => {
+    googleCalendarSync.init({
+      apiKey: '<YOUR_GOOGLE_API_KEY>',
+      onInit: loadEvents,
+    });
+  }, [loadEvents]);
+
   return (
-    <Eventcalendar
-      className={'md-google-calendar ' + (isLoading ? 'md-loading-events' : '')}
-      exclusiveEndDates={true}
-      view={calView}
-      data={events}
-      onPageLoading={onPageLoading}
-      renderHeader={customWithNavButtons}
-    />
+    <>
+      <Eventcalendar
+        className={'md-google-calendar ' + (isLoading ? 'md-loading-events' : '')}
+        exclusiveEndDates={true}
+        view={calView}
+        data={myEvents}
+        onPageLoading={handlePageLoading}
+        renderHeader={customWithNavButtons}
+      />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
+    </>
   );
 };
 export default App;

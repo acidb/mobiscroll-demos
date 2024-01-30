@@ -76,6 +76,7 @@ const defaultEvents = [
 const viewSettings = {
   schedule: { type: 'week' },
 };
+
 const responsivePopup = {
   medium: {
     display: 'anchored',

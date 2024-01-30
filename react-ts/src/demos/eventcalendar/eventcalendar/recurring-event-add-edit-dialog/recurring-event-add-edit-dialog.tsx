@@ -132,21 +132,6 @@ const months = [
 
 const ordinalList: { [key: number]: string } = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth' };
 
-// const dayInputProps = {
-//   className: 'custom-repeat-input custom-repeat-select-nr',
-//   inputStyle: 'outline',
-// };
-
-// const monthInputProps = {
-//   className: 'custom-repeat-input custom-repeat-select-month',
-//   inputStyle: 'outline',
-// };
-
-// const dateInputProps = {
-//   className: 'custom-repeat-input custom-specific-date',
-//   inputStyle: 'outline',
-// };
-
 // returns the weeknumber of the passed date
 function getWeekDayNum(date: Date): number {
   const year = date.getFullYear();

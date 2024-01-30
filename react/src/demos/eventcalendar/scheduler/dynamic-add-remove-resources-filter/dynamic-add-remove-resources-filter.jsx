@@ -8,6 +8,10 @@ setOptions({
 });
 
 const App = () => {
+  const [myEvents, setEvents] = useState([]);
+  const [myResources, setResources] = useState(resources);
+  const [participants, setParticipants] = useState({ 1: true, 2: true, 3: true });
+
   const resources = useMemo(
     () => [
       {
@@ -28,10 +32,6 @@ const App = () => {
     ],
     [],
   );
-
-  const [myEvents, setEvents] = useState([]);
-  const [myResources, setResources] = useState(resources);
-  const [participants, setParticipants] = useState({ 1: true, 2: true, 3: true });
 
   const myView = useMemo(
     () => ({

@@ -1,14 +1,14 @@
 import {
-  Eventcalendar,
   Checkbox,
-  Page,
+  Eventcalendar,
   getJson,
-  setOptions,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscResourceData /* localeImport */,
+  MbscResource /* localeImport */,
+  Page,
+  setOptions,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import './dynamic-add-remove-resources-filter.css';
 
 setOptions({
@@ -17,7 +17,7 @@ setOptions({
 });
 
 function App() {
-  const resources = React.useMemo<MbscResourceData[]>(
+  const resources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -37,7 +37,11 @@ function App() {
     ],
     [],
   );
-  const view = React.useMemo<MbscEventcalendarView>(
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [myResources, setResources] = useState<MbscResource[]>(resources);
+  const [participants, setParticipants] = useState<{ [key: number]: boolean }>({ 1: true, 2: true, 3: true });
+
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       schedule: {
         type: 'week',
@@ -50,20 +54,17 @@ function App() {
     }),
     [],
   );
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [myResources, setResources] = React.useState<MbscResourceData[]>(resources);
-  const [participants, setParticipants] = React.useState<{ [key: number]: boolean }>({ 1: true, 2: true, 3: true });
 
-  const filter = React.useCallback(
-    (ev) => {
+  const filter = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
       participants[+ev.target.value] = ev.target.checked;
       setParticipants({ ...participants });
-      setResources(resources.filter((r: any) => participants[r.id]));
+      setResources(resources.filter((r) => participants[+r.id]));
     },
     [participants, resources],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/resource-events-shared/',
       (events: MbscCalendarEvent[]) => {
@@ -81,7 +82,7 @@ function App() {
             <Eventcalendar
               data={myEvents}
               resources={myResources}
-              view={view}
+              view={myView}
               clickToCreate={true}
               dragToCreate={true}
               dragToMove={true}

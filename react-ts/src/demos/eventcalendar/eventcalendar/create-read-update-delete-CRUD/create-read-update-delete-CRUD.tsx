@@ -5,6 +5,7 @@ import {
   Input,
   MbscCalendarEvent,
   MbscDatepickerChangeEvent,
+  MbscDatepickerControl,
   MbscDateType,
   MbscEventcalendarView,
   MbscEventClickEvent,
@@ -20,7 +21,6 @@ import {
   Switch,
   Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import { TDatepickerControl } from '@mobiscroll/react/dist/src/core/components/datepicker/datepicker';
 import { ChangeEvent, FC, MouseEvent, useCallback, useMemo, useRef, useState } from 'react';
 import './create-read-update-delete-CRUD.css';
 
@@ -274,7 +274,7 @@ const App: FC = () => {
   }, []);
 
   // datepicker options
-  const controls = useMemo(() => (popupEventAllDay ? ['date'] : ['datetime']) as TDatepickerControl[], [popupEventAllDay]);
+  const controls = useMemo(() => (popupEventAllDay ? ['date'] : ['datetime']) as MbscDatepickerControl[], [popupEventAllDay]);
   const datepickerResponsive = useMemo(
     () =>
       popupEventAllDay

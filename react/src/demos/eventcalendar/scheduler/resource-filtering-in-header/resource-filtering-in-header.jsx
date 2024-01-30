@@ -29,17 +29,6 @@ function App() {
     setToastOpen(false);
   }, []);
 
-  useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/custom-events/',
-      (events) => {
-        setEvents(events);
-        filterEvents(events, selected);
-      },
-      'jsonp',
-    );
-  }, [filterEvents, selected]);
-
   const filterEvents = useCallback((events, selected) => {
     let ev = [];
     for (let i = 0; i < events.length; ++i) {
@@ -110,6 +99,17 @@ function App() {
     ),
     [filter, selected],
   );
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/custom-events/',
+      (events) => {
+        setEvents(events);
+        filterEvents(events, selected);
+      },
+      'jsonp',
+    );
+  }, [filterEvents, selected]);
 
   return (
     <div>

@@ -1,5 +1,4 @@
-import { MbscCalendarEvent } from '@mobiscroll/calendar-integration/dist/src/core/shared/calendar-view/calendar-view.types.public';
-import { Button, Eventcalendar, MbscEventcalendarView, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment';
 import { FC, useCallback, useMemo, useState } from 'react';
 

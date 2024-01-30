@@ -1,5 +1,5 @@
-import { Eventcalendar, MbscEventcalendarView, MbscCalendarEvent, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo } from 'react';
 import './resource-data-structure.css';
 
 setOptions({
@@ -7,7 +7,7 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
+const App: FC = () => {
   const myResources: MbscResource[] = [
     {
       // base properties
@@ -41,7 +41,7 @@ const App: React.FC = () => {
     },
   ];
 
-  const myView = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       schedule: {
         type: 'day',
@@ -50,32 +50,38 @@ const App: React.FC = () => {
     [],
   );
 
-  const myEvents: MbscCalendarEvent[] = [
-    {
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'General orientation',
-      resource: 1,
-    },
-    {
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,11)',
-      text: 'Stakeholder mtg.',
-      resource: 2,
-    },
-    {
-      start: 'dyndatetime(y,m,d,13,30)',
-      end: 'dyndatetime(y,m,d,15)',
-      text: "Lunch @ Butcher's",
-      resource: 3,
-    },
-  ];
+  const myEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
+      {
+        start: 'dyndatetime(y,m,d,15)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'General orientation',
+        resource: 1,
+      },
+      {
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,11)',
+        text: 'Stakeholder mtg.',
+        resource: 2,
+      },
+      {
+        start: 'dyndatetime(y,m,d,13,30)',
+        end: 'dyndatetime(y,m,d,15)',
+        text: "Lunch @ Butcher's",
+        resource: 3,
+      },
+    ],
+    [],
+  );
 
-  const renderCustomResource = (resource) => (
-    <div>
-      <div className="resource-name">{resource.name}</div>
-      <div className="md-resource-data-structure-title">{resource.title}</div>
-    </div>
+  const renderCustomResource = useCallback(
+    (resource: MbscResource) => (
+      <div>
+        <div className="resource-name">{resource.name}</div>
+        <div className="md-resource-data-structure-title">{resource.title}</div>
+      </div>
+    ),
+    [],
   );
 
   return <Eventcalendar view={myView} data={myEvents} resources={myResources} renderResource={renderCustomResource} />;

@@ -1,57 +1,42 @@
 import {
   Eventcalendar,
-  Toast,
   getJson,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscEventCreateFailedEvent,
   MbscEventUpdateFailedEvent,
-  MbscEventCreateFailedEvent /* localeImport */,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './work-week-hours.css';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>();
-  const invalids = [
-    {
-      start: '12:00',
-      end: '13:00',
-      title: 'Lunch break',
-      type: 'lunch',
-      recurring: {
-        repeat: 'weekly',
-        weekDays: 'MO,TU,WE,TH,FR',
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>();
+  const myInvalids = useMemo(
+    () => [
+      {
+        start: '12:00',
+        end: '13:00',
+        title: 'Lunch break',
+        type: 'lunch',
+        recurring: {
+          repeat: 'weekly',
+          weekDays: 'MO,TU,WE,TH,FR',
+        },
       },
-    },
-  ];
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com//workday-events/?vers=5',
-      (events: any) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const onEventCreateFailed = React.useCallback((event: MbscEventCreateFailedEvent) => {
-    if (event.invalid.type === 'lunch') {
-      setToastText("Can't create this task on lunch break.");
-      setToastOpen(true);
-    }
-  }, []);
-
-  const onEventUpdateFailed = React.useCallback((event: MbscEventUpdateFailedEvent) => {
-    if (event.invalid.type === 'lunch') {
-      setToastText("Can't schedule this task on lunch break.");
-      setToastOpen(true);
-    }
-  }, []);
-
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       schedule: {
         type: 'week',
@@ -64,22 +49,44 @@ const App: React.FC = () => {
     [],
   );
 
-  const handleCloseToast = React.useCallback(() => {
+  const handleEventCreateFailed = useCallback((event: MbscEventCreateFailedEvent) => {
+    if (event.invalid.type === 'lunch') {
+      setToastText("Can't create this task on lunch break.");
+      setToastOpen(true);
+    }
+  }, []);
+
+  const handleEventUpdateFailed = useCallback((event: MbscEventUpdateFailedEvent) => {
+    if (event.invalid.type === 'lunch') {
+      setToastText("Can't schedule this task on lunch break.");
+      setToastOpen(true);
+    }
+  }, []);
+
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
+  }, []);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com//workday-events/?vers=5',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
   }, []);
 
   return (
     <div>
       <Eventcalendar
-        // theme
-        // locale
         dragToCreate={true}
         dragToMove={true}
-        invalid={invalids}
+        invalid={myInvalids}
         data={myEvents}
-        view={view}
-        onEventCreateFailed={onEventCreateFailed}
-        onEventUpdateFailed={onEventUpdateFailed}
+        view={myView}
+        onEventCreateFailed={handleEventCreateFailed}
+        onEventUpdateFailed={handleEventUpdateFailed}
       />
       <Toast
         // theme

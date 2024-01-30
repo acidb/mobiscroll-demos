@@ -7,7 +7,7 @@ import {
   Page,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import * as moment from 'moment';
+import moment from 'moment';
 import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({

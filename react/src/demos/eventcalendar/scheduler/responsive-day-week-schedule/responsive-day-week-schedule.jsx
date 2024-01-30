@@ -9,7 +9,7 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const responsive = useMemo(
+  const myResponsive = useMemo(
     () => ({
       xsmall: {
         view: {
@@ -41,7 +41,7 @@ function App() {
     <Eventcalendar
       // drag
       data={myEvents}
-      responsive={responsive}
+      responsive={myResponsive}
     />
   );
 }

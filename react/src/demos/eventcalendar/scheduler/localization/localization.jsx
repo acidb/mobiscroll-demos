@@ -8,7 +8,7 @@ setOptions({
 
 function App() {
   const [myEvents, setEvents] = useState([]);
-  const [lang, setLang] = useState('ios');
+  const [lang, setLang] = useState('en');
 
   const myView = useMemo(
     () => ({
