@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -22,23 +22,23 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  myResources = [
+  myResources: MbscResource[] = [
     {
-      id: '1',
+      id: 1,
       name: 'Barry',
       color: '#328e39',
       img: 'https://img.mobiscroll.com/demos/m1.png',
       checked: true,
     },
     {
-      id: '2',
+      id: 2,
       name: 'Hortense',
       color: '#00aabb',
       img: 'https://img.mobiscroll.com/demos/f1.png',
       checked: false,
     },
     {
-      id: '3',
+      id: 3,
       name: 'Carl',
       color: '#ea72c0',
       img: 'https://img.mobiscroll.com/demos/m2.png',
@@ -50,41 +50,27 @@ export class AppComponent implements OnInit {
 
   filteredEvents: MbscCalendarEvent[] = [];
 
-  selected = ['1'];
+  selectedResources = [1];
+
+  onChange(ev: Event): void {
+    const target = ev.target as HTMLInputElement;
+    const resource = this.myResources.find((r) => r.id === +target.value);
+
+    this.filteredEvents = this.myEvents
+      .filter((e) => this.selectedResources.indexOf(e['participant']) !== -1)
+      .map((e) => ({ ...e, color: this.myResources.find((r) => r.id === e['participant'])!.color }));
+
+    this.notify.toast({
+      message: (target.checked ? 'Showing ' : 'Hiding ') + (resource ? resource.name : '') + ' events',
+    });
+  }
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/custom-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
-      this.filterEvents();
-    });
-  }
-
-  filterEvents(): void {
-    const ev = [];
-    for (const item of this.myEvents) {
-      if (this.selected.indexOf('' + item['participant']) > -1) {
-        if (item['participant'] === 1) {
-          item.color = '#328e39';
-        } else if (item['participant'] === 2) {
-          item.color = '#00aabb';
-        } else if (item['participant'] === 3) {
-          item.color = '#ea72c0';
-        }
-        ev.push(item);
-      }
-    }
-    this.filteredEvents = ev;
-  }
-
-  filter(ev: any): void {
-    const value = ev.target.value;
-    const checked = ev.target.checked;
-    const resource = this.myResources.find((r) => r.id === value);
-
-    this.filterEvents();
-
-    this.notify.toast({
-      message: (checked ? 'Showing ' : 'Hiding ') + (resource ? resource.name : '') + ' events',
+      this.filteredEvents = this.myEvents
+        .filter((e) => this.selectedResources.indexOf(e['participant']) !== -1)
+        .map((e) => ({ ...e, color: this.myResources.find((r) => r.id === e['participant'])!.color }));
     });
   }
 }

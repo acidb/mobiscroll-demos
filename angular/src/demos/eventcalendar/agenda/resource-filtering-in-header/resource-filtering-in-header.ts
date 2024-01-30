@@ -24,19 +24,19 @@ export class AppComponent implements OnInit {
 
   myResources: MbscResource[] = [
     {
-      id: '1',
+      id: 1,
       name: 'Barry',
       color: '#328e39',
       img: 'https://img.mobiscroll.com/demos/m1.png',
     },
     {
-      id: '2',
+      id: 2,
       name: 'Hortense',
       color: '#00aabb',
       img: 'https://img.mobiscroll.com/demos/f1.png',
     },
     {
-      id: '3',
+      id: 3,
       name: 'Carl',
       color: '#ea72c0',
       img: 'https://img.mobiscroll.com/demos/m2.png',
@@ -47,13 +47,13 @@ export class AppComponent implements OnInit {
 
   filteredEvents: MbscCalendarEvent[] = [];
 
-  selectedResources = ['1'];
+  selectedResources = [1];
 
   onChange(ev: Event): void {
     const target = ev.target as HTMLInputElement;
-    const resource = this.myResources.find((r) => r.id === target.value);
+    const resource = this.myResources.find((r) => r.id === +target.value);
 
-    this.filteredEvents = this.myEvents.filter((e) => this.selectedResources.indexOf('' + e.resource) !== -1);
+    this.filteredEvents = this.myEvents.filter((e) => this.selectedResources.indexOf(e.resource as number) !== -1);
 
     this.notify.toast({
       message: (target.checked ? 'Showing ' : 'Hiding ') + (resource ? resource.name : '') + ' events',
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/filter-resource-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
-      this.filteredEvents = this.myEvents.filter((e) => this.selectedResources.indexOf('' + e.resource) !== -1);
+      this.filteredEvents = this.myEvents.filter((e) => this.selectedResources.indexOf(e.resource as number) !== -1);
     });
   }
 }
