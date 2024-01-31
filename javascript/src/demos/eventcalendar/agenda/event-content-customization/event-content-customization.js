@@ -8,56 +8,45 @@ export default {
       // theme
     });
 
+    var participants = {
+      1: { name: 'Barry L.', img: 'https://img.mobiscroll.com/demos/m1.png' },
+      2: { name: 'Hortense T.', img: 'https://img.mobiscroll.com/demos/f1.png' },
+      3: { name: 'Carl H.', img: 'https://img.mobiscroll.com/demos/m2.png' },
+    };
+
     var inst = mobiscroll.eventcalendar('#demo-custom-event-content', {
+      actionableEvents: false,
       view: {
         calendar: { type: 'week' },
         agenda: { type: 'day' },
       },
       renderEventContent: function (data) {
+        var participant = participants[data.original.participant];
         return (
-          '<div">' +
+          '<div>' +
           data.title +
           '</div>' +
-          '<div class="md-custom-event-cont">' +
-          '<img class="md-custom-event-img" src="' +
-          getParticipant(data.original.participant).img +
+          '<div class="mds-agenda-event-content mbsc-flex mbsc-align-items-center">' +
+          '<img class="mds-agenda-event-img" alt="' +
+          participant.name +
+          '" src="' +
+          participant.img +
           '"/>' +
           '<div class="mbsc-custom-event-name">' +
-          getParticipant(data.original.participant).name +
+          participant.name +
           '</div>' +
-          '<button mbsc-button class="md-custom-event-btn" data-color="secondary" data-variant="outline">Add participant</button>' +
+          '<button mbsc-button class="mds-agenda-event-btn" data-color="secondary">Add participant</button>' +
           '</div>'
         );
       },
       onEventClick: function (args) {
-        var ev = args.event.original || args.event;
-        if (args.domEvent.target.classList.contains('md-custom-event-btn')) {
+        if (args.domEvent.target.classList.contains('mds-agenda-event-btn')) {
           mobiscroll.toast({
-            message: ev.title + ' clicked',
+            message: args.event.title + ' clicked',
           });
         }
       },
     });
-
-    function getParticipant(id) {
-      switch (id) {
-        case 1:
-          return {
-            img: 'https://img.mobiscroll.com/demos/m1.png',
-            name: 'Barry L.',
-          };
-        case 2:
-          return {
-            img: 'https://img.mobiscroll.com/demos/f1.png',
-            name: 'Hortense T.',
-          };
-        case 3:
-          return {
-            img: 'https://img.mobiscroll.com/demos/m2.png',
-            name: 'Carl H.',
-          };
-      }
-    }
 
     mobiscroll.getJson(
       'https://trial.mobiscroll.com/custom-events/',
@@ -70,32 +59,28 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-custom-event-content"></div>
-  `,
+`,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-custom-event-img {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
+.mds-agenda-event-content {
+  padding: 8px 0;
+  font-size: 13px;
 }
 
-.md-custom-event-cont {
-    display: flex;
-    align-items: center;
-    padding-top: 10px;
-    font-size: 13px;
+.mds-agenda-event-img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }
 
-.md-custom-event-btn,
-.md-custom-event-btn.mbsc-button {
-    position: absolute;
-    right: 10px;
-    bottom: 8px;
-    line-height: 20px;
+.mds-agenda-event-btn.mbsc-button {
+  line-height: 20px;
 }
 
-.md-custom-event .mbsc-material.mbsc-event-time {
-    margin-top: 5px;
+.mds-agenda-event-btn.mbsc-ios {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
 }
-  `,
+`,
 };

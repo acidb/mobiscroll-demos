@@ -9,51 +9,88 @@ export default {
     });
 
     var confirmOpen;
-    var firstDay;
-    var lastDay;
     var selectedEvent;
+    var list = document.getElementById('demo-bulk-actions-event-list');
     var formatDate = mobiscroll.formatDate;
-    var listElm = document.createElement('ul');
-    document.getElementById('selected-event-list').append(listElm);
 
-    function getSelectedEventTitles(events) {
-      var eventTitles = [];
-      for (var i = 0; i < events.length; ++i) {
-        eventTitles.push(events[i].title);
-      }
-      return eventTitles;
+    function selectEvents(events) {
+      list.innerHTML = events
+        .map(function (e) {
+          return '<li>' + e.title + '</li>';
+        })
+        .join('');
+      calendar.setSelectedEvents(events);
+    }
+
+    function updateSelectedEvents() {
+      var selectedEvents = calendar.getSelectedEvents();
+      var events = selectedEvents.length === 0 && selectedEvent ? [selectedEvent] : selectedEvents;
+      var newEvents = [];
+      var updatedEvents = [];
+
+      events.forEach(function (event) {
+        var newEvent;
+        var updatedEvent;
+        if (event.recurring) {
+          newEvent = Object.assign({}, event);
+          newEvent.color = 'orange';
+          newEvent.id += '_' + formatDate('YYYY-MM-DD', event.start);
+          newEvent.recurring = undefined;
+          newEvents.push(newEvent);
+          updatedEvent = event.original;
+          updatedEvent.recurringException = updatedEvent.recurringException || [];
+          updatedEvent.recurringException.push(event.start);
+          updatedEvents.push(updatedEvent);
+        } else {
+          updatedEvent = Object.assign({}, event);
+          updatedEvent.color = 'orange';
+          updatedEvents.push(updatedEvent);
+        }
+      });
+
+      calendar.updateEvent(updatedEvents);
+      calendar.addEvent(newEvents);
+      selectEvents([]);
+
+      mobiscroll.toast({
+        message: "All selected event's color changed to orange",
+      });
     }
 
     function deleteSelectedEvents() {
       var selectedEvents = calendar.getSelectedEvents();
-      var events = selectedEvents.length == 0 && selectedEvent ? [selectedEvent] : selectedEvents;
+      var events = selectedEvents.length === 0 && selectedEvent ? [selectedEvent] : selectedEvents;
 
       confirmOpen = true;
 
       mobiscroll.confirm({
         title: 'Are you sure you want to delete the following events?',
-        message: getSelectedEventTitles(events).join(', '),
+        message: events
+          .map(function (e) {
+            return e.title;
+          })
+          .join(','),
         okText: 'Delete',
         callback: function (result) {
           if (result) {
-            var eventsToDelete = [];
-            var eventsToUpdate = [];
+            var updatedEvents = [];
+            var deletedEvents = [];
 
-            for (var i = 0; i < events.length; ++i) {
-              var event = events[i];
+            events.forEach(function (event) {
               if (event.recurring) {
-                var origEvent = event.original;
-                var exc = origEvent.recurringException || [];
-                exc.push(event.start);
-                origEvent.recurringException = exc;
-                eventsToUpdate.push(origEvent);
+                var updatedEvent = event.original;
+                updatedEvent.recurringException = updatedEvent.recurringException || [];
+                updatedEvent.recurringException.push(event.start);
+                updatedEvents.push(updatedEvent);
               } else {
-                eventsToDelete.push(event);
+                deletedEvents.push(event);
               }
-            }
-            calendar.updateEvent(eventsToUpdate);
-            calendar.removeEvent(eventsToDelete);
-            calendar.setSelectedEvents([]);
+            });
+
+            calendar.updateEvent(updatedEvents);
+            calendar.removeEvent(deletedEvents);
+            selectEvents([]);
+
             mobiscroll.toast({
               message: 'Deleted',
             });
@@ -63,48 +100,10 @@ export default {
       });
     }
 
-    function updateSelectedEvents() {
-      var selectedEvents = calendar.getSelectedEvents();
-      var events = selectedEvents.length == 0 && selectedEvent ? [selectedEvent] : selectedEvents;
-      var eventsToUpdate = [];
-      var newEvents = [];
-
-      for (var i = 0; i < events.length; ++i) {
-        var event = events[i];
-        if (event.recurring) {
-          var origEvent = event.original;
-          var exc = origEvent.recurringException || [];
-          var newEvent = event;
-
-          newEvent.recurring = undefined;
-          newEvent.color = 'orange';
-          newEvent.id += '_' + formatDate('YYYY-MM-DD', event.start);
-          newEvents.push(newEvent);
-
-          exc.push(event.start);
-          origEvent.recurringException = exc;
-          eventsToUpdate.push(origEvent);
-        } else {
-          event.color = 'orange';
-          eventsToUpdate.push(event);
-        }
-      }
-      calendar.updateEvent(eventsToUpdate);
-      calendar.addEvent(newEvents);
-      calendar.setSelectedEvents([]);
-
-      mobiscroll.toast({
-        message: "All selected event's color changed to orange",
-      });
-    }
-
-    var calendar = mobiscroll.eventcalendar('#demo-multiple-event-selection', {
-      clickToCreate: true,
+    var calendar = mobiscroll.eventcalendar('#demo-bulk-actions', {
       selectMultipleEvents: true,
       view: {
-        agenda: {
-          type: 'month',
-        },
+        agenda: { type: 'month' },
       },
       onEventUpdate: function (args) {
         if (args.isDelete) {
@@ -120,10 +119,6 @@ export default {
           return false;
         }
       },
-      onPageLoading: function (args) {
-        firstDay = args.firstDay;
-        lastDay = args.lastDay;
-      },
       onEventRightClick: function (args) {
         selectedEvent = args.event;
         args.domEvent.preventDefault();
@@ -134,13 +129,19 @@ export default {
           menu.open();
         });
       },
+      onSelectedEventsChange: function (args) {
+        selectEvents(args.events);
+      },
     });
 
-    var menu = mobiscroll.select('#demo-context-menu', {
-      touchUi: false,
-      display: 'anchored',
+    var menu = mobiscroll.select('#demo-bulk-actions-menu', {
       buttons: [],
-      inputElement: document.getElementById('context-menu-input'),
+      data: [
+        { value: 'update', text: 'Update' },
+        { value: 'delete', text: 'Delete' },
+      ],
+      display: 'anchored',
+      touchUi: false,
       onChange: function (args) {
         if (args.value === 'update') {
           updateSelectedEvents();
@@ -149,33 +150,33 @@ export default {
         }
       },
       onClose: function () {
-        // clear selection
-        menu.setVal();
+        // Clear selection
+        menu.setVal(null);
       },
     });
 
-    document.getElementById('select-all-events').addEventListener('click', function () {
-      calendar.setSelectedEvents(calendar.getEvents(firstDay, lastDay));
+    document.getElementById('demo-bulk-actions-select-all').addEventListener('click', function () {
+      selectEvents(calendar.getEvents());
       mobiscroll.toast({
         message: 'All events selected this month',
       });
     });
 
-    document.getElementById('reset-selection').addEventListener('click', function () {
-      calendar.setSelectedEvents([]);
+    document.getElementById('demo-bulk-actions-reset').addEventListener('click', function () {
+      selectEvents([]);
       mobiscroll.toast({
         message: 'Selection cleared',
       });
     });
 
-    document.querySelector('.md-bulk-operations').addEventListener('keydown', function (ev) {
-      if (!confirmOpen && (ev.keyCode === 8 || ev.keyCode === 46)) {
-        deleteSelectedEvents();
-      }
+    document.getElementById('demo-bulk-actions-update').addEventListener('click', function () {
+      updateSelectedEvents();
     });
 
-    document.getElementById('update-selected').addEventListener('click', function () {
-      updateSelectedEvents();
+    document.getElementById('demo-bulk-actions-page').addEventListener('keydown', function (ev) {
+      if (!confirmOpen && (ev.code === 'Delete' || ev.code === 'Backspace' || ev.keyCode === 8 || ev.keyCode === 46)) {
+        deleteSelectedEvents();
+      }
     });
 
     mobiscroll.getJson(
@@ -188,52 +189,47 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div mbsc-page class="md-bulk-operations">
-    <div class="mbsc-grid mbsc-no-padding">
-        <div class="mbsc-row">
-            <div class="mbsc-col-sm-9 mbsc-push-sm-3">
-                <div id="demo-multiple-event-selection" class="md-bulk-operations-border"></div>
-                <input id="context-menu-input" type="hidden" />
-                <select id="demo-context-menu">
-                    <option value="update">Update</option>
-                    <option value="delete">Delete</option>
-                </select>
-            </div>
-            <div class="mbsc-col-sm-3 mbsc-pull-sm-9">
-                <div class="mbsc-form-group">
-                    <div class="mbsc-button-group-block">
-                        <button id="select-all-events" mbsc-button>Select all from view</button>
-                        <button id="reset-selection" mbsc-button>Reset selection</button>
-                        <button id="update-selected" mbsc-button>Update selected</button>
-                    </div>
-                </div>
-                <div class="mbsc-form-group-title">Currently selected</div>
-                <div id="selected-event-list" class="mbsc-padding md-selected-event-list"></div>
-            </div>
+<div id="demo-bulk-actions-page" mbsc-page class="mds-bulk-actions">
+  <div class="mbsc-grid mbsc-no-padding">
+    <div class="mbsc-row">
+      <div class="mds-bulk-actions-calendar mbsc-col-sm-9 mbsc-push-sm-3">
+        <div id="demo-bulk-actions"></div>
+        <input id="demo-bulk-actions-menu" type="hidden" />
+      </div>
+      <div class="mbsc-col-sm-3 mbsc-pull-sm-9 mbsc-flex-col">
+        <div class="mbsc-button-group-block">
+          <button id="demo-bulk-actions-select-all" mbsc-button>Select all from view</button>
+          <button id="demo-bulk-actions-reset" mbsc-button>Reset selection</button>
+          <button id="demo-bulk-actions-update" mbsc-button>Update selected</button>
         </div>
+        <div class="mbsc-form-group-title">Currently selected</div>
+        <div class="mds-bulk-actions-event-list mbsc-padding mbsc-flex-1-1">
+          <ul id="demo-bulk-actions-event-list">
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-  `,
+`,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-bulk-operations-border {
+  .mds-bulk-actions,
+  .mds-bulk-actions .mbsc-grid,
+  .mds-bulk-actions .mbsc-row,
+  .mds-bulk-actions .mbsc-col-sm-9,
+  .mds-bulk-actions .mbsc-col-sm-3 {
+    height: 100%;
+  }
+  
+  .mds-bulk-actions-calendar {
     border-left: 1px solid #ccc;
-}
-
-.md-selected-event-list {
-    height: 500px;
+  }
+  
+  .mds-bulk-actions-event-list {
     overflow: auto;
     padding-top: 0;
     padding-bottom: 0;
-}
-
-.md-bulk-operations,
-.md-bulk-operations .mbsc-grid,
-.md-bulk-operations .mbsc-row,
-.md-bulk-operations .mbsc-col-sm-9,
-.md-bulk-operations .mbsc-push-sm-3,
-.md-bulk-operations .mbsc-calendar {
-    height: 100%;
-}
-  `,
+  }
+`,
 };

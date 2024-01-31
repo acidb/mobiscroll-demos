@@ -3,9 +3,12 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    var inst = mobiscroll.eventcalendar('#demo-daily-events', {
+    mobiscroll.setOptions({
       // locale,
       // theme,
+    });
+
+    var inst = mobiscroll.eventcalendar('#demo-basic-agenda', {
       view: {
         agenda: { type: 'month' },
       },
@@ -26,6 +29,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo"></div>
-  `,
+<div id="demo-basic-agenda"></div>
+`,
 };

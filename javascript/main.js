@@ -1,4 +1,4 @@
-import { enhance } from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import { enhance, getInst } from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { Router } from 'html5-history-router';
 import './style.css';
 import '@mobiscroll/javascript/dist/css/mobiscroll.min.css';
@@ -319,7 +319,34 @@ var router = new Router();
 
 var app = document.getElementById('app');
 
+var currentPage;
+
+function destroyPage() {
+  var selectors = [
+    '[mbsc-button]',
+    '[mbsc-calendar-nav]',
+    '[mbsc-calendar-next]',
+    '[mbsc-calendar-prev]',
+    '[mbsc-calendar-today]',
+    '[mbsc-segmented]',
+    '[mbsc-segmented-group]',
+    '[mbsc-page]',
+    '.mbsc-eventcalendar',
+    '.mds-tooltip',
+  ];
+  document.querySelectorAll(selectors.join(',')).forEach(function (elm) {
+    getInst(elm).destroy();
+  });
+}
+
 function loadPage(page) {
+  if (currentPage) {
+    destroyPage();
+    if (currentPage.destroy) {
+      currentPage.destroy();
+    }
+  }
+
   app.innerHTML = "<div id='javascript-demo-placeholder'>" + page.markup + '</div>';
 
   if (page.css && !page.loaded) {
@@ -332,6 +359,8 @@ function loadPage(page) {
   if (page.init) {
     page.init();
   }
+
+  currentPage = page;
 
   enhance(app);
 }
