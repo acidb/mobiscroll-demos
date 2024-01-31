@@ -1,4 +1,3 @@
-import { useCallback, useMemo, FC } from 'react';
 import {
   setOptions,
   Eventcalendar,
@@ -7,6 +6,7 @@ import {
   MbscEventcalendarView,
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useMemo, FC } from 'react';
 import './timeline-custom-event-rendering.css';
 
 setOptions({
@@ -15,16 +15,18 @@ setOptions({
 })
 
 const App: FC = () => {
-  const view = useMemo<MbscEventcalendarView>(() => {
-    return {
+
+  const view = useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         bufferBefore: 30,
         bufferAfter: 35,
@@ -85,11 +87,12 @@ const App: FC = () => {
         taskType: 'material-format-paint',
         resource: 2,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -105,8 +108,9 @@ const App: FC = () => {
         name: 'John',
         color: '#ff0101',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const myScheduleEvent = useCallback((args: MbscCalendarEventData) => {
     const ev = args.original!;

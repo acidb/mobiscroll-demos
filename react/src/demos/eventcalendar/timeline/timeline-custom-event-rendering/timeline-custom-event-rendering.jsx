@@ -1,23 +1,24 @@
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo } from 'react';
-import { setOptions, Eventcalendar /* localeImport */ } from '@mobiscroll/react';
 import './timeline-custom-event-rendering.css';
 
 setOptions({
-  // theme,
-  // lang
-})
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const view = useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         bufferBefore: 30,
         bufferAfter: 35,
@@ -78,11 +79,12 @@ function App() {
         taskType: 'material-format-paint',
         resource: 2,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -98,12 +100,13 @@ function App() {
         name: 'John',
         color: '#ff0101',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myScheduleEvent = useCallback((args) => {
-    const ev = args.original;
-    const color = args.color;
+  const myScheduleEvent = useCallback((data) => {
+    const ev = data.original;
+    const color = data.color;
 
     return (
       <div className="md-timeline-template-event" style={{ borderColor: color, background: color }}>
@@ -116,7 +119,15 @@ function App() {
         </div>
       </div>
     );
-  });
+  }, []);
+
+  const myDefaultEvent = useCallback(
+    () => ({
+      taskType: 'cogs',
+    }),
+    [],
+  );
+
 
   const myBeforeBuffer = useCallback((args) => {
     const event = args.original;
@@ -149,19 +160,10 @@ function App() {
     );
   }, []);
 
-  const myDefaultEvent = useCallback(() => {
-    return {
-      taskType: 'cogs',
-      bufferAfter: 60,
-      bufferBefore: 30,
-      color: '#239a21'
-    };
-  }, []);
-
   return (
     <Eventcalendar
-    dragToCreate={true}
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderScheduleEvent={myScheduleEvent}

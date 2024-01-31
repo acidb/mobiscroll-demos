@@ -56,7 +56,7 @@ function App() {
     [getParticipant],
   );
 
-  const renderEventContent = useCallback(
+  const customEventContent = useCallback(
     (data) => (
       <>
         <div>{data.title}</div>
@@ -84,7 +84,12 @@ function App() {
 
   return (
     <>
-      <Eventcalendar renderEventContent={renderEventContent} data={myEvents} view={myView} />
+      <Eventcalendar
+        // drag
+        renderEventContent={customEventContent}
+        data={myEvents}
+        view={myView}
+      />
       <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );

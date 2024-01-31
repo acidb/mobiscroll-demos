@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback } from 'react';
-import { Eventcalendar, getJson, Toast, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './customizing-events.css';
 
 setOptions({
@@ -11,35 +11,87 @@ function App() {
   const [myEvents, setEvents] = useState([]);
   const [isToastOpen, setToastOpen] = useState(false);
 
+  const resp = useMemo(
+    () => ({
+      xsmall: {
+        view: {
+          schedule: {
+            type: 'day',
+          },
+        },
+      },
+      medium: {
+        view: {
+          schedule: {
+            type: 'week',
+          },
+        },
+      },
+    }),
+    [],
+  );
+
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const customScheduleEvent = useCallback((data) => {
+    const cat = getCategory(data.original.category);
+    if (data.allDay) {
+      return (
+        <div style={{ background: cat.color }} className="md-custom-event-allday-title">
+          {data.title}
+        </div>
+      );
+    } else {
+      return (
+        <div className="md-custom-event-cont" style={{ borderLeft: '5px solid ' + cat.color, background: cat.color }}>
+          <div className="md-custom-event-wrapper">
+            <div style={{ background: cat.color }} className="md-custom-event-category">
+              {cat.name}
+            </div>
+            <div className="md-custom-event-details">
+              <div className="md-custom-event-title">{data.title}</div>
+              <div className="md-custom-event-time">
+                {data.start} - {data.end}
+              </div>
+              <Button className="md-custom-event-btn" color="dark" variant="outline" onClick={edit}>
+                Edit
+              </Button>
+              <div className="md-cutom-event-img-cont">
+                {data.original.participants &&
+                  data.original.participants.map(function (p) {
+                    return <img key={p} className="md-custom-event-img" src={getParticipant(p).img} />;
+                  })}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }, []);
+
+  const myBeforeBuffer = useCallback((args) => {
+    var cat = getCategory(args.original.category);
+
+    return (
+      <div className="md-schedule-buffer md-schedule-before-buffer">
+        <div className=' md-schedule-buffer-background' 
+          style={{ background: `repeating-linear-gradient(-45deg,#fcfffc,#fcfffc 10px,${cat.color} 10px,${cat.color} 20px)`}}>
+          </div>
+          <span className='md-buffer-text'>Travel time </span><span className='md-buffer-time'>{args.original.bufferBefore} minutes </span>
+      </div>
+    );
+  }, []);    
+
   useEffect(() => {
     getJson(
-      'https://trial.dev.mobiscroll.com/multi-events/',
+      'https://trial.mobiscroll.com/multi-events/',
       (events) => {
         setEvents(events);
       },
       'jsonp',
     );
-  }, []);
-
-  const [resp, setResp] = useState({
-    xsmall: {
-      view: {
-        schedule: {
-          type: 'day',
-        },
-      },
-    },
-    medium: {
-      view: {
-        schedule: {
-          type: 'week',
-        },
-      },
-    },
-  });
-
-  const closeToast = useCallback(() => {
-    setToastOpen(false);
   }, []);
 
   const getCategory = (id) => {
@@ -126,70 +178,16 @@ function App() {
     setToastOpen(true);
   };
 
-  const renderScheduleEvent = useCallback((data) => {
-    const cat = getCategory(data.original.category);
-    if (data.allDay) {
-      return (
-        <div style={{ background: cat.color }} className="md-custom-event-allday-title">
-          {data.title}
-        </div>
-      );
-    } else {
-      return (
-        <div className="md-custom-event-cont" style={{ borderLeft: '5px solid ' + cat.color, background: cat.color }}>
-          <div className="md-custom-event-wrapper">
-            <div style={{ background: cat.color }} className="md-custom-event-category">
-              {cat.name}
-            </div>
-            <div className="md-custom-event-details">
-              <div className="md-custom-event-title">{data.title}</div>
-              <div className="md-custom-event-time">
-                {data.start} - {data.end}
-              </div>
-              <Button className="md-custom-event-btn" color="dark" variant="outline" onClick={edit}>
-                Edit
-              </Button>
-              <div className="md-cutom-event-img-cont">
-                {data.original.participants &&
-                  data.original.participants.map(function (p) {
-                    return <img key={p} className="md-custom-event-img" src={getParticipant(p).img} />;
-                  })}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-  }, []);
-
-  const myBeforeBuffer = useCallback((args) => {
-    var cat = getCategory(args.original.category);
-
-    return (
-      <div className="md-schedule-buffer md-schedule-before-buffer">
-        <div className=' md-schedule-buffer-background' 
-          style={{ background: `repeating-linear-gradient(-45deg,#fcfffc,#fcfffc 10px,${cat.color} 10px,${cat.color} 20px)`}}>
-          </div>
-          <span className='md-buffer-text'>Travel time </span><span className='md-buffer-time'>{args.original.bufferBefore} minutes </span>
-      </div>
-    );
-  }, []);    
-
   return (
     <div>
       <Eventcalendar
-        dragToMove={true}
-        renderScheduleEvent={renderScheduleEvent}
+        // drag
+        renderScheduleEvent={customScheduleEvent}
         renderBufferBefore={myBeforeBuffer}
-        responsive={resp} 
-        data={myEvents} 
+        responsive={resp}
+        data={myEvents}
       />
-      <Toast
-        // theme
-        message="Edit clicked"
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Toast message="Edit clicked" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

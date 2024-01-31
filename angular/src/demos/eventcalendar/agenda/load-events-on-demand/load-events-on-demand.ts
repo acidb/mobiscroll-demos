@@ -1,6 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscPageLoadingEvent, Notifications /* localeImport */ } from '@mobiscroll/angular';
 
 @Component({
   selector: 'app-agenda-load-events-on-demand',
@@ -16,40 +16,19 @@ export class AppComponent {
   ) {}
 
   myEvents: MbscCalendarEvent[] = [];
+  myView: MbscEventcalendarView = { agenda: { type: 'month' } };
 
-  eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
-    view: {
-      agenda: { type: 'month' },
-    },
-    onPageLoading: (event: any) => {
-      const year = event.firstDay.getFullYear();
-      const month = event.firstDay.getMonth();
+  onPageLoading(event: MbscPageLoadingEvent): void {
+    const year = event.firstDay.getFullYear();
+    const month = event.firstDay.getMonth();
 
-      this.http
-        .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/monthlyevents/?year=' + year + '&month=' + month + '&vers=5', 'callback')
-        .subscribe((data: any) => {
-          const newEvents = [];
-
-          for (const value of data) {
-            newEvents.push({
-              start: value.start,
-              end: value.end || '',
-              allDay: value.allDay,
-              title: value.title,
-              color: value.color,
-            });
-          }
-
-          this.myEvents = newEvents;
-
-          this.notify.toast({
-            //<hidden>
-            // theme,//</hidden>
-            message: 'New events loaded',
-          });
+    this.http
+      .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/monthlyevents/?year=' + year + '&month=' + month + '&vers=5', 'callback')
+      .subscribe((resp) => {
+        this.myEvents = resp;
+        this.notify.toast({
+          message: 'New events loaded',
         });
-    },
-  };
+      });
+  }
 }

@@ -1,21 +1,16 @@
-import React from 'react';
-import { Eventcalendar, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useEffect, useMemo, useState } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/events/?vers=5',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const responsive = React.useMemo(() => {
-    return {
+  const myResponsive = useMemo(
+    () => ({
       xsmall: {
         view: {
           schedule: { type: 'day' },
@@ -28,15 +23,25 @@ function App() {
           schedule: { type: 'week' },
         },
       },
-    };
+    }),
+    [],
+  );
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/events/?vers=5',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
   }, []);
 
   return (
     <Eventcalendar
-      // locale
-      // theme
+      // drag
       data={myEvents}
-      responsive={responsive}
+      responsive={myResponsive}
     />
   );
 }

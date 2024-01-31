@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -11,19 +12,19 @@ export default {
       return cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
-    var calendar,
-      popup,
-      range,
-      oldEvent,
-      tempEvent = {},
-      deleteEvent,
-      restoreEvent,
-      titleInput = document.getElementById('work-order-title'),
-      locationInput = document.getElementById('work-order-location'),
-      billInput = document.getElementById('work-order-bill'),
-      notesTextarea = document.getElementById('work-order-notes'),
-      deleteButton = document.getElementById('work-order-delete'),
-      resourceCont = document.getElementById('work-order-resources');
+    var calendar;
+    var popup;
+    var range;
+    var oldEvent;
+    var tempEvent = {};
+    var deleteEvent;
+    var restoreEvent;
+    var titleInput = document.getElementById('work-order-title');
+    var locationInput = document.getElementById('work-order-location');
+    var billInput = document.getElementById('work-order-bill');
+    var notesTextarea = document.getElementById('work-order-notes');
+    var deleteButton = document.getElementById('work-order-delete');
+    var resourceCont = document.getElementById('work-order-resources');
 
     var myResources = [
       {
@@ -370,7 +371,7 @@ export default {
         };
       },
       onEventClick: function (args) {
-        oldEvent = { ...args.event };
+        oldEvent = Object.assign({}, args.event);
         tempEvent = args.event;
 
         if (!popup.isVisible()) {
@@ -385,8 +386,6 @@ export default {
       },
       onEventDeleted: function (args) {
         mobiscroll.snackbar({
-          //<hidden>
-          // theme,//</hidden>
           button: {
             action: function () {
               calendar.addEvent(args.event);
@@ -481,13 +480,6 @@ export default {
       },
     });
 
-    document.querySelectorAll('input[name=event-status]').forEach(function (elm) {
-      elm.addEventListener('change', function () {
-        // update current event's free property
-        tempEvent.free = mobiscroll.getInst(freeSegmented).checked;
-      });
-    });
-
     deleteButton.addEventListener('click', function () {
       // delete current event on button click
       calendar.removeEvent(tempEvent);
@@ -497,8 +489,6 @@ export default {
       var deletedEvent = tempEvent;
 
       mobiscroll.snackbar({
-        //<hidden>
-        // theme,//</hidden>
         button: {
           action: function () {
             calendar.addEvent(deletedEvent);
@@ -547,6 +537,7 @@ export default {
 
     appendChekboxes();
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-work-order-scheduling" class="md-work-order-scheduling"></div>
 
@@ -591,6 +582,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-work-order-checkbox-label.mbsc-checkbox {
     padding-top: 5px;

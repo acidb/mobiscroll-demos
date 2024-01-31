@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -104,15 +104,16 @@ const myResources = [
 ];
 
 function App() {
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar
-      view={view}
+      view={myView}
       data={myData}
       resources={myResources}
       dragToCreate={true}

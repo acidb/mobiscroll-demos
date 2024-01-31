@@ -1,8 +1,8 @@
-import { Component, OnInit, NgZone, ViewEncapsulation } from '@angular/core';
+import { Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
-  MbscEventcalendarOptions,
   MbscEventcalendarView,
+  MbscPageLoadingEvent,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -27,53 +27,73 @@ export class AppComponent implements OnInit {
     public zone: NgZone,
   ) {}
 
-  myEvents: MbscCalendarEvent[] = [];
-  isLoading = false;
+  currentView = 'agenda';
   firstDay!: Date;
   lastDay!: Date;
-  view = 'agenda';
-  calView: MbscEventcalendarView = {
+  isLoading = false;
+  myEvents: MbscCalendarEvent[] = [];
+  myView: MbscEventcalendarView = {
     calendar: { type: 'week' },
     agenda: { type: 'week' },
   };
 
-  calSettings: MbscEventcalendarOptions = {
-    exclusiveEndDates: true,
-    onPageLoading: (event: any) => {
-      const start = event.viewStart;
-      const end = event.viewEnd;
+  onPageLoading(event: MbscPageLoadingEvent): void {
+    const start = event.viewStart;
+    const end = event.viewEnd;
 
-      // Calculate dates
-      // (pre-load events for previous and next pages as well)
-      if (this.view === 'month') {
-        this.firstDay = start;
-        this.lastDay = end;
-      } else {
-        this.firstDay = new Date(start.getFullYear(), start.getMonth(), start.getDate() - 7);
-        this.lastDay = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 7);
-      }
-      this.loadEvents();
-    },
-  };
+    // Calculate dates
+    // (pre-load events for previous and next pages as well)
+    if (this.currentView === 'month') {
+      this.firstDay = start;
+      this.lastDay = end;
+    } else {
+      this.firstDay = new Date(start.getFullYear(), start.getMonth(), start.getDate() - 7);
+      this.lastDay = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 7);
+    }
+    this.loadEvents();
+  }
+
+  onError(resp: { error?: string; result: { error: { message: string } } }): void {
+    this.notify.toast({
+      message: resp.error ? resp.error : resp.result.error.message,
+    });
+  }
 
   loadEvents(): void {
     this.isLoading = true;
     googleCalendarSync
       .getEvents(CALENDAR_ID, this.firstDay, this.lastDay)
-      .then((resp: any) => {
+      .then((resp) => {
         this.zone.run(() => {
           this.myEvents = resp;
           this.isLoading = false;
         });
       })
-      .catch((error: any) => {
+      .catch((error) => {
         this.onError(error);
       });
   }
 
-  onError(resp: any): void {
-    this.notify.toast({
-      message: resp.error ? resp.error : resp.result.error.message,
+  changeView(): void {
+    setTimeout(() => {
+      switch (this.currentView) {
+        case 'month':
+          this.myView = { calendar: { labels: true } };
+          break;
+        case 'week':
+          this.myView = { schedule: { type: 'week' } };
+          break;
+        case 'day':
+          this.myView = { schedule: { type: 'day' } };
+          break;
+        case 'myView':
+        default:
+          this.myView = {
+            calendar: { type: 'week' },
+            agenda: { type: 'week' },
+          };
+          break;
+      }
     });
   }
 
@@ -83,35 +103,6 @@ export class AppComponent implements OnInit {
       onInit: () => {
         this.loadEvents();
       },
-    });
-  }
-
-  changeView(): void {
-    setTimeout(() => {
-      switch (this.view) {
-        case 'month':
-          this.calView = {
-            calendar: { labels: true },
-          };
-          break;
-        case 'week':
-          this.calView = {
-            schedule: { type: 'week' },
-          };
-          break;
-        case 'day':
-          this.calView = {
-            schedule: { type: 'day' },
-          };
-          break;
-        case 'agenda':
-        default:
-          this.calView = {
-            calendar: { type: 'week' },
-            agenda: { type: 'week' },
-          };
-          break;
-      }
     });
   }
 }

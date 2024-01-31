@@ -1,12 +1,14 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
       // theme
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid mbsc-grid-fixed">
     <div class="mbsc-form-group">
@@ -129,6 +131,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .mbsc-ios .mbsc-form-grid .mbsc-textfield-wrapper {
     margin: 0.75em 1em;

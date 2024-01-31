@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -61,9 +62,11 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="quarter-year-view" class="md-quarter-year-view-cont"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .mbsc-calendar .quarter-year-header-picker .mbsc-segmented {
     max-width: 200px;

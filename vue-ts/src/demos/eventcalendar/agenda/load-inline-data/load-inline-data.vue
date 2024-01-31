@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -292,13 +292,3 @@ const myView: MbscEventcalendarView = {
 <template>
   <MbscEventcalendar :view="myView" :data="myEvents" />
 </template>
-
-<style>
-/*<hidden>*/
-
-.demo-load-inline-data {
-  height: 100%;
-}
-
-/*</hidden>*/
-</style>

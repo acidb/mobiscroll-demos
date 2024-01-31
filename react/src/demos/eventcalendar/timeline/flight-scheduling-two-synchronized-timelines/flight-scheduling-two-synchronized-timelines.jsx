@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './flight-scheduling-two-synchronized-timelines.css';
 
 setOptions({
@@ -313,58 +313,61 @@ const jets = [
 ];
 
 function App() {
-  const [reservations, setReservations] = React.useState([
-    {
-      id: 1,
-      name: 'Alison Reyes',
-    },
-    {
-      id: 2,
-      name: 'Shauna Perry',
-    },
-    {
-      id: 3,
-      name: 'Jan Whitney',
-    },
-    {
-      id: 4,
-      name: 'Freddie Durham',
-    },
-    {
-      id: 5,
-      name: 'William Dillon',
-    },
-    {
-      id: 6,
-      name: 'Tyrell Edwards',
-    },
-    {
-      id: 7,
-      name: 'Caitlyn Riddle',
-    },
-    {
-      id: 8,
-      name: 'Liam Mays',
-    },
-    {
-      id: 9,
-      name: 'Frank Medina',
-    },
-    {
-      id: 10,
-      name: 'Calvin Larsen',
-    },
-    {
-      id: 11,
-      name: 'Heather Walsh',
-    },
-    {
-      id: 12,
-      name: 'Conner Paul',
-    },
-  ]);
+  const reservations = useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'Alison Reyes',
+      },
+      {
+        id: 2,
+        name: 'Shauna Perry',
+      },
+      {
+        id: 3,
+        name: 'Jan Whitney',
+      },
+      {
+        id: 4,
+        name: 'Freddie Durham',
+      },
+      {
+        id: 5,
+        name: 'William Dillon',
+      },
+      {
+        id: 6,
+        name: 'Tyrell Edwards',
+      },
+      {
+        id: 7,
+        name: 'Caitlyn Riddle',
+      },
+      {
+        id: 8,
+        name: 'Liam Mays',
+      },
+      {
+        id: 9,
+        name: 'Frank Medina',
+      },
+      {
+        id: 10,
+        name: 'Calvin Larsen',
+      },
+      {
+        id: 11,
+        name: 'Heather Walsh',
+      },
+      {
+        id: 12,
+        name: 'Conner Paul',
+      },
+    ],
+    [],
+  );
 
-  const [flights, setFlights] = React.useState([
+  const [flights, setFlights] = useState([
     {
       start: 'dyndatetime(y,m,d,10)',
       end: 'dyndatetime(y,m,d,17)',
@@ -403,25 +406,26 @@ function App() {
     },
   ]);
 
-  const [invalid, setInvalid] = React.useState();
-  const firstCalCont = React.useRef(null);
-  const secondCalCont = React.useRef(null);
-  const skipScroll1 = React.useRef(false);
-  const skipScroll2 = React.useRef(false);
-  const [mySelectedDate, setSelectedDate] = React.useState(new Date());
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [toastText, setToastText] = React.useState();
+  const [invalid, setInvalid] = useState();
+  const firstCalCont = useRef(null);
+  const secondCalCont = useRef(null);
+  const skipScroll1 = useRef(false);
+  const skipScroll2 = useRef(false);
+  const [mySelectedDate, setSelectedDate] = useState(new Date());
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastText, setToastText] = useState();
 
-  const myView = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'day',
         size: 1,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const renderMyResource = (resource) => {
+  const renderMyResource = useCallback((resource) => {
     if (!resource.children) {
       return (
         <div className="mbsc-flex mbsc-align-items-center mbsc-justify-content-start">
@@ -439,9 +443,9 @@ function App() {
       );
     }
     return <div>{resource.name}</div>;
-  };
+  }, []);
 
-  const handleScroll1 = React.useCallback((ev) => {
+  const handleScroll1 = useCallback((ev) => {
     if (secondCalCont.current && !skipScroll2.current) {
       skipScroll1.current = true;
       secondCalCont.current.scrollLeft = ev.target.scrollLeft;
@@ -449,7 +453,7 @@ function App() {
     skipScroll1.current = false;
   }, []);
 
-  const handleScroll2 = React.useCallback((ev) => {
+  const handleScroll2 = useCallback((ev) => {
     if (firstCalCont.current && !skipScroll1.current) {
       skipScroll2.current = true;
       firstCalCont.current.scrollLeft = ev.target.scrollLeft;
@@ -457,33 +461,33 @@ function App() {
     skipScroll2.current = false;
   }, []);
 
-  const handleFirstScroll = React.useCallback(() => {
+  const handleFirstScroll = useCallback(() => {
     if (!firstCalCont.current) {
       firstCalCont.current = document.querySelector('.md-drag-drop-bw-inst-first .mbsc-timeline-grid-scroll');
       firstCalCont.current.addEventListener('scroll', handleScroll1);
     }
   }, [handleScroll1]);
 
-  const handleSecondScroll = React.useCallback(() => {
+  const handleSecondScroll = useCallback(() => {
     if (!secondCalCont.current) {
       secondCalCont.current = document.querySelector('.md-drag-drop-bw-inst-second .mbsc-timeline-grid-scroll');
       secondCalCont.current.addEventListener('scroll', handleScroll2);
     }
   }, [handleScroll2]);
 
-  const detachFirstScroll = React.useCallback(() => {
+  const detachFirstScroll = useCallback(() => {
     if (firstCalCont.current) {
       firstCalCont.current.removeEventListener('scroll', handleScroll1);
     }
   }, [handleScroll1]);
 
-  const detachSecondScroll = React.useCallback(() => {
+  const detachSecondScroll = useCallback(() => {
     if (secondCalCont.current) {
       secondCalCont.current.removeEventListener('scroll', handleScroll2);
     }
   }, [handleScroll2]);
 
-  const handlePageLoading = React.useCallback((args) => {
+  const handlePageLoading = useCallback((args) => {
     if (secondCalCont.current) {
       setTimeout(() => {
         setSelectedDate(args.firstDay);
@@ -491,30 +495,26 @@ function App() {
     }
   }, []);
 
-  // const onEventDelete = React.useCallback((args) => {
-  //     setReservations(reservations.filter(item => item.id !== args.event.resource));
-  // }, []);
-
-  const handleSelectedDateChange = React.useCallback((args) => {
+  const handleSelectedDateChange = useCallback((args) => {
     setSelectedDate(args.date);
   }, []);
 
-  const handleEventCreated = React.useCallback((args) => {
+  const handleEventCreated = useCallback((args) => {
     setFlights((current) => [...current, args.event]);
     setToastText('Flight scheduled');
     setToastOpen(true);
   }, []);
 
-  const handleEventDeleted = React.useCallback((args) => {
+  const handleEventDeleted = useCallback((args) => {
     setFlights((current) => [...current.filter((flight) => flight.id !== args.event.id)]);
   }, []);
 
-  const handleEventCreateUpdateFailed = React.useCallback(() => {
+  const handleEventCreateUpdateFailed = useCallback(() => {
     setToastText("There's already a flight on this date");
     setToastOpen(true);
   }, []);
 
-  const handleEventDragStart = React.useCallback(
+  const handleEventDragStart = useCallback(
     (args) => {
       const unavailable = {};
       const invalid = {
@@ -549,14 +549,14 @@ function App() {
     [flights],
   );
 
-  const handleEventDragEnd = React.useCallback(() => {
+  const handleEventDragEnd = useCallback(() => {
     flights.forEach((flight) => {
       delete flight.cssClass;
     });
     setInvalid([]);
   }, [flights]);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -574,7 +574,6 @@ function App() {
         externalDrag={true}
         onPageLoading={handlePageLoading}
         onPageLoaded={handleFirstScroll}
-        // onEventDelete={onEventDelete}
         onDestroy={detachFirstScroll}
       />
       <Eventcalendar
@@ -603,7 +602,7 @@ function App() {
         onPageLoaded={handleSecondScroll}
         onDestroy={detachSecondScroll}
       />
-      <Toast display="center" message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast display="center" message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

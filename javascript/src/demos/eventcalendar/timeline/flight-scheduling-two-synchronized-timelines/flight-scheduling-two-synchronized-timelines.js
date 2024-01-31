@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -419,13 +420,12 @@ export default {
     ];
 
     var firstDay;
-    var lastDay;
     var firstCalCont;
     var secondCalCont;
     var skipFirstScroll;
     var skipSecondScroll;
 
-    var firstCalendar = mobiscroll.eventcalendar('#demo-drag-drop-bw-inst-first', {
+    mobiscroll.eventcalendar('#demo-drag-drop-bw-inst-first', {
       view: {
         timeline: {
           type: 'day',
@@ -441,7 +441,6 @@ export default {
       resources: reservations,
       onPageLoading: function (args) {
         firstDay = args.firstDay;
-        lastDay = args.lastDay;
         if (secondCalendar) {
           secondCalendar.navigate(firstDay);
         }
@@ -506,12 +505,9 @@ export default {
         }
         return '<div>' + resource.name + '</div>';
       },
-      onEventCreated: function (args, inst) {
+      onEventCreated: function (args) {
         flights.push(args.event);
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           display: 'center',
           message: 'Flight scheduled',
         });
@@ -521,20 +517,14 @@ export default {
           return flight.id !== args.event.id;
         });
       },
-      onEventCreateFailed: function (args, inst) {
+      onEventCreateFailed: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           display: 'center',
           message: "There's already a flight on this date",
         });
       },
-      onEventUpdateFailed: function (args, inst) {
+      onEventUpdateFailed: function () {
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           display: 'center',
           message: "There's already a flight on this date",
         });
@@ -589,12 +579,14 @@ export default {
       },
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-flex-col md-drag-drop-bw-inst-cont">
     <div id="demo-drag-drop-bw-inst-first" class="md-drag-drop-bw-inst-first"></div>
     <div id="demo-drag-drop-bw-inst-second" class="md-drag-drop-bw-inst-second"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-drag-drop-bw-inst-cont .mbsc-eventcalendar {
     height: 500px;

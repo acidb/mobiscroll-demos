@@ -2,8 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MbscPopup, MbscPopupOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
-  theme: 'ios',
-  themeVariant: 'light',
+  // theme,
 });
 
 @Component({

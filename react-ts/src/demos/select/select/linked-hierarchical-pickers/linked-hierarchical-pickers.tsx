@@ -1,5 +1,5 @@
-import React from 'react';
 import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,

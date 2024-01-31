@@ -1,20 +1,32 @@
-import React from 'react';
 import {
   Eventcalendar,
-  Page,
   getJson,
+  hijriCalendar,
+  jalaliCalendar,
+  localeAr,
+  localeFa,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  jalaliCalendar,
-  hijriCalendar,
-  localeFa,
-  localeAr /* localeImport */,
+  Page,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+setOptions({
+  // themeJs
+});
 
-  React.useEffect(() => {
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
+      schedule: { type: 'day' },
+    }),
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events: MbscCalendarEvent[]) => {
@@ -24,12 +36,6 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
-      schedule: { type: 'day' },
-    };
-  }, []);
-
   return (
     <Page>
       <div className="mbsc-grid">
@@ -37,36 +43,19 @@ const App: React.FC = () => {
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Gregorian calendar</div>
-              <Eventcalendar
-                // locale
-                // theme
-                data={myEvents}
-                view={view}
-              />
+              <Eventcalendar data={myEvents} view={myView} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Jalali calendar</div>
-              <Eventcalendar
-                // theme
-                data={myEvents}
-                view={view}
-                calendarSystem={jalaliCalendar}
-                locale={localeFa}
-              />
+              <Eventcalendar data={myEvents} view={myView} calendarSystem={jalaliCalendar} locale={localeFa} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Hijri calendar</div>
-              <Eventcalendar
-                // theme
-                data={myEvents}
-                view={view}
-                calendarSystem={hijriCalendar}
-                locale={localeAr}
-              />
+              <Eventcalendar data={myEvents} view={myView} calendarSystem={hijriCalendar} locale={localeAr} />
             </div>
           </div>
         </div>

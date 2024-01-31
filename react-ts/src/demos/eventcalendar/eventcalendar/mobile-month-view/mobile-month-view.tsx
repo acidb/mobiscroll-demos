@@ -1,20 +1,43 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
-  Toast,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscEventClickEvent /* localeImport */,
+  MbscEventClickEvent,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './mobile-month-view.css';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>();
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  React.useEffect(() => {
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>();
+
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
+      calendar: { type: 'month' },
+      agenda: { type: 'month' },
+    }),
+    [],
+  );
+
+  const handleEventClick = useCallback((args: MbscEventClickEvent) => {
+    setToastMessage(args.event.title);
+    setToastOpen(true);
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events: MbscCalendarEvent[]) => {
@@ -24,32 +47,15 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
-      calendar: { type: 'month' },
-      agenda: { type: 'month' },
-    };
-  }, []);
-
-  const onEventClick = React.useCallback((event: MbscEventClickEvent) => {
-    setToastText(event.event.title);
-    setToastOpen(true);
-  }, []);
-
   return (
     <>
       <Eventcalendar
-        // locale
-        // theme
+        // drag
         data={myEvents}
-        view={view}
-        onEventClick={onEventClick}
+        view={myView}
+        onEventClick={handleEventClick}
       />
-      <Toast message={toastText} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 };

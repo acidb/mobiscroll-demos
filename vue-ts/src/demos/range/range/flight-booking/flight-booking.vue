@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
   MbscDatepicker,
-  MbscPage,
   MbscInput,
-  MbscRadioGroup,
+  MbscPage,
   MbscRadio,
+  MbscRadioGroup,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,

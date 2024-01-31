@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue'
 import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -101,6 +101,7 @@ const myView = {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     :view="myView"
     :data="myEvents"
@@ -149,14 +150,6 @@ const myView = {
 </template>
 
 <style>
-/*<hidden>*/
-
-.demo-timeline-template {
-  height: 100%;
-}
-
-/*</hidden>*/
-
 .md-timeline-template .mbsc-schedule-event.mbsc-ltr {
   height: auto !important;
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications /* localeImport */ } from '@mobiscroll/angular';
 
 @Component({
   selector: 'app-eventcalendar-customize-label-look-and-feel',
@@ -20,14 +20,13 @@ export class AppComponent implements OnInit {
   eventSettings: MbscEventcalendarOptions = {
     // locale,
     // theme,
+    // drag,
     view: {
       calendar: { labels: true },
     },
-    onEventClick: (event) => {
+    onEventClick: (args) => {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
-        message: event.event.title,
+        message: args.event.title,
       });
     },
   };

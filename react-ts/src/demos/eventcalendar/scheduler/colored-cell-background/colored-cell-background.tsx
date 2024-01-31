@@ -1,15 +1,17 @@
-import React from 'react';
 import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  React.useEffect(() => {
+  const myView = useMemo<MbscEventcalendarView>(() => ({ schedule: { type: 'week' } }), []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events: MbscCalendarEvent[]) => {
@@ -19,16 +21,11 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
-      schedule: { type: 'week' },
-    };
-  }, []);
-
   return (
     <Eventcalendar
+      // drag
       data={myEvents}
-      view={view}
+      view={myView}
       colors={[
         {
           date: 'dyndatetime(y,m,d-2)',

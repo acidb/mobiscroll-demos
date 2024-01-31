@@ -105,9 +105,7 @@ function getTransform(rotate: number) {
 }
 
 function getActivity(day: any) {
-  return activities.find((obj) => {
-    return +new Date(obj.date) === +day.date
-  })
+  return activities.find((obj) => +new Date(obj.date) === +day.date)
 }
 </script>
 

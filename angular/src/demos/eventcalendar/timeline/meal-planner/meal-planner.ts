@@ -1,4 +1,5 @@
-import { Component, ViewChild, OnInit, ViewEncapsulation } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
@@ -8,7 +9,6 @@ import {
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,
@@ -127,12 +127,10 @@ export class AppComponent implements OnInit {
     dragToResize: false,
     dragToMove: true,
     clickToCreate: true,
-    extendDefaultEvent: () => {
-      return {
-        title: 'New meal',
-        allDay: true,
-      };
-    },
+    extendDefaultEvent: () => ({
+      title: 'New meal',
+      allDay: true,
+    }),
     onEventClick: (args: any) => {
       const event = args.event;
       this.isEdit = true;

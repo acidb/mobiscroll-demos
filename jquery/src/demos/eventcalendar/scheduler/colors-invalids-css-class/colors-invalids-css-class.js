@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -13,6 +14,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             schedule: {
               allDay: false,
@@ -101,9 +103,11 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-colors-invalids-css-class"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-lunch-break-class.mbsc-schedule-invalid {
     justify-content: center;

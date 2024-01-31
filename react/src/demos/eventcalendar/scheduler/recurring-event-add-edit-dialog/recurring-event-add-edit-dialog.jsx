@@ -1,21 +1,21 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  Select,
-  setOptions,
-  Popup,
   Button,
+  Datepicker,
+  Eventcalendar,
+  formatDate,
   Input,
-  Textarea,
-  Switch,
+  Popup,
   Radio,
   RadioGroup,
-  Datepicker,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
-  formatDate,
+  Select,
+  setOptions,
+  Switch,
+  Textarea,
   updateRecurringEvent /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './recurring-event-add-edit-dialog.css';
 
 setOptions({
@@ -76,6 +76,7 @@ const defaultEvents = [
 const viewSettings = {
   schedule: { type: 'week' },
 };
+
 const responsivePopup = {
   medium: {
     display: 'anchored',
@@ -220,21 +221,21 @@ function getWeekDayNum(date) {
 }
 
 function App() {
-  const [myEvents, setMyEvents] = React.useState(defaultEvents);
-  const [tempEvent, setTempEvent] = React.useState(null);
-  const [isOpen, setOpen] = React.useState(false);
-  const [isEdit, setEdit] = React.useState(false);
-  const [anchor, setAnchor] = React.useState(null);
-  const [start, startRef] = React.useState(null);
-  const [end, endRef] = React.useState(null);
-  const [popupEventTitle, setTitle] = React.useState('');
-  const [popupEventDescription, setDescription] = React.useState('');
-  const [popupEventAllDay, setAllDay] = React.useState(true);
-  const [popupEventDate, setDate] = React.useState([]);
-  const [mySelectedDate, setSelectedDate] = React.useState(new Date());
+  const [myEvents, setMyEvents] = useState(defaultEvents);
+  const [tempEvent, setTempEvent] = useState(null);
+  const [isOpen, setOpen] = useState(false);
+  const [isEdit, setEdit] = useState(false);
+  const [anchor, setAnchor] = useState(null);
+  const [start, startRef] = useState(null);
+  const [end, endRef] = useState(null);
+  const [popupEventTitle, setTitle] = useState('');
+  const [popupEventDescription, setDescription] = useState('');
+  const [popupEventAllDay, setAllDay] = useState(true);
+  const [popupEventDate, setDate] = useState([]);
+  const [mySelectedDate, setSelectedDate] = useState(new Date());
 
   // recurring editor data
-  const [repeatData, setRepeatData] = React.useState([
+  const [repeatData, setRepeatData] = useState([
     {
       value: 'norepeat',
       text: 'Does not repeat',
@@ -272,30 +273,30 @@ function App() {
       text: 'Custom',
     },
   ]);
-  const [selectedRepeat, setSelectedRepeat] = React.useState('norepeat');
-  const [repeatType, setRepeatType] = React.useState('daily');
-  const [repeatNr, setRepeatNr] = React.useState('1');
-  const [condition, setCondition] = React.useState('never');
-  const [untilDate, setUntilDate] = React.useState();
-  const [occurrences, setOccurrences] = React.useState('10');
-  const [selectedMonth, setMonth] = React.useState(1);
-  const [monthlyDays, setMonthlyDays] = React.useState(['1']);
-  const [monthlyDay, setMonthlyDay] = React.useState('1');
-  const [yearlyDays, setYearlyDays] = React.useState(['1']);
-  const [yearlyDay, setYearlyDay] = React.useState('1');
-  const [weekDays, setWeekDays] = React.useState(['SU']);
+  const [selectedRepeat, setSelectedRepeat] = useState('norepeat');
+  const [repeatType, setRepeatType] = useState('daily');
+  const [repeatNr, setRepeatNr] = useState('1');
+  const [condition, setCondition] = useState('never');
+  const [untilDate, setUntilDate] = useState();
+  const [occurrences, setOccurrences] = useState('10');
+  const [selectedMonth, setMonth] = useState(1);
+  const [monthlyDays, setMonthlyDays] = useState(['1']);
+  const [monthlyDay, setMonthlyDay] = useState('1');
+  const [yearlyDays, setYearlyDays] = useState(['1']);
+  const [yearlyDay, setYearlyDay] = useState('1');
+  const [weekDays, setWeekDays] = useState(['SU']);
 
-  const [originalRecurringEvent, setOriginalRecurringEvent] = React.useState();
-  const [eventOccurrence, setEventOccurrence] = React.useState();
-  const [recurringText, setRecurringText] = React.useState();
-  const [recurringDelete, setRecurringDelete] = React.useState();
-  const [isRecurringEditOpen, setRecurringEditOpen] = React.useState();
-  const [newEvent, setNewEvent] = React.useState();
-  const [recurringEditMode, setRecurringEditMode] = React.useState('current');
-  const [editFromPopup, setEditFromPopup] = React.useState(false);
+  const [originalRecurringEvent, setOriginalRecurringEvent] = useState();
+  const [eventOccurrence, setEventOccurrence] = useState();
+  const [recurringText, setRecurringText] = useState();
+  const [recurringDelete, setRecurringDelete] = useState();
+  const [isRecurringEditOpen, setRecurringEditOpen] = useState();
+  const [newEvent, setNewEvent] = useState();
+  const [recurringEditMode, setRecurringEditMode] = useState('current');
+  const [editFromPopup, setEditFromPopup] = useState(false);
 
   // set custom values to default
-  const resetCustomValues = React.useCallback(() => {
+  const resetCustomValues = useCallback(() => {
     setRepeatType('daily');
     setRepeatNr('1');
     setCondition('never');
@@ -308,7 +309,7 @@ function App() {
     setRepeatData(repeatData.filter((item) => item.value !== 'custom-value'));
   }, [repeatData]);
 
-  const navigateTo = React.useCallback(() => {
+  const navigateTo = useCallback(() => {
     const rec = tempEvent.recurring;
     const d = new Date(tempEvent.start);
     let nextYear = 0;
@@ -324,21 +325,9 @@ function App() {
     }
   }, [tempEvent]);
 
-  const deleteRecurringEvent = React.useCallback(() => {
+  const deleteRecurringEvent = useCallback(() => {
     switch (recurringEditMode) {
-      case 'current':
-      default:
-        let currentExceptions = tempEvent.recurringException || [];
-        currentExceptions = [...currentExceptions, tempEvent.start];
-
-        const newEv = { ...originalRecurringEvent, recurringException: currentExceptions };
-        const index = myEvents.findIndex((x) => x.id === originalRecurringEvent.id);
-        const newEventList = [...myEvents];
-
-        newEventList.splice(index, 1, newEv);
-        setMyEvents(newEventList);
-        break;
-      case 'following':
+      case 'following': {
         let exceptions = tempEvent.recurringException || [];
         exceptions = [...exceptions, tempEvent.start];
 
@@ -350,15 +339,29 @@ function App() {
         newEvList.splice(i, 1, newE);
         setMyEvents(newEvList);
         break;
+      }
       case 'all':
         setMyEvents(myEvents.filter((item) => item.id !== tempEvent.id));
         break;
+      case 'current':
+      default: {
+        let currentExceptions = tempEvent.recurringException || [];
+        currentExceptions = [...currentExceptions, tempEvent.start];
+
+        const newEv = { ...originalRecurringEvent, recurringException: currentExceptions };
+        const index = myEvents.findIndex((x) => x.id === originalRecurringEvent.id);
+        const newEventList = [...myEvents];
+
+        newEventList.splice(index, 1, newEv);
+        setMyEvents(newEventList);
+        break;
+      }
     }
     setOpen(false);
     setRecurringEditOpen(false);
   }, [myEvents, originalRecurringEvent, recurringEditMode, tempEvent]);
 
-  const getCustomRule = React.useCallback(() => {
+  const getCustomRule = useCallback(() => {
     let recurringRule;
     const d = editFromPopup ? popupEventDate[0] : new Date(tempEvent.start);
     const weekday = d.getDay();
@@ -468,21 +471,22 @@ function App() {
     }
     return recurringRule;
   }, [
-    selectedRepeat,
-    deleteRecurringEvent,
     editFromPopup,
-    repeatType,
-    weekDays,
-    eventOccurrence,
-    myEvents,
-    newEvent,
-    originalRecurringEvent,
-    recurringDelete,
-    recurringEditMode,
+    popupEventDate,
     tempEvent,
+    selectedRepeat,
+    repeatType,
+    repeatNr,
+    condition,
+    weekDays,
+    monthlyDay,
+    yearlyDay,
+    selectedMonth,
+    untilDate,
+    occurrences,
   ]);
 
-  const saveEvent = React.useCallback(() => {
+  const saveEvent = useCallback(() => {
     const newEv = {
       id: tempEvent.id,
       title: popupEventTitle,
@@ -516,14 +520,14 @@ function App() {
     setOpen(false);
   }, [tempEvent, popupEventTitle, popupEventDescription, popupEventDate, popupEventAllDay, getCustomRule, isEdit, navigateTo, myEvents]);
 
-  const deleteEvent = React.useCallback(
+  const deleteEvent = useCallback(
     (event) => {
       setMyEvents(myEvents.filter((item) => item.id !== event.id));
     },
     [myEvents],
   );
 
-  const updateOptionDates = React.useCallback(
+  const updateOptionDates = useCallback(
     (d) => {
       const weekday = d.getDay();
       const monthday = d.getDate();
@@ -556,7 +560,7 @@ function App() {
     [repeatData],
   );
 
-  const loadPopupForm = React.useCallback(
+  const loadPopupForm = useCallback(
     (event) => {
       const startDate = new Date(event.start);
       setTitle(event.title);
@@ -655,24 +659,24 @@ function App() {
         resetCustomValues();
       }
     },
-    [repeatData, weekDays, resetCustomValues],
+    [repeatData, resetCustomValues],
   );
 
   // handle popup form changes
 
-  const titleChange = React.useCallback((ev) => {
+  const titleChange = useCallback((ev) => {
     setTitle(ev.target.value);
   }, []);
 
-  const descriptionChange = React.useCallback((ev) => {
+  const descriptionChange = useCallback((ev) => {
     setDescription(ev.target.value);
   }, []);
 
-  const allDayChange = React.useCallback((ev) => {
+  const allDayChange = useCallback((ev) => {
     setAllDay(ev.target.checked);
   }, []);
 
-  const dateChange = React.useCallback(
+  const dateChange = useCallback(
     (args) => {
       const d = args.value;
       setDate(d);
@@ -681,7 +685,7 @@ function App() {
     [updateOptionDates],
   );
 
-  const onDeleteClick = React.useCallback(() => {
+  const onDeleteClick = useCallback(() => {
     if (tempEvent.recurring) {
       setRecurringText('Delete');
       setRecurringDelete(true);
@@ -693,7 +697,7 @@ function App() {
   }, [deleteEvent, tempEvent]);
 
   // popuplate data for months
-  const populateMonthDays = React.useCallback(
+  const populateMonthDays = useCallback(
     (month, type) => {
       const day30 = [2, 4, 6, 9, 11];
       let newValues = [];
@@ -715,31 +719,31 @@ function App() {
     [setMonthlyDays, setYearlyDays],
   );
 
-  const repeatChange = React.useCallback((ev) => {
+  const repeatChange = useCallback((ev) => {
     setSelectedRepeat(ev.value);
   }, []);
 
-  const repeatTypeChange = React.useCallback((ev) => {
+  const repeatTypeChange = useCallback((ev) => {
     setRepeatType(ev.target.value);
   }, []);
 
-  const repeatNrChange = React.useCallback((ev) => {
+  const repeatNrChange = useCallback((ev) => {
     setRepeatNr(ev.target.value);
   }, []);
 
-  const conditionChange = React.useCallback((ev) => {
+  const conditionChange = useCallback((ev) => {
     setCondition(ev.target.value);
   }, []);
 
-  const untilDateChange = React.useCallback((ev) => {
+  const untilDateChange = useCallback((ev) => {
     setUntilDate(ev.value);
   }, []);
 
-  const occurrancesChange = React.useCallback((ev) => {
+  const occurrancesChange = useCallback((ev) => {
     setOccurrences(ev.target.value);
   }, []);
 
-  const monthsChange = React.useCallback(
+  const monthsChange = useCallback(
     (ev) => {
       setMonth(ev.value);
       populateMonthDays(ev.value, 'yearly');
@@ -747,15 +751,15 @@ function App() {
     [populateMonthDays],
   );
 
-  const monthlyDayChange = React.useCallback((ev) => {
+  const monthlyDayChange = useCallback((ev) => {
     setMonthlyDay(ev.value);
   }, []);
 
-  const yearlyDayChange = React.useCallback((ev) => {
+  const yearlyDayChange = useCallback((ev) => {
     setYearlyDay(ev.value);
   }, []);
 
-  const weekDayChange = React.useCallback(
+  const weekDayChange = useCallback(
     (ev) => {
       const value = ev.target.value;
       if (ev.target.checked) {
@@ -769,11 +773,11 @@ function App() {
 
   // scheduler options
 
-  const onSelectedDateChange = React.useCallback((event) => {
+  const handleSelectedDateChange = useCallback((event) => {
     setSelectedDate(event.date);
   }, []);
 
-  const onEventClick = React.useCallback(
+  const handleEventClick = useCallback(
     (args) => {
       const event = args.event;
 
@@ -796,7 +800,7 @@ function App() {
     [loadPopupForm],
   );
 
-  const onEventUpdate = React.useCallback((args) => {
+  const handleEventUpdate = useCallback((args) => {
     const event = args.event;
     if (event.recurring) {
       setOriginalRecurringEvent(args.oldEvent);
@@ -815,7 +819,7 @@ function App() {
     }
   }, []);
 
-  const onEventCreate = React.useCallback((args) => {
+  const handleEventCreate = useCallback((args) => {
     const originEvent = args.originEvent;
     if (originEvent && originEvent.recurring) {
       setNewEvent(args.event);
@@ -823,7 +827,7 @@ function App() {
     }
   }, []);
 
-  const onEventCreated = React.useCallback(
+  const handleEventCreated = useCallback(
     (args) => {
       setEdit(false);
       resetCustomValues();
@@ -837,21 +841,21 @@ function App() {
     [loadPopupForm, resetCustomValues],
   );
 
-  const onEventDeleted = React.useCallback(
+  const handleEventDeleted = useCallback(
     (args) => {
       deleteEvent(args.event);
     },
     [deleteEvent],
   );
 
-  const onEventUpdated = React.useCallback((args) => {
+  const handleEventUpdated = useCallback(() => {
     // here you can update the event in your storage as well, after drag & drop or resize
     // ...
   }, []);
 
   // datepicker options
-  const controls = React.useMemo(() => (popupEventAllDay ? ['calendar'] : ['calendar', 'time']), [popupEventAllDay]);
-  const respSetting = React.useMemo(
+  const controls = useMemo(() => (popupEventAllDay ? ['calendar'] : ['calendar', 'time']), [popupEventAllDay]);
+  const respSetting = useMemo(
     () =>
       popupEventAllDay
         ? {
@@ -876,8 +880,8 @@ function App() {
   );
 
   // popup options
-  const headerText = React.useMemo(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
-  const popupButtons = React.useMemo(() => {
+  const headerText = useMemo(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
+  const popupButtons = useMemo(() => {
     if (isEdit) {
       return [
         'cancel',
@@ -912,7 +916,7 @@ function App() {
     }
   }, [isEdit, originalRecurringEvent, saveEvent]);
 
-  const onPopupClose = React.useCallback(() => {
+  const onPopupClose = useCallback(() => {
     setRepeatData(repeatData.filter((item) => item.value !== 'custom-value'));
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
@@ -922,8 +926,8 @@ function App() {
     setOpen(false);
   }, [isEdit, myEvents, repeatData]);
 
-  const recurringEditButtons = React.useMemo(() => {
-    return [
+  const recurringEditButtons = useMemo(
+    () => [
       'cancel',
       {
         handler: () => {
@@ -973,34 +977,35 @@ function App() {
         text: 'Ok',
         cssClass: 'mbsc-popup-button-primary',
       },
-    ];
-  }, [
-    deleteRecurringEvent,
-    editFromPopup,
-    eventOccurrence,
-    getCustomRule,
-    myEvents,
-    newEvent,
-    originalRecurringEvent,
-    popupEventAllDay,
-    popupEventDate,
-    popupEventDescription,
-    popupEventTitle,
-    recurringDelete,
-    recurringEditMode,
-    tempEvent,
-  ]);
+    ],
+    [
+      deleteRecurringEvent,
+      editFromPopup,
+      eventOccurrence,
+      getCustomRule,
+      myEvents,
+      newEvent,
+      originalRecurringEvent,
+      popupEventAllDay,
+      popupEventDate,
+      popupEventDescription,
+      popupEventTitle,
+      recurringDelete,
+      recurringEditMode,
+      tempEvent,
+    ],
+  );
 
-  const recurringEditModeChange = React.useCallback((ev) => {
+  const recurringEditModeChange = useCallback((ev) => {
     setRecurringEditMode(ev.target.value);
   }, []);
 
-  const onRecurringEditClose = React.useCallback(() => {
+  const onRecurringEditClose = useCallback(() => {
     setRecurringEditMode('current');
     setRecurringEditOpen(false);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     populateMonthDays(1, 'monthly');
     setMonthlyDay(1);
     populateMonthDays(1, 'yearly');
@@ -1017,13 +1022,13 @@ function App() {
         dragToMove={true}
         dragToResize={true}
         selectedDate={mySelectedDate}
-        onSelectedDateChange={onSelectedDateChange}
-        onEventClick={onEventClick}
-        onEventUpdate={onEventUpdate}
-        onEventCreate={onEventCreate}
-        onEventCreated={onEventCreated}
-        onEventDeleted={onEventDeleted}
-        onEventUpdated={onEventUpdated}
+        onSelectedDateChange={handleSelectedDateChange}
+        onEventClick={handleEventClick}
+        onEventUpdate={handleEventUpdate}
+        onEventCreate={handleEventCreate}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDeleted}
+        onEventUpdated={handleEventUpdated}
       />
       <Popup
         display="bottom"
@@ -1065,18 +1070,18 @@ function App() {
             <div>
               <div>
                 <SegmentedGroup onChange={repeatTypeChange}>
-                  <SegmentedItem value="daily" checked={repeatType === 'daily'}>
+                  <Segmented value="daily" checked={repeatType === 'daily'}>
                     Daily
-                  </SegmentedItem>
-                  <SegmentedItem value="weekly" checked={repeatType === 'weekly'}>
+                  </Segmented>
+                  <Segmented value="weekly" checked={repeatType === 'weekly'}>
                     Weekly
-                  </SegmentedItem>
-                  <SegmentedItem value="monthly" checked={repeatType === 'monthly'}>
+                  </Segmented>
+                  <Segmented value="monthly" checked={repeatType === 'monthly'}>
                     Monthly
-                  </SegmentedItem>
-                  <SegmentedItem value="yearly" checked={repeatType === 'yearly'}>
+                  </Segmented>
+                  <Segmented value="yearly" checked={repeatType === 'yearly'}>
                     Yearly
-                  </SegmentedItem>
+                  </Segmented>
                 </SegmentedGroup>
 
                 <div className="md-recurrence-options">
@@ -1124,27 +1129,27 @@ function App() {
 
                 {repeatType === 'weekly' && (
                   <SegmentedGroup select="multiple" onChange={weekDayChange}>
-                    <SegmentedItem value="SU" checked={weekDays.indexOf('SU') >= 0}>
+                    <Segmented value="SU" checked={weekDays.indexOf('SU') >= 0}>
                       Sun
-                    </SegmentedItem>
-                    <SegmentedItem value="MO" checked={weekDays.indexOf('MO') >= 0}>
+                    </Segmented>
+                    <Segmented value="MO" checked={weekDays.indexOf('MO') >= 0}>
                       Mon
-                    </SegmentedItem>
-                    <SegmentedItem value="TU" checked={weekDays.indexOf('TU') >= 0}>
+                    </Segmented>
+                    <Segmented value="TU" checked={weekDays.indexOf('TU') >= 0}>
                       Tue
-                    </SegmentedItem>
-                    <SegmentedItem value="WE" checked={weekDays.indexOf('WE') >= 0}>
+                    </Segmented>
+                    <Segmented value="WE" checked={weekDays.indexOf('WE') >= 0}>
                       Wed
-                    </SegmentedItem>
-                    <SegmentedItem value="TH" checked={weekDays.indexOf('TH') >= 0}>
+                    </Segmented>
+                    <Segmented value="TH" checked={weekDays.indexOf('TH') >= 0}>
                       Thu
-                    </SegmentedItem>
-                    <SegmentedItem value="FR" checked={weekDays.indexOf('FR') >= 0}>
+                    </Segmented>
+                    <Segmented value="FR" checked={weekDays.indexOf('FR') >= 0}>
                       Fri
-                    </SegmentedItem>
-                    <SegmentedItem value="SA" checked={weekDays.indexOf('SA') >= 0}>
+                    </Segmented>
+                    <Segmented value="SA" checked={weekDays.indexOf('SA') >= 0}>
                       Sat
-                    </SegmentedItem>
+                    </Segmented>
                   </SegmentedGroup>
                 )}
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { setOptions, MbscDatepickerOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscDatepickerOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,

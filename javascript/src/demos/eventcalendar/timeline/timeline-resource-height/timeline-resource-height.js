@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -8,6 +9,7 @@ export default {
     });
 
     mobiscroll.eventcalendar('#demo-resource-height', {
+      // drag,
       view: {
         timeline: {
           rowHeight: 'equal',
@@ -101,18 +103,12 @@ export default {
       ],
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-resource-height" class="md-timeline-height"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
-/*<hidden>*/
-
-.demo-custom-timeline-resource-height {
-    height: 100%;
-}
-
-/*</hidden>*/
-
 .md-timeline-height .mbsc-timeline-resource,
 .md-timeline-height .mbsc-timeline-row {
     min-height: 120px;

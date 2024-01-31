@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,
@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
   ];
 
   eventSettings: MbscEventcalendarOptions = {
+    // drag,
     view: {
       timeline: { type: 'day' },
     },

@@ -1,36 +1,43 @@
-import React from 'react';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import {
-  Eventcalendar,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext,
-  toast /* localeImport */,
+  Eventcalendar,
+  Segmented,
+  SegmentedGroup,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { googleCalendarSync } from '@mobiscroll/calendar-integration';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import './load-events-from-google-calendar.css';
 
 const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const [events, setEvents] = React.useState([]);
-  const [isLoading, setLoading] = React.useState(false);
-  const [view, setView] = React.useState('week');
-  const [calView, setCalView] = React.useState({
+  const [myEvents, setEvents] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const [view, setView] = useState('week');
+  const [calView, setCalView] = useState({
     schedule: { type: 'week' },
   });
-  const firstDay = React.useRef();
-  const lastDay = React.useRef();
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const firstDay = useRef();
+  const lastDay = useRef();
 
-  const onError = React.useCallback((resp) => {
-    toast({
-      message: resp.error ? resp.error : resp.result.error.message,
-    });
+  const onError = useCallback((resp) => {
+    setToastMessage(resp.error ? resp.error : resp.result.error.message);
+    setToastOpen(true);
   }, []);
 
-  const loadEvents = React.useCallback(() => {
+  const loadEvents = useCallback(() => {
     setLoading(true);
     googleCalendarSync
       .getEvents(CALENDAR_ID, firstDay, lastDay)
@@ -41,10 +48,10 @@ function App() {
       .catch(onError);
   }, [firstDay, lastDay, onError]);
 
-  const onPageLoading = React.useCallback(
-    (event) => {
-      const start = event.viewStart;
-      const end = event.viewEnd;
+  const handlePageLoading = useCallback(
+    (args) => {
+      const start = args.viewStart;
+      const end = args.viewEnd;
 
       // Calculate dates
       // (pre-load events for previous and next pages as well)
@@ -60,13 +67,6 @@ function App() {
     },
     [loadEvents, view],
   );
-
-  React.useEffect(() => {
-    googleCalendarSync.init({
-      apiKey: '<YOUR_GOOGLE_API_KEY>',
-      onInit: loadEvents,
-    });
-  }, [loadEvents, view]);
 
   const changeView = (event) => {
     let calView;
@@ -100,9 +100,11 @@ function App() {
     setCalView(calView);
   };
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
+
+  const customWithNavButtons = useCallback(
+    () => (
+      <>
         <CalendarNav className="google-cal-header-nav" />
         <div className="md-spinner">
           <div className="md-spinner-blade"></div>
@@ -120,30 +122,39 @@ function App() {
         </div>
         <div className="google-cal-header-picker">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="month">Month</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="day">Day</SegmentedItem>
-            <SegmentedItem value="agenda">Agenda</SegmentedItem>
+            <Segmented value="month">Month</Segmented>
+            <Segmented value="week">Week</Segmented>
+            <Segmented value="day">Day</Segmented>
+            <Segmented value="agenda">Agenda</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="google-cal-header-prev" />
         <CalendarToday className="google-cal-header-today" />
         <CalendarNext className="google-cal-header-next" />
-      </React.Fragment>
-    );
-  };
+      </>
+    ),
+    [view],
+  );
+
+  useEffect(() => {
+    googleCalendarSync.init({
+      apiKey: '<YOUR_GOOGLE_API_KEY>',
+      onInit: loadEvents,
+    });
+  }, [loadEvents, view]);
 
   return (
-    <Eventcalendar
-      // locale
-      // theme
-      className={'md-google-calendar ' + (isLoading ? 'md-loading-events' : '')}
-      exclusiveEndDates={true}
-      view={calView}
-      data={events}
-      onPageLoading={onPageLoading}
-      renderHeader={customWithNavButtons}
-    />
+    <>
+      <Eventcalendar
+        className={'md-google-calendar ' + (isLoading ? 'md-loading-events' : '')}
+        exclusiveEndDates={true}
+        view={calView}
+        data={myEvents}
+        onPageLoading={handlePageLoading}
+        renderHeader={customWithNavButtons}
+      />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
+    </>
   );
 }
 

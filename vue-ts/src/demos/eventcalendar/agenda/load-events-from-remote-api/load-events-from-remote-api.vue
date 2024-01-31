@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { MbscEventcalendar, setOptions, getJson /* localeImport */ } from '@mobiscroll/vue'
+import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -28,13 +28,3 @@ onMounted(() => {
 <template>
   <MbscEventcalendar :view="myView" :data="myEvents" />
 </template>
-
-<style>
-/*<hidden>*/
-
-.demo-load-events-from-remote-api {
-  height: 100%;
-}
-
-/*</hidden>*/
-</style>

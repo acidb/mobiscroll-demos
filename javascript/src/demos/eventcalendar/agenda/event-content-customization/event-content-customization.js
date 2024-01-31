@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -8,7 +9,6 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-custom-event-content', {
-      // context,
       view: {
         calendar: { type: 'week' },
         agenda: { type: 'day' },
@@ -29,14 +29,10 @@ export default {
           '</div>'
         );
       },
-      onEventClick: function (event, inst) {
-        const ev = event.event.original || event.event;
-
-        if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
+      onEventClick: function (args) {
+        var ev = args.event.original || args.event;
+        if (args.domEvent.target.classList.contains('md-custom-event-btn')) {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: ev.title + ' clicked',
           });
         }
@@ -71,9 +67,11 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-custom-event-content"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-custom-event-img {
     width: 30px;
@@ -99,13 +97,5 @@ export default {
 .md-custom-event .mbsc-material.mbsc-event-time {
     margin-top: 5px;
 }
-
-/*<hidden>*/
-
-.demo-event-content-customization {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

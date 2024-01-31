@@ -1,23 +1,16 @@
-<div class="md-custom-header">
-  <mbsc-eventcalendar [data]="myEvents" [view]="calView" [headerTemplate]="customTemplate" #calendar [selectedDate]="currentDate">
-    <ng-template #customTemplate>
-      <mbsc-calendar-nav class="md-custom-header-nav"></mbsc-calendar-nav>
-      <div class="md-custom-header-controls">
-        <mbsc-button (click)="navigateToPrevPage()" icon="material-arrow-back" variant="flat" class="md-custom-header-button"></mbsc-button>
-        <mbsc-calendar-today class="md-custom-header-today"></mbsc-calendar-today>
-        <mbsc-button
-          (click)="navigateToNextPage()"
-          icon="material-arrow-forward"
-          variant="flat"
-          class="md-custom-header-button"
-        ></mbsc-button>
-      </div>
-      <div class="md-custom-header-view">
-        <mbsc-segmented-group [(ngModel)]="view" (change)="changeView()">
-          <mbsc-segmented value="agenda" icon="material-view-day"></mbsc-segmented>
-          <mbsc-segmented value="calendar" icon="calendar"></mbsc-segmented>
-        </mbsc-segmented-group>
-      </div>
-    </ng-template>
-  </mbsc-eventcalendar>
-</div>
+<mbsc-eventcalendar [data]="myEvents" [headerTemplate]="customHeader" [(selectedDate)]="currentDate" [view]="myView">
+  <ng-template #customHeader>
+    <mbsc-calendar-nav class="mds-custom-header-nav"></mbsc-calendar-nav>
+    <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
+      <mbsc-button (click)="prevPage()" icon="material-arrow-back" variant="flat" class="mds-custom-header-button"></mbsc-button>
+      <mbsc-calendar-today></mbsc-calendar-today>
+      <mbsc-button (click)="nextPage()" icon="material-arrow-forward" variant="flat" class="mds-custom-header-button"></mbsc-button>
+    </div>
+    <div class="mds-custom-header-switch">
+      <mbsc-segmented-group [(ngModel)]="currentView" (change)="changeView()">
+        <mbsc-segmented value="agenda" icon="material-view-day"></mbsc-segmented>
+        <mbsc-segmented value="calendar" icon="calendar"></mbsc-segmented>
+      </mbsc-segmented-group>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>

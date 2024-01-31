@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -13,6 +14,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             timeline: { type: 'day' },
           },
@@ -44,9 +46,9 @@ export default {
             },
           ],
           onPageLoading: function (event, inst) {
-            var year = event.firstDay.getFullYear(),
-              month = event.firstDay.getMonth(),
-              day = event.firstDay.getDate();
+            var year = event.firstDay.getFullYear();
+            var month = event.firstDay.getMonth();
+            var day = event.firstDay.getDate();
 
             $.getJSON(
               'https://trial.mobiscroll.com/weeklyevents/?year=' + year + '&month=' + month + '&day=' + day + '&callback=?',
@@ -78,6 +80,7 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo"></div>
   `,

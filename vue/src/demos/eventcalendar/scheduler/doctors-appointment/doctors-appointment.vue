@@ -1,5 +1,4 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
   MbscDraggable,
   MbscDropcontainer,
@@ -7,6 +6,7 @@ import {
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

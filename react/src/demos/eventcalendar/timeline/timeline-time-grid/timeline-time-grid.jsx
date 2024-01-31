@@ -1,20 +1,26 @@
-import React from 'react';
-import { Eventcalendar, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useEffect, useMemo, useState } from 'react';
 import './timeline-time-grid.css';
 
-function App() {
-  const [myEvents, setEvents] = React.useState([]);
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  const view = React.useMemo(() => {
-    return {
+function App() {
+  const [myEvents, setEvents] = useState([]);
+
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -45,10 +51,11 @@ function App() {
         name: 'Ashley',
         color: '#01adff',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/timeline-events/',
       (events) => {
@@ -60,9 +67,8 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
     />

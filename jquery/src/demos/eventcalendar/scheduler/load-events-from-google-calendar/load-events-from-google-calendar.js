@@ -1,10 +1,12 @@
-import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
+var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -16,7 +18,9 @@ export default {
       var CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.google.com';
       var $cont = $('#demo-google-cal');
       var view = 'week';
-      var firstDay, lastDay, apiLoaded;
+      var firstDay;
+      var lastDay;
+      var apiLoaded;
 
       //<hidden>
       if (window.gapi) {
@@ -67,9 +71,9 @@ export default {
             schedule: { type: 'week' },
           },
           exclusiveEndDates: true,
-          onPageLoading: function (event) {
-            var start = event.viewStart;
-            var end = event.viewEnd;
+          onPageLoading: function (args) {
+            var start = args.viewStart;
+            var end = args.viewEnd;
 
             // Calculate dates
             // (pre-load events for previous and next pages as well)
@@ -154,6 +158,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div class="demo-inline demo-max-width-1100">
@@ -163,6 +168,7 @@ export default {
 </div>
 <!--/hidden-->
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-google-calendar .mbsc-segmented {
     max-width: 300px;

@@ -1,10 +1,12 @@
-import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { print } from '@mobiscroll/print';
+import $ from 'jquery';
 
+var mobiscroll = m;
 mobiscroll.print = print;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -16,6 +18,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           modules: [mobiscroll.print],
           view: {
             schedule: { type: 'week' },
@@ -36,6 +39,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <button id="print-button" mbsc-button>Print scheduler</button>
 <div id="demo-printing-the-view"></div>

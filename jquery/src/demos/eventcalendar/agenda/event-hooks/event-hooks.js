@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -17,37 +18,37 @@ export default {
               type: 'month',
             },
           },
-          onDestroy: function (event, inst) {
+          onDestroy: function () {
             // Logic for destroying the event calendar
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function () {
             // Logic for event click
           },
-          onEventDoubleClick: function (event, inst) {
+          onEventDoubleClick: function () {
             // Logic for event double click
           },
-          onEventHoverIn: function (event, inst) {
+          onEventHoverIn: function () {
             // Logic for event hover in
           },
-          onEventHoverOut: function (event, inst) {
+          onEventHoverOut: function () {
             // Logic for event hover out
           },
-          onEventRightClick: function (event, inst) {
+          onEventRightClick: function () {
             // Logic for event right click
           },
-          onInit: function (event, inst) {
+          onInit: function () {
             // Logic running on component init
           },
-          onPageChange: function (event, inst) {
+          onPageChange: function () {
             // Your custom event handler goes here
           },
-          onPageLoaded: function (event, inst) {
+          onPageLoaded: function () {
             // Use it to inject custom markup & attach custom listeners
           },
-          onPageLoading: function (event, inst) {
+          onPageLoading: function () {
             // Use it to load data on demand
           },
-          onSelectedDateChange: function (event, inst) {
+          onSelectedDateChange: function () {
             // Use it to keep track of the selected date externally
           },
         })
@@ -62,6 +63,7 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo"></div>
   `,

@@ -4,8 +4,8 @@ import {
   CalendarPrev,
   CalendarToday,
   Datepicker,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -83,25 +83,26 @@ function App() {
     setDate(event.value);
   }, []);
 
-  const calendarHeaderSwitch = useCallback(() => {
-    return (
+  const calendarHeaderSwitch = useCallback(
+    () => (
       <>
         <CalendarNav />
         <div className="quarter-year-header-picker">
           <SegmentedGroup value={type} onChange={handleTypeChange}>
-            <SegmentedItem value="q1">Q1</SegmentedItem>
-            <SegmentedItem value="q2">Q2</SegmentedItem>
-            <SegmentedItem value="q3">Q3</SegmentedItem>
-            <SegmentedItem value="q4">Q4</SegmentedItem>
-            <SegmentedItem value="year">Year</SegmentedItem>
+            <Segmented value="q1">Q1</Segmented>
+            <Segmented value="q2">Q2</Segmented>
+            <Segmented value="q3">Q3</Segmented>
+            <Segmented value="q4">Q4</Segmented>
+            <Segmented value="year">Year</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev />
         <CalendarToday />
         <CalendarNext />
       </>
-    );
-  }, [handleTypeChange, type]);
+    ),
+    [handleTypeChange, type],
+  );
 
   return (
     <Datepicker

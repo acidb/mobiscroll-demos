@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
-  setOptions,
   getJson,
-  MbscToast /* localeImport */
+  MbscEventcalendar,
+  MbscToast,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -80,13 +80,3 @@ onMounted(() => {
   />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>
-
-<style>
-/*<hidden>*/
-
-.demo-work-week-hours {
-  height: 100%;
-}
-
-/*</hidden>*/
-</style>

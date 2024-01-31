@@ -1,22 +1,28 @@
-import React from 'react';
-import { Eventcalendar, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './resource-header-template.css';
 
-function App() {
-  const [myEvents, setEvents] = React.useState([]);
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  const view = React.useMemo(() => {
-    return {
+function App() {
+  const [myEvents, setEvents] = useState([]);
+
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -53,10 +59,31 @@ function App() {
         seats: 900,
         color: '#8f1ed6',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
+  const renderCustomResource = useCallback(
+    (resource) => (
+      <div className="md-resource-header-template-cont">
+        <div className="md-resource-header-template-name">{resource.name}</div>
+        <div className="md-resource-header-template-seats">{resource.seats} seats</div>
+      </div>
+    ),
+    [],
+  );
+
+  const renderCustomHeader = useCallback(
+    () => (
+      <div className="md-resource-header-template-title">
+        <div className="md-resource-header-template-name">Room</div>
+        <div className="md-resource-header-template-seats">Capacity</div>
+      </div>
+    ),
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/daily-weekly-events/',
       (events) => {
@@ -66,29 +93,10 @@ function App() {
     );
   }, []);
 
-  const renderCustomResource = (resource) => {
-    return (
-      <div className="md-resource-header-template-cont">
-        <div className="md-resource-header-template-name">{resource.name}</div>
-        <div className="md-resource-header-template-seats">{resource.seats} seats</div>
-      </div>
-    );
-  };
-
-  const renderCustomHeader = () => {
-    return (
-      <div className="md-resource-header-template-title">
-        <div className="md-resource-header-template-name">Room</div>
-        <div className="md-resource-header-template-seats">Capacity</div>
-      </div>
-    );
-  };
-
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderResource={renderCustomResource}

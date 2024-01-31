@@ -1,15 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
-  setOptions,
-  MbscEventcalendarOptions,
-  MbscCalendarEvent,
-  jalaliCalendar,
   hijriCalendar,
-  localeFa,
+  jalaliCalendar,
   localeAr,
   localeEn,
+  localeFa,
+  MbscCalendarEvent,
+  MbscEventcalendarOptions,
+  setOptions,
 } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // theme
@@ -24,46 +24,34 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  gregorianSettings: MbscEventcalendarOptions = {
+  gregorianOptions: MbscEventcalendarOptions = {
     locale: localeEn,
     view: {
-      calendar: {
-        type: 'week',
-      },
-      agenda: {
-        type: 'day',
-      },
+      calendar: { type: 'week' },
+      agenda: { type: 'day' },
     },
   };
 
-  jalaliSettings: MbscEventcalendarOptions = {
+  jalaliOptions: MbscEventcalendarOptions = {
     calendarSystem: jalaliCalendar,
     locale: localeFa,
     view: {
-      calendar: {
-        type: 'week',
-      },
-      agenda: {
-        type: 'day',
-      },
+      calendar: { type: 'week' },
+      agenda: { type: 'day' },
     },
   };
 
-  hijriSettings: MbscEventcalendarOptions = {
+  hijriOptions: MbscEventcalendarOptions = {
     calendarSystem: hijriCalendar,
     locale: localeAr,
     view: {
-      calendar: {
-        type: 'week',
-      },
-      agenda: {
-        type: 'day',
-      },
+      calendar: { type: 'week' },
+      agenda: { type: 'day' },
     },
   };
 
   ngOnInit(): void {
-    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp: any) => {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
   }

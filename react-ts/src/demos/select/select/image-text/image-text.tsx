@@ -1,5 +1,5 @@
-import React from 'react';
 import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './image-text.css';
 
 setOptions({
@@ -57,14 +57,12 @@ const App: React.FC = () => {
     placeholder: 'Please select...',
   };
 
-  const renderCustomItem = (item: any) => {
-    return (
-      <div className="md-image-text-item">
-        <img className="md-image-text-avatar" src={'https://img.mobiscroll.com/demos/' + item.data.avatar + '.png'} alt="Cover" />
-        <div className="md-image-text-name">{item.display}</div>
-      </div>
-    );
-  };
+  const renderCustomItem = (item: any) => (
+    <div className="md-image-text-item">
+      <img className="md-image-text-avatar" src={'https://img.mobiscroll.com/demos/' + item.data.avatar + '.png'} alt="Cover" />
+      <div className="md-image-text-name">{item.display}</div>
+    </div>
+  );
 
   const [myValue, setValue] = React.useState(['42976', '47883']);
   const onChange = (ev: any) => {

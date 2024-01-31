@@ -1,26 +1,31 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  Select,
   CalendarNav,
-  CalendarPrev,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
-  momentTimezone,
+  Eventcalendar,
   MbscCalendarEvent,
-  MbscEventcalendarView /* localeImport */,
+  MbscEventcalendarView,
+  MbscSelectChangeEvent,
+  momentTimezone,
+  Select,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import moment from 'moment-timezone';
+import { useCallback, useMemo, useState } from 'react';
 import './multiple-timezone-support.css';
 
-import moment from 'moment-timezone';
-
-// setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const [timezone, setTimezone] = React.useState<string>('utc');
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const [timezone, setTimezone] = useState<string>('utc');
+  const myEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,d-2,7)',
         end: 'dyndatetime(y,m,d-2,9)',
@@ -63,11 +68,12 @@ function App() {
         color: '#50b166',
         title: 'Team-Building',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const timezones = React.useMemo(() => {
-    return [
+  const timezones = useMemo(
+    () => [
       {
         text: 'America/Los Angeles',
         value: 'America/Los_Angeles',
@@ -104,42 +110,43 @@ function App() {
         text: 'Asia/Tokyo',
         value: 'Asia/Tokyo',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const onChange = React.useCallback((ev) => {
+  const handleOnChange = useCallback((ev: MbscSelectChangeEvent) => {
     setTimezone(ev.value);
   }, []);
 
-  const myHeader = () => {
-    return (
-      <React.Fragment>
+  const myHeader = useCallback(
+    () => (
+      <>
         <CalendarNav />
         <div className="md-timezone-header">
           <CalendarPrev />
           <CalendarToday />
           <CalendarNext />
-          <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={onChange} />
+          <Select data={timezones} inputStyle="box" touchUi={false} display="anchored" value={timezone} onChange={handleOnChange} />
         </div>
-      </React.Fragment>
-    );
-  };
+      </>
+    ),
+    [handleOnChange, timezone, timezones],
+  );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       dataTimezone="utc"
       displayTimezone={timezone}
       timezonePlugin={momentTimezone}
       data={myEvents}
-      view={view}
+      view={myView}
       dragToCreate={true}
       dragToMove={true}
       dragToResize={true}

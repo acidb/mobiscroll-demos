@@ -1,6 +1,6 @@
 <script setup>
+import { formatDate, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import { ref } from 'vue'
-import { MbscEventcalendar, setOptions, formatDate /* localeImport */ } from '@mobiscroll/vue'
 
 setOptions({
   // locale,
@@ -655,12 +655,7 @@ function getEventOccurrence(args) {
   <div class="md-date-header-template">
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Hourly header template</div>
-      <MbscEventcalendar
-        :drag="drag"
-        :view="myHourView"
-        :data="hourlyEvents"
-        :resources="myResources"
-      >
+      <MbscEventcalendar :view="myHourView" :data="hourlyEvents" :resources="myResources">
         <template #hour="day">
           <div
             :class="
@@ -677,12 +672,7 @@ function getEventOccurrence(args) {
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Daily header template</div>
-      <MbscEventcalendar
-        :drag="drag"
-        :view="myDayView"
-        :data="dailyEvents"
-        :resources="myResources"
-      >
+      <MbscEventcalendar :view="myDayView" :data="dailyEvents" :resources="myResources">
         <template #day="day">
           <div
             :class="
@@ -700,12 +690,7 @@ function getEventOccurrence(args) {
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Weekly header template</div>
-      <MbscEventcalendar
-        :drag="drag"
-        :view="myWeekView"
-        :data="weeklyEvents"
-        :resources="myResources"
-      >
+      <MbscEventcalendar :view="myWeekView" :data="weeklyEvents" :resources="myResources">
         <template #week="day">
           <div
             :class="
@@ -722,12 +707,7 @@ function getEventOccurrence(args) {
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Monthly header template</div>
-      <MbscEventcalendar
-        :drag="drag"
-        :view="myMonthView"
-        :data="monthlyEvents"
-        :resources="myResources"
-      >
+      <MbscEventcalendar :view="myMonthView" :data="monthlyEvents" :resources="myResources">
         <template #month="day">
           <div
             :class="
@@ -744,12 +724,7 @@ function getEventOccurrence(args) {
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Quarter header template</div>
-      <MbscEventcalendar
-        :drag="drag"
-        :view="myQuarterView"
-        :data="quarterEvents"
-        :resources="myResources"
-      >
+      <MbscEventcalendar :view="myQuarterView" :data="quarterEvents" :resources="myResources">
         <template #quarter="day">
           <div
             :class="
@@ -767,12 +742,7 @@ function getEventOccurrence(args) {
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Yearly header template</div>
-      <MbscEventcalendar
-        :drag="drag"
-        :view="myYearView"
-        :data="yearlyEvents"
-        :resources="myResources"
-      >
+      <MbscEventcalendar :view="myYearView" :data="yearlyEvents" :resources="myResources">
         <template #year="day">
           <div
             :class="

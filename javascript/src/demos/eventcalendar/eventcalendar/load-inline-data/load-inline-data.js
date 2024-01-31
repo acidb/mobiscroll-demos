@@ -1,12 +1,14 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     var now = new Date();
 
     mobiscroll.eventcalendar('#demo-loading-inline-data', {
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: {
           labels: true,
@@ -285,6 +287,7 @@ export default {
       ],
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-loading-inline-data"></div>
   `,

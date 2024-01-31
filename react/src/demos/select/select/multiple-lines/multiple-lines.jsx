@@ -70,13 +70,14 @@ function App() {
     [],
   );
 
-  const renderCustomItem = useCallback((item) => {
-    return (
+  const renderCustomItem = useCallback(
+    (item) => (
       <div className="md-multiple-lines-item">
         <span className="md-multiple-lines-text">{item.display}</span>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   return (
     <Select

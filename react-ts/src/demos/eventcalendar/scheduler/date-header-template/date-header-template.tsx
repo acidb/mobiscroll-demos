@@ -1,13 +1,15 @@
-import React from 'react';
 import {
   Eventcalendar,
-  getJson,
   formatDate,
+  getJson,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './date-header-template.css';
+// eslint-disable-next-line import/order
+import { MbscCalendarDayData } from '@mobiscroll/react/dist/src/core/shared/calendar-view/calendar-day';
 
 const milestones = [
   {
@@ -27,11 +29,11 @@ const milestones = [
   },
 ];
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -40,11 +42,12 @@ const App: React.FC = () => {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -63,25 +66,13 @@ const App: React.FC = () => {
         color: '#e8d0ef',
         img: 'https://img.mobiscroll.com/demos/m2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/resource-events/',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const renderDay = (args: any) => {
+  const renderCustomDay = useCallback((args: MbscCalendarDayData) => {
     const date = args.date;
-    const task: any =
-      milestones.find((obj) => {
-        return +new Date(obj.date) === +date;
-      }) || {};
+    const task: { date: string; name: string; color: string } = milestones.find((obj) => +new Date(obj.date) === +date)!;
 
     return (
       <div className="header-template-container">
@@ -94,26 +85,36 @@ const App: React.FC = () => {
         </div>
       </div>
     );
-  };
+  }, []);
 
-  const renderCustomResource = (resource: MbscResource) => {
-    return (
+  const renderCustomResource = useCallback(
+    (resource: MbscResource) => (
       <div className="header-resource-template-content">
         <img className="header-resource-avatar" src={resource.img} alt="Avatar" />
         <div className="header-resource-name">{resource.name}</div>
       </div>
+    ),
+    [],
+  );
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/resource-events/',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
     );
-  };
+  }, []);
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       groupBy="date"
-      renderDay={renderDay}
+      renderDay={renderCustomDay}
       renderResource={renderCustomResource}
     />
   );

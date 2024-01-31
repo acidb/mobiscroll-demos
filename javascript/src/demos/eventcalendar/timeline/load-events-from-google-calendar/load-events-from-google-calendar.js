@@ -1,9 +1,11 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
+import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
+var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -23,7 +25,8 @@ export default {
     var calendarIds = calendars.map(function (cal) {
       return cal.id;
     });
-    var firstDay, lastDay;
+    var firstDay;
+    var lastDay;
 
     googleCalendarSync.init({
       apiKey: '<YOUR_GOOGLE_API_KEY>',
@@ -44,9 +47,6 @@ export default {
 
     function onError(resp) {
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: resp.error ? resp.error : resp.result.error.message,
       });
     }
@@ -75,9 +75,11 @@ export default {
       },
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-google-cal" class="md-google-calendar"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-google-calendar .mbsc-timeline-day {
     min-width: 150px;

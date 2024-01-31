@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { setOptions, MbscEventcalendarView, MbscCalendarEvent, Notifications /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -175,8 +175,6 @@ export class AppComponent {
   handleFirstCalEventCreated(args: any) {
     if (args.action === 'externalDrop') {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         context: '.md-drag-drop-first-calendar',
         message: 'Event dropped to Calendar 1',
       });
@@ -186,8 +184,6 @@ export class AppComponent {
   handleSecondCalEventCreated(args: any) {
     if (args.action === 'externalDrop') {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         context: '.md-drag-drop-second-calendar',
         message: 'Event dropped to Calendar 2',
       });

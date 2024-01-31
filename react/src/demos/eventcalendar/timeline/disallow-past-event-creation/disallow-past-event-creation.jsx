@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, setOptions, toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './disallow-past-event-creation.css';
 
 setOptions({
@@ -12,53 +12,102 @@ const today = new Date(now.setMinutes(59));
 const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const myInvalid = [
-    {
-      recurring: {
-        repeat: 'daily',
-        until: yesterday,
+  const [myEvents, setEvents] = useState([]);
+  const myInvalid = useMemo(
+    () => [
+      {
+        recurring: {
+          repeat: 'daily',
+          until: yesterday,
+        },
       },
-    },
-    {
-      start: yesterday,
-      end: today,
-    },
-  ];
-  const myResources = [
-    {
-      id: 1,
-      name: 'Resource A',
-      color: '#e20000',
-    },
-    {
-      id: 2,
-      name: 'Resource B',
-      color: '#76e083',
-    },
-    {
-      id: 3,
-      name: 'Resource C',
-      color: '#4981d6',
-    },
-    {
-      id: 4,
-      name: 'Resource D',
-      color: '#e25dd2',
-    },
-    {
-      id: 5,
-      name: 'Resource E',
-      color: '#1dab2f',
-    },
-    {
-      id: 6,
-      name: 'Resource F',
-      color: '#d6d145',
-    },
-  ];
+      {
+        start: yesterday,
+        end: today,
+      },
+    ],
+    [],
+  );
+  const myResources = useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'Resource A',
+        color: '#e20000',
+      },
+      {
+        id: 2,
+        name: 'Resource B',
+        color: '#76e083',
+      },
+      {
+        id: 3,
+        name: 'Resource C',
+        color: '#4981d6',
+      },
+      {
+        id: 4,
+        name: 'Resource D',
+        color: '#e25dd2',
+      },
+      {
+        id: 5,
+        name: 'Resource E',
+        color: '#1dab2f',
+      },
+      {
+        id: 6,
+        name: 'Resource F',
+        color: '#d6d145',
+      },
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
+  const myView = useMemo(() => ({ timeline: { type: 'month' } }), []);
+
+  const handleEventCreateFailed = useCallback((args) => {
+    if (!args.originEvent) {
+      toast({
+        message: "Can't create event in the past",
+      });
+    }
+  }, []);
+
+  const handleEventUpdateFailed = useCallback((args) => {
+    if (!args.oldEventOccurrence) {
+      toast({
+        message: "Can't move event in the past",
+      });
+    }
+  }, []);
+
+  const handleEventCreate = useCallback((args) => {
+    const oldEvent = args.originEvent;
+    const start = oldEvent && oldEvent.start ? oldEvent.start : null;
+
+    // handle recurring events
+    if (start && start < today) {
+      toast({
+        message: "Can't move past event",
+      });
+      return false;
+    }
+  }, []);
+
+  const handleEventUpdate = useCallback((args) => {
+    const oldEvent = args.oldEvent;
+    const start = oldEvent && oldEvent.start ? oldEvent.start : null;
+    const oldEventOccurrence = args.oldEventOccurrence;
+    const occurrenceStart = oldEventOccurrence && oldEventOccurrence.start ? oldEventOccurrence.start : null;
+
+    // handle recurring events
+    if ((start && start < today) || (occurrenceStart && occurrenceStart < today)) {
+      return false;
+    }
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/multiday-events/',
       (events) => {
@@ -75,53 +124,10 @@ function App() {
     );
   }, []);
 
-  const { current: view } = React.useRef({ timeline: { type: 'month' } });
-
-  const onEventCreateFailed = React.useCallback((args) => {
-    if (!args.originEvent) {
-      toast({
-        message: "Can't create event in the past",
-      });
-    }
-  }, []);
-
-  const onEventUpdateFailed = React.useCallback((args) => {
-    if (!args.oldEventOccurrence) {
-      toast({
-        message: "Can't move event in the past",
-      });
-    }
-  }, []);
-
-  const onEventCreate = React.useCallback((args) => {
-    const oldEvent = args.originEvent;
-    const start = oldEvent && oldEvent.start ? oldEvent.start : null;
-
-    // handle recurring events
-    if (start && start < today) {
-      toast({
-        message: "Can't move past event",
-      });
-      return false;
-    }
-  }, []);
-
-  const onEventUpdate = React.useCallback((args) => {
-    const oldEvent = args.oldEvent;
-    const start = oldEvent && oldEvent.start ? oldEvent.start : null;
-    const oldEventOccurrence = args.oldEventOccurrence;
-    const occurrenceStart = oldEventOccurrence && oldEventOccurrence.start ? oldEventOccurrence.start : null;
-
-    // handle recurring events
-    if ((start && start < today) || (occurrenceStart && occurrenceStart < today)) {
-      return false;
-    }
-  }, []);
-
   return (
     <Eventcalendar
       className="md-disallow-past-event-creation"
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
       invalid={myInvalid}
@@ -129,10 +135,10 @@ function App() {
       dragToCreate={true}
       dragToMove={true}
       dragToResize={true}
-      onEventCreateFailed={onEventCreateFailed}
-      onEventUpdateFailed={onEventUpdateFailed}
-      onEventCreate={onEventCreate}
-      onEventUpdate={onEventUpdate}
+      onEventCreateFailed={handleEventCreateFailed}
+      onEventUpdateFailed={handleEventUpdateFailed}
+      onEventCreate={handleEventCreate}
+      onEventUpdate={handleEventUpdate}
     />
   );
 }

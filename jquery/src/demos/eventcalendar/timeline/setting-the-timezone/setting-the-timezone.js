@@ -1,13 +1,14 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     $(function () {
       mobiscroll.momentTimezone.moment = moment;
 
-      var inst = $('#demo-setting-the-timezone')
+      $('#demo-setting-the-timezone')
         .mobiscroll()
         .eventcalendar({
           timezonePlugin: mobiscroll.momentTimezone,
@@ -94,6 +95,7 @@ export default {
         .mobiscroll('getInst');
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-setting-the-timezone"></div>
   `,

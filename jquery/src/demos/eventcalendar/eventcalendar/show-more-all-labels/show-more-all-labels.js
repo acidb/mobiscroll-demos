@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,8 +10,12 @@ export default {
     });
 
     $(function () {
-      var allLabels, nrLabels, fitLabels;
-      var allLabelsWeeks, nrLabelsWeeks, labelsWeek;
+      var allLabels;
+      var nrLabels;
+      var fitLabels;
+      var allLabelsWeeks;
+      var nrLabelsWeeks;
+      var labelsWeek;
 
       allLabels = $('#demo-labels-all')
         .mobiscroll()
@@ -80,6 +85,7 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid">
     <div class="mbsc-row">

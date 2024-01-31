@@ -1,16 +1,16 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
+  formatDate,
+  getJson,
+  MbscButton,
+  MbscConfirm,
   MbscEventcalendar,
   MbscPage,
   MbscSelect,
-  MbscButton,
   MbscToast,
-  MbscConfirm,
-  getJson,
-  formatDate,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -114,9 +114,7 @@ function deleteSelectedEvents() {
           const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id)
           eventsToUpdate.splice(index, 1, origEvent)
         } else {
-          eventsToUpdate = eventsToUpdate.filter((ev) => {
-            return ev.id !== event.id
-          })
+          eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id)
         }
       }
 
@@ -318,14 +316,4 @@ onMounted(() => {
   padding-top: 0;
   padding-bottom: 0;
 }
-
-/*<hidden>*/
-
-.md-bulk-operations,
-.md-bulk-operations .mbsc-grid,
-.md-bulk-operations .mbsc-row {
-  height: 100%;
-}
-
-/*</hidden>*/
 </style>

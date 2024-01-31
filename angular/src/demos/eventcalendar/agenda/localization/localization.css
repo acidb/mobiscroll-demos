@@ -1,0 +1,12 @@
+.mds-agenda-locale-page,
+.mds-agenda-locale-cont {
+  height: 100%;
+}
+
+.mds-agenda-locale-cont .mbsc-col-sm-8 {
+  margin: 0 auto;
+}
+
+.mds-agenda-locale-cal {
+  overflow: hidden;
+}

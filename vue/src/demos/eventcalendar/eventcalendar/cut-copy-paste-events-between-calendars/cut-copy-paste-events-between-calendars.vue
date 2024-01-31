@@ -1,15 +1,15 @@
 <script setup>
-import { ref } from 'vue'
 import {
   MbscEventcalendar,
   MbscPage,
-  MbscSelect,
-  MbscSegmentedGroup,
   MbscSegmented,
-  MbscToast,
+  MbscSegmentedGroup,
+  MbscSelect,
   MbscSnackbar,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -135,9 +135,9 @@ function pasteEvents() {
       const endDate = new Date(event.end)
       const diff = Math.abs(endDate - startDate)
 
-      newEvent.start = startDate.setMonth(
-        startDate.getMonth() - monthDiff(toDate.value, originDate.value)
-      )
+      startDate.setMonth(startDate.getMonth() - monthDiff(toDate.value, originDate.value))
+
+      newEvent.start = startDate
       newEvent.end = new Date(startDate.getTime() + diff)
 
       delete newEvent.id
@@ -157,9 +157,7 @@ function pasteEvents() {
       let cutEvs = cutCalendar.value === 'first' ? firstEvents.value : secondEvents.value
       moveEvents.value = [...selectedEvents.value]
       for (const event of selectedEvents.value) {
-        cutEvs = cutEvs.filter((ev) => {
-          return ev.id !== event.id
-        })
+        cutEvs = cutEvs.filter((ev) => ev.id !== event.id)
       }
       if (cutCalendar.value === 'first') {
         firstEvents.value = cutEvs
@@ -181,9 +179,7 @@ function pasteEvents() {
 
           let cutEvs = getActiveEvents()
           for (const event of pastedEvents.value) {
-            cutEvs = cutEvs.filter((ev) => {
-              return ev.id !== event.id
-            })
+            cutEvs = cutEvs.filter((ev) => ev.id !== event.id)
           }
           if (activeCalendar.value === 'first') {
             firstEvents.value = cutEvs
@@ -228,9 +224,7 @@ function deleteEvents() {
     deletedEvents.value = activeSelectedEvents
 
     for (const event of activeSelectedEvents) {
-      eventsToUpdate = eventsToUpdate.filter((ev) => {
-        return ev.id !== event.id
-      })
+      eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id)
     }
 
     if (activeCalendar.value === 'first') {
@@ -330,9 +324,7 @@ function undoEvents() {
 
     let cutEvs = getActiveEvents()
     for (const event of pastedEvents.value) {
-      cutEvs = cutEvs.filter((ev) => {
-        return ev.id !== event.id
-      })
+      cutEvs = cutEvs.filter((ev) => ev.id !== event.id)
     }
     if (activeCalendar.value === 'first') {
       firstEvents.value = cutEvs
@@ -415,9 +407,7 @@ function handleEventDeleted(args) {
       const activeEvents = activeCalendar.value === 'first' ? firstEvents.value : secondEvents.value
       let eventsToUpdate = [...activeEvents]
       for (const event of deletedEvents.value) {
-        eventsToUpdate = eventsToUpdate.filter((ev) => {
-          return ev.id !== event.id
-        })
+        eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id)
       }
 
       if (activeCalendar.value === 'first') {
@@ -536,18 +526,6 @@ function handleKeyDown(ev) {
 </template>
 
 <style>
-/*<hidden>*/
-
-.demo-copy-cut-paste,
-.demo-copy-cut-paste .mbsc-page,
-.md-copy-cut-paste,
-.md-copy-cut-paste-cont,
-.md-copy-cut-paste-cont + div {
-  height: 100%;
-}
-
-/*</hidden>*/
-
 .md-copy-cut-paste .mbsc-segmented {
   width: 300px;
   margin-left: auto;

@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -28,8 +29,8 @@ export default {
           touchUi: false,
         },
       },
-      onChange: function (event) {
-        var selected = event.value;
+      onChange: function (args) {
+        var selected = args.value;
 
         if (selected === 'custom') {
           disableInputs(false);
@@ -100,7 +101,7 @@ export default {
           buttons: [
             {
               text: 'Apply',
-              handler: function (event) {
+              handler: function () {
                 var date = calendar.getVal();
 
                 setInputValue(date[0], date[1] || date[0], calendar.s.dateFormat);
@@ -143,6 +144,7 @@ export default {
       }
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-form-group">
     <label>
@@ -190,6 +192,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .demo-date-filtering-popup .mbsc-ios.mbsc-datepicker-inline {
     border: none;

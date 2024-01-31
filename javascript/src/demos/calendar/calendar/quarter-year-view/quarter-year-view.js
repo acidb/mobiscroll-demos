@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -28,8 +29,8 @@ export default {
           '<div mbsc-calendar-next></div>'
         );
       },
-      onPageChange: function (event, inst) {
-        selectedDate = event.firstDay;
+      onPageChange: function (args) {
+        selectedDate = args.firstDay;
         setType(mobiscroll.getInst(document.querySelectorAll('.md-quarter-year-view-change[value="year"]')[0]).checked);
       },
     });
@@ -89,9 +90,11 @@ export default {
       setType();
     }, 1000);
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-quarter-year-view"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .mbsc-datepicker .quarter-year-header-picker .mbsc-segmented {
     max-width: 280px;

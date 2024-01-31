@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useEffect, useMemo, useState } from 'react';
 import './monthly-timetable-vertical-days-horizontal-times.css';
 
 setOptions({
@@ -8,19 +8,20 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
         resolutionHorizontal: 'hour',
         resolutionVertical: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/timeline-vertical-events/',
       (events) => {
@@ -32,9 +33,8 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
     />
   );

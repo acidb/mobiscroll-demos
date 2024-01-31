@@ -1,10 +1,36 @@
-import React from 'react';
-import { Eventcalendar, Page, getJson, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  React.useEffect(() => {
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+
+  const dayView = useMemo<MbscEventcalendarView>(
+    () => ({
+      agenda: { type: 'day' },
+    }),
+    [],
+  );
+
+  const weekView = useMemo<MbscEventcalendarView>(
+    () => ({
+      agenda: { type: 'week' },
+    }),
+    [],
+  );
+
+  const monthView = useMemo<MbscEventcalendarView>(
+    () => ({
+      agenda: { type: 'month' },
+    }),
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events: MbscCalendarEvent[]) => {
@@ -12,24 +38,6 @@ const App: React.FC = () => {
       },
       'jsonp',
     );
-  }, []);
-
-  const dayView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
-      agenda: { type: 'day' },
-    };
-  }, []);
-
-  const weekView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
-      agenda: { type: 'week' },
-    };
-  }, []);
-
-  const monthView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
-      agenda: { type: 'month' },
-    };
   }, []);
 
   return (

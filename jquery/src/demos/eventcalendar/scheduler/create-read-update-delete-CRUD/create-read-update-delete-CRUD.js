@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,76 +10,76 @@ export default {
     });
 
     $(function () {
-      var calendar,
-        popup,
-        range,
-        oldEvent,
-        tempEvent = {},
-        deleteEvent,
-        restoreEvent,
-        colorPicker,
-        tempColor,
-        $title = $('#event-title'),
-        $description = $('#event-desc'),
-        $allDay = $('#event-all-day'),
-        $statusFree = $('#event-status-free'),
-        $statusBusy = $('#event-status-busy'),
-        $deleteButton = $('#event-delete'),
-        $color = $('#event-color'),
-        datePickerResponsive = {
-          medium: {
-            controls: ['calendar'],
-            touchUi: false,
-          },
+      var calendar;
+      var popup;
+      var range;
+      var oldEvent;
+      var tempEvent = {};
+      var deleteEvent;
+      var restoreEvent;
+      var colorPicker;
+      var tempColor;
+      var $title = $('#event-title');
+      var $description = $('#event-desc');
+      var $allDay = $('#event-all-day');
+      var $statusFree = $('#event-status-free');
+      var $statusBusy = $('#event-status-busy');
+      var $deleteButton = $('#event-delete');
+      var $color = $('#event-color');
+      var datePickerResponsive = {
+        medium: {
+          controls: ['calendar'],
+          touchUi: false,
         },
-        datetimePickerResponsive = {
-          medium: {
-            controls: ['calendar', 'time'],
-            touchUi: false,
-          },
+      };
+      var datetimePickerResponsive = {
+        medium: {
+          controls: ['calendar', 'time'],
+          touchUi: false,
         },
-        myData = [
-          {
-            id: 1,
-            start: 'dyndatetime(y,m,8,13)',
-            end: 'dyndatetime(y,m,8,13,45)',
-            title: "Lunch @ Butcher's",
-            description: '',
-            allDay: false,
-            free: true,
-            color: '#009788',
-          },
-          {
-            id: 2,
-            start: 'dyndatetime(y,m,d,15)',
-            end: 'dyndatetime(y,m,d,16)',
-            title: 'General orientation',
-            description: '',
-            allDay: false,
-            free: false,
-            color: '#ff9900',
-          },
-          {
-            id: 3,
-            start: 'dyndatetime(y,m,d-1,18)',
-            end: 'dyndatetime(y,m,d-1,22)',
-            title: 'Dexter BD',
-            description: '',
-            allDay: false,
-            free: true,
-            color: '#3f51b5',
-          },
-          {
-            id: 4,
-            start: 'dyndatetime(y,m,d+1,10,30)',
-            end: 'dyndatetime(y,m,d+1,11,30)',
-            title: 'Stakeholder mtg.',
-            description: '',
-            allDay: false,
-            free: false,
-            color: '#f44437',
-          },
-        ];
+      };
+      var myData = [
+        {
+          id: 1,
+          start: 'dyndatetime(y,m,8,13)',
+          end: 'dyndatetime(y,m,8,13,45)',
+          title: "Lunch @ Butcher's",
+          description: '',
+          allDay: false,
+          free: true,
+          color: '#009788',
+        },
+        {
+          id: 2,
+          start: 'dyndatetime(y,m,d,15)',
+          end: 'dyndatetime(y,m,d,16)',
+          title: 'General orientation',
+          description: '',
+          allDay: false,
+          free: false,
+          color: '#ff9900',
+        },
+        {
+          id: 3,
+          start: 'dyndatetime(y,m,d-1,18)',
+          end: 'dyndatetime(y,m,d-1,22)',
+          title: 'Dexter BD',
+          description: '',
+          allDay: false,
+          free: true,
+          color: '#3f51b5',
+        },
+        {
+          id: 4,
+          start: 'dyndatetime(y,m,d+1,10,30)',
+          end: 'dyndatetime(y,m,d+1,11,30)',
+          title: 'Stakeholder mtg.',
+          description: '',
+          allDay: false,
+          free: false,
+          color: '#f44437',
+        },
+      ];
 
       function createAddPopup(elm) {
         // hide delete button inside add popup
@@ -340,7 +341,7 @@ export default {
             {
               text: 'Set',
               keyCode: 'enter',
-              handler: function (ev) {
+              handler: function () {
                 setSelectedColor();
               },
               cssClass: 'mbsc-popup-button-primary',
@@ -387,6 +388,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-add-delete-event"></div>
 
@@ -474,6 +476,7 @@ export default {
 </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .event-color-c {
     display: flex;

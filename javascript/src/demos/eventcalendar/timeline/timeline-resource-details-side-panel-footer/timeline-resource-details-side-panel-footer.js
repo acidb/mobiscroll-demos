@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -84,6 +85,7 @@ export default {
       },
     ];
     var calendar = mobiscroll.eventcalendar('#demo-resource-details', {
+      // drag,
       view: {
         timeline: {
           type: 'month',
@@ -153,20 +155,14 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="md-resource-details">
     <div id="demo-resource-details"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
-/*<hidden>*/
-
-.demo-timeline-resource-details {
-    height: 100%;
-}
-
-/*</hidden>*/
-
 /* Header */
 
 .md-resource-details .mbsc-timeline-resource-col {

@@ -1,4 +1,4 @@
-import { Button, Datepicker, Page, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Datepicker, Page, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useState } from 'react';
 import './presets.css';
 
@@ -25,7 +25,7 @@ function App() {
     setOpen(true);
   }, []);
 
-  const closeToast = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setOpen(false);
   }, []);
 
@@ -78,7 +78,7 @@ function App() {
         <div className="mbsc-form-group-title">Or by a custom range</div>
         <Datepicker select="range" display="inline" showRangeLabels={false} value={value} />
       </div>
-      <Toast message={toastMsg} isOpen={isOpen} onClose={closeToast} />
+      <Toast message={toastMsg} isOpen={isOpen} onClose={handleCloseToast} />
     </Page>
   );
 }

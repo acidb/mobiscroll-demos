@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -75,7 +76,7 @@ export default {
               color: '#01adff',
             },
           ],
-          onPageLoading: function (args, inst) {
+          onPageLoading: function (args) {
             var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
             var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
 
@@ -112,6 +113,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div mbsc-page>
@@ -131,6 +133,7 @@ export default {
 </div>
 <!--/hidden-->
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-search-events-cont {
     width: 350px;

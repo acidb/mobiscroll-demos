@@ -1,6 +1,7 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 import './custom-resource-header-template.css';
+import { useCallback } from 'react';
 
 setOptions({
   // localeJs,
@@ -8,8 +9,8 @@ setOptions({
 });
 
 function App() {
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -18,11 +19,12 @@ function App() {
         startTime: '05:00',
         endTime: '22:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const [myEvents, setEvents] = React.useState(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d-3,10)',
         end: 'dyndatetime(y,m,d-3,15)',
@@ -72,11 +74,12 @@ function App() {
         resource: [1, 2],
         color: '#de3d83',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -98,20 +101,30 @@ function App() {
         description: 'Territory sales manager',
         img: 'https://img.mobiscroll.com/demos/m2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const renderCustomResource = (resource) => {
-    return (
+  const renderCustomResource = useCallback(
+    (resource) => (
       <div className="resource-template-content">
         <div className="resource-name">{resource.name}</div>
         <div className="resource-description">{resource.description}</div>
         <img className="resource-avatar" src={resource.img} />
       </div>
-    );
-  };
+    ),
+    [],
+  );
 
-  return <Eventcalendar data={myEvents} resources={myResources} view={view} renderResource={renderCustomResource} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      resources={myResources}
+      view={myView}
+      renderResource={renderCustomResource}
+    />
+  );
 }
 
 export default App;

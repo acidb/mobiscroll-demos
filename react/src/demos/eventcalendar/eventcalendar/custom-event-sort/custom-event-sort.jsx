@@ -133,7 +133,14 @@ function App() {
 
   const orderMyEvents = useCallback((event) => (event.accepted ? 1 : -1), []);
 
-  return <Eventcalendar view={myView} data={myEvents} eventOrder={orderMyEvents} />;
+  return (
+    <Eventcalendar
+      // drag
+      view={myView}
+      data={myEvents}
+      eventOrder={orderMyEvents}
+    />
+  );
 }
 
 export default App;

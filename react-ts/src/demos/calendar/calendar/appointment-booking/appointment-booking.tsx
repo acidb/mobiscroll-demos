@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, Page, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './appointment-booking.css';
 
 setOptions({
@@ -40,14 +40,14 @@ const App: React.FC = () => {
   }, []);
 
   const getPrices = (d: Date, callback: any) => {
-    var invalid: Date[] = [],
+    const invalid: Date[] = [],
       labels: MbscCalendarLabel[] = [];
 
     getJson(
       'https://trial.mobiscroll.com/getprices/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
       (bookings: any) => {
-        for (var i = 0; i < bookings.length; ++i) {
-          var booking = bookings[i],
+        for (let i = 0; i < bookings.length; ++i) {
+          const booking = bookings[i],
             d = new Date(booking.d);
 
           if (booking.price > 0) {
@@ -68,7 +68,7 @@ const App: React.FC = () => {
 
   const getDatetimes = (d: Date, callback: any) => {
     let invalid = [];
-    let labels = [];
+    const labels = [];
 
     getJson(
       'https://trial.dev.mobiscroll.com/getbookingtime/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
@@ -95,14 +95,14 @@ const App: React.FC = () => {
   };
 
   const getBookings = (d: Date, callback: any) => {
-    var invalid: Date[] = [],
+    const invalid: Date[] = [],
       labels: MbscCalendarLabel[] = [];
 
     getJson(
       'https://trial.mobiscroll.com/getbookings/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
       (bookings) => {
-        for (var i = 0; i < bookings.length; ++i) {
-          var booking = bookings[i],
+        for (let i = 0; i < bookings.length; ++i) {
+          const booking = bookings[i],
             d = new Date(booking.d);
 
           if (booking.nr > 0) {

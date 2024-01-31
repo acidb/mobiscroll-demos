@@ -1,18 +1,38 @@
-import React from 'react';
-import { Eventcalendar, getJson, Toast, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import {
+  Eventcalendar,
+  getJson,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscPageLoadingEvent,
+  setOptions,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
-const App: React.FC = () => {
-  const [events, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState(false);
+setOptions({
+  // themeJs,
+  // localeJs
+});
 
-  const closeToast = React.useCallback(() => {
+const App: FC = () => {
+  const [events, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
+      schedule: { type: 'day' },
+    }),
+    [],
+  );
+
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const onPageLoading = React.useCallback((event, inst) => {
-    const year = event.firstDay.getFullYear();
-    const month = event.firstDay.getMonth();
-    const day = event.firstDay.getDate();
+  const handlePageLoading = useCallback((args: MbscPageLoadingEvent) => {
+    const year = args.firstDay.getFullYear();
+    const month = args.firstDay.getMonth();
+    const day = args.firstDay.getDate();
 
     getJson(
       'https://trial.mobiscroll.com/weeklyevents/?year=' + year + '&month=' + month + '&day=' + day,
@@ -36,22 +56,15 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
-      schedule: { type: 'day' },
-    };
-  }, []);
-
   return (
     <div>
       <Eventcalendar
-        // theme
-        // locale
+        // drag
         data={events}
-        view={view}
-        onPageLoading={onPageLoading}
+        view={myView}
+        onPageLoading={handlePageLoading}
       />
-      <Toast message="New events loaded" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="New events loaded" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 };

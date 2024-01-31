@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { setOptions, localeEn, jalaliCalendar, localeFa, hijriCalendar, localeAr } from '@mobiscroll/angular';
+import { hijriCalendar, jalaliCalendar, localeAr, localeEn, localeFa, setOptions } from '@mobiscroll/angular';
 
 setOptions({
   // theme

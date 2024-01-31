@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, Button, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './compare-resources-fixed-at-top.css';
 
 setOptions({
@@ -7,7 +7,7 @@ setOptions({
   // themeJs
 });
 
-const myResources = [
+const resources = [
   {
     id: 1,
     name: 'Emma Smith',
@@ -76,13 +76,13 @@ const myResources = [
 ];
 
 const App = () => {
-  const [resources, setResources] = React.useState(myResources);
-  const [fixedNr, setFixedNr] = React.useState(0);
-  const [fixedResources, setFixedResources] = React.useState([]);
-  const [isToastOpen, setIsToastOpen] = React.useState(false);
+  const [myResources, setMyResources] = useState(resources);
+  const [fixedNr, setFixedNr] = useState(0);
+  const [fixedResources, setFixedResources] = useState([]);
+  const [isToastOpen, setIsToastOpen] = useState(false);
 
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,9)',
         end: 'dyndatetime(y,m,d,12)',
@@ -401,11 +401,12 @@ const App = () => {
         title: 'Task 52',
         resource: 13,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo(() => {
-    return {
+  const view = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         resolutionHorizontal: 'hour',
@@ -414,17 +415,18 @@ const App = () => {
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setIsToastOpen(false);
   }, []);
 
-  const toggleComparison = React.useCallback(
+  const toggleComparison = useCallback(
     (resource) => {
       const isFixed = resource.fixed;
-      const origResource = myResources.find((r) => r.id === resource.id);
+      const origResource = resources.find((r) => r.id === resource.id);
       let newFixedResources = [];
       let newFixedNr = fixedNr;
 
@@ -439,13 +441,13 @@ const App = () => {
       }
 
       const newResources = [...newFixedResources];
-      myResources.forEach(function (r) {
+      resources.forEach(function (r) {
         if (!r.fixed) {
           newResources.push(r);
         }
       });
 
-      setResources(newResources);
+      setMyResources(newResources);
       setFixedResources(newFixedResources);
       setFixedNr(newFixedNr);
 
@@ -456,34 +458,32 @@ const App = () => {
     [fixedNr, fixedResources],
   );
 
-  const renderResource = React.useCallback(
-    (r) => {
-      return (
-        <div className="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
-          <div>{r.name}</div>
-          {r.fixed || (!r.fixed && fixedNr <= 2) ? (
-            <Button
-              className="md-compare-button"
-              color={r.fixed ? 'danger' : 'success'}
-              variant="outline"
-              onClick={() => toggleComparison(r)}
-            >
-              {r.fixed ? 'Remove' : 'Compare'}
-            </Button>
-          ) : (
-            ''
-          )}
-        </div>
-      );
-    },
+  const customResource = useCallback(
+    (r) => (
+      <div className="md-compare-resource mbsc-flex mbsc-align-items-center mbsc-justify-content-between">
+        <div>{r.name}</div>
+        {r.fixed || (!r.fixed && fixedNr <= 2) ? (
+          <Button
+            className="md-compare-button"
+            color={r.fixed ? 'danger' : 'success'}
+            variant="outline"
+            onClick={() => toggleComparison(r)}
+          >
+            {r.fixed ? 'Remove' : 'Compare'}
+          </Button>
+        ) : (
+          ''
+        )}
+      </div>
+    ),
     [fixedNr, toggleComparison],
   );
 
   return (
-    <React.Fragment>
-      <Eventcalendar data={myEvents} resources={resources} dragToMove={true} renderResource={renderResource} view={view} />
-      <Toast message="Comparing up to 3 schedules" isOpen={isToastOpen} onClose={closeToast} />
-    </React.Fragment>
+    <>
+      <Eventcalendar data={myEvents} resources={myResources} dragToMove={true} renderResource={customResource} view={view} />
+      <Toast message="Comparing up to 3 schedules" isOpen={isToastOpen} onClose={handleCloseToast} />
+    </>
   );
 };
 

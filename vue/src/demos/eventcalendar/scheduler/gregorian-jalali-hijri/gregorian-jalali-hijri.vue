@@ -1,15 +1,15 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
+  getJson,
+  hijriCalendar,
+  jalaliCalendar,
+  localeAr,
+  localeFa,
   MbscEventcalendar,
   MbscPage,
-  setOptions,
-  getJson,
-  jalaliCalendar,
-  hijriCalendar,
-  localeFa,
-  localeAr
+  setOptions
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // theme
@@ -39,14 +39,13 @@ onMounted(() => {
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Gregorian calendar</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="myView" />
+            <MbscEventcalendar :data="myEvents" :view="myView" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Jalali calendar</div>
             <MbscEventcalendar
-              :drag="drag"
               :data="myEvents"
               :view="myView"
               :calendarSystem="jalaliCalendar"
@@ -58,7 +57,6 @@ onMounted(() => {
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Hijri calendar</div>
             <MbscEventcalendar
-              :drag="drag"
               :data="myEvents"
               :view="myView"
               :calendarSystem="hijriCalendar"

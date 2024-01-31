@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,24 +10,24 @@ export default {
     });
 
     $(function () {
-      var now = new Date(),
-        curr = new Date(),
-        yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1),
-        startWeek = new Date(curr.setDate(curr.getDate() - curr.getDay())),
-        endWeek = new Date(curr.setDate(curr.getDate() - curr.getDay() + 6)),
-        startMonth = new Date(curr.getFullYear(), curr.getMonth() - 1, 1),
-        endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0),
-        inst = $('#demo')
-          .mobiscroll()
-          .datepicker({
-            controls: ['calendar'],
-            select: 'range',
-            display: 'inline',
-            showRangeLabels: false,
-          })
-          .mobiscroll('getInst');
+      var now = new Date();
+      var curr = new Date();
+      var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+      var startWeek = new Date(curr.setDate(curr.getDate() - curr.getDay()));
+      var endWeek = new Date(curr.setDate(curr.getDate() - curr.getDay() + 6));
+      var startMonth = new Date(curr.getFullYear(), curr.getMonth() - 1, 1);
+      var endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0);
+      var inst = $('#demo')
+        .mobiscroll()
+        .datepicker({
+          controls: ['calendar'],
+          select: 'range',
+          display: 'inline',
+          showRangeLabels: false,
+        })
+        .mobiscroll('getInst');
 
-      $('.md-today').on('click', function (ev) {
+      $('.md-today').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -36,7 +37,7 @@ export default {
         inst.setVal([now, now]);
       });
 
-      $('.md-yesterday').on('click', function (ev) {
+      $('.md-yesterday').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -46,7 +47,7 @@ export default {
         inst.setVal([yesterday, yesterday]);
       });
 
-      $('.md-week').on('click', function (ev) {
+      $('.md-week').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -56,7 +57,7 @@ export default {
         inst.setVal([startWeek, endWeek]);
       });
 
-      $('.md-month').on('click', function (ev) {
+      $('.md-month').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -66,7 +67,7 @@ export default {
         inst.setVal([startMonth, endMonth]);
       });
 
-      $('.md-clear').on('click', function (ev) {
+      $('.md-clear').on('click', function () {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -77,6 +78,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="md-range-filter">
     <h4 class="md-header">Filter Results by</h4>
@@ -93,6 +95,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-range-filter .md-header {
     text-align: center;

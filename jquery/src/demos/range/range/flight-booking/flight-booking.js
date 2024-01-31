@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,9 +10,9 @@ export default {
     });
 
     $(function () {
-      var now = new Date(),
-        min = now,
-        max = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
+      var now = new Date();
+      var min = now;
+      var max = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
 
       $('#demo-flight-booking-single')
         .mobiscroll()
@@ -134,6 +135,7 @@ export default {
         .mobiscroll('getInst');
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid mbsc-no-padding">
 

@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -53,7 +54,7 @@ export default {
               },
             },
           ],
-          onEventCreateFailed: function (event, inst) {
+          onEventCreateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -61,7 +62,7 @@ export default {
               message: "Can't create event on this date",
             });
           },
-          onEventUpdateFailed: function (event, inst) {
+          onEventUpdateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -81,6 +82,7 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-time-off-blocked-ranges"></div>
   `,

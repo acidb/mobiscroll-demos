@@ -1,17 +1,17 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  snackbar,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
-  Switch,
   Datepicker,
+  Eventcalendar,
+  Input,
+  Popup,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem /* localeImport */,
+  setOptions,
+  snackbar,
+  Switch,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './create-read-update-delete-CRUD.css';
 
 setOptions({
@@ -109,25 +109,25 @@ const colorPopup = {
 const colors = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '#5ac8fa', '#009788', '#4baf4f', '#7e5d4e'];
 
 function App() {
-  const [myEvents, setMyEvents] = React.useState(defaultEvents);
-  const [tempEvent, setTempEvent] = React.useState(null);
-  const [isOpen, setOpen] = React.useState(false);
-  const [isEdit, setEdit] = React.useState(false);
-  const [anchor, setAnchor] = React.useState(null);
-  const [start, startRef] = React.useState(null);
-  const [end, endRef] = React.useState(null);
-  const [popupEventTitle, setTitle] = React.useState('');
-  const [popupEventDescription, setDescription] = React.useState('');
-  const [popupEventAllDay, setAllDay] = React.useState(true);
-  const [popupEventDate, setDate] = React.useState([]);
-  const [popupEventStatus, setStatus] = React.useState('busy');
-  const [mySelectedDate, setSelectedDate] = React.useState(new Date());
-  const [colorPickerOpen, setColorPickerOpen] = React.useState(false);
-  const [colorAnchor, setColorAnchor] = React.useState(null);
-  const [selectedColor, setSelectedColor] = React.useState('');
-  const [tempColor, setTempColor] = React.useState('');
-  const colorPicker = React.useRef();
-  const colorButtons = React.useMemo(
+  const [myEvents, setMyEvents] = useState(defaultEvents);
+  const [tempEvent, setTempEvent] = useState(null);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isEdit, setEdit] = useState(false);
+  const [anchor, setAnchor] = useState(null);
+  const [start, startRef] = useState(null);
+  const [end, endRef] = useState(null);
+  const [popupEventTitle, setTitle] = useState('');
+  const [popupEventDescription, setDescription] = useState('');
+  const [popupEventAllDay, setAllDay] = useState(true);
+  const [popupEventDate, setDate] = useState([]);
+  const [popupEventStatus, setStatus] = useState('busy');
+  const [mySelectedDate, setSelectedDate] = useState(new Date());
+  const [colorPickerOpen, setColorPickerOpen] = useState(false);
+  const [colorAnchor, setColorAnchor] = useState(null);
+  const [selectedColor, setSelectedColor] = useState('');
+  const [tempColor, setTempColor] = useState('');
+  const colorPicker = useRef();
+  const colorButtons = useMemo(
     () => [
       'cancel',
       {
@@ -143,7 +143,7 @@ function App() {
     [tempColor],
   );
 
-  const saveEvent = React.useCallback(() => {
+  const saveEvent = useCallback(() => {
     const newEvent = {
       id: tempEvent.id,
       title: popupEventTitle,
@@ -172,7 +172,7 @@ function App() {
     }
     setSelectedDate(popupEventDate[0]);
     // close the popup
-    setOpen(false);
+    setPopupOpen(false);
   }, [
     isEdit,
     myEvents,
@@ -185,7 +185,7 @@ function App() {
     selectedColor,
   ]);
 
-  const deleteEvent = React.useCallback(
+  const deleteEvent = useCallback(
     (event) => {
       setMyEvents(myEvents.filter((item) => item.id !== event.id));
       setTimeout(() => {
@@ -203,7 +203,7 @@ function App() {
     [myEvents],
   );
 
-  const loadPopupForm = React.useCallback((event) => {
+  const loadPopupForm = useCallback((event) => {
     setTitle(event.title);
     setDescription(event.description);
     setDate([event.start, event.end]);
@@ -213,38 +213,38 @@ function App() {
 
   // handle popup form changes
 
-  const titleChange = React.useCallback((ev) => {
+  const titleChange = useCallback((ev) => {
     setTitle(ev.target.value);
   }, []);
 
-  const descriptionChange = React.useCallback((ev) => {
+  const descriptionChange = useCallback((ev) => {
     setDescription(ev.target.value);
   }, []);
 
-  const allDayChange = React.useCallback((ev) => {
+  const allDayChange = useCallback((ev) => {
     setAllDay(ev.target.checked);
   }, []);
 
-  const dateChange = React.useCallback((args) => {
+  const dateChange = useCallback((args) => {
     setDate(args.value);
   }, []);
 
-  const statusChange = React.useCallback((ev) => {
+  const statusChange = useCallback((ev) => {
     setStatus(ev.target.value);
   }, []);
 
-  const onDeleteClick = React.useCallback(() => {
+  const onDeleteClick = useCallback(() => {
     deleteEvent(tempEvent);
-    setOpen(false);
+    setPopupOpen(false);
   }, [deleteEvent, tempEvent]);
 
   // scheduler options
 
-  const onSelectedDateChange = React.useCallback((event) => {
+  const handleSelectedDateChange = useCallback((event) => {
     setSelectedDate(event.date);
   }, []);
 
-  const onEventClick = React.useCallback(
+  const handleEventClick = useCallback(
     (args) => {
       setEdit(true);
       setTempEvent({ ...args.event });
@@ -252,12 +252,12 @@ function App() {
       // fill popup form with event data
       loadPopupForm(args.event);
       setAnchor(args.domEvent.target);
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const onEventCreated = React.useCallback(
+  const handleEventCreated = useCallback(
     (args) => {
       setEdit(false);
       setTempEvent(args.event);
@@ -266,26 +266,26 @@ function App() {
       loadPopupForm(args.event);
       setAnchor(args.target);
       // open the popup
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const onEventDeleted = React.useCallback(
+  const handleEventDeleted = useCallback(
     (args) => {
       deleteEvent(args.event);
     },
     [deleteEvent],
   );
 
-  const onEventUpdated = React.useCallback((args) => {
+  const handleEventUpdated = useCallback(() => {
     // here you can update the event in your storage as well, after drag & drop or resize
     // ...
   }, []);
 
   // datepicker options
-  const controls = React.useMemo(() => (popupEventAllDay ? ['date'] : ['datetime']), [popupEventAllDay]);
-  const responsiveOptions = React.useMemo(
+  const controls = useMemo(() => (popupEventAllDay ? ['date'] : ['datetime']), [popupEventAllDay]);
+  const responsiveOptions = useMemo(
     () =>
       popupEventAllDay
         ? {
@@ -304,8 +304,8 @@ function App() {
   );
 
   // popup options
-  const headerText = React.useMemo(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
-  const popupButtons = React.useMemo(() => {
+  const headerText = useMemo(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
+  const popupButtons = useMemo(() => {
     if (isEdit) {
       return [
         'cancel',
@@ -333,19 +333,19 @@ function App() {
     }
   }, [isEdit, saveEvent]);
 
-  const onClose = React.useCallback(() => {
+  const onPopupClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setMyEvents([...myEvents]);
     }
-    setOpen(false);
+    setPopupOpen(false);
   }, [isEdit, myEvents]);
 
-  const selectColor = React.useCallback((color) => {
+  const selectColor = useCallback((color) => {
     setTempColor(color);
   }, []);
 
-  const openColorPicker = React.useCallback(
+  const openColorPicker = useCallback(
     (ev) => {
       selectColor(selectedColor);
       setColorAnchor(ev.currentTarget);
@@ -354,7 +354,7 @@ function App() {
     [selectColor, selectedColor],
   );
 
-  const changeColor = React.useCallback(
+  const changeColor = useCallback(
     (ev) => {
       const color = ev.currentTarget.getAttribute('data-value');
       selectColor(color);
@@ -366,7 +366,7 @@ function App() {
     [selectColor, setSelectedColor],
   );
 
-  const onPickerClose = React.useCallback(() => {
+  const onPickerClose = useCallback(() => {
     setColorPickerOpen(false);
   }, []);
 
@@ -381,11 +381,11 @@ function App() {
         dragToMove={true}
         dragToResize={true}
         selectedDate={mySelectedDate}
-        onSelectedDateChange={onSelectedDateChange}
-        onEventClick={onEventClick}
-        onEventCreated={onEventCreated}
-        onEventDeleted={onEventDeleted}
-        onEventUpdated={onEventUpdated}
+        onSelectedDateChange={handleSelectedDateChange}
+        onEventClick={handleEventClick}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDeleted}
+        onEventUpdated={handleEventUpdated}
       />
       <Popup
         display="bottom"
@@ -394,8 +394,8 @@ function App() {
         headerText={headerText}
         anchor={anchor}
         buttons={popupButtons}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isPopupOpen}
+        onClose={onPopupClose}
         responsive={responsivePopup}
       >
         <div className="mbsc-form-group">
@@ -422,12 +422,12 @@ function App() {
             <div className="event-color" style={{ background: selectedColor }}></div>
           </div>
           <SegmentedGroup onChange={statusChange}>
-            <SegmentedItem value="busy" checked={popupEventStatus === 'busy'}>
+            <Segmented value="busy" checked={popupEventStatus === 'busy'}>
               Show as busy
-            </SegmentedItem>
-            <SegmentedItem value="free" checked={popupEventStatus === 'free'}>
+            </Segmented>
+            <Segmented value="free" checked={popupEventStatus === 'free'}>
               Show as free
-            </SegmentedItem>
+            </Segmented>
           </SegmentedGroup>
           {isEdit && (
             <div className="mbsc-button-group">

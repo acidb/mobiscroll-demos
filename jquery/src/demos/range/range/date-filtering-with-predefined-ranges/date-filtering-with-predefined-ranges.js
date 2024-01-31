@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -32,8 +33,8 @@ export default {
               touchUi: false,
             },
           },
-          onChange: function (event) {
-            var selected = event.value;
+          onChange: function (args) {
+            var selected = args.value;
 
             if (selected === 'custom') {
               disableInputs(false);
@@ -110,7 +111,7 @@ export default {
               buttons: [
                 {
                   text: 'Apply',
-                  handler: function (event) {
+                  handler: function () {
                     var date = calendar.getVal();
 
                     setInputValue(date[0], date[1] || date[0], calendar.s.dateFormat);
@@ -139,22 +140,23 @@ export default {
         $dateInput.val(formatDate(dateFormat, new Date(start)) + ' - ' + formatDate(dateFormat, new Date(end)));
       }
 
-      $dateInput.on('click', function (ev) {
+      $dateInput.on('click', function () {
         popup.open();
       });
 
-      $('.apply-button').on('click', function (ev) {
+      $('.apply-button').on('click', function () {
         var date = calendar.getVal();
 
         setInputValue(date[0], date[1] || date[0], calendar.s.dateFormat);
         popup.close();
       });
 
-      $('.cancel-button').on('click', function (ev) {
+      $('.cancel-button').on('click', function () {
         popup.close();
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div class="demo-inline demo-max-width-400" mbsc-page>
@@ -208,6 +210,7 @@ export default {
 </div>
 <!--/hidden-->
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .demo-date-filtering-popup .mbsc-ios.mbsc-datepicker-inline {
     border: none;

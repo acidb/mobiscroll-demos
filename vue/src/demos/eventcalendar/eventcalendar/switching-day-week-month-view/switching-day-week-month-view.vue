@@ -1,15 +1,15 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
-  setOptions,
   getJson,
   MbscCalendarNav,
-  MbscSegmentedGroup,
-  MbscSegmented,
+  MbscCalendarNext,
   MbscCalendarPrev,
-  MbscCalendarNext /* localeImport */
+  MbscEventcalendar,
+  MbscSegmented,
+  MbscSegmentedGroup,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -61,7 +61,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar :drag="drag" :view="myView" :data="myEvents">
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents">
     <template #header>
       <MbscCalendarNav />
       <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
@@ -125,13 +126,4 @@ onMounted(() => {
 .cal-header-nav .mbsc-calendar-title.mbsc-material {
   font-size: 16px;
 }
-
-/*<hidden>*/
-
-.demo-switching-day-week-month-view,
-mbsc-page > .mbsc-page {
-  height: 100%;
-}
-
-/*</hidden>*/
 </style>

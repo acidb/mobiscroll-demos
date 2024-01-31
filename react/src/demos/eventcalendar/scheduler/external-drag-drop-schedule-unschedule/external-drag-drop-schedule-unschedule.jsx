@@ -1,5 +1,6 @@
-import React from 'react';
-import { Eventcalendar, Draggable, Dropcontainer, setOptions, getJson, toast /* localeImport */ } from '@mobiscroll/react';
+import { Draggable, Dropcontainer, Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import PropTypes from 'prop-types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './external-drag-drop-schedule-unschedule.css';
 
 setOptions({
@@ -8,9 +9,9 @@ setOptions({
 });
 
 function Task(props) {
-  const [draggable, setDraggable] = React.useState();
+  const [draggable, setDraggable] = useState();
 
-  const setDragElm = React.useCallback((elm) => {
+  const setDragElm = useCallback((elm) => {
     setDraggable(elm);
   }, []);
 
@@ -30,10 +31,14 @@ function Task(props) {
   );
 }
 
-function App() {
-  const [myEvents, setEvents] = React.useState([]);
+Task.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
-  const [myTasks, setTasks] = React.useState([
+function App() {
+  const [myEvents, setEvents] = useState([]);
+
+  const [myTasks, setTasks] = useState([
     {
       id: 1,
       title: 'Product team meeting',
@@ -63,36 +68,36 @@ function App() {
       end: 'dyndatetime(y,m,d,18)',
     },
   ]);
+  const [dropCont, setDropCont] = useState();
+  const [toastText, setToastText] = useState('');
+  const [isToastOpen, setIsToastOpen] = useState(false);
 
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const [dropCont, setDropCont] = React.useState();
-  const setDropElm = React.useCallback((elm) => {
+  const setDropElm = useCallback((elm) => {
     setDropCont(elm);
   }, []);
 
-  const onEventCreate = React.useCallback(
+  const handleEventCreate = useCallback(
     (args) => {
       setTasks(myTasks.filter((item) => item.id !== args.event.id));
-
-      toast({
-        message: args.event.title + ' added',
-      });
+      setToastText(args.event.title + ' added');
+      setIsToastOpen(true);
     },
     [myTasks],
   );
 
-  const onEventDelete = React.useCallback((args) => {
-    toast({
-      message: args.event.title + ' unscheduled',
-    });
+  const handleEventDelete = useCallback((args) => {
+    setToastText(args.event.title + ' unscheduled');
+    setIsToastOpen(true);
   }, []);
 
-  const onItemDrop = React.useCallback(
+  const handleItemDrop = useCallback(
     (args) => {
       if (args.data) {
         setTasks([...myTasks, args.data]);
@@ -101,7 +106,11 @@ function App() {
     [myTasks],
   );
 
-  React.useEffect(() => {
+  const handleCloseToast = useCallback(() => {
+    setIsToastOpen(false);
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/drag-drop-events/',
       (events) => {
@@ -117,17 +126,18 @@ function App() {
         <div className="mbsc-col-sm-9 external-drop-calendar">
           <Eventcalendar
             data={myEvents}
-            view={view}
+            view={myView}
             dragToMove={true}
             dragToCreate={true}
             externalDrop={true}
             externalDrag={true}
-            onEventCreate={onEventCreate}
-            onEventDelete={onEventDelete}
+            onEventCreate={handleEventCreate}
+            onEventDelete={handleEventDelete}
           />
+          <Toast message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
         </div>
         <div className="mbsc-col-sm-3 external-drop-cont" ref={setDropElm}>
-          <Dropcontainer onItemDrop={onItemDrop} element={dropCont}>
+          <Dropcontainer onItemDrop={handleItemDrop} element={dropCont}>
             <div className="mbsc-form-group-title">Available tasks</div>
             {myTasks.map((task) => (
               <Task key={task.id} data={task} />

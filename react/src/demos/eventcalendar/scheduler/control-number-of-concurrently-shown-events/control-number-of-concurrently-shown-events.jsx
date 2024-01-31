@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -12,8 +12,8 @@ const month = now.getMonth();
 const day = now.getDate();
 
 const App = () => {
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       { title: 'Employment (Semi-weekly)', start: '09:30', end: '11:00', recurring: 'FREQ=WEEKLY;BYDAY=WE', color: '#228c73' },
       { title: 'Product team mtg.', start: '10:00', end: '12:00', recurring: 'FREQ=WEEKLY;BYDAY=FR', color: '#913aa7' },
       { title: 'Football training.', start: '20:00', end: '22:00', recurring: 'FREQ=WEEKLY;BYDAY=MO,TH', color: '#37bbe4' },
@@ -36,20 +36,28 @@ const App = () => {
       { title: 'Clever Conference', start: new Date(year, month, day + 1, 8), end: new Date(year, month, day + 1, 14), color: '#a71111' },
       { title: 'Board Meeting', start: new Date(year, month, day + 1, 12), end: new Date(year, month, day + 1, 16), color: '#cfc014' },
       { title: 'Stakeholder mtg.', start: new Date(year, month, day + 1, 14), end: new Date(year, month, day + 1, 18), color: '#a144f6' },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myView = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         allDay: false,
         maxEventStack: 2,
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  return <Eventcalendar data={myEvents} view={myView} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      view={myView}
+    />
+  );
 };
 
 export default App;

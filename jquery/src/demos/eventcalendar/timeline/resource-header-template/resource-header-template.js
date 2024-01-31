@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -12,6 +13,7 @@ export default {
       var calendar = $('#demo-resource-header-template')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               type: 'week',
@@ -89,9 +91,11 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-resource-header-template" class="md-resource-header-template"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 /*<hidden>*/
 

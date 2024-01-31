@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
-  MbscEventcalendar,
-  setOptions,
   MbscButton,
+  MbscEventcalendar,
   MbscPage,
-  MbscToast /* localeImport */
+  MbscToast,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -92,12 +92,11 @@ function handleToastClose() {
 <template>
   <MbscPage>
     <MbscEventcalendar
-      :drag="drag"
       :view="myView"
       :data="myEvents"
       :resources="myResources"
       :selectedDate="mySelectedDate"
-    ></MbscEventcalendar>
+    />
     <div class="mbsc-button-group-block">
       <MbscButton @click="addEvent()">Add event to calendar</MbscButton>
     </div>

@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
-  setOptions,
   getJson,
-  MbscPage /* localeImport */
+  MbscEventcalendar,
+  MbscPage,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -35,19 +35,22 @@ onMounted(() => {
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">One week view</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="oneWeekView" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" :view="oneWeekView" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Two week view</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="twoWeekView" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" :view="twoWeekView" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Three week view</div>
-            <MbscEventcalendar :drag="drag" :data="myEvents" :view="threeWeekView" />
+            <!-- dragOptions -->
+            <MbscEventcalendar :data="myEvents" :view="threeWeekView" />
           </div>
         </div>
       </div>

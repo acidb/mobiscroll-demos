@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, setOptions, toast, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './disallow-past-event-creation.css';
 
 setOptions({

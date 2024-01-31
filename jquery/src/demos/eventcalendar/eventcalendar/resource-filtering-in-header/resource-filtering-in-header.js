@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -40,13 +41,14 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           view: {
             calendar: {
               labels: true,
             },
           },
           resources: myResources,
-          renderHeader: function (a, b) {
+          renderHeader: function () {
             var header = '<div mbsc-calendar-nav class="md-header-filter-nav"></div>' + '<div class="md-header-filter-controls">';
 
             for (var i = 0; i < myResources.length; ++i) {
@@ -118,6 +120,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div class="demo-inline demo-max-width-1400">
@@ -127,6 +130,7 @@ export default {
 </div>
 <!--/hidden-->
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-header-filter-controls {
     flex: 1 0 auto;

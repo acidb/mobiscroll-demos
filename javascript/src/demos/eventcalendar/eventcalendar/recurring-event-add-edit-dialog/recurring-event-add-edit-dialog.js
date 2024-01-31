@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -150,11 +151,13 @@ export default {
             if (weekDays.split(',').length > 1) {
               return 'custom-value';
             }
+            break;
           case 'monthly':
           case 'yearly':
             if (recurringRule.pos) {
               return repeat + '-pos';
             }
+            break;
           default:
             return repeat;
         }
@@ -314,7 +317,7 @@ export default {
       mobiscroll.getInst(document.getElementById('recurrence-repeat-' + recurrenceRepeat)).checked = true;
       mobiscroll.getInst(document.getElementById('recurrence-condition-' + recurrenceCondition)).checked = true;
       recurrenceWeekDaysElms.forEach(function (elm) {
-        mobiscroll.getInst(elm).checked = recurrenceWeekDays.includes(elm.value);
+        mobiscroll.getInst(elm).checked = recurrenceWeekDays.indexOf(elm.value) !== -1;
       });
       toggleRecurrenceText(recurrenceRepeat);
     }
@@ -767,6 +770,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-add-delete-event"></div>
 
@@ -939,6 +943,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-recurring-event-editor-popup .md-recurrence-input .mbsc-textfield-wrapper {
     display: inline-block;

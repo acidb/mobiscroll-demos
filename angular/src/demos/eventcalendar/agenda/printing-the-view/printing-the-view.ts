@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { setOptions, MbscEventcalendar, MbscEventcalendarView, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendar, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { print } from '@mobiscroll/print';
 
 setOptions({
@@ -10,24 +10,24 @@ setOptions({
 
 @Component({
   selector: 'app-agenda-printing-the-view',
+  styleUrl: './printing-the-view.css',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './printing-the-view.html',
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
-  @ViewChild('mycal', { static: false })
-  inst!: MbscEventcalendar;
-
-  calendarModules = [print];
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
 
   myEvents: MbscCalendarEvent[] = [];
-
-  calView: MbscEventcalendarView = {
+  myModules = [print];
+  myView: MbscEventcalendarView = {
     agenda: { type: 'month' },
   };
 
-  printView(): void {
-    this.inst.print();
+  print(): void {
+    this.calendar.print();
   }
 
   ngOnInit(): void {

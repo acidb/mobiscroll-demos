@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -10,8 +10,8 @@ const App: React.FC = () => {
   const initialValue = new Date(2020, 11, 24);
 
   const [now, setNow] = React.useState<any>();
-  const nowButtons = React.useMemo<any>(() => {
-    return [
+  const nowButtons = React.useMemo<any>(
+    () => [
       {
         text: 'Now',
         handler: () => {
@@ -21,12 +21,13 @@ const App: React.FC = () => {
       },
       'set',
       'cancel',
-    ];
-  }, [now]);
+    ],
+    [now],
+  );
 
   const [custom, setCustom] = React.useState<any>();
-  const customButtons = React.useMemo<any>(() => {
-    return [
+  const customButtons = React.useMemo<any>(
+    () => [
       {
         text: '05 Jan 2020',
         handler: () => {
@@ -36,17 +37,19 @@ const App: React.FC = () => {
       },
       'set',
       'cancel',
-    ];
-  }, [custom]);
+    ],
+    [custom],
+  );
 
-  const autoButtons = React.useMemo<any>(() => {
-    return [
+  const autoButtons = React.useMemo<any>(
+    () => [
       {
         text: 'Close',
         handler: 'cancel',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const [val, setVal] = React.useState<Date>();
 

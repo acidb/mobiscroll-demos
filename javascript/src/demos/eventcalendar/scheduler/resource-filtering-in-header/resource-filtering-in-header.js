@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -10,7 +11,7 @@ export default {
     var selected = [1];
     var events = [];
     var calendar = mobiscroll.eventcalendar('#demo-header-functionality', {
-      // context,
+      // drag,
       view: {
         schedule: {
           type: 'week',
@@ -83,9 +84,6 @@ export default {
         filterEvents(events, selected);
 
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message:
             (ev.target.checked ? 'Showing ' : 'Hiding ') +
             document.getElementsByClassName('md-header-filter-name-' + ev.target.value)[0].textContent +
@@ -94,9 +92,11 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-header-functionality" class="md-custom-header-filtering"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-header-filter-controls {
     flex: 1 0 auto;

@@ -3,8 +3,8 @@ import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
-  MbscPopupOptions,
   MbscPopup,
+  MbscPopupOptions,
   MbscResource,
   Notifications,
   setOptions /* localeImport */,
@@ -500,6 +500,8 @@ export class AppComponent {
     },
     clickToCreate: false,
     dragToCreate: false,
+    dragToMove: true,
+    dragToResize: false,
     showEventTooltip: false,
     onEventHoverIn: (args) => {
       const event: MyEvent = args.event;

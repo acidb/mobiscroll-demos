@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarOptions /* localeImport */ } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-eventcalendar-responsive-month-view',
@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   eventSettings: MbscEventcalendarOptions = {
     // locale,
     // theme,
+    // drag,
     responsive: {
       xsmall: {
         view: {

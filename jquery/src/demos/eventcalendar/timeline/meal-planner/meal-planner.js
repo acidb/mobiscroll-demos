@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,11 +10,10 @@ export default {
     });
 
     $(function () {
-      var calendar;
-      var popup;
       var oldMeal;
       var tempMeal;
       var deleteMeal;
+      var restoreMeal;
       var formatDate = mobiscroll.formatDate;
       var $name = $('#meal-name-input');
       var $calories = $('#meal-calories-input');
@@ -165,20 +165,20 @@ export default {
           dragToResize: false,
           dragToMove: true,
           clickToCreate: true,
-          extendDefaultEvent: function (ev) {
+          extendDefaultEvent: function () {
             return {
               title: 'New meal',
               allDay: true,
             };
           },
-          onEventCreate: function (args, inst) {
+          onEventCreate: function (args) {
             // store temporary event
             tempMeal = args.event;
             setTimeout(function () {
               addMealPopup();
             }, 100);
           },
-          onEventClick: function (args, inst) {
+          onEventClick: function (args) {
             oldMeal = $.extend({}, args.event);
             tempMeal = args.event;
 
@@ -251,19 +251,6 @@ export default {
         })
         .mobiscroll('getInst');
 
-      function getTypes() {
-        var data = [];
-
-        for (var i = 0; i < types.length; ++i) {
-          var type = types[i];
-          data.push({
-            text: type.name,
-            value: type.id,
-          });
-        }
-        return data;
-      }
-
       function appendTypes() {
         var segmented = '<div mbsc-segmented-group>';
 
@@ -326,6 +313,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-meal-planner" class="md-meal-planner-calendar"></div>
 
@@ -350,6 +338,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-meal-type {
     font-size: 14px;

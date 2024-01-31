@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
+  getJson,
   MbscEventcalendar,
   MbscToast,
-  setOptions,
-  getJson /* localeImport */
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
@@ -12,6 +11,7 @@ import type {
   MbscPageLoadingEvent,
   MbscResource
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -76,8 +76,8 @@ function handleToastClose() {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"

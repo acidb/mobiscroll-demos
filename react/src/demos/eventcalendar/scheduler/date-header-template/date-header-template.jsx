@@ -1,6 +1,11 @@
-import React from 'react';
-import { Eventcalendar, getJson, formatDate /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, formatDate, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './date-header-template.css';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const milestones = [
   {
@@ -21,10 +26,10 @@ const milestones = [
 ];
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  const view = React.useMemo(() => {
-    return {
+  const calView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -33,11 +38,12 @@ function App() {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -56,26 +62,14 @@ function App() {
         color: '#e8d0ef',
         img: 'https://img.mobiscroll.com/demos/m2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/resource-events/',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const renderDay = (args) => {
+  const renderCustomDay = useCallback((args) => {
     const date = args.date;
-    const dayNr = date.getDay();
-    const task =
-      milestones.find((obj) => {
-        return +new Date(obj.date) === +date;
-      }) || {};
+    // const dayNr = date.getDay();
+    const task = milestones.find((obj) => +new Date(obj.date) === +date) || {};
 
     return (
       <div className="header-template-container">
@@ -88,26 +82,36 @@ function App() {
         </div>
       </div>
     );
-  };
+  }, []);
 
-  const renderCustomResource = (resource) => {
-    return (
+  const renderCustomResource = useCallback(
+    (resource) => (
       <div className="header-resource-template-content">
         <img className="header-resource-avatar" src={resource.img} />
         <div className="header-resource-name">{resource.name}</div>
       </div>
+    ),
+    [],
+  );
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/resource-events/',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
     );
-  };
+  }, []);
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={calView}
       data={myEvents}
       resources={myResources}
       groupBy="date"
-      renderDay={renderDay}
+      renderDay={renderCustomDay}
       renderResource={renderCustomResource}
     />
   );

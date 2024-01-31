@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, MbscEventcalendarView, MbscPageLoadingEvent, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './loading-big-data-sets.css';
 
 setOptions({
@@ -16,21 +16,22 @@ const eventsNr = 10000;
 const myResources = [];
 const myEventColors = ['#ff0101', '#239a21', '#8f1ed6', '#01adff', '#d8ca1a'];
 
-for (var i = 1; i <= resourceNr; i++) {
+for (let i = 1; i <= resourceNr; i++) {
   myResources.push({ name: 'Resource ' + i, id: i });
 }
 
 const App: React.FC = () => {
   const [myEvents, setMyEvents] = React.useState([]);
 
-  const myView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'year',
         eventList: true,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const handlePageLoading = React.useCallback((args: MbscPageLoadingEvent) => {
     setTimeout(() => {

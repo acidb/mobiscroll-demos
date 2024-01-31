@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -130,11 +130,7 @@ export class AppComponent {
     },
   ];
 
-  view: MbscEventcalendarView = {
-    agenda: {
-      type: 'week',
-    },
-  };
+  myView: MbscEventcalendarView = { agenda: { type: 'week' } };
 
   orderMyEvents(event: MbscCalendarEvent) {
     return event['accepted'] ? 1 : -1;

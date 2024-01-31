@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -19,8 +20,8 @@ export default {
             },
           },
           onPageLoading: function (event, inst) {
-            var year = event.firstDay.getFullYear(),
-              month = event.firstDay.getMonth();
+            var year = event.firstDay.getFullYear();
+            var month = event.firstDay.getMonth();
 
             $.getJSON(
               'https://trial.mobiscroll.com/monthlyevents/?year=' + year + '&month=' + month + '&vers=5' + '&callback=?',
@@ -52,9 +53,11 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-on-demand-api"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 /*<hidden>*/
 

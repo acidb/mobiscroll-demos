@@ -1,17 +1,19 @@
 <mbsc-eventcalendar
-  [eventContentTemplate]="contentTemplate"
+  [actionableEvents]="false"
   [data]="myEvents"
-  [options]="eventSettings"
-  class="md-custom-event"
+  [eventContentTemplate]="customContentTemplate"
+  [view]="myView"
 ></mbsc-eventcalendar>
 
-<ng-template #contentTemplate let-data>
+<ng-template #customContentTemplate let-data>
   <div>{{data.title}}</div>
-  <div class="md-custom-event-cont">
-    <img class="md-custom-event-img" alt="Participant" [src]="getParticipant(data.original.participant).img" />
-    <div class="mbsc-custom-event-name">{{getParticipant(data.original.participant).name}}</div>
-    <mbsc-button class="md-custom-event-btn" color="secondary" data-variant="outline" (click)="add($event, data.original)"
-      >Add participant</mbsc-button
-    >
+  <div class="mds-agenda-event-content mbsc-flex mbsc-align-items-center">
+    <img
+      class="mds-agenda-event-img"
+      [attr.alt]="myParticipants[data.original.participant].name"
+      [src]="myParticipants[data.original.participant].img"
+    />
+    <div class="mbsc-flex-1-0">{{myParticipants[data.original.participant].name}}</div>
+    <mbsc-button class="mds-agenda-event-btn" color="secondary" (click)="add(data.original)">Add participant</mbsc-button>
   </div>
 </ng-template>

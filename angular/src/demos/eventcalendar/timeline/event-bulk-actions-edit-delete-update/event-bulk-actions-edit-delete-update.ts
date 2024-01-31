@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
@@ -9,7 +10,6 @@ import {
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,
@@ -113,9 +113,7 @@ export class AppComponent implements OnInit {
               const index = eventsToUpdate.findIndex((x) => x.id === origEvent['id']);
               eventsToUpdate.splice(index, 1, origEvent);
             } else {
-              eventsToUpdate = eventsToUpdate.filter((ev) => {
-                return ev.id !== event.id;
-              });
+              eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
             }
           }
 
@@ -132,7 +130,7 @@ export class AppComponent implements OnInit {
   }
 
   calendarOptions: MbscEventcalendarOptions = {
-    clickToCreate: true,
+    // drag,
     selectMultipleEvents: true,
     view: {
       timeline: {

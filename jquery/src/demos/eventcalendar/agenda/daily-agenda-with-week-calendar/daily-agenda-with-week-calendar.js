@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -17,12 +18,12 @@ export default {
             calendar: { type: 'week' },
             agenda: { type: 'day' },
           },
-          onEventClick: function (event, inst) {
+          onEventClick: function (args) {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
               // context,
-              message: event.event.title,
+              message: args.event.title,
             });
           },
         })
@@ -33,6 +34,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-daily-events"></div>
   `,

@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,8 +10,8 @@ export default {
     });
 
     $(function () {
-      var now = new Date(),
-        week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
+      var now = new Date();
+      var week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
 
       $('#demo-mobile-picker-input')
         .mobiscroll()
@@ -63,6 +64,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid">
     <div class="mbsc-form-group">
@@ -100,6 +102,7 @@ export default {
     <div id="demo-mobile-picker-inline"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-mobile-picker-header {
     font-size: 14px;

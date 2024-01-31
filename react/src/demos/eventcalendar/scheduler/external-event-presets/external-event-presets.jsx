@@ -1,5 +1,6 @@
-import React from 'react';
-import { Eventcalendar, Draggable, Popup, Input, Textarea, Select, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Draggable, Eventcalendar, Input, Popup, Select, setOptions, Textarea, Toast /* localeImport */ } from '@mobiscroll/react';
+import PropTypes from 'prop-types';
+import { useCallback, useMemo, useState } from 'react';
 import './external-event-presets.css';
 
 setOptions({
@@ -63,9 +64,9 @@ const myData = [
 ];
 
 function Task(props) {
-  const [draggable, setDraggable] = React.useState();
+  const [draggable, setDraggable] = useState();
 
-  const setDragElm = React.useCallback((elm) => {
+  const setDragElm = useCallback((elm) => {
     setDraggable(elm);
   }, []);
 
@@ -78,28 +79,33 @@ function Task(props) {
   );
 }
 
-function App() {
-  const [isOpen, setOpen] = React.useState(false);
-  const [title, setTitle] = React.useState('');
-  const [details, setDetails] = React.useState('');
-  const [technician, setTechnician] = React.useState('');
-  const [anchor, setAnchor] = React.useState(null);
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [toastText, setToastText] = React.useState();
+Task.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
-  const view = React.useMemo(() => {
-    return {
+function App() {
+  const [isOpen, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [details, setDetails] = useState('');
+  const [technician, setTechnician] = useState('');
+  const [anchor, setAnchor] = useState(null);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastText, setToastText] = useState();
+
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
         startTime: '06:00',
         endTime: '20:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const invalid = React.useMemo(() => {
-    return [
+  const myInvalid = useMemo(
+    () => [
       {
         recurring: {
           repeat: 'weekly',
@@ -115,10 +121,11 @@ function App() {
           weekDays: 'MO,TU,WE,TH,FR',
         },
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const fillDialog = React.useCallback((args) => {
+  const fillDialog = useCallback((args) => {
     setTitle(args.event.title);
     setDetails(args.event.details);
     setTechnician(args.event.technician);
@@ -126,34 +133,34 @@ function App() {
     setOpen(true);
   }, []);
 
-  const onEventCreated = React.useCallback(
+  const handleEventCreated = useCallback(
     (args) => {
       fillDialog(args);
     },
     [fillDialog],
   );
 
-  const eventCreateFail = React.useCallback(() => {
+  const handleEventCreateFail = useCallback(() => {
     setToastText("Can't create event on this date");
     setToastOpen(true);
   }, []);
 
-  const eventUpdateFail = React.useCallback(() => {
+  const handleEventUpdateFail = useCallback(() => {
     setToastText("Can't add event on this date");
     setToastOpen(true);
   }, []);
 
-  const onClose = React.useCallback(() => {
+  const onClose = useCallback(() => {
     setOpen(false);
     setToastText('New task added');
     setToastOpen(true);
   }, []);
 
-  const changeSelected = React.useCallback((event) => {
+  const changeSelected = useCallback((event) => {
     setTechnician(event.value);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -162,13 +169,13 @@ function App() {
       <div className="mbsc-row">
         <div className="mbsc-col-sm-9 external-event-calendar">
           <Eventcalendar
-            view={view}
-            invalid={invalid}
+            view={myView}
+            invalid={myInvalid}
             dragToMove={true}
             externalDrop={true}
-            onEventCreated={onEventCreated}
-            onEventCreateFailed={eventCreateFail}
-            onEventUpdateFailed={eventUpdateFail}
+            onEventCreated={handleEventCreated}
+            onEventCreateFailed={handleEventCreateFail}
+            onEventUpdateFailed={handleEventUpdateFail}
           />
         </div>
         <div className="mbsc-col-sm-3">
@@ -198,7 +205,7 @@ function App() {
               display="anchored"
               touchUi={false}
               label="Technician"
-              inputProps={{ placeholder: 'Please select...' }}
+              placeholder="Please select..."
             />
           </div>
         </Popup>
@@ -207,7 +214,7 @@ function App() {
         // theme
         message={toastText}
         isOpen={isToastOpen}
-        onClose={closeToast}
+        onClose={handleCloseToast}
       />
     </div>
   );

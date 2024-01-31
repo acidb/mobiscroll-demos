@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { MbscEventcalendar, setOptions, getJson /* localeImport */ } from '@mobiscroll/vue'
+import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -32,4 +32,7 @@ onMounted(() => {
 })
 </script>
 
-<template><MbscEventcalendar :drag="drag" :view="myView" :data="myEvents" /></template>
+<template>
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents" />
+</template>

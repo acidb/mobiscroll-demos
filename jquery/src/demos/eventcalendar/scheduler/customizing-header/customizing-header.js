@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,33 +10,34 @@ export default {
     });
 
     $(function () {
-      var currentDate = new Date(),
-        view = 'schedule',
-        calendar = $('#demo-custom-header')
-          .mobiscroll()
-          .eventcalendar({
-            view: {
-              schedule: { type: 'week' },
-            },
-            onSelectedDateChange: function (event, inst) {
-              currentDate = event.date;
-            },
-            renderHeader: function () {
-              return (
-                '<div mbsc-calendar-nav class="md-custom-header-nav"></div>' +
-                '<div class="md-custom-header-controls">' +
-                '<button id="nav-to-prev-page" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="md-custom-header-button"></button>' +
-                '<div mbsc-calendar-today class="md-custom-header-today"></div>' +
-                '<button id="nav-to-next-page" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="md-custom-header-button"></button>' +
-                '</div>' +
-                '<div class="md-custom-header-view">' +
-                '<label><input data-icon="material-list" mbsc-segmented type="radio" name="custom-header-view" value="schedule" class="md-custom-header-view-change" checked></label>' +
-                '<label><input data-icon="calendar" mbsc-segmented type="radio" name="custom-header-view" value="calendar" class="md-custom-header-view-change"></label>' +
-                '</div>'
-              );
-            },
-          })
-          .mobiscroll('getInst');
+      var currentDate = new Date();
+      var view = 'schedule';
+      var calendar = $('#demo-custom-header')
+        .mobiscroll()
+        .eventcalendar({
+          // drag,
+          view: {
+            schedule: { type: 'week' },
+          },
+          onSelectedDateChange: function (event) {
+            currentDate = event.date;
+          },
+          renderHeader: function () {
+            return (
+              '<div mbsc-calendar-nav class="md-custom-header-nav"></div>' +
+              '<div class="md-custom-header-controls">' +
+              '<button id="nav-to-prev-page" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="md-custom-header-button"></button>' +
+              '<div mbsc-calendar-today class="md-custom-header-today"></div>' +
+              '<button id="nav-to-next-page" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="md-custom-header-button"></button>' +
+              '</div>' +
+              '<div class="md-custom-header-view">' +
+              '<label><input data-icon="material-list" mbsc-segmented type="radio" name="custom-header-view" value="schedule" class="md-custom-header-view-change" checked></label>' +
+              '<label><input data-icon="calendar" mbsc-segmented type="radio" name="custom-header-view" value="calendar" class="md-custom-header-view-change"></label>' +
+              '</div>'
+            );
+          },
+        })
+        .mobiscroll('getInst');
 
       $.getJSON(
         'https://trial.mobiscroll.com/events/?vers=5&callback=?',
@@ -46,8 +48,8 @@ export default {
       );
 
       function getFirstDayOfWeek(d, prev) {
-        var day = d.getDay(),
-          diff = d.getDate() - day + (prev ? -7 : 7);
+        var day = d.getDay();
+        var diff = d.getDate() - day + (prev ? -7 : 7);
         return new Date(d.setDate(diff));
       }
 
@@ -84,15 +86,16 @@ export default {
         }
       });
 
-      $('#nav-to-prev-page').on('click', function (ev) {
+      $('#nav-to-prev-page').on('click', function () {
         navigatePage(true);
       });
 
-      $('#nav-to-next-page').on('click', function (ev) {
+      $('#nav-to-next-page').on('click', function () {
         navigatePage(false);
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div class="demo-inline demo-max-width-1000">
@@ -102,6 +105,7 @@ export default {
 </div>
 <!--/hidden-->
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-custom-header-controls {
     display: flex;

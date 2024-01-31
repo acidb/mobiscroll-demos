@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications /* localeImport */ } from '@mobiscroll/angular';
 
 @Component({
   selector: 'app-eventcalendar-customize-event-popover',
@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   eventSettings: MbscEventcalendarOptions = {
     // locale,
     // theme,
+    // drag,
     view: {
       calendar: {
         labels: false,
@@ -52,8 +53,6 @@ export class AppComponent implements OnInit {
   add(ev: any, data: any): void {
     ev.stopPropagation();
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: this.getParticipant(data.participant).name + "'s event clicked",
     });
   }

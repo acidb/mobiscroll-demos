@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -22,14 +23,14 @@ export default {
           dragToCreate: true,
           externalDrop: true,
           externalDrag: true,
-          onEventCreate: function (args, inst) {
+          onEventCreate: function (args) {
             $('#md-event-' + args.event.id).remove();
             mobiscroll.toast({
               // context,
               message: args.event.title + ' added',
             });
           },
-          onEventDelete: function (args, inst) {
+          onEventDelete: function (args) {
             mobiscroll.toast({
               // context,
               message: args.event.title + ' unscheduled',
@@ -74,6 +75,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
@@ -107,6 +109,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .external-drop-calendar {
     border-right: 1px solid #ccc;

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   MbscCalendarEvent,
@@ -6,7 +7,6 @@ import {
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,
@@ -26,20 +26,16 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  view: MbscEventcalendarView = {
-    agenda: { type: 'month' },
-  };
+  myView: MbscEventcalendarView = { agenda: { type: 'month' } };
 
-  onEventClick(event: MbscEventClickEvent): void {
+  onEventClick(args: MbscEventClickEvent): void {
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
-      message: event.event.title,
+      message: args.event.title,
     });
   }
 
   ngOnInit(): void {
-    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp: any) => {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
   }

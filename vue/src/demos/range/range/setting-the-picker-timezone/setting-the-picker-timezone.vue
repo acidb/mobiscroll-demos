@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue'
 import { MbscDatepicker, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import * as moment from 'moment-timezone'
+import { ref } from 'vue'
 
 momentTimezone.moment = moment
 

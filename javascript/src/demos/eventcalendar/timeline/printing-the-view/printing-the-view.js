@@ -1,9 +1,11 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { print } from '@mobiscroll/print';
 
+var mobiscroll = m;
 mobiscroll.print = print;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -11,6 +13,7 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-printing-the-view', {
+      // drag,
       modules: [mobiscroll.print],
       view: {
         timeline: {
@@ -66,6 +69,7 @@ export default {
       inst.print();
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <button id="print-button" mbsc-button>Print timeline</button>
 <div id="demo-printing-the-view"></div>

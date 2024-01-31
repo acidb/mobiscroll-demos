@@ -1,10 +1,10 @@
-<div class="mbsc-grid md-demo-synchronized-views">
+<div class="mbsc-grid mds-sync-view">
   <div class="mbsc-row mbsc-no-padding">
-    <div class="mbsc-col-md-4 mbsc-col-12">
-      <mbsc-eventcalendar [(selectedDate)]="selectedDate" [data]="myEvents" [options]="monthSettings"></mbsc-eventcalendar>
+    <div class="mbsc-col-12 mbsc-col-md-4 mbsc-col-xl-3">
+      <mbsc-eventcalendar [(selectedDate)]="selectedDate" [data]="myEvents" [view]="monthView" height="auto"></mbsc-eventcalendar>
     </div>
-    <div class="mbsc-col-md-8 mbsc-col-12 md-col-right">
-      <mbsc-eventcalendar [(selectedDate)]="selectedDate" [data]="myEvents" [options]="daySettings"></mbsc-eventcalendar>
+    <div class="mds-sync-cal mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">
+      <mbsc-eventcalendar [(selectedDate)]="selectedDate" [data]="myEvents" [view]="dayView"></mbsc-eventcalendar>
     </div>
   </div>
 </div>

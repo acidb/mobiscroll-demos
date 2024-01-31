@@ -4,8 +4,11 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react-hooks/recommended'],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  plugins: ['import', 'react-refresh'],
   rules: {
+    'arrow-body-style': ['warn', 'as-needed'],
+    'import/order': ['warn', { alphabetize: { order: 'asc', caseInsensitive: true } }],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'sort-imports': ['warn', { ignoreCase: true, ignoreDeclarationSort: true }],
   },
 };

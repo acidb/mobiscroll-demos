@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -7,6 +6,7 @@ import {
   MbscEventcalendarView,
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './colors-invalids-css-class.css';
 
 setOptions({
@@ -181,8 +181,8 @@ const myColors = [
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         allDay: false,
         type: 'week',
@@ -191,8 +191,9 @@ const App: React.FC = () => {
         startTime: '09:00',
         endTime: '18:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   React.useEffect(() => {
     getJson(

@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -8,7 +9,7 @@ export default {
     });
 
     var inst = mobiscroll.eventcalendar('#demo-customize-events', {
-      // context,
+      // drag,
       responsive: {
         xsmall: {
           view: {
@@ -68,12 +69,9 @@ export default {
             <span class='md-buffer-time'>${args.original.bufferBefore} minutes </span>
         </div>`;
       },
-      onEventClick: function (event, inst) {
-        if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
+      onEventClick: function (args) {
+        if (args.domEvent.target.classList.contains('md-custom-event-btn')) {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: 'Edit clicked',
           });
         }
@@ -178,9 +176,11 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-customize-events"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-custom-event-cont {
     font-size: 12px;

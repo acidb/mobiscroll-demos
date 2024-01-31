@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -155,7 +156,7 @@ export default {
           color: '#a446b5',
         };
       },
-      onEventCreate: function (args, inst) {
+      onEventCreate: function (args) {
         var event = args.event;
         event.unscheduled = false;
         myCalendar.setOptions({
@@ -187,12 +188,12 @@ export default {
           message: 'Make sure not to double book',
         });
       },
-      onEventDelete: function (args, inst) {
+      onEventDelete: function (args) {
         mobiscroll.toast({
           message: args.event.title + ' unscheduled',
         });
       },
-      onEventDragEnter: function (args) {
+      onEventDragEnter: function () {
         myCalendar.setOptions({
           colors: [
             {
@@ -241,11 +242,12 @@ export default {
           externalCont.style.backgroundColor = '#d0e7d2cc';
         }
       },
-      onItemDragLeave: function (args) {
+      onItemDragLeave: function () {
         externalCont.style.backgroundColor = '';
       },
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
@@ -276,6 +278,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .docs-appointment-calendar {
     border-right: 1px solid #ccc;

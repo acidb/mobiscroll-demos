@@ -116,6 +116,7 @@ function App() {
   return (
     <>
       <Eventcalendar
+        // drag
         renderHeader={customWithNavButtons}
         view={myView}
         resources={myResources}

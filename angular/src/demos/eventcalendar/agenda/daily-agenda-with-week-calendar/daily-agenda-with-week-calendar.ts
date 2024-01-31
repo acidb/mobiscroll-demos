@@ -1,6 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { MbscEventcalendarOptions, Notifications, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscEventClickEvent,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
+
+setOptions({
+  // locale,
+  // theme
+});
 
 @Component({
   selector: 'app-agenda-daily-agenda-with-week-calendar',
@@ -14,24 +25,19 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
-    view: {
-      calendar: { type: 'week' },
-      agenda: { type: 'day' },
-    },
-    onEventClick: (event) => {
-      this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
-        message: event.event.title,
-      });
-    },
+  myView: MbscEventcalendarView = {
+    calendar: { type: 'week' },
+    agenda: { type: 'day' },
   };
 
+  onEventClick(args: MbscEventClickEvent): void {
+    this.notify.toast({
+      message: args.event.title,
+    });
+  }
+
   ngOnInit(): void {
-    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp: any) => {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
   }

@@ -1,13 +1,18 @@
-import React from 'react';
-import { Eventcalendar, momentTimezone /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment-timezone';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
 function App() {
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y, m, d, 7)',
         end: 'dyndatetime(y, m, d, 9)',
@@ -50,24 +55,24 @@ function App() {
         color: '#5bb7c5',
         title: 'Team-Building',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       dataTimezone="utc"
       displayTimezone="local"
       timezonePlugin={momentTimezone}
       data={myEvents}
-      view={view}
+      view={myView}
       dragToCreate={true}
       dragToMove={true}
       dragToResize={true}

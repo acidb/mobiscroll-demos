@@ -1,15 +1,16 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
       // theme
     });
 
-    var now = new Date(),
-      min = now,
-      max = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
+    var now = new Date();
+    var min = now;
+    var max = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
 
     mobiscroll.datepicker('#demo-flight-booking-single', {
       controls: ['calendar'],
@@ -64,8 +65,8 @@ export default {
       pages: 2,
     });
 
-    document.querySelectorAll('.demo-flight-type').forEach((item) => {
-      item.addEventListener('change', (event) => {
+    document.querySelectorAll('.demo-flight-type').forEach(function (item) {
+      item.addEventListener('change', function (event) {
         var oneWay = event.target.value == 'oneway';
 
         mobiscroll.getInst(document.getElementById('demo-flight-booking-type-return')).setOptions({ disabled: oneWay });
@@ -123,6 +124,7 @@ export default {
       },
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid mbsc-no-padding">
 

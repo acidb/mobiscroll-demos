@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Page,
   Popup,
@@ -10,6 +9,7 @@ import {
   SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,

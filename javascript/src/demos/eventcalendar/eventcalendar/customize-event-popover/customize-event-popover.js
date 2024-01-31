@@ -1,11 +1,12 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     var inst = mobiscroll.eventcalendar('#demo-custom-event-popover', {
-      // context,
       // locale,
       // theme,
+      // drag,
       view: {
         calendar: {
           labels: false,
@@ -29,14 +30,11 @@ export default {
           '</div>'
         );
       },
-      onEventClick: function (event, inst) {
-        if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
-          event.domEvent.stopPropagation();
+      onEventClick: function (args) {
+        if (args.domEvent.target.classList.contains('md-custom-event-btn')) {
+          args.domEvent.stopPropagation();
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
-            message: getParticipant(event.event.participant).name + "'s event clicked",
+            message: getParticipant(args.event.participant).name + "'s event clicked",
           });
         }
       },
@@ -70,11 +68,13 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div>
     <div id="demo-custom-event-popover"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-custom-event-img {
     width: 30px;

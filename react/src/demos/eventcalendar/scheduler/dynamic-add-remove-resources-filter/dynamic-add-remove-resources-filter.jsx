@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, getJson, Checkbox, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Checkbox, Eventcalendar, getJson, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './dynamic-add-remove-resources-filter.css';
 
 setOptions({
@@ -8,8 +8,12 @@ setOptions({
 });
 
 const App = () => {
-  const resources = React.useMemo(() => {
-    return [
+  const [myEvents, setEvents] = useState([]);
+  const [myResources, setResources] = useState(resources);
+  const [participants, setParticipants] = useState({ 1: true, 2: true, 3: true });
+
+  const resources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -25,10 +29,12 @@ const App = () => {
         name: 'John',
         color: '#e8d0ef',
       },
-    ];
-  }, []);
-  const view = React.useMemo(() => {
-    return {
+    ],
+    [],
+  );
+
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -37,13 +43,11 @@ const App = () => {
         startTime: '08:00',
         endTime: '17:00',
       },
-    };
-  }, []);
-  const [myEvents, setEvents] = React.useState([]);
-  const [myResources, setResources] = React.useState(resources);
-  const [participants, setParticipants] = React.useState({ 1: true, 2: true, 3: true });
+    }),
+    [],
+  );
 
-  const filter = React.useCallback(
+  const filter = useCallback(
     (ev) => {
       participants[+ev.target.value] = ev.target.checked;
       setParticipants({ ...participants });
@@ -52,7 +56,7 @@ const App = () => {
     [participants, resources],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/resource-events-shared/',
       (events) => {
@@ -70,7 +74,7 @@ const App = () => {
             <Eventcalendar
               data={myEvents}
               resources={myResources}
-              view={view}
+              view={myView}
               clickToCreate={true}
               dragToCreate={true}
               dragToMove={true}

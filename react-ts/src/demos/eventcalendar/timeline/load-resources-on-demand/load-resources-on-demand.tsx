@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   MbscCalendarEvent,
@@ -8,6 +7,7 @@ import {
   setOptions,
   toast /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './load-resources-on-demand.css';
 
 setOptions({
@@ -16,11 +16,12 @@ setOptions({
 });
 
 const App: React.FC = () => {
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const [myResources, setResources] = React.useState<MbscResource[]>([
     {

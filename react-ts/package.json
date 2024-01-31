@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mobiscroll/calendar-integration": "^5.28.0",
-    "@mobiscroll/print": "^5.28.0",
-    "@mobiscroll/react": "^5.28.0",
+    "@mobiscroll/calendar-integration": "^5.28.3",
+    "@mobiscroll/print": "^5.28.3",
+    "@mobiscroll/react": "^5.28.3",
     "moment-timezone": "^0.5.43",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -25,6 +25,7 @@
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.45.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "prettier": "3.1.0",

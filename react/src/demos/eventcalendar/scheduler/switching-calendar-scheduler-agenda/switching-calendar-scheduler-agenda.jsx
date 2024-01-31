@@ -1,15 +1,15 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  getJson,
-  setOptions,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext /* localeImport */,
+  Eventcalendar,
+  getJson,
+  Segmented,
+  SegmentedGroup,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useEffect, useState } from 'react';
 import './switching-calendar-scheduler-agenda.css';
 
 setOptions({
@@ -18,24 +18,14 @@ setOptions({
 });
 
 function App() {
-  const [view, setView] = React.useState('month');
-  const [myEvents, setEvents] = React.useState([]);
+  const [view, setView] = useState('month');
+  const [myEvents, setEvents] = useState([]);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/events/?vers=5',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const [calView, setCalView] = React.useState({
+  const [calView, setCalView] = useState({
     calendar: { labels: true },
   });
 
-  const changeView = (event) => {
+  const changeView = useCallback((event) => {
     let calView;
 
     switch (event.target.value) {
@@ -69,30 +59,48 @@ function App() {
 
     setView(event.target.value);
     setCalView(calView);
-  };
+  }, []);
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
+  const customWithNavButtons = useCallback(
+    () => (
+      <>
         <CalendarNav className="cal-header-nav" />
         <div className="cal-header-picker">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="year">Year</SegmentedItem>
-            <SegmentedItem value="month">Month</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="day">Day</SegmentedItem>
-            <SegmentedItem value="agenda">Agenda</SegmentedItem>
+            <Segmented value="year">Year</Segmented>
+            <Segmented value="month">Month</Segmented>
+            <Segmented value="week">Week</Segmented>
+            <Segmented value="day">Day</Segmented>
+            <Segmented value="agenda">Agenda</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="cal-header-prev" />
         <CalendarToday className="cal-header-today" />
         <CalendarNext className="cal-header-next" />
-      </React.Fragment>
+      </>
+    ),
+    [changeView, view],
+  );
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/events/?vers=5',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
     );
-  };
+  }, []);
 
   return (
-    <Eventcalendar renderHeader={customWithNavButtons} height={750} view={calView} data={myEvents} cssClass="md-switching-view-cont" />
+    <Eventcalendar
+      // drag
+      renderHeader={customWithNavButtons}
+      height={750}
+      view={calView}
+      data={myEvents}
+      cssClass="md-switching-view-cont"
+    />
   );
 }
 

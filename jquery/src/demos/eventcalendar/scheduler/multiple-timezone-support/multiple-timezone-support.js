@@ -1,8 +1,9 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -107,9 +108,11 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-showing-events-timezone"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-timezone-header .mbsc-textfield-wrapper {
     margin: 0.5em;

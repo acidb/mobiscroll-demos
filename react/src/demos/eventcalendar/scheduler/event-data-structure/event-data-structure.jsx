@@ -1,10 +1,15 @@
-import React from 'react';
-import { Eventcalendar, Toast, Button /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 
 const now = new Date();
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const [myEvents, setEvents] = React.useState([
+  const [myEvents, setEvents] = useState([
     {
       start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
       end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
@@ -13,22 +18,23 @@ function App() {
     },
   ]);
 
-  const [selectedDate, setSelectedDate] = React.useState();
-  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [mySelectedDate, setMySelectedDate] = useState();
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'day',
       },
-    };
+    }),
+    [],
+  );
+
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
   }, []);
 
-  const addEvent = () => {
+  const addEvent = useCallback(() => {
     const newEvent = {
       // base properties
       title: 'Product planning',
@@ -43,24 +49,18 @@ function App() {
       location: 'Office',
     };
 
-    setSelectedDate(new Date(2018, 11, 21));
+    setMySelectedDate(new Date(2018, 11, 21));
     setEvents([...myEvents, newEvent]);
     setToastOpen(true);
-  };
+  }, [myEvents]);
 
   return (
     <div>
-      <Eventcalendar
-        // theme
-        // locale
-        data={myEvents}
-        view={view}
-        selectedDate={selectedDate}
-      />
+      <Eventcalendar data={myEvents} view={myView} selectedDate={mySelectedDate} />
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>
-      <Toast message="Event added" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

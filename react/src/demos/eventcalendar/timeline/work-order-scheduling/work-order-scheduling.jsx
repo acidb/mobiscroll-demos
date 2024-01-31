@@ -1,16 +1,16 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
   Checkbox,
   Datepicker,
+  Eventcalendar,
+  formatDate,
+  Input,
+  Popup,
+  setOptions,
   snackbar,
-  formatDate /* localeImport */,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './work-order-scheduling.css';
 
 setOptions({
@@ -258,22 +258,22 @@ const responsivePopup = {
 };
 
 function App() {
-  const [myEvents, setMyEvents] = React.useState(defaultEvents);
-  const [tempEvent, setTempEvent] = React.useState(null);
-  const [isOpen, setOpen] = React.useState(false);
-  const [isEdit, setEdit] = React.useState(false);
-  const [anchor, setAnchor] = React.useState(null);
-  const [start, startRef] = React.useState(null);
-  const [end, endRef] = React.useState(null);
-  const [popupEventTitle, setTitle] = React.useState('');
-  const [popupEventLocation, setLocation] = React.useState('');
-  const [popupEventBill, setBill] = React.useState(0);
-  const [popupEventNotes, setNotes] = React.useState('');
-  const [popupEventDate, setDate] = React.useState([]);
-  const [mySelectedDate, setSelectedDate] = React.useState(new Date());
-  const [checkedResources, setCheckedResources] = React.useState([]);
+  const [myEvents, setMyEvents] = useState(defaultEvents);
+  const [tempEvent, setTempEvent] = useState(null);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isEdit, setEdit] = useState(false);
+  const [anchor, setAnchor] = useState(null);
+  const [start, startRef] = useState(null);
+  const [end, endRef] = useState(null);
+  const [popupEventTitle, setTitle] = useState('');
+  const [popupEventLocation, setLocation] = useState('');
+  const [popupEventBill, setBill] = useState(0);
+  const [popupEventNotes, setNotes] = useState('');
+  const [popupEventDate, setDate] = useState([]);
+  const [mySelectedDate, setSelectedDate] = useState(new Date());
+  const [checkedResources, setCheckedResources] = useState([]);
 
-  const checkboxChange = React.useCallback(
+  const checkboxChange = useCallback(
     (ev) => {
       const value = ev.target.value;
 
@@ -286,7 +286,7 @@ function App() {
     [checkedResources],
   );
 
-  const saveEvent = React.useCallback(() => {
+  const saveEvent = useCallback(() => {
     const newEvent = {
       id: tempEvent.id,
       title: popupEventTitle,
@@ -315,10 +315,10 @@ function App() {
     }
     setSelectedDate(popupEventDate[0]);
     // close the popup
-    setOpen(false);
+    setPopupOpen(false);
   }, [isEdit, myEvents, popupEventDate, popupEventNotes, popupEventTitle, popupEventLocation, popupEventBill, tempEvent, checkedResources]);
 
-  const deleteEvent = React.useCallback(
+  const deleteEvent = useCallback(
     (event) => {
       setMyEvents(myEvents.filter((item) => item.id !== event.id));
       setTimeout(() => {
@@ -336,7 +336,7 @@ function App() {
     [myEvents],
   );
 
-  const loadPopupForm = React.useCallback((event) => {
+  const loadPopupForm = useCallback((event) => {
     setTitle(event.title);
     setLocation(event.location);
     setBill(event.cost);
@@ -347,50 +347,50 @@ function App() {
 
   // handle popup form changes
 
-  const titleChange = React.useCallback((ev) => {
+  const titleChange = useCallback((ev) => {
     setTitle(ev.target.value);
   }, []);
 
-  const locationChange = React.useCallback((ev) => {
+  const locationChange = useCallback((ev) => {
     setLocation(ev.target.value);
   }, []);
 
-  const billChange = React.useCallback((ev) => {
+  const billChange = useCallback((ev) => {
     setBill(+ev.target.value || 0);
   }, []);
 
-  const notesChange = React.useCallback((ev) => {
+  const notesChange = useCallback((ev) => {
     setNotes(ev.target.value);
   }, []);
 
-  const dateChange = React.useCallback((args) => {
+  const dateChange = useCallback((args) => {
     setDate(args.value);
   }, []);
 
-  const onDeleteClick = React.useCallback(() => {
+  const onDeleteClick = useCallback(() => {
     deleteEvent(tempEvent);
-    setOpen(false);
+    setPopupOpen(false);
   }, [deleteEvent, tempEvent]);
 
   // scheduler options
 
-  const onSelectedDateChange = React.useCallback((event) => {
+  const handleSelectedDateChange = useCallback((event) => {
     setSelectedDate(event.date);
   }, []);
 
-  const onEventClick = React.useCallback(
+  const handleEventClick = useCallback(
     (args) => {
       setEdit(true);
       setTempEvent({ ...args.event });
       // fill popup form with event data
       loadPopupForm(args.event);
       setAnchor(args.domEvent.target);
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const onEventCreated = React.useCallback(
+  const handleEventCreated = useCallback(
     (args) => {
       setEdit(false);
       setTempEvent(args.event);
@@ -398,12 +398,12 @@ function App() {
       loadPopupForm(args.event);
       setAnchor(args.target);
       // open the popup
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const onEventDeleted = React.useCallback(
+  const handleEventDeleted = useCallback(
     (args) => {
       deleteEvent(args.event);
     },
@@ -411,8 +411,8 @@ function App() {
   );
 
   // popup options
-  const headerText = React.useMemo(() => (isEdit ? 'Edit work order' : 'New work order'), [isEdit]);
-  const popupButtons = React.useMemo(() => {
+  const headerText = useMemo(() => (isEdit ? 'Edit work order' : 'New work order'), [isEdit]);
+  const popupButtons = useMemo(() => {
     if (isEdit) {
       return [
         'cancel',
@@ -440,52 +440,55 @@ function App() {
     }
   }, [isEdit, saveEvent]);
 
-  const onClose = React.useCallback(() => {
+  const onPopupClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setMyEvents([...myEvents]);
     }
-    setOpen(false);
+    setPopupOpen(false);
   }, [isEdit, myEvents]);
 
-  const extendDefaultEvent = React.useCallback((args) => {
-    return {
+  const extendMyDefaultEvent = useCallback(
+    () => ({
       title: 'Work order',
       location: '',
       cost: 0,
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const getCostString = (cost) => {
-    return cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
+  const getCostString = useCallback((cost) => cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), []);
 
-  const renderCustomDay = (args) => {
-    const events = args.events;
-    let costs = 0;
+  const renderCustomDay = useCallback(
+    (args) => {
+      const events = args.events;
+      let costs = 0;
 
-    if (events) {
-      for (const event of events) {
-        costs += event.cost;
+      if (events) {
+        for (const event of events) {
+          costs += event.cost;
+        }
       }
-    }
 
-    return (
-      <div>
-        <div className="md-work-order-date">{formatDate('DD DDD MMM YYYY', args.date)}</div>
-        <div className="md-work-order-date-title">{'Total revenue: $' + getCostString(costs)}</div>
-      </div>
-    );
-  };
+      return (
+        <div>
+          <div className="md-work-order-date">{formatDate('DD DDD MMM YYYY', args.date)}</div>
+          <div className="md-work-order-date-title">{'Total revenue: $' + getCostString(costs)}</div>
+        </div>
+      );
+    },
+    [getCostString],
+  );
 
-  const myScheduleEvent = React.useCallback((event) => {
-    return (
+  const myScheduleEvent = useCallback(
+    (event) => (
       <div>
         {event.title}
         <span className="md-work-order-price-tag">${getCostString(event.original.cost)}</span>
       </div>
-    );
-  }, []);
+    ),
+    [getCostString],
+  );
 
   return (
     <div>
@@ -500,11 +503,11 @@ function App() {
         dragToResize={true}
         dragTimeStep={30}
         selectedDate={mySelectedDate}
-        onSelectedDateChange={onSelectedDateChange}
-        onEventClick={onEventClick}
-        onEventCreated={onEventCreated}
-        onEventDeleted={onEventDeleted}
-        extendDefaultEvent={extendDefaultEvent}
+        onSelectedDateChange={handleSelectedDateChange}
+        onEventClick={handleEventClick}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDeleted}
+        extendDefaultEvent={extendMyDefaultEvent}
         renderDay={renderCustomDay}
         renderScheduleEventContent={myScheduleEvent}
       />
@@ -515,8 +518,8 @@ function App() {
         headerText={headerText}
         anchor={anchor}
         buttons={popupButtons}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isPopupOpen}
+        onClose={onPopupClose}
         responsive={responsivePopup}
       >
         <div className="mbsc-form-group">
@@ -542,31 +545,27 @@ function App() {
         <div className="mbsc-form-group">
           <div className="mbsc-grid mbsc-no-padding">
             <div className="mbsc-row">
-              {myResources.map((resources) => {
-                return resources.children.map((res) => {
-                  return (
-                    <div className="mbsc-col-sm-4" key={res.id}>
-                      <React.Fragment>
-                        <div className="mbsc-form-group-title">{res.name}</div>
-                        {res.children.map((r) => {
-                          return (
-                            <Checkbox
-                              key={r.id}
-                              value={r.id}
-                              checked={checkedResources.indexOf(r.id) > -1}
-                              onChange={checkboxChange}
-                              theme="material"
-                              className="md-work-order-checkbox-label"
-                            >
-                              {r.name}
-                            </Checkbox>
-                          );
-                        })}
-                      </React.Fragment>
-                    </div>
-                  );
-                });
-              })}
+              {myResources.map((resources) =>
+                resources.children.map((res) => (
+                  <div className="mbsc-col-sm-4" key={res.id}>
+                    <>
+                      <div className="mbsc-form-group-title">{res.name}</div>
+                      {res.children.map((r) => (
+                        <Checkbox
+                          key={r.id}
+                          value={r.id}
+                          checked={checkedResources.indexOf(r.id) > -1}
+                          onChange={checkboxChange}
+                          theme="material"
+                          className="md-work-order-checkbox-label"
+                        >
+                          {r.name}
+                        </Checkbox>
+                      ))}
+                    </>
+                  </div>
+                )),
+              )}
             </div>
           </div>
         </div>

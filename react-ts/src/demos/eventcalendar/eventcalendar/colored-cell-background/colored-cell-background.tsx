@@ -1,12 +1,12 @@
-import React from 'react';
-import { Eventcalendar, getJson, MbscCalendarEvent, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, MbscCalendarColor, MbscCalendarEvent, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useEffect, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const myColors = [
+const myColors: MbscCalendarColor[] = [
   {
     start: 'dyndatetime(y,m,0)',
     end: 'dyndatetime(y,m,1)',
@@ -38,10 +38,10 @@ const myColors = [
   },
 ];
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events: MbscCalendarEvent[]) => {
@@ -51,6 +51,12 @@ const App: React.FC = () => {
     );
   }, []);
 
-  return <Eventcalendar data={myEvents} colors={myColors} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      colors={myColors}
+    />
+  );
 };
 export default App;

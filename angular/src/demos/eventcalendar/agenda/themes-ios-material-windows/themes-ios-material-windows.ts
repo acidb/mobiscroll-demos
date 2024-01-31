@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale
@@ -8,22 +8,21 @@ setOptions({
 
 @Component({
   selector: 'app-agenda-themes-ios-material-windows',
+  styleUrl: './themes-ios-material-windows.css',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './themes-ios-material-windows.html',
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   myEvents: MbscCalendarEvent[] = [];
+  myView: MbscEventcalendarView = { agenda: { type: 'month' } };
 
-  theme = 'material'; // can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', the theme will automatically be set based on the platform
-  themeVariant: any = 'dark'; // can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
-
-  view: MbscEventcalendarView = {
-    agenda: { type: 'month' },
-  };
+  theme = 'auto';
+  themeVariant: 'auto' | 'light' | 'dark' = 'auto';
 
   ngOnInit(): void {
-    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp: any) => {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
   }

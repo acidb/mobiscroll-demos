@@ -1,18 +1,20 @@
-<mbsc-eventcalendar [eventTemplate]="eventTemplate" [data]="myEvents" [options]="eventSettings"></mbsc-eventcalendar>
-
-<ng-template #eventTemplate let-data>
-  <div class="md-full-event">
-    <img class="md-full-event-img" [attr.alt]="data.title" src="https://img.mobiscroll.com/demos/{{data.original.img}}" />
-    <div class="md-full-event-details">
-      <div class="md-full-event-title">{{data.title}}</div>
-      <div class="md-full-event-location">
-        <div class="md-full-event-label">Location</div>
-        <div>{{data.original.location}}</div>
-      </div>
-      <div class="md-full-event-time">
-        <div class="md-full-event-label">Time</div>
-        <div>{{data.start}}</div>
+<mbsc-eventcalendar [data]="myEvents" [eventTemplate]="customEventTemplate" [view]="myView">
+  <ng-template #customEventTemplate let-data>
+    <div class="mbsc-flex mbsc-flex-1-1">
+      <img class="mds-agenda-event-img" [attr.alt]="data.title" [src]="'https://img.mobiscroll.com/demos/' + data.original.img" />
+      <div class="mbsc-flex-1-1">
+        <div class="mds-agenda-event-title">{{data.title}}</div>
+        <div class="mbsc-flex">
+          <div class="mds-agenda-event-location mbsc-flex-1-1">
+            <div class="mds-agenda-event-label">Location</div>
+            <div>{{data.original.location}}</div>
+          </div>
+          <div class="mds-agenda-event-time">
+            <div class="mds-agenda-event-label">Time</div>
+            <div>{{data.start}}</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>
+</mbsc-eventcalendar>

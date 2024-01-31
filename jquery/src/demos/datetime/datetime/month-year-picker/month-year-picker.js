@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,8 +10,8 @@ export default {
     });
 
     $(function () {
-      var now = new Date(),
-        until = new Date(now.getFullYear() + 10, now.getMonth());
+      var now = new Date();
+      var until = new Date(now.getFullYear() + 10, now.getMonth());
 
       $('#picker')
         .mobiscroll()
@@ -23,6 +24,7 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Add a new credit card</div>

@@ -4,6 +4,7 @@ import { StrictMode } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+import '@mobiscroll/print/dist/css/mobiscroll.min.css';
 
 import Root from './routes/root';
 import DatetimeDatePicker from './demos/datetime/datetime/date-picker/date-picker';

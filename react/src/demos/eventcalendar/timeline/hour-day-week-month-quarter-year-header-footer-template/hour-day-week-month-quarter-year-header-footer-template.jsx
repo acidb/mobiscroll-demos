@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, setOptions, formatDate /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo } from 'react';
 import './hour-day-week-month-quarter-year-header-footer-template.css';
 
 setOptions({
@@ -8,586 +8,610 @@ setOptions({
 });
 
 function App() {
-  const hourView = React.useMemo(() => {
-    return {
+  const hourView = useMemo(
+    () => ({
       timeline: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const hourlyEvents = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m,d,2)',
-      end: 'dyndatetime(y,m,d,10)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,d,21)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,15)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m,d,5)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m,d,3)',
-      end: 'dyndatetime(y,m,d,10)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m,d,16)',
-      end: 'dyndatetime(y,m,d,23)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m,d,6)',
-      end: 'dyndatetime(y,m,d,11)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,d,22)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,d,5)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m,d,16)',
-      end: 'dyndatetime(y,m,d,21)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const hourlyEvents = useMemo(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m,d,2)',
+        end: 'dyndatetime(y,m,d,10)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m,d,15)',
+        end: 'dyndatetime(y,m,d,21)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,15)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m,d,5)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m,d,3)',
+        end: 'dyndatetime(y,m,d,10)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m,d,16)',
+        end: 'dyndatetime(y,m,d,23)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m,d,6)',
+        end: 'dyndatetime(y,m,d,11)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m,d,15)',
+        end: 'dyndatetime(y,m,d,22)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,d,5)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m,d,16)',
+        end: 'dyndatetime(y,m,d,21)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const dayView = React.useMemo(() => {
-    return {
+  const dayView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const dailyEvents = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m,2)',
-      end: 'dyndatetime(y,m,10)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m,16)',
-      end: 'dyndatetime(y,m,24)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m,8)',
-      end: 'dyndatetime(y,m,15)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m,4)',
-      end: 'dyndatetime(y,m,11)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m,7)',
-      end: 'dyndatetime(y,m,15)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m,21)',
-      end: 'dyndatetime(y,m,27)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m,10)',
-      end: 'dyndatetime(y,m,19)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m,24)',
-      end: 'dyndatetime(y,m,30)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m,8)',
-      end: 'dyndatetime(y,m,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,5)',
-      end: 'dyndatetime(y,m,13)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m,17)',
-      end: 'dyndatetime(y,m,26)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m,9)',
-      end: 'dyndatetime(y,m,20)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const dailyEvents = useMemo(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m,2)',
+        end: 'dyndatetime(y,m,10)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m,16)',
+        end: 'dyndatetime(y,m,24)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m,8)',
+        end: 'dyndatetime(y,m,15)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m,4)',
+        end: 'dyndatetime(y,m,11)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m,7)',
+        end: 'dyndatetime(y,m,15)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m,21)',
+        end: 'dyndatetime(y,m,27)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m,10)',
+        end: 'dyndatetime(y,m,19)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m,24)',
+        end: 'dyndatetime(y,m,30)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m,8)',
+        end: 'dyndatetime(y,m,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,5)',
+        end: 'dyndatetime(y,m,13)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m,17)',
+        end: 'dyndatetime(y,m,26)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m,9)',
+        end: 'dyndatetime(y,m,20)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const weekView = React.useMemo(() => {
-    return {
+  const weekView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         resolutionHorizontal: 'week',
         size: 6,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const weeklyEvents = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m,10)',
-      end: 'dyndatetime(y,m,24)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m+1,2)',
-      end: 'dyndatetime(y,m+1,18)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m,27)',
-      end: 'dyndatetime(y,m+1,13)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m+1,4)',
-      end: 'dyndatetime(y,m+1,27)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m,24)',
-      end: 'dyndatetime(y,m+1,2)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m+1,10)',
-      end: 'dyndatetime(y,m+1,24)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m,20)',
-      end: 'dyndatetime(y,m+1,3)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m+1,8)',
-      end: 'dyndatetime(y,m+1,19)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m,28)',
-      end: 'dyndatetime(y,m+1,15)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,9)',
-      end: 'dyndatetime(y,m,23)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m+1,5)',
-      end: 'dyndatetime(y,m+1,22)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m,24)',
-      end: 'dyndatetime(y,m+1,13)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const weeklyEvents = useMemo(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m,10)',
+        end: 'dyndatetime(y,m,24)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m+1,2)',
+        end: 'dyndatetime(y,m+1,18)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m,27)',
+        end: 'dyndatetime(y,m+1,13)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m+1,4)',
+        end: 'dyndatetime(y,m+1,27)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m,24)',
+        end: 'dyndatetime(y,m+1,2)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m+1,10)',
+        end: 'dyndatetime(y,m+1,24)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m,20)',
+        end: 'dyndatetime(y,m+1,3)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m+1,8)',
+        end: 'dyndatetime(y,m+1,19)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m,28)',
+        end: 'dyndatetime(y,m+1,15)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,9)',
+        end: 'dyndatetime(y,m,23)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m+1,5)',
+        end: 'dyndatetime(y,m+1,22)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m,24)',
+        end: 'dyndatetime(y,m+1,13)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const monthView = React.useMemo(() => {
-    return {
+  const monthView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
         resolutionHorizontal: 'month',
         size: 6,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const monthlyEvents = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m-1,10)',
-      end: 'dyndatetime(y,m+1,7)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m+3,1)',
-      end: 'dyndatetime(y,m+4,8)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m+1,27)',
-      end: 'dyndatetime(y,m+2,23)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m,25)',
-      end: 'dyndatetime(y,m+1,19)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m+1,10)',
-      end: 'dyndatetime(y,m+2,18)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m+4,24)',
-      end: 'dyndatetime(y,m+5,27)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m+2,2)',
-      end: 'dyndatetime(y,m+3,13)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m+4,8)',
-      end: 'dyndatetime(y,m+5,6)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m+2,20)',
-      end: 'dyndatetime(y,m+3,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,1)',
-      end: 'dyndatetime(y,m+1,14)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m+4,14)',
-      end: 'dyndatetime(y,m+5,20)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m+1,24)',
-      end: 'dyndatetime(y,m+2,20)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const monthlyEvents = useMemo(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m-1,10)',
+        end: 'dyndatetime(y,m+1,7)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m+3,1)',
+        end: 'dyndatetime(y,m+4,8)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m+1,27)',
+        end: 'dyndatetime(y,m+2,23)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m,25)',
+        end: 'dyndatetime(y,m+1,19)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m+1,10)',
+        end: 'dyndatetime(y,m+2,18)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m+4,24)',
+        end: 'dyndatetime(y,m+5,27)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m+2,2)',
+        end: 'dyndatetime(y,m+3,13)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m+4,8)',
+        end: 'dyndatetime(y,m+5,6)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m+2,20)',
+        end: 'dyndatetime(y,m+3,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,1)',
+        end: 'dyndatetime(y,m+1,14)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m+4,14)',
+        end: 'dyndatetime(y,m+5,20)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m+1,24)',
+        end: 'dyndatetime(y,m+2,20)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const quarterView = React.useMemo(() => {
-    return {
+  const quarterView = useMemo(
+    () => ({
       timeline: {
         type: 'year',
         resolutionHorizontal: 'quarter',
         size: 1,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const quarterEvents = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m-1,10)',
-      end: 'dyndatetime(y,m+1,7)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m+3,1)',
-      end: 'dyndatetime(y,m+4,8)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m+1,27)',
-      end: 'dyndatetime(y,m+2,23)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m,25)',
-      end: 'dyndatetime(y,m+1,19)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m+1,10)',
-      end: 'dyndatetime(y,m+2,18)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m+4,24)',
-      end: 'dyndatetime(y,m+5,27)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m+2,2)',
-      end: 'dyndatetime(y,m+3,13)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m+4,8)',
-      end: 'dyndatetime(y,m+5,6)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m+2,20)',
-      end: 'dyndatetime(y,m+3,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,1)',
-      end: 'dyndatetime(y,m+1,14)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m+4,14)',
-      end: 'dyndatetime(y,m+5,20)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m+1,24)',
-      end: 'dyndatetime(y,m+2,20)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const quarterEvents = useMemo(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m-1,10)',
+        end: 'dyndatetime(y,m+1,7)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m+3,1)',
+        end: 'dyndatetime(y,m+4,8)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m+1,27)',
+        end: 'dyndatetime(y,m+2,23)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m,25)',
+        end: 'dyndatetime(y,m+1,19)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m+1,10)',
+        end: 'dyndatetime(y,m+2,18)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m+4,24)',
+        end: 'dyndatetime(y,m+5,27)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m+2,2)',
+        end: 'dyndatetime(y,m+3,13)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m+4,8)',
+        end: 'dyndatetime(y,m+5,6)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m+2,20)',
+        end: 'dyndatetime(y,m+3,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,1)',
+        end: 'dyndatetime(y,m+1,14)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m+4,14)',
+        end: 'dyndatetime(y,m+5,20)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m+1,24)',
+        end: 'dyndatetime(y,m+2,20)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const yearView = React.useMemo(() => {
-    return {
+  const yearView = useMemo(
+    () => ({
       timeline: {
         type: 'year',
         resolutionHorizontal: 'year',
         size: 6,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const yearlyEvents = [
-    {
-      id: 1,
-      start: 'dyndatetime(y+1,4,10)',
-      end: 'dyndatetime(y+2,8,7)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y+3,6,1)',
-      end: 'dyndatetime(y+4,9,8)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y+2,3,27)',
-      end: 'dyndatetime(y+3,10,23)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y+2,8,25)',
-      end: 'dyndatetime(y+3,11,19)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y+1,9,10)',
-      end: 'dyndatetime(y+3,4,18)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y+4,1,24)',
-      end: 'dyndatetime(y+5,5,27)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y-1,4,2)',
-      end: 'dyndatetime(y,8,13)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y+2,4,8)',
-      end: 'dyndatetime(y+3,11,6)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y+2,1,20)',
-      end: 'dyndatetime(y+3,8,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,10,1)',
-      end: 'dyndatetime(y+1,11,14)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y+3,10,14)',
-      end: 'dyndatetime(y+4,11,20)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y+3,2,24)',
-      end: 'dyndatetime(y+5,4,20)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const yearlyEvents = useMemo(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y+1,4,10)',
+        end: 'dyndatetime(y+2,8,7)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y+3,6,1)',
+        end: 'dyndatetime(y+4,9,8)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y+2,3,27)',
+        end: 'dyndatetime(y+3,10,23)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y+2,8,25)',
+        end: 'dyndatetime(y+3,11,19)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y+1,9,10)',
+        end: 'dyndatetime(y+3,4,18)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y+4,1,24)',
+        end: 'dyndatetime(y+5,5,27)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y-1,4,2)',
+        end: 'dyndatetime(y,8,13)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y+2,4,8)',
+        end: 'dyndatetime(y+3,11,6)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y+2,1,20)',
+        end: 'dyndatetime(y+3,8,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,10,1)',
+        end: 'dyndatetime(y+1,11,14)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y+3,10,14)',
+        end: 'dyndatetime(y+4,11,20)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y+3,2,24)',
+        end: 'dyndatetime(y+5,4,20)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -628,10 +652,11 @@ function App() {
         name: 'Resource H',
         color: '#34c8e0',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const getEventOccurrence = React.useCallback((events) => {
+  const getEventOccurrence = useCallback((events) => {
     let eventOccurrence = 'none';
 
     if (events) {
@@ -650,97 +675,114 @@ function App() {
     return eventOccurrence;
   }, []);
 
-  const getOccuppancy = (events) => {
-    let occuppancy = 0;
+  const getOccuppancy = useCallback(
+    (events) => {
+      let occuppancy = 0;
 
-    if (events) {
-      var resourceIds = [];
-      var nr = 0;
-      for (const event of events) {
-        if (resourceIds.indexOf(event.resource) < 0) {
-          nr++;
-          resourceIds = [...resourceIds, event.resource];
+      if (events) {
+        var resourceIds = [];
+        var nr = 0;
+        for (const event of events) {
+          if (resourceIds.indexOf(event.resource) < 0) {
+            nr++;
+            resourceIds = [...resourceIds, event.resource];
+          }
         }
+        occuppancy = ((nr * 100) / myResources.length).toFixed(0);
       }
-      occuppancy = ((nr * 100) / myResources.length).toFixed(0);
-    }
 
-    return occuppancy;
-  };
+      return occuppancy;
+    },
+    [myResources.length],
+  );
 
-  const renderCustomHour = (args) => {
-    return (
+  const renderCustomHour = useCallback(
+    (args) => (
       <div className={'md-date-header md-date-header-hour md-date-header-events-' + getEventOccurrence(args.events)}>
         {formatDate('h:mm A', args.date)}
       </div>
-    );
-  };
+    ),
+    [getEventOccurrence],
+  );
 
-  const renderCustomHourFooter = (args) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomHourFooter = useCallback(
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
+    [getOccuppancy],
+  );
 
-  const renderCustomDay = (args) => {
-    const date = args.date;
-    return (
-      <div className={'md-date-header md-date-header-events-' + getEventOccurrence(args.events)}>
-        <div className="md-date-header-day-name">{formatDate('DDD', date)}</div>
-        <div className="md-date-header-day-nr">{formatDate('DD', date)}</div>
-      </div>
-    );
-  };
+  const renderCustomDay = useCallback(
+    (args) => {
+      const date = args.date;
+      return (
+        <div className={'md-date-header md-date-header-events-' + getEventOccurrence(args.events)}>
+          <div className="md-date-header-day-name">{formatDate('DDD', date)}</div>
+          <div className="md-date-header-day-nr">{formatDate('DD', date)}</div>
+        </div>
+      );
+    },
+    [getEventOccurrence],
+  );
 
-  const renderCustomDayFooter = (args) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomDayFooter = useCallback(
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
+    [getOccuppancy],
+  );
 
-  const renderCustomWeek = (args) => {
-    return (
+  const renderCustomWeek = useCallback(
+    (args) => (
       <div className={'md-date-header md-date-header-week md-date-header-events-' + getEventOccurrence(args.events)}>
         {formatDate('MMM DD', args.startDate) + ' - ' + formatDate('MMM DD', args.endDate)}
       </div>
-    );
-  };
+    ),
+    [getEventOccurrence],
+  );
 
-  const renderCustomWeekFooter = (args) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomWeekFooter = useCallback(
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
+    [getOccuppancy],
+  );
 
-  const renderCustomMonth = (args) => {
-    return (
+  const renderCustomMonth = useCallback(
+    (args) => (
       <div className={'md-date-header md-date-header-month md-date-header-events-' + getEventOccurrence(args.events)}>
         {formatDate('MMM', args.date)}
       </div>
-    );
-  };
+    ),
+    [getEventOccurrence],
+  );
 
-  const renderCustomMonthFooter = (args) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomMonthFooter = useCallback(
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
+    [getOccuppancy],
+  );
 
-  const renderCustomQuarter = (args) => {
-    return (
+  const renderCustomQuarter = useCallback(
+    (args) => (
       <div className={'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(args.events)}>
         Quarter {args.date.getMonth() / 3 + 1}
       </div>
-    );
-  };
+    ),
+    [getEventOccurrence],
+  );
 
-  const renderCustomQuarterFooter = (args) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomQuarterFooter = useCallback(
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
+    [getOccuppancy],
+  );
 
-  const renderCustomYear = (args) => {
-    return (
+  const renderCustomYear = useCallback(
+    (args) => (
       <div className={'md-date-header md-date-header-year md-date-header-events-' + getEventOccurrence(args.events)}>
         {formatDate('YYYY', args.date)}
       </div>
-    );
-  };
+    ),
+    [getEventOccurrence],
+  );
 
-  const renderCustomYearFooter = (args) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomYearFooter = useCallback(
+    (args) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>,
+    [getOccuppancy],
+  );
 
   return (
     <div className="md-date-header-template">

@@ -1,5 +1,5 @@
-import React from 'react';
-import { setOptions, Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 import './resource-grouping-hierarchy.css';
 
 setOptions({
@@ -8,8 +8,8 @@ setOptions({
 });
 
 function App() {
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,2)',
         end: 'dyndatetime(y,m,5)',
@@ -82,11 +82,12 @@ function App() {
         title: 'Event 12',
         resource: 'res7',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 'res1',
         name: 'Resource 1',
@@ -171,27 +172,27 @@ function App() {
         name: 'Resource 12',
         color: '#e25dd2',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       className="md-resource-grouping-hierarchy"
       clickToCreate={true}
       dragToCreate={true}
       dragToMove={true}
       dragToResize={true}
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
     />

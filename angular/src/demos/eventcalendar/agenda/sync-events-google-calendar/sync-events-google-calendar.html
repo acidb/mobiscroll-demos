@@ -1,55 +1,36 @@
-<mbsc-page class="md-sync-events-google-cont" [ngClass]="{'md-loading-events': isLoading}">
-  <mbsc-eventcalendar
-    [options]="calendarOptions"
-    [data]="myEvents"
-    [exclusiveEndDates]="true"
-    [clickToCreate]="isEditable"
-    [dragToCreate]="isEditable"
-    [dragToMove]="isEditable"
-    [dragToResize]="isEditable"
-    [headerTemplate]="customTemplate"
-    [(selectedDate)]="selectedDate"
-  >
-    <ng-template #customTemplate>
-      <mbsc-calendar-nav class="md-sync-events-google-nav"></mbsc-calendar-nav>
-      <div class="md-spinner">
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-        <div class="md-spinner-blade"></div>
-      </div>
-
-      <div class="md-google-calendar-buttons">
-        <mbsc-button (click)="logIn()" *ngIf="!isLoggedIn" class="md-sync-events-google-button">Sync my google calendars </mbsc-button>
-        <mbsc-button #calButton (click)="openPopup()" *ngIf="isLoggedIn" class="md-sync-events-google-button">My Calendars </mbsc-button>
-        <mbsc-button (click)="navigate()">Today</mbsc-button>
-        <mbsc-calendar-prev></mbsc-calendar-prev>
-        <mbsc-calendar-next></mbsc-calendar-next>
-      </div>
-    </ng-template>
-  </mbsc-eventcalendar>
-
-  <mbsc-popup [options]="popupOptions" [anchor]="myAnchor" #popup>
-    <div class="mbsc-form-group-inset md-sync-events-google-inset">
-      <div class="mbsc-form-group-title">My calendars</div>
-      <ng-container *ngFor="let cal of myCalendars;">
-        <mbsc-switch
-          label="{{cal.summary}}"
-          [(ngModel)]="calendarData[cal.id].checked"
-          (change)="toggleCalendars($event, cal.id)"
-        ></mbsc-switch>
-      </ng-container>
-    </div>
-    <div class="mbsc-form-group-inset">
-      <mbsc-button class="md-sync-events-google-button mbsc-button-block" (click)="logOut()">Log out of my account </mbsc-button>
-    </div>
-  </mbsc-popup></mbsc-page
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [exclusiveEndDates]="true"
+  [headerTemplate]="customHeaderTemplate"
+  [(selectedDate)]="selectedDate"
+  [view]="myView"
+  (onPageLoading)="onPageLoading($event)"
 >
+  <ng-template #customHeaderTemplate>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
+    <div [style.visibility]="isLoading ? 'visible' : 'hidden'" class="mds-loader"></div>
+    <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
+      <mbsc-button (click)="signIn()" *ngIf="!isLoggedIn">Sync my Google calendars</mbsc-button>
+      <mbsc-button #calButton (click)="openPopup()" *ngIf="isLoggedIn">My Calendars</mbsc-button>
+      <mbsc-button (click)="navigate()">Today</mbsc-button>
+    </div>
+    <mbsc-calendar-prev></mbsc-calendar-prev>
+    <mbsc-calendar-next></mbsc-calendar-next>
+  </ng-template>
+</mbsc-eventcalendar>
+
+<mbsc-popup #popup [anchor]="myAnchor" [options]="popupOptions">
+  <div class="mbsc-form-group-inset">
+    <div class="mbsc-form-group-title">My calendars</div>
+    <ng-container *ngFor="let cal of myCalendars;">
+      <mbsc-switch
+        [label]="cal.summary"
+        [(ngModel)]="calendarData[cal.id].checked"
+        (change)="toggleCalendars($event, cal.id)"
+      ></mbsc-switch>
+    </ng-container>
+  </div>
+  <div class="mbsc-form-group-inset">
+    <mbsc-button class="mbsc-button-block" (click)="signOut()">Sign out of my account</mbsc-button>
+  </div>
+</mbsc-popup>

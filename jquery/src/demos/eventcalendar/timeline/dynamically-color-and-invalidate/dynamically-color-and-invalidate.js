@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -92,7 +93,7 @@ export default {
               colors: [],
             });
           },
-          onEventCreated: function (args) {
+          onEventCreated: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -100,7 +101,7 @@ export default {
               message: 'Event created',
             });
           },
-          onEventUpdated: function (args) {
+          onEventUpdated: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -108,7 +109,7 @@ export default {
               message: 'Event moved',
             });
           },
-          onEventCreateFailed: function (event) {
+          onEventCreateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -116,7 +117,7 @@ export default {
               message: "Can't create event",
             });
           },
-          onEventUpdateFailed: function (event) {
+          onEventUpdateFailed: function () {
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -173,6 +174,7 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div mbsc-page class="md-dynamically-color-and-invalidate">
@@ -214,6 +216,7 @@ export default {
 </div>
 <!--/hidden-->
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .dynamically-color-and-invalidate-calendar {
     border-left: 1px solid #ccc;

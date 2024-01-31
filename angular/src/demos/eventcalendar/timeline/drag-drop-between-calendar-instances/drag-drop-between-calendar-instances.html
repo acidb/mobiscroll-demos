@@ -9,7 +9,7 @@
     [eventDelete]="true"
     [externalDrag]="true"
     [externalDrop]="true"
-    (onEventCreated)="handleFirstCalEventCreated($event, 'Calendar 1')"
+    (onEventCreated)="handleFirstCalEventCreated($event)"
     class="md-drag-drop-first-calendar"
   ></mbsc-eventcalendar>
   <div class="mbsc-form-group-title">Calendar 2</div>
@@ -22,7 +22,7 @@
     [eventDelete]="true"
     [externalDrag]="true"
     [externalDrop]="true"
-    (onEventCreated)="handleSecondCalEventCreated($event, 'Calendar 2')"
+    (onEventCreated)="handleSecondCalEventCreated($event)"
     class="md-drag-drop-second-calendar"
   ></mbsc-eventcalendar>
 </div>

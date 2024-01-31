@@ -1,4 +1,4 @@
-import { getJson, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 setOptions({
@@ -11,12 +11,12 @@ function App() {
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastText, setToastText] = useState();
 
-  const handleToastClose = useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const handleEventClick = useCallback((event) => {
-    setToastText(event.event.title);
+  const handleEventClick = useCallback((args) => {
+    setToastText(args.event.title);
     setToastOpen(true);
   }, []);
 
@@ -41,7 +41,7 @@ function App() {
   return (
     <div>
       <Eventcalendar data={myEvents} view={myView} onEventClick={handleEventClick} />
-      <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

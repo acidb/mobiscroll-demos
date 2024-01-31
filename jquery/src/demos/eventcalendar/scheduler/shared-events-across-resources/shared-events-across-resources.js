@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -35,7 +36,6 @@ export default {
       var deleteEvent;
       var $title = $('#demo-shared-events-title');
       var $segmented = $('[name="demo-shared-events-select"]');
-      var now = new Date();
 
       var calendar = $('#demo-shared-events-across-resources')
         .mobiscroll()
@@ -184,6 +184,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-shared-events-across-resources"></div>
 <div id="demo-shared-events-popup">

@@ -1,5 +1,16 @@
-import React from 'react';
-import { Eventcalendar, getJson, setOptions, toast, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import {
+  Eventcalendar,
+  getJson,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscEventCreateEvent,
+  MbscEventCreateFailedEvent,
+  MbscEventUpdateEvent,
+  MbscEventUpdateFailedEvent,
+  setOptions,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './disallow-past-event-creation.css';
 
 setOptions({
@@ -9,18 +20,68 @@ setOptions({
 
 const today = new Date();
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const myInvalid = [
-    {
-      recurring: {
-        repeat: 'daily',
-        until: today,
-      },
-    },
-  ];
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
-  React.useEffect(() => {
+  const { current: myView } = useRef<MbscEventcalendarView>({ calendar: { labels: true } });
+
+  const myInvalid = useMemo(
+    () => [
+      {
+        recurring: {
+          repeat: 'daily',
+          until: today,
+        },
+      },
+    ],
+    [],
+  );
+
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const handleEventCreateFailed = useCallback((args: MbscEventCreateFailedEvent) => {
+    if (!args.originEvent) {
+      setToastMessage("Can't create event in the past");
+      setToastOpen(true);
+    }
+  }, []);
+
+  const handleEventUpdateFailed = useCallback((args: MbscEventUpdateFailedEvent) => {
+    if (!args.oldEventOccurrence) {
+      setToastMessage("Can't move event in the past");
+      setToastOpen(true);
+    }
+  }, []);
+
+  const handleEventCreate = useCallback((args: MbscEventCreateEvent) => {
+    const oldEvent = args.originEvent;
+    const start = oldEvent && oldEvent.start ? oldEvent.start : null;
+
+    // handle recurring events
+    if (start && start < today) {
+      setToastMessage("Can't move past event");
+      setToastOpen(true);
+      return false;
+    }
+  }, []);
+
+  const handleEventUpdate = useCallback((args: MbscEventUpdateEvent) => {
+    const oldEvent = args.oldEvent;
+    const start = oldEvent && oldEvent.start ? oldEvent.start : null;
+    const oldEventOccurrence = args.oldEventOccurrence;
+    const occurrenceStart = oldEventOccurrence && oldEventOccurrence.start ? oldEventOccurrence.start : null;
+
+    // handle recurring events
+    if ((start && start < today) || (occurrenceStart && occurrenceStart < today)) {
+      return false;
+    }
+  }, []);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -37,64 +98,24 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const { current: view } = React.useRef<MbscEventcalendarView>({ calendar: { labels: true } });
-
-  const onEventCreateFailed = React.useCallback((args: any) => {
-    if (!args.originEvent) {
-      toast({
-        message: "Can't create event in the past",
-      });
-    }
-  }, []);
-
-  const onEventUpdateFailed = React.useCallback((args: any) => {
-    if (!args.oldEventOccurrence) {
-      toast({
-        message: "Can't move event in the past",
-      });
-    }
-  }, []);
-
-  const onEventCreate = React.useCallback((args: any) => {
-    const oldEvent = args.originEvent;
-    const start = oldEvent && oldEvent.start ? oldEvent.start : null;
-
-    // handle recurring events
-    if (start && start < today) {
-      toast({
-        message: "Can't move past event",
-      });
-      return false;
-    }
-  }, []);
-
-  const onEventUpdate = React.useCallback((args: any) => {
-    const oldEvent = args.oldEvent;
-    const start = oldEvent && oldEvent.start ? oldEvent.start : null;
-    const oldEventOccurrence = args.oldEventOccurrence;
-    const occurrenceStart = oldEventOccurrence && oldEventOccurrence.start ? oldEventOccurrence.start : null;
-
-    // handle recurring events
-    if ((start && start < today) || (occurrenceStart && occurrenceStart < today)) {
-      return false;
-    }
-  }, []);
-
   return (
-    <Eventcalendar
-      className="md-disallow-past-event-creation"
-      view={view}
-      data={myEvents}
-      invalid={myInvalid}
-      clickToCreate={true}
-      dragToCreate={true}
-      dragToMove={true}
-      dragToResize={true}
-      onEventCreateFailed={onEventCreateFailed}
-      onEventUpdateFailed={onEventUpdateFailed}
-      onEventCreate={onEventCreate}
-      onEventUpdate={onEventUpdate}
-    />
+    <>
+      <Eventcalendar
+        className="md-disallow-past-event-creation"
+        view={myView}
+        data={myEvents}
+        invalid={myInvalid}
+        clickToCreate={true}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
+        onEventCreateFailed={handleEventCreateFailed}
+        onEventUpdateFailed={handleEventUpdateFailed}
+        onEventCreate={handleEventCreate}
+        onEventUpdate={handleEventUpdate}
+      />
+      <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
+    </>
   );
 };
 

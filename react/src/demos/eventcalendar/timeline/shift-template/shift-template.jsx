@@ -1,6 +1,11 @@
-import React from 'react';
-import { Eventcalendar, formatDate /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './shift-template.css';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const staff = [
   {
@@ -134,7 +139,7 @@ const defaultShifts = [
   },
 ];
 
-const colors = [
+const myColors = [
   {
     background: '#a5ceff4d',
     slot: 1,
@@ -153,7 +158,7 @@ const colors = [
   },
 ];
 
-const slots = [
+const mySlots = [
   {
     id: 1,
     name: 'Morning',
@@ -165,19 +170,20 @@ const slots = [
 ];
 
 function App() {
-  const [shifts, setShifts] = React.useState(defaultShifts);
-  const view = React.useMemo(() => {
-    return {
+  const [shifts, setShifts] = useState(defaultShifts);
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         eventList: true,
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const renderMySlot = (args) => {
+  const renderMySlot = useCallback((args) => {
     const slotId = args.slot.id;
     return (
       <div style={{ backgroundColor: slotId === 1 ? '#a5ceff4d' : '#f7f7bb4d', padding: '4px' }}>
@@ -185,9 +191,9 @@ function App() {
         <div className="slot-time">{slotId === 1 ? '7am - 1pm' : '12pm - 6pm'}</div>
       </div>
     );
-  };
+  }, []);
 
-  const extendDefaultEvent = React.useCallback((ev) => {
+  const extendMyDefaultEvent = useCallback((ev) => {
     const d = ev.start;
     const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), ev.slot === 1 ? 7 : 12);
     const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), ev.slot === 1 ? 13 : 18);
@@ -199,7 +205,7 @@ function App() {
     };
   }, []);
 
-  const eventUpdate = React.useCallback(
+  const handleEventUpdate = useCallback(
     (args) => {
       const event = args.event;
       const index = shifts.findIndex((x) => x.id === event.id);
@@ -214,19 +220,17 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      view={myView}
       data={shifts}
       resources={staff}
-      colors={colors}
-      slots={slots}
+      colors={myColors}
+      slots={mySlots}
       clickToCreate={true}
       dragToMove={true}
       dragToResize={false}
       renderSlot={renderMySlot}
-      onEventUpdate={eventUpdate}
-      extendDefaultEvent={extendDefaultEvent}
+      onEventUpdate={handleEventUpdate}
+      extendDefaultEvent={extendMyDefaultEvent}
       cssClass="md-shift-template"
     />
   );

@@ -1,14 +1,14 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  setOptions,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext /* localeImport */,
+  Eventcalendar,
+  Segmented,
+  SegmentedGroup,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './event-listing.css';
 
 setOptions({
@@ -17,17 +17,17 @@ setOptions({
 });
 
 function App() {
-  const [view, setView] = React.useState('month');
+  const [view, setView] = useState('month');
 
-  const [calView, setCalView] = React.useState({
+  const [calView, setCalView] = useState({
     timeline: {
       type: 'month',
       eventList: true,
     },
   });
 
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d-1,8)',
         end: 'dyndatetime(y,m,d-1,15)',
@@ -106,11 +106,12 @@ function App() {
         title: 'Event 13',
         resource: 6,
       },
-    ];
-  });
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -141,10 +142,11 @@ function App() {
         name: 'Resource F',
         color: '#1ac38d',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const changeView = (event) => {
+  const changeView = useCallback((event) => {
     let calView;
 
     switch (event.target.value) {
@@ -179,30 +181,30 @@ function App() {
 
     setView(event.target.value);
     setCalView(calView);
-  };
+  }, []);
 
-  const renderMyHeader = () => {
-    return (
-      <React.Fragment>
+  const renderMyHeader = useCallback(
+    () => (
+      <>
         <CalendarNav className="md-event-listing-nav" />
         <div className="md-event-listing-picker">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="workweek">Work week</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="month">Month</SegmentedItem>
+            <Segmented value="workweek">Work week</Segmented>
+            <Segmented value="week">Week</Segmented>
+            <Segmented value="month">Month</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="md-event-listing-prev" />
         <CalendarToday className="md-event-listing-today" />
         <CalendarNext className="md-event-listing-next" />
-      </React.Fragment>
-    );
-  };
+      </>
+    ),
+    [changeView, view],
+  );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
+      // drag
       view={calView}
       data={myEvents}
       resources={myResources}

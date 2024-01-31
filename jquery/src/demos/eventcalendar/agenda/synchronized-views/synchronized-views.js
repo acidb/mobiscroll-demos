@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -17,8 +18,8 @@ export default {
           view: {
             calendar: { popover: false, labels: false },
           },
-          onSelectedDateChange: function (event) {
-            dayInst.navigate(event.date);
+          onSelectedDateChange: function (args) {
+            dayInst.navigate(args.date);
           },
         })
         .mobiscroll('getInst');
@@ -30,8 +31,8 @@ export default {
           view: {
             agenda: { type: 'day' },
           },
-          onPageChange: function (event, inst) {
-            monthInst.navigate(event.firstDay);
+          onPageChange: function (args) {
+            monthInst.navigate(args.firstDay);
           },
         })
         .mobiscroll('getInst');
@@ -42,6 +43,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="md-sync-views">
     <div class="md-sync-cal">
@@ -52,6 +54,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-sync-views {
     display: flex;

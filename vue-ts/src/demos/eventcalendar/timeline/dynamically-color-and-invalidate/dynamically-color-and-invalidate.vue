@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
+  MbscDraggable,
   MbscEventcalendar,
   MbscPage,
   MbscToast,
-  MbscDraggable,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscResource,
-  MbscEventDragEvent
+  MbscEventDragEvent,
+  MbscResource
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -287,14 +287,4 @@ function handleToastClose() {
 .dynamically-color-and-invalidate-calendar .mbsc-timeline-parent {
   height: 32px;
 }
-
-/*<hidden>*/
-
-.md-dynamically-color-and-invalidate,
-.md-dynamically-color-and-invalidate .mbsc-grid,
-.md-dynamically-color-and-invalidate .mbsc-row {
-  height: 100%;
-}
-
-/*</hidden>*/
 </style>

@@ -1,4 +1,4 @@
-import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
@@ -13,8 +13,8 @@ function App() {
   const [custom, setCustom] = useState();
   const [val, setVal] = useState();
 
-  const nowButtons = useMemo(() => {
-    return [
+  const nowButtons = useMemo(
+    () => [
       {
         text: 'Now',
         handler: () => {
@@ -24,11 +24,12 @@ function App() {
       },
       'set',
       'cancel',
-    ];
-  }, [now]);
+    ],
+    [now],
+  );
 
-  const customButtons = useMemo(() => {
-    return [
+  const customButtons = useMemo(
+    () => [
       {
         text: '05 Jan 2020',
         handler: () => {
@@ -38,17 +39,19 @@ function App() {
       },
       'set',
       'cancel',
-    ];
-  }, [custom]);
+    ],
+    [custom],
+  );
 
-  const autoButtons = useMemo(() => {
-    return [
+  const autoButtons = useMemo(
+    () => [
       {
         text: 'Close',
         handler: 'cancel',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const setValue = useCallback(() => {
     setVal(new Date(2020, 0, 2));

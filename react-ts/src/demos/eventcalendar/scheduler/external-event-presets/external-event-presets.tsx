@@ -1,15 +1,17 @@
-import React from 'react';
 import {
-  Eventcalendar,
   Draggable,
-  Popup,
+  Eventcalendar,
   Input,
-  Textarea,
+  MbscEventcalendarView,
+  MbscEventCreatedEvent,
+  MbscSelectChangeEvent,
+  Popup,
   Select,
   setOptions,
-  Toast,
-  MbscEventcalendarView /* localeImport */,
+  Textarea,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import './external-event-presets.css';
 
 setOptions({
@@ -72,10 +74,10 @@ const myData = [
   { value: '7', text: 'Payton Sinclair' },
 ];
 
-function Task(props) {
-  const [draggable, setDraggable] = React.useState<any>();
+function Task(props: { data: { title: string; color: string; start: string; end: string; length: string } }) {
+  const [draggable, setDraggable] = useState<HTMLDivElement>();
 
-  const setDragElm = React.useCallback((elm) => {
+  const setDragElm = useCallback((elm: HTMLDivElement) => {
     setDraggable(elm);
   }, []);
 
@@ -88,28 +90,29 @@ function Task(props) {
   );
 }
 
-const App: React.FC = () => {
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [title, setTitle] = React.useState<string>('');
-  const [details, setDetails] = React.useState<string>('');
-  const [technician, setTechnician] = React.useState<string>('');
-  const [anchor, setAnchor] = React.useState<any>(null);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>();
+const App: FC = () => {
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('');
+  const [details, setDetails] = useState<string>('');
+  const [technician, setTechnician] = useState<string>('');
+  const [anchor, setAnchor] = useState<HTMLElement>();
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>();
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
         startTime: '06:00',
         endTime: '20:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const invalid = React.useMemo(() => {
-    return [
+  const invalid = useMemo(
+    () => [
       {
         recurring: {
           repeat: 'weekly',
@@ -125,43 +128,46 @@ const App: React.FC = () => {
           weekDays: 'MO,TU,WE,TH,FR',
         },
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const fillDialog = React.useCallback((args) => {
-    setTitle(args.event.title);
-    setAnchor(args.target);
+  const fillDialog = useCallback((args: MbscEventCreatedEvent) => {
+    setTitle(args.event.title!);
+    setDetails(args.event.details);
+    setTechnician(args.event.technician);
+    setAnchor(args.target!);
     setOpen(true);
   }, []);
 
-  const onEventCreated = React.useCallback(
-    (args) => {
+  const onEventCreated = useCallback(
+    (args: MbscEventCreatedEvent) => {
       fillDialog(args);
     },
     [fillDialog],
   );
 
-  const eventCreateFail = React.useCallback(() => {
+  const eventCreateFail = useCallback(() => {
     setToastText("Can't create event on this date");
     setToastOpen(true);
   }, []);
 
-  const eventUpdateFail = React.useCallback(() => {
+  const eventUpdateFail = useCallback(() => {
     setToastText("Can't add event on this date");
     setToastOpen(true);
   }, []);
 
-  const onClose = React.useCallback(() => {
+  const onClose = useCallback(() => {
     setOpen(false);
     setToastText('New task added');
     setToastOpen(true);
   }, []);
 
-  const changeSelected = React.useCallback((event: any) => {
+  const changeSelected = useCallback((event: MbscSelectChangeEvent) => {
     setTechnician(event.value);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -215,7 +221,7 @@ const App: React.FC = () => {
         // theme
         message={toastText}
         isOpen={isToastOpen}
-        onClose={closeToast}
+        onClose={handleCloseToast}
       />
     </div>
   );

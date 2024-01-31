@@ -1,10 +1,15 @@
-import React from 'react';
-import { Eventcalendar, Button /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 import './connecting-linking-events-arrows.css';
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         id: 1,
         start: 'dyndatetime(y,m,1)',
@@ -89,19 +94,21 @@ function App() {
         title: 'Event 12',
         resource: 6,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource 1',
@@ -132,11 +139,12 @@ function App() {
         name: 'Resource 6',
         color: '#01adff',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myConnections = React.useMemo(() => {
-    return [
+  const myConnections = useMemo(
+    () => [
       {
         from: 1,
         to: 2,
@@ -204,14 +212,14 @@ function App() {
         color: 'pink',
         arrow: 'to',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       connections={myConnections}

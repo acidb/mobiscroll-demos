@@ -1,27 +1,29 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    var now = new Date(),
-      cal = mobiscroll.eventcalendar('#demo', {
-        // locale,
-        // theme,
-        view: {
-          schedule: {
-            type: 'day',
-          },
+    var now = new Date();
+    var cal = mobiscroll.eventcalendar('#demo', {
+      // locale,
+      // theme,
+      // drag,
+      view: {
+        schedule: {
+          type: 'day',
         },
-        data: [
-          {
-            start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
-            end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
-            title: 'General orientation',
-            color: '#35bb5a',
-            bufferBefore: 20,
-            bufferAfter: 30,
-          },
-        ],
-      });
+      },
+      data: [
+        {
+          start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
+          end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
+          title: 'General orientation',
+          color: '#35bb5a',
+          bufferBefore: 20,
+          bufferAfter: 30,
+        },
+      ],
+    });
 
     document.getElementById('add-event').addEventListener('click', function () {
       var newEvent = {
@@ -42,13 +44,11 @@ export default {
       cal.navigateToEvent(newEvent);
 
       mobiscroll.toast({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         message: 'Event added',
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo"></div>
 <div class="mbsc-button-group-block">

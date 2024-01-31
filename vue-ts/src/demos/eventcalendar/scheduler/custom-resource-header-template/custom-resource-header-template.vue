@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -97,7 +97,8 @@ const myView: MbscEventcalendarView = {
 </script>
 
 <template>
-  <MbscEventcalendar :drag="drag" :view="myView" :data="myEvents" :resources="myResources">
+  <!-- dragOptions -->
+  <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources">
     <template #resource="resource">
       <div class="resource-template-content">
         <div class="resource-name">{{ resource.name }}</div>

@@ -1,10 +1,10 @@
-<mbsc-eventcalendar [agendaEmptyTemplate]="agendaEmptyTemplate" [data]="myEvents" [view]="myView">
-  <ng-template #agendaEmptyTemplate>
+<mbsc-eventcalendar [agendaEmptyTemplate]="customEmptyTemplate" [data]="myEvents" [view]="myView">
+  <ng-template #customEmptyTemplate>
     <div class="mbsc-align-center mbsc-padding">
-      <img src="https://img.mobiscroll.com/demos/smart-empty-tin-can.png" alt="Empty can" style="width: 150px; margin: 50px 0" />
+      <img class="mds-empty-img" src="https://img.mobiscroll.com/demos/smart-empty-tin-can.png" alt="Empty can" />
       <div class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Looks like this can is empty</div>
-      <mbsc-button color="primary" variant="outline" (click)="displayToast()"> Add something to it </mbsc-button>
-      <div class="mbsc-txt-xs" style="padding-top: 150px">
+      <mbsc-button color="primary" variant="outline" (click)="addEvent()">Add something to it</mbsc-button>
+      <div class="mds-empty-txt mbsc-txt-xs">
         Illustration by <a href="https://icons8.com/illustrations/author/zD2oqC8lLBBA">Icons 8</a> from
         <a href="https://icons8.com/illustrations">Ouch!</a>
       </div>

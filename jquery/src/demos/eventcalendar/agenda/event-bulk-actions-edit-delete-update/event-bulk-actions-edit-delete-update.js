@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,7 +10,10 @@ export default {
     });
 
     $(function () {
-      var confirmOpen, firstDay, lastDay, selectedEvent;
+      var confirmOpen;
+      var firstDay;
+      var lastDay;
+      var selectedEvent;
       var formatDate = mobiscroll.formatDate;
 
       function getSelectedEventTitles(events) {
@@ -135,7 +139,7 @@ export default {
               return false;
             }
           },
-          onEventDelete: function (args, inst) {
+          onEventDelete: function () {
             if (!confirmOpen) {
               deleteSelectedEvents();
               return false;
@@ -222,6 +226,7 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-page class="md-bulk-operations">
     <div class="mbsc-grid mbsc-no-padding">
@@ -249,6 +254,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-bulk-operations-border {
     border-left: 1px solid #ccc;

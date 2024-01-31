@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -14,6 +13,7 @@ import {
   CalendarToday,
   CalendarNext /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './switching-day-week-work-week-timeline.css';
 
 setOptions({
@@ -31,8 +31,8 @@ const App: React.FC = () => {
     },
   });
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -68,11 +68,12 @@ const App: React.FC = () => {
         title: 'Data Quality Manager',
         img: 'https://img.mobiscroll.com/demos/f2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myInvalids = React.useMemo(() => {
-    return [
+  const myInvalids = React.useMemo(
+    () => [
       {
         start: '00:00',
         end: '06:00',
@@ -95,8 +96,9 @@ const App: React.FC = () => {
           weekDays: 'SA,SU',
         },
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   React.useEffect(() => {
     getJson(
@@ -140,39 +142,35 @@ const App: React.FC = () => {
     setCalView(calView);
   };
 
-  const renderMyHeader = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav className="md-work-week-nav" />
-        <div className="md-work-week-picker">
-          <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="day">Day</SegmentedItem>
-            <SegmentedItem value="workweek">Work week</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
-          </SegmentedGroup>
-        </div>
-        <CalendarPrev className="md-work-week-prev" />
-        <CalendarToday className="md-work-week-today" />
-        <CalendarNext className="md-work-week-next" />
-      </React.Fragment>
-    );
-  };
-
-  const renderMyResource = (resource: MbscResource) => {
-    return (
-      <div className="md-work-week-cont">
-        <div className="md-work-week-name">{resource.name}</div>
-        <div className="md-work-week-title">{resource.title}</div>
-        <img className="md-work-week-avatar" src={resource.img} alt="Avatar" />
+  const renderMyHeader = () => (
+    <React.Fragment>
+      <CalendarNav className="md-work-week-nav" />
+      <div className="md-work-week-picker">
+        <SegmentedGroup value={view} onChange={changeView}>
+          <SegmentedItem value="day">Day</SegmentedItem>
+          <SegmentedItem value="workweek">Work week</SegmentedItem>
+          <SegmentedItem value="week">Week</SegmentedItem>
+        </SegmentedGroup>
       </div>
-    );
-  };
+      <CalendarPrev className="md-work-week-prev" />
+      <CalendarToday className="md-work-week-today" />
+      <CalendarNext className="md-work-week-next" />
+    </React.Fragment>
+  );
+
+  const renderMyResource = (resource: MbscResource) => (
+    <div className="md-work-week-cont">
+      <div className="md-work-week-name">{resource.name}</div>
+      <div className="md-work-week-title">{resource.title}</div>
+      <img className="md-work-week-avatar" src={resource.img} alt="Avatar" />
+    </div>
+  );
 
   const eventUpdateFail = React.useCallback(() => {
     setToastOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -195,7 +193,7 @@ const App: React.FC = () => {
         // theme
         message="Can't schedule outside of working hours"
         isOpen={isToastOpen}
-        onClose={closeToast}
+        onClose={handleCloseToast}
       />
     </div>
   );

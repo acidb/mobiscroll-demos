@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.momentTimezone.moment = moment;
 
@@ -11,13 +12,14 @@ export default {
       displayTimezone: 'local',
       controls: ['calendar', 'time'],
       onChange: function (ev, inst) {
-        const valueSpan = document.getElementById('selected-value');
+        var valueSpan = document.getElementById('selected-value');
+        var value = inst.getVal();
         valueSpan.parentElement.classList.remove('hidden');
-        const value = inst.getVal();
         valueSpan.innerText = value;
       },
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-page>
     <label>

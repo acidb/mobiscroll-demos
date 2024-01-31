@@ -1,13 +1,25 @@
-import React from 'react';
-import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResourceData /* localeImport */ } from '@mobiscroll/react';
+import {
+  Eventcalendar,
+  MbscCalendarColor,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscResource,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 
-const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+const App: FC = () => {
+  const myEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: new Date(now.getFullYear(), now.getMonth(), monday + 1, 11),
         end: new Date(now.getFullYear(), now.getMonth(), monday + 1, 12, 30),
@@ -44,11 +56,12 @@ const App: React.FC = () => {
         title: 'Stakeholder mtg.',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResourceData[]>(() => {
-    return [
+  const myResources = useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -75,11 +88,12 @@ const App: React.FC = () => {
         name: 'King’s Landing',
         color: '#bacded',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -88,10 +102,11 @@ const App: React.FC = () => {
         startTime: '05:00',
         endTime: '22:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myColors = React.useMemo<any>(
+  const myColors = useMemo<MbscCalendarColor[]>(
     () => [
       {
         start: '05:00',
@@ -108,9 +123,8 @@ const App: React.FC = () => {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       colors={myColors}

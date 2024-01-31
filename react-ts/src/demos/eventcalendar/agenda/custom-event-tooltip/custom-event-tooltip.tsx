@@ -1,12 +1,23 @@
-import React from 'react';
-import { Eventcalendar, MbscEventcalendarView, setOptions, Popup, Button, formatDate, toast /* localeImport */ } from '@mobiscroll/react';
+import {
+  Button,
+  Eventcalendar,
+  formatDate,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscEventClickEvent,
+  Popup,
+  setOptions,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import './custom-event-tooltip.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const defaultAppointments = [
+const defaultAppointments: MbscCalendarEvent[] = [
   {
     title: 'Jude Chester',
     age: 69,
@@ -15,7 +26,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Headaches morning & afternoon',
     location: 'Topmed, Building A, Room 203',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Leon Porter',
@@ -25,7 +36,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Left abdominal pain',
     location: 'Topmed, Building D, Room 360',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Merv Kenny',
@@ -35,7 +46,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Itchy, red rashes',
     location: 'Topmed, Building D, Room 360',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Derek Austyn',
@@ -45,7 +56,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Nausea & weakness',
     location: 'Rose Medical Center, Room 18',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Jenifer Kalyn',
@@ -55,7 +66,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Cough & fever',
     location: 'Rose Medical Center, Room 18',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Lily Racquel',
@@ -65,7 +76,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Dry, persistent cough & headache',
     location: 'Procare, Building C, Room 12',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Mia Sawyer',
@@ -75,7 +86,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Difficulty sleeping & loss of appetite',
     location: 'Procare, Building C, Room 12',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Fred Valdez',
@@ -85,7 +96,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'High blood pressure',
     location: 'Procare, Building C, Room 40',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Sylvia Cale',
@@ -95,7 +106,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Fever & sore throat',
     location: 'MedStar, Building A, Room 1',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Isadora Lyric',
@@ -105,7 +116,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Constant tiredness & weakness',
     location: 'MedStar, Building A, Room 1',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Jon Candace',
@@ -115,7 +126,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Nausea & weakness',
     location: 'MedStar, Building A, Room 1',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Layton Drake',
@@ -125,7 +136,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Headaches & loss of appetite',
     location: 'Vitalife, Room 160',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Florence Amy',
@@ -135,7 +146,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Dry, persistent cough & headache',
     location: 'Vitalife, Room 160',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Willis Kane',
@@ -145,7 +156,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Back pain',
     location: 'Care Cente, Room 320r',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Theo Calanthia',
@@ -155,7 +166,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Anxiousness & sleeping disorder',
     location: 'Care Center, Room 320',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Ford Kaiden',
@@ -165,7 +176,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Nausea & vomiting',
     location: 'Care Center, Room 206',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Jewell Ryder',
@@ -175,7 +186,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'High blood pressure',
     location: 'Care Center, Room 206',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Antonia Cindra',
@@ -185,7 +196,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Dry, persistent cough',
     location: 'Medica Zone, Building C, Room 2',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Gerry Irma',
@@ -195,7 +206,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Fever & sore throat',
     location: 'Medica Zone, Building C, Room 2',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Carlyn Dorothy',
@@ -205,7 +216,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Tiredness & muscle pain',
     location: 'Medica Zone, Building C, Room 2',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Alma Potter',
@@ -215,7 +226,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'High blood pressure',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Debra Aguilar',
@@ -225,7 +236,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Fever & sore throat',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Tommie Love',
@@ -235,7 +246,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Dry, persistent cough & headache',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Marjorie White',
@@ -245,7 +256,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Back pain',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Brandon Perkins',
@@ -255,7 +266,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Swollen ankles',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Lora Wilson',
@@ -265,7 +276,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Fever & headache',
     location: 'Vitacure, Building D, Room 2',
-    resource: 1,
+    color: '#b33d3d',
   },
   {
     title: 'Ismael Bates',
@@ -275,7 +286,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Tiredness & muscle pain',
     location: 'Care Center, Room 300',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Archie Wilkins',
@@ -285,7 +296,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Fever & headache',
     location: 'Care Center, Room 300',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Christie Baker',
@@ -295,7 +306,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Headaches morning & afternoon',
     location: 'Care Center, Room 300',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Laura Shelton',
@@ -305,7 +316,7 @@ const defaultAppointments = [
     confirmed: false,
     reason: 'Dry, persistent cough',
     location: 'Care Center, Room 300',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Mary Hudson',
@@ -315,7 +326,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Fever & sore throat',
     location: 'Medica Zone, Room 45',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Ralph Rice',
@@ -325,7 +336,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Left abdominal pain',
     location: 'Medica Zone, Room 45',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Marc Hoffman',
@@ -335,7 +346,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Dry, persistent cough & headache',
     location: 'Medica Zone, Room 45',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Arlene Lyons',
@@ -345,7 +356,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Nausea & weakness',
     location: 'Care Center, Room 202',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Thelma Shaw',
@@ -355,7 +366,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Anxiousness & sleeping disorder',
     location: 'Care Center, Room 202',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Dory Edie',
@@ -365,7 +376,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Right abdominal pain',
     location: 'Vitacure, Building A, Room 203',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Kaylin Toni',
@@ -375,7 +386,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Itchy, red rashes',
     location: 'Vitacure, Building A, Room 203',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Gray Kestrel',
@@ -385,7 +396,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Cough & fever',
     location: 'Vitacure, Building A, Room 203',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Reg Izabelle',
@@ -395,7 +406,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Fever & headache',
     location: 'Medica Zone, Room 13',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Lou Andie',
@@ -405,7 +416,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'High blood pressure',
     location: 'Medica Zone, Room 13',
-    resource: 2,
+    color: '#309346',
   },
   {
     title: 'Yancy Dustin',
@@ -415,7 +426,7 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Fever & headache',
     location: 'Vitacure, Building E, Room 50',
-    resource: 3,
+    color: '#c77c0a',
   },
   {
     title: 'Terry Clark',
@@ -425,38 +436,44 @@ const defaultAppointments = [
     confirmed: true,
     reason: 'Swollen ankles',
     location: 'Vitacure, Building E, Room 50',
-    resource: 3,
+    color: '#c77c0a',
   },
 ];
 
 function App() {
-  const [appointments, setAppointments] = React.useState<any>(defaultAppointments);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [anchor, setAnchor] = React.useState<any>(null);
-  const [currentEvent, setCurrentEvent] = React.useState<any>(null);
-  const [info, setInfo] = React.useState<string>('');
-  const [time, setTime] = React.useState<string>('');
-  const [status, setStatus] = React.useState<string>('');
-  const [reason, setReason] = React.useState<string>('');
-  const [location, setLocation] = React.useState<string>('');
-  const [buttonText, setButtonText] = React.useState<string>('');
-  const [buttonType, setButtonType] = React.useState<any>('');
-  const [bgColor, setBgColor] = React.useState<string>('');
-  const timerRef = React.useRef<any>(null);
+  const [appointments, setAppointments] = useState<MbscCalendarEvent[]>(defaultAppointments);
+  const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
+  const [anchor, setAnchor] = useState();
+  const [currentEvent, setCurrentEvent] = useState<MbscCalendarEvent>();
+  const [info, setInfo] = useState<string>('');
+  const [time, setTime] = useState<string>('');
+  const [status, setStatus] = useState<string>('');
+  const [reason, setReason] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [buttonText, setButtonText] = useState<string>('');
+  const [buttonType, setButtonType] = useState<
+    'info' | 'warning' | 'success' | 'light' | 'dark' | 'primary' | 'secondary' | 'danger' | undefined
+  >();
+  const [bgColor, setBgColor] = useState<string>('');
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const timerRef = useRef<number | null>(null);
+
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: {
         type: 'week',
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const onEventHoverIn = React.useCallback((args) => {
-    const event = args.event;
-    const time = formatDate('hh:mm A', new Date(event.start)) + ' - ' + formatDate('hh:mm A', new Date(event.end));
+  const handleEventHoverIn = useCallback((args: MbscEventClickEvent) => {
+    const event: MbscCalendarEvent = args.event;
+    const time = formatDate('hh:mm A', new Date(event.start! as string)) + ' - ' + formatDate('hh:mm A', new Date(event.end! as string));
 
     setCurrentEvent(event);
 
@@ -470,7 +487,7 @@ function App() {
       setButtonType('success');
     }
 
-    setBgColor(event.color);
+    setBgColor(event.color!);
     setInfo(event.title + ', Age: ' + event.age);
     setTime(time);
     setReason(event.reason);
@@ -481,72 +498,70 @@ function App() {
     }
 
     setAnchor(args.domEvent.target);
-    setOpen(true);
+    setPopupOpen(true);
   }, []);
 
-  const onEventHoverOut = React.useCallback(() => {
+  const handleEventHoverOut = useCallback(() => {
     timerRef.current = setTimeout(() => {
-      setOpen(false);
+      setPopupOpen(false);
     }, 200);
   }, []);
 
-  const onEventClick = React.useCallback(() => {
-    setOpen(true);
+  const handleEventClick = useCallback(() => {
+    setPopupOpen(true);
   }, []);
 
-  const onMouseEnter = React.useCallback(() => {
+  const handleMouseEnter = useCallback(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
   }, []);
 
-  const onMouseLeave = React.useCallback(() => {
+  const handleMouseLeave = useCallback(() => {
     timerRef.current = setTimeout(() => {
-      setOpen(false);
+      setPopupOpen(false);
     }, 200);
   }, []);
 
-  const setStatusButton = React.useCallback(() => {
-    setOpen(false);
-    const index = appointments.findIndex((item: any) => item.id === currentEvent.id);
+  const setStatusButton = useCallback(() => {
+    setPopupOpen(false);
+    const index = appointments.findIndex((item: MbscCalendarEvent) => item.id === currentEvent!.id);
     const newApp = [...appointments];
     newApp[index].confirmed = !appointments[index].confirmed;
     setAppointments(newApp);
-    toast({
-      message: 'Appointment ' + (currentEvent.confirmed ? 'confirmed' : 'canceled'),
-    });
+    setToastMessage('Appointment ' + (currentEvent!.confirmed ? 'confirmed' : 'canceled'));
+    setToastOpen(true);
   }, [appointments, currentEvent]);
 
-  const viewFile = React.useCallback(() => {
-    setOpen(false);
-    toast({
-      message: 'View file',
-    });
+  const viewFile = useCallback(() => {
+    setPopupOpen(false);
+    setToastMessage('View file');
+    setToastOpen(true);
   }, []);
 
-  const deleteApp = React.useCallback(() => {
-    setAppointments(appointments.filter((item: any) => item.id !== currentEvent.id));
-    setOpen(false);
-    toast({
-      message: 'Appointment deleted',
-    });
+  const deleteApp = useCallback(() => {
+    setAppointments(appointments.filter((item: MbscCalendarEvent) => item.id !== currentEvent!.id));
+    setPopupOpen(false);
+    setToastMessage('Appointment deleted');
+    setToastOpen(true);
   }, [appointments, currentEvent]);
 
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
+
   return (
-    <div>
+    <>
       <Eventcalendar
-        view={view}
+        view={myView}
         data={appointments}
-        clickToCreate={false}
-        dragToCreate={false}
         showEventTooltip={false}
-        onEventHoverIn={onEventHoverIn}
-        onEventHoverOut={onEventHoverOut}
-        onEventClick={onEventClick}
+        onEventHoverIn={handleEventHoverIn}
+        onEventHoverOut={handleEventHoverOut}
+        onEventClick={handleEventClick}
       />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
       <Popup
         display="anchored"
-        isOpen={isOpen}
+        isOpen={isPopupOpen}
         anchor={anchor}
         touchUi={false}
         showOverlay={false}
@@ -555,7 +570,7 @@ function App() {
         width={350}
         cssClass="md-tooltip"
       >
-        <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <div className="md-tooltip-header" style={{ backgroundColor: bgColor }}>
             <span className="md-tooltip-name-age">{info}</span>
             <span className="md-tooltip-time">{time}</span>
@@ -582,7 +597,7 @@ function App() {
           </div>
         </div>
       </Popup>
-    </div>
+    </>
   );
 }
 export default App;

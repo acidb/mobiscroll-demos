@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, getJson, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,7 +7,7 @@ setOptions({
 });
 
 const now = new Date();
-const myData = [
+const myData: MbscCalendarEvent[] = [
   {
     title: 'Fixed event',
     start: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2, 16),
@@ -67,13 +67,14 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+const App: FC = () => {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  return <Eventcalendar view={view} data={myData} dragToCreate={true} dragToMove={true} dragToResize={true} dragTimeStep={15} />;
+  return <Eventcalendar view={myView} data={myData} dragToCreate={true} dragToMove={true} dragToResize={true} dragTimeStep={15} />;
 };
 export default App;

@@ -1,18 +1,18 @@
-import React from 'react';
-import {
-  Eventcalendar,
-  setOptions,
-  Page,
-  Button,
-  Switch,
-  CalendarNav,
-  CalendarPrev,
-  CalendarNext,
-  CalendarToday,
-  toast,
-  confirm /* localeImport */,
-} from '@mobiscroll/react';
 import { outlookCalendarSync } from '@mobiscroll/calendar-integration';
+import {
+  Button,
+  CalendarNav,
+  CalendarNext,
+  CalendarPrev,
+  CalendarToday,
+  Confirm,
+  Eventcalendar,
+  Page,
+  setOptions,
+  Switch,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './sync-events-outlook-calendar.css';
 
 setOptions({
@@ -21,34 +21,36 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [myCalendars, setCalendars] = React.useState([]);
-  const [calendarIds, setCalendarIds] = React.useState([]);
-  const [calendarData, setCalendarData] = React.useState([]);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [editable, setEditable] = React.useState(false);
-  const [isLoading, setLoading] = React.useState(false);
-  const [primaryCalendarId, setPrimaryCalendarId] = React.useState();
+  const [myEvents, setEvents] = useState([]);
+  const [myCalendars, setCalendars] = useState([]);
+  const [calendarIds, setCalendarIds] = useState([]);
+  const [calendarData, setCalendarData] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [editable, setEditable] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [isToastOpen, setToastOpen] = useState('');
+  const [primaryCalendarId, setPrimaryCalendarId] = useState();
 
-  const { current: view } = React.useRef({ schedule: { type: 'week' } });
+  const view = useMemo(() => ({ schedule: { type: 'week' } }), []);
 
-  const debounce = React.useRef();
-  const startDate = React.useRef();
-  const endDate = React.useRef();
+  const debounce = useRef();
+  const startDate = useRef();
+  const endDate = useRef();
 
-  const onError = React.useCallback((resp) => {
-    toast({
-      message: resp.message,
-    });
+  const onError = useCallback((resp) => {
+    setToastMessage(resp.message);
+    setToastOpen(true);
   }, []);
 
-  const extendDefaultEvent = React.useCallback(() => {
-    return {
+  const extendMyDefaultEvent = useCallback(
+    () => ({
       color: calendarData[primaryCalendarId].color,
-    };
-  }, [calendarData, primaryCalendarId]);
+    }),
+    [calendarData, primaryCalendarId],
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const onSignedIn = () => {
       setIsLoggedIn(true);
       outlookCalendarSync
@@ -95,19 +97,19 @@ function App() {
     });
   }, [onError]);
 
-  const signIn = React.useCallback(() => {
+  const signIn = useCallback(() => {
     outlookCalendarSync.signIn().catch(onError);
   }, [onError]);
 
-  const signOut = React.useCallback(() => {
+  const signOut = useCallback(() => {
     outlookCalendarSync.signOut().catch(onError);
   }, [onError]);
 
-  const toggleEditing = React.useCallback((ev) => {
+  const toggleEditing = useCallback((ev) => {
     setEditable(ev.target.checked);
   }, []);
 
-  const toggleCalendar = React.useCallback(
+  const toggleCalendar = useCallback(
     (ev) => {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
@@ -130,9 +132,9 @@ function App() {
     [calendarData, onError],
   );
 
-  const renderMyHeader = React.useCallback(() => {
-    return (
-      <React.Fragment>
+  const renderMyHeader = useCallback(
+    () => (
+      <>
         <CalendarNav />
         <div className="md-spinner">
           <div className="md-spinner-blade"></div>
@@ -153,11 +155,12 @@ function App() {
           <CalendarToday />
           <CalendarNext />
         </div>
-      </React.Fragment>
-    );
-  }, []);
+      </>
+    ),
+    [],
+  );
 
-  const onPageLoading = React.useCallback(
+  const handlePageLoading = useCallback(
     (args) => {
       clearTimeout(debounce.current);
       startDate.current = args.viewStart;
@@ -178,7 +181,7 @@ function App() {
     [calendarIds, onError],
   );
 
-  const onEventCreate = React.useCallback(
+  const handleEventCreate = useCallback(
     (args) => {
       if (outlookCalendarSync.isSignedIn()) {
         const event = args.event;
@@ -187,9 +190,8 @@ function App() {
           .then((newEvent) => {
             newEvent.color = event.color;
             setEvents((oldEvents) => [...oldEvents, newEvent]);
-            toast({
-              message: 'Event created in "' + calendarData[primaryCalendarId].name + '" calendar',
-            });
+            setToastMessage('Event created in "' + calendarData[primaryCalendarId].name + '" calendar');
+            setToastOpen(true);
           })
           .catch((error) => {
             setEvents((oldEvents) => [...oldEvents]);
@@ -200,7 +202,7 @@ function App() {
     [calendarData, onError, primaryCalendarId],
   );
 
-  const onEventUpdate = React.useCallback(
+  const handleEventUpdate = useCallback(
     (args) => {
       if (outlookCalendarSync.isSignedIn()) {
         confirm({
@@ -214,9 +216,8 @@ function App() {
             outlookCalendarSync
               .updateEvent(calendarId, event)
               .then(() => {
-                toast({
-                  message: 'Event updated on "' + calendarData[calendarId].name + '" calendar',
-                });
+                setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
+                setToastOpen(true);
               })
               .catch((error) => {
                 setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
@@ -231,7 +232,7 @@ function App() {
     [calendarData, onError],
   );
 
-  const onEventDelete = React.useCallback(
+  const handleEventDelete = useCallback(
     (args) => {
       if (outlookCalendarSync.isSignedIn()) {
         confirm({
@@ -246,9 +247,8 @@ function App() {
               .deleteEvent(calendarId, event)
               .then(() => {
                 setEvents((oldEvents) => oldEvents.filter((item) => item.id !== event.id));
-                toast({
-                  message: 'Event deleted from "' + calendarData[calendarId].name + '" calendar',
-                });
+                setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
+                setToastOpen(true);
               })
               .catch(onError);
           }
@@ -258,6 +258,8 @@ function App() {
     },
     [calendarData, onError],
   );
+
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <Page className="md-sync-events-outlook-cont">
@@ -274,11 +276,9 @@ function App() {
             </div>
             <div className="mbsc-form-group-inset md-sync-events-outlook-inset">
               <div className="mbsc-form-group-title">My Calendars</div>
-              {myCalendars.map((cal) => {
-                return (
-                  <Switch label={cal.name} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
-                );
-              })}
+              {myCalendars.map((cal) => (
+                <Switch label={cal.name} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+              ))}
             </div>
             <div className="mbsc-form-group-inset">
               <Button className="md-sync-events-outlook-button mbsc-button-block" onClick={signOut}>
@@ -307,14 +307,15 @@ function App() {
           dragToCreate={editable}
           dragToMove={editable}
           dragToResize={editable}
-          extendDefaultEvent={extendDefaultEvent}
+          extendDefaultEvent={extendMyDefaultEvent}
           renderHeader={renderMyHeader}
-          onPageLoading={onPageLoading}
-          onEventCreate={onEventCreate}
-          onEventUpdate={onEventUpdate}
-          onEventDelete={onEventDelete}
+          onPageLoading={handlePageLoading}
+          onEventCreate={handleEventCreate}
+          onEventUpdate={handleEventUpdate}
+          onEventDelete={handleEventDelete}
         ></Eventcalendar>
       </div>
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 }

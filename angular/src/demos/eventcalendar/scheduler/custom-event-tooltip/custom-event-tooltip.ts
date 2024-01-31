@@ -2,8 +2,8 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscEventcalendarOptions,
-  MbscPopupOptions,
   MbscPopup,
+  MbscPopupOptions,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -523,6 +523,8 @@ export class AppComponent {
     },
     clickToCreate: false,
     dragToCreate: false,
+    dragToMove: true,
+    dragToResize: false,
     showEventTooltip: false,
     onEventHoverIn: (args) => {
       this.openTooltip(args, false);

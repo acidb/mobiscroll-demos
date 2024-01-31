@@ -198,12 +198,10 @@ export class AppComponent implements OnInit {
     eventOverlap: false,
     externalDrop: true,
     externalDrag: true,
-    extendDefaultEvent: () => {
-      return {
-        job: 'Tartar removal',
-        color: '#a446b5',
-      };
-    },
+    extendDefaultEvent: () => ({
+      job: 'Tartar removal',
+      color: '#a446b5',
+    }),
     onEventCreate: (args) => {
       const event: MyEvent = args.event;
       event.unscheduled = false;

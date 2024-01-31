@@ -1,13 +1,15 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
       // theme
     });
 
-    var divisionInst, subdivisionInst;
+    var divisionInst;
+    var subdivisionInst;
     var divisionElm = document.getElementById('demo-hierarchical-pickers-division');
     var subdivisionElm = document.getElementById('demo-hierarchical-pickers-subdivision');
     var regions = [
@@ -124,8 +126,8 @@ export default {
     mobiscroll.select('#demo-hierarchical-pickers-region', {
       touchUi: false,
       data: getData(),
-      onChange: function (event, inst) {
-        divisionInst.setOptions({ data: getData(event.value), disabled: false });
+      onChange: function (args) {
+        divisionInst.setOptions({ data: getData(args.value), disabled: false });
         subdivisionInst.setOptions({ disabled: true });
         mobiscroll.getInst(divisionElm, true).setOptions({ disabled: false });
         mobiscroll.getInst(subdivisionElm, true).setOptions({ disabled: true });
@@ -135,9 +137,9 @@ export default {
     divisionInst = mobiscroll.select('#demo-hierarchical-pickers-division', {
       touchUi: false,
       disabled: true,
-      onChange: function (event, inst) {
+      onChange: function (args) {
         if (event.value) {
-          subdivisionInst.setOptions({ data: getData(null, event.value), disabled: false });
+          subdivisionInst.setOptions({ data: getData(null, args.value), disabled: false });
           mobiscroll.getInst(subdivisionElm, true).setOptions({ disabled: false });
         } else {
           subdivisionInst.setOptions({ data: [], disabled: true });
@@ -151,23 +153,24 @@ export default {
       disabled: true,
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid mbsc-grid-fixed mbsc-no-padding">
     <div class="mbsc-row">
         <div class="mbsc-col-sm-12">
             <div class="mbsc-form-group-inset">
                 <label>
-                        Region
-                        <input mbsc-input id="demo-hierarchical-pickers-region" data-dropdown="true" placeholder="Please select..." />
-                    </label>
+                    Region
+                    <input mbsc-input id="demo-hierarchical-pickers-region" data-dropdown="true" placeholder="Please select..." />
+                </label>
                 <label>
-                        Division
-                        <input mbsc-input id="demo-hierarchical-pickers-division" data-dropdown="true" placeholder="Please select..." disabled />
-                    </label>
+                    Division
+                    <input mbsc-input id="demo-hierarchical-pickers-division" data-dropdown="true" placeholder="Please select..." disabled />
+                </label>
                 <label>
-                        Subdivision
-                        <input mbsc-input id="demo-hierarchical-pickers-subdivision" data-dropdown="true" placeholder="Please select..." disabled />
-                    </label>
+                    Subdivision
+                    <input mbsc-input id="demo-hierarchical-pickers-subdivision" data-dropdown="true" placeholder="Please select..." disabled />
+                </label>
             </div>
         </div>
     </div>

@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,7 +10,8 @@ export default {
     });
 
     $(function () {
-      var divisionInst, subdivisionInst;
+      var divisionInst;
+      var subdivisionInst;
       var $region = $('#demo-hierarchical-pickers-region');
       var $division = $('#demo-hierarchical-pickers-division');
       var $subdivision = $('#demo-hierarchical-pickers-subdivision');
@@ -127,8 +129,8 @@ export default {
       $region.mobiscroll().select({
         touchUi: false,
         data: getData(),
-        onChange: function (event, inst) {
-          divisionInst.setOptions({ data: getData(event.value), disabled: false });
+        onChange: function (args) {
+          divisionInst.setOptions({ data: getData(args.value), disabled: false });
           subdivisionInst.setOptions({ disabled: true });
           mobiscroll.getInst($division[0], true).setOptions({ disabled: false });
           mobiscroll.getInst($subdivision[0], true).setOptions({ disabled: true });
@@ -140,9 +142,9 @@ export default {
         .select({
           touchUi: false,
           disabled: true,
-          onChange: function (event, inst) {
-            if (event.value) {
-              subdivisionInst.setOptions({ data: getData(null, event.value), disabled: false });
+          onChange: function (args) {
+            if (args.value) {
+              subdivisionInst.setOptions({ data: getData(null, args.value), disabled: false });
               mobiscroll.getInst($subdivision[0], true).setOptions({ disabled: false });
             } else {
               subdivisionInst.setOptions({ data: [], disabled: true });
@@ -161,6 +163,7 @@ export default {
         .mobiscroll('getInst');
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div class="demo-inline demo-max-width-400" mbsc-page>

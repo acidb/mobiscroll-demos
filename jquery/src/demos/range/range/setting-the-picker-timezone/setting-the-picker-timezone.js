@@ -1,8 +1,9 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     $(function () {
       mobiscroll.momentTimezone.moment = moment;
@@ -16,14 +17,15 @@ export default {
           controls: ['calendar', 'time'],
           select: 'range',
           onChange: function (ev, inst) {
-            const valueSpan = $('#selected-value')[0];
+            var valueSpan = $('#selected-value')[0];
+            var value = inst.getVal();
             valueSpan.parentElement.classList.remove('hidden');
-            const [from, to] = inst.getVal();
-            valueSpan.innerHTML = 'from: <code>' + from + '</code><br>to:<code>' + to + '</code>';
+            valueSpan.innerHTML = 'from: <code>' + value[0] + '</code><br>to:<code>' + value[1] + '</code>';
           },
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-page>
     <label>

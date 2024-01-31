@@ -7,9 +7,9 @@ import {
   Popup,
   Radio,
   RadioGroup,
-  Select,
   Segmented,
   SegmentedGroup,
+  Select,
   setOptions,
   Switch,
   Textarea,
@@ -812,8 +812,8 @@ function App() {
     setOpen(false);
   }, [isEdit, myEvents, repeatData]);
 
-  const recurringEditButtons = useMemo(() => {
-    return [
+  const recurringEditButtons = useMemo(
+    () => [
       'cancel',
       {
         handler: () => {
@@ -863,23 +863,24 @@ function App() {
         text: 'Ok',
         cssClass: 'mbsc-popup-button-primary',
       },
-    ];
-  }, [
-    deleteRecurringEvent,
-    editFromPopup,
-    eventOccurrence,
-    getCustomRule,
-    myEvents,
-    newEvent,
-    originalRecurringEvent,
-    popupEventAllDay,
-    popupEventDate,
-    popupEventDescription,
-    popupEventTitle,
-    recurringDelete,
-    recurringEditMode,
-    tempEvent,
-  ]);
+    ],
+    [
+      deleteRecurringEvent,
+      editFromPopup,
+      eventOccurrence,
+      getCustomRule,
+      myEvents,
+      newEvent,
+      originalRecurringEvent,
+      popupEventAllDay,
+      popupEventDate,
+      popupEventDescription,
+      popupEventTitle,
+      recurringDelete,
+      recurringEditMode,
+      tempEvent,
+    ],
+  );
 
   const recurringEditModeChange = useCallback((ev) => {
     setRecurringEditMode(ev.target.value);

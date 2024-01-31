@@ -1,6 +1,6 @@
-import React from 'react';
-import { Eventcalendar, Page, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment';
+import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -36,7 +36,7 @@ const myResources = [
 ];
 
 function App() {
-  const [dateObjData, setDateObjData] = React.useState([
+  const [dateObjData, setDateObjData] = useState([
     {
       start: new Date(2020, 4, 19, 9),
       end: new Date(2020, 4, 19, 11),
@@ -44,9 +44,9 @@ function App() {
       resource: 2,
     },
   ]);
-  const [selectedObj, setSelectedObj] = React.useState(new Date(2020, 4, 19));
+  const [selectedObj, setSelectedObj] = useState(new Date(2020, 4, 19));
 
-  const [isoData, setISOData] = React.useState([
+  const [isoData, setISOData] = useState([
     {
       start: '2020-05-20T09:00:00',
       end: '2020-05-20T11:00:00',
@@ -54,9 +54,9 @@ function App() {
       resource: 2,
     },
   ]);
-  const [selectedISO, setSelectedISO] = React.useState('2020-05-20');
+  const [selectedISO, setSelectedISO] = useState('2020-05-20');
 
-  const [momentData, setMomentData] = React.useState([
+  const [momentData, setMomentData] = useState([
     {
       start: moment([2020, 4, 21, 9]),
       end: moment([2020, 4, 21, 11]),
@@ -64,48 +64,42 @@ function App() {
       resource: 2,
     },
   ]);
-  const [selectedMoment, setSelectedMoment] = React.useState(moment([2020, 4, 21]));
+  const [selectedMoment, setSelectedMoment] = useState(moment([2020, 4, 21]));
 
-  const addDate = React.useCallback(() => {
+  const addDate = useCallback(() => {
     const newEvent = {
       start: new Date(2020, 4, 19, 11, 15),
       end: new Date(2020, 4, 19, 13, 45),
       text: 'New Event',
       resource: 4,
     };
-    setDateObjData([...dateObjData, newEvent]);
+    setDateObjData((dateObjData) => [...dateObjData, newEvent]);
     setSelectedObj(new Date(2020, 4, 19));
-  });
+  }, []);
 
-  const addISO = React.useCallback(() => {
+  const addISO = useCallback(() => {
     const newEvent = {
       start: '2020-05-20T15:30:00',
       end: '2020-05-20T18:00:00',
       text: 'New Event',
       resource: 1,
     };
-    setISOData([...isoData, newEvent]);
+    setISOData((isoData) => [...isoData, newEvent]);
     setSelectedISO('2020-05-20');
-  });
+  }, []);
 
-  const addMoment = React.useCallback(() => {
+  const addMoment = useCallback(() => {
     const newEvent = {
       start: moment([2020, 4, 21, 12]),
       end: moment([2020, 4, 21, 15]),
       text: 'New Event',
       resource: 5,
     };
-    setMomentData([...momentData, newEvent]);
+    setMomentData((momentData) => [...momentData, newEvent]);
     setSelectedMoment(moment([2020, 4, 21]));
-  });
-
-  const view = React.useMemo(() => {
-    return {
-      timeline: {
-        type: 'day',
-      },
-    };
   }, []);
+
+  const myView = useMemo(() => ({ timeline: { type: 'day' } }), []);
 
   return (
     <Page>
@@ -116,7 +110,7 @@ function App() {
             start: new Date(2020, 4, 19, 11, 15) <br /> end: new Date(2020, 4, 19, 13, 45)
           </Button>
         </div>
-        <Eventcalendar data={dateObjData} resources={myResources} view={view} selectedDate={selectedObj} />
+        <Eventcalendar data={dateObjData} resources={myResources} view={myView} selectedDate={selectedObj} />
       </div>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">ISO string</div>
@@ -125,7 +119,7 @@ function App() {
             start: 2020-05-20T15:30:00 <br /> end: 2020-05-20T18:00:00
           </Button>
         </div>
-        <Eventcalendar data={isoData} resources={myResources} view={view} selectedDate={selectedISO} />
+        <Eventcalendar data={isoData} resources={myResources} view={myView} selectedDate={selectedISO} />
       </div>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Moment js</div>
@@ -134,7 +128,7 @@ function App() {
             start: moment([2020, 4, 21, 12]) <br /> end: moment([2020, 4, 21, 15])
           </Button>
         </div>
-        <Eventcalendar data={momentData} resources={myResources} view={view} selectedDate={selectedMoment} />
+        <Eventcalendar data={momentData} resources={myResources} view={myView} selectedDate={selectedMoment} />
       </div>
     </Page>
   );

@@ -1,21 +1,15 @@
-import React from 'react';
-import {
-  Button,
-  Eventcalendar,
-  setOptions,
-  Toast,
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-  MbscCalendarEventData /* localeImport */,
-} from '@mobiscroll/react';
+import { Button, Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+const App: FC = () => {
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         title: 'Zumba Class',
@@ -41,9 +35,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-
-  const calView = React.useMemo<MbscEventcalendarView>(
+  const calView = useMemo<MbscEventcalendarView>(
     () => ({
       calendar: { type: 'week' },
       agenda: { type: 'week' },
@@ -51,16 +43,16 @@ const App: React.FC = () => {
     [],
   );
 
-  const displayToast = React.useCallback(() => {
+  const displayToast = useCallback(() => {
     setToastOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const renderAgendaEmpty = React.useCallback<() => any>(() => {
-    return (
+  const customAgendaEmpty = useCallback(
+    () => (
       <div className="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/smart-empty-tin-can.png" alt="Empty can" style={{ width: 150, margin: '50px 0' }} />
         <div className="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Looks like this can is empty</div>
@@ -72,13 +64,14 @@ const App: React.FC = () => {
           &nbsp;from&nbsp;<a href="https://icons8.com/illustrations">Ouch!</a>
         </div>
       </div>
-    );
-  }, []);
+    ),
+    [displayToast],
+  );
 
   return (
     <>
-      <Eventcalendar renderAgendaEmpty={renderAgendaEmpty} view={calView} data={myEvents} />
-      <Toast message="Add button clicked" isOpen={isToastOpen} onClose={closeToast} />
+      <Eventcalendar renderAgendaEmpty={customAgendaEmpty} view={calView} data={myEvents} />
+      <Toast message="Add button clicked" isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 };

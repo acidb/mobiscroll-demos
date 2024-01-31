@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -31,7 +32,6 @@ export default {
         .mobiscroll()
         .datepicker({
           controls: ['calendar'],
-          select: 'range',
           select: 'preset-range',
           display: 'inline',
           pages: 2,
@@ -56,6 +56,7 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-calendar"></div>
 

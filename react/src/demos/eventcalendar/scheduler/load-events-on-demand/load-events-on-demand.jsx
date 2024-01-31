@@ -1,18 +1,30 @@
-import React from 'react';
-import { Eventcalendar, getJson, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
+
+setOptions({
+  // themeJs,
+  // localeJs
+});
 
 function App() {
-  const [events, setEvents] = React.useState([]);
-  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [myEvents, setEvents] = useState([]);
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  const closeToast = React.useCallback(() => {
+  const myView = useMemo(
+    () => ({
+      schedule: { type: 'day' },
+    }),
+    [],
+  );
+
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const onPageLoading = React.useCallback((event, inst) => {
-    const year = event.month.getFullYear();
-    const month = event.month.getMonth();
-    const day = event.firstDay.getDate();
+  const handlePageLoading = useCallback((args) => {
+    const year = args.month.getFullYear();
+    const month = args.month.getMonth();
+    const day = args.firstDay.getDate();
 
     getJson(
       'https://trial.mobiscroll.com/weeklyevents/?year=' + year + '&month=' + month + '&day=' + day,
@@ -36,22 +48,15 @@ function App() {
     );
   }, []);
 
-  const view = React.useMemo(() => {
-    return {
-      schedule: { type: 'day' },
-    };
-  }, []);
-
   return (
     <div>
       <Eventcalendar
-        // theme
-        // locale
-        data={events}
-        view={view}
-        onPageLoading={onPageLoading}
+        // drag
+        data={myEvents}
+        view={myView}
+        onPageLoading={handlePageLoading}
       />
-      <Toast message="New events loaded" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="New events loaded" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

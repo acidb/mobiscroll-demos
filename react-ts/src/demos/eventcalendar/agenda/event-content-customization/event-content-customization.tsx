@@ -1,14 +1,14 @@
-import React from 'react';
 import {
-  Eventcalendar,
   Button,
+  Eventcalendar,
   getJson,
-  setOptions,
-  Toast,
   MbscCalendarEvent,
+  MbscCalendarEventData,
   MbscEventcalendarView,
-  MbscCalendarEventData /* localeImport */,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './event-content-customization.css';
 
 setOptions({
@@ -16,31 +16,24 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>();
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>();
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/custom-events/',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
+  const calView = useMemo<MbscEventcalendarView>(
+    () => ({
+      calendar: { type: 'week' },
+      agenda: { type: 'day' },
+    }),
+    [],
+  );
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const [calView, setCalView] = React.useState<MbscEventcalendarView>({
-    calendar: { type: 'week' },
-    agenda: { type: 'day' },
-  });
-
-  const getParticipant = (id: number) => {
+  const getParticipant = useCallback((id: number) => {
     switch (id) {
       case 1:
         return {
@@ -63,39 +56,52 @@ const App: React.FC = () => {
           name: '',
         };
     }
-  };
+  }, []);
 
-  const add = (ev: any, data: MbscCalendarEvent) => {
+  const add = useCallback((data: MbscCalendarEvent) => {
     setToastText(data.title + ' clicked');
     setToastOpen(true);
-  };
+  }, []);
 
-  const renderEventContent = React.useCallback<(data: MbscCalendarEventData) => any>((data: MbscCalendarEventData) => {
-    const original = data.original!;
-    return (
-      <React.Fragment>
-        <div>{data.title}</div>
-        <div className="md-custom-event-cont">
-          <img className="md-custom-event-img" src={getParticipant(original.participant).img} />
-          <div className="mbsc-custom-event-name">{getParticipant(original.participant).name}</div>
-          <Button className="md-custom-event-btn" color="secondary" variant="outline" onClick={(domEvent: any) => add(domEvent, original)}>
-            Add participant
-          </Button>
-        </div>
-      </React.Fragment>
+  const customEventContent = useCallback(
+    (data: MbscCalendarEventData) => {
+      const original = data.original!;
+      return (
+        <>
+          <div>{data.title}</div>
+          <div className="md-custom-event-cont">
+            <img className="md-custom-event-img" src={getParticipant(original.participant).img} />
+            <div className="mbsc-custom-event-name">{getParticipant(original.participant).name}</div>
+            <Button className="md-custom-event-btn" color="secondary" variant="outline" onClick={() => add(original)}>
+              Add participant
+            </Button>
+          </div>
+        </>
+      );
+    },
+    [add, getParticipant],
+  );
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/custom-events/',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
     );
   }, []);
 
   return (
     <div className="md-switching-view-cont">
       <div className="md-switching-view-cal-cont">
-        <Eventcalendar renderEventContent={renderEventContent} view={calView} data={myEvents} />
+        <Eventcalendar renderEventContent={customEventContent} view={calView} data={myEvents} />
       </div>
       <Toast
         // theme
         message={toastText}
         isOpen={isToastOpen}
-        onClose={closeToast}
+        onClose={handleCloseToast}
       />
     </div>
   );

@@ -2,8 +2,8 @@ import {
   Button,
   CalendarNav,
   CalendarToday,
-  getJson,
   Eventcalendar,
+  getJson,
   Segmented,
   SegmentedGroup,
   setOptions /* localeImport */,
@@ -105,6 +105,7 @@ function App() {
   return (
     <Eventcalendar
       cssClass="md-custom-header"
+      // drag
       onSelectedDateChange={handleSelectedDateChange}
       selectedDate={currentDate}
       renderHeader={customWithNavButtons}

@@ -1,16 +1,16 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  getJson,
-  Toast,
-  setOptions,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext /* localeImport */,
+  Eventcalendar,
+  getJson,
+  Segmented,
+  SegmentedGroup,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './switching-day-week-work-week-timeline.css';
 
 setOptions({
@@ -19,17 +19,17 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [view, setView] = React.useState('week');
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [calView, setCalView] = React.useState({
+  const [myEvents, setEvents] = useState([]);
+  const [view, setView] = useState('week');
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [calView, setCalView] = useState({
     timeline: {
       type: 'week',
     },
   });
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Ryan',
@@ -65,11 +65,12 @@ function App() {
         title: 'Data Quality Manager',
         img: 'https://img.mobiscroll.com/demos/f2.png',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myInvalids = React.useMemo(() => {
-    return [
+  const myInvalids = useMemo(
+    () => [
       {
         start: '00:00',
         end: '06:00',
@@ -92,20 +93,11 @@ function App() {
           weekDays: 'SA,SU',
         },
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/timeline-events/',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const changeView = (event) => {
+  const changeView = useCallback((event) => {
     let calView;
 
     switch (event.target.value) {
@@ -135,49 +127,60 @@ function App() {
 
     setView(event.target.value);
     setCalView(calView);
-  };
+  }, []);
 
-  const renderMyHeader = () => {
-    return (
-      <React.Fragment>
+  const renderMyHeader = useCallback(
+    () => (
+      <>
         <CalendarNav className="md-work-week-nav" />
         <div className="md-work-week-picker">
           <SegmentedGroup value={view} onChange={changeView}>
-            <SegmentedItem value="day">Day</SegmentedItem>
-            <SegmentedItem value="workweek">Work week</SegmentedItem>
-            <SegmentedItem value="week">Week</SegmentedItem>
+            <Segmented value="day">Day</Segmented>
+            <Segmented value="workweek">Work week</Segmented>
+            <Segmented value="week">Week</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="md-work-week-prev" />
         <CalendarToday className="md-work-week-today" />
         <CalendarNext className="md-work-week-next" />
-      </React.Fragment>
-    );
-  };
+      </>
+    ),
+    [changeView, view],
+  );
 
-  const renderMyResource = (resource) => {
-    return (
+  const renderMyResource = useCallback(
+    (resource) => (
       <div className="md-work-week-cont">
         <div className="md-work-week-name">{resource.name}</div>
         <div className="md-work-week-title">{resource.title}</div>
         <img className="md-work-week-avatar" src={resource.img} alt="Avatar" />
       </div>
-    );
-  };
+    ),
+    [],
+  );
 
-  const eventUpdateFail = React.useCallback(() => {
+  const eventUpdateFail = useCallback(() => {
     setToastOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
+  }, []);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/timeline-events/',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
   }, []);
 
   return (
     <div>
       <Eventcalendar
-        // theme
-        // locale
+        // drag
         view={calView}
         data={myEvents}
         invalid={myInvalids}
@@ -188,12 +191,7 @@ function App() {
         onEventUpdateFailed={eventUpdateFail}
         cssClass="md-switching-timeline-view-cont"
       />
-      <Toast
-        // theme
-        message="Can't schedule outside of working hours"
-        isOpen={isToastOpen}
-        onClose={closeToast}
-      />
+      <Toast message="Can't schedule outside of working hours" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

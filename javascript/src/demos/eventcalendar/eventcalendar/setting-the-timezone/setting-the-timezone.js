@@ -2,10 +2,13 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.momentTimezone.moment = moment;
 
     mobiscroll.eventcalendar('#demo-showing-events-timezone', {
+      // theme,
+      // locale,
       timezonePlugin: mobiscroll.momentTimezone,
       dataTimezone: 'utc',
       displayTimezone: 'local',
@@ -15,6 +18,9 @@ export default {
           type: 'month',
         },
       },
+      dragToCreate: true,
+      dragToMove: true,
+      dragToResize: true,
       data: [
         {
           start: 'dyndatetime(y, m, d, 7)',
@@ -61,6 +67,7 @@ export default {
       ],
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-showing-events-timezone"></div>
   `,

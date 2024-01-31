@@ -1,8 +1,11 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    var gregorian, jalali, hijri;
+    var gregorian;
+    var jalali;
+    var hijri;
 
     gregorian = mobiscroll.eventcalendar('#demo-gregorian', {
       // locale,
@@ -40,6 +43,7 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-form>
     <div class="mbsc-grid">

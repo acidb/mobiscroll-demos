@@ -1,18 +1,17 @@
-import React from 'react';
-import {
-  Eventcalendar,
-  setOptions,
-  Page,
-  Button,
-  Switch,
-  CalendarNav,
-  CalendarPrev,
-  CalendarNext,
-  toast,
-  confirm,
-  Popup /* localeImport */,
-} from '@mobiscroll/react';
 import { googleCalendarSync } from '@mobiscroll/calendar-integration';
+import {
+  Button,
+  CalendarNav,
+  CalendarNext,
+  CalendarPrev,
+  Eventcalendar,
+  Page,
+  Popup,
+  setOptions,
+  Switch,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './sync-events-google-calendar.css';
 
 setOptions({
@@ -21,39 +20,43 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [myCalendars, setCalendars] = React.useState([]);
-  const [calendarIds, setCalendarIds] = React.useState([]);
-  const [calendarData, setCalendarData] = React.useState([]);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [editable, setEditable] = React.useState(false);
-  const [isLoading, setLoading] = React.useState(false);
-  const [myResources, setResources] = React.useState([]);
-  const [readonlyCalendars, setReadonlyCalendars] = React.useState([]);
-  const [myInvalids, setInvalids] = React.useState([]);
-  const [isOpen, setOpen] = React.useState(false);
-  const buttonRef = React.useRef(null);
-  const [myAnchor, setAnchor] = React.useState(null);
-  const [mySelectedDate, setSelectedDate] = React.useState(new Date());
+  const [myEvents, setEvents] = useState([]);
+  const [myCalendars, setCalendars] = useState([]);
+  const [calendarIds, setCalendarIds] = useState([]);
+  const [calendarData, setCalendarData] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [editable, setEditable] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [myResources, setResources] = useState([]);
+  const [readonlyCalendars, setReadonlyCalendars] = useState([]);
+  const [myInvalids, setInvalids] = useState([]);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const buttonRef = useRef(null);
+  const [myAnchor, setAnchor] = useState(null);
+  const [mySelectedDate, setSelectedDate] = useState(new Date());
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
-  const { current: view } = React.useRef({
-    timeline: {
-      type: 'week',
-      eventList: true,
-    },
-  });
+  const debounce = useRef();
+  const startDate = useRef();
+  const endDate = useRef();
 
-  const debounce = React.useRef();
-  const startDate = React.useRef();
-  const endDate = React.useRef();
+  const myView = useMemo(
+    () => ({
+      timeline: {
+        type: 'week',
+        eventList: true,
+      },
+    }),
+    [],
+  );
 
-  const onError = React.useCallback((resp) => {
-    toast({
-      message: resp.error ? resp.error : resp.result.error.message,
-    });
+  const onError = useCallback((resp) => {
+    setToastMessage(resp.error ? resp.error : resp.result.error.message);
+    setToastOpen(true);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const onSignedIn = () => {
       setIsLoggedIn(true);
       googleCalendarSync
@@ -110,7 +113,7 @@ function App() {
       setCalendarData({});
       setEvents([]);
       setResources([]);
-      setOpen(false);
+      setPopupOpen(false);
     };
 
     // init google client
@@ -122,36 +125,36 @@ function App() {
     });
   }, [onError]);
 
-  const onClose = React.useCallback(() => {
-    setOpen(false);
+  const onPopupClose = useCallback(() => {
+    setPopupOpen(false);
   }, []);
 
-  const openPopup = React.useCallback(() => {
+  const openPopup = useCallback(() => {
     setAnchor(buttonRef.current.nativeElement);
-    setOpen(true);
+    setPopupOpen(true);
   }, []);
 
-  const navigate = React.useCallback(() => {
+  const navigate = useCallback(() => {
     setSelectedDate(new Date());
   }, []);
 
-  const onSelectedDateChange = React.useCallback((event) => {
+  const handleSelectedDateChange = useCallback((event) => {
     setSelectedDate(event.date);
   }, []);
 
-  const signIn = React.useCallback(() => {
+  const signIn = useCallback(() => {
     googleCalendarSync.signIn().catch(onError);
   }, [onError]);
 
-  const signOut = React.useCallback(() => {
+  const signOut = useCallback(() => {
     googleCalendarSync.signOut().catch(onError);
   }, [onError]);
 
-  const toggleEditing = React.useCallback((ev) => {
+  const toggleEditing = useCallback((ev) => {
     setEditable(ev.target.checked);
   }, []);
 
-  const toggleCalendar = React.useCallback(
+  const toggleCalendar = useCallback(
     (ev) => {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
@@ -180,9 +183,9 @@ function App() {
     [calendarData, onError],
   );
 
-  const renderMyHeader = React.useCallback(() => {
-    return (
-      <React.Fragment>
+  const renderMyHeader = useCallback(
+    () => (
+      <>
         <CalendarNav className="md-sync-events-google-nav" />
         <div className="md-spinner">
           <div className="md-spinner-blade"></div>
@@ -212,11 +215,12 @@ function App() {
           <CalendarPrev />
           <CalendarNext />
         </div>
-      </React.Fragment>
-    );
-  }, [isLoggedIn, navigate, openPopup, signIn]);
+      </>
+    ),
+    [isLoggedIn, navigate, openPopup, signIn],
+  );
 
-  const onPageLoading = React.useCallback(
+  const handlePageLoading = useCallback(
     (args) => {
       clearTimeout(debounce.current);
       startDate.current = args.viewStart;
@@ -240,25 +244,23 @@ function App() {
     [calendarIds, onError],
   );
 
-  const onEventCreate = React.useCallback(
+  const handleEventCreate = useCallback(
     (args) => {
       if (googleCalendarSync.isSignedIn()) {
         const event = args.event;
         const calendarId = event.resource;
 
         if (readonlyCalendars.indexOf(calendarId) !== -1) {
-          toast({
-            message: 'This calendar is readonly',
-          });
+          setToastMessage('This calendar is readonly');
+          setToastOpen(true);
         } else {
           googleCalendarSync
             .addEvent(calendarId, event)
             .then((newEvent) => {
               newEvent.resource = event.resource;
               setEvents((oldEvents) => [...oldEvents, newEvent]);
-              toast({
-                message: 'Event created in "' + calendarData[calendarId].name + '" calendar',
-              });
+              setToastMessage('Event created in "' + calendarData[calendarId].name + '" calendar');
+              setToastOpen(true);
             })
             .catch((error) => {
               setEvents((oldEvents) => [...oldEvents]);
@@ -270,7 +272,7 @@ function App() {
     [calendarData, onError, readonlyCalendars],
   );
 
-  const onEventUpdate = React.useCallback(
+  const handleEventUpdate = useCallback(
     (args) => {
       if (googleCalendarSync.isSignedIn()) {
         confirm({
@@ -284,9 +286,8 @@ function App() {
             googleCalendarSync
               .updateEvent(calendarId, event)
               .then(() => {
-                toast({
-                  message: 'Event updated on "' + calendarData[calendarId].name + '" calendar',
-                });
+                setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
+                setToastOpen(true);
               })
               .catch((error) => {
                 setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
@@ -301,7 +302,7 @@ function App() {
     [calendarData, onError],
   );
 
-  const onEventDelete = React.useCallback(
+  const handleEventDelete = useCallback(
     (args) => {
       if (googleCalendarSync.isSignedIn()) {
         confirm({
@@ -316,9 +317,8 @@ function App() {
               .deleteEvent(calendarId, event)
               .then(() => {
                 setEvents((oldEvents) => oldEvents.filter((item) => item.id !== event.id));
-                toast({
-                  message: 'Event deleted from "' + calendarData[calendarId].name + '" calendar',
-                });
+                setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
+                setToastOpen(true);
               })
               .catch(onError);
           }
@@ -329,10 +329,12 @@ function App() {
     [calendarData, onError],
   );
 
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
+
   return (
     <Page className={'md-sync-events-google-cont ' + (isLoading ? 'md-loading-events' : '')}>
       <Eventcalendar
-        view={view}
+        view={myView}
         data={myEvents}
         exclusiveEndDates={true}
         clickToCreate={editable}
@@ -343,16 +345,16 @@ function App() {
         invalid={myInvalids}
         selectedDate={mySelectedDate}
         renderHeader={renderMyHeader}
-        onPageLoading={onPageLoading}
-        onEventCreate={onEventCreate}
-        onEventUpdate={onEventUpdate}
-        onEventDelete={onEventDelete}
-        onSelectedDateChange={onSelectedDateChange}
+        onPageLoading={handlePageLoading}
+        onEventCreate={handleEventCreate}
+        onEventUpdate={handleEventUpdate}
+        onEventDelete={handleEventDelete}
+        onSelectedDateChange={handleSelectedDateChange}
       ></Eventcalendar>
       <Popup
-        isOpen={isOpen}
+        isOpen={isPopupOpen}
         anchor={myAnchor}
-        onClose={onClose}
+        onClose={onPopupClose}
         width={400}
         touchUi={false}
         showOverlay={false}
@@ -370,11 +372,9 @@ function App() {
         </div>
         <div className="mbsc-form-group-inset md-sync-events-google-inset">
           <div className="mbsc-form-group-title">My Calendars</div>
-          {myCalendars.map((cal) => {
-            return (
-              <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
-            );
-          })}
+          {myCalendars.map((cal) => (
+            <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+          ))}
         </div>
         <div className="mbsc-form-group-inset">
           <Button className="md-sync-events-google-button mbsc-button-block" onClick={signOut}>
@@ -382,6 +382,7 @@ function App() {
           </Button>
         </div>
       </Popup>
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 }

@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,
@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   events: any;
 
   eventSettings: MbscEventcalendarOptions = {
+    // drag,
     view: {
       schedule: {
         type: 'week',

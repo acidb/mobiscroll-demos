@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Datepicker,
   CalendarPrev,
@@ -9,6 +8,7 @@ import {
   SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './quarter-year-view.css';
 
 setOptions({
@@ -82,8 +82,8 @@ const App: React.FC = () => {
     setDate(event.value);
   }, []);
 
-  const calendarHeaderSwitch = React.useCallback<any>(() => {
-    return (
+  const calendarHeaderSwitch = React.useCallback<any>(
+    () => (
       <React.Fragment>
         <CalendarNav />
         <div className="quarter-year-header-picker">
@@ -99,8 +99,9 @@ const App: React.FC = () => {
         <CalendarToday />
         <CalendarNext />
       </React.Fragment>
-    );
-  }, [changeView, type]);
+    ),
+    [changeView, type],
+  );
 
   return (
     <Datepicker

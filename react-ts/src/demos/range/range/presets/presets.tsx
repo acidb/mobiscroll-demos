@@ -1,5 +1,5 @@
-import React from 'react';
 import { Datepicker, Button, Page, Toast /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './presets.css';
 
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
@@ -22,7 +22,7 @@ const App: React.FC = () => {
     setOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setOpen(false);
   }, []);
 
@@ -83,7 +83,7 @@ const App: React.FC = () => {
           value={value}
         />
       </div>
-      <Toast message={toastMsg} isOpen={isOpen} onClose={closeToast} />
+      <Toast message={toastMsg} isOpen={isOpen} onClose={handleCloseToast} />
     </Page>
   );
 };

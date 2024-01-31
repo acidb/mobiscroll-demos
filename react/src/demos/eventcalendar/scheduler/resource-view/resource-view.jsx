@@ -1,13 +1,18 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 
 function App() {
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: new Date(now.getFullYear(), now.getMonth(), monday + 1, 11),
         end: new Date(now.getFullYear(), now.getMonth(), monday + 1, 12, 30),
@@ -44,11 +49,12 @@ function App() {
         title: 'Stakeholder mtg.',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -75,11 +81,12 @@ function App() {
         name: 'King’s Landing',
         color: '#bacded',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
         allDay: false,
@@ -88,10 +95,11 @@ function App() {
         startTime: '05:00',
         endTime: '22:00',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myColors = React.useMemo(
+  const myColors = useMemo(
     () => [
       {
         start: '05:00',
@@ -108,9 +116,8 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       colors={myColors}

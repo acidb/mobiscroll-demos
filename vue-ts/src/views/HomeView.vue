@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import { MbscPage } from '@mobiscroll/vue'
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>

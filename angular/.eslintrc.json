@@ -10,6 +10,7 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
+      "plugins": ["import"],
       "rules": {
         "@typescript-eslint/no-explicit-any": "off",
         "@angular-eslint/directive-selector": [
@@ -27,7 +28,11 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "arrow-body-style": ["warn", "as-needed"],
+        "import/order": ["warn", { "alphabetize": { "order": "asc", "caseInsensitive": true } }],
+        "one-var": ["error", "never"],
+        "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }]
       }
     },
     {

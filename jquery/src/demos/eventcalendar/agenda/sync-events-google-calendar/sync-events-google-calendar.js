@@ -1,10 +1,12 @@
-import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
+var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -76,8 +78,8 @@ export default {
           .then(function (calendars) {
             var calList = '';
 
-            calendars.sort(function (a, b) {
-              return a.primary ? -1 : 1;
+            calendars.sort(function (event) {
+              return event.primary ? -1 : 1;
             });
 
             for (var i = 0; i < calendars.length; ++i) {
@@ -123,7 +125,7 @@ export default {
         $('#google-cal-list').empty();
       }
 
-      function onError(error) {
+      function onError(resp) {
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -237,6 +239,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-sync-events-google-calendar"></div>
 
@@ -252,6 +255,7 @@ export default {
 
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-google-calendar-buttons {
     flex: 1 0 auto;

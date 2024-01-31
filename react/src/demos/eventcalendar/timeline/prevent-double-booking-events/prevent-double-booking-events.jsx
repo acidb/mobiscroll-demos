@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -12,49 +12,52 @@ const m = now.getMonth();
 const d = now.getDate();
 
 function App() {
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [myEvents, setEvents] = React.useState([
-    {
-      start: new Date(y, m, d, 11),
-      end: new Date(y, m, d, 13),
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      start: new Date(y, m, d, 16),
-      end: new Date(y, m, d, 17),
-      title: 'Event 2 (no event overlap)',
-      overlap: false,
-      resource: 1,
-    },
-    {
-      start: new Date(y, m, d, 14),
-      end: new Date(y, m, d, 16),
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      start: new Date(y, m, d, 8),
-      end: new Date(y, m, d, 10),
-      title: 'Event 4 (no event overlap)',
-      resource: 2,
-      overlap: false,
-    },
-    {
-      start: new Date(y, m, d, 10),
-      end: new Date(y, m, d, 13),
-      title: 'Event 5',
-      resource: 3,
-    },
-    {
-      start: new Date(y, m, d, 11),
-      end: new Date(y, m, d, 16),
-      title: 'Event 6',
-      resource: 4,
-    },
-  ]);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const myEvents = useMemo(
+    () => [
+      {
+        start: new Date(y, m, d, 11),
+        end: new Date(y, m, d, 13),
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        start: new Date(y, m, d, 16),
+        end: new Date(y, m, d, 17),
+        title: 'Event 2 (no event overlap)',
+        overlap: false,
+        resource: 1,
+      },
+      {
+        start: new Date(y, m, d, 14),
+        end: new Date(y, m, d, 16),
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        start: new Date(y, m, d, 8),
+        end: new Date(y, m, d, 10),
+        title: 'Event 4 (no event overlap)',
+        resource: 2,
+        overlap: false,
+      },
+      {
+        start: new Date(y, m, d, 10),
+        end: new Date(y, m, d, 13),
+        title: 'Event 5',
+        resource: 3,
+      },
+      {
+        start: new Date(y, m, d, 11),
+        end: new Date(y, m, d, 16),
+        title: 'Event 6',
+        resource: 4,
+      },
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo(
+  const myResources = useMemo(
     () => [
       {
         id: 1,
@@ -77,17 +80,18 @@ function App() {
     [],
   );
 
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const onEventFailed = React.useCallback(() => {
+  const handleEventFailed = useCallback(() => {
     setToastOpen(true);
   }, []);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -96,16 +100,16 @@ function App() {
       <Eventcalendar
         data={myEvents}
         resources={myResources}
-        view={view}
+        view={myView}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
         clickToCreate={true}
         eventOverlap={true}
-        onEventUpdateFailed={onEventFailed}
-        onEventCreateFailed={onEventFailed}
+        onEventUpdateFailed={handleEventFailed}
+        onEventCreateFailed={handleEventFailed}
       />
-      <Toast message="Make sure not to double book" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Make sure not to double book" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

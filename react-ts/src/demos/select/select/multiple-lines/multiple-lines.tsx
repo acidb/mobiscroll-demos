@@ -1,5 +1,5 @@
-import React from 'react';
 import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './multiple-lines.css';
 
 setOptions({
@@ -73,13 +73,11 @@ const App: React.FC = () => {
     placeholder: 'Please select...',
   };
 
-  const renderCustomItem = (item: any) => {
-    return (
-      <div className="md-multiple-lines-item">
-        <span className="md-multiple-lines-text">{item.display}</span>
-      </div>
-    );
-  };
+  const renderCustomItem = (item: any) => (
+    <div className="md-multiple-lines-item">
+      <span className="md-multiple-lines-text">{item.display}</span>
+    </div>
+  );
 
   return (
     <Page>

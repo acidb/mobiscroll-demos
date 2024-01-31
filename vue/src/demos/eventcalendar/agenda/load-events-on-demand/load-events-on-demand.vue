@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue'
 import {
-  MbscEventcalendar,
-  setOptions,
   getJson,
-  MbscToast /* localeImport */
+  MbscEventcalendar,
+  MbscToast,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -44,13 +44,3 @@ function handleToastClose() {
   <MbscEventcalendar :view="myView" :data="myEvents" @page-loading="handlePageLoading" />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>
-
-<style>
-/*<hidden>*/
-
-.demo-load-events-on-demand {
-  height: 100%;
-}
-
-/*</hidden>*/
-</style>

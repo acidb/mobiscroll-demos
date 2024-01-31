@@ -8,6 +8,7 @@ setOptions({
 
 @Component({
   selector: 'app-agenda-empty-state',
+  styleUrl: './empty-state.css',
   templateUrl: './empty-state.html',
   providers: [Notifications],
 })
@@ -42,7 +43,7 @@ export class AppComponent {
     agenda: { type: 'week' },
   };
 
-  displayToast(): void {
+  addEvent(): void {
     this.notify.toast({
       message: 'Add button clicked',
     });

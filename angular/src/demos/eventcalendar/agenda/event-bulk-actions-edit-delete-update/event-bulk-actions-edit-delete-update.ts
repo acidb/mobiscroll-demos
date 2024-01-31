@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
@@ -9,7 +10,6 @@ import {
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,
@@ -35,104 +35,13 @@ export class AppComponent implements OnInit {
   @ViewChild('menu', { static: false })
   menu!: MbscSelect;
 
-  myEvents: MbscCalendarEvent[] = [];
-
-  mySelectedEvents: MbscCalendarEvent[] = [];
-  eventTitles: string[] = [];
-  selectValue: string | null = null;
-  firstDay!: Date;
-  lastDay!: Date;
-  menuAnchor!: HTMLElement;
   confirmOpen: boolean = false;
-
-  getSelectedEventTitles(events: MbscCalendarEvent[]) {
-    let titles: string[] = [];
-    for (const event of events) {
-      titles = [...titles, event.title!];
-    }
-    return titles;
-  }
-
-  refreshSelectedEvents(events: MbscCalendarEvent[]) {
-    this.mySelectedEvents = events;
-    this.eventTitles = this.getSelectedEventTitles(events);
-  }
-
-  updateSelectedEvents() {
-    const events = this.mySelectedEvents;
-    let eventsToUpdate = [...this.myEvents];
-    for (const event of events) {
-      if (event.recurring) {
-        const origEvent = event.original!;
-        const exc = (origEvent.recurringException as string[]) || [];
-        const newEvent = event;
-
-        newEvent.recurring = undefined;
-        newEvent.color = 'orange';
-        newEvent.id += '_' + formatDate('YYYY-MM-DD', new Date(event.start as string));
-        eventsToUpdate = [...eventsToUpdate, newEvent];
-
-        origEvent.recurringException = [...exc, event.start];
-
-        // update the event in the list
-        const index = eventsToUpdate.findIndex((x) => x.id === origEvent['id']);
-        eventsToUpdate.splice(index, 1, origEvent);
-      } else {
-        const newEv = event;
-        newEv.color = 'orange';
-        const index = eventsToUpdate.findIndex((x) => x.id === newEv.id);
-        eventsToUpdate.splice(index, 1, newEv);
-      }
-    }
-
-    this.myEvents = eventsToUpdate;
-    this.refreshSelectedEvents([]);
-
-    this.notify.toast({
-      message: "All selected event's color changed to orange",
-    });
-  }
-
-  deleteSelectedEvents() {
-    this.confirmOpen = true;
-    this.notify.confirm({
-      title: 'Are you sure you want to delete the following events?',
-      message: this.getSelectedEventTitles(this.mySelectedEvents).join(','),
-      okText: 'Delete',
-      callback: (result) => {
-        if (result) {
-          let eventsToUpdate = [...this.myEvents];
-
-          for (const event of this.mySelectedEvents) {
-            if (event.recurring) {
-              const origEvent = event.original!;
-              const exc = (origEvent.recurringException as string[]) || [];
-              origEvent.recurringException = [...exc, event.start];
-
-              // update the event in the list
-              const index = eventsToUpdate.findIndex((x) => x.id === origEvent['id']);
-              eventsToUpdate.splice(index, 1, origEvent);
-            } else {
-              eventsToUpdate = eventsToUpdate.filter((ev) => {
-                return ev.id !== event.id;
-              });
-            }
-          }
-
-          this.myEvents = eventsToUpdate;
-          this.refreshSelectedEvents([]);
-
-          this.notify.toast({
-            message: 'Deleted',
-          });
-        }
-        this.confirmOpen = false;
-      },
-    });
-  }
+  myEvents: MbscCalendarEvent[] = [];
+  mySelectedEvents: MbscCalendarEvent[] = [];
+  menuAction: string | null = null;
+  menuAnchor!: HTMLElement;
 
   calendarOptions: MbscEventcalendarOptions = {
-    clickToCreate: true,
     selectMultipleEvents: true,
     view: {
       agenda: {
@@ -154,14 +63,8 @@ export class AppComponent implements OnInit {
       }
       return false;
     },
-    onPageLoading: (args) => {
-      setTimeout(() => {
-        this.firstDay = args.firstDay;
-        this.lastDay = args.lastDay;
-      });
-    },
     onSelectedEventsChange: (args) => {
-      this.refreshSelectedEvents(args.events);
+      this.mySelectedEvents = args.events;
     },
     onEventRightClick: (args) => {
       args.domEvent.preventDefault();
@@ -173,13 +76,13 @@ export class AppComponent implements OnInit {
   };
 
   menuOptions: MbscSelectOptions = {
-    touchUi: false,
-    display: 'anchored',
     buttons: [],
     data: [
       { value: 'update', text: 'Update' },
       { value: 'delete', text: 'Delete' },
     ],
+    display: 'anchored',
+    touchUi: false,
     onChange: (args) => {
       if (args.value === 'update') {
         this.updateSelectedEvents();
@@ -189,28 +92,96 @@ export class AppComponent implements OnInit {
     },
     onClose: () => {
       setTimeout(() => {
-        // clear selection
-        this.selectValue = null;
+        // Clear selection
+        this.menuAction = null;
       });
     },
   };
 
-  selectAllEvents() {
-    this.refreshSelectedEvents(this.calendar.getEvents(this.firstDay, this.lastDay));
+  updateSelectedEvents(): void {
+    const updatedEvents = [...this.myEvents];
+    for (const event of this.mySelectedEvents) {
+      const index = updatedEvents.findIndex((x) => x.id === event.id);
+      // Handle recurring event occurrence
+      if (event.recurring) {
+        // Create a new event, with updated color and id
+        const newEvent: MbscCalendarEvent = {
+          ...event,
+          color: 'orange',
+          id: event.id + '_' + formatDate('YYYY-MM-DD', new Date(event.start as string)),
+          recurring: undefined,
+        };
+        // Update the original event with a recurring exception
+        const updatedEvent: MbscCalendarEvent = {
+          ...event.original!,
+          recurringException: [...((event.recurringException as string[]) || []), event.start],
+        };
+        updatedEvents.splice(index, 1, updatedEvent);
+        updatedEvents.push(newEvent);
+      } else {
+        // Update the event color
+        const updatedEvent = { ...event, color: 'orange' };
+        updatedEvents.splice(index, 1, updatedEvent);
+      }
+    }
+    this.myEvents = updatedEvents;
+    this.mySelectedEvents = [];
+    this.notify.toast({
+      message: "All selected event's color changed to orange",
+    });
+  }
+
+  deleteSelectedEvents(): void {
+    this.confirmOpen = true;
+    this.notify.confirm({
+      title: 'Are you sure you want to delete the following events?',
+      message: this.mySelectedEvents.map((e) => e.title).join(','),
+      okText: 'Delete',
+      callback: (result) => {
+        if (result) {
+          const updatedEvents = [...this.myEvents];
+          for (const event of this.mySelectedEvents) {
+            const index = updatedEvents.findIndex((x) => x.id === event.id);
+            // Handle recurring event occurrence
+            if (event.recurring) {
+              // Update the original event with a recurring exception
+              const updatedEvent: MbscCalendarEvent = {
+                ...event.original!,
+                recurringException: [...((event.recurringException as string[]) || []), event.start],
+              };
+              updatedEvents.splice(index, 1, updatedEvent);
+            } else {
+              // Remove the event
+              updatedEvents.splice(index, 1);
+            }
+          }
+          this.myEvents = updatedEvents;
+          this.mySelectedEvents = [];
+          this.notify.toast({
+            message: 'Deleted',
+          });
+        }
+        this.confirmOpen = false;
+      },
+    });
+  }
+
+  selectAllEvents(): void {
+    this.mySelectedEvents = this.calendar.getEvents();
     this.notify.toast({
       message: 'All events selected this month',
     });
   }
 
-  resetSelection() {
-    this.refreshSelectedEvents([]);
+  resetSelection(): void {
+    this.mySelectedEvents = [];
     this.notify.toast({
       message: 'Selection cleared',
     });
   }
 
-  onKeyDown(ev: any) {
-    if (!this.confirmOpen && (ev.keyCode === 8 || ev.keyCode === 46)) {
+  onKeyDown(ev: KeyboardEvent): void {
+    if (!this.confirmOpen && (ev.code === 'Delete' || ev.code === 'Backspace' || ev.keyCode === 8 || ev.keyCode === 46)) {
       this.deleteSelectedEvents();
     }
   }

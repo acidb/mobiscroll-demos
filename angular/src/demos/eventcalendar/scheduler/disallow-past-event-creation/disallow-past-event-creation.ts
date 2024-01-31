@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,
@@ -48,15 +48,15 @@ export class AppComponent implements OnInit {
     dragToCreate: true,
     dragToMove: true,
     dragToResize: true,
-    onEventCreateFailed: (event) => {
-      if (!event.originEvent) {
+    onEventCreateFailed: (args) => {
+      if (!args.originEvent) {
         this.notify.toast({
           message: "Can't create event in the past",
         });
       }
     },
-    onEventUpdateFailed: (event) => {
-      if (!event.oldEventOccurrence) {
+    onEventUpdateFailed: (args) => {
+      if (!args.oldEventOccurrence) {
         this.notify.toast({
           message: "Can't move event in the past",
         });

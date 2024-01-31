@@ -1,5 +1,10 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
+
+setOptions({
+  // themeJs,
+  // localeJs
+});
 
 const now = new Date();
 const myEvents = [
@@ -275,19 +280,19 @@ const myEvents = [
 ];
 
 function App() {
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       calendar: { type: 'week' },
       schedule: { type: 'day' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
+      // drag
       data={myEvents}
-      view={view}
+      view={myView}
     />
   );
 }

@@ -1,8 +1,11 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    var gregorian, jalali, hijri;
+    var gregorian;
+    var jalali;
+    var hijri;
     var myResources = [
       {
         id: 1,
@@ -75,6 +78,7 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Gregorian calendar</div>

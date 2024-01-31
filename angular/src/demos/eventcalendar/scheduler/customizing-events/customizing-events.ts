@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications /* localeImport */ } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-scheduler-customizing-events',
@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   eventSettings: MbscEventcalendarOptions = {
     // locale,
     // theme,
+    // drag,
     responsive: {
       xsmall: {
         view: {
@@ -120,8 +121,6 @@ export class AppComponent implements OnInit {
 
   edit(): void {
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: 'Edit clicked',
     });
   }

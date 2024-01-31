@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -8,6 +9,7 @@ export default {
     });
 
     var calendar = mobiscroll.eventcalendar('#demo-day-week-view', {
+      // drag,
       view: {
         calendar: {
           labels: true,
@@ -83,9 +85,11 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-day-week-view" class="md-switching-view-cont"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-switching-view-cont .mbsc-segmented {
     max-width: 350px;

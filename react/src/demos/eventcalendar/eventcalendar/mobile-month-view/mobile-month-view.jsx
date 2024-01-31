@@ -41,7 +41,12 @@ function App() {
 
   return (
     <>
-      <Eventcalendar data={myEvents} view={myView} onEventClick={handleEventClick} />
+      <Eventcalendar
+        // drag
+        data={myEvents}
+        view={myView}
+        onEventClick={handleEventClick}
+      />
       <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );

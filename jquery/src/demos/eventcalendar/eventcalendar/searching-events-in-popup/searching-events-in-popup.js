@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -10,7 +11,6 @@ export default {
 
     $(function () {
       var timer;
-      var $searchInput;
 
       var list = $('#demo-search-list')
         .mobiscroll()
@@ -54,7 +54,7 @@ export default {
               '<div mbsc-calendar-next></div>'
             );
           },
-          onPageLoading: function (args, inst) {
+          onPageLoading: function (args) {
             var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
             var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
 
@@ -112,6 +112,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-search-events" class="md-search-events"></div>
 <div id="demo-search-popup" class="md-search-popup">
@@ -120,6 +121,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-seach-header-bar .mbsc-textfield-wrapper.mbsc-form-control-wrapper {
     width: 400px;

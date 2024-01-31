@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -13,6 +14,7 @@ export default {
     var oldShift;
     var tempShift;
     var deleteShift;
+    var restoreShift;
     var formatDate = mobiscroll.formatDate;
     var notes = document.getElementById('employee-shifts-notes');
     var deleteButton = document.getElementById('employee-shifts-delete');
@@ -259,7 +261,7 @@ export default {
       },
     ];
 
-    function createAddPopup(args) {
+    function createAddPopup() {
       // hide delete button inside add popup
       deleteButton.style.display = 'none';
       deleteShift = true;
@@ -393,14 +395,14 @@ export default {
           resource: ev.resource,
         };
       },
-      onEventCreate: function (args, inst) {
+      onEventCreate: function (args) {
         // store temporary event
         tempShift = args.event;
         setTimeout(function () {
           createAddPopup(args);
         }, 100);
       },
-      onEventClick: function (args, inst) {
+      onEventClick: function (args) {
         oldShift = Object.assign({}, args.event);
         tempShift = args.event;
 
@@ -438,7 +440,6 @@ export default {
       },
       responsive: {
         medium: {
-          // context,
           display: 'center',
           width: 400,
           fullScreen: false,
@@ -483,9 +484,6 @@ export default {
       popup.close();
 
       mobiscroll.snackbar({
-        //<hidden>
-        // theme,//</hidden>
-        // context,
         button: {
           action: function () {
             calendar.addEvent(deletedShift);
@@ -497,6 +495,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-employee-shifts-calendar" class="md-employee-shifts"></div>
 
@@ -523,6 +522,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .employee-shifts-day {
     font-size: 14px;

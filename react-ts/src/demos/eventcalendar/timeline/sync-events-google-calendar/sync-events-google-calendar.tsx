@@ -1,21 +1,21 @@
-import React from 'react';
+import { googleCalendarSync } from '@mobiscroll/calendar-integration';
 import {
-  Eventcalendar,
-  Popup,
-  setOptions,
-  Page,
   Button,
-  Switch,
   CalendarNav,
-  CalendarPrev,
   CalendarNext,
-  toast,
+  CalendarPrev,
   confirm,
+  Eventcalendar,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscResource,
+  Page,
+  Popup,
+  setOptions,
+  Switch,
+  toast,
 } from '@mobiscroll/react';
-import { googleCalendarSync } from '@mobiscroll/calendar-integration';
+import React from 'react';
 import './sync-events-google-calendar.css';
 
 setOptions({
@@ -183,8 +183,8 @@ const App: React.FC = () => {
     [calendarData, onError],
   );
 
-  const renderMyHeader = React.useCallback(() => {
-    return (
+  const renderMyHeader = React.useCallback(
+    () => (
       <React.Fragment>
         <CalendarNav className="md-sync-events-google-nav" />
         <div className="md-spinner">
@@ -216,8 +216,9 @@ const App: React.FC = () => {
           <CalendarNext />
         </div>
       </React.Fragment>
-    );
-  }, [isLoggedIn, navigate, openPopup, signIn]);
+    ),
+    [isLoggedIn, navigate, openPopup, signIn],
+  );
 
   const onPageLoading = React.useCallback(
     (args) => {
@@ -373,11 +374,9 @@ const App: React.FC = () => {
         </div>
         <div className="mbsc-form-group-inset md-sync-events-google-inset">
           <div className="mbsc-form-group-title">My Calendars</div>
-          {myCalendars.map((cal: any) => {
-            return (
-              <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
-            );
-          })}
+          {myCalendars.map((cal: any) => (
+            <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+          ))}
         </div>
         <div className="mbsc-form-group-inset">
           <Button className="md-sync-events-google-button mbsc-button-block" onClick={signOut}>

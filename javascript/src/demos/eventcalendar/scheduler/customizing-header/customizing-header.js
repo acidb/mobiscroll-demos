@@ -1,36 +1,38 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
       // theme
     });
 
-    var currentDate = new Date(),
-      view = 'schedule',
-      calendar = mobiscroll.eventcalendar('#demo-custom-header', {
-        view: {
-          schedule: { type: 'week' },
-        },
-        onSelectedDateChange: function (event, inst) {
-          currentDate = event.date;
-        },
-        renderHeader: function () {
-          return (
-            '<div mbsc-calendar-nav class="md-custom-header-nav"></div>' +
-            '<div class="md-custom-header-controls">' +
-            '<button id="nav-to-prev-page" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="md-custom-header-button"></button>' +
-            '<div mbsc-calendar-today class="md-custom-header-today"></div>' +
-            '<button id="nav-to-next-page" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="md-custom-header-button"></button>' +
-            '</div>' +
-            '<div class="md-custom-header-view">' +
-            '<label><input data-icon="material-list" mbsc-segmented type="radio" name="view" value="schedule" class="md-view-change" checked></label>' +
-            '<label><input data-icon="calendar" mbsc-segmented type="radio" name="view" value="calendar" class="md-view-change"></label>' +
-            '</div>'
-          );
-        },
-      });
+    var currentDate = new Date();
+    var view = 'schedule';
+    var calendar = mobiscroll.eventcalendar('#demo-custom-header', {
+      // drag,
+      view: {
+        schedule: { type: 'week' },
+      },
+      onSelectedDateChange: function (args) {
+        currentDate = args.date;
+      },
+      renderHeader: function () {
+        return (
+          '<div mbsc-calendar-nav class="md-custom-header-nav"></div>' +
+          '<div class="md-custom-header-controls">' +
+          '<button id="nav-to-prev-page" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="md-custom-header-button"></button>' +
+          '<div mbsc-calendar-today class="md-custom-header-today"></div>' +
+          '<button id="nav-to-next-page" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="md-custom-header-button"></button>' +
+          '</div>' +
+          '<div class="md-custom-header-view">' +
+          '<label><input data-icon="material-list" mbsc-segmented type="radio" name="view" value="schedule" class="md-view-change" checked></label>' +
+          '<label><input data-icon="calendar" mbsc-segmented type="radio" name="view" value="calendar" class="md-view-change"></label>' +
+          '</div>'
+        );
+      },
+    });
 
     mobiscroll.getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
@@ -41,8 +43,8 @@ export default {
     );
 
     function getFirstDayOfWeek(d, prev) {
-      var day = d.getDay(),
-        diff = d.getDate() - day + (prev ? -7 : 7);
+      var day = d.getDay();
+      var diff = d.getDate() - day + (prev ? -7 : 7);
       return new Date(d.setDate(diff));
     }
 
@@ -89,9 +91,11 @@ export default {
       navigatePage(false);
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-custom-header" class="md-custom-header"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-custom-header-controls {
     display: flex;

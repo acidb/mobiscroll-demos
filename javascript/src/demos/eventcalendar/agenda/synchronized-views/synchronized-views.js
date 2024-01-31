@@ -1,20 +1,22 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
       // theme
     });
 
-    var monthInst, dayInst;
+    var monthInst;
+    var dayInst;
 
     monthInst = mobiscroll.eventcalendar('#demo-month', {
       view: {
         calendar: { popover: false, labels: false },
       },
-      onSelectedDateChange: function (event) {
-        dayInst.navigate(event.date);
+      onSelectedDateChange: function (args) {
+        dayInst.navigate(args.date);
       },
     });
 
@@ -22,16 +24,10 @@ export default {
       view: {
         agenda: { type: 'day' },
       },
-      onPageChange: function (event, inst) {
-        monthInst.navigate(event.firstDay);
+      onPageChange: function (args) {
+        monthInst.navigate(args.firstDay);
       },
     });
-
-    function navigate(inst, val) {
-      if (inst) {
-        inst.navigate(val);
-      }
-    }
 
     mobiscroll.getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
@@ -42,6 +38,7 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid md-demo-synchronized-views">
     <div class="mbsc-row mbsc-no-padding">
@@ -54,6 +51,7 @@ export default {
     </div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-sync-views {
     display: flex;

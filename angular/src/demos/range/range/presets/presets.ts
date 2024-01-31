@@ -29,8 +29,6 @@ export class AppComponent {
   today(): void {
     this.range = [now, now];
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: 'Today Selected',
     });
   }
@@ -38,8 +36,6 @@ export class AppComponent {
   yesterday(): void {
     this.range = [yesterday, yesterday];
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: 'Yesterday Selected',
     });
   }
@@ -47,8 +43,6 @@ export class AppComponent {
   thisWeek(): void {
     this.range = [startWeek, endWeek];
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: 'This Week Selected',
     });
   }
@@ -56,8 +50,6 @@ export class AppComponent {
   lastMonth(): void {
     this.range = [startMonth, endMonth];
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: 'Last Month Selected',
     });
   }
@@ -65,8 +57,6 @@ export class AppComponent {
   clear(): void {
     this.range = null;
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: 'Clear Value',
     });
   }

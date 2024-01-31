@@ -1,5 +1,12 @@
-import React from 'react';
-import { Eventcalendar, getJson, setOptions, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import {
+  Eventcalendar,
+  getJson,
+  MbscCalendarColor,
+  MbscCalendarEvent,
+  MbscEventcalendarView /* localeImport */,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import './colors-invalids-css-class.css';
 
 setOptions({
@@ -20,7 +27,7 @@ const myInvalid = [
   },
 ];
 
-const myColors = [
+const myColors: MbscCalendarColor[] = [
   {
     start: '03:00',
     end: '10:00',
@@ -77,21 +84,22 @@ const myColors = [
   },
 ];
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         allDay: false,
         type: 'week',
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/workday-events/',
       (events: MbscCalendarEvent[]) => {
@@ -101,6 +109,14 @@ const App: React.FC = () => {
     );
   }, []);
 
-  return <Eventcalendar view={view} data={myEvents} invalid={myInvalid} colors={myColors} />;
+  return (
+    <Eventcalendar
+      // drag
+      view={myView}
+      data={myEvents}
+      invalid={myInvalid}
+      colors={myColors}
+    />
+  );
 };
 export default App;

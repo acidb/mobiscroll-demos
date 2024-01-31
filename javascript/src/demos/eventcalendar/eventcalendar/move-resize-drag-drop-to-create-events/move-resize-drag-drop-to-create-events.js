@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -8,7 +9,8 @@ export default {
     });
 
     var now = new Date();
-    var inst = mobiscroll.eventcalendar('#demo-drag-drop-events', {
+
+    mobiscroll.eventcalendar('#demo-drag-drop-events', {
       view: {
         calendar: { labels: true },
       },
@@ -45,6 +47,7 @@ export default {
       ],
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-drag-drop-events"></div>
   `,

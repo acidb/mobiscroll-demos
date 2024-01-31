@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -18,10 +19,13 @@ export default {
       var cutEvents = [];
       var pastedEvents = [];
       var today = new Date();
-      var toDate, originDate;
+      var toDate;
+      var originDate;
       var firstToDate = today;
       var secondToDate = today;
-      var activeInst, originInst, cutInst;
+      var activeInst;
+      var originInst;
+      var cutInst;
       var menuOpen;
       var action;
       var menuData = [
@@ -373,6 +377,7 @@ export default {
       activeInst = firstInst;
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-page id="demo-copy-cut-paste-cont">
     <div class="mbsc-flex-col md-copy-cut-paste">
@@ -399,6 +404,7 @@ export default {
     <div id="my-focus" tabindex="-1"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 /*<hidden>*/
 

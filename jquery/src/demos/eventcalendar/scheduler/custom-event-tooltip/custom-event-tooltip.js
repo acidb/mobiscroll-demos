@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -516,8 +517,6 @@ export default {
               resource: 3,
             },
           ],
-          clickToCreate: false,
-          dragToCreate: false,
           showEventTooltip: false,
           onEventHoverIn: function (args) {
             openTooltip(args, false);
@@ -549,20 +548,20 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $tooltip.mouseenter(function (ev) {
+      $tooltip.mouseenter(function () {
         if (timer) {
           clearTimeout(timer);
           timer = null;
         }
       });
 
-      $tooltip.mouseleave(function (ev) {
+      $tooltip.mouseleave(function () {
         timer = setTimeout(function () {
           tooltip.close();
         }, 200);
       });
 
-      $statusButton.on('click', function (ev) {
+      $statusButton.on('click', function () {
         tooltip.close();
         currentEvent.confirmed = !currentEvent.confirmed;
         calendar.updateEvent(currentEvent);
@@ -575,7 +574,7 @@ export default {
         });
       });
 
-      $fileButton.on('click', function (ev) {
+      $fileButton.on('click', function () {
         tooltip.close();
 
         mobiscroll.toast({
@@ -586,7 +585,7 @@ export default {
         });
       });
 
-      $deleteButton.on('click', function (ev) {
+      $deleteButton.on('click', function () {
         calendar.removeEvent(currentEvent);
 
         tooltip.close();
@@ -600,6 +599,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="custom-event-tooltip-popup" class="md-tooltip">
     <div id="tooltip-event-header" class="md-tooltip-header">
@@ -619,6 +619,7 @@ export default {
 </div>
 <div id="demo-custom-event-tooltip"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-tooltip .mbsc-popup-content {
     padding: 0;

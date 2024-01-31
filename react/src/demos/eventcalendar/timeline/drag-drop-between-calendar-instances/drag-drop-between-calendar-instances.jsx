@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,20 +7,21 @@ setOptions({
 });
 
 function App() {
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [toastText, setToastText] = React.useState();
-  const [toastContext, setToastContext] = React.useState();
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastText, setToastText] = useState();
+  const [toastContext, setToastContext] = useState();
 
-  const myView = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const firstEvents = React.useMemo(() => {
-    return [
+  const firstEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,2)',
         end: 'dyndatetime(y,m,5)',
@@ -91,11 +92,12 @@ function App() {
         color: '#152d2b',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const firstResources = React.useMemo(() => {
-    return [
+  const firstResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -116,11 +118,12 @@ function App() {
         id: 5,
         name: 'Resource E',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondEvents = React.useMemo(() => {
-    return [
+  const secondEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,5)',
         end: 'dyndatetime(y,m,9)',
@@ -191,11 +194,12 @@ function App() {
         color: '#d6d145',
         resource: 5,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondResources = React.useMemo(() => {
-    return [
+  const secondResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -216,14 +220,15 @@ function App() {
         id: 5,
         name: 'Resource E',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const handleFirstCalEventCreated = React.useCallback((args) => {
+  const handleFirstCalEventCreated = useCallback((args) => {
     if (args.action === 'externalDrop') {
       setToastText('Event dropped to Calendar 1');
       setToastContext('.md-drag-drop-first-calendar');
@@ -231,7 +236,7 @@ function App() {
     }
   }, []);
 
-  const handleSecondCalEventCreated = React.useCallback((args) => {
+  const handleSecondCalEventCreated = useCallback((args) => {
     if (args.action === 'externalDrop') {
       setToastText('Event dropped to Calendar 2');
       setToastContext('.md-drag-drop-second-calendar');
@@ -268,7 +273,7 @@ function App() {
         onEventCreated={handleSecondCalEventCreated}
         className="md-drag-drop-second-calendar"
       />
-      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

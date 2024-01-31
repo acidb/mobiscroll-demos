@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 import moment from 'moment';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,29 +10,28 @@ export default {
     });
 
     var dateInstance = mobiscroll.datepicker('#demo-date', {
-        controls: ['calendar'],
-        select: 'range',
-        onChange: function (event, inst) {
-          updateValue('returnVal', inst);
-          returnMoment;
-        },
-      }),
-      isoInstance = mobiscroll.datepicker('#demo-iso', {
-        controls: ['calendar'],
-        select: 'range',
-        returnFormat: 'iso8601',
-        onChange: function (event, inst) {
-          updateValue('returnISO', inst);
-        },
-      }),
-      momentInstance = mobiscroll.datepicker('#demo-moment', {
-        controls: ['calendar'],
-        select: 'range',
-        returnFormat: 'moment',
-        onChange: function (event, inst) {
-          updateValue('returnMoment', inst);
-        },
-      });
+      controls: ['calendar'],
+      select: 'range',
+      onChange: function (event, inst) {
+        updateValue('returnVal', inst);
+      },
+    });
+    var isoInstance = mobiscroll.datepicker('#demo-iso', {
+      controls: ['calendar'],
+      select: 'range',
+      returnFormat: 'iso8601',
+      onChange: function (event, inst) {
+        updateValue('returnISO', inst);
+      },
+    });
+    var momentInstance = mobiscroll.datepicker('#demo-moment', {
+      controls: ['calendar'],
+      select: 'range',
+      returnFormat: 'moment',
+      onChange: function (event, inst) {
+        updateValue('returnMoment', inst);
+      },
+    });
 
     document.getElementById('setDate').addEventListener(
       'click',
@@ -72,6 +72,7 @@ export default {
       });
     }
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Working with Js Date Objects</div>

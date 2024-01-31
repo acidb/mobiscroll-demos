@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -27,22 +28,16 @@ export default {
       dragToCreate: true,
       dragToMove: true,
       dragToResize: true,
-      onEventCreateFailed: function (event) {
-        if (!event.originEvent) {
+      onEventCreateFailed: function (args) {
+        if (!args.originEvent) {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't create event in the past",
           });
         }
       },
-      onEventUpdateFailed: function (event) {
-        if (!event.oldEventOccurrence) {
+      onEventUpdateFailed: function (args) {
+        if (!args.oldEventOccurrence) {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't move event in the past",
           });
         }
@@ -55,9 +50,6 @@ export default {
         if (start && start < today) {
           inst.updateEvent(oldEvent);
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't move past event",
           });
           return false;
@@ -93,9 +85,11 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-disallow-past-event-creation" class="md-disallow-past-event-creation"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-disallow-past-event-creation .mbsc-readonly-event {
     opacity: .6;

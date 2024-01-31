@@ -1,5 +1,5 @@
-import React from 'react';
 import { Page, Button, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -9,7 +9,7 @@ setOptions({
 const App: React.FC = () => {
   const [isToastOpen, setToastOpen] = React.useState(false);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = React.useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -87,7 +87,7 @@ const App: React.FC = () => {
           </Button>
         </div>
       </div>
-      <Toast message="Button was clicked." isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Button was clicked." isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 };

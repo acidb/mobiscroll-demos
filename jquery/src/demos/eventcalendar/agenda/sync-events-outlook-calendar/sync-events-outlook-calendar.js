@@ -1,10 +1,12 @@
-import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { outlookCalendarSync as outlookSync } from '@mobiscroll/calendar-integration';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
+var mobiscroll = m;
 mobiscroll.outlookCalendarSync = outlookSync;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -237,6 +239,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-sync-events-outlook-calendar"></div>
 
@@ -252,6 +255,7 @@ export default {
 
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-outlook-calendar-buttons {
     flex: 1 0 auto;

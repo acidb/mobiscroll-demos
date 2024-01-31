@@ -60,7 +60,16 @@ function App() {
 
   const myView = useMemo(() => ({ calendar: { popover: true, type: 'month' } }), []);
 
-  return <Eventcalendar dataTimezone="utc" displayTimezone="local" timezonePlugin={momentTimezone} data={myEvents} view={myView} />;
+  return (
+    <Eventcalendar
+      // drag
+      dataTimezone="utc"
+      displayTimezone="local"
+      timezonePlugin={momentTimezone}
+      data={myEvents}
+      view={myView}
+    />
+  );
 }
 
 export default App;

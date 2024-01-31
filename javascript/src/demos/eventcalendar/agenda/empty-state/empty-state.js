@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,7 +10,7 @@ export default {
 
     var myElement = document.getElementById('demo-custom-empty-agenda');
 
-    var inst = mobiscroll.eventcalendar(myElement, {
+    mobiscroll.eventcalendar(myElement, {
       view: {
         calendar: { type: 'week' },
         agenda: { type: 'week' },
@@ -56,6 +57,7 @@ export default {
       }
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-custom-empty-agenda"></div>
   `,

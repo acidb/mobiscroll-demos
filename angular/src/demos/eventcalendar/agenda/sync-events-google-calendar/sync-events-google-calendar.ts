@@ -1,7 +1,9 @@
-import { Component, NgZone, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
-  MbscEventcalendarOptions,
+  MbscDateType,
+  MbscEventcalendarView,
+  MbscPageLoadingEvent,
   MbscPopup,
   MbscPopupOptions,
   Notifications,
@@ -31,116 +33,97 @@ export class AppComponent implements OnInit {
 
   @ViewChild('calButton') anchorElm!: ElementRef;
 
-  myEvents: MbscCalendarEvent[] = [];
-
-  isEditable = false;
+  calendarData: { [key: string]: { checked: boolean } } = {};
+  calendarIds: string[] = [];
   isLoggedIn = false;
   isLoading = false;
-  calendarIds: string[] = [];
-  myCalendars: any = [];
-  readonlyCals: string[] = [];
   startDate!: Date;
   endDate!: Date;
-  debounce: any;
-  calendarData: any = {};
-  myInvalids: any[] = [];
-  myAnchor: any;
-  selectedDate: any = new Date();
-
-  calendarOptions: MbscEventcalendarOptions = {
-    view: {
-      agenda: { type: 'month' },
-    },
-    onPageLoading: (args: any) => {
-      this.startDate = args.viewStart;
-      this.endDate = args.viewEnd;
-      clearTimeout(this.debounce);
-      this.debounce = setTimeout(() => {
-        if (googleCalendarSync.isSignedIn()) {
-          this.isLoading = true;
-          googleCalendarSync
-            .getEvents(this.calendarIds, this.startDate, this.endDate)
-            .then((resp: any) => {
-              this.zone.run(() => {
-                this.myEvents = resp;
-                this.isLoading = false;
-              });
-            })
-            .catch((error: any) => {
-              this.onError(error);
-            });
-        }
-      }, 200);
-    },
-  };
+  myAnchor!: HTMLButtonElement;
+  myCalendars: Array<{ summary: string; id: string }> = [];
+  myEvents: MbscCalendarEvent[] = [];
+  myView: MbscEventcalendarView = { agenda: { type: 'month' } };
+  readonlyCals: string[] = [];
+  selectedDate: MbscDateType = new Date();
+  timer?: ReturnType<typeof setTimeout>;
 
   popupOptions: MbscPopupOptions = {
-    width: 400,
-    touchUi: false,
-    showOverlay: false,
-    scrollLock: false,
     contentPadding: false,
     display: 'anchored',
+    scrollLock: false,
+    showOverlay: false,
+    touchUi: false,
+    width: 400,
   };
 
-  ngOnInit(): void {
-    googleCalendarSync.init({
-      apiKey: '<YOUR_GOOGLE_API_KEY>',
-      clientId: '<YOUR_GOOGLE_CLIENT_ID>',
-      onSignedIn: () => {
-        this.isLoggedIn = true;
+  onPageLoading(args: MbscPageLoadingEvent): void {
+    this.startDate = args.viewStart;
+    this.endDate = args.viewEnd;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      if (googleCalendarSync.isSignedIn()) {
+        this.isLoading = true;
         googleCalendarSync
-          .getCalendars()
-          .then((calendars: any) => {
-            calendars.sort((a: { primary: boolean }) => (a.primary ? -1 : 1));
-            this.myCalendars = calendars;
-
-            for (const c of calendars) {
-              this.calendarIds = [...this.calendarIds, c.id];
-              this.calendarData[c.id] = { checked: true };
-            }
-
-            this.isLoading = true;
-
-            googleCalendarSync
-              .getEvents(this.calendarIds, this.startDate, this.endDate)
-              .then((resp: any) => {
-                this.zone.run(() => {
-                  this.myEvents = resp;
-                  this.isLoading = false;
-                });
-              })
-              .catch((error: any) => {
-                this.onError(error);
-              });
+          .getEvents(this.calendarIds, this.startDate, this.endDate)
+          .then((resp) => {
+            this.zone.run(() => {
+              this.myEvents = resp;
+              this.isLoading = false;
+            });
           })
-          .catch((error: any) => {
+          .catch((error) => {
             this.onError(error);
           });
-      },
-      onSignedOut: () => {
-        this.isLoggedIn = false;
-        this.popup.close();
-        this.myCalendars = [];
-        this.calendarIds = [];
-        this.calendarData = {};
-        this.myEvents = [];
-      },
-    });
+      }
+    }, 200);
   }
 
-  onError(resp: any): void {
+  onError(resp: { error?: string; result: { error: { message: string } } }): void {
     this.notify.toast({
       message: resp.error ? resp.error : resp.result.error.message,
     });
   }
 
-  changeEditable(ev: any): void {
-    this.isEditable = ev.target.checked;
+  onSignedIn(): void {
+    this.isLoggedIn = true;
+    this.calendarIds = [];
+    googleCalendarSync
+      .getCalendars()
+      .then((calendars) => {
+        calendars.sort((a: { primary: boolean }) => (a.primary ? -1 : 1));
+
+        for (const c of calendars) {
+          this.calendarIds.push(c.id);
+          this.calendarData[c.id] = { checked: true };
+        }
+
+        this.myCalendars = calendars;
+        this.isLoading = true;
+
+        return googleCalendarSync.getEvents(this.calendarIds, this.startDate, this.endDate);
+      })
+      .then((resp) => {
+        this.zone.run(() => {
+          this.myEvents = resp;
+          this.isLoading = false;
+        });
+      })
+      .catch((error) => {
+        this.onError(error);
+      });
   }
 
-  toggleCalendars(ev: any, calendarId: string): void {
-    const checked = ev.target.checked;
+  onSignedOut(): void {
+    this.calendarIds = [];
+    this.calendarData = {};
+    this.isLoggedIn = false;
+    this.myCalendars = [];
+    this.myEvents = [];
+    this.popup.close();
+  }
+
+  toggleCalendars(ev: Event, calendarId: string): void {
+    const checked = (ev.target as HTMLInputElement).checked;
     this.calendarData[calendarId].checked = checked;
 
     if (checked) {
@@ -148,13 +131,13 @@ export class AppComponent implements OnInit {
       this.isLoading = true;
       googleCalendarSync
         .getEvents([calendarId], this.startDate, this.endDate)
-        .then((resp: any) => {
+        .then((resp) => {
           this.zone.run(() => {
             this.myEvents = [...this.myEvents, ...resp];
             this.isLoading = false;
           });
         })
-        .catch((error: any) => {
+        .catch((error) => {
           this.onError(error);
         });
     } else {
@@ -172,17 +155,30 @@ export class AppComponent implements OnInit {
     this.selectedDate = new Date();
   }
 
-  logOut(): void {
-    googleCalendarSync.signOut().catch((error: any) => {
+  signOut(): void {
+    googleCalendarSync.signOut().catch((error) => {
       this.onError(error);
     });
   }
 
-  logIn(): void {
+  signIn(): void {
     if (!googleCalendarSync.isSignedIn()) {
-      googleCalendarSync.signIn().catch((error: any) => {
+      googleCalendarSync.signIn().catch((error) => {
         this.onError(error);
       });
     }
+  }
+
+  ngOnInit(): void {
+    googleCalendarSync.init({
+      apiKey: '<YOUR_GOOGLE_API_KEY>',
+      clientId: '<YOUR_GOOGLE_CLIENT_ID>',
+      onSignedIn: () => {
+        this.onSignedIn();
+      },
+      onSignedOut: () => {
+        this.onSignedOut();
+      },
+    });
   }
 }

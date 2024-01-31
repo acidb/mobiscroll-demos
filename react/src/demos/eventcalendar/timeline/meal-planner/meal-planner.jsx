@@ -1,17 +1,17 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  snackbar,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
+  Eventcalendar,
   formatDate,
   getJson,
+  Input,
+  Popup,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem /* localeImport */,
+  setOptions,
+  snackbar,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './meal-planner.css';
 
 setOptions({
@@ -75,27 +75,17 @@ const responsivePopup = {
 };
 
 function App() {
-  const [myMeals, setMyMeals] = React.useState([]);
-  const [tempMeal, setTempMeal] = React.useState(null);
-  const [isOpen, setOpen] = React.useState(false);
-  const [isEdit, setEdit] = React.useState(false);
-  const [name, setName] = React.useState('');
-  const [calories, setCalories] = React.useState('');
-  const [notes, setNotes] = React.useState('');
-  const [headerText, setHeader] = React.useState('');
-  const [type, setType] = React.useState(1);
+  const [myMeals, setMyMeals] = useState([]);
+  const [tempMeal, setTempMeal] = useState(null);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isEdit, setEdit] = useState(false);
+  const [name, setName] = useState('');
+  const [calories, setCalories] = useState('');
+  const [notes, setNotes] = useState('');
+  const [headerText, setHeader] = useState('');
+  const [type, setType] = useState(1);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/meal-planner/',
-      (events) => {
-        setMyMeals(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const saveEvent = React.useCallback(() => {
+  const saveEvent = useCallback(() => {
     const newEvent = {
       id: tempMeal.id,
       title: name,
@@ -117,10 +107,10 @@ function App() {
       setMyMeals([...myMeals, newEvent]);
     }
     // close the popup
-    setOpen(false);
+    setPopupOpen(false);
   }, [isEdit, myMeals, calories, notes, name, tempMeal]);
 
-  const deleteEvent = React.useCallback(
+  const deleteEvent = useCallback(
     (event) => {
       setMyMeals(myMeals.filter((item) => item.id !== event.id));
       setTimeout(() => {
@@ -138,32 +128,32 @@ function App() {
     [myMeals],
   );
 
-  const loadPopupForm = React.useCallback((event) => {
+  const loadPopupForm = useCallback((event) => {
     setName(event.title);
     setCalories(event.calories);
     setNotes(event.notes);
   }, []);
 
   // handle popup form changes
-  const nameChange = React.useCallback((ev) => {
+  const nameChange = useCallback((ev) => {
     setName(ev.target.value);
   }, []);
 
-  const caloriesChange = React.useCallback((ev) => {
+  const caloriesChange = useCallback((ev) => {
     setCalories(ev.target.value);
   }, []);
 
-  const notesChange = React.useCallback((ev) => {
+  const notesChange = useCallback((ev) => {
     setNotes(ev.target.checked);
   }, []);
 
-  const onDeleteClick = React.useCallback(() => {
+  const onDeleteClick = useCallback(() => {
     deleteEvent(tempMeal);
-    setOpen(false);
+    setPopupOpen(false);
   }, [deleteEvent, tempMeal]);
 
   // scheduler options
-  const onEventClick = React.useCallback(
+  const handleEventClick = useCallback(
     (args) => {
       const event = args.event;
       setHeader('<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>');
@@ -172,17 +162,15 @@ function App() {
       setTempMeal({ ...event });
       // fill popup form with event data
       loadPopupForm(event);
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const onEventCreated = React.useCallback(
+  const handleEventCreated = useCallback(
     (args) => {
       const event = args.event;
-      const resource = types.find((obj) => {
-        return obj.id === event.resource;
-      });
+      const resource = types.find((obj) => obj.id === event.resource);
       setHeader(
         '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>',
       );
@@ -192,12 +180,12 @@ function App() {
       // fill popup form with event data
       loadPopupForm(event);
       // open the popup
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const typeChange = React.useCallback(
+  const typeChange = useCallback(
     (ev) => {
       const value = +ev.target.value;
       setType(value);
@@ -206,7 +194,7 @@ function App() {
     [tempMeal],
   );
 
-  const onEventDeleted = React.useCallback(
+  const handleEventDeleted = useCallback(
     (args) => {
       deleteEvent(args.event);
     },
@@ -214,7 +202,7 @@ function App() {
   );
 
   // popup options
-  const popupButtons = React.useMemo(() => {
+  const popupButtons = useMemo(() => {
     if (isEdit) {
       return [
         'cancel',
@@ -242,40 +230,49 @@ function App() {
     }
   }, [isEdit, saveEvent]);
 
-  const onClose = React.useCallback(() => {
+  const onPopupClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setMyMeals([...myMeals]);
     }
-    setOpen(false);
+    setPopupOpen(false);
   }, [isEdit, myMeals]);
 
-  const extendDefaultEvent = React.useCallback((args) => {
-    return {
+  const extendMyDefaultEvent = useCallback(
+    () => ({
       title: 'New meal',
       allDay: true,
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const renderMyResource = (resource) => {
-    return (
-      <div className="md-meal-planner-cont">
-        <div className="md-meal-planner-title" style={{ color: resource.color }}>
-          <span className="md-meal-planner-icon" dangerouslySetInnerHTML={{ __html: resource.icon }}></span>
-          {resource.name}
-        </div>
-        <div className="md-meal-planner-kcal">{resource.kcal}</div>
+  const renderMyResource = (resource) => (
+    <div className="md-meal-planner-cont">
+      <div className="md-meal-planner-title" style={{ color: resource.color }}>
+        <span className="md-meal-planner-icon" dangerouslySetInnerHTML={{ __html: resource.icon }}></span>
+        {resource.name}
       </div>
-    );
-  };
+      <div className="md-meal-planner-kcal">{resource.kcal}</div>
+    </div>
+  );
 
-  const myScheduleEvent = React.useCallback((args) => {
+  const myScheduleEvent = useCallback((args) => {
     const event = args.original;
     return (
       <div className="md-meal-planner-event">
         <div className="md-meal-planner-event-title">{event.title}</div>
         {event.calories && <div className="md-meal-planner-event-desc">Calories {event.calories} kcal</div>}
       </div>
+    );
+  }, []);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/meal-planner/',
+      (events) => {
+        setMyMeals(events);
+      },
+      'jsonp',
     );
   }, []);
 
@@ -289,10 +286,10 @@ function App() {
         dragToResize={false}
         dragToMove={true}
         clickToCreate={true}
-        extendDefaultEvent={extendDefaultEvent}
-        onEventClick={onEventClick}
-        onEventCreated={onEventCreated}
-        onEventDeleted={onEventDeleted}
+        extendDefaultEvent={extendMyDefaultEvent}
+        onEventClick={handleEventClick}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDeleted}
         renderResource={renderMyResource}
         renderScheduleEventContent={myScheduleEvent}
         cssClass="md-meal-planner-calendar"
@@ -303,19 +300,17 @@ function App() {
         contentPadding={false}
         headerText={headerText}
         buttons={popupButtons}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isPopupOpen}
+        onClose={onPopupClose}
         responsive={responsivePopup}
         cssClass="md-meal-planner-popup"
       >
         <SegmentedGroup onChange={typeChange} value={type}>
-          {types.map((type) => {
-            return (
-              <SegmentedItem value={type.id} key={type.id}>
-                {type.name}
-              </SegmentedItem>
-            );
-          })}
+          {types.map((type) => (
+            <Segmented value={type.id} key={type.id}>
+              {type.name}
+            </Segmented>
+          ))}
         </SegmentedGroup>
         <div className="mbsc-form-group">
           <Input label="Name" value={name} onChange={nameChange} />

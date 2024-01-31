@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { MbscEventcalendar, setOptions, getJson /* localeImport */ } from '@mobiscroll/vue'
+import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -67,9 +67,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     className="md-resource-header-template"
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"
@@ -90,14 +90,6 @@ onMounted(() => {
 </template>
 
 <style>
-/*<hidden>*/
-
-.demo-timeline-resource-header-template {
-  height: 100%;
-}
-
-/*</hidden>*/
-
 .md-resource-header-template .mbsc-timeline-resource-col {
   width: 230px;
 }

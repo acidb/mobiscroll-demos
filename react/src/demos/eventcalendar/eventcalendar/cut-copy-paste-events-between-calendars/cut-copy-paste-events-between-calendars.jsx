@@ -1,4 +1,4 @@
-import { Eventcalendar, Page, SegmentedGroup, Segmented, Select, setOptions, Snackbar, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, Page, Segmented, SegmentedGroup, Select, setOptions, Snackbar, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import './cut-copy-paste-events-between-calendars.css';
 
@@ -189,9 +189,7 @@ function App() {
             const activeEvents = activeCalendar === 'first' ? firstEvents : secondEvents;
             let eventsToUpdate = [...activeEvents];
             for (const event of deletedEvents) {
-              eventsToUpdate = eventsToUpdate.filter((ev) => {
-                return ev.id !== event.id;
-              });
+              eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
             }
 
             if (activeCalendar === 'first') {
@@ -212,17 +210,17 @@ function App() {
     [activeCalendar, deletedEvents, firstEvents, secondEvents],
   );
 
-  const getActiveEvents = useCallback(() => {
-    return activeCalendar === 'first' ? firstEvents : secondEvents;
-  }, [activeCalendar, firstEvents, secondEvents]);
+  const getActiveEvents = useCallback(
+    () => (activeCalendar === 'first' ? firstEvents : secondEvents),
+    [activeCalendar, firstEvents, secondEvents],
+  );
 
-  const getActiveSelectedEvents = useCallback(() => {
-    return activeCalendar === 'first' ? firstSelectedEvents : secondSelectedEvents;
-  }, [activeCalendar, firstSelectedEvents, secondSelectedEvents]);
+  const getActiveSelectedEvents = useCallback(
+    () => (activeCalendar === 'first' ? firstSelectedEvents : secondSelectedEvents),
+    [activeCalendar, firstSelectedEvents, secondSelectedEvents],
+  );
 
-  const monthDiff = useCallback((d1, d2) => {
-    return d2.getMonth() - d1.getMonth() + 12 * (d2.getFullYear() - d1.getFullYear());
-  }, []);
+  const monthDiff = useCallback((d1, d2) => d2.getMonth() - d1.getMonth() + 12 * (d2.getFullYear() - d1.getFullYear()), []);
 
   const pasteEvents = useCallback(() => {
     const activeEvents = getActiveEvents();
@@ -255,9 +253,7 @@ function App() {
         let cutEvs = activeCalendar === cutCalendar ? eventsToUpdate : cutCalendar === 'first' ? firstEvents : secondEvents;
         setMoveEvents([...selectedEvents]);
         for (const event of selectedEvents) {
-          cutEvs = cutEvs.filter((ev) => {
-            return ev.id !== event.id;
-          });
+          cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
         }
         if (cutCalendar === 'first') {
           setFirstEvents(cutEvs);
@@ -280,9 +276,7 @@ function App() {
 
               let cutEvs = getActiveEvents();
               for (const event of pastedEvents) {
-                cutEvs = cutEvs.filter((ev) => {
-                  return ev.id !== event.id;
-                });
+                cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
               }
               if (activeCalendar === 'first') {
                 setFirstEvents(cutEvs);
@@ -332,9 +326,7 @@ function App() {
       setDeletedEvents(activeSelectedEvents);
 
       for (const event of activeSelectedEvents) {
-        eventsToUpdate = eventsToUpdate.filter((ev) => {
-          return ev.id !== event.id;
-        });
+        eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
       }
 
       if (activeCalendar === 'first') {
@@ -438,9 +430,7 @@ function App() {
 
       let cutEvs = getActiveEvents();
       for (const event of pastedEvents) {
-        cutEvs = cutEvs.filter((ev) => {
-          return ev.id !== event.id;
-        });
+        cutEvs = cutEvs.filter((ev) => ev.id !== event.id);
       }
       if (activeCalendar === 'first') {
         setFirstEvents(cutEvs);

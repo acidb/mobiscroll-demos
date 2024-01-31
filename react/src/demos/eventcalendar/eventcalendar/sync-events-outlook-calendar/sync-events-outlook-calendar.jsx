@@ -144,11 +144,12 @@ function App() {
     [calendarData, handleError],
   );
 
-  const extendDefaultEvent = useCallback(() => {
-    return {
+  const extendDefaultEvent = useCallback(
+    () => ({
       color: calendarData[primaryCalendarId].color,
-    };
-  }, [calendarData, primaryCalendarId]);
+    }),
+    [calendarData, primaryCalendarId],
+  );
 
   const signIn = useCallback(() => {
     outlookCalendarSync.signIn().catch(handleError);
@@ -275,11 +276,9 @@ function App() {
             </div>
             <div className="mbsc-form-group-inset md-sync-events-outlook-inset">
               <div className="mbsc-form-group-title">My Calendars</div>
-              {myCalendars.map((cal) => {
-                return (
-                  <Switch label={cal.name} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
-                );
-              })}
+              {myCalendars.map((cal) => (
+                <Switch label={cal.name} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+              ))}
             </div>
             <div className="mbsc-form-group-inset">
               <Button className="md-sync-events-outlook-button mbsc-button-block" onClick={signOut}>

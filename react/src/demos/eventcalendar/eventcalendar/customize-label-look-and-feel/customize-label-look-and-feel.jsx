@@ -18,25 +18,27 @@ function App() {
     setToastOpen(false);
   }, []);
 
-  const handleEventClick = useCallback((event) => {
-    setToastText(event.event.title);
+  const handleEventClick = useCallback((args) => {
+    setToastText(args.event.title);
     setToastOpen(true);
   }, []);
 
-  const renderLabel = useCallback((data) => {
-    return data.isMultiDay ? (
-      <div style={{ background: data.original.color, color: '#000' }} className="multi-day-event">
-        {data.original.title}
-      </div>
-    ) : (
-      <>
-        <div className="single-day-event-dot" style={{ background: data.original.color }}></div>
-        <div className="single-day-event" style={{ color: '#000' }}>
+  const customLabel = useCallback(
+    (data) =>
+      data.isMultiDay ? (
+        <div style={{ background: data.original.color, color: '#000' }} className="multi-day-event">
           {data.original.title}
         </div>
-      </>
-    );
-  }, []);
+      ) : (
+        <>
+          <div className="single-day-event-dot" style={{ background: data.original.color }}></div>
+          <div className="single-day-event" style={{ color: '#000' }}>
+            {data.original.title}
+          </div>
+        </>
+      ),
+    [],
+  );
 
   useEffect(() => {
     getJson(
@@ -50,7 +52,13 @@ function App() {
 
   return (
     <>
-      <Eventcalendar renderLabel={renderLabel} data={myEvents} view={myView} onEventClick={handleEventClick} />
+      <Eventcalendar
+        // drag
+        renderLabel={customLabel}
+        data={myEvents}
+        view={myView}
+        onEventClick={handleEventClick}
+      />
       <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );

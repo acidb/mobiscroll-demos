@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
-import { HttpClient } from '@angular/common/http';
 
 setOptions({
   // locale,
@@ -63,15 +63,11 @@ export class AppComponent implements OnInit {
     ],
     onEventCreateFailed: () => {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         message: "Can't create event on this date",
       });
     },
     onEventUpdateFailed: () => {
       this.notify.toast({
-        //<hidden>
-        // theme,//</hidden>
         message: "Can't add event on this date",
       });
     },

@@ -1,10 +1,24 @@
-import React from 'react';
-import { Eventcalendar, Page, Toast, MbscCalendarEvent, MbscEventcalendarView, Button /* localeImport */ } from '@mobiscroll/react';
+import {
+  Button,
+  Eventcalendar,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscSelectedDateChangeEvent,
+  Page,
+  setOptions,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const now = new Date();
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([
     {
       start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
       end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
@@ -12,22 +26,27 @@ const App: React.FC = () => {
       color: '#35bb5a',
     },
   ]);
-  const [selectedDate, setSelectedDate] = React.useState<Date>();
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
 
-  const closeToast = React.useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       agenda: {
         type: 'month',
       },
-    };
+    }),
+    [],
+  );
+
+  const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
+    setSelectedDate(new Date(args.date as string));
   }, []);
 
-  const addEvent = () => {
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const addEvent = useCallback(() => {
     const newEvent = {
       // base properties
       title: 'Product planning',
@@ -41,23 +60,17 @@ const App: React.FC = () => {
     };
 
     setSelectedDate(new Date(2018, 11, 21));
-    setEvents([...myEvents, newEvent]);
+    setEvents((myEvents) => [...myEvents, newEvent]);
     setToastOpen(true);
-  };
+  }, []);
 
   return (
     <Page>
-      <Eventcalendar
-        // theme
-        // locale
-        data={myEvents}
-        view={view}
-        selectedDate={selectedDate}
-      />
+      <Eventcalendar data={myEvents} view={myView} selectedDate={selectedDate} onSelectedDateChange={handleSelectedDateChange} />
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>
-      <Toast message="Event added" isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 };

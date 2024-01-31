@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
-  setOptions,
   getJson,
   MbscButton,
-  MbscToast /* localeImport */
+  MbscEventcalendar,
+  MbscToast,
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -110,12 +110,4 @@ onMounted(() => {
 .md-custom-event .mbsc-material.mbsc-event-time {
   margin-top: 5px;
 }
-
-/*<hidden>*/
-
-.demo-event-content-customization {
-  height: 100%;
-}
-
-/*</hidden>*/
 </style>

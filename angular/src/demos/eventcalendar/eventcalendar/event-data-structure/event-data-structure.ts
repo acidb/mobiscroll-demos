@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { setOptions, Notifications /* localeImport */ } from '@mobiscroll/angular';
+import { Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -52,8 +52,6 @@ export class AppComponent {
     this.myEvents = [...this.myEvents, newEvent];
 
     this.notify.toast({
-      //<hidden>
-      // theme,//</hidden>
       message: 'Event added',
     });
   }

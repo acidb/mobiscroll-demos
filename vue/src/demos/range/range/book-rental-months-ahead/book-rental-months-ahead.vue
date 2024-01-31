@@ -1,14 +1,14 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
-  MbscDatepicker,
-  MbscCalendarNav,
-  MbscCalendarPrev,
-  MbscCalendarNext,
   formatDate,
   getJson,
+  MbscCalendarNav,
+  MbscCalendarNext,
+  MbscCalendarPrev,
+  MbscDatepicker,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,

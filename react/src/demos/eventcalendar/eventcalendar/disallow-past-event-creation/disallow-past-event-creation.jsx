@@ -14,7 +14,7 @@ function App() {
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
-  const { current: view } = useRef({ calendar: { labels: true } });
+  const { current: myView } = useRef({ calendar: { labels: true } });
 
   const myInvalid = useMemo(
     () => [
@@ -91,7 +91,7 @@ function App() {
     <>
       <Eventcalendar
         className="md-disallow-past-event-creation"
-        view={view}
+        view={myView}
         data={myEvents}
         invalid={myInvalid}
         clickToCreate={true}

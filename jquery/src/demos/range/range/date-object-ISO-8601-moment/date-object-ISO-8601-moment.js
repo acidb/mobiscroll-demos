@@ -1,8 +1,9 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 import moment from 'moment';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -11,37 +12,37 @@ export default {
 
     $(function () {
       var dateInstance = $('#demo-date')
-          .mobiscroll()
-          .datepicker({
-            controls: ['calendar'],
-            select: 'range',
-            onChange: function (event, inst) {
-              updateValue('returnVal', inst);
-            },
-          })
-          .mobiscroll('getInst'),
-        isoInstance = $('#demo-iso')
-          .mobiscroll()
-          .datepicker({
-            controls: ['calendar'],
-            select: 'range',
-            returnFormat: 'iso8601',
-            onChange: function (event, inst) {
-              updateValue('returnISO', inst);
-            },
-          })
-          .mobiscroll('getInst'),
-        momentInstance = $('#demo-moment')
-          .mobiscroll()
-          .datepicker({
-            controls: ['calendar'],
-            select: 'range',
-            returnFormat: 'moment',
-            onChange: function (event, inst) {
-              updateValue('returnMoment', inst);
-            },
-          })
-          .mobiscroll('getInst');
+        .mobiscroll()
+        .datepicker({
+          controls: ['calendar'],
+          select: 'range',
+          onChange: function (event, inst) {
+            updateValue('returnVal', inst);
+          },
+        })
+        .mobiscroll('getInst');
+      var isoInstance = $('#demo-iso')
+        .mobiscroll()
+        .datepicker({
+          controls: ['calendar'],
+          select: 'range',
+          returnFormat: 'iso8601',
+          onChange: function (event, inst) {
+            updateValue('returnISO', inst);
+          },
+        })
+        .mobiscroll('getInst');
+      var momentInstance = $('#demo-moment')
+        .mobiscroll()
+        .datepicker({
+          controls: ['calendar'],
+          select: 'range',
+          returnFormat: 'moment',
+          onChange: function (event, inst) {
+            updateValue('returnMoment', inst);
+          },
+        })
+        .mobiscroll('getInst');
 
       $('#setDate').click(function () {
         $('#demo-date').mobiscroll('setVal', [new Date(2020, 10, 15), new Date(2020, 10, 21)], true);
@@ -71,6 +72,7 @@ export default {
       }
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Working with Js Date Objects</div>

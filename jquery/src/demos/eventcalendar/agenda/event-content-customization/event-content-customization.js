@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -33,9 +34,9 @@ export default {
               '</div>'
             );
           },
-          onEventClick: function (event, inst) {
-            const ev = event.event.original || event.event;
-            if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
+          onEventClick: function (args) {
+            var ev = args.event.original || args.event;
+            if (args.domEvent.target.classList.contains('md-custom-event-btn')) {
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
@@ -76,9 +77,11 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-custom-event-content"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-custom-event-img {
     width: 30px;

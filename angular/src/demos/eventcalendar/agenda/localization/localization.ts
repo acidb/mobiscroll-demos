@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { locale, setOptions, MbscEventcalendarOptions, MbscCalendarEvent /* localeImport */ } from '@mobiscroll/angular';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { locale, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // theme
@@ -8,21 +8,21 @@ setOptions({
 
 @Component({
   selector: 'app-agenda-localization',
+  styleUrl: './localization.css',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './localization.html',
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   myEvents: MbscCalendarEvent[] = [];
+  myView: MbscEventcalendarView = {
+    calendar: { type: 'week' },
+    agenda: { type: 'day' },
+  };
+
   localeStr = 'en';
   localeAll = locale;
-
-  settings: MbscEventcalendarOptions = {
-    view: {
-      calendar: { type: 'week' },
-      agenda: { type: 'day' },
-    },
-  };
 
   languages = [
     { name: 'Arabic', value: 'ar' },

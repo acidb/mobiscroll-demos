@@ -1,16 +1,16 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  getJson,
-  Toast,
-  setOptions,
   CalendarNav,
-  SegmentedGroup,
-  SegmentedItem,
+  CalendarNext,
   CalendarPrev,
   CalendarToday,
-  CalendarNext /* localeImport */,
+  Eventcalendar,
+  getJson,
+  Segmented,
+  SegmentedGroup,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './resource-filtering-in-header.css';
 
 setOptions({
@@ -19,29 +19,17 @@ setOptions({
 });
 
 function App() {
-  const [selected, setSelected] = React.useState({ 1: true });
-  const [events, setEvents] = React.useState([]);
-  const [filteredEvents, setFilteredEvents] = React.useState([]);
-  const [view, setView] = React.useState('month');
-  const [toastText, setToastText] = React.useState();
-  const [isToastOpen, setToastOpen] = React.useState(false);
+  const [selected, setSelected] = useState({ 1: true });
+  const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [toastText, setToastText] = useState();
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/custom-events/',
-      (events) => {
-        setEvents(events);
-        filterEvents(events, selected);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const filterEvents = (events, selected) => {
+  const filterEvents = useCallback((events, selected) => {
     let ev = [];
     for (let i = 0; i < events.length; ++i) {
       const item = events[i];
@@ -58,61 +46,81 @@ function App() {
     }
 
     setFilteredEvents(ev);
-  };
+  }, []);
 
-  const [calView, setCalView] = React.useState({
-    schedule: { type: 'week' },
-  });
+  const calView = useMemo(
+    () => ({
+      schedule: { type: 'week' },
+    }),
+    [],
+  );
 
-  const filter = (ev) => {
-    const value = ev.target.value;
-    const checked = ev.target.checked;
+  const filter = useCallback(
+    (ev) => {
+      const value = ev.target.value;
+      const checked = ev.target.checked;
 
-    selected[value] = checked;
+      selected[value] = checked;
 
-    setSelected(selected);
+      setSelected(selected);
 
-    filterEvents(events, selected);
+      filterEvents(events, selected);
 
-    setToastText((checked ? 'Showing ' : 'Hiding ') + document.querySelector('.md-header-filter-name-' + value).textContent + ' events');
-    setToastOpen(true);
-  };
+      setToastText((checked ? 'Showing ' : 'Hiding ') + document.querySelector('.md-header-filter-name-' + value).textContent + ' events');
+      setToastOpen(true);
+    },
+    [events, filterEvents, selected],
+  );
 
-  const customWithNavButtons = () => {
-    return (
-      <React.Fragment>
+  const customWithNavButtons = useCallback(
+    () => (
+      <>
         <CalendarNav className="md-header-filter-nav" />
         <div className="md-header-filter-controls">
           <SegmentedGroup select="multiple">
-            <SegmentedItem value={1} checked={selected[1]} onChange={filter}>
+            <Segmented value={1} checked={selected[1]} onChange={filter}>
               <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/m1.png" />
               <span className="md-header-filter-name md-header-filter-name-1">Barry</span>
-            </SegmentedItem>
-            <SegmentedItem value={2} checked={selected[2]} onChange={filter}>
+            </Segmented>
+            <Segmented value={2} checked={selected[2]} onChange={filter}>
               <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/f1.png" />
               <span className="md-header-filter-name md-header-filter-name-2">Hortense</span>
-            </SegmentedItem>
-            <SegmentedItem value={3} checked={selected[3]} onChange={filter}>
+            </Segmented>
+            <Segmented value={3} checked={selected[3]} onChange={filter}>
               <img className="md-header-filter-img" src="https://img.mobiscroll.com/demos/m2.png" />
               <span className="md-header-filter-name md-header-filter-name-3">Carl</span>
-            </SegmentedItem>
+            </Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev className="md-header-filter-prev" />
+        <CalendarToday className="md-header-filter-today" />
         <CalendarNext className="md-header-filter-next" />
-      </React.Fragment>
+      </>
+    ),
+    [filter, selected],
+  );
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/custom-events/',
+      (events) => {
+        setEvents(events);
+        filterEvents(events, selected);
+      },
+      'jsonp',
     );
-  };
+  }, [filterEvents, selected]);
 
   return (
     <div>
-      <Eventcalendar renderHeader={customWithNavButtons} view={calView} data={filteredEvents} cssClass="md-custom-header-filtering" />
-      <Toast
-        // theme
-        message={toastText}
-        isOpen={isToastOpen}
-        onClose={closeToast}
+      <Eventcalendar
+        // drag
+        renderHeader={customWithNavButtons}
+        view={calView}
+        data={filteredEvents}
+        cssClass="md-custom-header-filtering"
       />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, Page, Input, getJson, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, formatDate, getJson, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './searching-events-in-sidebar.css';
 
 setOptions({
@@ -8,31 +8,33 @@ setOptions({
 });
 
 function App() {
-  const [calEvents, setCalEvents] = React.useState([]);
-  const [listEvents, setListEvents] = React.useState([]);
-  const [mySelectedEvent, setSelectedEvent] = React.useState([]);
-  const [showList, setShowList] = React.useState(false);
-  const [currentDate, setCurrentDate] = React.useState(new Date());
-  const timerRef = React.useRef(null);
+  const [calEvents, setCalEvents] = useState([]);
+  const [listEvents, setListEvents] = useState([]);
+  const [mySelectedEvent, setSelectedEvent] = useState([]);
+  const [showList, setShowList] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const timerRef = useRef(null);
 
-  const calView = React.useMemo(() => {
-    return {
+  const calView = useMemo(
+    () => ({
       schedule: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const listView = React.useMemo(() => {
-    return {
+  const listView = useMemo(
+    () => ({
       agenda: {
         type: 'year',
         size: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const onSearch = React.useCallback((ev) => {
+  const onSearch = useCallback((ev) => {
     const text = ev.target.value;
 
     if (timerRef.current) {
@@ -55,7 +57,7 @@ function App() {
     }, 200);
   }, []);
 
-  const onPageLoading = React.useCallback((args) => {
+  const handlePageLoading = useCallback((args) => {
     const start = formatDate('YYYY-MM-DD', args.viewStart);
     const end = formatDate('YYYY-MM-DD', args.viewEnd);
 
@@ -70,7 +72,7 @@ function App() {
     });
   }, []);
 
-  const eventClick = React.useCallback((args) => {
+  const handleEventClick = useCallback((args) => {
     setCurrentDate(args.event.start);
     setSelectedEvent([args.event]);
   }, []);
@@ -80,7 +82,7 @@ function App() {
       <div className="md-search-events-sidebar mbsc-flex">
         <div className="md-search-events-cont mbsc-flex-col mbsc-flex-none">
           <Input startIcon="material-search" onChange={onSearch} inputStyle="outline" placeholder="Search events" />
-          {showList && <Eventcalendar view={listView} data={listEvents} showControls={false} onEventClick={eventClick} />}
+          {showList && <Eventcalendar view={listView} data={listEvents} showControls={false} onEventClick={handleEventClick} />}
         </div>
         <div className="md-search-events-calendar mbsc-flex-1-1">
           <Eventcalendar
@@ -93,7 +95,7 @@ function App() {
             data={calEvents}
             selectedEvents={mySelectedEvent}
             selectedDate={currentDate}
-            onPageLoading={onPageLoading}
+            onPageLoading={handlePageLoading}
           />
         </div>
       </div>

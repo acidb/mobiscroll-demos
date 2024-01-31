@@ -1,13 +1,18 @@
-import React from 'react';
-import { Eventcalendar, momentTimezone /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment-timezone';
+import { useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
 function App() {
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,7)',
         end: 'dyndatetime(y,m,d,9)',
@@ -50,11 +55,12 @@ function App() {
         title: 'Team-Building',
         resource: [1, 2, 3, 4, 5],
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -80,24 +86,24 @@ function App() {
         name: 'Resource E',
         color: '#ff4600',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: { type: 'week' },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       dataTimezone="utc"
       displayTimezone="local"
       timezonePlugin={momentTimezone}
       data={myEvents}
-      view={view}
+      view={myView}
       resources={myResources}
       dragToCreate={true}
       dragToMove={true}

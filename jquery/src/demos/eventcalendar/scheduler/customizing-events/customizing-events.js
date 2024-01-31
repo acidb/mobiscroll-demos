@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -13,6 +14,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
+          // drag,
           responsive: {
             xsmall: {
               view: {
@@ -72,8 +74,8 @@ export default {
                 <span class='md-buffer-time'>${args.original.bufferBefore} minutes </span>
             </div>`;
           },
-          onEventClick: function (event) {
-            if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
+          onEventClick: function (args) {
+            if (args.domEvent.target.classList.contains('md-custom-event-btn')) {
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
@@ -184,9 +186,11 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-customize-events" class="md-schedule-template"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-custom-event-cont {
     font-size: 12px;

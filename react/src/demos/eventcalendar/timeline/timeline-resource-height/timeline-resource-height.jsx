@@ -1,21 +1,27 @@
-import React from 'react';
-import { Eventcalendar /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 import './timeline-resource-height.css';
 
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
 function App() {
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         rowHeight: 'equal',
         type: 'week',
         timeCellStep: 240,
         timeLabelStep: 240,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,4)',
         end: 'dyndatetime(y,m,d,22)',
@@ -70,11 +76,12 @@ function App() {
         title: 'Event9',
         resource: 4,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Flatiron Room',
@@ -100,14 +107,14 @@ function App() {
         name: 'King’s Landing',
         color: '#ff4600',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       cssClass="md-timeline-height"

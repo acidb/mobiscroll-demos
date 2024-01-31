@@ -5,36 +5,36 @@
         <div class="mbsc-form-group">
           <div class="mbsc-form-group-title">Date object</div>
           <div class="mbsc-button-group-block">
-            <mbsc-button (click)="addDate()"
-              >start: new Date(2020, 4, 19, 10, 45) <br />
-              end: new Date(2020, 4, 19, 11, 45)</mbsc-button
-            >
+            <mbsc-button (click)="addDateObjEvent()">
+              start: new Date(2020, 4, 19, 10, 45) <br />
+              end: new Date(2020, 4, 19, 11, 45)
+            </mbsc-button>
           </div>
-          <mbsc-eventcalendar [data]="dateObjData" [view]="view" [selectedDate]="selectedObj"></mbsc-eventcalendar>
+          <mbsc-eventcalendar [data]="dateObjEvents" [view]="myView" [selectedDate]="selectedDateObj"></mbsc-eventcalendar>
         </div>
       </div>
       <div class="mbsc-col-sm-12 mbsc-col-md-4">
         <div class="mbsc-form-group">
-          <div class="mbsc-form-group-title">ISO string</div>
+          <div class="mbsc-form-group-title">ISO 8601 date string</div>
           <div class="mbsc-button-group-block">
-            <mbsc-button (click)="addISO()"
-              >start: 2020-05-20T12:30:00 <br />
-              end: 2020-05-20T13:00:00</mbsc-button
-            >
+            <mbsc-button (click)="addDateISOEvent()">
+              start: '2020-05-20T12:30:00' <br />
+              end: '2020-05-20T13:00:00'
+            </mbsc-button>
           </div>
-          <mbsc-eventcalendar [data]="dateStrData" [view]="view" [selectedDate]="selectedISO"></mbsc-eventcalendar>
+          <mbsc-eventcalendar [data]="dateISOEvents" [view]="myView" [selectedDate]="selectedDateISO"></mbsc-eventcalendar>
         </div>
       </div>
       <div class="mbsc-col-sm-12 mbsc-col-md-4">
         <div class="mbsc-form-group">
-          <div class="mbsc-form-group-title">Moment js</div>
+          <div class="mbsc-form-group-title">Moment.js object</div>
           <div class="mbsc-button-group-block">
-            <mbsc-button (click)="addMoment()"
-              >start: moment([2020, 4, 21, 11]) <br />
-              end: moment([2020, 4, 21, 14])</mbsc-button
-            >
+            <mbsc-button (click)="addDateMomentEvent()">
+              start: moment([2020, 4, 21, 11]) <br />
+              end: moment([2020, 4, 21, 14])
+            </mbsc-button>
           </div>
-          <mbsc-eventcalendar [data]="momentData" [view]="view" [selectedDate]="selectedMoment"></mbsc-eventcalendar>
+          <mbsc-eventcalendar [data]="dateMomentEvents" [view]="myView" [selectedDate]="selectedDateMoment"></mbsc-eventcalendar>
         </div>
       </div>
     </div>

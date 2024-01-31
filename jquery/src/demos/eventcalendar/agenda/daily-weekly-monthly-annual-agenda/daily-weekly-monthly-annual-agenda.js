@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,7 +10,9 @@ export default {
     });
 
     $(function () {
-      var daily, weekly, monthly;
+      var daily;
+      var weekly;
+      var monthly;
 
       daily = $('#demo-agenda-daily')
         .mobiscroll()
@@ -49,6 +52,7 @@ export default {
       );
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div class="demo-inline demo-max-width-1100" mbsc-page>

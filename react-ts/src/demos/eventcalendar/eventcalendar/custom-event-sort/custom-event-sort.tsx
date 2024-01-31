@@ -1,5 +1,10 @@
-import React from 'react';
-import { Eventcalendar, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo } from 'react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const now = new Date();
 const day = now.getDay();
@@ -120,23 +125,21 @@ const myEvents = [
 ];
 
 function App() {
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       calendar: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const orderMyEvents = React.useCallback((event) => {
-    return event.accepted ? 1 : -1;
-  }, []);
+  const orderMyEvents = useCallback((event: MbscCalendarEvent) => (event.accepted ? 1 : -1), []);
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       eventOrder={orderMyEvents}
     />

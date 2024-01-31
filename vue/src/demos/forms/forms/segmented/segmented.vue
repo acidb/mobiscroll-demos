@@ -1,8 +1,8 @@
 <script setup>
 import {
-  MbscSegmentedGroup,
-  MbscSegmented,
   MbscPage,
+  MbscSegmented,
+  MbscSegmentedGroup,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 

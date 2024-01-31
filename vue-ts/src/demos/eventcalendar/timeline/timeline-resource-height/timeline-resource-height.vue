@@ -103,9 +103,9 @@ const myView: MbscEventcalendarView = {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     className="md-timeline-height"
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"
@@ -113,14 +113,6 @@ const myView: MbscEventcalendarView = {
 </template>
 
 <style>
-/*<hidden>*/
-
-.demo-custom-timeline-resource-height {
-  height: 100%;
-}
-
-/*</hidden>*/
-
 .md-timeline-height .mbsc-timeline-resource,
 .md-timeline-height .mbsc-timeline-row {
   min-height: 120px;

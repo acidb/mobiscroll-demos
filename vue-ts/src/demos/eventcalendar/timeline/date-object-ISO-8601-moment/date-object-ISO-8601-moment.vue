@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
+  MbscButton,
   MbscEventcalendar,
   MbscPage,
-  MbscButton,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 import moment from 'moment'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -132,7 +132,6 @@ function addMoment() {
               </MbscButton>
             </div>
             <MbscEventcalendar
-              :drag="drag"
               :data="dateObjData"
               :resources="myResources"
               :view="myView"
@@ -150,7 +149,6 @@ function addMoment() {
               </MbscButton>
             </div>
             <MbscEventcalendar
-              :drag="drag"
               :data="isoData"
               :resources="myResources"
               :view="myView"
@@ -168,7 +166,6 @@ function addMoment() {
               </MbscButton>
             </div>
             <MbscEventcalendar
-              :drag="drag"
               :data="momentData"
               :resources="myResources"
               :view="myView"

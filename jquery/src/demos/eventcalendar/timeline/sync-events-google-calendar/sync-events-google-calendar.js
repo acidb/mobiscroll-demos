@@ -1,10 +1,12 @@
-import $ from 'jquery';
-import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
+import * as m from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
+var mobiscroll = m;
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -287,7 +289,7 @@ export default {
                           message: 'Event updated on "' + calendarData[calendarId].name + '" calendar',
                         });
                       })
-                      .catch(function () {
+                      .catch(function (error) {
                         inst.updateEvent(args.oldEvent);
                         onError(error);
                       });
@@ -311,7 +313,7 @@ export default {
                     var calendarId = event.googleCalendarId;
                     googleCalendarSync
                       .deleteEvent(calendarId, event)
-                      .then(function (resp) {
+                      .then(function () {
                         inst.removeEvent(event);
                         events = events.filter(function (ev) {
                           return event.id !== ev.id;
@@ -389,6 +391,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-sync-events-google-calendar"></div>
 
@@ -413,6 +416,7 @@ export default {
 
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-google-calendar-buttons {
     flex: 1 0 auto;

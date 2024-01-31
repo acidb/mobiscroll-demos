@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Datepicker,
   CalendarPrev,
@@ -11,6 +10,7 @@ import {
   MbscCalendarColor,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './book-rental-months-ahead.css';
 
 setOptions({
@@ -25,8 +25,8 @@ const App: React.FC = () => {
   const [invalid, setInvalid] = React.useState<any>([]);
   const [colors, setColors] = React.useState<MbscCalendarColor[]>([]);
 
-  const getColors = React.useCallback((start, end) => {
-    return [
+  const getColors = React.useCallback(
+    (start, end) => [
       {
         date: start,
         cellCssClass: 'vacation-check-in',
@@ -41,8 +41,9 @@ const App: React.FC = () => {
         background: '#ffbaba80',
         cellCssClass: 'vacation-booked',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   React.useEffect(() => {
     const monthColors = [
@@ -194,8 +195,8 @@ const App: React.FC = () => {
       (data: any) => {
         const prices = data.prices;
         const bookings = data.bookings;
-        let labels: any = [];
-        let invalids: any = [];
+        const labels: any = [];
+        const invalids: any = [];
         let colors: any = [];
         let endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0);
 
@@ -234,8 +235,8 @@ const App: React.FC = () => {
     );
   }, [getColors, invalid]);
 
-  const calendarHeader = React.useCallback(() => {
-    return (
+  const calendarHeader = React.useCallback(
+    () => (
       <React.Fragment>
         <CalendarNav />
         <div className="md-book-rental-header">
@@ -248,8 +249,9 @@ const App: React.FC = () => {
         <CalendarToday />
         <CalendarNext />
       </React.Fragment>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   return (
     <Datepicker

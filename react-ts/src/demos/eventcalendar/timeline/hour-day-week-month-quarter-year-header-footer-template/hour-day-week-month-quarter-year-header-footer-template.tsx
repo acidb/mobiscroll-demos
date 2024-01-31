@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -8,6 +7,7 @@ import {
   MbscEventcalendarView,
   MbscResource /* localeImport */,
 } from '@mobiscroll/react';
+import React from 'react';
 import './hour-day-week-month-quarter-year-header-footer-template.css';
 
 setOptions({
@@ -16,13 +16,14 @@ setOptions({
 });
 
 const App: React.FC = () => {
-  const hourView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const hourView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const hourlyEvents: MbscCalendarEvent[] = [
     {
@@ -111,13 +112,14 @@ const App: React.FC = () => {
     },
   ];
 
-  const dayView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const dayView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'month',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const dailyEvents: MbscCalendarEvent[] = [
     {
@@ -206,15 +208,16 @@ const App: React.FC = () => {
     },
   ];
 
-  const weekView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const weekView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'week',
         resolutionHorizontal: 'week',
         size: 6,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const weeklyEvents: MbscCalendarEvent[] = [
     {
@@ -303,15 +306,16 @@ const App: React.FC = () => {
     },
   ];
 
-  const monthView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const monthView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'month',
         resolutionHorizontal: 'month',
         size: 6,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const monthlyEvents: MbscCalendarEvent[] = [
     {
@@ -400,15 +404,16 @@ const App: React.FC = () => {
     },
   ];
 
-  const quarterView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const quarterView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'year',
         resolutionHorizontal: 'quarter',
         size: 1,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const quarterEvents: MbscCalendarEvent[] = [
     {
@@ -497,15 +502,16 @@ const App: React.FC = () => {
     },
   ];
 
-  const yearView = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const yearView = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'year',
         resolutionHorizontal: 'year',
         size: 6,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
   const yearlyEvents: MbscCalendarEvent[] = [
     {
@@ -594,8 +600,8 @@ const App: React.FC = () => {
     },
   ];
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Resource A',
@@ -636,14 +642,15 @@ const App: React.FC = () => {
         name: 'Resource H',
         color: '#34c8e0',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   const getEventOccurrence = React.useCallback((events: MbscCalendarEvent[]) => {
     let eventOccurrence = 'none';
 
     if (events) {
-      var eventNr = events.length;
+      const eventNr = events.length;
       if (eventNr === 0) {
         eventOccurrence = 'none';
       } else if (eventNr === 1) {
@@ -662,8 +669,8 @@ const App: React.FC = () => {
     let occuppancy = 0;
 
     if (events) {
-      var resourceIds = [];
-      var nr = 0;
+      let resourceIds = [];
+      let nr = 0;
       for (const event of events) {
         if (resourceIds.indexOf(event.resource) < 0) {
           nr++;
@@ -676,17 +683,13 @@ const App: React.FC = () => {
     return occuppancy;
   };
 
-  const renderCustomHour = (args: any) => {
-    return (
-      <div className={'md-date-header md-date-header-hour md-date-header-events-' + getEventOccurrence(args.events)}>
-        {formatDate('h:mm A', args.date)}
-      </div>
-    );
-  };
+  const renderCustomHour = (args: any) => (
+    <div className={'md-date-header md-date-header-hour md-date-header-events-' + getEventOccurrence(args.events)}>
+      {formatDate('h:mm A', args.date)}
+    </div>
+  );
 
-  const renderCustomHourFooter = (args: any) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomHourFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
 
   const renderCustomDay = (args: any) => {
     const date = args.date;
@@ -698,57 +701,39 @@ const App: React.FC = () => {
     );
   };
 
-  const renderCustomDayFooter = (args: any) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomDayFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
 
-  const renderCustomWeek = (args: any) => {
-    return (
-      <div className={'md-date-header md-date-header-week md-date-header-events-' + getEventOccurrence(args.events)}>
-        {formatDate('MMM DD', args.startDate) + ' - ' + formatDate('MMM DD', args.endDate)}
-      </div>
-    );
-  };
+  const renderCustomWeek = (args: any) => (
+    <div className={'md-date-header md-date-header-week md-date-header-events-' + getEventOccurrence(args.events)}>
+      {formatDate('MMM DD', args.startDate) + ' - ' + formatDate('MMM DD', args.endDate)}
+    </div>
+  );
 
-  const renderCustomWeekFooter = (args: any) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomWeekFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
 
-  const renderCustomMonth = (args: any) => {
-    return (
-      <div className={'md-date-header md-date-header-month md-date-header-events-' + getEventOccurrence(args.events)}>
-        {formatDate('MMM', args.date)}
-      </div>
-    );
-  };
+  const renderCustomMonth = (args: any) => (
+    <div className={'md-date-header md-date-header-month md-date-header-events-' + getEventOccurrence(args.events)}>
+      {formatDate('MMM', args.date)}
+    </div>
+  );
 
-  const renderCustomMonthFooter = (args: any) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomMonthFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
 
-  const renderCustomQuarter = (args: any) => {
-    return (
-      <div className={'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(args.events)}>
-        Quarter {args.date.getMonth() / 3 + 1}
-      </div>
-    );
-  };
+  const renderCustomQuarter = (args: any) => (
+    <div className={'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(args.events)}>
+      Quarter {args.date.getMonth() / 3 + 1}
+    </div>
+  );
 
-  const renderCustomQuarterFooter = (args: any) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomQuarterFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
 
-  const renderCustomYear = (args: any) => {
-    return (
-      <div className={'md-date-header md-date-header-year md-date-header-events-' + getEventOccurrence(args.events)}>
-        {formatDate('YYYY', args.date)}
-      </div>
-    );
-  };
+  const renderCustomYear = (args: any) => (
+    <div className={'md-date-header md-date-header-year md-date-header-events-' + getEventOccurrence(args.events)}>
+      {formatDate('YYYY', args.date)}
+    </div>
+  );
 
-  const renderCustomYearFooter = (args: any) => {
-    return <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
-  };
+  const renderCustomYearFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
 
   return (
     <div className="md-date-header-template">

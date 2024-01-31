@@ -1,32 +1,30 @@
-import React from 'react';
-import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const invalids = [
-    {
-      start: '12:00',
-      end: '13:00',
-      title: 'Lunch break',
-      recurring: {
-        repeat: 'weekly',
-        weekDays: 'MO,TU,WE,TH,FR',
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const myInvalids = useMemo(
+    () => [
+      {
+        start: '12:00',
+        end: '13:00',
+        title: 'Lunch break',
+        recurring: {
+          repeat: 'weekly',
+          weekDays: 'MO,TU,WE,TH,FR',
+        },
       },
-    },
-  ];
+    ],
+    [],
+  );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com//workday-events/?vers=5',
-      (events: any) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
       schedule: {
         type: 'week',
         startDay: 1,
@@ -36,9 +34,27 @@ const App: React.FC = () => {
         timeCellStep: 30,
         timeLabelStep: 30,
       },
-    };
+    }),
+    [],
+  );
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com//workday-events/?vers=5',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
   }, []);
 
-  return <Eventcalendar dragToCreatse={true} dragToResize={true} dragToMove={true} invalid={invalids} data={myEvents} view={view} />;
+  return (
+    <Eventcalendar
+      // drag
+      invalid={myInvalids}
+      data={myEvents}
+      view={myView}
+    />
+  );
 };
 export default App;

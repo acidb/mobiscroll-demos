@@ -1,8 +1,22 @@
+import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
 import React from 'react';
-import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+
+  const myView = React.useMemo<MbscEventcalendarView>(
+    () => ({
+      agenda: {
+        type: 'month',
+      },
+    }),
+    [],
+  );
 
   React.useEffect(() => {
     getJson(
@@ -14,51 +28,43 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
-      agenda: {
-        type: 'month',
-      },
-    };
-  }, []);
-
   return (
     <Eventcalendar
       // theme
       // locale
       data={myEvents}
-      view={view}
-      onDestroy={(event, inst) => {
+      view={myView}
+      onDestroy={() => {
         // Your custom event handler goes here
       }}
-      onEventClick={(event, inst) => {
+      onEventClick={() => {
         // Logic for event click
       }}
-      onEventDoubleClick={(event, inst) => {
+      onEventDoubleClick={() => {
         // Logic for event double click
       }}
-      onEventHoverIn={(event, inst) => {
+      onEventHoverIn={() => {
         // Logic for event hover in
       }}
-      onEventHoverOut={(event, inst) => {
+      onEventHoverOut={() => {
         // Logic for event hover out
       }}
-      onEventRightClick={(event, inst) => {
+      onEventRightClick={() => {
         // Logic for event right click
       }}
-      onInit={(event, inst) => {
+      onInit={() => {
         // Logic running on component init
       }}
-      onPageChange={(event, inst) => {
+      onPageChange={() => {
         // Your custom event handler goes here
       }}
-      onPageLoaded={(event, inst) => {
+      onPageLoaded={() => {
         // Use it to inject custom markup & attach custom listeners
       }}
-      onPageLoading={(event, inst) => {
+      onPageLoading={() => {
         // Use it to load data on demand
       }}
-      onSelectedDateChange={(event, inst) => {
+      onSelectedDateChange={() => {
         // Use it to keep track of the selected date externally
       }}
     />

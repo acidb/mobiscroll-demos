@@ -1,17 +1,17 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import {
-  MbscEventcalendar,
+  getJson,
   MbscCalendarNav,
-  MbscCalendarPrev,
   MbscCalendarNext,
+  MbscCalendarPrev,
   MbscCalendarToday,
-  MbscSegmentedGroup,
+  MbscEventcalendar,
   MbscSegmented,
+  MbscSegmentedGroup,
   MbscToast,
-  setOptions,
-  getJson /* localeImport */
+  setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -92,9 +92,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     cssClass="md-custom-header-filtering"
-    :drag="drag"
     :view="myView"
     :data="filteredEvents"
     :resources="myResources"

@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -78,12 +79,14 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <label>
     Multiline
     <input mbsc-input id="demo-multiple-lines" data-dropdown="true" data-input-style="box" data-label-style="stacked" placeholder="Please select..." />
 </label>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-multiple-lines-item {
     font-size: 14px;

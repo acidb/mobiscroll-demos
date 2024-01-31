@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     var now = new Date();
     var year = now.getFullYear();
@@ -8,6 +9,7 @@ export default {
     var day = now.getDate();
 
     mobiscroll.eventcalendar('#demo-more-events', {
+      // drag,
       view: {
         schedule: {
           allDay: false,
@@ -41,6 +43,7 @@ export default {
       ],
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-more-events"></div>
   `,

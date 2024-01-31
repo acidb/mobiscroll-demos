@@ -1,6 +1,6 @@
-import React from 'react';
-import { Eventcalendar, Page, Button, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { print } from '@mobiscroll/print';
+import { Button, Eventcalendar, getJson, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 const MY_MODULES = [print];
 
@@ -10,10 +10,21 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
-  const [inst, setInst] = React.useState(null);
+  const [myEvents, setEvents] = useState([]);
+  const [inst, setInst] = useState(null);
 
-  React.useEffect(() => {
+  const myView = useMemo(
+    () => ({
+      schedule: { type: 'week' },
+    }),
+    [],
+  );
+
+  const printView = useCallback(() => {
+    inst.print();
+  }, [inst]);
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
@@ -23,20 +34,16 @@ function App() {
     );
   }, []);
 
-  const view = React.useMemo(() => {
-    return {
-      schedule: { type: 'week' },
-    };
-  }, []);
-
-  const printView = () => {
-    inst.print();
-  };
-
   return (
     <Page>
       <Button onClick={printView}>Print scheduler</Button>
-      <Eventcalendar data={myEvents} view={view} ref={setInst} modules={MY_MODULES} />
+      <Eventcalendar
+        // drag
+        data={myEvents}
+        view={myView}
+        ref={setInst}
+        modules={MY_MODULES}
+      />
     </Page>
   );
 }

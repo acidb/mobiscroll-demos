@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -60,76 +61,76 @@ export default {
           color: '#01adff',
         },
       ],
-      onCellClick: function (event, inst) {
+      onCellClick: function () {
         /* Logic for cell click */
       },
-      onCellDoubleClick: function (event, inst) {
+      onCellDoubleClick: function () {
         /* Logic for cell double click */
       },
-      onCellRightClick: function (event, inst) {
+      onCellRightClick: function () {
         /* Logic for cell right click */
       },
-      onDestroy: function (event, inst) {
+      onDestroy: function () {
         // Logic for destroying the event calendar
       },
-      onEventClick: function (event, inst) {
+      onEventClick: function () {
         // Logic for event click
       },
-      onEventCreate: function (event, inst) {
+      onEventCreate: function () {
         // Logic for event create
       },
-      onEventCreated: function (event, inst) {
+      onEventCreated: function () {
         // Logic for event created
       },
-      onEventCreateFailed: function (event, inst) {
+      onEventCreateFailed: function () {
         // Logic for failed event create
       },
-      onEventDelete: function (event, inst) {
+      onEventDelete: function () {
         // Logic for event delete
       },
-      onEventDeleted: function (event, inst) {
+      onEventDeleted: function () {
         // Logic for event deleted
       },
-      onEventDoubleClick: function (event, inst) {
+      onEventDoubleClick: function () {
         // Logic for event double click
       },
-      onEventDragStart: function (args, inst) {
+      onEventDragStart: function () {
         // Logic for event drag start
       },
-      onEventDragEnd: function (args, inst) {
+      onEventDragEnd: function () {
         // Logic for event drag end
       },
-      onEventHoverIn: function (event, inst) {
+      onEventHoverIn: function () {
         // Logic for event hover in
       },
-      onEventHoverOut: function (event, inst) {
+      onEventHoverOut: function () {
         // Logic for event hover out
       },
-      onEventUpdate: function (event, inst) {
+      onEventUpdate: function () {
         // Logic for event update
       },
-      onEventUpdated: function (event, inst) {
+      onEventUpdated: function () {
         // Logic for event updated
       },
-      onEventUpdateFailed: function (event, inst) {
+      onEventUpdateFailed: function () {
         // Logic for failed event update
       },
-      onEventRightClick: function (event, inst) {
+      onEventRightClick: function () {
         // Logic for event right click
       },
-      onInit: function (event, inst) {
+      onInit: function () {
         // Logic running on component init
       },
-      onPageChange: function (event, inst) {
+      onPageChange: function () {
         // Your custom event handler goes here
       },
-      onPageLoaded: function (event, inst) {
+      onPageLoaded: function () {
         // Use it to inject custom markup & attach custom listeners
       },
-      onPageLoading: function (event, inst) {
+      onPageLoading: function () {
         // Use it to load data on demand
       },
-      onSelectedDateChange: function (event, inst) {
+      onSelectedDateChange: function () {
         // Use it to keep track of the selected date externally
       },
     });
@@ -142,6 +143,7 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-draggable data-drag-data='{"title": "External drag 1", "color": "#ffdab8"}' class="event-hooks-draggable" style="background: #ffdab8;">
     <div class="draggable-title">External drag 1</div>
@@ -153,6 +155,7 @@ export default {
 </div>
 <div id="demo"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .event-hooks-draggable {
     padding: 10px 20px;

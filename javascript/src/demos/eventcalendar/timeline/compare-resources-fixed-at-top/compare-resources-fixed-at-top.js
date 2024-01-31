@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -437,7 +438,7 @@ export default {
       })
       .getInst();
 
-    document.getElementById('demo-compare-resources').addEventListener('click', (e) => {
+    document.getElementById('demo-compare-resources').addEventListener('click', function (e) {
       if (e.target.classList.contains('md-compare-button')) {
         var id = +e.target.dataset.id;
         var isFixed = fixedResourceMap[id];
@@ -449,7 +450,6 @@ export default {
           fixedResources.push(resource);
           if (fixedNr > 2) {
             mobiscroll.toast({
-              // context,
               message: 'Comparing up to 3 schedules',
             });
           }
@@ -471,9 +471,11 @@ export default {
       }
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-compare-resources" class="md-compare"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-compare-resource {
     font-size: 12px;

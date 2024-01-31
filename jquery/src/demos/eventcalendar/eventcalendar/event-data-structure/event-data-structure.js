@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,25 +10,26 @@ export default {
     });
 
     $(function () {
-      var now = new Date(),
-        cal = $('#demo')
-          .mobiscroll()
-          .eventcalendar({
-            view: {
-              calendar: {
-                labels: true,
-              },
+      var now = new Date();
+      var cal = $('#demo')
+        .mobiscroll()
+        .eventcalendar({
+          // drag,
+          view: {
+            calendar: {
+              labels: true,
             },
-            data: [
-              {
-                start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
-                end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
-                title: 'General orientation',
-                color: '#35bb5a',
-              },
-            ],
-          })
-          .mobiscroll('getInst');
+          },
+          data: [
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
+              end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
+              title: 'General orientation',
+              color: '#35bb5a',
+            },
+          ],
+        })
+        .mobiscroll('getInst');
 
       $('#add-event').on('click', function () {
         var newEvent = {
@@ -54,6 +56,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo"></div>
 <div class="mbsc-button-group-block">

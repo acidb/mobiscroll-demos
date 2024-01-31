@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -10,7 +11,7 @@ export default {
     document.getElementById('show-alert').addEventListener('click', function () {
       mobiscroll.alert({
         title: 'Cellular Data is Turned Off for "Safari"',
-        message: `You can turn on cellular data for \n\r this app in Settings.`,
+        message: 'You can turn on cellular data for this app in Settings.',
       });
     });
 
@@ -20,8 +21,6 @@ export default {
         message: 'Help apps determine location. This means sending anonymous location data, even when no apps are running.',
         okText: 'Agree',
         cancelText: 'Disagree',
-        cssClass: 'teszt',
-        duration: 1000000000000000,
       });
     });
 
@@ -34,6 +33,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <button mbsc-button id="show-alert">Alert</button>
 <button mbsc-button id="show-confirm">Confirm</button>

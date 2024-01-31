@@ -1,9 +1,11 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { outlookCalendarSync as outlookSync } from '@mobiscroll/calendar-integration';
+import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
+var mobiscroll = m;
 mobiscroll.outlookCalendarSync = outlookSync;
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -270,7 +272,7 @@ export default {
                       message: 'Event updated on "' + calendarData[calendarId].name + '" calendar',
                     });
                   })
-                  .catch(function () {
+                  .catch(function (error) {
                     inst.updateEvent(args.oldEvent);
                     onError(error);
                   });
@@ -294,7 +296,7 @@ export default {
                 var calendarId = event.outlookCalendarId;
                 outlookCalendarSync
                   .deleteEvent(calendarId, event)
-                  .then(function (resp) {
+                  .then(function () {
                     inst.removeEvent(event);
                     events = events.filter(function (ev) {
                       return event.id !== ev.id;
@@ -367,6 +369,7 @@ export default {
       onSignedOut: onSignedOut,
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-sync-events-outlook-calendar"></div>
 
@@ -391,6 +394,7 @@ export default {
 
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-outlook-calendar-buttons {
     flex: 1 0 auto;

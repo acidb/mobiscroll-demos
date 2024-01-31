@@ -5,8 +5,8 @@ import {
   CalendarPrev,
   CalendarToday,
   Eventcalendar,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
@@ -98,10 +98,10 @@ function App() {
       </div>
       <div className="google-cal-header-picker">
         <SegmentedGroup value={view} onChange={changeView}>
-          <SegmentedItem value="month">Month</SegmentedItem>
-          <SegmentedItem value="week">Week</SegmentedItem>
-          <SegmentedItem value="day">Day</SegmentedItem>
-          <SegmentedItem value="agenda">Agenda</SegmentedItem>
+          <Segmented value="month">Month</Segmented>
+          <Segmented value="week">Week</Segmented>
+          <Segmented value="day">Day</Segmented>
+          <Segmented value="agenda">Agenda</Segmented>
         </SegmentedGroup>
       </div>
       <CalendarPrev className="google-cal-header-prev" />

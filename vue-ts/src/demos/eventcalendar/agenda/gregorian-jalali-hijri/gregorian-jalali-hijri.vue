@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import {
+  getJson,
+  hijriCalendar,
+  jalaliCalendar,
+  localeAr,
+  localeFa,
   MbscEventcalendar,
   MbscPage,
-  setOptions,
-  getJson,
-  jalaliCalendar,
-  hijriCalendar,
-  localeFa,
-  localeAr
+  setOptions
 } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // theme

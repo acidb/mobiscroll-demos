@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -28,7 +29,7 @@ export default {
       ];
       var currentEvent;
       var timer;
-      var tooltip = document.getElementById('custom-event-tooltip-popup');
+      var tooltipElm = document.getElementById('custom-event-tooltip-popup');
       var deleteButton = document.getElementById('tooltip-event-delete');
       var fileButton = document.getElementById('tooltip-event-view');
       var statusButton = document.getElementById('tooltip-event-status');
@@ -475,8 +476,10 @@ export default {
         ],
         clickToCreate: false,
         dragToCreate: false,
+        dragToMove: true,
+        dragToResize: false,
         showEventTooltip: false,
-        onEventHoverIn: function (args, inst) {
+        onEventHoverIn: function (args) {
           var event = args.event;
           var resource = doctors.find(function (dr) {
             return dr.id === event.resource;
@@ -510,14 +513,14 @@ export default {
           tooltip.setOptions({ anchor: args.domEvent.target });
           tooltip.open();
         },
-        onEventHoverOut: function (args) {
+        onEventHoverOut: function () {
           if (!timer) {
             timer = setTimeout(function () {
               tooltip.close();
             }, 200);
           }
         },
-        onEventClick: function (event, inst) {
+        onEventClick: function () {
           tooltip.open();
         },
       });
@@ -530,14 +533,14 @@ export default {
         closeOnOverlayClick: false,
         width: 350,
         onInit: function () {
-          tooltip.addEventListener('mouseenter', function (e) {
+          tooltipElm.addEventListener('mouseenter', function () {
             if (timer) {
               clearTimeout(timer);
               timer = null;
             }
           });
 
-          tooltip.addEventListener('mouseleave', function () {
+          tooltipElm.addEventListener('mouseleave', function () {
             timer = setTimeout(function () {
               tooltip.close();
             }, 200);
@@ -551,8 +554,6 @@ export default {
         calendar.updateEvent(currentEvent);
 
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
           message: 'Appointment ' + (currentEvent.confirmed ? 'confirmed' : 'canceled'),
         });
       });
@@ -561,8 +562,6 @@ export default {
         tooltip.close();
 
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
           message: 'View file',
         });
       });
@@ -573,14 +572,12 @@ export default {
         tooltip.close();
 
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: 'Appointment deleted',
         });
       });
     })();
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="custom-event-tooltip-popup" class="md-tooltip">
     <div id="tooltip-event-header" class="md-tooltip-header">
@@ -600,6 +597,7 @@ export default {
 </div>
 <div id="demo-custom-event-tooltip"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-tooltip .mbsc-popup-content {
     padding: 0;

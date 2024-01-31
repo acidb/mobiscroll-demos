@@ -1,5 +1,5 @@
+import { Eventcalendar, formatDate, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions } from '@mobiscroll/react';
 import React from 'react';
-import { Eventcalendar, setOptions, formatDate, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/react';
 import './multi-classroom-timetable.css';
 
 setOptions({
@@ -10,8 +10,8 @@ setOptions({
 const App: React.FC = () => {
   const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'week',
         startDay: 1,
@@ -21,11 +21,12 @@ const App: React.FC = () => {
         resolutionHorizontal: 'hour',
         resolutionVertical: 'day',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Green Hall',
@@ -46,8 +47,9 @@ const App: React.FC = () => {
         id: 5,
         name: 'Yellow Hall',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   React.useEffect(() => {
     getJson(
@@ -69,24 +71,26 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const myCustomEvent = React.useCallback((args: any) => {
-    return (
+  const myCustomEvent = React.useCallback(
+    (args: any) => (
       <div>
         <div className="md-timetable-event-title">{args.title}</div>
         <div className="md-timetable-event-prop">Prof. {args.original.prof}</div>
         <div className="md-timetable-event-class">{args.original.class} year</div>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
-  const myDefaultEvent = React.useCallback(() => {
-    return {
+  const myDefaultEvent = React.useCallback(
+    () => ({
       title: 'New class',
       prof: 'Stacia Jaden',
       class: 'Junior',
       color: '#ff0000',
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

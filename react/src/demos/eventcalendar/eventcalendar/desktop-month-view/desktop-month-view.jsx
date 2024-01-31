@@ -15,8 +15,8 @@ function App() {
     setToastOpen(false);
   }, []);
 
-  const handleEventClick = useCallback((event) => {
-    setToastText(event.event.title);
+  const handleEventClick = useCallback((args) => {
+    setToastText(args.event.title);
     setToastOpen(true);
   }, []);
 
@@ -34,7 +34,12 @@ function App() {
 
   return (
     <>
-      <Eventcalendar data={myEvents} view={myView} onEventClick={handleEventClick} />
+      <Eventcalendar
+        // drag
+        data={myEvents}
+        view={myView}
+        onEventClick={handleEventClick}
+      />
       <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );

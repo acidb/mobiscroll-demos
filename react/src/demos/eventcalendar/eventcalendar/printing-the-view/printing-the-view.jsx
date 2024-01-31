@@ -1,5 +1,5 @@
 import { print } from '@mobiscroll/print';
-import { Button, Eventcalendar, getJson, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useEffect, useState } from 'react';
 
 const MY_MODULES = [print];
@@ -28,10 +28,15 @@ function App() {
   }, []);
 
   return (
-    <Page>
+    <>
       <Button onClick={printView}>Print calendar</Button>
-      <Eventcalendar data={myEvents} ref={setInst} modules={MY_MODULES} />
-    </Page>
+      <Eventcalendar
+        // drag
+        data={myEvents}
+        ref={setInst}
+        modules={MY_MODULES}
+      />
+    </>
   );
 }
 

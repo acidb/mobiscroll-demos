@@ -1,7 +1,8 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,32 +10,32 @@ export default {
     });
 
     $(function () {
-      var currentDate = new Date(),
-        calendar = $('#demo-custom-header')
-          .mobiscroll()
-          .eventcalendar({
-            view: {
-              agenda: { type: 'month' },
-            },
-            onSelectedDateChange: function (event, inst) {
-              currentDate = event.date;
-            },
-            renderHeader: function () {
-              return (
-                '<div mbsc-calendar-nav class="md-custom-header-nav"></div>' +
-                '<div class="md-custom-header-controls">' +
-                '<button id="nav-to-prev-page" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="md-custom-header-button"></button>' +
-                '<div mbsc-calendar-today class="md-custom-header-today"></div>' +
-                '<button id="nav-to-next-page" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="md-custom-header-button"></button>' +
-                '</div>' +
-                '<div class="md-custom-header-view">' +
-                '<label><input data-icon="material-view-day" mbsc-segmented type="radio" name="custom-header-view" value="agenda" class="md-custom-header-view-change" checked></label>' +
-                '<label><input data-icon="calendar" mbsc-segmented type="radio" name="custom-header-view" value="calendar" class="md-custom-header-view-change"></label>' +
-                '</div>'
-              );
-            },
-          })
-          .mobiscroll('getInst');
+      var currentDate = new Date();
+      var calendar = $('#demo-custom-header')
+        .mobiscroll()
+        .eventcalendar({
+          view: {
+            agenda: { type: 'month' },
+          },
+          onSelectedDateChange: function (args) {
+            currentDate = args.date;
+          },
+          renderHeader: function () {
+            return (
+              '<div mbsc-calendar-nav class="md-custom-header-nav"></div>' +
+              '<div class="md-custom-header-controls">' +
+              '<button id="nav-to-prev-page" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="md-custom-header-button"></button>' +
+              '<div mbsc-calendar-today class="md-custom-header-today"></div>' +
+              '<button id="nav-to-next-page" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="md-custom-header-button"></button>' +
+              '</div>' +
+              '<div class="md-custom-header-view">' +
+              '<label><input data-icon="material-view-day" mbsc-segmented type="radio" name="custom-header-view" value="agenda" class="md-custom-header-view-change" checked></label>' +
+              '<label><input data-icon="calendar" mbsc-segmented type="radio" name="custom-header-view" value="calendar" class="md-custom-header-view-change"></label>' +
+              '</div>'
+            );
+          },
+        })
+        .mobiscroll('getInst');
 
       $.getJSON(
         'https://trial.mobiscroll.com/events/?vers=5&callback=?',
@@ -63,7 +64,7 @@ export default {
         }
       });
 
-      $('#nav-to-prev-page').on('click', function (ev) {
+      $('#nav-to-prev-page').on('click', function () {
         var prevPage = new Date(currentDate);
 
         prevPage.setDate(1);
@@ -72,7 +73,7 @@ export default {
         currentDate = prevPage;
       });
 
-      $('#nav-to-next-page').on('click', function (ev) {
+      $('#nav-to-next-page').on('click', function () {
         var nextPage = new Date(currentDate);
 
         nextPage.setDate(1);
@@ -82,6 +83,7 @@ export default {
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <!--hidden-->
 <div class="demo-inline demo-max-width-900">
@@ -91,6 +93,7 @@ export default {
 </div>
 <!--/hidden-->
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-custom-header-controls {
     display: flex;

@@ -1,23 +1,22 @@
-import React from 'react';
 import {
-  Eventcalendar,
-  setOptions,
-  Popup,
   Button,
-  Input,
-  Textarea,
   Checkbox,
   Datepicker,
+  Eventcalendar,
   formatDate,
+  Input,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  Popup,
+  setOptions,
   snackbar,
+  Textarea,
 } from '@mobiscroll/react';
+import React from 'react';
 import './work-order-scheduling.css';
 
 setOptions({
-  theme: 'ios',
-  themeVariant: 'light',
+  // theme,
 });
 
 const defaultEvents = [
@@ -453,17 +452,16 @@ const App: React.FC = () => {
     setOpen(false);
   }, [isEdit, myEvents]);
 
-  const extendDefaultEvent = React.useCallback((args) => {
-    return {
+  const extendDefaultEvent = React.useCallback(
+    (args) => ({
       title: 'Work order',
       location: '',
       cost: 0,
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const getCostString = (cost: any) => {
-    return cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
+  const getCostString = (cost: any) => cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   const renderCustomDay = (args: any) => {
     const events = args.events;
@@ -483,14 +481,15 @@ const App: React.FC = () => {
     );
   };
 
-  const myScheduleEvent = React.useCallback((event: any) => {
-    return (
+  const myScheduleEvent = React.useCallback(
+    (event: any) => (
       <div>
         {event.title}
         <span className="md-work-order-price-tag">${getCostString(event.original.cost)}</span>
       </div>
-    );
-  }, []);
+    ),
+    [],
+  );
 
   return (
     <div>
@@ -547,31 +546,27 @@ const App: React.FC = () => {
         <div className="mbsc-form-group">
           <div className="mbsc-grid mbsc-no-padding">
             <div className="mbsc-row">
-              {myResources.map((resources: any) => {
-                return resources.children.map((res: any) => {
-                  return (
-                    <div className="mbsc-col-sm-4" key={res.id}>
-                      <React.Fragment>
-                        <div className="mbsc-form-group-title">{res.name}</div>
-                        {res.children.map((r: any, i: any) => {
-                          return (
-                            <Checkbox
-                              key={r.id}
-                              value={r.id}
-                              checked={checkedResources.indexOf(r.id) > -1}
-                              onChange={checkboxChange}
-                              theme="material"
-                              className="md-work-order-checkbox-label"
-                            >
-                              {r.name}
-                            </Checkbox>
-                          );
-                        })}
-                      </React.Fragment>
-                    </div>
-                  );
-                });
-              })}
+              {myResources.map((resources: any) =>
+                resources.children.map((res: any) => (
+                  <div className="mbsc-col-sm-4" key={res.id}>
+                    <React.Fragment>
+                      <div className="mbsc-form-group-title">{res.name}</div>
+                      {res.children.map((r: any, i: any) => (
+                        <Checkbox
+                          key={r.id}
+                          value={r.id}
+                          checked={checkedResources.indexOf(r.id) > -1}
+                          onChange={checkboxChange}
+                          theme="material"
+                          className="md-work-order-checkbox-label"
+                        >
+                          {r.name}
+                        </Checkbox>
+                      ))}
+                    </React.Fragment>
+                  </div>
+                )),
+              )}
             </div>
           </div>
         </div>

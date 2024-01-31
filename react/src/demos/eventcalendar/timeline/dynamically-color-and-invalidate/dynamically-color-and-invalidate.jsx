@@ -1,5 +1,6 @@
-import React from 'react';
-import { Eventcalendar, Page, Draggable, toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Draggable, Eventcalendar, Page, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 import './dynamically-color-and-invalidate.css';
 
 setOptions({
@@ -142,9 +143,9 @@ const myTasks = [
 ];
 
 function Task(props) {
-  const [draggable, setDraggable] = React.useState();
+  const [draggable, setDraggable] = useState();
 
-  const setDragElm = React.useCallback((elm) => {
+  const setDragElm = useCallback((elm) => {
     setDraggable(elm);
   }, []);
 
@@ -159,11 +160,17 @@ function Task(props) {
   );
 }
 
-function App() {
-  const [myInvalids, setInvalids] = React.useState([]);
-  const [myColors, setColors] = React.useState([]);
+Task.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
-  const extendDefaultEvent = React.useCallback((event) => {
+function App() {
+  const [myInvalids, setInvalids] = useState([]);
+  const [myColors, setColors] = useState([]);
+  const [toasterMessage, setToasterMessage] = useState('');
+  const [isToastOpen, setToastOpen] = useState(false);
+
+  const handleExtendDefaultEvent = useCallback((event) => {
     const res = event.resource;
 
     if (res) {
@@ -179,7 +186,7 @@ function App() {
     }
   }, []);
 
-  const onEventDragStart = React.useCallback((args) => {
+  const handleEventDragStart = useCallback((args) => {
     let event = args.event;
 
     if (event) {
@@ -195,34 +202,32 @@ function App() {
     }
   }, []);
 
-  const onEventDragEnd = React.useCallback(() => {
+  const handleEventDragEnd = useCallback(() => {
     setInvalids([]);
     setColors([]);
   }, []);
 
-  const onEventCreated = React.useCallback(() => {
-    toast({
-      message: 'Event created',
-    });
+  const handleEventCreated = useCallback(() => {
+    setToasterMessage('Event created');
+    setToastOpen(true);
   }, []);
 
-  const onEventUpdated = React.useCallback((args) => {
-    toast({
-      message: 'Event moved',
-    });
+  const handleEventUpdated = useCallback(() => {
+    setToasterMessage('Event moved');
+    setToastOpen(true);
   }, []);
 
-  const onEventCreateFailed = React.useCallback((args) => {
-    toast({
-      message: "Can't create event",
-    });
+  const handleEventCreateFailed = useCallback(() => {
+    setToasterMessage("Can't create event");
+    setToastOpen(true);
   }, []);
 
-  const onEventUpdateFailed = React.useCallback((args) => {
-    toast({
-      message: "Can't move event",
-    });
+  const handleEventUpdateFailed = useCallback(() => {
+    setToasterMessage("Can't move event");
+    setToastOpen(true);
   }, []);
+
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <Page>
@@ -242,17 +247,18 @@ function App() {
               colors={myColors}
               dragToMove={true}
               externalDrop={true}
-              extendDefaultEvent={extendDefaultEvent}
-              onEventDragStart={onEventDragStart}
-              onEventDragEnd={onEventDragEnd}
-              onEventCreated={onEventCreated}
-              onEventUpdated={onEventUpdated}
-              onEventCreateFailed={onEventCreateFailed}
-              onEventUpdateFailed={onEventUpdateFailed}
+              extendDefaultEvent={handleExtendDefaultEvent}
+              onEventDragStart={handleEventDragStart}
+              onEventDragEnd={handleEventDragEnd}
+              onEventCreated={handleEventCreated}
+              onEventUpdated={handleEventUpdated}
+              onEventCreateFailed={handleEventCreateFailed}
+              onEventUpdateFailed={handleEventUpdateFailed}
             />
           </div>
         </div>
       </div>
+      <Toast message={toasterMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 }

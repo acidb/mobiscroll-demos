@@ -1,9 +1,15 @@
-import $ from 'jquery';
 import * as mobiscroll from '@mobiscroll/jquery/dist/js/mobiscroll.jquery.min.js';
+import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     $(function () {
+      mobiscroll.setOptions({
+        // locale,
+        // theme
+      });
+
       var now = new Date();
       var year = now.getFullYear();
       var month = now.getMonth();
@@ -12,6 +18,7 @@ export default {
       $('#demo-more-events')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: {
               maxEventStack: 2,
@@ -163,6 +170,7 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-more-events"></div>
   `,

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Select, Page, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 import './country-picker.css';
 
 setOptions({
@@ -27,14 +27,12 @@ const App: React.FC = () => {
     });
   }, []);
 
-  const renderCustomItem = (item: any) => {
-    return (
-      <div className="md-country-picker-item">
-        <img className="md-country-picker-flag" src={'https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png'} alt="Flag" />
-        {item.display}
-      </div>
-    );
-  };
+  const renderCustomItem = (item: any) => (
+    <div className="md-country-picker-item">
+      <img className="md-country-picker-flag" src={'https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png'} alt="Flag" />
+      {item.display}
+    </div>
+  );
 
   return (
     <Page>

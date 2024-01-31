@@ -489,6 +489,5 @@ const myView: MbscEventcalendarView = {
     :data="myEvents"
     :resources="myResources"
     :min="min"
-  >
-  </MbscEventcalendar>
+  />
 </template>

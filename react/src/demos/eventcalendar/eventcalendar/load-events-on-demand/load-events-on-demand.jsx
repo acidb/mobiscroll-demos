@@ -32,7 +32,12 @@ function App() {
 
   return (
     <>
-      <Eventcalendar data={events} view={myView} onPageLoading={handlePageLoading} />
+      <Eventcalendar
+        // drag
+        data={events}
+        view={myView}
+        onPageLoading={handlePageLoading}
+      />
       <Toast message="New events loaded" isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );

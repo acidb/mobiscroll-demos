@@ -1,6 +1,6 @@
-import React from 'react';
 import { Datepicker, momentTimezone } from '@mobiscroll/react';
 import moment from 'moment-timezone';
+import React from 'react';
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;

@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -31,22 +32,16 @@ export default {
           endTime: '18:00',
         },
       },
-      onEventCreateFailed: function (event, inst) {
-        if (event.invalid.type == 'lunch') {
+      onEventCreateFailed: function (args) {
+        if (args.invalid.type == 'lunch') {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't create this task on lunch break.",
           });
         }
       },
-      onEventUpdateFailed: function (event, inst) {
-        if (event.invalid.type == 'lunch') {
+      onEventUpdateFailed: function (args) {
+        if (args.invalid.type == 'lunch') {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: "Can't schedule this task on lunch break.",
           });
         }
@@ -61,16 +56,8 @@ export default {
       'jsonp',
     );
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-work-week-hours"></div>
-  `,
-  css: `
-/*<hidden>*/
-
-.demo-work-week-hours {
-    height: 100%;
-}
-
-/*</hidden>*/
   `,
 };

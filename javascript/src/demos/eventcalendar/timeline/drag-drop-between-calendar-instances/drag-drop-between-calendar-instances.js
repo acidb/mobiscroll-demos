@@ -1,6 +1,7 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -115,8 +116,6 @@ export default {
       onEventCreated: function (args) {
         if (args.action === 'externalDrop') {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
             context: '#demo-drag-drop-first-calendar',
             message: 'Event dropped to Calendar 1',
           });
@@ -232,8 +231,6 @@ export default {
       onEventCreated: function (args) {
         if (args.action === 'externalDrop') {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
             context: '#demo-drag-drop-second-calendar',
             message: 'Event dropped to Calendar 2',
           });
@@ -241,6 +238,7 @@ export default {
       },
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="md-drag-drop-calendar">
     <div class="mbsc-form-group-title">Calendar 1</div>

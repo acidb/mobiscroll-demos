@@ -91,9 +91,7 @@ function App() {
             const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id);
             eventsToUpdate.splice(index, 1, origEvent);
           } else {
-            eventsToUpdate = eventsToUpdate.filter((ev) => {
-              return ev.id !== event.id;
-            });
+            eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);
           }
         }
 
@@ -202,9 +200,9 @@ function App() {
             <Eventcalendar
               className="md-bulk-operations-border"
               ref={calRef}
+              // drag
               data={myEvents}
               view={view}
-              clickToCreate={true}
               selectMultipleEvents={true}
               selectedEvents={mySelectedEvents}
               onEventDelete={handleEventDelete}

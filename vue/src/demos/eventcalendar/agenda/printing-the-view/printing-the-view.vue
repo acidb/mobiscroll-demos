@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { print } from '@mobiscroll/print'
 import {
   getJson,
   MbscButton,
@@ -7,7 +7,7 @@ import {
   MbscPage,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { print } from '@mobiscroll/print'
+import { onMounted, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -40,12 +40,7 @@ onMounted(() => {
 <template>
   <MbscPage>
     <MbscButton @click="printView()">Print agenda</MbscButton>
-    <MbscEventcalendar
-      ref="calendarRef"
-      :drag="drag"
-      :data="myEvents"
-      :view="myView"
-      :modules="[print]"
-    />
+    <!-- dragOptions -->
+    <MbscEventcalendar ref="calendarRef" :data="myEvents" :view="myView" :modules="[print]" />
   </MbscPage>
 </template>

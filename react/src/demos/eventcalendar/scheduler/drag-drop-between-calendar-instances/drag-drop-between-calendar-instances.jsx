@@ -1,5 +1,5 @@
-import React from 'react';
-import { Eventcalendar, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,20 +7,21 @@ setOptions({
 });
 
 function App() {
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [toastText, setToastText] = React.useState();
-  const [toastContext, setToastContext] = React.useState();
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastText, setToastText] = useState();
+  const [toastContext, setToastContext] = useState();
 
-  const myView = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       schedule: {
         type: 'week',
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const firstEvents = React.useMemo(() => {
-    return [
+  const firstEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d-5,10)',
         end: 'dyndatetime(y,m,d-5,14)',
@@ -93,11 +94,12 @@ function App() {
         title: 'Event 12',
         color: '#8b1a1a',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const secondEvents = React.useMemo(() => {
-    return [
+  const secondEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d-5,14)',
         end: 'dyndatetime(y,m,d-5,17)',
@@ -170,14 +172,15 @@ function App() {
         title: 'Event 12',
         color: '#ee9572',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const closeToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const handleFirstCalEventCreated = React.useCallback((args) => {
+  const handleFirstCalEventCreated = useCallback((args) => {
     if (args.action === 'externalDrop') {
       setToastText('Event dropped to Calendar 1');
       setToastContext('.md-drag-drop-first-calendar');
@@ -185,7 +188,7 @@ function App() {
     }
   }, []);
 
-  const handleSecondCalEventCreated = React.useCallback((args) => {
+  const handleSecondCalEventCreated = useCallback((args) => {
     if (args.action === 'externalDrop') {
       setToastText('Event dropped to Calendar 2');
       setToastContext('.md-drag-drop-second-calendar');
@@ -220,7 +223,7 @@ function App() {
         onEventCreated={handleSecondCalEventCreated}
         className="md-drag-drop-second-calendar"
       />
-      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={closeToast} />
+      <Toast message={toastText} context={toastContext} isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 }

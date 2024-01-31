@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { MbscEventcalendar, getJson /* localeImport */ } from '@mobiscroll/vue'
+import { getJson, MbscEventcalendar /* localeImport */ } from '@mobiscroll/vue'
+import { onMounted, ref } from 'vue'
 
 const myEvents = ref([])
 const myTheme = ref('material') // can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', it will automatically be set based on the platform
@@ -56,7 +56,6 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar
-    :drag="drag"
     :view="myView"
     :data="myEvents"
     :resources="myResources"

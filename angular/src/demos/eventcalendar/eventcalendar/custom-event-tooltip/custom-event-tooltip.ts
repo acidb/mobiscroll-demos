@@ -3,8 +3,8 @@ import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
-  MbscPopupOptions,
   MbscPopup,
+  MbscPopupOptions,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -286,6 +286,8 @@ export class AppComponent {
     },
     clickToCreate: false,
     dragToCreate: false,
+    dragToMove: true,
+    dragToResize: false,
     showEventTooltip: false,
     height: 260,
     onEventHoverIn: (args) => {

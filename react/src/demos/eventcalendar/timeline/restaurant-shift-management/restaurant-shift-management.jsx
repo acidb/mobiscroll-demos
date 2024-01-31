@@ -1,15 +1,15 @@
-import React from 'react';
 import {
-  Eventcalendar,
   CalendarNav,
-  CalendarPrev,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
-  Select,
   Checkbox,
-  setOptions,
-  formatDate /* localeImport */,
+  Eventcalendar,
+  formatDate,
+  Select,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import './restaurant-shift-management.css';
 
 setOptions({
@@ -17,7 +17,7 @@ setOptions({
   // themeJs
 });
 
-const resources = [
+const myResources = [
   {
     id: 1,
     name: 'Barista',
@@ -1854,9 +1854,9 @@ const views = [
 ];
 
 function App() {
-  const [shifts, setShifts] = React.useState(allShifts);
-  const [slots, setSlots] = React.useState(allSlots);
-  const [shiftTimes, setShiftTimes] = React.useState([
+  const [shifts, setShifts] = useState(allShifts);
+  const [mySlots, setMySlots] = useState(allSlots);
+  const [shiftTimes, setShiftTimes] = useState([
     {
       id: 1,
       name: 'Night',
@@ -1889,8 +1889,8 @@ function App() {
     },
   ]);
 
-  const [selectedView, setView] = React.useState('week');
-  const view = React.useMemo(
+  const [selectedView, setView] = useState('week');
+  const myView = useMemo(
     () =>
       selectedView === 'day'
         ? {
@@ -1910,10 +1910,10 @@ function App() {
     [selectedView],
   );
 
-  const getEmployeeName = React.useCallback((event) => {
-    for (var i = 0; i < resources.length; ++i) {
-      for (var j = 0; j < resources[i].children.length; ++j) {
-        var employee = resources[i].children[j];
+  const getEmployeeName = useCallback((event) => {
+    for (var i = 0; i < myResources.length; ++i) {
+      for (var j = 0; j < myResources[i].children.length; ++j) {
+        var employee = myResources[i].children[j];
         if (employee.id === event.resource) {
           return employee.name.substr(0, employee.name.indexOf(' '));
         }
@@ -1921,20 +1921,16 @@ function App() {
     }
   }, []);
 
-  const extendDefaultEvent = React.useCallback(
-    (event) => {
-      return {
-        title: getEmployeeName(event),
-      };
-    },
+  const extendMyDefaultEvent = useCallback(
+    (event) => ({
+      title: getEmployeeName(event),
+    }),
     [getEmployeeName],
   );
 
-  const formatMyDate = React.useCallback((date) => {
-    return formatDate('YYYY-MM-DD', new Date(date));
-  }, []);
+  const formatMyDate = useCallback((date) => formatDate('YYYY-MM-DD', new Date(date)), []);
 
-  const getShiftsNrs = React.useCallback(
+  const getShiftsNrs = useCallback(
     (date, slotId) => {
       const shiftList = [];
 
@@ -1951,7 +1947,7 @@ function App() {
     [shifts, formatMyDate],
   );
 
-  const renderMyResource = (resource) => {
+  const renderMyResource = useCallback((resource) => {
     const parent = resource.children;
     return (
       <div className={parent ? 'md-shift-resource' : ''} style={{ color: parent ? parent[0].color : '' }}>
@@ -1959,41 +1955,44 @@ function App() {
         {resource.name}
       </div>
     );
-  };
+  }, []);
 
-  const renderMySlot = (args) => {
-    const slot = args.slot;
-    const date = formatMyDate(args.date);
-    const shiftList = getShiftsNrs(date, slot.id);
-    let length = 0;
+  const renderMySlot = useCallback(
+    (args) => {
+      const slot = args.slot;
+      const date = formatMyDate(args.date);
+      const shiftList = getShiftsNrs(date, slot.id);
+      let length = 0;
 
-    return (
-      <div className="md-shift-header">
-        <div className="md-shift-name">
-          {slot.name}
-          <span className="md-shift-time">{slot.time}</span>
+      return (
+        <div className="md-shift-header">
+          <div className="md-shift-name">
+            {slot.name}
+            <span className="md-shift-time">{slot.time}</span>
+          </div>
+          <div className={'md-shift-counts-' + date + '-' + slot.id}>
+            {shiftList.length > 0 &&
+              shiftList.map((shift, i) => {
+                ++length;
+                return (
+                  <Fragment key={i}>
+                    <div className="md-shift-count">
+                      <span className="md-shift-icon">{myResources[i].icon}</span>
+                      <span className={'md-shift-nr md-shift-nr-' + date + '-' + slot.id + '-' + (i + 1)}>{shift}</span>
+                    </div>
+                    {length === 4 && <br />}
+                  </Fragment>
+                );
+              })}
+            {shiftList.length === 0 && <div className="md-shift-count">{'\uD83D\uDE36'} empty...</div>}
+          </div>
         </div>
-        <div className={'md-shift-counts-' + date + '-' + slot.id}>
-          {shiftList.length > 0 &&
-            shiftList.map((shift, i) => {
-              ++length;
-              return (
-                <React.Fragment key={i}>
-                  <div className="md-shift-count">
-                    <span className="md-shift-icon">{resources[i].icon}</span>
-                    <span className={'md-shift-nr md-shift-nr-' + date + '-' + slot.id + '-' + (i + 1)}>{shift}</span>
-                  </div>
-                  {length === 4 && <br />}
-                </React.Fragment>
-              );
-            })}
-          {shiftList.length === 0 && <div className="md-shift-count">{'\uD83D\uDE36'} empty...</div>}
-        </div>
-      </div>
-    );
-  };
+      );
+    },
+    [formatMyDate, getShiftsNrs],
+  );
 
-  const checkboxChange = React.useCallback(
+  const checkboxChange = useCallback(
     (ev) => {
       const value = +ev.target.value;
       const checked = ev.target.checked;
@@ -2012,47 +2011,41 @@ function App() {
         updatedTimes = updatedTimes.map((ut) => ({ ...ut, disabled: false }));
       }
 
-      setSlots(filteredSlots);
+      setMySlots(filteredSlots);
       setShiftTimes(updatedTimes);
     },
     [shiftTimes],
   );
 
-  const viewChange = React.useCallback((event) => {
+  const viewChange = useCallback((event) => {
     setView(event.value);
   }, []);
 
-  const renderMyHeader = () => {
-    return (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
-          {shiftTimes.map((cs) => {
-            return (
-              <Checkbox key={cs.id} value={cs.id} checked={cs.checked} disabled={cs.disabled} onChange={checkboxChange} theme="material">
-                {cs.name}
-              </Checkbox>
-            );
-          })}
-        </div>
-        <Select data={views} value={selectedView} onChange={viewChange} inputStyle="box" />
-        <CalendarPrev />
-        <CalendarToday />
-        <CalendarNext />
-      </React.Fragment>
-    );
-  };
+  const renderMyHeader = () => (
+    <Fragment>
+      <CalendarNav />
+      <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
+        {shiftTimes.map((cs) => (
+          <Checkbox key={cs.id} value={cs.id} checked={cs.checked} disabled={cs.disabled} onChange={checkboxChange} theme="material">
+            {cs.name}
+          </Checkbox>
+        ))}
+      </div>
+      <Select data={views} value={selectedView} onChange={viewChange} inputStyle="box" />
+      <CalendarPrev />
+      <CalendarToday />
+      <CalendarNext />
+    </Fragment>
+  );
 
-  const isDouble = React.useCallback((event, inst) => {
+  const isDouble = useCallback((event, inst) => {
     const date = event.start.setHours(0);
     const events = inst.getEvents(date);
-    const ev = events.find((e) => {
-      return new Date(e.start).setHours(0) === date && e.resource === event.resource && e.slot === event.slot;
-    });
+    const ev = events.find((e) => new Date(e.start).setHours(0) === date && e.resource === event.resource && e.slot === event.slot);
     return ev;
   }, []);
 
-  const createEvent = React.useCallback(
+  const handleCreateEvent = useCallback(
     (args, inst) => {
       if (isDouble(args.event, inst)) {
         return false;
@@ -2065,7 +2058,7 @@ function App() {
     [shifts, isDouble],
   );
 
-  const eventUpdate = React.useCallback(
+  const handleEventUpdate = useCallback(
     (args, inst) => {
       const event = args.event;
 
@@ -2084,7 +2077,7 @@ function App() {
     [shifts, getEmployeeName, isDouble],
   );
 
-  const deleteEvent = React.useCallback(
+  const handleDeleteEvent = useCallback(
     (args) => {
       setShifts(shifts.filter((item) => item.id !== args.event.id));
     },
@@ -2093,19 +2086,19 @@ function App() {
 
   return (
     <Eventcalendar
-      view={view}
+      view={myView}
       data={shifts}
-      resources={resources}
-      slots={slots}
+      resources={myResources}
+      slots={mySlots}
       clickToCreate={true}
       dragToMove={true}
-      extendDefaultEvent={extendDefaultEvent}
+      extendDefaultEvent={extendMyDefaultEvent}
       renderResource={renderMyResource}
       renderSlot={renderMySlot}
       renderHeader={renderMyHeader}
-      onEventUpdate={eventUpdate}
-      onEventCreate={createEvent}
-      onEventDeleted={deleteEvent}
+      onEventUpdate={handleEventUpdate}
+      onEventCreate={handleCreateEvent}
+      onEventDeleted={handleDeleteEvent}
       cssClass="md-shift-management-calendar"
     />
   );

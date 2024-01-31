@@ -1,14 +1,15 @@
 import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
       // theme
     });
 
-    var now = new Date(),
-      week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
+    var now = new Date();
+    var week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
 
     mobiscroll.datepicker('#demo-mobile-picker-input', {
       controls: ['calendar'],
@@ -46,6 +47,7 @@ export default {
       return false;
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-grid">
     <div class="mbsc-form-group">
@@ -83,6 +85,7 @@ export default {
     <div id="demo-mobile-picker-inline"></div>
 </div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-mobile-picker-header {
     font-size: 14px;

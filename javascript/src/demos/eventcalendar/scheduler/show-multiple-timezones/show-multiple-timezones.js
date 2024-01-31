@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -10,7 +11,8 @@ export default {
 
     mobiscroll.momentTimezone.moment = moment;
 
-    var calendarInst = mobiscroll.eventcalendar('#demo-showing-multiple-timezone', {
+    mobiscroll.eventcalendar('#demo-showing-multiple-timezone', {
+      // drag,
       timezonePlugin: mobiscroll.momentTimezone,
       dataTimezone: 'utc',
       displayTimezone: 'America/New_York',
@@ -79,6 +81,7 @@ export default {
       ],
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-showing-multiple-timezone"></div>
   `,

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useEffect, useMemo, useState } from 'react';
 import './colors-invalids-css-class.css';
 
 setOptions({
@@ -172,9 +172,23 @@ const myColors = [
 ];
 
 function App() {
-  const [myEvents, setEvents] = React.useState([]);
+  const [myEvents, setEvents] = useState([]);
 
-  React.useEffect(() => {
+  const myView = useMemo(
+    () => ({
+      timeline: {
+        allDay: false,
+        type: 'week',
+        startDay: 1,
+        endDay: 5,
+        startTime: '09:00',
+        endTime: '18:00',
+      },
+    }),
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/timeline-events/',
       (events) => {
@@ -184,20 +198,16 @@ function App() {
     );
   }, []);
 
-  const view = React.useMemo(() => {
-    return {
-      timeline: {
-        allDay: false,
-        type: 'week',
-        startDay: 1,
-        endDay: 5,
-        startTime: '09:00',
-        endTime: '18:00',
-      },
-    };
-  }, []);
-
-  return <Eventcalendar view={view} resources={myResources} data={myEvents} invalid={myInvalid} colors={myColors} />;
+  return (
+    <Eventcalendar
+      // drag
+      view={myView}
+      resources={myResources}
+      data={myEvents}
+      invalid={myInvalid}
+      colors={myColors}
+    />
+  );
 }
 
 export default App;

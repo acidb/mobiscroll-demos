@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
+import React from 'react';
 
 setOptions({
   // localeJs,
@@ -7,8 +7,8 @@ setOptions({
 });
 
 const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(() => {
-    return [
+  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+    () => [
       {
         start: 'dyndatetime(y,m,d,16)',
         end: 'dyndatetime(y,m,d,18)',
@@ -411,11 +411,12 @@ const App: React.FC = () => {
         title: 'Work order #44331',
         resource: 10,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(() => {
-    return {
+  const view = React.useMemo<MbscEventcalendarView>(
+    () => ({
       timeline: {
         type: 'week',
         resolutionHorizontal: 'hour',
@@ -424,11 +425,12 @@ const App: React.FC = () => {
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(() => {
-    return [
+  const myResources = React.useMemo<MbscResource[]>(
+    () => [
       {
         id: 1,
         name: 'Unassigned',
@@ -480,8 +482,9 @@ const App: React.FC = () => {
         name: 'John',
         color: '#f542ef',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Eventcalendar

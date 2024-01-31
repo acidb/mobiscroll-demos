@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -7,8 +7,8 @@ setOptions({
 });
 
 function App() {
-  const myEvents = React.useMemo(() => {
-    return [
+  const myEvents = useMemo(
+    () => [
       {
         start: 'dyndatetime(y,m,d,16)',
         end: 'dyndatetime(y,m,d,18)',
@@ -411,11 +411,12 @@ function App() {
         title: 'Work order #44331',
         resource: 10,
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
-  const view = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'week',
         resolutionHorizontal: 'hour',
@@ -424,11 +425,12 @@ function App() {
         startDay: 1,
         endDay: 5,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const myResources = React.useMemo(() => {
-    return [
+  const myResources = useMemo(
+    () => [
       {
         id: 1,
         name: 'Unassigned',
@@ -480,8 +482,9 @@ function App() {
         name: 'John',
         color: '#f542ef',
       },
-    ];
-  }, []);
+    ],
+    [],
+  );
 
   return (
     <Eventcalendar
@@ -490,7 +493,7 @@ function App() {
       dragToMove={true}
       dragInTime={false}
       dragToResize={false}
-      view={view}
+      view={myView}
       min={'dyndatetime(y,m,d,6)'}
     />
   );

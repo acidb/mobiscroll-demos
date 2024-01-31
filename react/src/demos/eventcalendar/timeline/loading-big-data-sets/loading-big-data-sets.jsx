@@ -1,5 +1,5 @@
-import React from 'react';
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './loading-big-data-sets.css';
 
 setOptions({
@@ -21,18 +21,19 @@ for (var i = 1; i <= resourceNr; i++) {
 }
 
 function App() {
-  const [myEvents, setMyEvents] = React.useState([]);
+  const [myEvents, setMyEvents] = useState([]);
 
-  const myView = React.useMemo(() => {
-    return {
+  const myView = useMemo(
+    () => ({
       timeline: {
         type: 'year',
         eventList: true,
       },
-    };
-  }, []);
+    }),
+    [],
+  );
 
-  const handlePageLoading = React.useCallback((args) => {
+  const handlePageLoading = useCallback((args) => {
     setTimeout(() => {
       const year = args.firstDay.getFullYear();
       const newEvents = [];
@@ -55,7 +56,15 @@ function App() {
     });
   }, []);
 
-  return <Eventcalendar view={myView} data={myEvents} resources={myResources} onPageLoading={handlePageLoading} />;
+  return (
+    <Eventcalendar
+      // drag
+      view={myView}
+      data={myEvents}
+      resources={myResources}
+      onPageLoading={handlePageLoading}
+    />
+  );
 }
 
 export default App;

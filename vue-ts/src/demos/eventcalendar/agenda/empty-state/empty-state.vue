@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
   MbscButton,
   MbscEventcalendar,
@@ -7,6 +6,7 @@ import {
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,

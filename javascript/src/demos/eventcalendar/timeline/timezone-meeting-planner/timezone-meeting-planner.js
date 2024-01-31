@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 import * as moment from 'moment-timezone';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -60,7 +61,7 @@ export default {
 
     var details = getDetails();
 
-    calendar = mobiscroll.eventcalendar('#demo-timezone-meeting-planner', {
+    var calendar = mobiscroll.eventcalendar('#demo-timezone-meeting-planner', {
       timezonePlugin: mobiscroll.momentTimezone,
       dataTimezone: 'utc',
       displayTimezone: 'utc',
@@ -86,8 +87,8 @@ export default {
         },
       ],
       resources: myResources,
-      colors: getDetails().colors,
-      invalid: getDetails().invalid,
+      colors: details.colors,
+      invalid: details.invalid,
       extendDefaultEvent: function () {
         return { resource: [1, 2, 3, 4, 5, 6] };
       },
@@ -116,13 +117,11 @@ export default {
       },
       onEventCreated: function () {
         mobiscroll.toast({
-          // context,
           message: 'Event created',
         });
       },
       onEventUpdated: function () {
         mobiscroll.toast({
-          // context,
           message: 'Event updated',
         });
       },
@@ -166,8 +165,6 @@ export default {
 
     function createUpdateEvent(event, isNew) {
       mobiscroll.confirm({
-        // theme,
-        // context,
         title: 'Are you sure you want to proceed?',
         message: "It looks like someone from the team won't be able to join the meeting.",
         okText: 'Yes',
@@ -181,8 +178,6 @@ export default {
             }
 
             mobiscroll.toast({
-              // theme,
-              // context,
               message: isNew ? 'Event added' : 'Event updated',
             });
           }
@@ -266,9 +261,11 @@ export default {
       return { colors: colors, invalid: invalid };
     }
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-timezone-meeting-planner" class="md-timezone-meeting-planner"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-timezone-meeting-planner .mbsc-schedule-color-text {
     padding: 16px 0;
