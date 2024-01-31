@@ -65,13 +65,12 @@ export default {
           renderBufferBefore: function (args) {
             var cat = getCategory(args.original.category);
             return `<div class="md-schedule-buffer md-schedule-before-buffer">
-              <div class="md-schedule-buffer-background" style="background: ${cat.color}"></div>
-              Travel time: <span class="md-buffer-time">${args.original.bufferBefore} min</span>
+              <div class='md-schedule-buffer-background' 
+                style="background: repeating-linear-gradient(-45deg,#fcfffc,#fcfffc 10px,${cat.color} 10px,${cat.color} 20px)">
+                </div>
+                <span class='md-buffer-text'>Travel time</span>
+                <span class='md-buffer-time'>${args.original.bufferBefore} minutes </span>
             </div>`;
-          },
-          renderBufferAfter: function (args) {
-            var cat = getCategory(args.original.category);
-            return `<div class="md-schedule-buffer md-schedule-after-buffer" style="background: ${cat.color}"></div>`;
           },
           onEventClick: function (event) {
             if (event.domEvent.target.classList.contains('md-custom-event-btn')) {
@@ -281,14 +280,13 @@ export default {
     margin: 0 2px;
 }
 
-
 .md-schedule-buffer {
   position: absolute;
   display: flex;
   height: 100%;
   font-size: 10px;
-  left: 6px;
-  right: 6px;
+  left: 0;
+  right: 0;
   color:#000;
   padding: 7px 4px;
   align-items: start;
@@ -316,10 +314,16 @@ export default {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   opacity: .3;
-} 
+}
+
+.md-buffer-time,
+.md-buffer-text {
+  width: 50px;
+  padding: 0 3px;
+  text-align: center;
+}
 
 .md-buffer-time {
-  padding: 0 3px;
   font-weight: 600;
 }
   `,

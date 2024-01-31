@@ -1,9 +1,21 @@
 <mbsc-eventcalendar
   [scheduleEventTemplate]="eventTemplate"
+  [bufferBeforeTemplate]="bufferBefore"
   [data]="myEvents"
   [options]="eventSettings"
   class="md-custom-event"
 ></mbsc-eventcalendar>
+
+<ng-template #bufferBefore let-data>
+  <div class="md-schedule-buffer md-schedule-before-buffer">
+    <div class="md-schedule-buffer-background"
+    [ngStyle]="{ background: 'repeating-linear-gradient(-45deg,#fcfffc,#fcfffc 10px,${ getCategory(data.original.category).color} 10px,${ getCategory(data.original.category).color} 20px)'}">
+      </div>
+      <span class="md-buffer-text">Travel time </span>
+      <span class="md-buffer-time">{{data.original.bufferBefore}} minutes </span>
+  </div>
+</ng-template>
+
 
 <ng-template #eventTemplate let-data>
   <div *ngIf="data.allDay" [ngStyle]="{background: getCategory(data.original.category).color}" class="md-custom-event-allday-title">
@@ -29,3 +41,5 @@
     </div>
   </div>
 </ng-template>
+
+

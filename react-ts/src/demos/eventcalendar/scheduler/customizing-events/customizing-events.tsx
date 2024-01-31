@@ -1,4 +1,4 @@
-import React from 'react';
+import {useCallback, useEffect, useState, FC} from 'react';
 import {
   Eventcalendar,
   getJson,
@@ -15,11 +15,11 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/multi-events/',
       (events: MbscCalendarEvent[]) => {
@@ -29,7 +29,7 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const [resp, setResp] = React.useState({
+  const [resp, setResp] = useState({
     xsmall: {
       view: {
         schedule: {
@@ -46,7 +46,7 @@ const App: React.FC = () => {
     },
   });
 
-  const closeToast = React.useCallback(() => {
+  const closeToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -139,7 +139,7 @@ const App: React.FC = () => {
     setToastOpen(true);
   };
 
-  const renderScheduleEvent = React.useCallback<(data: MbscCalendarEventData) => any>((data: MbscCalendarEventData) => {
+  const renderScheduleEvent = useCallback<(data: MbscCalendarEventData) => any>((data: MbscCalendarEventData) => {
     const original = data.original!;
     const cat = getCategory(original.category);
     if (data.allDay) {
@@ -175,9 +175,27 @@ const App: React.FC = () => {
     }
   }, []);
 
+  const myBeforeBuffer = useCallback((args: MbscCalendarEventData) => {
+    const cat = getCategory(args.original.category);
+
+    return (
+      <div className="md-schedule-buffer md-schedule-before-buffer">
+        <div className=' md-schedule-buffer-background' 
+          style={{ background: `repeating-linear-gradient(-45deg,#fcfffc,#fcfffc 10px,${cat.color} 10px,${cat.color} 20px)`}}>
+          </div>
+          <span className='md-buffer-text'>Travel time </span><span className='md-buffer-time'>{args.original.bufferBefore} minutes </span>
+      </div>
+    );
+  }, []);  
+
   return (
     <div>
-      <Eventcalendar renderScheduleEvent={renderScheduleEvent} responsive={resp} data={myEvents} />
+      <Eventcalendar 
+        renderScheduleEvent={renderScheduleEvent} 
+        renderBufferBefore={myBeforeBuffer}
+        responsive={resp}
+        data={myEvents}
+      />
       <Toast
         // theme
         message="Edit clicked"
