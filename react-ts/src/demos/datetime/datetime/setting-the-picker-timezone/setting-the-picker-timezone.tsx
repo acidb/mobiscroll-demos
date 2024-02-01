@@ -1,23 +1,33 @@
-import { Datepicker, momentTimezone } from '@mobiscroll/react';
+import { Datepicker, MbscDatepickerChangeEvent, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment-timezone';
-import React from 'react';
+import { FC, useCallback, useState } from 'react';
 
 // setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
-const App: React.FC = () => {
-  const [selected, setSelected] = React.useState<string | null>(null);
-  const selectedChange = (ev: any) => {
-    setSelected(ev.value);
-  };
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const App: FC = () => {
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const handleChange = useCallback((ev: MbscDatepickerChangeEvent) => {
+    setSelected(ev.value as string);
+  }, []);
+
   return (
     <Datepicker
+      controls={['datetime']}
       value={selected}
-      onChange={selectedChange}
+      onChange={handleChange}
       dataTimezone="utc"
       displayTimezone="local"
+      inputStyle="outline"
+      label="Pick date & time"
+      labelStyle="stacked"
       timezonePlugin={momentTimezone}
-      controls={['calendar', 'time']}
     />
   );
 };

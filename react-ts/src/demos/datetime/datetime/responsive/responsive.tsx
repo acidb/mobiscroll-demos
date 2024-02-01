@@ -1,14 +1,14 @@
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useMemo } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [responsiveDrop] = React.useState<any>([
-    {
+const App: FC = () => {
+  const responsiveDrop = useMemo(
+    () => ({
       xsmall: {
         display: 'bottom',
       },
@@ -21,11 +21,12 @@ const App: React.FC = () => {
         display: 'anchored',
         touchUi: false,
       },
-    },
-  ]);
+    }),
+    [],
+  );
 
-  const [responsiveCal] = React.useState<any>([
-    {
+  const responsiveCal = useMemo(
+    () => ({
       xsmall: {
         controls: ['date'],
         display: 'bottom',
@@ -43,27 +44,14 @@ const App: React.FC = () => {
         display: 'anchored',
         touchUi: false,
       },
-    },
-  ]);
+    }),
+    [],
+  );
 
   return (
     <Page>
-      <Datepicker
-        controls={['date']}
-        responsive={responsiveDrop}
-        inputOptions={{
-          inputStyle: 'box',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Datepicker
-        controls={['date']}
-        responsive={responsiveCal}
-        inputOptions={{
-          inputStyle: 'box',
-          placeholder: 'Please Select...',
-        }}
-      />
+      <Datepicker controls={['date']} responsive={responsiveDrop} inputStyle="box" placeholder="Please Select..." />
+      <Datepicker controls={['date']} responsive={responsiveCal} inputStyle="box" placeholder="Please Select..." />
     </Page>
   );
 };

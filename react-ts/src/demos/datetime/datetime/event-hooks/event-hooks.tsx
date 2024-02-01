@@ -1,52 +1,50 @@
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <Page>
     <Datepicker
       controls={['date']}
-      inputProps={{
-        label: 'Date',
-        labelStyle: 'stacked',
-        inputStyle: 'box',
-        placeholder: 'Please Select...',
-      }}
-      onCancel={(event, inst) => {
+      label="Date"
+      labelStyle="stacked"
+      inputStyle="box"
+      placeholder="Please Select..."
+      onCancel={() => {
         // Logic for cancel button click
       }}
-      onChange={(event, inst) => {
+      onChange={() => {
         // Logic for value change
       }}
-      onClose={(event, inst) => {
+      onClose={() => {
         // Your custom event handler goes here
       }}
-      onDestroy={(event, inst) => {
+      onDestroy={() => {
         // Your custom event handler goes here
       }}
-      onInit={(event, inst) => {
+      onInit={() => {
         // Logic running on component init
       }}
-      onOpen={(event, inst) => {
+      onOpen={() => {
         // Your custom event handler goes here
       }}
-      onPageChange={(event, inst) => {
+      onPageChange={() => {
         // Your custom event handler goes here
       }}
-      onPageLoaded={(event, inst) => {
+      onPageLoaded={() => {
         // Use it to inject custom markup & attach custom listeners
       }}
-      onPageLoading={(event, inst) => {
+      onPageLoading={() => {
         // Use it to load data on demand
       }}
-      onPosition={(event, inst) => {
+      onPosition={() => {
         // Logic for component positioning
       }}
-      onTempChange={(event, inst) => {
+      onTempChange={() => {
         // Logic for temporary value change
       }}
     />

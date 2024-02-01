@@ -1,5 +1,5 @@
-import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Button, Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import './mobile-desktop-usage.css';
 
 setOptions({
@@ -7,28 +7,33 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [openPicker, setOpenPicker] = React.useState(false);
-  const [date, setDate] = React.useState<any>(new Date());
-
-  const show = () => {
-    setOpenPicker(true);
-  };
-
-  const onClose = () => {
+const App: FC = () => {
+  const [openPicker, setOpenPicker] = useState<boolean>(false);
+  const handleClose = useCallback(() => {
     setOpenPicker(false);
-  };
+  }, []);
 
-  const inputProps = {
-    className: 'md-mobile-picker-input',
-    placeholder: 'Please Select...',
-  };
+  const handleClick = useCallback(() => {
+    setOpenPicker(true);
+  }, []);
 
-  const boxInputProps = {
-    className: 'md-mobile-picker-box-label',
-    inputStyle: 'box',
-    placeholder: 'Please Select...',
-  };
+  const inputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-input',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
+
+  const boxInputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-box-label',
+      inputStyle: 'box',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
+
   return (
     <Page>
       <div className="mbsc-grid">
@@ -53,12 +58,11 @@ const App: React.FC = () => {
                 showOnClick={false}
                 showOnFocus={false}
                 isOpen={openPicker}
-                onClose={onClose}
-                defaultValue={date}
+                onClose={handleClose}
               />
             </div>
             <div className="mbsc-col-4">
-              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={show}>
+              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={handleClick}>
                 Show picker
               </Button>
             </div>
