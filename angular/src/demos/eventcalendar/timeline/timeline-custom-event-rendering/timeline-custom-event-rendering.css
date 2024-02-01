@@ -45,7 +45,7 @@
   top: 2px;
   bottom: 2px;
   color: #fff;
-  padding: 0 8px;
+  padding: 0 6px;
   line-height: 12px;
   flex-direction: column;
   align-items: center;
@@ -53,6 +53,7 @@
   text-align: center;
   opacity: .5;
   box-sizing: border-box;
+  z-index: -1;
 }
 
 .md-buffer-tail {
@@ -68,6 +69,10 @@
 
 .md-after-buffer .md-buffer-tail {
   right: 100%;
+}
+
+.md-buffer-time {
+  font-weight: 600;
 }
 
 .md-timeline-template-event-cont .mbsc-icon:before {

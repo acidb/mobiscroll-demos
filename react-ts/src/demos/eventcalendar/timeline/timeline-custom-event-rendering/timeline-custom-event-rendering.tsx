@@ -137,9 +137,7 @@ const App: FC = () => {
       <div className="md-buffer md-before-buffer" style={{background: color}}>
         Prep
         <span className='md-buffer-time'>{event.bufferBefore} min</span>
-        <div className='md-buffer-tail' 
-          style={{background: `radial-gradient(circle at right, transparent 70%, ${color} 0)`}}
-        ></div>
+        <div className='md-buffer-tail'  style={{background: color}}></div>
       </div>
     );
   }, []);
@@ -152,10 +150,7 @@ const App: FC = () => {
       <div className="md-buffer md-after-buffer" style={{background: color}}>
         Inspection
         <span className='md-buffer-time'>{event.bufferAfter} min</span>
-        <div 
-          className='md-buffer-tail' 
-          style={{background: `radial-gradient(circle at left, transparent 70%, ${color} 0)`}}
-        ></div>
+        <div className='md-buffer-tail'  style={{background: color}}></div>
       </div>
     );
   }, []);

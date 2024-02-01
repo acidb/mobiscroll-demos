@@ -52,9 +52,7 @@ export default {
             return `<div class="md-buffer md-before-buffer" style="background: ${color}">
               Prep
               <span class='md-buffer-time'>${event.bufferBefore} min</span>
-              <div class='md-buffer-tail' 
-                style="background: radial-gradient(circle at right, transparent 70%, ${color} 0)"
-              ></div>
+              <div class='md-buffer-tail' style="background: ${color}"></div>
             </div>`
           },
           renderBufferAfter: function (args) {
@@ -64,10 +62,7 @@ export default {
             return `<div class="md-buffer md-after-buffer" style="background: ${color}">
               Inspection
               <span class='md-buffer-time'>${event.bufferAfter} min</span>
-              <div 
-                class='md-buffer-tail' 
-                style="background: radial-gradient(circle at left, transparent 70%, ${color} 0)"
-              ></div>
+              <div class='md-buffer-tail' style="background: ${color}"></div>
              </div>`;
           },
           extendDefaultEvent: function () {
@@ -222,7 +217,7 @@ export default {
   top: 2px;
   bottom: 2px;
   color: #fff;
-  padding: 0 8px;
+  padding: 0 6px;
   line-height: 12px;
   flex-direction: column;
   align-items: center;
@@ -230,6 +225,7 @@ export default {
   text-align: center;
   opacity: .5;
   box-sizing: border-box;
+  z-index: -1;
 }
 
 .md-buffer-tail {
@@ -248,7 +244,6 @@ export default {
 }
 
 .md-buffer-time {
-  padding: 0 3px;
   font-weight: 600;
 }
 

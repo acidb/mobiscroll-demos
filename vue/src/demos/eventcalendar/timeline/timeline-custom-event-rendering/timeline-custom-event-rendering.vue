@@ -130,20 +130,14 @@ const myView = {
       <div class="md-buffer md-after-buffer" :style="{background: data.original.color}">
         Inspection
         <span class='md-buffer-time'>{{data.original.bufferAfter}} min</span>
-        <div 
-          class='md-buffer-tail' 
-          :style="{background: `radial-gradient(circle at left, transparent 70%, ${data.original.color} 0)`}"
-        ></div>
+        <div class='md-buffer-tail' :style="{background: data.original.color}"></div>
       </div>
     </template>
     <template #bufferBefore="data">
       <div class="md-buffer md-after-buffer" :style="{background: data.original.color}">
         Prep
         <span class='md-buffer-time'>{{data.original.bufferBefore}} min</span>
-        <div 
-          class='md-buffer-tail' 
-          :style="{background: `radial-gradient(circle at right, transparent 70%, ${data.original.color} 0)`}"
-        ></div>
+        <div class='md-buffer-tail' :style="{background: data.original.color}"></div>
       </div>
     </template>
   </MbscEventcalendar>
@@ -188,7 +182,6 @@ const myView = {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
-
 .md-buffer {
   position: absolute;
   display: flex;
@@ -197,7 +190,7 @@ const myView = {
   top: 2px;
   bottom: 2px;
   color: #fff;
-  padding: 0 8px;
+  padding: 0 6px;
   line-height: 12px;
   flex-direction: column;
   align-items: center;
@@ -205,6 +198,7 @@ const myView = {
   text-align: center;
   opacity: .5;
   box-sizing: border-box;
+  z-index: -1;
 }
 
 .md-buffer-tail {
@@ -220,6 +214,10 @@ const myView = {
 
 .md-after-buffer .md-buffer-tail {
   right: 100%;
+}
+
+.md-buffer-time {
+  font-weight: 600;
 }
 
 .md-timeline-template-event-cont .mbsc-icon:before {
