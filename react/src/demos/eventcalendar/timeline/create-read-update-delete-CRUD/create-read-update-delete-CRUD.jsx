@@ -7,7 +7,7 @@ import {
   Segmented,
   SegmentedGroup,
   setOptions,
-  snackbar,
+  Snackbar,
   Switch,
   Textarea /* localeImport */,
 } from '@mobiscroll/react';
@@ -126,6 +126,7 @@ function App() {
   const [colorAnchor, setColorAnchor] = useState(null);
   const [selectedColor, setSelectedColor] = useState('');
   const [tempColor, setTempColor] = useState('');
+  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
   const colorPicker = useRef();
   const colorButtons = useMemo(
     () => [
@@ -188,19 +189,9 @@ function App() {
   const deleteEvent = useCallback(
     (event) => {
       setMyEvents(myEvents.filter((item) => item.id !== event.id));
-      setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              setMyEvents((prevEvents) => [...prevEvents, event]);
-            },
-            text: 'Undo',
-          },
-          message: 'Event deleted',
-        });
-      });
+      setSnackbarOpen(true);
     },
-    [myEvents],
+    [myEvents, setSnackbarOpen],
   );
 
   const loadPopupForm = useCallback((event) => {
@@ -370,6 +361,10 @@ function App() {
     setColorPickerOpen(false);
   }, []);
 
+  const handleSnackbarClose = useCallback(() => {
+    setSnackbarOpen(false);
+  }, []);
+
   return (
     <div>
       <Eventcalendar
@@ -483,6 +478,17 @@ function App() {
           })}
         </div>
       </Popup>
+      <Snackbar
+        message="Event deleted"
+        isOpen={isSnackbarOpen}
+        onClose={handleSnackbarClose}
+        button={{
+          action: () => {
+            setMyEvents((prevEvents) => [...prevEvents, event]);
+          },
+          text: 'Undo',
+        }}
+      />
     </div>
   );
 }

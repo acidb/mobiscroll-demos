@@ -1,13 +1,22 @@
-import { Eventcalendar, getJson, setOptions, toast, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Eventcalendar,
+  getJson,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscPageLoadingEvent,
+  setOptions,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [events, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const myResources = [
     {
       id: 1,
@@ -36,10 +45,10 @@ const App: React.FC = () => {
     },
   ];
 
-  const onPageLoading = React.useCallback((event, inst) => {
-    const year = event.firstDay.getFullYear();
-    const month = event.firstDay.getMonth();
-    const day = event.firstDay.getDate();
+  const handlePageLoading = useCallback((args: MbscPageLoadingEvent) => {
+    const year = args.firstDay.getFullYear();
+    const month = args.firstDay.getMonth();
+    const day = args.firstDay.getDate();
 
     getJson(
       'https://trial.mobiscroll.com/weeklyevents/?year=' + year + '&month=' + month + '&day=' + day,
@@ -54,24 +63,34 @@ const App: React.FC = () => {
             resource: d.resource,
           });
         }
-
         setEvents(newEvents);
-
-        toast({
-          message: 'New events loaded',
-        });
+        setToastOpen(true);
       },
       'jsonp',
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: { type: 'day' },
     }),
     [],
   );
 
-  return <Eventcalendar data={events} view={view} resources={myResources} onPageLoading={onPageLoading} />;
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+  return (
+    <>
+      <Eventcalendar
+        // drag
+        data={myEvents}
+        view={myView}
+        resources={myResources}
+        onPageLoading={handlePageLoading}
+      />
+      <Toast message="New events loaded" isOpen={isToastOpen} onClose={handleCloseToast} />
+    </>
+  );
 };
 export default App;

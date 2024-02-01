@@ -4,6 +4,7 @@ import {
   CalendarNav,
   CalendarNext,
   CalendarPrev,
+  Confirm,
   Eventcalendar,
   Page,
   Popup,
@@ -31,11 +32,16 @@ function App() {
   const [readonlyCalendars, setReadonlyCalendars] = useState([]);
   const [myInvalids, setInvalids] = useState([]);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const buttonRef = useRef(null);
   const [myAnchor, setAnchor] = useState(null);
   const [mySelectedDate, setSelectedDate] = useState(new Date());
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [confirmEvent, setConfirmEvent] = useState();
+  const [confirmOldEvent, setConfirmOldEvent] = useState();
+  const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
+  const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+
+  const buttonRef = useRef(null);
 
   const debounce = useRef();
   const startDate = useRef();
@@ -55,75 +61,6 @@ function App() {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);
     setToastOpen(true);
   }, []);
-
-  useEffect(() => {
-    const onSignedIn = () => {
-      setIsLoggedIn(true);
-      googleCalendarSync
-        .getCalendars()
-        .then((calendars) => {
-          const newCalendarIds = [];
-          const newResources = [];
-          const calData = {};
-          const readonlyCals = [];
-
-          calendars.sort((c) => (c.primary ? -1 : 1));
-
-          for (const c of calendars) {
-            newCalendarIds.push(c.id);
-            newResources.push({ id: c.id, name: c.summary, color: c.backgroundColor });
-            calData[c.id] = { name: c.summary, color: c.backgroundColor, checked: true };
-            if (!(c.accessRole === 'writer' || c.accessRole === 'owner')) {
-              readonlyCals.push(c.id);
-            }
-          }
-
-          setCalendarIds(newCalendarIds);
-          setResources(newResources);
-          setCalendarData(calData);
-          setReadonlyCalendars(readonlyCals);
-          setCalendars(calendars);
-          setLoading(true);
-          setInvalids([
-            {
-              recurring: {
-                repeat: 'daily',
-                interval: 1,
-              },
-              resource: readonlyCals,
-            },
-          ]);
-
-          return googleCalendarSync.getEvents(newCalendarIds, startDate.current, endDate.current);
-        })
-        .then((events) => {
-          events.forEach((event) => {
-            event.resource = event.googleCalendarId;
-          });
-          setEvents(events);
-          setLoading(false);
-        })
-        .catch(onError);
-    };
-
-    const onSignedOut = () => {
-      setIsLoggedIn(false);
-      setCalendars([]);
-      setCalendarIds([]);
-      setCalendarData({});
-      setEvents([]);
-      setResources([]);
-      setPopupOpen(false);
-    };
-
-    // init google client
-    googleCalendarSync.init({
-      apiKey: '<YOUR_GOOGLE_API_KEY>',
-      clientId: '<YOUR_GOOGLE_CLIENT_ID>',
-      onSignedIn: onSignedIn,
-      onSignedOut: onSignedOut,
-    });
-  }, [onError]);
 
   const onPopupClose = useCallback(() => {
     setPopupOpen(false);
@@ -272,64 +209,132 @@ function App() {
     [calendarData, onError, readonlyCalendars],
   );
 
-  const handleEventUpdate = useCallback(
-    (args) => {
-      if (googleCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to update this event?',
-          message: 'This action will affect your Google Calendar event.',
-          okText: 'Update',
-        }).then((result) => {
-          const event = args.event;
-          if (result) {
-            const calendarId = event.googleCalendarId;
-            googleCalendarSync
-              .updateEvent(calendarId, event)
-              .then(() => {
-                setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
-                setToastOpen(true);
-              })
-              .catch((error) => {
-                setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-                onError(error);
-              });
-          } else {
-            setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-          }
-        });
+  const handleEventUpdate = useCallback((args) => {
+    if (googleCalendarSync.isSignedIn()) {
+      setConfirmEvent(args.event);
+      setConfirmOldEvent(args.oldEvent);
+      setUpdateConfirmOpen(true);
+    }
+  }, []);
+
+  const handleEventDelete = useCallback((args) => {
+    if (googleCalendarSync.isSignedIn()) {
+      setConfirmEvent(args.event);
+      setUpdateConfirmOpen(true);
+    }
+    return false;
+  }, []);
+
+  const handleUpdateConfirmClose = useCallback(
+    (result) => {
+      if (result) {
+        const calendarId = confirmEvent.googleCalendarId;
+        googleCalendarSync
+          .updateEvent(calendarId, confirmEvent)
+          .then(() => {
+            setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
+            setToastOpen(true);
+          })
+          .catch((error) => {
+            setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== confirmEvent.id), confirmOldEvent]);
+            onError(error);
+          });
+      } else {
+        setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== confirmEvent.id), confirmOldEvent]);
       }
+      setUpdateConfirmOpen(false);
     },
-    [calendarData, onError],
+    [calendarData, confirmEvent, confirmOldEvent, onError],
   );
 
-  const handleEventDelete = useCallback(
-    (args) => {
-      if (googleCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to delete this event?',
-          message: 'This action will remove the event from your Google Calendar as well.',
-          okText: 'Delete',
-        }).then((result) => {
-          if (result) {
-            const event = args.event;
-            const calendarId = event.googleCalendarId;
-            googleCalendarSync
-              .deleteEvent(calendarId, event)
-              .then(() => {
-                setEvents((oldEvents) => oldEvents.filter((item) => item.id !== event.id));
-                setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
-                setToastOpen(true);
-              })
-              .catch(onError);
-          }
-        });
+  const handleDeleteConfirmClose = useCallback(
+    (result) => {
+      if (result) {
+        const calendarId = confirmEvent.googleCalendarId;
+        googleCalendarSync
+          .deleteEvent(calendarId, confirmEvent)
+          .then(() => {
+            setEvents((oldEvents) => oldEvents.filter((item) => item.id !== confirmEvent.id));
+            setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
+            setToastOpen(true);
+          })
+          .catch(onError);
       }
-      return false;
+      setDeleteConfirmOpen(false);
     },
-    [calendarData, onError],
+    [calendarData, confirmEvent, onError],
   );
 
   const handleCloseToast = useCallback(() => setToastOpen(false), []);
+
+  useEffect(() => {
+    const onSignedIn = () => {
+      setIsLoggedIn(true);
+      googleCalendarSync
+        .getCalendars()
+        .then((calendars) => {
+          const newCalendarIds = [];
+          const newResources = [];
+          const calData = {};
+          const readonlyCals = [];
+
+          calendars.sort((c) => (c.primary ? -1 : 1));
+
+          for (const c of calendars) {
+            newCalendarIds.push(c.id);
+            newResources.push({ id: c.id, name: c.summary, color: c.backgroundColor });
+            calData[c.id] = { name: c.summary, color: c.backgroundColor, checked: true };
+            if (!(c.accessRole === 'writer' || c.accessRole === 'owner')) {
+              readonlyCals.push(c.id);
+            }
+          }
+
+          setCalendarIds(newCalendarIds);
+          setResources(newResources);
+          setCalendarData(calData);
+          setReadonlyCalendars(readonlyCals);
+          setCalendars(calendars);
+          setLoading(true);
+          setInvalids([
+            {
+              recurring: {
+                repeat: 'daily',
+                interval: 1,
+              },
+              resource: readonlyCals,
+            },
+          ]);
+
+          return googleCalendarSync.getEvents(newCalendarIds, startDate.current, endDate.current);
+        })
+        .then((events) => {
+          events.forEach((event) => {
+            event.resource = event.googleCalendarId;
+          });
+          setEvents(events);
+          setLoading(false);
+        })
+        .catch(onError);
+    };
+
+    const onSignedOut = () => {
+      setIsLoggedIn(false);
+      setCalendars([]);
+      setCalendarIds([]);
+      setCalendarData({});
+      setEvents([]);
+      setResources([]);
+      setPopupOpen(false);
+    };
+
+    // init google client
+    googleCalendarSync.init({
+      apiKey: '<YOUR_GOOGLE_API_KEY>',
+      clientId: '<YOUR_GOOGLE_CLIENT_ID>',
+      onSignedIn: onSignedIn,
+      onSignedOut: onSignedOut,
+    });
+  }, [onError]);
 
   return (
     <Page className={'md-sync-events-google-cont ' + (isLoading ? 'md-loading-events' : '')}>
@@ -383,6 +388,20 @@ function App() {
         </div>
       </Popup>
       <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
+      <Confirm
+        isOpen={isUpdateConfirmOpen}
+        title="Are you sure you want to update this event?"
+        message="This action will affect your Google Calendar event."
+        okText="Update"
+        onClose={handleUpdateConfirmClose}
+      />
+      <Confirm
+        isOpen={isDeleteConfirmOpen}
+        title="Are you sure you want to delete this event?"
+        message="This action will remove the event from your Google Calendar as well."
+        okText="Delete"
+        onClose={handleDeleteConfirmClose}
+      />
     </Page>
   );
 }

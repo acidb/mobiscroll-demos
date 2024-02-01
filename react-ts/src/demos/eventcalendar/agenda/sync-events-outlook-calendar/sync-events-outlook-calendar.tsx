@@ -14,7 +14,7 @@ import {
   Popup,
   setOptions,
   Switch,
-  toast /* localeImport */,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
 import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import './sync-events-outlook-calendar.css';
@@ -35,6 +35,8 @@ const App: FC = () => {
   const buttonRef = useRef<Button>(null);
   const [myAnchor, setAnchor] = useState<HTMLElement>();
   const [mySelectedDate, setSelectedDate] = useState(new Date());
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
 
   const { current: view } = useRef<MbscEventcalendarView>({ agenda: { type: 'month' } });
 
@@ -43,9 +45,8 @@ const App: FC = () => {
   const endDate = useRef<MbscDateType>();
 
   const onError = useCallback((resp: { message: string }) => {
-    toast({
-      message: resp.message,
-    });
+    setToastMessage(resp.message);
+    setToastOpen(true);
   }, []);
 
   useEffect(() => {
@@ -201,6 +202,8 @@ const App: FC = () => {
     [calendarIds, onError],
   );
 
+  const handleToastClose = useCallback(() => setToastOpen(false), []);
+
   return (
     <Page className={'md-sync-events-outlook-cont ' + (isLoading ? 'md-loading-events' : '')}>
       <Eventcalendar
@@ -235,6 +238,7 @@ const App: FC = () => {
           </Button>
         </div>
       </Popup>
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleToastClose} />
     </Page>
   );
 };

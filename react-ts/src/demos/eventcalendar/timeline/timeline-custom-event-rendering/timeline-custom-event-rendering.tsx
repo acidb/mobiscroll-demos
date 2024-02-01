@@ -3,15 +3,19 @@ import {
   MbscCalendarEvent,
   MbscCalendarEventData,
   MbscEventcalendarView,
-  MbscResource /* localeImport */,
+  MbscResource,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import './timeline-custom-event-rendering.css';
 
-const App: React.FC = () => {
-  // const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  const view = React.useMemo<MbscEventcalendarView>(
+const App: FC = () => {
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'day',
@@ -20,7 +24,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         start: 'dyndatetime(y,m,d,10,30)',
@@ -74,7 +78,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -95,7 +99,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myScheduleEvent = React.useCallback((data) => {
+  const myScheduleEvent = useCallback((data: MbscCalendarEventData) => {
     const ev = data.original;
     const color = data.color;
 
@@ -112,7 +116,7 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const myDefaultEvent = React.useCallback(
+  const myDefaultEvent = useCallback(
     () => ({
       taskType: 'cogs',
     }),
@@ -121,9 +125,8 @@ const App: React.FC = () => {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderScheduleEvent={myScheduleEvent}

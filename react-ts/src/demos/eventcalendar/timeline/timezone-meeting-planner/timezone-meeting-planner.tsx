@@ -1,22 +1,28 @@
-import React from 'react';
 import {
   CalendarNav,
   CalendarNext,
   CalendarPrev,
   CalendarToday,
-  confirm,
+  Confirm,
   Eventcalendar,
   formatDate,
+  MbscCalendarColor,
   MbscCalendarEvent,
+  MbscCalendarEventData,
   MbscEventcalendarView,
+  MbscEventCreatedEvent,
+  MbscEventCreateFailedEvent,
+  MbscEventDeletedEvent,
+  MbscEventUpdatedEvent,
+  MbscEventUpdateFailedEvent,
   MbscResource,
   momentTimezone,
   setOptions,
-  toast,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import './timezone-meeting-planner.css';
-
 import moment from 'moment-timezone';
+import { FC, useCallback, useMemo, useState } from 'react';
+import './timezone-meeting-planner.css';
 
 momentTimezone.moment = moment;
 
@@ -25,7 +31,7 @@ setOptions({
   // themeJs
 });
 
-const defaultEvents = [
+const defaultEvents: MbscCalendarEvent[] = [
   {
     start: 'dyndatetime(y,m,d,13)',
     end: 'dyndatetime(y,m,d,15)',
@@ -34,20 +40,15 @@ const defaultEvents = [
   },
 ];
 
-const App: React.FC = () => {
-  const [myEvents, setMyEvents] = React.useState<MbscCalendarEvent[]>([defaultEvents]);
+const App: FC = () => {
+  const [myEvents, setMyEvents] = useState<MbscCalendarEvent[]>([defaultEvents]);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
+  const [isConfirmOpen, setConfirmOpen] = useState<boolean>(false);
+  const [tempEvent, setTempEvent] = useState<MbscCalendarEvent>();
+  const [isNewEvent, setIsNewEvent] = useState<boolean>(false);
 
-  const view = React.useMemo<MbscEventcalendarView>(
-    () => ({
-      timeline: {
-        type: 'week',
-        timeLabelStep: 1440,
-      },
-    }),
-    [],
-  );
-
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -96,7 +97,17 @@ const App: React.FC = () => {
     [],
   );
 
-  const getUtcOffset = React.useCallback((timezone) => {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
+      timeline: {
+        type: 'week',
+        timeLabelStep: 1440,
+      },
+    }),
+    [],
+  );
+
+  const getUtcOffset = useCallback((timezone: string) => {
     switch (timezone) {
       case 'America/Los_Angeles':
         return -7;
@@ -119,7 +130,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const getProps = React.useCallback((h) => {
+  const getProps = useCallback((h: number) => {
     if (h < 6) {
       return { color: '#ffbaba4d', invalid: true };
     } else if (h < 8) {
@@ -131,9 +142,9 @@ const App: React.FC = () => {
     } else return { color: '#ffbaba4d', invalid: true };
   }, []);
 
-  const details = React.useMemo(() => {
-    const colors: any = [];
-    const invalid: any = [];
+  const details = useMemo(() => {
+    const colors: MbscCalendarColor[] = [];
+    const invalid = [];
 
     for (let j = 0; j < myResources.length; ++j) {
       const resource = myResources[j];
@@ -172,12 +183,12 @@ const App: React.FC = () => {
     return { colors, invalid };
   }, [getProps, getUtcOffset, myResources]);
 
-  const myScheduleEvent = React.useCallback((data) => {
-    const start = data.startDate.clone();
-    const end = data.endDate.clone();
+  const myScheduleEvent = useCallback((data: MbscCalendarEventData) => {
+    const start = (data.startDate as MyDate).clone();
+    const end = (data.endDate as MyDate).clone();
 
-    start.setTimezone(data.currentResource.timezone);
-    end.setTimezone(data.currentResource.timezone);
+    start.setTimezone(data.currentResource!.timezone);
+    end.setTimezone(data.currentResource!.timezone);
 
     return (
       <div className="md-meeting-planner-cont" style={{ background: data.color }}>
@@ -192,7 +203,7 @@ const App: React.FC = () => {
   }, []);
 
   const myHeader = () => (
-    <React.Fragment>
+    <>
       <CalendarNav />
       <div className="md-meeting-planner-header">
         <div className="md-meeting-planner-zone md-meeting-planner-work">working hours</div>
@@ -202,10 +213,10 @@ const App: React.FC = () => {
         <CalendarToday />
         <CalendarNext />
       </div>
-    </React.Fragment>
+    </>
   );
 
-  const myResource = (resource: any) => (
+  const myResource = (resource: MbscResource) => (
     <div className="md-meeting-participant-cont">
       <div className="md-meeting-participant-name">{resource.name}</div>
       <div>
@@ -216,121 +227,133 @@ const App: React.FC = () => {
     </div>
   );
 
-  const myDefaultEvent = React.useCallback(
+  const myDefaultEvent = useCallback(
     () => ({
       resource: [1, 2, 3, 4, 5, 6],
     }),
     [],
   );
 
-  const onEventCreate = React.useCallback((args, inst) => {
-    args.event.resource = [1, 2, 3, 4, 5, 6];
-  }, []);
-
-  const onEventCreated = React.useCallback(
-    (args) => {
+  const handleEventCreated = useCallback(
+    (args: MbscEventCreatedEvent) => {
       setMyEvents([...myEvents, args.event]);
       setTimeout(() => {
-        toast({
-          message: 'Event created',
-        });
+        setToastMessage('Event created');
+        setToastOpen(true);
       });
     },
     [myEvents],
   );
 
-  const onEventUpdated = React.useCallback(
-    (args) => {
+  const handleEventUpdated = useCallback(
+    (args: MbscEventUpdatedEvent) => {
       const index = myEvents.findIndex((x) => x.id === args.event.id);
       const newEventList = [...myEvents];
 
       newEventList.splice(index, 1, args.event);
       setMyEvents(newEventList);
       setTimeout(() => {
-        toast({
-          message: 'Event updated',
-        });
+        setToastMessage('Event updated');
+        setToastOpen(true);
       });
     },
     [myEvents],
   );
 
-  const onEventDeleted = React.useCallback(
-    (args) => {
+  const handleEventDeleted = useCallback(
+    (args: MbscEventDeletedEvent) => {
       setMyEvents(myEvents.filter((item) => item.id !== args.event.id));
     },
     [myEvents],
   );
 
-  const createUpdateEvent = React.useCallback(
-    (event, isNew) => {
-      confirm({
-        title: 'Are you sure you want to proceed?',
-        message: "It looks like someone from the team won't be able to join the meeting.",
-        okText: 'Yes',
-        cancelText: 'No',
-        callback: function (res) {
-          if (res) {
-            if (isNew) {
-              setMyEvents([...myEvents, event]);
-            } else {
-              const index = myEvents.findIndex((x) => x.id === event.id);
-              const newEventList = [...myEvents];
+  const createUpdateEvent = useCallback((event: MbscCalendarEvent, isNew: boolean) => {
+    setTempEvent(event);
+    setIsNewEvent(isNew);
+    setConfirmOpen(true);
+  }, []);
 
-              newEventList.splice(index, 1, event);
-              setMyEvents(newEventList);
-            }
-
-            toast({
-              message: isNew ? 'Event created' : 'Event updated',
-            });
-          }
-        },
-      });
-    },
-    [myEvents],
-  );
-
-  const onEventCreateFailed = React.useCallback(
-    (args) => {
+  const handleEventCreateFailed = useCallback(
+    (args: MbscEventCreateFailedEvent) => {
       createUpdateEvent(args.event, true);
     },
     [createUpdateEvent],
   );
 
-  const onEventUpdateFailed = React.useCallback(
-    (args) => {
+  const handleEventUpdateFailed = useCallback(
+    (args: MbscEventUpdateFailedEvent) => {
       createUpdateEvent(args.event, false);
     },
     [createUpdateEvent],
   );
 
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
+
+  const handleConfirmClose = useCallback(
+    (res: boolean) => {
+      if (res) {
+        if (isNewEvent) {
+          setMyEvents([...myEvents, tempEvent!]);
+        } else {
+          const index = myEvents.findIndex((x) => x.id === tempEvent!.id);
+          const newEventList = [...myEvents];
+
+          newEventList.splice(index, 1, tempEvent!);
+          setMyEvents(newEventList);
+        }
+        setToastMessage(isNewEvent ? 'Event created' : 'Event updated');
+        setToastOpen(true);
+      }
+      setConfirmOpen(false);
+    },
+    [isNewEvent, myEvents, tempEvent],
+  );
+  // const onEventCreate = useCallback((args, inst) => {
+  //   args.event.resource = [1, 2, 3, 4, 5, 6];
+  // }, []);
+
   return (
-    <Eventcalendar
-      timezonePlugin={momentTimezone}
-      dataTimezone="utc"
-      displayTimezone="utc"
-      clickToCreate={true}
-      dragToCreate={true}
-      dragToMove={true}
-      dragToResize={true}
-      dragTimeStep={60}
-      view={view}
-      data={myEvents}
-      resources={myResources}
-      colors={details.colors}
-      invalid={details.invalid}
-      extendDefaultEvent={myDefaultEvent}
-      renderScheduleEvent={myScheduleEvent}
-      renderHeader={myHeader}
-      renderResource={myResource}
-      onEventCreate={onEventCreate}
-      onEventCreated={onEventCreated}
-      onEventUpdated={onEventUpdated}
-      onEventDeleted={onEventDeleted}
-      onEventCreateFailed={onEventCreateFailed}
-      onEventUpdateFailed={onEventUpdateFailed}
-    />
+    <>
+      <Eventcalendar
+        timezonePlugin={momentTimezone}
+        dataTimezone="utc"
+        displayTimezone="utc"
+        clickToCreate={true}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
+        dragTimeStep={60}
+        height={400}
+        view={myView}
+        data={myEvents}
+        resources={myResources}
+        colors={details.colors}
+        invalid={details.invalid}
+        extendDefaultEvent={myDefaultEvent}
+        renderScheduleEvent={myScheduleEvent}
+        renderHeader={myHeader}
+        renderResource={myResource}
+        onEventCreated={handleEventCreated}
+        onEventUpdated={handleEventUpdated}
+        onEventDeleted={handleEventDeleted}
+        onEventCreateFailed={handleEventCreateFailed}
+        onEventUpdateFailed={handleEventUpdateFailed}
+      />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
+      <Confirm
+        isOpen={isConfirmOpen}
+        title="Are you sure you want to proceed?"
+        message="It looks like someone from the team won't be able to join the meeting."
+        okText="Yes"
+        cancelText="No"
+        onClose={handleConfirmClose}
+      />
+    </>
   );
 };
 export default App;
+
+interface MyDate extends Date {
+  clone(): MyDate;
+  setTimezone(timezone: MyDate): void;
+}

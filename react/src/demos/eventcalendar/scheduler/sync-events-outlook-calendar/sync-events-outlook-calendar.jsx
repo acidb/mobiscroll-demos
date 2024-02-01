@@ -31,6 +31,10 @@ function App() {
   const [toastMessage, setToastMessage] = useState('');
   const [isToastOpen, setToastOpen] = useState('');
   const [primaryCalendarId, setPrimaryCalendarId] = useState();
+  const [confirmEvent, setConfirmEvent] = useState();
+  const [confirmOldEvent, setConfirmOldEvent] = useState();
+  const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
+  const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const view = useMemo(() => ({ schedule: { type: 'week' } }), []);
 
@@ -202,61 +206,60 @@ function App() {
     [calendarData, onError, primaryCalendarId],
   );
 
-  const handleEventUpdate = useCallback(
-    (args) => {
-      if (outlookCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to update this event?',
-          message: 'This action will affect your Outlook Calendar event.',
-          okText: 'Update',
-        }).then((result) => {
-          const event = args.event;
-          if (result) {
-            const calendarId = event.outlookCalendarId;
-            outlookCalendarSync
-              .updateEvent(calendarId, event)
-              .then(() => {
-                setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
-                setToastOpen(true);
-              })
-              .catch((error) => {
-                setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-                onError(error);
-              });
-          } else {
-            setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-          }
-        });
+  const handleEventUpdate = useCallback((args) => {
+    if (outlookCalendarSync.isSignedIn()) {
+      setConfirmEvent(args.event);
+      setConfirmOldEvent(args.oldEvent);
+      setUpdateConfirmOpen(true);
+    }
+  }, []);
+
+  const handleEventDelete = useCallback((args) => {
+    if (outlookCalendarSync.isSignedIn()) {
+      setConfirmEvent(args.event);
+      setUpdateConfirmOpen(true);
+    }
+    return false;
+  }, []);
+
+  const handleUpdateConfirmClose = useCallback(
+    (result) => {
+      if (result) {
+        const calendarId = confirmEvent.outlookCalendarId;
+        outlookCalendarSync
+          .updateEvent(calendarId, confirmEvent)
+          .then(() => {
+            setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
+            setToastOpen(true);
+          })
+          .catch((error) => {
+            setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== confirmEvent.id), confirmOldEvent]);
+            onError(error);
+          });
+      } else {
+        setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== confirmEvent.id), confirmOldEvent]);
       }
+      setUpdateConfirmOpen(false);
     },
-    [calendarData, onError],
+    [calendarData, confirmEvent, confirmOldEvent, onError],
   );
 
-  const handleEventDelete = useCallback(
-    (args) => {
-      if (outlookCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to delete this event?',
-          message: 'This action will remove the event from your Outlook Calendar as well.',
-          okText: 'Delete',
-        }).then((result) => {
-          if (result) {
-            const event = args.event;
-            const calendarId = event.outlookCalendarId;
-            outlookCalendarSync
-              .deleteEvent(calendarId, event)
-              .then(() => {
-                setEvents((oldEvents) => oldEvents.filter((item) => item.id !== event.id));
-                setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
-                setToastOpen(true);
-              })
-              .catch(onError);
-          }
-        });
+  const handleDeleteConfirmClose = useCallback(
+    (result) => {
+      if (result) {
+        const calendarId = confirmEvent.outlookCalendarId;
+        outlookCalendarSync
+          .deleteEvent(calendarId, confirmEvent)
+          .then(() => {
+            setEvents((oldEvents) => oldEvents.filter((item) => item.id !== confirmEvent.id));
+            setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
+            setToastOpen(true);
+          })
+          .catch(onError);
       }
-      return false;
+      setDeleteConfirmOpen(false);
     },
-    [calendarData, onError],
+    [calendarData, confirmEvent, onError],
   );
 
   const handleCloseToast = useCallback(() => setToastOpen(false), []);
@@ -316,6 +319,20 @@ function App() {
         ></Eventcalendar>
       </div>
       <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
+      <Confirm
+        isOpen={isUpdateConfirmOpen}
+        title="Are you sure you want to update this event?"
+        message="This action will affect your Outlook Calendar event."
+        okText="Update"
+        onClose={handleUpdateConfirmClose}
+      />
+      <Confirm
+        isOpen={isDeleteConfirmOpen}
+        title="Are you sure you want to delete this event?"
+        message="This action will remove the event from your Outlook Calendar as well."
+        okText="Delete"
+        onClose={handleDeleteConfirmClose}
+      />
     </Page>
   );
 }

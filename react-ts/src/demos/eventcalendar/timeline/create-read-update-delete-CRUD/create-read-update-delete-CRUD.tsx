@@ -4,16 +4,25 @@ import {
   Eventcalendar,
   Input,
   MbscCalendarEvent,
+  MbscDatepickerChangeEvent,
+  MbscDatepickerControl,
+  MbscDateType,
   MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscEventCreatedEvent,
+  MbscEventDeletedEvent,
+  MbscPopupButton,
+  MbscResource,
+  MbscSelectedDateChangeEvent,
   Popup,
   SegmentedGroup,
   SegmentedItem,
   setOptions,
-  snackbar,
+  Snackbar,
   Switch,
-  Textarea,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, MouseEvent, useCallback, useMemo, useRef, useState } from 'react';
 import './create-read-update-delete-CRUD.css';
 
 setOptions({
@@ -21,7 +30,7 @@ setOptions({
   // themeJs
 });
 
-const defaultEvents = [
+const defaultEvents: MbscCalendarEvent[] = [
   {
     id: 1,
     start: 'dyndatetime(y,m,d,13)',
@@ -110,26 +119,27 @@ const colorPopup = {
 };
 const colors = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '#5ac8fa', '#009788', '#4baf4f', '#7e5d4e'];
 
-const App: React.FC = () => {
-  const [myEvents, setMyEvents] = React.useState<MbscCalendarEvent[]>(defaultEvents);
-  const [tempEvent, setTempEvent] = React.useState<any>(null);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [isEdit, setEdit] = React.useState<boolean>(false);
-  const [anchor, setAnchor] = React.useState<any>(null);
-  const [start, startRef] = React.useState<any>(null);
-  const [end, endRef] = React.useState<any>(null);
-  const [popupEventTitle, setTitle] = React.useState<string | undefined>('');
-  const [popupEventDescription, setDescription] = React.useState<string>('');
-  const [popupEventAllDay, setAllDay] = React.useState<boolean>(true);
-  const [popupEventDate, setDate] = React.useState<any>([]);
-  const [popupEventStatus, setStatus] = React.useState<string>('busy');
-  const [mySelectedDate, setSelectedDate] = React.useState<any>(new Date());
-  const [colorPickerOpen, setColorPickerOpen] = React.useState(false);
-  const [colorAnchor, setColorAnchor] = React.useState<any>(null);
-  const [selectedColor, setSelectedColor] = React.useState('');
-  const [tempColor, setTempColor] = React.useState('');
-  const colorPicker = React.useRef<any>();
-  const colorButtons = React.useMemo<any>(
+const App: FC = () => {
+  const [myEvents, setMyEvents] = useState<MbscCalendarEvent[]>(defaultEvents);
+  const [tempEvent, setTempEvent] = useState<MbscCalendarEvent>();
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isEdit, setEdit] = useState<boolean>(false);
+  const [anchor, setAnchor] = useState<HTMLElement>();
+  const [start, startRef] = useState<Input | null>(null);
+  const [end, endRef] = useState<Input | null>(null);
+  const [popupEventTitle, setTitle] = useState<string>('');
+  const [popupEventDescription, setDescription] = useState<string>('');
+  const [popupEventAllDay, setAllDay] = useState<boolean>(true);
+  const [popupEventDate, setDate] = useState<MbscDateType[]>([]);
+  const [popupEventStatus, setStatus] = useState<string>('busy');
+  const [mySelectedDate, setSelectedDate] = useState<MbscDateType>(new Date());
+  const [colorPickerOpen, setColorPickerOpen] = useState<boolean>(false);
+  const [colorAnchor, setColorAnchor] = useState<HTMLElement>();
+  const [selectedColor, setSelectedColor] = useState<string | undefined>('');
+  const [tempColor, setTempColor] = useState<string>('');
+  const [isSnackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const colorPicker = useRef<Popup | null>(null);
+  const colorButtons = useMemo<(string | MbscPopupButton)[]>(
     () => [
       'cancel',
       {
@@ -145,9 +155,9 @@ const App: React.FC = () => {
     [tempColor],
   );
 
-  const saveEvent = React.useCallback<any>(() => {
+  const saveEvent = useCallback(() => {
     const newEvent = {
-      id: tempEvent.id,
+      id: tempEvent!.id,
       title: popupEventTitle,
       description: popupEventDescription,
       start: popupEventDate[0],
@@ -155,11 +165,11 @@ const App: React.FC = () => {
       allDay: popupEventAllDay,
       status: popupEventStatus,
       color: selectedColor,
-      resource: tempEvent.resource,
+      resource: tempEvent!.resource,
     };
     if (isEdit) {
       // update the event in the list
-      const index = myEvents.findIndex((x) => x.id === tempEvent.id);
+      const index = myEvents.findIndex((x) => x.id === tempEvent!.id);
       const newEventList = [...myEvents];
 
       newEventList.splice(index, 1, newEvent);
@@ -187,69 +197,60 @@ const App: React.FC = () => {
     selectedColor,
   ]);
 
-  const deleteEvent = React.useCallback(
-    (event: any) => {
+  const deleteEvent = useCallback(
+    (event: MbscCalendarEvent) => {
       const filteredEvents = myEvents.filter((item) => item.id !== event.id);
+      setTempEvent(event);
       setMyEvents(filteredEvents);
-      setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              setMyEvents([...filteredEvents, event]);
-            },
-            text: 'Undo',
-          },
-          message: 'Event deleted',
-        });
-      });
+      setSnackbarOpen(true);
     },
     [myEvents],
   );
 
-  const loadPopupForm = React.useCallback((event: MbscCalendarEvent) => {
-    setTitle(event.title);
+  const loadPopupForm = useCallback((event: MbscCalendarEvent) => {
+    setTitle(event.title!);
     setDescription(event.description);
-    setDate([event.start, event.end]);
+    setDate([event.start!, event.end!]);
     setAllDay(event.allDay || false);
     setStatus(event.status || 'busy');
   }, []);
 
   // handle popup form changes
 
-  const titleChange = React.useCallback<any>((ev: any) => {
+  const titleChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setTitle(ev.target.value);
   }, []);
 
-  const descriptionChange = React.useCallback<any>((ev: any) => {
+  const descriptionChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setDescription(ev.target.value);
   }, []);
 
-  const allDayChange = React.useCallback<any>((ev: any) => {
+  const allDayChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setAllDay(ev.target.checked);
   }, []);
 
-  const dateChange = React.useCallback<any>((args: any) => {
-    setDate(args.value);
+  const dateChange = useCallback((args: MbscDatepickerChangeEvent) => {
+    setDate(args.value as MbscDateType[]);
   }, []);
 
-  const statusChange = React.useCallback<any>((ev: any) => {
+  const statusChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setStatus(ev.target.value);
   }, []);
 
-  const onDeleteClick = React.useCallback<any>(() => {
-    deleteEvent(tempEvent);
+  const onDeleteClick = useCallback(() => {
+    deleteEvent(tempEvent!);
     setOpen(false);
   }, [deleteEvent, tempEvent]);
 
   // scheduler options
 
-  const onSelectedDateChange = React.useCallback<any>((event: any) => {
+  const handleSelectedDateChange = useCallback((event: MbscSelectedDateChangeEvent) => {
     setSelectedDate(event.date);
   }, []);
 
-  const onEventClick = React.useCallback<any>(
-    (args: any) => {
-      const resource: any = myResources.find((r) => r.id === args.event.resource);
+  const handleEventClick = useCallback(
+    (args: MbscEventClickEvent) => {
+      const resource: MbscResource = myResources.find((r) => r.id === args.event.resource)!;
       setEdit(true);
       setTempEvent({ ...args.event });
       setSelectedColor(args.event.color || resource.color);
@@ -261,9 +262,9 @@ const App: React.FC = () => {
     [loadPopupForm],
   );
 
-  const onEventCreated = React.useCallback<any>(
-    (args: any) => {
-      const resource: any = myResources.find((r) => r.id === args.event.resource);
+  const handleEventCreated = useCallback(
+    (args: MbscEventCreatedEvent) => {
+      const resource: MbscResource = myResources.find((r) => r.id === args.event.resource)!;
       setEdit(false);
       setTempEvent(args.event);
       setSelectedColor(resource.color);
@@ -276,22 +277,22 @@ const App: React.FC = () => {
     [loadPopupForm],
   );
 
-  const onEventDeleted = React.useCallback<any>(
-    (args: any) => {
+  const handleEventDeleted = useCallback(
+    (args: MbscEventDeletedEvent) => {
       deleteEvent(args.event);
     },
     [deleteEvent],
   );
 
-  const onEventUpdated = React.useCallback<any>((event: any) => {
+  const handleEventUpdated = useCallback(() => {
     // here you can update the event in your storage as well, after drag & drop or resize
     // ...
   }, []);
 
   // datepicker options
-  const controls = React.useMemo<any>(() => (popupEventAllDay ? ['date'] : ['datetime']), [popupEventAllDay]);
-  const headerText = React.useMemo<string>(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
-  const respSetting = React.useMemo<any>(
+  const controls = useMemo<MbscDatepickerControl[]>(() => (popupEventAllDay ? ['date'] : ['datetime']), [popupEventAllDay]);
+  const headerText = useMemo<string>(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
+  const respSetting = useMemo(
     () =>
       popupEventAllDay
         ? {
@@ -308,7 +309,7 @@ const App: React.FC = () => {
           },
     [popupEventAllDay],
   );
-  const popupButtons = React.useMemo<any>(() => {
+  const popupButtons = useMemo<(string | MbscPopupButton)[]>(() => {
     if (isEdit) {
       return [
         'cancel',
@@ -336,7 +337,7 @@ const App: React.FC = () => {
     }
   }, [isEdit, saveEvent]);
 
-  const onClose = React.useCallback(() => {
+  const onPopupClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setMyEvents([...myEvents]);
@@ -344,34 +345,36 @@ const App: React.FC = () => {
     setOpen(false);
   }, [isEdit, myEvents]);
 
-  const selectColor = React.useCallback((color) => {
+  const selectColor = useCallback((color: string) => {
     setTempColor(color);
   }, []);
 
-  const openColorPicker = React.useCallback(
-    (ev) => {
-      selectColor(selectedColor);
+  const openColorPicker = useCallback(
+    (ev: MouseEvent<HTMLDivElement>) => {
+      selectColor(selectedColor!);
       setColorAnchor(ev.currentTarget);
       setColorPickerOpen(true);
     },
     [selectColor, selectedColor],
   );
 
-  const changeColor = React.useCallback(
-    (ev) => {
+  const changeColor = useCallback(
+    (ev: MouseEvent<HTMLDivElement>) => {
       const color = ev.currentTarget.getAttribute('data-value');
-      selectColor(color);
-      if (!colorPicker.current.s.buttons.length) {
-        setSelectedColor(color);
+      selectColor(color!);
+      if (!colorPicker.current!.s.buttons!.length) {
+        setSelectedColor(color!);
         setColorPickerOpen(false);
       }
     },
     [selectColor, setSelectedColor],
   );
 
-  const onPickerClose = React.useCallback(() => {
+  const onPickerClose = useCallback(() => {
     setColorPickerOpen(false);
   }, []);
+
+  const handleSnackbarClose = useCallback(() => setSnackbarOpen(false), []);
 
   return (
     <div>
@@ -384,11 +387,11 @@ const App: React.FC = () => {
         dragToMove={true}
         dragToResize={true}
         selectedDate={mySelectedDate}
-        onSelectedDateChange={onSelectedDateChange}
-        onEventClick={onEventClick}
-        onEventCreated={onEventCreated}
-        onEventDeleted={onEventDeleted}
-        onEventUpdated={onEventUpdated}
+        onSelectedDateChange={handleSelectedDateChange}
+        onEventClick={handleEventClick}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDeleted}
+        onEventUpdated={handleEventUpdated}
       />
       <Popup
         display="bottom"
@@ -398,7 +401,7 @@ const App: React.FC = () => {
         anchor={anchor}
         buttons={popupButtons}
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={onPopupClose}
         responsive={responsivePopup}
       >
         <div className="mbsc-form-group">
@@ -488,6 +491,17 @@ const App: React.FC = () => {
           })}
         </div>
       </Popup>
+      <Snackbar
+        message="Event deleted"
+        isOpen={isSnackbarOpen}
+        onClose={handleSnackbarClose}
+        button={{
+          action: () => {
+            setMyEvents([...myEvents, tempEvent!]);
+          },
+          text: 'Undo',
+        }}
+      />
     </div>
   );
 };

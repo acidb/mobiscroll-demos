@@ -5,21 +5,32 @@ import {
   Eventcalendar,
   formatDate,
   Input,
+  // MbscCalendarDayData,
   MbscCalendarEvent,
+  MbscCalendarEventData,
+  MbscDatepickerChangeEvent,
+  MbscDateType,
   MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscEventCreatedEvent,
+  MbscEventDeletedEvent,
+  MbscPopupButton,
+  MbscResource,
+  MbscSelectedDateChangeEvent,
   Popup,
   setOptions,
-  snackbar,
-  Textarea,
+  Snackbar,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
 import './work-order-scheduling.css';
 
 setOptions({
-  // theme,
+  // localeJs,
+  // themeJs
 });
 
-const defaultEvents = [
+const defaultEvents: MbscCalendarEvent[] = [
   {
     start: 'dyndatetime(y,m,d-4,6)',
     end: 'dyndatetime(y,m,d-4,14)',
@@ -112,7 +123,7 @@ const defaultEvents = [
   },
 ];
 
-const myResources: any = [
+const myResources: MbscResource[] = [
   {
     id: 'contractors',
     name: 'Contractors',
@@ -261,50 +272,51 @@ const responsivePopup = {
   },
 };
 
-const App: React.FC = () => {
-  const [myEvents, setMyEvents] = React.useState<MbscCalendarEvent[]>(defaultEvents);
-  const [tempEvent, setTempEvent] = React.useState<any>(null);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [isEdit, setEdit] = React.useState<boolean>(false);
-  const [anchor, setAnchor] = React.useState<any>(null);
-  const [start, startRef] = React.useState<any>(null);
-  const [end, endRef] = React.useState<any>(null);
-  const [popupEventTitle, setTitle] = React.useState<string | undefined>('');
-  const [popupEventLocation, setLocation] = React.useState<string | undefined>('');
-  const [popupEventBill, setBill] = React.useState<number>(0);
-  const [popupEventNotes, setNotes] = React.useState<string>('');
-  const [popupEventDate, setDate] = React.useState<any>([]);
-  const [mySelectedDate, setSelectedDate] = React.useState<any>();
-  const [checkedResources, setCheckedResources] = React.useState<any>([]);
+const App: FC = () => {
+  const [myEvents, setMyEvents] = useState<MbscCalendarEvent[]>(defaultEvents);
+  const [tempEvent, setTempEvent] = useState<MbscCalendarEvent>();
+  const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
+  const [isEdit, setEdit] = useState<boolean>(false);
+  const [anchor, setAnchor] = useState<HTMLElement>();
+  const [start, startRef] = useState<Input | null>(null);
+  const [end, endRef] = useState<Input | null>(null);
+  const [popupEventTitle, setTitle] = useState<string | undefined>('');
+  const [popupEventLocation, setLocation] = useState<string | undefined>('');
+  const [popupEventBill, setBill] = useState<number>(0);
+  const [popupEventNotes, setNotes] = useState<string>('');
+  const [popupEventDate, setDate] = useState<MbscDateType[]>([]);
+  const [mySelectedDate, setSelectedDate] = useState<MbscDateType>(new Date());
+  const [checkedResources, setCheckedResources] = useState<string[]>([]);
+  const [isSnackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
-  const checkboxChange = React.useCallback(
-    (ev: any) => {
+  const checkboxChange = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
       const value = ev.target.value;
 
       if (ev.target.checked) {
-        setCheckedResources((checkedResources: any) => [...checkedResources, value]);
+        setCheckedResources((checkedResources) => [...checkedResources, value]);
       } else {
-        setCheckedResources(checkedResources.filter((r: any) => r !== value));
+        setCheckedResources(checkedResources.filter((r) => r !== value));
       }
     },
     [checkedResources],
   );
 
-  const saveEvent = React.useCallback<any>(() => {
+  const saveEvent = useCallback(() => {
     const newEvent = {
-      id: tempEvent.id,
+      id: tempEvent!.id,
       title: popupEventTitle,
       location: popupEventLocation,
       cost: popupEventBill,
       notes: popupEventNotes,
       start: popupEventDate[0],
       end: popupEventDate[1],
-      color: tempEvent.color,
+      color: tempEvent!.color,
       resource: checkedResources,
     };
     if (isEdit) {
       // update the event in the list
-      const index = myEvents.findIndex((x) => x.id === tempEvent.id);
+      const index = myEvents.findIndex((x) => x.id === tempEvent!.id);
       const newEventList = [...myEvents];
 
       newEventList.splice(index, 1, newEvent);
@@ -319,104 +331,95 @@ const App: React.FC = () => {
     }
     setSelectedDate(popupEventDate[0]);
     // close the popup
-    setOpen(false);
+    setPopupOpen(false);
   }, [isEdit, myEvents, popupEventDate, popupEventNotes, popupEventTitle, popupEventLocation, popupEventBill, tempEvent, checkedResources]);
 
-  const deleteEvent = React.useCallback(
-    (event: any) => {
+  const deleteEvent = useCallback(
+    (event: MbscCalendarEvent) => {
       const filteredEvents = myEvents.filter((item) => item.id !== event.id);
       setMyEvents(filteredEvents);
-      setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              setMyEvents([...filteredEvents, event]);
-            },
-            text: 'Undo',
-          },
-          message: 'Event deleted',
-        });
-      });
+      setTempEvent(event);
+      setSnackbarOpen(true);
     },
     [myEvents],
   );
 
-  const loadPopupForm = React.useCallback((event: MbscCalendarEvent) => {
+  const loadPopupForm = useCallback((event: MbscCalendarEvent) => {
     setTitle(event.title);
     setLocation(event.location);
     setBill(event.cost);
     setNotes(event.notes);
-    setDate([event.start, event.end]);
-    setCheckedResources(event.resource);
+    setDate([event.start!, event.end!]);
+    setCheckedResources([event.resource as string]);
   }, []);
 
   // handle popup form changes
 
-  const titleChange = React.useCallback<any>((ev: any) => {
+  const titleChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setTitle(ev.target.value);
   }, []);
 
-  const locationChange = React.useCallback<any>((ev: any) => {
+  const locationChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setLocation(ev.target.value);
   }, []);
 
-  const billChange = React.useCallback((ev: any) => {
+  const billChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setBill(+ev.target.value || 0);
   }, []);
 
-  const notesChange = React.useCallback<any>((ev: any) => {
+  const notesChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setNotes(ev.target.value);
   }, []);
 
-  const dateChange = React.useCallback<any>((args: any) => {
-    setDate(args.value);
+  const dateChange = useCallback((args: MbscDatepickerChangeEvent) => {
+    setDate(args.value as MbscDateType[]);
   }, []);
 
-  const onDeleteClick = React.useCallback<any>(() => {
-    deleteEvent(tempEvent);
-    setOpen(false);
+  const onDeleteClick = useCallback(() => {
+    deleteEvent(tempEvent!);
+    setPopupOpen(false);
   }, [deleteEvent, tempEvent]);
 
   // scheduler options
 
-  const onSelectedDateChange = React.useCallback<any>((event: any) => {
+  const onSelectedDateChange = useCallback((event: MbscSelectedDateChangeEvent) => {
     setSelectedDate(event.date);
   }, []);
 
-  const onEventClick = React.useCallback<any>(
-    (args: any) => {
+  const onEventClick = useCallback(
+    (args: MbscEventClickEvent) => {
       setEdit(true);
       setTempEvent({ ...args.event });
       // fill popup form with event data
       loadPopupForm(args.event);
       setAnchor(args.domEvent.target);
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const onEventCreated = React.useCallback<any>(
-    (args: any) => {
+  const onEventCreated = useCallback(
+    (args: MbscEventCreatedEvent) => {
       setEdit(false);
       setTempEvent(args.event);
       // fill popup form with event data
       loadPopupForm(args.event);
       setAnchor(args.target);
       // open the popup
-      setOpen(true);
+      setPopupOpen(true);
     },
     [loadPopupForm],
   );
 
-  const onEventDeleted = React.useCallback<any>(
-    (args: any) => {
+  const onEventDeleted = useCallback(
+    (args: MbscEventDeletedEvent) => {
       deleteEvent(args.event);
     },
     [deleteEvent],
   );
 
-  const headerText = React.useMemo(() => (isEdit ? 'Edit work order' : 'New work order'), [isEdit]);
-  const popupButtons = React.useMemo<any>(() => {
+  const headerText = useMemo(() => (isEdit ? 'Edit work order' : 'New work order'), [isEdit]);
+  const popupButtons = useMemo<(string | MbscPopupButton)[]>(() => {
     if (isEdit) {
       return [
         'cancel',
@@ -444,16 +447,16 @@ const App: React.FC = () => {
     }
   }, [isEdit, saveEvent]);
 
-  const onClose = React.useCallback(() => {
+  const onClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setMyEvents([...myEvents]);
     }
-    setOpen(false);
+    setPopupOpen(false);
   }, [isEdit, myEvents]);
 
-  const extendDefaultEvent = React.useCallback(
-    (args) => ({
+  const extendDefaultEvent = useCallback(
+    () => ({
       title: 'Work order',
       location: '',
       cost: 0,
@@ -461,9 +464,9 @@ const App: React.FC = () => {
     [],
   );
 
-  const getCostString = (cost: any) => cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const getCostString = (cost: number) => cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-  const renderCustomDay = (args: any) => {
+  const renderCustomDay = (args: { date: Date; events: MbscCalendarEvent[] }) => {
     const events = args.events;
     let costs = 0;
 
@@ -481,15 +484,17 @@ const App: React.FC = () => {
     );
   };
 
-  const myScheduleEvent = React.useCallback(
-    (event: any) => (
+  const myScheduleEvent = useCallback(
+    (event: MbscCalendarEventData) => (
       <div>
         {event.title}
-        <span className="md-work-order-price-tag">${getCostString(event.original.cost)}</span>
+        <span className="md-work-order-price-tag">${getCostString(event.original!.cost)}</span>
       </div>
     ),
     [],
   );
+
+  const handleSnackbarClose = useCallback(() => setSnackbarOpen(false), []);
 
   return (
     <div>
@@ -519,14 +524,14 @@ const App: React.FC = () => {
         headerText={headerText}
         anchor={anchor}
         buttons={popupButtons}
-        isOpen={isOpen}
+        isOpen={isPopupOpen}
         onClose={onClose}
         responsive={responsivePopup}
       >
         <div className="mbsc-form-group">
           <Input label="Title" value={popupEventTitle} onChange={titleChange} />
           <Input label="Location" value={popupEventLocation} onChange={locationChange} />
-          <Input label="Bill to customer ($)" value={popupEventBill} onChange={billChange} />
+          <Input label="Bill to customer ($)" value={popupEventBill.toString()} onChange={billChange} />
           <Textarea label="Notes" value={popupEventNotes} onChange={notesChange} />
         </div>
         <div className="mbsc-form-group">
@@ -546,26 +551,29 @@ const App: React.FC = () => {
         <div className="mbsc-form-group">
           <div className="mbsc-grid mbsc-no-padding">
             <div className="mbsc-row">
-              {myResources.map((resources: any) =>
-                resources.children.map((res: any) => (
-                  <div className="mbsc-col-sm-4" key={res.id}>
-                    <React.Fragment>
-                      <div className="mbsc-form-group-title">{res.name}</div>
-                      {res.children.map((r: any, i: any) => (
-                        <Checkbox
-                          key={r.id}
-                          value={r.id}
-                          checked={checkedResources.indexOf(r.id) > -1}
-                          onChange={checkboxChange}
-                          theme="material"
-                          className="md-work-order-checkbox-label"
-                        >
-                          {r.name}
-                        </Checkbox>
-                      ))}
-                    </React.Fragment>
-                  </div>
-                )),
+              {myResources.map(
+                (resources: MbscResource) =>
+                  resources.children &&
+                  resources.children.map((res: MbscResource) => (
+                    <div className="mbsc-col-sm-4" key={res.id}>
+                      <>
+                        <div className="mbsc-form-group-title">{res.name}</div>
+                        {res.children &&
+                          res.children.map((r: MbscResource) => (
+                            <Checkbox
+                              key={r.id}
+                              value={r.id}
+                              checked={checkedResources.indexOf(r.id as string) > -1}
+                              onChange={checkboxChange}
+                              theme="material"
+                              className="md-work-order-checkbox-label"
+                            >
+                              {r.name}
+                            </Checkbox>
+                          ))}
+                      </>
+                    </div>
+                  )),
               )}
             </div>
           </div>
@@ -580,6 +588,17 @@ const App: React.FC = () => {
           )}
         </div>
       </Popup>
+      <Snackbar
+        message="Event deleted"
+        isOpen={isSnackbarOpen}
+        onClose={handleSnackbarClose}
+        button={{
+          action: () => {
+            setMyEvents([...myEvents, tempEvent!]);
+          },
+          text: 'Undo',
+        }}
+      />
     </div>
   );
 };

@@ -1,10 +1,13 @@
-import { Eventcalendar, toast, Button, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Button, Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
-const now = new Date();
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([
     {
       start: 'dyndatetime(y,m,d,11)',
       end: 'dyndatetime(y,m,d,13)',
@@ -12,6 +15,8 @@ const App: React.FC = () => {
       resource: 2,
     },
   ]);
+
+  const [isToastOpen, setToastOpen] = useState(false);
 
   const myResources = [
     {
@@ -41,7 +46,7 @@ const App: React.FC = () => {
     },
   ];
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const view = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'day',
@@ -65,23 +70,15 @@ const App: React.FC = () => {
 
     setEvents([...myEvents, newEvent]);
 
-    toast({
-      //<hidden>
-      // theme,//</hidden>
-      // context,
-      message: 'Event added',
-    });
+    setToastOpen(true);
   };
+
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <div>
-      <Eventcalendar
-        // theme
-        // locale
-        data={myEvents}
-        view={view}
-        resources={myResources}
-      />
+      <Eventcalendar data={myEvents} view={view} resources={myResources} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={handleCloseToast} />
       <div className="mbsc-button-group-block">
         <Button onClick={addEvent}>Add event to calendar</Button>
       </div>

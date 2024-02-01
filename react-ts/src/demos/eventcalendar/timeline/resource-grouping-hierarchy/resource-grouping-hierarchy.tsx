@@ -1,5 +1,5 @@
-import { setOptions, Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useMemo } from 'react';
 import './resource-grouping-hierarchy.css';
 
 setOptions({
@@ -7,8 +7,8 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+const App: FC = () => {
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         start: 'dyndatetime(y,m,2)',
@@ -86,7 +86,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 'res1',
@@ -176,7 +176,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'month',
@@ -187,14 +187,12 @@ const App: React.FC = () => {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
       className="md-resource-grouping-hierarchy"
       clickToCreate={true}
       dragToCreate={true}
       dragToMove={true}
       dragToResize={true}
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
     />

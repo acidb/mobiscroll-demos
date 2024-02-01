@@ -5,7 +5,7 @@ import {
   CalendarNext,
   CalendarPrev,
   CalendarToday,
-  confirm,
+  Confirm,
   Eventcalendar,
   MbscCalendarEvent,
   MbscEventcalendarView,
@@ -16,7 +16,7 @@ import {
   Page,
   setOptions,
   Switch,
-  toast,
+  Toast,
 } from '@mobiscroll/react';
 import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import './sync-events-outlook-calendar.css';
@@ -35,6 +35,12 @@ const App: FC = () => {
   const [editable, setEditable] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [primaryCalendarId, setPrimaryCalendarId] = useState<string>('');
+  const [toastMessage, setToastMessage] = useState<string>('');
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [confirmEvent, setConfirmEvent] = useState<MbscCalendarEvent>();
+  const [confirmOldEvent, setConfirmOldEvent] = useState<MbscCalendarEvent>();
+  const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
+  const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const { current: view } = useRef<MbscEventcalendarView>({ calendar: { labels: true } });
 
@@ -43,9 +49,8 @@ const App: FC = () => {
   const endDate = useRef<Date>();
 
   const onError = useCallback((resp: { message: string }) => {
-    toast({
-      message: resp.message,
-    });
+    setToastMessage(resp.message);
+    setToastOpen(true);
   }, []);
 
   const extendDefaultEvent = useCallback(
@@ -195,9 +200,8 @@ const App: FC = () => {
           .then((newEvent) => {
             newEvent.color = event.color;
             setEvents((oldEvents) => [...oldEvents, newEvent]);
-            toast({
-              message: 'Event created in "' + calendarData[primaryCalendarId].name + '" calendar',
-            });
+            setToastMessage('Event created in "' + calendarData[primaryCalendarId].name + '" calendar');
+            setToastOpen(true);
           })
           .catch((error) => {
             setEvents((oldEvents) => [...oldEvents]);
@@ -211,29 +215,9 @@ const App: FC = () => {
   const onEventUpdate = useCallback(
     (args: MbscEventUpdateEvent) => {
       if (outlookCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to update this event?',
-          message: 'This action will affect your Outlook Calendar event.',
-          okText: 'Update',
-        }).then((result) => {
-          const event = args.event;
-          if (result) {
-            const calendarId = event.outlookCalendarId;
-            outlookCalendarSync
-              .updateEvent(calendarId, event)
-              .then(() => {
-                toast({
-                  message: 'Event updated on "' + calendarData[calendarId].name + '" calendar',
-                });
-              })
-              .catch((error) => {
-                setEvents((oldEvents) => [oldEvents.filter((item) => item.id !== event.id), args.oldEvent!]);
-                onError(error);
-              });
-          } else {
-            setEvents((oldEvents) => [oldEvents.filter((item) => item.id !== event.id), args.oldEvent!]);
-          }
-        });
+        setConfirmEvent(args.event);
+        setConfirmOldEvent(args.oldEvent);
+        setUpdateConfirmOpen(true);
       }
     },
     [calendarData, onError],
@@ -242,30 +226,55 @@ const App: FC = () => {
   const onEventDelete = useCallback(
     (args: MbscEventDeleteEvent) => {
       if (outlookCalendarSync.isSignedIn()) {
-        confirm({
-          title: 'Are you sure you want to delete this event?',
-          message: 'This action will remove the event from your Outlook Calendar as well.',
-          okText: 'Delete',
-        }).then((result) => {
-          if (result) {
-            const event = args.event;
-            const calendarId = event.outlookCalendarId;
-            outlookCalendarSync
-              .deleteEvent(calendarId, event)
-              .then(() => {
-                setEvents((oldEvents) => oldEvents.filter((item) => item.id !== event.id));
-                toast({
-                  message: 'Event deleted from "' + calendarData[calendarId].name + '" calendar',
-                });
-              })
-              .catch(onError);
-          }
-        });
+        setConfirmEvent(args.event);
+        setUpdateConfirmOpen(true);
       }
       return false;
     },
     [calendarData, onError],
   );
+
+  const handleUpdateConfirmClose = useCallback(
+    (result: boolean) => {
+      if (result) {
+        const calendarId = confirmEvent!.googleCalendarId;
+        outlookCalendarSync
+          .updateEvent(calendarId, confirmEvent!)
+          .then(() => {
+            setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
+            setToastOpen(true);
+          })
+          .catch((error) => {
+            setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== confirmEvent!.id), confirmOldEvent!]);
+            onError(error);
+          });
+      } else {
+        setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== confirmEvent!.id), confirmOldEvent!]);
+      }
+      setUpdateConfirmOpen(false);
+    },
+    [calendarData, confirmEvent, confirmOldEvent, onError],
+  );
+
+  const handleDeleteConfirmClose = useCallback(
+    (result: boolean) => {
+      if (result) {
+        const calendarId = confirmEvent!.googleCalendarId;
+        outlookCalendarSync
+          .deleteEvent(calendarId, confirmEvent!)
+          .then(() => {
+            setEvents((oldEvents) => oldEvents.filter((item) => item.id !== confirmEvent!.id));
+            setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
+            setToastOpen(true);
+          })
+          .catch(onError);
+      }
+      setDeleteConfirmOpen(false);
+    },
+    [calendarData, confirmEvent, onError],
+  );
+
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <Page className="md-sync-events-outlook-cont">
@@ -321,6 +330,21 @@ const App: FC = () => {
           onEventDelete={onEventDelete}
         ></Eventcalendar>
       </div>
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
+      <Confirm
+        isOpen={isUpdateConfirmOpen}
+        title="Are you sure you want to update this event?"
+        message="This action will affect your Outlook Calendar event."
+        okText="Update"
+        onClose={handleUpdateConfirmClose}
+      />
+      <Confirm
+        isOpen={isDeleteConfirmOpen}
+        title="Are you sure you want to delete this event?"
+        message="This action will remove the event from your Outlook Calendar as well."
+        okText="Delete"
+        onClose={handleDeleteConfirmClose}
+      />
     </Page>
   );
 };

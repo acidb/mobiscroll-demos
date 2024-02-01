@@ -1,8 +1,25 @@
-import { Eventcalendar, MbscEventcalendarView, formatDate /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Eventcalendar,
+  formatDate,
+  MbscCalendarColor,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscEventUpdateEvent,
+  MbscNewEventData,
+  MbscResource,
+  MbscSlot,
+  MbscSlotData,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './shift-template.css';
 
-const staff = [
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const staff: MbscResource[] = [
   {
     id: 1,
     name: 'Ryan',
@@ -26,7 +43,7 @@ const staff = [
   },
 ];
 
-const defaultShifts = [
+const defaultShifts: MbscCalendarEvent[] = [
   {
     start: 'dyndatetime(y,m,d-2,7)',
     end: 'dyndatetime(y,m,d-2,13)',
@@ -134,7 +151,7 @@ const defaultShifts = [
   },
 ];
 
-const colors = [
+const myColors: MbscCalendarColor[] = [
   {
     background: '#a5ceff4d',
     slot: 1,
@@ -153,7 +170,7 @@ const colors = [
   },
 ];
 
-const slots = [
+const mySlots: MbscSlot[] = [
   {
     id: 1,
     name: 'Morning',
@@ -165,8 +182,8 @@ const slots = [
 ];
 
 function App() {
-  const [shifts, setShifts] = React.useState(defaultShifts);
-  const view = React.useMemo<MbscEventcalendarView>(
+  const [shifts, setShifts] = useState<MbscCalendarEvent[]>(defaultShifts);
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'week',
@@ -178,7 +195,7 @@ function App() {
     [],
   );
 
-  const renderMySlot = (args: any) => {
+  const renderMySlot = (args: MbscSlotData) => {
     const slotId = args.slot.id;
     return (
       <div style={{ backgroundColor: slotId === 1 ? '#a5ceff4d' : '#f7f7bb4d', padding: '4px' }}>
@@ -188,7 +205,7 @@ function App() {
     );
   };
 
-  const extendDefaultEvent = React.useCallback((ev: any) => {
+  const extendMyDefaultEvent = useCallback((ev: MbscNewEventData) => {
     const d = ev.start;
     const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), ev.slot === 1 ? 7 : 12);
     const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), ev.slot === 1 ? 13 : 18);
@@ -200,8 +217,8 @@ function App() {
     };
   }, []);
 
-  const eventUpdate = React.useCallback(
-    (args) => {
+  const handleEventUpdate = useCallback(
+    (args: MbscEventUpdateEvent) => {
       const event = args.event;
       const index = shifts.findIndex((x) => x.id === event.id);
       const newShifts = [...shifts];
@@ -215,19 +232,17 @@ function App() {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      view={myView}
       data={shifts}
       resources={staff}
-      colors={colors}
-      slots={slots}
+      colors={myColors}
+      slots={mySlots}
       clickToCreate={true}
       dragToMove={true}
       dragToResize={false}
       renderSlot={renderMySlot}
-      onEventUpdate={eventUpdate}
-      extendDefaultEvent={extendDefaultEvent}
+      onEventUpdate={handleEventUpdate}
+      extendDefaultEvent={extendMyDefaultEvent}
       cssClass="md-shift-template"
     />
   );

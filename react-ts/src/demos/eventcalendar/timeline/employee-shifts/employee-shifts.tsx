@@ -1,16 +1,25 @@
 import {
-  Eventcalendar,
-  MbscCalendarEvent,
-  Datepicker,
-  snackbar,
-  setOptions,
-  Popup,
   Button,
+  Datepicker,
+  Eventcalendar,
+  formatDate,
   Input,
-  Textarea,
-  formatDate /* localeImport */,
+  MbscCalendarEvent,
+  MbscDatepickerChangeEvent,
+  MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscEventCreatedEvent,
+  MbscEventDeletedEvent,
+  MbscNewEventData,
+  MbscPopupButton,
+  MbscResource,
+  MbscSlot,
+  Popup,
+  setOptions,
+  Snackbar,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import './employee-shifts.css';
 
 setOptions({
@@ -18,7 +27,7 @@ setOptions({
   // themeJs
 });
 
-const staff = [
+const staff: MbscResource[] = [
   {
     id: 1,
     name: 'Ryan',
@@ -63,7 +72,7 @@ const staff = [
   },
 ];
 
-const defaultShifts = [
+const defaultShifts: MbscCalendarEvent[] = [
   {
     start: 'dyndatetime(y,m,d-2,7)',
     end: 'dyndatetime(y,m,d-2,13)',
@@ -234,7 +243,7 @@ const defaultShifts = [
   },
 ];
 
-const slots = [
+const mySlots: MbscSlot[] = [
   {
     id: 1,
     name: 'Morning',
@@ -245,7 +254,7 @@ const slots = [
   },
 ];
 
-const invalid = [
+const myInvalid = [
   {
     start: 'dyndatetime(y,m,d+1,0)',
     end: 'dyndatetime(y,m,d+1,23,59)',
@@ -260,7 +269,7 @@ const invalid = [
   },
 ];
 
-const viewSettings = {
+const viewSettings: MbscEventcalendarView = {
   timeline: {
     type: 'week',
     eventList: true,
@@ -280,33 +289,34 @@ const responsivePopup = {
 };
 
 function App() {
-  const [shifts, setShifts] = React.useState<MbscCalendarEvent[]>(defaultShifts);
-  const [tempShift, setTempShift] = React.useState<any>(null);
-  const [start, startRef] = React.useState<any>(null);
-  const [end, endRef] = React.useState<any>(null);
-  const [min, setMinTime] = React.useState<string>('');
-  const [max, setMaxTime] = React.useState<string>('');
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [isEdit, setEdit] = React.useState<boolean>(false);
-  const [headerText, setHeader] = React.useState<string>('');
-  const [shiftDate, setDate] = React.useState<any>([]);
-  const [shiftNotes, setNotes] = React.useState<string>('');
+  const [shifts, setShifts] = useState<MbscCalendarEvent[]>(defaultShifts);
+  const [tempShift, setTempShift] = useState<MbscCalendarEvent>();
+  const [start, startRef] = useState<Input | null>(null);
+  const [end, endRef] = useState<Input | null>(null);
+  const [min, setMinTime] = useState<string>('');
+  const [max, setMaxTime] = useState<string>('');
+  const [isPopupOpen, setOpen] = useState<boolean>(false);
+  const [isEdit, setEdit] = useState<boolean>(false);
+  const [headerText, setHeader] = useState<string>('');
+  const [shiftDate, setDate] = useState<Date[]>([]);
+  const [shiftNotes, setNotes] = useState<string>('');
+  const [isSnackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
-  const saveEvent = React.useCallback(() => {
+  const saveEvent = useCallback(() => {
     const start = new Date(shiftDate[0]);
     const end = new Date(shiftDate[1]);
     const newEvent = {
-      id: tempShift.id,
+      id: tempShift!.id,
       title: formatDate('HH:mm', start) + ' - ' + formatDate('HH:mm', end),
       notes: shiftNotes,
       start: start,
       end: end,
-      resource: tempShift.resource,
-      slot: tempShift.slot,
+      resource: tempShift!.resource,
+      slot: tempShift!.slot,
     };
     if (isEdit) {
       // update the event in the list
-      const index = shifts.findIndex((x) => x.id === tempShift.id);
+      const index = shifts.findIndex((x) => x.id === tempShift!.id);
       const newEventList = [...shifts];
 
       newEventList.splice(index, 1, newEvent);
@@ -319,54 +329,45 @@ function App() {
     setOpen(false);
   }, [isEdit, shifts, shiftNotes, tempShift, shiftDate]);
 
-  const deleteEvent = React.useCallback(
-    (event) => {
+  const deleteEvent = useCallback(
+    (event: MbscCalendarEvent) => {
       setShifts(shifts.filter((item) => item.id !== event.id));
-      setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              setShifts((prevEvents) => [...prevEvents, event]);
-            },
-            text: 'Undo',
-          },
-          message: 'Event deleted',
-        });
-      });
+      setTempShift(event);
+      setSnackbarOpen(true);
     },
     [shifts],
   );
 
-  const loadPopupForm = React.useCallback((event) => {
-    setDate([event.start, event.end]);
+  const loadPopupForm = useCallback((event: MbscCalendarEvent) => {
+    setDate([new Date(event.start as string), new Date(event.end as string)]);
     setNotes(event.notes);
   }, []);
 
   // handle popup form changes
-  const notesChange = React.useCallback((ev) => {
+  const notesChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setNotes(ev.target.value);
   }, []);
 
-  const onDeleteClick = React.useCallback(() => {
-    deleteEvent(tempShift);
+  const onDeleteClick = useCallback(() => {
+    deleteEvent(tempShift!);
     setOpen(false);
   }, [deleteEvent, tempShift]);
 
   // scheduler options
-  const onEventClick = React.useCallback(
-    (args) => {
+  const handleEventClick = useCallback(
+    (args: MbscEventClickEvent) => {
       const event = args.event;
-      const resource: any = staff.find((r) => r.id === event.resource);
-      const slot: any = slots.find((s) => s.id === event.slot);
+      const resource = staff.find((r) => r.id === event.resource);
+      const slot = mySlots.find((s) => s.id === event.slot);
       setHeader(
         '<div>Edit ' +
-          resource.name +
+          resource!.name +
           '\'s hours</div><div class="employee-shifts-day">' +
-          formatDate('DDDD', new Date(event.start)) +
+          formatDate('DDDD', new Date(event.start as string)) +
           ' ' +
-          slot.name +
+          slot!.name +
           ',' +
-          formatDate('DD MMMM YYYY', new Date(event.start)) +
+          formatDate('DD MMMM YYYY', new Date(event.start as string)) +
           '</div>',
       );
       setMinTime(event.slot === 1 ? '07:00' : '12:00');
@@ -380,17 +381,17 @@ function App() {
     [loadPopupForm],
   );
 
-  const onEventCreated = React.useCallback(
-    (args) => {
+  const handleEventCreated = useCallback(
+    (args: MbscEventCreatedEvent) => {
       const event = args.event;
-      const slot: any = slots.find((s) => s.id === event.slot);
+      const slot = mySlots.find((s) => s.id === event.slot);
       setHeader(
         '<div>New shift</div><div class="employee-shifts-day">' +
-          formatDate('DDDD', new Date(event.start)) +
+          formatDate('DDDD', new Date(event.start as string)) +
           ' ' +
-          slot.name +
+          slot!.name +
           ',' +
-          formatDate('DD MMMM YYYY', new Date(event.start)) +
+          formatDate('DD MMMM YYYY', new Date(event.start as string)) +
           '</div>',
       );
       setEdit(false);
@@ -403,15 +404,15 @@ function App() {
     [loadPopupForm],
   );
 
-  const onEventDeleted = React.useCallback(
-    (args) => {
+  const handleEventDeleted = useCallback(
+    (args: MbscEventDeletedEvent) => {
       deleteEvent(args.event);
     },
     [deleteEvent],
   );
 
   // popup options
-  const popupButtons = React.useMemo(() => {
+  const popupButtons = useMemo<(string | MbscPopupButton)[]>(() => {
     if (isEdit) {
       return [
         'cancel',
@@ -439,7 +440,7 @@ function App() {
     }
   }, [isEdit, saveEvent]);
 
-  const onClose = React.useCallback(() => {
+  const onPopupClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setShifts([...shifts]);
@@ -447,7 +448,7 @@ function App() {
     setOpen(false);
   }, [isEdit, shifts]);
 
-  const extendDefaultEvent = React.useCallback((args) => {
+  const extendMyDefaultEvent = useCallback((args: MbscNewEventData) => {
     const d = args.start;
     const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), args.slot === 1 ? 7 : 12);
     const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), args.slot === 1 ? 13 : 18);
@@ -460,16 +461,23 @@ function App() {
     };
   }, []);
 
-  const renderMyResource = (resource: any) => (
-    <div className="md-staff-cont">
-      <div className="md-staff-name">{resource.name}</div>
-      <div className="md-staff-title">{resource.title}</div>
-      <img className="md-staff-avatar" src={resource.img} alt="Avatar" />
-    </div>
+  const renderMyResource = useCallback(
+    (resource: MbscResource) => (
+      <div className="employee-shifts-cont">
+        <div className="employee-shifts-name">{resource.name}</div>
+        <div className="employee-shifts-title">{resource.title}</div>
+        <img className="employee-shifts-avatar" src={resource.img} alt="Avatar" />
+      </div>
+    ),
+    [],
   );
 
-  const dateChange = React.useCallback((args) => {
-    setDate(args.value);
+  const dateChange = useCallback((args: MbscDatepickerChangeEvent) => {
+    setDate(args.value as Date[]);
+  }, []);
+
+  const handleSnackbarClose = useCallback(() => {
+    setSnackbarOpen(false);
   }, []);
 
   return (
@@ -478,16 +486,16 @@ function App() {
         view={viewSettings}
         data={shifts}
         resources={staff}
-        slots={slots}
-        invalid={invalid}
+        slots={mySlots}
+        invalid={myInvalid}
         dragToCreate={false}
         dragToResize={false}
         dragToMove={true}
         clickToCreate={true}
-        extendDefaultEvent={extendDefaultEvent}
-        onEventClick={onEventClick}
-        onEventCreated={onEventCreated}
-        onEventDeleted={onEventDeleted}
+        extendDefaultEvent={extendMyDefaultEvent}
+        onEventClick={handleEventClick}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDeleted}
         renderResource={renderMyResource}
         cssClass="md-employee-shifts"
       />
@@ -497,8 +505,8 @@ function App() {
         contentPadding={false}
         headerText={headerText}
         buttons={popupButtons}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isPopupOpen}
+        onClose={onPopupClose}
         responsive={responsivePopup}
         cssClass="employee-shifts-popup"
       >
@@ -532,6 +540,17 @@ function App() {
           </div>
         )}
       </Popup>
+      <Snackbar
+        message="Event deleted"
+        isOpen={isSnackbarOpen}
+        onClose={handleSnackbarClose}
+        button={{
+          action: () => {
+            setShifts((prevEvents) => [...prevEvents, tempShift!]);
+          },
+          text: 'Undo',
+        }}
+      />
     </div>
   );
 }

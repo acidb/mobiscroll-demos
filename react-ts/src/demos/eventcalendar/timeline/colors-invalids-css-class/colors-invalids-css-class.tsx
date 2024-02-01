@@ -1,12 +1,13 @@
 import {
   Eventcalendar,
   getJson,
-  setOptions,
+  MbscCalendarColor,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscResource /* localeImport */,
+  MbscResource,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import './colors-invalids-css-class.css';
 
 setOptions({
@@ -14,7 +15,7 @@ setOptions({
   // themeJs
 });
 
-const myResources = [
+const myResources: MbscResource[] = [
   {
     id: 1,
     color: '#ff0101',
@@ -55,7 +56,7 @@ const myInvalid = [
   },
 ];
 
-const myColors = [
+const myColors: MbscCalendarColor[] = [
   {
     resource: 2,
     start: '09:00',
@@ -178,10 +179,10 @@ const myColors = [
   },
 ];
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         allDay: false,
@@ -195,7 +196,7 @@ const App: React.FC = () => {
     [],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/timeline-events/',
       (events: MbscCalendarEvent[]) => {
@@ -205,6 +206,15 @@ const App: React.FC = () => {
     );
   }, []);
 
-  return <Eventcalendar view={view} resources={myResources} data={myEvents} invalid={myInvalid} colors={myColors} />;
+  return (
+    <Eventcalendar
+      // drag
+      view={myView}
+      resources={myResources}
+      data={myEvents}
+      invalid={myInvalid}
+      colors={myColors}
+    />
+  );
 };
 export default App;

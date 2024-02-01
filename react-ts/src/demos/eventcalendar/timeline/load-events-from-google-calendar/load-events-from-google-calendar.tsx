@@ -1,14 +1,28 @@
 import { googleCalendarSync } from '@mobiscroll/calendar-integration';
-import { Eventcalendar, MbscEventcalendarView, toast /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Eventcalendar,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscPageLoadingEvent,
+  setOptions,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './load-events-from-google-calendar.css';
 
-const App: React.FC = () => {
-  const [events, setEvents] = React.useState([]);
-  const firstDay = React.useRef<Date>();
-  const lastDay = React.useRef<Date>();
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  const calView = React.useMemo<MbscEventcalendarView>(
+const App: FC = () => {
+  const [events, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
+  const firstDay = useRef<Date>();
+  const lastDay = useRef<Date>();
+
+  const calView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'month',
@@ -18,7 +32,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const calendars = React.useMemo(
+  const calendars = useMemo(
     () => [
       { id: 'en.french#holiday@group.v.calendar.google.com', name: 'Holidays in France', color: '#D81B60' },
       { id: 'en.german#holiday@group.v.calendar.google.com', name: 'Holidays in Germany', color: '#F4511E' },
@@ -31,7 +45,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const calendarIds = React.useMemo(
+  const calendarIds = useMemo(
     () =>
       calendars.map(function (cal) {
         return cal.id;
@@ -39,17 +53,16 @@ const App: React.FC = () => {
     [calendars],
   );
 
-  const onError = React.useCallback((resp) => {
-    toast({
-      message: resp.error ? resp.error : resp.result.error.message,
-    });
+  const onError = useCallback((resp: { error?: string; result: { error: { message: string } } }) => {
+    setToastMessage(resp.error ? resp.error : resp.result.error.message);
+    setToastOpen(true);
   }, []);
 
-  const loadEvents = React.useCallback(() => {
+  const loadEvents = useCallback(() => {
     googleCalendarSync
-      .getEvents(calendarIds, firstDay.current, lastDay.current)
+      .getEvents(calendarIds, firstDay.current!, lastDay.current!)
       .then(function (resp) {
-        resp.forEach(function (event) {
+        resp.forEach(function (event: MbscCalendarEvent) {
           event.resource = event.googleCalendarId;
         });
         setEvents(resp);
@@ -57,8 +70,8 @@ const App: React.FC = () => {
       .catch(onError);
   }, [calendarIds, firstDay, lastDay, onError]);
 
-  const onPageLoading = React.useCallback(
-    (args) => {
+  const handlePageLoading = useCallback(
+    (args: MbscPageLoadingEvent) => {
       const start = args.firstDay;
       const end = args.lastDay;
 
@@ -72,7 +85,9 @@ const App: React.FC = () => {
     [loadEvents],
   );
 
-  React.useEffect(() => {
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
+
+  useEffect(() => {
     googleCalendarSync.init({
       apiKey: '<YOUR_GOOGLE_API_KEY>',
       onInit: loadEvents,
@@ -80,17 +95,18 @@ const App: React.FC = () => {
   }, [loadEvents]);
 
   return (
-    <Eventcalendar
-      // locale
-      // theme
-      clickToCreate={false}
-      dragToCreate={false}
-      exclusiveEndDates={true}
-      resources={calendars}
-      view={calView}
-      data={events}
-      onPageLoading={onPageLoading}
-    />
+    <>
+      <Eventcalendar
+        clickToCreate={false}
+        dragToCreate={false}
+        exclusiveEndDates={true}
+        resources={calendars}
+        view={calView}
+        data={events}
+        onPageLoading={handlePageLoading}
+      />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
+    </>
   );
 };
 export default App;

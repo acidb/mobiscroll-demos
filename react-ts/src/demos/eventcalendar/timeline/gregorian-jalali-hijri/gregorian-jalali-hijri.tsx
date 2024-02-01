@@ -1,52 +1,69 @@
 import {
   Eventcalendar,
-  Page,
   getJson,
+  hijriCalendar,
+  jalaliCalendar,
+  localeAr,
+  localeFa,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  jalaliCalendar,
-  hijriCalendar,
-  localeFa,
-  localeAr /* localeImport */,
+  MbscResource,
+  Page,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const myResources = [
-    {
-      id: 1,
-      name: 'Ryan',
-      color: '#fdf500',
-    },
-    {
-      id: 2,
-      name: 'Kate',
-      color: '#ff4600',
-    },
-    {
-      id: 3,
-      name: 'John',
-      color: '#ff0101',
-    },
-    {
-      id: 4,
-      name: 'Mark',
-      color: '#239a21',
-    },
-    {
-      id: 5,
-      name: 'Sharon',
-      color: '#8f1ed6',
-    },
-    {
-      id: 6,
-      name: 'Ashley',
-      color: '#01adff',
-    },
-  ];
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  React.useEffect(() => {
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const myResources = useMemo<MbscResource[]>(
+    () => [
+      {
+        id: 1,
+        name: 'Ryan',
+        color: '#fdf500',
+      },
+      {
+        id: 2,
+        name: 'Kate',
+        color: '#ff4600',
+      },
+      {
+        id: 3,
+        name: 'John',
+        color: '#ff0101',
+      },
+      {
+        id: 4,
+        name: 'Mark',
+        color: '#239a21',
+      },
+      {
+        id: 5,
+        name: 'Sharon',
+        color: '#8f1ed6',
+      },
+      {
+        id: 6,
+        name: 'Ashley',
+        color: '#01adff',
+      },
+    ],
+    [],
+  );
+
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
+      timeline: { type: 'day' },
+    }),
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/timeline-events/',
       (events: MbscCalendarEvent[]) => {
@@ -56,46 +73,19 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(
-    () => ({
-      timeline: { type: 'day' },
-    }),
-    [],
-  );
-
   return (
     <Page>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Gregorian calendar</div>
-        <Eventcalendar
-          // locale
-          // theme
-          data={myEvents}
-          view={view}
-          resources={myResources}
-        />
+        <Eventcalendar data={myEvents} view={myView} resources={myResources} />
       </div>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Jalali calendar</div>
-        <Eventcalendar
-          // theme
-          data={myEvents}
-          view={view}
-          resources={myResources}
-          calendarSystem={jalaliCalendar}
-          locale={localeFa}
-        />
+        <Eventcalendar data={myEvents} view={myView} resources={myResources} calendarSystem={jalaliCalendar} locale={localeFa} />
       </div>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Hijri calendar</div>
-        <Eventcalendar
-          // theme
-          data={myEvents}
-          view={view}
-          resources={myResources}
-          calendarSystem={hijriCalendar}
-          locale={localeAr}
-        />
+        <Eventcalendar data={myEvents} view={myView} resources={myResources} calendarSystem={hijriCalendar} locale={localeAr} />
       </div>
     </Page>
   );

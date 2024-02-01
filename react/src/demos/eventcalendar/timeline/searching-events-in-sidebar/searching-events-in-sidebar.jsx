@@ -105,7 +105,7 @@ function App() {
     });
   }, []);
 
-  const eventClick = useCallback((args) => {
+  const handleEventClick = useCallback((args) => {
     setCurrentDate(args.event.start);
     setSelectedEvent([args.event]);
   }, []);
@@ -115,7 +115,7 @@ function App() {
       <div className="md-search-events-sidebar mbsc-flex">
         <div className="md-search-events-cont mbsc-flex-col mbsc-flex-none">
           <Input startIcon="material-search" onChange={onSearch} inputStyle="outline" placeholder="Search events" />
-          {showList && <Eventcalendar view={listView} data={listEvents} showControls={false} onEventClick={eventClick} />}
+          {showList && <Eventcalendar view={listView} data={listEvents} showControls={false} onEventClick={handleEventClick} />}
         </div>
         <div className="md-search-events-calendar mbsc-flex-1-1">
           <Eventcalendar

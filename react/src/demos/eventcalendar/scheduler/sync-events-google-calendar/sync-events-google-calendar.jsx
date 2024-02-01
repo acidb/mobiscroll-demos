@@ -168,28 +168,6 @@ function App() {
       setConfirmEvent(args.event);
       setConfirmOldEvent(args.oldEvent);
       setUpdateConfirmOpen(true);
-      // confirm({
-      //   title: 'Are you sure you want to update this event?',
-      //   message: 'This action will affect your Google Calendar event.',
-      //   okText: 'Update',
-      // }).then((result) => {
-      //   const event = args.event;
-      //   if (result) {
-      //     const calendarId = event.googleCalendarId;
-      //     googleCalendarSync
-      //       .updateEvent(calendarId, event)
-      //       .then(() => {
-      //         setToastMessage('Event updated on "' + calendarData[calendarId].name + '" calendar');
-      //         setIsToastOpen(true);
-      //       })
-      //       .catch((error) => {
-      //         setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-      //         onError(error);
-      //       });
-      //   } else {
-      //     setEvents((oldEvents) => [...oldEvents.filter((item) => item.id !== event.id), args.oldEvent]);
-      //   }
-      // });
     }
   }, []);
 
@@ -197,24 +175,6 @@ function App() {
     if (googleCalendarSync.isSignedIn()) {
       setConfirmEvent(args.event);
       setUpdateConfirmOpen(true);
-      // confirm({
-      //   title: 'Are you sure you want to delete this event?',
-      //   message: 'This action will remove the event from your Google Calendar as well.',
-      //   okText: 'Delete',
-      // }).then((result) => {
-      //   if (result) {
-      //     const event = args.event;
-      //     const calendarId = event.googleCalendarId;
-      //     googleCalendarSync
-      //       .deleteEvent(calendarId, event)
-      //       .then(() => {
-      //         setEvents((oldEvents) => oldEvents.filter((item) => item.id !== event.id));
-      //         setToastMessage('Event deleted from "' + calendarData[calendarId].name + '" calendar');
-      //         setIsToastOpen(true);
-      //       })
-      //       .catch(onError);
-      //   }
-      // });
     }
     return false;
   }, []);

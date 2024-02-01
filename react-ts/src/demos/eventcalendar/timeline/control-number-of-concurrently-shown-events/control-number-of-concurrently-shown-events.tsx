@@ -1,5 +1,5 @@
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -11,8 +11,8 @@ const year = now.getFullYear();
 const month = now.getMonth();
 const day = now.getDate();
 
-const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+const App: FC = () => {
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       { title: 'Product team mtg.', start: '10:00', end: '14:00', recurring: 'FREQ=WEEKLY;BYDAY=MO', color: '#913aa7' },
       { title: 'Employment (Semi-weekly)', start: '11:00', end: '17:00', recurring: 'FREQ=WEEKLY;BYDAY=WE', color: '#228c73' },
@@ -150,7 +150,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       { id: 1, name: 'Jude Chester' },
       { id: 2, name: 'Natalie Racquel' },
@@ -160,7 +160,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myView = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         maxEventStack: 2,
@@ -172,7 +172,14 @@ const App: React.FC = () => {
     [],
   );
 
-  return <Eventcalendar data={myEvents} view={myView} resources={myResources} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      view={myView}
+      resources={myResources}
+    />
+  );
 };
 
 export default App;

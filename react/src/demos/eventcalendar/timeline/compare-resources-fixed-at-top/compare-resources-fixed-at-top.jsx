@@ -405,7 +405,7 @@ const App = () => {
     [],
   );
 
-  const view = useMemo(
+  const myView = useMemo(
     () => ({
       timeline: {
         type: 'week',
@@ -481,7 +481,7 @@ const App = () => {
 
   return (
     <>
-      <Eventcalendar data={myEvents} resources={myResources} dragToMove={true} renderResource={customResource} view={view} />
+      <Eventcalendar data={myEvents} resources={myResources} dragToMove={true} renderResource={customResource} view={myView} />
       <Toast message="Comparing up to 3 schedules" isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );

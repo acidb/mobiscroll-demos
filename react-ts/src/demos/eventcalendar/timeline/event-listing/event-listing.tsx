@@ -1,17 +1,17 @@
 import {
+  CalendarNav,
+  CalendarNext,
+  CalendarPrev,
+  CalendarToday,
   Eventcalendar,
-  setOptions,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscResource,
-  CalendarNav,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
-  CalendarPrev,
-  CalendarToday,
-  CalendarNext /* localeImport */,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
 import './event-listing.css';
 
 setOptions({
@@ -19,16 +19,16 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [view, setView] = React.useState('month');
+const App: FC = () => {
+  const [view, setView] = useState('month');
 
-  const [calView, setCalView] = React.useState<MbscEventcalendarView>({
+  const [calView, setCalView] = useState<MbscEventcalendarView>({
     timeline: {
       type: 'month',
       eventList: true,
     },
   });
-  const myEvents = React.useState<MbscCalendarEvent[]>(() => [
+  const myEvents = useState<MbscCalendarEvent[]>(() => [
     {
       start: 'dyndatetime(y,m,d-1,8)',
       end: 'dyndatetime(y,m,d-1,15)',
@@ -109,7 +109,7 @@ const App: React.FC = () => {
     },
   ]);
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -145,7 +145,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const changeView = (event: any) => {
+  const changeView = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     let calView: MbscEventcalendarView;
 
     switch (event.target.value) {
@@ -180,28 +180,30 @@ const App: React.FC = () => {
 
     setView(event.target.value);
     setCalView(calView);
-  };
+  }, []);
 
-  const renderMyHeader = () => (
-    <React.Fragment>
-      <CalendarNav className="md-event-listing-nav" />
-      <div className="md-event-listing-picker">
-        <SegmentedGroup value={view} onChange={changeView}>
-          <SegmentedItem value="workweek">Work week</SegmentedItem>
-          <SegmentedItem value="week">Week</SegmentedItem>
-          <SegmentedItem value="month">Month</SegmentedItem>
-        </SegmentedGroup>
-      </div>
-      <CalendarPrev className="md-event-listing-prev" />
-      <CalendarToday className="md-event-listing-today" />
-      <CalendarNext className="md-event-listing-next" />
-    </React.Fragment>
+  const renderMyHeader = useCallback(
+    () => (
+      <>
+        <CalendarNav className="md-event-listing-nav" />
+        <div className="md-event-listing-picker">
+          <SegmentedGroup value={view} onChange={changeView}>
+            <Segmented value="workweek">Work week</Segmented>
+            <Segmented value="week">Week</Segmented>
+            <Segmented value="month">Month</Segmented>
+          </SegmentedGroup>
+        </div>
+        <CalendarPrev className="md-event-listing-prev" />
+        <CalendarToday className="md-event-listing-today" />
+        <CalendarNext className="md-event-listing-next" />
+      </>
+    ),
+    [changeView, view],
   );
 
   return (
     <Eventcalendar
-      // theme
-      // locale
+      // drag
       view={calView}
       data={myEvents}
       resources={myResources}
@@ -210,4 +212,5 @@ const App: React.FC = () => {
     />
   );
 };
+
 export default App;

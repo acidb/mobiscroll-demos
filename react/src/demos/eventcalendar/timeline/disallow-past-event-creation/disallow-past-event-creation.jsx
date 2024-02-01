@@ -1,4 +1,4 @@
-import { Eventcalendar, getJson, setOptions, toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import './disallow-past-event-creation.css';
 
@@ -13,6 +13,9 @@ const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
 
 function App() {
   const [myEvents, setEvents] = useState([]);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState();
+
   const myInvalid = useMemo(
     () => [
       {
@@ -68,17 +71,15 @@ function App() {
 
   const handleEventCreateFailed = useCallback((args) => {
     if (!args.originEvent) {
-      toast({
-        message: "Can't create event in the past",
-      });
+      setToastMessage("Can't create event in the past");
+      setToastOpen(true);
     }
   }, []);
 
   const handleEventUpdateFailed = useCallback((args) => {
     if (!args.oldEventOccurrence) {
-      toast({
-        message: "Can't move event in the past",
-      });
+      setToastMessage("Can't move event in the past");
+      setToastOpen(true);
     }
   }, []);
 
@@ -88,9 +89,8 @@ function App() {
 
     // handle recurring events
     if (start && start < today) {
-      toast({
-        message: "Can't move past event",
-      });
+      setToastMessage("Can't move past event");
+      setToastOpen(true);
       return false;
     }
   }, []);
@@ -105,6 +105,10 @@ function App() {
     if ((start && start < today) || (occurrenceStart && occurrenceStart < today)) {
       return false;
     }
+  }, []);
+
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
   }, []);
 
   useEffect(() => {
@@ -125,21 +129,24 @@ function App() {
   }, []);
 
   return (
-    <Eventcalendar
-      className="md-disallow-past-event-creation"
-      view={myView}
-      data={myEvents}
-      resources={myResources}
-      invalid={myInvalid}
-      clickToCreate={true}
-      dragToCreate={true}
-      dragToMove={true}
-      dragToResize={true}
-      onEventCreateFailed={handleEventCreateFailed}
-      onEventUpdateFailed={handleEventUpdateFailed}
-      onEventCreate={handleEventCreate}
-      onEventUpdate={handleEventUpdate}
-    />
+    <>
+      <Eventcalendar
+        className="md-disallow-past-event-creation"
+        view={myView}
+        data={myEvents}
+        resources={myResources}
+        invalid={myInvalid}
+        clickToCreate={true}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
+        onEventCreateFailed={handleEventCreateFailed}
+        onEventUpdateFailed={handleEventUpdateFailed}
+        onEventCreate={handleEventCreate}
+        onEventUpdate={handleEventUpdate}
+      />
+      <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
+    </>
   );
 }
 

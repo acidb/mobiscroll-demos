@@ -1,5 +1,17 @@
-import { Eventcalendar, Page, Draggable, toast, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Draggable,
+  Eventcalendar,
+  MbscCalendarColor,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscEventDragEvent,
+  MbscNewEventData,
+  MbscResource,
+  Page,
+  setOptions,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useState } from 'react';
 import './dynamically-color-and-invalidate.css';
 
 setOptions({
@@ -23,7 +35,7 @@ const swInvalids = [
     resource: ['res1', 'res2', 'res3'],
   },
 ];
-const hwColors = [
+const hwColors: MbscCalendarColor[] = [
   {
     recurring: {
       repeat: 'daily',
@@ -32,7 +44,7 @@ const hwColors = [
     background: '#1ad4041a',
   },
 ];
-const swColors = [
+const swColors: MbscCalendarColor[] = [
   {
     recurring: {
       repeat: 'daily',
@@ -41,10 +53,10 @@ const swColors = [
     background: '#1ad4041a',
   },
 ];
-const viewSettings = {
+const viewSettings: MbscEventcalendarView = {
   timeline: { type: 'day' },
 };
-const myResources = [
+const myResources: MbscResource[] = [
   {
     id: 'hwt',
     name: 'HW Team',
@@ -90,7 +102,7 @@ const myResources = [
     ],
   },
 ];
-const myTasks = [
+const myTasks: MbscCalendarEvent[] = [
   {
     id: 1,
     title: 'Task 1',
@@ -141,10 +153,10 @@ const myTasks = [
   },
 ];
 
-function Task(props) {
-  const [draggable, setDraggable] = React.useState<any>();
+function Task(props: { data: MbscCalendarEvent }) {
+  const [draggable, setDraggable] = useState<HTMLDivElement>();
 
-  const setDragElm = React.useCallback((elm) => {
+  const setDragElm = useCallback((elm: HTMLDivElement) => {
     setDraggable(elm);
   }, []);
 
@@ -159,12 +171,14 @@ function Task(props) {
   );
 }
 
-const App: React.FC = () => {
-  const [myInvalids, setInvalids] = React.useState<any>([]);
-  const [myColors, setColors] = React.useState<any>([]);
+const App: FC = () => {
+  const [myInvalids, setInvalids] = useState<Array<{ recurring: { repeat: string }; resource: Array<string> }>>();
+  const [myColors, setColors] = useState<MbscCalendarColor[]>([]);
+  const [toasterMessage, setToasterMessage] = useState('');
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  const extendDefaultEvent = React.useCallback((event) => {
-    const res = event.resource;
+  const handleExtendDefaultEvent = useCallback((args: MbscNewEventData) => {
+    const res = args.resource;
 
     if (res) {
       if (res === 'res1' || res === 'res2' || res === 'res3') {
@@ -177,9 +191,11 @@ const App: React.FC = () => {
         };
       }
     }
+
+    return args;
   }, []);
 
-  const onEventDragStart = React.useCallback((args) => {
+  const handleEventDragStart = useCallback((args: MbscEventDragEvent) => {
     let event = args.event;
 
     if (event) {
@@ -195,35 +211,32 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const onEventDragEnd = React.useCallback(() => {
+  const handleEventDragEnd = useCallback(() => {
     setInvalids([]);
     setColors([]);
   }, []);
 
-  const onEventCreated = React.useCallback(() => {
-    console.log(toast);
-    toast({
-      message: 'Event created',
-    });
+  const handleEventCreated = useCallback(() => {
+    setToasterMessage('Event created');
+    setToastOpen(true);
   }, []);
 
-  const onEventUpdated = React.useCallback((args) => {
-    toast({
-      message: 'Event moved',
-    });
+  const handleEventUpdated = useCallback(() => {
+    setToasterMessage('Event moved');
+    setToastOpen(true);
   }, []);
 
-  const onEventCreateFailed = React.useCallback((args) => {
-    toast({
-      message: "Can't create event",
-    });
+  const handleEventCreateFailed = useCallback(() => {
+    setToasterMessage("Can't create event");
+    setToastOpen(true);
   }, []);
 
-  const onEventUpdateFailed = React.useCallback((args) => {
-    toast({
-      message: "Can't move event",
-    });
+  const handleEventUpdateFailed = useCallback(() => {
+    setToasterMessage("Can't move event");
+    setToastOpen(true);
   }, []);
+
+  const handleCloseToast = useCallback(() => setToastOpen(false), []);
 
   return (
     <Page>
@@ -243,17 +256,18 @@ const App: React.FC = () => {
               colors={myColors}
               dragToMove={true}
               externalDrop={true}
-              extendDefaultEvent={extendDefaultEvent}
-              onEventDragStart={onEventDragStart}
-              onEventDragEnd={onEventDragEnd}
-              onEventCreated={onEventCreated}
-              onEventUpdated={onEventUpdated}
-              onEventCreateFailed={onEventCreateFailed}
-              onEventUpdateFailed={onEventUpdateFailed}
+              extendDefaultEvent={handleExtendDefaultEvent}
+              onEventDragStart={handleEventDragStart}
+              onEventDragEnd={handleEventDragEnd}
+              onEventCreated={handleEventCreated}
+              onEventUpdated={handleEventUpdated}
+              onEventCreateFailed={handleEventCreateFailed}
+              onEventUpdateFailed={handleEventUpdateFailed}
             />
           </div>
         </div>
       </div>
+      <Toast message={toasterMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </Page>
   );
 };

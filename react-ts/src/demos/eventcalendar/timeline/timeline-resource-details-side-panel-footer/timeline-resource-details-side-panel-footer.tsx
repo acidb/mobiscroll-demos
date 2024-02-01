@@ -3,19 +3,24 @@ import {
   getJson,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  toast,
-  MbscResource /* localeImport */,
+  MbscResource,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './timeline-resource-details-side-panel-footer.css';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const oneDay = 60000 * 60 * 24;
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const calRef = React.useRef();
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const calRef = useRef<Eventcalendar | null>(null);
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'month',
@@ -24,7 +29,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -72,30 +77,20 @@ const App: React.FC = () => {
     [],
   );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/multiday-events/',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
+  const getUTCDateOnly = useCallback((d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()), []);
 
-  const getUTCDateOnly = React.useCallback((d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()), []);
-
-  const getDayDiff = React.useCallback(
+  const getDayDiff = useCallback(
     (d1: Date, d2: Date) => Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1,
     [getUTCDateOnly],
   );
 
-  const getRevenue = React.useCallback(
+  const getRevenue = useCallback(
     (resource: MbscResource) => {
       if (calRef.current) {
         let days = 0;
         for (const event of calRef.current.getEvents()) {
           if (event.resource === resource.id) {
-            days += getDayDiff(new Date(event.start), new Date(event.end));
+            days += getDayDiff(new Date(event.start as string), new Date(event.end as string));
           }
         }
         return days * resource.price;
@@ -103,10 +98,10 @@ const App: React.FC = () => {
         return 0;
       }
     },
-    [getDayDiff, myEvents],
+    [getDayDiff],
   );
 
-  const getTotal = React.useCallback(() => {
+  const getTotal = useCallback(() => {
     let total = 0;
     for (const resource of myResources) {
       total += getRevenue(resource);
@@ -136,31 +131,39 @@ const App: React.FC = () => {
 
   const myCustomResourceFooter = () => <div className="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>;
 
-  const myCustomDayFooter = (data: any) => {
+  const myCustomDayFooter = (data: { date: Date; events: Array<MbscCalendarEvent> }) => {
     const events = data.events;
     let occuppancy = 0;
     if (events) {
-      let resourceIds = [];
+      let resourceIds: Array<string> = [];
       let nr = 0;
       for (const event of myEvents) {
-        if (resourceIds.indexOf(event.resource) < 0) {
+        if (resourceIds.indexOf(event.resource as string) < 0) {
           nr++;
-          resourceIds = [...resourceIds, event.resource];
+          resourceIds = [...resourceIds, event.resource as string];
         }
       }
-      occuppancy = ((nr * 100) / myResources.length).toFixed(0);
+      occuppancy = +((nr * 100) / myResources.length).toFixed(0);
     }
     return <div className="md-resource-details-footer md-resource-details-footer-day">{occuppancy + '%'}</div>;
   };
 
   const myCustomSidebarFooter = () => <div className="md-resource-details-footer md-resource-details-total">{'$' + getTotal()}</div>;
 
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/multiday-events/',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
+
   return (
     <Eventcalendar
-      // theme
-      // locale
       ref={calRef}
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
       cssClass="md-resource-details"

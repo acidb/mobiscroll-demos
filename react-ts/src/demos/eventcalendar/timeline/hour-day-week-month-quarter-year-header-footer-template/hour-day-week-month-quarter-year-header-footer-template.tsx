@@ -1,13 +1,13 @@
 import {
   Eventcalendar,
-  getJson,
   formatDate,
-  setOptions,
+  // MbscCalendarDayData,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscResource /* localeImport */,
+  MbscResource,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import './hour-day-week-month-quarter-year-header-footer-template.css';
 
 setOptions({
@@ -15,8 +15,8 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const hourView = React.useMemo<MbscEventcalendarView>(
+const App: FC = () => {
+  const hourView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'day',
@@ -25,94 +25,97 @@ const App: React.FC = () => {
     [],
   );
 
-  const hourlyEvents: MbscCalendarEvent[] = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m,d,2)',
-      end: 'dyndatetime(y,m,d,10)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,d,21)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,15)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m,d,5)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m,d,3)',
-      end: 'dyndatetime(y,m,d,10)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m,d,16)',
-      end: 'dyndatetime(y,m,d,23)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m,d,6)',
-      end: 'dyndatetime(y,m,d,11)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,d,22)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,d,5)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m,d,16)',
-      end: 'dyndatetime(y,m,d,21)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const hourlyEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m,d,2)',
+        end: 'dyndatetime(y,m,d,10)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m,d,15)',
+        end: 'dyndatetime(y,m,d,21)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,15)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m,d,5)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m,d,3)',
+        end: 'dyndatetime(y,m,d,10)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m,d,16)',
+        end: 'dyndatetime(y,m,d,23)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m,d,6)',
+        end: 'dyndatetime(y,m,d,11)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m,d,15)',
+        end: 'dyndatetime(y,m,d,22)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,d,5)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m,d,16)',
+        end: 'dyndatetime(y,m,d,21)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const dayView = React.useMemo<MbscEventcalendarView>(
+  const dayView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'month',
@@ -121,94 +124,97 @@ const App: React.FC = () => {
     [],
   );
 
-  const dailyEvents: MbscCalendarEvent[] = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m,2)',
-      end: 'dyndatetime(y,m,10)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m,16)',
-      end: 'dyndatetime(y,m,24)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m,8)',
-      end: 'dyndatetime(y,m,15)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m,4)',
-      end: 'dyndatetime(y,m,11)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m,7)',
-      end: 'dyndatetime(y,m,15)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m,21)',
-      end: 'dyndatetime(y,m,27)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m,10)',
-      end: 'dyndatetime(y,m,19)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m,24)',
-      end: 'dyndatetime(y,m,30)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m,8)',
-      end: 'dyndatetime(y,m,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,5)',
-      end: 'dyndatetime(y,m,13)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m,17)',
-      end: 'dyndatetime(y,m,26)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m,9)',
-      end: 'dyndatetime(y,m,20)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const dailyEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m,2)',
+        end: 'dyndatetime(y,m,10)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m,16)',
+        end: 'dyndatetime(y,m,24)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m,8)',
+        end: 'dyndatetime(y,m,15)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m,4)',
+        end: 'dyndatetime(y,m,11)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m,7)',
+        end: 'dyndatetime(y,m,15)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m,21)',
+        end: 'dyndatetime(y,m,27)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m,10)',
+        end: 'dyndatetime(y,m,19)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m,24)',
+        end: 'dyndatetime(y,m,30)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m,8)',
+        end: 'dyndatetime(y,m,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,5)',
+        end: 'dyndatetime(y,m,13)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m,17)',
+        end: 'dyndatetime(y,m,26)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m,9)',
+        end: 'dyndatetime(y,m,20)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const weekView = React.useMemo<MbscEventcalendarView>(
+  const weekView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'week',
@@ -219,94 +225,97 @@ const App: React.FC = () => {
     [],
   );
 
-  const weeklyEvents: MbscCalendarEvent[] = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m,10)',
-      end: 'dyndatetime(y,m,24)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m+1,2)',
-      end: 'dyndatetime(y,m+1,18)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m,27)',
-      end: 'dyndatetime(y,m+1,13)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m+1,4)',
-      end: 'dyndatetime(y,m+1,27)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m,24)',
-      end: 'dyndatetime(y,m+1,2)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m+1,10)',
-      end: 'dyndatetime(y,m+1,24)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m,20)',
-      end: 'dyndatetime(y,m+1,3)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m+1,8)',
-      end: 'dyndatetime(y,m+1,19)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m,28)',
-      end: 'dyndatetime(y,m+1,15)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,9)',
-      end: 'dyndatetime(y,m,23)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m+1,5)',
-      end: 'dyndatetime(y,m+1,22)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m,24)',
-      end: 'dyndatetime(y,m+1,13)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const weeklyEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m,10)',
+        end: 'dyndatetime(y,m,24)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m+1,2)',
+        end: 'dyndatetime(y,m+1,18)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m,27)',
+        end: 'dyndatetime(y,m+1,13)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m+1,4)',
+        end: 'dyndatetime(y,m+1,27)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m,24)',
+        end: 'dyndatetime(y,m+1,2)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m+1,10)',
+        end: 'dyndatetime(y,m+1,24)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m,20)',
+        end: 'dyndatetime(y,m+1,3)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m+1,8)',
+        end: 'dyndatetime(y,m+1,19)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m,28)',
+        end: 'dyndatetime(y,m+1,15)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,9)',
+        end: 'dyndatetime(y,m,23)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m+1,5)',
+        end: 'dyndatetime(y,m+1,22)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m,24)',
+        end: 'dyndatetime(y,m+1,13)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const monthView = React.useMemo<MbscEventcalendarView>(
+  const monthView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'month',
@@ -317,94 +326,97 @@ const App: React.FC = () => {
     [],
   );
 
-  const monthlyEvents: MbscCalendarEvent[] = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m-1,10)',
-      end: 'dyndatetime(y,m+1,7)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m+3,1)',
-      end: 'dyndatetime(y,m+4,8)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m+1,27)',
-      end: 'dyndatetime(y,m+2,23)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m,25)',
-      end: 'dyndatetime(y,m+1,19)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m+1,10)',
-      end: 'dyndatetime(y,m+2,18)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m+4,24)',
-      end: 'dyndatetime(y,m+5,27)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m+2,2)',
-      end: 'dyndatetime(y,m+3,13)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m+4,8)',
-      end: 'dyndatetime(y,m+5,6)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m+2,20)',
-      end: 'dyndatetime(y,m+3,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,1)',
-      end: 'dyndatetime(y,m+1,14)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m+4,14)',
-      end: 'dyndatetime(y,m+5,20)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m+1,24)',
-      end: 'dyndatetime(y,m+2,20)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const monthlyEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m-1,10)',
+        end: 'dyndatetime(y,m+1,7)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m+3,1)',
+        end: 'dyndatetime(y,m+4,8)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m+1,27)',
+        end: 'dyndatetime(y,m+2,23)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m,25)',
+        end: 'dyndatetime(y,m+1,19)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m+1,10)',
+        end: 'dyndatetime(y,m+2,18)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m+4,24)',
+        end: 'dyndatetime(y,m+5,27)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m+2,2)',
+        end: 'dyndatetime(y,m+3,13)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m+4,8)',
+        end: 'dyndatetime(y,m+5,6)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m+2,20)',
+        end: 'dyndatetime(y,m+3,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,1)',
+        end: 'dyndatetime(y,m+1,14)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m+4,14)',
+        end: 'dyndatetime(y,m+5,20)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m+1,24)',
+        end: 'dyndatetime(y,m+2,20)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const quarterView = React.useMemo<MbscEventcalendarView>(
+  const quarterView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'year',
@@ -415,94 +427,97 @@ const App: React.FC = () => {
     [],
   );
 
-  const quarterEvents: MbscCalendarEvent[] = [
-    {
-      id: 1,
-      start: 'dyndatetime(y,m-1,10)',
-      end: 'dyndatetime(y,m+1,7)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y,m+3,1)',
-      end: 'dyndatetime(y,m+4,8)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y,m+1,27)',
-      end: 'dyndatetime(y,m+2,23)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y,m,25)',
-      end: 'dyndatetime(y,m+1,19)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y,m+1,10)',
-      end: 'dyndatetime(y,m+2,18)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y,m+4,24)',
-      end: 'dyndatetime(y,m+5,27)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y,m+2,2)',
-      end: 'dyndatetime(y,m+3,13)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y,m+4,8)',
-      end: 'dyndatetime(y,m+5,6)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y,m+2,20)',
-      end: 'dyndatetime(y,m+3,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,m,1)',
-      end: 'dyndatetime(y,m+1,14)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y,m+4,14)',
-      end: 'dyndatetime(y,m+5,20)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y,m+1,24)',
-      end: 'dyndatetime(y,m+2,20)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const quarterEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y,m-1,10)',
+        end: 'dyndatetime(y,m+1,7)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y,m+3,1)',
+        end: 'dyndatetime(y,m+4,8)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y,m+1,27)',
+        end: 'dyndatetime(y,m+2,23)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y,m,25)',
+        end: 'dyndatetime(y,m+1,19)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y,m+1,10)',
+        end: 'dyndatetime(y,m+2,18)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y,m+4,24)',
+        end: 'dyndatetime(y,m+5,27)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y,m+2,2)',
+        end: 'dyndatetime(y,m+3,13)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y,m+4,8)',
+        end: 'dyndatetime(y,m+5,6)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y,m+2,20)',
+        end: 'dyndatetime(y,m+3,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,m,1)',
+        end: 'dyndatetime(y,m+1,14)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y,m+4,14)',
+        end: 'dyndatetime(y,m+5,20)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y,m+1,24)',
+        end: 'dyndatetime(y,m+2,20)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const yearView = React.useMemo<MbscEventcalendarView>(
+  const yearView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'year',
@@ -513,94 +528,97 @@ const App: React.FC = () => {
     [],
   );
 
-  const yearlyEvents: MbscCalendarEvent[] = [
-    {
-      id: 1,
-      start: 'dyndatetime(y+1,4,10)',
-      end: 'dyndatetime(y+2,8,7)',
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      id: 2,
-      start: 'dyndatetime(y+3,6,1)',
-      end: 'dyndatetime(y+4,9,8)',
-      title: 'Event 2',
-      resource: 1,
-    },
-    {
-      id: 3,
-      start: 'dyndatetime(y+2,3,27)',
-      end: 'dyndatetime(y+3,10,23)',
-      title: 'Event 3',
-      resource: 2,
-    },
-    {
-      id: 4,
-      start: 'dyndatetime(y+2,8,25)',
-      end: 'dyndatetime(y+3,11,19)',
-      title: 'Event 4',
-      resource: 3,
-    },
-    {
-      id: 5,
-      start: 'dyndatetime(y+1,9,10)',
-      end: 'dyndatetime(y+3,4,18)',
-      title: 'Event 5',
-      resource: 4,
-    },
-    {
-      id: 6,
-      start: 'dyndatetime(y+4,1,24)',
-      end: 'dyndatetime(y+5,5,27)',
-      title: 'Event 6',
-      resource: 4,
-    },
-    {
-      id: 7,
-      start: 'dyndatetime(y-1,4,2)',
-      end: 'dyndatetime(y,8,13)',
-      title: 'Event 7',
-      resource: 5,
-    },
-    {
-      id: 8,
-      start: 'dyndatetime(y+2,4,8)',
-      end: 'dyndatetime(y+3,11,6)',
-      title: 'Event 8',
-      resource: 5,
-    },
-    {
-      id: 9,
-      start: 'dyndatetime(y+2,1,20)',
-      end: 'dyndatetime(y+3,8,17)',
-      title: 'Event 9',
-      resource: 6,
-    },
-    {
-      id: 10,
-      start: 'dyndatetime(y,10,1)',
-      end: 'dyndatetime(y+1,11,14)',
-      title: 'Event 10',
-      resource: 7,
-    },
-    {
-      id: 11,
-      start: 'dyndatetime(y+3,10,14)',
-      end: 'dyndatetime(y+4,11,20)',
-      title: 'Event 11',
-      resource: 7,
-    },
-    {
-      id: 12,
-      start: 'dyndatetime(y+3,2,24)',
-      end: 'dyndatetime(y+5,4,20)',
-      title: 'Event 12',
-      resource: 8,
-    },
-  ];
+  const yearlyEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
+      {
+        id: 1,
+        start: 'dyndatetime(y+1,4,10)',
+        end: 'dyndatetime(y+2,8,7)',
+        title: 'Event 1',
+        resource: 1,
+      },
+      {
+        id: 2,
+        start: 'dyndatetime(y+3,6,1)',
+        end: 'dyndatetime(y+4,9,8)',
+        title: 'Event 2',
+        resource: 1,
+      },
+      {
+        id: 3,
+        start: 'dyndatetime(y+2,3,27)',
+        end: 'dyndatetime(y+3,10,23)',
+        title: 'Event 3',
+        resource: 2,
+      },
+      {
+        id: 4,
+        start: 'dyndatetime(y+2,8,25)',
+        end: 'dyndatetime(y+3,11,19)',
+        title: 'Event 4',
+        resource: 3,
+      },
+      {
+        id: 5,
+        start: 'dyndatetime(y+1,9,10)',
+        end: 'dyndatetime(y+3,4,18)',
+        title: 'Event 5',
+        resource: 4,
+      },
+      {
+        id: 6,
+        start: 'dyndatetime(y+4,1,24)',
+        end: 'dyndatetime(y+5,5,27)',
+        title: 'Event 6',
+        resource: 4,
+      },
+      {
+        id: 7,
+        start: 'dyndatetime(y-1,4,2)',
+        end: 'dyndatetime(y,8,13)',
+        title: 'Event 7',
+        resource: 5,
+      },
+      {
+        id: 8,
+        start: 'dyndatetime(y+2,4,8)',
+        end: 'dyndatetime(y+3,11,6)',
+        title: 'Event 8',
+        resource: 5,
+      },
+      {
+        id: 9,
+        start: 'dyndatetime(y+2,1,20)',
+        end: 'dyndatetime(y+3,8,17)',
+        title: 'Event 9',
+        resource: 6,
+      },
+      {
+        id: 10,
+        start: 'dyndatetime(y,10,1)',
+        end: 'dyndatetime(y+1,11,14)',
+        title: 'Event 10',
+        resource: 7,
+      },
+      {
+        id: 11,
+        start: 'dyndatetime(y+3,10,14)',
+        end: 'dyndatetime(y+4,11,20)',
+        title: 'Event 11',
+        resource: 7,
+      },
+      {
+        id: 12,
+        start: 'dyndatetime(y+3,2,24)',
+        end: 'dyndatetime(y+5,4,20)',
+        title: 'Event 12',
+        resource: 8,
+      },
+    ],
+    [],
+  );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -646,7 +664,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const getEventOccurrence = React.useCallback((events: MbscCalendarEvent[]) => {
+  const getEventOccurrence = useCallback((events: MbscCalendarEvent[]) => {
     let eventOccurrence = 'none';
 
     if (events) {
@@ -665,33 +683,35 @@ const App: React.FC = () => {
     return eventOccurrence;
   }, []);
 
-  const getOccuppancy = (events: any) => {
+  const getOccuppancy = (events: MbscCalendarEvent[]) => {
     let occuppancy = 0;
 
     if (events) {
-      let resourceIds = [];
+      let resourceIds: Array<number> = [];
       let nr = 0;
       for (const event of events) {
-        if (resourceIds.indexOf(event.resource) < 0) {
+        if (resourceIds.indexOf(event.resource as number) < 0) {
           nr++;
-          resourceIds = [...resourceIds, event.resource];
+          resourceIds = [...resourceIds, event.resource as number];
         }
       }
-      occuppancy = ((nr * 100) / myResources.length).toFixed(0);
+      occuppancy = +((nr * 100) / myResources.length).toFixed(0);
     }
 
     return occuppancy;
   };
 
-  const renderCustomHour = (args: any) => (
+  const renderCustomHour = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
     <div className={'md-date-header md-date-header-hour md-date-header-events-' + getEventOccurrence(args.events)}>
       {formatDate('h:mm A', args.date)}
     </div>
   );
 
-  const renderCustomHourFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
+  const renderCustomHourFooter = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
+    <div className="md-date-footer">{getOccuppancy(args.events)} %</div>
+  );
 
-  const renderCustomDay = (args: any) => {
+  const renderCustomDay = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => {
     const date = args.date;
     return (
       <div className={'md-date-header md-date-header-events-' + getEventOccurrence(args.events)}>
@@ -701,39 +721,49 @@ const App: React.FC = () => {
     );
   };
 
-  const renderCustomDayFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
+  const renderCustomDayFooter = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
+    <div className="md-date-footer">{getOccuppancy(args.events)} %</div>
+  );
 
-  const renderCustomWeek = (args: any) => (
+  const renderCustomWeek = (args: { date: Date; events: Array<MbscCalendarEvent[]>; startDate: Date; endDate: Date }) => (
     <div className={'md-date-header md-date-header-week md-date-header-events-' + getEventOccurrence(args.events)}>
       {formatDate('MMM DD', args.startDate) + ' - ' + formatDate('MMM DD', args.endDate)}
     </div>
   );
 
-  const renderCustomWeekFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
+  const renderCustomWeekFooter = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
+    <div className="md-date-footer">{getOccuppancy(args.events)} %</div>
+  );
 
-  const renderCustomMonth = (args: any) => (
+  const renderCustomMonth = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
     <div className={'md-date-header md-date-header-month md-date-header-events-' + getEventOccurrence(args.events)}>
       {formatDate('MMM', args.date)}
     </div>
   );
 
-  const renderCustomMonthFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
+  const renderCustomMonthFooter = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
+    <div className="md-date-footer">{getOccuppancy(args.events)} %</div>
+  );
 
-  const renderCustomQuarter = (args: any) => (
+  const renderCustomQuarter = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
     <div className={'md-date-header md-date-header-quarter md-date-header-events-' + getEventOccurrence(args.events)}>
       Quarter {args.date.getMonth() / 3 + 1}
     </div>
   );
 
-  const renderCustomQuarterFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
+  const renderCustomQuarterFooter = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
+    <div className="md-date-footer">{getOccuppancy(args.events)} %</div>
+  );
 
-  const renderCustomYear = (args: any) => (
+  const renderCustomYear = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
     <div className={'md-date-header md-date-header-year md-date-header-events-' + getEventOccurrence(args.events)}>
       {formatDate('YYYY', args.date)}
     </div>
   );
 
-  const renderCustomYearFooter = (args: any) => <div className="md-date-footer">{getOccuppancy(args.events)} %</div>;
+  const renderCustomYearFooter = (args: { date: Date; events: Array<MbscCalendarEvent[]> }) => (
+    <div className="md-date-footer">{getOccuppancy(args.events)} %</div>
+  );
 
   return (
     <div className="md-date-header-template">

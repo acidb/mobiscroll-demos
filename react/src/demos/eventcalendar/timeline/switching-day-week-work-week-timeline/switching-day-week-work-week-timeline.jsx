@@ -159,7 +159,7 @@ function App() {
     [],
   );
 
-  const eventUpdateFail = useCallback(() => {
+  const handleEventUpdateFail = useCallback(() => {
     setToastOpen(true);
   }, []);
 
@@ -187,8 +187,8 @@ function App() {
         resources={myResources}
         renderHeader={renderMyHeader}
         renderResource={renderMyResource}
-        onEventCreateFailed={eventUpdateFail}
-        onEventUpdateFailed={eventUpdateFail}
+        onEventCreateFailed={handleEventUpdateFail}
+        onEventUpdateFailed={handleEventUpdateFail}
         cssClass="md-switching-timeline-view-cont"
       />
       <Toast message="Can't schedule outside of working hours" isOpen={isToastOpen} onClose={handleCloseToast} />
