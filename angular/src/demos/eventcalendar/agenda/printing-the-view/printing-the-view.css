@@ -1,8 +1,7 @@
-.mds-print-page,
-.mds-print-cont {
+.mds-full-height {
   height: 100%;
 }
 
-.mds-print-cal {
+.mds-overflow-hidden {
   overflow: hidden;
 }

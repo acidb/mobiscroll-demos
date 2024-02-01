@@ -31,5 +31,5 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-daily-agenda"></div>
-`,
+  `,
 };

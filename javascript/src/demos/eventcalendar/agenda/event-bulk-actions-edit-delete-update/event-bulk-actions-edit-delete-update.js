@@ -69,7 +69,7 @@ export default {
           .map(function (e) {
             return e.title;
           })
-          .join(','),
+          .join(', '),
         okText: 'Delete',
         callback: function (result) {
           if (result) {
@@ -194,7 +194,7 @@ export default {
     <div class="mbsc-row">
       <div class="mds-bulk-actions-calendar mbsc-col-sm-9 mbsc-push-sm-3">
         <div id="demo-bulk-actions"></div>
-        <input id="demo-bulk-actions-menu" type="hidden" />
+        <div id="demo-bulk-actions-menu" class="mds-select"></div>
       </div>
       <div class="mbsc-col-sm-3 mbsc-pull-sm-9 mbsc-flex-col">
         <div class="mbsc-button-group-block">
@@ -211,7 +211,7 @@ export default {
     </div>
   </div>
 </div>
-`,
+  `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
   .mds-bulk-actions,
@@ -231,5 +231,5 @@ export default {
     padding-top: 0;
     padding-bottom: 0;
   }
-`,
+  `,
 };

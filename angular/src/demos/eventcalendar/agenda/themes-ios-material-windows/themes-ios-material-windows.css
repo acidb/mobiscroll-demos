@@ -1,8 +1,7 @@
-.mds-agenda-theme-page,
-.mds-agenda-theme-cont {
+.mds-full-height {
   height: 100%;
 }
 
-.mds-agenda-theme-cal {
+.mds-overflow-hidden {
   overflow: hidden;
 }

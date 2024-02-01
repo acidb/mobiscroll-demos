@@ -14,7 +14,7 @@ export default {
       3: { name: 'Carl H.', img: 'https://img.mobiscroll.com/demos/m2.png' },
     };
 
-    var inst = mobiscroll.eventcalendar('#demo-custom-event-content', {
+    var inst = mobiscroll.eventcalendar('#demo-event-content-template', {
       actionableEvents: false,
       view: {
         calendar: { type: 'week' },
@@ -27,7 +27,7 @@ export default {
           data.title +
           '</div>' +
           '<div class="mds-agenda-event-content mbsc-flex mbsc-align-items-center">' +
-          '<img class="mds-agenda-event-img" alt="' +
+          '<img class="mds-agenda-event-avatar" alt="' +
           participant.name +
           '" src="' +
           participant.img +
@@ -58,8 +58,8 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-custom-event-content"></div>
-`,
+<div id="demo-event-content-template"></div>
+  `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-agenda-event-content {
@@ -67,7 +67,7 @@ export default {
   font-size: 13px;
 }
 
-.mds-agenda-event-img {
+.mds-agenda-event-avatar {
   width: 30px;
   height: 30px;
   margin-right: 10px;
@@ -82,5 +82,5 @@ export default {
   right: 8px;
   bottom: 8px;
 }
-`,
+  `,
 };

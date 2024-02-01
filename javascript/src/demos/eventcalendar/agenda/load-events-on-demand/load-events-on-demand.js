@@ -3,35 +3,21 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    mobiscroll.eventcalendar('#demo-on-demand-api', {
+    mobiscroll.setOptions({
       // locale,
-      // theme,
-      view: {
-        agenda: {
-          type: 'month',
-        },
-      },
+      // theme
+    });
+
+    mobiscroll.eventcalendar('#demo-on-demand-api', {
+      view: { agenda: { type: 'month' } },
       onPageLoading: function (event, inst) {
         var year = event.firstDay.getFullYear();
         var month = event.firstDay.getMonth();
 
         mobiscroll.getJson(
           'https://trial.mobiscroll.com/monthlyevents/?year=' + year + '&month=' + month + '&vers=5',
-          function (data) {
-            var events = [];
-
-            for (var i = 0; i < data.length; i++) {
-              events.push({
-                start: data[i].start,
-                end: data[i].end || '',
-                allDay: data[i].allDay,
-                title: data[i].title,
-                color: data[i].color,
-              });
-            }
-
+          function (events) {
             inst.setEvents(events);
-
             mobiscroll.toast({
               message: 'New events loaded',
             });

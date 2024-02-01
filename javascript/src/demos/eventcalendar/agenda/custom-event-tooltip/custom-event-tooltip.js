@@ -540,7 +540,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-tooltip-calendar"></div>
-<div id="demo-tooltip-popup" class="mds-tooltip">
+<div id="demo-tooltip-popup" class="mds-tooltip mds-popup">
     <div id="demo-tooltip-header" class="mds-tooltip-header">
         <span id="demo-tooltip-info"></span>
         <span id="demo-tooltip-time" class="mbsc-pull-right"></span>
@@ -556,7 +556,7 @@ export default {
         <button id="demo-tooltip-delete" mbsc-button data-color="danger" data-variant="outline" class="mds-tooltip-button mbsc-pull-right">Delete appointment</button>
     </div>
 </div>
-`,
+  `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-tooltip {
@@ -581,5 +581,5 @@ export default {
 .mds-tooltip-button.mbsc-material {
   font-size: 12px;
 }
-`,
+  `,
 };

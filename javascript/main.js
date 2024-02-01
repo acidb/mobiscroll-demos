@@ -1,7 +1,8 @@
 import { enhance, getInst } from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
 import { Router } from 'html5-history-router';
-import './style.css';
 import '@mobiscroll/javascript/dist/css/mobiscroll.min.css';
+import '@mobiscroll/print/dist/css/mobiscroll.min.css';
+import './style.css';
 
 import HomePage from './pages/home/home';
 import CalendarActivityCalendar from './src/demos/calendar/calendar/activity-calendar/activity-calendar';
@@ -332,7 +333,8 @@ function destroyPage() {
     '[mbsc-segmented-group]',
     '[mbsc-page]',
     '.mbsc-eventcalendar',
-    '.mds-tooltip',
+    '.mds-popup',
+    '.mds-select',
   ];
   document.querySelectorAll(selectors.join(',')).forEach(function (elm) {
     getInst(elm).destroy();
@@ -347,7 +349,7 @@ function loadPage(page) {
     }
   }
 
-  app.innerHTML = "<div id='javascript-demo-placeholder'>" + page.markup + '</div>';
+  app.innerHTML = "<div id='demo-placeholder'>" + page.markup + '</div>';
 
   if (page.css && !page.loaded) {
     page.loaded = true;

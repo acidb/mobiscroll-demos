@@ -1,8 +1,7 @@
-.mds-event-data-page,
-.mds-event-data-cont {
+.mds-full-height {
   height: 100%;
 }
 
-.mds-event-data-cal {
+.mds-overflow-hidden {
   overflow: hidden;
 }

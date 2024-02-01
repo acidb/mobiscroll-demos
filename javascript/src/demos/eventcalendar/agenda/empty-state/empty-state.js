@@ -60,7 +60,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-agenda-empty"></div>
-`,
+  `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-empty-img {
@@ -71,5 +71,5 @@ export default {
 .mds-empty-txt {
   padding-top: 150px;
 }
-`,
+  `,
 };

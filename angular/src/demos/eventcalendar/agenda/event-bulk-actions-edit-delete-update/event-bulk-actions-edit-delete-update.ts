@@ -134,7 +134,7 @@ export class AppComponent implements OnInit {
     this.confirmOpen = true;
     this.notify.confirm({
       title: 'Are you sure you want to delete the following events?',
-      message: events.map((e) => e.title).join(','),
+      message: events.map((e) => e.title).join(', '),
       okText: 'Delete',
       callback: (result) => {
         if (result) {

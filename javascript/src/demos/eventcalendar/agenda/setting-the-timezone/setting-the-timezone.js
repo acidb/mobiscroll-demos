@@ -4,16 +4,20 @@ import * as moment from 'moment-timezone';
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
+    mobiscroll.setOptions({
+      // locale,
+      // theme
+    });
+
     mobiscroll.momentTimezone.moment = moment;
 
-    mobiscroll.eventcalendar('#demo-showing-events-timezone', {
-      timezonePlugin: mobiscroll.momentTimezone,
+    mobiscroll.eventcalendar('#demo-set-timezone', {
       dataTimezone: 'utc',
       displayTimezone: 'local',
+      timezonePlugin: mobiscroll.momentTimezone,
       view: {
         agenda: { type: 'week' },
       },
-
       data: [
         {
           start: 'dyndatetime(y, m, d, 7)',
@@ -62,6 +66,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-showing-events-timezone"></div>
+<div id="demo-set-timezone"></div>
   `,
 };

@@ -69,7 +69,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-custom-header"></div>
-`,
+  `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-custom-header-nav {
@@ -99,5 +99,5 @@ export default {
   height: 32px;
   padding: 0;
 }
-`,
+  `,
 };
