@@ -1,14 +1,14 @@
 import {
-  Datepicker,
-  CalendarPrev,
   CalendarNav,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
+  Datepicker,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useState } from 'react';
 import './customizing-header.css';
 
 setOptions({
@@ -16,42 +16,52 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const calendarHeaderCustom = () => (
-    <React.Fragment>
-      <CalendarPrev className="custom-prev" />
-      <CalendarNav className="custom-nav" />
-      <CalendarNext className="custom-next" />
-    </React.Fragment>
+const App: FC = () => {
+  const [calendarType, setCalendarType] = useState<'week' | 'year' | 'month' | undefined>('week');
+
+  const calendarHeaderCustom = useCallback(
+    () => (
+      <>
+        <CalendarPrev className="custom-prev" />
+        <CalendarNav className="custom-nav" />
+        <CalendarNext className="custom-next" />
+      </>
+    ),
+    [],
   );
-  const calendarHeaderToday = () => (
-    <React.Fragment>
-      <CalendarNav />
-      <div className="custom-buttons">
+
+  const calendarHeaderToday = useCallback(
+    () => (
+      <>
+        <CalendarNav />
+        <div className="custom-buttons">
+          <CalendarPrev />
+          <CalendarToday />
+          <CalendarNext />
+        </div>
+      </>
+    ),
+    [],
+  );
+
+  const calendarHeaderSwitch = useCallback(
+    () => (
+      <>
+        <CalendarNav className="custom-view-nav" />
+        <div className="custom-view">
+          <SegmentedGroup value={calendarType} onChange={changeView}>
+            <Segmented value="week" icon="material-date-range" />
+            <Segmented value="month" icon="material-event-note" />
+          </SegmentedGroup>
+        </div>
         <CalendarPrev />
-        <CalendarToday />
         <CalendarNext />
-      </div>
-    </React.Fragment>
+      </>
+    ),
+    [calendarType],
   );
-  const [calendarType, setCalendarType] = React.useState<any>('week');
-  const calendarHeaderSwitch = () => (
-    <React.Fragment>
-      <CalendarNav className="custom-nav" />
-      <div className="custom-view">
-        <SegmentedGroup value={calendarType} onChange={changeView}>
-          <SegmentedItem value="week" icon="material-date-range" />
-          <SegmentedItem value="month" icon="material-event-note" />
-        </SegmentedGroup>
-      </div>
-      <div className="custom-buttons">
-        <CalendarPrev />
-        <CalendarNext />
-      </div>
-    </React.Fragment>
-  );
-  const changeView = (event: any) => {
-    setCalendarType(event.target.value);
+  const changeView = (event: ChangeEvent<HTMLInputElement>) => {
+    setCalendarType(event.target.value as 'week' | 'year' | 'month' | undefined);
   };
   return (
     <div>

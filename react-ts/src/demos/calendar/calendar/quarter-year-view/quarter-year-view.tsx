@@ -1,14 +1,16 @@
 import {
-  Datepicker,
-  CalendarPrev,
   CalendarNav,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
+  Datepicker,
+  MbscDatepickerChangeEvent,
+  MbscDatepickerPageChangeEvent,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
 import './quarter-year-view.css';
 
 setOptions({
@@ -16,14 +18,14 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [type, setType] = React.useState<string>('q4');
-  const calType = React.useMemo<string>(() => (type === 'year' ? 'year' : 'month'), [type]);
-  const [selectedDate, setDate] = React.useState<Date>(new Date());
-  const [activeDate, setActiveDate] = React.useState<Date>(new Date());
+const App: FC = () => {
+  const [type, setType] = useState<string>('q4');
+  const calType = useMemo<'year' | 'month' | 'week' | undefined>(() => (type === 'year' ? 'year' : 'month'), [type]);
+  const [selectedDate, setDate] = useState<Date>(new Date());
+  const [activeDate, setActiveDate] = useState<Date>(new Date());
 
-  const changeView = React.useCallback<any>(
-    (event: any) => {
+  const handleTypeChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
       const tp = event.target.value;
       const year = activeDate.getFullYear();
       let date;
@@ -47,14 +49,14 @@ const App: React.FC = () => {
           break;
       }
       setType(tp);
-      setDate(date);
-      setActiveDate(date);
+      setDate(date!);
+      setActiveDate(date!);
     },
     [activeDate],
   );
 
-  const onPageChange = React.useCallback<any>(
-    (event: any) => {
+  const handlePageChange = useCallback(
+    (event: MbscDatepickerPageChangeEvent) => {
       let t = '';
       if (type === 'year') {
         t = 'year';
@@ -78,29 +80,29 @@ const App: React.FC = () => {
     [type],
   );
 
-  const onChange = React.useCallback<any>((event: any) => {
-    setDate(event.value);
+  const handleDateChange = useCallback((event: MbscDatepickerChangeEvent) => {
+    setDate(new Date(event.value as string));
   }, []);
 
-  const calendarHeaderSwitch = React.useCallback<any>(
+  const calendarHeaderSwitch = useCallback(
     () => (
-      <React.Fragment>
+      <>
         <CalendarNav />
         <div className="quarter-year-header-picker">
-          <SegmentedGroup value={type} onChange={changeView}>
-            <SegmentedItem value="q1">Q1</SegmentedItem>
-            <SegmentedItem value="q2">Q2</SegmentedItem>
-            <SegmentedItem value="q3">Q3</SegmentedItem>
-            <SegmentedItem value="q4">Q4</SegmentedItem>
-            <SegmentedItem value="year">Year</SegmentedItem>
+          <SegmentedGroup value={type} onChange={handleTypeChange}>
+            <Segmented value="q1">Q1</Segmented>
+            <Segmented value="q2">Q2</Segmented>
+            <Segmented value="q3">Q3</Segmented>
+            <Segmented value="q4">Q4</Segmented>
+            <Segmented value="year">Year</Segmented>
           </SegmentedGroup>
         </div>
         <CalendarPrev />
         <CalendarToday />
         <CalendarNext />
-      </React.Fragment>
+      </>
     ),
-    [changeView, type],
+    [handleTypeChange, type],
   );
 
   return (
@@ -110,8 +112,8 @@ const App: React.FC = () => {
       calendarType={calType}
       calendarSize={3}
       renderCalendarHeader={calendarHeaderSwitch}
-      onPageChange={onPageChange}
-      onChange={onChange}
+      onPageChange={handlePageChange}
+      onChange={handleDateChange}
       showWeekNumbers={true}
       value={selectedDate}
     />

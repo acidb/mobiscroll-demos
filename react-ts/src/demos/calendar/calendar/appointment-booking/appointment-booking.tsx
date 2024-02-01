@@ -1,5 +1,14 @@
-import { Datepicker, Page, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Datepicker,
+  getJson,
+  MbscCalendarLabel,
+  MbscDatepickerChangeEvent,
+  MbscDatepickerPageLoadingEvent,
+  MbscDateType,
+  Page,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useState } from 'react';
 import './appointment-booking.css';
 
 setOptions({
@@ -7,48 +16,28 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [multiple, setMultiple] = React.useState(['dyndatetime(y,m,11)', 'dyndatetime(y,m,16)', 'dyndatetime(y,m,17)']);
+const App: FC = () => {
+  const [multiple, setMultiple] = useState<MbscDateType[]>(['dyndatetime(y,m,11)', 'dyndatetime(y,m,16)', 'dyndatetime(y,m,17)']);
   const min = 'dyndatetime(y,m,d)';
   const max = 'dyndatetime(y,m+6,d)';
-  const [singleLabels, setSingleLabels] = React.useState<MbscCalendarLabel>([]);
-  const [singleInvalid, setSingleInvalid] = React.useState<any>([]);
-  const [datetimeLabels, setDatetimeLabels] = React.useState<MbscCalendarLabel>([]);
-  const [datetimeInvalid, setDatetimeInvalid] = React.useState<any>([]);
-  const [multipleLabels, setMultipleLabels] = React.useState<MbscCalendarLabel>([]);
-  const [multipleInvalid, setMultipleInvalid] = React.useState<any>([]);
+  const [singleLabels, setSingleLabels] = useState<MbscCalendarLabel[]>([]);
+  const [singleInvalid, setSingleInvalid] = useState<Array<object>>([]);
+  const [datetimeLabels, setDatetimeLabels] = useState<MbscCalendarLabel[]>([]);
+  const [datetimeInvalid, setDatetimeInvalid] = useState<Array<object>>([]);
+  const [multipleLabels, setMultipleLabels] = useState<MbscCalendarLabel[]>([]);
+  const [multipleInvalid, setMultipleInvalid] = useState<Array<object>>([]);
 
-  const onPageLoadingSingle = React.useCallback((event, inst) => {
-    getPrices(event.firstDay, (bookings: any) => {
-      setSingleLabels(bookings.labels);
-      setSingleInvalid(bookings.invalid);
-    });
-  }, []);
-
-  const onPageLoadingDatetime = React.useCallback((event, inst) => {
-    getDatetimes(event.firstDay, (bookings) => {
-      setDatetimeLabels(bookings.labels);
-      setDatetimeInvalid(bookings.invalid);
-    });
-  }, []);
-
-  const onPageLoadingMultiple = React.useCallback((event, inst) => {
-    getBookings(event.firstDay, (bookings: any) => {
-      setMultipleLabels(bookings.labels);
-      setMultipleInvalid(bookings.invalid);
-    });
-  }, []);
-
-  const getPrices = (d: Date, callback: any) => {
-    const invalid: Date[] = [],
-      labels: MbscCalendarLabel[] = [];
+  const handlePageLoadingSingle = useCallback((args: MbscDatepickerPageLoadingEvent) => {
+    const d = args.firstDay;
+    const invalid: Array<object> = [];
+    const labels: MbscCalendarLabel[] = [];
 
     getJson(
       'https://trial.mobiscroll.com/getprices/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
-      (bookings: any) => {
+      (bookings) => {
         for (let i = 0; i < bookings.length; ++i) {
-          const booking = bookings[i],
-            d = new Date(booking.d);
+          const booking = bookings[i];
+          const d = new Date(booking.d);
 
           if (booking.price > 0) {
             labels.push({
@@ -60,50 +49,54 @@ const App: React.FC = () => {
             invalid.push(d);
           }
         }
-        callback({ labels: labels, invalid: invalid });
+        setSingleLabels(labels);
+        setSingleInvalid(invalid);
       },
       'jsonp',
     );
-  };
+  }, []);
 
-  const getDatetimes = (d: Date, callback: any) => {
-    let invalid = [];
-    const labels = [];
+  const handlePageLoadingDatetime = useCallback((args: MbscDatepickerPageLoadingEvent) => {
+    const d = args.firstDay;
+    const invalid: Array<object> = [];
+    const labels: MbscCalendarLabel[] = [];
 
     getJson(
-      'https://trial.dev.mobiscroll.com/getbookingtime/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
+      'https://trial.mobiscroll.com/getbookingtime/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
       (bookings) => {
         for (let i = 0; i < bookings.length; ++i) {
           const booking = bookings[i];
-          const bDate = new Date(booking.d);
+          const d = new Date(booking.d);
 
           if (booking.nr > 0) {
             labels.push({
-              start: bDate,
+              start: d,
               title: booking.nr + ' SPOTS',
               textColor: '#e1528f',
             });
-            invalid = [...invalid, ...booking.invalid];
+            invalid.push(...booking.invalid);
           } else {
             invalid.push(d);
           }
         }
-        callback({ labels: labels, invalid: invalid });
+        setDatetimeLabels(labels);
+        setDatetimeInvalid(invalid);
       },
       'jsonp',
     );
-  };
+  }, []);
 
-  const getBookings = (d: Date, callback: any) => {
-    const invalid: Date[] = [],
-      labels: MbscCalendarLabel[] = [];
+  const handlePageLoadingMultiple = useCallback((args: MbscDatepickerPageLoadingEvent) => {
+    const d = args.firstDay;
+    const invalid: Array<object> = [];
+    const labels: MbscCalendarLabel[] = [];
 
     getJson(
       'https://trial.mobiscroll.com/getbookings/?year=' + d.getFullYear() + '&month=' + d.getMonth(),
       (bookings) => {
         for (let i = 0; i < bookings.length; ++i) {
-          const booking = bookings[i],
-            d = new Date(booking.d);
+          const booking = bookings[i];
+          const d = new Date(booking.d);
 
           if (booking.nr > 0) {
             labels.push({
@@ -115,11 +108,16 @@ const App: React.FC = () => {
             invalid.push(d);
           }
         }
-        callback({ labels: labels, invalid: invalid });
+        setMultipleLabels(labels);
+        setMultipleInvalid(invalid);
       },
       'jsonp',
     );
-  };
+  }, []);
+
+  const handleChangeMultiple = useCallback((args: MbscDatepickerChangeEvent) => {
+    setMultiple(args.value as MbscDateType[]);
+  }, []);
 
   return (
     <Page className="md-calendar-booking">
@@ -133,7 +131,7 @@ const App: React.FC = () => {
           labels={singleLabels}
           invalid={singleInvalid}
           pages="auto"
-          onPageLoading={onPageLoadingSingle}
+          onPageLoading={handlePageLoadingSingle}
         />
       </div>
       <div className="mbsc-form-group">
@@ -146,10 +144,9 @@ const App: React.FC = () => {
           minTime="08:00"
           maxTime="19:59"
           stepMinute={60}
-          width={null}
           labels={datetimeLabels}
           invalid={datetimeInvalid}
-          onPageLoading={onPageLoadingDatetime}
+          onPageLoading={handlePageLoadingDatetime}
           cssClass="booking-datetime"
         />
       </div>
@@ -165,7 +162,8 @@ const App: React.FC = () => {
           invalid={multipleInvalid}
           pages="auto"
           selectMultiple={true}
-          onPageLoading={onPageLoadingMultiple}
+          onChange={handleChangeMultiple}
+          onPageLoading={handlePageLoadingMultiple}
         />
       </div>
     </Page>

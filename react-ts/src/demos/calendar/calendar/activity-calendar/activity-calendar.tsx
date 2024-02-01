@@ -1,6 +1,15 @@
-import { Datepicker /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Datepicker,
+  // MbscCalendarDayData,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { FC } from 'react';
 import './activity-calendar.css';
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const activities = [
   {
@@ -89,7 +98,7 @@ const activities = [
   },
 ];
 
-const App: React.FC = () => {
+const App: FC = () => {
   const getDeg = (nr: number) => ({
     rotate1: nr > 180 ? 180 : nr,
     rotate2: nr > 180 ? nr - 180 : 0,
@@ -97,7 +106,7 @@ const App: React.FC = () => {
 
   const getTransform = (rotate: number) => 'rotateZ(' + rotate + 'deg)';
 
-  const customDay = (args: any) => {
+  const customDay = (args: { date: Date }) => {
     const a = activities.find((obj) => +new Date(obj.date) === +args.date);
 
     return (
@@ -139,15 +148,6 @@ const App: React.FC = () => {
     );
   };
 
-  return (
-    <Datepicker
-      // theme
-      // locale
-      controls={['calendar']}
-      touchUi={true}
-      display="inline"
-      renderDayContent={customDay}
-    />
-  );
+  return <Datepicker controls={['calendar']} touchUi={true} display="inline" renderDayContent={customDay} />;
 };
 export default App;

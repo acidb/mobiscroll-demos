@@ -1,64 +1,61 @@
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <Page>
     <Datepicker
-      controls={['calendar']}
-      inputProps={{
-        label: 'Calendar',
-        labelStyle: 'stacked',
-        inputStyle: 'box',
-        placeholder: 'Please Select...',
-      }}
-      onCancel={(event, inst) => {
+      label="Calendar"
+      labelStyle="stacked"
+      inputStyle="box"
+      placeholder="Please Select..."
+      onCancel={() => {
         // Logic for cancel button click
       }}
-      onCellClick={(event, inst) => {
+      onCellClick={() => {
         // Logic for event click
       }}
-      handleCellHoverIn={(event, inst) => {
+      onCellHoverIn={() => {
         // Logic for handling cell hover in
       }}
-      handleCellHoverOut={(event, inst) => {
+      onCellHoverOut={() => {
         // Logic for handling cell hover out
       }}
-      onChange={(event, inst) => {
+      onChange={() => {
         // Logic for value change
       }}
-      onClose={(event, inst) => {
+      onClose={() => {
         // Your custom event handler goes here
       }}
-      onDestroy={(event, inst) => {
+      onDestroy={() => {
         // Your custom event handler goes here
       }}
-      onInit={(event, inst) => {
+      onInit={() => {
         // Logic running on component init
       }}
-      onLabelClick={(event, inst) => {
+      onLabelClick={() => {
         // Logic for label click
       }}
-      onOpen={(event, inst) => {
+      onOpen={() => {
         // Your custom event handler goes here
       }}
-      onPageChange={(event, inst) => {
+      onPageChange={() => {
         // Your custom event handler goes here
       }}
-      onPageLoaded={(event, inst) => {
+      onPageLoaded={() => {
         // Use it to inject custom markup & attach custom listeners
       }}
-      onPageLoading={(event, inst) => {
+      onPageLoading={() => {
         // Use it to load data on demand
       }}
-      onPosition={(event, inst) => {
+      onPosition={() => {
         // Logic for component positioning
       }}
-      onTempChange={(event, inst) => {
+      onTempChange={() => {
         // Logic for temporary value change
       }}
     />

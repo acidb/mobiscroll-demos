@@ -1,12 +1,12 @@
 import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <div>
     <Datepicker controls={['calendar']} display="inline" min="1920-01-01" max="2050-01-01" />
 

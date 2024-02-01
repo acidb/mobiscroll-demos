@@ -1,8 +1,13 @@
-import { Datepicker /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useMemo } from 'react';
 
-const App: React.FC = () => {
-  const invalids = React.useMemo<any>(
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const App: FC = () => {
+  const myInvalid = useMemo(
     () => [
       {
         recurring: {
@@ -41,14 +46,7 @@ const App: React.FC = () => {
     [],
   );
 
-  return (
-    <Datepicker
-      // locale
-      // theme
-      controls={['calendar']}
-      display="inline"
-      invalid={invalids}
-    />
-  );
+  return <Datepicker controls={['calendar']} display="inline" invalid={myInvalid} />;
 };
+
 export default App;

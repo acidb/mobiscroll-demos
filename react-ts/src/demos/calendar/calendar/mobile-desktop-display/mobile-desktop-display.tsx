@@ -1,54 +1,18 @@
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <Page>
-    <Datepicker controls={['calendar']} display="inline" />
-    <Datepicker
-      controls={['calendar']}
-      display="anchored"
-      inputProps={{
-        label: 'Anchored',
-        labelStyle: 'stacked',
-        inputStyle: 'outline',
-        placeholder: 'Please Select...',
-      }}
-    />
-    <Datepicker
-      controls={['calendar']}
-      display="top"
-      inputProps={{
-        label: 'Top',
-        labelStyle: 'stacked',
-        inputStyle: 'outline',
-        placeholder: 'Please Select...',
-      }}
-    />
-    <Datepicker
-      controls={['calendar']}
-      display="bottom"
-      inputProps={{
-        label: 'Bottom',
-        labelStyle: 'stacked',
-        inputStyle: 'outline',
-        placeholder: 'Please Select...',
-      }}
-    />
-    <Datepicker
-      controls={['calendar']}
-      display="center"
-      inputProps={{
-        label: 'Center',
-        labelStyle: 'stacked',
-        inputStyle: 'outline',
-        placeholder: 'Please Select...',
-      }}
-    />
+    <Datepicker display="inline" />
+    <Datepicker display="anchored" label="Anchored" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+    <Datepicker display="top" label="Top" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+    <Datepicker display="bottom" label="Bottom" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+    <Datepicker display="center" label="Center" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
   </Page>
 );
 export default App;
