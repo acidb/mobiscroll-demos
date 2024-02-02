@@ -1,5 +1,5 @@
-import { Select, Page, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { getJson, MbscSelectData, MbscSelectFilterEvent, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -69,19 +69,13 @@ const names = [
   },
 ];
 
-const App: React.FC = () => {
-  const [remoteData, setRemoteData] = React.useState<any>([]);
+const App: FC = () => {
+  const [remoteData, setRemoteData] = useState<(string | number | MbscSelectData)[]>([]);
 
-  const inputProps = {
-    inputStyle: 'box',
-    labelStyle: 'stacked',
-    placeholder: 'Please select...',
-  };
-
-  const remoteFiltering = React.useCallback((filterText: any) => {
+  const remoteFiltering = useCallback((filterText: string) => {
     getJson(
       'https://trial.mobiscroll.com/airports/' + encodeURIComponent(filterText),
-      (data: any) => {
+      (data) => {
         const airports = [];
         for (const item of data) {
           airports.push({ text: item.name, value: item.code });
@@ -92,31 +86,46 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const onFilter = React.useCallback(
-    (ev) => {
-      remoteFiltering(ev.filterText);
+  const onFilter = useCallback(
+    (args: MbscSelectFilterEvent) => {
+      remoteFiltering(args.filterText);
       return false;
     },
     [remoteFiltering],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     remoteFiltering('');
   });
 
   return (
-    <Page>
-      <div className="mbsc-grid mbsc-form-grid">
-        <div className="mbsc-row">
-          <div className="mbsc-col-sm-12 mbsc-col-md-6">
-            <Select data={names} display="anchored" filter={true} label="Local data" inputProps={inputProps} />
-          </div>
-          <div className="mbsc-col-sm-12 mbsc-col-md-6">
-            <Select data={remoteData} display="anchored" filter={true} label="Remote data" inputProps={inputProps} onFilter={onFilter} />
-          </div>
+    <div className="mbsc-grid mbsc-form-grid">
+      <div className="mbsc-row">
+        <div className="mbsc-col-sm-12 mbsc-col-md-6">
+          <Select
+            data={names}
+            display="anchored"
+            filter={true}
+            inputStyle="outline"
+            label="Local data"
+            labelStyle="stacked"
+            placeholder="Please select..."
+          />
+        </div>
+        <div className="mbsc-col-sm-12 mbsc-col-md-6">
+          <Select
+            data={remoteData}
+            display="anchored"
+            filter={true}
+            inputStyle="outline"
+            label="Remote data"
+            labelStyle="stacked"
+            placeholder="Please select..."
+            onFilter={onFilter}
+          />
         </div>
       </div>
-    </Page>
+    </div>
   );
 };
 export default App;

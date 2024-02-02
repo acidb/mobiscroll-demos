@@ -1,5 +1,5 @@
-import { Select, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Button, MbscPopupButton, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useRef, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -29,30 +29,16 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
-  const [customSelected, setCustomSelected] = React.useState('');
-  const selectRef = React.useRef<any>();
+const App: FC = () => {
+  const [customSelected, setCustomSelected] = useState<string>('');
+  const selectRef = useRef<Select | null>(null);
 
-  const inputProps = {
-    inputStyle: 'outline',
-    labelStyle: 'stacked',
-    placeholder: 'Please select...',
-  };
-
-  const setBoston = React.useCallback(() => {
-    setCustomSelected('bos');
-  }, []);
-
-  const setLondon = React.useCallback(() => {
-    setCustomSelected('lon');
-  }, []);
-
-  const customButtons = React.useMemo(
+  const customButtons = useMemo<(string | MbscPopupButton)[]>(
     () => [
       {
         text: 'Custom',
         handler: () => {
-          selectRef.current.setTempVal('chi');
+          selectRef.current!.setTempVal('chi');
         },
       },
       'set',
@@ -60,8 +46,26 @@ const App: React.FC = () => {
     ],
     [],
   );
+
+  const inputProps = useMemo(
+    () => ({
+      inputStyle: 'outline',
+      labelStyle: 'stacked',
+      placeholder: 'Please select...',
+    }),
+    [],
+  );
+
+  const setBoston = useCallback(() => {
+    setCustomSelected('bos');
+  }, []);
+
+  const setLondon = useCallback(() => {
+    setCustomSelected('lon');
+  }, []);
+
   return (
-    <Page>
+    <>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Controlling the default value</div>
         <Select data={myData} label="Default" inputProps={inputProps} />
@@ -80,7 +84,7 @@ const App: React.FC = () => {
         <Select data={myData} ref={selectRef} label="Custom" inputProps={inputProps} buttons={customButtons} />
         <Select data={myData} label="Auto set" inputProps={inputProps} buttons={['cancel']} />
       </div>
-    </Page>
+    </>
   );
 };
 export default App;

@@ -79,19 +79,22 @@ const App: FC = () => {
     setFilteredEvents(evs);
   }, []);
 
-  const filter = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
-    const value = ev.target.value;
-    const checked = ev.target.checked;
+  const filter = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
+      const value = ev.target.value;
+      const checked = ev.target.checked;
 
-    selected[value] = checked;
+      selected[value] = checked;
 
-    setSelected(selected);
+      setSelected(selected);
 
-    filterEvents(events, selected);
+      filterEvents(events, selected);
 
-    setToastText((checked ? 'Showing ' : 'Hiding ') + document.querySelector('.md-header-filter-name-' + value)!.textContent + ' events');
-    setToastOpen(true);
-  }, []);
+      setToastText((checked ? 'Showing ' : 'Hiding ') + document.querySelector('.md-header-filter-name-' + value)!.textContent + ' events');
+      setToastOpen(true);
+    },
+    [events, filterEvents, selected],
+  );
 
   const customWithNavButtons = useCallback(
     () => (

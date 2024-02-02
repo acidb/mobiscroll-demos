@@ -1,8 +1,8 @@
 import {
   Eventcalendar,
   MbscCalendarEvent,
-  MbscEventConnection,
   MbscEventcalendarView,
+  MbscEventConnection,
   MbscResource,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';

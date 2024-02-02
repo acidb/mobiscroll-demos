@@ -1,4 +1,4 @@
-import { Datepicker, Button, Page, setOptions /* localeImport */, MbscPopupButton } from '@mobiscroll/react';
+import { Button, Datepicker, MbscPopupButton, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({

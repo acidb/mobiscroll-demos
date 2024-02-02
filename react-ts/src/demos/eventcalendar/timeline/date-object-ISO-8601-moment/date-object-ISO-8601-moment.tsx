@@ -1,11 +1,11 @@
 import {
-  Eventcalendar,
-  Page,
   Button,
-  MbscEventcalendarView,
-  setOptions /* localeImport */,
-  MbscResource,
+  Eventcalendar,
   MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscResource,
+  Page,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import moment from 'moment';
 import { FC, useCallback, useMemo, useState } from 'react';

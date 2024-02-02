@@ -67,7 +67,7 @@ function App() {
     [],
   );
 
-  const onChange = useCallback((ev) => {
+  const handleOnChange = useCallback((ev) => {
     setValue(ev.value);
   }, []);
 
@@ -82,7 +82,7 @@ function App() {
       placeholder="Please select..."
       selectMultiple={true}
       value={myValue}
-      onChange={onChange}
+      onChange={handleOnChange}
       renderItem={renderCustomItem}
     />
   );

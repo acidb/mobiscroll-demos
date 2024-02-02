@@ -1,5 +1,5 @@
-import { Select, Page, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { getJson, MbscSelectData, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useEffect, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -45,34 +45,26 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
-  const [remoteData, setRemoteData] = React.useState<any>([]);
+const App: FC = () => {
+  const [remoteData, setRemoteData] = useState<(string | number | MbscSelectData)[]>([]);
 
-  const inputProps = {
-    inputStyle: 'box',
-    labelStyle: 'stacked',
-    placeholder: 'Please select...',
-  };
-
-  React.useEffect(() => {
-    getJson('https://trial.mobiscroll.com/content/languages.json', (resp: any) => {
+  useEffect(() => {
+    getJson('https://trial.mobiscroll.com/content/languages.json', (resp) => {
       setRemoteData(resp);
     });
   }, []);
 
   return (
-    <Page>
-      <div className="mbsc-grid mbsc-form-grid">
-        <div className="mbsc-row">
-          <div className="mbsc-col-sm-12 mbsc-col-md-6">
-            <Select data={myData} label="Data object" inputProps={inputProps} />
-          </div>
-          <div className="mbsc-col-sm-12 mbsc-col-md-6">
-            <Select data={remoteData} label="Remote data" inputProps={inputProps} />
-          </div>
+    <div className="mbsc-grid mbsc-form-grid">
+      <div className="mbsc-row">
+        <div className="mbsc-col-sm-12 mbsc-col-md-6">
+          <Select data={myData} inputStyle="outline" label="Data object" labelStyle="stacked" />
+        </div>
+        <div className="mbsc-col-sm-12 mbsc-col-md-6">
+          <Select data={remoteData} inputStyle="outline" label="Remote data" labelStyle="stacked" />
         </div>
       </div>
-    </Page>
+    </div>
   );
 };
 export default App;

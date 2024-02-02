@@ -1,5 +1,4 @@
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Select, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -47,18 +46,14 @@ const myData = [
 
 function App() {
   return (
-    <Page>
-      <Select
-        data={myData}
-        multiple={true}
-        label="Multi-select"
-        inputProps={{
-          inputStyle: 'box',
-          labelStyle: 'stacked',
-          placeholder: 'Please select...',
-        }}
-      />
-    </Page>
+    <Select
+      data={myData}
+      selectMultiple={true}
+      label="Multi-select"
+      inputStyle="outline"
+      labelStyle="stacked"
+      placeholder="Please select..."
+    />
   );
 }
 

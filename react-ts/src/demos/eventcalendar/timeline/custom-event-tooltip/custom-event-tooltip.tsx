@@ -564,7 +564,7 @@ function App() {
   const viewFile = useCallback(() => {
     setOpen(false);
     showToast('View file');
-  }, []);
+  }, [showToast]);
 
   const deleteApp = useCallback(() => {
     setAppointments(appointments.filter((item: MbscCalendarEvent) => item.id !== currentEvent!.id));

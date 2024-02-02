@@ -67,19 +67,16 @@ const App: FC = () => {
     setToastOpen(false);
   }, []);
 
-  const filterEvents = useCallback(
-    (events: MbscCalendarEvent, selected: { [key: number | string]: boolean }) => {
-      const evs = [];
-      for (let i = 0; i < events.length; ++i) {
-        const item = events[i];
-        if (selected[item.resource]) {
-          evs.push(item);
-        }
+  const filterEvents = useCallback((events: MbscCalendarEvent, selected: { [key: number | string]: boolean }) => {
+    const evs = [];
+    for (let i = 0; i < events.length; ++i) {
+      const item = events[i];
+      if (selected[item.resource]) {
+        evs.push(item);
       }
-      setFilteredEvents(evs);
-    },
-    [myResources],
-  );
+    }
+    setFilteredEvents(evs);
+  }, []);
 
   useEffect(() => {
     getJson(

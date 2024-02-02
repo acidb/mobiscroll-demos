@@ -22,7 +22,7 @@ const App: FC = () => {
   const [allDay, setAllDay] = useState<boolean>(false);
   const [showAs, setShowAs] = useState<string>('busy');
 
-  const controls = useMemo<MbscDatepickerControl[]>(() => (allDay ? ['date'] : ['datetime']), []);
+  const controls = useMemo<MbscDatepickerControl[]>(() => (allDay ? ['date'] : ['datetime']), [allDay]);
 
   const controlChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setAllDay(ev.target.checked);

@@ -1,5 +1,5 @@
-import { Select, Page, setOptions, getJson /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { getJson, MbscSelectData, MbscSelectItemData, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import './country-picker.css';
 
 setOptions({
@@ -7,37 +7,36 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myData, setMyData] = React.useState([]);
+const App: FC = () => {
+  const [myData, setMyData] = useState<(string | number | MbscSelectData)[]>([]);
 
-  const inputProps = {
-    inputStyle: 'box',
-    labelStyle: 'stacked',
-    placeholder: 'Please select...',
-  };
+  const renderCustomItem = useCallback(
+    (item: MbscSelectItemData) => (
+      <div className="md-country-picker-item">
+        <img className="md-country-picker-flag" src={'https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png'} alt="Flag" />
+        {item.display}
+      </div>
+    ),
+    [],
+  );
 
-  React.useEffect(() => {
-    getJson('https://trial.mobiscroll.com/content/countries.json', (resp: any) => {
-      const countries: any = [];
-      for (let i = 0; i < resp.length; ++i) {
-        const country = resp[i];
-        countries.push({ text: country.text, value: country.value });
-      }
-      setMyData(countries);
+  useEffect(() => {
+    getJson('https://trial.mobiscroll.com/content/countries.json', (resp) => {
+      setMyData(resp.map((country: { text: string; value: string }) => ({ text: country.text, value: country.value })));
     });
   }, []);
 
-  const renderCustomItem = (item: any) => (
-    <div className="md-country-picker-item">
-      <img className="md-country-picker-flag" src={'https://img.mobiscroll.com/demos/flags/' + item.data.value + '.png'} alt="Flag" />
-      {item.display}
-    </div>
-  );
-
   return (
-    <Page>
-      <Select data={myData} label="Countries" inputProps={inputProps} display="anchored" itemHeight={40} renderItem={renderCustomItem} />
-    </Page>
+    <Select
+      data={myData}
+      display="anchored"
+      inputStyle="outline"
+      itemHeight={40}
+      label="Countries"
+      labelStyle="stacked"
+      placeholder="Please select..."
+      renderItem={renderCustomItem}
+    />
   );
 };
 export default App;

@@ -61,32 +61,35 @@ const App: FC = () => {
     }
   };
 
-  const add = (ev: ChangeEvent<HTMLInputElement>, data: MbscCalendarEvent) => {
+  const add = useCallback((ev: ChangeEvent<HTMLInputElement>, data: MbscCalendarEvent) => {
     ev.stopPropagation();
     setToastText(getParticipant(data.participant).name + "'s event clicked");
     setToastOpen(true);
-  };
-
-  const customEventContent = useCallback((data: MbscCalendarEventData) => {
-    const original = data.original!;
-    return (
-      <>
-        <div>{data.title}</div>
-        <div className="md-custom-event-cont">
-          <img className="md-custom-event-img" src={getParticipant(original.participant).img} />
-          <div className="mbsc-custom-event-name">{getParticipant(original.participant).name}</div>
-          <Button
-            className="md-custom-event-btn"
-            color="primary"
-            variant="outline"
-            onClick={(domEvent: ChangeEvent<HTMLInputElement>) => add(domEvent, original)}
-          >
-            Add participant
-          </Button>
-        </div>
-      </>
-    );
   }, []);
+
+  const customEventContent = useCallback(
+    (data: MbscCalendarEventData) => {
+      const original = data.original!;
+      return (
+        <>
+          <div>{data.title}</div>
+          <div className="md-custom-event-cont">
+            <img className="md-custom-event-img" src={getParticipant(original.participant).img} />
+            <div className="mbsc-custom-event-name">{getParticipant(original.participant).name}</div>
+            <Button
+              className="md-custom-event-btn"
+              color="primary"
+              variant="outline"
+              onClick={(domEvent: ChangeEvent<HTMLInputElement>) => add(domEvent, original)}
+            >
+              Add participant
+            </Button>
+          </div>
+        </>
+      );
+    },
+    [add],
+  );
 
   useEffect(() => {
     getJson(

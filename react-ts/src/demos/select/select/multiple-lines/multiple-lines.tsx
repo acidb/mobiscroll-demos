@@ -1,5 +1,5 @@
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { MbscSelectItemData, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback } from 'react';
 import './multiple-lines.css';
 
 setOptions({
@@ -66,23 +66,27 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
-  const inputProps = {
-    inputStyle: 'box',
-    labelStyle: 'stacked',
-    placeholder: 'Please select...',
-  };
-
-  const renderCustomItem = (item: any) => (
-    <div className="md-multiple-lines-item">
-      <span className="md-multiple-lines-text">{item.display}</span>
-    </div>
+const App: FC = () => {
+  const renderCustomItem = useCallback(
+    (item: MbscSelectItemData) => (
+      <div className="md-multiple-lines-item">
+        <span className="md-multiple-lines-text">{item.display}</span>
+      </div>
+    ),
+    [],
   );
 
   return (
-    <Page>
-      <Select data={myData} label="Multiline" inputProps={inputProps} display="anchored" itemHeight={60} renderItem={renderCustomItem} />
-    </Page>
+    <Select
+      data={myData}
+      display="anchored"
+      label="Multiline"
+      labelStyle="stacked"
+      inputStyle="outline"
+      itemHeight={60}
+      placeholder="Please select..."
+      renderItem={renderCustomItem}
+    />
   );
 };
 export default App;

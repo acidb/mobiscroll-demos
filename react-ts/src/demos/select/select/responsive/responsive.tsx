@@ -1,5 +1,5 @@
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -45,9 +45,9 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
-  const [responsive] = React.useState<any>([
-    {
+const App: FC = () => {
+  const myResponsive = useMemo(
+    () => ({
       xsmall: {
         display: 'bottom',
       },
@@ -60,13 +60,19 @@ const App: React.FC = () => {
         display: 'anchored',
         touchUi: false,
       },
-    },
-  ]);
+    }),
+    [],
+  );
 
   return (
-    <Page>
-      <Select data={myData} responsive={responsive} label="Select" labelStyle="stacked" inputStyle="box" placeholder="Please select..." />
-    </Page>
+    <Select
+      data={myData}
+      responsive={myResponsive}
+      label="Select"
+      labelStyle="stacked"
+      inputStyle="outline"
+      placeholder="Please select..."
+    />
   );
 };
 export default App;

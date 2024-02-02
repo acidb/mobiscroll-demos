@@ -212,27 +212,21 @@ const App: FC = () => {
     [calendarData, onError, primaryCalendarId],
   );
 
-  const onEventUpdate = useCallback(
-    (args: MbscEventUpdateEvent) => {
-      if (outlookCalendarSync.isSignedIn()) {
-        setConfirmEvent(args.event);
-        setConfirmOldEvent(args.oldEvent);
-        setUpdateConfirmOpen(true);
-      }
-    },
-    [calendarData, onError],
-  );
+  const onEventUpdate = useCallback((args: MbscEventUpdateEvent) => {
+    if (outlookCalendarSync.isSignedIn()) {
+      setConfirmEvent(args.event);
+      setConfirmOldEvent(args.oldEvent);
+      setUpdateConfirmOpen(true);
+    }
+  }, []);
 
-  const onEventDelete = useCallback(
-    (args: MbscEventDeleteEvent) => {
-      if (outlookCalendarSync.isSignedIn()) {
-        setConfirmEvent(args.event);
-        setUpdateConfirmOpen(true);
-      }
-      return false;
-    },
-    [calendarData, onError],
-  );
+  const onEventDelete = useCallback((args: MbscEventDeleteEvent) => {
+    if (outlookCalendarSync.isSignedIn()) {
+      setConfirmEvent(args.event);
+      setUpdateConfirmOpen(true);
+    }
+    return false;
+  }, []);
 
   const handleUpdateConfirmClose = useCallback(
     (result: boolean) => {

@@ -1,6 +1,6 @@
 import { Button, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './mobile-desktop-usage.css';
 import { useCallback, useMemo, useState } from 'react';
+import './mobile-desktop-usage.css';
 
 setOptions({
   // localeJs,

@@ -1,5 +1,5 @@
 import { Select, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
@@ -47,5 +47,5 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => <Select data={myData} display="inline" />;
+const App: FC = () => <Select data={myData} display="inline" />;
 export default App;

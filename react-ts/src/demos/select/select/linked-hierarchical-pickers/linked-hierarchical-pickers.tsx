@@ -1,18 +1,18 @@
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { MbscSelectChangeEvent, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const regions = [
+const regions: Array<{ value: string; text: string }> = [
   { value: 'reg-1', text: 'Northeast' },
   { value: 'reg-2', text: 'Midwest' },
   { value: 'reg-3', text: 'South' },
   { value: 'reg-4', text: 'West' },
 ];
-const divisions = {
+const divisions: { [key: string]: Array<{ value: string; text: string }> } = {
   'reg-1': [
     { value: 'div-1', text: 'New England' },
     { value: 'div-2', text: 'Mid-Atlantic' },
@@ -31,7 +31,7 @@ const divisions = {
     { value: 'div-9', text: 'Pacific' },
   ],
 };
-const subdivisions = {
+const subdivisions: { [key: string]: Array<{ value: string; text: string }> } = {
   'div-1': [
     { value: 'sub-1', text: 'Connecticut' },
     { value: 'sub-2', text: 'Maine' },
@@ -103,19 +103,13 @@ const subdivisions = {
   ],
 };
 
-const App: React.FC = () => {
-  const [divDisabled, setDivDisabled] = React.useState(true);
-  const [subDisabled, setSubDisabled] = React.useState(true);
-  const [divData, setDivData] = React.useState([]);
-  const [subData, setSubData] = React.useState([]);
+const App: FC = () => {
+  const [divDisabled, setDivDisabled] = useState<boolean>(true);
+  const [subDisabled, setSubDisabled] = useState<boolean>(true);
+  const [divData, setDivData] = useState<Array<{ value: string; text: string }>>([]);
+  const [subData, setSubData] = useState<Array<{ value: string; text: string }>>([]);
 
-  const inputProps = {
-    inputStyle: 'box',
-    labelStyle: 'stacked',
-    placeholder: 'Please select...',
-  };
-
-  const getData = React.useCallback((region, division) => {
+  const getData = useCallback((region: string | null, division: string | null) => {
     let arr = [];
 
     if (division) {
@@ -129,8 +123,8 @@ const App: React.FC = () => {
     return arr;
   }, []);
 
-  const regChange = React.useCallback(
-    (event) => {
+  const regChange = useCallback(
+    (event: MbscSelectChangeEvent) => {
       setDivData(getData(event.value, null));
       setDivDisabled(false);
       setSubDisabled(true);
@@ -138,8 +132,8 @@ const App: React.FC = () => {
     [getData],
   );
 
-  const divChange = React.useCallback(
-    (event) => {
+  const divChange = useCallback(
+    (event: MbscSelectChangeEvent) => {
       const val = event.value;
       if (val) {
         setSubData(getData(null, event.value));
@@ -153,19 +147,24 @@ const App: React.FC = () => {
   );
 
   return (
-    <Page>
-      <div className="mbsc-grid mbsc-grid-fixed mbsc-no-padding">
-        <div className="mbsc-row">
-          <div className="mbsc-col-sm-12">
-            <div className="mbsc-form-group-inset">
-              <Select data={getData(null, null)} touchUi={false} label="Region" inputProps={inputProps} onChange={regChange} />
-              <Select data={divData} touchUi={false} disabled={divDisabled} label="Division" inputProps={inputProps} onChange={divChange} />
-              <Select data={subData} touchUi={false} disabled={subDisabled} label="Subivision" inputProps={inputProps} />
-            </div>
+    <div className="mbsc-grid mbsc-grid-fixed mbsc-no-padding">
+      <div className="mbsc-row">
+        <div className="mbsc-col-sm-12">
+          <div className="mbsc-form-group-inset">
+            <Select data={getData(null, null)} touchUi={false} label="Region" placeholder="Please select..." onChange={regChange} />
+            <Select
+              data={divData}
+              touchUi={false}
+              disabled={divDisabled}
+              label="Division"
+              placeholder="Please select..."
+              onChange={divChange}
+            />
+            <Select data={subData} touchUi={false} disabled={subDisabled} label="Subivision" placeholder="Please select..." />
           </div>
         </div>
       </div>
-    </Page>
+    </div>
   );
 };
 export default App;
