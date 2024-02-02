@@ -20,7 +20,7 @@ function App() {
               inputStyle="box"
               labelStyle="floating"
               type="password"
-              passwordToggle="true"
+              passwordToggle={true}
               placeholder="Set a password"
             />
           </div>

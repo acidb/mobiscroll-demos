@@ -1,12 +1,12 @@
 import { Switch, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <Page>
     <div className="mbsc-form-group">
       <div className="mbsc-form-group-title">Switch</div>

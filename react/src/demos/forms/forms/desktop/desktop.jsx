@@ -23,7 +23,7 @@ function App() {
                     type="password"
                     label="Password"
                     placeholder="Password"
-                    passwordToggle="true"
+                    passwordToggle={true}
                     inputStyle="box"
                     labelStyle="floating"
                   />

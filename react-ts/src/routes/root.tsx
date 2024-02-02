@@ -1599,21 +1599,6 @@ export default function Root() {
               </a>
             </li>
           </ul>
-
-          <h2>Alerts & Notifications</h2>
-
-          <ul>
-            <li>
-              <a className="app-link" href="/alerts-notifications/alert">
-                Alert
-              </a>
-            </li>
-            <li>
-              <a className="app-link" href="/alerts-notifications/notifications">
-                Notifications
-              </a>
-            </li>
-          </ul>
         </div>
       </Page>
     </>

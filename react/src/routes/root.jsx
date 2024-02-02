@@ -986,17 +986,6 @@ export default function Root() {
               <Link to="/forms/themes-ios-material-windows">Theming capabilities</Link>
             </li>
           </ul>
-
-          <h2>Alerts & Notifications</h2>
-
-          <ul>
-            <li>
-              <Link to="/alerts-notifications/alert">Alert</Link>
-            </li>
-            <li>
-              <Link to="/alerts-notifications/notifications">Notifications</Link>
-            </li>
-          </ul>
         </div>
       </Page>
     </>

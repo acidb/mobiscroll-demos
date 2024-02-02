@@ -1,12 +1,12 @@
-import { Input, Textarea, Datepicker, Dropdown, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Datepicker, Dropdown, Input, Page, setOptions, Textarea /* localeImport */ } from '@mobiscroll/react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
+const App: FC = () => {
   const props1 = { placeholder: 'Please Select...', label: 'Calendar' };
   const props2 = { placeholder: 'Please Select...', label: 'Date scroller' };
   return (
