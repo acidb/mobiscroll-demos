@@ -67,7 +67,7 @@ function App() {
         }
 
         setEvents(newEvents);
-        isToastOpen(true);
+        setToastOpen(true);
       },
       'jsonp',
     );
