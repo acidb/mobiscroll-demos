@@ -149,6 +149,7 @@ export default {
       <li><a class="app-link" href="/scheduler/disallow-past-event-creation">Disable past event creation</a></li>
       <li><a class="app-link" href="/scheduler/resource-filtering-in-header">Custom component in header</a></li>
       <li><a class="app-link" href="/scheduler/themes-ios-material-windows">Theming capabilities</a></li>
+      <li><a class="app-link" href="/scheduler/resource-background">Resource background and styling</a></li>
       <li><a class="app-link" href="/scheduler/gregorian-jalali-hijri">Calendar systems </a></li>
       <li><a class="app-link" href="/scheduler/event-hooks">Lifecycle events</a></li>
       <li><a class="app-link" href="/scheduler/localization">Localization</a></li>
@@ -220,6 +221,7 @@ export default {
       <li><a class="app-link" href="/timeline/disallow-past-event-creation">Disable past event creation</a></li>
       <li><a class="app-link" href="/timeline/event-bulk-actions-edit-delete-update">Multiple select & bulk operations</a></li>
       <li><a class="app-link" href="/timeline/themes-ios-material-windows">Theming capabilities</a></li>
+      <li><a class="app-link" href="/timeline/resource-background">Resource background and styling</a></li>
       <li><a class="app-link" href="/timeline/gregorian-jalali-hijri">Calendar systems </a></li>
       <li><a class="app-link" href="/timeline/event-hooks">Lifecycle events</a></li>
       <li><a class="app-link" href="/timeline/localization">Localization</a></li>

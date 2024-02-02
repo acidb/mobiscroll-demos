@@ -188,6 +188,7 @@ import SchedulerSwitchingCalendarSchedulerAgenda from './src/demos/eventcalendar
 import SchedulerSyncEventsGoogleCalendar from './src/demos/eventcalendar/scheduler/sync-events-google-calendar/sync-events-google-calendar';
 import SchedulerSyncEventsOutlookCalendar from './src/demos/eventcalendar/scheduler/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import SchedulerThemesIosMaterialWindows from './src/demos/eventcalendar/scheduler/themes-ios-material-windows/themes-ios-material-windows';
+import SchedulerResourceBackground from './src/demos/eventcalendar/scheduler/resource-background/resource-background';
 import SchedulerTimeOffBlockedRanges from './src/demos/eventcalendar/scheduler/time-off-blocked-ranges/time-off-blocked-ranges';
 import SchedulerWorkWeekHours from './src/demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
 import TimelineAssignUnassignWorkOrdersFixedTopRow from './src/demos/eventcalendar/timeline/assign-unassign-work-orders-fixed-top-row/assign-unassign-work-orders-fixed-top-row';
@@ -244,6 +245,7 @@ import TimelineSwitchingDayWeekWorkWeekTimeline from './src/demos/eventcalendar/
 import TimelineSyncEventsGoogleCalendar from './src/demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar';
 import TimelineSyncEventsOutlookCalendar from './src/demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import TimelineThemesIosMaterialWindows from './src/demos/eventcalendar/timeline/themes-ios-material-windows/themes-ios-material-windows';
+import TimelineResourceBackground from './src/demos/eventcalendar/timeline/resource-background/resource-background';
 import TimelineTimelineCustomEventRendering from './src/demos/eventcalendar/timeline/timeline-custom-event-rendering/timeline-custom-event-rendering';
 import TimelineTimelineResourceDetailsSidePanelFooter from './src/demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import TimelineTimelineResourceHeight from './src/demos/eventcalendar/timeline/timeline-resource-height/timeline-resource-height';
@@ -888,6 +890,9 @@ router
   .on('/scheduler/themes-ios-material-windows', function () {
     loadPage(SchedulerThemesIosMaterialWindows);
   })
+  .on('/scheduler/resource-background', function () {
+    loadPage(SchedulerResourceBackground);
+  })
   .on('/scheduler/recurring-events', function () {
     loadPage(SchedulerRecurringEvents);
   })
@@ -1190,6 +1195,9 @@ router
   })
   .on('/timeline/themes-ios-material-windows', function () {
     loadPage(TimelineThemesIosMaterialWindows);
+  })
+  .on('/timeline/resource-background', function () {
+    loadPage(TimelineResourceBackground);
   })
   .on('/timeline/gregorian-jalali-hijri', function () {
     loadPage(TimelineGregorianJalaliHijri);

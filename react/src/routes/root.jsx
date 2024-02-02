@@ -405,6 +405,9 @@ export default function Root() {
               <Link to="/scheduler/themes-ios-material-windows">Theming capabilities</Link>
             </li>
             <li>
+              <Link to="/scheduler/resource-background">Resource background</Link>
+            </li>
+            <li>
               <Link to="/scheduler/gregorian-jalali-hijri">Calendar systems </Link>
             </li>
             <li>
@@ -584,6 +587,9 @@ export default function Root() {
             </li>
             <li>
               <Link to="/timeline/themes-ios-material-windows">Theming capabilities</Link>
+            </li>
+            <li>
+              <Link to="/timeline/resource-background">Resource background</Link>
             </li>
             <li>
               <Link to="/timeline/gregorian-jalali-hijri">Calendar systems </Link>
