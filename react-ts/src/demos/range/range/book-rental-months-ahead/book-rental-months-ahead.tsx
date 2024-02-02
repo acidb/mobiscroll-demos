@@ -1,16 +1,16 @@
 import {
-  Datepicker,
-  CalendarPrev,
   CalendarNav,
   CalendarNext,
+  CalendarPrev,
   CalendarToday,
-  getJson,
+  Datepicker,
   formatDate,
-  MbscCalendarLabel,
+  getJson,
   MbscCalendarColor,
+  MbscCalendarLabel,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import './book-rental-months-ahead.css';
 
 setOptions({
@@ -20,13 +20,13 @@ setOptions({
 
 const now = new Date();
 
-const App: React.FC = () => {
-  const [labels, setLabels] = React.useState<MbscCalendarLabel>([]);
-  const [invalid, setInvalid] = React.useState<any>([]);
-  const [colors, setColors] = React.useState<MbscCalendarColor[]>([]);
+const App: FC = () => {
+  const [labels, setLabels] = useState<MbscCalendarLabel[]>([]);
+  const [invalid, setInvalid] = useState([]);
+  const [colors, setColors] = useState<MbscCalendarColor[]>([]);
 
-  const getColors = React.useCallback(
-    (start, end) => [
+  const getColors = useCallback(
+    (start: Date, end: Date) => [
       {
         date: start,
         cellCssClass: 'vacation-check-in',
@@ -45,8 +45,26 @@ const App: React.FC = () => {
     [],
   );
 
-  React.useEffect(() => {
-    const monthColors = [
+  const calendarHeader = useCallback(
+    () => (
+      <>
+        <CalendarNav />
+        <div className="md-book-rental-header">
+          <div className="md-book-rental-zone md-book-rental-pre">pre-season</div>
+          <div className="md-book-rental-zone md-book-rental-in">in-season</div>
+          <div className="md-book-rental-zone md-book-rental-off">off-season</div>
+          <div className="md-book-rental-zone md-book-rental-booked">booked</div>
+        </div>
+        <CalendarPrev />
+        <CalendarToday />
+        <CalendarNext />
+      </>
+    ),
+    [],
+  );
+
+  useEffect(() => {
+    const monthColors: MbscCalendarColor[] = [
       {
         background: '#b2f1c080',
         start: 'dyndatetime(y,1,1)',
@@ -192,17 +210,17 @@ const App: React.FC = () => {
 
     getJson(
       'https://trial.mobiscroll.com/getrentals/?year=' + now.getFullYear() + '&month=' + now.getMonth(),
-      (data: any) => {
+      (data) => {
         const prices = data.prices;
         const bookings = data.bookings;
-        const labels: any = [];
-        const invalids: any = [];
-        let colors: any = [];
+        const labels: Array<MbscCalendarLabel> = [];
+        const invalids: Array<object> = [];
+        let colors: Array<MbscCalendarColor> = [];
         let endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0);
 
         for (let i = 0; i < prices.length; ++i) {
           const price = prices[i];
-          const booked = bookings.find((b) => formatDate('YYYY-M-D', new Date(b.checkIn)) === price.date);
+          const booked = bookings.find((b: { checkIn: string }) => formatDate('YYYY-M-D', new Date(b.checkIn)) === price.date);
           if (booked) {
             const checkIn = new Date(booked.checkIn);
             const checkOut = new Date(booked.checkOut);
@@ -234,24 +252,6 @@ const App: React.FC = () => {
       'jsonp',
     );
   }, [getColors, invalid]);
-
-  const calendarHeader = React.useCallback(
-    () => (
-      <React.Fragment>
-        <CalendarNav />
-        <div className="md-book-rental-header">
-          <div className="md-book-rental-zone md-book-rental-pre">pre-season</div>
-          <div className="md-book-rental-zone md-book-rental-in">in-season</div>
-          <div className="md-book-rental-zone md-book-rental-off">off-season</div>
-          <div className="md-book-rental-zone md-book-rental-booked">booked</div>
-        </div>
-        <CalendarPrev />
-        <CalendarToday />
-        <CalendarNext />
-      </React.Fragment>
-    ),
-    [],
-  );
 
   return (
     <Datepicker

@@ -1,24 +1,37 @@
-import { Datepicker, Input, Switch, SegmentedGroup, SegmentedItem, Textarea, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Datepicker,
+  Input,
+  MbscDatepickerControl,
+  Page,
+  Segmented,
+  SegmentedGroup,
+  setOptions,
+  Switch,
+  Textarea /* localeImport */,
+} from '@mobiscroll/react';
+import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // langJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [start, setStart] = React.useState<any>(null);
-  const [end, setEnd] = React.useState<any>(null);
-  const [allDay, setAllDay] = React.useState<boolean>(false);
-  const [showAs, setShowAs] = React.useState<string>('busy');
+const App: FC = () => {
+  const [start, setStart] = useState<Input | null>(null);
+  const [end, setEnd] = useState<Input | null>(null);
+  const [allDay, setAllDay] = useState<boolean>(false);
+  const [showAs, setShowAs] = useState<string>('busy');
 
-  const controls = React.useMemo<any>(() => (allDay ? ['date'] : ['datetime']), []);
-  const controlChange = (ev: any) => {
+  const controls = useMemo<MbscDatepickerControl[]>(() => (allDay ? ['date'] : ['datetime']), []);
+
+  const controlChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setAllDay(ev.target.checked);
-  };
-  const showAsChange = (ev: any) => {
+  }, []);
+
+  const showAsChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setShowAs(ev.target.value);
-  };
+  }, []);
+
   return (
     <Page>
       <Input label="Title" placeholder="Name of the event" />
@@ -28,8 +41,8 @@ const App: React.FC = () => {
       <Input ref={setStart} label="Start" placeholder="Event start" />
       <Input ref={setEnd} label="End " placeholder="Event end" />
       <SegmentedGroup value={showAs} onChange={showAsChange}>
-        <SegmentedItem value="busy">Show as busy</SegmentedItem>
-        <SegmentedItem value="free">Show as free</SegmentedItem>
+        <Segmented value="busy">Show as busy</Segmented>
+        <Segmented value="free">Show as free</Segmented>
       </SegmentedGroup>
       <Textarea label="Notes" placeholder="Enter notes, URL, comments" />
     </Page>

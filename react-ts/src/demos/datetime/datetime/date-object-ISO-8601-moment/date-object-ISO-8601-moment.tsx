@@ -36,7 +36,7 @@ const App: FC = () => {
   }, []);
 
   const handleMomentChange = useCallback((ev: MbscDatepickerChangeEvent) => {
-    setMomentObj(moment(ev.value as string));
+    setMomentObj(ev.value as object);
   }, []);
 
   return (

@@ -1,34 +1,37 @@
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useMemo } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [responsive] = React.useState([
-    {
-      xsmall: {
-        display: 'bottom',
+const App: FC = () => {
+  const myResponsive = useMemo(
+    () => [
+      {
+        xsmall: {
+          display: 'bottom',
+        },
+        small: {
+          display: 'anchored',
+        },
+        custom: {
+          // Custom breakpoint
+          breakpoint: 800,
+          display: 'anchored',
+          touchUi: false,
+        },
       },
-      small: {
-        display: 'anchored',
-      },
-      custom: {
-        // Custom breakpoint
-        breakpoint: 800,
-        display: 'anchored',
-        touchUi: false,
-      },
-    },
-  ]);
+    ],
+    [],
+  );
 
   return (
     <Page>
       <Datepicker
         controls={['calendar']}
-        responsive={responsive}
+        responsive={myResponsive}
         select="range"
         showRangeLabels={true}
         inputOptions={{

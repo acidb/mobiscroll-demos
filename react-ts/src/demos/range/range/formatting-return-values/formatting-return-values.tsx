@@ -1,63 +1,63 @@
-import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Datepicker, MbscDatepickerChangeEvent, MbscDateType, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const currentWeek: any = ['dyndatetime(y,m,d)', 'dyndatetime(y,m,d+6)'];
-const currentTime: any = ['dyndatetime(y,m,d,h)', 'dyndatetime(y,m,d,h+2)'];
+const currentWeek = ['dyndatetime(y,m,d)', 'dyndatetime(y,m,d+6)'];
+const currentTime = ['dyndatetime(y,m,d,h)', 'dyndatetime(y,m,d,h+2)'];
 
 function App() {
-  const [rangeValue, setRangeValue] = React.useState<any>(currentWeek);
-  const [separatorValue, setSeparatorValue] = React.useState<any>(currentWeek);
-  const [monthValue, setMonthValue] = React.useState<any>(currentWeek);
-  const [dayValue, setDayValue] = React.useState<any>(currentWeek);
-  const [atomValue, setAtomValue] = React.useState<any>(currentWeek);
-  const [cookieValue, setCookieValue] = React.useState<any>(currentWeek);
-  const [timeValue, setTimeValue] = React.useState<any>(currentTime);
-  const [h12Value, setH12Value] = React.useState<any>(currentTime);
-  const [h24Value, setH24Value] = React.useState<any>(currentTime);
-  const [hmsValue, setHmsValue] = React.useState<any>(currentTime);
-  const [dateTimeValue, setDateTimeValue] = React.useState<any>(currentTime);
-  const [dayNameValue, setDayNameValue] = React.useState<any>(currentTime);
+  const [rangeValue, setRangeValue] = useState<MbscDateType[]>(currentWeek);
+  const [separatorValue, setSeparatorValue] = useState<MbscDateType[]>(currentWeek);
+  const [monthValue, setMonthValue] = useState<MbscDateType[]>(currentWeek);
+  const [dayValue, setDayValue] = useState<MbscDateType[]>(currentWeek);
+  const [atomValue, setAtomValue] = useState<MbscDateType[]>(currentWeek);
+  const [cookieValue, setCookieValue] = useState<MbscDateType[]>(currentWeek);
+  const [timeValue, setTimeValue] = useState<MbscDateType[]>(currentTime);
+  const [h12Value, setH12Value] = useState<MbscDateType[]>(currentTime);
+  const [h24Value, setH24Value] = useState<MbscDateType[]>(currentTime);
+  const [hmsValue, setHmsValue] = useState<MbscDateType[]>(currentTime);
+  const [dateTimeValue, setDateTimeValue] = useState<MbscDateType[]>(currentTime);
+  const [dayNameValue, setDayNameValue] = useState<MbscDateType[]>(currentTime);
 
-  const changeRange = React.useCallback((args: any) => {
-    setRangeValue(args.value);
+  const changeRange = useCallback((args: MbscDatepickerChangeEvent) => {
+    setRangeValue(args.value as MbscDateType[]);
   }, []);
-  const changeSeparator = React.useCallback((args: any) => {
-    setSeparatorValue(args.value);
+  const changeSeparator = useCallback((args: MbscDatepickerChangeEvent) => {
+    setSeparatorValue(args.value as MbscDateType[]);
   }, []);
-  const changeMonth = React.useCallback((args: any) => {
-    setMonthValue(args.value);
+  const changeMonth = useCallback((args: MbscDatepickerChangeEvent) => {
+    setMonthValue(args.value as MbscDateType[]);
   }, []);
-  const changeDay = React.useCallback((args: any) => {
-    setDayValue(args.value);
+  const changeDay = useCallback((args: MbscDatepickerChangeEvent) => {
+    setDayValue(args.value as MbscDateType[]);
   }, []);
-  const changeAtom = React.useCallback((args: any) => {
-    setAtomValue(args.value);
+  const changeAtom = useCallback((args: MbscDatepickerChangeEvent) => {
+    setAtomValue(args.value as MbscDateType[]);
   }, []);
-  const changeCookie = React.useCallback((args: any) => {
-    setCookieValue(args.value);
+  const changeCookie = useCallback((args: MbscDatepickerChangeEvent) => {
+    setCookieValue(args.value as MbscDateType[]);
   }, []);
-  const changeTime = React.useCallback((args: any) => {
-    setTimeValue(args.value);
+  const changeTime = useCallback((args: MbscDatepickerChangeEvent) => {
+    setTimeValue(args.value as MbscDateType[]);
   }, []);
-  const changeH12 = React.useCallback((args: any) => {
-    setH12Value(args.value);
+  const changeH12 = useCallback((args: MbscDatepickerChangeEvent) => {
+    setH12Value(args.value as MbscDateType[]);
   }, []);
-  const changeH24 = React.useCallback((args: any) => {
-    setH24Value(args.value);
+  const changeH24 = useCallback((args: MbscDatepickerChangeEvent) => {
+    setH24Value(args.value as MbscDateType[]);
   }, []);
-  const changeHms = React.useCallback((args: any) => {
-    setHmsValue(args.value);
+  const changeHms = useCallback((args: MbscDatepickerChangeEvent) => {
+    setHmsValue(args.value as MbscDateType[]);
   }, []);
-  const changeDateTime = React.useCallback((args: any) => {
-    setDateTimeValue(args.value);
+  const changeDateTime = useCallback((args: MbscDatepickerChangeEvent) => {
+    setDateTimeValue(args.value as MbscDateType[]);
   }, []);
-  const changeDayName = React.useCallback((args: any) => {
-    setDayNameValue(args.value);
+  const changeDayName = useCallback((args: MbscDatepickerChangeEvent) => {
+    setDayNameValue(args.value as MbscDateType[]);
   }, []);
   return (
     <Page>
