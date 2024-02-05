@@ -32,7 +32,7 @@ export default {
           '<div mbsc-calendar-nav></div>' +
           '<div class="mds-search-bar mbsc-flex-1-0">' +
           '<label>' +
-          '<input id="demo-search-input" mbsc-input data-start-icon="material-search" data-input-style="box" placeholder="Search events" />' +
+          '<input id="demo-search-input" mbsc-input autocomplete="off" data-start-icon="material-search" data-input-style="box" placeholder="Search events" />' +
           '</label>' +
           '</div>' +
           '<button mbsc-calendar-prev></button>' +
