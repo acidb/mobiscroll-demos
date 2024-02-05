@@ -653,6 +653,11 @@ export default function Root() {
               </a>
             </li>
             <li>
+              <a className="app-link" href="/scheduler/resource-background">
+                Resource background
+              </a>
+            </li>
+            <li>
               <a className="app-link" href="/scheduler/gregorian-jalali-hijri">
                 Calendar systems{' '}
               </a>
@@ -945,6 +950,11 @@ export default function Root() {
             <li>
               <a className="app-link" href="/timeline/themes-ios-material-windows">
                 Theming capabilities
+              </a>
+            </li>
+            <li>
+              <a className="app-link" href="/timeline/resource-background">
+                Resource background
               </a>
             </li>
             <li>

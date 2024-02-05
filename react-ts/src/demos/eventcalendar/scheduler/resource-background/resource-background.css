@@ -1,0 +1,15 @@
+.md-diff-custom-bg.mbsc-schedule-header-item,
+.md-diff-custom-bg.mbsc-schedule-resource {
+  background: rgba(75, 145, 216, 0.4)
+}
+.md-diff-custom-bg.mbsc-schedule-column {
+  background: rgba(216, 75, 120, 0.4)
+}
+
+.md-diff-custom-bg.mbsc-schedule-all-day-item {
+  background: rgba(120, 216, 75, 0.4)
+}
+
+.md-pattern-custom-bg {
+  background: repeating-linear-gradient(-45deg, #fcfffc, #fcfffc 10px, #eefbec 10px, #eefbec 20px);
+}

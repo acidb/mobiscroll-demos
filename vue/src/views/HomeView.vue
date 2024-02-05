@@ -740,6 +740,9 @@ import { RouterLink } from 'vue-router'
           <RouterLink to="/timeline/themes-ios-material-windows">Theming capabilities</RouterLink>
         </li>
         <li>
+          <RouterLink to="/timeline/resource-background">Resource background</RouterLink>
+        </li>
+        <li>
           <RouterLink to="/timeline/gregorian-jalali-hijri">Calendar systems </RouterLink>
         </li>
         <li>

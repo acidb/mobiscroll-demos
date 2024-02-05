@@ -182,6 +182,7 @@ import SchedulerSwitchingCalendarSchedulerAgenda from '../demos/eventcalendar/sc
 import SchedulerSyncEventsGoogleCalendar from '../demos/eventcalendar/scheduler/sync-events-google-calendar/sync-events-google-calendar.vue'
 import SchedulerSyncEventsOutlookCalendar from '../demos/eventcalendar/scheduler/sync-events-outlook-calendar/sync-events-outlook-calendar.vue'
 import SchedulerThemesIosMaterialWindows from '../demos/eventcalendar/scheduler/themes-ios-material-windows/themes-ios-material-windows.vue'
+import SchedulerResourceBackground from '../demos/eventcalendar/scheduler/resource-background/resource-background.vue'
 import SchedulerTimeOffBlockedRanges from '../demos/eventcalendar/scheduler/time-off-blocked-ranges/time-off-blocked-ranges.vue'
 import SchedulerWorkWeekHours from '../demos/eventcalendar/scheduler/work-week-hours/work-week-hours.vue'
 import TimelineAssignUnassignWorkOrdersFixedTopRow from '../demos/eventcalendar/timeline/assign-unassign-work-orders-fixed-top-row/assign-unassign-work-orders-fixed-top-row.vue'
@@ -238,6 +239,7 @@ import TimelineSwitchingDayWeekWorkWeekTimeline from '../demos/eventcalendar/tim
 import TimelineSyncEventsGoogleCalendar from '../demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar.vue'
 import TimelineSyncEventsOutlookCalendar from '../demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar.vue'
 import TimelineThemesIosMaterialWindows from '../demos/eventcalendar/timeline/themes-ios-material-windows/themes-ios-material-windows.vue'
+import TimelineResourceBackground from '../demos/eventcalendar/timeline/resource-background/resource-background.vue'
 import TimelineTimelineCustomEventRendering from '../demos/eventcalendar/timeline/timeline-custom-event-rendering/timeline-custom-event-rendering.vue'
 import TimelineTimelineResourceDetailsSidePanelFooter from '../demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer.vue'
 import TimelineTimelineResourceHeight from '../demos/eventcalendar/timeline/timeline-resource-height/timeline-resource-height.vue'
@@ -1422,6 +1424,11 @@ const router = createRouter({
       component: SchedulerThemesIosMaterialWindows
     },
     {
+      path: '/scheduler/resource-background',
+      name: 'scheduler/resource-background',
+      component: SchedulerResourceBackground
+    },
+    {
       path: '/scheduler/gregorian-jalali-hijri',
       name: 'scheduler/gregorian-jalali-hijri',
       component: SchedulerGregorianJalaliHijri
@@ -1855,6 +1862,11 @@ const router = createRouter({
       path: '/timeline/themes-ios-material-windows',
       name: 'timeline/themes-ios-material-windows',
       component: TimelineThemesIosMaterialWindows
+    },
+    {
+      path: '/timeline/resource-background',
+      name: 'timeline/resource-background',
+      component: TimelineResourceBackground
     },
     {
       path: '/timeline/gregorian-jalali-hijri',
