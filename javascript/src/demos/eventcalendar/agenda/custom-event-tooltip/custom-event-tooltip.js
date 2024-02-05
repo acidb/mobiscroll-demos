@@ -541,20 +541,25 @@ export default {
   markup: `
 <div id="demo-tooltip-calendar"></div>
 <div id="demo-tooltip-popup" class="mds-tooltip mds-popup">
-    <div id="demo-tooltip-header" class="mds-tooltip-header">
-        <span id="demo-tooltip-info"></span>
-        <span id="demo-tooltip-time" class="mbsc-pull-right"></span>
+  <div id="demo-tooltip-header" class="mds-tooltip-header">
+    <span id="demo-tooltip-info"></span>
+    <span id="demo-tooltip-time" class="mbsc-pull-right"></span>
+  </div>
+  <div class="mbsc-padding">
+    <div class="mds-tooltip-label mbsc-margin">
+      Status: <span id="demo-tooltip-status" class="mbsc-light"></span>
+      <button id="demo-tooltip-status-update" mbsc-button data-color="warning" data-variant="outline" class="mds-tooltip-button mbsc-pull-right">
+      </button>
     </div>
-    <div class="mbsc-padding">
-        <div class="mds-tooltip-label mbsc-margin">
-            Status: <span id="demo-tooltip-status" class="mbsc-light"></span>
-            <button id="demo-tooltip-status-update" mbsc-button data-color="warning" data-variant="outline" class="mds-tooltip-button mbsc-pull-right"></button>
-        </div>
-        <div class="mds-tooltip-label mbsc-margin">Reason for visit: <span id="demo-tooltip-reason" class="mbsc-light"></span></div>
-        <div class="mds-tooltip-label mbsc-margin">Location: <span id="demo-tooltip-location" class="mbsc-light"></span></div>
-        <button id="demo-tooltip-view" mbsc-button data-color="secondary" class="mds-tooltip-button">View patient file</button>
-        <button id="demo-tooltip-delete" mbsc-button data-color="danger" data-variant="outline" class="mds-tooltip-button mbsc-pull-right">Delete appointment</button>
-    </div>
+    <div class="mds-tooltip-label mbsc-margin">Reason for visit: <span id="demo-tooltip-reason" class="mbsc-light"></span></div>
+    <div class="mds-tooltip-label mbsc-margin">Location: <span id="demo-tooltip-location" class="mbsc-light"></span></div>
+    <button id="demo-tooltip-view" mbsc-button data-color="secondary" class="mds-tooltip-button">
+      View patient file
+    </button>
+    <button id="demo-tooltip-delete" mbsc-button data-color="danger" data-variant="outline" class="mds-tooltip-button mbsc-pull-right">
+      Delete appointment
+    </button>
+  </div>
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals

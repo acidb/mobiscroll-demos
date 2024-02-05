@@ -1,7 +1,6 @@
 html,
 body,
-#root,
-.main-page {
+#root {
   height: 100%;
   margin: 0;
 }

@@ -14,9 +14,7 @@ export default {
 
     mobiscroll.eventcalendar('#demo-custom-event-sort', {
       view: {
-        agenda: {
-          type: 'week',
-        },
+        agenda: { type: 'week' },
       },
       eventOrder: function (event) {
         return event.accepted ? 1 : -1;
