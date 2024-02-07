@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
         case 'day':
           this.myView = { schedule: { type: 'day' } };
           break;
-        case 'myView':
+        case 'agenda':
         default:
           this.myView = {
             calendar: { type: 'week' },

@@ -59,12 +59,13 @@ export class AppComponent implements OnInit {
     onEventDelete: () => {
       if (!this.confirmOpen) {
         this.deleteSelectedEvents();
+        return false;
       }
-      return false;
+      return true;
     },
     onEventRightClick: (args) => {
-      this.selectedEvent = args.event;
       args.domEvent.preventDefault();
+      this.selectedEvent = args.event;
       this.menuAnchor = args.domEvent.target;
       setTimeout(() => {
         this.menu.open();
@@ -168,7 +169,7 @@ export class AppComponent implements OnInit {
   selectAllEvents(): void {
     this.selectedEvents = this.calendar.getEvents();
     this.notify.toast({
-      message: 'All events selected this month',
+      message: 'All events selected from view',
     });
   }
 

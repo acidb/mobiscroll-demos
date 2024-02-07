@@ -120,8 +120,8 @@ export default {
         }
       },
       onEventRightClick: function (args) {
-        selectedEvent = args.event;
         args.domEvent.preventDefault();
+        selectedEvent = args.event;
         menu.setOptions({
           anchor: args.domEvent.target,
         });
