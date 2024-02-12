@@ -293,7 +293,7 @@ export default {
   right: 0;
   color:#000;
   padding: 7px 4px;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   box-sizing: border-box;
   overflow: hidden;
@@ -305,19 +305,12 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  opacity: .3;
   z-index: -1;
 }
 
 .md-schedule-before-buffer {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-}
-
-.md-schedule-after-buffer {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  opacity: .3;
 }
 
 .md-buffer-time,
