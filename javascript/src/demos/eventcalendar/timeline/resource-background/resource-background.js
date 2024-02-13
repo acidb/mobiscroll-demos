@@ -9,14 +9,59 @@ export default {
     });
 
     mobiscroll.eventcalendar('#demo-resource-background', {
-      // locale,
-      // theme,
       // drag,
       view: {
         timeline: {
           type: 'month',
         },
       },
+      resources: [
+        {
+          id: 1,
+          name: 'Resource A (background defined with the `background` property)',
+          color: '#e20000',
+          background: 'rgba(108, 166, 166, 0.37)'
+        },
+        {
+          id: 2,
+          name: 'Resource B (ticker borders defined with the `cssClass` property)',
+          color: '#1dab2f',
+          cssClass: 'md-tick-border'
+        },
+        {
+          id: 3,
+          name: 'Resource C',
+          color: '#4981d6',
+        },
+        {
+          id: 4,
+          name: 'Resource D (resource only background defined with the `cssClass` property)',
+          color: '#e25dd2',
+          cssClass: 'md-resource-only-bg'
+        },
+        {
+          id: 5,
+          name: 'Resource E (different resource/row/sidebar backgrounds defined with the `cssClass` property)',
+          color: '#4981d6',
+          cssClass: 'md-diff-custom-bg'
+        },
+        {
+          id: 6,
+          name: 'Resource F',
+          color: '#d6d145',
+        },
+        {
+          id: 7,
+          name: 'Resource G',
+          color: '#34c8e0',
+        },
+        {
+          id: 8,
+          name: 'Resource H (row background defined with the `cssClass` property)',
+          color: '#34c8e0',
+          cssClass: 'md-row-only-bg'
+        },
+      ],
       data: [
         {
           start: 'dyndatetime(y,m,2)',
@@ -55,18 +100,6 @@ export default {
           resource: 7,
         },
         {
-          start: 'dyndatetime(y,m,22)',
-          end: 'dyndatetime(y,m,28)',
-          title: 'Event 7',
-          resource: 7,
-        },
-        {
-          start: 'dyndatetime(y,m,8)',
-          end: 'dyndatetime(y,m,13)',
-          title: 'Event 8',
-          resource: 7,
-        },
-        {
           start: 'dyndatetime(y,m,25)',
           end: 'dyndatetime(y,m,27)',
           title: 'Event 9',
@@ -79,52 +112,6 @@ export default {
           resource: 9,
         },
       ],
-      resources: [
-        {
-          id: 1,
-          name: 'Resource A',
-          color: '#e20000',
-          background: 'rgba(108, 166, 166, 0.37)'
-        },
-        {
-          id: 2,
-          name: 'Resource B',
-          color: '#76e083',
-        },
-        {
-          id: 3,
-          name: 'Resource C',
-          color: '#4981d6',
-          cssClass: 'md-diff-custom-bg'
-        },
-        {
-          id: 4,
-          name: 'Resource D',
-          color: '#e25dd2',
-        },
-        {
-          id: 5,
-          name: 'Resource E',
-          color: '#1dab2f',
-          cssClass: 'md-tick-border'
-        },
-        {
-          id: 6,
-          name: 'Resource F',
-          color: '#d6d145',
-        },
-        {
-          id: 7,
-          name: 'Resource G',
-          color: '#34c8e0',
-          background: 'rgba(130, 113, 244, 0.28)'
-        },
-        {
-          id: 8,
-          name: 'Resource H',
-          color: '#9dde46',
-        },
-      ],
       renderSidebar: function (resource) {
         return '<div>'+ resource.name + ' Sidebar</div>';
       }
@@ -134,31 +121,40 @@ export default {
   markup: `
 <div id="demo-resource-background"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
   .md-diff-custom-bg.mbsc-timeline-row  {
-    background: repeating-linear-gradient(-45deg, #fcfffc, #fcfffc 10px, #eefbec 10px, #eefbec 20px);
+    background-image: radial-gradient(#ae8a8a 20%, transparent 20%);
+    background-color: #f9f9f9;
+    background-position: 0 0, 10px 10px;
+    background-size: 20px 20px;
   }
   
   .md-diff-custom-bg.mbsc-timeline-resource {
-      background-image: radial-gradient(#ae8a8a 20%, transparent 20%);
-      background-color: #f9f9f9;
-      background-position: 0 0, 10px 10px;
-      background-size: 20px 20px;
+    background: repeating-linear-gradient(-45deg, #fcfffc, #fcfffc 10px, #eefbec 10px, #eefbec 20px);
   }
   
   .md-diff-custom-bg.mbsc-timeline-sidebar-resource {
-      opacity: 0.8;
-      background-image: repeating-linear-gradient(45deg, #ffd6d6 25%, transparent 25%, transparent 75%, #ffd6d6 75%, #ffd6d6),
+    opacity: 0.8;
+    background-image: repeating-linear-gradient(45deg, #ffd6d6 25%, transparent 25%, transparent 75%, #ffd6d6 75%, #ffd6d6),
         repeating-linear-gradient(45deg, #ffd6d6 25%, #ffefef 25%, #ffefef 75%, #ffd6d6 75%, #ffd6d6);
-      background-position:
+    background-position:
         0 0,
         10px 10px;
-      background-size: 20px 20px;
+    background-size: 20px 20px;
   }
   
   .md-tick-border {
     border-top: 2px solid currentColor;
     border-bottom-width: 3px;
-    }
+  }
+  
+  .md-row-only-bg .mbsc-timeline-day {
+    background: rgba(0, 128, 128, 0.8);
+  }
+  
+  .md-resource-only-bg.mbsc-timeline-resource {
+    background: rgba(255, 166, 0, 0.7);
+  }
   `,
 };
