@@ -60,7 +60,7 @@ function App() {
       },
       {
         id: 8,
-        name: 'Resource H (row background defined with the `cssClass` property)',
+        name: 'Resource H (column background defined with the `cssClass` property)',
         color: '#34c8e0',
         cssClass: 'md-colum-only-bg'
       },
