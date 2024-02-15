@@ -117,15 +117,16 @@ export default {
             },
           ],
           renderResource: function (resource) {
-            return '<div class="md-resource-bg-res-cont">'+ resource.name + 
-            (resource.background || resource.cssClass) ? ('<p><code>' + 
-            (resource.background ? 'background' : 'cssClass') + ' </code> property used</p>') : '' +
+            return '<div class="md-resource-bg-res-cont">'+ 
+            resource.name + 
+            ((resource.background || resource.cssClass) ? ('<p><code>' + 
+            (resource.background ? 'background' : 'cssClass') + ' </code> property used</p>') : '') +
             '</div>';
           },
           renderSidebar: function (resource) {
             return '<div class="md-resource-bg-res-cont">'+ resource.name + 
-            (resource.background || resource.cssClass) ? ('<p><code>' + 
-            (resource.background ? 'background' : 'cssClass') + ' </code> property used</p>') : '' +
+            ((resource.background || resource.cssClass) ? ('<p><code>' + 
+            (resource.background ? 'background' : 'cssClass') + ' </code> property used</p>') : '') +
             '</div>';
           }
         });
@@ -178,5 +179,9 @@ export default {
   
   .md-resource-bg-res-cont code {
     font-weight: 600;
-  }`,
+  }
+  .md-resource-bg-res-cont p {
+    margin: 4px 0;
+  }
+  `,
 };
