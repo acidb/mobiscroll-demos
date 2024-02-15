@@ -1,15 +1,17 @@
 import {
   Eventcalendar,
-  setOptions,
-  Toast,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscEventDragEvent,
-  MbscResource /* localeImport */,
+  MbscPageLoadingEvent,
+  MbscResource,
+  MbscSelectedDateChangeEvent,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useMemo, useRef, useState } from 'react';
 import './flight-scheduling-two-synchronized-timelines.css';
 
 setOptions({
@@ -322,59 +324,62 @@ const jets: MbscResource[] = [
   },
 ];
 
-const App: React.FC = () => {
-  const [reservations, setReservations] = React.useState<MbscResource[]>([
-    {
-      id: 1,
-      name: 'Alison Reyes',
-    },
-    {
-      id: 2,
-      name: 'Shauna Perry',
-    },
-    {
-      id: 3,
-      name: 'Jan Whitney',
-    },
-    {
-      id: 4,
-      name: 'Freddie Durham',
-    },
-    {
-      id: 5,
-      name: 'William Dillon',
-    },
-    {
-      id: 6,
-      name: 'Tyrell Edwards',
-    },
-    {
-      id: 7,
-      name: 'Caitlyn Riddle',
-    },
-    {
-      id: 8,
-      name: 'Liam Mays',
-    },
-    {
-      id: 9,
-      name: 'Frank Medina',
-    },
-    {
-      id: 10,
-      name: 'Calvin Larsen',
-    },
-    {
-      id: 11,
-      name: 'Heather Walsh',
-    },
-    {
-      id: 12,
-      name: 'Conner Paul',
-    },
-  ]);
+const App: FC = () => {
+  const reservations = useMemo<MbscResource[]>(
+    () => [
+      {
+        id: 1,
+        name: 'Alison Reyes',
+      },
+      {
+        id: 2,
+        name: 'Shauna Perry',
+      },
+      {
+        id: 3,
+        name: 'Jan Whitney',
+      },
+      {
+        id: 4,
+        name: 'Freddie Durham',
+      },
+      {
+        id: 5,
+        name: 'William Dillon',
+      },
+      {
+        id: 6,
+        name: 'Tyrell Edwards',
+      },
+      {
+        id: 7,
+        name: 'Caitlyn Riddle',
+      },
+      {
+        id: 8,
+        name: 'Liam Mays',
+      },
+      {
+        id: 9,
+        name: 'Frank Medina',
+      },
+      {
+        id: 10,
+        name: 'Calvin Larsen',
+      },
+      {
+        id: 11,
+        name: 'Heather Walsh',
+      },
+      {
+        id: 12,
+        name: 'Conner Paul',
+      },
+    ],
+    [],
+  );
 
-  const [flights, setFlights] = React.useState<MbscCalendarEvent[]>([
+  const [flights, setFlights] = useState<MbscCalendarEvent[]>([
     {
       start: 'dyndatetime(y,m,d,10)',
       end: 'dyndatetime(y,m,d,17)',
@@ -413,16 +418,16 @@ const App: React.FC = () => {
     },
   ]);
 
-  const [invalid, setInvalid] = React.useState<MbscCalendarEvent[]>();
-  const firstCalCont = React.useRef<any>(null);
-  const secondCalCont = React.useRef<any>(null);
-  const skipScroll1 = React.useRef<boolean>(false);
-  const skipScroll2 = React.useRef<boolean>(false);
-  const [mySelectedDate, setSelectedDate] = React.useState<any>(new Date());
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [toastText, setToastText] = React.useState<string>('');
+  const [invalid, setInvalid] = useState<MbscCalendarEvent[]>();
+  const firstCalCont = useRef<HTMLElement | null>(null);
+  const secondCalCont = useRef<HTMLElement | null>(null);
+  const skipScroll1 = useRef<boolean>(false);
+  const skipScroll2 = useRef<boolean>(false);
+  const [mySelectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>('');
 
-  const myView = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'day',
@@ -452,49 +457,49 @@ const App: React.FC = () => {
     return <div>{resource.name}</div>;
   };
 
-  const handleScroll1 = React.useCallback((ev: any) => {
+  const handleScroll1 = useCallback((ev: Event) => {
     if (secondCalCont.current && !skipScroll2.current) {
       skipScroll1.current = true;
-      secondCalCont.current.scrollLeft = ev.target.scrollLeft;
+      secondCalCont.current.scrollLeft = (ev.target as HTMLDivElement).scrollLeft;
     }
     skipScroll1.current = false;
   }, []);
 
-  const handleScroll2 = React.useCallback((ev: any) => {
+  const handleScroll2 = useCallback((ev: Event) => {
     if (firstCalCont.current && !skipScroll1.current) {
       skipScroll2.current = true;
-      firstCalCont.current.scrollLeft = ev.target.scrollLeft;
+      firstCalCont.current.scrollLeft = (ev.target as HTMLDivElement).scrollLeft;
     }
     skipScroll2.current = false;
   }, []);
 
-  const handleFirstScroll = React.useCallback(() => {
+  const handleFirstScroll = useCallback(() => {
     if (!firstCalCont.current) {
       firstCalCont.current = document.querySelector('.md-drag-drop-bw-inst-first .mbsc-timeline-grid-scroll');
-      firstCalCont.current.addEventListener('scroll', handleScroll1);
+      firstCalCont.current!.addEventListener('scroll', handleScroll1);
     }
   }, [handleScroll1]);
 
-  const handleSecondScroll = React.useCallback(() => {
+  const handleSecondScroll = useCallback(() => {
     if (!secondCalCont.current) {
       secondCalCont.current = document.querySelector('.md-drag-drop-bw-inst-second .mbsc-timeline-grid-scroll');
-      secondCalCont.current.addEventListener('scroll', handleScroll2);
+      secondCalCont.current!.addEventListener('scroll', handleScroll2);
     }
   }, [handleScroll2]);
 
-  const detachFirstScroll = React.useCallback(() => {
+  const detachFirstScroll = useCallback(() => {
     if (firstCalCont.current) {
       firstCalCont.current.removeEventListener('scroll', handleScroll1);
     }
   }, [handleScroll1]);
 
-  const detachSecondScroll = React.useCallback(() => {
+  const detachSecondScroll = useCallback(() => {
     if (secondCalCont.current) {
       secondCalCont.current.removeEventListener('scroll', handleScroll2);
     }
   }, [handleScroll2]);
 
-  const handlePageLoading = React.useCallback((args: any) => {
+  const handlePageLoading = useCallback((args: MbscPageLoadingEvent) => {
     if (secondCalCont.current) {
       setTimeout(() => {
         setSelectedDate(args.firstDay);
@@ -502,69 +507,68 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // const onEventDelete = React.useCallback((args: any) => {
-  //     setReservations(reservations.filter(item => item.id !== args.event.resource));
-  // }, []);
-
-  const handleSelectedDateChange = React.useCallback((args: any) => {
-    setSelectedDate(args.date);
+  const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
+    setSelectedDate(new Date(args.date as string));
   }, []);
 
-  const handleEventCreated = React.useCallback((args: MbscEventCreatedEvent) => {
+  const handleEventCreated = useCallback((args: MbscEventCreatedEvent) => {
     setFlights((current) => [...current, args.event]);
     setToastText('Flight scheduled');
     setToastOpen(true);
   }, []);
 
-  const handleEventDeleted = React.useCallback((args: MbscEventDeletedEvent) => {
+  const handleEventDeleted = useCallback((args: MbscEventDeletedEvent) => {
     setFlights((current) => [...current.filter((flight) => flight.id !== args.event.id)]);
   }, []);
 
-  const handleEventCreateUpdateFailed = React.useCallback(() => {
+  const handleEventCreateUpdateFailed = useCallback(() => {
     setToastText("There's already a flight on this date");
     setToastOpen(true);
   }, []);
 
-  const handleEventDragStart = React.useCallback((args: MbscEventDragEvent) => {
-    const unavailable: { [key: string]: boolean } = {};
-    const invalid: MbscCalendarEvent = {
-      cssClass: 'md-drag-drop-invalid',
-      recurring: { repeat: 'daily' },
-      resource: [],
-    };
-    // Filter unavailable jets
-    flights.forEach((flight: any) => {
-      if (
-        flight.id !== args.event.id &&
-        new Date(flight.start) < new Date(args.event.end as string) &&
-        new Date(flight.end) > new Date(args.event.start as string)
-      ) {
-        unavailable[flight.resource] = true;
-      }
-    });
-    flights.forEach((flight) => {
-      if (unavailable[flight.resource]) {
-        flight.cssClass = 'md-drag-drop-faded';
-      }
-    });
-    jets.forEach((group: any) => {
-      group.children.forEach((jet: any) => {
-        if (unavailable[jet.id]) {
-          invalid.resource.push(jet.id);
+  const handleEventDragStart = useCallback(
+    (args: MbscEventDragEvent) => {
+      const unavailable: { [key: string]: boolean } = {};
+      const invalid: MbscCalendarEvent = {
+        cssClass: 'md-drag-drop-invalid',
+        recurring: { repeat: 'daily' },
+        resource: [],
+      };
+      // Filter unavailable jets
+      flights.forEach((flight) => {
+        if (
+          flight.id !== args.event.id &&
+          new Date(flight.start as string) < new Date(args.event.end as string) &&
+          new Date(flight.end as string) > new Date(args.event.start as string)
+        ) {
+          unavailable[flight.resource as string] = true;
         }
       });
-    });
-    setInvalid([invalid]);
-  }, []);
+      flights.forEach((flight) => {
+        if (unavailable[flight.resource as string]) {
+          flight.cssClass = 'md-drag-drop-faded';
+        }
+      });
+      jets.forEach((group) => {
+        group.children!.forEach((jet) => {
+          if (unavailable[jet.id]) {
+            (invalid.resource as Array<number | string>).push(jet.id);
+          }
+        });
+      });
+      setInvalid([invalid]);
+    },
+    [flights],
+  );
 
-  const handleEventDragEnd = React.useCallback(() => {
+  const handleEventDragEnd = useCallback(() => {
     flights.forEach((flight) => {
       delete flight.cssClass;
     });
     setInvalid([]);
   }, [flights]);
 
-  const handleCloseToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 

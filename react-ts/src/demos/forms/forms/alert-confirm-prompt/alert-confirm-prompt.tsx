@@ -1,21 +1,21 @@
 import { Alert, Button, Confirm, Page, Prompt, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [isAlertOpen, setAlertOpen] = React.useState(false);
-  const [isConfirmOpen, setConfirmOpen] = React.useState(false);
-  const [isPromptOpen, setPromptOpen] = React.useState(false);
+const App: FC = () => {
+  const [isAlertOpen, setAlertOpen] = useState(false);
+  const [isConfirmOpen, setConfirmOpen] = useState(false);
+  const [isPromptOpen, setPromptOpen] = useState(false);
 
   const showAlert = () => {
     setAlertOpen(true);
   };
 
-  const closeAlert = React.useCallback(() => {
+  const closeAlert = useCallback(() => {
     setAlertOpen(false);
   }, []);
 
@@ -23,7 +23,7 @@ const App: React.FC = () => {
     setConfirmOpen(true);
   };
 
-  const closeConfirm = React.useCallback(() => {
+  const closeConfirm = useCallback(() => {
     setConfirmOpen(false);
   }, []);
 
@@ -31,7 +31,7 @@ const App: React.FC = () => {
     setPromptOpen(true);
   };
 
-  const closePrompt = React.useCallback((value: any) => {
+  const closePrompt = useCallback((value: string | null) => {
     setPromptOpen(false);
     console.log('The password is: ' + value);
   }, []);

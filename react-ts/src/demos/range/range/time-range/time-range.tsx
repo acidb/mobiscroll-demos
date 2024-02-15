@@ -1,14 +1,14 @@
 import { Datepicker, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [start, startRef] = React.useState(null);
-  const [end, endRef] = React.useState(null);
+const App: FC = () => {
+  const [start, startRef] = useState<Input | null>(null);
+  const [end, endRef] = useState<Input | null>(null);
 
   return (
     <Page>

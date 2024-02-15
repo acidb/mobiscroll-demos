@@ -1,6 +1,6 @@
 import { Select, setOptions /* localeImport */ } from '@mobiscroll/react';
-import './multiple-lines.css';
 import { useCallback, useMemo } from 'react';
+import './multiple-lines.css';
 
 setOptions({
   // localeJs,

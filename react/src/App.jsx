@@ -1,5 +1,4 @@
 /* eslint-disable import/order */
-import { Page } from '@mobiscroll/react';
 import { StrictMode } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -113,8 +112,6 @@ import RangeRtlRightToLeft from './demos/range/range/rtl-right-to-left/rtl-right
 import RangeDateFilteringWithPredefinedRanges from './demos/range/range/date-filtering-with-predefined-ranges/date-filtering-with-predefined-ranges';
 import RangeBookRentalMonthsAhead from './demos/range/range/book-rental-months-ahead/book-rental-months-ahead';
 import RangeSettingThePickerTimezone from './demos/range/range/setting-the-picker-timezone/setting-the-picker-timezone';
-import AlertsNotificationsAlert from './demos/forms/alerts-notifications/alert/alert';
-import AlertsNotificationsNotifications from './demos/forms/alerts-notifications/notifications/notifications';
 import FormsMobile from './demos/forms/forms/mobile/mobile';
 import FormsResponsive from './demos/forms/forms/responsive/responsive';
 import FormsThemesIosMaterialWindows from './demos/forms/forms/themes-ios-material-windows/themes-ios-material-windows';
@@ -568,11 +565,6 @@ function App() {
     {
       path: '/range/setting-the-picker-timezone',
       element: <RangeSettingThePickerTimezone />,
-    },
-    { path: '/alerts-notifications/alert', element: <AlertsNotificationsAlert /> },
-    {
-      path: '/alerts-notifications/notifications',
-      element: <AlertsNotificationsNotifications />,
     },
     { path: '/forms/mobile', element: <FormsMobile /> },
     { path: '/forms/responsive', element: <FormsResponsive /> },
@@ -1229,9 +1221,7 @@ function App() {
   return (
     <>
       <StrictMode>
-        <Page cssClass="main-page">
-          <RouterProvider router={router} />
-        </Page>
+        <RouterProvider router={router} />
       </StrictMode>
     </>
   );

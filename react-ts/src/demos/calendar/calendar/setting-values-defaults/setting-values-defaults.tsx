@@ -1,22 +1,25 @@
-import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Button, Datepicker, MbscPopupButton, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const initialValue = new Date(2020, 11, 24);
+const initialValue = new Date(2020, 11, 24);
 
-  const [now, setNow] = React.useState<any>();
-  const nowButtons = React.useMemo<any>(
+const App: FC = () => {
+  const [now, setNow] = useState<Datepicker | null>(null);
+  const [custom, setCustom] = useState<Datepicker | null>(null);
+  const [val, setVal] = useState<Date>();
+
+  const nowButtons = useMemo<(string | MbscPopupButton)[]>(
     () => [
       {
         text: 'Now',
         handler: () => {
-          now.setVal(new Date());
-          now.close();
+          now!.setVal(new Date());
+          now!.close();
         },
       },
       'set',
@@ -25,14 +28,13 @@ const App: React.FC = () => {
     [now],
   );
 
-  const [custom, setCustom] = React.useState<any>();
-  const customButtons = React.useMemo<any>(
+  const customButtons = useMemo<(string | MbscPopupButton)[]>(
     () => [
       {
         text: '05 Jan 2020',
         handler: () => {
-          custom.setVal(new Date(2020, 0, 5));
-          custom.close();
+          custom!.setVal(new Date(2020, 0, 5));
+          custom!.close();
         },
       },
       'set',
@@ -41,7 +43,7 @@ const App: React.FC = () => {
     [custom],
   );
 
-  const autoButtons = React.useMemo<any>(
+  const autoButtons = useMemo<(string | MbscPopupButton)[]>(
     () => [
       {
         text: 'Close',
@@ -51,15 +53,13 @@ const App: React.FC = () => {
     [],
   );
 
-  const [val, setVal] = React.useState<Date>();
-
-  const setValue = () => {
+  const setValue = useCallback(() => {
     setVal(new Date(2020, 0, 2));
-  };
+  }, []);
 
-  const setToday = () => {
+  const setToday = useCallback(() => {
     setVal(new Date());
-  };
+  }, []);
 
   return (
     <Page>

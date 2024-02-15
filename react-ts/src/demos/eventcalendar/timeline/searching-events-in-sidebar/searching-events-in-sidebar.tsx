@@ -1,14 +1,19 @@
 import {
   Eventcalendar,
-  Page,
-  Input,
-  getJson,
   formatDate,
+  getJson,
+  Input,
   MbscCalendarEvent,
+  MbscDateType,
   MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscPageLoadingEvent,
+  MbscResource,
+  MbscSelectedDateChangeEvent,
+  Page,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react';
 import './searching-events-in-sidebar.css';
 
 setOptions({
@@ -16,90 +21,51 @@ setOptions({
   // themeJs
 });
 
-const myResources: MbscResource[] = [
-  {
-    id: 1,
-    name: 'Resource 1',
-    color: '#fdf500',
-  },
-  {
-    id: 2,
-    name: 'Resource 2',
-    color: '#ff4600',
-  },
-  {
-    id: 3,
-    name: 'Resource 3',
-    color: '#ff0101',
-  },
-  {
-    id: 4,
-    name: 'Resource 4',
-    color: '#239a21',
-  },
-  {
-    id: 5,
-    name: 'Resource 5',
-    color: '#8f1ed6',
-  },
-  {
-    id: 6,
-    name: 'Resource 6',
-    color: '#01adff',
-  },
-];
+const App: FC = () => {
+  const [calEvents, setCalEvents] = useState<MbscCalendarEvent[]>([]);
+  const [listEvents, setListEvents] = useState<MbscCalendarEvent[]>([]);
+  const [selectedDate, setSelectedDate] = useState<MbscDateType>(new Date());
+  const [selectedEvent, setSelectedEvent] = useState<MbscCalendarEvent[]>([]);
+  const [displayResults, setDisplayResults] = useState<boolean>(false);
 
-const App: React.FC = () => {
-  const [calEvents, setCalEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [listEvents, setListEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [mySelectedEvent, setSelectedEvent] = React.useState<MbscCalendarEvent[]>([]);
-  const [showList, setShowList] = React.useState<boolean>(false);
-  const [currentDate, setCurrentDate] = React.useState<any>(new Date());
-  const timerRef = React.useRef<any>(null);
+  const timer = useRef<ReturnType<typeof setTimeout>>();
 
-  const calView = React.useMemo<MbscEventcalendarView>(
-    () => ({
-      timeline: {
-        type: 'week',
-      },
-    }),
+  const calView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'week' } }), []);
+  const listView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'year', size: 5 } }), []);
+
+  const myResources: MbscResource[] = useMemo(
+    () => [
+      { id: 1, name: 'Resource 1', color: '#fdf500' },
+      { id: 2, name: 'Resource 2', color: '#ff4600' },
+      { id: 3, name: 'Resource 3', color: '#ff0101' },
+      { id: 4, name: 'Resource 4', color: '#239a21' },
+      { id: 5, name: 'Resource 5', color: '#8f1ed6' },
+      { id: 6, name: 'Resource 6', color: '#01adff' },
+    ],
     [],
   );
 
-  const listView = React.useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: {
-        type: 'year',
-        size: 5,
-      },
-    }),
-    [],
-  );
-
-  const onSearch = React.useCallback((ev: any) => {
+  const handleInputChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     const text = ev.target.value;
 
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-
-    timerRef.current = setTimeout(() => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
       if (text.length > 0) {
         getJson(
           'https://trial.mobiscroll.com/searchevents-timeline/?text=' + text,
           (data: MbscCalendarEvent[]) => {
             setListEvents(data);
-            setShowList(true);
+            setDisplayResults(true);
           },
           'jsonp',
         );
       } else {
-        setShowList(false);
+        setDisplayResults(false);
       }
     }, 200);
   }, []);
 
-  const onPageLoading = React.useCallback((args: any) => {
+  const handlePageLoading = useCallback((args: MbscPageLoadingEvent) => {
     const start = formatDate('YYYY-MM-DD', args.viewStart);
     const end = formatDate('YYYY-MM-DD', args.viewEnd);
 
@@ -114,30 +80,36 @@ const App: React.FC = () => {
     });
   }, []);
 
-  const eventClick = React.useCallback((args: any) => {
-    setCurrentDate(args.event.start);
+  const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
+    setSelectedDate(args.date);
+  }, []);
+
+  const handleEventClick = useCallback((args: MbscEventClickEvent) => {
+    setSelectedDate(args.event.start!);
     setSelectedEvent([args.event]);
   }, []);
 
   return (
-    <Page>
-      <div className="md-search-events-sidebar mbsc-flex">
-        <div className="md-search-events-cont mbsc-flex-col mbsc-flex-none">
-          <Input startIcon="material-search" onChange={onSearch} inputStyle="outline" placeholder="Search events" />
-          {showList && <Eventcalendar view={listView} data={listEvents} showControls={false} onEventClick={eventClick} />}
+    <Page className="mds-full-height">
+      <div className="mds-full-height mbsc-flex">
+        <div className="mds-search-sidebar mbsc-flex-col mbsc-flex-none">
+          <Input startIcon="material-search" onChange={handleInputChange} inputStyle="outline" placeholder="Search events" />
+          {displayResults && <Eventcalendar data={listEvents} showControls={false} view={listView} onEventClick={handleEventClick} />}
         </div>
-        <div className="md-search-events-calendar mbsc-flex-1-1">
+        <div className="mds-search-calendar mbsc-flex-1-1">
           <Eventcalendar
             clickToCreate={false}
+            data={calEvents}
             dragToCreate={false}
             dragToMove={false}
             dragToResize={false}
+            resources={myResources}
+            selectedDate={selectedDate}
+            selectedEvents={selectedEvent}
             selectMultipleEvents={true}
             view={calView}
-            data={calEvents}
-            selectedEvents={mySelectedEvent}
-            selectedDate={currentDate}
-            onPageLoading={onPageLoading}
+            onPageLoading={handlePageLoading}
+            onSelectedDateChange={handleSelectedDateChange}
           />
         </div>
       </div>

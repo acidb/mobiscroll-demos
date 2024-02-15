@@ -1,54 +1,78 @@
-import { Datepicker, Input, RadioGroup, Radio, Page /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Datepicker,
+  Input,
+  MbscDatepickerChangeEvent,
+  MbscDateType,
+  MbscPopupButton,
+  Page,
+  Radio,
+  RadioGroup,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
 
-const App: React.FC = () => {
-  const now = new Date();
-  const min = now;
-  const max = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  const [start, setStart] = React.useState<any>(null);
-  const [end, setEnd] = React.useState<any>(null);
+const now = new Date();
+const min = now;
+const max = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
 
-  const [startInv, setStartInv] = React.useState<any>(null);
-  const [endInv, setEndInv] = React.useState<any>(null);
+function nrOfValues(instance: Datepicker | null) {
+  const tempVal = ((instance && instance.getTempVal()) as MbscDateType[]) || [];
+  return tempVal.filter((v) => v).length;
+}
 
-  const [startBooking, setStartBooking] = React.useState<any>(null);
-  const [endBooking, setEndBooking] = React.useState<any>(null);
+const App: FC = () => {
+  const [start, setStart] = useState<Input | null>(null);
+  const [end, setEnd] = useState<Input | null>(null);
+  const [startInv, setStartInv] = useState<Input | null>(null);
+  const [endInv, setEndInv] = useState<Input | null>(null);
+  const [startBooking, setStartBooking] = useState<Input | null>(null);
+  const [endBooking, setEndBooking] = useState<Input | null>(null);
+  const [bookingType, setBookingType] = useState<string>('round');
+  const [inst, setInst] = useState<Datepicker | null>(null);
+  const [val, setVal] = useState<(MbscDateType | null)[]>();
+  const [disabled, setDisabled] = useState(nrOfValues(inst) === 0);
 
-  const invalid = [
-    {
-      recurring: {
-        repeat: 'weekly',
-        weekDays: 'TU,TH',
+  const invalid = useMemo(
+    () => [
+      {
+        recurring: {
+          repeat: 'weekly',
+          weekDays: 'TU,TH',
+        },
       },
-    },
-    new Date(now.getFullYear(), now.getMonth(), 25),
-  ];
+      new Date(now.getFullYear(), now.getMonth(), 25),
+    ],
+    [],
+  );
 
-  const [bookingType, setBookingType] = React.useState('round');
-  const selectType = React.useMemo<any>(() => (bookingType === 'oneway' ? 'date' : 'range'), [bookingType]);
-  const bookingTypeChange = (ev: any) => {
+  const selectType = useMemo(() => (bookingType === 'oneway' ? 'date' : 'range'), [bookingType]);
+
+  const bookingTypeChange = (ev: ChangeEvent<HTMLInputElement>) => {
     setBookingType(ev.target.value);
   };
 
-  const [inst, setInst] = React.useState<any>(null);
-  const [val, setVal] = React.useState<any>();
-  const valChange = (ev: any) => {
-    setVal(ev.value);
-  };
-  const [disabled, setDisabled] = React.useState(nrOfValues(inst) === 0);
-  const changeTripType = (ev: any) => {
+  const valChange = useCallback((ev: MbscDatepickerChangeEvent) => {
+    setVal(ev.value as MbscDateType[]);
+  }, []);
+
+  const changeTripType = useCallback(() => {
     setDisabled(nrOfValues(inst) < 1);
-  };
-  const buttons = React.useMemo(
+  }, [inst]);
+
+  const buttons = useMemo<(string | MbscPopupButton)[]>(
     () => [
       'cancel',
       {
         disabled,
         handler: () => {
-          const [start] = inst.getTempVal();
-          setVal([start, null]);
-          inst.close();
+          const start = inst!.getTempVal() as MbscDateType[];
+          setVal([start[0], null]);
+          inst!.close();
         },
         text: 'One way only',
       },
@@ -57,20 +81,12 @@ const App: React.FC = () => {
     [disabled, inst],
   );
 
-  function nrOfValues(instance: any) {
-    const tempVal = (instance && instance.getTempVal()) || [];
-    return tempVal.filter((v: any) => v).length;
-  }
-
   return (
     <Page>
       <div className="mbsc-grid mbsc-no-padding">
         <div className="mbsc-row">
           <div className="mbsc-col-sm-12">
             <Datepicker
-              // theme
-              // locale
-              controls={['calendar']}
               select="range"
               min={min}
               max={max}
@@ -86,21 +102,16 @@ const App: React.FC = () => {
         <div className="mbsc-row">
           <div className="mbsc-col-6">
             <Datepicker controls={['calendar']} select="range" startInput={start} endInput={end} min={min} max={max} pages={2} />
-            <Input ref={setStart} label="Outbound" inputStyle="outline" labelStyle="stacked" placeholder="Please Select...">
-              Outbound
-            </Input>
+            <Input ref={setStart} label="Outbound" inputStyle="outline" labelStyle="stacked" placeholder="Please Select..." />
           </div>
           <div className="mbsc-col-6">
-            <Input ref={setEnd} label="Return" inputStyle="outline" labelStyle="stacked" placeholder="Please Select...">
-              Return
-            </Input>
+            <Input ref={setEnd} label="Return" inputStyle="outline" labelStyle="stacked" placeholder="Please Select..." />
           </div>
         </div>
 
         <div className="mbsc-row">
           <div className="mbsc-col-6">
             <Datepicker
-              controls={['calendar']}
               select="range"
               startInput={startInv}
               endInput={endInv}
@@ -110,14 +121,10 @@ const App: React.FC = () => {
               invalid={invalid}
               inRangeInvalid={true}
             />
-            <Input ref={setStartInv} label="Outbound" inputStyle="outline" labelStyle="stacked" placeholder="Please Select...">
-              Outbound
-            </Input>
+            <Input ref={setStartInv} label="Outbound" inputStyle="outline" labelStyle="stacked" placeholder="Please Select..." />
           </div>
           <div className="mbsc-col-6">
-            <Input ref={setEndInv} label="Return" inputStyle="outline" labelStyle="stacked" placeholder="Please Select...">
-              Return
-            </Input>
+            <Input ref={setEndInv} label="Return" inputStyle="outline" labelStyle="stacked" placeholder="Please Select..." />
           </div>
         </div>
 
@@ -144,17 +151,20 @@ const App: React.FC = () => {
         <div className="mbsc-row">
           <div className="mbsc-col-6">
             <Datepicker
-              controls={['calendar']}
               select={selectType}
               startInput={startBooking}
               endInput={endBooking}
               min={min}
               max={max}
               pages={2}
+              label="Outbound"
+              inputStyle="outline"
+              labelStyle="stacked"
+              placeholder="Please Select..."
             />
-            <Input ref={setStartBooking} label="Outbound" inputStyle="outline" labelStyle="stacked" placeholder="Please Select...">
-              Outbound
-            </Input>
+            {selectType === 'range' && (
+              <Input ref={setStartBooking} label="Outbound" inputStyle="outline" labelStyle="stacked" placeholder="Please Select..." />
+            )}
           </div>
           <div className="mbsc-col-6">
             <Input
@@ -164,18 +174,13 @@ const App: React.FC = () => {
               labelStyle="stacked"
               placeholder="Please Select..."
               disabled={bookingType === 'oneway'}
-            >
-              Return
-            </Input>
+            />
           </div>
         </div>
 
         <div className="mbsc-row">
           <div className="mbsc-col-12">
             <Datepicker
-              // theme
-              // locale
-              controls={['calendar']}
               select="range"
               min={min}
               max={max}

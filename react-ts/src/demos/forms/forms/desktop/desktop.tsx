@@ -1,5 +1,5 @@
 import { Button, Dropdown, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC } from 'react';
 import './desktop.css';
 
 setOptions({
@@ -7,7 +7,7 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <Page>
     <div className="mbsc-grid mbsc-grid-fixed">
       <div className="mbsc-form-group">
@@ -23,7 +23,7 @@ const App: React.FC = () => (
                   type="password"
                   label="Password"
                   placeholder="Password"
-                  passwordToggle="true"
+                  passwordToggle={true}
                   inputStyle="box"
                   labelStyle="floating"
                 />

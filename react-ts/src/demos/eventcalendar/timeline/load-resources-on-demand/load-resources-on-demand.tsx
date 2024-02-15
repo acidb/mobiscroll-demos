@@ -1,13 +1,14 @@
 import {
   Eventcalendar,
+  getJson,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscResource,
-  getJson,
+  MbscResourceExpandEvent,
   setOptions,
-  toast /* localeImport */,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import './load-resources-on-demand.css';
 
 setOptions({
@@ -15,15 +16,16 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const view = React.useMemo<MbscEventcalendarView>(
+const App: FC = () => {
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: { type: 'day' },
     }),
     [],
   );
 
-  const [myResources, setResources] = React.useState<MbscResource[]>([
+  const [myResources, setResources] = useState<MbscResource[]>([
     {
       id: 1,
       name: 'Group 1',
@@ -128,7 +130,7 @@ const App: React.FC = () => {
     },
   ]);
 
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([
     {
       start: 'dyndatetime(y,m,d,10)',
       end: 'dyndatetime(y,m,d,13)',
@@ -155,41 +157,41 @@ const App: React.FC = () => {
     },
   ]);
 
-  const getResourceById = React.useCallback<any>((resources: MbscResource[], resourceId: any) => {
-    for (let i = 0; i < resources.length; i++) {
-      const resource = resources[i];
-      if (resource.id === resourceId) {
-        return resource;
-      } else {
-        if (resource.children) {
-          const child = getResourceById(resource.children, resourceId);
-          if (child) {
-            return child;
+  const getResourceById: (resources: MbscResource[], resourceId: string) => MbscResource | undefined = useCallback(
+    (resources: MbscResource[], resourceId: string) => {
+      for (let i = 0; i < resources.length; i++) {
+        const resource: MbscResource = resources[i];
+        if (resource.id === resourceId) {
+          return resource;
+        } else {
+          if (resource.children) {
+            const child: MbscResource | undefined = getResourceById(resource.children, resourceId);
+            if (child) {
+              return child;
+            }
           }
         }
       }
-    }
-  }, []);
+    },
+    [],
+  );
 
-  const loadChildResources = React.useCallback(
-    (args: any) => {
-      const resource = getResourceById(myResources, args.resource);
+  const loadChildResources = useCallback(
+    (args: MbscResourceExpandEvent) => {
+      const resource = getResourceById(myResources, args.resource as string);
 
-      if (!resource.loaded) {
+      if (!resource!.loaded) {
         getJson(
           'https://trial.mobiscroll.com/load-resources/?res=' + args.resource,
           (data) => {
             const newEvents = [...myEvents, ...data.events];
 
-            resource.children = data.resources;
-            resource.loaded = true;
+            resource!.children = data.resources;
+            resource!.loaded = true;
 
             setEvents(newEvents);
             setResources([...myResources]);
-
-            toast({
-              message: 'Resources loaded',
-            });
+            setToastOpen(true);
           },
           'jsonp',
         );
@@ -198,14 +200,22 @@ const App: React.FC = () => {
     [getResourceById, myEvents, myResources],
   );
 
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
   return (
-    <Eventcalendar
-      view={view}
-      resources={myResources}
-      data={myEvents}
-      onResourceExpand={loadChildResources}
-      className="md-load-resources-on-demand"
-    />
+    <>
+      <Eventcalendar
+        // drag
+        view={myView}
+        resources={myResources}
+        data={myEvents}
+        onResourceExpand={loadChildResources}
+        className="md-load-resources-on-demand"
+      />
+      <Toast message="Resources loaded" isOpen={isToastOpen} onClose={handleCloseToast} />
+    </>
   );
 };
 export default App;

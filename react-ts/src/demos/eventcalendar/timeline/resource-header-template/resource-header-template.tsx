@@ -1,11 +1,23 @@
-import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Eventcalendar,
+  getJson,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscResource,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './resource-header-template.css';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
-  const view = React.useMemo<MbscEventcalendarView>(
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'week',
@@ -16,7 +28,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -58,7 +70,27 @@ const App: React.FC = () => {
     [],
   );
 
-  React.useEffect(() => {
+  const renderCustomResource = useCallback(
+    (resource: MbscResource) => (
+      <div className="md-resource-header-template-title">
+        <div className="md-resource-header-template-name">{resource.name}</div>
+        <div className="md-resource-header-template-seats">{resource.seats} seats</div>
+      </div>
+    ),
+    [],
+  );
+
+  const renderCustomHeader = useCallback(
+    () => (
+      <div className="md-resource-header-template-title">
+        <div className="md-resource-header-template-name">Room</div>
+        <div className="md-resource-header-template-seats">Capacity</div>
+      </div>
+    ),
+    [],
+  );
+
+  useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/resource-events/',
       (events: MbscCalendarEvent[]) => {
@@ -68,25 +100,10 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const renderCustomResource = (resource: MbscResource) => (
-    <div className="md-resource-header-template-title">
-      <div className="md-resource-header-template-name">Room</div>
-      <div className="md-resource-header-template-seats">Capacity</div>
-    </div>
-  );
-
-  const renderCustomHeader = () => (
-    <div className="md-resource-header-template-title">
-      <div className="md-resource-header-template-name">Room</div>
-      <div className="md-resource-header-template-seats">Capacity</div>
-    </div>
-  );
-
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderResource={renderCustomResource}
@@ -95,4 +112,5 @@ const App: React.FC = () => {
     />
   );
 };
+
 export default App;

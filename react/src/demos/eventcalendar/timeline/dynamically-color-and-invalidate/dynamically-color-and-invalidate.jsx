@@ -170,8 +170,8 @@ function App() {
   const [toasterMessage, setToasterMessage] = useState('');
   const [isToastOpen, setToastOpen] = useState(false);
 
-  const handleExtendDefaultEvent = useCallback((event) => {
-    const res = event.resource;
+  const handleExtendDefaultEvent = useCallback((args) => {
+    const res = args.resource;
 
     if (res) {
       if (res === 'res1' || res === 'res2' || res === 'res3') {

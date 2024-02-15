@@ -1,15 +1,5 @@
-import {
-  Page,
-  Popup,
-  Button,
-  Input,
-  Textarea,
-  Switch,
-  SegmentedGroup,
-  SegmentedItem,
-  setOptions /* localeImport */,
-} from '@mobiscroll/react';
-import React from 'react';
+import { Button, Input, Page, Popup, Segmented, SegmentedGroup, setOptions, Switch, Textarea /* localeImport */ } from '@mobiscroll/react';
+import { ChangeEvent, FC, useCallback, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -27,18 +17,22 @@ const responsivePopup = {
   },
 };
 
-const App: React.FC = () => {
-  const [anchor, setAnchor] = React.useState<any>(null);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
+const App: FC = () => {
+  const [anchor, setAnchor] = useState<HTMLElement>();
+  const [isOpen, setOpen] = useState<boolean>(false);
 
-  const onBtnClick = React.useCallback<any>((args: any) => {
+  const handleBtnClick = useCallback((args: ChangeEvent<HTMLInputElement>) => {
     setAnchor(args.target);
     setOpen(true);
   }, []);
 
+  const handlePopupClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
   return (
     <Page>
-      <Button onClick={onBtnClick}>Show modal</Button>
+      <Button onClick={handleBtnClick}>Show modal</Button>
       <Popup
         display="anchored"
         contentPadding={false}
@@ -46,9 +40,7 @@ const App: React.FC = () => {
         buttons={popupButtons}
         isOpen={isOpen}
         responsive={responsivePopup}
-        onClose={() => {
-          setOpen(false);
-        }}
+        onClose={handlePopupClose}
       >
         <div className="mbsc-form-group">
           <Input label="Title" />
@@ -59,10 +51,10 @@ const App: React.FC = () => {
           <Input label="Starts" />
           <Input label="Ends" />
           <SegmentedGroup>
-            <SegmentedItem value="busy" defaultChecked={true}>
+            <Segmented value="busy" defaultChecked={true}>
               Show as busy
-            </SegmentedItem>
-            <SegmentedItem value="free">Show as free</SegmentedItem>
+            </Segmented>
+            <Segmented value="free">Show as free</Segmented>
           </SegmentedGroup>
         </div>
       </Popup>

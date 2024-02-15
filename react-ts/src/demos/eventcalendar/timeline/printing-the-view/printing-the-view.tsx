@@ -1,15 +1,14 @@
 import { print } from '@mobiscroll/print';
 import {
-  Eventcalendar,
-  Page,
   Button,
-  MbscResource,
+  Eventcalendar,
   getJson,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscResource,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 const MY_MODULES = [print];
 
@@ -18,10 +17,10 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [inst, setInst] = React.useState<any>(null);
-  const myResources = React.useMemo<MbscResource[]>(
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [inst, setInst] = useState<Eventcalendar | null>(null);
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -57,17 +56,7 @@ const App: React.FC = () => {
     [],
   );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/daily-weekly-events/',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'week',
@@ -79,23 +68,33 @@ const App: React.FC = () => {
     [],
   );
 
-  const printView = () => {
-    inst.print();
-  };
+  const printView = useCallback(() => {
+    inst!.print();
+  }, [inst]);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/daily-weekly-events/',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
 
   return (
-    <Page>
+    <>
       <Button onClick={printView}>Print timeline</Button>
       <Eventcalendar
-        // theme
-        // locale
+        // drag
         data={myEvents}
         resources={myResources}
-        view={view}
+        view={myView}
         ref={setInst}
         modules={MY_MODULES}
       />
-    </Page>
+    </>
   );
 };
+
 export default App;

@@ -1,8 +1,13 @@
-import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useMemo } from 'react';
 
-const App: React.FC = () => {
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const App: FC = () => {
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         recurring: {
@@ -50,35 +55,38 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = [
-    {
-      id: 1,
-      name: 'Resource A',
-      color: '#fdf500',
-    },
-    {
-      id: 2,
-      name: 'Resource B',
-      color: '#ff0101',
-    },
-    {
-      id: 3,
-      name: 'Resource C',
-      color: '#01adff',
-    },
-    {
-      id: 4,
-      name: 'Resource D',
-      color: '#239a21',
-    },
-    {
-      id: 5,
-      name: 'Resource E',
-      color: '#ff4600',
-    },
-  ];
+  const myResources = useMemo<MbscResource[]>(
+    () => [
+      {
+        id: 1,
+        name: 'Resource A',
+        color: '#fdf500',
+      },
+      {
+        id: 2,
+        name: 'Resource B',
+        color: '#ff0101',
+      },
+      {
+        id: 3,
+        name: 'Resource C',
+        color: '#01adff',
+      },
+      {
+        id: 4,
+        name: 'Resource D',
+        color: '#239a21',
+      },
+      {
+        id: 5,
+        name: 'Resource E',
+        color: '#ff4600',
+      },
+    ],
+    [],
+  );
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: { type: 'week' },
     }),
@@ -87,10 +95,9 @@ const App: React.FC = () => {
 
   return (
     <Eventcalendar
-      // locale
-      // theme
+      // drag
       data={myEvents}
-      view={view}
+      view={myView}
       resources={myResources}
     />
   );

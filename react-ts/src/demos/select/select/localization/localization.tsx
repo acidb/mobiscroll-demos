@@ -1,5 +1,4 @@
-import { Select, setOptions, localeEs /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { localeEs, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // themeJs
@@ -48,12 +47,10 @@ function App() {
   return (
     <Select
       data={myData}
-      inputProps={{
-        label: 'Select',
-        labelStyle: 'stacked',
-        inputStyle: 'outline',
-        placeholder: 'Please Select...',
-      }}
+      label="Select"
+      labelStyle="stacked"
+      inputStyle="outline"
+      placeholder="Please Select..."
       display="bottom"
       locale={localeEs} // sets the language of the component
     />

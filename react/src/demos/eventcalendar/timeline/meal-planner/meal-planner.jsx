@@ -8,7 +8,7 @@ import {
   Segmented,
   SegmentedGroup,
   setOptions,
-  snackbar,
+  Snackbar,
   Textarea /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -84,6 +84,7 @@ function App() {
   const [notes, setNotes] = useState('');
   const [headerText, setHeader] = useState('');
   const [type, setType] = useState(1);
+  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
 
   const saveEvent = useCallback(() => {
     const newEvent = {
@@ -113,17 +114,8 @@ function App() {
   const deleteEvent = useCallback(
     (event) => {
       setMyMeals(myMeals.filter((item) => item.id !== event.id));
-      setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              setMyMeals((prevEvents) => [...prevEvents, event]);
-            },
-            text: 'Undo',
-          },
-          message: 'Event deleted',
-        });
-      });
+      setTempMeal(event);
+      setSnackbarOpen(true);
     },
     [myMeals],
   );
@@ -144,7 +136,7 @@ function App() {
   }, []);
 
   const notesChange = useCallback((ev) => {
-    setNotes(ev.target.checked);
+    setNotes(ev.target.value);
   }, []);
 
   const onDeleteClick = useCallback(() => {
@@ -266,6 +258,10 @@ function App() {
     );
   }, []);
 
+  const handleSnackbarClose = useCallback(() => {
+    setSnackbarOpen(false);
+  }, []);
+
   useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/meal-planner/',
@@ -325,6 +321,17 @@ function App() {
           </div>
         )}
       </Popup>
+      <Snackbar
+        message="Event deleted"
+        isOpen={isSnackbarOpen}
+        onClose={handleSnackbarClose}
+        button={{
+          action: () => {
+            setMyMeals((prevEvents) => [...prevEvents, tempMeal]);
+          },
+          text: 'Undo',
+        }}
+      />
     </div>
   );
 }

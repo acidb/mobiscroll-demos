@@ -23,7 +23,7 @@
   <div class="mbsc-form-group-inset">
     <div class="mbsc-form-group-title">My calendars</div>
     <ng-container *ngFor="let cal of myCalendars;">
-      <mbsc-switch [label]="cal.name" [(ngModel)]="calendarData[cal.id].checked" (change)="toggleCalendars($event, cal.id)"></mbsc-switch>
+      <mbsc-switch [label]="cal.name" [(ngModel)]="calendarData[cal.id].checked" (change)="toggleCalendar($event, cal.id)"></mbsc-switch>
     </ng-container>
   </div>
   <div class="mbsc-form-group-inset">

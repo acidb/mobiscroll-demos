@@ -5,15 +5,21 @@ import {
   getJson,
   Input,
   MbscCalendarEvent,
+  MbscCalendarEventData,
   MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscEventCreateEvent,
+  MbscEventDeletedEvent,
+  MbscPopupButton,
+  MbscResource,
   Popup,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
   setOptions,
-  snackbar,
+  Snackbar,
   Textarea,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './meal-planner.css';
 
 setOptions({
@@ -76,41 +82,32 @@ const responsivePopup = {
   },
 };
 
-const App: React.FC = () => {
-  const [myMeals, setMyMeals] = React.useState<MbscCalendarEvent[]>([]);
-  const [tempMeal, setTempMeal] = React.useState<any>(null);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [isEdit, setEdit] = React.useState<boolean>(false);
-  const [name, setName] = React.useState<string>('');
-  const [calories, setCalories] = React.useState<string>('');
-  const [notes, setNotes] = React.useState<string>('');
-  const [headerText, setHeader] = React.useState<string>('');
-  const [type, setType] = React.useState<any>(1);
+const App: FC = () => {
+  const [myMeals, setMyMeals] = useState<MbscCalendarEvent[]>([]);
+  const [tempMeal, setTempMeal] = useState<MbscCalendarEvent>();
+  const [isPopupOpen, setOpen] = useState<boolean>(false);
+  const [isEdit, setEdit] = useState<boolean>(false);
+  const [name, setName] = useState<string>('');
+  const [calories, setCalories] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
+  const [headerText, setHeader] = useState<string>('');
+  const [type, setType] = useState<number>(1);
+  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/meal-planner/',
-      (events: MbscCalendarEvent[]) => {
-        setMyMeals(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const saveEvent = React.useCallback<any>(() => {
+  const saveEvent = useCallback(() => {
     const newEvent = {
-      id: tempMeal.id,
+      id: tempMeal!.id,
       title: name,
       calories: calories,
       notes: notes,
-      start: tempMeal.start,
-      end: tempMeal.end,
-      resource: tempMeal.resource,
+      start: tempMeal!.start,
+      end: tempMeal!.end,
+      resource: tempMeal!.resource,
     };
 
     if (isEdit) {
       // update the event in the list
-      const index = myMeals.findIndex((x) => x.id === tempMeal.id);
+      const index = myMeals.findIndex((x) => x.id === tempMeal!.id);
       const newEventList = [...myMeals];
 
       newEventList.splice(index, 1, newEvent);
@@ -124,55 +121,48 @@ const App: React.FC = () => {
     setOpen(false);
   }, [isEdit, myMeals, calories, notes, name, tempMeal]);
 
-  const deleteEvent = React.useCallback(
-    (event) => {
+  const deleteEvent = useCallback(
+    (event: MbscCalendarEvent) => {
       setMyMeals(myMeals.filter((item) => item.id !== event.id));
-      setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              setMyMeals((prevEvents) => [...prevEvents, event]);
-            },
-            text: 'Undo',
-          },
-          message: 'Event deleted',
-        });
-      });
+      setTempMeal(event);
+      setSnackbarOpen(true);
     },
     [myMeals],
   );
 
-  const loadPopupForm = React.useCallback((event) => {
-    setName(event.title);
+  const loadPopupForm = useCallback((event: MbscCalendarEvent) => {
+    setName(event.title!);
     setCalories(event.calories);
     setNotes(event.notes);
   }, []);
 
   // handle popup form changes
 
-  const nameChange = React.useCallback((ev) => {
+  const nameChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setName(ev.target.value);
   }, []);
 
-  const caloriesChange = React.useCallback((ev) => {
+  const caloriesChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setCalories(ev.target.value);
   }, []);
 
-  const notesChange = React.useCallback((ev) => {
-    setNotes(ev.target.checked);
+  const notesChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    setNotes(ev.target.value);
   }, []);
 
-  const onDeleteClick = React.useCallback(() => {
-    deleteEvent(tempMeal);
+  const onDeleteClick = useCallback(() => {
+    deleteEvent(tempMeal!);
     setOpen(false);
   }, [deleteEvent, tempMeal]);
 
   // scheduler options
-  const onEventClick = React.useCallback(
-    (args) => {
+  const handleEventClick = useCallback(
+    (args: MbscEventClickEvent) => {
       const event = args.event;
-      setHeader('<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>');
-      setType(event.resource.toString());
+      setHeader(
+        '<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start as string)) + '</div>',
+      );
+      setType(+event.resource!);
       setEdit(true);
       setTempMeal({ ...event });
       // fill popup form with event data
@@ -182,14 +172,18 @@ const App: React.FC = () => {
     [loadPopupForm],
   );
 
-  const onEventCreated = React.useCallback(
-    (args) => {
+  const handleEventCreated = useCallback(
+    (args: MbscEventCreateEvent) => {
       const event = args.event;
-      const resource: any = types.find((obj) => obj.id === event.resource);
+      const resource = types.find((obj) => obj.id === event.resource)!;
       setHeader(
-        '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>',
+        '<div>' +
+          resource.name +
+          '</div><div class="md-meal-type">' +
+          formatDate('DDDD, DD MMMM YYYY', new Date(event.start as string)) +
+          '</div>',
       );
-      setType(event.resource.toString());
+      setType(+event.resource!);
       setEdit(false);
       setTempMeal(event);
       // fill popup form with event data
@@ -200,24 +194,24 @@ const App: React.FC = () => {
     [loadPopupForm],
   );
 
-  const typeChange = React.useCallback(
-    (ev) => {
+  const typeChange = useCallback(
+    (ev: ChangeEvent<HTMLInputElement>) => {
       const value = ev.target.value;
-      setType(value);
+      setType(+value);
       setTempMeal({ ...tempMeal, resource: +value });
     },
     [tempMeal],
   );
 
-  const onEventDeleted = React.useCallback(
-    (args) => {
+  const handleEventDeleted = useCallback(
+    (args: MbscEventDeletedEvent) => {
       deleteEvent(args.event);
     },
     [deleteEvent],
   );
 
   // popup options
-  const popupButtons = React.useMemo<any>(() => {
+  const popupButtons = useMemo<(string | MbscPopupButton)[]>(() => {
     if (isEdit) {
       return [
         'cancel',
@@ -245,7 +239,7 @@ const App: React.FC = () => {
     }
   }, [isEdit, saveEvent]);
 
-  const onClose = React.useCallback(() => {
+  const onPopupClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setMyMeals([...myMeals]);
@@ -253,15 +247,15 @@ const App: React.FC = () => {
     setOpen(false);
   }, [isEdit, myMeals]);
 
-  const extendDefaultEvent = React.useCallback(
-    (args) => ({
+  const extendMyDefaultEvent = useCallback(
+    () => ({
       title: 'New meal',
       allDay: true,
     }),
     [],
   );
 
-  const renderMyResource = (resource: any) => (
+  const renderMyResource = (resource: MbscResource) => (
     <div className="md-meal-planner-cont">
       <div className="md-meal-planner-title" style={{ color: resource.color }}>
         <span className="md-meal-planner-icon" dangerouslySetInnerHTML={{ __html: resource.icon }}></span>
@@ -271,13 +265,27 @@ const App: React.FC = () => {
     </div>
   );
 
-  const myScheduleEvent = React.useCallback((args) => {
-    const event = args.original;
+  const myScheduleEvent = useCallback((args: MbscCalendarEventData) => {
+    const event = args.original!;
     return (
       <div className="md-meal-planner-event">
         <div className="md-meal-planner-event-title">{event.title}</div>
         {event.calories && <div className="md-meal-planner-event-desc">Calories {event.calories} kcal</div>}
       </div>
+    );
+  }, []);
+
+  const handleSnackbarClose = useCallback(() => {
+    setSnackbarOpen(false);
+  }, []);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/meal-planner/',
+      (events: MbscCalendarEvent[]) => {
+        setMyMeals(events);
+      },
+      'jsonp',
     );
   }, []);
 
@@ -291,10 +299,10 @@ const App: React.FC = () => {
         dragToResize={false}
         dragToMove={true}
         clickToCreate={true}
-        extendDefaultEvent={extendDefaultEvent}
-        onEventClick={onEventClick}
-        onEventCreated={onEventCreated}
-        onEventDeleted={onEventDeleted}
+        extendDefaultEvent={extendMyDefaultEvent}
+        onEventClick={handleEventClick}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDeleted}
         renderResource={renderMyResource}
         renderScheduleEventContent={myScheduleEvent}
         cssClass="md-meal-planner-calendar"
@@ -305,16 +313,16 @@ const App: React.FC = () => {
         contentPadding={false}
         headerText={headerText}
         buttons={popupButtons}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isPopupOpen}
+        onClose={onPopupClose}
         responsive={responsivePopup}
         cssClass="md-meal-planner-popup"
       >
         <SegmentedGroup onChange={typeChange} value={type}>
           {types.map((type) => (
-            <SegmentedItem value={type.id.toString()} key={type.id}>
+            <Segmented value={type.id} key={type.id}>
               {type.name}
-            </SegmentedItem>
+            </Segmented>
           ))}
         </SegmentedGroup>
         <div className="mbsc-form-group">
@@ -330,6 +338,17 @@ const App: React.FC = () => {
           </div>
         )}
       </Popup>
+      <Snackbar
+        message="Event deleted"
+        isOpen={isSnackbarOpen}
+        onClose={handleSnackbarClose}
+        button={{
+          action: () => {
+            setMyMeals((prevEvents) => [...prevEvents, tempMeal!]);
+          },
+          text: 'Undo',
+        }}
+      />
     </div>
   );
 };

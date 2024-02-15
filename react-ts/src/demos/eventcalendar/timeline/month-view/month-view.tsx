@@ -1,8 +1,13 @@
-import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useMemo } from 'react';
 
-const App: React.FC = () => {
-  const view = React.useMemo<MbscEventcalendarView>(
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const App: FC = () => {
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'month',
@@ -11,7 +16,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         start: 'dyndatetime(y,m,2)',
@@ -77,7 +82,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -160,9 +165,8 @@ const App: React.FC = () => {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
     />

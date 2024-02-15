@@ -7,10 +7,10 @@ import {
   MbscResource,
   Popup,
   setOptions,
-  Toast,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
-//<demo-only>import { , MbscEventcalendarView, setOptions, Popup, Button, formatDate, toast/* localeImport */ } from '@mobiscroll/react';//</demo-only>
+import { useCallback, useMemo, useRef, useState } from 'react';
+import './custom-event-tooltip.css';
 
 setOptions({
   // localeJs,
@@ -459,25 +459,25 @@ const defaultAppointments: MbscCalendarEvent[] = [
 ];
 
 function App() {
-  const [appointments, setAppointments] = React.useState<MbscCalendarEvent[]>(defaultAppointments);
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [anchor, setAnchor] = React.useState();
-  const [currentEvent, setCurrentEvent] = React.useState<MbscCalendarEvent | null>(null);
-  const [info, setInfo] = React.useState<string>('');
-  const [time, setTime] = React.useState<string>('');
-  const [status, setStatus] = React.useState<string>('');
-  const [reason, setReason] = React.useState<string>('');
-  const [location, setLocation] = React.useState<string>('');
-  const [buttonText, setButtonText] = React.useState<string>('');
-  const [buttonType, setButtonType] = React.useState<
+  const [appointments, setAppointments] = useState<MbscCalendarEvent[]>(defaultAppointments);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [anchor, setAnchor] = useState();
+  const [currentEvent, setCurrentEvent] = useState<MbscCalendarEvent | null>(null);
+  const [info, setInfo] = useState<string>('');
+  const [time, setTime] = useState<string>('');
+  const [status, setStatus] = useState<string>('');
+  const [reason, setReason] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [buttonText, setButtonText] = useState<string>('');
+  const [buttonType, setButtonType] = useState<
     'info' | 'warning' | 'success' | 'light' | 'dark' | 'primary' | 'secondary' | 'danger' | undefined
   >();
-  const [bgColor, setBgColor] = React.useState<string>('');
-  const timerRef = React.useRef<number | null>(null);
-  const [toastText, setToastText] = React.useState<string>('');
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
+  const [bgColor, setBgColor] = useState<string>('');
+  const timerRef = useRef<number | null>(null);
+  const [toastText, setToastText] = useState<string>('');
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'day',
@@ -491,7 +491,7 @@ function App() {
     [],
   );
 
-  const onEventHoverIn = React.useCallback((args: MbscCalendarEvent) => {
+  const handleEventHoverIn = useCallback((args: MbscCalendarEvent) => {
     const event = args.event;
     const resource: MbscResource = doctors.find((dr) => dr.id === event.resource)!;
     const time = formatDate('hh:mm A', new Date(event.start)) + ' - ' + formatDate('hh:mm A', new Date(event.end));
@@ -522,37 +522,37 @@ function App() {
     setOpen(true);
   }, []);
 
-  const onEventHoverOut = React.useCallback(() => {
+  const handleEventHoverOut = useCallback(() => {
     timerRef.current = setTimeout(() => {
       setOpen(false);
     }, 200);
   }, []);
 
-  const onEventClick = React.useCallback(() => {
+  const handleEventClick = useCallback(() => {
     setOpen(true);
   }, []);
 
-  const onMouseEnter = React.useCallback(() => {
+  const onMouseEnter = useCallback(() => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
   }, []);
 
-  const onMouseLeave = React.useCallback(() => {
+  const onMouseLeave = useCallback(() => {
     timerRef.current = setTimeout(() => {
       setOpen(false);
     }, 200);
   }, []);
 
-  const handleCloseToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const showToast = React.useCallback((message: string) => {
+  const showToast = useCallback((message: string) => {
     setToastText(message);
     setToastOpen(true);
   }, []);
-  const setStatusButton = React.useCallback(() => {
+  const setStatusButton = useCallback(() => {
     setOpen(false);
     const index = appointments.findIndex((item: MbscCalendarEvent) => item.id === currentEvent!.id);
     const newApp = [...appointments];
@@ -561,12 +561,12 @@ function App() {
     showToast('Appointment ' + (currentEvent!.confirmed ? 'confirmed' : 'canceled'));
   }, [appointments, currentEvent, showToast]);
 
-  const viewFile = React.useCallback(() => {
+  const viewFile = useCallback(() => {
     setOpen(false);
     showToast('View file');
-  }, []);
+  }, [showToast]);
 
-  const deleteApp = React.useCallback(() => {
+  const deleteApp = useCallback(() => {
     setAppointments(appointments.filter((item: MbscCalendarEvent) => item.id !== currentEvent!.id));
     setOpen(false);
     showToast('Appointment deleted');
@@ -575,15 +575,15 @@ function App() {
   return (
     <div>
       <Eventcalendar
-        view={view}
+        view={myView}
         resources={doctors}
         data={appointments}
         clickToCreate={false}
         dragToCreate={false}
         showEventTooltip={false}
-        onEventHoverIn={onEventHoverIn}
-        onEventHoverOut={onEventHoverOut}
-        onEventClick={onEventClick}
+        onEventHoverIn={handleEventHoverIn}
+        onEventHoverOut={handleEventHoverOut}
+        onEventClick={handleEventClick}
       />
       <Popup
         display="anchored"

@@ -1,5 +1,15 @@
-import { Eventcalendar, formatDate, getJson, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Eventcalendar,
+  formatDate,
+  getJson,
+  // MbscCalendarDayData,
+  MbscCalendarEvent,
+  MbscCalendarEventData,
+  MbscEventcalendarView,
+  MbscResource,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './multi-classroom-timetable.css';
 
 setOptions({
@@ -7,10 +17,10 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'week',
@@ -25,7 +35,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -51,17 +61,7 @@ const App: React.FC = () => {
     [],
   );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/timetable-events/',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const myCustomDay = React.useCallback((day: any) => {
+  const myCustomDay = useCallback((day: { date: Date }) => {
     const date = day.date;
     return (
       <div className="md-timetable-day">
@@ -71,18 +71,18 @@ const App: React.FC = () => {
     );
   }, []);
 
-  const myCustomEvent = React.useCallback(
-    (args: any) => (
+  const myCustomEvent = useCallback(
+    (args: MbscCalendarEventData) => (
       <div>
         <div className="md-timetable-event-title">{args.title}</div>
-        <div className="md-timetable-event-prop">Prof. {args.original.prof}</div>
-        <div className="md-timetable-event-class">{args.original.class} year</div>
+        <div className="md-timetable-event-prop">Prof. {args.original!.prof}</div>
+        <div className="md-timetable-event-class">{args.original!.class} year</div>
       </div>
     ),
     [],
   );
 
-  const myDefaultEvent = React.useCallback(
+  const myDefaultEvent = useCallback(
     () => ({
       title: 'New class',
       prof: 'Stacia Jaden',
@@ -92,10 +92,21 @@ const App: React.FC = () => {
     [],
   );
 
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/timetable-events/',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
+  }, []);
+
   return (
     <Eventcalendar
       className="md-timetable"
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderDay={myCustomDay}
@@ -104,4 +115,5 @@ const App: React.FC = () => {
     />
   );
 };
+
 export default App;

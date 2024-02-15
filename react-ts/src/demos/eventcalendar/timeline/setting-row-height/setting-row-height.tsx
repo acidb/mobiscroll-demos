@@ -1,5 +1,5 @@
-import { Eventcalendar, MbscEventcalendarView, MbscCalendarEvent, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo } from 'react';
 import './setting-row-height.css';
 
 setOptions({
@@ -7,8 +7,8 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const view = React.useMemo<MbscEventcalendarView>(
+const App: FC = () => {
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'month',
@@ -17,7 +17,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myEvents = React.useMemo<MbscCalendarEvent[]>(
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         start: 'dyndatetime(y,m,2)',
@@ -95,7 +95,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 'gro1',
@@ -180,24 +180,27 @@ const App: React.FC = () => {
     [],
   );
 
-  const renderMyResource = (resource: MbscResource) => (
-    <div>
-      {resource.children ? (
-        <div>{resource.name}</div>
-      ) : (
-        <div className="md-timeline-row-height-cont">
-          <div className="md-timeline-row-height-name">{resource.name}</div>
-          <div className="md-timeline-row-height-title">{resource.title}</div>
-          <img className="md-timeline-row-height-avatar" src={resource.img} alt="Avatar" />
-        </div>
-      )}
-    </div>
+  const renderMyResource = useCallback(
+    (resource: MbscResource) => (
+      <div>
+        {resource.children ? (
+          <div>{resource.name}</div>
+        ) : (
+          <div className="md-timeline-row-height-cont">
+            <div className="md-timeline-row-height-name">{resource.name}</div>
+            <div className="md-timeline-row-height-title">{resource.title}</div>
+            <img className="md-timeline-row-height-avatar" src={resource.img} alt="Avatar" />
+          </div>
+        )}
+      </div>
+    ),
+    [],
   );
 
   return (
     <Eventcalendar
       className="md-timeline-row-height"
-      view={view}
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderResource={renderMyResource}

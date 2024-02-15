@@ -1,13 +1,21 @@
-import { Eventcalendar, Page, Button, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
+import {
+  Button,
+  Eventcalendar,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscResource,
+  Page,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
 import moment from 'moment';
-import React from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const myResources = [
+const myResources: MbscResource[] = [
   {
     id: 1,
     name: 'Resource A',
@@ -35,8 +43,8 @@ const myResources = [
   },
 ];
 
-const App: React.FC = () => {
-  const [dateObjData, setDateObjData] = React.useState<any>([
+const App: FC = () => {
+  const [dateObjData, setDateObjData] = useState<MbscCalendarEvent[]>([
     {
       start: new Date(2020, 4, 19, 9),
       end: new Date(2020, 4, 19, 11),
@@ -44,9 +52,9 @@ const App: React.FC = () => {
       resource: 2,
     },
   ]);
-  const [selectedObj, setSelectedObj] = React.useState<any>(new Date(2020, 4, 19));
+  const [selectedObj, setSelectedObj] = useState<Date>(new Date(2020, 4, 19));
 
-  const [isoData, setISOData] = React.useState<any>([
+  const [isoData, setISOData] = useState<MbscCalendarEvent[]>([
     {
       start: '2020-05-20T09:00:00',
       end: '2020-05-20T11:00:00',
@@ -54,9 +62,9 @@ const App: React.FC = () => {
       resource: 2,
     },
   ]);
-  const [selectedISO, setSelectedISO] = React.useState<any>('2020-05-20');
+  const [selectedISO, setSelectedISO] = useState<string>('2020-05-20');
 
-  const [momentData, setMomentData] = React.useState<any>([
+  const [momentData, setMomentData] = useState<MbscCalendarEvent[]>([
     {
       start: moment([2020, 4, 21, 9]),
       end: moment([2020, 4, 21, 11]),
@@ -64,51 +72,42 @@ const App: React.FC = () => {
       resource: 2,
     },
   ]);
-  const [selectedMoment, setSelectedMoment] = React.useState<any>(moment([2020, 4, 21]));
+  const [selectedMoment, setSelectedMoment] = useState<object>(moment([2020, 4, 21]));
 
-  const addDate = React.useCallback(() => {
+  const addDate = useCallback(() => {
     const newEvent = {
       start: new Date(2020, 4, 19, 11, 15),
       end: new Date(2020, 4, 19, 13, 45),
       text: 'New Event',
       resource: 4,
     };
-    setDateObjData([...dateObjData, newEvent]);
+    setDateObjData((dateObjData) => [...dateObjData, newEvent]);
     setSelectedObj(new Date(2020, 4, 19));
   }, []);
 
-  const addISO = React.useCallback(() => {
+  const addISO = useCallback(() => {
     const newEvent = {
       start: '2020-05-20T15:30:00',
       end: '2020-05-20T18:00:00',
       text: 'New Event',
       resource: 1,
     };
-    setISOData([...isoData, newEvent]);
+    setISOData((isoData) => [...isoData, newEvent]);
     setSelectedISO('2020-05-20');
   }, []);
 
-  const addMoment = React.useCallback(() => {
+  const addMoment = useCallback(() => {
     const newEvent = {
       start: moment([2020, 4, 21, 12]),
       end: moment([2020, 4, 21, 15]),
       text: 'New Event',
       resource: 5,
     };
-    setMomentData([...momentData, newEvent]);
+    setMomentData((momentData) => [...momentData, newEvent]);
     setSelectedMoment(moment([2020, 4, 21]));
   }, []);
 
-  const view = React.useMemo<MbscEventcalendarView>(
-    () => ({
-      calendar: {
-        type: 'month',
-        popover: true,
-        count: true,
-      },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'day' } }), []);
 
   return (
     <Page>
@@ -122,7 +121,7 @@ const App: React.FC = () => {
                   start: new Date(2020, 4, 19, 11, 15) <br /> end: new Date(2020, 4, 19, 13, 45)
                 </Button>
               </div>
-              <Eventcalendar data={dateObjData} resources={myResources} view={view} selectedDate={selectedObj} />
+              <Eventcalendar data={dateObjData} resources={myResources} view={myView} selectedDate={selectedObj} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
@@ -133,7 +132,7 @@ const App: React.FC = () => {
                   start: 2020-05-20T15:30:00 <br /> end: 2020-05-20T18:00:00
                 </Button>
               </div>
-              <Eventcalendar data={isoData} resources={myResources} view={view} selectedDate={selectedISO} />
+              <Eventcalendar data={isoData} resources={myResources} view={myView} selectedDate={selectedISO} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
@@ -144,7 +143,7 @@ const App: React.FC = () => {
                   start: moment([2020, 4, 21, 12]) <br /> end: moment([2020, 4, 21, 15])
                 </Button>
               </div>
-              <Eventcalendar data={momentData} resources={myResources} view={view} selectedDate={selectedMoment} />
+              <Eventcalendar data={momentData} resources={myResources} view={myView} selectedDate={selectedMoment} />
             </div>
           </div>
         </div>

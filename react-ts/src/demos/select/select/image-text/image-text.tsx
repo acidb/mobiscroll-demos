@@ -1,5 +1,5 @@
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { MbscSelectChangeEvent, MbscSelectItemData, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useState } from 'react';
 import './image-text.css';
 
 setOptions({
@@ -50,39 +50,44 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
+const App: FC = () => {
+  const [myValue, setValue] = useState<string[]>(['42976', '47883']);
+
   const inputProps = {
     inputStyle: 'box',
     labelStyle: 'stacked',
     placeholder: 'Please select...',
   };
 
-  const renderCustomItem = (item: any) => (
-    <div className="md-image-text-item">
-      <img className="md-image-text-avatar" src={'https://img.mobiscroll.com/demos/' + item.data.avatar + '.png'} alt="Cover" />
-      <div className="md-image-text-name">{item.display}</div>
-    </div>
+  const renderCustomItem = useCallback(
+    () => (item: MbscSelectItemData) => (
+      <div className="md-image-text-item">
+        <img className="md-image-text-avatar" src={'https://img.mobiscroll.com/demos/' + item.data.avatar + '.png'} alt="Cover" />
+        <div className="md-image-text-name">{item.display}</div>
+      </div>
+    ),
+    [],
   );
 
-  const [myValue, setValue] = React.useState(['42976', '47883']);
-  const onChange = (ev: any) => {
-    setValue(ev.value);
-  };
+  const handleOnChange = useCallback(
+    () => (ev: MbscSelectChangeEvent) => {
+      setValue(ev.value);
+    },
+    [],
+  );
 
   return (
-    <Page>
-      <Select
-        data={myData}
-        label="Users"
-        inputProps={inputProps}
-        display="anchored"
-        itemHeight={50}
-        selectMultiple={true}
-        value={myValue}
-        onChange={onChange}
-        renderItem={renderCustomItem}
-      />
-    </Page>
+    <Select
+      data={myData}
+      label="Users"
+      inputProps={inputProps}
+      display="anchored"
+      itemHeight={50}
+      selectMultiple={true}
+      value={myValue}
+      onChange={handleOnChange}
+      renderItem={renderCustomItem}
+    />
   );
 };
 export default App;

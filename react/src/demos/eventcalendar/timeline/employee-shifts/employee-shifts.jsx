@@ -6,7 +6,7 @@ import {
   Input,
   Popup,
   setOptions,
-  snackbar,
+  Snackbar,
   Textarea /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useMemo, useState } from 'react';
@@ -290,6 +290,7 @@ function App() {
   const [headerText, setHeader] = useState('');
   const [shiftDate, setDate] = useState([]);
   const [shiftNotes, setNotes] = useState('');
+  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
 
   const saveEvent = useCallback(() => {
     const start = new Date(shiftDate[0]);
@@ -321,17 +322,7 @@ function App() {
   const deleteEvent = useCallback(
     (event) => {
       setShifts(shifts.filter((item) => item.id !== event.id));
-      setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              setShifts((prevEvents) => [...prevEvents, event]);
-            },
-            text: 'Undo',
-          },
-          message: 'Event deleted',
-        });
-      });
+      setTempShift(event);
     },
     [shifts],
   );
@@ -349,6 +340,7 @@ function App() {
   const onDeleteClick = useCallback(() => {
     deleteEvent(tempShift);
     setPopupOpen(false);
+    setSnackbarOpen(true);
   }, [deleteEvent, tempShift]);
 
   // scheduler options
@@ -476,6 +468,10 @@ function App() {
     setDate(args.value);
   }, []);
 
+  const handleSnackbarClose = useCallback(() => {
+    setSnackbarOpen(false);
+  }, []);
+
   return (
     <div>
       <Eventcalendar
@@ -536,6 +532,17 @@ function App() {
           </div>
         )}
       </Popup>
+      <Snackbar
+        message="Event deleted"
+        isOpen={isSnackbarOpen}
+        onClose={handleSnackbarClose}
+        button={{
+          action: () => {
+            setShifts((prevEvents) => [...prevEvents, tempShift]);
+          },
+          text: 'Undo',
+        }}
+      />
     </div>
   );
 }

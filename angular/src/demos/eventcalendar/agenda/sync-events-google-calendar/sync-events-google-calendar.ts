@@ -43,7 +43,6 @@ export class AppComponent implements OnInit {
   myCalendars: Array<{ summary: string; id: string }> = [];
   myEvents: MbscCalendarEvent[] = [];
   myView: MbscEventcalendarView = { agenda: { type: 'month' } };
-  readonlyCals: string[] = [];
   selectedDate: MbscDateType = new Date();
   timer?: ReturnType<typeof setTimeout>;
 
@@ -122,7 +121,7 @@ export class AppComponent implements OnInit {
     this.popup.close();
   }
 
-  toggleCalendars(ev: Event, calendarId: string): void {
+  toggleCalendar(ev: Event, calendarId: string): void {
     const checked = (ev.target as HTMLInputElement).checked;
     this.calendarData[calendarId].checked = checked;
 

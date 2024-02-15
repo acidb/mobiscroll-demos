@@ -1,5 +1,5 @@
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { MbscSelectItemData, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback } from 'react';
 import './item-templating.css';
 
 setOptions({
@@ -73,14 +73,8 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
-  const inputProps = {
-    inputStyle: 'box',
-    labelStyle: 'stacked',
-    placeholder: 'Please select...',
-  };
-
-  const renderCustomItem = (item: any) => {
+const App: FC = () => {
+  const renderCustomItem = useCallback((item: MbscSelectItemData) => {
     const data = item.data;
     return (
       <div className="md-item-template">
@@ -92,12 +86,19 @@ const App: React.FC = () => {
         <div className="md-item-template-artist">{'by ' + data.artist}</div>
       </div>
     );
-  };
+  }, []);
 
   return (
-    <Page>
-      <Select data={myData} label="Albums" inputProps={inputProps} display="anchored" itemHeight={64} renderItem={renderCustomItem} />
-    </Page>
+    <Select
+      data={myData}
+      display="anchored"
+      inputStyle="outline"
+      itemHeight={64}
+      label="Albums"
+      labelStyle="stacked"
+      placeholder="Please select..."
+      renderItem={renderCustomItem}
+    />
   );
 };
 export default App;

@@ -44,7 +44,7 @@ const disabledMenu = [
 
 const App: FC = () => {
   const [selectValue, setSelectValue] = useState(null);
-  const [menuAnchor, setMenuAnchor] = useState();
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement>();
   const [activeCalendar, setActiveCalendar] = useState<string>('first');
   const [cutCalendar, setCutCalendar] = useState<string>('first');
   const [toDate, setToDate] = useState(new Date());
@@ -156,7 +156,7 @@ const App: FC = () => {
       if (!isMenuOpen.current) {
         args.domEvent.preventDefault();
         setMenuData(disabledMenu);
-        setMenuAnchor(args.domEvent.target);
+        setMenuAnchor(args.target);
         setTimeout(() => {
           setMenuOpen(true);
         });
@@ -388,7 +388,7 @@ const App: FC = () => {
         activateAction('copy');
       }
     }
-  }, [activeCalendar, firstSelectedEvents, secondSelectedEvents, selectedEvents.length, toDate]);
+  }, [activateAction, activeCalendar, firstSelectedEvents, secondSelectedEvents]);
 
   const cutEvents = useCallback(() => {
     if (activeCalendar === 'first') {
@@ -408,7 +408,7 @@ const App: FC = () => {
         setDeletedEvents([]);
       }
     }
-  }, [activeCalendar, firstSelectedEvents, secondSelectedEvents, selectedEvents.length, toDate]);
+  }, [activateAction, activeCalendar, firstSelectedEvents, secondSelectedEvents]);
 
   const undoEvents = useCallback(() => {
     const activeEvents = getActiveEvents();

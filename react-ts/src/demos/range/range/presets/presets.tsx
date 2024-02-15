@@ -1,8 +1,11 @@
-import { Datepicker, Button, Page, Toast /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Button, Datepicker, Page, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useState } from 'react';
 import './presets.css';
 
-import '@mobiscroll/react/dist/css/mobiscroll.min.css';
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const now = new Date();
 const curr = new Date();
@@ -12,17 +15,17 @@ const endWeek = new Date(curr.setDate(curr.getDate() - curr.getDay() + 6));
 const startMonth = new Date(curr.getFullYear(), curr.getMonth() - 1, 1);
 const endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0);
 
-const App: React.FC = () => {
-  const [value, setValue] = React.useState<any>(null);
-  const [isOpen, setOpen] = React.useState(false);
-  const [toastMsg, setMsg] = React.useState('');
+const App: FC = () => {
+  const [value, setValue] = useState<Array<Date> | null>(null);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [toastMsg, setMsg] = useState<string>('');
 
-  const openToast = React.useCallback((message: string) => {
+  const openToast = useCallback((message: string) => {
     setMsg(message);
     setOpen(true);
   }, []);
 
-  const handleCloseToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setOpen(false);
   }, []);
 
@@ -73,15 +76,7 @@ const App: React.FC = () => {
       </div>
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Or by a custom range</div>
-        <Datepicker
-          // theme
-          // locale
-          controls={['calendar']}
-          select="range"
-          display="inline"
-          showRangeLabels={false}
-          value={value}
-        />
+        <Datepicker controls={['calendar']} select="range" display="inline" showRangeLabels={false} value={value} />
       </div>
       <Toast message={toastMsg} isOpen={isOpen} onClose={handleCloseToast} />
     </Page>

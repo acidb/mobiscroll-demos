@@ -1,4 +1,4 @@
-import { Eventcalendar, getJson, setOptions, toast /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo, useState } from 'react';
 import './load-resources-on-demand.css';
 
@@ -8,6 +8,7 @@ setOptions({
 });
 
 function App() {
+  const [isToastOpen, setToastOpen] = useState(false);
   const [myResources, setResources] = useState([
     {
       id: 1,
@@ -178,27 +179,31 @@ function App() {
 
             setEvents(newEvents);
             setResources([...myResources]);
-
-            toast({
-              message: 'Resources loaded',
-            });
+            setToastOpen(true);
           },
           'jsonp',
         );
       }
     },
-    [getResourceById, myEvents, myResources],
+    [getResourceById, myEvents, myResources, setToastOpen],
   );
 
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
   return (
-    <Eventcalendar
-      // drag
-      view={myView}
-      resources={myResources}
-      data={myEvents}
-      onResourceExpand={loadChildResources}
-      className="md-load-resources-on-demand"
-    />
+    <>
+      <Eventcalendar
+        // drag
+        view={myView}
+        resources={myResources}
+        data={myEvents}
+        onResourceExpand={loadChildResources}
+        className="md-load-resources-on-demand"
+      />
+      <Toast message="Resources loaded" isOpen={isToastOpen} onClose={handleCloseToast} />
+    </>
   );
 }
 

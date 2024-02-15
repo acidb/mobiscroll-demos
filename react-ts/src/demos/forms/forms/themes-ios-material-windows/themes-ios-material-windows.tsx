@@ -1,26 +1,26 @@
 import {
+  Button,
+  Checkbox,
+  Dropdown,
   Input,
   Page,
-  Button,
-  Stepper,
   Radio,
   RadioGroup,
-  Textarea,
-  Dropdown,
-  Switch,
-  Checkbox,
-  SegmentedGroup,
   Segmented,
-  setOptions /* localeImport */,
+  SegmentedGroup,
+  setOptions,
+  Stepper,
+  Switch,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <Page>
     <div className="mbsc-form-group">
       <Input label="Input field" placeholder="Input with label" />
@@ -38,7 +38,7 @@ const App: React.FC = () => (
         <Radio value="2" label="Radio 2" />
       </RadioGroup>
       <Stepper label="Stepper" />
-      <div class="mbsc-button-group-block">
+      <div className="mbsc-button-group-block">
         <Button>Button</Button>
       </div>
       <SegmentedGroup name="segmented-group">

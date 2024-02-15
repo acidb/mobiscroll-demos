@@ -1,12 +1,12 @@
-import { Page, Button, Stepper, SegmentedGroup, Segmented, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Button, Page, Segmented, SegmentedGroup, setOptions, Stepper /* localeImport */ } from '@mobiscroll/react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <Page>
     <div className="mbsc-form-group">
       <div className="mbsc-form-group-title">Button colors</div>

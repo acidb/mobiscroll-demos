@@ -1,24 +1,25 @@
 import {
   Eventcalendar,
-  Toast,
-  setOptions,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscResource /* localeImport */,
+  MbscEventCreatedEvent,
+  MbscResource,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [isToastOpen, setToastOpen] = React.useState(false);
-  const [toastText, setToastText] = React.useState();
-  const [toastContext, setToastContext] = React.useState();
+const App: FC = () => {
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastText, setToastText] = useState<string>('');
+  const [toastContext, setToastContext] = useState<string>();
 
-  const myView = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'month',
@@ -27,7 +28,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const firstEvents = React.useMemo<MbscCalendarEvent[]>(
+  const firstEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         start: 'dyndatetime(y,m,2)',
@@ -103,7 +104,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const firstResources = React.useMemo<MbscResource[]>(
+  const firstResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -129,7 +130,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const secondEvents = React.useMemo<MbscCalendarEvent[]>(
+  const secondEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         start: 'dyndatetime(y,m,5)',
@@ -205,7 +206,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const secondResources = React.useMemo<MbscResource[]>(
+  const secondResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -231,11 +232,11 @@ const App: React.FC = () => {
     [],
   );
 
-  const handleCloseToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 
-  const handleFirstCalEventCreated = React.useCallback((args: any) => {
+  const handleFirstCalEventCreated = useCallback((args: MbscEventCreatedEvent) => {
     if (args.action === 'externalDrop') {
       setToastText('Event dropped to Calendar 1');
       setToastContext('.md-drag-drop-first-calendar');
@@ -243,7 +244,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleSecondCalEventCreated = React.useCallback((args: any) => {
+  const handleSecondCalEventCreated = useCallback((args: MbscEventCreatedEvent) => {
     if (args.action === 'externalDrop') {
       setToastText('Event dropped to Calendar 2');
       setToastContext('.md-drag-drop-second-calendar');

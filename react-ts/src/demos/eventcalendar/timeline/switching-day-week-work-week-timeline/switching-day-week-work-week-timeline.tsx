@@ -1,19 +1,19 @@
 import {
+  CalendarNav,
+  CalendarNext,
+  CalendarPrev,
+  CalendarToday,
   Eventcalendar,
   getJson,
-  Toast,
-  setOptions,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscResource,
-  CalendarNav,
+  Segmented,
   SegmentedGroup,
-  SegmentedItem,
-  CalendarPrev,
-  CalendarToday,
-  CalendarNext /* localeImport */,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import React from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './switching-day-week-work-week-timeline.css';
 
 setOptions({
@@ -21,17 +21,17 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [view, setView] = React.useState('week');
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const [isToastOpen, setToastOpen] = React.useState<boolean>(false);
-  const [calView, setCalView] = React.useState<MbscEventcalendarView>({
+const App: FC = () => {
+  const [view, setView] = useState<string>('week');
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [calView, setCalView] = useState<MbscEventcalendarView>({
     timeline: {
       type: 'week',
     },
   });
 
-  const myResources = React.useMemo<MbscResource[]>(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 1,
@@ -72,7 +72,7 @@ const App: React.FC = () => {
     [],
   );
 
-  const myInvalids = React.useMemo(
+  const myInvalids = useMemo(
     () => [
       {
         start: '00:00',
@@ -100,17 +100,7 @@ const App: React.FC = () => {
     [],
   );
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/timeline-events/',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const changeView = (event: any) => {
+  const changeView = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     let calView: MbscEventcalendarView;
 
     switch (event.target.value) {
@@ -140,61 +130,70 @@ const App: React.FC = () => {
 
     setView(event.target.value);
     setCalView(calView);
-  };
+  }, []);
 
-  const renderMyHeader = () => (
-    <React.Fragment>
-      <CalendarNav className="md-work-week-nav" />
-      <div className="md-work-week-picker">
-        <SegmentedGroup value={view} onChange={changeView}>
-          <SegmentedItem value="day">Day</SegmentedItem>
-          <SegmentedItem value="workweek">Work week</SegmentedItem>
-          <SegmentedItem value="week">Week</SegmentedItem>
-        </SegmentedGroup>
+  const renderMyHeader = useCallback(
+    () => (
+      <>
+        <CalendarNav className="md-work-week-nav" />
+        <div className="md-work-week-picker">
+          <SegmentedGroup value={view} onChange={changeView}>
+            <Segmented value="day">Day</Segmented>
+            <Segmented value="workweek">Work week</Segmented>
+            <Segmented value="week">Week</Segmented>
+          </SegmentedGroup>
+        </div>
+        <CalendarPrev className="md-work-week-prev" />
+        <CalendarToday className="md-work-week-today" />
+        <CalendarNext className="md-work-week-next" />
+      </>
+    ),
+    [changeView, view],
+  );
+
+  const renderMyResource = useCallback(
+    (resource: MbscResource) => (
+      <div className="md-work-week-cont">
+        <div className="md-work-week-name">{resource.name}</div>
+        <div className="md-work-week-title">{resource.title}</div>
+        <img className="md-work-week-avatar" src={resource.img} alt="Avatar" />
       </div>
-      <CalendarPrev className="md-work-week-prev" />
-      <CalendarToday className="md-work-week-today" />
-      <CalendarNext className="md-work-week-next" />
-    </React.Fragment>
+    ),
+    [],
   );
 
-  const renderMyResource = (resource: MbscResource) => (
-    <div className="md-work-week-cont">
-      <div className="md-work-week-name">{resource.name}</div>
-      <div className="md-work-week-title">{resource.title}</div>
-      <img className="md-work-week-avatar" src={resource.img} alt="Avatar" />
-    </div>
-  );
-
-  const eventUpdateFail = React.useCallback(() => {
+  const handleEventUpdateFail = useCallback(() => {
     setToastOpen(true);
   }, []);
 
-  const handleCloseToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
+  }, []);
+
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/timeline-events/',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
   }, []);
 
   return (
     <div>
       <Eventcalendar
-        // theme
-        // locale
         view={calView}
         data={myEvents}
         invalid={myInvalids}
         resources={myResources}
         renderHeader={renderMyHeader}
         renderResource={renderMyResource}
-        onEventCreateFailed={eventUpdateFail}
-        onEventUpdateFailed={eventUpdateFail}
+        onEventCreateFailed={handleEventUpdateFail}
+        onEventUpdateFailed={handleEventUpdateFail}
         cssClass="md-switching-timeline-view-cont"
       />
-      <Toast
-        // theme
-        message="Can't schedule outside of working hours"
-        isOpen={isToastOpen}
-        onClose={handleCloseToast}
-      />
+      <Toast message="Can't schedule outside of working hours" isOpen={isToastOpen} onClose={handleCloseToast} />
     </div>
   );
 };

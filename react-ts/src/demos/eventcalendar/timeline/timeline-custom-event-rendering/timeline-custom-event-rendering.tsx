@@ -1,22 +1,21 @@
 import {
-  setOptions,
   Eventcalendar,
   MbscCalendarEvent,
   MbscCalendarEventData,
   MbscEventcalendarView,
-  MbscResource /* localeImport */,
+  MbscResource, 
+  setOptions, /* localeImport */
 } from '@mobiscroll/react';
-import { useCallback, useMemo, FC } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import './timeline-custom-event-rendering.css';
 
 setOptions({
-  // theme,
-  // lang
-})
+  // localeJs,
+  // themeJs
+});
 
 const App: FC = () => {
-
-  const view = useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'day',
@@ -166,9 +165,8 @@ const App: FC = () => {
 
   return (
     <Eventcalendar
-      // theme
-      // locale
-      view={view}
+      // drag
+      view={myView}
       data={myEvents}
       resources={myResources}
       renderScheduleEvent={myScheduleEvent}

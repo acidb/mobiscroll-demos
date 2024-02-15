@@ -1,5 +1,5 @@
-import { Input, Page, Button, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Button, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC } from 'react';
 import './responsive.css';
 
 setOptions({
@@ -7,7 +7,7 @@ setOptions({
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <Page>
     <div className="mbsc-grid mbsc-form-grid">
       <div className="mbsc-row">
@@ -20,7 +20,7 @@ const App: React.FC = () => (
             inputStyle="box"
             labelStyle="floating"
             type="password"
-            passwordToggle="true"
+            passwordToggle={true}
             placeholder="Set a password"
           />
         </div>

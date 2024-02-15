@@ -46,7 +46,7 @@ const App: FC = () => {
     };
     setDateObjData([...dateObjData, newEvent]);
     setSelectedObj(new Date(2020, 4, 19));
-  }, []);
+  }, [dateObjData]);
 
   const addISO = useCallback(() => {
     const newEvent = {
@@ -56,7 +56,7 @@ const App: FC = () => {
     };
     setISOData([...isoData, newEvent]);
     setSelectedISO('2020-05-20');
-  }, []);
+  }, [isoData]);
 
   const addMoment = useCallback(() => {
     const newEvent = {
@@ -66,7 +66,7 @@ const App: FC = () => {
     };
     setMomentData([...momentData, newEvent]);
     setSelectedMoment(moment([2020, 4, 21]));
-  }, []);
+  }, [momentData]);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({

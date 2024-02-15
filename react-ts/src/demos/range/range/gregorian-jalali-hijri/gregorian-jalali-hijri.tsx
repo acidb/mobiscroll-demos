@@ -1,11 +1,11 @@
-import { Datepicker, setOptions, jalaliCalendar, hijriCalendar, localeFa, localeAr /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Datepicker, hijriCalendar, jalaliCalendar, localeAr, localeFa, setOptions } from '@mobiscroll/react';
+import { FC } from 'react';
 
 setOptions({
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <div>
     <Datepicker controls={['calendar']} select="range" display="inline" />
     <Datepicker controls={['calendar']} select="range" display="inline" calendarSystem={jalaliCalendar} locale={localeFa} />

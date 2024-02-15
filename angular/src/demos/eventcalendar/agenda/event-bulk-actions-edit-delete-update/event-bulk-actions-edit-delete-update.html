@@ -6,7 +6,7 @@
           #calendar
           [data]="myEvents"
           [options]="calendarOptions"
-          [(selectedEvents)]="mySelectedEvents"
+          [(selectedEvents)]="selectedEvents"
           [selectMultipleEvents]="true"
         ></mbsc-eventcalendar>
         <mbsc-select style="display: none" #menu [(ngModel)]="menuAction" [anchor]="menuAnchor" [options]="menuOptions"> </mbsc-select>
@@ -20,7 +20,7 @@
         <div class="mbsc-form-group-title">Currently selected</div>
         <div class="mds-bulk-actions-event-list mbsc-padding mbsc-flex-1-1">
           <ul>
-            <li *ngFor="let event of mySelectedEvents;">{{event.title}}</li>
+            <li *ngFor="let event of selectedEvents;">{{event.title}}</li>
           </ul>
         </div>
       </div>

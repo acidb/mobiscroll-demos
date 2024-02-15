@@ -1,4 +1,4 @@
-import { Datepicker, momentTimezone, setOptions } from '@mobiscroll/react';
+import { Datepicker, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment-timezone';
 import { useCallback, useState } from 'react';
 

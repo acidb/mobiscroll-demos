@@ -1,12 +1,12 @@
-import { setOptions, Page, Input, Textarea, Dropdown /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Dropdown, Input, Page, setOptions, Textarea /* localeImport */ } from '@mobiscroll/react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => (
+const App: FC = () => (
   <Page>
     <div className="mbsc-grid">
       <div className="mbsc-row mbsc-justify-content-center">

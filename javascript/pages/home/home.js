@@ -5,7 +5,7 @@ export default {
   markup: `
     <div mbsc-page>
     <div class="mbsc-padding">
-    <h1>Mobiscroll Javascript Demos</h1>
+    <h1>Mobiscroll JavaScript Demos</h1>
 
     <h2>Event Calendar</h2>
 

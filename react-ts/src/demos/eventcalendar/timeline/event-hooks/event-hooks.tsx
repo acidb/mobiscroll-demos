@@ -1,10 +1,36 @@
-import { Eventcalendar, Draggable, getJson, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Draggable,
+  Eventcalendar,
+  getJson,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscResource,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import './event-hooks.css';
 
-const App: React.FC = () => {
-  const [myEvents, setEvents] = React.useState<MbscCalendarEvent[]>([]);
-  const invalid = [
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const dragData1 = {
+  title: 'External drag 1',
+  color: '#ffdab8',
+};
+
+const dragData2 = {
+  title: 'External drag 2',
+  color: '#ddfcf7',
+};
+
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [draggable1, setDraggable1] = useState<HTMLElement | null>(null);
+  const [draggable2, setDraggable2] = useState<HTMLElement | null>(null);
+
+  const myInvalid = [
     {
       start: '12:00',
       end: '13:00',
@@ -16,17 +42,7 @@ const App: React.FC = () => {
     },
   ];
 
-  React.useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/timeline-events/',
-      (events: MbscCalendarEvent[]) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
-  }, []);
-
-  const view = React.useMemo<MbscEventcalendarView>(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'day',
@@ -35,59 +51,51 @@ const App: React.FC = () => {
     [],
   );
 
-  const myResources = [
-    {
-      id: 1,
-      name: 'Ryan',
-      color: '#fdf500',
-    },
-    {
-      id: 2,
-      name: 'Kate',
-      color: '#ff4600',
-    },
-    {
-      id: 3,
-      name: 'John',
-      color: '#ff0101',
-    },
-    {
-      id: 4,
-      name: 'Mark',
-      color: '#239a21',
-    },
-    {
-      id: 5,
-      name: 'Sharon',
-      color: '#8f1ed6',
-    },
-    {
-      id: 6,
-      name: 'Ashley',
-      color: '#01adff',
-    },
-  ];
+  const myResources = useMemo<MbscResource[]>(
+    () => [
+      {
+        id: 1,
+        name: 'Ryan',
+        color: '#fdf500',
+      },
+      {
+        id: 2,
+        name: 'Kate',
+        color: '#ff4600',
+      },
+      {
+        id: 3,
+        name: 'John',
+        color: '#ff0101',
+      },
+      {
+        id: 4,
+        name: 'Mark',
+        color: '#239a21',
+      },
+      {
+        id: 5,
+        name: 'Sharon',
+        color: '#8f1ed6',
+      },
+      {
+        id: 6,
+        name: 'Ashley',
+        color: '#01adff',
+      },
+    ],
+    [],
+  );
 
-  const [draggable1, setDraggable1] = React.useState<any>();
-  const [draggable2, setDraggable2] = React.useState<any>();
-
-  const setDragElm1 = React.useCallback((elm) => {
-    setDraggable1(elm);
+  useEffect(() => {
+    getJson(
+      'https://trial.mobiscroll.com/timeline-events/',
+      (events: MbscCalendarEvent[]) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
   }, []);
-
-  const setDragElm2 = React.useCallback((elm) => {
-    setDraggable2(elm);
-  }, []);
-
-  const dragData1 = {
-    title: 'External drag 1',
-    color: '#ffdab8',
-  };
-
-  const dragData2 = {
-    title: 'External drag 2',
-    color: '#ddfcf7',
-  };
 
   return (
     <>
@@ -102,88 +110,86 @@ const App: React.FC = () => {
         <Draggable dragData={dragData2} element={draggable2} />
       </div>
       <Eventcalendar
-        // theme
-        // locale
         data={myEvents}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
-        view={view}
+        view={myView}
         resources={myResources}
-        invalid={invalid}
-        onCellClick={(event, inst) => {
+        invalid={myInvalid}
+        onCellClick={() => {
           /* Logic for cell click */
         }}
-        onCellDoubleClick={(event, inst) => {
+        onCellDoubleClick={() => {
           /* Logic for cell double click */
         }}
-        onCellRightClick={(event, inst) => {
+        onCellRightClick={() => {
           /* Logic for cell right click */
         }}
-        onDestroy={(event, inst) => {
+        onDestroy={() => {
           // Your custom event handler goes here
         }}
-        onEventClick={(event, inst) => {
+        onEventClick={() => {
           // Logic for event click
         }}
-        onEventCreate={(event, inst) => {
+        onEventCreate={() => {
           // Logic for event create
         }}
-        onEventCreated={(event, inst) => {
+        onEventCreated={() => {
           // Logic for event created
         }}
-        onEventCreateFailed={(event, inst) => {
+        onEventCreateFailed={() => {
           // Logic for failed event create
         }}
-        onEventDelete={(event, inst) => {
+        onEventDelete={() => {
           // Logic for event delete
         }}
-        onEventDeleted={(event, inst) => {
+        onEventDeleted={() => {
           // Logic for event deleted
         }}
-        onEventDoubleClick={(event, inst) => {
+        onEventDoubleClick={() => {
           // Logic for event double click
         }}
-        onEventDragStart={(event, inst) => {
+        onEventDragStart={() => {
           // Logic for event drag start
         }}
-        onEventDragEnd={(event, inst) => {
+        onEventDragEnd={() => {
           // Logic for event drag end
         }}
-        onEventHoverIn={(event, inst) => {
+        onEventHoverIn={() => {
           // Logic for event hover in
         }}
-        onEventHoverOut={(event, inst) => {
+        onEventHoverOut={() => {
           // Logic for event hover out
         }}
-        onEventUpdate={(event, inst) => {
+        onEventUpdate={() => {
           // Logic for event update
         }}
-        onEventUpdated={(event, inst) => {
+        onEventUpdated={() => {
           // Logic for event updated
         }}
-        onEventUpdateFailed={(event, inst) => {
+        onEventUpdateFailed={() => {
           // Logic for failed event update
         }}
-        onEventRightClick={(event, inst) => {
+        onEventRightClick={() => {
           // Logic for event right click
         }}
-        onInit={(event, inst) => {
+        onInit={() => {
           // Logic running on component init
         }}
-        onLabelClick={(event, inst) => {
+        onLabelClick={() => {
           // Logic for label click
         }}
-        onPageChange={(event, inst) => {
+        onPageChange={() => {
           // Your custom event handler goes here
         }}
-        onPageLoaded={(event, inst) => {
+        onPageLoaded={() => {
           // Use it to inject custom markup & attach custom listeners
         }}
-        onPageLoading={(event, inst) => {
+        onPageLoading={() => {
           // Use it to load data on demand
         }}
-        onSelectedDateChange={(event, inst) => {
+        onSelectedDateChange={() => {
           // Use it to keep track of the selected date externally
         }}
       />

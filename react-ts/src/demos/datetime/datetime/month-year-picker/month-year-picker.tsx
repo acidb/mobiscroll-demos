@@ -1,7 +1,12 @@
-import { Datepicker, Input, Page /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Datepicker, Input, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC } from 'react';
 
-const App: React.FC = () => {
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+const App: FC = () => {
   const now = new Date();
   const until = new Date(now.getFullYear() + 10, now.getMonth());
 

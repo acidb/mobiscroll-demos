@@ -1,5 +1,18 @@
-import { Page, Input, Popup, Select, Datepicker, Button, formatDate, options, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import {
+  Button,
+  Datepicker,
+  formatDate,
+  Input,
+  MbscDatepickerChangeEvent,
+  MbscDateType,
+  MbscSelectChangeEvent,
+  options,
+  Page,
+  Popup,
+  Select,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import './date-filtering-with-predefined-ranges.css';
 
 setOptions({
@@ -53,14 +66,14 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
-  const [isOpen, setOpen] = React.useState<boolean>(false);
-  const [start, startRef] = React.useState<any>(null);
-  const [end, endRef] = React.useState<any>(null);
-  const [selected, setSelected] = React.useState<string>('custom');
-  const [selectedDate, setSelectedDate] = React.useState<any>([startDate, endDate]);
-  const [inputValue, setInputValue] = React.useState<any>();
-  const [disabledInput, setDisabledInput] = React.useState<boolean>(false);
+const App: FC = () => {
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [start, startRef] = useState<Input | null>(null);
+  const [end, endRef] = useState<Input | null>(null);
+  const [selected, setSelected] = useState<string>('custom');
+  const [selectedDate, setSelectedDate] = useState<MbscDateType[]>([startDate, endDate]);
+  const [inputValue, setInputValue] = useState<string>('');
+  const [disabledInput, setDisabledInput] = useState<boolean>(false);
 
   const respPopup = {
     xsmall: {
@@ -72,7 +85,7 @@ const App: React.FC = () => {
           handler: () => {
             const date = selectedDate;
 
-            changeInputValue(date[0], date[1] || date[0]);
+            changeInputValue(date[0] as string, (date[1] as string) || (date[0] as string));
             setOpen(false);
           },
         },
@@ -92,27 +105,27 @@ const App: React.FC = () => {
     },
   };
 
-  const inputClick = React.useCallback(() => {
+  const inputClick = useCallback(() => {
     setOpen(true);
   }, []);
 
-  const changeInputValue = React.useCallback((start, end) => {
+  const changeInputValue = useCallback((start: string, end: string) => {
     const locale = options.locale || {};
     const dateFormat = locale.dateFormat || 'DD/MM/YYYY';
 
     setInputValue(formatDate(dateFormat, new Date(start)) + ' - ' + formatDate(dateFormat, new Date(end)));
   }, []);
 
-  const applyClick = React.useCallback(() => {
-    changeInputValue(selectedDate[0], selectedDate[1] || selectedDate[0]);
+  const applyClick = useCallback(() => {
+    changeInputValue(selectedDate[0] as string, (selectedDate[1] as string) || (selectedDate[0] as string));
     setOpen(false);
   }, [selectedDate, changeInputValue]);
 
-  const cancelClick = React.useCallback(() => {
+  const cancelClick = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const onChange = React.useCallback((event) => {
+  const onChange = useCallback((event: MbscSelectChangeEvent) => {
     const s = event.value;
 
     if (s === 'custom') {
@@ -149,19 +162,19 @@ const App: React.FC = () => {
     setSelected(s);
   }, []);
 
-  const onDateChange = React.useCallback((ev) => {
-    const date = ev.value;
+  const onDateChange = useCallback((ev: MbscDatepickerChangeEvent) => {
+    const date = ev.value as MbscDateType[];
 
     setDisabledInput(false);
     setSelected('custom');
     setSelectedDate(date);
   }, []);
 
-  const onClose = React.useCallback(() => {
+  const onClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     changeInputValue(startDate, endDate);
   });
 

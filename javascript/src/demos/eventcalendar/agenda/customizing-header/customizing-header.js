@@ -9,27 +9,53 @@ export default {
     });
 
     var currentDate = new Date();
+
     var calendar = mobiscroll.eventcalendar('#demo-custom-header', {
-      view: {
-        agenda: { type: 'month' },
-      },
+      view: { agenda: { type: 'month' } },
       onSelectedDateChange: function (args) {
         currentDate = args.date;
       },
       renderHeader: function () {
         return (
-          '<div mbsc-calendar-nav class="md-custom-header-nav"></div>' +
-          '<div class="md-custom-header-controls">' +
-          '<button id="nav-to-prev-page" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="md-custom-header-button"></button>' +
-          '<div mbsc-calendar-today class="md-custom-header-today"></div>' +
-          '<button id="nav-to-next-page" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="md-custom-header-button"></button>' +
+          '<div mbsc-calendar-nav class="mds-custom-header-nav"></div>' +
+          '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">' +
+          '<button id="demo-custom-header-prev" mbsc-button data-variant="flat" data-icon="material-arrow-back" class="mds-custom-header-button"></button>' +
+          '<button mbsc-calendar-today></button>' +
+          '<button id="demo-custom-header-next" mbsc-button data-variant="flat" data-icon="material-arrow-forward" class="mds-custom-header-button"></button>' +
           '</div>' +
-          '<div class="md-custom-header-view">' +
-          '<label><input data-icon="material-view-day" mbsc-segmented type="radio" name="view" value="agenda" class="md-view-change" checked></label>' +
-          '<label><input data-icon="calendar" mbsc-segmented type="radio" name="view" value="calendar" class="md-view-change"></label>' +
+          '<div class="mds-custom-header-switch">' +
+          '<label><input data-icon="material-view-day" mbsc-segmented type="radio" name="view" value="agenda" class="mds-custom-header-view-change" checked></label>' +
+          '<label><input data-icon="calendar" mbsc-segmented type="radio" name="view" value="calendar" class="mds-custom-header-view-change"></label>' +
           '</div>'
         );
       },
+    });
+
+    document.querySelectorAll('.mds-custom-header-view-change').forEach(function (elm) {
+      elm.addEventListener('change', function (ev) {
+        switch (ev.target.value) {
+          case 'calendar':
+            calendar.setOptions({
+              view: { calendar: { type: 'month' } },
+            });
+            break;
+          case 'agenda':
+            calendar.setOptions({
+              view: { agenda: { type: 'month' } },
+            });
+            break;
+        }
+      });
+    });
+
+    document.getElementById('demo-custom-header-prev').addEventListener('click', function () {
+      currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+      calendar.navigate(currentDate);
+    });
+
+    document.getElementById('demo-custom-header-next').addEventListener('click', function () {
+      currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+      calendar.navigate(currentDate);
     });
 
     mobiscroll.getJson(
@@ -39,89 +65,39 @@ export default {
       },
       'jsonp',
     );
-
-    document.querySelectorAll('.md-view-change').forEach(function (elm) {
-      elm.addEventListener('change', function (ev) {
-        switch (ev.target.value) {
-          case 'calendar':
-            calendar.setOptions({
-              view: {
-                calendar: { labels: true },
-              },
-            });
-            break;
-          case 'agenda':
-            calendar.setOptions({
-              view: {
-                agenda: { type: 'month' },
-              },
-            });
-            break;
-        }
-      });
-    });
-
-    document.getElementById('nav-to-prev-page').addEventListener('click', function () {
-      var prevPage = new Date(currentDate);
-
-      prevPage.setDate(1);
-      prevPage.setMonth(prevPage.getMonth() - 1);
-      calendar.navigate(prevPage);
-      currentDate = prevPage;
-    });
-
-    document.getElementById('nav-to-next-page').addEventListener('click', function () {
-      var nextPage = new Date(currentDate);
-
-      nextPage.setDate(1);
-      nextPage.setMonth(nextPage.getMonth() + 1);
-      calendar.navigate(nextPage);
-      currentDate = nextPage;
-    });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="md-custom-header">
-    <div id="demo-custom-header"></div>
-</div>
+<div id="demo-custom-header"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-custom-header-controls {
-    display: flex;
-    flex: 1 0 auto;
-    justify-content: center;
-    align-items: center;
+.mds-custom-header-nav {
+  width: 180px;
 }
 
-.md-custom-header-nav,
-.md-custom-header-view {
-    width: 180px;
+.mds-custom-header-button.mbsc-button {
+  font-size: 20px;
+  height: auto;
+  padding: 0;
+  margin: 0;
 }
 
-.md-custom-header-button.mbsc-button {
-    font-size: 20px;
-    height: auto;
-    padding: 0;
-    margin: 0;
+.mds-custom-header-switch .mbsc-segmented {
+  width: 110px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.md-custom-header .mbsc-segmented {
-    width: 110px;
-    float: right;
-    margin-top: 0;
-    margin-bottom: 0;
+.mds-custom-header-switch .mbsc-segmented.mbsc-material,
+.mds-custom-header-switch .mbsc-segmented.mbsc-windows {
+  padding: 0;
 }
 
-.md-custom-header .mbsc-material.mbsc-segmented,
-.md-custom-header .mbsc-windows.mbsc-segmented {
-    padding: 0;
-}
-
-.md-custom-header .mbsc-segmented .mbsc-segmented-button {
-    font-size: 20px;
-    height: 32px;
-    padding: 0;
+.mds-custom-header-switch .mbsc-segmented-button.mbsc-button {
+  font-size: 20px;
+  height: 32px;
+  padding: 0;
 }
   `,
 };

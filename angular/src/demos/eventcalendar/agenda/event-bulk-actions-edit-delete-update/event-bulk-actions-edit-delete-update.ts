@@ -37,16 +37,15 @@ export class AppComponent implements OnInit {
 
   confirmOpen: boolean = false;
   myEvents: MbscCalendarEvent[] = [];
-  mySelectedEvents: MbscCalendarEvent[] = [];
+  selectedEvent?: MbscCalendarEvent;
+  selectedEvents: MbscCalendarEvent[] = [];
   menuAction: string | null = null;
   menuAnchor!: HTMLElement;
 
   calendarOptions: MbscEventcalendarOptions = {
     selectMultipleEvents: true,
     view: {
-      agenda: {
-        type: 'month',
-      },
+      agenda: { type: 'month' },
     },
     onEventUpdate: (args) => {
       if (args.isDelete) {
@@ -60,14 +59,13 @@ export class AppComponent implements OnInit {
     onEventDelete: () => {
       if (!this.confirmOpen) {
         this.deleteSelectedEvents();
+        return false;
       }
-      return false;
-    },
-    onSelectedEventsChange: (args) => {
-      this.mySelectedEvents = args.events;
+      return true;
     },
     onEventRightClick: (args) => {
       args.domEvent.preventDefault();
+      this.selectedEvent = args.event;
       this.menuAnchor = args.domEvent.target;
       setTimeout(() => {
         this.menu.open();
@@ -100,7 +98,8 @@ export class AppComponent implements OnInit {
 
   updateSelectedEvents(): void {
     const updatedEvents = [...this.myEvents];
-    for (const event of this.mySelectedEvents) {
+    const events = this.selectedEvents.length === 0 && this.selectedEvent ? [this.selectedEvent] : this.selectedEvents;
+    for (const event of events) {
       const index = updatedEvents.findIndex((x) => x.id === event.id);
       // Handle recurring event occurrence
       if (event.recurring) {
@@ -108,14 +107,14 @@ export class AppComponent implements OnInit {
         const newEvent: MbscCalendarEvent = {
           ...event,
           color: 'orange',
-          id: event.id + '_' + formatDate('YYYY-MM-DD', new Date(event.start as string)),
+          id: event.id + '_' + formatDate('YYYY-MM-DD', event.start as Date),
           recurring: undefined,
         };
         // Update the original event with a recurring exception
-        const updatedEvent: MbscCalendarEvent = {
-          ...event.original!,
-          recurringException: [...((event.recurringException as string[]) || []), event.start],
-        };
+        const updatedEvent = event.original!;
+        const updatedExceptionDates = (updatedEvent.recurringException as Date[]) || [];
+        updatedExceptionDates.push(event.start as Date);
+        updatedEvent.recurringException = updatedExceptionDates;
         updatedEvents.splice(index, 1, updatedEvent);
         updatedEvents.push(newEvent);
       } else {
@@ -125,30 +124,31 @@ export class AppComponent implements OnInit {
       }
     }
     this.myEvents = updatedEvents;
-    this.mySelectedEvents = [];
+    this.selectedEvents = [];
     this.notify.toast({
       message: "All selected event's color changed to orange",
     });
   }
 
   deleteSelectedEvents(): void {
+    const events = this.selectedEvents.length === 0 && this.selectedEvent ? [this.selectedEvent] : this.selectedEvents;
     this.confirmOpen = true;
     this.notify.confirm({
       title: 'Are you sure you want to delete the following events?',
-      message: this.mySelectedEvents.map((e) => e.title).join(','),
+      message: events.map((e) => e.title).join(', '),
       okText: 'Delete',
       callback: (result) => {
         if (result) {
           const updatedEvents = [...this.myEvents];
-          for (const event of this.mySelectedEvents) {
+          for (const event of events) {
             const index = updatedEvents.findIndex((x) => x.id === event.id);
             // Handle recurring event occurrence
             if (event.recurring) {
               // Update the original event with a recurring exception
-              const updatedEvent: MbscCalendarEvent = {
-                ...event.original!,
-                recurringException: [...((event.recurringException as string[]) || []), event.start],
-              };
+              const updatedEvent = event.original!;
+              const updatedExceptionDates = (updatedEvent.recurringException as Date[]) || [];
+              updatedExceptionDates.push(event.start as Date);
+              updatedEvent.recurringException = updatedExceptionDates;
               updatedEvents.splice(index, 1, updatedEvent);
             } else {
               // Remove the event
@@ -156,7 +156,7 @@ export class AppComponent implements OnInit {
             }
           }
           this.myEvents = updatedEvents;
-          this.mySelectedEvents = [];
+          this.selectedEvents = [];
           this.notify.toast({
             message: 'Deleted',
           });
@@ -167,14 +167,14 @@ export class AppComponent implements OnInit {
   }
 
   selectAllEvents(): void {
-    this.mySelectedEvents = this.calendar.getEvents();
+    this.selectedEvents = this.calendar.getEvents();
     this.notify.toast({
-      message: 'All events selected this month',
+      message: 'All events selected from view',
     });
   }
 
   resetSelection(): void {
-    this.mySelectedEvents = [];
+    this.selectedEvents = [];
     this.notify.toast({
       message: 'Selection cleared',
     });

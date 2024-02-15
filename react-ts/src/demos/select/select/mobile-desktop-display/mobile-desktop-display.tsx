@@ -1,5 +1,4 @@
-import { Select, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Select, setOptions /* localeImport */ } from '@mobiscroll/react';
 
 setOptions({
   // localeJs,
@@ -47,49 +46,13 @@ const myData = [
 
 function App() {
   return (
-    <Page>
+    <>
       <Select data={myData} display="inline" />
-      <Select
-        data={myData}
-        display="anchored"
-        inputProps={{
-          label: 'Anchored',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Select
-        data={myData}
-        display="top"
-        inputProps={{
-          label: 'Top',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Select
-        data={myData}
-        display="bottom"
-        inputProps={{
-          label: 'Bottom',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-      <Select
-        data={myData}
-        display="center"
-        inputProps={{
-          label: 'Center',
-          labelStyle: 'stacked',
-          inputStyle: 'outline',
-          placeholder: 'Please Select...',
-        }}
-      />
-    </Page>
+      <Select data={myData} display="anchored" label="Anchored" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+      <Select data={myData} display="top" label="Top" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+      <Select data={myData} display="bottom" label="Bottom" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+      <Select data={myData} display="center" label="Center" labelStyle="stacked" inputStyle="outline" placeholder="Please Select..." />
+    </>
   );
 }
 

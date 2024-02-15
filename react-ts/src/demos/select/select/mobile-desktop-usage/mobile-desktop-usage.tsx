@@ -1,5 +1,5 @@
-import { Select, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Button, MbscSelectChangeEvent, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import './mobile-desktop-usage.css';
 
 setOptions({
@@ -26,30 +26,41 @@ const myData = [
   },
 ];
 
-const App: React.FC = () => {
-  const [openPicker, setOpenPicker] = React.useState(false);
-  const [selected, setSelected] = React.useState<string>('1');
+const App: FC = () => {
+  const [openPicker, setOpenPicker] = useState<boolean>(false);
+  const [selected, setSelected] = useState<string>('1');
 
-  const show = () => {
+  const handleClick = useCallback(() => {
     setOpenPicker(true);
-  };
+  }, []);
 
-  const onClose = () => {
+  const handleChange = useCallback((ev: MbscSelectChangeEvent) => {
+    setSelected(ev.value);
+  }, []);
+
+  const handleClose = useCallback(() => {
     setOpenPicker(false);
-  };
+  }, []);
 
-  const inputProps = {
-    className: 'md-mobile-picker-input',
-    placeholder: 'Please Select...',
-  };
+  const inputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-input',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
 
-  const boxInputProps = {
-    className: 'md-mobile-picker-box-label',
-    inputStyle: 'box',
-    placeholder: 'Please Select...',
-  };
+  const boxInputProps = useMemo(
+    () => ({
+      className: 'md-mobile-picker-box-label',
+      inputStyle: 'outline',
+      placeholder: 'Please Select...',
+    }),
+    [],
+  );
+
   return (
-    <Page>
+    <>
       <div className="mbsc-grid">
         <div className="mbsc-form-group">
           <div className="mbsc-row">
@@ -72,12 +83,13 @@ const App: React.FC = () => {
                 showOnClick={false}
                 showOnFocus={false}
                 isOpen={openPicker}
-                onClose={onClose}
-                defaultValue={selected}
+                value={selected}
+                onChange={handleChange}
+                onClose={handleClose}
               />
             </div>
             <div className="mbsc-col-4">
-              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={show}>
+              <Button variant="outline" color="primary" className="md-mobile-picker-button" onClick={handleClick}>
                 Show picker
               </Button>
             </div>
@@ -87,7 +99,7 @@ const App: React.FC = () => {
           <div className="mbsc-row">
             <div className="mbsc-col-12">
               <div className="mbsc-txt-muted md-mobile-picker-header">Use the picker with a Mobiscroll input</div>
-              <Select data={myData} inputProps={boxInputProps} />
+              <Select data={myData} inputProps={boxInputProps} touchUi={true} />
             </div>
           </div>
         </div>
@@ -96,7 +108,7 @@ const App: React.FC = () => {
       <div className="md-mobile-picker-inline">
         <Select display="inline" data={myData} />
       </div>
-    </Page>
+    </>
   );
 };
 export default App;

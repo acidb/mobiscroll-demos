@@ -1,6 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscPageLoadingEvent, Notifications /* localeImport */ } from '@mobiscroll/angular';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscPageLoadingEvent,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
+
+setOptions({
+  // locale,
+  // theme
+});
 
 @Component({
   selector: 'app-agenda-load-events-on-demand',

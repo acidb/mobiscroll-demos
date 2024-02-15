@@ -3,15 +3,16 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
+    mobiscroll.setOptions({
+      // locale,
+      // theme
+    });
+
     var now = new Date();
 
-    mobiscroll.eventcalendar('#demo-loading-inline-data', {
-      // locale,
-      // theme,
+    mobiscroll.eventcalendar('#demo-inline-data', {
       view: {
-        agenda: {
-          type: 'month',
-        },
+        agenda: { type: 'month' },
       },
       data: [
         {
@@ -288,6 +289,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-loading-inline-data"></div>
+<div id="demo-inline-data"></div>
   `,
 };

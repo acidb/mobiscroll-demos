@@ -3,48 +3,37 @@ import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascrip
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
+    mobiscroll.setOptions({
+      // theme
+    });
+
     var gregorian;
     var jalali;
     var hijri;
 
     gregorian = mobiscroll.eventcalendar('#demo-gregorian', {
-      // locale,
-      // theme,
+      locale: mobiscroll.localeEn,
       view: {
-        calendar: {
-          type: 'week',
-        },
-        agenda: {
-          type: 'day',
-        },
+        calendar: { type: 'week' },
+        agenda: { type: 'day' },
       },
     });
 
     jalali = mobiscroll.eventcalendar('#demo-jalali', {
-      // theme,
       calendarSystem: mobiscroll.jalaliCalendar,
       locale: mobiscroll.locale.fa,
       view: {
-        calendar: {
-          type: 'week',
-        },
-        agenda: {
-          type: 'day',
-        },
+        calendar: { type: 'week' },
+        agenda: { type: 'day' },
       },
     });
 
     hijri = mobiscroll.eventcalendar('#demo-hijri', {
-      // theme,
       calendarSystem: mobiscroll.hijriCalendar,
       locale: mobiscroll.locale.ar,
       view: {
-        calendar: {
-          type: 'week',
-        },
-        agenda: {
-          type: 'day',
-        },
+        calendar: { type: 'week' },
+        agenda: { type: 'day' },
       },
     });
 
@@ -60,29 +49,29 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div mbsc-form>
-    <div class="mbsc-grid">
-        <div class="mbsc-row">
-            <div class="mbsc-col-sm-12 mbsc-col-md-4">
-                <div class="mbsc-form-group">
-                    <div class="mbsc-form-group-title">Gregorian calendar</div>
-                    <div id="demo-gregorian"></div>
-                </div>
-            </div>
-            <div class="mbsc-col-sm-12 mbsc-col-md-4">
-                <div class="mbsc-form-group">
-                    <div class="mbsc-form-group-title">Jalali calendar</div>
-                    <div id="demo-jalali"></div>
-                </div>
-            </div>
-            <div class="mbsc-col-sm-12 mbsc-col-md-4">
-                <div class="mbsc-form-group">
-                    <div class="mbsc-form-group-title">Hijri calendar</div>
-                    <div id="demo-hijri"></div>
-                </div>
-            </div>
+<div mbsc-page>
+  <div class="mbsc-grid">
+    <div class="mbsc-row">
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Gregorian calendar</div>
+          <div id="demo-gregorian"></div>
         </div>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Jalali calendar</div>
+          <div id="demo-jalali"></div>
+        </div>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Hijri calendar</div>
+          <div id="demo-hijri"></div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
   `,
 };

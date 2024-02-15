@@ -1,15 +1,15 @@
-import { Page, Button, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Button, Page, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [isToastOpen, setToastOpen] = React.useState(false);
+const App: FC = () => {
+  const [isToastOpen, setToastOpen] = useState(false);
 
-  const handleCloseToast = React.useCallback(() => {
+  const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
 

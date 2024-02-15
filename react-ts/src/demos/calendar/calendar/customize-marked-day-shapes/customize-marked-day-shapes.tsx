@@ -1,17 +1,15 @@
-import { Datepicker, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { Datepicker, MbscCalendarMarked, setOptions /* localeImport */ } from '@mobiscroll/react';
 import './customize-marked-day-shapes.css';
+import { FC, useMemo } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => (
-  <Datepicker
-    controls={['calendar']}
-    display="inline"
-    marked={[
+const App: FC = () => {
+  const myMarked = useMemo<MbscCalendarMarked[]>(
+    () => [
       { date: 'dyndatetime(y,m,2)', color: '#46c4f3', markCssClass: 'square-mark' },
       { date: 'dyndatetime(y,m,4)', color: '#159833', markCssClass: 'triangle-mark' },
       { date: 'dyndatetime(y,m,6)', color: '#b05cbf', markCssClass: 'square-mark' },
@@ -25,7 +23,14 @@ const App: React.FC = () => (
       { date: 'dyndatetime(y,m,18)', color: '#89d7c9', markCssClass: 'triangle-mark' },
       { date: 'dyndatetime(y,m,21)', color: '#ffc400', markCssClass: 'square-mark' },
       { date: 'dyndatetime(y,m,26)', color: '#8dec7d', markCssClass: 'triangle-mark' },
-    ]}
-  />
-);
+    ],
+    [],
+  );
+
+  return (
+    <div>
+      <Datepicker display="inline" marked={myMarked} />
+    </div>
+  );
+};
 export default App;

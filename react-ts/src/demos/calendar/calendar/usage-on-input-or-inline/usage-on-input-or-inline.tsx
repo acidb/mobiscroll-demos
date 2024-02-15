@@ -1,29 +1,16 @@
 import { Datepicker, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
-import React from 'react';
+import { FC } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const inputProps = {
-    placeholder: 'Please Select...',
-  };
-
-  const boxInputProps = {
-    label: 'Range',
-    labelStyle: 'stacked',
-    inputStyle: 'outline',
-    placeholder: 'Please Select...',
-  };
-
-  return (
-    <Page>
-      <Datepicker controls={['calendar']} inputComponent="input" inputProps={inputProps} />
-      <Datepicker controls={['calendar']} inputProps={boxInputProps} />
-      <Datepicker controls={['calendar']} display="inline" />
-    </Page>
-  );
-};
+const App: FC = () => (
+  <Page>
+    <Datepicker inputComponent="input" inputProps={{ placeholder: 'Please Select...' }} />
+    <Datepicker inputStyle="outline" label="Date" labelStyle="stacked" placeholder="Please Select..." />
+    <Datepicker display="inline" />
+  </Page>
+);
 export default App;

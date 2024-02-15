@@ -1,41 +1,42 @@
-import { Datepicker, Button, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Datepicker, MbscDatepickerChangeEvent, Page, setOptions /* localeImport */ } from '@mobiscroll/react';
 import moment from 'moment';
-import React from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const App: React.FC = () => {
-  const [obj, setObj] = React.useState<any>();
-  const objString = React.useMemo(() => (obj ? obj.toString() : null), [obj]);
-  const [iso, setISO] = React.useState<any>();
-  const [momentJs, setMomentJs] = React.useState<any>();
-  const momentString = React.useMemo<any>(() => (momentJs ? momentJs[0].toString() + ' - ' + momentJs[1].toString() : null), [momentJs]);
+const App: FC = () => {
+  const [dateObj, setDateObj] = useState<Date[]>();
+  const [iso, setISO] = useState<string[]>();
+  const [momentObj, setMomentObj] = useState<object[]>();
 
-  const setCustomObj = React.useCallback<any>(() => {
-    setObj([new Date(2020, 10, 15), new Date(2020, 10, 21)]);
+  const objString = useMemo(() => (dateObj ? dateObj.toString() : null), [dateObj]);
+  const momentString = useMemo(() => (momentObj ? momentObj[0].toString() + ' - ' + momentObj[1].toString() : null), [momentObj]);
+
+  const setCustomObj = useCallback(() => {
+    setDateObj([new Date(2020, 10, 15), new Date(2020, 10, 21)]);
   }, []);
 
-  const objChange = React.useCallback<any>((ev: any) => {
-    setObj(ev.value);
-  }, []);
-
-  const setCustomISO = React.useCallback<any>(() => {
+  const setCustomISO = useCallback(() => {
     setISO(['2020-05-20', '2020-05-26']);
   }, []);
 
-  const isoChange = React.useCallback<any>((ev: any) => {
-    setISO(ev.value);
+  const setCustomMoment = useCallback(() => {
+    setMomentObj([moment([2020, 2, 6]), moment([2020, 2, 12])]);
   }, []);
 
-  const setCustomMoment = React.useCallback<any>(() => {
-    setMomentJs([moment([2020, 2, 6]), moment([2020, 2, 12])]);
+  const handleDateObjChange = useCallback((ev: MbscDatepickerChangeEvent) => {
+    setDateObj(ev.value as Date[]);
   }, []);
 
-  const momentChange = React.useCallback<any>((ev: any) => {
-    setMomentJs(ev.value);
+  const handleIsoChange = useCallback((ev: MbscDatepickerChangeEvent) => {
+    setISO(ev.value as string[]);
+  }, []);
+
+  const handleMomentChange = useCallback((ev: MbscDatepickerChangeEvent) => {
+    setMomentObj(ev.value as object[]);
   }, []);
 
   return (
@@ -45,18 +46,35 @@ const App: React.FC = () => {
         <div className="mbsc-button-group-block">
           <Button onClick={setCustomObj}>Set: Sun Nov 15 2020 - Sat Nov 21 2020</Button>
         </div>
-        <Datepicker controls={['calendar']} select="range" value={obj} onChange={objChange} label="Date object" />
+        <Datepicker
+          controls={['calendar']}
+          select="range"
+          value={dateObj}
+          onChange={handleDateObjChange}
+          inputStyle="outline"
+          label="Date object"
+          labelStyle="stacked"
+        />
       </div>
-      <div className="mbsc-form-group mbsc-padding">Return value: {objString}</div>
+      <div className="mbsc-padding">Return value: {objString}</div>
 
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Working with Date strings</div>
         <div className="mbsc-button-group-block">
           <Button onClick={setCustomISO}>Set: 2020-05-20 - 2020-05-26</Button>
         </div>
-        <Datepicker controls={['calendar']} select="range" returnFormat="iso8601" value={iso} onChange={isoChange} label="ISO string" />
+        <Datepicker
+          controls={['calendar']}
+          select="range"
+          returnFormat="iso8601"
+          value={iso}
+          onChange={handleIsoChange}
+          inputStyle="outline"
+          label="ISO string"
+          labelStyle="stacked"
+        />
       </div>
-      <div className="mbsc-form-group mbsc-padding">Return value: {iso}</div>
+      <div className="mbsc-padding">Return value: {iso}</div>
 
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Working with Moment JS Objects</div>
@@ -67,12 +85,14 @@ const App: React.FC = () => {
           controls={['calendar']}
           select="range"
           returnFormat="moment"
-          value={momentJs}
-          onChange={momentChange}
+          value={momentObj}
+          onChange={handleMomentChange}
+          inputStyle="outline"
           label="Moment JS"
+          labelStyle="stacked"
         />
       </div>
-      <div className="mbsc-form-group mbsc-padding">Return value: {momentString}</div>
+      <div className="mbsc-padding">Return value: {momentString}</div>
     </Page>
   );
 };

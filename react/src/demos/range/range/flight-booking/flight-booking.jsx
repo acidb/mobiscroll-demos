@@ -10,6 +10,11 @@ const now = new Date();
 const min = now;
 const max = new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
 
+function nrOfValues(instance) {
+  const tempVal = (instance && instance.getTempVal()) || [];
+  return tempVal.filter((v) => v).length;
+}
+
 function App() {
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
@@ -65,11 +70,6 @@ function App() {
     ],
     [disabled, inst],
   );
-
-  function nrOfValues(instance) {
-    const tempVal = (instance && instance.getTempVal()) || [];
-    return tempVal.filter((v) => v).length;
-  }
 
   return (
     <Page>
