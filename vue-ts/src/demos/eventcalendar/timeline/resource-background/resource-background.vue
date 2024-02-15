@@ -67,7 +67,7 @@ const myResources: MbscResource[] = [
 },
 {
   id: 2,
-  name: 'Resource B (ticker borders defined with the `cssClass` property)',
+  name: 'Resource B',
   color: '#1dab2f',
   cssClass: 'md-tick-border'
 },
@@ -78,13 +78,13 @@ const myResources: MbscResource[] = [
 },
 {
   id: 4,
-  name: 'Resource D (resource only background defined with the `cssClass` property)',
+  name: 'Resource D',
   color: '#e25dd2',
   cssClass: 'md-resource-only-bg'
 },
 {
   id: 5,
-  name: 'Resource E (different resource/row/sidebar backgrounds defined with the `cssClass` property)',
+  name: 'Resource E',
   color: '#4981d6',
   cssClass: 'md-diff-custom-bg'
 },
@@ -100,7 +100,7 @@ const myResources: MbscResource[] = [
 },
 {
   id: 8,
-  name: 'Resource H (row background defined with the `cssClass` property)',
+  name: 'Resource H',
   color: '#34c8e0',
   cssClass: 'md-row-only-bg'
 },
@@ -115,7 +115,20 @@ const myView: MbscEventcalendarView = {
   <!-- dragOptions -->
   <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources">
     <template #sidebar="resource">
-      <div class="md-sidebar">{{ resource.name }} Sidebar</div>
+      <div class="md-resource-bg-res-cont">
+        {{ resource.name }}
+        <p v-if="resource.background || resource.cssClass">
+          <code>{{resource.background ? 'background' : 'cssClass'}}</code> property used
+        </p>
+      </div>
+    </template>
+    <template #resource="resource">
+      <div class="md-resource-bg-res-cont">
+        {{ resource.name }}
+        <p v-if="resource.background || resource.cssClass">
+          <code>{{resource.background ? 'background' : 'cssClass'}}</code> property used
+        </p>
+      </div>
     </template>
   </MbscEventcalendar>
 </template>
@@ -153,5 +166,14 @@ const myView: MbscEventcalendarView = {
 
 .md-resource-only-bg.mbsc-timeline-resource {
   background: rgba(255, 166, 0, 0.7);
+}
+
+.md-resource-bg-res-cont p {
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.md-resource-bg-res-cont code {
+  font-weight: 600;
 }
 </style>

@@ -18,13 +18,13 @@ export default {
       resources: [
         {
           id: 1,
-          name: 'Resource A (background defined with the `background` property)',
+          name: 'Resource A',
           color: '#e20000',
           background: 'rgba(108, 166, 166, 0.37)'
         },
         {
           id: 2,
-          name: 'Resource B (ticker borders defined with the `cssClass` property)',
+          name: 'Resource B',
           color: '#1dab2f',
           cssClass: 'md-tick-border'
         },
@@ -35,13 +35,13 @@ export default {
         },
         {
           id: 4,
-          name: 'Resource D (resource only background defined with the `cssClass` property)',
+          name: 'Resource D',
           color: '#e25dd2',
           cssClass: 'md-resource-only-bg'
         },
         {
           id: 5,
-          name: 'Resource E (different resource/row/sidebar backgrounds defined with the `cssClass` property)',
+          name: 'Resource E',
           color: '#4981d6',
           cssClass: 'md-diff-custom-bg'
         },
@@ -57,7 +57,7 @@ export default {
         },
         {
           id: 8,
-          name: 'Resource H (row background defined with the `cssClass` property)',
+          name: 'Resource H',
           color: '#34c8e0',
           cssClass: 'md-row-only-bg'
         },
@@ -112,8 +112,17 @@ export default {
           resource: 9,
         },
       ],
+      renderResource: function (resource) {
+        return '<div class="md-resource-bg-res-cont">'+ resource.name + 
+        (resource.background || resource.cssClass) ? ('<p><code>' + 
+        (resource.background ? 'background' : 'cssClass') + ' </code> property used</p>') : '' +
+        '</div>';
+      },
       renderSidebar: function (resource) {
-        return '<div>'+ resource.name + ' Sidebar</div>';
+        return '<div class="md-resource-bg-res-cont">'+ resource.name + 
+        (resource.background || resource.cssClass) ? ('<p><code>' + 
+        (resource.background ? 'background' : 'cssClass') + ' </code> property used</p>') : '' +
+        '</div>';
       }
     });
   },
@@ -155,6 +164,15 @@ export default {
   
   .md-resource-only-bg.mbsc-timeline-resource {
     background: rgba(255, 166, 0, 0.7);
+  }
+  
+  .md-resource-bg-res-cont p {
+    font-weight: normal;
+    font-size: 12px;
+  }
+  
+  .md-resource-bg-res-cont code {
+    font-weight: 600;
   }
   `,
 };

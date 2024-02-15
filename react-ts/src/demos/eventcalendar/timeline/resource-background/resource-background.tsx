@@ -122,15 +122,19 @@ const App: FC = () => {
     [],
   );
 
-  const customSidebar = useCallback((resource: MbscResource) => <div className="md-sidebar">{resource.name} Sidebar</div>, []);
-
+  const customResource = useCallback((resource: MbscResource) => <div className="md-resource-bg-res-cont">
+    {resource.name}
+    {(resource.background || resource.cssClass) && 
+    <p><code>{resource.background ? 'background' : 'cssClass'}</code> property used</p> }
+  </div>, []);
   return (
     <Eventcalendar
       // drag
       view={myView}
       data={myEvents}
       resources={myResources}
-      renderSidebar={customSidebar}
+      renderResource={customResource}
+      renderSidebar={customResource}
     />
   );
 }

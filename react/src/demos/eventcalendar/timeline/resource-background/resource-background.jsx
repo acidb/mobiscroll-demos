@@ -21,13 +21,13 @@ function App() {
     () => [
       {
         id: 1,
-        name: 'Resource A (background defined with the `background` property)',
+        name: 'Resource A',
         color: '#e20000',
         background: 'rgba(108, 166, 166, 0.37)'
       },
       {
         id: 2,
-        name: 'Resource B (ticker borders defined with the `cssClass` property)',
+        name: 'Resource B',
         color: '#1dab2f',
         cssClass: 'md-tick-border'
       },
@@ -38,13 +38,13 @@ function App() {
       },
       {
         id: 4,
-        name: 'Resource D (resource only background defined with the `cssClass` property)',
+        name: 'Resource D',
         color: '#e25dd2',
         cssClass: 'md-resource-only-bg'
       },
       {
         id: 5,
-        name: 'Resource E (different resource/row/sidebar backgrounds defined with the `cssClass` property)',
+        name: 'Resource E',
         color: '#4981d6',
         cssClass: 'md-diff-custom-bg'
       },
@@ -60,7 +60,7 @@ function App() {
       },
       {
         id: 8,
-        name: 'Resource H (row background defined with the `cssClass` property)',
+        name: 'Resource H',
         color: '#34c8e0',
         cssClass: 'md-row-only-bg'
       },
@@ -122,8 +122,11 @@ function App() {
     [],
   );
 
-
-  const customSidebar = useCallback((resource) => <div className="md-sidebar">{resource.name} Sidebar</div>, []);
+  const customResource = useCallback((resource) => <div className="md-resource-bg-res-cont">
+    {resource.name}
+    {(resource.background || resource.cssClass) && 
+    <p><code>{resource.background ? 'background' : 'cssClass'}</code> property used</p> }
+  </div>, []);
 
   return (
     <Eventcalendar
@@ -131,7 +134,8 @@ function App() {
       view={myView}
       data={myEvents}
       resources={myResources}
-      renderSidebar={customSidebar}
+      renderResource={customResource}
+      renderSidebar={customResource}
     />
   );
 }

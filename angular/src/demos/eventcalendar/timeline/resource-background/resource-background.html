@@ -1,0 +1,29 @@
+<div class="md-resource-background">
+  <mbsc-eventcalendar
+    #mycalendar
+    [view]="view"
+    [data]="myEvents"
+    [resources]="myResources"
+    [resourceTemplate]="resourceTemp"
+    [sidebarTemplate]="sidebarTemp"
+  ></mbsc-eventcalendar>
+</div>
+
+
+<ng-template #resourceTemp let-resource>
+  <div class="md-resource-bg-res-cont">
+    {{ resource.name }}
+    <p *ngIf="resource.background || resource.cssClass">
+      <code>{{resource.background ? 'background' : 'cssClass'}}</code> property used
+    </p>
+  </div>
+</ng-template>
+
+<ng-template #sidebarTemp let-resource>
+  <div class="md-resource-bg-res-cont">
+    {{ resource.name }}
+    <p *ngIf="resource.background || resource.cssClass">
+      <code>{{resource.background ? 'background' : 'cssClass'}}</code> property used
+    </p>
+  </div>
+</ng-template>

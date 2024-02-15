@@ -182,6 +182,7 @@ import { AppComponent as SchedulerSwitchingCalendarSchedulerAgenda } from '../de
 import { AppComponent as SchedulerSyncEventsGoogleCalendar } from '../demos/eventcalendar/scheduler/sync-events-google-calendar/sync-events-google-calendar';
 import { AppComponent as SchedulerSyncEventsOutlookCalendar } from '../demos/eventcalendar/scheduler/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import { AppComponent as SchedulerThemesIosMaterialWindows } from '../demos/eventcalendar/scheduler/themes-ios-material-windows/themes-ios-material-windows';
+import { AppComponent as SchedulerResourceBackground } from '../demos/eventcalendar/scheduler/resource-background/resource-background';
 import { AppComponent as SchedulerTimeOffBlockedRanges } from '../demos/eventcalendar/scheduler/time-off-blocked-ranges/time-off-blocked-ranges';
 import { AppComponent as SchedulerWorkWeekHours } from '../demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
 import { AppComponent as TimelineAssignUnassignWorkOrdersFixedTopRow } from '../demos/eventcalendar/timeline/assign-unassign-work-orders-fixed-top-row/assign-unassign-work-orders-fixed-top-row';
@@ -238,6 +239,7 @@ import { AppComponent as TimelineSwitchingDayWeekWorkWeekTimeline } from '../dem
 import { AppComponent as TimelineSyncEventsGoogleCalendar } from '../demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar';
 import { AppComponent as TimelineSyncEventsOutlookCalendar } from '../demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import { AppComponent as TimelineThemesIosMaterialWindows } from '../demos/eventcalendar/timeline/themes-ios-material-windows/themes-ios-material-windows';
+import { AppComponent as TimelineResourceBackground } from '../demos/eventcalendar/timeline/resource-background/resource-background';
 import { AppComponent as TimelineTimelineCustomEventRendering } from '../demos/eventcalendar/timeline/timeline-custom-event-rendering/timeline-custom-event-rendering';
 import { AppComponent as TimelineTimelineResourceDetailsSidePanelFooter } from '../demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import { AppComponent as TimelineTimelineResourceHeight } from '../demos/eventcalendar/timeline/timeline-resource-height/timeline-resource-height';
@@ -788,6 +790,10 @@ export const routes: Routes = [
     path: 'scheduler/themes-ios-material-windows',
     component: SchedulerThemesIosMaterialWindows,
   },
+  {
+    path: 'scheduler/resource-background',
+    component: SchedulerResourceBackground,
+  },
   { path: 'scheduler/recurring-events', component: SchedulerRecurringEvents },
   {
     path: 'scheduler/load-events-from-google-calendar',
@@ -1107,6 +1113,10 @@ export const routes: Routes = [
   {
     path: 'timeline/themes-ios-material-windows',
     component: TimelineThemesIosMaterialWindows,
+  },
+  {
+    path: 'timeline/resource-background',
+    component: TimelineResourceBackground,
   },
   {
     path: 'timeline/gregorian-jalali-hijri',
