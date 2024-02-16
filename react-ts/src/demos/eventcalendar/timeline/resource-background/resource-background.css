@@ -33,9 +33,7 @@
 }
 
 .md-resource-bg-res-cont p {
+  margin: 4px 0;
   font-weight: normal;
   font-size: 12px;
-}
-.md-resource-bg-res-cont code {
-  font-weight: 600;
 }

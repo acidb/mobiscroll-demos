@@ -23,13 +23,15 @@ function App() {
         id: 1,
         name: 'Resource A',
         color: '#e20000',
-        background: 'rgba(108, 166, 166, 0.37)'
+        background: 'rgba(108, 166, 166, 0.37)',
+        description: 'Full row background - with "background" property'
       },
       {
         id: 2,
         name: 'Resource B',
         color: '#1dab2f',
-        cssClass: 'md-tick-border'
+        cssClass: 'md-tick-border',
+        description: 'Thicker borders - with "cssClass" property'
       },
       {
         id: 3,
@@ -40,13 +42,15 @@ function App() {
         id: 4,
         name: 'Resource D',
         color: '#e25dd2',
-        cssClass: 'md-resource-only-bg'
+        cssClass: 'md-resource-only-bg',
+        description: 'Resource only background - with "cssClass" property'
       },
       {
         id: 5,
         name: 'Resource E',
         color: '#4981d6',
-        cssClass: 'md-diff-custom-bg'
+        cssClass: 'md-diff-custom-bg',
+        description: 'Different resource/sidebar/grid background - with "cssClass" property'
       },
       {
         id: 6,
@@ -62,7 +66,8 @@ function App() {
         id: 8,
         name: 'Resource H',
         color: '#34c8e0',
-        cssClass: 'md-row-only-bg'
+        cssClass: 'md-row-only-bg',
+        description: 'Grid only background - with "cssClass" property'
       },
     ],
     [],
@@ -124,9 +129,13 @@ function App() {
 
   const customResource = useCallback((resource) => <div className="md-resource-bg-res-cont">
     {resource.name}
-    {(resource.background || resource.cssClass) && 
-    <p><code>{resource.background ? 'background' : 'cssClass'}</code> property used</p> }
-  </div>, []);
+    {resource.description && <p>{resource.description}</p> }
+  </div>, []); 
+
+const customSidebar = useCallback((resource) => <div className="md-resource-bg-res-cont">
+  {resource.name} Sidebar
+  {resource.description && <p>{resource.description}</p> }
+  </div>, []);  
 
   return (
     <Eventcalendar
@@ -135,7 +144,7 @@ function App() {
       data={myEvents}
       resources={myResources}
       renderResource={customResource}
-      renderSidebar={customResource}
+      renderSidebar={customSidebar}
     />
   );
 }

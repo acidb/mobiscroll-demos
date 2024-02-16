@@ -7,6 +7,58 @@ setOptions({
   // theme
 })
 
+const myResources: MbscResource[] = [
+{
+  id: 1,
+  name: 'Resource A',
+  color: '#e20000',
+  background: 'rgba(108, 166, 166, 0.37)',
+  description: 'Full row background - with "background" property'
+},
+{
+  id: 2,
+  name: 'Resource B',
+  color: '#1dab2f',
+  cssClass: 'md-tick-border',
+  description: 'Thicker borders - with "cssClass" property'
+},
+{
+  id: 3,
+  name: 'Resource C',
+  color: '#4981d6',
+},
+{
+  id: 4,
+  name: 'Resource D',
+  color: '#e25dd2',
+  cssClass: 'md-resource-only-bg',
+  description: 'Resource only background - with "cssClass" property'
+},
+{
+  id: 5,
+  name: 'Resource E',
+  color: '#4981d6',
+  cssClass: 'md-diff-custom-bg',
+  description: 'Different resource/sidebar/grid background - with "cssClass" property'
+},
+{
+  id: 6,
+  name: 'Resource F',
+  color: '#d6d145',
+},
+{
+  id: 7,
+  name: 'Resource G',
+  color: '#34c8e0',
+},
+{
+  id: 8,
+  name: 'Resource H',
+  color: '#34c8e0',
+  cssClass: 'md-row-only-bg',
+  description: 'Grid only background - with "cssClass" property'
+}];
+
 const myEvents: MbscCalendarEvent[] = [
 {
   start: 'dyndatetime(y,m,2)',
@@ -55,56 +107,7 @@ const myEvents: MbscCalendarEvent[] = [
   end: 'dyndatetime(y,m,23)',
   title: 'Event 10',
   resource: 9,
-},
-]
-
-const myResources: MbscResource[] = [
-{
-  id: 1,
-  name: 'Resource A (background defined with the `background` property)',
-  color: '#e20000',
-  background: 'rgba(108, 166, 166, 0.37)'
-},
-{
-  id: 2,
-  name: 'Resource B',
-  color: '#1dab2f',
-  cssClass: 'md-tick-border'
-},
-{
-  id: 3,
-  name: 'Resource C',
-  color: '#4981d6',
-},
-{
-  id: 4,
-  name: 'Resource D',
-  color: '#e25dd2',
-  cssClass: 'md-resource-only-bg'
-},
-{
-  id: 5,
-  name: 'Resource E',
-  color: '#4981d6',
-  cssClass: 'md-diff-custom-bg'
-},
-{
-  id: 6,
-  name: 'Resource F',
-  color: '#d6d145',
-},
-{
-  id: 7,
-  name: 'Resource G',
-  color: '#34c8e0',
-},
-{
-  id: 8,
-  name: 'Resource H',
-  color: '#34c8e0',
-  cssClass: 'md-row-only-bg'
-},
-];
+}]
 
 const myView: MbscEventcalendarView = {
   timeline: { type: 'month' }
@@ -116,18 +119,14 @@ const myView: MbscEventcalendarView = {
   <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources">
     <template #sidebar="resource">
       <div class="md-resource-bg-res-cont">
-        {{ resource.name }}
-        <p v-if="resource.background || resource.cssClass">
-          <code>{{resource.background ? 'background' : 'cssClass'}}</code> property used
-        </p>
+        {{ resource.name }} Sidebar
+        <p v-if="resource.description">{{ resource.description }}</p>
       </div>
     </template>
     <template #resource="resource">
       <div class="md-resource-bg-res-cont">
         {{ resource.name }}
-        <p v-if="resource.background || resource.cssClass">
-          <code>{{resource.background ? 'background' : 'cssClass'}}</code> property used
-        </p>
+        <p v-if="resource.description">{{ resource.description }}</p>
       </div>
     </template>
   </MbscEventcalendar>
@@ -169,11 +168,8 @@ const myView: MbscEventcalendarView = {
 }
 
 .md-resource-bg-res-cont p {
+  margin: 4px 0;
   font-weight: normal;
   font-size: 12px;
-}
-
-.md-resource-bg-res-cont code {
-  font-weight: 600;
 }
 </style>

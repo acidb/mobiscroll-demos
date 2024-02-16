@@ -9,21 +9,16 @@
   ></mbsc-eventcalendar>
 </div>
 
-
 <ng-template #resourceTemp let-resource>
   <div class="md-resource-bg-res-cont">
     {{ resource.name }}
-    <p *ngIf="resource.background || resource.cssClass">
-      <code>{{resource.background ? 'background' : 'cssClass'}}</code> property used
-    </p>
+    <p *ngIf="resource.description">{{ resource.description }}</p>
   </div>
 </ng-template>
 
 <ng-template #sidebarTemp let-resource>
   <div class="md-resource-bg-res-cont">
-    {{ resource.name }}
-    <p *ngIf="resource.background || resource.cssClass">
-      <code>{{resource.background ? 'background' : 'cssClass'}}</code> property used
-    </p>
+    {{ resource.name }} Sidebar
+    <p *ngIf="resource.description">{{ resource.description }}</p>
   </div>
 </ng-template>

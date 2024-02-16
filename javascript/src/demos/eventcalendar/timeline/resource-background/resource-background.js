@@ -20,13 +20,15 @@ export default {
           id: 1,
           name: 'Resource A',
           color: '#e20000',
-          background: 'rgba(108, 166, 166, 0.37)'
+          background: 'rgba(108, 166, 166, 0.37)',
+          description: 'Full row background - with "background" property'
         },
         {
           id: 2,
           name: 'Resource B',
           color: '#1dab2f',
-          cssClass: 'md-tick-border'
+          cssClass: 'md-tick-border',
+          description: 'Thicker borders - with "cssClass" property'
         },
         {
           id: 3,
@@ -37,13 +39,15 @@ export default {
           id: 4,
           name: 'Resource D',
           color: '#e25dd2',
-          cssClass: 'md-resource-only-bg'
+          cssClass: 'md-resource-only-bg',
+          description: 'Resource only background - with "cssClass" property'
         },
         {
           id: 5,
           name: 'Resource E',
           color: '#4981d6',
-          cssClass: 'md-diff-custom-bg'
+          cssClass: 'md-diff-custom-bg',
+          description: 'Different resource/sidebar/grid background - with "cssClass" property'
         },
         {
           id: 6,
@@ -59,7 +63,8 @@ export default {
           id: 8,
           name: 'Resource H',
           color: '#34c8e0',
-          cssClass: 'md-row-only-bg'
+          cssClass: 'md-row-only-bg',
+          description: 'Grid only background - with "cssClass" property'
         },
       ],
       data: [
@@ -114,14 +119,12 @@ export default {
       ],
       renderResource: function (resource) {
         return '<div class="md-resource-bg-res-cont">'+ resource.name + 
-        ((resource.background || resource.cssClass) ? ('<p><code>' + 
-        (resource.background ? 'background' : 'cssClass') + ' </code> property used</p>') : '') +
+          (resource.description ? ('<p>' + resource.description  + '</div>') : '') + 
         '</div>';
       },
       renderSidebar: function (resource) {
-        return '<div class="md-resource-bg-res-cont">'+ resource.name + 
-        ((resource.background || resource.cssClass) ? ('<p><code>' + 
-        (resource.background ? 'background' : 'cssClass') + ' </code> property used</p>') : '') +
+        return '<div class="md-resource-bg-res-cont">'+ resource.name + ' Sidebar' +
+          (resource.description ? ('<p>' + resource.description  + '</div>') : '') + 
         '</div>';
       }
     });
@@ -167,16 +170,9 @@ export default {
   }
   
   .md-resource-bg-res-cont p {
+    margin: 4px 0;
     font-weight: normal;
     font-size: 12px;
-  }
-  
-  .md-resource-bg-res-cont code {
-    font-weight: 600;
-  }
-
-  .md-resource-bg-res-cont p {
-    margin: 4px 0;
   }
   `,
 };
