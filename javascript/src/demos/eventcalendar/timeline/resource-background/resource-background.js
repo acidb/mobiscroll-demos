@@ -138,6 +138,10 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
+<div id="demo-resource-background" class="md-timeline-resource-bg"></div>
+  `,
+  // eslint-disable-next-line es5/no-template-literals
+  css: `
 .md-diff-custom-bg.mbsc-timeline-row {
   background-image: radial-gradient(#ae8a8a 20%, transparent 20%);
   background-color: #f9f9f9;
