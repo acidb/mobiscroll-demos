@@ -130,13 +130,13 @@ export default {
             return '<div class="md-resource-bg-res-cont">'+ resource.name + ' Sidebar' +
               (resource.description ? ('<p>' + resource.description  + '</div>') : '') + 
             '</div>';
-          }
+          },
         });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-background"></div>
+<div id="demo-resource-background" class="md-timeline-resource-bg"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
@@ -178,6 +178,11 @@ export default {
     margin: 4px 0;
     font-weight: normal;
     font-size: 12px;
+    line-height: 14px;
+  }
+
+  .md-timeline-resource-bg {
+    min-height: 650px;
   }
   `,
 };
