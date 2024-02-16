@@ -191,6 +191,7 @@ const myView = {
   font-size: 10px;
   top: 2px;
   bottom: 2px;
+  left: 0;
   color: #fff;
   padding: 0 6px;
   line-height: 12px;

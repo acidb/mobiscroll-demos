@@ -171,26 +171,26 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .md-timeline-template .mbsc-schedule-event.mbsc-ltr {
-    height: auto !important;
+  height: auto !important;
 }
 
 .md-timeline-template-event {
-    border: 1px solid transparent;
-    margin: 2px 0;
+  border: 1px solid transparent;
+  margin: 2px 0;
 }
 
 .md-timeline-template-event-cont {
-    background: rgba(255, 255, 255, .8);
-    font-size: 15px;
-    height: 32px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  background: rgba(255, 255, 255, .8);
+  font-size: 15px;
+  height: 32px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .md-timeline-template-event-cont .mbsc-icon {
-    padding: 5px;
-    box-sizing: content-box;
+  padding: 5px;
+  box-sizing: content-box;
 }
 
 .md-before-buffer,
@@ -216,6 +216,7 @@ export default {
   font-size: 10px;
   top: 2px;
   bottom: 2px;
+  left: 0;
   color: #fff;
   padding: 0 6px;
   line-height: 12px;
@@ -248,8 +249,8 @@ export default {
 }
 
 .md-timeline-template-event-cont .mbsc-icon:before {
-    color: #fff;
-    font-size: 18px;
+  color: #fff;
+  font-size: 18px;
 }
 
 .md-timeline-template-time {
@@ -257,17 +258,17 @@ export default {
 }
 
 .md-timeline-template-title {
-    color: #666;
+  color: #666;
 }
 
 .md-timeline-template .mbsc-timeline-column,
 .md-timeline-template .mbsc-timeline-header-column {
-    min-width: 100px;
+  min-width: 100px;
 }
 
 .md-timeline-template .mbsc-timeline-resource,
 .md-timeline-template .mbsc-timeline-row {
-    min-height: 100px;
+  min-height: 100px;
 }
   `,
 };
