@@ -22,7 +22,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     title: 'General orientation',
     resource: 2,
     bufferBefore: 20,
-    bufferAfter: 30,
+    bufferAfter: 30
   }
 ])
 

@@ -45,21 +45,33 @@ export default {
         var event = args.original;
         var color = event.color;
 
-        return `<div class="md-buffer md-before-buffer" style="background: ${color}">
-          Prep
-          <span class='md-buffer-time'>${event.bufferBefore} min</span>
-          <div class='md-buffer-tail' style="background: ${color}"></div>
-        </div>`;
+        return (
+          '<div class="md-buffer md-before-buffer" style="background: ' +
+          color +
+          '">Prep' +
+          '<span class="md-buffer-time">' +
+          event.bufferBefore +
+          ' min</span>' +
+          '<div class="md-buffer-tail" style="background: ' +
+          color +
+          '"></div></div>'
+        );
       },
       renderBufferAfter: function (args) {
         var event = args.original;
         var color = event.color;
 
-        return `<div class="md-buffer md-after-buffer" style="background: ${color}">
-          Inspection
-          <span class='md-buffer-time'>${event.bufferAfter} min</span>
-          <div class='md-buffer-tail' style="background: ${color}"></div>
-         </div>`;
+        return (
+          '<div class="md-buffer md-after-buffer" style="background: ' +
+          color +
+          '">Inspection' +
+          '<span class="md-buffer-time">' +
+          event.bufferAfter +
+          ' min</span>' +
+          '<div class="md-buffer-tail" style="background: ' +
+          color +
+          '"></div></div>'
+        );
       },
       extendDefaultEvent: function () {
         return {

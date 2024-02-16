@@ -227,6 +227,7 @@ import TimelineMultipleTimezoneSupport from './demos/eventcalendar/timeline/mult
 import TimelinePreventDoubleBookingEvents from './demos/eventcalendar/timeline/prevent-double-booking-events/prevent-double-booking-events';
 import TimelinePrintingTheView from './demos/eventcalendar/timeline/printing-the-view/printing-the-view';
 import TimelineRecurringEvents from './demos/eventcalendar/timeline/recurring-events/recurring-events';
+import TimelineResourceBackground from './demos/eventcalendar/timeline/resource-background/resource-background';
 import TimelineResourceDataStructure from './demos/eventcalendar/timeline/resource-data-structure/resource-data-structure';
 import TimelineResourceGroupingHierarchy from './demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy';
 import TimelineResourceHeaderTemplate from './demos/eventcalendar/timeline/resource-header-template/resource-header-template';
@@ -240,7 +241,6 @@ import TimelineSwitchingDayWeekWorkWeekTimeline from './demos/eventcalendar/time
 import TimelineSyncEventsGoogleCalendar from './demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar';
 import TimelineSyncEventsOutlookCalendar from './demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import TimelineThemesIosMaterialWindows from './demos/eventcalendar/timeline/themes-ios-material-windows/themes-ios-material-windows';
-import TimelineResourceBackground from './demos/eventcalendar/timeline/resource-background/resource-background';
 import TimelineTimelineCustomEventRendering from './demos/eventcalendar/timeline/timeline-custom-event-rendering/timeline-custom-event-rendering';
 import TimelineTimelineResourceDetailsSidePanelFooter from './demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import TimelineTimelineResourceHeight from './demos/eventcalendar/timeline/timeline-resource-height/timeline-resource-height';

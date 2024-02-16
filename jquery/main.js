@@ -155,6 +155,7 @@ import SchedulerDisplayMultipleDaysWeeks from './src/demos/eventcalendar/schedul
 import SchedulerDoctorsAppointment from './src/demos/eventcalendar/scheduler/doctors-appointment/doctors-appointment';
 import SchedulerDragDropBetweenCalendarInstances from './src/demos/eventcalendar/scheduler/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import SchedulerDynamicAddRemoveResourcesFilter from './src/demos/eventcalendar/scheduler/dynamic-add-remove-resources-filter/dynamic-add-remove-resources-filter';
+import SchedulerEventBuffer from './src/demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import SchedulerEventBulkActionsEditDeleteUpdate from './src/demos/eventcalendar/scheduler/event-bulk-actions-edit-delete-update/event-bulk-actions-edit-delete-update';
 import SchedulerEventDataStructure from './src/demos/eventcalendar/scheduler/event-data-structure/event-data-structure';
 import SchedulerEventHooks from './src/demos/eventcalendar/scheduler/event-hooks/event-hooks';
@@ -175,6 +176,7 @@ import SchedulerPreventDoubleBookingEvents from './src/demos/eventcalendar/sched
 import SchedulerPrintingTheView from './src/demos/eventcalendar/scheduler/printing-the-view/printing-the-view';
 import SchedulerRecurringEventAddEditDialog from './src/demos/eventcalendar/scheduler/recurring-event-add-edit-dialog/recurring-event-add-edit-dialog';
 import SchedulerRecurringEvents from './src/demos/eventcalendar/scheduler/recurring-events/recurring-events';
+import SchedulerResourceBackground from './src/demos/eventcalendar/scheduler/resource-background/resource-background';
 import SchedulerResourceDataStructure from './src/demos/eventcalendar/scheduler/resource-data-structure/resource-data-structure';
 import SchedulerResourceFilteringInHeader from './src/demos/eventcalendar/scheduler/resource-filtering-in-header/resource-filtering-in-header';
 import SchedulerResourceView from './src/demos/eventcalendar/scheduler/resource-view/resource-view';
@@ -188,7 +190,6 @@ import SchedulerSwitchingCalendarSchedulerAgenda from './src/demos/eventcalendar
 import SchedulerSyncEventsGoogleCalendar from './src/demos/eventcalendar/scheduler/sync-events-google-calendar/sync-events-google-calendar';
 import SchedulerSyncEventsOutlookCalendar from './src/demos/eventcalendar/scheduler/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import SchedulerThemesIosMaterialWindows from './src/demos/eventcalendar/scheduler/themes-ios-material-windows/themes-ios-material-windows';
-import SchedulerResourceBackground from './src/demos/eventcalendar/scheduler/resource-background/resource-background';
 import SchedulerTimeOffBlockedRanges from './src/demos/eventcalendar/scheduler/time-off-blocked-ranges/time-off-blocked-ranges';
 import SchedulerWorkWeekHours from './src/demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
 import TimelineAssignUnassignWorkOrdersFixedTopRow from './src/demos/eventcalendar/timeline/assign-unassign-work-orders-fixed-top-row/assign-unassign-work-orders-fixed-top-row';
@@ -199,8 +200,6 @@ import TimelineConnectingLinkingEventsArrows from './src/demos/eventcalendar/tim
 import TimelineControlNumberOfConcurrentlyShownEvents from './src/demos/eventcalendar/timeline/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events';
 import TimelineCreateReadUpdateDeleteCRUD from './src/demos/eventcalendar/timeline/create-read-update-delete-CRUD/create-read-update-delete-CRUD';
 import TimelineCustomEventTooltip from './src/demos/eventcalendar/timeline/custom-event-tooltip/custom-event-tooltip';
-import TimelineEventBuffer from './src/demos/eventcalendar/timeline/event-buffer/event-buffer';
-import SchedulerEventBuffer from './src/demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import TimelineCustomRangeView from './src/demos/eventcalendar/timeline/custom-range-view/custom-range-view';
 import TimelineDailyWeeklyMonthlyYearlyTimeline from './src/demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import TimelineDateObjectISO8601Moment from './src/demos/eventcalendar/timeline/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
@@ -208,6 +207,7 @@ import TimelineDisallowPastEventCreation from './src/demos/eventcalendar/timelin
 import TimelineDragDropBetweenCalendarInstances from './src/demos/eventcalendar/timeline/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import TimelineDynamicallyColorAndInvalidate from './src/demos/eventcalendar/timeline/dynamically-color-and-invalidate/dynamically-color-and-invalidate';
 import TimelineEmployeeShifts from './src/demos/eventcalendar/timeline/employee-shifts/employee-shifts';
+import TimelineEventBuffer from './src/demos/eventcalendar/timeline/event-buffer/event-buffer';
 import TimelineEventBulkActionsEditDeleteUpdate from './src/demos/eventcalendar/timeline/event-bulk-actions-edit-delete-update/event-bulk-actions-edit-delete-update';
 import TimelineEventDataStructure from './src/demos/eventcalendar/timeline/event-data-structure/event-data-structure';
 import TimelineEventHooks from './src/demos/eventcalendar/timeline/event-hooks/event-hooks';
@@ -232,6 +232,7 @@ import TimelineMultipleTimezoneSupport from './src/demos/eventcalendar/timeline/
 import TimelinePreventDoubleBookingEvents from './src/demos/eventcalendar/timeline/prevent-double-booking-events/prevent-double-booking-events';
 import TimelinePrintingTheView from './src/demos/eventcalendar/timeline/printing-the-view/printing-the-view';
 import TimelineRecurringEvents from './src/demos/eventcalendar/timeline/recurring-events/recurring-events';
+import TimelineResourceBackground from './src/demos/eventcalendar/timeline/resource-background/resource-background';
 import TimelineResourceDataStructure from './src/demos/eventcalendar/timeline/resource-data-structure/resource-data-structure';
 import TimelineResourceGroupingHierarchy from './src/demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy';
 import TimelineResourceHeaderTemplate from './src/demos/eventcalendar/timeline/resource-header-template/resource-header-template';
@@ -245,7 +246,6 @@ import TimelineSwitchingDayWeekWorkWeekTimeline from './src/demos/eventcalendar/
 import TimelineSyncEventsGoogleCalendar from './src/demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar';
 import TimelineSyncEventsOutlookCalendar from './src/demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import TimelineThemesIosMaterialWindows from './src/demos/eventcalendar/timeline/themes-ios-material-windows/themes-ios-material-windows';
-import TimelineResourceBackground from './src/demos/eventcalendar/timeline/resource-background/resource-background';
 import TimelineTimelineCustomEventRendering from './src/demos/eventcalendar/timeline/timeline-custom-event-rendering/timeline-custom-event-rendering';
 import TimelineTimelineResourceDetailsSidePanelFooter from './src/demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import TimelineTimelineResourceHeight from './src/demos/eventcalendar/timeline/timeline-resource-height/timeline-resource-height';

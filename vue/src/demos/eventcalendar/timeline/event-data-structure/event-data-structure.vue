@@ -20,7 +20,7 @@ const myEvents = ref([
     title: 'General orientation',
     resource: 2,
     bufferBefore: 20,
-    bufferAfter: 30,
+    bufferAfter: 30
   }
 ])
 

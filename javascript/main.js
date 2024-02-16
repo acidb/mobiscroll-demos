@@ -155,6 +155,7 @@ import SchedulerDisplayMultipleDaysWeeks from './src/demos/eventcalendar/schedul
 import SchedulerDoctorsAppointment from './src/demos/eventcalendar/scheduler/doctors-appointment/doctors-appointment';
 import SchedulerDragDropBetweenCalendarInstances from './src/demos/eventcalendar/scheduler/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import SchedulerDynamicAddRemoveResourcesFilter from './src/demos/eventcalendar/scheduler/dynamic-add-remove-resources-filter/dynamic-add-remove-resources-filter';
+import SchedulerEventBuffer from './src/demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import SchedulerEventBulkActionsEditDeleteUpdate from './src/demos/eventcalendar/scheduler/event-bulk-actions-edit-delete-update/event-bulk-actions-edit-delete-update';
 import SchedulerEventDataStructure from './src/demos/eventcalendar/scheduler/event-data-structure/event-data-structure';
 import SchedulerEventHooks from './src/demos/eventcalendar/scheduler/event-hooks/event-hooks';
@@ -205,6 +206,7 @@ import TimelineDisallowPastEventCreation from './src/demos/eventcalendar/timelin
 import TimelineDragDropBetweenCalendarInstances from './src/demos/eventcalendar/timeline/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import TimelineDynamicallyColorAndInvalidate from './src/demos/eventcalendar/timeline/dynamically-color-and-invalidate/dynamically-color-and-invalidate';
 import TimelineEmployeeShifts from './src/demos/eventcalendar/timeline/employee-shifts/employee-shifts';
+import TimelineEventBuffer from './src/demos/eventcalendar/timeline/event-buffer/event-buffer';
 import TimelineEventBulkActionsEditDeleteUpdate from './src/demos/eventcalendar/timeline/event-bulk-actions-edit-delete-update/event-bulk-actions-edit-delete-update';
 import TimelineEventDataStructure from './src/demos/eventcalendar/timeline/event-data-structure/event-data-structure';
 import TimelineEventHooks from './src/demos/eventcalendar/timeline/event-hooks/event-hooks';
@@ -216,8 +218,6 @@ import TimelineLoadEventsFromGoogleCalendar from './src/demos/eventcalendar/time
 import TimelineLoadEventsFromRemoteApi from './src/demos/eventcalendar/timeline/load-events-from-remote-api/load-events-from-remote-api';
 import TimelineLoadEventsOnDemand from './src/demos/eventcalendar/timeline/load-events-on-demand/load-events-on-demand';
 import TimelineLoadInlineData from './src/demos/eventcalendar/timeline/load-inline-data/load-inline-data';
-import TimelineEventBuffer from './src/demos/eventcalendar/timeline/event-buffer/event-buffer';
-import SchedulerEventBuffer from './src/demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import TimelineLoadResourcesOnDemand from './src/demos/eventcalendar/timeline/load-resources-on-demand/load-resources-on-demand';
 import TimelineLoadingBigDataSets from './src/demos/eventcalendar/timeline/loading-big-data-sets/loading-big-data-sets';
 import TimelineLocalization from './src/demos/eventcalendar/timeline/localization/localization';

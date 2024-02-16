@@ -21,7 +21,7 @@ const myEvents = ref([
     title: 'General orientation',
     color: '#35bb5a',
     bufferBefore: 20,
-      bufferAfter: 30,
+    bufferAfter: 30
   }
 ])
 const toastMessage = ref('')

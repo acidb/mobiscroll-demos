@@ -71,7 +71,9 @@ export default {
           ' 20px)">' +
           '</div>' +
           '<span class="md-buffer-text">Travel time</span>' +
-          '<span class="md-buffer-time">${args.original.bufferBefore} minutes </span>' +
+          '<span class="md-buffer-time">' +
+          args.original.bufferBefore +
+          ' minutes</span>' +
           '</div>'
         );
       },

@@ -1083,11 +1083,11 @@ export const routes: Routes = [
   },
   {
     path: 'timeline/event-buffer',
-    component: TimelineEventBuffer
+    component: TimelineEventBuffer,
   },
   {
     path: 'scheduler/event-buffer',
-    component: ScheduleEventBuffer
+    component: ScheduleEventBuffer,
   },
   {
     path: 'timeline/event-data-structure',
