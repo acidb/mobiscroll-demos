@@ -4,6 +4,7 @@
   "description": "Mobiscroll Demos",
   "main": "generate.js",
   "scripts": {
+    "lint": "cd angular && ng lint && cd ../javascript && npm run lint && cd ../jquery && npm run lint && cd ../react && npm run lint && cd ../react-ts && npm run lint && cd ../vue && npm run lint && cd ../vue-ts && npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
