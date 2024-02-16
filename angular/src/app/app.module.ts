@@ -155,6 +155,7 @@ import { AppComponent as SchedulerDisplayMultipleDaysWeeks } from '../demos/even
 import { AppComponent as SchedulerDoctorsAppointment } from '../demos/eventcalendar/scheduler/doctors-appointment/doctors-appointment';
 import { AppComponent as SchedulerDragDropBetweenCalendarInstances } from '../demos/eventcalendar/scheduler/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import { AppComponent as SchedulerDynamicAddRemoveResourcesFilter } from '../demos/eventcalendar/scheduler/dynamic-add-remove-resources-filter/dynamic-add-remove-resources-filter';
+import { AppComponent as ScheduleEventBuffer } from '../demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import { AppComponent as SchedulerEventBulkActionsEditDeleteUpdate } from '../demos/eventcalendar/scheduler/event-bulk-actions-edit-delete-update/event-bulk-actions-edit-delete-update';
 import { AppComponent as SchedulerEventDataStructure } from '../demos/eventcalendar/scheduler/event-data-structure/event-data-structure';
 import { AppComponent as SchedulerEventHooks } from '../demos/eventcalendar/scheduler/event-hooks/event-hooks';
@@ -175,8 +176,7 @@ import { AppComponent as SchedulerPreventDoubleBookingEvents } from '../demos/ev
 import { AppComponent as SchedulerPrintingTheView } from '../demos/eventcalendar/scheduler/printing-the-view/printing-the-view';
 import { AppComponent as SchedulerRecurringEventAddEditDialog } from '../demos/eventcalendar/scheduler/recurring-event-add-edit-dialog/recurring-event-add-edit-dialog';
 import { AppComponent as SchedulerRecurringEvents } from '../demos/eventcalendar/scheduler/recurring-events/recurring-events';
-import { AppComponent as ScheduleEventBuffer } from '../demos/eventcalendar/scheduler/event-buffer/event-buffer';
-import { AppComponent as TimelineEventBuffer } from '../demos/eventcalendar/timeline/event-buffer/event-buffer';
+import { AppComponent as SchedulerResourceBackground } from '../demos/eventcalendar/scheduler/resource-background/resource-background';
 import { AppComponent as SchedulerResourceDataStructure } from '../demos/eventcalendar/scheduler/resource-data-structure/resource-data-structure';
 import { AppComponent as SchedulerResourceFilteringInHeader } from '../demos/eventcalendar/scheduler/resource-filtering-in-header/resource-filtering-in-header';
 import { AppComponent as SchedulerResourceView } from '../demos/eventcalendar/scheduler/resource-view/resource-view';
@@ -207,6 +207,7 @@ import { AppComponent as TimelineDisallowPastEventCreation } from '../demos/even
 import { AppComponent as TimelineDragDropBetweenCalendarInstances } from '../demos/eventcalendar/timeline/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import { AppComponent as TimelineDynamicallyColorAndInvalidate } from '../demos/eventcalendar/timeline/dynamically-color-and-invalidate/dynamically-color-and-invalidate';
 import { AppComponent as TimelineEmployeeShifts } from '../demos/eventcalendar/timeline/employee-shifts/employee-shifts';
+import { AppComponent as TimelineEventBuffer } from '../demos/eventcalendar/timeline/event-buffer/event-buffer';
 import { AppComponent as TimelineEventBulkActionsEditDeleteUpdate } from '../demos/eventcalendar/timeline/event-bulk-actions-edit-delete-update/event-bulk-actions-edit-delete-update';
 import { AppComponent as TimelineEventDataStructure } from '../demos/eventcalendar/timeline/event-data-structure/event-data-structure';
 import { AppComponent as TimelineEventHooks } from '../demos/eventcalendar/timeline/event-hooks/event-hooks';
@@ -231,6 +232,7 @@ import { AppComponent as TimelineMultipleTimezoneSupport } from '../demos/eventc
 import { AppComponent as TimelinePreventDoubleBookingEvents } from '../demos/eventcalendar/timeline/prevent-double-booking-events/prevent-double-booking-events';
 import { AppComponent as TimelinePrintingTheView } from '../demos/eventcalendar/timeline/printing-the-view/printing-the-view';
 import { AppComponent as TimelineRecurringEvents } from '../demos/eventcalendar/timeline/recurring-events/recurring-events';
+import { AppComponent as TimelineResourceBackground } from '../demos/eventcalendar/timeline/resource-background/resource-background';
 import { AppComponent as TimelineResourceDataStructure } from '../demos/eventcalendar/timeline/resource-data-structure/resource-data-structure';
 import { AppComponent as TimelineResourceGroupingHierarchy } from '../demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy';
 import { AppComponent as TimelineResourceHeaderTemplate } from '../demos/eventcalendar/timeline/resource-header-template/resource-header-template';
@@ -548,6 +550,7 @@ import { HomeComponent } from './components/home/home.component';
     SchedulerConditionalMoveResize,
     SchedulerDragDropBetweenCalendarInstances,
     SchedulerControlNumberOfConcurrentlyShownEvents,
+    SchedulerResourceBackground,
     AgendaLoadEventsFromRemoteApi,
     AgendaLoadEventsOnDemand,
     AgendaLoadEventsFromGoogleCalendar,
@@ -635,6 +638,7 @@ import { HomeComponent } from './components/home/home.component';
     TimelineAssignUnassignWorkOrdersFixedTopRow,
     TimelineControlNumberOfConcurrentlyShownEvents,
     TimelineFlightSchedulingTwoSynchronizedTimelines,
+    TimelineResourceBackground,
   ],
   imports: [CommonModule, FormsModule, MbscModule, HttpClientJsonpModule, HttpClientModule, RouterLink],
   providers: [],

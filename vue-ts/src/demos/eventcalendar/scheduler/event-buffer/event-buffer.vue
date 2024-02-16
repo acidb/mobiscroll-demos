@@ -1,11 +1,7 @@
 <script setup lang="ts">
+import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
 import { ref } from 'vue'
-import {
-  MbscEventcalendar,
-  setOptions,
-  MbscPage,/* localeImport */
-} from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 
 setOptions({
   // locale,
@@ -18,7 +14,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     color: '#4981d6',
     start: 'dyndatetime(y,m,d,6)',
     end: 'dyndatetime(y,m,d,8)',
-    title: 'Morning routine',
+    title: 'Morning routine'
   },
   {
     bufferAfter: 120,
@@ -26,7 +22,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     color: '#f7961e',
     start: 'dyndatetime(y,m,d,16)',
     end: 'dyndatetime(y,m,d,20)',
-    title: 'Friends binge marathon',
+    title: 'Friends binge marathon'
   },
   {
     bufferAfter: 120,
@@ -34,7 +30,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     color: '#4981d6',
     start: 'dyndatetime(y,m,d+1,13)',
     end: 'dyndatetime(y,m,d+1,21)',
-    title: 'Mastering CSS class',
+    title: 'Mastering CSS class'
   },
   {
     bufferAfter: 10,
@@ -42,7 +38,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     color: '#76e083',
     start: 'y,m,d-1,8)',
     end: 'y,m,d-1,10)',
-    title: 'Product team mtg.',
+    title: 'Product team mtg.'
   },
   {
     bufferAfter: 20,
@@ -50,7 +46,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     color: '#e20000',
     start: 'dyndatetime(y,m,d+2,16,30)',
     end: 'dyndatetime(y,m,d+2,19, 30)',
-    title: 'Cinema afternoon',
+    title: 'Cinema afternoon'
   },
   {
     bufferAfter: 10,
@@ -58,17 +54,16 @@ const myEvents = ref<MbscCalendarEvent[]>([
     color: '#76e083',
     start: 'dyndatetime(y,m,d-2,8,30)',
     end: 'dyndatetime(y,m,d-2,10)',
-    title: 'Quick mtg. with Martin',
+    title: 'Quick mtg. with Martin'
   },
   {
     bufferBefore: 45,
     color: '#e20000',
     start: 'dyndatetime(y,m,d,9,30)',
     end: 'dyndatetime(y,m,d,12)',
-    title: 'Product team mtg.',
+    title: 'Product team mtg.'
   }
 ])
-
 
 const myView: MbscEventcalendarView = {
   schedule: { type: 'week' }
@@ -76,9 +71,5 @@ const myView: MbscEventcalendarView = {
 </script>
 
 <template>
-    <MbscEventcalendar
-      :view="myView"
-      :data="myEvents"
-      :showEventBuffer="true"
-    ></MbscEventcalendar>
+  <MbscEventcalendar :view="myView" :data="myEvents" :showEventBuffer="true"></MbscEventcalendar>
 </template>

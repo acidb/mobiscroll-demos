@@ -1,5 +1,5 @@
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useMemo, useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import './resource-background.css';
 
 setOptions({
@@ -24,14 +24,14 @@ function App() {
         name: 'Resource A',
         color: '#e20000',
         background: 'rgba(108, 166, 166, 0.37)',
-        description: 'Full row background - with "background" property'
+        description: 'Full row background - with "background" property',
       },
       {
         id: 2,
         name: 'Resource B',
         color: '#1dab2f',
         cssClass: 'md-tick-border',
-        description: 'Thicker borders - with "cssClass" property'
+        description: 'Thicker borders - with "cssClass" property',
       },
       {
         id: 3,
@@ -43,14 +43,14 @@ function App() {
         name: 'Resource D',
         color: '#e25dd2',
         cssClass: 'md-resource-only-bg',
-        description: 'Resource only background - with "cssClass" property'
+        description: 'Resource only background - with "cssClass" property',
       },
       {
         id: 5,
         name: 'Resource E',
         color: '#4981d6',
         cssClass: 'md-diff-custom-bg',
-        description: 'Different resource/sidebar/grid background - with "cssClass" property'
+        description: 'Different resource/sidebar/grid background - with "cssClass" property',
       },
       {
         id: 6,
@@ -67,7 +67,7 @@ function App() {
         name: 'Resource H',
         color: '#34c8e0',
         cssClass: 'md-row-only-bg',
-        description: 'Grid only background - with "cssClass" property'
+        description: 'Grid only background - with "cssClass" property',
       },
     ],
     [],
@@ -127,15 +127,25 @@ function App() {
     [],
   );
 
-  const customResource = useCallback((resource) => <div className="md-resource-bg-res-cont">
-    {resource.name}
-    {resource.description && <p>{resource.description}</p> }
-  </div>, []); 
+  const customResource = useCallback(
+    (resource) => (
+      <div className="md-resource-bg-res-cont">
+        {resource.name}
+        {resource.description && <p>{resource.description}</p>}
+      </div>
+    ),
+    [],
+  );
 
-const customSidebar = useCallback((resource) => <div className="md-resource-bg-res-cont">
-  {resource.name} Sidebar
-  {resource.description && <p>{resource.description}</p> }
-  </div>, []);  
+  const customSidebar = useCallback(
+    (resource) => (
+      <div className="md-resource-bg-res-cont">
+        {resource.name} Sidebar
+        {resource.description && <p>{resource.description}</p>}
+      </div>
+    ),
+    [],
+  );
 
   return (
     <Eventcalendar

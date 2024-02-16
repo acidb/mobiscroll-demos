@@ -113,7 +113,7 @@ function App() {
         <div className="md-timeline-template-event-cont">
           <span className={'mbsc-icon mbsc-font-icon mbsc-icon-' + ev.taskType} style={{ background: color }}></span>
           <span className="md-timeline-template-time" style={{ color: color }}>
-            {args.start}
+            {data.start}
           </span>
           <span className="md-timeline-template-title">{ev.title}</span>
         </div>
@@ -128,16 +128,15 @@ function App() {
     [],
   );
 
-
   const myBeforeBuffer = useCallback((args) => {
     const event = args.original;
     const color = event.color;
 
     return (
-      <div className="md-buffer md-before-buffer" style={{background: color}}>
+      <div className="md-buffer md-before-buffer" style={{ background: color }}>
         Prep
-        <span className='md-buffer-time'>{event.bufferBefore} min</span>
-        <div className='md-buffer-tail' style={{background: color}}></div>
+        <span className="md-buffer-time">{event.bufferBefore} min</span>
+        <div className="md-buffer-tail" style={{ background: color }}></div>
       </div>
     );
   }, []);
@@ -147,10 +146,10 @@ function App() {
     const color = event.color;
 
     return (
-      <div className="md-buffer md-after-buffer" style={{background: color}}>
+      <div className="md-buffer md-after-buffer" style={{ background: color }}>
         Inspection
-        <span className='md-buffer-time'>{event.bufferAfter} min</span>
-        <div className='md-buffer-tail' style={{background: color}}></div>
+        <span className="md-buffer-time">{event.bufferAfter} min</span>
+        <div className="md-buffer-tail" style={{ background: color }}></div>
       </div>
     );
   }, []);

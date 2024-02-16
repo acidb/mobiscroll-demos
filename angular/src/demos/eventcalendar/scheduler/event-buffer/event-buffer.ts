@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Notifications, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -68,7 +68,7 @@ export class AppComponent {
       start: 'dyndatetime(y,m,d,9,30)',
       end: 'dyndatetime(y,m,d,12)',
       title: 'Product team mtg.',
-    }
+    },
   ];
 
   view: MbscEventcalendarView = {

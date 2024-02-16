@@ -1,24 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import {
-  MbscEventcalendar,
-  setOptions, /* localeImport */
-} from '@mobiscroll/vue'
+import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
 
-const now = new Date()
 const myEvents = ref<MbscCalendarEvent[]>([
   {
     bufferAfter: 30,
     start: 'dyndatetime(y,m,d,6)',
     end: 'dyndatetime(y,m,d,8)',
     title: 'Morning routine',
-    resource: 1,
+    resource: 1
   },
   {
     bufferAfter: 120,
@@ -26,7 +22,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     start: 'dyndatetime(y,m,d,16)',
     end: 'dyndatetime(y,m,d,20)',
     title: 'Friends binge marathon',
-    resource: 4,
+    resource: 4
   },
   {
     bufferAfter: 120,
@@ -34,7 +30,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     start: 'dyndatetime(y,m,d,13)',
     end: 'dyndatetime(y,m,d,21)',
     title: 'Mastering CSS class',
-    resource: 2,
+    resource: 2
   },
   {
     bufferAfter: 10,
@@ -42,7 +38,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     start: 'y,m,d,8)',
     end: 'y,m,d,10)',
     title: 'Product team mtg.',
-    resource: 2,
+    resource: 2
   },
   {
     bufferAfter: 20,
@@ -50,7 +46,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     start: 'dyndatetime(y,m,d,16,30)',
     end: 'dyndatetime(y,m,d,19, 30)',
     title: 'Cinema afternoon',
-    resource: 3,
+    resource: 3
   },
   {
     bufferAfter: 10,
@@ -58,14 +54,14 @@ const myEvents = ref<MbscCalendarEvent[]>([
     start: 'dyndatetime(y,m,d,8,30)',
     end: 'dyndatetime(y,m,d,10)',
     title: 'Quick mtg. with Martin',
-    resource: 3,
+    resource: 3
   },
   {
     bufferBefore: 45,
     start: 'dyndatetime(y,m,d,9,30)',
     end: 'dyndatetime(y,m,d,12)',
     title: 'Product team mtg.',
-    resource: 4,
+    resource: 4
   }
 ])
 
@@ -73,37 +69,35 @@ const myResources = ref<MbscResource[]>([
   {
     id: 1,
     name: 'Resource 1',
-    color: '#e20000',
-  }, {
+    color: '#e20000'
+  },
+  {
     id: 2,
     name: 'Resource 2',
-    color: '#76e083',
+    color: '#76e083'
   },
   {
     id: 3,
     name: 'Resource 3',
-    color: '#4981d6',
-  }, {
+    color: '#4981d6'
+  },
+  {
     id: 4,
     name: 'Resource 4',
-    color: '#f7961e',
-}
+    color: '#f7961e'
+  }
 ])
-
 
 const myView: MbscEventcalendarView = {
   timeline: { type: 'week' }
 }
-
 </script>
 
 <template>
-  <MbscPage>
-    <MbscEventcalendar
-      :showEventBuffer="true"
-      :view="myView"
-      :data="myEvents"
-      :resources="myResources"
-    ></MbscEventcalendar>
-  </MbscPage>
+  <MbscEventcalendar
+    :showEventBuffer="true"
+    :view="myView"
+    :data="myEvents"
+    :resources="myResources"
+  ></MbscEventcalendar>
 </template>

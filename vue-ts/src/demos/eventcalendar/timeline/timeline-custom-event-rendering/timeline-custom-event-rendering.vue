@@ -82,7 +82,7 @@ function myDefaultEvent() {
     taskType: 'cogs',
     bufferAfter: 60,
     bufferBefore: 30,
-    color: '#239a21',
+    color: '#239a21'
   }
 }
 
@@ -118,17 +118,17 @@ const myView: MbscEventcalendarView = {
       </div>
     </template>
     <template #bufferAfter="data">
-      <div class="md-buffer md-after-buffer" :style="{background: data.original.color}">
+      <div class="md-buffer md-after-buffer" :style="{ background: data.original.color }">
         Inspection
-        <span class='md-buffer-time'>{{data.original.bufferAfter}} min</span>
-        <div class='md-buffer-tail' :style="{background: data.original.color}"></div>
+        <span class="md-buffer-time">{{ data.original.bufferAfter }} min</span>
+        <div class="md-buffer-tail" :style="{ background: data.original.color }"></div>
       </div>
     </template>
     <template #bufferBefore="data">
-      <div class="md-buffer md-after-buffer" :style="{background: data.original.color}">
+      <div class="md-buffer md-after-buffer" :style="{ background: data.original.color }">
         Prep
-        <span class='md-buffer-time'>{{data.original.bufferBefore}} min</span>
-        <div class='md-buffer-tail' :style="{background: data.original.color}"></div>
+        <span class="md-buffer-time">{{ data.original.bufferBefore }} min</span>
+        <div class="md-buffer-tail" :style="{ background: data.original.color }"></div>
       </div>
     </template>
   </MbscEventcalendar>
@@ -157,7 +157,6 @@ const myView: MbscEventcalendarView = {
   padding: 5px;
   box-sizing: content-box;
 }
-
 
 .md-before-buffer,
 .mbsc-timeline-event-start .md-timeline-template-event,
@@ -189,7 +188,7 @@ const myView: MbscEventcalendarView = {
   align-items: center;
   justify-content: center;
   text-align: center;
-  opacity: .5;
+  opacity: 0.5;
   box-sizing: border-box;
   z-index: -1;
 }

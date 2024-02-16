@@ -186,10 +186,16 @@ onMounted(() => {
     </template>
     <template #bufferBefore="data">
       <div class="md-schedule-buffer md-schedule-before-buffer">
-        <div class="md-schedule-buffer-background"
-        :style="{ background: `repeating-linear-gradient(-45deg,#fcfffc,#fcfffc 10px,${getCategory(data.original.category).color} 10px,${ getCategory(data.original.category).color} 20px)`}">
-          </div>
-          <span class='md-buffer-text'>Travel time </span><span class='md-buffer-time'>{{data.original.bufferBefore}} minutes </span>
+        <div
+          class="md-schedule-buffer-background"
+          :style="{
+            background: `repeating-linear-gradient(-45deg,#fcfffc,#fcfffc 10px,${
+              getCategory(data.original.category).color
+            } 10px,${getCategory(data.original.category).color} 20px)`
+          }"
+        ></div>
+        <span class="md-buffer-text">Travel time </span
+        ><span class="md-buffer-time">{{ data.original.bufferBefore }} minutes </span>
       </div>
     </template>
   </MbscEventcalendar>
@@ -302,7 +308,7 @@ onMounted(() => {
   font-size: 10px;
   left: 0;
   right: 0;
-  color:#000;
+  color: #000;
   padding: 7px 4px;
   align-items: center;
   justify-content: center;

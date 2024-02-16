@@ -49,7 +49,7 @@ export default {
           Prep
           <span class='md-buffer-time'>${event.bufferBefore} min</span>
           <div class='md-buffer-tail' style="background: ${color}"></div>
-        </div>`
+        </div>`;
       },
       renderBufferAfter: function (args) {
         var event = args.original;
@@ -66,7 +66,7 @@ export default {
           taskType: 'cogs',
           bufferAfter: 60,
           bufferBefore: 30,
-          color: '#239a21'
+          color: '#239a21',
         };
       },
       data: [

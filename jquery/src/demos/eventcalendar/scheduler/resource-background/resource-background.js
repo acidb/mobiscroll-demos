@@ -23,15 +23,15 @@ export default {
           resources: [
             {
               id: 1,
-              name: 'Resource A - Full column background - with "background" property', 
+              name: 'Resource A - Full column background - with "background" property',
               color: '#e20000',
-              background: 'rgba(71, 251, 34, 0.37)'
+              background: 'rgba(71, 251, 34, 0.37)',
             },
             {
               id: 2,
               name: 'Resource B - Thicker borders - with "cssClass" property',
               color: '#1dab2f',
-              cssClass: 'md-col-tick-border'
+              cssClass: 'md-col-tick-border',
             },
             {
               id: 3,
@@ -42,13 +42,13 @@ export default {
               id: 4,
               name: 'Resource D - Resource only background - with "cssClass" property',
               color: '#e25dd2',
-              cssClass: 'md-resource-only-bg'
+              cssClass: 'md-resource-only-bg',
             },
             {
               id: 5,
               name: 'Resource E - Different resource/sidebar/grid background - with "cssClass" property',
               color: '#4981d6',
-              cssClass: 'md-diff-custom-bg'
+              cssClass: 'md-diff-custom-bg',
             },
             {
               id: 6,
@@ -64,7 +64,7 @@ export default {
               id: 8,
               name: 'Resource H - Grid only background - with "cssClass" property',
               color: '#34c8e0',
-              cssClass: 'md-colum-only-bg'
+              cssClass: 'md-colum-only-bg',
             },
           ],
           data: [
@@ -132,44 +132,44 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .md-diff-custom-bg.mbsc-schedule-header-item,
-  .md-diff-custom-bg.mbsc-schedule-resource {
-    opacity: 0.8;
-    background-image: repeating-linear-gradient(45deg, #ffd6d6 25%, transparent 25%, transparent 75%, #ffd6d6 75%, #ffd6d6),
-        repeating-linear-gradient(45deg, #ffd6d6 25%, #ffefef 25%, #ffefef 75%, #ffd6d6 75%, #ffd6d6);
-    background-position:
-        0 0,
-        10px 10px;
-    background-size: 20px 20px;
-  }
-  .md-diff-custom-bg.mbsc-schedule-column {
-    background-image: radial-gradient(#ae8a8a 20%, transparent 20%);
-    background-color: #f9f9f9;
-    background-position: 0 0, 10px 10px;
-    background-size: 20px 20px;
-  }
-  
-  .md-diff-custom-bg.mbsc-schedule-all-day-item {
-    background: repeating-linear-gradient(-45deg, #fcfffc, #fcfffc 10px, #eefbec 10px, #eefbec 20px);
-  }
-  
-  .md-col-tick-border.mbsc-schedule-all-day-item,
-  .md-col-tick-border.mbsc-schedule-column,
-  .md-col-tick-border.mbsc-schedule-resource.mbsc-schedule-col-width {
-    border-left: 4px solid #ccc;
-    border-right: 3px solid #ccc; 
-  }
-  
-  .md-col-tick-border.mbsc-schedule-all-day-item::after  {
-    border-right: 4px solid #ccc; 
-  }
-  
-  .md-colum-only-bg.mbsc-schedule-column {
-    background: rgba(0, 128, 128, 0.8);
-  }
-  
-  .md-resource-only-bg.mbsc-schedule-resource  {
-    background: rgba(255, 166, 0, 0.7);
-  }
+.md-diff-custom-bg.mbsc-schedule-header-item,
+.md-diff-custom-bg.mbsc-schedule-resource {
+  opacity: 0.8;
+  background-image: repeating-linear-gradient(45deg, #ffd6d6 25%, transparent 25%, transparent 75%, #ffd6d6 75%, #ffd6d6),
+      repeating-linear-gradient(45deg, #ffd6d6 25%, #ffefef 25%, #ffefef 75%, #ffd6d6 75%, #ffd6d6);
+  background-position:
+      0 0,
+      10px 10px;
+  background-size: 20px 20px;
+}
+.md-diff-custom-bg.mbsc-schedule-column {
+  background-image: radial-gradient(#ae8a8a 20%, transparent 20%);
+  background-color: #f9f9f9;
+  background-position: 0 0, 10px 10px;
+  background-size: 20px 20px;
+}
+
+.md-diff-custom-bg.mbsc-schedule-all-day-item {
+  background: repeating-linear-gradient(-45deg, #fcfffc, #fcfffc 10px, #eefbec 10px, #eefbec 20px);
+}
+
+.md-col-tick-border.mbsc-schedule-all-day-item,
+.md-col-tick-border.mbsc-schedule-column,
+.md-col-tick-border.mbsc-schedule-resource.mbsc-schedule-col-width {
+  border-left: 4px solid #ccc;
+  border-right: 3px solid #ccc; 
+}
+
+.md-col-tick-border.mbsc-schedule-all-day-item::after  {
+  border-right: 4px solid #ccc; 
+}
+
+.md-colum-only-bg.mbsc-schedule-column {
+  background: rgba(0, 128, 128, 0.8);
+}
+
+.md-resource-only-bg.mbsc-schedule-resource  {
+  background: rgba(255, 166, 0, 0.7);
+}
   `,
 };

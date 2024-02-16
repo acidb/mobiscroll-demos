@@ -76,13 +76,15 @@ function App() {
 
     return (
       <div className="md-schedule-buffer md-schedule-before-buffer">
-        <div className=' md-schedule-buffer-background' 
-          style={{ background: `repeating-linear-gradient(-45deg,#fcfffc,#fcfffc 10px,${cat.color} 10px,${cat.color} 20px)`}}>
-          </div>
-          <span className='md-buffer-text'>Travel time </span><span className='md-buffer-time'>{args.original.bufferBefore} minutes </span>
+        <div
+          className=" md-schedule-buffer-background"
+          style={{ background: `repeating-linear-gradient(-45deg,#fcfffc,#fcfffc 10px,${cat.color} 10px,${cat.color} 20px)` }}
+        ></div>
+        <span className="md-buffer-text">Travel time </span>
+        <span className="md-buffer-time">{args.original.bufferBefore} minutes </span>
       </div>
     );
-  }, []);    
+  }, []);
 
   useEffect(() => {
     getJson(

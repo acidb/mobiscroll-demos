@@ -1,7 +1,9 @@
-.md-diff-custom-bg.mbsc-timeline-row  {
+.md-diff-custom-bg.mbsc-timeline-row {
   background-image: radial-gradient(#ae8a8a 20%, transparent 20%);
   background-color: #f9f9f9;
-  background-position: 0 0, 10px 10px;
+  background-position:
+    0 0,
+    10px 10px;
   background-size: 20px 20px;
 }
 
@@ -12,10 +14,10 @@
 .md-diff-custom-bg.mbsc-timeline-sidebar-resource {
   opacity: 0.8;
   background-image: repeating-linear-gradient(45deg, #ffd6d6 25%, transparent 25%, transparent 75%, #ffd6d6 75%, #ffd6d6),
-      repeating-linear-gradient(45deg, #ffd6d6 25%, #ffefef 25%, #ffefef 75%, #ffd6d6 75%, #ffd6d6);
+    repeating-linear-gradient(45deg, #ffd6d6 25%, #ffefef 25%, #ffefef 75%, #ffd6d6 75%, #ffd6d6);
   background-position:
-      0 0,
-      10px 10px;
+    0 0,
+    10px 10px;
   background-size: 20px 20px;
 }
 

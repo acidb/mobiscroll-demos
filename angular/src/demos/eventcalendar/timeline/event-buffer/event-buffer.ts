@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Notifications, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -14,60 +14,62 @@ setOptions({
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  myEvents = [{
-    bufferAfter: 30,
-    start: 'dyndatetime(y,m,d,6)',
-    end: 'dyndatetime(y,m,d,8)',
-    title: 'Morning routine',
-    resource: 1,
-  },
-  {
-    bufferAfter: 120,
-    bufferBefore: 30,
-    start: 'dyndatetime(y,m,d,16)',
-    end: 'dyndatetime(y,m,d,20)',
-    title: 'Friends binge marathon',
-    resource: 4,
-  },
-  {
-    bufferAfter: 120,
-    bufferBefore: 30,
-    start: 'dyndatetime(y,m,d,13)',
-    end: 'dyndatetime(y,m,d,21)',
-    title: 'Mastering CSS class',
-    resource: 2,
-  },
-  {
-    bufferAfter: 10,
-    bufferBefore: 15,
-    start: 'y,m,d,8)',
-    end: 'y,m,d,10)',
-    title: 'Product team mtg.',
-    resource: 2,
-  },
-  {
-    bufferAfter: 20,
-    bufferBefore: 30,
-    start: 'dyndatetime(y,m,d,16,30)',
-    end: 'dyndatetime(y,m,d,19, 30)',
-    title: 'Cinema afternoon',
-    resource: 3,
-  },
-  {
-    bufferAfter: 10,
-    bufferBefore: 10,
-    start: 'dyndatetime(y,m,d,8,30)',
-    end: 'dyndatetime(y,m,d,10)',
-    title: 'Quick mtg. with Martin',
-    resource: 3,
-  },
-  {
-    bufferBefore: 45,
-    start: 'dyndatetime(y,m,d,9,30)',
-    end: 'dyndatetime(y,m,d,12)',
-    title: 'Product team mtg.',
-    resource: 4,
-  }];
+  myEvents = [
+    {
+      bufferAfter: 30,
+      start: 'dyndatetime(y,m,d,6)',
+      end: 'dyndatetime(y,m,d,8)',
+      title: 'Morning routine',
+      resource: 1,
+    },
+    {
+      bufferAfter: 120,
+      bufferBefore: 30,
+      start: 'dyndatetime(y,m,d,16)',
+      end: 'dyndatetime(y,m,d,20)',
+      title: 'Friends binge marathon',
+      resource: 4,
+    },
+    {
+      bufferAfter: 120,
+      bufferBefore: 30,
+      start: 'dyndatetime(y,m,d,13)',
+      end: 'dyndatetime(y,m,d,21)',
+      title: 'Mastering CSS class',
+      resource: 2,
+    },
+    {
+      bufferAfter: 10,
+      bufferBefore: 15,
+      start: 'y,m,d,8)',
+      end: 'y,m,d,10)',
+      title: 'Product team mtg.',
+      resource: 2,
+    },
+    {
+      bufferAfter: 20,
+      bufferBefore: 30,
+      start: 'dyndatetime(y,m,d,16,30)',
+      end: 'dyndatetime(y,m,d,19, 30)',
+      title: 'Cinema afternoon',
+      resource: 3,
+    },
+    {
+      bufferAfter: 10,
+      bufferBefore: 10,
+      start: 'dyndatetime(y,m,d,8,30)',
+      end: 'dyndatetime(y,m,d,10)',
+      title: 'Quick mtg. with Martin',
+      resource: 3,
+    },
+    {
+      bufferBefore: 45,
+      start: 'dyndatetime(y,m,d,9,30)',
+      end: 'dyndatetime(y,m,d,12)',
+      title: 'Product team mtg.',
+      resource: 4,
+    },
+  ];
 
   myResources = [
     {

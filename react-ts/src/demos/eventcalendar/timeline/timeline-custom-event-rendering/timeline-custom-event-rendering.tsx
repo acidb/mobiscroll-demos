@@ -3,8 +3,8 @@ import {
   MbscCalendarEvent,
   MbscCalendarEventData,
   MbscEventcalendarView,
-  MbscResource, 
-  setOptions, /* localeImport */
+  MbscResource,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { FC, useCallback, useMemo } from 'react';
 import './timeline-custom-event-rendering.css';
@@ -129,14 +129,14 @@ const App: FC = () => {
 
   const myBeforeBuffer = useCallback((args: MbscCalendarEventData) => {
     const event = args.original!;
-    console.log('event?', event)
+    console.log('event?', event);
     const color = event.color;
 
     return (
-      <div className="md-buffer md-before-buffer" style={{background: color}}>
+      <div className="md-buffer md-before-buffer" style={{ background: color }}>
         Prep
-        <span className='md-buffer-time'>{event.bufferBefore} min</span>
-        <div className='md-buffer-tail'  style={{background: color}}></div>
+        <span className="md-buffer-time">{event.bufferBefore} min</span>
+        <div className="md-buffer-tail" style={{ background: color }}></div>
       </div>
     );
   }, []);
@@ -146,22 +146,23 @@ const App: FC = () => {
     const color = event.color;
 
     return (
-      <div className="md-buffer md-after-buffer" style={{background: color}}>
+      <div className="md-buffer md-after-buffer" style={{ background: color }}>
         Inspection
-        <span className='md-buffer-time'>{event.bufferAfter} min</span>
-        <div className='md-buffer-tail'  style={{background: color}}></div>
+        <span className="md-buffer-time">{event.bufferAfter} min</span>
+        <div className="md-buffer-tail" style={{ background: color }}></div>
       </div>
     );
   }, []);
 
-  const myDefaultEvent = useCallback(() => {
-    return {
+  const myDefaultEvent = useCallback(
+    () => ({
       taskType: 'cogs',
       bufferAfter: 60,
       bufferBefore: 30,
       color: '#239a21',
-    };
-  }, []);
+    }),
+    [],
+  );
 
   return (
     <Eventcalendar

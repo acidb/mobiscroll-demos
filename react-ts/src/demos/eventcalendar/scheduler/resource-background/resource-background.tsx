@@ -23,13 +23,13 @@ const App: FC = () => {
         id: 1,
         name: 'Resource A Full column background - with "background" property',
         color: '#e20000',
-        background: 'rgba(71, 251, 34, 0.37)'
+        background: 'rgba(71, 251, 34, 0.37)',
       },
       {
         id: 2,
         name: 'Resource B - Thicker borders - with "cssClass" property',
         color: '#1dab2f',
-        cssClass: 'md-col-tick-border'
+        cssClass: 'md-col-tick-border',
       },
       {
         id: 3,
@@ -40,13 +40,13 @@ const App: FC = () => {
         id: 4,
         name: 'Resource D - Resource only background - with "cssClass" property',
         color: '#e25dd2',
-        cssClass: 'md-resource-only-bg'
+        cssClass: 'md-resource-only-bg',
       },
       {
         id: 5,
         name: 'Resource E - Different resource/sidebar/grid background - with "cssClass" property',
         color: '#4981d6',
-        cssClass: 'md-diff-custom-bg'
+        cssClass: 'md-diff-custom-bg',
       },
       {
         id: 6,
@@ -62,7 +62,7 @@ const App: FC = () => {
         id: 8,
         name: 'Resource H - Grid only background - with "cssClass" property',
         color: '#34c8e0',
-        cssClass: 'md-colum-only-bg'
+        cssClass: 'md-colum-only-bg',
       },
     ],
     [],
@@ -132,11 +132,11 @@ const App: FC = () => {
     <Eventcalendar
       // drag
       view={myView}
-      groupBy='date'
+      groupBy="date"
       data={myEvents}
       resources={myResources}
     />
   );
-}
+};
 
 export default App;
