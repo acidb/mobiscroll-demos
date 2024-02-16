@@ -151,6 +151,7 @@ import SchedulerDisplayMultipleDaysWeeks from './demos/eventcalendar/scheduler/d
 import SchedulerDoctorsAppointment from './demos/eventcalendar/scheduler/doctors-appointment/doctors-appointment';
 import SchedulerDragDropBetweenCalendarInstances from './demos/eventcalendar/scheduler/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import SchedulerDynamicAddRemoveResourcesFilter from './demos/eventcalendar/scheduler/dynamic-add-remove-resources-filter/dynamic-add-remove-resources-filter';
+import ScheduleEventBuffer from './demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import SchedulerEventBulkActionsEditDeleteUpdate from './demos/eventcalendar/scheduler/event-bulk-actions-edit-delete-update/event-bulk-actions-edit-delete-update';
 import SchedulerEventDataStructure from './demos/eventcalendar/scheduler/event-data-structure/event-data-structure';
 import SchedulerEventHooks from './demos/eventcalendar/scheduler/event-hooks/event-hooks';
@@ -201,6 +202,7 @@ import TimelineDisallowPastEventCreation from './demos/eventcalendar/timeline/di
 import TimelineDragDropBetweenCalendarInstances from './demos/eventcalendar/timeline/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import TimelineDynamicallyColorAndInvalidate from './demos/eventcalendar/timeline/dynamically-color-and-invalidate/dynamically-color-and-invalidate';
 import TimelineEmployeeShifts from './demos/eventcalendar/timeline/employee-shifts/employee-shifts';
+import TimelineEventBuffer from './demos/eventcalendar/timeline/event-buffer/event-buffer';
 import TimelineEventBulkActionsEditDeleteUpdate from './demos/eventcalendar/timeline/event-bulk-actions-edit-delete-update/event-bulk-actions-edit-delete-update';
 import TimelineEventDataStructure from './demos/eventcalendar/timeline/event-data-structure/event-data-structure';
 import TimelineEventHooks from './demos/eventcalendar/timeline/event-hooks/event-hooks';
@@ -238,6 +240,7 @@ import TimelineSwitchingDayWeekWorkWeekTimeline from './demos/eventcalendar/time
 import TimelineSyncEventsGoogleCalendar from './demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar';
 import TimelineSyncEventsOutlookCalendar from './demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import TimelineThemesIosMaterialWindows from './demos/eventcalendar/timeline/themes-ios-material-windows/themes-ios-material-windows';
+import TimelineResourceBackground from './demos/eventcalendar/timeline/resource-background/resource-background';
 import TimelineTimelineCustomEventRendering from './demos/eventcalendar/timeline/timeline-custom-event-rendering/timeline-custom-event-rendering';
 import TimelineTimelineResourceDetailsSidePanelFooter from './demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import TimelineTimelineResourceHeight from './demos/eventcalendar/timeline/timeline-resource-height/timeline-resource-height';
@@ -790,6 +793,10 @@ function App() {
       path: '/scheduler/themes-ios-material-windows',
       element: <SchedulerThemesIosMaterialWindows />,
     },
+    {
+      path: '/scheduler/resource-background',
+      element: <SchedulerResourceBackground />,
+    },
     { path: '/scheduler/recurring-events', element: <SchedulerRecurringEvents /> },
     {
       path: '/scheduler/load-events-from-google-calendar',
@@ -1082,6 +1089,14 @@ function App() {
       element: <TimelineEventDataStructure />,
     },
     {
+      path: '/timeline/event-buffer',
+      element: <TimelineEventBuffer />,
+    },
+    {
+      path: '/scheduler/event-buffer',
+      element: <ScheduleEventBuffer />,
+    },
+    {
       path: '/timeline/date-object-ISO-8601-moment',
       element: <TimelineDateObjectISO8601Moment />,
     },
@@ -1101,6 +1116,10 @@ function App() {
     {
       path: '/timeline/themes-ios-material-windows',
       element: <TimelineThemesIosMaterialWindows />,
+    },
+    {
+      path: '/timeline/resource-background',
+      element: <TimelineResourceBackground />,
     },
     {
       path: '/timeline/gregorian-jalali-hijri',

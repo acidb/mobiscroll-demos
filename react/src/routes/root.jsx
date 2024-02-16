@@ -360,6 +360,9 @@ export default function Root() {
               <Link to="/scheduler/event-data-structure">Event properties</Link>
             </li>
             <li>
+              <Link to="/scheduler/event-buffer">Event buffer</Link>
+            </li>
+            <li>
               <Link to="/scheduler/date-object-ISO-8601-moment">Supported date formats</Link>
             </li>
             <li>
@@ -400,6 +403,9 @@ export default function Root() {
             </li>
             <li>
               <Link to="/scheduler/themes-ios-material-windows">Theming capabilities</Link>
+            </li>
+            <li>
+              <Link to="/scheduler/resource-background">Resource background</Link>
             </li>
             <li>
               <Link to="/scheduler/gregorian-jalali-hijri">Calendar systems </Link>
@@ -547,6 +553,9 @@ export default function Root() {
               <Link to="/timeline/load-inline-data">Loading inline data</Link>
             </li>
             <li>
+              <Link to="/timeline/event-buffer">Event buffer</Link>
+            </li>
+            <li>
               <Link to="/timeline/load-events-from-remote-api">Events from remote API </Link>
             </li>
             <li>
@@ -578,6 +587,9 @@ export default function Root() {
             </li>
             <li>
               <Link to="/timeline/themes-ios-material-windows">Theming capabilities</Link>
+            </li>
+            <li>
+              <Link to="/timeline/resource-background">Resource background</Link>
             </li>
             <li>
               <Link to="/timeline/gregorian-jalali-hijri">Calendar systems </Link>

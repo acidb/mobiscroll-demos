@@ -134,6 +134,7 @@ export default {
       <li><a class="app-link" href="/scheduler/dynamic-add-remove-resources-filter">Show/hide resources</a></li>
       <li><a class="app-link" href="/scheduler/resource-data-structure">Resource properties</a></li>
       <li><a class="app-link" href="/scheduler/event-data-structure">Event properties</a></li>
+      <li><a class="app-link" href="/scheduler/event-buffer">Event buffer</a></li>
       <li><a class="app-link" href="/scheduler/date-object-ISO-8601-moment">Supported date formats</a></li>
       <li><a class="app-link" href="/scheduler/recurring-events">Recurrence rules</a></li>
       <li><a class="app-link" href="/scheduler/load-inline-data">Loading inline data</a></li>
@@ -148,6 +149,7 @@ export default {
       <li><a class="app-link" href="/scheduler/disallow-past-event-creation">Disable past event creation</a></li>
       <li><a class="app-link" href="/scheduler/resource-filtering-in-header">Custom component in header</a></li>
       <li><a class="app-link" href="/scheduler/themes-ios-material-windows">Theming capabilities</a></li>
+      <li><a class="app-link" href="/scheduler/resource-background">Resource background and styling</a></li>
       <li><a class="app-link" href="/scheduler/gregorian-jalali-hijri">Calendar systems </a></li>
       <li><a class="app-link" href="/scheduler/event-hooks">Lifecycle events</a></li>
       <li><a class="app-link" href="/scheduler/localization">Localization</a></li>
@@ -203,6 +205,7 @@ export default {
       <li><a class="app-link" href="/timeline/resource-grouping-hierarchy">Resource grouping & hierarchy</a></li>
       <li><a class="app-link" href="/timeline/resource-data-structure">Resource properties</a></li>
       <li><a class="app-link" href="/timeline/event-data-structure">Event properties</a></li>
+      <li><a class="app-link" href="/timeline/event-buffer">Event buffer</a></li>
       <li><a class="app-link" href="/timeline/connecting-linking-events-arrows">Event connections</a></li>
       <li><a class="app-link" href="/timeline/date-object-ISO-8601-moment">Supported date formats</a></li>
       <li><a class="app-link" href="/timeline/recurring-events">Recurrence rules</a></li>
@@ -218,6 +221,7 @@ export default {
       <li><a class="app-link" href="/timeline/disallow-past-event-creation">Disable past event creation</a></li>
       <li><a class="app-link" href="/timeline/event-bulk-actions-edit-delete-update">Multiple select & bulk operations</a></li>
       <li><a class="app-link" href="/timeline/themes-ios-material-windows">Theming capabilities</a></li>
+      <li><a class="app-link" href="/timeline/resource-background">Resource background and styling</a></li>
       <li><a class="app-link" href="/timeline/gregorian-jalali-hijri">Calendar systems </a></li>
       <li><a class="app-link" href="/timeline/event-hooks">Lifecycle events</a></li>
       <li><a class="app-link" href="/timeline/localization">Localization</a></li>

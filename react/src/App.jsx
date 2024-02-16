@@ -187,6 +187,7 @@ import SchedulerGregorianJalaliHijri from './demos/eventcalendar/scheduler/grego
 import SchedulerEventHooks from './demos/eventcalendar/scheduler/event-hooks/event-hooks';
 import SchedulerLocalization from './demos/eventcalendar/scheduler/localization/localization';
 import SchedulerThemesIosMaterialWindows from './demos/eventcalendar/scheduler/themes-ios-material-windows/themes-ios-material-windows';
+import SchedulerResourceBackground from './demos/eventcalendar/scheduler/resource-background/resource-background';
 import SchedulerRecurringEvents from './demos/eventcalendar/scheduler/recurring-events/recurring-events';
 import SchedulerLoadEventsFromGoogleCalendar from './demos/eventcalendar/scheduler/load-events-from-google-calendar/load-events-from-google-calendar';
 import SchedulerDateObjectISO8601Moment from './demos/eventcalendar/scheduler/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
@@ -286,11 +287,14 @@ import TimelineLoadEventsFromRemoteApi from './demos/eventcalendar/timeline/load
 import TimelineLoadEventsOnDemand from './demos/eventcalendar/timeline/load-events-on-demand/load-events-on-demand';
 import TimelineCreateReadUpdateDeleteCRUD from './demos/eventcalendar/timeline/create-read-update-delete-CRUD/create-read-update-delete-CRUD';
 import TimelineThemesIosMaterialWindows from './demos/eventcalendar/timeline/themes-ios-material-windows/themes-ios-material-windows';
+import TimelineResourceBackground from './demos/eventcalendar/timeline/resource-background/resource-background';
 import TimelineGregorianJalaliHijri from './demos/eventcalendar/timeline/gregorian-jalali-hijri/gregorian-jalali-hijri';
 import TimelineEventHooks from './demos/eventcalendar/timeline/event-hooks/event-hooks';
 import TimelineLocalization from './demos/eventcalendar/timeline/localization/localization';
 import TimelineRtlRightToLeft from './demos/eventcalendar/timeline/rtl-right-to-left/rtl-right-to-left';
 import TimelineLoadInlineData from './demos/eventcalendar/timeline/load-inline-data/load-inline-data';
+import TimelineEventBuffer from './demos/eventcalendar/timeline/event-buffer/event-buffer';
+import SchedulerEventBuffer from './demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import TimelineSyncEventsGoogleCalendar from './demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar';
 import TimelineSyncEventsOutlookCalendar from './demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import TimelineDisallowPastEventCreation from './demos/eventcalendar/timeline/disallow-past-event-creation/disallow-past-event-creation';
@@ -793,6 +797,10 @@ function App() {
       path: '/scheduler/themes-ios-material-windows',
       element: <SchedulerThemesIosMaterialWindows />,
     },
+    {
+      path: '/scheduler/resource-background',
+      element: <SchedulerResourceBackground />,
+    },
     { path: '/scheduler/recurring-events', element: <SchedulerRecurringEvents /> },
     {
       path: '/scheduler/load-events-from-google-calendar',
@@ -1106,6 +1114,10 @@ function App() {
       element: <TimelineThemesIosMaterialWindows />,
     },
     {
+      path: '/timeline/resource-background',
+      element: <TimelineResourceBackground />,
+    },
+    {
       path: '/timeline/gregorian-jalali-hijri',
       element: <TimelineGregorianJalaliHijri />,
     },
@@ -1113,6 +1125,8 @@ function App() {
     { path: '/timeline/localization', element: <TimelineLocalization /> },
     { path: '/timeline/rtl-right-to-left', element: <TimelineRtlRightToLeft /> },
     { path: '/timeline/load-inline-data', element: <TimelineLoadInlineData /> },
+    { path: '/timeline/event-buffer', element: <TimelineEventBuffer /> },
+    { path: '/scheduler/event-buffer', element: <SchedulerEventBuffer /> },
     {
       path: '/timeline/sync-events-google-calendar',
       element: <TimelineSyncEventsGoogleCalendar />,

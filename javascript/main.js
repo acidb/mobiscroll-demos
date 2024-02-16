@@ -216,6 +216,8 @@ import TimelineLoadEventsFromGoogleCalendar from './src/demos/eventcalendar/time
 import TimelineLoadEventsFromRemoteApi from './src/demos/eventcalendar/timeline/load-events-from-remote-api/load-events-from-remote-api';
 import TimelineLoadEventsOnDemand from './src/demos/eventcalendar/timeline/load-events-on-demand/load-events-on-demand';
 import TimelineLoadInlineData from './src/demos/eventcalendar/timeline/load-inline-data/load-inline-data';
+import TimelineEventBuffer from './src/demos/eventcalendar/timeline/event-buffer/event-buffer';
+import SchedulerEventBuffer from './src/demos/eventcalendar/scheduler/event-buffer/event-buffer';
 import TimelineLoadResourcesOnDemand from './src/demos/eventcalendar/timeline/load-resources-on-demand/load-resources-on-demand';
 import TimelineLoadingBigDataSets from './src/demos/eventcalendar/timeline/loading-big-data-sets/loading-big-data-sets';
 import TimelineLocalization from './src/demos/eventcalendar/timeline/localization/localization';
@@ -1195,6 +1197,12 @@ router
   })
   .on('/timeline/event-data-structure', function () {
     loadPage(TimelineEventDataStructure);
+  })
+  .on('/timeline/event-buffer', function () {
+    loadPage(TimelineEventBuffer);
+  })
+  .on('/scheduler/event-buffer', function () {
+    loadPage(SchedulerEventBuffer);
   })
   .on('/timeline/date-object-ISO-8601-moment', function () {
     loadPage(TimelineDateObjectISO8601Moment);

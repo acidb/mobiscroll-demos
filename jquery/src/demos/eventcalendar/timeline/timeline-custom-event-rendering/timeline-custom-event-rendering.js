@@ -45,13 +45,38 @@ export default {
               '</span></div></div>'
             );
           },
+          renderBufferBefore: function (args) {
+            var event = args.original;
+            var color = event.color;
+
+            return `<div class="md-buffer md-before-buffer" style="background: ${color}">
+              Prep
+              <span class='md-buffer-time'>${event.bufferBefore} min</span>
+              <div class='md-buffer-tail' style="background: ${color}"></div>
+            </div>`;
+          },
+          renderBufferAfter: function (args) {
+            var event = args.original;
+            var color = event.color;
+
+            return `<div class="md-buffer md-after-buffer" style="background: ${color}">
+              Inspection
+              <span class='md-buffer-time'>${event.bufferAfter} min</span>
+              <div class='md-buffer-tail' style="background: ${color}"></div>
+             </div>`;
+          },
           extendDefaultEvent: function () {
             return {
               taskType: 'cogs',
+              bufferAfter: 60,
+              bufferBefore: 30,
+              color: '#239a21',
             };
           },
           data: [
             {
+              bufferBefore: 30,
+              bufferAfter: 35,
               start: 'dyndatetime(y,m,d,10,30)',
               end: 'dyndatetime(y,m,d,13)',
               title: 'Tire change',
@@ -60,6 +85,8 @@ export default {
               resource: 1,
             },
             {
+              bufferAfter: 40,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,7)',
               end: 'dyndatetime(y,m,d,10)',
               title: 'Brake maintenance',
@@ -68,6 +95,8 @@ export default {
               resource: 2,
             },
             {
+              bufferAfter: 45,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,13,30)',
               end: 'dyndatetime(y,m,d,16,30)',
               title: 'Fluid maintenance',
@@ -76,6 +105,8 @@ export default {
               resource: 1,
             },
             {
+              bufferAfter: 35,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,11)',
               end: 'dyndatetime(y,m,d,14)',
               title: 'Oil change',
@@ -84,14 +115,18 @@ export default {
               resource: 3,
             },
             {
+              bufferAfter: 60,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,8)',
               end: 'dyndatetime(y,m,d,12)',
-              title: 'Engine inspection',
+              title: 'Engine repair',
               color: '#6c5d45',
               taskType: 'material-search',
               resource: 3,
             },
             {
+              bufferAfter: 45,
+              bufferBefore: 30,
               start: 'dyndatetime(y,m,d,14)',
               end: 'dyndatetime(y,m,d,19)',
               title: 'Car painting',
@@ -158,18 +193,58 @@ export default {
     box-sizing: content-box;
 }
 
+.md-before-buffer,
 .mbsc-timeline-event-start .md-timeline-template-event,
 .mbsc-timeline-event-start .md-timeline-template-event-cont,
 .mbsc-timeline-event-start .md-timeline-template-event-cont .mbsc-icon {
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
+.md-after-buffer,
 .mbsc-timeline-event-end .md-timeline-template-event,
 .mbsc-timeline-event-end .md-timeline-template-event-cont,
 .mbsc-timeline-event-end .md-timeline-template-event-cont .mbsc-icon {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.md-buffer {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  font-size: 10px;
+  top: 2px;
+  bottom: 2px;
+  color: #fff;
+  padding: 0 6px;
+  line-height: 12px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: .5;
+  box-sizing: border-box;
+  z-index: -1;
+}
+
+.md-buffer-tail {
+  position: absolute;
+  width: 14px;
+  height: 100%;
+  top: 0;
+}
+
+.md-before-buffer .md-buffer-tail {
+  left: 100%;
+}
+
+.md-after-buffer .md-buffer-tail {
+  right: 100%;
+}
+
+.md-buffer-time {
+  font-weight: 600;
 }
 
 .md-timeline-template-event-cont .mbsc-icon:before {

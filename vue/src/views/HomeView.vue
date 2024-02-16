@@ -438,6 +438,9 @@ import { RouterLink } from 'vue-router'
           <RouterLink to="/scheduler/event-data-structure">Event properties</RouterLink>
         </li>
         <li>
+          <RouterLink to="/scheduler/event-buffer">Event buffer</RouterLink>
+        </li>
+        <li>
           <RouterLink to="/scheduler/date-object-ISO-8601-moment"
             >Supported date formats</RouterLink
           >
@@ -673,6 +676,9 @@ import { RouterLink } from 'vue-router'
           <RouterLink to="/timeline/event-data-structure">Event properties</RouterLink>
         </li>
         <li>
+          <RouterLink to="/timeline/event-buffer">Event buffer</RouterLink>
+        </li>
+        <li>
           <RouterLink to="/timeline/connecting-linking-events-arrows">Event connections</RouterLink>
         </li>
         <li>
@@ -732,6 +738,9 @@ import { RouterLink } from 'vue-router'
         </li>
         <li>
           <RouterLink to="/timeline/themes-ios-material-windows">Theming capabilities</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/timeline/resource-background">Resource background</RouterLink>
         </li>
         <li>
           <RouterLink to="/timeline/gregorian-jalali-hijri">Calendar systems </RouterLink>
