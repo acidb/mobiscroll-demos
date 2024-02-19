@@ -21,17 +21,15 @@ function App() {
     () => [
       {
         id: 1,
-        name: 'Resource A',
+        name: 'Resource A - Row background with "background" property',
         color: '#e20000',
         background: 'rgba(108, 166, 166, 0.37)',
-        description: 'Full row background - with "background" property',
       },
       {
         id: 2,
-        name: 'Resource B',
+        name: 'Resource B - Thicker borders with "cssClass" property',
         color: '#1dab2f',
         cssClass: 'md-tick-border',
-        description: 'Thicker borders - with "cssClass" property',
       },
       {
         id: 3,
@@ -40,17 +38,15 @@ function App() {
       },
       {
         id: 4,
-        name: 'Resource D',
+        name: 'Resource D - Resource background with "cssClass" property',
         color: '#e25dd2',
         cssClass: 'md-resource-only-bg',
-        description: 'Resource only background - with "cssClass" property',
       },
       {
         id: 5,
-        name: 'Resource E',
+        name: 'Resource E - Different backgrounds with "cssClass" property',
         color: '#4981d6',
         cssClass: 'md-diff-custom-bg',
-        description: 'Different resource/sidebar/grid background - with "cssClass" property',
       },
       {
         id: 6,
@@ -59,15 +55,9 @@ function App() {
       },
       {
         id: 7,
-        name: 'Resource G',
+        name: 'Resource H - Grid background with "cssClass" property',
         color: '#34c8e0',
-      },
-      {
-        id: 8,
-        name: 'Resource H',
-        color: '#34c8e0',
-        cssClass: 'md-row-only-bg',
-        description: 'Grid only background - with "cssClass" property',
+        cssClass: 'md-row-only-bg'
       },
     ],
     [],
@@ -111,29 +101,7 @@ function App() {
         title: 'Event 6',
         resource: 7,
       },
-      {
-        start: 'dyndatetime(y,m,25)',
-        end: 'dyndatetime(y,m,27)',
-        title: 'Event 9',
-        resource: 8,
-      },
-      {
-        start: 'dyndatetime(y,m,20)',
-        end: 'dyndatetime(y,m,23)',
-        title: 'Event 10',
-        resource: 9,
-      },
     ],
-    [],
-  );
-
-  const customResource = useCallback(
-    (resource) => (
-      <div className="md-resource-bg-res-cont">
-        {resource.name}
-        {resource.description && <p>{resource.description}</p>}
-      </div>
-    ),
     [],
   );
 
@@ -141,7 +109,6 @@ function App() {
     (resource) => (
       <div className="md-resource-bg-res-cont">
         {resource.name} Sidebar
-        {resource.description && <p>{resource.description}</p>}
       </div>
     ),
     [],
@@ -153,7 +120,6 @@ function App() {
       view={myView}
       data={myEvents}
       resources={myResources}
-      renderResource={customResource}
       renderSidebar={customSidebar}
     />
   );

@@ -10,7 +10,7 @@ setOptions({
 const myResources = ref([
   {
     id: 1,
-    name: 'Resource A Full column background - with "background" property',
+    name: 'Resource - Full column background with "background" property',
     color: '#e20000',
     background: 'rgba(71, 251, 34, 0.37)'
   },
@@ -27,13 +27,13 @@ const myResources = ref([
   },
   {
     id: 4,
-    name: 'Resource D - Resource only background - with "cssClass" property',
+    name: 'Resource D - Resource only background with "cssClass" property',
     color: '#e25dd2',
     cssClass: 'md-resource-only-bg'
   },
   {
     id: 5,
-    name: 'Resource E - Different resource/sidebar/grid background - with "cssClass" property',
+    name: 'Resource E - Different backgrounds with "cssClass" property',
     color: '#4981d6',
     cssClass: 'md-diff-custom-bg'
   },
@@ -44,12 +44,7 @@ const myResources = ref([
   },
   {
     id: 7,
-    name: 'Resource G',
-    color: '#34c8e0'
-  },
-  {
-    id: 8,
-    name: 'Resource H - Grid only background - with "cssClass" property',
+    name: 'Resource G - Grid only background with "cssClass" property',
     color: '#34c8e0',
     cssClass: 'md-colum-only-bg'
   }

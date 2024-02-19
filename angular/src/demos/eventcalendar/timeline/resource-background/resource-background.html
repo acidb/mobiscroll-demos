@@ -4,21 +4,12 @@
     [view]="view"
     [data]="myEvents"
     [resources]="myResources"
-    [resourceTemplate]="resourceTemp"
     [sidebarTemplate]="sidebarTemp"
   ></mbsc-eventcalendar>
 </div>
 
-<ng-template #resourceTemp let-resource>
-  <div class="md-resource-bg-res-cont">
-    {{ resource.name }}
-    <p *ngIf="resource.description">{{ resource.description }}</p>
-  </div>
-</ng-template>
-
 <ng-template #sidebarTemp let-resource>
   <div class="md-resource-bg-res-cont">
     {{ resource.name }} Sidebar
-    <p *ngIf="resource.description">{{ resource.description }}</p>
   </div>
 </ng-template>

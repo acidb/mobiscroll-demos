@@ -33,9 +33,3 @@
 .md-resource-only-bg.mbsc-timeline-resource {
   background: rgba(255, 166, 0, 0.7);
 }
-
-.md-resource-bg-res-cont p {
-  margin: 4px 0;
-  font-weight: normal;
-  font-size: 12px;
-}

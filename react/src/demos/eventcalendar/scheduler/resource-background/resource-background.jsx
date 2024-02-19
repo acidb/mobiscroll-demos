@@ -20,7 +20,7 @@ function App() {
       },
       {
         id: 2,
-        name: 'Resource B - Thicker borders - with "cssClass" property',
+        name: 'Resource B - Thicker borders with "cssClass" property',
         color: '#1dab2f',
         cssClass: 'md-col-tick-border',
       },
@@ -31,13 +31,13 @@ function App() {
       },
       {
         id: 4,
-        name: 'Resource D - Resource only background - with "cssClass" property',
+        name: 'Resource D - Resource only background with "cssClass" property',
         color: '#e25dd2',
         cssClass: 'md-resource-only-bg',
       },
       {
         id: 5,
-        name: 'Resource E - Different resource/sidebar/grid background - with "cssClass" property',
+        name: 'Resource E - Different backgrounds with "cssClass" property',
         color: '#4981d6',
         cssClass: 'md-diff-custom-bg',
       },
@@ -48,12 +48,7 @@ function App() {
       },
       {
         id: 7,
-        name: 'Resource G',
-        color: '#34c8e0',
-      },
-      {
-        id: 8,
-        name: 'Resource H - Grid only background - with "cssClass" property',
+        name: 'Resource G - Grid only background with "cssClass" property',
         color: '#34c8e0',
         cssClass: 'md-colum-only-bg',
       },

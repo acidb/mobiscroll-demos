@@ -9,53 +9,43 @@ setOptions({
 const myResources = [
   {
     id: 1,
-    name: 'Resource A',
+    name: 'Resource A - Row background with "background" property',
     color: '#e20000',
     background: 'rgba(108, 166, 166, 0.37)',
-    description: 'Full row background - with "background" property'
   },
   {
     id: 2,
-    name: 'Resource B',
+    name: 'Resource B - Thicker borders with "cssClass" property',
     color: '#1dab2f',
     cssClass: 'md-tick-border',
-    description: 'Thicker borders - with "cssClass" property'
   },
   {
     id: 3,
     name: 'Resource C',
-    color: '#4981d6'
+    color: '#4981d6',
   },
   {
     id: 4,
-    name: 'Resource D',
+    name: 'Resource D - Resource background with "cssClass" property',
     color: '#e25dd2',
     cssClass: 'md-resource-only-bg',
-    description: 'Resource only background - with "cssClass" property'
   },
   {
     id: 5,
-    name: 'Resource E',
+    name: 'Resource E - Different backgrounds with "cssClass" property',
     color: '#4981d6',
     cssClass: 'md-diff-custom-bg',
-    description: 'Different resource/sidebar/grid background - with "cssClass" property'
   },
   {
     id: 6,
     name: 'Resource F',
-    color: '#d6d145'
+    color: '#d6d145',
   },
   {
     id: 7,
-    name: 'Resource G',
-    color: '#34c8e0'
-  },
-  {
-    id: 8,
-    name: 'Resource H',
+    name: 'Resource H - Grid background with "cssClass" property',
     color: '#34c8e0',
     cssClass: 'md-row-only-bg',
-    description: 'Grid only background - with "cssClass" property'
   }
 ]
 
@@ -96,18 +86,6 @@ const myEvents = [
     title: 'Event 6',
     resource: 7
   },
-  {
-    start: 'dyndatetime(y,m,25)',
-    end: 'dyndatetime(y,m,27)',
-    title: 'Event 9',
-    resource: 8
-  },
-  {
-    start: 'dyndatetime(y,m,20)',
-    end: 'dyndatetime(y,m,23)',
-    title: 'Event 10',
-    resource: 9
-  }
 ]
 
 const myView = {
@@ -121,13 +99,6 @@ const myView = {
     <template #sidebar="resource">
       <div class="md-resource-bg-res-cont">
         {{ resource.name }} Sidebar
-        <p v-if="description">{{ resource.description }}</p>
-      </div>
-    </template>
-    <template #resource="resource">
-      <div class="md-resource-bg-res-cont">
-        {{ resource.name }}
-        <p v-if="description">{{ resource.description }}</p>
       </div>
     </template>
   </MbscEventcalendar>
@@ -175,11 +146,5 @@ const myView = {
 
 .md-resource-only-bg.mbsc-timeline-resource {
   background: rgba(255, 166, 0, 0.7);
-}
-
-.md-resource-bg-res-cont p {
-  margin: 4px 0;
-  font-weight: normal;
-  font-size: 12px;
 }
 </style>
