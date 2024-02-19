@@ -150,5 +150,9 @@ export default {
 .md-resource-only-bg.mbsc-timeline-resource {
   background: rgba(255, 166, 0, 0.7);
 }
+
+.md-timeline-resource-bg {
+  min-height: 650px;
+}
   `,
 };
