@@ -589,7 +589,6 @@ export class AppComponent implements OnInit {
             repeat: this.repeatType,
             interval: this.repeatNr,
           };
-          console.log(this.weekDays.join(','));
           switch (this.repeatType) {
             case 'weekly':
               recurringRule.weekDays = this.weekDays.join(',');
@@ -614,7 +613,6 @@ export class AppComponent implements OnInit {
           break;
       }
     }
-    console.log(recurringRule);
     return recurringRule;
   }
   setTempEvent(): void {

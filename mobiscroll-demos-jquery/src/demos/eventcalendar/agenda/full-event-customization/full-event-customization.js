@@ -18,7 +18,6 @@ export default {
             agenda: { type: 'month' },
           },
           renderEvent: function (data) {
-            console.log(data);
             return (
               '<div class="md-full-event"><img class="md-full-event-img" src="https://img.mobiscroll.com/demos/' +
               data.original.img +

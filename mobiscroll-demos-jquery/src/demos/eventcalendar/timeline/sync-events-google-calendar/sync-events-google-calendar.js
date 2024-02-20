@@ -87,7 +87,6 @@ export default {
       }
 
       function onError(resp) {
-        console.log(resp);
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>

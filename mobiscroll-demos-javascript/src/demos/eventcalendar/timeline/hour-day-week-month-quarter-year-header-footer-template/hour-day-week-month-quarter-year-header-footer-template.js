@@ -527,7 +527,6 @@ export default {
         );
       },
       renderMonthFooter: function (args) {
-        console.log('renderMonthFooter', args);
         return getOccuppancy(args.events);
       },
     });
