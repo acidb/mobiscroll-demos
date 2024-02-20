@@ -1,4 +1,26 @@
-import { enhance, getInst } from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import {
+  Button,
+  CalendarNav,
+  CalendarNext,
+  CalendarPrev,
+  CalendarToday,
+  Checkbox,
+  Draggable,
+  Dropcontainer,
+  Dropdown,
+  enhance,
+  getInst,
+  Input,
+  Page,
+  Radio,
+  registerComponent,
+  Segmented,
+  SegmentedGroup,
+  Stepper,
+  Switch,
+  Textarea,
+} from '@mobiscroll/javascript';
+
 import { Router } from 'html5-history-router';
 import '@mobiscroll/javascript/dist/css/mobiscroll.min.css';
 import '@mobiscroll/print/dist/css/mobiscroll.min.css';
@@ -6,6 +28,24 @@ import './style.css';
 
 import { demos, demoTitleMap } from './src/demos';
 import HomePage from './src/pages/home';
+
+registerComponent(Button);
+registerComponent(Checkbox);
+registerComponent(Input);
+registerComponent(Draggable);
+registerComponent(Dropcontainer);
+registerComponent(Dropdown);
+registerComponent(Textarea);
+registerComponent(Page);
+registerComponent(Radio);
+registerComponent(Segmented);
+registerComponent(SegmentedGroup);
+registerComponent(Stepper);
+registerComponent(Switch);
+registerComponent(CalendarNext);
+registerComponent(CalendarPrev);
+registerComponent(CalendarToday);
+registerComponent(CalendarNav);
 
 var router = new Router();
 

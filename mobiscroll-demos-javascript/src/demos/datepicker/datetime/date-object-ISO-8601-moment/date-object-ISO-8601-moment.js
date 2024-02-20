@@ -1,4 +1,5 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import * as mobiscroll from '@mobiscroll/javascript';
+
 import moment from 'moment';
 
 export default {

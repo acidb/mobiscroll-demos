@@ -1,4 +1,4 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import * as mobiscroll from '@mobiscroll/javascript';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -11,7 +11,6 @@ export default {
       controls: ['calendar'],
       select: 'range',
       display: 'inline',
-      calendarSystem: mobiscroll.gregorianCalendar,
       locale: mobiscroll.locale.en,
     });
 

@@ -1,4 +1,4 @@
-import * as mobiscroll from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import * as mobiscroll from '@mobiscroll/javascript';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -54,7 +54,7 @@ export default {
           id: 7,
           name: 'Resource H - Grid background with "cssClass" property',
           color: '#34c8e0',
-          cssClass: 'md-row-only-bg'
+          cssClass: 'md-row-only-bg',
         },
       ],
       data: [
@@ -96,9 +96,7 @@ export default {
         },
       ],
       renderSidebar: function (resource) {
-        return (
-          '<div class="md-resource-bg-res-cont">' + resource.name + ' Sidebar</div>'
-        );
+        return '<div class="md-resource-bg-res-cont">' + resource.name + ' Sidebar</div>';
       },
     });
   },

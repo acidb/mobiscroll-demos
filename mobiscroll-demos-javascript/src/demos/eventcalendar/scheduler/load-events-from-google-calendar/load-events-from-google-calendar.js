@@ -1,7 +1,7 @@
 import { googleCalendarSync as googleSync } from '@mobiscroll/calendar-integration';
-import * as m from '@mobiscroll/javascript/dist/js/mobiscroll.javascript.min.js';
+import * as m from '@mobiscroll/javascript';
 
-var mobiscroll = m;
+var mobiscroll = Object.assign({}, m);
 mobiscroll.googleCalendarSync = googleSync;
 
 export default {
