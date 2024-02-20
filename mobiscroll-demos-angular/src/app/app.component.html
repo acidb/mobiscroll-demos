@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<div class="app-header mbsc-font">
+  <div *ngIf="path !== '/'" class="app-back">
+    <a routerLink="/">
+      <span class="mbsc-icon mbsc-font-icon mbsc-icon-ion-ios7-arrow-back"></span>
+    </a>
+  </div>
+  <div class="app-title">
+    <h1>{{ demoTitleMap[path] || 'Mobiscroll Angular Demos' }}</h1>
+  </div>
+</div>
+<div class="app-page">
+  <router-outlet></router-outlet>
+</div>
+<div class="app-footer mbsc-font">
+  <div *ngIf="path !== '/'" class="app-path">{{ './src/demos' + path }}</div>
+</div>

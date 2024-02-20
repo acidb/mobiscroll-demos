@@ -1,35 +1,34 @@
-# vue
+Mobiscroll Vue Demos
+====================
 
-This template should help get you started developing with Vue 3 in Vite.
+This repository consists of demos from the [Mobiscroll website](https://demo.mobiscroll.com/).
+It is meant to be a learning resource/helping guide to start working with Mobiscroll components (and beyond).
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Required steps to run the project locally:
+-----------------------------------------
 
-## Customize configuration
+- If not signed up yet, or do not have a license [start a trial](https://mobiscroll.com/starttrial).
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Clone the repository:
 
-## Project Setup
+      git clone https://github.com/acidb/mobiscroll-demos-vue.git
 
-```sh
-npm install
-```
+- If not installed yet, install the Mobiscroll CLI from NPM:
 
-### Compile and Hot-Reload for Development
+      npm install -g @mobiscroll/cli
 
-```sh
-npm run dev
-```
+- Config Mobiscroll - open a terminal window in the root directory and run:
 
-### Compile and Minify for Production
+      mobiscroll config vue
 
-```sh
-npm run build
-```
+- Install dependencies - open a terminal window in the root directory and run:
 
-### Lint with [ESLint](https://eslint.org/)
+      npm install
 
-```sh
-npm run lint
-```
+- Run the project:
+
+      npm run dev
+
+
+*Have you encountered any issues or do you have feedback regarding the demos? Feel free to contact us via our [ticketing system](https://mobiscroll.com/account/supporttickets) or website chat. Alternatively, you can also submit your questions to our [Community Forum](https://forum.mobiscroll.com/).*

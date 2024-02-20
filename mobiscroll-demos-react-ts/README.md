@@ -1,27 +1,34 @@
-# React + TypeScript + Vite
+Mobiscroll React TS Demos
+=========================
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository consists of demos from the [Mobiscroll website](https://demo.mobiscroll.com/).
+It is meant to be a learning resource/helping guide to start working with Mobiscroll components (and beyond).
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Required steps to run the project locally:
+-----------------------------------------
 
-## Expanding the ESLint configuration
+- If not signed up yet, or do not have a license [start a trial](https://mobiscroll.com/starttrial).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Clone the repository:
 
-- Configure the top-level `parserOptions` property like this:
+      git clone https://github.com/acidb/mobiscroll-demos-react-ts.git
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+- If not installed yet, install the Mobiscroll CLI from NPM:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+      npm install -g @mobiscroll/cli
+
+- Config Mobiscroll - open a terminal window in the root directory and run:
+
+      mobiscroll config react
+
+- Install dependencies - open a terminal window in the root directory and run:
+
+      npm install
+
+- Run the project:
+
+      npm run dev
+
+
+*Have you encountered any issues or do you have feedback regarding the demos? Feel free to contact us via our [ticketing system](https://mobiscroll.com/account/supporttickets) or website chat. Alternatively, you can also submit your questions to our [Community Forum](https://forum.mobiscroll.com/).*

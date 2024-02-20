@@ -1,27 +1,34 @@
-# Angular
+Mobiscroll Angular Demos
+========================
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.2.
+This repository consists of demos from the [Mobiscroll website](https://demo.mobiscroll.com/).
+It is meant to be a learning resource/helping guide to start working with Mobiscroll components (and beyond).
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Required steps to run the project locally:
+-----------------------------------------
 
-## Code scaffolding
+- If not signed up yet, or do not have a license [start a trial](https://mobiscroll.com/starttrial).
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Clone the repository:
 
-## Build
+      git clone https://github.com/acidb/mobiscroll-demos-angular.git
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- If not installed yet, install the Mobiscroll CLI from NPM:
 
-## Running unit tests
+      npm install -g @mobiscroll/cli
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Config Mobiscroll - open a terminal window in the root directory and run:
 
-## Running end-to-end tests
+      mobiscroll config angular
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Install dependencies - open a terminal window in the root directory and run:
 
-## Further help
+      npm install
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Run the project:
+
+      ng serve
+
+
+*Have you encountered any issues or do you have feedback regarding the demos? Feel free to contact us via our [ticketing system](https://mobiscroll.com/account/supporttickets) or website chat. Alternatively, you can also submit your questions to our [Community Forum](https://forum.mobiscroll.com/).*

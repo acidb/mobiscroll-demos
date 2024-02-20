@@ -1,68 +1,34 @@
-# vue-ts
+Mobiscroll Vue TS Demos
+=======================
 
-This template should help get you started developing with Vue 3 in Vite.
+This repository consists of demos from the [Mobiscroll website](https://demo.mobiscroll.com/).
+It is meant to be a learning resource/helping guide to start working with Mobiscroll components (and beyond).
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Required steps to run the project locally:
+-----------------------------------------
 
-## Type Support for `.vue` Imports in TS
+- If not signed up yet, or do not have a license [start a trial](https://mobiscroll.com/starttrial).
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+- Clone the repository:
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+      git clone https://github.com/acidb/mobiscroll-demos-vue-ts.git
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- If not installed yet, install the Mobiscroll CLI from NPM:
 
-## Customize configuration
+      npm install -g @mobiscroll/cli
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- Config Mobiscroll - open a terminal window in the root directory and run:
 
-## Project Setup
+      mobiscroll config vue
 
-```sh
-npm install
-```
+- Install dependencies - open a terminal window in the root directory and run:
 
-### Compile and Hot-Reload for Development
+      npm install
 
-```sh
-npm run dev
-```
+- Run the project:
 
-### Type-Check, Compile and Minify for Production
+      npm run dev
 
-```sh
-npm run build
-```
 
-### Run Headed Component Tests with [Cypress Component Testing](https://on.cypress.io/component)
-
-```sh
-npm run test:unit:dev # or `npm run test:unit` for headless testing
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+*Have you encountered any issues or do you have feedback regarding the demos? Feel free to contact us via our [ticketing system](https://mobiscroll.com/account/supporttickets) or website chat. Alternatively, you can also submit your questions to our [Community Forum](https://forum.mobiscroll.com/).*
