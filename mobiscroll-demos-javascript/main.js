@@ -47,6 +47,8 @@ registerComponent(CalendarPrev);
 registerComponent(CalendarToday);
 registerComponent(CalendarNav);
 
+window.isMbscDemo = true;
+
 var router = new Router();
 
 var app = document.getElementById('app');
