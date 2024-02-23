@@ -9,6 +9,7 @@ import {
   setOptions,
   updateRecurringEvent /* localeImport */,
 } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
@@ -90,8 +91,8 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [
     {
       id: 1,
-      start: 'dyndatetime(y,m,21)',
-      end: 'dyndatetime(y,m,24)',
+      start: dyndatetime('y,m,21'),
+      end: dyndatetime('y,m,24'),
       title: 'Alice OFF',
       allDay: true,
       color: '#67ab0d',

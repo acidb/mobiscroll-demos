@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { formatDate, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
@@ -18,15 +19,15 @@ const now = new Date();
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
-  min = 'dyndatetime(y,m,d)';
+  min = dyndatetime('y,m,d');
   labels: any = [];
   invalid: any = [];
   colors: any = [];
   monthColors = [
     {
       background: '#b2f1c080',
-      start: 'dyndatetime(y,1,1)',
-      end: 'dyndatetime(y,1,31)',
+      start: dyndatetime('y,1,1'),
+      end: dyndatetime('y,1,31'),
       cellCssClass: 'md-book-rental-bg-off',
       recurring: {
         repeat: 'yearly',
@@ -36,8 +37,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#b2f1c080',
-      start: 'dyndatetime(y,2,1)',
-      end: 'dyndatetime(y,2,28)',
+      start: dyndatetime('y,2,1'),
+      end: dyndatetime('y,2,28'),
       cellCssClass: 'md-book-rental-bg-off',
       recurring: {
         repeat: 'yearly',
@@ -56,8 +57,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#a3cdff80',
-      start: 'dyndatetime(y,3,1)',
-      end: 'dyndatetime(y,3,31,23,59)',
+      start: dyndatetime('y,3,1'),
+      end: dyndatetime('y,3,31,23,59'),
       cellCssClass: 'md-book-rental-bg-pre',
       recurring: {
         repeat: 'yearly',
@@ -67,8 +68,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#a3cdff80',
-      start: 'dyndatetime(y,4,1)',
-      end: 'dyndatetime(y,4,30)',
+      start: dyndatetime('y,4,1'),
+      end: dyndatetime('y,4,30'),
       cellCssClass: 'md-book-rental-bg-pre',
       recurring: {
         repeat: 'yearly',
@@ -78,8 +79,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#a3cdff80',
-      start: 'dyndatetime(y,5,1)',
-      end: 'dyndatetime(y,5,31)',
+      start: dyndatetime('y,5,1'),
+      end: dyndatetime('y,5,31'),
       cellCssClass: 'md-book-rental-bg-pre',
       recurring: {
         repeat: 'yearly',
@@ -89,8 +90,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#f7f7bb80',
-      start: 'dyndatetime(y,6,1)',
-      end: 'dyndatetime(y,6,30)',
+      start: dyndatetime('y,6,1'),
+      end: dyndatetime('y,6,30'),
       cellCssClass: 'md-book-rental-bg-in',
       recurring: {
         repeat: 'yearly',
@@ -100,8 +101,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#f7f7bb80',
-      start: 'dyndatetime(y,7,1)',
-      end: 'dyndatetime(y,7,31)',
+      start: dyndatetime('y,7,1'),
+      end: dyndatetime('y,7,31'),
       cellCssClass: 'md-book-rental-bg-in',
       recurring: {
         repeat: 'yearly',
@@ -111,8 +112,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#f7f7bb80',
-      start: 'dyndatetime(y,8,1)',
-      end: 'dyndatetime(y,8,31)',
+      start: dyndatetime('y,8,1'),
+      end: dyndatetime('y,8,31'),
       cellCssClass: 'md-book-rental-bg-in',
       recurring: {
         repeat: 'yearly',
@@ -122,8 +123,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#f7f7bb80',
-      start: 'dyndatetime(y,9,1)',
-      end: 'dyndatetime(y,9,30)',
+      start: dyndatetime('y,9,1'),
+      end: dyndatetime('y,9,30'),
       cellCssClass: 'md-book-rental-bg-in',
       recurring: {
         repeat: 'yearly',
@@ -133,8 +134,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#f7f7bb80',
-      start: 'dyndatetime(y,10,1)',
-      end: 'dyndatetime(y,10,31,23,59)',
+      start: dyndatetime('y,10,1'),
+      end: dyndatetime('y,10,31,23,59'),
       cellCssClass: 'md-book-rental-bg-in',
       recurring: {
         repeat: 'yearly',
@@ -144,8 +145,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#b2f1c080',
-      start: 'dyndatetime(y,11,1)',
-      end: 'dyndatetime(y,11,30)',
+      start: dyndatetime('y,11,1'),
+      end: dyndatetime('y,11,30'),
       cellCssClass: 'md-book-rental-bg-off',
       recurring: {
         repeat: 'yearly',
@@ -155,8 +156,8 @@ export class AppComponent implements OnInit {
     },
     {
       background: '#b2f1c080',
-      start: 'dyndatetime(y,12,1)',
-      end: 'dyndatetime(y,12,31)',
+      start: dyndatetime('y,12,1'),
+      end: dyndatetime('y,12,31'),
       cellCssClass: 'md-book-rental-bg-off',
       recurring: {
         repeat: 'yearly',

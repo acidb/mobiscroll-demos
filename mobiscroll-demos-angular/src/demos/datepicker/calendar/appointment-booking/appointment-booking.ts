@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MbscDatepickerOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
   // theme
 });
 
-const minDate = 'dyndatetime(y,m,d)';
-const maxDate = 'dyndatetime(y,m+6,d)';
+const minDate = dyndatetime('y,m,d');
+const maxDate = dyndatetime('y,m+6,d');
 
 @Component({
   selector: 'app-calendar-appointment-booking',
@@ -19,7 +20,7 @@ const maxDate = 'dyndatetime(y,m+6,d)';
 export class AppComponent {
   constructor(private http: HttpClient) {}
 
-  multiple = ['dyndatetime(y,m,11)', 'dyndatetime(y,m,16)', 'dyndatetime(y,m,17)'];
+  multiple = [dyndatetime('y,m,11'), dyndatetime('y,m,16'), dyndatetime('y,m,17')];
 
   singleLabels = [];
   singleInvalid = [];

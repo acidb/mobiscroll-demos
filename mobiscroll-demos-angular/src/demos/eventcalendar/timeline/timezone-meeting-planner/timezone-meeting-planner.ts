@@ -8,6 +8,7 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import moment from 'moment-timezone';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
@@ -27,8 +28,8 @@ export class AppComponent {
   constructor(private notify: Notifications) {}
   myEvents: MbscCalendarEvent[] = [
     {
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,15)',
+      start: dyndatetime('y,m,d,13'),
+      end: dyndatetime('y,m,d,15'),
       title: 'General orientation',
       color: '#1ad404',
       resource: [1, 2, 3, 4, 5, 6],

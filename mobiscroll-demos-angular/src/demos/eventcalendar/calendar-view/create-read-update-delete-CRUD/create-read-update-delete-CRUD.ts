@@ -8,6 +8,7 @@ import {
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
@@ -41,8 +42,8 @@ export class AppComponent {
   myEvents: MbscCalendarEvent[] = [
     {
       id: 1,
-      start: 'dyndatetime(y,m,8,13)',
-      end: 'dyndatetime(y,m,8,13,45)',
+      start: dyndatetime('y,m,8,13'),
+      end: dyndatetime('y,m,8,13,45'),
       title: "Lunch @ Butcher's",
       description: '',
       allDay: false,
@@ -51,8 +52,8 @@ export class AppComponent {
     },
     {
       id: 2,
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,d,16)',
+      start: dyndatetime('y,m,d,15'),
+      end: dyndatetime('y,m,d,16'),
       title: 'General orientation',
       description: '',
       allDay: false,
@@ -61,8 +62,8 @@ export class AppComponent {
     },
     {
       id: 3,
-      start: 'dyndatetime(y,m,d-1,18)',
-      end: 'dyndatetime(y,m,d-1,22)',
+      start: dyndatetime('y,m,d-1,18'),
+      end: dyndatetime('y,m,d-1,22'),
       title: 'Dexter BD',
       description: '',
       allDay: false,
@@ -71,8 +72,8 @@ export class AppComponent {
     },
     {
       id: 4,
-      start: 'dyndatetime(y,m,d+1,10,30)',
-      end: 'dyndatetime(y,m,d+1,11,30)',
+      start: dyndatetime('y,m,d+1,10,30'),
+      end: dyndatetime('y,m,d+1,11,30'),
       title: 'Stakeholder mtg.',
       description: '',
       allDay: false,
