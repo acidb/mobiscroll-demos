@@ -6,6 +6,7 @@ import {
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // theme,
@@ -44,58 +45,58 @@ export class AppComponent {
 
   firstEvents: MbscCalendarEvent[] = [
     {
-      start: 'dyndatetime(y,m,2,9)',
-      end: 'dyndatetime(y,m,6,18)',
+      start: dyndatetime('y,m,2,9'),
+      end: dyndatetime('y,m,6,18'),
       title: 'Business of Software Conference',
       color: '#ff6d42',
     },
     {
-      start: 'dyndatetime(y,m,10,7)',
-      end: 'dyndatetime(y,m,10,8)',
+      start: dyndatetime('y,m,10,7'),
+      end: dyndatetime('y,m,10,8'),
       title: 'Green box to post office',
       color: '#6e7f29',
     },
     {
-      start: 'dyndatetime(y,m,15,9,30)',
-      end: 'dyndatetime(y,m,15,10,30)',
+      start: dyndatetime('y,m,15,9,30'),
+      end: dyndatetime('y,m,15,10,30'),
       title: 'Product team mtg.',
       color: '#f67944',
     },
     {
-      start: 'dyndatetime(y,m,23,11,0)',
-      end: 'dyndatetime(y,m,23,11,45)',
+      start: dyndatetime('y,m,23,11,0'),
+      end: dyndatetime('y,m,23,11,45'),
       title: 'Stakeholder mtg.',
       color: '#a144f6',
     },
     {
-      start: 'dyndatetime(y,m,28,13,0)',
-      end: 'dyndatetime(y,m,28,13,45)',
+      start: dyndatetime('y,m,28,13,0'),
+      end: dyndatetime('y,m,28,13,45'),
       title: "Lunch @ Butcher's",
       color: '#00aabb',
     },
   ];
   secondEvents: MbscCalendarEvent[] = [
     {
-      start: 'dyndatetime(y,m,4,8,45)',
-      end: 'dyndatetime(y,m,4,10)',
+      start: dyndatetime('y,m,4,8,45'),
+      end: dyndatetime('y,m,4,10'),
       title: 'Quick mtg. with Martin',
       color: '#de3d83',
     },
     {
-      start: 'dyndatetime(y,m,8,15,0)',
-      end: 'dyndatetime(y,m,8,16,0)',
+      start: dyndatetime('y,m,8,15,0'),
+      end: dyndatetime('y,m,8,16,0'),
       title: 'General orientation',
       color: '#a71111',
     },
     {
-      start: 'dyndatetime(y,m,10,13)',
-      end: 'dyndatetime(y,m,14,21)',
+      start: dyndatetime('y,m,10,13'),
+      end: dyndatetime('y,m,14,21'),
       title: 'Friends binge marathon',
       color: '#7bde83',
     },
     {
-      start: 'dyndatetime(y,m,23,8)',
-      end: 'dyndatetime(y,m,27,9)',
+      start: dyndatetime('y,m,23,8'),
+      end: dyndatetime('y,m,27,9'),
       title: 'Product team mtg.',
       color: '#913aa7',
     },

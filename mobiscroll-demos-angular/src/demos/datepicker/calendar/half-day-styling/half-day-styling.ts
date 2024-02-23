@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
@@ -14,8 +15,8 @@ setOptions({
 })
 export class AppComponent {
   myColors = [
-    { date: 'dyndatetime(y,m,12)', cellCssClass: 'check-in' },
-    { date: 'dyndatetime(y,m,16)', cellCssClass: 'check-out' },
-    { start: 'dyndatetime(y,m,13)', end: 'dyndatetime(y,m,15)', background: '#46c4f3' },
+    { date: dyndatetime('y,m,12'), cellCssClass: 'check-in' },
+    { date: dyndatetime('y,m,16'), cellCssClass: 'check-out' },
+    { start: dyndatetime('y,m,13'), end: dyndatetime('y,m,15'), background: '#46c4f3' },
   ];
 }

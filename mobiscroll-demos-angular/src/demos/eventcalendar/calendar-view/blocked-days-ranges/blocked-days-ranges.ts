@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
@@ -39,13 +40,13 @@ export class AppComponent implements OnInit {
       },
       {
         allDay: true,
-        start: 'dyndatetime(y,m,19)',
-        end: 'dyndatetime(y,m,20)',
+        start: dyndatetime('y,m,19'),
+        end: dyndatetime('y,m,20'),
       },
       {
         allDay: true,
-        start: 'dyndatetime(y,m,26)',
-        end: 'dyndatetime(y,m,27)',
+        start: dyndatetime('y,m,26'),
+        end: dyndatetime('y,m,27'),
       },
     ],
     onEventCreateFailed: () => {

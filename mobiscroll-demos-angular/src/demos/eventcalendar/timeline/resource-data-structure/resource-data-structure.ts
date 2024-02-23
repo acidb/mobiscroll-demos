@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
@@ -86,20 +87,20 @@ export class AppComponent {
 
   myEvents: MbscCalendarEvent[] = [
     {
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,d,16)',
+      start: dyndatetime('y,m,d,15'),
+      end: dyndatetime('y,m,d,16'),
       title: 'General orientation',
       resource: 1,
     },
     {
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,10)',
+      start: dyndatetime('y,m,d,9'),
+      end: dyndatetime('y,m,d,10'),
       text: 'Stakeholder mtg.',
       resource: 2,
     },
     {
-      start: 'dyndatetime(y,m,d,13,30)',
-      end: 'dyndatetime(y,m,d,14,30)',
+      start: dyndatetime('y,m,d,13,30'),
+      end: dyndatetime('y,m,d,14,30'),
       text: "Lunch @ Butcher's",
       resource: 5,
     },

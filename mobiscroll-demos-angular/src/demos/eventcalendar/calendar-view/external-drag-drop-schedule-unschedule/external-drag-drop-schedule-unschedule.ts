@@ -7,6 +7,7 @@ import {
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
@@ -33,29 +34,29 @@ export class AppComponent implements OnInit {
       id: 1,
       title: 'Product team meeting',
       color: '#cf4343',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,9,30)',
+      start: dyndatetime('y,m,d,8'),
+      end: dyndatetime('y,m,d,9,30'),
     },
     {
       id: 2,
       title: 'General orientation',
       color: '#e49516',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,10)',
+      start: dyndatetime('y,m,d,8'),
+      end: dyndatetime('y,m,d,10'),
     },
     {
       id: 3,
       title: 'Client Training',
       color: '#8c429f',
-      start: 'dyndatetime(y,m,d,10)',
-      end: 'dyndatetime(y,m,d,14)',
+      start: dyndatetime('y,m,d,10'),
+      end: dyndatetime('y,m,d,14'),
     },
     {
       id: 4,
       title: 'CEO Conference',
       color: '#63b548',
-      start: 'dyndatetime(y,m,d,12)',
-      end: 'dyndatetime(y,m,d,18)',
+      start: dyndatetime('y,m,d,12'),
+      end: dyndatetime('y,m,d,18'),
     },
   ];
 

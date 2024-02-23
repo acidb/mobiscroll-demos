@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
@@ -16,8 +17,8 @@ export class AppComponent {
 
   myEvents = [
     {
-      start: 'dyndatetime(y,m,d,11)',
-      end: 'dyndatetime(y,m,d,13)',
+      start: dyndatetime('y,m,d,11'),
+      end: dyndatetime('y,m,d,13'),
       title: 'General orientation',
       resource: 2,
       bufferBefore: 20,
@@ -65,8 +66,8 @@ export class AppComponent {
     const newEvent = {
       // base properties
       title: 'Product planning',
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,d,17)',
+      start: dyndatetime('y,m,d,15'),
+      end: dyndatetime('y,m,d,17'),
       resource: 4,
       bufferBefore: 20,
       bufferAfter: 30,

@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
   // theme
 });
 
-const currentWeek: any = ['dyndatetime(y,m,d)', 'dyndatetime(y,m,d+6)'];
-const currentTime: any = ['dyndatetime(y,m,d,h)', 'dyndatetime(y,m,d,h+2)'];
+const currentWeek: any = [dyndatetime('y,m,d'), dyndatetime('y,m,d+6')];
+const currentTime: any = [dyndatetime('y,m,d,h'), dyndatetime('y,m,d,h+2')];
 
 @Component({
   selector: 'app-range-formatting-return-values',
