@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -9,11 +9,8 @@ setOptions({
 @Component({
   selector: 'app-timeline-event-buffer',
   templateUrl: './event-buffer.html',
-  providers: [Notifications],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) {}
-
   myEvents = [
     {
       bufferAfter: 30,
