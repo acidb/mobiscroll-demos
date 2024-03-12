@@ -1,7 +1,9 @@
 const fse = require('fs-extra');
 const config = require('./config.json');
 
-const filter = (src) => !/node_modules|dist|.angular/.test(src);
+const filter = (src) => {
+  return !/node_modules|dist|\.angular/.test(src);
+};
 
 const opt = { filter };
 
