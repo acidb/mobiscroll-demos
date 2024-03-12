@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  eventSettings: MbscEventcalendarOptions = {
+  myOptions: MbscEventcalendarOptions = {
     // drag,
     view: {
       schedule: { type: 'day' },

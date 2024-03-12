@@ -3,12 +3,20 @@ import * as mobiscroll from '@mobiscroll/javascript';
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    var inst = mobiscroll.eventcalendar('#demo-mobile-day-view', {
+    mobiscroll.setOptions({
       // locale,
       // theme,
+    });
+
+    var inst = mobiscroll.eventcalendar('#demo-mobile-day-view', {
       // drag,
       view: {
         schedule: { type: 'day' },
+      },
+      onEventClick: function (args) {
+        mobiscroll.toast({
+          message: args.event.title,
+        });
       },
     });
 
