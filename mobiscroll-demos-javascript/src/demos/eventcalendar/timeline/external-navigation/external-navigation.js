@@ -13,7 +13,6 @@ export default {
 
     monthInst = mobiscroll.datepicker('#demo-month', {
       // context,
-      controls: ['calendar'],
       display: 'inline',
       onChange: function (args) {
         dayInst.navigate(args.value);
@@ -27,8 +26,8 @@ export default {
       view: {
         timeline: { type: 'day' },
       },
-      onPageChange: function (args) {
-        monthInst.setVal(args.firstDay);
+      onSelectedDateChange: function (args) {
+        monthInst.setVal(args.date);
       },
     });
 

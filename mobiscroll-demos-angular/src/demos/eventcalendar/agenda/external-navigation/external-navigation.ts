@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
-  MbscDatepickerControl,
   MbscDatepickerPageLoadedEvent,
   MbscDateType,
   MbscEventcalendarView,
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   dayView: MbscEventcalendarView = { agenda: { type: 'day' } };
-  calView: MbscDatepickerControl[] = ['calendar'];
   myEvents: MbscCalendarEvent[] = [];
   selectedDate: MbscDateType = new Date();
 

@@ -13,7 +13,6 @@ export default {
 
     monthInst = mobiscroll.datepicker('#demo-month', {
       // context,
-      controls: ['calendar'],
       display: 'inline',
       onChange: function (args) {
         dayInst.navigate(args.value);
@@ -27,8 +26,8 @@ export default {
       view: {
         agenda: { type: 'day' },
       },
-      onPageChange: function (args) {
-        monthInst.setVal(args.firstDay);
+      onSelectedDateChange: function (args) {
+        monthInst.setVal(args.date);
       },
     });
 
@@ -42,7 +41,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <div class="mbsc-grid mds-external-nav-timeline">
+  <div class="mbsc-grid mds-external-nav-agenda">
     <div class="mbsc-row mbsc-flex-1-1 mbsc-no-padding">
       <div class="mbsc-col-12 mbsc-col-md-4 mbsc-col-xl-3">
         <div id="demo-month"></div>
@@ -55,7 +54,7 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-external-nav-timeline {
+  .mds-external-nav-agenda {
     display: flex;
     height: 100%;
   }
@@ -64,7 +63,7 @@ export default {
     border-left: 1px solid #ccc;
   }
   @media screen and (max-width: 700px) {
-    .mds-external-nav-timeline {
+    .mds-external-nav-agenda {
       display: block;
     }
   }

@@ -14,7 +14,6 @@ export default {
         .mobiscroll()
         .datepicker({
           // context,
-          controls: ['calendar'],
           display: 'inline',
           onChange: function (args) {
             dayInst.navigate(args.value);
@@ -32,8 +31,8 @@ export default {
           view: {
             schedule: { type: 'day' },
           },
-          onPageChange: function (args) {
-            monthInst.setVal(args.firstDay);
+          onSelectedDateChange: function (args) {
+            monthInst.setVal(args.date);
           },
         })
         .mobiscroll('getInst');

@@ -48,7 +48,6 @@ onMounted(() => {
         <MbscDatepicker
           display="inline"
           :value="mySelectedDate"
-          :controls="['calendar']"
           @change="handleDateChange"
           @pageLoaded="handlePageChange"
         />

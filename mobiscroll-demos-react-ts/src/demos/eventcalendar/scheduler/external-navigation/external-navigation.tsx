@@ -4,7 +4,6 @@ import {
   getJson,
   MbscCalendarEvent,
   MbscDatepickerChangeEvent,
-  MbscDatepickerControl,
   MbscDatepickerPageLoadedEvent,
   MbscDateType,
   MbscEventcalendarView,
@@ -24,7 +23,6 @@ function App() {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
   const [mySelectedDate, setSelectedDate] = useState<MbscDateType>(new Date());
   const dayView = useMemo<MbscEventcalendarView>(() => ({ schedule: { type: 'day' } }), []);
-  const calView = useMemo<MbscDatepickerControl[]>(() => ['calendar'], []);
 
   const handleDateChange = useCallback((args: MbscDatepickerChangeEvent) => {
     if (args.value) {
@@ -56,13 +54,7 @@ function App() {
     <div className="mbsc-grid mds-external-nav-scheduler">
       <div className="mbsc-row mbsc-flex-1-1 mbsc-no-padding">
         <div className="mbsc-col-12 mbsc-col-md-4 mbsc-col-xl-3">
-          <Datepicker
-            value={mySelectedDate}
-            display="inline"
-            controls={calView}
-            onChange={handleDateChange}
-            onPageLoaded={handlePageChange}
-          />
+          <Datepicker value={mySelectedDate} display="inline" onChange={handleDateChange} onPageLoaded={handlePageChange} />
         </div>
         <div className="mds-external-nav-ec mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">
           <Eventcalendar data={myEvents} selectedDate={mySelectedDate} view={dayView} onSelectedDateChange={handleSelectedDateChange} />

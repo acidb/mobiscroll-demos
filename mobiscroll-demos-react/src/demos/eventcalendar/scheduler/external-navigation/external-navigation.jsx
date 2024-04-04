@@ -11,7 +11,6 @@ function App() {
   const [myEvents, setEvents] = useState([]);
   const [mySelectedDate, setSelectedDate] = useState(new Date());
   const dayView = useMemo(() => ({ schedule: { type: 'day' } }), []);
-  const calView = useMemo(() => ['calendar'], []);
 
   const handleDateChange = useCallback((args) => {
     setSelectedDate(args.value);
@@ -42,7 +41,6 @@ function App() {
           <Datepicker
             display="inline"
             value={mySelectedDate}
-            controls={calView}
             onChange={handleDateChange}
             onPageChange={handleDateChange}
             onPageLoaded={handlePageChange}
