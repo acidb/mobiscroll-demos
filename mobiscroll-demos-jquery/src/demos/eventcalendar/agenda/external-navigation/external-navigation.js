@@ -55,6 +55,7 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+  .demo-external-navigation,
   .mds-external-nav-agenda {
     height: 100%;
   }
