@@ -3,8 +3,11 @@
   height: 100%;
 }
 
+.mds-external-nav-dp {
+  height: 360px;
+}
+
 .mds-external-nav-ec {
-  height: 100%;
   border-left: 1px solid #ccc;
 }
 

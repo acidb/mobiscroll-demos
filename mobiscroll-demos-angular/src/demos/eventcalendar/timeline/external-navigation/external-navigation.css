@@ -1,15 +1,17 @@
-.mds-external-nav-timeline {
-  display: flex;
+.mds-external-nav-calendar {
   height: 100%;
 }
 
+.mds-external-nav-dp {
+  height: 360px;
+}
+
 .mds-external-nav-ec {
-  flex: 1;
   border-left: 1px solid #ccc;
 }
 
 @media screen and (max-width: 700px) {
-  .mds-external-nav-timeline {
+  .mds-external-nav-calendar {
     display: block;
   }
 }

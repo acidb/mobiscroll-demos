@@ -1,10 +1,8 @@
-<div class="mbsc-grid mds-external-nav-agenda">
-  <div class="mbsc-row mbsc-flex-1-1 mbsc-no-padding">
-    <div class="mbsc-col-12 mbsc-col-md-4 mbsc-col-xl-3">
-      <mbsc-datepicker [(ngModel)]="selectedDate" display="inline" (onPageLoaded)="handlePageChange($event)"></mbsc-datepicker>
-    </div>
-    <div class="mds-sync-cal mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">
-      <mbsc-eventcalendar [(selectedDate)]="selectedDate" [data]="myEvents" [view]="dayView"></mbsc-eventcalendar>
-    </div>
+<div class="mds-external-nav-agenda mbsc-flex">
+  <div class="mds-external-nav-dp">
+    <mbsc-datepicker [(ngModel)]="selectedDate" display="inline" (onPageLoaded)="handlePageChange($event)"></mbsc-datepicker>
+  </div>
+  <div class="mds-external-nav-ec mbsc-flex-1-1">
+    <mbsc-eventcalendar [(selectedDate)]="selectedDate" [data]="myEvents" [view]="dayView"></mbsc-eventcalendar>
   </div>
 </div>

@@ -35,20 +35,18 @@ function App() {
   }, []);
 
   return (
-    <div className="mbsc-grid mds-external-nav-scheduler">
-      <div className="mbsc-row mbsc-flex-1-1 mbsc-no-padding">
-        <div className="mbsc-col-12 mbsc-col-md-4 mbsc-col-xl-3">
-          <Datepicker
-            display="inline"
-            value={mySelectedDate}
-            onChange={handleDateChange}
-            onPageChange={handleDateChange}
-            onPageLoaded={handlePageChange}
-          />
-        </div>
-        <div className="mds-external-nav-ec mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">
-          <Eventcalendar data={myEvents} selectedDate={mySelectedDate} view={dayView} onSelectedDateChange={handleSelectedDateChange} />
-        </div>
+    <div className="mds-external-nav-scheduler mbsc-flex">
+      <div className="mds-external-nav-dp">
+        <Datepicker
+          display="inline"
+          value={mySelectedDate}
+          onChange={handleDateChange}
+          onPageChange={handleDateChange}
+          onPageLoaded={handlePageChange}
+        />
+      </div>
+      <div className="mds-external-nav-ec mbsc-flex-1-1">
+        <Eventcalendar data={myEvents} selectedDate={mySelectedDate} view={dayView} onSelectedDateChange={handleSelectedDateChange} />
       </div>
     </div>
   );

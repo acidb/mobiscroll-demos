@@ -42,36 +42,36 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="mbsc-grid mds-external-nav-timeline">
-    <div class="mbsc-row mbsc-flex-1-1 mbsc-no-padding">
-      <div class="mbsc-col-12 mbsc-col-md-4 mbsc-col-xl-3">
-        <MbscDatepicker
-          display="inline"
-          :value="mySelectedDate"
-          @change="handleDateChange"
-          @pageLoaded="handlePageChange"
-        />
-      </div>
-      <div class="mds-external-nav-ec mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">
-        <MbscEventcalendar
-          :view="dayView"
-          :data="myEvents"
-          :selectedDate="mySelectedDate"
-          @selected-date-change="handleSelectedDateChange"
-        />
-      </div>
+  <div class="mds-external-nav-timeline mbsc-flex">
+    <div class="mds-external-nav-dp">
+      <MbscDatepicker
+        display="inline"
+        :value="mySelectedDate"
+        @change="handleDateChange"
+        @pageLoaded="handlePageChange"
+      />
+    </div>
+    <div class="mds-external-nav-ec mbsc-flex-1-1">
+      <MbscEventcalendar
+        :view="dayView"
+        :data="myEvents"
+        :selectedDate="mySelectedDate"
+        @selected-date-change="handleSelectedDateChange"
+      />
     </div>
   </div>
 </template>
 
 <style>
 .mds-external-nav-timeline {
-  display: flex;
   height: 100%;
 }
 
+.mds-external-nav-dp {
+  height: 360px;
+}
+
 .mds-external-nav-ec {
-  height: 100%;
   border-left: 1px solid #ccc;
 }
 
