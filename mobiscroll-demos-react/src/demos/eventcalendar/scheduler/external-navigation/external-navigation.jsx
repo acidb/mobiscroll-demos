@@ -21,6 +21,10 @@ function App() {
     setSelectedDate(args.date);
   }, []);
 
+  const handlePageChange = useCallback((args) => {
+    setSelectedDate(args.month);
+  }, []);
+
   useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
@@ -41,6 +45,7 @@ function App() {
             controls={calView}
             onChange={handleDateChange}
             onPageChange={handleDateChange}
+            onPageLoaded={handlePageChange}
           />
         </div>
         <div className="mds-external-nav-ec mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">

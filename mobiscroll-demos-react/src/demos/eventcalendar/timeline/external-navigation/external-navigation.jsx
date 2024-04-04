@@ -18,6 +18,10 @@ function App() {
     setSelectedDate(args.value);
   }, []);
 
+  const handlePageChange = useCallback((args) => {
+    setSelectedDate(args.month);
+  }, []);
+
   const handleSelectedDateChange = useCallback((args) => {
     setSelectedDate(args.date);
   }, []);
@@ -36,7 +40,13 @@ function App() {
     <div className="mbsc-grid mds-external-nav-timeline">
       <div className="mbsc-row mbsc-flex-1-1 mbsc-no-padding">
         <div className="mbsc-col-12 mbsc-col-md-4 mbsc-col-xl-3">
-          <Datepicker value={mySelectedDate} display="inline" controls={calView} onChange={handleDateChange} />
+          <Datepicker
+            value={mySelectedDate}
+            display="inline"
+            controls={calView}
+            onChange={handleDateChange}
+            onPageLoaded={handlePageChange}
+          />
         </div>
         <div className="mds-external-nav-ec mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">
           <Eventcalendar data={myEvents} selectedDate={mySelectedDate} view={dayView} onSelectedDateChange={handleSelectedDateChange} />

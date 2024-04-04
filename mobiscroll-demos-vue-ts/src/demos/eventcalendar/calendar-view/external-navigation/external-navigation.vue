@@ -4,6 +4,7 @@ import {
   MbscCalendarEvent,
   MbscDatepicker,
   MbscDatepickerChangeEvent,
+  MbscDatepickerPageLoadedEvent,
   MbscDateType,
   MbscEventcalendar,
   MbscEventcalendarView,
@@ -29,7 +30,15 @@ function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
 }
 
 function handleDateChange(args: MbscDatepickerChangeEvent) {
-  mySelectedDate.value = args.value
+  if (args.value) {
+    mySelectedDate.value = args.value
+  }
+}
+
+function handlePageChange(args: MbscDatepickerPageLoadedEvent) {
+  if (args.month) {
+    mySelectedDate.value = args.month
+  }
 }
 
 onMounted(() => {
@@ -52,6 +61,7 @@ onMounted(() => {
           :value="mySelectedDate"
           :controls="['calendar']"
           @change="handleDateChange"
+          @pageLoaded="handlePageChange"
         />
       </div>
       <div class="mds-external-nav-ec mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">

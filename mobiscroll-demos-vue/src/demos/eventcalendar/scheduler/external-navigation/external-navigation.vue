@@ -26,6 +26,10 @@ function handleDateChange(args) {
   mySelectedDate.value = args.value
 }
 
+function handlePageChange(args) {
+  mySelectedDate.value = args.month
+}
+
 onMounted(() => {
   getJson(
     'https://trial.mobiscroll.com/events/?vers=5',
@@ -46,6 +50,7 @@ onMounted(() => {
           :value="mySelectedDate"
           :controls="['calendar']"
           @change="handleDateChange"
+          @pageLoaded="handlePageChange"
         />
       </div>
       <div class="mds-external-nav-ec mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">

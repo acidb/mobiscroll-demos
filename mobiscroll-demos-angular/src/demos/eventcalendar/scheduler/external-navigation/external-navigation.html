@@ -1,7 +1,12 @@
 <div class="mbsc-grid mds-external-nav-scheduler">
   <div class="mbsc-row mbsc-flex-1-1 mbsc-no-padding">
     <div class="mbsc-col-12 mbsc-col-md-4 mbsc-col-xl-3">
-      <mbsc-datepicker [(ngModel)]="selectedDate" [controls]="calView" display="inline"></mbsc-bsc-datepicker>
+      <mbsc-datepicker
+        [(ngModel)]="selectedDate"
+        [controls]="calView"
+        display="inline"
+        (onPageLoaded)="handlePageChange($event)"
+      ></mbsc-datepicker>
     </div>
     <div class="mds-sync-cal mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">
       <mbsc-eventcalendar [(selectedDate)]="selectedDate" [data]="myEvents" [view]="dayView"></mbsc-eventcalendar>
