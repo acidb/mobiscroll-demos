@@ -1,6 +1,6 @@
 <div class="mds-external-nav-scheduler mbsc-flex">
   <div class="mds-external-nav-dp">
-    <mbsc-datepicker [(ngModel)]="selectedDate" display="inline" (onPageLoaded)="handlePageChange($event)"></mbsc-datepicker>
+    <mbsc-datepicker [(ngModel)]="selectedDate" display="inline"></mbsc-datepicker>
   </div>
   <div class="mds-external-nav-ec mbsc-flex-1-1">
     <mbsc-eventcalendar [(selectedDate)]="selectedDate" [data]="myEvents" [view]="dayView"></mbsc-eventcalendar>

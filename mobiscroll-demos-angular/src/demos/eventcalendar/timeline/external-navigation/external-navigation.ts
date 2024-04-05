@@ -1,12 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-  MbscCalendarEvent,
-  MbscDatepickerPageLoadedEvent,
-  MbscDateType,
-  MbscEventcalendarView,
-  setOptions /* localeImport */,
-} from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscDateType, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -25,12 +19,6 @@ export class AppComponent implements OnInit {
   dayView: MbscEventcalendarView = { timeline: { type: 'day' } };
   myEvents: MbscCalendarEvent[] = [];
   selectedDate: MbscDateType = new Date();
-
-  handlePageChange(args: MbscDatepickerPageLoadedEvent) {
-    if (args.month) {
-      this.selectedDate = args.month;
-    }
-  }
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
