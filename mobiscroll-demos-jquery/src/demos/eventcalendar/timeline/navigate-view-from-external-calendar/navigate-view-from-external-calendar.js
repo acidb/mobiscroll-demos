@@ -70,7 +70,7 @@ export default {
   }
 
   /*<hidden>*/
-  .demo-external-navigation {
+  .demo-navigate-view-from-external-calendar {
     height: 100%;
   }
   /*</hidden>*/

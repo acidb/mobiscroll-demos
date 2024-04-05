@@ -66,7 +66,7 @@ export default {
   }
 
   /*<hidden>*/
-  .demo-external-navigation {
+  .demo-navigate-from-external-date-picker {
     height: 100%;
   }
   /*</hidden>*/
