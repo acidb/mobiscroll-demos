@@ -60,6 +60,7 @@ export default {
 
   .mds-external-nav-ec {
     border-left: 1px solid #ccc;
+    overflow: hidden;
   }
 
   @media screen and (max-width: 700px) {
