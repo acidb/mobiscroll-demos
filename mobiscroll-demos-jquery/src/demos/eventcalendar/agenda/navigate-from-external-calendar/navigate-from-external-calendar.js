@@ -69,7 +69,7 @@ export default {
   }
 
   /*<hidden>*/
-  .demo-navigate-from-external-date-picker {
+  .demo-navigate-from-external-calendar {
     height: 100%;
   }
   /*</hidden>*/
