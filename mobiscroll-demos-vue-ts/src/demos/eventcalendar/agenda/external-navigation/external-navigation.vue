@@ -65,8 +65,8 @@ onMounted(() => {
   height: 100%;
 }
 
-.mds-external-nav-dp {
-  height: 360px;
+.mds-external-nav-dp .mbsc-datepicker-inline {
+  height: auto;
 }
 
 .mds-external-nav-ec {

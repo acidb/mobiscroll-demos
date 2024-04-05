@@ -14,8 +14,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import './external-navigation.css';
 
 setOptions({
-  theme: 'ios',
-  themeVariant: 'light',
+  // locale,
+  // theme
 });
 
 function App() {

@@ -8,18 +8,14 @@ export default {
       // theme
     });
 
-    var monthInst;
-    var dayInst;
-
-    monthInst = mobiscroll.datepicker('#demo-month', {
-      // context,
+    var monthInst = mobiscroll.datepicker('#demo-month', {
       display: 'inline',
       onChange: function (args) {
         dayInst.navigate(args.value);
       },
     });
 
-    dayInst = mobiscroll.eventcalendar('#demo-day', {
+    var dayInst = mobiscroll.eventcalendar('#demo-day', {
       view: {
         timeline: { type: 'day' },
       },
@@ -53,8 +49,8 @@ export default {
     height: 100%;
   }
 
-  .mds-external-nav-dp {
-    height: 360px;
+  .mds-external-nav-dp .mbsc-datepicker-inline {
+    height: auto;
   }
 
   .mds-external-nav-ec {

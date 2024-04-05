@@ -13,7 +13,6 @@ export default {
       var monthInst = $('#demo-month')
         .mobiscroll()
         .datepicker({
-          // context,
           display: 'inline',
           onChange: function (args) {
             dayInst.navigate(args.value);
@@ -24,7 +23,6 @@ export default {
       var dayInst = $('#demo-day')
         .mobiscroll()
         .eventcalendar({
-          // context,
           view: {
             timeline: { type: 'day' },
           },
@@ -56,8 +54,8 @@ export default {
     height: 100%;
   }
 
-  .mds-external-nav-dp {
-    height: 360px;
+  .mds-external-nav-dp .mbsc-datepicker-inline {
+    height: auto;
   }
 
   .mds-external-nav-ec {

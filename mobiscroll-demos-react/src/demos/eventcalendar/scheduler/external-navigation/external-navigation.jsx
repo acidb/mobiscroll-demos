@@ -1,16 +1,21 @@
-import { Datepicker, Eventcalendar, getJson, setOptions } from '@mobiscroll/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import './external-navigation.css';
+import {
+  Datepicker,
+  Eventcalendar,
+  getJson,
+  setOptions,
+} from "@mobiscroll/react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import "./external-navigation.css";
 
 setOptions({
-  theme: 'ios',
-  themeVariant: 'light',
+  // locale,
+  // theme
 });
 
 function App() {
   const [myEvents, setEvents] = useState([]);
   const [mySelectedDate, setSelectedDate] = useState(new Date());
-  const dayView = useMemo(() => ({ schedule: { type: 'day' } }), []);
+  const dayView = useMemo(() => ({ schedule: { type: "day" } }), []);
 
   const handleDateChange = useCallback((args) => {
     setSelectedDate(args.value);
@@ -22,21 +27,30 @@ function App() {
 
   useEffect(() => {
     getJson(
-      'https://trial.mobiscroll.com/events/?vers=5',
+      "https://trial.mobiscroll.com/events/?vers=5",
       (events) => {
         setEvents(events);
       },
-      'jsonp',
+      "jsonp",
     );
   }, []);
 
   return (
     <div className="mds-external-nav-scheduler mbsc-flex">
       <div className="mds-external-nav-dp">
-        <Datepicker display="inline" value={mySelectedDate} onChange={handleDateChange} />
+        <Datepicker
+          display="inline"
+          value={mySelectedDate}
+          onChange={handleDateChange}
+        />
       </div>
       <div className="mds-external-nav-ec mbsc-flex-1-1">
-        <Eventcalendar data={myEvents} selectedDate={mySelectedDate} view={dayView} onSelectedDateChange={handleSelectedDateChange} />
+        <Eventcalendar
+          data={myEvents}
+          selectedDate={mySelectedDate}
+          view={dayView}
+          onSelectedDateChange={handleSelectedDateChange}
+        />
       </div>
     </div>
   );

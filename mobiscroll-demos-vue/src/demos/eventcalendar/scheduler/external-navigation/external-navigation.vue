@@ -23,7 +23,9 @@ function handleSelectedDateChange(args) {
 }
 
 function handleDateChange(args) {
-  mySelectedDate.value = args.value
+  if (args.value) {
+    mySelectedDate.value = args.value
+  }
 }
 
 onMounted(() => {
@@ -58,8 +60,8 @@ onMounted(() => {
   height: 100%;
 }
 
-.mds-external-nav-dp {
-  height: 360px;
+.mds-external-nav-dp .mbsc-datepicker-inline {
+  height: auto;
 }
 
 .mds-external-nav-ec {
