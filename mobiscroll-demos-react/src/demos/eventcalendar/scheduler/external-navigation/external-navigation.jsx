@@ -20,10 +20,6 @@ function App() {
     setSelectedDate(args.date);
   }, []);
 
-  const handlePageChange = useCallback((args) => {
-    setSelectedDate(args.month);
-  }, []);
-
   useEffect(() => {
     getJson(
       'https://trial.mobiscroll.com/events/?vers=5',
@@ -37,13 +33,7 @@ function App() {
   return (
     <div className="mds-external-nav-scheduler mbsc-flex">
       <div className="mds-external-nav-dp">
-        <Datepicker
-          display="inline"
-          value={mySelectedDate}
-          onChange={handleDateChange}
-          onPageChange={handleDateChange}
-          onPageLoaded={handlePageChange}
-        />
+        <Datepicker display="inline" value={mySelectedDate} onChange={handleDateChange} />
       </div>
       <div className="mds-external-nav-ec mbsc-flex-1-1">
         <Eventcalendar data={myEvents} selectedDate={mySelectedDate} view={dayView} onSelectedDateChange={handleSelectedDateChange} />

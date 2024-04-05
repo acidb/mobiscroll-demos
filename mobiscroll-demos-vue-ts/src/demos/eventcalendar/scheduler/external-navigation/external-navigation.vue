@@ -4,7 +4,6 @@ import {
   MbscCalendarEvent,
   MbscDatepicker,
   MbscDatepickerChangeEvent,
-  MbscDatepickerPageLoadedEvent,
   MbscDateType,
   MbscEventcalendar,
   MbscEventcalendarView,
@@ -34,12 +33,6 @@ function handleDateChange(args: MbscDatepickerChangeEvent) {
   }
 }
 
-function handlePageChange(args: MbscDatepickerPageLoadedEvent) {
-  if (args.month) {
-    mySelectedDate.value = args.month
-  }
-}
-
 onMounted(() => {
   getJson(
     'https://trial.mobiscroll.com/events/?vers=5',
@@ -54,12 +47,7 @@ onMounted(() => {
 <template>
   <div class="mds-external-nav-scheduler mbsc-flex">
     <div class="mds-external-nav-dp">
-      <MbscDatepicker
-        display="inline"
-        :value="mySelectedDate"
-        @change="handleDateChange"
-        @pageLoaded="handlePageChange"
-      />
+      <MbscDatepicker display="inline" :value="mySelectedDate" @change="handleDateChange" />
     </div>
     <div class="mds-external-nav-ec mbsc-flex-1-1">
       <MbscEventcalendar

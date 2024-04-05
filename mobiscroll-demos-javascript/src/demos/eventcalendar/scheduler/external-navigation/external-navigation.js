@@ -17,9 +17,6 @@ export default {
       onChange: function (args) {
         dayInst.navigate(args.value);
       },
-      onPageChange: function (args) {
-        dayInst.navigate(args.month);
-      },
     });
 
     dayInst = mobiscroll.eventcalendar('#demo-day', {

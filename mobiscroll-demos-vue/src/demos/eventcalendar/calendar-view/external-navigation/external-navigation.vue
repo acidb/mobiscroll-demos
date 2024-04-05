@@ -14,10 +14,6 @@ setOptions({
 
 const myEvents = ref([])
 const mySelectedDate = ref(new Date())
-const dayView = {
-  calendar: { type: 'week' },
-  agenda: { type: 'day' }
-}
 
 function handleSelectedDateChange(args) {
   mySelectedDate.value = args.date
@@ -25,10 +21,6 @@ function handleSelectedDateChange(args) {
 
 function handleDateChange(args) {
   mySelectedDate.value = args.value
-}
-
-function handlePageChange(args) {
-  mySelectedDate.value = args.month
 }
 
 onMounted(() => {
@@ -45,16 +37,10 @@ onMounted(() => {
 <template>
   <div class="mds-external-nav-calendar mbsc-flex">
     <div class="mds-external-nav-dp">
-      <MbscDatepicker
-        display="inline"
-        :value="mySelectedDate"
-        @change="handleDateChange"
-        @pageLoaded="handlePageChange"
-      />
+      <MbscDatepicker display="inline" :value="mySelectedDate" @change="handleDateChange" />
     </div>
     <div class="mds-external-nav-ec mbsc-flex-1-1">
       <MbscEventcalendar
-        :view="dayView"
         :data="myEvents"
         :selectedDate="mySelectedDate"
         @selected-date-change="handleSelectedDateChange"

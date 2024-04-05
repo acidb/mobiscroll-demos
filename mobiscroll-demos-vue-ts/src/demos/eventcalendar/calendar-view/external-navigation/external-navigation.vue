@@ -4,10 +4,8 @@ import {
   MbscCalendarEvent,
   MbscDatepicker,
   MbscDatepickerChangeEvent,
-  MbscDatepickerPageLoadedEvent,
   MbscDateType,
   MbscEventcalendar,
-  MbscEventcalendarView,
   MbscSelectedDateChangeEvent,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
@@ -20,10 +18,6 @@ setOptions({
 
 const myEvents = ref<MbscCalendarEvent>([])
 const mySelectedDate = ref<MbscDateType>(new Date())
-const dayView: MbscEventcalendarView = {
-  calendar: { type: 'week' },
-  agenda: { type: 'day' }
-}
 
 function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
   mySelectedDate.value = args.date
@@ -32,12 +26,6 @@ function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
 function handleDateChange(args: MbscDatepickerChangeEvent) {
   if (args.value) {
     mySelectedDate.value = args.value
-  }
-}
-
-function handlePageChange(args: MbscDatepickerPageLoadedEvent) {
-  if (args.month) {
-    mySelectedDate.value = args.month
   }
 }
 
@@ -55,16 +43,10 @@ onMounted(() => {
 <template>
   <div class="mds-external-nav-calendar mbsc-flex">
     <div class="mds-external-nav-dp">
-      <MbscDatepicker
-        display="inline"
-        :value="mySelectedDate"
-        @change="handleDateChange"
-        @pageLoaded="handlePageChange"
-      />
+      <MbscDatepicker display="inline" :value="mySelectedDate" @change="handleDateChange" />
     </div>
     <div class="mds-external-nav-ec mbsc-flex-1-1">
       <MbscEventcalendar
-        :view="dayView"
         :data="myEvents"
         :selectedDate="mySelectedDate"
         @selected-date-change="handleSelectedDateChange"

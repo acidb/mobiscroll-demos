@@ -18,9 +18,6 @@ export default {
           onChange: function (args) {
             dayInst.navigate(args.value);
           },
-          onPageChange: function (args) {
-            dayInst.navigate(args.month);
-          },
         })
         .mobiscroll('getInst');
 
@@ -28,10 +25,6 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
-          view: {
-            calendar: { type: 'week' },
-            agenda: { type: 'day' },
-          },
           onSelectedDateChange: function (args) {
             monthInst.setVal(args.date);
           },
@@ -56,7 +49,6 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .demo-external-navigation,
   .mds-external-nav-calendar {
     height: 100%;
   }
@@ -74,5 +66,11 @@ export default {
       display: block;
     }
   }
+
+  /*<hidden>*/
+  .demo-external-navigation {
+    height: 100%;
+  }
+  /*</hidden>*/
   `,
 };

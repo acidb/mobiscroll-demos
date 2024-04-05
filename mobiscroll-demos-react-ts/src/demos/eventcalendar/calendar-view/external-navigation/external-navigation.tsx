@@ -5,14 +5,12 @@ import {
   getJson,
   MbscCalendarEvent,
   MbscDatepickerChangeEvent,
-  MbscDatepickerPageLoadedEvent,
   MbscDateType,
-  MbscEventcalendarView,
   MbscSelectedDateChangeEvent,
   setOptions,
 } from '@mobiscroll/react';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './external-navigation.css';
 
 setOptions({
@@ -23,7 +21,6 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
   const [mySelectedDate, setSelectedDate] = useState<MbscDateType>();
-  const monthView = useMemo<MbscEventcalendarView>(() => ({ calendar: { type: 'week' }, agenda: { type: 'day' } }), []);
 
   const handleDateChange = useCallback((args: MbscDatepickerChangeEvent) => {
     if (args.value) {
@@ -33,12 +30,6 @@ function App() {
 
   const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
     setSelectedDate(args.date);
-  }, []);
-
-  const handlePageChange = useCallback((args: MbscDatepickerPageLoadedEvent) => {
-    if (args.month) {
-      setSelectedDate(args.month);
-    }
   }, []);
 
   useEffect(() => {
@@ -54,10 +45,10 @@ function App() {
   return (
     <div className="mds-external-nav-calendar mbsc-flex">
       <div className="mds-external-nav-dp">
-        <Datepicker value={mySelectedDate} display="inline" onChange={handleDateChange} onPageLoaded={handlePageChange} />
+        <Datepicker value={mySelectedDate} display="inline" onChange={handleDateChange} />
       </div>
       <div className="mds-external-nav-ec mbsc-flex-1-1">
-        <Eventcalendar data={myEvents} selectedDate={mySelectedDate} view={monthView} onSelectedDateChange={handleSelectedDateChange} />
+        <Eventcalendar data={myEvents} selectedDate={mySelectedDate} onSelectedDateChange={handleSelectedDateChange} />
       </div>
     </div>
   );

@@ -10,7 +10,6 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
   const [mySelectedDate, setSelectedDate] = useState(new Date());
-  const monthView = useMemo(() => ({ calendar: { type: 'week' }, agenda: { type: 'day' } }), []);
 
   const handleDateChange = useCallback((args) => {
     setSelectedDate(args.value);
@@ -18,10 +17,6 @@ function App() {
 
   const handleSelectedDateChange = useCallback((args) => {
     setSelectedDate(args.date);
-  }, []);
-
-  const handlePageChange = useCallback((args) => {
-    setSelectedDate(args.month);
   }, []);
 
   useEffect(() => {
@@ -37,10 +32,10 @@ function App() {
   return (
     <div className="mds-external-nav-calendar mbsc-flex">
       <div className="mds-external-nav-dp">
-        <Datepicker value={mySelectedDate} display="inline" onChange={handleDateChange} onPageLoaded={handlePageChange} />
+        <Datepicker value={mySelectedDate} display="inline" onChange={handleDateChange} />
       </div>
       <div className="mds-external-nav-ec mbsc-flex-1-1">
-        <Eventcalendar data={myEvents} selectedDate={mySelectedDate} view={monthView} onSelectedDateChange={handleSelectedDateChange} />
+        <Eventcalendar data={myEvents} selectedDate={mySelectedDate} onSelectedDateChange={handleSelectedDateChange} />
       </div>
     </div>
   );

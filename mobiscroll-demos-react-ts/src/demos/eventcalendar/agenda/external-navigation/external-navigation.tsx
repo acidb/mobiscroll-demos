@@ -4,7 +4,6 @@ import {
   getJson,
   MbscCalendarEvent,
   MbscDatepickerChangeEvent,
-  MbscDatepickerPageLoadedEvent,
   MbscDateType,
   MbscEventcalendarView,
   MbscSelectedDateChangeEvent,
@@ -30,12 +29,6 @@ function App() {
     }
   }, []);
 
-  const handlePageChange = useCallback((args: MbscDatepickerPageLoadedEvent) => {
-    if (args.month) {
-      setSelectedDate(args.month);
-    }
-  }, []);
-
   const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
     setSelectedDate(args.date);
   }, []);
@@ -53,7 +46,7 @@ function App() {
   return (
     <div className="mds-external-nav-agenda mbsc-flex">
       <div className="mds-external-nav-dp">
-        <Datepicker display="inline" value={mySelectedDate} onChange={handleDateChange} onPageLoaded={handlePageChange} />
+        <Datepicker display="inline" value={mySelectedDate} onChange={handleDateChange} />
       </div>
       <div className="mds-external-nav-ec mbsc-flex-1-1">
         <Eventcalendar data={myEvents} selectedDate={mySelectedDate} view={dayView} onSelectedDateChange={handleSelectedDateChange} />
