@@ -14,7 +14,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
-          height: 350,
+          height: 'auto',
           view: {
             calendar: { popover: false, labels: false },
           },
@@ -45,43 +45,27 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="md-sync-views">
-    <div class="md-sync-cal">
-        <div id="demo-month"></div>
+  <div class="mbsc-grid mds-sync-view">
+  <div class="mbsc-row mbsc-no-padding">
+    <div class="mbsc-col-12 mbsc-col-md-4 mbsc-col-xl-3">
+      <div id="demo-month"></div>
     </div>
-    <div class="md-sync-list">
-        <div id="demo-day"></div>
+    <div class="mds-sync-cal mbsc-col-12 mbsc-col-md-8 mbsc-col-xl-9">
+      <div id="demo-day"></div>
     </div>
+  </div>
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-sync-views {
-    display: flex;
+.mds-sync-view,
+.mds-sync-view .mbsc-row,
+.mds-sync-cal {
+  height: 100%;
 }
 
-.md-sync-cal {
-    width: 350px;
-}
-
-.md-sync-list {
-    flex: 1;
-    border-left: 1px solid #ccc;
-}
-
-.demo-synchronized-views,
-.md-sync-views,
-.md-sync-list {
-    height: 100%;
-}
-
-@media screen and (max-width: 700px) {
-    .md-sync-views {
-        display: block;
-    }
-    .md-sync-cal {
-        width: auto;
-    }
+.mds-sync-cal {
+  border-left: 1px solid #ccc;
 }
   `,
 };

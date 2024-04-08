@@ -8,7 +8,7 @@ export default {
     $(function () {
       mobiscroll.momentTimezone.moment = moment;
 
-      $('#demo-showing-events-timezone')
+      $('#demo-set-timezone')
         .mobiscroll()
         .eventcalendar({
           timezonePlugin: mobiscroll.momentTimezone,
@@ -67,6 +67,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-showing-events-timezone"></div>
+<div id="demo-set-timezone"></div>
   `,
 };
