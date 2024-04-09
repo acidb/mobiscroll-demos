@@ -113,8 +113,14 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <div id="demo-header-filter"></div>
-    `,
+  <!--hidden-->
+  <div class="demo-inline demo-max-width-900">
+      <!--/hidden-->
+      <div id="demo-header-filter"></div>
+      <!--hidden-->
+  </div>
+  <!--/hidden-->
+  `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
   .mds-header-filter-nav {

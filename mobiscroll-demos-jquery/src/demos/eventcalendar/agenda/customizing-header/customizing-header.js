@@ -77,8 +77,14 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <div id="demo-custom-header"></div>
-    `,
+   <!--hidden-->
+   <div class="demo-inline demo-max-width-900">
+       <!--/hidden-->
+           <div id="demo-custom-header"></div>
+       <!--hidden-->
+   </div>
+   <!--/hidden-->
+     `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
   .mds-custom-header-nav {
