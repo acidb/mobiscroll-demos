@@ -9,13 +9,12 @@ export default {
       // theme
     });
 
-    var participants = {
-      1: { name: 'Barry L.', img: 'https://img.mobiscroll.com/demos/m1.png' },
-      2: { name: 'Hortense T.', img: 'https://img.mobiscroll.com/demos/f1.png' },
-      3: { name: 'Carl H.', img: 'https://img.mobiscroll.com/demos/m2.png' },
-    };
-
     $(function () {
+      var participants = {
+        1: { name: 'Barry L.', img: 'https://img.mobiscroll.com/demos/m1.png' },
+        2: { name: 'Hortense T.', img: 'https://img.mobiscroll.com/demos/f1.png' },
+        3: { name: 'Carl H.', img: 'https://img.mobiscroll.com/demos/m2.png' },
+      };
       var inst = $('#demo-event-content-template')
         .mobiscroll()
         .eventcalendar({

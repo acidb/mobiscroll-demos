@@ -102,6 +102,9 @@ export default {
           calendar.setEvents(filteredEvents);
 
           mobiscroll.toast({
+            //<hidden>
+            // theme,//</hidden>
+            // context,
             message: (target.prop('checked') ? 'Showing ' : 'Hiding ') + (resource ? resource.name : '') + ' events',
           });
         });
