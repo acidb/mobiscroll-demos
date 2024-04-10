@@ -27,6 +27,7 @@ const App: FC = () => {
     );
   }, []);
 
-  return <Eventcalendar height={600} data={myEvents} view={myView} />;
+  return <Eventcalendar data={myEvents} view={myView} />;
 };
+
 export default App;
