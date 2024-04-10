@@ -26,17 +26,19 @@ const App: FC = () => {
 
   const customEvent = useCallback(
     (data: MbscCalendarEventData) => (
-      <div className="md-full-event">
-        <img className="md-full-event-img" src={'https://img.mobiscroll.com/demos/' + data.original!.img} />
-        <div className="md-full-event-details">
-          <div className="md-full-event-title">{data.title}</div>
-          <div className="md-full-event-location">
-            <div className="md-full-event-label">Location</div>
-            <div>{data.original!.location}</div>
-          </div>
-          <div className="md-full-event-time">
-            <div className="md-full-event-label">Time</div>
-            <div>{data.start}</div>
+      <div className="mbsc-flex mbsc-flex-1-1">
+        <img className="mds-agenda-event-img" alt={data.title} src={'https://img.mobiscroll.com/demos/' + data.original!.img} />
+        <div className="mbsc-flex-1-1">
+          <div className="mds-agenda-event-title">{data.title}</div>
+          <div className="mbsc-flex">
+            <div className="mds-agenda-event-location mbsc-flex-1-1">
+              <div className="mds-agenda-event-label">Location</div>
+              <div>{data.original!.location}</div>
+            </div>
+            <div className="mds-agenda-event-time">
+              <div className="mds-agenda-event-label">Time</div>
+              <div>{data.start}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -54,6 +56,6 @@ const App: FC = () => {
     );
   }, []);
 
-  return <Eventcalendar renderEvent={customEvent} view={myView} data={myEvents} />;
+  return <Eventcalendar renderEvent={customEvent} data={myEvents} view={myView} />;
 };
 export default App;
