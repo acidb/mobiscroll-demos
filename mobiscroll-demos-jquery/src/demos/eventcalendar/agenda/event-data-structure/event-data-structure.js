@@ -5,7 +5,7 @@ export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
-      // localendare,
+      // locale,
       // theme
     });
 

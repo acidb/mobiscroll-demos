@@ -92,10 +92,5 @@ export default {
     right: 8px;
     bottom: 8px;
   }
-  /*<hidden>*/
-  .demo-event-content-customization {
-      height: 100%;
-  }
-  /*</hidden>*/
     `,
 };

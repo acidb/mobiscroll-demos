@@ -1,6 +1,6 @@
 import * as mobiscroll from '@mobiscroll/jquery';
 import $ from 'jquery';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
