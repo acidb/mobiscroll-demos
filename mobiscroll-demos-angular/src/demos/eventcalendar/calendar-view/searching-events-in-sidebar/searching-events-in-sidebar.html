@@ -12,10 +12,10 @@
     </div>
     <div class="md-search-events-calendar mbsc-flex-1-1">
       <mbsc-eventcalendar
+        #calendar
         [data]="calEvents"
         [view]="calView"
         [selectMultipleEvents]="true"
-        [(selectedDate)]="currentDate"
         [(selectedEvents)]="mySelectedEvent"
         (onPageLoading)="onPageLoading($event)"
         [clickToCreate]="false"

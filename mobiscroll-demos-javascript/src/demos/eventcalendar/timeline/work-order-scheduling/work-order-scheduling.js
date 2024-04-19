@@ -178,7 +178,7 @@ export default {
               deleteEvent = false;
 
               // navigate the calendar to the correct view
-              calendar.navigate(tempEvent.start);
+              calendar.navigateToEvent(tempEvent);
 
               popup.close();
             },

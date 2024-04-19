@@ -3,7 +3,7 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
-  MbscDateType,
+  MbscEventcalendar,
   MbscEventcalendarView,
   MbscEventClickEvent,
   MbscInput,
@@ -34,6 +34,9 @@ export class AppComponent {
     });
   }
 
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
+
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
 
@@ -42,7 +45,6 @@ export class AppComponent {
   listEvents: MbscCalendarEvent[] = [];
   listView: MbscEventcalendarView = { agenda: { type: 'year', size: 5 } };
   searchInput: HTMLElement | undefined;
-  selectedDate: MbscDateType = new Date();
   selectedEvent: MbscCalendarEvent[] = [];
   timer?: ReturnType<typeof setTimeout>;
 
@@ -93,7 +95,7 @@ export class AppComponent {
   }
 
   onEventClick(args: MbscEventClickEvent): void {
-    this.selectedDate = args.event.start!;
+    this.calendar.navigateToEvent(args.event);
     this.selectedEvent = [args.event];
     this.popup.close();
   }

@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewEncapsulation } from '@angular/core';
-import { formatDate, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  formatDate,
+  MbscCalendarEvent,
+  MbscEventcalendar,
+  MbscEventcalendarView,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -16,7 +22,9 @@ setOptions({
 export class AppComponent {
   constructor(private http: HttpClient) {}
 
-  currentDate: any = new Date();
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
+
   mySelectedEvent: MbscCalendarEvent[] = [];
   timer: any;
   showList = false;
@@ -73,7 +81,7 @@ export class AppComponent {
   }
 
   eventClick(args: any): void {
-    this.currentDate = args.event.start;
+    this.calendar.navigateToEvent(args.event);
     this.mySelectedEvent = [args.event];
   }
 }

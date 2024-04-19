@@ -1,10 +1,10 @@
 <mbsc-page>
   <mbsc-eventcalendar
+    #calendar
     [data]="calEvents"
     [view]="calView"
     [headerTemplate]="myHeader"
     [selectMultipleEvents]="true"
-    [(selectedDate)]="currentDate"
     [(selectedEvents)]="mySelectedEvent"
     class="md-search-events"
     (onPageLoading)="onPageLoading($event)"

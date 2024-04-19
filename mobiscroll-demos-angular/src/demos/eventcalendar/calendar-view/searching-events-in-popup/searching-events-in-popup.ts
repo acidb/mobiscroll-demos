@@ -3,6 +3,7 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
+  MbscEventcalendar,
   MbscEventcalendarView,
   MbscPopup,
   MbscPopupOptions,
@@ -26,10 +27,12 @@ export class AppComponent {
   @ViewChild('searchInput', { static: false })
   searchInputElm!: any;
 
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
+
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
 
-  currentDate: any = new Date();
   mySelectedEvent: MbscCalendarEvent[] = [];
   searchInput: HTMLElement | undefined;
   timer: any;
@@ -108,7 +111,7 @@ export class AppComponent {
   }
 
   eventClick(args: any): void {
-    this.currentDate = args.event.start;
+    this.calendar.navigateToEvent(args.event);
     this.mySelectedEvent = [args.event];
     this.popup.close();
   }

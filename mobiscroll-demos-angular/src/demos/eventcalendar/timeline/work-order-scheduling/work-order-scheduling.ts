@@ -3,6 +3,7 @@ import {
   formatDate,
   MbscCalendarEvent,
   MbscDatepickerOptions,
+  MbscEventcalendar,
   MbscEventcalendarOptions,
   MbscPopup,
   MbscPopupOptions,
@@ -26,14 +27,18 @@ setOptions({
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
+
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
+
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
+
   popupEventTitle: string | undefined;
   popupEventLocation: string | undefined;
   popupEventBill: number | undefined;
   popupEventNotes: string | undefined;
   popupEventDates: any;
-  calendarSelectedDate: any = new Date();
   formatDate = formatDate;
   myEvents: MbscCalendarEvent[] = [
     {
@@ -404,7 +409,7 @@ export class AppComponent {
       // ...
     }
     // navigate the calendar
-    this.calendarSelectedDate = this.popupEventDates[0];
+    this.calendar.navigateToEvent(this.tempEvent);
     // close the popup
     this.popup.close();
   }
