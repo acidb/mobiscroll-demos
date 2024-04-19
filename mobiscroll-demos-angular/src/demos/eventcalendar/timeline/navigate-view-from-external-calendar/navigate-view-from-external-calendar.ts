@@ -20,28 +20,14 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
   selectedDate: MbscDateType = new Date();
   myResources: MbscResource[] = [
-    {
-      id: 1,
-      name: 'Resource 1',
-      color: 'red',
-    },
-    {
-      id: 2,
-      name: 'Resource 2',
-      color: 'orange',
-    },
-    {
-      id: 3,
-      name: 'Resource 3',
-      color: 'blue',
-    },
+    { id: 1, name: 'Resource 1', color: 'red' },
+    { id: 2, name: 'Resource 2', color: 'orange' },
+    { id: 3, name: 'Resource 3', color: 'blue' },
   ];
 
   ngOnInit(): void {
-    this.http
-      .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/filter-resource-events/?callback=?', 'callback')
-      .subscribe((resp) => {
-        this.myEvents = resp;
-      });
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/filter-resource-events/', 'callback').subscribe((resp) => {
+      this.myEvents = resp;
+    });
   }
 }
