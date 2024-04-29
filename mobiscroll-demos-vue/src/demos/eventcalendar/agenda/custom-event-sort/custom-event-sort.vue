@@ -125,17 +125,13 @@ const myEvents = [
   }
 ]
 
-const myView = {
-  agenda: {
-    type: 'week'
-  }
-}
+const myView = { agenda: { type: 'week' } }
 
-function orderMyEvents(event) {
+function customEventOrder(event) {
   return event.accepted ? 1 : -1
 }
 </script>
 
 <template>
-  <MbscEventcalendar :view="myView" :data="myEvents" :eventOrder="orderMyEvents" />
+  <MbscEventcalendar :view="myView" :data="myEvents" :eventOrder="customEventOrder" />
 </template>

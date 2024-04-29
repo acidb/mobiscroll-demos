@@ -8,14 +8,16 @@ import {
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
+import './printing-the-view.css'
 
 setOptions({
   // locale,
   // theme
 })
 
+const inst = ref(null)
 const myEvents = ref([])
-const calendarRef = ref(null)
+
 const myView = {
   agenda: {
     type: 'month'
@@ -23,7 +25,7 @@ const myView = {
 }
 
 function printView() {
-  calendarRef.value.instance.print()
+  inst.value.instance.print()
 }
 
 onMounted(() => {
@@ -38,9 +40,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscPage>
-    <MbscButton @click="printView()">Print agenda</MbscButton>
-    <!-- dragOptions -->
-    <MbscEventcalendar ref="calendarRef" :data="myEvents" :view="myView" :modules="[print]" />
+  <MbscPage className="mds-full-height">
+    <div className="mds-full-height mbsc-flex-col">
+      <div className="mbsc-flex-none">
+        <MbscButton @click="printView()" startIcon="print"> Print agenda </MbscButton>
+      </div>
+      <div className="mds-overflow-hidden mbsc-flex-1-1">
+        <MbscEventcalendar ref="inst" :data="myEvents" :view="myView" :modules="[print]" />
+      </div>
+    </div>
   </MbscPage>
 </template>

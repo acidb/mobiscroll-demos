@@ -1,0 +1,20 @@
+.mds-agenda-event-content {
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.mds-agenda-event-avatar {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.mds-agenda-event-btn.mbsc-button {
+  line-height: 20px;
+}
+
+.mds-agenda-event-btn.mbsc-ios {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+}

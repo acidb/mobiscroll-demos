@@ -13,6 +13,7 @@ import {
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
+import './searching-events-in-popup.css'
 
 setOptions({
   // locale,
@@ -20,29 +21,21 @@ setOptions({
 })
 
 const calEvents = ref([])
-const listEvents = ref([])
-const mySelectedEvent = ref([])
 const isPopupOpen = ref(false)
-const currentDate = ref(new Date())
+const listEvents = ref([])
 const searchInput = ref(null)
-const inputRef = ref(null)
+const selectedDate = ref(new Date())
+const selectedEvent = ref([])
+
 const timer = ref(null)
 
-const calView = {
-  agenda: {
-    type: 'month'
-  }
-}
+const inputRef = ref(null)
 
-const listView = {
-  agenda: {
-    type: 'year',
-    size: 5
-  }
-}
+const calView = { agenda: { type: 'month' } }
+const listView = { agenda: { type: 'year', size: 5 } }
 
-function handleSearch(ev) {
-  const text = ev.target.value
+function handleInputChange(ev) {
+  const searchText = ev.target.value
 
   if (timer.value) {
     clearTimeout(timer.value)
@@ -50,9 +43,9 @@ function handleSearch(ev) {
   }
 
   timer.value = setTimeout(() => {
-    if (text.length > 0) {
+    if (searchText.length > 0) {
       getJson(
-        'https://trial.mobiscroll.com/searchevents/?text=' + text,
+        'https://trial.mobiscroll.com/searchevents/?text=' + searchText,
         (data) => {
           listEvents.value = data
           isPopupOpen.value = true
@@ -63,6 +56,12 @@ function handleSearch(ev) {
       isPopupOpen.value = false
     }
   }, 200)
+}
+
+function handleInputFocus(ev) {
+  if (ev.target.value.length > 0) {
+    isPopupOpen.value = true
+  }
 }
 
 function handlePageLoading(args) {
@@ -80,10 +79,14 @@ function handlePageLoading(args) {
   })
 }
 
-function handleInputFocus(ev) {
-  if (ev.target.value.length > 0) {
-    isPopupOpen.value = true
-  }
+function handlePopupClose() {
+  isPopupOpen.value = false
+}
+
+function handleEventClick(args) {
+  selectedDate.value = args.event.start
+  selectedEvent.value = [args.event]
+  isPopupOpen.value = false
 }
 
 function handlePopupInit() {
@@ -91,42 +94,32 @@ function handlePopupInit() {
     searchInput.value = inputRef.value.instance.nativeElement
   })
 }
-
-function handlePopupClose() {
-  isPopupOpen.value = false
-}
-
-function handleEventClick(args) {
-  currentDate.value = args.event.start
-  mySelectedEvent.value = [args.event]
-  isPopupOpen.value = false
-}
 </script>
 
 <template>
   <MbscPage>
     <MbscEventcalendar
-      className="md-search-events"
       :clickToCreate="false"
+      :data="calEvents"
       :dragToCreate="false"
       :dragToMove="false"
       :dragToResize="false"
       :selectMultipleEvents="true"
       :view="calView"
-      :data="calEvents"
-      :selectedEvents="mySelectedEvent"
-      :selectedDate="currentDate"
+      :selectedEvents="selectedEvent"
+      :selectedDate="selectedDate"
       @page-loading="handlePageLoading"
     >
       <template #header>
         <MbscCalendarNav />
-        <div class="md-seach-header-bar mbsc-flex-1-0">
+        <div className="mds-search-bar mbsc-flex-1-0">
           <MbscInput
-            ref="inputRef"
-            startIcon="material-search"
+            autocomplete="off"
             inputStyle="box"
             placeholder="Search events"
-            @input="handleSearch"
+            startIcon="material-search"
+            ref="inputRef"
+            @input="handleInputChange"
             @focus="handleInputFocus"
           />
         </div>
@@ -136,7 +129,7 @@ function handleEventClick(args) {
       </template>
     </MbscEventcalendar>
     <MbscPopup
-      className="md-search-popup"
+      className="mds-search-popup"
       display="anchored"
       :showArrow="false"
       :showOverlay="false"
@@ -151,7 +144,7 @@ function handleEventClick(args) {
       @close="handlePopupClose"
     >
       <MbscEventcalendar
-        className="mbsc-popover-list"
+        className="mds-search-results mbsc-popover-list"
         :view="listView"
         :data="listEvents"
         :showControls="false"
@@ -160,23 +153,3 @@ function handleEventClick(args) {
     </MbscPopup>
   </MbscPage>
 </template>
-
-<style>
-.md-seach-header-bar .mbsc-textfield-wrapper.mbsc-form-control-wrapper {
-  width: 400px;
-  margin: 12px auto;
-}
-
-.md-search-popup .mbsc-popover-list {
-  width: 400px;
-}
-
-.md-search-popup .mbsc-event-list {
-  margin-top: -1px;
-  margin-bottom: -1px;
-}
-
-.md-search-events .mbsc-ios-dark.mbsc-textfield-box {
-  background: #313131;
-}
-</style>

@@ -1,0 +1,21 @@
+.mds-search-bar .mbsc-textfield-wrapper {
+  max-width: 400px;
+  margin: 8px auto;
+}
+
+.mds-search-bar .mbsc-textfield.mbsc-ios-dark {
+  background: #313131;
+}
+
+.mds-search-results .mbsc-calendar-wrapper {
+  margin-top: -1px;
+}
+
+.mds-search-popup .mbsc-popover-list {
+  width: 400px;
+}
+
+.mds-search-popup .mbsc-event-list {
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
