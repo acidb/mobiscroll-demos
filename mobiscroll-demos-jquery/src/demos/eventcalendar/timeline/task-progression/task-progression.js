@@ -11,62 +11,61 @@ export default {
       var eventTitle;
       var eventStart;
       var eventEnd;
-      var eventProgress = 2;
-      var isDraggingDot = false;
+      var eventProgress;
+      var isDraggingDot;
 
-      var $eventProgress = $('#popup-progress-slider');
-      var $eventTitle = $('#popup-event-title');
-      var $eventDeleteButton = $('#popup-event-delete');
+      var $popupSlider = $('.mds-popup-progress-slider');
+      var $eventTitle = $('.mds-popup-event-title');
 
       var myEvents = [
         {
-          start: '2024-05-02',
-          end: '2024-05-07',
+          start: 'dyndatetime(y,m,d)',
+          end: 'dyndatetime(y,m,d+3)',
           title: 'Design Homepage',
           resource: 'alice',
-          progress: 50,
+          progress: 100,
         },
         {
-          start: '2024-05-09',
-          end: '2024-05-1',
+          start: 'dyndatetime(y,m,d)',
+          end: 'dyndatetime(y,m,d+4)',
           title: 'Create Wireframes',
           resource: 'bob',
-          progress: 35,
+          progress: 100,
         },
         {
-          start: '2024-05-11',
-          end: '2024-05-19',
+          start: 'dyndatetime(y,m,d+4)',
+          end: 'dyndatetime(y,m,d+9)',
           title: 'Develop Frontend',
           resource: 'charlie',
           progress: 45,
         },
         {
-          start: '2024-05-13',
-          end: '2024-05-17',
+          start: 'dyndatetime(y,m,d+4)',
+          end: 'dyndatetime(y,m,d+9)',
           title: 'Develop Backend',
           resource: 'dave',
-          progress: 19,
+          progress: 35,
         },
         {
-          start: '2024-05-11',
-          end: '2024-05-14',
+          start: 'dyndatetime(y,m,d+9)',
+          end: 'dyndatetime(y,m,d+13)',
           title: 'Test Website',
           resource: 'erin',
-          progress: 92,
+          progress: 0,
         },
         {
-          start: '2024-05-08',
-          end: '2024-05-15',
+          start: 'dyndatetime(y,m,d+6)',
+          end: 'dyndatetime(y,m,d+13)',
           title: 'Fix Bugs',
           resource: 'frank',
-          progress: 88,
+          progress: 0,
         },
         {
-          start: '2024-05-16',
-          end: '2024-05-20',
+          start: 'dyndatetime(y,m,d+13)',
+          end: 'dyndatetime(y,m,d+16)',
           title: 'Deploy Website',
           resource: 'george',
-          progress: 60,
+          progress: 0,
         },
       ];
 
@@ -81,17 +80,18 @@ export default {
           name: 'Bob - Designer',
           color: '#76e083',
         },
-        {
-          id: 'charlie',
-          name: 'Charlie - Frontend Developer',
-          color: '#4981d6',
-        },
+
         {
           id: 'gro1',
           name: 'Development Team',
           color: '#ff1717',
           eventCreation: false,
           children: [
+            {
+              id: 'charlie',
+              name: 'Charlie - Frontend Developer',
+              color: '#4981d6',
+            },
             {
               id: 'dave',
               name: 'Dave - Backend Developer',
@@ -102,14 +102,6 @@ export default {
               name: 'Frank - Full-Stack Developer',
               color: '#34c8e0',
             },
-          ],
-        },
-        {
-          id: 'gro2',
-          name: 'Support Team',
-          collapsed: true,
-          eventCreation: false,
-          children: [
             {
               id: 'erin',
               name: 'Erin - QA Tester',
@@ -129,25 +121,27 @@ export default {
         var color = data.color;
         var progress = event.progress || 0;
 
+        attachProgressDotDragEvents();
+
         return (
-          '<div class="event-container" style="border-color:' +
+          '<div class="mds-event-container" style="border-color:' +
           color +
           '; background:' +
           color +
           ';">' +
-          '<div class="event-padding">' +
-          '<span class="event-title">' +
+          '<div class="mds-event-padding">' +
+          '<span class="mds-event-title">' +
           event.title +
           '</span>' +
           '</div>' +
-          '<div class="progress-bar-overlay" style="width:' +
+          '<div class="mds-progress-bar-overlay" style="width:' +
           progress +
           '%;">' +
-          '<div class="progress-dot" data-event-id="' +
+          '<div class="mds-progress-dot" data-event-id="' +
           event.id +
           '"></div>' +
           '</div>' +
-          '<span class="progress-percentage real-time-progress" >' +
+          '<span class="mds-progress-label" >' +
           progress +
           '%</span>' +
           '</div>'
@@ -159,17 +153,15 @@ export default {
         .eventcalendar({
           dragToMove: true,
           dragToResize: true,
-          eventList: true,
-          //   timeCellStep: 1440,
-          //   timeLabelsStep: 1440,
-          view: { timeline: { type: 'month' } },
+          clickToCreate: 'double',
+          view: { timeline: { type: 'month', eventList: true } },
           data: myEvents,
           resources: myResources,
           onEventClick: function (args) {
             if (!isDraggingDot) {
               createEditPopup(args.event, args.domEvent.currentTarget);
             } else {
-              // to clean this flag
+              // todo, remove flagging
               isDraggingDot = false;
               args.event.progress = eventProgress;
             }
@@ -191,6 +183,11 @@ export default {
           showRangeLabels: false,
           touchUi: true,
           responsive: { medium: { touchUi: false } },
+          onChange: function (args) {
+            var dates = args.value;
+            eventStart = dates[0];
+            eventEnd = dates[1];
+          },
         })
         .mobiscroll('getInst');
 
@@ -244,14 +241,13 @@ export default {
       }
 
       function createEditPopup(event, target) {
-        $eventDeleteButton.parent().show();
         eventId = event.id;
         eventTitle = event.title || '';
         eventStart = event.start;
         eventEnd = event.end;
 
-        $('#progress-percentage').text(event.progress + ' %');
-        $('#popup-progress-slider').val(event.progress);
+        $('.mds-popup-progress-label').text(event.progress + ' %');
+        $popupSlider.val(event.progress);
 
         addEditPopup.setOptions({
           headerText: 'Edit event',
@@ -284,52 +280,54 @@ export default {
 
       function fillPopup(event) {
         $eventTitle.mobiscroll('getInst').value = event.title || '';
-        $eventProgress.mobiscroll('getInst').value = event.progress || 0;
+        $popupSlider.mobiscroll('getInst').value = event.progress || 0;
         eventStartEndPicker.setVal([event.start, event.end]);
+        eventProgress = event.progress;
       }
 
-      $('#popup-progress-slider').on('input', function () {
-        var sliderValue = $(this).val();
-        $('#progress-percentage').text(sliderValue + ' %');
-        eventProgress = sliderValue;
+      $popupSlider.on('input', function () {
+        eventProgress = $(this).val();
+        $('.mds-popup-progress-label').text(eventProgress + ' %');
       });
 
-      // test
-      // ! dot dragging not working after the event drag or popup
+      function attachProgressDotDragEvents() {
+        var dots = $('.mds-progress-dot');
 
-      $('.progress-dot').on('mousedown', function (event) {
-        event.stopPropagation();
+        dots.each(function () {
+          var dot = $(this);
 
-        var dot = $(this);
-        var parent = dot.closest('.progress-bar-overlay');
-        var startX = event.pageX;
-        var initialProgress = (parseInt(parent.css('width'), 10) / parent.parent().width()) * 100;
+          dot.on('mousedown', function (event) {
+            event.stopPropagation();
 
-        function onMouseMove(e) {
-          var dx = e.pageX - startX;
-          var newProgress = initialProgress + (dx / parent.parent().width()) * 100;
-          newProgress = Math.max(0, Math.min(100, newProgress));
-          parent.css('width', newProgress + '%');
+            var parent = dot.closest('.mds-progress-bar-overlay');
+            var startX = event.pageX;
+            var initialProgress = (parseInt(parent.css('width'), 10) / parent.parent().width()) * 100;
 
-          eventProgress = Math.floor(newProgress);
-          dot
-            .closest('.event-container')
-            .find('.real-time-progress')
-            .text(newProgress.toFixed(0) + '%');
-        }
+            function onMouseMove(e) {
+              var dx = e.pageX - startX;
+              var newProgress = initialProgress + (dx / parent.parent().width()) * 100;
+              newProgress = Math.max(0, Math.min(100, newProgress));
+              parent.css('width', newProgress + '%');
 
-        // stop dragging
-        function onMouseUp() {
-          $(document).off('mousemove', onMouseMove);
-          $(document).off('mouseup', onMouseUp);
-          // flag to prevent popup after drag -> need to clean this
-          isDraggingDot = true;
-        }
-        $(document).on('mousemove', onMouseMove);
-        $(document).on('mouseup', onMouseUp);
-      });
+              eventProgress = Math.floor(newProgress);
+              dot
+                .closest('.mds-event-container')
+                .find('.mds-progress-label')
+                .text(newProgress.toFixed(0) + '%');
+            }
 
-      // end test
+            function onMouseUp() {
+              $(document).off('mousemove', onMouseMove);
+              $(document).off('mouseup', onMouseUp);
+              // todo, remove flagging
+              isDraggingDot = true;
+            }
+
+            $(document).on('mousemove', onMouseMove);
+            $(document).on('mouseup', onMouseUp);
+          });
+        });
+      }
 
       $eventTitle.on('input', function () {
         eventTitle = this.value;
@@ -343,7 +341,7 @@ export default {
     <div id="demo-add-edit-popup">
       <div class="mbsc-form-group">
         <label>Title
-          <input mbsc-input id="popup-event-title" />
+          <input mbsc-input class="mds-popup-event-title" />
         </label>
       </div>
       <div class="mbsc-form-group">
@@ -354,83 +352,66 @@ export default {
           <input mbsc-input data-label="Ends" id="popup-event-end" />
         </label>
         <br>
-        <div class="mbsc-progress-container">
+        <div class="mbsc-progress-container mbsc-flex mbsc-align-items-center">
           <label style='padding-left: 15px;'>Progress</label>
-          <input id="popup-progress-slider" mbsc-slider type="range" min="0" max="100" />
-          <span id="progress-percentage">0%</span> 
+          <input class="mds-popup-progress-slider" type="range" min="0" max="100" />
+          <span class="mds-popup-progress-label">0%</span> 
         </div>
         <div id="popup-event-dates"></div>
       </div>
     </div>
   </div>
-  
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mbsc-progress-container {
-    display: flex;
-    align-items: center;
     gap: 10px;
     padding-right: 10px;
 }
 
-#popup-progress-slider {
+.mds-popup-progress-slider {
     flex-grow: 1;
-   
 }
-#progress-percentage {
+.mds-popup-progress-label {
     margin-left: 10px;
 }
-.event-container {
+
+.mds-event-container {
     border-radius: 5px;
     position: relative;
 }
 
-.event-padding {
-    padding: 5px;
+.mds-event-padding {
+    padding: 10px;
 }
 
-.event-title {
+.mds-event-title {
     color: black;
-    font-weight: normal;
 }
 
-.progress-bar-overlay {
+.mds-progress-bar-overlay {
     position: absolute;
     top: 0;
-    left: 0;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
-.progress-dot {
+.mds-progress-dot {
     position: absolute;
-    right: 0px;
+    right: -5px;
     top: 100%;
     transform: translateY(-50%);
-    width: 0;
-    height: 0;
     border-style: solid;
     border-width: 0 5px 5px 5px;
     border-color: transparent transparent white transparent;
     cursor: ew-resize;
 }
 
-.progress-percentage {
+.mds-progress-label {
     position: absolute;
     right: 0px;
     top: 50%;
     transform: translateY(-50%);
-    padding-right: 5px;
-    color: black;
-    font-weight: bold;
-}
-
-.real-time-progress {
-    position: absolute;
-    bottom: 0; 
-    right: 0; 
     padding-right: 5px;
     color: black;
     font-weight: bold;
