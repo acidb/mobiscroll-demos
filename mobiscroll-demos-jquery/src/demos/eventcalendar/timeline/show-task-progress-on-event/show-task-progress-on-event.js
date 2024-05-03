@@ -72,12 +72,14 @@ export default {
       var myResources = [
         {
           id: 'alice',
-          name: 'Alice - Designer',
+          name: 'Alice',
+          title: 'Designer',
           color: '#1dab2f',
         },
         {
           id: 'bob',
-          name: 'Bob - Designer',
+          name: 'Bob',
+          title: 'Designer',
           color: '#76e083',
         },
 
@@ -89,27 +91,32 @@ export default {
           children: [
             {
               id: 'charlie',
-              name: 'Charlie - Frontend Developer',
+              name: 'Charlie',
+              title: 'Frontend Developer',
               color: '#4981d6',
             },
             {
               id: 'dave',
-              name: 'Dave - Backend Developer',
+              name: 'Dave',
+              title: 'Backend Developer',
               color: '#f7961e',
             },
             {
               id: 'frank',
-              name: 'Frank - Full-Stack Developer',
+              name: 'Frank',
+              title: 'Full-Stack Developer',
               color: '#34c8e0',
             },
             {
               id: 'erin',
-              name: 'Erin - QA Tester',
+              name: 'Erin',
+              title: 'QA Tester',
               color: '#d6d145',
             },
             {
               id: 'george',
-              name: 'George - DevOps Engineer',
+              name: 'George',
+              title: 'DevOps Engineer',
               color: '#e25dd2',
             },
           ],
@@ -148,6 +155,17 @@ export default {
         );
       }
 
+      function renderCustomResource(resource) {
+        return (
+          '<div class="mds-resource-group"><div class="mds-employee-name">' +
+          resource.name +
+          '</div>' +
+          (resource.title !== undefined ? '<div class="mds-employee-title">' + resource.title + '</div>' : '') +
+          '</div>' +
+          '</div>'
+        );
+      }
+
       var calendar = $('#demo-task-progression')
         .mobiscroll()
         .eventcalendar({
@@ -166,10 +184,11 @@ export default {
               args.event.progress = eventProgress;
             }
           },
-          onEventCreate: function (args) {
+          onEventCreated: function (args) {
             createAddPopup(args.event, args.target);
           },
           renderScheduleEvent: renderEvent,
+          renderResource: renderCustomResource,
         })
         .mobiscroll('getInst');
 
@@ -198,7 +217,7 @@ export default {
           contentPadding: false,
           fullScreen: true,
           scrollLock: false,
-          height: 500,
+          height: 320,
           responsive: {
             medium: {
               display: 'anchored',
@@ -211,6 +230,11 @@ export default {
         .mobiscroll('getInst');
 
       function createAddPopup(event, target) {
+        var success = false;
+
+        $('.mds-popup-progress-label').text(0 + ' %');
+        $popupSlider.val(0);
+
         addEditPopup.setOptions({
           anchor: target,
           headerText: 'New event',
@@ -228,12 +252,18 @@ export default {
                   resource: event.resource,
                   progress: eventProgress,
                 };
-                calendar.addEvent(newEvent);
+                calendar.updateEvent(newEvent);
+                success = true;
                 addEditPopup.close();
               },
               cssClass: 'mbsc-popup-button-primary',
             },
           ],
+          onClose: function () {
+            if (!success) {
+              calendar.removeEvent(event);
+            }
+          },
         });
 
         fillPopup(event);
@@ -279,6 +309,11 @@ export default {
       }
 
       function fillPopup(event) {
+        eventId = event.id;
+        eventTitle = event.title || '';
+        eventStart = event.start;
+        eventEnd = event.end;
+
         $eventTitle.mobiscroll('getInst').value = event.title || '';
         $popupSlider.mobiscroll('getInst').value = event.progress || 0;
         eventStartEndPicker.setVal([event.start, event.end]);
@@ -355,7 +390,7 @@ export default {
         <div class="mbsc-progress-container mbsc-flex mbsc-align-items-center">
           <label style='padding-left: 15px;'>Progress</label>
           <input class="mds-popup-progress-slider" type="range" min="0" max="100" />
-          <span class="mds-popup-progress-label">0%</span> 
+          <label class="mds-popup-progress-label">0%</label> 
         </div>
         <div id="popup-event-dates"></div>
       </div>
@@ -386,10 +421,14 @@ export default {
 }
 
 .mds-event-title {
-    color: black;
+    color: white;
+    z-index: 1;
+    position: relative;
+    font-size: 14px;
 }
 
 .mds-progress-bar-overlay {
+    border-radius: 5px;
     position: absolute;
     top: 0;
     height: 100%;
@@ -398,11 +437,11 @@ export default {
 
 .mds-progress-dot {
     position: absolute;
-    right: -5px;
-    top: 100%;
+    right: -7px;
+    top: 92%;
     transform: translateY(-50%);
     border-style: solid;
-    border-width: 0 5px 5px 5px;
+    border-width: 0 7px 7px 7px;
     border-color: transparent transparent white transparent;
     cursor: ew-resize;
 }
@@ -413,8 +452,19 @@ export default {
     top: 50%;
     transform: translateY(-50%);
     padding-right: 5px;
-    color: black;
+    color: white;
     font-weight: bold;
+    font-size: 14px;
+}
+.mds-employee-name {
+  font-size: 16px;
+}
+.mds-employee-title {
+  font-size: 12px;
+  margin-top: 5px;
+}
+.mds-resource-group{
+  padding: 5px 0 0 10px;
 }
   `,
 };
