@@ -466,10 +466,12 @@ export default {
 <div id="demo-check-list-tasks-events"></div>
 <div style="display:none">
   <div id="demo-check-list-tasks-events-popup">
-  <label for="demo-check-list-tasks-popup-input">
-    Enter the new task:  
-    <input mbsc-input id="demo-check-list-tasks-popup-input" type="text">
-  </label>
+    <div>
+      <label>
+        Enter the new task:  
+        <input mbsc-input id="demo-check-list-tasks-popup-input" type="text">
+      </label>
+    </div>
   </div>
 </div>
   `,
@@ -482,8 +484,10 @@ export default {
     font-size: 16px;
     font-weight: 600;
   }
+
   .mds-check-list-tasks-list {
-    padding: 4px 0;
+    margin: 1em 0 1em 1.25em;
+    padding: 0;
     white-space: normal;
     font-weight: 400;
   }
