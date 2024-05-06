@@ -54,7 +54,7 @@ export default {
           id: 2,
           start: 'dyndatetime(y,m,d,15)',
           end: 'dyndatetime(y,m,d,16)',
-          title: 'General orientation',
+          title: 'Conference',
           description: '',
           allDay: false,
           free: false,
@@ -64,7 +64,7 @@ export default {
           id: 3,
           start: 'dyndatetime(y,m,d-1,18)',
           end: 'dyndatetime(y,m,d-1,22)',
-          title: 'Dexter BD',
+          title: 'Site Visit',
           description: '',
           allDay: false,
           free: true,
@@ -121,6 +121,7 @@ export default {
           responsive: tempEvent.allDay ? datePickerResponsive : datetimePickerResponsive,
         });
         selectColor('', true);
+        $travelTime.val(0);
 
         // set anchor for the popup
         popup.setOptions({ anchor: elm });
