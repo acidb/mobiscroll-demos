@@ -13,7 +13,7 @@ export default {
       var displayTasks = function (tasks) {
         var list = '';
         tasks.forEach(function (task) {
-          list += '<li>' + task + '</li>';
+          list += '<li class="mds-check-list-tasks-li">' + task + '</li>';
         });
         return list;
       };
@@ -54,13 +54,13 @@ export default {
               event.title +
               '</div><ul class="mds-check-list-tasks-list">' +
               displayTasks(event.original.tasks) +
-              '<li id="mds-check-list-tasks-add-button">ADD TASK</li>' +
+              '<li class="mds-check-list-tasks-li mds-check-list-tasks-add" id="demo-check-list-tasks-add-button">ADD TASK</li>' +
               '</ul></div>'
             );
           },
           onEventClick: function (args) {
             console.log(args.domEvent.srcElement.id);
-            if (args.domEvent.srcElement.id === 'mds-check-list-tasks-add-button') {
+            if (args.domEvent.srcElement.id === 'demo-check-list-tasks-add-button') {
               createEditPopup(args);
             }
           },
@@ -487,6 +487,9 @@ export default {
   .mds-check-list-tasks-event {
     padding: 1em;
   }
+  .mds-check-list-tasks-event:hover {
+    cursor: context-menu;
+  }
   .mds-check-list-tasks-title {
     white-space: normal;
     word-break: normal;
@@ -502,22 +505,23 @@ export default {
     font-size: 12px;
     line-height: 20px !important;
   }
-  .mds-check-list-tasks-list > li {
+  .mds-check-list-tasks-li {
     padding: 0 4px 0 4px;
   }
-  .mds-check-list-tasks-list > li:nth-child(odd) {
+  .mds-check-list-tasks-li:nth-child(odd) {
     background-color: #fff;
     color: #888;
   }
-  .mds-check-list-tasks-list > li:nth-child(even) {
+  .mds-check-list-tasks-li:nth-child(even) {
     background-color: #778899;
     color: #fff;
   }
-  #mds-check-list-tasks-add-button {
+  .mds-check-list-tasks-add {
     display: inline-block;
     font-style: italic;
+    cursor: pointer;
   }
-  #mds-check-list-tasks-add-button:hover {
+  .mds-check-list-tasks-add:hover {
     font-weight: 600;
   }
   .mbsc-timeline-events-track {
