@@ -10,8 +10,6 @@ export default {
     });
 
     $(function () {
-      var $popupInput = $('#demo-check-list-tasks-popup-input');
-      var tempTask = '';
       var displayTasks = function (tasks) {
         var list = '';
         tasks.forEach(function (task) {
@@ -27,61 +25,88 @@ export default {
             timeline: {
               type: 'week',
               eventHeight: 'variable',
-              resolutionHorizontal: 'day',
+              eventList: true,
             },
           },
-          renderScheduleEventContent: function (event) {
+          dragToCreate: false,
+          clickToCreate: false,
+          eventOverlap: false,
+          dragToMove: false,
+          dragToResize: false,
+          renderResource: function (resource) {
             return (
-              '<div class="mds-check-list-tasks-title">' +
+              '<div class="mds-check-list-tasks-resource-name">' +
+              resource.name +
+              '</div>' +
+              '<p class="mds-check-list-tasks-resource-description">' +
+              resource.description +
+              '</p>'
+            );
+          },
+          renderScheduleEvent: function (event) {
+            console.log(event);
+            return (
+              '<div class="mds-check-list-tasks-event" style="background: ' +
+              event.color +
+              ';"><div class="mds-check-list-tasks-title" style="color: ' +
+              event.style.color +
+              ';">' +
               event.title +
               '</div><ul class="mds-check-list-tasks-list">' +
               displayTasks(event.original.tasks) +
-              '</ul>' +
-              '<button mbsc-button data-variant="flat" data-color="dark" class="demo-check-list-tasks-add-button">+ ADD TASK</button>'
+              '<li id="mds-check-list-tasks-add-button">ADD TASK</li>' +
+              '</ul></div>'
             );
           },
           onEventClick: function (args) {
-            if (!popup.isVisible() && args.domEvent.srcElement.nodeName === 'BUTTON') {
+            console.log(args.domEvent.srcElement.id);
+            if (args.domEvent.srcElement.id === 'mds-check-list-tasks-add-button') {
               createEditPopup(args);
             }
           },
           resources: [
             {
               id: 1,
-              name: 'Team 1',
-              color: '#fdf500',
-            },
-            {
-              id: 2,
-              name: 'Team 2',
-              color: '#ff0101',
-            },
-            {
-              id: 3,
-              name: 'Team 3',
+              name: 'Site Plumbing Squad',
+              description: 'Elite construction plumbers ensuring flawless pipeline installations on every site.',
               color: '#01adff',
             },
             {
-              id: 4,
-              name: 'Team 4',
+              id: 2,
+              name: 'Pipeline Builders',
+              description: 'Constructing fluid pathways, one precision connection at a time.',
               color: '#239a21',
             },
             {
-              id: 5,
-              name: 'Team 5',
+              id: 3,
+              name: 'Blueprint Plumbers',
+              description: 'Turning plans into precise pipelines with expert craftsmanship.',
               color: '#ff4600',
             },
             {
+              id: 4,
+              name: 'Site Supply Specialists',
+              description: 'Delivering essential plumbing materials promptly to construction sites',
+              color: '#4981d6',
+            },
+            {
+              id: 5,
+              name: 'Infrastructure Installers',
+              description: ' Building the backbone of modern plumbing systems efficiently.',
+              color: '#f1e920',
+            },
+            {
               id: 6,
-              name: 'Team 6',
-              color: '#8f1ed6',
+              name: 'Steel Sinks Squad',
+              description: 'Installing robust sinks for industrial and commercial settings.',
+              color: '#f7961e',
             },
           ],
           data: [
             {
               id: 1,
-              start: 'dyndatetime(y,m,d)',
-              end: 'dyndatetime(y,m,d+2)',
+              start: 'dyndatetime(y,m,d-3)',
+              end: 'dyndatetime(y,m,d-1)',
               allDay: true,
               title: 'Underground Pipe Installation',
               tasks: [
@@ -93,8 +118,8 @@ export default {
             },
             {
               id: 2,
-              start: 'dyndatetime(y,m,d+3)',
-              end: 'dyndatetime(y,m,d+5)',
+              start: 'dyndatetime(y,m,d)',
+              end: 'dyndatetime(y,m,d+2)',
               allDay: true,
               title: 'Fixture Installation',
               tasks: [
@@ -109,8 +134,8 @@ export default {
             },
             {
               id: 3,
-              start: 'dyndatetime(y,m,d+6)',
-              end: 'dyndatetime(y,m,d+7)',
+              start: 'dyndatetime(y,m,d+3)',
+              end: 'dyndatetime(y,m,d+4)',
               allDay: true,
               title: 'Water Heater Installation',
               tasks: [
@@ -124,8 +149,8 @@ export default {
             },
             {
               id: 4,
-              start: 'dyndatetime(y,m,d+8)',
-              end: 'dyndatetime(y,m,d+9)',
+              start: 'dyndatetime(y,m,d+5)',
+              end: 'dyndatetime(y,m,d+6)',
               allDay: true,
               title: 'Gas Line Installation',
               tasks: [
@@ -138,8 +163,8 @@ export default {
             },
             {
               id: 5,
-              start: 'dyndatetime(y,m,d+10)',
-              end: 'dyndatetime(y,m,d+10)',
+              start: 'dyndatetime(y,m,d+7)',
+              end: 'dyndatetime(y,m,d+7)',
               allDay: true,
               title: 'Backflow Preventer Installation',
               tasks: [
@@ -151,8 +176,8 @@ export default {
             },
             {
               id: 6,
-              start: 'dyndatetime(y,m,d)',
-              end: 'dyndatetime(y,m,d+3)',
+              start: 'dyndatetime(y,m,d-3)',
+              end: 'dyndatetime(y,m,d)',
               allDay: true,
               title: 'Water Meter Installation',
               tasks: [
@@ -167,8 +192,8 @@ export default {
             },
             {
               id: 7,
-              start: 'dyndatetime(y,m,d+4)',
-              end: 'dyndatetime(y,m,d+7)',
+              start: 'dyndatetime(y,m,d+1)',
+              end: 'dyndatetime(y,m,d+4)',
               allDay: true,
               title: 'Sump Pump Installation',
               tasks: [
@@ -180,8 +205,8 @@ export default {
             },
             {
               id: 8,
-              start: 'dyndatetime(y,m,d+8)',
-              end: 'dyndatetime(y,m,d+10)',
+              start: 'dyndatetime(y,m,d+5)',
+              end: 'dyndatetime(y,m,d+7)',
               allDay: true,
               title: 'Water Filtration System Installation',
               tasks: [
@@ -196,8 +221,8 @@ export default {
             },
             {
               id: 9,
-              start: 'dyndatetime(y,m,d)',
-              end: 'dyndatetime(y,m,d+2)',
+              start: 'dyndatetime(y,m,d-3)',
+              end: 'dyndatetime(y,m,d-1)',
               allDay: true,
               title: 'Stormwater Management System Installation',
               tasks: [
@@ -212,8 +237,8 @@ export default {
             },
             {
               id: 10,
-              start: 'dyndatetime(y,m,d+3)',
-              end: 'dyndatetime(y,m,d+6)',
+              start: 'dyndatetime(y,m,d)',
+              end: 'dyndatetime(y,m,d+3)',
               allDay: true,
               title: 'Hot Water Recirculation System Installation',
               tasks: [
@@ -225,8 +250,8 @@ export default {
             },
             {
               id: 11,
-              start: 'dyndatetime(y,m,d+7)',
-              end: 'dyndatetime(y,m,d+10)',
+              start: 'dyndatetime(y,m,d+4)',
+              end: 'dyndatetime(y,m,d+7)',
               allDay: true,
               title: 'Grease Trap Installation',
               tasks: [
@@ -240,8 +265,8 @@ export default {
             },
             {
               id: 12,
-              start: 'dyndatetime(y,m,d)',
-              end: 'dyndatetime(y,m,d+3)',
+              start: 'dyndatetime(y,m,d-3)',
+              end: 'dyndatetime(y,m,d)',
               allDay: true,
               title: 'Septic System Installation',
               tasks: [
@@ -253,8 +278,8 @@ export default {
             },
             {
               id: 13,
-              start: 'dyndatetime(y,m,d+4)',
-              end: 'dyndatetime(y,m,d+5)',
+              start: 'dyndatetime(y,m,d+1)',
+              end: 'dyndatetime(y,m,d+2)',
               allDay: true,
               title: 'Water Softener Installation',
               tasks: [
@@ -269,8 +294,8 @@ export default {
             },
             {
               id: 14,
-              start: 'dyndatetime(y,m,d+6)',
-              end: 'dyndatetime(y,m,d+8)',
+              start: 'dyndatetime(y,m,d+3)',
+              end: 'dyndatetime(y,m,d+5)',
               allDay: true,
               title: 'Water Main Connection',
               tasks: [
@@ -282,8 +307,8 @@ export default {
             },
             {
               id: 15,
-              start: 'dyndatetime(y,m,d+9)',
-              end: 'dyndatetime(y,m,d+10)',
+              start: 'dyndatetime(y,m,d+6)',
+              end: 'dyndatetime(y,m,d+7)',
               allDay: true,
               title: 'Hydronic Heating System Installation',
               tasks: [
@@ -295,8 +320,8 @@ export default {
             },
             {
               id: 16,
-              start: 'dyndatetime(y,m,d)',
-              end: 'dyndatetime(y,m,d+4)',
+              start: 'dyndatetime(y,m,d-3)',
+              end: 'dyndatetime(y,m,d+1)',
               allDay: true,
               title: 'Gas Appliance Installation',
               tasks: [
@@ -311,8 +336,8 @@ export default {
             },
             {
               id: 17,
-              start: 'dyndatetime(y,m,d+5)',
-              end: 'dyndatetime(y,m,d+6)',
+              start: 'dyndatetime(y,m,d+2)',
+              end: 'dyndatetime(y,m,d+3)',
               allDay: true,
               title: 'Water Feature Installation',
               tasks: [
@@ -324,8 +349,8 @@ export default {
             },
             {
               id: 18,
-              start: 'dyndatetime(y,m,d+7)',
-              end: 'dyndatetime(y,m,d+7)',
+              start: 'dyndatetime(y,m,d+4)',
+              end: 'dyndatetime(y,m,d+4)',
               allDay: true,
               title: 'Plumbing System Flushing',
               tasks: [
@@ -340,8 +365,8 @@ export default {
             },
             {
               id: 19,
-              start: 'dyndatetime(y,m,d+8)',
-              end: 'dyndatetime(y,m,d+10)',
+              start: 'dyndatetime(y,m,d+5)',
+              end: 'dyndatetime(y,m,d+7)',
               allDay: true,
               title: 'Emergency Shut-Off Valve Installation',
               tasks: [
@@ -353,8 +378,8 @@ export default {
             },
             {
               id: 20,
-              start: 'dyndatetime(y,m,d)',
-              end: 'dyndatetime(y,m,d)',
+              start: 'dyndatetime(y,m,d-3)',
+              end: 'dyndatetime(y,m,d-3)',
               allDay: true,
               title: 'Water Quality Testing',
               tasks: [
@@ -369,8 +394,8 @@ export default {
             },
             {
               id: 21,
-              start: 'dyndatetime(y,m,d+1)',
-              end: 'dyndatetime(y,m,d+4)',
+              start: 'dyndatetime(y,m,d-2)',
+              end: 'dyndatetime(y,m,d+1)',
               allDay: true,
               title: 'Plumbing System Ventilation Installation',
               tasks: [
@@ -385,8 +410,8 @@ export default {
             },
             {
               id: 22,
-              start: 'dyndatetime(y,m,d+5)',
-              end: 'dyndatetime(y,m,d+6)',
+              start: 'dyndatetime(y,m,d+2)',
+              end: 'dyndatetime(y,m,d+3)',
               allDay: true,
               title: 'Plumbing System Retrofitting for Accessibility',
               tasks: [
@@ -398,8 +423,8 @@ export default {
             },
             {
               id: 23,
-              start: 'dyndatetime(y,m,d+7)',
-              end: 'dyndatetime(y,m,d+10)',
+              start: 'dyndatetime(y,m,d+4)',
+              end: 'dyndatetime(y,m,d+7)',
               allDay: true,
               title: 'Plumbing System Monitoring Installation',
               tasks: [
@@ -416,42 +441,26 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var popup = $('#demo-check-list-tasks-events-popup').mobiscroll().popup().mobiscroll('getInst');
-
       function createEditPopup(args) {
-        $popupInput.val('');
         var ev = args.event;
-
-        var headerText = '<div>Add a new task to ' + ev.title + '</div>';
-
-        popup.setOptions({
-          headerText: headerText,
-          buttons: [
-            'cancel',
-            {
-              text: 'Save',
-              keyCode: 'enter',
-              handler: function () {
-                var updatedTasks = ev.tasks.slice();
-                updatedTasks.push(tempTask);
-                ev.tasks = updatedTasks;
-                calInst.updateEvent(ev);
-                popup.close();
-                mobiscroll.toast({
-                  duration: 3000,
-                  message: 'Tasks updated for ' + ev.title,
-                });
-              },
-              cssClass: 'mbsc-popup-button-primary',
-            },
-          ],
+        mobiscroll.prompt({
+          title: 'Add new task to ' + ev.title,
+          inputType: 'text',
+          callback: function (value) {
+            if (value) {
+              var updatedTasks = ev.tasks.slice();
+              updatedTasks.push(value);
+              ev.tasks = updatedTasks;
+              calInst.updateEvent(ev);
+              mobiscroll.toast({
+                duration: 3000,
+                message: 'Tasks updated for ' + ev.title,
+              });
+            }
+          },
         });
-        popup.open();
       }
-
-      $popupInput.on('change', function (e) {
-        tempTask = e.target.value;
-      });
+      // TODO CDN integration
       //   $.getJSON(
       //     'https://trial.mobiscroll.com/timeline-events/?callback=?',
       //     function (events) {
@@ -464,32 +473,55 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-check-list-tasks-events"></div>
-<div style="display:none">
-  <div id="demo-check-list-tasks-events-popup">
-    <div>
-      <label>
-        Enter the new task:  
-        <input mbsc-input id="demo-check-list-tasks-popup-input" type="text">
-      </label>
-    </div>
-  </div>
-</div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+  .mds-check-list-tasks-resource-name {
+    padding: 12px 0 0 0;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .mds-check-list-tasks-resource-description {
+    color: #888;
+  }
+  .mds-check-list-tasks-event {
+    padding: 1em;
+  }
   .mds-check-list-tasks-title {
     white-space: normal;
     word-break: normal;
     line-height: 16px;
     font-size: 16px;
+    font-weight: 700;
+  }
+  .mds-check-list-tasks-list {
+    list-style-type: none;
+    margin: 0 !important;
+    padding: 16px 0 8px 0 !important;
+    white-space: normal;
+    font-size: 12px;
+    line-height: 20px !important;
+  }
+  .mds-check-list-tasks-list > li {
+    padding: 0 4px 0 4px;
+  }
+  .mds-check-list-tasks-list > li:nth-child(odd) {
+    background-color: #fff;
+    color: #888;
+  }
+  .mds-check-list-tasks-list > li:nth-child(even) {
+    background-color: #778899;
+    color: #fff;
+  }
+  #mds-check-list-tasks-add-button {
+    display: inline-block;
+    font-style: italic;
+  }
+  #mds-check-list-tasks-add-button:hover {
     font-weight: 600;
   }
-
-  .mds-check-list-tasks-list {
-    margin: 1em 0 1em 1.25em;
-    padding: 0;
-    white-space: normal;
-    font-weight: 400;
+  .mbsc-timeline-events-track {
+    display: flex;
   }
   `,
 };

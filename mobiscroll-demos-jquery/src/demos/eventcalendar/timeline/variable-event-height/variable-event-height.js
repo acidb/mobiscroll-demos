@@ -18,18 +18,16 @@ export default {
             timeline: {
               type: 'week', //'day'
               eventHeight: 'variable',
-              startTime: '09:00',
-              endTime: '18:00',
+              startTime: '07:00',
+              endTime: '22:00',
             },
           },
-          invalid: [
-            {
-              start: '13:00',
-              end: '14:00',
-              recurring: { repeat: 'weekly', weekDays: 'MO,TU,WE,TH,FR,SA,SU' },
-              title: 'Lunch break',
-            },
-          ],
+          dragToCreate: false,
+          clickToCreate: false,
+          dragToMove: true,
+          eventOverlap: false,
+          dragToResize: true,
+          dragInTime: true,
           renderScheduleEventContent: function (event) {
             return (
               '<div class="mds-variable-event-heights-title">' +
@@ -63,7 +61,7 @@ export default {
             {
               id: 5,
               name: 'Adams Hall',
-              color: '#1dab2f',
+              color: '#f7961e',
             },
             {
               id: 6,
@@ -74,28 +72,28 @@ export default {
           data: [
             {
               start: 'dyndatetime(y,m,d+1,9)',
-              end: 'dyndatetime(y,m,d+1,13)',
+              end: 'dyndatetime(y,m,d+1,14)',
               title: 'Advancing Agricultural Sustainability',
               description:
                 'Esteemed experts delve into strategies for advancing agricultural sustainability, exploring innovative practices, and policy frameworks aimed at enhancing productivity while conserving natural resources.',
               resource: 1,
             },
             {
-              start: 'dyndatetime(y,m,d+1,14)',
-              end: 'dyndatetime(y,m,d+1,16)',
+              start: 'dyndatetime(y,m,d+1,14,30)',
+              end: 'dyndatetime(y,m,d+1,16,30)',
               title: 'Future of Farming',
               resource: 1,
               description: 'Experts discuss technological advancements and sustainability in agriculture.',
             },
             {
-              start: 'dyndatetime(y,m,d+1,16)',
-              end: 'dyndatetime(y,m,d+1,18)',
+              start: 'dyndatetime(y,m,d+1,17)',
+              end: 'dyndatetime(y,m,d+1,20)',
               title: 'Agri-Technology Trends',
               resource: 1,
               description: 'Experts discuss emerging trends in agricultural technology. ',
             },
             {
-              start: 'dyndatetime(y,m,d+2, 9)',
+              start: 'dyndatetime(y,m,d+2, 8)',
               end: 'dyndatetime(y,m,d+2, 13)',
               title: 'Precision Agriculture Applications',
               resource: 1,
@@ -103,8 +101,8 @@ export default {
                 'Attendees delve into the applications of precision agriculture, learning about data-driven decision-making, sensor technologies, and precision equipment to optimize inputs, increase yields, and minimize environmental impact.',
             },
             {
-              start: 'dyndatetime(y,m,d+2,14)',
-              end: 'dyndatetime(y,m,d+2,18)',
+              start: 'dyndatetime(y,m,d+2,14, 30)',
+              end: 'dyndatetime(y,m,d+2,19)',
               title: 'Agroforestry for Carbon Sequestration',
               resource: 1,
               description:
@@ -119,7 +117,7 @@ export default {
                 'Attend a training session on food safety certification, covering requirements, standards, and best practices for achieving and maintaining certification in food safety management systems, ensuring compliance and market access for agricultural products.',
             },
             {
-              start: 'dyndatetime(y,m,d,14)',
+              start: 'dyndatetime(y,m,d,13, 30)',
               end: 'dyndatetime(y,m,d, 18)',
               title: 'Action Plans',
               resource: 1,
@@ -142,21 +140,21 @@ export default {
             },
             {
               start: 'dyndatetime(y,m,d+2,9)',
-              end: 'dyndatetime(y,m,d+2,13)',
+              end: 'dyndatetime(y,m,d+2,14)',
               title: 'Precision Farming Techniques',
               resource: 2,
               description: 'Learn about precision agriculture and its role in modern farming.',
             },
             {
-              start: 'dyndatetime(y,m,d+2,14)',
-              end: 'dyndatetime(y,m,d+2,18)',
+              start: 'dyndatetime(y,m,d+2,15)',
+              end: 'dyndatetime(y,m,d+2,20)',
               title: 'Water Management Solutions for Agriculture',
               resource: 2,
               description:
                 'A seminar focuses on water management solutions, highlighting efficient irrigation techniques, water conservation strategies, and technologies for sustainable water use in agricultural production systems.',
             },
             {
-              start: 'dyndatetime(y,m,d,9)',
+              start: 'dyndatetime(y,m,d,8)',
               end: 'dyndatetime(y,m,d,13)',
               title: 'Agroforestry for Climate Resilience',
               resource: 2,
@@ -172,29 +170,29 @@ export default {
                 'Attendees enjoy thought-provoking documentaries on sustainable agriculture, exploring diverse approaches, success stories, and challenges in promoting ecological, social, and economic sustainability in farming.',
             },
             {
-              start: 'dyndatetime(y,m,d,16)',
-              end: 'dyndatetime(y,m,d,18)',
+              start: 'dyndatetime(y,m,d,17)',
+              end: 'dyndatetime(y,m,d,20)',
               title: 'Farming Challenges',
               resource: 2,
               description: 'Identify and discuss challenges faced by farmers globally.',
             },
             {
-              start: 'dyndatetime(y,m,d+1,9)',
+              start: 'dyndatetime(y,m,d+1,8)',
               end: 'dyndatetime(y,m,d+1,13)',
               title: 'Pest Management',
               resource: 3,
               description: 'Learn effective methods for pest control in agriculture.',
             },
             {
-              start: 'dyndatetime(y,m,d+1,14)',
-              end: 'dyndatetime(y,m,d+1,18)',
+              start: 'dyndatetime(y,m,d+1,15)',
+              end: 'dyndatetime(y,m,d+1,19)',
               title: 'Women in Agriculture Leadership',
               resource: 3,
               description:
                 'Female leaders in agriculture discuss their experiences, challenges, and contributions to the industry in a panel discussion on women in agriculture leadership, advocating for gender equity and empowerment.',
             },
             {
-              start: 'dyndatetime(y,m,d+2,9)',
+              start: 'dyndatetime(y,m,d+2,8)',
               end: 'dyndatetime(y,m,d+2,13)',
               title: 'Emerging Trends in Agri-Tech',
               resource: 3,
@@ -203,14 +201,14 @@ export default {
             },
             {
               start: 'dyndatetime(y,m,d+2,14)',
-              end: 'dyndatetime(y,m,d+2,16)',
+              end: 'dyndatetime(y,m,d+2,16,30)',
               title: 'Agri-Startups',
               resource: 3,
               description: 'Entrepreneurs pitch agricultural business ideas to investors and experts.',
             },
             {
-              start: 'dyndatetime(y,m,d+2,16)',
-              end: 'dyndatetime(y,m,d+2,18)',
+              start: 'dyndatetime(y,m,d+2,17)',
+              end: 'dyndatetime(y,m,d+2,20)',
               title: 'Empowering Young Farmers',
               resource: 3,
               description:
@@ -218,14 +216,14 @@ export default {
             },
             {
               start: 'dyndatetime(y,m,d,9)',
-              end: 'dyndatetime(y,m,d,13)',
+              end: 'dyndatetime(y,m,d,15)',
               title: 'Sustainable Livestock',
               resource: 3,
               description: 'Engage in activities to promote sustainable livestock farming.',
             },
             {
-              start: 'dyndatetime(y,m,d,14)',
-              end: 'dyndatetime(y,m,d,18)',
+              start: 'dyndatetime(y,m,d,16)',
+              end: 'dyndatetime(y,m,d,19)',
               title: 'Food Safety Standards Compliance',
               resource: 3,
               description:
@@ -276,23 +274,23 @@ export default {
                 'Aspiring entrepreneurs pitch sustainable agri-business ideas in a competition, presenting innovative ventures focused on addressing agricultural challenges, promoting sustainability, and creating value along the agricultural value chain.',
             },
             {
-              start: 'dyndatetime(y,m,d+1,9)',
-              end: 'dyndatetime(y,m,d+1,11)',
+              start: 'dyndatetime(y,m,d+1,8)',
+              end: 'dyndatetime(y,m,d+1,12)',
               title: 'Aquaponics and Integrated Farming Systems',
               resource: 5,
               description:
                 'Engage in an interactive workshop on aquaponics and integrated farming systems, learning about symbiotic relationships between fish and plants, nutrient cycling, and sustainable aquaculture practices for diversified, resource-efficient food production.',
             },
             {
-              start: 'dyndatetime(y,m,d+1, 11)',
-              end: 'dyndatetime(y,m,d+1,13)',
+              start: 'dyndatetime(y,m,d+1, 12, 30)',
+              end: 'dyndatetime(y,m,d+1,16, 30)',
               title: 'Agri-Subsidies',
               resource: 5,
               description: 'Workshop on government subsidies and incentives for agriculture.',
             },
             {
-              start: 'dyndatetime(y,m,d+1,14)',
-              end: 'dyndatetime(y,m,d+1,18)',
+              start: 'dyndatetime(y,m,d+1,17)',
+              end: 'dyndatetime(y,m,d+1,20)',
               title: 'Agri-Marketing',
               resource: 5,
               description: 'Learn about effective marketing strategies for agricultural products.',
@@ -307,13 +305,13 @@ export default {
             },
             {
               start: 'dyndatetime(y,m,d+2,14)',
-              end: 'dyndatetime(y,m,d+2,18)',
+              end: 'dyndatetime(y,m,d+2,19)',
               title: 'Agri-Trade',
               resource: 5,
               description: 'Discuss trade policies impacting agriculture. ',
             },
             {
-              start: 'dyndatetime(y,m,d,9)',
+              start: 'dyndatetime(y,m,d,8)',
               end: 'dyndatetime(y,m,d,13)',
               title: 'Agri-Inspiration',
               resource: 5,
@@ -321,46 +319,46 @@ export default {
             },
             {
               start: 'dyndatetime(y,m,d,14)',
-              end: 'dyndatetime(y,m,d,16)',
+              end: 'dyndatetime(y,m,d,17)',
               title: 'Sustainable Livestock Production Practices',
               resource: 5,
               description:
                 'Attend a lecture on sustainable livestock production practices, exploring animal welfare, grazing management, and regenerative livestock farming techniques aimed at promoting ecological balance, biodiversity, and resilience in agriculture.',
             },
             {
-              start: 'dyndatetime(y,m,d,16)',
-              end: 'dyndatetime(y,m,d,18)',
+              start: 'dyndatetime(y,m,d,17,30)',
+              end: 'dyndatetime(y,m,d,20)',
               title: 'Agri-Tourism Development',
               resource: 5,
               description:
                 'Participate in a community dialogue on agri-tourism development, discussing opportunities, challenges, and best practices for leveraging agriculture, culture, and nature-based experiences to promote rural tourism and sustainable development.',
             },
             {
-              start: 'dyndatetime(y,m,d+1,9)',
-              end: 'dyndatetime(y,m,d+1,13)',
+              start: 'dyndatetime(y,m,d,9)',
+              end: 'dyndatetime(y,m,d,13)',
               title: 'Digital Solutions for Smallholder Finance',
               resource: 6,
               description:
                 'Discover digital solutions for smallholder finance in a workshop, exploring mobile banking, digital payments, and microfinance innovations aimed at increasing financial inclusion and access to credit for smallholder farmers and rural entrepreneurs.',
             },
             {
-              start: 'dyndatetime(y,m,d+1,14)',
-              end: 'dyndatetime(y,m,d+1,18)',
+              start: 'dyndatetime(y,m,d,14)',
+              end: 'dyndatetime(y,m,d,18)',
               title: 'Agroecological Transition Strategies',
               resource: 6,
               description:
                 'Join a policy roundtable on agroecological transition strategies, discussing policy incentives, support mechanisms, and capacity-building initiatives to facilitate the transition towards more sustainable, resilient, and regenerative agricultural systems.',
             },
             {
-              start: 'dyndatetime(y,m,d+2,9)',
-              end: 'dyndatetime(y,m,d+2,13)',
+              start: 'dyndatetime(y,m,d+1,9)',
+              end: 'dyndatetime(y,m,d+1,13)',
               title: 'Agri-Cooperatives',
               resource: 6,
               description: 'Discuss the role of cooperatives in agricultural development. ',
             },
             {
-              start: 'dyndatetime(y,m,d+2,14)',
-              end: 'dyndatetime(y,m,d+2,18)',
+              start: 'dyndatetime(y,m,d+1,14)',
+              end: 'dyndatetime(y,m,d+1,18)',
               title: 'Agri-Waste Management',
               resource: 6,
               description: 'Learn about sustainable waste management practices in agriculture.',
@@ -387,14 +385,22 @@ export default {
   .mds-variable-event-heights-title {
     white-space: normal;
     line-height: 16px;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 600;
   }
   .mds-variable-event-heights-description {
-    padding: 4px 0;
+    padding: 8px 0;
     white-space: normal;
-    font-size: 10px;
+    font-size: 12px;
+    line-height: 18px;
     font-weight: 400;
+  }
+  .mbsc-schedule-event-range {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+  }
+  .mbsc-schedule-event-inner {
+    padding: 1em;
   }
   `,
 };
