@@ -4,7 +4,10 @@ import $ from 'jquery';
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    mobiscroll.setOptions({});
+    mobiscroll.setOptions({
+      // locale,
+      // theme
+    });
 
     $(function () {
       var eventId;
@@ -14,20 +17,21 @@ export default {
       var eventProgress;
       var isDraggingDot;
 
-      var $popupSlider = $('.mds-popup-progress-slider');
+      var $eventProgressLabel = $('.mds-popup-progress-label');
+      var $eventProgress = $('.mds-popup-progress-slider');
       var $eventTitle = $('.mds-popup-event-title');
 
       var myEvents = [
         {
-          start: 'dyndatetime(y,m,d)',
-          end: 'dyndatetime(y,m,d+3)',
+          start: 'dyndatetime(y,m,d+2)',
+          end: 'dyndatetime(y,m,d+5)',
           title: 'Design Homepage',
           resource: 'alice',
           progress: 100,
         },
         {
-          start: 'dyndatetime(y,m,d)',
-          end: 'dyndatetime(y,m,d+4)',
+          start: 'dyndatetime(y,m,d+2)',
+          end: 'dyndatetime(y,m,d+6)',
           title: 'Create Wireframes',
           resource: 'bob',
           progress: 100,
@@ -128,18 +132,16 @@ export default {
         var color = data.color;
         var progress = event.progress || 0;
 
-        attachProgressDotDragEvents();
-
         return (
-          '<div class="mds-event-container" style="border-color:' +
+          '<div class="mds-progress-event-container" style="border-color:' +
           color +
           '; background:' +
           color +
           ';">' +
-          '<div class="mds-event-padding">' +
-          '<span class="mds-event-title">' +
+          '<div class="mds-progress-event-padding">' +
+          '<div class="mds-progress-event-title">' +
           event.title +
-          '</span>' +
+          '</div>' +
           '</div>' +
           '<div class="mds-progress-bar-overlay" style="width:' +
           progress +
@@ -157,11 +159,10 @@ export default {
 
       function renderCustomResource(resource) {
         return (
-          '<div class="mds-resource-group"><div class="mds-employee-name">' +
+          '<div class="mds-progress-employee-name">' +
           resource.name +
           '</div>' +
-          (resource.title !== undefined ? '<div class="mds-employee-title">' + resource.title + '</div>' : '') +
-          '</div>' +
+          (resource.title !== undefined ? '<div class="mds-progress-employee-title">' + resource.title + '</div>' : '') +
           '</div>'
         );
       }
@@ -169,20 +170,20 @@ export default {
       var calendar = $('#demo-task-progression')
         .mobiscroll()
         .eventcalendar({
+          class: 'mds-progress-calendar',
           dragToMove: true,
           dragToResize: true,
-          clickToCreate: 'double',
+          dragToCreate: true,
+          clickToCreate: true,
           view: { timeline: { type: 'month', eventList: true } },
           data: myEvents,
           resources: myResources,
           onEventClick: function (args) {
-            if (!isDraggingDot) {
-              createEditPopup(args.event, args.domEvent.currentTarget);
-            } else {
-              // todo, remove flagging
+            if (isDraggingDot) {
               isDraggingDot = false;
-              args.event.progress = eventProgress;
+              return;
             }
+            createEditPopup(args.event, args.domEvent.currentTarget);
           },
           onEventCreated: function (args) {
             createAddPopup(args.event, args.target);
@@ -217,7 +218,6 @@ export default {
           contentPadding: false,
           fullScreen: true,
           scrollLock: false,
-          height: 320,
           responsive: {
             medium: {
               display: 'anchored',
@@ -231,9 +231,6 @@ export default {
 
       function createAddPopup(event, target) {
         var success = false;
-
-        $('.mds-popup-progress-label').text(0 + ' %');
-        $popupSlider.val(0);
 
         addEditPopup.setOptions({
           anchor: target,
@@ -271,14 +268,6 @@ export default {
       }
 
       function createEditPopup(event, target) {
-        eventId = event.id;
-        eventTitle = event.title || '';
-        eventStart = event.start;
-        eventEnd = event.end;
-
-        $('.mds-popup-progress-label').text(event.progress + ' %');
-        $popupSlider.val(event.progress);
-
         addEditPopup.setOptions({
           headerText: 'Edit event',
           anchor: target,
@@ -313,56 +302,70 @@ export default {
         eventTitle = event.title || '';
         eventStart = event.start;
         eventEnd = event.end;
+        eventProgress = event.progress || 0;
 
-        $eventTitle.mobiscroll('getInst').value = event.title || '';
-        $popupSlider.mobiscroll('getInst').value = event.progress || 0;
-        eventStartEndPicker.setVal([event.start, event.end]);
-        eventProgress = event.progress;
+        $eventProgressLabel.text(eventProgress + ' %');
+        $eventProgress.val(eventProgress);
+        eventStartEndPicker.setVal([eventStart, eventEnd]);
+        $eventTitle.mobiscroll('getInst').value = eventTitle;
       }
 
-      $popupSlider.on('input', function () {
+      $eventProgress.on('input', function () {
         eventProgress = $(this).val();
         $('.mds-popup-progress-label').text(eventProgress + ' %');
       });
 
-      function attachProgressDotDragEvents() {
-        var dots = $('.mds-progress-dot');
+      $('.mds-progress-calendar')[0].addEventListener(
+        'mousedown',
+        function (event) {
+          var dot = $(event.target).closest('.mds-progress-dot');
+          if (!dot.length) {
+            return;
+          }
+          event.stopPropagation();
 
-        dots.each(function () {
-          var dot = $(this);
+          var parent = dot.closest('.mds-progress-bar-overlay');
+          var initialMouseX = event.pageX;
+          var initialProgressPercentage = (parent.width() / parent.parent().width()) * 100;
 
-          dot.on('mousedown', function (event) {
-            event.stopPropagation();
+          function onMouseMove(e) {
+            var mouseXOffset = e.pageX - initialMouseX;
+            var newProgress = initialProgressPercentage + (mouseXOffset / parent.parent().width()) * 100;
+            newProgress = Math.max(0, Math.min(100, newProgress));
+            eventProgress = Math.floor(newProgress);
 
-            var parent = dot.closest('.mds-progress-bar-overlay');
-            var startX = event.pageX;
-            var initialProgress = (parseInt(parent.css('width'), 10) / parent.parent().width()) * 100;
+            parent.css('width', eventProgress + '%');
 
-            function onMouseMove(e) {
-              var dx = e.pageX - startX;
-              var newProgress = initialProgress + (dx / parent.parent().width()) * 100;
-              newProgress = Math.max(0, Math.min(100, newProgress));
-              parent.css('width', newProgress + '%');
+            dot
+              .closest('.mds-progress-event-container')
+              .find('.mds-progress-label')
+              .text(eventProgress.toFixed(0) + '%');
 
-              eventProgress = Math.floor(newProgress);
-              dot
-                .closest('.mds-event-container')
-                .find('.mds-progress-label')
-                .text(newProgress.toFixed(0) + '%');
-            }
+            isDraggingDot = true;
+            dot.addClass('progress-dragging-dot');
+            parent.addClass('progress-dragging');
+          }
 
-            function onMouseUp() {
-              $(document).off('mousemove', onMouseMove);
-              $(document).off('mouseup', onMouseUp);
-              // todo, remove flagging
-              isDraggingDot = true;
-            }
+          function onMouseUp() {
+            $(document).off('mousemove', onMouseMove);
+            $(document).off('mouseup', onMouseUp);
 
-            $(document).on('mousemove', onMouseMove);
-            $(document).on('mouseup', onMouseUp);
-          });
-        });
-      }
+            dot.removeClass('progress-dragging-dot');
+            parent.removeClass('progress-dragging');
+
+            var eventId = dot.data('event-id');
+            var eventToUpdate = myEvents.find(function (event) {
+              return event.id === eventId;
+            });
+
+            eventToUpdate.progress = eventProgress;
+          }
+
+          $(document).on('mousemove', onMouseMove);
+          $(document).on('mouseup', onMouseUp);
+        },
+        true,
+      );
 
       $eventTitle.on('input', function () {
         eventTitle = this.value;
@@ -386,11 +389,10 @@ export default {
         <label>
           <input mbsc-input data-label="Ends" id="popup-event-end" />
         </label>
-        <br>
-        <div class="mbsc-progress-container mbsc-flex mbsc-align-items-center">
-          <label style='padding-left: 15px;'>Progress</label>
-          <input class="mds-popup-progress-slider" type="range" min="0" max="100" />
-          <label class="mds-popup-progress-label">0%</label> 
+        <div class="mbsc-flex mbsc-align-items-center mbsc-padding">
+          <label for="progress-slider">Progress</label>
+          <input id="progress-slider "class="mds-popup-progress-slider mbsc-flex-1-0" type="range" min="0" max="100" />
+          <span class="mds-popup-progress-label">0%</span> 
         </div>
         <div id="popup-event-dates"></div>
       </div>
@@ -399,72 +401,92 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mbsc-progress-container {
-    gap: 10px;
-    padding-right: 10px;
+.mds-progress-calendar .mbsc-timeline-parent {
+  height: 34px;  
 }
 
 .mds-popup-progress-slider {
-    flex-grow: 1;
+  margin: 0 10px;
 }
+
 .mds-popup-progress-label {
-    margin-left: 10px;
+  margin-left: 10px;
+  width: 50px;
+  text-align: right;
 }
 
-.mds-event-container {
-    border-radius: 5px;
-    position: relative;
+.mds-progress-event-container {
+  margin-top: 8px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
 }
 
-.mds-event-padding {
-    padding: 10px;
+.mds-progress-event-padding {
+  padding: 10px 0;
+  margin-right: 50px;
 }
 
-.mds-event-title {
-    color: white;
-    z-index: 1;
-    position: relative;
-    font-size: 14px;
+.mds-progress-event-title {
+  color: white;
+  z-index: 1;
+  position: relative;
+  font-size: 14px;
+  padding: 0 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .mds-progress-bar-overlay {
-    border-radius: 5px;
-    position: absolute;
-    top: 0;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .mds-progress-dot {
-    position: absolute;
-    right: -7px;
-    top: 92%;
-    transform: translateY(-50%);
-    border-style: solid;
-    border-width: 0 7px 7px 7px;
-    border-color: transparent transparent white transparent;
-    cursor: ew-resize;
+  position: absolute;
+  right: -9px;
+  bottom: 0;
+  border-style: solid;
+  border-width: 0 9px 9px 9px;
+  border-color: transparent transparent white transparent;
+  cursor: ew-resize;
+}
+
+.mds-progress-bar-overlay.progress-dragging {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.mds-progress-dot.progress-dragging-dot, .mds-progress-dot:hover {
+  right: -12px;
+  border-width: 0 12px 12px 12px;
+  border-color: transparent transparent rgba(255, 255, 255, 0.5) transparent;
 }
 
 .mds-progress-label {
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    padding-right: 5px;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  margin-top: -8px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
 }
-.mds-employee-name {
+
+.mds-progress-employee-name {
   font-size: 16px;
+  margin-top: 5px;
 }
-.mds-employee-title {
+
+.mds-progress-employee-title {
   font-size: 12px;
   margin-top: 5px;
 }
-.mds-resource-group{
-  padding: 5px 0 0 10px;
+
+.mds-progress-calendar .mbsc-timeline-parent .mds-progress-employee-name {
+  margin-top: 0;  
 }
   `,
 };
