@@ -25,7 +25,6 @@ export default {
           dragToCreate: false,
           clickToCreate: false,
           dragToMove: true,
-          eventOverlap: false,
           dragToResize: true,
           dragInTime: true,
           renderScheduleEventContent: function (event) {
