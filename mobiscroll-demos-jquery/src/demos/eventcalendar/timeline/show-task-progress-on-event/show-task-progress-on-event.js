@@ -249,6 +249,7 @@ export default {
                   resource: event.resource,
                   progress: eventProgress,
                 };
+                myEvents.push(newEvent);
                 calendar.updateEvent(newEvent);
                 success = true;
                 addEditPopup.close();
@@ -403,7 +404,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-progress-calendar .mbsc-timeline-row-gutter {
-  height: 0;
+  height: 6px;
 }
 
 .mds-progress-calendar .mbsc-timeline-parent {
@@ -487,11 +488,6 @@ export default {
 .mds-progress-employee-title {
   font-size: 12px;
   margin-top: 5px;
-  line-height: 19px;
-}
-
-.mds-progress-calendar .mbsc-timeline-parent .mds-progress-employee-name {
-  margin-top: 0;  
 }
   `,
 };
