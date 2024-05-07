@@ -318,6 +318,7 @@ import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left'
 // the generated id was 741 which already exists on prod, changed it to 744 for now
 import Demo744 from './demos/eventcalendar/timeline/variable-event-height/variable-event-height';
 import Demo745 from './demos/eventcalendar/timeline/check-list-tasks-within-events/check-list-tasks-within-events';
+import Demo747 from './demos/eventcalendar/timeline/show-summaries-aggregates-for-resource-groups/show-summaries-aggregates-for-resource-groups';
 
 export const demos = [
   {
@@ -983,6 +984,7 @@ export const demos = [
             items: [
               { name: 'Resource grid', unique: 'timeline-resource-details-side-panel-footer', component: Demo607 },
               { name: 'Resource grouping & hierarchy', unique: 'resource-grouping-hierarchy', component: Demo625 },
+              { name: 'Resource group summaries', unique: 'show-summaries-aggregates-for-resource-groups', component: Demo747 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
             ],
           },

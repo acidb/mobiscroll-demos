@@ -25,14 +25,19 @@ export default {
             timeline: {
               type: 'week',
               eventHeight: 'variable',
-              eventList: true,
+              resolutionHorizontal: 'day',
             },
           },
-          dragToCreate: false,
-          clickToCreate: false,
-          eventOverlap: false,
-          dragToMove: false,
-          dragToResize: false,
+          dragToCreate: true,
+          clickToCreate: true,
+          dragToMove: true,
+          dragToResize: true,
+          extendDefaultEvent: function () {
+            return {
+              title: 'New Event',
+              tasks: ['Default task'],
+            };
+          },
           renderResource: function (resource) {
             return (
               '<div class="mds-check-list-tasks-resource-name">' +
@@ -43,23 +48,19 @@ export default {
               '</p>'
             );
           },
-          renderScheduleEvent: function (event) {
-            console.log(event);
+          renderScheduleEventContent: function (event) {
             return (
-              '<div class="mds-check-list-tasks-event" style="background: ' +
-              event.color +
-              ';"><div class="mds-check-list-tasks-title" style="color: ' +
+              '<div class="mds-check-list-tasks-title" style="color: ' +
               event.style.color +
               ';">' +
               event.title +
               '</div><ul class="mds-check-list-tasks-list">' +
               displayTasks(event.original.tasks) +
-              '<li class="mds-check-list-tasks-li mds-check-list-tasks-add" id="demo-check-list-tasks-add-button">ADD TASK</li>' +
-              '</ul></div>'
+              '<li class="mds-check-list-tasks-li mds-check-list-tasks-add" id="demo-check-list-tasks-add-button">Add task</li>' +
+              '</ul>'
             );
           },
           onEventClick: function (args) {
-            console.log(args.domEvent.srcElement.id);
             if (args.domEvent.srcElement.id === 'demo-check-list-tasks-add-button') {
               createEditPopup(args);
             }
@@ -105,8 +106,8 @@ export default {
           data: [
             {
               id: 1,
-              start: 'dyndatetime(y,m,d-3)',
-              end: 'dyndatetime(y,m,d-1)',
+              start: 'dyndatetime(y,m,d-4)',
+              end: 'dyndatetime(y,m,d-2)',
               allDay: true,
               title: 'Underground Pipe Installation',
               tasks: [
@@ -134,8 +135,8 @@ export default {
             },
             {
               id: 3,
-              start: 'dyndatetime(y,m,d+3)',
-              end: 'dyndatetime(y,m,d+4)',
+              start: 'dyndatetime(y,m,d+4)',
+              end: 'dyndatetime(y,m,d+6)',
               allDay: true,
               title: 'Water Heater Installation',
               tasks: [
@@ -149,8 +150,8 @@ export default {
             },
             {
               id: 4,
-              start: 'dyndatetime(y,m,d+5)',
-              end: 'dyndatetime(y,m,d+6)',
+              start: 'dyndatetime(y,m,d+8)',
+              end: 'dyndatetime(y,m,d+9)',
               allDay: true,
               title: 'Gas Line Installation',
               tasks: [
@@ -163,8 +164,8 @@ export default {
             },
             {
               id: 5,
-              start: 'dyndatetime(y,m,d+7)',
-              end: 'dyndatetime(y,m,d+7)',
+              start: 'dyndatetime(y,m,d+11)',
+              end: 'dyndatetime(y,m,d+14)',
               allDay: true,
               title: 'Backflow Preventer Installation',
               tasks: [
@@ -176,8 +177,8 @@ export default {
             },
             {
               id: 6,
-              start: 'dyndatetime(y,m,d-3)',
-              end: 'dyndatetime(y,m,d)',
+              start: 'dyndatetime(y,m,d-4)',
+              end: 'dyndatetime(y,m,d-1)',
               allDay: true,
               title: 'Water Meter Installation',
               tasks: [
@@ -205,8 +206,8 @@ export default {
             },
             {
               id: 8,
-              start: 'dyndatetime(y,m,d+5)',
-              end: 'dyndatetime(y,m,d+7)',
+              start: 'dyndatetime(y,m,d+6)',
+              end: 'dyndatetime(y,m,d+8)',
               allDay: true,
               title: 'Water Filtration System Installation',
               tasks: [
@@ -221,8 +222,8 @@ export default {
             },
             {
               id: 9,
-              start: 'dyndatetime(y,m,d-3)',
-              end: 'dyndatetime(y,m,d-1)',
+              start: 'dyndatetime(y,m,d-4)',
+              end: 'dyndatetime(y,m,d-2)',
               allDay: true,
               title: 'Stormwater Management System Installation',
               tasks: [
@@ -250,8 +251,8 @@ export default {
             },
             {
               id: 11,
-              start: 'dyndatetime(y,m,d+4)',
-              end: 'dyndatetime(y,m,d+7)',
+              start: 'dyndatetime(y,m,d+5)',
+              end: 'dyndatetime(y,m,d+8)',
               allDay: true,
               title: 'Grease Trap Installation',
               tasks: [
@@ -265,8 +266,8 @@ export default {
             },
             {
               id: 12,
-              start: 'dyndatetime(y,m,d-3)',
-              end: 'dyndatetime(y,m,d)',
+              start: 'dyndatetime(y,m,d-4)',
+              end: 'dyndatetime(y,m,d-1)',
               allDay: true,
               title: 'Septic System Installation',
               tasks: [
@@ -294,8 +295,8 @@ export default {
             },
             {
               id: 14,
-              start: 'dyndatetime(y,m,d+3)',
-              end: 'dyndatetime(y,m,d+5)',
+              start: 'dyndatetime(y,m,d+4)',
+              end: 'dyndatetime(y,m,d+6)',
               allDay: true,
               title: 'Water Main Connection',
               tasks: [
@@ -307,8 +308,8 @@ export default {
             },
             {
               id: 15,
-              start: 'dyndatetime(y,m,d+6)',
-              end: 'dyndatetime(y,m,d+7)',
+              start: 'dyndatetime(y,m,d+8)',
+              end: 'dyndatetime(y,m,d+9)',
               allDay: true,
               title: 'Hydronic Heating System Installation',
               tasks: [
@@ -320,8 +321,8 @@ export default {
             },
             {
               id: 16,
-              start: 'dyndatetime(y,m,d-3)',
-              end: 'dyndatetime(y,m,d+1)',
+              start: 'dyndatetime(y,m,d-4)',
+              end: 'dyndatetime(y,m,d)',
               allDay: true,
               title: 'Gas Appliance Installation',
               tasks: [
@@ -349,8 +350,8 @@ export default {
             },
             {
               id: 18,
-              start: 'dyndatetime(y,m,d+4)',
-              end: 'dyndatetime(y,m,d+4)',
+              start: 'dyndatetime(y,m,d+5)',
+              end: 'dyndatetime(y,m,d+5)',
               allDay: true,
               title: 'Plumbing System Flushing',
               tasks: [
@@ -365,8 +366,8 @@ export default {
             },
             {
               id: 19,
-              start: 'dyndatetime(y,m,d+5)',
-              end: 'dyndatetime(y,m,d+7)',
+              start: 'dyndatetime(y,m,d+6)',
+              end: 'dyndatetime(y,m,d+8)',
               allDay: true,
               title: 'Emergency Shut-Off Valve Installation',
               tasks: [
@@ -378,8 +379,8 @@ export default {
             },
             {
               id: 20,
-              start: 'dyndatetime(y,m,d-3)',
-              end: 'dyndatetime(y,m,d-3)',
+              start: 'dyndatetime(y,m,d-4)',
+              end: 'dyndatetime(y,m,d-4)',
               allDay: true,
               title: 'Water Quality Testing',
               tasks: [
@@ -410,8 +411,8 @@ export default {
             },
             {
               id: 22,
-              start: 'dyndatetime(y,m,d+2)',
-              end: 'dyndatetime(y,m,d+3)',
+              start: 'dyndatetime(y,m,d+3)',
+              end: 'dyndatetime(y,m,d+4)',
               allDay: true,
               title: 'Plumbing System Retrofitting for Accessibility',
               tasks: [
@@ -423,8 +424,8 @@ export default {
             },
             {
               id: 23,
-              start: 'dyndatetime(y,m,d+4)',
-              end: 'dyndatetime(y,m,d+7)',
+              start: 'dyndatetime(y,m,d+6)',
+              end: 'dyndatetime(y,m,d+8)',
               allDay: true,
               title: 'Plumbing System Monitoring Installation',
               tasks: [
@@ -472,25 +473,21 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-check-list-tasks-events"></div>
+<div id="demo-check-list-tasks-events" class="mds-check-list-tasks-events"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
   .mds-check-list-tasks-resource-name {
-    padding: 12px 0 0 0;
+    padding: 4px 0 0 0;
     font-size: 16px;
     font-weight: 700;
   }
   .mds-check-list-tasks-resource-description {
-    color: #888;
-  }
-  .mds-check-list-tasks-event {
-    padding: 1em;
-  }
-  .mds-check-list-tasks-event:hover {
-    cursor: context-menu;
+    font-size: 12px;
+    line-height: 20px;
   }
   .mds-check-list-tasks-title {
+    padding: 16px 8px 0 8px;
     white-space: normal;
     word-break: normal;
     line-height: 16px;
@@ -500,32 +497,30 @@ export default {
   .mds-check-list-tasks-list {
     list-style-type: none;
     margin: 0 !important;
-    padding: 16px 0 8px 0 !important;
+    padding: 16px 4px 24px 0 !important;
     white-space: normal;
     font-size: 12px;
     line-height: 20px !important;
   }
   .mds-check-list-tasks-li {
-    padding: 0 4px 0 4px;
+    padding: 0 8px 0 8px;
+    color: #000;
   }
   .mds-check-list-tasks-li:nth-child(odd) {
     background-color: #fff;
-    color: #888;
   }
   .mds-check-list-tasks-li:nth-child(even) {
-    background-color: #778899;
-    color: #fff;
-  }
-  .mds-check-list-tasks-add {
-    display: inline-block;
-    font-style: italic;
-    cursor: pointer;
+    background-color: #f0f0f0;
   }
   .mds-check-list-tasks-add:hover {
     font-weight: 600;
   }
-  .mbsc-timeline-events-track {
-    display: flex;
+  .mds-check-list-tasks-events .mbsc-schedule-event-range {
+    display: none;
+  }
+  .mds-check-list-tasks-events .mbsc-schedule-event-inner {
+    width: 100%;
+    padding: 0 !important;
   }
   `,
 };
