@@ -143,7 +143,7 @@ export default {
           event.title +
           '</div>' +
           '</div>' +
-          '<div class="mds-progress-bar-overlay" style="width:' +
+          '<div class="mds-progress-bar" style="width:' +
           progress +
           '%;">' +
           '<div class="mds-progress-dot" data-event-id="' +
@@ -324,17 +324,20 @@ export default {
           }
           event.stopPropagation();
 
-          var parent = dot.closest('.mds-progress-bar-overlay');
+          var progressOverlay = dot.closest('.mds-progress-bar');
+          var eventContainerWidth = progressOverlay.parent().width();
+
           var initialMouseX = event.pageX;
-          var initialProgressPercentage = (parent.width() / parent.parent().width()) * 100;
+          var initialProgressPercentage = (progressOverlay.width() / eventContainerWidth) * 100;
 
           function onMouseMove(e) {
             var mouseXOffset = e.pageX - initialMouseX;
-            var newProgress = initialProgressPercentage + (mouseXOffset / parent.parent().width()) * 100;
+            var newProgress = initialProgressPercentage + (mouseXOffset / eventContainerWidth) * 100;
+
             newProgress = Math.max(0, Math.min(100, newProgress));
             eventProgress = Math.floor(newProgress);
 
-            parent.css('width', eventProgress + '%');
+            progressOverlay.css('width', eventProgress + '%');
 
             dot
               .closest('.mds-progress-event-container')
@@ -342,16 +345,14 @@ export default {
               .text(eventProgress.toFixed(0) + '%');
 
             isDraggingDot = true;
-            dot.addClass('progress-dragging-dot');
-            parent.addClass('progress-dragging');
+            progressOverlay.addClass('mds-progress-dragging');
           }
 
           function onMouseUp() {
             $(document).off('mousemove', onMouseMove);
             $(document).off('mouseup', onMouseUp);
 
-            dot.removeClass('progress-dragging-dot');
-            parent.removeClass('progress-dragging');
+            progressOverlay.removeClass('mds-progress-dragging');
 
             var eventId = dot.data('event-id');
             var eventToUpdate = myEvents.find(function (event) {
@@ -401,6 +402,10 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+.mds-progress-calendar .mbsc-timeline-row-gutter {
+  height: 0;
+}
+
 .mds-progress-calendar .mbsc-timeline-parent {
   height: 34px;  
 }
@@ -416,10 +421,10 @@ export default {
 }
 
 .mds-progress-event-container {
-  margin-top: 8px;
   border-radius: 4px;
   position: relative;
   overflow: hidden;
+  line-height: 19px;
 }
 
 .mds-progress-event-padding {
@@ -438,7 +443,7 @@ export default {
   overflow: hidden;
 }
 
-.mds-progress-bar-overlay {
+.mds-progress-bar {
   position: absolute;
   top: 0;
   height: 100%;
@@ -455,11 +460,11 @@ export default {
   cursor: ew-resize;
 }
 
-.mds-progress-bar-overlay.progress-dragging {
+.mds-progress-bar.mds-progress-dragging {
   background-color: rgba(255, 0, 0, 0.5);
 }
 
-.mds-progress-dot.progress-dragging-dot, .mds-progress-dot:hover {
+.mds-progress-dragging .mds-progress-dot , .mds-progress-dot:hover {
   right: -12px;
   border-width: 0 12px 12px 12px;
   border-color: transparent transparent rgba(255, 255, 255, 0.5) transparent;
@@ -477,12 +482,12 @@ export default {
 
 .mds-progress-employee-name {
   font-size: 16px;
-  margin-top: 5px;
 }
 
 .mds-progress-employee-title {
   font-size: 12px;
   margin-top: 5px;
+  line-height: 19px;
 }
 
 .mds-progress-calendar .mbsc-timeline-parent .mds-progress-employee-name {
