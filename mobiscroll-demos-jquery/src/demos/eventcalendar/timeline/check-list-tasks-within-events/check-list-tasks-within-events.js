@@ -478,7 +478,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
   .mds-check-list-tasks-resource-name {
-    padding: 4px 0 0 0;
+    padding: 8px 0 12px 0;
     font-size: 16px;
     font-weight: 700;
   }
