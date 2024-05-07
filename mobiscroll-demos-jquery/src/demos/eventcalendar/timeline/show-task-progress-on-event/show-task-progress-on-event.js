@@ -15,7 +15,7 @@ export default {
       var eventStart;
       var eventEnd;
       var eventProgress;
-      var isDraggingDot;
+      var isDraggingProgress;
 
       var $eventProgressLabel = $('.mds-popup-progress-label');
       var $eventProgress = $('.mds-popup-progress-slider');
@@ -167,68 +167,6 @@ export default {
         );
       }
 
-      var calendar = $('#demo-task-progression')
-        .mobiscroll()
-        .eventcalendar({
-          class: 'mds-progress-calendar',
-          dragToMove: true,
-          dragToResize: true,
-          dragToCreate: true,
-          clickToCreate: true,
-          view: { timeline: { type: 'month', eventList: true } },
-          data: myEvents,
-          resources: myResources,
-          onEventClick: function (args) {
-            if (isDraggingDot) {
-              isDraggingDot = false;
-              return;
-            }
-            createEditPopup(args.event, args.domEvent.currentTarget);
-          },
-          onEventCreated: function (args) {
-            createAddPopup(args.event, args.target);
-          },
-          renderScheduleEvent: renderEvent,
-          renderResource: renderCustomResource,
-        })
-        .mobiscroll('getInst');
-
-      var eventStartEndPicker = $('#popup-event-dates')
-        .mobiscroll()
-        .datepicker({
-          controls: ['date'],
-          select: 'range',
-          startInput: '#popup-event-start',
-          endInput: '#popup-event-end',
-          showRangeLabels: false,
-          touchUi: true,
-          responsive: { medium: { touchUi: false } },
-          onChange: function (args) {
-            var dates = args.value;
-            eventStart = dates[0];
-            eventEnd = dates[1];
-          },
-        })
-        .mobiscroll('getInst');
-
-      var addEditPopup = $('#demo-add-edit-popup')
-        .mobiscroll()
-        .popup({
-          display: 'bottom',
-          contentPadding: false,
-          fullScreen: true,
-          scrollLock: false,
-          responsive: {
-            medium: {
-              display: 'anchored',
-              width: 510,
-              fullScreen: false,
-              touchUi: false,
-            },
-          },
-        })
-        .mobiscroll('getInst');
-
       function createAddPopup(event, target) {
         var success = false;
 
@@ -249,6 +187,7 @@ export default {
                   resource: event.resource,
                   progress: eventProgress,
                 };
+                myEvents.push(newEvent);
                 calendar.updateEvent(newEvent);
                 success = true;
                 addEditPopup.close();
@@ -310,51 +249,121 @@ export default {
         $eventTitle.mobiscroll('getInst').value = eventTitle;
       }
 
+      var calendar = $('#demo-task-progression')
+        .mobiscroll()
+        .eventcalendar({
+          class: 'mds-progress-calendar',
+          dragToMove: true,
+          dragToResize: true,
+          dragToCreate: true,
+          clickToCreate: true,
+          view: { timeline: { type: 'month', eventList: true } },
+          data: myEvents,
+          resources: myResources,
+          onEventClick: function (args) {
+            if (isDraggingProgress) {
+              isDraggingProgress = false;
+              return;
+            }
+            createEditPopup(args.event, args.domEvent.currentTarget);
+          },
+          onEventCreated: function (args) {
+            createAddPopup(args.event, args.target);
+          },
+          renderScheduleEvent: renderEvent,
+          renderResource: renderCustomResource,
+        })
+        .mobiscroll('getInst');
+
+      var eventStartEndPicker = $('#popup-event-dates')
+        .mobiscroll()
+        .datepicker({
+          controls: ['date'],
+          select: 'range',
+          startInput: '#popup-event-start',
+          endInput: '#popup-event-end',
+          showRangeLabels: false,
+          touchUi: true,
+          responsive: { medium: { touchUi: false } },
+          onChange: function (args) {
+            var dates = args.value;
+            eventStart = dates[0];
+            eventEnd = dates[1];
+          },
+        })
+        .mobiscroll('getInst');
+
+      var addEditPopup = $('#demo-add-edit-popup')
+        .mobiscroll()
+        .popup({
+          display: 'bottom',
+          contentPadding: false,
+          fullScreen: true,
+          scrollLock: false,
+          responsive: {
+            medium: {
+              display: 'anchored',
+              width: 510,
+              fullScreen: false,
+              touchUi: false,
+            },
+          },
+        })
+        .mobiscroll('getInst');
+
       $eventProgress.on('input', function () {
         eventProgress = $(this).val();
-        $('.mds-popup-progress-label').text(eventProgress + ' %');
+        $eventProgressLabel.text(eventProgress + ' %');
+      });
+
+      $eventTitle.on('input', function () {
+        eventTitle = this.value;
       });
 
       $('.mds-progress-calendar')[0].addEventListener(
         'mousedown',
         function (event) {
-          var dot = $(event.target).closest('.mds-progress-dot');
-          if (!dot.length) {
+          var progressArrow = $(event.target).closest('.mds-progress-dot');
+          if (!progressArrow.length) {
             return;
           }
           event.stopPropagation();
 
-          var progressOverlay = dot.closest('.mds-progress-bar');
-          var eventContainerWidth = progressOverlay.parent().width();
+          var progressBar = progressArrow.closest('.mds-progress-bar');
+          var eventContainerWidth = progressBar.parent().width();
 
           var initialMouseX = event.pageX;
-          var initialProgressPercentage = (progressOverlay.width() / eventContainerWidth) * 100;
+          var initialProgress = (progressBar.width() / eventContainerWidth) * 100;
 
           function onMouseMove(e) {
             var mouseXOffset = e.pageX - initialMouseX;
-            var newProgress = initialProgressPercentage + (mouseXOffset / eventContainerWidth) * 100;
+            var newProgress = initialProgress + (mouseXOffset / eventContainerWidth) * 100;
 
             newProgress = Math.max(0, Math.min(100, newProgress));
             eventProgress = Math.floor(newProgress);
 
-            progressOverlay.css('width', eventProgress + '%');
+            progressBar.css('width', eventProgress + '%');
 
-            dot
+            progressArrow
               .closest('.mds-progress-event-container')
               .find('.mds-progress-label')
               .text(eventProgress.toFixed(0) + '%');
 
-            isDraggingDot = true;
-            progressOverlay.addClass('mds-progress-dragging');
+            isDraggingProgress = true;
+            progressBar.addClass('mds-progress-dragging');
           }
 
           function onMouseUp() {
             $(document).off('mousemove', onMouseMove);
             $(document).off('mouseup', onMouseUp);
 
-            progressOverlay.removeClass('mds-progress-dragging');
+            setTimeout(function () {
+              isDraggingProgress = false;
+            }, 100);
 
-            var eventId = dot.data('event-id');
+            progressBar.removeClass('mds-progress-dragging');
+
+            var eventId = progressArrow.data('event-id');
             var eventToUpdate = myEvents.find(function (event) {
               return event.id === eventId;
             });
@@ -367,10 +376,6 @@ export default {
         },
         true,
       );
-
-      $eventTitle.on('input', function () {
-        eventTitle = this.value;
-      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -403,7 +408,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-progress-calendar .mbsc-timeline-row-gutter {
-  height: 0;
+  height: 6px;
 }
 
 .mds-progress-calendar .mbsc-timeline-parent {
@@ -487,11 +492,6 @@ export default {
 .mds-progress-employee-title {
   font-size: 12px;
   margin-top: 5px;
-  line-height: 19px;
-}
-
-.mds-progress-calendar .mbsc-timeline-parent .mds-progress-employee-name {
-  margin-top: 0;  
 }
   `,
 };
