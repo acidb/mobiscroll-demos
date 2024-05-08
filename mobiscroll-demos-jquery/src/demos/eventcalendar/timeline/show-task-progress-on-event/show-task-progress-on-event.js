@@ -149,26 +149,24 @@ export default {
         var progress = event.progress || 0;
 
         return (
-          '<div class="mds-progress-event-container" style="border-color:' +
-          color +
-          '; background:' +
+          '<div class="mds-progress-event" style="background:' +
           color +
           ';">' +
-          '<div class="mds-progress-event-padding">' +
+          '<div class="mds-progress-bar" style="width:' +
+          progress +
+          '%;">' +
+          '<div class="mds-progress-arrow" data-event-id="' +
+          event.id +
+          '"></div>' +
+          '</div>' +
+          '<div class="mds-progress-event-content">' +
           '<div class="mds-progress-event-title">' +
           event.title +
           '</div>' +
           '</div>' +
-          '<div class="mds-progress-bar" style="width:' +
+          '<div class="mds-progress-label" >' +
           progress +
-          '%;">' +
-          '<div class="mds-progress-dot" data-event-id="' +
-          event.id +
-          '"></div>' +
-          '</div>' +
-          '<span class="mds-progress-label" >' +
-          progress +
-          '%</span>' +
+          '%</div>' +
           '</div>'
         );
       }
@@ -195,16 +193,12 @@ export default {
               text: 'Add',
               keyCode: 'enter',
               handler: function () {
-                var newEvent = {
-                  id: eventId,
-                  title: eventTitle,
-                  start: eventStart,
-                  end: eventEnd,
-                  resource: event.resource,
-                  progress: eventProgress,
-                };
-                myEvents.push(newEvent);
-                calendar.updateEvent(newEvent);
+                event.title = eventTitle;
+                event.start = eventStart;
+                event.end = eventEnd;
+                event.progress = eventProgress;
+                myEvents.push(event);
+                calendar.updateEvent(event);
                 success = true;
                 addEditPopup.close();
               },
@@ -232,15 +226,14 @@ export default {
               text: 'Save',
               keyCode: 'enter',
               handler: function () {
-                var updatedEvent = {
-                  id: eventId,
-                  title: eventTitle,
-                  start: eventStart,
-                  end: eventEnd,
-                  resource: event.resource,
-                  progress: eventProgress,
-                };
-                calendar.updateEvent(updatedEvent);
+                var eventToUpdate = myEvents.find(function (event) {
+                  return event.id === eventId;
+                });
+                eventToUpdate.title = eventTitle;
+                eventToUpdate.start = eventStart;
+                eventToUpdate.end = eventEnd;
+                eventToUpdate.progress = eventProgress;
+                calendar.updateEvent(eventToUpdate);
                 addEditPopup.close();
               },
               cssClass: 'mbsc-popup-button-primary',
@@ -259,10 +252,10 @@ export default {
         eventEnd = event.end;
         eventProgress = event.progress || 0;
 
+        $eventTitle.mobiscroll('getInst').value = eventTitle;
         $eventProgressLabel.text(eventProgress + ' %');
         $eventProgress.val(eventProgress);
         eventStartEndPicker.setVal([eventStart, eventEnd]);
-        $eventTitle.mobiscroll('getInst').value = eventTitle;
       }
 
       var calendar = $('#demo-task-progression')
@@ -286,6 +279,14 @@ export default {
           onEventCreated: function (args) {
             createAddPopup(args.event, args.target);
           },
+          onEventUpdated: function (args) {
+            var eventToUpdate = myEvents.find(function (event) {
+              return event.id === args.event.id;
+            });
+            eventToUpdate.start = args.event.start;
+            eventToUpdate.end = args.event.end;
+            eventToUpdate.resource = args.event.resource;
+          },
           renderScheduleEvent: renderEvent,
           renderResource: renderCustomResource,
         })
@@ -294,7 +295,6 @@ export default {
       var eventStartEndPicker = $('#popup-event-dates')
         .mobiscroll()
         .datepicker({
-          controls: ['date'],
           select: 'range',
           startInput: '#popup-event-start',
           endInput: '#popup-event-end',
@@ -336,37 +336,36 @@ export default {
         eventTitle = this.value;
       });
 
-      $('.mds-progress-calendar')[0].addEventListener(
+      $('#demo-task-progression')[0].addEventListener(
         'mousedown',
         function (event) {
-          var progressArrow = $(event.target).closest('.mds-progress-dot');
-          if (!progressArrow.length) {
+          var $progressArrow = $(event.target).closest('.mds-progress-arrow');
+
+          if (!$progressArrow.length) {
             return;
           }
+
           event.stopPropagation();
 
-          var progressBar = progressArrow.closest('.mds-progress-bar');
-          var eventContainerWidth = progressBar.parent().width();
-
+          var $progressBar = $progressArrow.closest('.mds-progress-bar');
+          var eventContainerWidth = $progressBar.parent().width();
           var initialMouseX = event.pageX;
-          var initialProgress = (progressBar.width() / eventContainerWidth) * 100;
+          var initialProgress = ($progressBar.width() / eventContainerWidth) * 100;
 
           function onMouseMove(e) {
             var mouseXOffset = e.pageX - initialMouseX;
-            var newProgress = initialProgress + (mouseXOffset / eventContainerWidth) * 100;
+            var newProgress = Math.round(initialProgress + (mouseXOffset / eventContainerWidth) * 100);
 
-            newProgress = Math.max(0, Math.min(100, newProgress));
-            eventProgress = Math.floor(newProgress);
+            eventProgress = Math.max(0, Math.min(100, newProgress));
 
-            progressBar.css('width', eventProgress + '%');
+            $progressBar.addClass('mds-progress-dragging').css('width', eventProgress + '%');
 
-            progressArrow
-              .closest('.mds-progress-event-container')
+            $progressArrow
+              .closest('.mds-progress-event')
               .find('.mds-progress-label')
               .text(eventProgress.toFixed(0) + '%');
 
             isDraggingProgress = true;
-            progressBar.addClass('mds-progress-dragging');
           }
 
           function onMouseUp() {
@@ -377,14 +376,15 @@ export default {
               isDraggingProgress = false;
             }, 100);
 
-            progressBar.removeClass('mds-progress-dragging');
+            $progressBar.removeClass('mds-progress-dragging');
 
-            var eventId = progressArrow.data('event-id');
+            var eventId = $progressArrow.data('event-id');
             var eventToUpdate = myEvents.find(function (event) {
               return event.id === eventId;
             });
 
             eventToUpdate.progress = eventProgress;
+            calendar.updateEvent(eventToUpdate);
           }
 
           $(document).on('mousemove', onMouseMove);
@@ -400,7 +400,8 @@ export default {
   <div style="display: none;">
     <div id="demo-add-edit-popup">
       <div class="mbsc-form-group">
-        <label>Title
+        <label>
+          Title
           <input mbsc-input class="mds-popup-event-title" />
         </label>
       </div>
@@ -411,6 +412,8 @@ export default {
         <label>
           <input mbsc-input data-label="Ends" id="popup-event-end" />
         </label>
+      </div>
+      <div class="mbsc-form-group">
         <div class="mbsc-flex mbsc-align-items-center mbsc-padding">
           <label for="progress-slider">Progress</label>
           <input id="progress-slider "class="mds-popup-progress-slider mbsc-flex-1-0" type="range" min="0" max="100" />
@@ -441,22 +444,21 @@ export default {
   text-align: right;
 }
 
-.mds-progress-event-container {
+.mds-progress-event {
   border-radius: 4px;
   position: relative;
   overflow: hidden;
   line-height: 19px;
 }
 
-.mds-progress-event-padding {
+.mds-progress-event-content {
   padding: 10px 0;
   margin-right: 50px;
 }
 
 .mds-progress-event-title {
-  color: white;
-  z-index: 1;
   position: relative;
+  color: white;
   font-size: 14px;
   padding: 0 10px;
   white-space: nowrap;
@@ -471,7 +473,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.mds-progress-dot {
+.mds-progress-arrow {
   position: absolute;
   right: -9px;
   bottom: 0;
@@ -481,11 +483,12 @@ export default {
   cursor: ew-resize;
 }
 
-.mds-progress-bar.mds-progress-dragging {
-  background-color: rgba(255, 0, 0, 0.5);
+.mds-progress-dragging {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.mds-progress-dragging .mds-progress-dot , .mds-progress-dot:hover {
+.mds-progress-dragging .mds-progress-arrow,
+.mds-progress-arrow:hover {
   right: -12px;
   border-width: 0 12px 12px 12px;
   border-color: transparent transparent white transparent;
