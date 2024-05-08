@@ -462,8 +462,8 @@ export default {
   }
   .mds-check-list-tasks-resource-description {
     font-size: 12px;
-    font-weight: 500;
-    line-height: 24px;
+    font-weight: 400;
+    line-height: 16px;
   }
   .mds-check-list-tasks-title {
     padding: 16px 8px 0 8px;
@@ -472,26 +472,25 @@ export default {
     line-height: 24px;
     font-size: 16px;
     font-weight: 700;
-    color: #000;
   }
   .mds-check-list-tasks-subtitle {
     font-weight: 600;
     font-size: 14px;
     padding: 8px 8px 0 8px;
-    color: #000;
   }
   .mds-check-list-tasks-list {
     margin: 8px 8px 16px;
     border-radius: 0.25em;
-    background-color: #e1e1e1cc;
+    background-color: #ffffff69;
   }
   .mds-check-list-tasks-li {
-    padding: 0 8px 0 8px;
+    padding: 8px;
     white-space: normal;
     font-size: 12px;
-    line-height: 24px;
+    line-height: 16px;
     color: #000;
     border-bottom: 1px solid #00000033;
+    font-weight: 400;
   }
   .mds-check-list-tasks-add {
     padding-top: 4px;
@@ -499,7 +498,7 @@ export default {
     font-weight: 700;
   }
   .mds-check-list-tasks-add:hover {
-    font-weight: 800;
+    text-shadow: 0 0 .25px #333, 0 0 .25px #333;
   }
   .mds-check-list-tasks-events .mbsc-schedule-event-range {
     display: none;
