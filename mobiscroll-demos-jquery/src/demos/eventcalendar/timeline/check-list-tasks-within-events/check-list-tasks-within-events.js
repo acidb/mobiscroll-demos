@@ -13,7 +13,7 @@ export default {
       var displayTasks = function (tasks) {
         var list = '';
         tasks.forEach(function (task) {
-          list += '<li class="mds-check-list-tasks-li">' + task + '</li>';
+          list += '<div class="mds-check-list-tasks-li">' + task + '</div>';
         });
         return list;
       };
@@ -25,7 +25,7 @@ export default {
             timeline: {
               type: 'week',
               eventHeight: 'variable',
-              resolutionHorizontal: 'day',
+              eventList: true,
             },
           },
           dragToCreate: true,
@@ -43,21 +43,21 @@ export default {
               '<div class="mds-check-list-tasks-resource-name">' +
               resource.name +
               '</div>' +
-              '<p class="mds-check-list-tasks-resource-description">' +
+              '<div class="mds-check-list-tasks-resource-description">' +
               resource.description +
-              '</p>'
+              '</div>'
             );
           },
           renderScheduleEventContent: function (event) {
             return (
-              '<div class="mds-check-list-tasks-title" style="color: ' +
-              event.style.color +
-              ';">' +
+              '<div class="mds-check-list-tasks-title">' +
               event.title +
-              '</div><ul class="mds-check-list-tasks-list">' +
+              '</div>' +
+              '<div class="mds-check-list-tasks-subtitle">Task list</div>' +
+              '<div class="mds-check-list-tasks-list">' +
               displayTasks(event.original.tasks) +
-              '<li class="mds-check-list-tasks-li mds-check-list-tasks-add" id="demo-check-list-tasks-add-button">Add task</li>' +
-              '</ul>'
+              '<div class="mds-check-list-tasks-li mds-check-list-tasks-add" id="demo-check-list-tasks-add-button">+ Add task</div>' +
+              '</div>'
             );
           },
           onEventClick: function (args) {
@@ -108,7 +108,6 @@ export default {
               id: 1,
               start: 'dyndatetime(y,m,d-4)',
               end: 'dyndatetime(y,m,d-2)',
-              allDay: true,
               title: 'Underground Pipe Installation',
               tasks: [
                 'Excavate trenches for underground pipes',
@@ -121,7 +120,6 @@ export default {
               id: 2,
               start: 'dyndatetime(y,m,d)',
               end: 'dyndatetime(y,m,d+2)',
-              allDay: true,
               title: 'Fixture Installation',
               tasks: [
                 'Install sinks, toilets, and bathtubs in bathrooms',
@@ -137,7 +135,6 @@ export default {
               id: 3,
               start: 'dyndatetime(y,m,d+4)',
               end: 'dyndatetime(y,m,d+6)',
-              allDay: true,
               title: 'Water Heater Installation',
               tasks: [
                 'Install water heater unit in designated location',
@@ -152,7 +149,6 @@ export default {
               id: 4,
               start: 'dyndatetime(y,m,d+8)',
               end: 'dyndatetime(y,m,d+9)',
-              allDay: true,
               title: 'Gas Line Installation',
               tasks: [
                 'Plan layout for gas lines to kitchen and heating systems',
@@ -166,7 +162,6 @@ export default {
               id: 5,
               start: 'dyndatetime(y,m,d+11)',
               end: 'dyndatetime(y,m,d+14)',
-              allDay: true,
               title: 'Backflow Preventer Installation',
               tasks: [
                 'Install backflow preventer device near main water supply connection',
@@ -179,7 +174,6 @@ export default {
               id: 6,
               start: 'dyndatetime(y,m,d-4)',
               end: 'dyndatetime(y,m,d-1)',
-              allDay: true,
               title: 'Water Meter Installation',
               tasks: [
                 'Install water meter in designated location',
@@ -195,7 +189,6 @@ export default {
               id: 7,
               start: 'dyndatetime(y,m,d+1)',
               end: 'dyndatetime(y,m,d+4)',
-              allDay: true,
               title: 'Sump Pump Installation',
               tasks: [
                 'Dig sump pit in basement or crawlspace',
@@ -208,7 +201,6 @@ export default {
               id: 8,
               start: 'dyndatetime(y,m,d+6)',
               end: 'dyndatetime(y,m,d+8)',
-              allDay: true,
               title: 'Water Filtration System Installation',
               tasks: [
                 'Install water filtration unit in utility room or basement',
@@ -224,7 +216,6 @@ export default {
               id: 9,
               start: 'dyndatetime(y,m,d-4)',
               end: 'dyndatetime(y,m,d-2)',
-              allDay: true,
               title: 'Stormwater Management System Installation',
               tasks: [
                 'Install stormwater drainage pipes around building perimeter',
@@ -240,7 +231,6 @@ export default {
               id: 10,
               start: 'dyndatetime(y,m,d)',
               end: 'dyndatetime(y,m,d+3)',
-              allDay: true,
               title: 'Hot Water Recirculation System Installation',
               tasks: [
                 'Install recirculation pump near water heater',
@@ -253,7 +243,6 @@ export default {
               id: 11,
               start: 'dyndatetime(y,m,d+5)',
               end: 'dyndatetime(y,m,d+8)',
-              allDay: true,
               title: 'Grease Trap Installation',
               tasks: [
                 'Dig trench for grease trap installation',
@@ -268,7 +257,6 @@ export default {
               id: 12,
               start: 'dyndatetime(y,m,d-4)',
               end: 'dyndatetime(y,m,d-1)',
-              allDay: true,
               title: 'Septic System Installation',
               tasks: [
                 'Excavate area for septic tank and drain field',
@@ -281,7 +269,6 @@ export default {
               id: 13,
               start: 'dyndatetime(y,m,d+1)',
               end: 'dyndatetime(y,m,d+2)',
-              allDay: true,
               title: 'Water Softener Installation',
               tasks: [
                 'Install water softener unit in utility room or basement',
@@ -297,7 +284,6 @@ export default {
               id: 14,
               start: 'dyndatetime(y,m,d+4)',
               end: 'dyndatetime(y,m,d+6)',
-              allDay: true,
               title: 'Water Main Connection',
               tasks: [
                 'Locate municipal water main connection point',
@@ -310,7 +296,6 @@ export default {
               id: 15,
               start: 'dyndatetime(y,m,d+8)',
               end: 'dyndatetime(y,m,d+9)',
-              allDay: true,
               title: 'Hydronic Heating System Installation',
               tasks: [
                 'Install boiler unit in utility room or basement',
@@ -323,7 +308,6 @@ export default {
               id: 16,
               start: 'dyndatetime(y,m,d-4)',
               end: 'dyndatetime(y,m,d)',
-              allDay: true,
               title: 'Gas Appliance Installation',
               tasks: [
                 'Install gas lines to kitchen appliances (e.g., range, oven)',
@@ -339,7 +323,6 @@ export default {
               id: 17,
               start: 'dyndatetime(y,m,d+2)',
               end: 'dyndatetime(y,m,d+3)',
-              allDay: true,
               title: 'Water Feature Installation',
               tasks: [
                 'Install water feature (e.g., fountain, pond) on building site',
@@ -352,7 +335,6 @@ export default {
               id: 18,
               start: 'dyndatetime(y,m,d+5)',
               end: 'dyndatetime(y,m,d+5)',
-              allDay: true,
               title: 'Plumbing System Flushing',
               tasks: [
                 'Flush water supply lines to remove debris or sediment',
@@ -368,7 +350,6 @@ export default {
               id: 19,
               start: 'dyndatetime(y,m,d+6)',
               end: 'dyndatetime(y,m,d+8)',
-              allDay: true,
               title: 'Emergency Shut-Off Valve Installation',
               tasks: [
                 "Install shut-off valves on building's main water supply line",
@@ -381,7 +362,6 @@ export default {
               id: 20,
               start: 'dyndatetime(y,m,d-4)',
               end: 'dyndatetime(y,m,d-4)',
-              allDay: true,
               title: 'Water Quality Testing',
               tasks: [
                 'Collect water samples from various points in building',
@@ -397,7 +377,6 @@ export default {
               id: 21,
               start: 'dyndatetime(y,m,d-2)',
               end: 'dyndatetime(y,m,d+1)',
-              allDay: true,
               title: 'Plumbing System Ventilation Installation',
               tasks: [
                 'Install vent pipes to allow proper air flow in drainage system',
@@ -413,7 +392,6 @@ export default {
               id: 22,
               start: 'dyndatetime(y,m,d+3)',
               end: 'dyndatetime(y,m,d+4)',
-              allDay: true,
               title: 'Plumbing System Retrofitting for Accessibility',
               tasks: [
                 'Install grab bars and handrails in bathrooms',
@@ -426,7 +404,6 @@ export default {
               id: 23,
               start: 'dyndatetime(y,m,d+6)',
               end: 'dyndatetime(y,m,d+8)',
-              allDay: true,
               title: 'Plumbing System Monitoring Installation',
               tasks: [
                 'Install water leak detection sensors in key areas',
@@ -478,49 +455,58 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
   .mds-check-list-tasks-resource-name {
-    padding: 8px 0 12px 0;
+    padding: 15px 0 8px 0;
     font-size: 16px;
     font-weight: 700;
+    line-height: 24px;
   }
   .mds-check-list-tasks-resource-description {
     font-size: 12px;
-    line-height: 20px;
+    font-weight: 500;
+    line-height: 24px;
   }
   .mds-check-list-tasks-title {
     padding: 16px 8px 0 8px;
     white-space: normal;
     word-break: normal;
-    line-height: 16px;
+    line-height: 24px;
     font-size: 16px;
     font-weight: 700;
+    color: #000;
+  }
+  .mds-check-list-tasks-subtitle {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 8px 0 8px;
+    color: #000;
   }
   .mds-check-list-tasks-list {
-    list-style-type: none;
-    margin: 0 !important;
-    padding: 16px 4px 24px 0 !important;
-    white-space: normal;
-    font-size: 12px;
-    line-height: 20px !important;
+    margin: 8px 8px 16px;
+    border-radius: 0.25em;
+    background-color: #e1e1e1cc;
   }
   .mds-check-list-tasks-li {
     padding: 0 8px 0 8px;
+    white-space: normal;
+    font-size: 12px;
+    line-height: 24px;
     color: #000;
+    border-bottom: 1px solid #00000033;
   }
-  .mds-check-list-tasks-li:nth-child(odd) {
-    background-color: #fff;
-  }
-  .mds-check-list-tasks-li:nth-child(even) {
-    background-color: #f0f0f0;
+  .mds-check-list-tasks-add {
+    padding-top: 4px;
+    border-bottom: none;
+    font-weight: 700;
   }
   .mds-check-list-tasks-add:hover {
-    font-weight: 600;
+    font-weight: 800;
   }
   .mds-check-list-tasks-events .mbsc-schedule-event-range {
     display: none;
   }
   .mds-check-list-tasks-events .mbsc-schedule-event-inner {
     width: 100%;
-    padding: 0 !important;
+    height: auto;
   }
   `,
 };

@@ -10,8 +10,6 @@ export default {
     });
 
     var defaultEvents = [
-      //SET FIX EVENTS NOT MOVABLE IN TIME AND NO RESIZE
-      //sedans
       {
         id: 1,
         start: 'dyndatetime(y,m,d,0)',
@@ -52,7 +50,6 @@ export default {
         description: 'Aggregate data for the second half of the day',
         resource: 'sedans',
       },
-      // suvs
       {
         id: 5,
         start: 'dyndatetime(y,m,d,0)',
@@ -93,7 +90,6 @@ export default {
         description: 'Aggregate data for the second half of the day',
         resource: 'suvs',
       },
-      // end parent fixed events section
       {
         id: 9,
         start: 'dyndatetime(y,m,d,2)',
@@ -332,7 +328,6 @@ export default {
       }
     };
     var updateAggregates = function (dayEvents, firstDay, lastDay) {
-      // console.log('DAY EVENTS ', dayEvents);
       var parentIds = ['sedans', 'suvs'];
       var mapOfUpdates = {};
 
@@ -377,7 +372,6 @@ export default {
           mapOfUpdates[mapping + 'pm'].distance += event.distance;
         }
       });
-      // console.log('MAP OF UPDATES ', mapOfUpdates);
       var aggregates = {};
       Object.keys(mapOfUpdates).forEach(function (key) {
         var el = mapOfUpdates[key];
@@ -403,7 +397,6 @@ export default {
           },
           onPageLoading: function (args, inst) {
             var dailyEvents = inst.getEvents(args.firstDay, args.lastDay);
-            // console.log('LOADING CALLED', args.firstDay, args.lastDay, dailyEvents);
             var updatedSummaries = updateAggregates(dailyEvents, args.firstDay, args.lastDay);
             var updatedEvents = defaultEvents.map(function (e) {
               if (updatedSummaries[e.id]) {
@@ -411,11 +404,9 @@ export default {
               }
               return e;
             });
-            // console.log('UPDATED EVENTS ', updatedEvents.slice());
-            // I HAVE ISSUES HERE, I DO NOT KNOW HOW TO UPDATE THE EVENTS
-            // ON NAVIGATION IT DOES NOT WORK AND SOMETIMES IT FREEZES
-            //setTimeout(inst.setEvents(updatedEvents), 6000);
-            inst.setEvents(updatedEvents);
+            setTimeout(function () {
+              inst.setEvents(updatedEvents);
+            });
           },
           renderScheduleEventContent: function (event) {
             var isParent = event.currentResource.isParent;
@@ -424,13 +415,13 @@ export default {
                 '<div class="mds-show-summaries-aggregates-parent">' +
                 '<div class="mds-show-summaries-aggregates-title">' +
                 event.title +
-                '</div><div class="mds-show-summaries-aggregates-description">' +
+                '</div><div class="mds-show-summaries-aggregates-description mds-show-summaries-aggregates-parent-description">' +
                 event.original.description +
-                '<ul class="mds-show-summaries-aggregates-details"><li>Total distance covered: ' +
+                '</div><div class="mds-show-summaries-aggregates-details"><div>Total distance covered: <span class="mds-show-summaries-aggregates-highlight">' +
                 event.original.distance +
-                ' miles</li><li>Total consumption: ' +
+                '</span> miles</div><div>Total consumption: <span class="mds-show-summaries-aggregates-highlight">' +
                 event.original.consumption +
-                ' gallons</li></ul></div></div>'
+                '</span> gallons</div></div></div></div>'
               );
             }
             return (
@@ -439,11 +430,11 @@ export default {
               event.title +
               '</div><div class="mds-show-summaries-aggregates-description">' +
               event.original.description +
-              '<ul class="mds-show-summaries-aggregates-details"><li>Distance covered: ' +
+              '</div><div class="mds-show-summaries-aggregates-details"><div>Distance covered: <span class="mds-show-summaries-aggregates-highlight">' +
               event.original.distance +
-              ' miles</li><li>Consumption: ' +
+              '</span> miles</div><div>Consumption: <span class="mds-show-summaries-aggregates-highlight">' +
               event.original.consumption +
-              ' gallons</li></ul></div></div>'
+              '</span> gallons</div></div></div>'
             );
           },
           resources: [
@@ -508,10 +499,14 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-show-summaries-aggregates-for-resource-groups"></div>
+<div id="demo-show-summaries-aggregates-for-resource-groups" class="mds-show-summaries-aggregates-for-resource-groups"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+  .mds-show-summaries-aggregates-for-resource-groups .mbsc-timeline-resource-title{
+    font-size: 16px;
+    font-weight: 700;
+  }
   .mds-show-summaries-aggregates-parent {
     height: 100px;
   }
@@ -519,15 +514,24 @@ export default {
     white-space: normal;
     line-height: 20px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
   }
   .mds-show-summaries-aggregates-description {
     padding: 4px 0;
     white-space: normal;
     font-size: 12px;
-    line-height: 20px;
+    line-height: 16px;
     font-weight: 400;
   }
-  .mds-show-summaries-aggregates-details {}
+  .mds-show-summaries-aggregates-parent-description {
+    font-weight: 700;
+  }
+  .mds-show-summaries-aggregates-highlight {
+    font-weight: 700;
+  }
+  .mds-show-summaries-aggregates-details {
+    white-space: normal;
+    padding: 8px 0;
+  }
   `,
 };
