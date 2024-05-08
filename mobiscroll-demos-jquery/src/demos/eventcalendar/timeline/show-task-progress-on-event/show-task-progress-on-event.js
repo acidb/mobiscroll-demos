@@ -7,6 +7,7 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -75,20 +76,27 @@ export default {
 
       var myResources = [
         {
-          id: 'alice',
-          name: 'Alice',
-          title: 'Designer',
-          color: '#1dab2f',
-        },
-        {
-          id: 'bob',
-          name: 'Bob',
-          title: 'Designer',
-          color: '#76e083',
-        },
-
-        {
           id: 'gro1',
+          name: 'Designer Team',
+          color: '#76e083',
+          eventCreation: false,
+          children: [
+            {
+              id: 'alice',
+              name: 'Alice',
+              title: 'Designer',
+              color: '#1dab2f',
+            },
+            {
+              id: 'bob',
+              name: 'Bob',
+              title: 'Designer',
+              color: '#76e083',
+            },
+          ],
+        },
+        {
+          id: 'gro2',
           name: 'Development Team',
           color: '#ff1717',
           eventCreation: false,
@@ -112,16 +120,25 @@ export default {
               color: '#34c8e0',
             },
             {
-              id: 'erin',
-              name: 'Erin',
-              title: 'QA Tester',
-              color: '#d6d145',
-            },
-            {
               id: 'george',
               name: 'George',
               title: 'DevOps Engineer',
               color: '#e25dd2',
+            },
+          ],
+        },
+
+        {
+          id: 'gro3',
+          name: 'QA Team',
+          color: '#d6d145',
+          eventCreation: false,
+          children: [
+            {
+              id: 'erin',
+              name: 'Erin',
+              title: 'QA Tester',
+              color: '#d6d145',
             },
           ],
         },
@@ -461,7 +478,7 @@ export default {
   bottom: 0;
   border-style: solid;
   border-width: 0 9px 9px 9px;
-  border-color: transparent transparent white transparent;
+  border-color: transparent transparent rgba(255, 255, 255, 0.5) transparent;
   cursor: ew-resize;
 }
 
@@ -472,7 +489,7 @@ export default {
 .mds-progress-dragging .mds-progress-dot , .mds-progress-dot:hover {
   right: -12px;
   border-width: 0 12px 12px 12px;
-  border-color: transparent transparent rgba(255, 255, 255, 0.5) transparent;
+  border-color: transparent transparent white transparent;
 }
 
 .mds-progress-label {
@@ -486,11 +503,12 @@ export default {
 }
 
 .mds-progress-employee-name {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .mds-progress-employee-title {
   font-size: 12px;
+  font-weight: 400;
   margin-top: 5px;
 }
   `,
