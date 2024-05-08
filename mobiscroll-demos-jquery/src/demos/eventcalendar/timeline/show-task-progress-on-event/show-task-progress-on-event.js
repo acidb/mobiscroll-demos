@@ -295,7 +295,6 @@ export default {
       var eventStartEndPicker = $('#popup-event-dates')
         .mobiscroll()
         .datepicker({
-          controls: ['date'],
           select: 'range',
           startInput: '#popup-event-start',
           endInput: '#popup-event-end',
