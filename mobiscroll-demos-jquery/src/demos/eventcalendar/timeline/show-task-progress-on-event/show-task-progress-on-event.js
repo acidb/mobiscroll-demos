@@ -193,16 +193,12 @@ export default {
               text: 'Add',
               keyCode: 'enter',
               handler: function () {
-                var newEvent = {
-                  id: eventId,
-                  title: eventTitle,
-                  start: eventStart,
-                  end: eventEnd,
-                  resource: event.resource,
-                  progress: eventProgress,
-                };
-                myEvents.push(newEvent);
-                calendar.updateEvent(newEvent);
+                event.title = eventTitle;
+                event.start = eventStart;
+                event.end = eventEnd;
+                event.progress = eventProgress;
+                myEvents.push(event);
+                calendar.updateEvent(event);
                 success = true;
                 addEditPopup.close();
               },
@@ -230,15 +226,14 @@ export default {
               text: 'Save',
               keyCode: 'enter',
               handler: function () {
-                var updatedEvent = {
-                  id: eventId,
-                  title: eventTitle,
-                  start: eventStart,
-                  end: eventEnd,
-                  resource: event.resource,
-                  progress: eventProgress,
-                };
-                calendar.updateEvent(updatedEvent);
+                var eventToUpdate = myEvents.find(function (event) {
+                  return event.id === eventId;
+                });
+                eventToUpdate.title = eventTitle;
+                eventToUpdate.start = eventStart;
+                eventToUpdate.end = eventEnd;
+                eventToUpdate.progress = eventProgress;
+                calendar.updateEvent(eventToUpdate);
                 addEditPopup.close();
               },
               cssClass: 'mbsc-popup-button-primary',
@@ -283,6 +278,13 @@ export default {
           },
           onEventCreated: function (args) {
             createAddPopup(args.event, args.target);
+          },
+          onEventUpdated: function (args) {
+            var eventToUpdate = myEvents.find(function (event) {
+              return event.id === args.event.id;
+            });
+            eventToUpdate.start = args.event.start;
+            eventToUpdate.end = args.event.end;
           },
           renderScheduleEvent: renderEvent,
           renderResource: renderCustomResource,
