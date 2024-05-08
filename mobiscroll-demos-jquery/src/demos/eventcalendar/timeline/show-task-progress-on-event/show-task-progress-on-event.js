@@ -385,6 +385,7 @@ export default {
             });
 
             eventToUpdate.progress = eventProgress;
+            calendar.updateEvent(eventToUpdate);
           }
 
           $(document).on('mousemove', onMouseMove);
@@ -482,7 +483,7 @@ export default {
 }
 
 .mds-progress-bar.mds-progress-dragging {
-  background-color: rgba(255, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .mds-progress-dragging .mds-progress-dot , .mds-progress-dot:hover {
