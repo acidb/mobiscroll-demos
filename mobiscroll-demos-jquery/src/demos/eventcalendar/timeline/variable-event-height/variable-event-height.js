@@ -365,9 +365,9 @@ export default {
           // ],
         })
         .mobiscroll('getInst');
-      // TODO B-E IMPL
+      // TODO CHANGE trialdev to trial
       $.getJSON(
-        'https://trial.mobiscroll.com/events-variable-height/?callback=?',
+        'https://trialdev.mobiscroll.com/events-variable-height/?callback=?',
         function (events) {
           inst.setEvents(events);
         },
