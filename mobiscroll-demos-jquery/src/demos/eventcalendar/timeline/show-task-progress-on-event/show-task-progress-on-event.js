@@ -285,6 +285,7 @@ export default {
             });
             eventToUpdate.start = args.event.start;
             eventToUpdate.end = args.event.end;
+            eventToUpdate.resource = args.event.resource;
           },
           renderScheduleEvent: renderEvent,
           renderResource: renderCustomResource,
