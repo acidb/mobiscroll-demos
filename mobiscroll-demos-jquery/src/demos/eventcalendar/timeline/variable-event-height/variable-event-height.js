@@ -28,9 +28,9 @@ export default {
           dragInTime: true,
           renderScheduleEventContent: function (event) {
             return (
-              '<div class="mds-variable-event-heights-title">' +
+              '<div class="mds-variable-event-height-title">' +
               event.title +
-              '</div><div class="mds-variable-event-heights-description">' +
+              '</div><div class="mds-variable-event-height-description">' +
               event.original.description +
               '</div>'
             );
@@ -85,24 +85,27 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-variable-event-heights-title {
+  .mds-variable-event-height-title {
     white-space: normal;
     line-height: 16px;
     font-size: 15px;
     font-weight: 600;
   }
-  .mds-variable-event-heights-description {
+
+  .mds-variable-event-height-description {
     padding: 8px 0;
     white-space: normal;
     font-size: 12px;
     line-height: 18px;
     font-weight: 400;
   }
-  mds-variable-event-height .mbsc-schedule-event-range {
-    font-size: 12px !important;
-    font-weight: 600 !important;
+
+  .mds-variable-event-height .mbsc-schedule-event-range {
+    font-size: 12px;
+    font-weight: 600;
   }
-  mds-variable-event-height .mbsc-schedule-event-inner {
+  
+  .mds-variable-event-height .mbsc-schedule-event-inner {
     padding: 1em;
   }
   `,

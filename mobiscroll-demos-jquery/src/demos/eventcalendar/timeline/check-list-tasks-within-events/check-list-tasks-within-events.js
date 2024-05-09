@@ -10,15 +10,7 @@ export default {
     });
 
     $(function () {
-      var displayTasks = function (tasks) {
-        var list = '';
-        tasks.forEach(function (task) {
-          list += '<div class="mds-check-list-tasks-li">' + task + '</div>';
-        });
-        return list;
-      };
-
-      var calInst = $('#demo-check-list-tasks-events')
+      var inst = $('#demo-tasks-calendar')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -40,29 +32,47 @@ export default {
           },
           renderResource: function (resource) {
             return (
-              '<div class="mds-check-list-tasks-resource-name">' +
+              '<div class="mds-tasks-resource-name">' +
               resource.name +
               '</div>' +
-              '<div class="mds-check-list-tasks-resource-description">' +
+              '<div class="mds-tasks-resource-description">' +
               resource.description +
               '</div>'
             );
           },
           renderScheduleEventContent: function (event) {
             return (
-              '<div class="mds-check-list-tasks-title">' +
+              '<div class="mds-tasks-event-title">' +
               event.title +
               '</div>' +
-              '<div class="mds-check-list-tasks-subtitle">Task list</div>' +
-              '<div class="mds-check-list-tasks-list">' +
-              displayTasks(event.original.tasks) +
-              '<div class="mds-check-list-tasks-li mds-check-list-tasks-add" id="demo-check-list-tasks-add-button">+ Add task</div>' +
+              '<div class="mds-tasks-event-subtitle">Task list</div>' +
+              '<div class="mds-tasks-event-list">' +
+              event.original.tasks.reduce(function (list, task) {
+                return list + '<div class="mds-tasks-event-list-item">' + task + '</div>';
+              }, '') +
+              '<div class="mds-tasks-event-list-item mds-tasks-event-add" id="demo-check-list-tasks-add-button">+ Add task</div>' +
               '</div>'
             );
           },
           onEventClick: function (args) {
-            if (args.domEvent.srcElement.id === 'demo-check-list-tasks-add-button') {
-              createEditPopup(args);
+            if (args.domEvent.target.id === 'demo-check-list-tasks-add-button') {
+              var ev = args.event;
+              mobiscroll.prompt({
+                title: 'Add new task to ' + ev.title,
+                inputType: 'text',
+                callback: function (value) {
+                  if (value) {
+                    var updatedTasks = ev.tasks.slice();
+                    updatedTasks.push(value);
+                    ev.tasks = updatedTasks;
+                    inst.updateEvent(ev);
+                    mobiscroll.toast({
+                      duration: 3000,
+                      message: 'Tasks updated for ' + ev.title,
+                    });
+                  }
+                },
+              });
             }
           },
           resources: [
@@ -106,30 +116,11 @@ export default {
         })
         .mobiscroll('getInst');
 
-      function createEditPopup(args) {
-        var ev = args.event;
-        mobiscroll.prompt({
-          title: 'Add new task to ' + ev.title,
-          inputType: 'text',
-          callback: function (value) {
-            if (value) {
-              var updatedTasks = ev.tasks.slice();
-              updatedTasks.push(value);
-              ev.tasks = updatedTasks;
-              calInst.updateEvent(ev);
-              mobiscroll.toast({
-                duration: 3000,
-                message: 'Tasks updated for ' + ev.title,
-              });
-            }
-          },
-        });
-      }
       // TODO CHANGE trialdev to trial
       $.getJSON(
         'https://trialdev.mobiscroll.com/events-check-list-tasks/?callback=?',
         function (events) {
-          calInst.setEvents(events);
+          inst.setEvents(events);
         },
         'jsonp',
       );
@@ -137,22 +128,24 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-check-list-tasks-events" class="mds-check-list-tasks-events"></div>
+<div id="demo-tasks-calendar" class="mds-tasks-calendar"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-check-list-tasks-resource-name {
+  .mds-tasks-resource-name {
     padding: 15px 0 8px 0;
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
   }
-  .mds-check-list-tasks-resource-description {
+
+  .mds-tasks-resource-description {
     font-size: 12px;
     font-weight: 400;
     line-height: 16px;
   }
-  .mds-check-list-tasks-title {
+
+  .mds-tasks-event-title {
     padding: 16px 8px 0 8px;
     white-space: normal;
     word-break: normal;
@@ -160,17 +153,20 @@ export default {
     font-size: 16px;
     font-weight: 700;
   }
-  .mds-check-list-tasks-subtitle {
+
+  .mds-tasks-event-subtitle {
     font-weight: 600;
     font-size: 14px;
     padding: 8px 8px 0 8px;
   }
-  .mds-check-list-tasks-list {
+
+  .mds-tasks-event-list {
     margin: 8px 8px 16px;
     border-radius: 0.25em;
     background-color: #ffffff69;
   }
-  .mds-check-list-tasks-li {
+
+  .mds-tasks-event-list-item {
     padding: 8px;
     white-space: normal;
     font-size: 12px;
@@ -179,19 +175,20 @@ export default {
     border-bottom: 1px solid #00000033;
     font-weight: 400;
   }
-  .mds-check-list-tasks-add {
+
+  .mds-tasks-event-add {
     padding-top: 4px;
     border-bottom: none;
     font-weight: 700;
   }
-  .mds-check-list-tasks-add:hover {
-    text-shadow: 0 0 .25px #333, 0 0 .25px #333;
+
+  .mds-tasks-event-add:hover {
+    color: #0000EE;
+    text-decoration: underline;
   }
-  .mds-check-list-tasks-events .mbsc-schedule-event-range {
-    display: none;
-  }
-  .mds-check-list-tasks-events .mbsc-schedule-event-inner {
-    width: 100%;
+
+  .mds-tasks-calendar .mbsc-schedule-event-inner {
+    display: block;
     height: auto;
   }
   `,
