@@ -753,7 +753,7 @@ export default {
       {
         id: 84,
         start: 'dyndatetime(y,m,d-5)',
-        end: 'dyndatetime(y,m,-5)',
+        end: 'dyndatetime(y,m,d-5)',
         title: 'las-vegas3',
         consumption: 10.5,
         distance: 150,
