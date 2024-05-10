@@ -1,0 +1,6 @@
+<mbsc-eventcalendar [options]="calendarOptions" [data]="myEvents" [resources]="myResources" [scheduleEventContentTemplate]="eventTemp">
+  <ng-template #eventTemp let-event>
+    <div class="mds-variable-event-height-title">{{event.title}}</div>
+    <div class="mds-variable-event-height-description">{{event.original!.description}}</div>
+  </ng-template>
+</mbsc-eventcalendar>
