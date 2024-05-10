@@ -25,7 +25,6 @@ function App() {
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
   const [tempEvent, setTempEvent] = useState<MbscCalendarEvent>();
-  const [inst, setInst] = useState<Eventcalendar | null>(null);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
@@ -109,8 +108,7 @@ function App() {
             </div>
           ))}
           <div className="mds-tasks-event-list-item mds-tasks-event-add" id="demo-check-list-tasks-add-button">
-            {' '}
-            Add task
+            + Add task
           </div>
         </div>
       </>
@@ -122,13 +120,16 @@ function App() {
     (value: string | null) => {
       if (value) {
         tempEvent!.tasks.push(value);
-        inst!.updateEvent(tempEvent!);
+        const index = myEvents.findIndex((event) => event.id === tempEvent!.id);
+        const newEventList = [...myEvents];
+        newEventList.splice(index, 1, tempEvent!);
+        setEvents(newEventList);
       }
       setPromptOpen(false);
       setToastMessage('Tasks updated for ' + tempEvent!.title);
       setToastOpen(true);
     },
-    [inst, tempEvent],
+    [myEvents, tempEvent],
   );
 
   const handleCloseToast = useCallback(() => {
@@ -170,9 +171,8 @@ function App() {
         renderResource={customResource}
         renderScheduleEventContent={customScheduleEventContent}
         onEventClick={handleEventClick}
-        ref={setInst}
       />
-      <Prompt title={promptTitle} inputType="text" isOpen={isPromptOpen} onClose={handleClosePrompt} />
+      <Prompt title={promptTitle} isOpen={isPromptOpen} onClose={handleClosePrompt} />
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleCloseToast} duration={3000} />
     </>
   );
