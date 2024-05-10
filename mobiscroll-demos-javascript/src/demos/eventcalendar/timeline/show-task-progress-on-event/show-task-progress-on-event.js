@@ -327,7 +327,7 @@ export default {
       eventTitle = this.value;
     });
 
-    document.querySelector('#demo-task-progression').addEventListener(
+    document.getElementById('demo-task-progression').addEventListener(
       'mousedown',
       function (event) {
         var progressArrow = event.target.closest('.mds-progress-arrow');
