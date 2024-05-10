@@ -138,10 +138,10 @@ const myResources = [
 
 function App() {
   const calendarRef = useRef(null);
+  const isDraggingProgress = useRef(false);
   const [myEvents, setMyEvents] = useState(defaultEvents);
   const [progress, setProgress] = useState(0);
   const [tempEvent, setTempEvent] = useState(null);
-  const [isDraggingProcess, setIsDraggingProcess] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [isEdit, setEdit] = useState(false);
   const [anchor, setAnchor] = useState(null);
@@ -152,40 +152,7 @@ function App() {
   const [mySelectedDate, setSelectedDate] = useState(new Date());
   const [popupEventResource, setResource] = useState('');
 
-  /// !?
-  const initialMouseXRef = useRef(null);
-  const initialProgressRef = useRef(null);
-  const progressArrowRef = useRef(null);
-
-  ///
-
   const myView = useMemo(() => ({ timeline: { type: 'month', eventList: true } }), []);
-
-  const renderCustomEvent = useCallback(
-    (event) => (
-      <div className="mds-progress-event" style={{ background: event.color }}>
-        <div className="mds-progress-bar" style={{ width: `${event.original.progress || 0}%` }}>
-          <div className="mds-progress-arrow" data-event-id={event.original.id}></div>
-          <div className="mds-progress-arrow" data-event-id={event.original.id}></div>
-        </div>
-        <div className="mds-progress-event-content">
-          <div className="mds-progress-event-title">{event.original.title}</div>
-        </div>
-        <div className="mds-progress-label">{event.original.progress || 0}%</div>
-      </div>
-    ),
-    [],
-  );
-
-  const renderCustomResource = useCallback(
-    (resource) => (
-      <div>
-        <div className="mds-progress-employee-name">{resource.name}</div>
-        {resource.title && <div className="mds-progress-employee-title">{resource.title}</div>}
-      </div>
-    ),
-    [],
-  );
 
   const loadPopupForm = useCallback((event) => {
     setProgress(event.progress || 0);
@@ -194,7 +161,7 @@ function App() {
     setResource(event.resource);
   }, []);
 
-  const onEventCreated = useCallback(
+  const handleEventCreated = useCallback(
     (args) => {
       setEdit(false);
       setTempEvent(args.event);
@@ -207,9 +174,9 @@ function App() {
     [loadPopupForm],
   );
 
-  const onEventClick = useCallback(
+  const handleEventClick = useCallback(
     (args) => {
-      if (isDraggingProcess) return;
+      if (isDraggingProgress.current) return;
 
       setEdit(true);
       setTempEvent({ ...args.event });
@@ -218,7 +185,7 @@ function App() {
       setAnchor(args.domEvent.target);
       setOpen(true);
     },
-    [loadPopupForm, isDraggingProcess],
+    [loadPopupForm, isDraggingProgress],
   );
 
   const saveEvent = useCallback(() => {
@@ -252,17 +219,16 @@ function App() {
 
   // handle popup form changes
 
-  const titleChange = useCallback((ev) => {
+  const handleTitleChange = useCallback((ev) => {
     setTitle(ev.target.value);
   }, []);
 
-  const dateChange = useCallback((args) => {
+  const handleDateChange = useCallback((args) => {
     setDate(args.value);
   }, []);
 
-  const progressChange = useCallback((event) => {
+  const handleProgressChange = useCallback((event) => {
     setProgress(event.target.value);
-    // console.log('new progress: ', event.target.value, 'progress value: ', progress);
   }, []);
 
   /// test
@@ -272,14 +238,24 @@ function App() {
 
   // timeline options
 
-  const onSelectedDateChange = useCallback((event) => {
+  const handleSelectedDateChange = useCallback((event) => {
     setSelectedDate(event.date);
   }, []);
 
-  const onEventUpdated = useCallback(() => {
-    // here you can update the event in your storage as well, after drag & drop or resize
-    // ...
-  }, []);
+  const handleEventUpdated = useCallback(
+    (args) => {
+      // here you can update the event in your storage as well, after drag & drop or resize
+      // ...
+      console.log('here');
+      var eventToUpdate = myEvents.find(function (event) {
+        return event.id === args.event.id;
+      });
+      eventToUpdate.start = args.event.start;
+      eventToUpdate.end = args.event.end;
+      eventToUpdate.resource = args.event.resource;
+    },
+    [myEvents],
+  );
 
   // popup options
   const headerText = useMemo(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
@@ -331,59 +307,89 @@ function App() {
     setOpen(false);
   }, [isEdit, myEvents]);
 
-  /// !?
-  const onProgressArrowMouseDown = useCallback((e) => {
-    const progressArrow = e.target.closest('.mds-progress-arrow');
-    if (!progressArrow) return;
+  /// !
 
-    e.stopPropagation();
-    setIsDraggingProcess(true);
+  const handleProgressArrowMouseDown = useCallback(
+    (e) => {
+      const progressArrow = e.target.closest('.mds-progress-arrow');
+      if (!progressArrow) return;
 
-    progressArrowRef.current = progressArrow;
-    initialMouseXRef.current = e.pageX;
-    initialProgressRef.current = parseFloat(progressArrow.closest('.mds-progress-bar').style.width.replace('%', ''));
+      e.stopPropagation();
+      isDraggingProgress.current = true;
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-  }, []);
+      const initialMouseX = e.pageX;
+      const initialProgress = parseFloat(progressArrow.closest('.mds-progress-bar').style.width.replace('%', ''));
+      var newProgress;
 
-  const onMouseMove = useCallback((e) => {
-    const mouseXOffset = e.pageX - initialMouseXRef.current;
-    const eventContainerWidth = progressArrowRef.current.closest('.mds-progress-bar').parentElement.offsetWidth;
-    var newProgress = Math.round(initialProgressRef.current + (mouseXOffset / eventContainerWidth) * 100);
-    newProgress = Math.max(0, Math.min(100, newProgress));
+      const handleMouseMove = (e) => {
+        const mouseXOffset = e.pageX - initialMouseX;
+        const eventContainerWidth = progressArrow.closest('.mds-progress-bar').parentElement.offsetWidth;
 
-    ///
-    setProgress(newProgress);
+        newProgress = Math.round(initialProgress + (mouseXOffset / eventContainerWidth) * 100);
+        newProgress = Math.max(0, Math.min(100, newProgress));
 
-    /// move back to onMouseUp !
-    const eventId = progressArrowRef.current.dataset.eventId;
-    const eventToUpdate = myEvents.find((event) => event.id === eventId);
-    eventToUpdate.progress = newProgress;
-    ///
+        const progressBar = progressArrow.closest('.mds-progress-bar');
+        progressBar.style.width = `${newProgress}%`;
 
-    const progressBar = progressArrowRef.current.closest('.mds-progress-bar');
-    progressBar.style.width = `${newProgress}%`;
+        const progressLabel = progressArrow.closest('.mds-progress-event').querySelector('.mds-progress-label');
+        progressLabel.textContent = `${newProgress}%`;
 
-    const progressLabel = progressArrowRef.current.closest('.mds-progress-event').querySelector('.mds-progress-label');
-    progressLabel.textContent = `${newProgress}%`;
-  }, []);
+        setProgress(newProgress);
+        console.log('mouse move progress:', progress);
+      };
 
-  const onMouseUp = useCallback(() => {
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
+      const handleMouseUp = () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
 
-    // const eventId = progressArrowRef.current.dataset.eventId;
-    // const eventToUpdate = myEvents.find((event) => event.id === eventId);
-    // eventToUpdate.progress = progress;
+        const eventId = progressArrow.dataset.eventId;
+        const eventToUpdate = myEvents.find((event) => event.id === eventId);
+        console.log('mouse up progress', progress);
+        eventToUpdate.progress = newProgress;
+        // console.log(calendarRef);
+        // calendarRef.current.updateEvent(eventToUpdate);
 
-    setTimeout(() => setIsDraggingProcess(false), 100);
-  }, []);
+        setTimeout(() => (isDraggingProgress.current = false), 100);
+      };
+
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    },
+    [myEvents, progress],
+  );
 
   ///
 
+  const renderCustomEvent = useCallback(
+    (event) => (
+      <div className="mds-progress-event" style={{ background: event.color }}>
+        <div className="mds-progress-bar" style={{ width: `${event.original.progress || 0}%` }}>
+          <div className="mds-progress-arrow" data-event-id={event.original.id} onMouseDown={handleProgressArrowMouseDown}></div>
+          {/* <div className="mds-progress-arrow" data-event-id={event.original.id}></div> */}
+        </div>
+        <div className="mds-progress-event-content">
+          <div className="mds-progress-event-title">{event.original.title}</div>
+        </div>
+        <div className="mds-progress-label">{event.original.progress || 0}%</div>
+      </div>
+    ),
+    // [],
+    [handleProgressArrowMouseDown],
+  );
+
+  const renderCustomResource = useCallback(
+    (resource) => (
+      <div>
+        <div className="mds-progress-employee-name">{resource.name}</div>
+        {resource.title && <div className="mds-progress-employee-title">{resource.title}</div>}
+      </div>
+    ),
+    [],
+  );
+
   return (
-    <div onMouseDownCapture={onProgressArrowMouseDown}>
+    // <div onMouseDownCapture={handleProgressArrowMouseDown}>
+    <div>
       <Eventcalendar
         ref={calendarRef}
         class="mds-progress-calendar"
@@ -395,10 +401,10 @@ function App() {
         dragToMove={true}
         dragToResize={true}
         selectedDate={mySelectedDate}
-        onSelectedDateChange={onSelectedDateChange}
-        onEventClick={onEventClick}
-        onEventCreated={onEventCreated}
-        onEventUpdated={onEventUpdated}
+        onSelectedDateChange={handleSelectedDateChange}
+        onEventClick={handleEventClick}
+        onEventCreated={handleEventCreated}
+        onEventUpdated={handleEventUpdated}
         renderResource={renderCustomResource}
         renderScheduleEvent={renderCustomEvent}
       />
@@ -414,7 +420,7 @@ function App() {
         responsive={popupResponsive}
       >
         <div className="mbsc-form-group">
-          <Input label="Title" value={popupEventTitle} onChange={titleChange} />
+          <Input label="Title" value={popupEventTitle} onChange={handleTitleChange} />
         </div>
         <div className="mbsc-form-group">
           <Input ref={startRef} label="Starts" />
@@ -430,7 +436,7 @@ function App() {
                 touchUi: false,
               },
             }}
-            onChange={dateChange}
+            onChange={handleDateChange}
             value={popupEventDate}
           />
         </div>
@@ -444,7 +450,7 @@ function App() {
               min="0"
               max="100"
               value={progress}
-              onChange={progressChange}
+              onChange={handleProgressChange}
             />
             <span className="mds-popup-progress-label">{progress}%</span>
           </div>
