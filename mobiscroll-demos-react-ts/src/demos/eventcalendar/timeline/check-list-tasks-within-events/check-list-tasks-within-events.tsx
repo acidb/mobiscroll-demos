@@ -107,7 +107,11 @@ function App() {
               {task}
             </div>
           ))}
-          <div className="mds-tasks-event-list-item mds-tasks-event-add" id="demo-check-list-tasks-add-button">
+          <div
+            className="mds-tasks-event-list-item mds-tasks-event-add"
+            id="demo-check-list-tasks-add-button"
+            onClick={() => addTask(event)}
+          >
             + Add task
           </div>
         </div>
@@ -136,13 +140,11 @@ function App() {
     setToastOpen(false);
   }, []);
 
-  const handleEventClick = useCallback((args: MbscEventClickEvent) => {
-    if (args.domEvent.target.id === 'demo-check-list-tasks-add-button') {
-      const ev = args.event;
-      setTempEvent(ev);
-      setPromptTitle('Add new task to ' + ev.title);
-      setPromptOpen(true);
-    }
+  const addTask = useCallback((event: MbscCalendarEventData) => {
+    const ev = event.original!;
+    setTempEvent(ev);
+    setPromptTitle('Add new task to ' + ev.title);
+    setPromptOpen(true);
   }, []);
 
   useEffect(() => {
@@ -170,7 +172,6 @@ function App() {
         extendDefaultEvent={handleDefaultEvent}
         renderResource={customResource}
         renderScheduleEventContent={customScheduleEventContent}
-        onEventClick={handleEventClick}
       />
       <Prompt title={promptTitle} isOpen={isPromptOpen} onClose={handleClosePrompt} />
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleCloseToast} duration={3000} />

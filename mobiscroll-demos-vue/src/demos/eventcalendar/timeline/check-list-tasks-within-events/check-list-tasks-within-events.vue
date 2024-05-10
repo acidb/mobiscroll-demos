@@ -86,13 +86,11 @@ function handleCloseToast() {
   isToastOpen.value = false
 }
 
-function handleEventClick(args) {
-  if (args.domEvent.target.id === 'demo-check-list-tasks-add-button') {
-    const ev = args.event
-    tempEvent.value = ev
-    promptTitle.value = 'Add new task to ' + ev.title
-    isPromptOpen.value = true
-  }
+function addTask(event) {
+  const ev = event.original
+  tempEvent.value = ev
+  promptTitle.value = 'Add new task to ' + ev.title
+  isPromptOpen.value = true
 }
 
 onMounted(() => {
@@ -118,7 +116,6 @@ onMounted(() => {
     :dragToMove="true"
     :dragToResize="true"
     :extendDefaultEvent="handleDefaultEvent"
-    @event-click="handleEventClick"
   >
     <template #resource="resource">
       <div class="mds-tasks-resource-name">{{ resource.name }}</div>
@@ -134,6 +131,7 @@ onMounted(() => {
         <div
           class="mds-tasks-event-list-item mds-tasks-event-add"
           id="demo-check-list-tasks-add-button"
+          @click="addTask(event)"
         >
           + Add task
         </div>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
-  MbscEventClickEvent,
+  MbscCalendarEventData,
   MbscEventcalendarOptions,
   MbscResource,
   Notifications,
@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private notify: Notifications,
-    // public notify: Notifications
   ) {}
 
   calendarOptions: MbscEventcalendarOptions = {
@@ -87,28 +86,24 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  handleEventClick(args: MbscEventClickEvent): void {
-    if (args.domEvent.target.id === 'demo-check-list-tasks-add-button') {
-      const ev = args.event;
-      const updatedTasks = ev['tasks'].slice();
-      const index = this.myEvents.findIndex((event) => event.id === ev.id);
-      const newEventList = [...this.myEvents];
-      this.notify.prompt({
-        title: 'Add new task to ' + ev.title,
-        callback: function (value) {
-          if (value) {
-            updatedTasks.push(value);
-            ev['tasks'] = updatedTasks;
-            newEventList.splice(index, 1, ev);
-          }
-        },
-      });
-      this.myEvents = newEventList;
-      this.notify.toast({
-        duration: 3000,
-        message: 'Tasks updated for ' + ev.title,
-      });
-    }
+  addTask(event: MbscCalendarEventData): void {
+    const ev: MbscCalendarEvent = event.original!;
+    const index = this.myEvents.findIndex((e) => e.id === ev.id);
+    this.notify.prompt({
+      title: 'Add new task to ' + ev.title,
+      callback: (value) => {
+        if (value) {
+          const newEventList = [...this.myEvents];
+          ev['tasks'].push(value);
+          newEventList.splice(index, 1, ev);
+          this.myEvents = newEventList;
+          this.notify.toast({
+            duration: 3000,
+            message: 'Tasks updated for ' + ev.title,
+          });
+        }
+      },
+    });
   }
 
   ngOnInit(): void {
