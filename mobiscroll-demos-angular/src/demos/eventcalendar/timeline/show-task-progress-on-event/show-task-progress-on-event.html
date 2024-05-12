@@ -1,0 +1,46 @@
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [resources]="myResources"
+  [resourceTemplate]="customResourceTemplate"
+  [scheduleEventTemplate]="customEventTemplate"
+  [options]="calendarOptions"
+  [(selectedDate)]="calendarSelectedDate"
+>
+</mbsc-eventcalendar>
+
+<ng-template #customResourceTemplate let-resource>
+  <div>
+    <div class="mds-progress-employee-name">{{resource.name}}</div>
+    <div *ngIf="resource.title" class="mds-progress-employee-title">{{resource.title}}</div>
+  </div>
+</ng-template>
+
+<ng-template #customEventTemplate let-event>
+  <div class="mds-progress-event" [style.background]="event.color">
+    <div class="mds-progress-bar" [style.width]="(event.original.progress || 0) + '%'">
+      <div class="mds-progress-arrow" [attr.data-event-id]="event.original.id"></div>
+    </div>
+    <div class="mds-progress-event-content">
+      <div class="mds-progress-event-title">{{event.original.title}}</div>
+    </div>
+    <div class="mds-progress-label">{{event.original.progress || 0}}%</div>
+  </div>
+</ng-template>
+
+<mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" [headerText]="popupHeaderText" #popup>
+  <div class="mbsc-form-group">
+    <mbsc-input label="Title" [(ngModel)]="popupEventTitle"></mbsc-input>
+  </div>
+  <div class="mbsc-form-group">
+    <mbsc-datepicker
+      [(ngModel)]="popupEventDates"
+      [options]="datePickerOptions"
+      [controls]="datePickerControls"
+      [responsive]="datePickerResponsive"
+      [startInput]="startInput"
+      [endInput]="endInput"
+    ></mbsc-datepicker>
+    <mbsc-input #startInput label="Starts"></mbsc-input>
+    <mbsc-input #endInput label="Ends"></mbsc-input>
+  </div>
+</mbsc-popup>
