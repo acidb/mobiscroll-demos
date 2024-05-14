@@ -28,6 +28,7 @@ export class AppComponent {
   popup!: MbscPopup;
 
   popupEventTitle: string | undefined;
+  popupEventProgress: number = 0;
 
   popupEventDates: any;
   popupEventStatus = 'busy';
@@ -39,50 +40,50 @@ export class AppComponent {
   colors = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '', '#009788', '#4baf4f', '#7e5d4e'];
   myEvents: MbscCalendarEvent[] = [
     {
-      start: 'dyndatetime(y,m,d+2)',
-      end: 'dyndatetime(y,m,d+5)',
+      start: dyndatetime('y,m,d+2'),
+      end: dyndatetime('y,m,d+5'),
       title: 'Design Homepage',
       resource: 'alice',
       progress: 100,
     },
     {
-      start: 'dyndatetime(y,m,d+2)',
-      end: 'dyndatetime(y,m,d+6)',
+      start: dyndatetime('y,m,d+2'),
+      end: dyndatetime('y,m,d+6'),
       title: 'Create Wireframes',
       resource: 'bob',
       progress: 100,
     },
     {
-      start: 'dyndatetime(y,m,d+4)',
-      end: 'dyndatetime(y,m,d+9)',
+      start: dyndatetime('y,m,d+4'),
+      end: dyndatetime('y,m,d+9'),
       title: 'Develop Frontend',
       resource: 'charlie',
       progress: 45,
     },
     {
-      start: 'dyndatetime(y,m,d+4)',
-      end: 'dyndatetime(y,m,d+9)',
+      start: dyndatetime('y,m,d+4'),
+      end: dyndatetime('y,m,d+9'),
       title: 'Develop Backend',
       resource: 'dave',
       progress: 35,
     },
     {
-      start: 'dyndatetime(y,m,d+9)',
-      end: 'dyndatetime(y,m,d+13)',
+      start: dyndatetime('y,m,d+9'),
+      end: dyndatetime('y,m,d+13'),
       title: 'Test Website',
       resource: 'erin',
       progress: 0,
     },
     {
-      start: 'dyndatetime(y,m,d+6)',
-      end: 'dyndatetime(y,m,d+13)',
+      start: dyndatetime('y,m,d+6'),
+      end: dyndatetime('y,m,d+13'),
       title: 'Fix Bugs',
       resource: 'frank',
       progress: 0,
     },
     {
-      start: 'dyndatetime(y,m,d+13)',
-      end: 'dyndatetime(y,m,d+16)',
+      start: dyndatetime('y,m,d+13'),
+      end: dyndatetime('y,m,d+16'),
       title: 'Deploy Website',
       resource: 'george',
       progress: 0,
@@ -271,6 +272,12 @@ export class AppComponent {
     this.popupEventStatus = event['status'] || 'busy';
     this.selectedColor = event.color || '';
   }
+
+  ///
+  handleProgressChange(event: Event) {
+    this.popupEventProgress = parseInt((event.target as HTMLInputElement).value);
+  }
+
   saveEvent(): void {
     this.tempEvent.title = this.popupEventTitle;
 

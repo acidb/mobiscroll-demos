@@ -43,4 +43,18 @@
     <mbsc-input #startInput label="Starts"></mbsc-input>
     <mbsc-input #endInput label="Ends"></mbsc-input>
   </div>
+  <div class="mbsc-form-group">
+    <label class="mbsc-flex mbsc-align-items-center mbsc-padding">
+      <span>Progress</span>
+      <input
+        class="mds-popup-progress-slider mbsc-flex-1-0"
+        type="range"
+        min="0"
+        max="100"
+        [value]="popupEventProgress"
+        (change)="handleProgressChange($event)"
+      />
+      <span class="mds-popup-progress-label">{{ popupEventProgress }}%</span>
+    </label>
+  </div>
 </mbsc-popup>
