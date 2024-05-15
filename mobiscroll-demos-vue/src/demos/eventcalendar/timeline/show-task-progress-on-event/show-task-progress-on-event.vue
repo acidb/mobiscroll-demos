@@ -13,7 +13,7 @@ setOptions({
   // theme
 })
 
-const myEvents = [
+const myEvents = ref([
   {
     start: 'dyndatetime(y,m,d+2)',
     end: 'dyndatetime(y,m,d+5)',
@@ -63,9 +63,9 @@ const myEvents = [
     resource: 'george',
     progress: 0
   }
-]
+])
 
-const myResources = [
+const myResources = ref([
   {
     id: 'gro1',
     name: 'Designer Team',
@@ -133,14 +133,17 @@ const myResources = [
       }
     ]
   }
-]
+])
 
 const myView = {
   timeline: {
-    type: 'month'
+    type: 'month',
+    eventList: true
   }
 }
 const isEdit = ref(false)
+const isDraggingProgress = ref(false)
+
 const mySelectedDate = ref()
 let addedEvent = null
 let editedEvent = null
@@ -157,6 +160,7 @@ const myResponsive = {
 const popupEventTitle = ref('')
 const popupEventDates = ref([])
 const popupEventProgress = ref(0)
+const popupEventResource = ref('')
 
 const popupAnchor = ref(null)
 const popupButtons = ref([])
@@ -170,22 +174,15 @@ const endInput = ref(null)
 const datePickerControls = ['date']
 const datePickerResponsive = {
   medium: {
-    controls: ['calendar'],
-    touchUi: false
-  }
-}
-const datetimePickerControls = ['datetime']
-const datetimePickerResponsive = {
-  medium: {
-    controls: ['calendar'],
     touchUi: false
   }
 }
 
 // Fills the popup with the event's data
-function fillPopup(event) {
+function loadPopupForm(event) {
   popupEventTitle.value = event.title
   popupEventDates.value = [event.start, event.end]
+  popupEventResource.value = event.resource
   popupEventProgress.value = event.progress || 0
 }
 
@@ -207,7 +204,9 @@ function createAddPopup(event, target) {
           id: addedEvent.id,
           title: popupEventTitle.value,
           start: popupEventDates.value[0],
-          end: popupEventDates.value[1]
+          end: popupEventDates.value[1],
+          resource: popupEventResource.value,
+          progress: popupEventProgress.value
         }
         myEvents.value = [...myEvents.value, newEvent]
         mySelectedDate.value = popupEventDates.value[0]
@@ -218,7 +217,7 @@ function createAddPopup(event, target) {
   ]
   popupAnchor.value = target
 
-  fillPopup(event)
+  loadPopupForm(event)
   isPopupOpen.value = true
 }
 
@@ -242,25 +241,25 @@ function createEditPopup(event, target) {
         updatedEvent.title = popupEventTitle.value
         updatedEvent.start = popupEventDates.value[0]
         updatedEvent.end = popupEventDates.value[1]
+        updatedEvent.resource = popupEventResource.value
+        updatedEvent.progress = popupEventProgress.value
         // Update event
         let newEventList = [...myEvents.value]
         const index = newEventList.findIndex((x) => x.id === updatedEvent.id)
         newEventList[index] = updatedEvent
         myEvents.value = newEventList
-
         isPopupOpen.value = false
       },
       cssClass: 'mbsc-popup-button-primary'
     }
   ]
   popupAnchor.value = target
-  fillPopup(event)
+  loadPopupForm(event)
   isPopupOpen.value = true
 }
 
-// Calendar events
 function handleEventClick(args) {
-  //   console.log(args.event)
+  if (isDraggingProgress.value) return
   createEditPopup(args.event, args.domEvent.currentTarget)
 }
 
@@ -268,13 +267,8 @@ function handleEventCreated(args) {
   createAddPopup(args.event, args.target)
 }
 
-function handleEventUpdated(args) {
-  //
-}
-
 function deleteEvent(event) {
   myEvents.value = myEvents.value.filter((item) => item.id !== event.id)
-  isSnackbarOpen.value = true
 }
 
 function handlePopupClose() {
@@ -283,87 +277,132 @@ function handlePopupClose() {
     deleteEvent(addedEvent)
   }
   isPopupOpen.value = false
-  isColorPickerOpen.value = false
+}
+
+const handleProgressArrowMouseDown = (e) => {
+  const progressArrow = e.target.closest('.mds-progress-arrow')
+
+  if (!progressArrow) return
+
+  e.stopPropagation()
+
+  isDraggingProgress.value = true
+
+  const progressBar = progressArrow.closest('.mds-progress-bar')
+  const progressLabel = progressArrow
+    .closest('.mds-progress-event')
+    .querySelector('.mds-progress-label')
+  const eventContainerWidth = progressBar.parentElement.offsetWidth
+  const initialMouseX = e.pageX
+  const initialProgress = parseFloat(progressBar.style.width.replace('%', ''))
+
+  let newProgress
+
+  const handleMouseMove = (e) => {
+    const mouseXOffset = e.pageX - initialMouseX
+
+    newProgress = Math.round(initialProgress + (mouseXOffset / eventContainerWidth) * 100)
+    newProgress = Math.max(0, Math.min(100, newProgress))
+
+    progressBar.style.width = `${newProgress}%`
+    progressLabel.textContent = `${newProgress}%`
+  }
+
+  const handleMouseUp = () => {
+    document.removeEventListener('mousemove', handleMouseMove)
+    document.removeEventListener('mouseup', handleMouseUp)
+
+    const eventId = progressArrow.dataset.eventId
+    const eventToUpdate = myEvents.value.find((event) => event.id === eventId)
+    eventToUpdate.progress = newProgress
+
+    setTimeout(() => (isDraggingProgress.value = false), 100)
+  }
+
+  document.addEventListener('mousemove', handleMouseMove)
+  document.addEventListener('mouseup', handleMouseUp)
 }
 </script>
 
 <template>
-  <MbscEventcalendar
-    class="mds-progress-calendar"
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-    clickToCreate="true"
-    :dragToCreate="true"
-    :dragToMove="true"
-    :dragToResize="true"
-    :selectedDate="mySelectedDate"
-    @event-click="handleEventClick"
-    @event-created="handleEventCreated"
-    @event-updated="handleEventUpdated"
-  >
-    <template #scheduleEvent="data">
-      <div class="mds-progress-event" :style="{ background: data.color }">
-        <div class="mds-progress-bar" :style="{ width: (data.original.progress || 0) + '%' }">
-          <div class="mds-progress-arrow" :data-event-id="data.id"></div>
+  <div @mousedown.capture="handleProgressArrowMouseDown">
+    <MbscEventcalendar
+      class="mds-progress-calendar"
+      :view="myView"
+      :data="myEvents"
+      :resources="myResources"
+      clickToCreate="true"
+      :dragToCreate="true"
+      :dragToMove="true"
+      :dragToResize="true"
+      :selectedDate="mySelectedDate"
+      @event-click="handleEventClick"
+      @event-created="handleEventCreated"
+    >
+      <template #scheduleEvent="data">
+        <div class="mds-progress-event" :style="{ background: data.color }">
+          <div class="mds-progress-bar" :style="{ width: (data.original.progress || 0) + '%' }">
+            <div class="mds-progress-arrow" :data-event-id="data.id"></div>
+          </div>
+          <div class="mds-progress-event-content">
+            <div class="mds-progress-event-title">{{ data.title }}</div>
+          </div>
+          <div class="mds-progress-label" :key="data.original.progress || 0">
+            {{ data.original.progress || 0 }}%
+          </div>
         </div>
-        <div class="mds-progress-event-content">
-          <div class="mds-progress-event-title">{{ data.title }}</div>
-        </div>
-        <div class="mds-progress-label" :key="data.original.progress || 0">
-          {{ data.original.progress || 0 }}%
-        </div>
-      </div>
-    </template>
+      </template>
 
-    <template #resource="resource">
-      <div>
-        <div class="mds-progress-employee-name">{{ resource.name }}</div>
-        <div v-if="resource.title" class="mds-progress-employee-title">{{ resource.title }}</div>
-      </div>
-    </template>
-  </MbscEventcalendar>
+      <template #resource="resource">
+        <div>
+          <div class="mds-progress-employee-name">{{ resource.name }}</div>
+          <div v-if="resource.title" class="mds-progress-employee-title">{{ resource.title }}</div>
+        </div>
+      </template>
+    </MbscEventcalendar>
 
-  <MbscPopup
-    display="bottom"
-    :contentPadding="false"
-    :fullScreen="true"
-    :isOpen="isPopupOpen"
-    :responsive="myResponsive"
-    :anchor="popupAnchor"
-    :buttons="popupButtons"
-    :headerText="popupHeaderText"
-    @close="handlePopupClose"
-  >
-    <div class="mbsc-form-group">
-      <MbscInput label="Title" v-model="popupEventTitle" />
-    </div>
-    <div class="mbsc-form-group">
-      <MbscInput ref="startInput" label="Starts" />
-      <MbscInput ref="endInput" label="Ends" />
-      <MbscDatepicker
-        v-model="popupEventDates"
-        select="range"
-        :controls="popupEventAllDay ? datePickerControls : datetimePickerControls"
-        :responsive="popupEventAllDay ? datePickerResponsive : datetimePickerResponsive"
-        :startInput="startInput"
-        :endInput="endInput"
-      />
-    </div>
-    <div class="mbsc-form-group">
-      <label class="mbsc-flex mbsc-align-items-center mbsc-padding">
-        <span>Progress</span>
-        <input
-          class="mds-popup-progress-slider mbsc-flex-1-0"
-          type="range"
-          min="0"
-          max="100"
-          v-model="popupEventProgress"
+    <MbscPopup
+      display="bottom"
+      :contentPadding="false"
+      :fullScreen="true"
+      :isOpen="isPopupOpen"
+      :responsive="myResponsive"
+      :anchor="popupAnchor"
+      :buttons="popupButtons"
+      :headerText="popupHeaderText"
+      @close="handlePopupClose"
+    >
+      <div class="mbsc-form-group">
+        <MbscInput label="Title" v-model="popupEventTitle" />
+      </div>
+      <div class="mbsc-form-group">
+        <MbscInput ref="startInput" label="Starts" />
+        <MbscInput ref="endInput" label="Ends" />
+        <MbscDatepicker
+          v-model="popupEventDates"
+          select="range"
+          :controls="datePickerControls"
+          :responsive="datePickerResponsive"
+          :startInput="startInput"
+          :endInput="endInput"
+          :showRangeLabels="false"
         />
-        <span class="mds-popup-progress-label">{{ popupEventProgress }}%</span>
-      </label>
-    </div>
-  </MbscPopup>
+      </div>
+      <div class="mbsc-form-group">
+        <label class="mbsc-flex mbsc-align-items-center mbsc-padding">
+          <span>Progress</span>
+          <input
+            class="mds-popup-progress-slider mbsc-flex-1-0"
+            type="range"
+            min="0"
+            max="100"
+            v-model="popupEventProgress"
+          />
+          <span class="mds-popup-progress-label">{{ popupEventProgress }}%</span>
+        </label>
+      </div>
+    </MbscPopup>
+  </div>
 </template>
 
 <style>
