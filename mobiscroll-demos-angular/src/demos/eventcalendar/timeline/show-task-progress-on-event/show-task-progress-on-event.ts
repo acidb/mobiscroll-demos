@@ -264,17 +264,13 @@ export class AppComponent {
   };
   isEdit = false;
 
-  handleProgressArrowMouseDown(e: MouseEvent): void {
-    const progressArrow = (e.target as HTMLElement).closest('.mds-progress-arrow');
-
-    if (!progressArrow) return;
-
+  handleProgressArrowMouseDown(e: MouseEvent, event: MbscCalendarEvent): void {
     e.stopPropagation();
 
     this.isDraggingProgress = true;
 
+    const progressArrow = e.target as HTMLElement;
     const progressBar = progressArrow.closest('.mds-progress-bar') as HTMLElement;
-    const progressLabel = progressArrow.closest('.mds-progress-event')!.querySelector('.mds-progress-label') as HTMLElement;
     const eventContainerWidth = progressBar.parentElement!.offsetWidth;
     const initialMouseX = e.pageX;
     const initialProgress = parseFloat(progressBar.style.width.replace('%', ''));
@@ -287,19 +283,12 @@ export class AppComponent {
       newProgress = Math.round(initialProgress + (mouseXOffset / eventContainerWidth) * 100);
       newProgress = Math.max(0, Math.min(100, newProgress));
 
-      progressBar.style.width = `${newProgress}%`;
-      progressLabel.textContent = `${newProgress}%`;
+      event['progress'] = newProgress;
     };
 
     const handleMouseUp = () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
-
-      const eventId = progressArrow.getAttribute('data-event-id');
-      const eventToUpdate = this.myEvents.find((event) => event.id === eventId);
-      if (eventToUpdate) {
-        (eventToUpdate as MbscCalendarEvent)['progress'] = newProgress;
-      }
 
       setTimeout(() => (this.isDraggingProgress = false), 100);
     };
