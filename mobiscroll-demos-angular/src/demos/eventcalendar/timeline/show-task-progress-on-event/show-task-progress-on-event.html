@@ -4,7 +4,6 @@
   [resourceTemplate]="customResourceTemplate"
   [scheduleEventTemplate]="customEventTemplate"
   [options]="calendarOptions"
-  [(selectedDate)]="calendarSelectedDate"
 >
 </mbsc-eventcalendar>
 
@@ -35,7 +34,6 @@
     <mbsc-datepicker
       [(ngModel)]="popupEventDates"
       [options]="datePickerOptions"
-      [controls]="datePickerControls"
       [responsive]="datePickerResponsive"
       [startInput]="startInput"
       [endInput]="endInput"
@@ -46,14 +44,7 @@
   <div class="mbsc-form-group">
     <label class="mbsc-flex mbsc-align-items-center mbsc-padding">
       <span>Progress</span>
-      <input
-        class="mds-popup-progress-slider mbsc-flex-1-0"
-        type="range"
-        min="0"
-        max="100"
-        [value]="popupEventProgress"
-        (change)="handleProgressChange($event)"
-      />
+      <input class="mds-popup-progress-slider mbsc-flex-1-0" type="range" min="0" max="100" [(ngModel)]="popupEventProgress" />
       <span class="mds-popup-progress-label">{{ popupEventProgress }}%</span>
     </label>
   </div>

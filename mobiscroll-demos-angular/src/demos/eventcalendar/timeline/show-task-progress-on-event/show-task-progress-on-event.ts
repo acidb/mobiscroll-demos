@@ -2,10 +2,11 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscDatepickerOptions,
+  MbscDateType,
   MbscEventcalendarOptions,
   MbscPopup,
+  MbscPopupButton,
   MbscPopupOptions,
-  Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
@@ -20,20 +21,15 @@ setOptions({
   styleUrl: './show-task-progress-on-event.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-task-progress-on-event.html',
-  providers: [Notifications],
 })
 export class AppComponent {
-  elementRef: any;
-  constructor(private notify: Notifications) {}
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
 
   popupEventTitle: string | undefined;
-  popupEventProgress: number = 0;
+  popupEventProgress = 0;
   popupEventResource: string | undefined;
-
-  popupEventDates: any;
-  calendarSelectedDate: any = new Date();
+  popupEventDates: Array<MbscDateType | undefined> = [];
 
   isDraggingProgress: boolean = false;
 
@@ -88,6 +84,7 @@ export class AppComponent {
       progress: 0,
     },
   ];
+
   myResources = [
     {
       id: 'gro1',
@@ -158,7 +155,6 @@ export class AppComponent {
     },
   ];
 
-  tempEvent!: MbscCalendarEvent;
   calendarOptions: MbscEventcalendarOptions = {
     clickToCreate: true,
     dragToCreate: true,
@@ -194,14 +190,11 @@ export class AppComponent {
         this.popup.open();
       });
     },
-    onEventUpdated: () => {
-      // here you can update the event in your storage as well, after drag & drop or resize
-      // ...
-    },
   };
+
   popupHeaderText!: string;
   popupAnchor: HTMLElement | undefined;
-  popupAddButtons = [
+  popupAddButtons: Array<MbscPopupButton | 'cancel'> = [
     'cancel',
     {
       handler: () => {
@@ -212,7 +205,7 @@ export class AppComponent {
       cssClass: 'mbsc-popup-button-primary',
     },
   ];
-  popupEditButtons = [
+  popupEditButtons: Array<MbscPopupButton | 'cancel'> = [
     'cancel',
     {
       handler: () => {
@@ -223,7 +216,7 @@ export class AppComponent {
       cssClass: 'mbsc-popup-button-primary',
     },
   ];
-  popupButtons: any = [];
+  popupButtons: Array<MbscPopupButton | 'cancel'> = [];
   popupOptions: MbscPopupOptions = {
     display: 'bottom',
     contentPadding: false,
@@ -243,15 +236,8 @@ export class AppComponent {
       },
     },
   };
-  datePickerControls = ['calendar'];
-  datePickerResponsive: any = {
-    medium: {
-      controls: ['calendar'],
-      touchUi: false,
-    },
-  };
-  datetimePickerControls = ['datetime'];
-  datetimePickerResponsive = {
+
+  datePickerResponsive: { [key: string]: MbscDatepickerOptions } = {
     medium: {
       controls: ['calendar'],
       touchUi: false,
@@ -262,9 +248,12 @@ export class AppComponent {
     showRangeLabels: false,
     touchUi: true,
   };
+
   isEdit = false;
 
-  handleProgressArrowMouseDown(e: MouseEvent, event: MbscCalendarEvent): void {
+  tempEvent!: MbscCalendarEvent;
+
+  handleProgressArrowMouseDown(e: MouseEvent, event: MbscCalendarEvent) {
     e.stopPropagation();
 
     this.isDraggingProgress = true;
@@ -273,7 +262,7 @@ export class AppComponent {
     const progressBar = progressArrow.closest('.mds-progress-bar') as HTMLElement;
     const eventContainerWidth = progressBar.parentElement!.offsetWidth;
     const initialMouseX = e.pageX;
-    const initialProgress = parseFloat(progressBar.style.width.replace('%', ''));
+    const initialProgress = +progressBar.style.width.replace('%', '');
 
     let newProgress: number;
 
@@ -297,38 +286,27 @@ export class AppComponent {
     document.addEventListener('mouseup', handleMouseUp);
   }
 
-  loadPopupForm(event: MbscCalendarEvent): void {
+  loadPopupForm(event: MbscCalendarEvent) {
     this.popupEventTitle = event.title;
     this.popupEventDates = [event.start, event.end];
     this.popupEventResource = event['resource'] as string;
     this.popupEventProgress = event['progress'] || 0;
   }
 
-  ///
-  handleProgressChange(event: Event) {
-    this.popupEventProgress = parseInt((event.target as HTMLInputElement).value);
-  }
-
-  saveEvent(): void {
+  saveEvent() {
     this.tempEvent.title = this.popupEventTitle;
     this.tempEvent.start = this.popupEventDates[0];
     this.tempEvent.end = this.popupEventDates[1];
     this.tempEvent.resource = this.popupEventResource;
-    this.tempEvent['progress'] = this.popupEventProgress;
+    this.tempEvent['progress'] = +this.popupEventProgress;
 
     if (this.isEdit) {
       // update the event in the list
       this.myEvents = [...this.myEvents];
-      // here you can update the event in your storage as well
-      // ...
     } else {
       // add the new event to the list
       this.myEvents = [...this.myEvents, this.tempEvent];
-      // here you can add the event to your storage as well
-      // ...
     }
-    // navigate the calendar
-    this.calendarSelectedDate = this.popupEventDates[0];
     // close the popup
     this.popup.close();
   }
