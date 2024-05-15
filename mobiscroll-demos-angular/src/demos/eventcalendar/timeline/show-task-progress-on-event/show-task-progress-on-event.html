@@ -18,7 +18,7 @@
 <ng-template #customEventTemplate let-event>
   <div class="mds-progress-event" [style.background]="event.color">
     <div class="mds-progress-bar" [style.width]="(event.original.progress || 0) + '%'">
-      <div class="mds-progress-arrow" [attr.data-event-id]="event.original.id"></div>
+      <div class="mds-progress-arrow" [attr.data-event-id]="event.original.id" (mousedown)="handleProgressArrowMouseDown($event)"></div>
     </div>
     <div class="mds-progress-event-content">
       <div class="mds-progress-event-title">{{event.original.title}}</div>

@@ -23,21 +23,20 @@ setOptions({
   providers: [Notifications],
 })
 export class AppComponent {
+  elementRef: any;
   constructor(private notify: Notifications) {}
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
 
   popupEventTitle: string | undefined;
   popupEventProgress: number = 0;
+  popupEventResource: string | undefined;
 
   popupEventDates: any;
-  popupEventStatus = 'busy';
   calendarSelectedDate: any = new Date();
-  switchLabel: any = 'All-day';
-  tempColor = '';
-  selectedColor = '';
-  colorAnchor: HTMLElement | undefined;
-  colors = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '', '#009788', '#4baf4f', '#7e5d4e'];
+
+  isDraggingProgress: boolean = false;
+
   myEvents: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d+2'),
@@ -169,6 +168,7 @@ export class AppComponent {
       timeline: { type: 'month', eventList: true },
     },
     onEventClick: (args) => {
+      if (this.isDraggingProgress) return;
       this.isEdit = true;
       this.tempEvent = args.event;
       // fill popup form with event data
@@ -264,13 +264,55 @@ export class AppComponent {
   };
   isEdit = false;
 
+  handleProgressArrowMouseDown(e: MouseEvent): void {
+    const progressArrow = (e.target as HTMLElement).closest('.mds-progress-arrow');
+
+    if (!progressArrow) return;
+
+    e.stopPropagation();
+
+    this.isDraggingProgress = true;
+
+    const progressBar = progressArrow.closest('.mds-progress-bar') as HTMLElement;
+    const progressLabel = progressArrow.closest('.mds-progress-event')!.querySelector('.mds-progress-label') as HTMLElement;
+    const eventContainerWidth = progressBar.parentElement!.offsetWidth;
+    const initialMouseX = e.pageX;
+    const initialProgress = parseFloat(progressBar.style.width.replace('%', ''));
+
+    let newProgress: number;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const mouseXOffset = e.pageX - initialMouseX;
+
+      newProgress = Math.round(initialProgress + (mouseXOffset / eventContainerWidth) * 100);
+      newProgress = Math.max(0, Math.min(100, newProgress));
+
+      progressBar.style.width = `${newProgress}%`;
+      progressLabel.textContent = `${newProgress}%`;
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+
+      const eventId = progressArrow.getAttribute('data-event-id');
+      const eventToUpdate = this.myEvents.find((event) => event.id === eventId);
+      if (eventToUpdate) {
+        (eventToUpdate as MbscCalendarEvent)['progress'] = newProgress;
+      }
+
+      setTimeout(() => (this.isDraggingProgress = false), 100);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  }
+
   loadPopupForm(event: MbscCalendarEvent): void {
     this.popupEventTitle = event.title;
-
     this.popupEventDates = [event.start, event.end];
-
-    this.popupEventStatus = event['status'] || 'busy';
-    this.selectedColor = event.color || '';
+    this.popupEventResource = event['resource'] as string;
+    this.popupEventProgress = event['progress'] || 0;
   }
 
   ///
@@ -280,12 +322,11 @@ export class AppComponent {
 
   saveEvent(): void {
     this.tempEvent.title = this.popupEventTitle;
-
     this.tempEvent.start = this.popupEventDates[0];
     this.tempEvent.end = this.popupEventDates[1];
+    this.tempEvent.resource = this.popupEventResource;
+    this.tempEvent['progress'] = this.popupEventProgress;
 
-    this.tempEvent['status'] = this.popupEventStatus;
-    this.tempEvent.color = this.selectedColor;
     if (this.isEdit) {
       // update the event in the list
       this.myEvents = [...this.myEvents];
