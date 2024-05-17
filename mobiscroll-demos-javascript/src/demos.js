@@ -315,6 +315,9 @@ import Demo387 from './demos/pickers/select/themes-ios-material-windows/themes-i
 import Demo276 from './demos/pickers/select/event-hooks/event-hooks';
 import Demo471 from './demos/pickers/select/localization/localization';
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
+// the generated id was 741 which already exists on prod, changed it to 744 for now
+import Demo744 from './demos/eventcalendar/timeline/variable-event-height/variable-event-height';
+import Demo745 from './demos/eventcalendar/timeline/check-list-tasks-within-events/check-list-tasks-within-events';
 
 export const demos = [
   {
@@ -930,6 +933,7 @@ export const demos = [
               { name: 'Weekly meal planner', unique: 'meal-planner', component: Demo628 },
               { name: 'Dynamically color & invalidate', unique: 'dynamically-color-and-invalidate', component: Demo698 },
               { name: 'Multiple classroom scheduling', unique: 'multi-classroom-timetable', component: Demo717 },
+              { name: 'Sub-tasks and lists', unique: 'check-list-tasks-within-events', component: Demo745 },
               { name: 'Single resource timetable', unique: 'monthly-timetable-vertical-days-horizontal-times', component: Demo716 },
               { name: 'Compare resources', unique: 'compare-resources-fixed-at-top', component: Demo731 },
               { name: 'Assign/unassign work orders', unique: 'assign-unassign-work-orders-fixed-top-row', component: Demo732 },
@@ -946,6 +950,7 @@ export const demos = [
               { name: 'Event buffer', unique: 'event-buffer', component: Demo739 },
               { name: 'View with custom range picker', unique: 'custom-range-view', component: Demo697 },
               { name: 'Equal row height', unique: 'timeline-resource-height', component: Demo608 },
+              { name: 'Variable event height', unique: 'variable event height', component: Demo744 },
               { name: 'Daily event summary', unique: 'event-listing', component: Demo620 },
               { name: 'Day, week, work week', unique: 'switching-day-week-work-week-timeline', component: Demo606 },
               { name: 'Timezones', unique: 'setting-the-timezone', component: Demo653 },

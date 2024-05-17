@@ -59,7 +59,6 @@ export default {
               var ev = args.event;
               mobiscroll.prompt({
                 title: 'Add new task to ' + ev.title,
-                inputType: 'text',
                 callback: function (value) {
                   if (value) {
                     var updatedTasks = ev.tasks.slice();

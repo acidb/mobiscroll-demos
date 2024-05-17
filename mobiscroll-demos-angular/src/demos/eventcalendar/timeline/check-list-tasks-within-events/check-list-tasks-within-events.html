@@ -1,0 +1,24 @@
+<mbsc-eventcalendar
+  class="mds-tasks-calendar"
+  [options]="calendarOptions"
+  [data]="myEvents"
+  [resources]="myResources"
+  [scheduleEventContentTemplate]="eventTemp"
+  [resourceTemplate]="resourceTemp"
+>
+  <!-- (onEventClick)="handleEventClick($event)" -->
+  <ng-template #eventTemp let-event>
+    <div class="mds-tasks-event-title">{{event.title}}</div>
+    <div class="mds-tasks-event-subtitle">Task list</div>
+    <div class="mds-tasks-event-list">
+      <div *ngFor="let task of event.original!.tasks;" class="mds-tasks-event-list-item">{{task}}</div>
+      <div class="mds-tasks-event-list-item mds-tasks-event-add" id="demo-check-list-tasks-add-button" (click)="addTask(event)">
+        + Add task
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #resourceTemp let-resource>
+    <div class="mds-tasks-resource-name">{{resource.name}}</div>
+    <div class="mds-tasks-resource-description">{{resource.description}}</div>
+  </ng-template>
+</mbsc-eventcalendar>
