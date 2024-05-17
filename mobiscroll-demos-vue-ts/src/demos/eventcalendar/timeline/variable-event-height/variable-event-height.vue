@@ -10,7 +10,7 @@ const myView: MbscEventcalendarView = {
     type: 'week',
     eventHeight: 'variable',
     startTime: '07:00',
-    endTime: '22:00'
+    endTime: '21:00'
   }
 }
 

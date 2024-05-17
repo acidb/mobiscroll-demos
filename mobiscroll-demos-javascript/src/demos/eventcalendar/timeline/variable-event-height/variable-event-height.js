@@ -11,10 +11,10 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-variable-event-height', {
       view: {
         timeline: {
-          type: 'week', //'day'
+          type: 'week',
           eventHeight: 'variable',
           startTime: '07:00',
-          endTime: '22:00',
+          endTime: '21:00',
         },
       },
       dragToCreate: false,
