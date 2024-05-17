@@ -232,6 +232,7 @@ import Demo716 from './demos/eventcalendar/timeline/monthly-timetable-vertical-d
 import Demo731 from './demos/eventcalendar/timeline/compare-resources-fixed-at-top/compare-resources-fixed-at-top.vue'
 import Demo732 from './demos/eventcalendar/timeline/assign-unassign-work-orders-fixed-top-row/assign-unassign-work-orders-fixed-top-row.vue'
 import Demo735 from './demos/eventcalendar/timeline/flight-scheduling-two-synchronized-timelines/flight-scheduling-two-synchronized-timelines.vue'
+import Demo744 from './demos/eventcalendar/timeline/show-task-progress-on-event/show-task-progress-on-event.vue'
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline.vue'
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution.vue'
 import Demo734 from './demos/eventcalendar/timeline/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events.vue'
@@ -315,7 +316,7 @@ import Demo276 from './demos/pickers/select/event-hooks/event-hooks.vue'
 import Demo471 from './demos/pickers/select/localization/localization.vue'
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left.vue'
 // the generated id was 741 which already exists on prod, changed it to 744 for now
-import Demo744 from './demos/eventcalendar/timeline/variable-event-height/variable-event-height.vue'
+import Demo746 from './demos/eventcalendar/timeline/variable-event-height/variable-event-height.vue'
 import Demo745 from './demos/eventcalendar/timeline/check-list-tasks-within-events/check-list-tasks-within-events.vue'
 
 export const demos = [
@@ -1364,6 +1365,11 @@ export const demos = [
                 name: 'Flight scheduling with two timelines',
                 unique: 'flight-scheduling-two-synchronized-timelines',
                 component: Demo735
+              },
+              {
+                name: 'Display task progress',
+                unique: 'show-task-progress-on-event',
+                component: Demo744
               }
             ]
           },
@@ -1396,7 +1402,7 @@ export const demos = [
               {
                 name: 'Variable event height',
                 unique: 'variable event height',
-                component: Demo744
+                component: Demo746
               },
               { name: 'Daily event summary', unique: 'event-listing', component: Demo620 },
               {
