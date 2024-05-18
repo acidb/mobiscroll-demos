@@ -116,7 +116,7 @@ export default {
         // fill popup with a new event data
         $title.mobiscroll('getInst').value = tempEvent.title;
         $description.mobiscroll('getInst').value = '';
-        $allDay.mobiscroll('getInst').checked = tempEvent.allDay;
+        $allDay.mobiscroll('getInst').checked = false;
         range.setVal([tempEvent.start, tempEvent.end]);
         $statusBusy.mobiscroll('getInst').checked = true;
         range.setOptions({
