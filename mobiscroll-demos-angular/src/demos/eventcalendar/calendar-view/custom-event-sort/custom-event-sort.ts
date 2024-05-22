@@ -22,6 +22,7 @@ export class AppComponent {
       color: '#e7b300',
       allDay: true,
       accepted: false,
+      order: 1,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -29,6 +30,7 @@ export class AppComponent {
       color: '#00ca10',
       allDay: true,
       accepted: true,
+      order: 2,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -36,6 +38,7 @@ export class AppComponent {
       color: '#e7b300',
       allDay: true,
       accepted: false,
+      order: 1,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -43,6 +46,7 @@ export class AppComponent {
       color: '#e7b300',
       allDay: true,
       accepted: false,
+      order: 1,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -50,6 +54,7 @@ export class AppComponent {
       color: '#00ca10',
       allDay: true,
       accepted: true,
+      order: 2,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -57,6 +62,7 @@ export class AppComponent {
       color: '#e7b300',
       allDay: true,
       accepted: false,
+      order: 1,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -64,6 +70,7 @@ export class AppComponent {
       color: '#e7b300',
       allDay: true,
       accepted: false,
+      order: 1,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -71,6 +78,7 @@ export class AppComponent {
       color: '#00ca10',
       allDay: true,
       accepted: true,
+      order: 2,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -78,6 +86,7 @@ export class AppComponent {
       color: '#00ca10',
       allDay: true,
       accepted: true,
+      order: 2,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -85,6 +94,7 @@ export class AppComponent {
       color: '#e7b300',
       allDay: true,
       accepted: false,
+      order: 1,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -92,6 +102,7 @@ export class AppComponent {
       color: '#00ca10',
       allDay: true,
       accepted: true,
+      order: 2,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -99,6 +110,7 @@ export class AppComponent {
       color: '#00ca10',
       allDay: true,
       accepted: true,
+      order: 2,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 3),
@@ -106,6 +118,7 @@ export class AppComponent {
       color: '#00ca10',
       allDay: true,
       accepted: true,
+      order: 2,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -113,6 +126,7 @@ export class AppComponent {
       color: '#e7b300',
       allDay: true,
       accepted: false,
+      order: 1,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -120,6 +134,7 @@ export class AppComponent {
       color: '#00ca10',
       allDay: true,
       accepted: true,
+      order: 2,
     },
     {
       start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -127,6 +142,7 @@ export class AppComponent {
       color: '#e7b300',
       allDay: true,
       accepted: false,
+      order: 1,
     },
   ];
 
@@ -135,8 +151,4 @@ export class AppComponent {
       type: 'week',
     },
   };
-
-  orderMyEvents(event: MbscCalendarEvent) {
-    return event['accepted'] ? 1 : -1;
-  }
 }
