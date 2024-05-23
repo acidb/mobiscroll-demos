@@ -26,6 +26,7 @@ export default {
     var colorSelect = document.getElementById('event-color-picker');
     var pickedColor = document.getElementById('event-color');
     var colorElms = document.querySelectorAll('.crud-color-c');
+    var travelTime = document.getElementById('travel-time-selection');
     var datePickerResponsive = {
       medium: {
         controls: ['calendar'],
@@ -46,6 +47,7 @@ export default {
         title: "Lunch @ Butcher's",
         description: '',
         allDay: false,
+        bufferBefore: 15,
         free: true,
         resource: 3,
       },
@@ -53,9 +55,10 @@ export default {
         id: 2,
         start: 'dyndatetime(y,m,d,14)',
         end: 'dyndatetime(y,m,d,16)',
-        title: 'General orientation',
+        title: 'Conference',
         description: '',
         allDay: false,
+        bufferBefore: 30,
         free: false,
         resource: 5,
       },
@@ -63,9 +66,10 @@ export default {
         id: 3,
         start: 'dyndatetime(y,m,d,18)',
         end: 'dyndatetime(y,m,d,22)',
-        title: 'Dexter BD',
+        title: 'Site Visit',
         description: '',
         allDay: false,
+        bufferBefore: 60,
         free: true,
         resource: 4,
       },
@@ -125,6 +129,7 @@ export default {
             text: 'Add',
             keyCode: 'enter',
             handler: function () {
+              tempEvent.bufferBefore = travelTime.value;
               calendar.updateEvent(tempEvent);
               deleteEvent = false;
               // navigate the calendar to the correct view
@@ -139,7 +144,7 @@ export default {
       // fill popup with a new event data
       mobiscroll.getInst(titleInput).value = tempEvent.title;
       mobiscroll.getInst(descriptionTextarea).value = '';
-      mobiscroll.getInst(allDaySwitch).checked = tempEvent.allDay;
+      mobiscroll.getInst(allDaySwitch).checked = false.allDay;
       range.setVal([tempEvent.start, tempEvent.end]);
       mobiscroll.getInst(busySegmented).checked = true;
       range.setOptions({
@@ -147,6 +152,7 @@ export default {
         responsive: tempEvent.allDay ? datePickerResponsive : datetimePickerResponsive,
       });
       selectColor(getResource(tempEvent.resource).color, true);
+      travelTime.value = 0;
 
       // set anchor for the popup
       popup.setOptions({ anchor: elm });
@@ -178,6 +184,7 @@ export default {
                 title: titleInput.value,
                 description: descriptionTextarea.value,
                 allDay: mobiscroll.getInst(allDaySwitch).checked,
+                bufferBefore: travelTime.value,
                 start: date[0],
                 end: date[1],
                 free: mobiscroll.getInst(freeSegmented).checked,
@@ -202,6 +209,7 @@ export default {
       mobiscroll.getInst(allDaySwitch).checked = ev.allDay || false;
       range.setVal([ev.start, ev.end]);
       selectColor(ev.color || getResource(ev.resource).color, true);
+      travelTime.value = ev.bufferBefore !== undefined ? ev.bufferBefore : 0;
 
       if (ev.free) {
         mobiscroll.getInst(freeSegmented).checked = true;
@@ -290,6 +298,15 @@ export default {
 
     allDaySwitch.addEventListener('change', function () {
       var checked = this.checked;
+
+      var travelTimeGroup = document.querySelector('#travel-time-group');
+      if (checked) {
+        travelTimeGroup.style.display = 'none';
+        travelTime.value = 0;
+      } else {
+        travelTimeGroup.style.display = 'flex';
+      }
+
       // change range settings based on the allDay
       range.setOptions({
         controls: checked ? ['date'] : ['datetime'],
@@ -438,6 +455,17 @@ export default {
         <label>
             Ends
             <input mbsc-input id="end-input" />
+        </label>
+        <label id="travel-time-group">
+            <select data-label="Travel time" mbsc-dropdown id="travel-time-selection">
+                <option value="0">None</option>
+                <option value="5">5 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="90">1.5 hours</option>
+                <option value="120">2 hours</option>
+            </select>
         </label>
         <div id="event-date"></div>
         <div id="event-color-picker" class="event-color-c">
