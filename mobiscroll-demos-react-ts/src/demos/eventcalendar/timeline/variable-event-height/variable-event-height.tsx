@@ -78,8 +78,7 @@ function App() {
 
   useEffect(() => {
     getJson(
-      //TODO change the link to trial
-      'https://trialdev.mobiscroll.com/events-variable-height/',
+      'https://trial.mobiscroll.com/events-variable-height/',
       (events: MbscCalendarEvent[]) => {
         setEvents(events);
       },

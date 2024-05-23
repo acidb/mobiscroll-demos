@@ -48,8 +48,7 @@ const myResources = ref([
 
 onMounted(() => {
   getJson(
-    //TODO change the link to trial
-    'https://trialdev.mobiscroll.com/events-variable-height/',
+    'https://trial.mobiscroll.com/events-variable-height/',
     (events) => {
       myEvents.value = events
     },

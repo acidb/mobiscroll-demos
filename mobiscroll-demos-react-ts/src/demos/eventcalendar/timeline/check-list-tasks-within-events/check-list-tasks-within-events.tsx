@@ -4,7 +4,6 @@ import {
   MbscCalendarEvent,
   MbscCalendarEventData,
   MbscEventcalendarView,
-  MbscEventClickEvent,
   MbscResource,
   Prompt,
   setOptions,
@@ -79,6 +78,13 @@ function App() {
     [],
   );
 
+  const addTask = useCallback((event: MbscCalendarEventData) => {
+    const ev = event.original!;
+    setTempEvent(ev);
+    setPromptTitle('Add new task to ' + ev.title);
+    setPromptOpen(true);
+  }, []);
+
   const handleDefaultEvent = useCallback(
     () => ({
       title: 'New Event',
@@ -96,6 +102,7 @@ function App() {
     ),
     [],
   );
+
   const customScheduleEventContent = useCallback(
     (event: MbscCalendarEventData) => (
       <>
@@ -107,17 +114,13 @@ function App() {
               {task}
             </div>
           ))}
-          <div
-            className="mds-tasks-event-list-item mds-tasks-event-add"
-            id="demo-check-list-tasks-add-button"
-            onClick={() => addTask(event)}
-          >
+          <div className="mds-tasks-event-list-item mds-tasks-event-add" onClick={() => addTask(event)}>
             + Add task
           </div>
         </div>
       </>
     ),
-    [],
+    [addTask],
   );
 
   const handleClosePrompt = useCallback(
@@ -140,17 +143,9 @@ function App() {
     setToastOpen(false);
   }, []);
 
-  const addTask = useCallback((event: MbscCalendarEventData) => {
-    const ev = event.original!;
-    setTempEvent(ev);
-    setPromptTitle('Add new task to ' + ev.title);
-    setPromptOpen(true);
-  }, []);
-
   useEffect(() => {
     getJson(
-      // TODO CHANGE trialdev to trial
-      'https://trialdev.mobiscroll.com/events-check-list-tasks/',
+      'https://trial.mobiscroll.com/events-check-list-tasks/',
       (events: MbscCalendarEvent[]) => {
         setEvents(events);
       },

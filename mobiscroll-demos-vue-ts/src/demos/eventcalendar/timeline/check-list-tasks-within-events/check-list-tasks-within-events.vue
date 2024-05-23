@@ -77,16 +77,16 @@ function handleDefaultEvent() {
 
 function handleClosePrompt(value: string | null) {
   if (value) {
-    tempEvent.value.tasks.push(value)
+    tempEvent.value!.tasks.push(value)
     const index = myEvents.value.findIndex(
-      (event: MbscCalendarEvent) => event.id === tempEvent.value.id
+      (event: MbscCalendarEvent) => event.id === tempEvent.value!.id
     )
     const newEventList = [...myEvents.value]
-    newEventList.splice(index, 1, tempEvent.value)
+    newEventList.splice(index, 1, tempEvent.value!)
     myEvents.value = newEventList
   }
   isPromptOpen.value = false
-  toastMessage.value = 'Tasks updated for ' + tempEvent.value.title
+  toastMessage.value = 'Tasks updated for ' + tempEvent.value!.title
   isToastOpen.value = true
 }
 
@@ -95,7 +95,7 @@ function handleCloseToast() {
 }
 
 function addTask(event: MbscCalendarEventData) {
-  const ev = event.original
+  const ev = event.original!
   tempEvent.value = ev
   promptTitle.value = 'Add new task to ' + ev.title
   isPromptOpen.value = true
@@ -103,8 +103,7 @@ function addTask(event: MbscCalendarEventData) {
 
 onMounted(() => {
   getJson(
-    //TODO change the link to trial
-    'https://trialdev.mobiscroll.com/events-check-list-tasks/',
+    'https://trial.mobiscroll.com/events-check-list-tasks/',
     (events: MbscCalendarEvent[]) => {
       myEvents.value = events
     },
@@ -136,11 +135,7 @@ onMounted(() => {
         <div class="mds-tasks-event-list-item" v-for="task in event.original.tasks" :key="task">
           {{ task }}
         </div>
-        <div
-          class="mds-tasks-event-list-item mds-tasks-event-add"
-          id="demo-check-list-tasks-add-button"
-          @click="addTask(event)"
-        >
+        <div class="mds-tasks-event-list-item mds-tasks-event-add" @click="addTask(event)">
           + Add task
         </div>
       </div>

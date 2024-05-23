@@ -163,10 +163,10 @@ const myResponsive: any = {
     touchUi: false
   }
 }
-const popupEventTitle = ref<string>('')
+const popupEventTitle = ref<string | undefined>('')
 const popupEventDates = ref<any>([])
 const popupEventProgress = ref<number>(0)
-const popupEventResource = ref<string>('')
+const popupEventResource = ref<string | number | (string | number)[] | undefined>('')
 
 const popupAnchor = ref<any>(null)
 const popupButtons = ref<any>([])
@@ -207,7 +207,7 @@ function createAddPopup(event: MbscCalendarEvent, target: any) {
       keyCode: 'enter',
       handler: () => {
         const newEvent: MbscCalendarEvent = {
-          id: addedEvent.id,
+          id: addedEvent!.id,
           title: popupEventTitle.value,
           start: popupEventDates.value[0],
           end: popupEventDates.value[1],
@@ -243,7 +243,7 @@ function createEditPopup(event: MbscCalendarEvent, target: any) {
       text: 'Save',
       keyCode: 'enter',
       handler: () => {
-        const updatedEvent: MbscCalendarEvent = editedEvent
+        const updatedEvent = editedEvent as MbscCalendarEvent
         updatedEvent.title = popupEventTitle.value
         updatedEvent.start = popupEventDates.value[0]
         updatedEvent.end = popupEventDates.value[1]
@@ -285,8 +285,10 @@ function handlePopupClose() {
   isPopupOpen.value = false
 }
 
-const handleProgressArrowMouseDown = (e) => {
-  const progressArrow = e.target.closest('.mds-progress-arrow')
+const handleProgressArrowMouseDown = (e: MouseEvent) => {
+  const progressArrow = (e.target as HTMLDivElement).closest(
+    '.mds-progress-arrow'
+  ) as HTMLDivElement
 
   if (!progressArrow) return
 
@@ -294,17 +296,17 @@ const handleProgressArrowMouseDown = (e) => {
 
   isDraggingProgress.value = true
 
-  const progressBar = progressArrow.closest('.mds-progress-bar')
+  const progressBar = progressArrow.closest('.mds-progress-bar') as HTMLDivElement
   const progressLabel = progressArrow
-    .closest('.mds-progress-event')
-    .querySelector('.mds-progress-label')
-  const eventContainerWidth = progressBar.parentElement.offsetWidth
+    .closest('.mds-progress-event')!
+    .querySelector('.mds-progress-label') as HTMLDivElement
+  const eventContainerWidth = progressBar.parentElement!.offsetWidth
   const initialMouseX = e.pageX
   const initialProgress = parseFloat(progressBar.style.width.replace('%', ''))
 
-  let newProgress
+  let newProgress: number
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: MouseEvent) => {
     const mouseXOffset = e.pageX - initialMouseX
 
     newProgress = Math.round(initialProgress + (mouseXOffset / eventContainerWidth) * 100)
@@ -319,7 +321,7 @@ const handleProgressArrowMouseDown = (e) => {
     document.removeEventListener('mouseup', handleMouseUp)
 
     const eventId = progressArrow.dataset.eventId
-    const eventToUpdate = myEvents.value.find((event) => event.id === eventId)
+    const eventToUpdate = myEvents.value.find((event) => event.id === eventId)!
     eventToUpdate.progress = newProgress
 
     setTimeout(() => (isDraggingProgress.value = false), 100)
@@ -333,7 +335,7 @@ const handleProgressArrowMouseDown = (e) => {
 <template>
   <div @mousedown.capture="handleProgressArrowMouseDown">
     <MbscEventcalendar
-      class="mds-progress-calendar"
+      cssClass="mds-progress-calendar"
       :view="myView"
       :data="myEvents"
       :resources="myResources"

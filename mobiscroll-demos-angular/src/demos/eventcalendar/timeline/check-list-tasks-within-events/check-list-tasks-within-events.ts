@@ -107,8 +107,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //TODO change the link to trial
-    this.http.jsonp<MbscCalendarEvent[]>('https://trialdev.mobiscroll.com/events-check-list-tasks/', 'callback').subscribe((resp) => {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events-check-list-tasks/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
   }

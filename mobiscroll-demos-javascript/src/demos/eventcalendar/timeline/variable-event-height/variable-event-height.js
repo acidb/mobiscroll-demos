@@ -65,9 +65,8 @@ export default {
       ],
     });
 
-    // TODO CHANGE trialdev to trial
     mobiscroll.getJson(
-      'https://trialdev.mobiscroll.com/events-variable-height/',
+      'https://trial.mobiscroll.com/events-variable-height/',
       function (events) {
         inst.setEvents(events);
       },

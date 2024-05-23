@@ -115,9 +115,8 @@ export default {
         })
         .mobiscroll('getInst');
 
-      // TODO CHANGE trialdev to trial
       $.getJSON(
-        'https://trialdev.mobiscroll.com/events-check-list-tasks/?callback=?',
+        'https://trial.mobiscroll.com/events-check-list-tasks/?callback=?',
         function (events) {
           inst.setEvents(events);
         },

@@ -1,5 +1,5 @@
 import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './variable-event-height.css';
 
 setOptions({
@@ -70,8 +70,7 @@ function App() {
 
   useEffect(() => {
     getJson(
-      //TODO change the link to trial
-      'https://trialdev.mobiscroll.com/events-variable-height/',
+      'https://trial.mobiscroll.com/events-variable-height/',
       (events) => {
         setEvents(events);
       },

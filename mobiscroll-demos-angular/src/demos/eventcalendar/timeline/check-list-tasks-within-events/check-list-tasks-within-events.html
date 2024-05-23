@@ -12,9 +12,7 @@
     <div class="mds-tasks-event-subtitle">Task list</div>
     <div class="mds-tasks-event-list">
       <div *ngFor="let task of event.original!.tasks;" class="mds-tasks-event-list-item">{{task}}</div>
-      <div class="mds-tasks-event-list-item mds-tasks-event-add" id="demo-check-list-tasks-add-button" (click)="addTask(event)">
-        + Add task
-      </div>
+      <div class="mds-tasks-event-list-item mds-tasks-event-add" (click)="addTask(event)">+ Add task</div>
     </div>
   </ng-template>
   <ng-template #resourceTemp let-resource>

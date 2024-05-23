@@ -95,8 +95,7 @@ function addTask(event) {
 
 onMounted(() => {
   getJson(
-    //TODO change the link to trial
-    'https://trialdev.mobiscroll.com/events-check-list-tasks/',
+    'https://trial.mobiscroll.com/events-check-list-tasks/',
     (events) => {
       myEvents.value = events
     },
@@ -128,11 +127,7 @@ onMounted(() => {
         <div class="mds-tasks-event-list-item" v-for="task in event.original.tasks" :key="task">
           {{ task }}
         </div>
-        <div
-          class="mds-tasks-event-list-item mds-tasks-event-add"
-          id="demo-check-list-tasks-add-button"
-          @click="addTask(event)"
-        >
+        <div class="mds-tasks-event-list-item mds-tasks-event-add" @click="addTask(event)">
           + Add task
         </div>
       </div>

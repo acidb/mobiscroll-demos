@@ -327,7 +327,7 @@ const handleProgressArrowMouseDown = (e) => {
 <template>
   <div @mousedown.capture="handleProgressArrowMouseDown">
     <MbscEventcalendar
-      class="mds-progress-calendar"
+      cssClass="mds-progress-calendar"
       :view="myView"
       :data="myEvents"
       :resources="myResources"

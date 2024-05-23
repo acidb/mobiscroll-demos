@@ -49,8 +49,7 @@ const myResources = ref<MbscResource[]>([
 
 onMounted(() => {
   getJson(
-    //TODO change the link to trial
-    'https://trialdev.mobiscroll.com/events-variable-height/',
+    'https://trial.mobiscroll.com/events-variable-height/',
     (events: MbscCalendarEvent[]) => {
       myEvents.value = events
     },

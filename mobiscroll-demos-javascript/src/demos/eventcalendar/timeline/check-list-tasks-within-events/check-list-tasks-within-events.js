@@ -110,15 +110,13 @@ export default {
       ],
     });
 
-    // TODO CHANGE trialdev to trial
     mobiscroll.getJson(
-      'https://trialdev.mobiscroll.com/events-check-list-tasks/',
+      'https://trial.mobiscroll.com/events-check-list-tasks/',
       function (events) {
         inst.setEvents(events);
       },
       'jsonp',
     );
-    // });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
