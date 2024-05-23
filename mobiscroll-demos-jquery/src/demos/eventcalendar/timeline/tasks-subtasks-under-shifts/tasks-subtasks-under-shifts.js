@@ -80,6 +80,7 @@ export default {
               var overlapShift = overlapEvents.filter(function (e) {
                 return e.tasks !== undefined && e.resource === event.resource;
               });
+
               if (overlapShift.length > 1) {
                 inst.updateEvent(oldEvent);
                 toast({ message: 'Shifts cannot overlap' });
@@ -92,11 +93,11 @@ export default {
                   return e.id === el;
                 });
                 // todo refactor
-                var newStart = new Date(Math.max(+new Date(task.start) + diff, +new Date(event.start)));
-                var newEnd = new Date(Math.min(+newStart + +new Date(task.end) - +new Date(task.start), +new Date(event.end)));
-                task.start = newStart;
-                task.end = newEnd;
                 if (isMove || (isResize && !isEventBetweenShift(event, task))) {
+                  var newStart = new Date(Math.max(+new Date(task.start) + diff, +new Date(event.start)));
+                  var newEnd = new Date(Math.min(+newStart + +new Date(task.end) - +new Date(task.start), +new Date(event.end)));
+                  task.start = newStart;
+                  task.end = newEnd;
                   inst.updateEvent(task);
                 }
               });
