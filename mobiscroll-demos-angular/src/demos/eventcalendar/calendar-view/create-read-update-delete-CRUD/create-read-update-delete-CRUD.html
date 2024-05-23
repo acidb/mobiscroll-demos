@@ -16,6 +16,19 @@
     ></mbsc-datepicker>
     <mbsc-input #startInput label="Starts"></mbsc-input>
     <mbsc-input #endInput label="Ends"></mbsc-input>
+
+    <div id="travel-time-group" *ngIf="!popupEventAllDay">
+      <mbsc-dropdown [(ngModel)]="popupTravelTime" label="Travel time" id="travel-time-selection">
+        <option value="0">None</option>
+        <option value="5">5 minutes</option>
+        <option value="15">15 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="60">1 hour</option>
+        <option value="90">1.5 hours</option>
+        <option value="120">2 hours</option>
+      </mbsc-dropdown>
+    </div>
+
     <div class="event-color-c" (click)="openColorPicker($event)">
       <div class="event-color-label">Color</div>
       <div class="event-color" [ngStyle]="{background: selectedColor}"></div>

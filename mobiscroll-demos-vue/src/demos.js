@@ -231,13 +231,16 @@ import Demo717 from './demos/eventcalendar/timeline/multi-classroom-timetable/mu
 import Demo716 from './demos/eventcalendar/timeline/monthly-timetable-vertical-days-horizontal-times/monthly-timetable-vertical-days-horizontal-times.vue';
 import Demo731 from './demos/eventcalendar/timeline/compare-resources-fixed-at-top/compare-resources-fixed-at-top.vue';
 import Demo732 from './demos/eventcalendar/timeline/assign-unassign-work-orders-fixed-top-row/assign-unassign-work-orders-fixed-top-row.vue';
+import Demo745 from './demos/eventcalendar/timeline/check-list-tasks-within-events/check-list-tasks-within-events.vue';
 import Demo735 from './demos/eventcalendar/timeline/flight-scheduling-two-synchronized-timelines/flight-scheduling-two-synchronized-timelines.vue';
+import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/show-task-progress-on-event.vue';
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline.vue';
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution.vue';
 import Demo734 from './demos/eventcalendar/timeline/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events.vue';
 import Demo739 from './demos/eventcalendar/timeline/event-buffer/event-buffer.vue';
 import Demo697 from './demos/eventcalendar/timeline/custom-range-view/custom-range-view.vue';
 import Demo608 from './demos/eventcalendar/timeline/timeline-resource-height/timeline-resource-height.vue';
+import Demo744 from './demos/eventcalendar/timeline/variable-event-height/variable-event-height.vue';
 import Demo620 from './demos/eventcalendar/timeline/event-listing/event-listing.vue';
 import Demo606 from './demos/eventcalendar/timeline/switching-day-week-work-week-timeline/switching-day-week-work-week-timeline.vue';
 import Demo653 from './demos/eventcalendar/timeline/setting-the-timezone/setting-the-timezone.vue';
@@ -256,6 +259,7 @@ import Demo726 from './demos/eventcalendar/timeline/drag-drop-between-calendar-i
 import Demo728 from './demos/eventcalendar/timeline/prevent-double-booking-events/prevent-double-booking-events.vue';
 import Demo607 from './demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer.vue';
 import Demo625 from './demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy.vue';
+import Demo747 from './demos/eventcalendar/timeline/show-summaries-aggregates-for-resource-groups/show-summaries-aggregates-for-resource-groups.vue';
 import Demo720 from './demos/eventcalendar/timeline/resource-data-structure/resource-data-structure.vue';
 import Demo666 from './demos/eventcalendar/timeline/event-data-structure/event-data-structure.vue';
 import Demo706 from './demos/eventcalendar/timeline/connecting-linking-events-arrows/connecting-linking-events-arrows.vue';
@@ -932,7 +936,9 @@ export const demos = [
               { name: 'Single resource timetable', unique: 'monthly-timetable-vertical-days-horizontal-times', component: Demo716 },
               { name: 'Compare resources', unique: 'compare-resources-fixed-at-top', component: Demo731 },
               { name: 'Assign/unassign work orders', unique: 'assign-unassign-work-orders-fixed-top-row', component: Demo732 },
+              { name: 'Sub-tasks and lists', unique: 'check-list-tasks-within-events', component: Demo745 },
               { name: 'Flight scheduling with two timelines', unique: 'flight-scheduling-two-synchronized-timelines', component: Demo735 },
+              { name: 'Display task progress', unique: 'show-task-progress-on-event', component: Demo746 },
             ],
           },
           {
@@ -945,6 +951,7 @@ export const demos = [
               { name: 'Event buffer', unique: 'event-buffer', component: Demo739 },
               { name: 'View with custom range picker', unique: 'custom-range-view', component: Demo697 },
               { name: 'Equal row height', unique: 'timeline-resource-height', component: Demo608 },
+              { name: 'Variable event height', unique: 'variable-event-height', component: Demo744 },
               { name: 'Daily event summary', unique: 'event-listing', component: Demo620 },
               { name: 'Day, week, work week', unique: 'switching-day-week-work-week-timeline', component: Demo606 },
               { name: 'Timezones', unique: 'setting-the-timezone', component: Demo653 },
@@ -981,6 +988,7 @@ export const demos = [
             items: [
               { name: 'Resource grid', unique: 'timeline-resource-details-side-panel-footer', component: Demo607 },
               { name: 'Resource grouping & hierarchy', unique: 'resource-grouping-hierarchy', component: Demo625 },
+              { name: 'Resource group summaries', unique: 'show-summaries-aggregates-for-resource-groups', component: Demo747 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
             ],
           },

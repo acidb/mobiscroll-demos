@@ -31,6 +31,7 @@ export class AppComponent {
   popupEventTitle: string | undefined;
   popupEventDescription = '';
   popupEventAllDay = true;
+  popupTravelTime = 0;
   popupEventDates: any;
   popupEventStatus = 'busy';
   calendarSelectedDate: any = new Date();
@@ -47,6 +48,7 @@ export class AppComponent {
       title: "Lunch @ Butcher's",
       description: '',
       allDay: false,
+      bufferBefore: 15,
       free: true,
       resource: 3,
     },
@@ -54,9 +56,10 @@ export class AppComponent {
       id: 2,
       start: dyndatetime('y,m,d,14'),
       end: dyndatetime('y,m,d,16'),
-      title: 'General orientation',
+      title: 'Conference',
       description: '',
       allDay: false,
+      bufferBefore: 30,
       free: false,
       resource: 5,
     },
@@ -64,9 +67,10 @@ export class AppComponent {
       id: 3,
       start: dyndatetime('y,m,d,18'),
       end: dyndatetime('y,m,d,22'),
-      title: 'Dexter BD',
+      title: 'Site Visit',
       description: '',
       allDay: false,
+      bufferBefore: 60,
       free: true,
       resource: 4,
     },
@@ -248,6 +252,7 @@ export class AppComponent {
     this.popupEventDescription = event['description'];
     this.popupEventDates = [event.start, event.end];
     this.popupEventAllDay = event.allDay || false;
+    this.popupTravelTime = event.bufferBefore || 0;
     this.popupEventStatus = event['status'] || 'busy';
   }
   saveEvent(): void {
@@ -256,6 +261,7 @@ export class AppComponent {
     this.tempEvent.start = this.popupEventDates[0];
     this.tempEvent.end = this.popupEventDates[1];
     this.tempEvent.allDay = this.popupEventAllDay;
+    this.tempEvent.bufferBefore = this.popupTravelTime;
     this.tempEvent['status'] = this.popupEventStatus;
     this.tempEvent.color = this.selectedColor;
     if (this.isEdit) {
