@@ -248,7 +248,7 @@ export default {
             {
               id: 'jb-4',
               start: 'dyndatetime(y,m,d,17)',
-              end: 'dyndatetime(y,m,d,18  )',
+              end: 'dyndatetime(y,m,d,18)',
               title: 'Attend Stand-Up Meeting',
               resource: 2,
               shift: 2,
@@ -268,7 +268,7 @@ export default {
             },
             {
               id: 'ol-1',
-              start: 'dyndatetime(y,m,d,5 )',
+              start: 'dyndatetime(y,m,d,5)',
               end: 'dyndatetime(y,m,d,8)',
               title: 'UI/UX Design Implementation',
               resource: 3,
@@ -370,7 +370,7 @@ export default {
             },
             {
               id: 'om-7',
-              start: 'dyndatetime(y,m,d+1,15, 15)',
+              start: 'dyndatetime(y,m,d+1,15,15)',
               end: 'dyndatetime(y,m,d+1,19)',
               title: 'Optimize Code',
               resource: 3,
@@ -473,7 +473,7 @@ export default {
             },
             {
               id: 'jb-8',
-              start: 'dyndatetime(y,m,d+1,11, )',
+              start: 'dyndatetime(y,m,d+1,11)',
               end: 'dyndatetime(y,m,d+1,13)',
               title: 'Code Deployment',
               resource: 2,
