@@ -14,7 +14,23 @@ export default {
     }
 
     $(function () {
-      var toast = mobiscroll.toast;
+      var myInvalids = [
+        {
+          start: '00:00',
+          end: '05:00',
+          recurring: {
+            repeat: 'daily',
+          },
+        },
+        {
+          start: '19:00',
+          end: '00:00',
+          recurring: {
+            repeat: 'daily',
+          },
+        },
+      ];
+
       var timelineInst = $('#demo-tasks-subtasks-under-shifts')
         .mobiscroll()
         .eventcalendar({
@@ -40,29 +56,85 @@ export default {
               color: isShift ? 'gray' : '',
               title: isShift ? 'New Shift' : 'New subtask',
               tasks: isShift ? [] : undefined,
+              shift: isShift ? undefined : events[0].id,
             };
           },
+
           onEventCreated: function (args, inst) {
             var event = args.event;
             var overlapEvents = inst.getEvents(event.start, event.end);
             var overlapShift = overlapEvents.filter(function (e) {
               return e.tasks !== undefined && e.resource === event.resource;
             });
-            if (event.tasks !== undefined) {
-              // shifts was created
-              if (overlapShift.length > 1) {
-                inst.removeEvent(event);
-                toast({ message: 'Shifts cannot overlap' });
-              }
-            } else {
+
+            if (event.shift) {
               // subtasks was created
               var shift = overlapShift[0];
-              // update the shift and subtask properties
+              // update the shift
               shift.tasks.push(event.id);
               inst.updateEvent(shift);
+
+              // update subtask
               event.shift = shift.id;
+              if (event.end > shift.end) {
+                event.end = shift.end;
+              }
+              if (event.start < shift.start) {
+                event.start = shift.start;
+              }
               inst.updateEvent(event);
             }
+          },
+          onEventDragStart: function (args, inst) {
+            var events = inst.getEvents();
+            var event = args.event;
+            var tempInvalid = [];
+
+            if (event.tasks) {
+              // shift
+              var shiftsInResource = events.filter(function (e) {
+                return e.tasks !== undefined && e.resource === event.resource && e.id !== event.id;
+              });
+
+              shiftsInResource.forEach(function (e) {
+                tempInvalid.push({
+                  start: e.start,
+                  end: e.end,
+                  resource: e.resource,
+                });
+              });
+
+              inst.setOptions({
+                invalid: tempInvalid.concat(myInvalids),
+              });
+            } else {
+              // subtask
+              var shift = events.find(function (ev) {
+                return ev.resource === event.resource && ev.id === event.shift;
+              });
+
+              tempInvalid.push(
+                {
+                  start: new Date(+new Date(shift.start) - 7 * 86400000),
+                  end: shift.start,
+                  resource: shift.resource,
+                },
+                {
+                  start: shift.end,
+                  end: new Date(+new Date(shift.end) + 7 * 86400000),
+                  resource: shift.resource,
+                },
+              );
+
+              inst.setOptions({
+                invalid: tempInvalid.concat(myInvalids),
+              });
+            }
+          },
+          onEventDragEnd: function (args, inst) {
+            inst.setOptions({
+              invalid: myInvalids,
+            });
           },
           onEventUpdated: function (args, inst) {
             var events = inst.getEvents();
@@ -76,16 +148,6 @@ export default {
               var diff = startDiff || endDiff;
               var isMove = startDiff === endDiff;
               var isResize = startDiff > 0 || endDiff < 0;
-              var overlapEvents = inst.getEvents(event.start, event.end);
-              var overlapShift = overlapEvents.filter(function (e) {
-                return e.tasks !== undefined && e.resource === event.resource;
-              });
-
-              if (overlapShift.length > 1) {
-                inst.updateEvent(oldEvent);
-                toast({ message: 'Shifts cannot overlap' });
-                return;
-              }
 
               // update subtask
               event.tasks.forEach(function (el) {
@@ -101,16 +163,6 @@ export default {
                   inst.updateEvent(task);
                 }
               });
-            } else {
-              // the tasks were updated
-              var shift = events.find(function (ev) {
-                return ev.id === event.shift;
-              });
-
-              if (!isEventBetweenShift(shift, event)) {
-                inst.updateEvent(args.oldEvent);
-                toast({ message: 'Subtasks cannot be dragged out from shifts' });
-              }
             }
           },
           data: [
@@ -233,22 +285,7 @@ export default {
               eventDragBetweenResources: false,
             },
           ],
-          invalid: [
-            {
-              start: '00:00',
-              end: '05:00',
-              recurring: {
-                repeat: 'daily',
-              },
-            },
-            {
-              start: '19:00',
-              end: '00:00',
-              recurring: {
-                repeat: 'daily',
-              },
-            },
-          ],
+          invalid: myInvalids,
         })
         .mobiscroll('getInst');
     });
@@ -259,11 +296,11 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-    .md-task-shift {
-      height: 30px;
-    }
-    .md-task-subtask {
-      height: 40px;
-    }
+.md-task-shift {
+  height: 30px;
+}
+.md-task-subtask {
+  height: 40px;
+}
    `,
 };
