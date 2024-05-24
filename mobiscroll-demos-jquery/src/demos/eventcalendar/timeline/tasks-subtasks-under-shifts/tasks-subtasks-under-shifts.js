@@ -329,7 +329,7 @@ export default {
             },
             {
               id: 'rt-3',
-              start: 'dyndatetime(y,m,d,16, 45)',
+              start: 'dyndatetime(y,m,d,16,45)',
               end: 'dyndatetime(y,m,d,19)',
               title: 'API Development',
               resource: 4,
@@ -412,7 +412,7 @@ export default {
             {
               id: 'es-7',
               start: 'dyndatetime(y,m,d+1,15)',
-              end: 'dyndatetime(y,m,d+1,16, 30)',
+              end: 'dyndatetime(y,m,d+1,16,30)',
               title: 'Security Audits',
               resource: 1,
               shift: 5,
