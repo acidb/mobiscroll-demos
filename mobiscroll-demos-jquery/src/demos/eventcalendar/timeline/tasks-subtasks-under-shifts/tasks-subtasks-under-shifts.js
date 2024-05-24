@@ -62,27 +62,26 @@ export default {
 
           onEventCreated: function (args, inst) {
             var event = args.event;
-            var overlapEvents = inst.getEvents(event.start, event.end);
-            var overlapShift = overlapEvents.filter(function (e) {
-              return e.tasks !== undefined && e.resource === event.resource;
+            var overlapEvents = inst.getEvents(event.start, event.end).filter(function (e) {
+              return e.resource === event.resource;
             });
 
             if (event.shift) {
-              // subtasks was created
-              var shift = overlapShift[0];
-              // update the shift
-              shift.tasks.push(event.id);
-              inst.updateEvent(shift);
+              /* tasks was created */
+              var shift = overlapEvents[0];
 
-              // update subtask
-              event.shift = shift.id;
-              if (event.end > shift.end) {
-                event.end = shift.end;
+              if (overlapEvents.length > 2) {
+                // prevent task overlap
+                inst.removeEvent(event);
+              } else {
+                /* update the shift */
+                shift.tasks.push(event.id);
+                inst.updateEvent(shift);
+                /* update subtask */
+                console.log('shift.id', shift.id);
+                event.shift = shift.id;
+                inst.updateEvent(event);
               }
-              if (event.start < shift.start) {
-                event.start = shift.start;
-              }
-              inst.updateEvent(event);
             }
           },
           onEventDragStart: function (args, inst) {
@@ -91,7 +90,7 @@ export default {
             var tempInvalid = [];
 
             if (event.tasks) {
-              // shift
+              /* shift */
               var shiftsInResource = events.filter(function (e) {
                 return e.tasks !== undefined && e.resource === event.resource && e.id !== event.id;
               });
@@ -108,11 +107,10 @@ export default {
                 invalid: tempInvalid.concat(myInvalids),
               });
             } else {
-              // subtask
+              /* subtask */
               var shift = events.find(function (ev) {
                 return ev.resource === event.resource && ev.id === event.shift;
               });
-
               tempInvalid.push(
                 {
                   start: new Date(+new Date(shift.start) - 7 * 86400000),
@@ -125,7 +123,6 @@ export default {
                   resource: shift.resource,
                 },
               );
-
               inst.setOptions({
                 invalid: tempInvalid.concat(myInvalids),
               });
@@ -142,14 +139,14 @@ export default {
             var oldEvent = args.oldEvent;
 
             if (event.tasks) {
-              // the shift was updated
+              /* the shift was updated */
               var startDiff = +new Date(event.start) - +new Date(oldEvent.start);
               var endDiff = +new Date(event.end) - +new Date(oldEvent.end);
               var diff = startDiff || endDiff;
               var isMove = startDiff === endDiff;
               var isResize = startDiff > 0 || endDiff < 0;
 
-              // update subtask
+              /* update subtask */
               event.tasks.forEach(function (el) {
                 var task = events.find(function (e) {
                   return e.id === el;
@@ -432,19 +429,20 @@ export default {
               order: 2,
               cssClass: 'md-task-subtask',
             },
+            //...
             {
               id: 7,
               start: 'dyndatetime(y,m,d+1,6)',
               end: 'dyndatetime(y,m,d+1,13)',
               title: 'Morning shift',
               resource: 2,
-              tasks: ['es-5', 'es-6', 'es-7', 'es-8'],
+              tasks: ['jb-5', 'jb-6', 'jb-7', 'jb-8'],
               order: 1,
               color: 'gray',
               cssClass: 'md-task-shift',
             },
             {
-              id: 'es-5',
+              id: 'jb-5',
               start: 'dyndatetime(y,m,d+1,6)',
               end: 'dyndatetime(y,m,d+1,7)',
               title: 'Documentation',
@@ -454,7 +452,7 @@ export default {
               cssClass: 'md-task-subtask',
             },
             {
-              id: 'es-6',
+              id: 'jb-6',
               start: 'dyndatetime(y,m,d+1,7,15)',
               end: 'dyndatetime(y,m,d+1,9,30)',
               title: 'Integrate APIs',
@@ -464,7 +462,7 @@ export default {
               cssClass: 'md-task-subtask',
             },
             {
-              id: 'es-7',
+              id: 'jb-7',
               start: 'dyndatetime(y,m,d+1,10)',
               end: 'dyndatetime(y,m,d+1,11)',
               title: 'Optimize Code',
@@ -474,7 +472,7 @@ export default {
               cssClass: 'md-task-subtask',
             },
             {
-              id: 'es-8',
+              id: 'jb-8',
               start: 'dyndatetime(y,m,d+1,11, )',
               end: 'dyndatetime(y,m,d+1,13)',
               title: 'Code Deployment',
