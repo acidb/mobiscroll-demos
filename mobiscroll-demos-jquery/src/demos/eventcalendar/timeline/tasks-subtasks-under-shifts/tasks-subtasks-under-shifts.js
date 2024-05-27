@@ -9,10 +9,6 @@ export default {
       // theme
     });
 
-    function isEventBetweenShift(shift, event) {
-      return new Date(shift.start) <= new Date(event.start) && new Date(shift.end) >= new Date(event.end);
-    }
-
     $(function () {
       var myInvalids = [
         {
@@ -139,27 +135,63 @@ export default {
             var oldEvent = args.oldEvent;
 
             if (event.tasks) {
-              /* the shift was updated */
-              var startDiff = +new Date(event.start) - +new Date(oldEvent.start);
-              var endDiff = +new Date(event.end) - +new Date(oldEvent.end);
-              var diff = startDiff || endDiff;
-              var isMove = startDiff === endDiff;
-              var isResize = startDiff > 0 || endDiff < 0;
-
-              /* update subtask */
-              event.tasks.forEach(function (el) {
-                var task = events.find(function (e) {
+              // shift was updated
+              var shiftStart = new Date(event.start);
+              var shiftEnd = new Date(event.end);
+              var startDiff = +shiftStart - +new Date(oldEvent.start);
+              var shiftDuration = +shiftEnd - +shiftStart;
+              var endDiff = +shiftEnd - +new Date(oldEvent.end);
+              var startResize = startDiff > 0;
+              var endResize = endDiff < 0;
+              var isResize = startResize || endResize;
+              var subTasksDuration = 0;
+              var tasks = event.tasks.map(function (el) {
+                var t = events.find(function (e) {
                   return e.id === el;
                 });
-                // todo refactor
-                if (isMove || (isResize && !isEventBetweenShift(event, task))) {
-                  var newStart = new Date(Math.max(+new Date(task.start) + diff, +new Date(event.start)));
-                  var newEnd = new Date(Math.min(+newStart + +new Date(task.end) - +new Date(task.start), +new Date(event.end)));
+                subTasksDuration += +new Date(t.end) - +new Date(t.start);
+                return t;
+              });
+
+              if (isResize && shiftDuration < subTasksDuration) {
+                // Limit the shift to don't be smaller than the containing subtasks
+                shiftStart = endResize ? shiftStart : new Date(+shiftEnd - subTasksDuration);
+                shiftEnd = startResize ? shiftEnd : new Date(+shiftStart + subTasksDuration);
+                event.start = shiftStart;
+                event.end = shiftEnd;
+                inst.updateEvent(event);
+              }
+
+              /* update subtask */
+              tasks.forEach(function (task, i) {
+                var taskStart = new Date(task.start);
+                var taskEnd = new Date(task.end);
+
+                if (isResize) {
+                  var compareStart = i === 0 ? +shiftStart : +new Date(tasks[i - 1].end);
+                  // var newStart = new Date(Math.max(+taskStart, compareStart));
+                  var newStart = new Date(compareStart);
+                  var newEnd = new Date(Math.min(+newStart + (+taskEnd - +taskStart), +new Date(event.end)));
                   task.start = newStart;
                   task.end = newEnd;
                   inst.updateEvent(task);
                 }
+                if (startDiff === endDiff) {
+                  // it was move
+                  task.start = new Date(+taskStart + startDiff);
+                  task.end = new Date(+taskEnd + startDiff);
+                  inst.updateEvent(task);
+                }
               });
+            } else {
+              // subtask was updated
+              var eventOverlap = inst.getEvents(event.start, event.end).filter(function (e) {
+                return e.resource === event.resource;
+              });
+              if (eventOverlap.length > 2) {
+                // don't let subtask to overlap
+                inst.updateEvent(oldEvent);
+              }
             }
           },
           data: [
