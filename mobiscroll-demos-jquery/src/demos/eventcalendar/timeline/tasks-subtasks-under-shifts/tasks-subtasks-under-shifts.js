@@ -261,7 +261,7 @@ export default {
               end: 'dyndatetime(y,m,d,14)',
               title: 'Morning shift',
               resource: 3,
-              tasks: ['ol-1', 'ol-2', 'ol-3', 'ol-4'],
+              tasks: ['ol-1', 'ol-2', 'ol-3'],
               order: 1,
               color: 'gray',
               cssClass: 'md-task-shift',
