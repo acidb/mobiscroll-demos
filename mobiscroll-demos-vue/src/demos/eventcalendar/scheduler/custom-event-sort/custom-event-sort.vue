@@ -1,6 +1,5 @@
-<script setup lang="ts">
+<script setup>
 import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
 
 setOptions({
   // locale,
@@ -10,8 +9,7 @@ setOptions({
 const now = new Date()
 const day = now.getDay()
 const monday = now.getDate() - day + (day == 0 ? -6 : 1)
-
-const myEvents: MbscCalendarEvent[] = [
+const myEvents = [
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
     title: 'Kate OFF (PROPOSED)',
@@ -142,8 +140,8 @@ const myEvents: MbscCalendarEvent[] = [
   }
 ]
 
-const myView: MbscEventcalendarView = {
-  calendar: {
+const myView = {
+  schedule: {
     type: 'week'
   }
 }

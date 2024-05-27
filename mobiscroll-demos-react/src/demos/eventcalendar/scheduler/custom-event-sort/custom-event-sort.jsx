@@ -145,9 +145,15 @@ function App() {
     [],
   );
 
-  const myView = useMemo(() => ({ agenda: { type: 'week' } }), []);
+  const myView = useMemo(() => ({ schedule: { type: 'week' } }), []);
 
-  return <Eventcalendar view={myView} data={myEvents} />;
+  return (
+    <Eventcalendar
+      // drag
+      view={myView}
+      data={myEvents}
+    />
+  );
 }
 
 export default App;

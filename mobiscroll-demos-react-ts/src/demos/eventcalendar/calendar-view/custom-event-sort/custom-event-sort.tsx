@@ -1,5 +1,5 @@
 import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 setOptions({
   // localeJs,
@@ -9,13 +9,14 @@ setOptions({
 const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day == 0 ? -6 : 1);
-const myEvents = [
+const myEvents: MbscCalendarEvent[] = [
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
     title: 'Kate OFF (PROPOSED)',
     color: '#e7b300',
     allDay: true,
     accepted: false,
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -23,6 +24,7 @@ const myEvents = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -30,6 +32,7 @@ const myEvents = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -37,6 +40,7 @@ const myEvents = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -44,6 +48,7 @@ const myEvents = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -51,6 +56,7 @@ const myEvents = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -58,6 +64,7 @@ const myEvents = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -65,6 +72,7 @@ const myEvents = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -72,6 +80,7 @@ const myEvents = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -79,6 +88,7 @@ const myEvents = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -86,6 +96,7 @@ const myEvents = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -93,6 +104,7 @@ const myEvents = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 3),
@@ -100,6 +112,7 @@ const myEvents = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -107,6 +120,7 @@ const myEvents = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -114,6 +128,7 @@ const myEvents = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -121,6 +136,7 @@ const myEvents = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
+    order: 1,
   },
 ];
 
@@ -134,14 +150,11 @@ function App() {
     [],
   );
 
-  const orderMyEvents = useCallback((event: MbscCalendarEvent) => (event.accepted ? 1 : -1), []);
-
   return (
     <Eventcalendar
       // drag
       view={myView}
       data={myEvents}
-      eventOrder={orderMyEvents}
     />
   );
 }

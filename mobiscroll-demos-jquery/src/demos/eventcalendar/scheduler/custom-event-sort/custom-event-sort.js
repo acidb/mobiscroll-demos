@@ -18,9 +18,8 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
-          // drag,
           view: {
-            calendar: {
+            schedule: {
               type: 'week',
             },
           },

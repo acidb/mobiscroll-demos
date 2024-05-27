@@ -1,16 +1,14 @@
-<script setup lang="ts">
-import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
+import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useMemo } from 'react';
 
 setOptions({
-  // locale,
-  // theme
-})
+  // localeJs,
+  // themeJs
+});
 
-const now = new Date()
-const day = now.getDay()
-const monday = now.getDate() - day + (day == 0 ? -6 : 1)
-
+const now = new Date();
+const day = now.getDay();
+const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 const myEvents: MbscCalendarEvent[] = [
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -18,7 +16,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
-    order: 1
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -26,7 +24,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
-    order: 2
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -34,7 +32,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
-    order: 1
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -42,7 +40,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
-    order: 1
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -50,7 +48,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
-    order: 2
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -58,7 +56,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
-    order: 1
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -66,7 +64,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
-    order: 1
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -74,7 +72,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
-    order: 2
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -82,7 +80,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
-    order: 2
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -90,7 +88,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
-    order: 1
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -98,7 +96,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
-    order: 2
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -106,7 +104,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
-    order: 2
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 3),
@@ -114,7 +112,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
-    order: 2
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -122,7 +120,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
-    order: 1
+    order: 1,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -130,7 +128,7 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#00ca10',
     allDay: true,
     accepted: true,
-    order: 2
+    order: 2,
   },
   {
     start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -138,18 +136,26 @@ const myEvents: MbscCalendarEvent[] = [
     color: '#e7b300',
     allDay: true,
     accepted: false,
-    order: 1
-  }
-]
+    order: 1,
+  },
+];
 
-const myView: MbscEventcalendarView = {
-  calendar: {
-    type: 'week'
-  }
+function App() {
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
+      timeline: {
+        type: 'week',
+      },
+    }),
+    [],
+  );
+
+  return (
+    <Eventcalendar
+      // drag
+      view={myView}
+      data={myEvents}
+    />
+  );
 }
-</script>
-
-<template>
-  <!-- dragOptions -->
-  <MbscEventcalendar :view="myView" :data="myEvents" />
-</template>
+export default App;

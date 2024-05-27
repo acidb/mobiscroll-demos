@@ -18,10 +18,12 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
-          // drag,
           view: {
-            calendar: {
+            timeline: {
               type: 'week',
+              eventList: true,
+              startDay: 1,
+              endDay: 5,
             },
           },
           data: [
@@ -32,6 +34,7 @@ export default {
               allDay: true,
               accepted: false,
               order: 1,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -40,6 +43,7 @@ export default {
               allDay: true,
               accepted: true,
               order: 2,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -48,6 +52,7 @@ export default {
               allDay: true,
               accepted: false,
               order: 1,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -56,6 +61,7 @@ export default {
               allDay: true,
               accepted: false,
               order: 1,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -64,6 +70,7 @@ export default {
               allDay: true,
               accepted: true,
               order: 2,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -72,6 +79,7 @@ export default {
               allDay: true,
               accepted: false,
               order: 1,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -80,6 +88,7 @@ export default {
               allDay: true,
               accepted: false,
               order: 1,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -88,6 +97,7 @@ export default {
               allDay: true,
               accepted: true,
               order: 2,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -96,6 +106,7 @@ export default {
               allDay: true,
               accepted: true,
               order: 2,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -104,6 +115,7 @@ export default {
               allDay: true,
               accepted: false,
               order: 1,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -112,6 +124,7 @@ export default {
               allDay: true,
               accepted: true,
               order: 2,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -120,6 +133,7 @@ export default {
               allDay: true,
               accepted: true,
               order: 2,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 3),
@@ -128,6 +142,7 @@ export default {
               allDay: true,
               accepted: true,
               order: 2,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -136,6 +151,7 @@ export default {
               allDay: true,
               accepted: false,
               order: 1,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -144,6 +160,7 @@ export default {
               allDay: true,
               accepted: true,
               order: 2,
+              resource: 1,
             },
             {
               start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -152,6 +169,128 @@ export default {
               allDay: true,
               accepted: false,
               order: 1,
+              resource: 1,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday),
+              title: 'James OFF (APPROVED)',
+              color: '#00ca10',
+              allDay: true,
+              accepted: true,
+              order: 2,
+              resource: 2,
+            },
+
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday),
+              title: 'Sarah OFF (PROPOSED)',
+              color: '#f5850c',
+              allDay: true,
+              accepted: false,
+              order: 1,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
+              title: 'Levi OFF (APPROVED)',
+              color: '#00ca10',
+              allDay: true,
+              accepted: true,
+              order: 2,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
+              title: 'Becky OFF (PROPOSED)',
+              color: '#f5850c',
+              allDay: true,
+              accepted: false,
+              order: 1,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
+              title: 'Sam OFF (PROPOSED)',
+              color: '#f5850c',
+              allDay: true,
+              accepted: false,
+              order: 1,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
+              title: 'Caren OFF (APPROVED)',
+              color: '#00ca10',
+              allDay: true,
+              accepted: true,
+              order: 2,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
+              title: 'Dereck OFF (PROPOSED)',
+              color: '#f5850c',
+              allDay: true,
+              accepted: false,
+              order: 1,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
+              title: 'Jack OFF (APPROVED)',
+              color: '#00ca10',
+              allDay: true,
+              accepted: true,
+              order: 2,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 3),
+              title: 'Jack OFF (APPROVED)',
+              color: '#00ca10',
+              allDay: true,
+              accepted: true,
+              order: 2,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
+              title: 'Ryan OFF (PROPOSED)',
+              color: '#f5850c',
+              allDay: true,
+              accepted: false,
+              order: 1,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
+              title: 'James OFF (APPROVED)',
+              color: '#00ca10',
+              allDay: true,
+              accepted: true,
+              order: 2,
+              resource: 2,
+            },
+            {
+              start: new Date(now.getFullYear(), now.getMonth(), monday + 3),
+              title: 'Dereck OFF (PROPOSED)',
+              color: '#f5850c',
+              allDay: true,
+              accepted: false,
+              order: 1,
+              resource: 2,
+            },
+          ],
+          resources: [
+            {
+              id: 1,
+              color: '#ff0101',
+              name: 'Resource A',
+            },
+            {
+              id: 2,
+              color: '#239a21',
+              name: 'Resource B',
             },
           ],
         });

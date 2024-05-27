@@ -143,7 +143,7 @@ const myEvents: MbscCalendarEvent[] = [
 ]
 
 const myView: MbscEventcalendarView = {
-  calendar: {
+  timeline: {
     type: 'week'
   }
 }
