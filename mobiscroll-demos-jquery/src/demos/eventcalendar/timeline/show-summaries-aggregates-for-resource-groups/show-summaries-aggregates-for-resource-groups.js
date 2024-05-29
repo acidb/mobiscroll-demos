@@ -817,7 +817,6 @@ export default {
             };
           },
           clickToCreate: true,
-          // dragToCreate: false,
           dragToCreate: true,
           dragToMove: true,
           dragToResize: false,
@@ -897,7 +896,7 @@ export default {
             var isParent = event.currentResource.isParent;
             if (isParent) {
               return (
-                '<div class="mbsc-flex-1-1">' +
+                '<div class="mbsc-flex-1-1 mds-parent-event">' +
                 '<div class="mds-show-summaries-aggregates-details mbsc-flex"><div class="mds-show-summaries-aggregates-no-highlight">Total dist. <div><span class="mds-show-summaries-aggregates-highlight">' +
                 event.original.distance +
                 ' ml</span></div></div><div class="mds-show-summaries-aggregates-no-highlight">Total cons. <div><span class="mds-show-summaries-aggregates-highlight">' +
@@ -1045,9 +1044,6 @@ export default {
     font-size: 14px;
     font-weight: 600;
   }
-  /*.mbsc-schedule-event-background {
-    //background: red !important;
-  }*/
   .mds-show-summaries-aggregates-main-event {
     padding: 4px;
   }
@@ -1066,7 +1062,7 @@ export default {
   .mds-show-summaries-aggregates-cartype {
     font-size: 11px;
     font-weight: 600;
-    padding-top: 6em;
+    padding-top: 7em;
   }
   .mds-show-summaries-aggregates-plate {
     padding: 8px 0;
@@ -1090,8 +1086,16 @@ export default {
     height: auto;
     width: 100%;
   }
-  /*.demo-show-summaries-aggregates-for-resource-groups .mbsc-timeline-parent .mbsc-schedule-event-inner {
-    padding: 0;
-  }*/
+  .demo-show-summaries-aggregates-for-resource-groups .mds-parent-event {
+    color: #000;
+  }
+  .demo-show-summaries-aggregates-for-resource-groups .mbsc-windows-dark .mds-parent-event,
+  .demo-show-summaries-aggregates-for-resource-groups .mbsc-ios-dark .mds-parent-event,
+  .demo-show-summaries-aggregates-for-resource-groups .mbsc-material-dark .mds-parent-event {
+    color: #fff;
+  }
+  .demo-show-summaries-aggregates-for-resource-groups .mbsc-ios .mbsc-schedule-event:after {
+    display: none;
+  }
   `,
 };
