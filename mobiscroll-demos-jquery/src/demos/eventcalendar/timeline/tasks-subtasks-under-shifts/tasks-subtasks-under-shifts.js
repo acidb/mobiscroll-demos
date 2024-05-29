@@ -1812,5 +1812,13 @@ export default {
   font-weight: bold;
   background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
 }
+
+/*<hidden>*/
+
+.demo-tasks-subtasks-under-shifts {
+    height: 100%;
+}
+
+/*</hidden>*/
    `,
 };
