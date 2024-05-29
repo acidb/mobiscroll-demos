@@ -81,6 +81,18 @@ export default {
               }
             }
           },
+          onEventDeleted: function (args, inst) {
+            var event = args.event;
+
+            if (event.tasks) {
+              event.tasks.forEach(function (el) {
+                var t = inst.getEvents().find(function (e) {
+                  return e.id === el;
+                });
+                inst.removeEvent(t);
+              });
+            }
+          },
           onEventDragStart: function (args, inst) {
             var events = inst.getEvents();
             var event = args.event;
@@ -166,6 +178,7 @@ export default {
                 inst.updateEvent(event);
               }
 
+              // resize or move
               if (isResize || startDiff === endDiff) {
                 /* update subtask */
                 tasks.forEach(function (task, i) {
@@ -194,18 +207,10 @@ export default {
             }
           },
           renderScheduleEventContent: function (args) {
-            var duration = Math.round((+args.endDate - +args.startDate) / 3600000);
+            var duration = (+args.endDate - +args.startDate) / 3600000;
             return (
               args.title +
-              (args.original.shift
-                ? ' <div class="md-task-hours">' +
-                  (duration + (duration === 1 ? 'h' : 'hrs')) +
-                  ' - ' +
-                  args.start +
-                  ' - ' +
-                  args.end +
-                  '</div>'
-                : '')
+              (args.original.shift ? ' <span class="md-task-hours"> - ' + (duration + (duration === 1 ? 'h' : 'hrs')) + '</span>' : '')
             );
           },
           data: [
@@ -441,7 +446,7 @@ export default {
               end: 'dyndatetime(y,m,d+1,12,30)',
               title: 'Automated Testing',
               resource: 1,
-              shift: 5,
+              shift: 6,
               order: 2,
               cssClass: 'md-task-subtask',
             },
@@ -451,7 +456,7 @@ export default {
               end: 'dyndatetime(y,m,d+1,15)',
               title: 'API Development',
               resource: 1,
-              shift: 5,
+              shift: 6,
               order: 2,
               cssClass: 'md-task-subtask',
             },
@@ -461,7 +466,7 @@ export default {
               end: 'dyndatetime(y,m,d+1,16,30)',
               title: 'Security Audits',
               resource: 1,
-              shift: 5,
+              shift: 6,
               order: 2,
               cssClass: 'md-task-subtask',
             },
@@ -471,11 +476,10 @@ export default {
               end: 'dyndatetime(y,m,d+1,18)',
               title: 'Continuous Integration Setup',
               resource: 1,
-              shift: 5,
+              shift: 6,
               order: 2,
               cssClass: 'md-task-subtask',
             },
-            //...
             {
               id: 7,
               start: 'dyndatetime(y,m,d+1,6)',
@@ -1789,10 +1793,6 @@ export default {
 }
 .md-task-subtask {
   font-size: 14px;
-}
-
-.md-task-subtask .mbsc-schedule-event-range {
-  display: none;
 }
 
 .md-task-hours {
