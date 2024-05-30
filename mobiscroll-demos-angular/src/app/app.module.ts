@@ -267,7 +267,7 @@ import { AppComponent as Demo726 } from '../demos/eventcalendar/timeline/drag-dr
 import { AppComponent as Demo728 } from '../demos/eventcalendar/timeline/prevent-double-booking-events/prevent-double-booking-events';
 import { AppComponent as Demo607 } from '../demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import { AppComponent as Demo625 } from '../demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy';
-// import { AppComponent as Demo747 } from '../demos/eventcalendar/timeline/show-summaries-aggregates-for-resource-groups/show-summaries-aggregates-for-resource-groups';
+import { AppComponent as Demo747 } from '../demos/eventcalendar/timeline/show-summaries-aggregates-for-resource-groups/show-summaries-aggregates-for-resource-groups';
 import { AppComponent as Demo720 } from '../demos/eventcalendar/timeline/resource-data-structure/resource-data-structure';
 import { AppComponent as Demo666 } from '../demos/eventcalendar/timeline/event-data-structure/event-data-structure';
 import { AppComponent as Demo706 } from '../demos/eventcalendar/timeline/connecting-linking-events-arrows/connecting-linking-events-arrows';
@@ -992,7 +992,7 @@ export const demos: any[] = [
             items: [
               { name: 'Resource grid', unique: 'timeline-resource-details-side-panel-footer', component: Demo607 },
               { name: 'Resource grouping & hierarchy', unique: 'resource-grouping-hierarchy', component: Demo625 },
-              // { name: 'Resource group summaries', unique: 'show-summaries-aggregates-for-resource-groups', component: Demo747 },
+              { name: 'Resource group summaries', unique: 'show-summaries-aggregates-for-resource-groups', component: Demo747 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
             ],
           },
@@ -1449,7 +1449,7 @@ export const demoTitleMap: { [key: string]: string } = {};
     Demo728,
     Demo607,
     Demo625,
-    // Demo747,
+    Demo747,
     Demo720,
     Demo666,
     Demo706,

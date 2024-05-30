@@ -1,0 +1,68 @@
+<mbsc-eventcalendar
+  class="mds-aggregates"
+  [options]="calendarOptions"
+  [data]="myEvents"
+  [resources]="myResources"
+  [scheduleEventContentTemplate]="eventTemp"
+  [resourceTemplate]="resourceTemp"
+  (onPageLoading)="handlePageLoading($event)"
+  (onEventCreated)="handleEventCreated($event)"
+  (onEventDeleted)="handleEventDeleted($event)"
+  (onEventUpdated)="handleEventUpdated($event)"
+>
+  <ng-template #eventTemp let-event>
+    <ng-container *ngIf="event.currentResource.isParent; else notSummary">
+      <div class="mds-aggregates-summary-event mbsc-flex">
+        <div class="mds-aggregates-summary-details mbsc-flex mbsc-flex-1-1">
+          <div class="mds-aggregates-label">
+            Total dist.
+            <div class="mds-aggregates-summary-value">{{event.original.distance}} ml</div>
+          </div>
+          <div class="mds-aggregates-label">
+            Total cons.
+            <div class="mds-aggregates-summary-value">{{event.original.consumption}} gal</div>
+          </div>
+          <div class="mds-aggregates-label">
+            Est. cost
+            <div class="mds-aggregates-summary-value">$ {{roundCost(event.original.consumption * 3.706 || 0)}}</div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #notSummary>
+      <div class="mds-aggregates-event">
+        <div class="mds-aggregates-title">{{event.title}}</div>
+        <div class="mds-aggregates-description">{{event.original.name}}</div>
+        <div class="mds-aggregates-details">
+          <div class="mds-aggregates-label">
+            Est. distance:
+            <span class="mds-aggregates-value"> {{event.original.distance}} ml</span>
+          </div>
+          <div class="mds-aggregates-label">
+            Est. consumption:
+            <span class="mds-aggregates-value"> {{event.original.consumption}} gal </span>
+          </div>
+        </div>
+        <div class="mds-aggregates-label mbsc-flex">
+          <div class="mbsc-flex-1-1">
+            Pick up:
+            <span class="mds-aggregates-value"> {{formatMyDate(event.original.start)}} </span>
+          </div>
+          <div>Drop off: <span class="mds-aggregates-value"> {{formatMyDate(event.original.end)}} </span></div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+
+  <ng-template #resourceTemp let-res>
+    <ng-container *ngIf="res.isParent;else notParent">
+      <div>{{res.name}}</div>
+      <div class="mds-aggregates-description">{{res.address}}</div>
+    </ng-container>
+    <ng-template #notParent>
+      <div>{{res.car}}</div>
+      <div class="mds-aggregates-plate">{{res.plate}}</div>
+      <div class="mds-aggregates-cartype">{{res.type}}</div>
+    </ng-template>
+  </ng-template>
+</mbsc-eventcalendar>
