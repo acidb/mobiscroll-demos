@@ -50,14 +50,13 @@ export default {
             var isShift = events.length === 0;
             return {
               order: isShift ? 1 : 2,
-              cssClass: isShift ? 'md-task-shift' : 'md-task-subtask',
+              cssClass: isShift ? 'mds-task-shift' : 'mds-task-subtask',
               color: isShift ? '#513737' : '',
               title: isShift ? 'New Shift' : 'New subtask',
               tasks: isShift ? [] : undefined,
               shift: isShift ? undefined : events[0].id,
             };
           },
-
           onEventCreated: function (args, inst) {
             var event = args.event;
             var overlapEvents = inst.getEvents(event.start, event.end).filter(function (e) {
@@ -83,14 +82,8 @@ export default {
           },
           onEventDeleted: function (args, inst) {
             var event = args.event;
-
             if (event.tasks) {
-              event.tasks.forEach(function (el) {
-                var t = inst.getEvents().find(function (e) {
-                  return e.id === el;
-                });
-                inst.removeEvent(t);
-              });
+              inst.removeEvent(event.tasks);
             }
           },
           onEventDragStart: function (args, inst) {
@@ -109,7 +102,7 @@ export default {
                   start: e.start,
                   end: e.end,
                   resource: e.resource,
-                  cssClass: 'md-temp-blocked-class mbsc-flex',
+                  cssClass: 'mds-task-blocked',
                 });
               });
 
@@ -126,13 +119,13 @@ export default {
                   start: new Date(+new Date(shift.start) - 7 * 86400000),
                   end: shift.start,
                   resource: shift.resource,
-                  cssClass: 'md-temp-blocked-class mbsc-flex',
+                  cssClass: 'mds-task-blocked',
                 },
                 {
                   start: shift.end,
                   end: new Date(+new Date(shift.end) + 7 * 86400000),
                   resource: shift.resource,
-                  cssClass: 'md-temp-blocked-class mbsc-flex',
+                  cssClass: 'mds-task-blocked',
                 },
               );
               inst.setOptions({
@@ -180,6 +173,7 @@ export default {
 
               // resize or move
               if (isResize || startDiff === endDiff) {
+                var updatedTasks = [];
                 /* update subtask */
                 tasks.forEach(function (task, i) {
                   var taskStart = new Date(task.start);
@@ -191,18 +185,23 @@ export default {
                     task.start = new Date(+taskStart + startDiff);
                     task.end = new Date(+taskEnd + startDiff);
                   }
-
-                  inst.updateEvent(task);
+                  updatedTasks.push(task);
                 });
+
+                inst.updateEvent(updatedTasks);
               }
-            } else {
-              // subtask was updated
+            }
+          },
+          onEventUpdate: function (args, inst) {
+            var event = args.event;
+            // subtask was updated
+            if (event.shift) {
               var eventOverlap = inst.getEvents(event.start, event.end).filter(function (e) {
                 return e.resource === event.resource;
               });
               if (eventOverlap.length > 2) {
                 // don't let subtask to overlap
-                inst.updateEvent(oldEvent);
+                return false;
               }
             }
           },
@@ -210,7 +209,7 @@ export default {
             var duration = (+args.endDate - +args.startDate) / 3600000;
             return (
               args.title +
-              (args.original.shift ? ' <span class="md-task-hours"> - ' + (duration + (duration === 1 ? 'h' : 'hrs')) + '</span>' : '')
+              (args.original.shift ? ' <span class="mds-task-hours"> - ' + (duration + (duration === 1 ? 'h' : 'hrs')) + '</span>' : '')
             );
           },
           data: [
@@ -223,7 +222,7 @@ export default {
               tasks: ['es-1', 'es-2', 'es-3'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'es-1',
@@ -233,7 +232,7 @@ export default {
               resource: 1,
               shift: 1,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'es-2',
@@ -243,7 +242,7 @@ export default {
               resource: 1,
               shift: 1,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'es-3',
@@ -253,7 +252,7 @@ export default {
               resource: 1,
               shift: 1,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 2,
@@ -264,7 +263,7 @@ export default {
               tasks: ['jb-1', 'jb-2', 'jb-3', 'jb-4'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jb-1',
@@ -274,7 +273,7 @@ export default {
               resource: 2,
               shift: 2,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-2',
@@ -284,7 +283,7 @@ export default {
               resource: 2,
               shift: 2,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-3',
@@ -294,7 +293,7 @@ export default {
               resource: 2,
               shift: 2,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-4',
@@ -304,8 +303,9 @@ export default {
               resource: 2,
               shift: 2,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
+            //<hidden>
             {
               id: 3,
               start: 'dyndatetime(y,m,d,5)',
@@ -315,7 +315,7 @@ export default {
               tasks: ['ol-1', 'ol-2', 'ol-3'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'ol-1',
@@ -325,7 +325,7 @@ export default {
               resource: 3,
               shift: 3,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-2',
@@ -335,7 +335,7 @@ export default {
               resource: 3,
               shift: 3,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-3',
@@ -345,7 +345,7 @@ export default {
               resource: 3,
               shift: 3,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 4,
@@ -356,7 +356,7 @@ export default {
               tasks: ['rt-1', 'rt-2', 'rt-3'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'rt-1',
@@ -366,7 +366,7 @@ export default {
               resource: 4,
               shift: 4,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-2',
@@ -376,7 +376,7 @@ export default {
               resource: 4,
               shift: 4,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-3',
@@ -386,7 +386,7 @@ export default {
               resource: 4,
               shift: 4,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 5,
@@ -397,7 +397,7 @@ export default {
               tasks: ['om-5', 'om-6', 'om-7'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'om-5',
@@ -407,7 +407,7 @@ export default {
               resource: 3,
               shift: 5,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'om-6',
@@ -417,7 +417,7 @@ export default {
               resource: 3,
               shift: 5,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'om-7',
@@ -427,7 +427,7 @@ export default {
               resource: 3,
               shift: 5,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 6,
@@ -438,7 +438,7 @@ export default {
               tasks: ['es-5', 'es-6', 'es-7', 'es-8'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'es-5',
@@ -448,7 +448,7 @@ export default {
               resource: 1,
               shift: 6,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'es-6',
@@ -458,7 +458,7 @@ export default {
               resource: 1,
               shift: 6,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'es-7',
@@ -468,7 +468,7 @@ export default {
               resource: 1,
               shift: 6,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'es-8',
@@ -478,7 +478,7 @@ export default {
               resource: 1,
               shift: 6,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 7,
@@ -489,7 +489,7 @@ export default {
               tasks: ['jb-5', 'jb-6', 'jb-7', 'jb-8'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jb-5',
@@ -499,7 +499,7 @@ export default {
               resource: 2,
               shift: 7,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-6',
@@ -509,7 +509,7 @@ export default {
               resource: 2,
               shift: 7,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-7',
@@ -519,7 +519,7 @@ export default {
               resource: 2,
               shift: 7,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-8',
@@ -529,7 +529,7 @@ export default {
               resource: 2,
               shift: 7,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 8,
@@ -540,7 +540,7 @@ export default {
               tasks: ['rt-5', 'rt-6', 'rt-7'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'rt-5',
@@ -550,7 +550,7 @@ export default {
               resource: 4,
               shift: 8,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-6',
@@ -560,7 +560,7 @@ export default {
               resource: 4,
               shift: 8,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-7',
@@ -570,7 +570,7 @@ export default {
               resource: 4,
               shift: 8,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 9,
@@ -580,7 +580,7 @@ export default {
               resource: 1,
               tasks: ['ts-1', 'ts-2', 'ts-3'],
               order: 1,
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
               color: '#513737',
             },
             {
@@ -591,7 +591,7 @@ export default {
               resource: 1,
               shift: 9,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-2',
@@ -601,7 +601,7 @@ export default {
               resource: 1,
               shift: 9,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-3',
@@ -611,7 +611,7 @@ export default {
               resource: 1,
               shift: 9,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 10,
@@ -621,7 +621,7 @@ export default {
               resource: 1,
               tasks: ['ts-4', 'ts-5', 'ts-6'],
               order: 1,
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
               color: '#513737',
             },
             {
@@ -632,7 +632,7 @@ export default {
               resource: 1,
               shift: 10,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-5',
@@ -642,7 +642,7 @@ export default {
               resource: 1,
               shift: 10,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-6',
@@ -652,7 +652,7 @@ export default {
               resource: 1,
               shift: 10,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 11,
@@ -662,7 +662,7 @@ export default {
               resource: 1,
               tasks: ['ts-7', 'ts-8', 'ts-9'],
               order: 1,
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
               color: '#513737',
             },
             {
@@ -673,7 +673,7 @@ export default {
               resource: 1,
               shift: 11,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-8',
@@ -683,7 +683,7 @@ export default {
               resource: 1,
               shift: 11,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-9',
@@ -693,7 +693,7 @@ export default {
               resource: 1,
               shift: 11,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 12,
@@ -703,7 +703,7 @@ export default {
               resource: 1,
               tasks: ['ts-10', 'ts-11', 'ts-12'],
               order: 1,
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
               color: '#513737',
             },
             {
@@ -714,7 +714,7 @@ export default {
               resource: 1,
               shift: 12,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-11',
@@ -724,7 +724,7 @@ export default {
               resource: 1,
               shift: 12,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-12',
@@ -734,7 +734,7 @@ export default {
               resource: 1,
               shift: 12,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -745,7 +745,7 @@ export default {
               resource: 1,
               tasks: ['ts-13', 'ts-14', 'ts-15'],
               order: 1,
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
               color: '#513737',
             },
             {
@@ -756,7 +756,7 @@ export default {
               resource: 1,
               shift: 13,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-14',
@@ -766,7 +766,7 @@ export default {
               resource: 1,
               shift: 13,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ts-15',
@@ -776,7 +776,7 @@ export default {
               resource: 1,
               shift: 13,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -788,7 +788,7 @@ export default {
               tasks: ['jb-13', 'jb-14', 'jb-15', 'jb-16'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jb-13',
@@ -798,7 +798,7 @@ export default {
               resource: 2,
               shift: 15,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-14',
@@ -808,7 +808,7 @@ export default {
               resource: 2,
               shift: 15,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-15',
@@ -818,7 +818,7 @@ export default {
               resource: 2,
               shift: 15,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-16',
@@ -828,7 +828,7 @@ export default {
               resource: 2,
               shift: 15,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -840,7 +840,7 @@ export default {
               tasks: ['jb-9', 'jb-10', 'jb-11', 'jb-12'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jb-9',
@@ -850,7 +850,7 @@ export default {
               resource: 2,
               shift: 14,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-10',
@@ -860,7 +860,7 @@ export default {
               resource: 2,
               shift: 14,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-11',
@@ -870,7 +870,7 @@ export default {
               resource: 2,
               shift: 14,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-12',
@@ -880,7 +880,7 @@ export default {
               resource: 2,
               shift: 14,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -892,7 +892,7 @@ export default {
               tasks: ['jb-17', 'jb-18', 'jb-19', 'jb-20'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jb-17',
@@ -902,7 +902,7 @@ export default {
               resource: 2,
               shift: 16,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-18',
@@ -912,7 +912,7 @@ export default {
               resource: 2,
               shift: 16,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-19',
@@ -922,7 +922,7 @@ export default {
               resource: 2,
               shift: 16,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-20',
@@ -932,7 +932,7 @@ export default {
               resource: 2,
               shift: 16,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -944,7 +944,7 @@ export default {
               tasks: ['jb-21', 'jb-22', 'jb-23', 'jb-24'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jb-21',
@@ -954,7 +954,7 @@ export default {
               resource: 2,
               shift: 17,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-22',
@@ -964,7 +964,7 @@ export default {
               resource: 2,
               shift: 17,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-23',
@@ -974,7 +974,7 @@ export default {
               resource: 2,
               shift: 17,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-24',
@@ -984,7 +984,7 @@ export default {
               resource: 2,
               shift: 17,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -996,7 +996,7 @@ export default {
               tasks: ['jb-25', 'jb-26', 'jb-27', 'jb-28'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jb-25',
@@ -1006,7 +1006,7 @@ export default {
               resource: 2,
               shift: 18,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-26',
@@ -1016,7 +1016,7 @@ export default {
               resource: 2,
               shift: 18,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-27',
@@ -1026,7 +1026,7 @@ export default {
               resource: 2,
               shift: 18,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jb-28',
@@ -1036,7 +1036,7 @@ export default {
               resource: 2,
               shift: 18,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -1048,7 +1048,7 @@ export default {
               tasks: ['ol-4', 'ol-5', 'ol-6'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'ol-4',
@@ -1058,7 +1058,7 @@ export default {
               resource: 3,
               shift: 19,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-5',
@@ -1068,7 +1068,7 @@ export default {
               resource: 3,
               shift: 19,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-6',
@@ -1078,7 +1078,7 @@ export default {
               resource: 3,
               shift: 19,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -1090,7 +1090,7 @@ export default {
               tasks: ['ol-7', 'ol-8', 'ol-9'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'ol-7',
@@ -1100,7 +1100,7 @@ export default {
               resource: 3,
               shift: 20,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-8',
@@ -1110,7 +1110,7 @@ export default {
               resource: 3,
               shift: 20,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-9',
@@ -1120,7 +1120,7 @@ export default {
               resource: 3,
               shift: 20,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -1132,7 +1132,7 @@ export default {
               tasks: ['ol-10', 'ol-11', 'ol-12'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'ol-10',
@@ -1142,7 +1142,7 @@ export default {
               resource: 3,
               shift: 21,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-11',
@@ -1152,7 +1152,7 @@ export default {
               resource: 3,
               shift: 21,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-12',
@@ -1162,7 +1162,7 @@ export default {
               resource: 3,
               shift: 21,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -1174,7 +1174,7 @@ export default {
               tasks: ['ol-13', 'ol-14', 'ol-15'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'ol-13',
@@ -1184,7 +1184,7 @@ export default {
               resource: 3,
               shift: 22,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-14',
@@ -1194,7 +1194,7 @@ export default {
               resource: 3,
               shift: 22,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-15',
@@ -1204,7 +1204,7 @@ export default {
               resource: 3,
               shift: 22,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -1216,7 +1216,7 @@ export default {
               tasks: ['ol-16', 'ol-17', 'ol-18'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'ol-16',
@@ -1226,7 +1226,7 @@ export default {
               resource: 3,
               shift: 23,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-17',
@@ -1236,7 +1236,7 @@ export default {
               resource: 3,
               shift: 23,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'ol-18',
@@ -1246,7 +1246,7 @@ export default {
               resource: 3,
               shift: 23,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -1258,7 +1258,7 @@ export default {
               tasks: ['rt-8', 'rt-9', 'rt-10'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'rt-8',
@@ -1268,7 +1268,7 @@ export default {
               resource: 4,
               shift: 24,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-9',
@@ -1278,7 +1278,7 @@ export default {
               resource: 4,
               shift: 24,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-10',
@@ -1288,7 +1288,7 @@ export default {
               resource: 4,
               shift: 24,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 25,
@@ -1299,7 +1299,7 @@ export default {
               tasks: ['rt-11', 'rt-12', 'rt-13'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'rt-11',
@@ -1309,7 +1309,7 @@ export default {
               resource: 4,
               shift: 25,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-12',
@@ -1319,7 +1319,7 @@ export default {
               resource: 4,
               shift: 25,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-13',
@@ -1329,7 +1329,7 @@ export default {
               resource: 4,
               shift: 25,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 26,
@@ -1340,7 +1340,7 @@ export default {
               tasks: ['rt-14', 'rt-15', 'rt-16'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'rt-14',
@@ -1350,7 +1350,7 @@ export default {
               resource: 4,
               shift: 26,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-15',
@@ -1360,7 +1360,7 @@ export default {
               resource: 4,
               shift: 26,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-16',
@@ -1370,7 +1370,7 @@ export default {
               resource: 4,
               shift: 26,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 27,
@@ -1381,7 +1381,7 @@ export default {
               tasks: ['rt-17', 'rt-18', 'rt-19'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'rt-17',
@@ -1391,7 +1391,7 @@ export default {
               resource: 4,
               shift: 27,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-18',
@@ -1401,7 +1401,7 @@ export default {
               resource: 4,
               shift: 27,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-19',
@@ -1411,7 +1411,7 @@ export default {
               resource: 4,
               shift: 27,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 28,
@@ -1422,7 +1422,7 @@ export default {
               tasks: ['rt-20', 'rt-21', 'rt-22'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'rt-20',
@@ -1432,7 +1432,7 @@ export default {
               resource: 4,
               shift: 28,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'rt-21',
@@ -1442,9 +1442,8 @@ export default {
               resource: 4,
               shift: 28,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
-
             {
               id: 'rt-22',
               start: 'dyndatetime(y,m,d+3,10,15)',
@@ -1453,7 +1452,7 @@ export default {
               resource: 4,
               shift: 28,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 29,
@@ -1464,7 +1463,7 @@ export default {
               tasks: ['jd-1', 'jd-2', 'jd-3'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jd-1',
@@ -1474,7 +1473,7 @@ export default {
               resource: 5,
               shift: 29,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-2',
@@ -1484,7 +1483,7 @@ export default {
               resource: 5,
               shift: 29,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
 
             {
@@ -1495,7 +1494,7 @@ export default {
               resource: 5,
               shift: 29,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 30,
@@ -1506,7 +1505,7 @@ export default {
               tasks: ['jd-4', 'jd-5', 'jd-6'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jd-4',
@@ -1516,7 +1515,7 @@ export default {
               resource: 5,
               shift: 30,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-5',
@@ -1526,7 +1525,7 @@ export default {
               resource: 5,
               shift: 30,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-6',
@@ -1536,7 +1535,7 @@ export default {
               resource: 5,
               shift: 30,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 31,
@@ -1547,7 +1546,7 @@ export default {
               tasks: ['jd-7', 'jd-8', 'jd-9'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jd-7',
@@ -1557,7 +1556,7 @@ export default {
               resource: 5,
               shift: 31,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-8',
@@ -1567,7 +1566,7 @@ export default {
               resource: 5,
               shift: 31,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-9',
@@ -1577,7 +1576,7 @@ export default {
               resource: 5,
               shift: 31,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 32,
@@ -1588,7 +1587,7 @@ export default {
               tasks: ['jd-10', 'jd-11', 'jd-12'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jd-10',
@@ -1598,7 +1597,7 @@ export default {
               resource: 5,
               shift: 32,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-11',
@@ -1608,7 +1607,7 @@ export default {
               resource: 5,
               shift: 32,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-12',
@@ -1618,7 +1617,7 @@ export default {
               resource: 5,
               shift: 32,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 33,
@@ -1629,7 +1628,7 @@ export default {
               tasks: ['jd-13', 'jd-14', 'jd-15'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jd-13',
@@ -1639,7 +1638,7 @@ export default {
               resource: 5,
               shift: 33,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-14',
@@ -1649,7 +1648,7 @@ export default {
               resource: 5,
               shift: 33,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-15',
@@ -1659,7 +1658,7 @@ export default {
               resource: 5,
               shift: 33,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 34,
@@ -1670,7 +1669,7 @@ export default {
               tasks: ['jd-16', 'jd-17', 'jd-18'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jd-16',
@@ -1680,7 +1679,7 @@ export default {
               resource: 5,
               shift: 34,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-17',
@@ -1690,7 +1689,7 @@ export default {
               resource: 5,
               shift: 34,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-18',
@@ -1700,7 +1699,7 @@ export default {
               resource: 5,
               shift: 34,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 35,
@@ -1711,7 +1710,7 @@ export default {
               tasks: ['jd-19', 'jd-20', 'jd-21'],
               order: 1,
               color: '#513737',
-              cssClass: 'md-task-shift',
+              cssClass: 'mds-task-shift',
             },
             {
               id: 'jd-19',
@@ -1721,7 +1720,7 @@ export default {
               resource: 5,
               shift: 35,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-20',
@@ -1731,7 +1730,7 @@ export default {
               resource: 5,
               shift: 35,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
             {
               id: 'jd-21',
@@ -1741,8 +1740,9 @@ export default {
               resource: 5,
               shift: 35,
               order: 2,
-              cssClass: 'md-task-subtask',
+              cssClass: 'mds-task-subtask',
             },
+            //</hidden>
           ],
           resources: [
             {
@@ -1788,25 +1788,33 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-task-shift {
+.mds-task-shift {
   height: 30px;
 }
-.md-task-subtask {
-  font-size: 14px;
+
+.mds-task-subtask {
+  height: 40px;
 }
 
-.md-task-hours {
+.mds-task-subtask .mbsc-schedule-event-range,
+.mds-task-subtask .mbsc-schedule-event-title  {
   font-size: 10px;
-  font-weight: 400;
+  line-height: 13px;
 }
 
-.md-task-shift .mbsc-schedule-event-range,
-.md-task-shift .mbsc-schedule-event-title {
+
+.mds-task-shift .mbsc-schedule-event-range,
+.mds-task-shift .mbsc-schedule-event-title {
   display: inline-block;
   margin: 0 4px;
 }
 
-.md-temp-blocked-class.mbsc-schedule-invalid {
+.mds-task-hours {
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.mds-task-blocked.mbsc-schedule-invalid {
   text-align: center;
   align-items: center;
   font-weight: bold;
