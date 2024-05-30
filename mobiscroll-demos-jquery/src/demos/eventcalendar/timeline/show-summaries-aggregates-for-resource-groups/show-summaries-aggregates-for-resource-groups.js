@@ -908,10 +908,6 @@ export default {
             updateCalendarEvents(inst);
           },
           onEventUpdated: function (args, inst) {
-            var updatedEvent = args.event;
-            var index = myEvents.indexOf(updatedEvent);
-            console.log(index);
-            myEvents.splice(index, 0);
             updateCalendarEvents(inst);
           },
           onEventCreated: function (args, inst) {
@@ -928,8 +924,7 @@ export default {
           min: 'dyndatetime(y,m,d-7)',
           max: 'dyndatetime(y,m,d+6)',
           renderResource: function (res) {
-            var isParent = res.isParent;
-            if (isParent) {
+            if (res.isParent) {
               return '<div>' + res.name + '</div><div class="mds-aggregates-description">' + res.address + '</div>';
             }
             return (
@@ -943,8 +938,7 @@ export default {
             );
           },
           renderScheduleEventContent: function (event) {
-            var isParent = event.currentResource.isParent;
-            if (isParent) {
+            if (event.currentResource.isParent) {
               return (
                 '<div class="mds-aggregates-summary-event mbsc-flex">' +
                 '<div class="mds-aggregates-summary-details mbsc-flex mbsc-flex-1-1"><div class="mds-aggregates-label">Total dist. <div class="mds-aggregates-summary-value">' +
@@ -1008,6 +1002,10 @@ export default {
   font-weight: 600;
 }
 
+.mds-aggregates .mbsc-ios .mbsc-schedule-event:after {
+  display: none;
+}
+
 .mds-aggregates .mbsc-schedule-event-inner {
   height: auto;
   width: 100%;
@@ -1019,8 +1017,33 @@ export default {
   color: #fff;
 }
 
-.mds-aggregates .mbsc-ios .mbsc-schedule-event:after {
-  display: none;
+.mds-aggregates-plate {
+  padding: 8px 0;
+  font-weight: 600;
+}
+
+.mds-aggregates-cartype {
+  font-size: 11px;
+  font-weight: 600;
+  padding-top: 7em;
+}
+
+.mds-aggregates-summary-event {
+  color: #000;
+  height: 70px;
+  align-items: center;
+}
+
+.mds-aggregates-summary-details {
+  white-space: normal;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.mds-aggregates-summary-value {
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 24px;
 }
 
 .mds-aggregates-event {
@@ -1041,25 +1064,8 @@ export default {
   font-weight: 600;
 }
 
-.mds-aggregates-cartype {
-  font-size: 11px;
-  font-weight: 600;
-  padding-top: 7em;
-}
-
-.mds-aggregates-plate {
-  padding: 8px 0;
-  font-weight: 600;
-}
-
 .mds-aggregates-value {
   font-weight: 600;
-  line-height: 24px;
-}
-
-.mds-aggregates-summary-value {
-  font-weight: 600;
-  font-size: 15px;
   line-height: 24px;
 }
 
@@ -1071,20 +1077,6 @@ export default {
   white-space: normal;
   justify-content: space-between;
   padding: 8px 0;
-}
-
-.mds-aggregates-summary-details {
-  white-space: normal;
-  justify-content: space-between;
-  padding: 8px;
-}
-
-
-
-.mds-aggregates-summary-event {
-  color: #000;
-  height: 70px;
-  align-items: center;
 }
 `,
 };
