@@ -17,6 +17,7 @@ export default {
           recurring: {
             repeat: 'daily',
           },
+          workOff: true,
         },
         {
           start: '19:00',
@@ -24,15 +25,14 @@ export default {
           recurring: {
             repeat: 'daily',
           },
+          workOff: true,
         },
       ];
 
       var timelineInst = $('#demo-tasks-subtasks-under-shifts')
         .mobiscroll()
         .eventcalendar({
-          dragToMove: true,
-          dragToResize: true,
-          dragToCreate: true,
+          // drag,
           view: {
             timeline: {
               type: 'week',
@@ -52,7 +52,7 @@ export default {
               order: isShift ? 1 : 2,
               cssClass: isShift ? 'mds-task-shift' : 'mds-task-subtask',
               color: isShift ? '#513737' : '',
-              title: isShift ? 'New Shift' : 'New subtask',
+              title: isShift ? 'New Shift' : 'New Task',
               tasks: isShift ? [] : undefined,
               shift: isShift ? undefined : events[0].id,
             };
@@ -66,15 +66,22 @@ export default {
             if (event.shift) {
               /* tasks was created */
               var shift = overlapEvents[0];
-
               if (overlapEvents.length > 2) {
                 // prevent task overlap
                 inst.removeEvent(event);
+                mobiscroll.toast({
+                  //<hidden>
+                  // theme,//</hidden>
+                  // context,
+                  message: 'No space for task',
+                });
               } else {
                 /* update the shift */
                 shift.tasks.push(event.id);
                 inst.updateEvent(shift);
                 /* update subtask */
+                event.start = new Date(Math.max(+new Date(shift.start), +event.start));
+                event.end = new Date(Math.min(+new Date(shift.end), +event.end));
                 event.shift = shift.id;
                 inst.updateEvent(event);
               }
@@ -84,6 +91,18 @@ export default {
             var event = args.event;
             if (event.tasks) {
               inst.removeEvent(event.tasks);
+            }
+
+            if (event.shift) {
+              var shift = inst.getEvents().find(function (ev) {
+                return ev.resource === event.resource && ev.id === event.shift;
+              });
+              // remove the deleted task id from the shift data
+              shift.tasks = shift.tasks.filter(function (t) {
+                return t !== event.id;
+              });
+
+              inst.updateEvent(shift);
             }
           },
           onEventDragStart: function (args, inst) {
@@ -103,6 +122,7 @@ export default {
                   end: e.end,
                   resource: e.resource,
                   cssClass: 'mds-task-blocked',
+                  shift: true,
                 });
               });
 
@@ -120,12 +140,14 @@ export default {
                   end: shift.start,
                   resource: shift.resource,
                   cssClass: 'mds-task-blocked',
+                  task: true,
                 },
                 {
                   start: shift.end,
                   end: new Date(+new Date(shift.end) + 7 * 86400000),
                   resource: shift.resource,
                   cssClass: 'mds-task-blocked',
+                  task: true,
                 },
               );
               inst.setOptions({
@@ -190,20 +212,43 @@ export default {
 
                 inst.updateEvent(updatedTasks);
               }
-            }
-          },
-          onEventUpdate: function (args, inst) {
-            var event = args.event;
-            // subtask was updated
-            if (event.shift) {
+            } else {
+              // subtask was updated
               var eventOverlap = inst.getEvents(event.start, event.end).filter(function (e) {
                 return e.resource === event.resource;
               });
               if (eventOverlap.length > 2) {
                 // don't let subtask to overlap
-                return false;
+                inst.updateEvent(oldEvent);
+
+                mobiscroll.toast({
+                  //<hidden>
+                  // theme,//</hidden>
+                  // context,
+                  message: 'No space for task',
+                });
               }
             }
+          },
+          onEventUpdateFailed: function (args) {
+            var invalid = args.invalid;
+            var msg = '';
+
+            if (invalid.workOff) {
+              msg = 'Shift falls out of working hours';
+            } else if (invalid.task) {
+              msg = 'Task falls out of shift';
+            } else if (invalid.shift) {
+              msg = 'Shifts cannot overlap';
+            }
+
+            msg &&
+              mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
+                message: msg,
+              });
           },
           renderScheduleEventContent: function (args) {
             var duration = (+args.endDate - +args.startDate) / 3600000;
