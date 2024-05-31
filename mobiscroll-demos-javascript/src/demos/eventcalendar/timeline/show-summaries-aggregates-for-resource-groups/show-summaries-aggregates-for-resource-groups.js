@@ -949,7 +949,7 @@ export default {
             event.original.consumption +
             ' gal</div></div><div class="mds-aggregates-label">Est. cost <div class="mds-aggregates-summary-value">$' +
             Math.round(event.original.consumption * 3.706 || 0) +
-            '</div></div></div></div></div>'
+            '</div></div></div></div>'
           );
         }
         return (
@@ -1027,7 +1027,6 @@ export default {
 
 .mds-aggregates-summary-event {
   color: #000;
-  /*align-items: center;*/
 }
 
 .mds-aggregates-summary-details {
