@@ -898,7 +898,7 @@ export default {
               start: start,
               end: end,
               title: 'New event',
-              name: 'Default name',
+              name: 'John Doe',
               distance: 42,
               consumption: 6,
             };
