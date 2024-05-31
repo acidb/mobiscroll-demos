@@ -59,6 +59,7 @@ export class AppComponent {
   };
 
   myEvents: MbscCalendarEvent[] = [
+    // relevant events
     {
       id: 1,
       allDay: true,
@@ -103,6 +104,7 @@ export class AppComponent {
       distance: 60,
       consumption: 20,
     },
+    //<hide-comment>
     {
       id: 5,
       allDay: true,
@@ -785,9 +787,11 @@ export class AppComponent {
       distance: 130,
       consumption: 35,
     },
+    //</hide-comment>
   ];
 
   myResources: MbscResource[] = [
+    // relevant resources
     {
       id: 'orlando',
       name: 'CNL Tower II',
@@ -818,6 +822,7 @@ export class AppComponent {
         },
       ],
     },
+    //<hide-comment>
     {
       id: 'las-vegas',
       name: 'Tower 300',
@@ -878,6 +883,7 @@ export class AppComponent {
         },
       ],
     },
+    //</hide-comment>
   ];
 
   firstViewDay: Date = new Date();

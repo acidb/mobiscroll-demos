@@ -49,6 +49,7 @@ export default {
       }
 
       var myResources = [
+        // relevant resources
         {
           id: 'orlando',
           name: 'CNL Tower II',
@@ -79,6 +80,7 @@ export default {
             },
           ],
         },
+        //<hide-comment>
         {
           id: 'las-vegas',
           name: 'Tower 300',
@@ -139,9 +141,11 @@ export default {
             },
           ],
         },
+        //</hide-comment>
       ];
 
       var myEvents = [
+        // relevant events
         {
           id: 1,
           allDay: true,
@@ -186,6 +190,7 @@ export default {
           distance: 60,
           consumption: 20,
         },
+        //<hide-comment>
         {
           id: 5,
           allDay: true,
@@ -868,12 +873,13 @@ export default {
           distance: 130,
           consumption: 35,
         },
+        //</hide-comment>
       ];
 
       var firstViewDay = null;
       var lastViewDay = null;
 
-      var inst = $('#demo-aggregates')
+      $('#demo-aggregates')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -925,7 +931,7 @@ export default {
           max: 'dyndatetime(y,m,d+6)',
           renderResource: function (res) {
             if (res.isParent) {
-              return '<div>' + res.name + '</div><div class="mds-aggregates-description">' + res.address + '</div>';
+              return '<div>' + res.name + '</div><div class="mds-aggregates-address">' + res.address + '</div>';
             }
             return (
               '<div>' +
@@ -969,17 +975,7 @@ export default {
           },
           resources: myResources,
           data: myEvents,
-        })
-        .mobiscroll('getInst');
-
-      //TODO B-E IMPL
-      // $.getJSON(
-      //   'https://trial.mobiscroll.com/timeline-events/?callback=?',
-      //   function (events) {
-      //     inst.setEvents(events);
-      //   },
-      //   'jsonp',
-      // );
+        });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -990,7 +986,7 @@ export default {
   css: `
 .mds-aggregates .mbsc-timeline-column,
 .mds-aggregates .mbsc-timeline-header-column {
-  width: 16em;
+  width: 14.5em;
 }
 
 .mds-aggregates .mbsc-timeline-row-gutter {
@@ -1017,6 +1013,13 @@ export default {
   color: #fff;
 }
 
+.mds-aggregates-address {
+  padding: 8px 0;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
 .mds-aggregates-plate {
   padding: 8px 0;
   font-weight: 600;
@@ -1025,12 +1028,11 @@ export default {
 .mds-aggregates-cartype {
   font-size: 11px;
   font-weight: 600;
-  padding-top: 7em;
 }
 
 .mds-aggregates-summary-event {
   color: #000;
-  height: 70px;
+  height: 58px;
   align-items: center;
 }
 
@@ -1059,7 +1061,7 @@ export default {
 
 .mds-aggregates-description {
   padding: 8px 0;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 16px;
   font-weight: 600;
 }
@@ -1070,7 +1072,9 @@ export default {
 }
 
 .mds-aggregates-label {
+  font-size: 11px;
   font-weight: 400;
+  line-height: 16px;
 }
 
 .mds-aggregates-details {

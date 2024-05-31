@@ -1,6 +1,6 @@
 .mds-aggregates .mbsc-timeline-column,
 .mds-aggregates .mbsc-timeline-header-column {
-  width: 16em;
+  width: 14.5em;
 }
 
 .mds-aggregates .mbsc-timeline-row-gutter {
@@ -27,6 +27,13 @@
   color: #fff;
 }
 
+.mds-aggregates-address {
+  padding: 8px 0;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
 .mds-aggregates-plate {
   padding: 8px 0;
   font-weight: 600;
@@ -35,12 +42,11 @@
 .mds-aggregates-cartype {
   font-size: 11px;
   font-weight: 600;
-  padding-top: 7em;
 }
 
 .mds-aggregates-summary-event {
   color: #000;
-  height: 70px;
+  height: 58px;
   align-items: center;
 }
 
@@ -69,7 +75,7 @@
 
 .mds-aggregates-description {
   padding: 8px 0;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 16px;
   font-weight: 600;
 }
@@ -80,7 +86,9 @@
 }
 
 .mds-aggregates-label {
+  font-size: 11px;
   font-weight: 400;
+  line-height: 16px;
 }
 
 .mds-aggregates-details {
