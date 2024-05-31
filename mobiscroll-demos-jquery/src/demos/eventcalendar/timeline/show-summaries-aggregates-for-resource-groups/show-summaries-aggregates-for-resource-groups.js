@@ -271,8 +271,8 @@ export default {
         {
           id: 12,
           allDay: true,
-          start: 'dyndatetime(y,m,d-5,7,30)',
-          end: 'dyndatetime(y,m,d-5,19)',
+          start: 'dyndatetime(y,m,d-7,7,30)',
+          end: 'dyndatetime(y,m,d-7,19)',
           resource: 'orlando_2',
           title: 'Board meeting',
           name: 'Charles H. King',
@@ -524,8 +524,8 @@ export default {
         {
           id: 35,
           allDay: true,
-          start: 'dyndatetime(y,m,d-5,7,30)',
-          end: 'dyndatetime(y,m,d-5,17)',
+          start: 'dyndatetime(y,m,d-7,7,30)',
+          end: 'dyndatetime(y,m,d-7,17)',
           resource: 'las-vegas_2',
           title: 'IT upgrade assessment',
           name: 'Amanda G. Walker',
@@ -590,8 +590,8 @@ export default {
         {
           id: 41,
           allDay: true,
-          start: 'dyndatetime(y,m,d-5,9)',
-          end: 'dyndatetime(y,m,d-5,19)',
+          start: 'dyndatetime(y,m,d-7,9)',
+          end: 'dyndatetime(y,m,d-7,19)',
           resource: 'las-vegas_3',
           title: 'Client negotiation',
           name: 'Stephanie M. Turner',
@@ -645,8 +645,8 @@ export default {
         {
           id: 46,
           allDay: true,
-          start: 'dyndatetime(y,m,d+4,8)',
-          end: 'dyndatetime(y,m,d+4,20)',
+          start: 'dyndatetime(y,m,d+6,8)',
+          end: 'dyndatetime(y,m,d+6,20)',
           resource: 'las-vegas_3',
           title: 'Industry trade show',
           name: 'Aaron R. Martin',
@@ -744,8 +744,8 @@ export default {
         {
           id: 55,
           allDay: true,
-          start: 'dyndatetime(y,m,d-5,11)',
-          end: 'dyndatetime(y,m,d-5,22)',
+          start: 'dyndatetime(y,m,d-7,11)',
+          end: 'dyndatetime(y,m,d-7,22)',
           resource: 'miami_2',
           title: 'Employee orientation',
           name: 'Donna A. Harris',
@@ -810,8 +810,8 @@ export default {
         {
           id: 61,
           allDay: true,
-          start: 'dyndatetime(y,m,d-5,11)',
-          end: 'dyndatetime(y,m,d-5,19)',
+          start: 'dyndatetime(y,m,d-7,11)',
+          end: 'dyndatetime(y,m,d-7,19)',
           resource: 'miami_3',
           title: 'Corporate luncheon',
           name: 'Judith G. Walker',
@@ -865,8 +865,8 @@ export default {
         {
           id: 66,
           allDay: true,
-          start: 'dyndatetime(y,m,d+4,9,30)',
-          end: 'dyndatetime(y,m,d+4,17)',
+          start: 'dyndatetime(y,m,d+6,9,30)',
+          end: 'dyndatetime(y,m,d+6,17)',
           resource: 'miami_3',
           title: 'Performance appraisal',
           name: 'Adam L. Scott',
@@ -947,11 +947,11 @@ export default {
             if (event.currentResource.isParent) {
               return (
                 '<div class="mds-aggregates-summary-event mbsc-flex">' +
-                '<div class="mds-aggregates-summary-details mbsc-flex mbsc-flex-1-1"><div class="mds-aggregates-label">Total dist. <div class="mds-aggregates-summary-value">' +
+                '<div class="mds-aggregates-summary-details mbsc-flex mbsc-flex-1-1"><div class="mds-aggregates-summary-label">Total dist. <div class="mds-aggregates-summary-value">' +
                 event.original.distance +
-                ' ml</div></div><div class="mds-aggregates-label">Total cons. <div class="mds-aggregates-summary-value">' +
+                ' mi</div></div><div class="mds-aggregates-summary-label">Total cons. <div class="mds-aggregates-summary-value">' +
                 event.original.consumption +
-                ' gal</div></div><div class="mds-aggregates-label">Est. cost <div class="mds-aggregates-summary-value">$' +
+                ' gal</div></div><div class="mds-aggregates-summary-label">Est. cost <div class="mds-aggregates-summary-value">$' +
                 Math.round(event.original.consumption * 3.706 || 0) +
                 '</div></div></div></div></div>'
               );
@@ -960,11 +960,11 @@ export default {
               '<div class="mds-aggregates-event">' +
               '<div class="mds-aggregates-title">' +
               event.title +
-              '</div><div class="mds-aggregates-description">' +
+              '</div><div class="mds-aggregates-name">' +
               event.original.name +
               '</div><div class="mds-aggregates-details"><div class="mds-aggregates-label">Est. distance: <span class="mds-aggregates-value">' +
               event.original.distance +
-              ' ml</span></div><div class="mds-aggregates-label">Est. consumption: <span class="mds-aggregates-value">' +
+              ' mi</span></div><div class="mds-aggregates-label">Est. consumption: <span class="mds-aggregates-value">' +
               event.original.consumption +
               ' gal</span></div></div><div class="mds-aggregates-label mbsc-flex"><div class="mbsc-flex-1-1">Pick up: <span class="mds-aggregates-value""> ' +
               mobiscroll.formatDate('hh:mm A', new Date(event.original.start)) +
@@ -1032,14 +1032,18 @@ export default {
 
 .mds-aggregates-summary-event {
   color: #000;
-  height: 58px;
-  align-items: center;
+  /*align-items: center;*/
 }
 
 .mds-aggregates-summary-details {
   white-space: normal;
   justify-content: space-between;
   padding: 8px;
+}
+
+.mds-aggregates-summary-label {
+  font-size: 11px;
+  font-weight: 400;
 }
 
 .mds-aggregates-summary-value {
@@ -1059,8 +1063,8 @@ export default {
   font-weight: 600;
 }
 
-.mds-aggregates-description {
-  padding: 8px 0;
+.mds-aggregates-name {
+  padding: 4px 0;
   font-size: 12px;
   line-height: 16px;
   font-weight: 600;
@@ -1068,13 +1072,11 @@ export default {
 
 .mds-aggregates-value {
   font-weight: 600;
-  line-height: 24px;
 }
 
 .mds-aggregates-label {
   font-size: 11px;
   font-weight: 400;
-  line-height: 16px;
 }
 
 .mds-aggregates-details {

@@ -25,8 +25,6 @@ setOptions({
   templateUrl: './show-summaries-aggregates-for-resource-groups.html',
 })
 export class AppComponent {
-  constructor() {}
-
   calendarOptions: MbscEventcalendarOptions = {
     min: dyndatetime('y,m,d-7'),
     max: dyndatetime('y,m,d+6'),
@@ -185,8 +183,8 @@ export class AppComponent {
     {
       id: 12,
       allDay: true,
-      start: dyndatetime('y,m,d-5,7,30'),
-      end: dyndatetime('y,m,d-5,19'),
+      start: dyndatetime('y,m,d-7,7,30'),
+      end: dyndatetime('y,m,d-7,19'),
       resource: 'orlando_2',
       title: 'Board meeting',
       name: 'Charles H. King',
@@ -438,8 +436,8 @@ export class AppComponent {
     {
       id: 35,
       allDay: true,
-      start: dyndatetime('y,m,d-5,7,30'),
-      end: dyndatetime('y,m,d-5,17'),
+      start: dyndatetime('y,m,d-7,7,30'),
+      end: dyndatetime('y,m,d-7,17'),
       resource: 'las-vegas_2',
       title: 'IT upgrade assessment',
       name: 'Amanda G. Walker',
@@ -504,8 +502,8 @@ export class AppComponent {
     {
       id: 41,
       allDay: true,
-      start: dyndatetime('y,m,d-5,9'),
-      end: dyndatetime('y,m,d-5,19'),
+      start: dyndatetime('y,m,d-7,9'),
+      end: dyndatetime('y,m,d-7,19'),
       resource: 'las-vegas_3',
       title: 'Client negotiation',
       name: 'Stephanie M. Turner',
@@ -559,8 +557,8 @@ export class AppComponent {
     {
       id: 46,
       allDay: true,
-      start: dyndatetime('y,m,d+4,8'),
-      end: dyndatetime('y,m,d+4,20'),
+      start: dyndatetime('y,m,d+6,8'),
+      end: dyndatetime('y,m,d+6,20'),
       resource: 'las-vegas_3',
       title: 'Industry trade show',
       name: 'Aaron R. Martin',
@@ -658,8 +656,8 @@ export class AppComponent {
     {
       id: 55,
       allDay: true,
-      start: dyndatetime('y,m,d-5,11'),
-      end: dyndatetime('y,m,d-5,22'),
+      start: dyndatetime('y,m,d-7,11'),
+      end: dyndatetime('y,m,d-7,22'),
       resource: 'miami_2',
       title: 'Employee orientation',
       name: 'Donna A. Harris',
@@ -724,8 +722,8 @@ export class AppComponent {
     {
       id: 61,
       allDay: true,
-      start: dyndatetime('y,m,d-5,11'),
-      end: dyndatetime('y,m,d-5,19'),
+      start: dyndatetime('y,m,d-7,11'),
+      end: dyndatetime('y,m,d-7,19'),
       resource: 'miami_3',
       title: 'Corporate luncheon',
       name: 'Judith G. Walker',
@@ -779,8 +777,8 @@ export class AppComponent {
     {
       id: 66,
       allDay: true,
-      start: dyndatetime('y,m,d+4,9,30'),
-      end: dyndatetime('y,m,d+4,17'),
+      start: dyndatetime('y,m,d+6,9,30'),
+      end: dyndatetime('y,m,d+6,17'),
       resource: 'miami_3',
       title: 'Performance appraisal',
       name: 'Adam L. Scott',

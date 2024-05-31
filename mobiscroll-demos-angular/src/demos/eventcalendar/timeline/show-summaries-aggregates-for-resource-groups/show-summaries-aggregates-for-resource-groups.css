@@ -46,14 +46,18 @@
 
 .mds-aggregates-summary-event {
   color: #000;
-  height: 58px;
-  align-items: center;
+  /*align-items: center;*/
 }
 
 .mds-aggregates-summary-details {
   white-space: normal;
   justify-content: space-between;
   padding: 8px;
+}
+
+.mds-aggregates-summary-label {
+  font-size: 11px;
+  font-weight: 400;
 }
 
 .mds-aggregates-summary-value {
@@ -73,8 +77,8 @@
   font-weight: 600;
 }
 
-.mds-aggregates-description {
-  padding: 8px 0;
+.mds-aggregates-name {
+  padding: 4px 0;
   font-size: 12px;
   line-height: 16px;
   font-weight: 600;
@@ -82,13 +86,11 @@
 
 .mds-aggregates-value {
   font-weight: 600;
-  line-height: 24px;
 }
 
 .mds-aggregates-label {
   font-size: 11px;
   font-weight: 400;
-  line-height: 16px;
 }
 
 .mds-aggregates-details {
