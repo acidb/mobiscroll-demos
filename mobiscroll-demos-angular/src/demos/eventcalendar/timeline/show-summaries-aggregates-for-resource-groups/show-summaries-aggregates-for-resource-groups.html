@@ -16,7 +16,7 @@
         <div class="mds-aggregates-summary-details mbsc-flex mbsc-flex-1-1">
           <div class="mds-aggregates-label">
             Total dist.
-            <div class="mds-aggregates-summary-value">{{event.original.distance}} ml</div>
+            <div class="mds-aggregates-summary-value">{{event.original.distance}} mi</div>
           </div>
           <div class="mds-aggregates-label">
             Total cons.
@@ -32,11 +32,11 @@
     <ng-template #notSummary>
       <div class="mds-aggregates-event">
         <div class="mds-aggregates-title">{{event.title}}</div>
-        <div class="mds-aggregates-description">{{event.original.name}}</div>
+        <div class="mds-aggregates-name">{{event.original.name}}</div>
         <div class="mds-aggregates-details">
           <div class="mds-aggregates-label">
             Est. distance:
-            <span class="mds-aggregates-value"> {{event.original.distance}} ml</span>
+            <span class="mds-aggregates-value"> {{event.original.distance}} mi</span>
           </div>
           <div class="mds-aggregates-label">
             Est. consumption:
