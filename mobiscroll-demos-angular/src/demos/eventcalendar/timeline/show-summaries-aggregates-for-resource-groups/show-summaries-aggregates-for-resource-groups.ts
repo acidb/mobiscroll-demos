@@ -2,15 +2,16 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
+  MbscEventcalendar,
   MbscEventcalendarOptions,
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscEventUpdatedEvent,
+  MbscNewEventData,
   MbscPageLoadingEvent,
   MbscResource,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import { EventcalendarBase } from '@mobiscroll/angular/dist/js/core/components/eventcalendar/eventcalendar';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -40,7 +41,7 @@ export class AppComponent {
         eventHeight: 'variable',
       },
     },
-    extendDefaultEvent: (args) => {
+    extendDefaultEvent: (args: MbscNewEventData) => {
       const d = args.start;
       const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 9);
       const end = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 18);
@@ -788,6 +789,8 @@ export class AppComponent {
     //</hide-comment>
   ];
 
+  eventsWithSummaries: MbscCalendarEvent[] = this.myEvents;
+
   myResources: MbscResource[] = [
     // relevant resources
     {
@@ -916,36 +919,33 @@ export class AppComponent {
     return Object.values(aggregateEvents);
   }
 
-  updateCalendarEvents(inst: EventcalendarBase): void {
+  updateCalendarEvents(inst: MbscEventcalendar): void {
     const dailyEvents = inst.getEvents();
     const updatedSummaries = this.getAggregateEvents(dailyEvents);
-    const updatedEvents = this.myEvents.concat(updatedSummaries);
-    setTimeout(() => {
-      inst.setEvents(updatedEvents);
-    });
+    this.eventsWithSummaries = [...this.myEvents, ...updatedSummaries];
   }
 
   handlePageLoading(args: MbscPageLoadingEvent): void {
     this.firstViewDay = new Date(args.firstDay);
     this.lastViewDay = new Date(args.lastDay);
-    this.updateCalendarEvents(args.inst!);
+    this.updateCalendarEvents(args.inst! as MbscEventcalendar);
   }
 
   handleEventUpdated(args: MbscEventUpdatedEvent): void {
-    this.updateCalendarEvents(args.inst!);
+    this.updateCalendarEvents(args.inst! as MbscEventcalendar);
   }
 
   handleEventCreated(args: MbscEventCreatedEvent): void {
     const newEvent = args.event;
     this.myEvents.push(newEvent);
-    this.updateCalendarEvents(args.inst!);
+    this.updateCalendarEvents(args.inst! as MbscEventcalendar);
   }
 
   handleEventDeleted(args: MbscEventDeletedEvent): void {
     const deletedEvent = args.event;
     const index = this.myEvents.indexOf(deletedEvent);
     this.myEvents.splice(index, 1);
-    this.updateCalendarEvents(args.inst!);
+    this.updateCalendarEvents(args.inst! as MbscEventcalendar);
   }
 
   roundCost(cost: number): number {
