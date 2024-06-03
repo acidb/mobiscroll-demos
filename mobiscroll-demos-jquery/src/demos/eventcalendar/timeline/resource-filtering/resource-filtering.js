@@ -220,7 +220,7 @@ export default {
         }, 0);
       }
 
-      $('#calendar').on('click', '.mds-reset-filters-button', resetFilters);
+      $('#demo-calendar').on('click', '.mds-reset-filters-button', resetFilters);
 
       function handleSearch(event) {
         var query = event.target.value.toLowerCase();
@@ -247,7 +247,7 @@ export default {
         }, 300);
       }
 
-      $('#calendar').on('input', '#search-input', handleSearch);
+      $('#demo-calendar').on('input', '#search-input', handleSearch);
 
       function generateResourceHTML(resource) {
         return (
@@ -443,7 +443,7 @@ export default {
         popup.open();
       });
 
-      var calendar = $('#calendar')
+      var calendar = $('#demo-calendar')
         .mobiscroll()
         .eventcalendar({
           clickToCreate: true,
@@ -471,7 +471,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <div id="calendar"></div>
+  <div id="demo-calendar"></div>
   <div id="demo-filter-popup">
     <div>
       <div id="resource-list-group" mbsc-form-group>
