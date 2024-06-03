@@ -7,7 +7,8 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
-      themeVariant: 'dark',
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     var myEvents = [
@@ -133,8 +134,24 @@ export default {
     ];
 
     var popupPlaceholder = $('.mds-resource-filtering-popup-placeholder');
-    var $filterButton = $('#filter-button');
-    console.log($filterButton);
+
+    var statusCheckboxes = [];
+    var resourceCheckboxes = [];
+    var success = false;
+
+    var initialStatusCheckboxStates = [];
+    var initialResourceCheckboxStates = [];
+
+    $(document).ready(function () {
+      $('.mds-status-checkbox').each(function () {
+        var checkbox = $(this).mobiscroll('getInst');
+        statusCheckboxes.push(checkbox);
+      });
+      $('.mds-resource-checkbox').each(function () {
+        var checkbox = $(this).mobiscroll('getInst');
+        resourceCheckboxes.push(checkbox);
+      });
+    });
 
     function renderCustomResource(resource) {
       var statusHtml = '';
@@ -162,7 +179,7 @@ export default {
       return (
         '<div class="mbsc-flex mbsc-align-items-center mds-resource-filtering-header">' +
         '<label class=mds-search-label>' +
-        '<input type="text" mbsc-input id="search-input" data-input-style="box" data-start-icon="" placeholder="Search..." class="mds-resource-header-template-search-input"/>' +
+        '<input type="text" mbsc-input id="search-input" data-input-style="outline" data-start-icon="" placeholder="Search..." class="mds-resource-header-template-search-input"/>' +
         '</label>' +
         '<button mbsc-button id="filter-button" class="mds-resource-header-template-filter-button" data-icon="">' +
         'Filter' +
@@ -184,16 +201,23 @@ export default {
     }
 
     function resetFilters() {
-      // $('.mds-status-checkbox').prop('checked', true);
-      // $('.mds-resource-checkbox').prop('checked', true);
-      // console.log(1);
+      statusCheckboxes.forEach(function (checkbox) {
+        checkbox.checked = true;
+      });
+
+      resourceCheckboxes.forEach(function (checkbox) {
+        checkbox.checked = true;
+      });
+
+      $('#search-input').val('');
 
       onSiteFilter = false;
       maintenanceFilter = false;
       filterResources();
       refreshResourceList();
       popupPlaceholder.hide();
-      inst.setOptions({ resources: filteredResources });
+
+      calendar.setOptions({ resources: filteredResources });
     }
 
     $(document).on('click', '.mds-reset-filters-button', resetFilters);
@@ -219,7 +243,7 @@ export default {
             return site.children.length > 0;
           });
 
-        inst.setOptions({ resources: filteredResources });
+        calendar.setOptions({ resources: filteredResources });
       }, 300);
     }
 
@@ -237,9 +261,7 @@ export default {
     }
 
     function createResourceList() {
-      // console.log(1);
       var resourceList = $('#resource-list');
-      // resourceList.empty();
 
       myResources.forEach(function (site) {
         site.children.forEach(function (resource) {
@@ -257,15 +279,38 @@ export default {
           var resourceItem = resourceList.find('input[value="' + resource.id + '"]').parent();
           if ((!maintenanceFilter || resource.status !== 'maintenance') && (!onSiteFilter || resource.status !== 'on site')) {
             resourceItem.show();
+            console.log('here');
           }
         });
+      });
+    }
+
+    function saveInitialCheckboxStates() {
+      initialStatusCheckboxStates = statusCheckboxes.map(function (checkbox) {
+        return checkbox.checked;
+      });
+      initialResourceCheckboxStates = resourceCheckboxes.map(function (checkbox) {
+        return checkbox.checked;
+      });
+    }
+
+    function restoreInitialCheckboxStates() {
+      statusCheckboxes.forEach(function (checkbox, index) {
+        checkbox.checked = initialStatusCheckboxStates[index];
+      });
+      resourceCheckboxes.forEach(function (checkbox, index) {
+        checkbox.checked = initialResourceCheckboxStates[index];
       });
     }
 
     createResourceList();
 
     var onSiteFilter = false;
+    var onSiteFilterTemp = false;
+
     var maintenanceFilter = false;
+    var maintenanceFilterTemp = false;
+
     var filteredResources = [];
 
     function filterResources() {
@@ -330,18 +375,16 @@ export default {
 
     $(document).on('change', '.mds-resource-checkbox', filterResources);
 
-    $(document).on('change', '.mds-status-checkbox', function () {
-      var selectedStatus = $('.mds-status-checkbox:checked')
-        .map(function () {
-          // console.log($(this).data('label'));
-          return $(this).data('label');
-        })
-        .get();
+    $(document).on('change', '.mds-status-checkbox-maintenance, .mds-status-checkbox-on-site', function () {
+      var isMaintenance = $(this).hasClass('mds-status-checkbox-maintenance');
+      var isChecked = $(this).is(':checked');
 
-      onSiteFilter = !selectedStatus.includes('on site');
-      maintenanceFilter = !selectedStatus.includes('maintenance');
+      if (isMaintenance) {
+        maintenanceFilter = !isChecked;
+      } else {
+        onSiteFilter = !isChecked;
+      }
 
-      filterResources();
       refreshResourceList();
 
       if (onSiteFilter && maintenanceFilter) {
@@ -354,22 +397,40 @@ export default {
     var popup = $('#demo-filter-popup')
       .mobiscroll()
       .popup({
-        anchor: $filterButton[0],
         buttons: [
           'cancel',
           {
-            text: 'Save',
+            text: 'Apply',
             keyCode: 'enter',
             handler: function () {
-              inst.setOptions({ resources: filteredResources });
+              filterResources();
+              calendar.setOptions({ resources: filteredResources });
+              success = true;
               popup.close();
             },
             cssClass: 'mbsc-popup-button-primary',
           },
         ],
+        onOpen: function () {
+          maintenanceFilterTemp = maintenanceFilter;
+          onSiteFilterTemp = onSiteFilter;
+        },
+        onClose: function () {
+          if (!success) {
+            maintenanceFilter = maintenanceFilterTemp;
+            onSiteFilter = onSiteFilterTemp;
+            restoreInitialCheckboxStates();
+            // .. refactor
+            if (onSiteFilter && maintenanceFilter) {
+              popupPlaceholder.show();
+            } else {
+              popupPlaceholder.hide();
+            }
+            refreshResourceList();
+          }
+        },
         contentPadding: false,
         display: 'anchored',
-        // focusElm: $filterButton,
         focusOnClose: false,
         focusOnOpen: false,
         showOverlay: false,
@@ -378,10 +439,13 @@ export default {
       .mobiscroll('getInst');
 
     $(document).on('click', '#filter-button', function () {
+      popup.setOptions({ anchor: this });
+      saveInitialCheckboxStates();
+      success = false;
       popup.open();
     });
 
-    var inst = $('#calendar')
+    var calendar = $('#calendar')
       .mobiscroll()
       .eventcalendar({
         clickToCreate: true,
@@ -398,7 +462,6 @@ export default {
             weekNumbers: false,
           },
         },
-        height: 1000,
         data: myEvents,
         resources: myResources,
         renderResource: renderCustomResource,
@@ -412,20 +475,21 @@ export default {
   <div id="calendar"></div>
   <div id="demo-filter-popup">
     <div>
-      <div id="resource-list-group">
+      <div id="resource-list-group" mbsc-form-group>
+      <div class="mbsc-form-group-title">Resources</div>
         <div class="mds-resource-filtering-popup-placeholder" style="display: none">
           <div class="mds-placeholder">No resources available</div>
         </div>
         <div id="resource-list"></div>
       </div>
-      <br />
-      <div id="checkbox-group">
+      <div id="checkbox-group" mbsc-form-group>
+      <div class="mbsc-form-group-title">Operational Status</div>
         <label>
           <input
             type="checkbox"
             mbsc-checkbox
             data-label="maintenance"
-            class="mds-status-checkbox"
+            class="mds-status-checkbox mds-status-checkbox-maintenance"
             checked
           />
         </label>
@@ -434,7 +498,7 @@ export default {
             type="checkbox"
             mbsc-checkbox
             data-label="on site"
-            class="mds-status-checkbox"
+            class="mds-status-checkbox mds-status-checkbox-on-site"
             checked
           />
         </label>
@@ -466,6 +530,7 @@ export default {
   }
   
   .mbsc-timeline-resource-header {
+    margin-top: 4px;
     padding: 0;
   }
   
@@ -504,10 +569,6 @@ export default {
   .mds-search-label {
     margin: 0 !important;
     width: auto;
-  }
-  
-  #filter-button {
-    border-radius: 8px;
   }
   
   .mds-resource-header-template-search-input {
@@ -556,6 +617,10 @@ export default {
   .mds-resource-filtering-header {
     justify-content: space-evenly;
     align-items: center;
+  }
+
+  .mds-placeholder {
+    margin-bottom: 15px;
   }
   `,
 };
