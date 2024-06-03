@@ -9,463 +9,465 @@ export default {
       // theme
     });
 
-    var myEvents = [
-      {
-        start: 'dyndatetime(y,m,d,h+1)',
-        end: 'dyndatetime(y,m,d,h+6)',
-        title: 'Excavate Foundation',
-        resource: 'bulldozer - XYZ123',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h+5)',
-        end: 'dyndatetime(y,m,d,h+10)',
-        title: 'Install Framing',
-        resource: 'crane - DEF789',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h+7)',
-        end: 'dyndatetime(y,m,d,h+12)',
-        title: 'Electrical Wiring',
-        resource: 'excavator - GHI012',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h-5)',
-        end: 'dyndatetime(y,m,d,h+5)',
-        title: 'Roofing',
-        resource: 'crane - MNO678',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h-5)',
-        end: 'dyndatetime(y,m,d,h+8)',
-        title: 'Site Cleanup',
-        resource: 'bulldozer - PQR901',
-      },
-    ];
+    $(function () {
+      var myEvents = [
+        {
+          start: 'dyndatetime(y,m,d,h+1)',
+          end: 'dyndatetime(y,m,d,h+6)',
+          title: 'Excavate Foundation',
+          resource: 'bulldozer - XYZ123',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h+5)',
+          end: 'dyndatetime(y,m,d,h+10)',
+          title: 'Install Framing',
+          resource: 'crane - DEF789',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h+7)',
+          end: 'dyndatetime(y,m,d,h+12)',
+          title: 'Electrical Wiring',
+          resource: 'excavator - GHI012',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h-5)',
+          end: 'dyndatetime(y,m,d,h+5)',
+          title: 'Roofing',
+          resource: 'crane - MNO678',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h-5)',
+          end: 'dyndatetime(y,m,d,h+8)',
+          title: 'Site Cleanup',
+          resource: 'bulldozer - PQR901',
+        },
+      ];
 
-    var myResources = [
-      {
-        id: 'site1',
-        name: 'Downtown Construction',
-        color: '#76e083',
-        eventCreation: false,
-        children: [
-          {
-            id: 'bulldozer - XYZ123',
-            name: 'Bulldozer - XYZ123',
-            color: '#1dab2f',
-            status: 'on site',
-          },
-          {
-            id: 'concrete mixer - ABC456',
-            name: 'Concrete Mixer - ABC456',
-            color: '#76e083',
-            status: 'maintenance',
-          },
-        ],
-      },
-      {
-        id: 'site2',
-        name: 'Uptown Development',
-        color: '#ff1717',
-        eventCreation: false,
-        children: [
-          {
-            id: 'crane - DEF789',
-            name: 'Crane - DEF789',
-            color: '#4981d6',
-            status: 'on site',
-          },
-          {
-            id: 'excavator - GHI012',
-            name: 'Excavator - GHI012',
-            color: '#f7961e',
-            status: 'on site',
-          },
-          {
-            id: 'drill - JKL345',
-            name: 'Drill - JKL345',
-            color: '#34c8e0',
-            status: 'maintenance',
-          },
-          {
-            id: 'crane - MNO678',
-            name: 'Crane - MNO678',
-            color: '#e25dd2',
-            status: 'on site',
-          },
-        ],
-      },
-      {
-        id: 'site3',
-        name: 'Suburban Project',
-        color: '#d6d145',
-        eventCreation: false,
-        children: [
-          {
-            id: 'bulldozer - PQR901',
-            name: 'Bulldozer - PQR901',
-            color: '#d6d145',
-            status: 'on site',
-          },
-        ],
-      },
-      {
-        id: 'site4',
-        name: 'Industrial Park',
-        color: '#a1d6e2',
-        eventCreation: false,
-        children: [
-          {
-            id: 'forklift - STU234',
-            name: 'Forklift - STU234',
-            color: '#ffcc00',
-            status: 'maintenance',
-          },
-          {
-            id: 'dump truck - VWX567',
-            name: 'Dump Truck - VWX567',
-            color: '#cc6600',
-            status: 'maintenance',
-          },
-        ],
-      },
-    ];
-
-    var popupPlaceholder = $('.mds-resource-filtering-popup-placeholder');
-
-    var statusCheckboxes = [];
-    var resourceCheckboxes = [];
-    var success = false;
-
-    var initialStatusCheckboxStates = [];
-    var initialResourceCheckboxStates = [];
-
-    $(document).ready(function () {
-      $('.mds-status-checkbox').each(function () {
-        var checkbox = $(this).mobiscroll('getInst');
-        statusCheckboxes.push(checkbox);
-      });
-      $('.mds-resource-checkbox').each(function () {
-        var checkbox = $(this).mobiscroll('getInst');
-        resourceCheckboxes.push(checkbox);
-      });
-    });
-
-    function renderCustomResource(resource) {
-      var statusHtml = '';
-      if (resource.status) {
-        var statusColor = resource.status === 'on site' ? 'green' : 'orange';
-        statusHtml =
-          '<div class="mds-construction-machine-status">' +
-          '<span class="mds-resource-status-dot" style="background-color:' +
-          statusColor +
-          ';"></span>' +
-          resource.status +
-          '</div>';
-      }
-      return (
-        '<div class="mds-construction-machine">' +
-        '<div class="mds-construction-machine-name">' +
-        resource.name +
-        '</div>' +
-        statusHtml +
-        '</div>'
-      );
-    }
-
-    function renderResourceHeader() {
-      return (
-        '<div class="mbsc-flex mbsc-align-items-center mds-resource-filtering-header">' +
-        '<label class=mds-search-label>' +
-        '<input type="text" mbsc-input id="search-input" data-input-style="outline" data-start-icon="" placeholder="Search..." class="mds-resource-header-template-search-input"/>' +
-        '</label>' +
-        '<button mbsc-button id="filter-button" class="mds-resource-header-template-filter-button" data-icon="">' +
-        'Filter' +
-        '</button>' +
-        '</div>'
-      );
-    }
-
-    function renderResourceEmpty() {
-      return (
-        '<div class="mds-empty-resource-container">' +
-        '<div class="mds-empty-resource-content">' +
-        '<div class="mds-empty-resource-text">No resources match your search. Adjust your filters or try a different keyword.</div>' +
-        '<button mbsc-button class="mds-reset-filters-button"' +
-        '>Reset Filters</button>' +
-        '</div>' +
-        '</div>'
-      );
-    }
-
-    function resetFilters() {
-      statusCheckboxes.forEach(function (checkbox) {
-        checkbox.checked = true;
-      });
-
-      resourceCheckboxes.forEach(function (checkbox) {
-        checkbox.checked = true;
-      });
-
-      setTimeout(function () {
-        $('#search-input').val('');
-        onSiteFilter = false;
-        maintenanceFilter = false;
-        filterResources();
-        refreshResourceList();
-        popupPlaceholder.hide();
-
-        calendar.setOptions({ resources: filteredResources });
-      }, 0);
-    }
-
-    $('#calendar').on('click', '.mds-reset-filters-button', resetFilters);
-
-    function handleSearch(event) {
-      var query = event.target.value.toLowerCase();
-
-      clearTimeout(handleSearch.timeout);
-      handleSearch.timeout = setTimeout(function () {
-        filteredResources = myResources
-          .map(function (site) {
-            return {
-              id: site.id,
-              name: site.name,
-              color: site.color,
-              eventCreation: site.eventCreation,
-              children: site.children.filter(function (resource) {
-                return resource.name.toLowerCase().indexOf(query) !== -1;
-              }),
-            };
-          })
-          .filter(function (site) {
-            return site.children.length > 0;
-          });
-
-        calendar.setOptions({ resources: filteredResources });
-      }, 300);
-    }
-
-    $('#calendar').on('input', '#search-input', handleSearch);
-
-    function generateResourceHTML(resource) {
-      return (
-        '<label>' +
-        '<input type="checkbox" mbsc-checkbox class="mds-resource-checkbox" value="' +
-        resource.id +
-        '" checked> ' +
-        resource.name +
-        '</label>'
-      );
-    }
-
-    function createResourceList() {
-      var resourceList = $('#resource-list');
-
-      myResources.forEach(function (site) {
-        site.children.forEach(function (resource) {
-          resourceList.append(generateResourceHTML(resource));
-        });
-      });
-    }
-
-    function refreshResourceList() {
-      var resourceList = $('#resource-list');
-      resourceList.children().hide();
-
-      myResources.forEach(function (site) {
-        site.children.forEach(function (resource) {
-          var resourceItem = resourceList.find('input[value="' + resource.id + '"]').parent();
-          if ((!maintenanceFilter || resource.status !== 'maintenance') && (!onSiteFilter || resource.status !== 'on site')) {
-            resourceItem.show();
-            console.log('here');
-          }
-        });
-      });
-    }
-
-    function saveInitialCheckboxStates() {
-      initialStatusCheckboxStates = statusCheckboxes.map(function (checkbox) {
-        return checkbox.checked;
-      });
-      initialResourceCheckboxStates = resourceCheckboxes.map(function (checkbox) {
-        return checkbox.checked;
-      });
-    }
-
-    function restoreInitialCheckboxStates() {
-      statusCheckboxes.forEach(function (checkbox, index) {
-        checkbox.checked = initialStatusCheckboxStates[index];
-      });
-      resourceCheckboxes.forEach(function (checkbox, index) {
-        checkbox.checked = initialResourceCheckboxStates[index];
-      });
-    }
-
-    createResourceList();
-
-    var onSiteFilter = false;
-    var onSiteFilterTemp = false;
-
-    var maintenanceFilter = false;
-    var maintenanceFilterTemp = false;
-
-    var filteredResources = [];
-
-    function filterResources() {
-      var selectedResources = $('.mds-resource-checkbox:checked')
-        .map(function () {
-          return $(this).val();
-        })
-        .get();
-
-      filteredResources = myResources.map(function (site) {
-        return {
-          id: site.id,
-          name: site.name,
-          color: site.color,
-          eventCreation: site.eventCreation,
-          children: site.children.filter(function (resource) {
-            return selectedResources.includes(resource.id);
-          }),
-        };
-      });
-
-      filteredResources = filteredResources.filter(function (site) {
-        return site.children.length > 0;
-      });
-
-      if (maintenanceFilter) {
-        filteredResources = filteredResources
-          .map(function (site) {
-            return {
-              id: site.id,
-              name: site.name,
-              color: site.color,
-              eventCreation: site.eventCreation,
-              children: site.children.filter(function (resource) {
-                return resource.status !== 'maintenance';
-              }),
-            };
-          })
-          .filter(function (site) {
-            return site.children.length > 0;
-          });
-      }
-
-      if (onSiteFilter) {
-        filteredResources = filteredResources
-          .map(function (site) {
-            return {
-              id: site.id,
-              name: site.name,
-              color: site.color,
-              eventCreation: site.eventCreation,
-              children: site.children.filter(function (resource) {
-                return resource.status !== 'on site';
-              }),
-            };
-          })
-          .filter(function (site) {
-            return site.children.length > 0;
-          });
-      }
-    }
-
-    $(document).on('change', '.mds-status-checkbox-maintenance, .mds-status-checkbox-on-site', function () {
-      var isMaintenance = $(this).hasClass('mds-status-checkbox-maintenance');
-      var isChecked = $(this).is(':checked');
-
-      if (isMaintenance) {
-        maintenanceFilter = !isChecked;
-      } else {
-        onSiteFilter = !isChecked;
-      }
-
-      refreshResourceList();
-
-      if (onSiteFilter && maintenanceFilter) {
-        popupPlaceholder.show();
-      } else {
-        popupPlaceholder.hide();
-      }
-    });
-
-    var popup = $('#demo-filter-popup')
-      .mobiscroll()
-      .popup({
-        buttons: [
-          'cancel',
-          {
-            text: 'Apply',
-            keyCode: 'enter',
-            handler: function () {
-              filterResources();
-              calendar.setOptions({ resources: filteredResources });
-              success = true;
-              popup.close();
+      var myResources = [
+        {
+          id: 'site1',
+          name: 'Downtown Construction',
+          color: '#76e083',
+          eventCreation: false,
+          children: [
+            {
+              id: 'bulldozer - XYZ123',
+              name: 'Bulldozer - XYZ123',
+              color: '#1dab2f',
+              status: 'on site',
             },
-            cssClass: 'mbsc-popup-button-primary',
-          },
-        ],
-        onOpen: function () {
-          maintenanceFilterTemp = maintenanceFilter;
-          onSiteFilterTemp = onSiteFilter;
+            {
+              id: 'concrete mixer - ABC456',
+              name: 'Concrete Mixer - ABC456',
+              color: '#76e083',
+              status: 'maintenance',
+            },
+          ],
         },
-        onClose: function () {
-          if (!success) {
-            maintenanceFilter = maintenanceFilterTemp;
-            onSiteFilter = onSiteFilterTemp;
-            restoreInitialCheckboxStates();
-            // .. refactor
-            if (onSiteFilter && maintenanceFilter) {
-              popupPlaceholder.show();
-            } else {
-              popupPlaceholder.hide();
+        {
+          id: 'site2',
+          name: 'Uptown Development',
+          color: '#ff1717',
+          eventCreation: false,
+          children: [
+            {
+              id: 'crane - DEF789',
+              name: 'Crane - DEF789',
+              color: '#4981d6',
+              status: 'on site',
+            },
+            {
+              id: 'excavator - GHI012',
+              name: 'Excavator - GHI012',
+              color: '#f7961e',
+              status: 'on site',
+            },
+            {
+              id: 'drill - JKL345',
+              name: 'Drill - JKL345',
+              color: '#34c8e0',
+              status: 'maintenance',
+            },
+            {
+              id: 'crane - MNO678',
+              name: 'Crane - MNO678',
+              color: '#e25dd2',
+              status: 'on site',
+            },
+          ],
+        },
+        {
+          id: 'site3',
+          name: 'Suburban Project',
+          color: '#d6d145',
+          eventCreation: false,
+          children: [
+            {
+              id: 'bulldozer - PQR901',
+              name: 'Bulldozer - PQR901',
+              color: '#d6d145',
+              status: 'on site',
+            },
+          ],
+        },
+        {
+          id: 'site4',
+          name: 'Industrial Park',
+          color: '#a1d6e2',
+          eventCreation: false,
+          children: [
+            {
+              id: 'forklift - STU234',
+              name: 'Forklift - STU234',
+              color: '#ffcc00',
+              status: 'maintenance',
+            },
+            {
+              id: 'dump truck - VWX567',
+              name: 'Dump Truck - VWX567',
+              color: '#cc6600',
+              status: 'maintenance',
+            },
+          ],
+        },
+      ];
+
+      var popupPlaceholder = $('.mds-resource-filtering-popup-placeholder');
+
+      var statusCheckboxes = [];
+      var resourceCheckboxes = [];
+      var success = false;
+
+      var initialStatusCheckboxStates = [];
+      var initialResourceCheckboxStates = [];
+
+      $(document).ready(function () {
+        $('.mds-status-checkbox').each(function () {
+          var checkbox = $(this).mobiscroll('getInst');
+          statusCheckboxes.push(checkbox);
+        });
+        $('.mds-resource-checkbox').each(function () {
+          var checkbox = $(this).mobiscroll('getInst');
+          resourceCheckboxes.push(checkbox);
+        });
+      });
+
+      function renderCustomResource(resource) {
+        var statusHtml = '';
+        if (resource.status) {
+          var statusColor = resource.status === 'on site' ? 'green' : 'orange';
+          statusHtml =
+            '<div class="mds-construction-machine-status">' +
+            '<span class="mds-resource-status-dot" style="background-color:' +
+            statusColor +
+            ';"></span>' +
+            resource.status +
+            '</div>';
+        }
+        return (
+          '<div class="mds-construction-machine">' +
+          '<div class="mds-construction-machine-name">' +
+          resource.name +
+          '</div>' +
+          statusHtml +
+          '</div>'
+        );
+      }
+
+      function renderResourceHeader() {
+        return (
+          '<div class="mbsc-flex mbsc-align-items-center mds-resource-filtering-header">' +
+          '<label class=mds-search-label>' +
+          '<input type="text" mbsc-input id="search-input" data-input-style="outline" data-start-icon="" placeholder="Search..." class="mds-resource-header-template-search-input"/>' +
+          '</label>' +
+          '<button mbsc-button id="filter-button" class="mds-resource-header-template-filter-button" data-icon="">' +
+          'Filter' +
+          '</button>' +
+          '</div>'
+        );
+      }
+
+      function renderResourceEmpty() {
+        return (
+          '<div class="mds-empty-resource-container">' +
+          '<div class="mds-empty-resource-content">' +
+          '<div class="mds-empty-resource-text">No resources match your search. Adjust your filters or try a different keyword.</div>' +
+          '<button mbsc-button class="mds-reset-filters-button"' +
+          '>Reset Filters</button>' +
+          '</div>' +
+          '</div>'
+        );
+      }
+
+      function resetFilters() {
+        statusCheckboxes.forEach(function (checkbox) {
+          checkbox.checked = true;
+        });
+
+        resourceCheckboxes.forEach(function (checkbox) {
+          checkbox.checked = true;
+        });
+
+        setTimeout(function () {
+          $('#search-input').val('');
+          onSiteFilter = false;
+          maintenanceFilter = false;
+          filterResources();
+          refreshResourceList();
+          popupPlaceholder.hide();
+
+          calendar.setOptions({ resources: filteredResources });
+        }, 0);
+      }
+
+      $('#calendar').on('click', '.mds-reset-filters-button', resetFilters);
+
+      function handleSearch(event) {
+        var query = event.target.value.toLowerCase();
+
+        clearTimeout(handleSearch.timeout);
+        handleSearch.timeout = setTimeout(function () {
+          filteredResources = myResources
+            .map(function (site) {
+              return {
+                id: site.id,
+                name: site.name,
+                color: site.color,
+                eventCreation: site.eventCreation,
+                children: site.children.filter(function (resource) {
+                  return resource.name.toLowerCase().indexOf(query) !== -1;
+                }),
+              };
+            })
+            .filter(function (site) {
+              return site.children.length > 0;
+            });
+
+          calendar.setOptions({ resources: filteredResources });
+        }, 300);
+      }
+
+      $('#calendar').on('input', '#search-input', handleSearch);
+
+      function generateResourceHTML(resource) {
+        return (
+          '<label>' +
+          '<input type="checkbox" mbsc-checkbox class="mds-resource-checkbox" value="' +
+          resource.id +
+          '" checked> ' +
+          resource.name +
+          '</label>'
+        );
+      }
+
+      function createResourceList() {
+        var resourceList = $('#resource-list');
+
+        myResources.forEach(function (site) {
+          site.children.forEach(function (resource) {
+            resourceList.append(generateResourceHTML(resource));
+          });
+        });
+      }
+
+      function refreshResourceList() {
+        var resourceList = $('#resource-list');
+        resourceList.children().hide();
+
+        myResources.forEach(function (site) {
+          site.children.forEach(function (resource) {
+            var resourceItem = resourceList.find('input[value="' + resource.id + '"]').parent();
+            if ((!maintenanceFilter || resource.status !== 'maintenance') && (!onSiteFilter || resource.status !== 'on site')) {
+              resourceItem.show();
+              console.log('here');
             }
-            refreshResourceList();
-          }
-        },
-        contentPadding: false,
-        display: 'anchored',
-        focusOnClose: false,
-        focusOnOpen: false,
-        showOverlay: false,
-        width: 400,
-      })
-      .mobiscroll('getInst');
+          });
+        });
+      }
 
-    $(document).on('click', '#filter-button', function () {
-      popup.setOptions({ anchor: this });
-      saveInitialCheckboxStates();
-      success = false;
-      popup.open();
-    });
+      function saveInitialCheckboxStates() {
+        initialStatusCheckboxStates = statusCheckboxes.map(function (checkbox) {
+          return checkbox.checked;
+        });
+        initialResourceCheckboxStates = resourceCheckboxes.map(function (checkbox) {
+          return checkbox.checked;
+        });
+      }
 
-    var calendar = $('#calendar')
-      .mobiscroll()
-      .eventcalendar({
-        clickToCreate: true,
-        dragToCreate: true,
-        dragToResize: true,
-        dragToMove: true,
-        view: {
-          timeline: {
-            type: 'day',
-            startTime: '05:00',
-            endTime: '22:00',
-            timeCellStep: 60,
-            timeLabelStep: 60,
-            weekNumbers: false,
+      function restoreInitialCheckboxStates() {
+        statusCheckboxes.forEach(function (checkbox, index) {
+          checkbox.checked = initialStatusCheckboxStates[index];
+        });
+        resourceCheckboxes.forEach(function (checkbox, index) {
+          checkbox.checked = initialResourceCheckboxStates[index];
+        });
+      }
+
+      createResourceList();
+
+      var onSiteFilter = false;
+      var onSiteFilterTemp = false;
+
+      var maintenanceFilter = false;
+      var maintenanceFilterTemp = false;
+
+      var filteredResources = [];
+
+      function filterResources() {
+        var selectedResources = $('.mds-resource-checkbox:checked')
+          .map(function () {
+            return $(this).val();
+          })
+          .get();
+
+        filteredResources = myResources.map(function (site) {
+          return {
+            id: site.id,
+            name: site.name,
+            color: site.color,
+            eventCreation: site.eventCreation,
+            children: site.children.filter(function (resource) {
+              return selectedResources.includes(resource.id);
+            }),
+          };
+        });
+
+        filteredResources = filteredResources.filter(function (site) {
+          return site.children.length > 0;
+        });
+
+        if (maintenanceFilter) {
+          filteredResources = filteredResources
+            .map(function (site) {
+              return {
+                id: site.id,
+                name: site.name,
+                color: site.color,
+                eventCreation: site.eventCreation,
+                children: site.children.filter(function (resource) {
+                  return resource.status !== 'maintenance';
+                }),
+              };
+            })
+            .filter(function (site) {
+              return site.children.length > 0;
+            });
+        }
+
+        if (onSiteFilter) {
+          filteredResources = filteredResources
+            .map(function (site) {
+              return {
+                id: site.id,
+                name: site.name,
+                color: site.color,
+                eventCreation: site.eventCreation,
+                children: site.children.filter(function (resource) {
+                  return resource.status !== 'on site';
+                }),
+              };
+            })
+            .filter(function (site) {
+              return site.children.length > 0;
+            });
+        }
+      }
+
+      $(document).on('change', '.mds-status-checkbox-maintenance, .mds-status-checkbox-on-site', function () {
+        var isMaintenance = $(this).hasClass('mds-status-checkbox-maintenance');
+        var isChecked = $(this).is(':checked');
+
+        if (isMaintenance) {
+          maintenanceFilter = !isChecked;
+        } else {
+          onSiteFilter = !isChecked;
+        }
+
+        refreshResourceList();
+
+        if (onSiteFilter && maintenanceFilter) {
+          popupPlaceholder.show();
+        } else {
+          popupPlaceholder.hide();
+        }
+      });
+
+      var popup = $('#demo-filter-popup')
+        .mobiscroll()
+        .popup({
+          buttons: [
+            'cancel',
+            {
+              text: 'Apply',
+              keyCode: 'enter',
+              handler: function () {
+                filterResources();
+                calendar.setOptions({ resources: filteredResources });
+                success = true;
+                popup.close();
+              },
+              cssClass: 'mbsc-popup-button-primary',
+            },
+          ],
+          onOpen: function () {
+            maintenanceFilterTemp = maintenanceFilter;
+            onSiteFilterTemp = onSiteFilter;
           },
-        },
-        data: myEvents,
-        resources: myResources,
-        renderResource: renderCustomResource,
-        renderResourceEmpty: renderResourceEmpty,
-        renderResourceHeader: renderResourceHeader,
-      })
-      .mobiscroll('getInst');
+          onClose: function () {
+            if (!success) {
+              maintenanceFilter = maintenanceFilterTemp;
+              onSiteFilter = onSiteFilterTemp;
+              restoreInitialCheckboxStates();
+              // .. refactor
+              if (onSiteFilter && maintenanceFilter) {
+                popupPlaceholder.show();
+              } else {
+                popupPlaceholder.hide();
+              }
+              refreshResourceList();
+            }
+          },
+          contentPadding: false,
+          display: 'anchored',
+          focusOnClose: false,
+          focusOnOpen: false,
+          showOverlay: false,
+          width: 400,
+        })
+        .mobiscroll('getInst');
+
+      $(document).on('click', '#filter-button', function () {
+        popup.setOptions({ anchor: this });
+        saveInitialCheckboxStates();
+        success = false;
+        popup.open();
+      });
+
+      var calendar = $('#calendar')
+        .mobiscroll()
+        .eventcalendar({
+          clickToCreate: true,
+          dragToCreate: true,
+          dragToResize: true,
+          dragToMove: true,
+          view: {
+            timeline: {
+              type: 'day',
+              startTime: '05:00',
+              endTime: '22:00',
+              timeCellStep: 60,
+              timeLabelStep: 60,
+              weekNumbers: false,
+            },
+          },
+          data: myEvents,
+          resources: myResources,
+          renderResource: renderCustomResource,
+          renderResourceEmpty: renderResourceEmpty,
+          renderResourceHeader: renderResourceHeader,
+        })
+        .mobiscroll('getInst');
+    });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
