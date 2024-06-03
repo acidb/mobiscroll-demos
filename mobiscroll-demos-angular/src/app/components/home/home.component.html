@@ -1,6 +1,6 @@
 <mbsc-page>
   <div class="app-home mbsc-padding">
-    <div *ngFor="let main of demos">
+    <div *ngFor="let main of demos" [class]="'app-' + main.unique">
       <h2>{{ main.name }}</h2>
       <div *ngFor="let sub of main.items">
         <h3>{{ sub.name }}</h3>

@@ -7,8 +7,8 @@ setOptions({
   // theme
 });
 
-const now = new Date();
-const today = new Date(now.setMinutes(59));
+const now = new Date(new Date().setMinutes(59));
+const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
 @Component({
@@ -27,55 +27,16 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
 
   eventSettings: MbscEventcalendarOptions = {
-    view: {
-      timeline: {
-        type: 'month',
-      },
-    },
+    view: { timeline: { type: 'month' } },
     resources: [
-      {
-        id: 1,
-        name: 'Resource A',
-        color: '#e20000',
-      },
-      {
-        id: 2,
-        name: 'Resource B',
-        color: '#76e083',
-      },
-      {
-        id: 3,
-        name: 'Resource C',
-        color: '#4981d6',
-      },
-      {
-        id: 4,
-        name: 'Resource D',
-        color: '#e25dd2',
-      },
-      {
-        id: 5,
-        name: 'Resource E',
-        color: '#1dab2f',
-      },
-      {
-        id: 6,
-        name: 'Resource F',
-        color: '#d6d145',
-      },
+      { id: 1, name: 'Resource A', color: '#e20000' },
+      { id: 2, name: 'Resource B', color: '#76e083' },
+      { id: 3, name: 'Resource C', color: '#4981d6' },
+      { id: 4, name: 'Resource D', color: '#e25dd2' },
+      { id: 5, name: 'Resource E', color: '#1dab2f' },
+      { id: 6, name: 'Resource F', color: '#d6d145' },
     ],
-    invalid: [
-      {
-        recurring: {
-          repeat: 'daily',
-          until: yesterday,
-        },
-      },
-      {
-        start: yesterday,
-        end: today,
-      },
-    ],
+    invalid: [{ recurring: { repeat: 'daily', until: yesterday } }, { start: today, end: now }],
     clickToCreate: true,
     dragToCreate: true,
     dragToMove: true,
