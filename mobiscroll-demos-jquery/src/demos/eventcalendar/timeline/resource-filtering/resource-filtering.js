@@ -8,7 +8,7 @@ export default {
       // locale,
       // theme
       theme: 'ios',
-      themeVariant: 'light',
+      themeVariant: 'dark',
     });
 
     var myEvents = [
@@ -209,18 +209,19 @@ export default {
         checkbox.checked = true;
       });
 
-      $('#search-input').val('');
+      setTimeout(function () {
+        $('#search-input').val('');
+        onSiteFilter = false;
+        maintenanceFilter = false;
+        filterResources();
+        refreshResourceList();
+        popupPlaceholder.hide();
 
-      onSiteFilter = false;
-      maintenanceFilter = false;
-      filterResources();
-      refreshResourceList();
-      popupPlaceholder.hide();
-
-      calendar.setOptions({ resources: filteredResources });
+        calendar.setOptions({ resources: filteredResources });
+      }, 0);
     }
 
-    $(document).on('click', '.mds-reset-filters-button', resetFilters);
+    $('#calendar').on('click', '.mds-reset-filters-button', resetFilters);
 
     function handleSearch(event) {
       var query = event.target.value.toLowerCase();
@@ -247,7 +248,7 @@ export default {
       }, 300);
     }
 
-    $(document).on('input', '#search-input', handleSearch);
+    $('#calendar').on('input', '#search-input', handleSearch);
 
     function generateResourceHTML(resource) {
       return (
@@ -372,8 +373,6 @@ export default {
           });
       }
     }
-
-    $(document).on('change', '.mds-resource-checkbox', filterResources);
 
     $(document).on('change', '.mds-status-checkbox-maintenance, .mds-status-checkbox-on-site', function () {
       var isMaintenance = $(this).hasClass('mds-status-checkbox-maintenance');
@@ -570,6 +569,7 @@ export default {
     margin: 0 !important;
     width: auto;
   }
+
   
   .mds-resource-header-template-search-input {
     height: 30px !important;
