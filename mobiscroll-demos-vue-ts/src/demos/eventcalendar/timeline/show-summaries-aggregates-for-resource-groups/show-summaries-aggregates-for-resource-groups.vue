@@ -3,7 +3,7 @@ import { formatDate, MbscEventcalendar, setOptions /* localeImport */ } from '@m
 import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscEventCreateEvent,
+  MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscEventUpdatedEvent,
   MbscNewEventData,
@@ -915,7 +915,7 @@ function handleEventUpdated(args: MbscEventUpdatedEvent, inst: any): void {
   updateCalendarEvents(inst)
 }
 
-function handleEventCreated(args: MbscEventCreateEvent, inst: any): void {
+function handleEventCreated(args: MbscEventCreatedEvent, inst: any): void {
   const newEvent = args.event
   myEvents.value.push(newEvent)
   updateCalendarEvents(inst)

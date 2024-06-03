@@ -1,5 +1,5 @@
 import { Eventcalendar, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './show-summaries-aggregates-for-resource-groups.css';
 
 setOptions({
@@ -8,7 +8,7 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = useState([
+  const myEvents = useRef([
     // relevant events
     {
       id: 1,
@@ -740,10 +740,10 @@ function App() {
     //</hide-comment>
   ]);
 
-  const [eventsWithSummaries, setEventsWithSummaries] = useState(myEvents);
+  const [eventsWithSummaries, setEventsWithSummaries] = useState(myEvents.current);
 
-  const [firstViewDay, setFirstDay] = useState(null);
-  const [lastViewDay, setLastDay] = useState(null);
+  const firstViewDay = useRef();
+  const lastViewDay = useRef();
 
   const myView = useMemo(
     () => ({
@@ -875,7 +875,7 @@ function App() {
       const aggregateEvents = {};
 
       myResources.forEach(function (resource) {
-        for (let date = new Date(firstViewDay); date < lastViewDay; date.setDate(date.getDate() + 1)) {
+        for (let date = new Date(firstViewDay.current); date < lastViewDay.current; date.setDate(date.getDate() + 1)) {
           aggregateEvents[resource.id + +date] = {
             id: resource.id + +date,
             isSummary: true,
@@ -888,7 +888,7 @@ function App() {
           };
         }
       });
-      dayEvents.forEach(function (event) {
+      dayEvents.forEach((event) => {
         if (!event.isSummary) {
           const parentResource = event.resource.split('_')[0];
           const dayStart = new Date(event.start).setHours(0, 0, 0, 0);
@@ -908,23 +908,26 @@ function App() {
     (inst) => {
       const dailyEvents = inst.getEvents();
       const updatedSummaries = getAggregateEvents(dailyEvents);
-      setEventsWithSummaries([...myEvents, ...updatedSummaries]);
+      setEventsWithSummaries([...myEvents.current, ...updatedSummaries]);
     },
     [getAggregateEvents, myEvents],
   );
 
   const handlePageLoading = useCallback(
     (args, inst) => {
-      setFirstDay(new Date(args.firstDay));
-      setLastDay(new Date(args.lastDay));
-      updateCalendarEvents(inst);
+      firstViewDay.current = new Date(args.firstDay);
+      lastViewDay.current = new Date(args.lastDay);
+      setTimeout(() => updateCalendarEvents(inst));
     },
     [updateCalendarEvents],
   );
 
   const handleEventUpdated = useCallback(
     (args, inst) => {
-      updateCalendarEvents(inst);
+      const updatedEvent = args.event;
+      const index = myEvents.current.indexOf(updatedEvent);
+      myEvents.current.splice(index, 1, updatedEvent);
+      setTimeout(() => updateCalendarEvents(inst));
     },
     [updateCalendarEvents],
   );
@@ -932,17 +935,22 @@ function App() {
   const handleEventCreated = useCallback(
     (args, inst) => {
       const newEvent = args.event;
-      setEvents([...myEvents, newEvent]);
-      updateCalendarEvents(inst);
+      myEvents.current = [...myEvents.current, newEvent];
+      setTimeout(() => {
+        updateCalendarEvents(inst);
+      });
     },
-    [myEvents, updateCalendarEvents],
+    [updateCalendarEvents],
   );
 
   const handleEventDeleted = useCallback(
     (args, inst) => {
       const deletedEvent = args.event;
-      setEvents(myEvents.filter((e) => deletedEvent.id !== e.id));
-      updateCalendarEvents(inst);
+      const index = myEvents.current.indexOf(deletedEvent);
+      myEvents.current.splice(index, 1);
+      setTimeout(() => {
+        updateCalendarEvents(inst);
+      });
     },
     [myEvents, updateCalendarEvents],
   );
