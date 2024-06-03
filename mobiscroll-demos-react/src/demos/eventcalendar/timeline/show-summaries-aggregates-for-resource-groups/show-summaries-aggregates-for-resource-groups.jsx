@@ -9,7 +9,6 @@ setOptions({
 
 function App() {
   const myEvents = useRef([
-    // relevant events
     {
       id: 1,
       allDay: true,
@@ -758,7 +757,6 @@ function App() {
 
   const myResources = useMemo(
     () => [
-      // relevant resources
       {
         id: 'orlando',
         name: 'CNL Tower II',

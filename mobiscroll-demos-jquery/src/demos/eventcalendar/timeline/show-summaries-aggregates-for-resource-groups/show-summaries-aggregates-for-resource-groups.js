@@ -49,7 +49,6 @@ export default {
       }
 
       var myResources = [
-        // relevant resources
         {
           id: 'orlando',
           name: 'CNL Tower II',
@@ -145,7 +144,6 @@ export default {
       ];
 
       var myEvents = [
-        // relevant events
         {
           id: 1,
           allDay: true,

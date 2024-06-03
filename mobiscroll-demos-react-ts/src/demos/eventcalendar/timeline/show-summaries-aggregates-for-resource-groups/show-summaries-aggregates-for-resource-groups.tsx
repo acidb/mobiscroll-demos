@@ -22,7 +22,6 @@ setOptions({
 
 function App() {
   const myEvents = useRef<MbscCalendarEvent[]>([
-    // relevant events
     {
       id: 1,
       allDay: true,
@@ -771,7 +770,6 @@ function App() {
 
   const myResources = useMemo<MbscResource[]>(
     () => [
-      // relevant resources
       {
         id: 'orlando',
         name: 'CNL Tower II',

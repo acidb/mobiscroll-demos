@@ -58,7 +58,6 @@ export class AppComponent {
   };
 
   myEvents: MbscCalendarEvent[] = [
-    // relevant events
     {
       id: 1,
       allDay: true,
@@ -792,7 +791,6 @@ export class AppComponent {
   eventsWithSummaries: MbscCalendarEvent[] = this.myEvents;
 
   myResources: MbscResource[] = [
-    // relevant resources
     {
       id: 'orlando',
       name: 'CNL Tower II',

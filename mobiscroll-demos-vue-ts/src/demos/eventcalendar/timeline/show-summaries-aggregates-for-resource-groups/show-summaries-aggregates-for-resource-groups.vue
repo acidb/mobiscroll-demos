@@ -17,8 +17,10 @@ setOptions({
   // theme
 })
 
+let firstViewDay: Date = new Date()
+let lastViewDay: Date = new Date()
+
 const myEvents = ref<MbscCalendarEvent[]>([
-  // relevant events
   {
     id: 1,
     allDay: true,
@@ -758,7 +760,6 @@ const myView: MbscEventcalendarView = {
 }
 
 const myResources: MbscResource[] = [
-  // relevant resources
   {
     id: 'orlando',
     name: 'CNL Tower II',
@@ -926,29 +927,26 @@ function handleEventDeleted(args: MbscEventDeletedEvent, inst: any): void {
   myEvents.value = myEvents.value.filter((e) => deletedEvent.id !== e.id)
   updateCalendarEvents(inst)
 }
-
-let firstViewDay: Date = new Date()
-let lastViewDay: Date = new Date()
 </script>
 
 <template>
   <MbscEventcalendar
     cssClass="mds-aggregates"
+    min="dyndatetime(y,m,d-7)"
+    max="dyndatetime(y,m,d+6)"
     :clickToCreate="true"
+    :data="eventsWithSummaries"
     :dragToCreate="false"
     :dragToMove="true"
     :dragToResize="false"
     :eventOverlap="false"
-    :view="myView"
-    :data="eventsWithSummaries"
-    :resources="myResources"
-    min="dyndatetime(y,m,d-7)"
-    max="dyndatetime(y,m,d+6)"
     :extendDefaultEvent="handleDefaultEvent"
-    @page-loading="handlePageLoading"
-    @event-updated="handleEventUpdated"
+    :resources="myResources"
+    :view="myView"
     @event-created="handleEventCreated"
     @event-deleted="handleEventDeleted"
+    @event-updated="handleEventUpdated"
+    @page-loading="handlePageLoading"
   >
     <template #resource="resource">
       <template v-if="resource.isParent">
