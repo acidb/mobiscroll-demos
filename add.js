@@ -25,6 +25,7 @@ export default {
   markup: \`
 <div id="demo-{unique}"></div>
 \`,
+  // eslint-disable-next-line es5/no-template-literals
   css: \`\`,
 };
 `;
@@ -52,6 +53,7 @@ export default {
   markup: \`
 <div id="demo-{unique}"></div>
 \`,
+  // eslint-disable-next-line es5/no-template-literals
   css: \`\`, 
 };
 `;

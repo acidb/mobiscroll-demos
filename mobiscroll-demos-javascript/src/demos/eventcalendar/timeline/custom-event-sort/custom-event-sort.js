@@ -17,6 +17,9 @@ export default {
       view: {
         timeline: {
           type: 'week',
+          eventList: true,
+          startDay: 1,
+          endDay: 5,
         },
       },
       data: [
