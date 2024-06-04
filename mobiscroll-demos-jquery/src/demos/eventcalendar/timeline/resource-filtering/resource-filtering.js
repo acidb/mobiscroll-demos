@@ -689,6 +689,7 @@ export default {
     var calendar = $('#calendar')
       .mobiscroll()
       .eventcalendar({
+        class: 'mds-resource-filtering-calendar',
         clickToCreate: true,
         dragToCreate: true,
         dragToResize: true,
@@ -866,6 +867,10 @@ export default {
 
   .mds-placeholder {
     margin-bottom: 15px;
+  }
+
+  .mds-resource-filtering-calendar .mbsc-timeline-parent {
+    height: 34px;  
   }
   `,
 };
