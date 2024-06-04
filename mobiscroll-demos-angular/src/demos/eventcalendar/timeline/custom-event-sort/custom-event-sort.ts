@@ -149,6 +149,9 @@ export class AppComponent {
   view: MbscEventcalendarView = {
     timeline: {
       type: 'week',
+      eventList: true,
+      startDay: 1,
+      endDay: 5,
     },
   };
 }
