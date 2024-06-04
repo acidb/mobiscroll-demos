@@ -161,4 +161,12 @@ export default {
   markup: `
 <div id="demo-custom-event-sort"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
+  css: `
+  /*<hidden>*/
+  .demo-custom-event-sort {
+      height: 270px;
+  }
+  /*</hidden>*/
+  `,
 };
