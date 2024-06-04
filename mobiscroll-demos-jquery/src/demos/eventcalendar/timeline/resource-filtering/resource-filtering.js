@@ -9,505 +9,460 @@ export default {
       // theme
     });
 
-    var myEvents = [
-      {
-        start: 'dyndatetime(y,m,d,5)',
-        end: 'dyndatetime(y,m,d,19)',
-        title: 'Excavate Foundation',
-        resource: 'bulldozer - TX1234',
-      },
-      {
-        start: 'dyndatetime(y,m,d,8)',
-        end: 'dyndatetime(y,m,d,h+18)',
-        title: 'Install Framing',
-        resource: 'crane - NY9101',
-      },
-      {
-        start: 'dyndatetime(y,m,d,10)',
-        end: 'dyndatetime(y,m,d,20)',
-        title: 'Electrical Wiring',
-        resource: 'excavator - FL1213',
-      },
-      {
-        start: 'dyndatetime(y,m,d,14)',
-        end: 'dyndatetime(y,m,d,22)',
-        title: 'Roofing',
-        resource: 'crane - IL1617',
-      },
-      {
-        start: 'dyndatetime(y,m,d,7)',
-        end: 'dyndatetime(y,m,d,19)',
-        title: 'Site Cleanup',
-        resource: 'bulldozer - PA1819',
-      },
+    $(function () {
+      var myEvents = [
+        {
+          start: 'dyndatetime(y,m,d,5)',
+          end: 'dyndatetime(y,m,d,19)',
+          title: 'Excavate Foundation',
+          resource: 'bulldozer - TX1234',
+        },
+        {
+          start: 'dyndatetime(y,m,d,8)',
+          end: 'dyndatetime(y,m,d,h+18)',
+          title: 'Install Framing',
+          resource: 'crane - NY9101',
+        },
+        {
+          start: 'dyndatetime(y,m,d,10)',
+          end: 'dyndatetime(y,m,d,20)',
+          title: 'Electrical Wiring',
+          resource: 'excavator - FL1213',
+        },
+        {
+          start: 'dyndatetime(y,m,d,14)',
+          end: 'dyndatetime(y,m,d,22)',
+          title: 'Roofing',
+          resource: 'crane - IL1617',
+        },
+        {
+          start: 'dyndatetime(y,m,d,7)',
+          end: 'dyndatetime(y,m,d,19)',
+          title: 'Site Cleanup',
+          resource: 'bulldozer - PA1819',
+        },
 
-      {
-        start: 'dyndatetime(y,m,d,5)',
-        end: 'dyndatetime(y,m,d,18)',
-        title: 'Foundation Work',
-        resource: 'concrete mixer - CA2223',
-      },
-      {
-        start: 'dyndatetime(y,m,d,9)',
-        end: 'dyndatetime(y,m,d,18)',
-        title: 'Steel Framing',
-        resource: 'crane - NY2425',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h+8)',
-        end: 'dyndatetime(y,m,d,h+13)',
-        title: 'Interior Plumbing',
-        resource: 'excavator - FL2627',
-      },
-      {
-        start: 'dyndatetime(y,m,d,8)',
-        end: 'dyndatetime(y,m,d,20)',
-        title: 'Masonry Work',
-        resource: 'crane - IL3031',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h-4)',
-        end: 'dyndatetime(y,m,d,h+8)',
-        title: 'Exterior Finishing',
-        resource: 'bulldozer - PA3233',
-      },
+        {
+          start: 'dyndatetime(y,m,d,5)',
+          end: 'dyndatetime(y,m,d,18)',
+          title: 'Foundation Work',
+          resource: 'concrete mixer - CA2223',
+        },
+        {
+          start: 'dyndatetime(y,m,d,9)',
+          end: 'dyndatetime(y,m,d,18)',
+          title: 'Steel Framing',
+          resource: 'crane - NY2425',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h+8)',
+          end: 'dyndatetime(y,m,d,h+13)',
+          title: 'Interior Plumbing',
+          resource: 'excavator - FL2627',
+        },
+        {
+          start: 'dyndatetime(y,m,d,8)',
+          end: 'dyndatetime(y,m,d,20)',
+          title: 'Masonry Work',
+          resource: 'crane - IL3031',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h-4)',
+          end: 'dyndatetime(y,m,d,h+8)',
+          title: 'Exterior Finishing',
+          resource: 'bulldozer - PA3233',
+        },
 
-      {
-        start: 'dyndatetime(y,m,d,h+1)',
-        end: 'dyndatetime(y,m,d,h+6)',
-        title: 'Ground Breaking',
-        resource: 'bulldozer - TX3435',
-      },
-      {
-        start: 'dyndatetime(y,m,d,7)',
-        end: 'dyndatetime(y,m,d,19)',
-        title: 'Wall Construction',
-        resource: 'crane - NY3839',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h+9)',
-        end: 'dyndatetime(y,m,d,h+14)',
-        title: 'Roof Installation',
-        resource: 'excavator - FL4041',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h-4)',
-        end: 'dyndatetime(y,m,d,h+6)',
-        title: 'Painting',
-        resource: 'crane - IL4445',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h-3)',
-        end: 'dyndatetime(y,m,d,h+8)',
-        title: 'Driveway Paving',
-        resource: 'bulldozer - PA4647',
-      },
+        {
+          start: 'dyndatetime(y,m,d,h+1)',
+          end: 'dyndatetime(y,m,d,h+6)',
+          title: 'Ground Breaking',
+          resource: 'bulldozer - TX3435',
+        },
+        {
+          start: 'dyndatetime(y,m,d,7)',
+          end: 'dyndatetime(y,m,d,19)',
+          title: 'Wall Construction',
+          resource: 'crane - NY3839',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h+9)',
+          end: 'dyndatetime(y,m,d,h+14)',
+          title: 'Roof Installation',
+          resource: 'excavator - FL4041',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h-4)',
+          end: 'dyndatetime(y,m,d,h+6)',
+          title: 'Painting',
+          resource: 'crane - IL4445',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h-3)',
+          end: 'dyndatetime(y,m,d,h+8)',
+          title: 'Driveway Paving',
+          resource: 'bulldozer - PA4647',
+        },
 
-      {
-        start: 'dyndatetime(y,m,d,h+1)',
-        end: 'dyndatetime(y,m,d,h+6)',
-        title: 'Foundation',
-        resource: 'concrete mixer - CA5051',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h+4)',
-        end: 'dyndatetime(y,m,d,h+9)',
-        title: 'Building Erection',
-        resource: 'crane - NY5253',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h+7)',
-        end: 'dyndatetime(y,m,d,h+12)',
-        title: 'Electrical Wiring',
-        resource: 'excavator - FL5455',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h-4)',
-        end: 'dyndatetime(y,m,d,h+5)',
-        title: 'Roofing',
-        resource: 'crane - IL5859',
-      },
-      {
-        start: 'dyndatetime(y,m,d,7)',
-        end: 'dyndatetime(y,m,d,20)',
-        title: 'Finishing Touches',
-        resource: 'bulldozer - PA6061',
-      },
+        {
+          start: 'dyndatetime(y,m,d,h+1)',
+          end: 'dyndatetime(y,m,d,h+6)',
+          title: 'Foundation',
+          resource: 'concrete mixer - CA5051',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h+4)',
+          end: 'dyndatetime(y,m,d,h+9)',
+          title: 'Building Erection',
+          resource: 'crane - NY5253',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h+7)',
+          end: 'dyndatetime(y,m,d,h+12)',
+          title: 'Electrical Wiring',
+          resource: 'excavator - FL5455',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h-4)',
+          end: 'dyndatetime(y,m,d,h+5)',
+          title: 'Roofing',
+          resource: 'crane - IL5859',
+        },
+        {
+          start: 'dyndatetime(y,m,d,7)',
+          end: 'dyndatetime(y,m,d,20)',
+          title: 'Finishing Touches',
+          resource: 'bulldozer - PA6061',
+        },
 
-      {
-        start: 'dyndatetime(y,m,d,8)',
-        end: 'dyndatetime(y,m,d,19)',
-        title: 'Site Preparation',
-        resource: 'bulldozer - TX6263',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h+4)',
-        end: 'dyndatetime(y,m,d,h+9)',
-        title: 'Piling Work',
-        resource: 'crane - NY6667',
-      },
-      {
-        start: 'dyndatetime(y,m,d,7)',
-        end: 'dyndatetime(y,m,d,18)',
-        title: 'Concrete Pouring',
-        resource: 'excavator - FL6869',
-      },
-      {
-        start: 'dyndatetime(y,m,d,6)',
-        end: 'dyndatetime(y,m,d,22)',
-        title: 'Deck Construction',
-        resource: 'drill - OH7071',
-      },
-      {
-        start: 'dyndatetime(y,m,d,h-3)',
-        end: 'dyndatetime(y,m,d,h+8)',
-        title: 'Final Touches',
-        resource: 'bulldozer - PA7475',
-      },
-    ];
+        {
+          start: 'dyndatetime(y,m,d,8)',
+          end: 'dyndatetime(y,m,d,19)',
+          title: 'Site Preparation',
+          resource: 'bulldozer - TX6263',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h+4)',
+          end: 'dyndatetime(y,m,d,h+9)',
+          title: 'Piling Work',
+          resource: 'crane - NY6667',
+        },
+        {
+          start: 'dyndatetime(y,m,d,7)',
+          end: 'dyndatetime(y,m,d,18)',
+          title: 'Concrete Pouring',
+          resource: 'excavator - FL6869',
+        },
+        {
+          start: 'dyndatetime(y,m,d,6)',
+          end: 'dyndatetime(y,m,d,22)',
+          title: 'Deck Construction',
+          resource: 'drill - OH7071',
+        },
+        {
+          start: 'dyndatetime(y,m,d,h-3)',
+          end: 'dyndatetime(y,m,d,h+8)',
+          title: 'Final Touches',
+          resource: 'bulldozer - PA7475',
+        },
+      ];
 
-    var myResources = [
-      {
-        id: 'site1',
-        name: 'Downtown Construction',
-        color: '#76e083',
-        eventCreation: false,
-        children: [
-          {
-            id: 'bulldozer - TX1234',
-            name: 'Bulldozer - TX1234',
-            color: '#1dab2f',
-            status: 'on site',
-          },
-          {
-            id: 'concrete mixer - CA5678',
-            name: 'Concrete Mixer - CA5678',
-            color: '#76e083',
-            status: 'maintenance',
-          },
-          {
-            id: 'crane - NY9101',
-            name: 'Crane - NY9101',
-            color: '#4981d6',
-            status: 'on site',
-          },
-          {
-            id: 'excavator - FL1213',
-            name: 'Excavator - FL1213',
-            color: '#f7961e',
-            status: 'on site',
-          },
-          {
-            id: 'drill - OH1415',
-            name: 'Drill - OH1415',
-            color: '#34c8e0',
-            status: 'maintenance',
-          },
-          {
-            id: 'crane - IL1617',
-            name: 'Crane - IL1617',
-            color: '#e25dd2',
-            status: 'on site',
-          },
-          {
-            id: 'bulldozer - PA1819',
-            name: 'Bulldozer - PA1819',
-            color: '#d6d145',
-            status: 'on site',
-          },
-        ],
-      },
-      {
-        id: 'site2',
-        name: 'Uptown Development',
-        color: '#ff1717',
-        eventCreation: false,
-        children: [
-          {
-            id: 'bulldozer - TX2021',
-            name: 'Bulldozer - TX2021',
-            color: '#1dab2f',
-            status: 'maintenance',
-          },
-          {
-            id: 'concrete mixer - CA2223',
-            name: 'Concrete Mixer - CA2223',
-            color: '#76e083',
-            status: 'on site',
-          },
-          {
-            id: 'crane - NY2425',
-            name: 'Crane - NY2425',
-            color: '#4981d6',
-            status: 'on site',
-          },
-          {
-            id: 'excavator - FL2627',
-            name: 'Excavator - FL2627',
-            color: '#f7961e',
-            status: 'on site',
-          },
-          {
-            id: 'drill - OH2829',
-            name: 'Drill - OH2829',
-            color: '#34c8e0',
-            status: 'maintenance',
-          },
-          {
-            id: 'crane - IL3031',
-            name: 'Crane - IL3031',
-            color: '#e25dd2',
-            status: 'on site',
-          },
-          {
-            id: 'bulldozer - PA3233',
-            name: 'Bulldozer - PA3233',
-            color: '#d6d145',
-            status: 'on site',
-          },
-        ],
-      },
-      {
-        id: 'site3',
-        name: 'Suburban Project',
-        color: '#d6d145',
-        eventCreation: false,
-        children: [
-          {
-            id: 'bulldozer - TX3435',
-            name: 'Bulldozer - TX3435',
-            color: '#1dab2f',
-            status: 'on site',
-          },
-          {
-            id: 'concrete mixer - CA3637',
-            name: 'Concrete Mixer - CA3637',
-            color: '#76e083',
-            status: 'maintenance',
-          },
-          {
-            id: 'crane - NY3839',
-            name: 'Crane - NY3839',
-            color: '#4981d6',
-            status: 'on site',
-          },
-          {
-            id: 'excavator - FL4041',
-            name: 'Excavator - FL4041',
-            color: '#f7961e',
-            status: 'on site',
-          },
-          {
-            id: 'crane - IL4445',
-            name: 'Crane - IL4445',
-            color: '#e25dd2',
-            status: 'on site',
-          },
-          {
-            id: 'bulldozer - PA4647',
-            name: 'Bulldozer - PA4647',
-            color: '#d6d145',
-            status: 'on site',
-          },
-        ],
-      },
-      {
-        id: 'site4',
-        name: 'Industrial Park',
-        color: '#a1d6e2',
-        eventCreation: false,
-        children: [
-          {
-            id: 'bulldozer - TX4849',
-            name: 'Bulldozer - TX4849',
-            color: '#1dab2f',
-            status: 'maintenance',
-          },
-          {
-            id: 'concrete mixer - CA5051',
-            name: 'Concrete Mixer - CA5051',
-            color: '#76e083',
-            status: 'on site',
-          },
-          {
-            id: 'crane - NY5253',
-            name: 'Crane - NY5253',
-            color: '#4981d6',
-            status: 'on site',
-          },
-          {
-            id: 'excavator - FL5455',
-            name: 'Excavator - FL5455',
-            color: '#f7961e',
-            status: 'on site',
-          },
-          {
-            id: 'drill - OH5657',
-            name: 'Drill - OH5657',
-            color: '#34c8e0',
-            status: 'maintenance',
-          },
-          {
-            id: 'crane - IL5859',
-            name: 'Crane - IL5859',
-            color: '#e25dd2',
-            status: 'on site',
-          },
-          {
-            id: 'bulldozer - PA6061',
-            name: 'Bulldozer - PA6061',
-            color: '#d6d145',
-            status: 'on site',
-          },
-        ],
-      },
-      {
-        id: 'site5',
-        name: 'Bridge Construction',
-        color: '#00ff00',
-        eventCreation: false,
-        children: [
-          {
-            id: 'bulldozer - TX6263',
-            name: 'Bulldozer - TX6263',
-            color: '#1dab2f',
-            status: 'on site',
-          },
-          {
-            id: 'concrete mixer - CA6465',
-            name: 'Concrete Mixer - CA6465',
-            color: '#76e083',
-            status: 'maintenance',
-          },
-          {
-            id: 'crane - NY6667',
-            name: 'Crane - NY6667',
-            color: '#4981d6',
-            status: 'on site',
-          },
-          {
-            id: 'excavator - FL6869',
-            name: 'Excavator - FL6869',
-            color: '#f7961e',
-            status: 'on site',
-          },
-          {
-            id: 'drill - OH7071',
-            name: 'Drill - OH7071',
-            color: '#34c8e0',
-            status: 'on site',
-          },
-          {
-            id: 'crane - IL7273',
-            name: 'Crane - IL7273',
-            color: '#e25dd2',
-            status: 'maintenance',
-          },
-          {
-            id: 'bulldozer - PA7475',
-            name: 'Bulldozer - PA7475',
-            color: '#d6d145',
-            status: 'on site',
-          },
-        ],
-      },
-    ];
+      var myResources = [
+        {
+          id: 'site1',
+          name: 'Downtown Construction',
+          color: '#76e083',
+          eventCreation: false,
+          children: [
+            {
+              id: 'bulldozer - TX1234',
+              name: 'Bulldozer - TX1234',
+              color: '#1dab2f',
+              status: 'on site',
+            },
+            {
+              id: 'concrete mixer - CA5678',
+              name: 'Concrete Mixer - CA5678',
+              color: '#76e083',
+              status: 'maintenance',
+            },
+            {
+              id: 'crane - NY9101',
+              name: 'Crane - NY9101',
+              color: '#4981d6',
+              status: 'on site',
+            },
+            {
+              id: 'excavator - FL1213',
+              name: 'Excavator - FL1213',
+              color: '#f7961e',
+              status: 'on site',
+            },
+            {
+              id: 'drill - OH1415',
+              name: 'Drill - OH1415',
+              color: '#34c8e0',
+              status: 'maintenance',
+            },
+            {
+              id: 'crane - IL1617',
+              name: 'Crane - IL1617',
+              color: '#e25dd2',
+              status: 'on site',
+            },
+            {
+              id: 'bulldozer - PA1819',
+              name: 'Bulldozer - PA1819',
+              color: '#d6d145',
+              status: 'on site',
+            },
+          ],
+        },
+        {
+          id: 'site2',
+          name: 'Uptown Development',
+          color: '#ff1717',
+          eventCreation: false,
+          children: [
+            {
+              id: 'bulldozer - TX2021',
+              name: 'Bulldozer - TX2021',
+              color: '#1dab2f',
+              status: 'maintenance',
+            },
+            {
+              id: 'concrete mixer - CA2223',
+              name: 'Concrete Mixer - CA2223',
+              color: '#76e083',
+              status: 'on site',
+            },
+            {
+              id: 'crane - NY2425',
+              name: 'Crane - NY2425',
+              color: '#4981d6',
+              status: 'on site',
+            },
+            {
+              id: 'excavator - FL2627',
+              name: 'Excavator - FL2627',
+              color: '#f7961e',
+              status: 'on site',
+            },
+            {
+              id: 'drill - OH2829',
+              name: 'Drill - OH2829',
+              color: '#34c8e0',
+              status: 'maintenance',
+            },
+            {
+              id: 'crane - IL3031',
+              name: 'Crane - IL3031',
+              color: '#e25dd2',
+              status: 'on site',
+            },
+            {
+              id: 'bulldozer - PA3233',
+              name: 'Bulldozer - PA3233',
+              color: '#d6d145',
+              status: 'on site',
+            },
+          ],
+        },
+        {
+          id: 'site3',
+          name: 'Suburban Project',
+          color: '#d6d145',
+          eventCreation: false,
+          children: [
+            {
+              id: 'bulldozer - TX3435',
+              name: 'Bulldozer - TX3435',
+              color: '#1dab2f',
+              status: 'on site',
+            },
+            {
+              id: 'concrete mixer - CA3637',
+              name: 'Concrete Mixer - CA3637',
+              color: '#76e083',
+              status: 'maintenance',
+            },
+            {
+              id: 'crane - NY3839',
+              name: 'Crane - NY3839',
+              color: '#4981d6',
+              status: 'on site',
+            },
+            {
+              id: 'excavator - FL4041',
+              name: 'Excavator - FL4041',
+              color: '#f7961e',
+              status: 'on site',
+            },
+            {
+              id: 'crane - IL4445',
+              name: 'Crane - IL4445',
+              color: '#e25dd2',
+              status: 'on site',
+            },
+            {
+              id: 'bulldozer - PA4647',
+              name: 'Bulldozer - PA4647',
+              color: '#d6d145',
+              status: 'on site',
+            },
+          ],
+        },
+        {
+          id: 'site4',
+          name: 'Industrial Park',
+          color: '#a1d6e2',
+          eventCreation: false,
+          children: [
+            {
+              id: 'bulldozer - TX4849',
+              name: 'Bulldozer - TX4849',
+              color: '#1dab2f',
+              status: 'maintenance',
+            },
+            {
+              id: 'concrete mixer - CA5051',
+              name: 'Concrete Mixer - CA5051',
+              color: '#76e083',
+              status: 'on site',
+            },
+            {
+              id: 'crane - NY5253',
+              name: 'Crane - NY5253',
+              color: '#4981d6',
+              status: 'on site',
+            },
+            {
+              id: 'excavator - FL5455',
+              name: 'Excavator - FL5455',
+              color: '#f7961e',
+              status: 'on site',
+            },
+            {
+              id: 'drill - OH5657',
+              name: 'Drill - OH5657',
+              color: '#34c8e0',
+              status: 'maintenance',
+            },
+            {
+              id: 'crane - IL5859',
+              name: 'Crane - IL5859',
+              color: '#e25dd2',
+              status: 'on site',
+            },
+            {
+              id: 'bulldozer - PA6061',
+              name: 'Bulldozer - PA6061',
+              color: '#d6d145',
+              status: 'on site',
+            },
+          ],
+        },
+        {
+          id: 'site5',
+          name: 'Bridge Construction',
+          color: '#00ff00',
+          eventCreation: false,
+          children: [
+            {
+              id: 'bulldozer - TX6263',
+              name: 'Bulldozer - TX6263',
+              color: '#1dab2f',
+              status: 'on site',
+            },
+            {
+              id: 'concrete mixer - CA6465',
+              name: 'Concrete Mixer - CA6465',
+              color: '#76e083',
+              status: 'maintenance',
+            },
+            {
+              id: 'crane - NY6667',
+              name: 'Crane - NY6667',
+              color: '#4981d6',
+              status: 'on site',
+            },
+            {
+              id: 'excavator - FL6869',
+              name: 'Excavator - FL6869',
+              color: '#f7961e',
+              status: 'on site',
+            },
+            {
+              id: 'drill - OH7071',
+              name: 'Drill - OH7071',
+              color: '#34c8e0',
+              status: 'on site',
+            },
+            {
+              id: 'crane - IL7273',
+              name: 'Crane - IL7273',
+              color: '#e25dd2',
+              status: 'maintenance',
+            },
+            {
+              id: 'bulldozer - PA7475',
+              name: 'Bulldozer - PA7475',
+              color: '#d6d145',
+              status: 'on site',
+            },
+          ],
+        },
+      ];
 
-    var popupPlaceholder = $('.mds-resource-filtering-popup-placeholder');
+      var $calendarElement = $('#demo-filtering-calendar');
+      var $resourceList = $('#resource-list');
+      var initialFilterCheckboxStates = [];
+      var filterCheckboxes = [];
+      var filteredResources = myResources;
+      var searchTimeout;
+      var searchQuery;
+      var success = false;
+      var onSiteFilter = false;
+      var onSiteFilterTemp = false;
+      var maintenanceFilter = false;
+      var maintenanceFilterTemp = false;
 
-    var statusCheckboxes = [];
-    var resourceCheckboxes = [];
-    var success = false;
+      function refreshPopupResourceList() {
+        $resourceList.children().hide();
 
-    var initialStatusCheckboxStates = [];
-    var initialResourceCheckboxStates = [];
-
-    // todo..
-    $(document).ready(function () {
-      $('.mds-status-checkbox').each(function () {
-        var checkbox = $(this).mobiscroll('getInst');
-        statusCheckboxes.push(checkbox);
-      });
-      $('.mds-resource-checkbox').each(function () {
-        var checkbox = $(this).mobiscroll('getInst');
-        resourceCheckboxes.push(checkbox);
-      });
-    });
-
-    function renderCustomResource(resource) {
-      var statusHtml = '';
-      if (resource.status) {
-        var statusColor = resource.status === 'on site' ? 'green' : 'orange';
-        statusHtml =
-          '<div class="mds-construction-machine-status">' +
-          '<span class="mds-resource-status-dot" style="background-color:' +
-          statusColor +
-          ';"></span>' +
-          resource.status +
-          '</div>';
+        myResources.forEach(function (site) {
+          site.children.forEach(function (resource) {
+            var resourceItem = $resourceList.find('input[value="' + resource.id + '"]').parent();
+            if (
+              (!maintenanceFilter || resource.status !== 'maintenance') &&
+              (!onSiteFilter || resource.status !== 'on site') &&
+              (!searchQuery || resource.name.toLowerCase().includes(searchQuery.toLowerCase()))
+            ) {
+              resourceItem.show();
+            }
+          });
+        });
       }
-      return (
-        '<div class="mds-construction-machine">' +
-        '<div class="mds-construction-machine-name">' +
-        resource.name +
-        '</div>' +
-        statusHtml +
-        '</div>'
-      );
-    }
 
-    function renderResourceHeader() {
-      return (
-        '<div class="mbsc-flex mbsc-align-items-center mds-resource-filtering-header">' +
-        '<label class=mds-search-label>' +
-        '<input type="text" mbsc-input id="search-input" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." class="mds-resource-header-template-search-input"/>' +
-        '</label>' +
-        '<button mbsc-button id="filter-button" class="mds-resource-header-template-filter-button" data-icon="">' +
-        'Filter' +
-        '</button>' +
-        '</div>'
-      );
-    }
+      function handleSearch(event) {
+        searchQuery = event.target.value.toLowerCase();
 
-    function renderResourceEmpty() {
-      return (
-        '<div class="mds-empty-resource-container">' +
-        '<div class="mds-empty-resource-content">' +
-        '<div class="mds-empty-resource-text">No resources match your search. Adjust your filters or try a different keyword.</div>' +
-        '<button mbsc-button class="mds-reset-filters-button"' +
-        '>Reset Filters</button>' +
-        '</div>' +
-        '</div>'
-      );
-    }
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(function () {
+          filterResources();
+        }, 300);
+      }
 
-    function resetFilters() {
-      statusCheckboxes.forEach(function (checkbox) {
-        checkbox.checked = true;
-      });
+      function filterResources() {
+        maintenanceFilter = !$('.mds-status-checkbox-maintenance').is(':checked');
+        onSiteFilter = !$('.mds-status-checkbox-on-site').is(':checked');
 
-      resourceCheckboxes.forEach(function (checkbox) {
-        checkbox.checked = true;
-      });
+        var selectedResources = $('.mds-resource-checkbox:checked')
+          .map(function () {
+            return $(this).val();
+          })
+          .get();
 
-      setTimeout(function () {
-        $('#search-input').val('');
-        onSiteFilter = false;
-        maintenanceFilter = false;
-        filterResources();
-        popupPlaceholder.hide();
-
-        calendar.setOptions({ resources: filteredResources });
-      }, 0);
-    }
-
-    $('#calendar').on('click', '.mds-reset-filters-button', resetFilters);
-
-    function handleSearch(event) {
-      var query = event.target.value.toLowerCase();
-
-      clearTimeout(handleSearch.timeout);
-      handleSearch.timeout = setTimeout(function () {
         filteredResources = myResources
           .map(function (site) {
             return {
@@ -516,7 +471,12 @@ export default {
               color: site.color,
               eventCreation: site.eventCreation,
               children: site.children.filter(function (resource) {
-                return resource.name.toLowerCase().indexOf(query) !== -1;
+                return (
+                  selectedResources.includes(resource.id) &&
+                  !(maintenanceFilter && resource.status === 'maintenance') &&
+                  !(onSiteFilter && resource.status === 'on site') &&
+                  (!searchQuery || resource.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                );
               }),
             };
           })
@@ -525,197 +485,169 @@ export default {
           });
 
         calendar.setOptions({ resources: filteredResources });
-      }, 300);
-    }
+      }
 
-    $('#calendar').on('input', '#search-input', handleSearch);
+      $calendarElement.on('click', '.mds-reset-filters-button', function () {
+        filterCheckboxes.forEach(function (checkbox) {
+          checkbox.checked = true;
+        });
 
-    function generateResourceHTML(resource) {
-      return (
-        '<label>' +
-        '<input type="checkbox" mbsc-checkbox class="mds-resource-checkbox" value="' +
-        resource.id +
-        '" checked> ' +
-        resource.name +
-        '</label>'
-      );
-    }
-
-    function createResourceList() {
-      var resourceList = $('#resource-list');
-
-      myResources.forEach(function (site) {
-        site.children.forEach(function (resource) {
-          resourceList.append(generateResourceHTML(resource));
+        setTimeout(function () {
+          $('#search-input').val('');
+          onSiteFilter = false;
+          maintenanceFilter = false;
+          filterResources();
         });
       });
-    }
 
-    function saveInitialCheckboxStates() {
-      initialStatusCheckboxStates = statusCheckboxes.map(function (checkbox) {
-        return checkbox.checked;
-      });
-      initialResourceCheckboxStates = resourceCheckboxes.map(function (checkbox) {
-        return checkbox.checked;
-      });
-    }
-
-    function restoreInitialCheckboxStates() {
-      statusCheckboxes.forEach(function (checkbox, index) {
-        checkbox.checked = initialStatusCheckboxStates[index];
-      });
-      resourceCheckboxes.forEach(function (checkbox, index) {
-        checkbox.checked = initialResourceCheckboxStates[index];
-      });
-    }
-
-    createResourceList();
-
-    var onSiteFilter = false;
-    var onSiteFilterTemp = false;
-
-    var maintenanceFilter = false;
-    var maintenanceFilterTemp = false;
-
-    var filteredResources = [];
-
-    function filterResources() {
-      maintenanceFilter = !$('.mds-status-checkbox-maintenance').is(':checked');
-      onSiteFilter = !$('.mds-status-checkbox-on-site').is(':checked');
-
-      var selectedResources = $('.mds-resource-checkbox:checked')
-        .map(function () {
-          return $(this).val();
-        })
-        .get();
-
-      filteredResources = myResources.map(function (site) {
-        return {
-          id: site.id,
-          name: site.name,
-          color: site.color,
-          eventCreation: site.eventCreation,
-          children: site.children.filter(function (resource) {
-            return selectedResources.includes(resource.id);
-          }),
-        };
-      });
-
-      filteredResources = filteredResources.filter(function (site) {
-        return site.children.length > 0;
-      });
-
-      if (maintenanceFilter) {
-        filteredResources = filteredResources
-          .map(function (site) {
-            return {
-              id: site.id,
-              name: site.name,
-              color: site.color,
-              eventCreation: site.eventCreation,
-              children: site.children.filter(function (resource) {
-                return resource.status !== 'maintenance';
-              }),
-            };
-          })
-          .filter(function (site) {
-            return site.children.length > 0;
+      $calendarElement.on('input', '#search-input', handleSearch);
+      function createResourceList(resources) {
+        $resourceList.empty();
+        var content = '';
+        resources.forEach(function (site) {
+          site.children.forEach(function (resource) {
+            content +=
+              '<label>' +
+              '<input type="checkbox" mbsc-checkbox class="mds-resource-checkbox mds-popup-checkbox" value="' +
+              resource.id +
+              '" checked> ' +
+              resource.name +
+              '</label>';
           });
+        });
+
+        $resourceList.html(content);
+        mobiscroll.enhance($resourceList[0]);
       }
 
-      if (onSiteFilter) {
-        filteredResources = filteredResources
-          .map(function (site) {
-            return {
-              id: site.id,
-              name: site.name,
-              color: site.color,
-              eventCreation: site.eventCreation,
-              children: site.children.filter(function (resource) {
-                return resource.status !== 'on site';
-              }),
-            };
-          })
-          .filter(function (site) {
-            return site.children.length > 0;
-          });
-      }
-    }
-
-    var popup = $('#demo-filter-popup')
-      .mobiscroll()
-      .popup({
-        buttons: [
-          'cancel',
-          {
-            text: 'Apply',
-            keyCode: 'enter',
-            handler: function () {
-              filterResources();
-              calendar.setOptions({ resources: filteredResources });
-              success = true;
-              popup.close();
+      var popup = $('#demo-filtering-popup')
+        .mobiscroll()
+        .popup({
+          buttons: [
+            'cancel',
+            {
+              text: 'Apply',
+              keyCode: 'enter',
+              handler: function () {
+                success = true;
+                filterResources();
+                popup.close();
+              },
+              cssClass: 'mbsc-popup-button-primary',
             },
-            cssClass: 'mbsc-popup-button-primary',
+          ],
+          onOpen: function () {
+            refreshPopupResourceList();
+            success = false;
+            // todo ..
+            $('.mds-popup-checkbox').each(function () {
+              var checkbox = $(this).mobiscroll('getInst');
+              filterCheckboxes.push(checkbox);
+            });
+            initialFilterCheckboxStates = filterCheckboxes.map(function (checkbox) {
+              return checkbox.checked;
+            });
+            maintenanceFilterTemp = maintenanceFilter;
+            onSiteFilterTemp = onSiteFilter;
           },
-        ],
-        onOpen: function () {
-          maintenanceFilterTemp = maintenanceFilter;
-          onSiteFilterTemp = onSiteFilter;
-        },
-        onClose: function () {
-          if (!success) {
-            maintenanceFilter = maintenanceFilterTemp;
-            onSiteFilter = onSiteFilterTemp;
-            restoreInitialCheckboxStates();
-          }
-        },
-        contentPadding: false,
-        display: 'anchored',
-        focusOnClose: false,
-        focusOnOpen: false,
-        showOverlay: false,
-        width: 400,
-      })
-      .mobiscroll('getInst');
+          onClose: function () {
+            if (!success) {
+              maintenanceFilter = maintenanceFilterTemp;
+              onSiteFilter = onSiteFilterTemp;
+              filterCheckboxes.forEach(function (checkbox, index) {
+                checkbox.checked = initialFilterCheckboxStates[index];
+              });
+            }
+          },
+          contentPadding: false,
+          display: 'anchored',
+          focusOnClose: false,
+          focusOnOpen: false,
+          showOverlay: false,
+          width: 400,
+        })
+        .mobiscroll('getInst');
 
-    $(document).on('click', '#filter-button', function () {
-      popup.setOptions({ anchor: this });
-      saveInitialCheckboxStates();
-      success = false;
-      popup.open();
+      $calendarElement.on('click', '#filter-button', function () {
+        popup.setOptions({ anchor: this });
+        popup.open();
+      });
+
+      var calendar = $calendarElement
+        .mobiscroll()
+        .eventcalendar({
+          class: 'mds-resource-filtering-calendar',
+          clickToCreate: true,
+          dragToCreate: true,
+          dragToResize: true,
+          dragToMove: true,
+          view: {
+            timeline: {
+              type: 'day',
+              startTime: '05:00',
+              endTime: '22:00',
+              timeCellStep: 60,
+              timeLabelStep: 60,
+              weekNumbers: false,
+            },
+          },
+          data: myEvents,
+          resources: myResources,
+          onInit: function () {
+            createResourceList(myResources);
+          },
+          renderResource: function (resource) {
+            var statusHtml = '';
+            if (resource.status) {
+              var statusColor = resource.status === 'on site' ? 'green' : 'orange';
+              statusHtml =
+                '<div class="mds-construction-machine-status">' +
+                '<span class="mds-resource-status-dot" style="background-color:' +
+                statusColor +
+                ';"></span>' +
+                resource.status +
+                '</div>';
+            }
+            return (
+              '<div class="mds-construction-machine">' +
+              '<div class="mds-construction-machine-name">' +
+              resource.name +
+              '</div>' +
+              statusHtml +
+              '</div>'
+            );
+          },
+          renderResourceEmpty: function () {
+            return (
+              '<div class="mds-empty-resource-container">' +
+              '<div class="mds-empty-resource-content">' +
+              '<div class="mds-empty-resource-text">No resources match your search. Adjust your filters or try a different keyword.</div>' +
+              '<button mbsc-button class="mds-reset-filters-button"' +
+              '>Reset Filters</button>' +
+              '</div>' +
+              '</div>'
+            );
+          },
+          renderResourceHeader: function () {
+            return (
+              '<div class="mbsc-flex mbsc-align-items-center mds-resource-filtering-header">' +
+              '<label class=mds-search-label>' +
+              '<input type="text" mbsc-input id="search-input" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." class="mds-resource-header-template-search-input"/>' +
+              '</label>' +
+              '<button mbsc-button id="filter-button" class="mds-resource-header-template-filter-button" data-icon="">' +
+              'Filter' +
+              '</button>' +
+              '</div>'
+            );
+          },
+        })
+        .mobiscroll('getInst');
     });
-
-    var calendar = $('#calendar')
-      .mobiscroll()
-      .eventcalendar({
-        class: 'mds-resource-filtering-calendar',
-        clickToCreate: true,
-        dragToCreate: true,
-        dragToResize: true,
-        dragToMove: true,
-        view: {
-          timeline: {
-            type: 'day',
-            startTime: '05:00',
-            endTime: '22:00',
-            timeCellStep: 60,
-            timeLabelStep: 60,
-            weekNumbers: false,
-          },
-        },
-        data: myEvents,
-        resources: myResources,
-        renderResource: renderCustomResource,
-        renderResourceEmpty: renderResourceEmpty,
-        renderResourceHeader: renderResourceHeader,
-      })
-      .mobiscroll('getInst');
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <div id="calendar"></div>
-  <div id="demo-filter-popup">
+  <div id="demo-filtering-calendar"></div>
+  <div id="demo-filtering-popup">
     <div>
     <div class="mbsc-form-group-title">Operational Status</div>
     <label>
@@ -723,7 +655,7 @@ export default {
         type="checkbox"
         mbsc-checkbox
         data-label="maintenance"
-        class="mds-status-checkbox mds-status-checkbox-maintenance"
+        class="mds-popup-checkbox mds-status-checkbox-maintenance"
         checked
       />
     </label>
@@ -732,145 +664,140 @@ export default {
         type="checkbox"
         mbsc-checkbox
         data-label="on site"
-        class="mds-status-checkbox mds-status-checkbox-on-site"
+        class="mds-popup-checkbox mds-status-checkbox-on-site"
         checked
       />
     </label>
-  </div>
+   </div>
       <div id="resource-list-group" mbsc-form-group>
       <div class="mbsc-form-group-title">Resources</div>
         <div id="resource-list"></div>
       </div>
-      <div id="checkbox-group" mbsc-form-group>
-
     </div>
   </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-resource-status-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 5px;
-  }
+    /* mbsc customs */
+    #demo-filtering-popup 
+    .mbsc-form-control-label {
+      font-size: 14px;
+    }
 
-  .mbsc-form-control-label{
-    font-size: 14px;
-  }
+    .mds-resource-filtering-calendar 
+    .mbsc-icon-material-search {
+      top: 0px !important;
+      font-size: 22px;
+    }
 
-  .mbsc-icon-material-search {
-    top: 0px !important;
-    font-size: 22px;
-  }
+    .mds-resource-filtering-calendar 
+    .mbsc-timeline-resources {
+      width: 300px;
+    }
 
-  .mbsc-checkbox-box{
-    width: 10px;
-  }
-  
-  .mds-construction-machine-name {
-    margin-bottom: 5px;
-  }
-  
-  .mbsc-timeline-resources {
-    width: 300px;
-  }
-  
-  .mbsc-timeline-resource-header-cont {
-    width: 300px;
-    margin: 0;
-  }
-  
-  .mbsc-timeline-resource-header {
-    margin-top: 4px;
-    padding: 0;
-  }
-  
-  .mds-resource-header-template-search button,
-  input {
-    font-size: 14px;
-  }
-  
-  #search-input {
-    width: 100%;
-  }
-  
-  .mds-construction-machine-status {
-    font-size: 13px;
-    font-weight: normal;
-  }
-  
-  .mds-construction-machine-name {
-    font-size: 14px;
-    font-weight: normal;
-  }
-  
-  .mds-placeholder {
-    color: #999;
-    font-style: italic;
-    margin-top: 15px;
-  }
-  
-  .mds-search-label {
-    margin: 0 !important;
-    width: auto;
-  }
-  
-  .mds-resource-header-template-search-input {
-    height: 30px !important;
-  }
-  
-  .mds-resource-header-template-filter-button {
-    white-space: nowrap;
-  }
-  
-  .mds-empty-resource-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-  
-  .mds-empty-resource-content {
-    text-align: center;
-  }
-  
-  .mds-empty-resource-text {
-    color: #999;
-    font-style: italic;
-    margin-bottom: 15px;
-  }
-  
-  .mds-reset-filters-button {
-    padding: 20px 20px;
-    font-size: 14px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .mbsc-timeline-resource-title {
-    height: 100%;
-  }
-  
-  .mds-resource-header-template {
-    width: 300px;
-  }
+    .mds-resource-filtering-calendar 
+    .mbsc-timeline-resource-header-cont {
+      width: 300px;
+      margin: 0;
+    }
 
-  .mds-resource-filtering-header {
-    justify-content: space-evenly;
-    align-items: center;
-  }
+    .mds-resource-filtering-calendar 
+    .mbsc-timeline-resource-header {
+      margin-top: 4px;
+      padding: 0;
+    }
 
-  .mds-placeholder {
-    margin-bottom: 15px;
-  }
+    .mds-resource-filtering-calendar 
+    .mbsc-timeline-resource-title {
+      height: 100%;
+    }
 
-  .mds-resource-filtering-calendar .mbsc-timeline-parent {
-    height: 34px;  
-  }
+    .mds-resource-filtering-calendar 
+    .mbsc-timeline-parent {
+      height: 34px;
+    }
+
+    /* resrouce header */
+    .mds-resource-header-template-search button, input {
+      font-size: 14px;
+    }
+
+    #search-input {
+      width: 100%;
+    }
+
+    .mds-search-label {
+      margin: 0 !important;
+      width: auto;
+    }
+
+    .mds-resource-header-template-search-input {
+      height: 30px !important;
+    }
+
+    .mds-resource-header-template-filter-button {
+      white-space: nowrap;
+    }
+
+    .mds-resource-header-template {
+      width: 300px;
+    }
+
+    .mds-resource-filtering-header {
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    /* resources */
+    .mds-construction-machine-name {
+      margin-top: 5px;
+      margin-bottom: 7px;
+    }
+
+    .mds-resource-status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .mds-construction-machine-status {
+      font-size: 13px;
+      font-weight: normal;
+    }
+
+    .mds-construction-machine-name {
+      font-size: 14px;
+      font-weight: normal;
+    }
+
+    /* empty resources */
+    .mds-empty-resource-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .mds-empty-resource-content {
+      text-align: center;
+    }
+
+    .mds-empty-resource-text {
+      color: #999;
+      font-style: italic;
+      margin-bottom: 15px;
+    }
+
+    .mds-reset-filters-button {
+      padding: 20px 20px;
+      font-size: 14px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   `,
 };
