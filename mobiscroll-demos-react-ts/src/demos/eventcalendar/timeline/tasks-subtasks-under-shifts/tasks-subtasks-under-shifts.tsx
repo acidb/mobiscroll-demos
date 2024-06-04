@@ -1691,11 +1691,8 @@ const App: FC = () => {
           event.shift = shift.id;
           newEventList.push(event);
           setEvents(newEventList);
-
-          console.log('newEventList', newEventList);
         }
       } else {
-        // console.log('test??,', event);
         setEvents([...myEvents, event]);
       }
     },
