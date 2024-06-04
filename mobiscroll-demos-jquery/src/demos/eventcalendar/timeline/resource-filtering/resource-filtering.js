@@ -11,34 +11,158 @@ export default {
 
     var myEvents = [
       {
-        start: 'dyndatetime(y,m,d,h+1)',
-        end: 'dyndatetime(y,m,d,h+6)',
+        start: 'dyndatetime(y,m,d,5)',
+        end: 'dyndatetime(y,m,d,19)',
         title: 'Excavate Foundation',
-        resource: 'bulldozer - XYZ123',
+        resource: 'bulldozer - TX1234',
       },
       {
-        start: 'dyndatetime(y,m,d,h+5)',
-        end: 'dyndatetime(y,m,d,h+10)',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,h+18)',
         title: 'Install Framing',
-        resource: 'crane - DEF789',
+        resource: 'crane - NY9101',
+      },
+      {
+        start: 'dyndatetime(y,m,d,10)',
+        end: 'dyndatetime(y,m,d,20)',
+        title: 'Electrical Wiring',
+        resource: 'excavator - FL1213',
+      },
+      {
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,22)',
+        title: 'Roofing',
+        resource: 'crane - IL1617',
+      },
+      {
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,19)',
+        title: 'Site Cleanup',
+        resource: 'bulldozer - PA1819',
+      },
+
+      {
+        start: 'dyndatetime(y,m,d,5)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Foundation Work',
+        resource: 'concrete mixer - CA2223',
+      },
+      {
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Steel Framing',
+        resource: 'crane - NY2425',
+      },
+      {
+        start: 'dyndatetime(y,m,d,h+8)',
+        end: 'dyndatetime(y,m,d,h+13)',
+        title: 'Interior Plumbing',
+        resource: 'excavator - FL2627',
+      },
+      {
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,20)',
+        title: 'Masonry Work',
+        resource: 'crane - IL3031',
+      },
+      {
+        start: 'dyndatetime(y,m,d,h-4)',
+        end: 'dyndatetime(y,m,d,h+8)',
+        title: 'Exterior Finishing',
+        resource: 'bulldozer - PA3233',
+      },
+
+      {
+        start: 'dyndatetime(y,m,d,h+1)',
+        end: 'dyndatetime(y,m,d,h+6)',
+        title: 'Ground Breaking',
+        resource: 'bulldozer - TX3435',
+      },
+      {
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,19)',
+        title: 'Wall Construction',
+        resource: 'crane - NY3839',
+      },
+      {
+        start: 'dyndatetime(y,m,d,h+9)',
+        end: 'dyndatetime(y,m,d,h+14)',
+        title: 'Roof Installation',
+        resource: 'excavator - FL4041',
+      },
+      {
+        start: 'dyndatetime(y,m,d,h-4)',
+        end: 'dyndatetime(y,m,d,h+6)',
+        title: 'Painting',
+        resource: 'crane - IL4445',
+      },
+      {
+        start: 'dyndatetime(y,m,d,h-3)',
+        end: 'dyndatetime(y,m,d,h+8)',
+        title: 'Driveway Paving',
+        resource: 'bulldozer - PA4647',
+      },
+
+      {
+        start: 'dyndatetime(y,m,d,h+1)',
+        end: 'dyndatetime(y,m,d,h+6)',
+        title: 'Foundation',
+        resource: 'concrete mixer - CA5051',
+      },
+      {
+        start: 'dyndatetime(y,m,d,h+4)',
+        end: 'dyndatetime(y,m,d,h+9)',
+        title: 'Building Erection',
+        resource: 'crane - NY5253',
       },
       {
         start: 'dyndatetime(y,m,d,h+7)',
         end: 'dyndatetime(y,m,d,h+12)',
         title: 'Electrical Wiring',
-        resource: 'excavator - GHI012',
+        resource: 'excavator - FL5455',
       },
       {
-        start: 'dyndatetime(y,m,d,h-5)',
+        start: 'dyndatetime(y,m,d,h-4)',
         end: 'dyndatetime(y,m,d,h+5)',
         title: 'Roofing',
-        resource: 'crane - MNO678',
+        resource: 'crane - IL5859',
       },
       {
-        start: 'dyndatetime(y,m,d,h-5)',
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,20)',
+        title: 'Finishing Touches',
+        resource: 'bulldozer - PA6061',
+      },
+
+      {
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,19)',
+        title: 'Site Preparation',
+        resource: 'bulldozer - TX6263',
+      },
+      {
+        start: 'dyndatetime(y,m,d,h+4)',
+        end: 'dyndatetime(y,m,d,h+9)',
+        title: 'Piling Work',
+        resource: 'crane - NY6667',
+      },
+      {
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Concrete Pouring',
+        resource: 'excavator - FL6869',
+      },
+      {
+        start: 'dyndatetime(y,m,d,6)',
+        end: 'dyndatetime(y,m,d,22)',
+        title: 'Deck Construction',
+        resource: 'drill - OH7071',
+      },
+      {
+        start: 'dyndatetime(y,m,d,h-3)',
         end: 'dyndatetime(y,m,d,h+8)',
-        title: 'Site Cleanup',
-        resource: 'bulldozer - PQR901',
+        title: 'Final Touches',
+        resource: 'bulldozer - PA7475',
       },
     ];
 
@@ -50,16 +174,46 @@ export default {
         eventCreation: false,
         children: [
           {
-            id: 'bulldozer - XYZ123',
-            name: 'Bulldozer - XYZ123',
+            id: 'bulldozer - TX1234',
+            name: 'Bulldozer - TX1234',
             color: '#1dab2f',
             status: 'on site',
           },
           {
-            id: 'concrete mixer - ABC456',
-            name: 'Concrete Mixer - ABC456',
+            id: 'concrete mixer - CA5678',
+            name: 'Concrete Mixer - CA5678',
             color: '#76e083',
             status: 'maintenance',
+          },
+          {
+            id: 'crane - NY9101',
+            name: 'Crane - NY9101',
+            color: '#4981d6',
+            status: 'on site',
+          },
+          {
+            id: 'excavator - FL1213',
+            name: 'Excavator - FL1213',
+            color: '#f7961e',
+            status: 'on site',
+          },
+          {
+            id: 'drill - OH1415',
+            name: 'Drill - OH1415',
+            color: '#34c8e0',
+            status: 'maintenance',
+          },
+          {
+            id: 'crane - IL1617',
+            name: 'Crane - IL1617',
+            color: '#e25dd2',
+            status: 'on site',
+          },
+          {
+            id: 'bulldozer - PA1819',
+            name: 'Bulldozer - PA1819',
+            color: '#d6d145',
+            status: 'on site',
           },
         ],
       },
@@ -70,27 +224,45 @@ export default {
         eventCreation: false,
         children: [
           {
-            id: 'crane - DEF789',
-            name: 'Crane - DEF789',
+            id: 'bulldozer - TX2021',
+            name: 'Bulldozer - TX2021',
+            color: '#1dab2f',
+            status: 'maintenance',
+          },
+          {
+            id: 'concrete mixer - CA2223',
+            name: 'Concrete Mixer - CA2223',
+            color: '#76e083',
+            status: 'on site',
+          },
+          {
+            id: 'crane - NY2425',
+            name: 'Crane - NY2425',
             color: '#4981d6',
             status: 'on site',
           },
           {
-            id: 'excavator - GHI012',
-            name: 'Excavator - GHI012',
+            id: 'excavator - FL2627',
+            name: 'Excavator - FL2627',
             color: '#f7961e',
             status: 'on site',
           },
           {
-            id: 'drill - JKL345',
-            name: 'Drill - JKL345',
+            id: 'drill - OH2829',
+            name: 'Drill - OH2829',
             color: '#34c8e0',
             status: 'maintenance',
           },
           {
-            id: 'crane - MNO678',
-            name: 'Crane - MNO678',
+            id: 'crane - IL3031',
+            name: 'Crane - IL3031',
             color: '#e25dd2',
+            status: 'on site',
+          },
+          {
+            id: 'bulldozer - PA3233',
+            name: 'Bulldozer - PA3233',
+            color: '#d6d145',
             status: 'on site',
           },
         ],
@@ -102,8 +274,38 @@ export default {
         eventCreation: false,
         children: [
           {
-            id: 'bulldozer - PQR901',
-            name: 'Bulldozer - PQR901',
+            id: 'bulldozer - TX3435',
+            name: 'Bulldozer - TX3435',
+            color: '#1dab2f',
+            status: 'on site',
+          },
+          {
+            id: 'concrete mixer - CA3637',
+            name: 'Concrete Mixer - CA3637',
+            color: '#76e083',
+            status: 'maintenance',
+          },
+          {
+            id: 'crane - NY3839',
+            name: 'Crane - NY3839',
+            color: '#4981d6',
+            status: 'on site',
+          },
+          {
+            id: 'excavator - FL4041',
+            name: 'Excavator - FL4041',
+            color: '#f7961e',
+            status: 'on site',
+          },
+          {
+            id: 'crane - IL4445',
+            name: 'Crane - IL4445',
+            color: '#e25dd2',
+            status: 'on site',
+          },
+          {
+            id: 'bulldozer - PA4647',
+            name: 'Bulldozer - PA4647',
             color: '#d6d145',
             status: 'on site',
           },
@@ -116,16 +318,96 @@ export default {
         eventCreation: false,
         children: [
           {
-            id: 'forklift - STU234',
-            name: 'Forklift - STU234',
-            color: '#ffcc00',
+            id: 'bulldozer - TX4849',
+            name: 'Bulldozer - TX4849',
+            color: '#1dab2f',
             status: 'maintenance',
           },
           {
-            id: 'dump truck - VWX567',
-            name: 'Dump Truck - VWX567',
-            color: '#cc6600',
+            id: 'concrete mixer - CA5051',
+            name: 'Concrete Mixer - CA5051',
+            color: '#76e083',
+            status: 'on site',
+          },
+          {
+            id: 'crane - NY5253',
+            name: 'Crane - NY5253',
+            color: '#4981d6',
+            status: 'on site',
+          },
+          {
+            id: 'excavator - FL5455',
+            name: 'Excavator - FL5455',
+            color: '#f7961e',
+            status: 'on site',
+          },
+          {
+            id: 'drill - OH5657',
+            name: 'Drill - OH5657',
+            color: '#34c8e0',
             status: 'maintenance',
+          },
+          {
+            id: 'crane - IL5859',
+            name: 'Crane - IL5859',
+            color: '#e25dd2',
+            status: 'on site',
+          },
+          {
+            id: 'bulldozer - PA6061',
+            name: 'Bulldozer - PA6061',
+            color: '#d6d145',
+            status: 'on site',
+          },
+        ],
+      },
+      {
+        id: 'site5',
+        name: 'Bridge Construction',
+        color: '#00ff00',
+        eventCreation: false,
+        children: [
+          {
+            id: 'bulldozer - TX6263',
+            name: 'Bulldozer - TX6263',
+            color: '#1dab2f',
+            status: 'on site',
+          },
+          {
+            id: 'concrete mixer - CA6465',
+            name: 'Concrete Mixer - CA6465',
+            color: '#76e083',
+            status: 'maintenance',
+          },
+          {
+            id: 'crane - NY6667',
+            name: 'Crane - NY6667',
+            color: '#4981d6',
+            status: 'on site',
+          },
+          {
+            id: 'excavator - FL6869',
+            name: 'Excavator - FL6869',
+            color: '#f7961e',
+            status: 'on site',
+          },
+          {
+            id: 'drill - OH7071',
+            name: 'Drill - OH7071',
+            color: '#34c8e0',
+            status: 'on site',
+          },
+          {
+            id: 'crane - IL7273',
+            name: 'Crane - IL7273',
+            color: '#e25dd2',
+            status: 'maintenance',
+          },
+          {
+            id: 'bulldozer - PA7475',
+            name: 'Bulldozer - PA7475',
+            color: '#d6d145',
+            status: 'on site',
           },
         ],
       },
@@ -140,6 +422,7 @@ export default {
     var initialStatusCheckboxStates = [];
     var initialResourceCheckboxStates = [];
 
+    // todo..
     $(document).ready(function () {
       $('.mds-status-checkbox').each(function () {
         var checkbox = $(this).mobiscroll('getInst');
@@ -177,7 +460,7 @@ export default {
       return (
         '<div class="mbsc-flex mbsc-align-items-center mds-resource-filtering-header">' +
         '<label class=mds-search-label>' +
-        '<input type="text" mbsc-input id="search-input" data-input-style="outline" data-start-icon="" placeholder="Search..." class="mds-resource-header-template-search-input"/>' +
+        '<input type="text" mbsc-input id="search-input" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." class="mds-resource-header-template-search-input"/>' +
         '</label>' +
         '<button mbsc-button id="filter-button" class="mds-resource-header-template-filter-button" data-icon="">' +
         'Filter' +
@@ -212,7 +495,6 @@ export default {
         onSiteFilter = false;
         maintenanceFilter = false;
         filterResources();
-        refreshResourceList();
         popupPlaceholder.hide();
 
         calendar.setOptions({ resources: filteredResources });
@@ -269,21 +551,6 @@ export default {
       });
     }
 
-    function refreshResourceList() {
-      var resourceList = $('#resource-list');
-      resourceList.children().hide();
-
-      myResources.forEach(function (site) {
-        site.children.forEach(function (resource) {
-          var resourceItem = resourceList.find('input[value="' + resource.id + '"]').parent();
-          if ((!maintenanceFilter || resource.status !== 'maintenance') && (!onSiteFilter || resource.status !== 'on site')) {
-            resourceItem.show();
-            console.log('here');
-          }
-        });
-      });
-    }
-
     function saveInitialCheckboxStates() {
       initialStatusCheckboxStates = statusCheckboxes.map(function (checkbox) {
         return checkbox.checked;
@@ -313,6 +580,9 @@ export default {
     var filteredResources = [];
 
     function filterResources() {
+      maintenanceFilter = !$('.mds-status-checkbox-maintenance').is(':checked');
+      onSiteFilter = !$('.mds-status-checkbox-on-site').is(':checked');
+
       var selectedResources = $('.mds-resource-checkbox:checked')
         .map(function () {
           return $(this).val();
@@ -372,25 +642,6 @@ export default {
       }
     }
 
-    $(document).on('change', '.mds-status-checkbox-maintenance, .mds-status-checkbox-on-site', function () {
-      var isMaintenance = $(this).hasClass('mds-status-checkbox-maintenance');
-      var isChecked = $(this).is(':checked');
-
-      if (isMaintenance) {
-        maintenanceFilter = !isChecked;
-      } else {
-        onSiteFilter = !isChecked;
-      }
-
-      refreshResourceList();
-
-      if (onSiteFilter && maintenanceFilter) {
-        popupPlaceholder.show();
-      } else {
-        popupPlaceholder.hide();
-      }
-    });
-
     var popup = $('#demo-filter-popup')
       .mobiscroll()
       .popup({
@@ -417,13 +668,6 @@ export default {
             maintenanceFilter = maintenanceFilterTemp;
             onSiteFilter = onSiteFilterTemp;
             restoreInitialCheckboxStates();
-            // .. refactor
-            if (onSiteFilter && maintenanceFilter) {
-              popupPlaceholder.show();
-            } else {
-              popupPlaceholder.hide();
-            }
-            refreshResourceList();
           }
         },
         contentPadding: false,
@@ -472,34 +716,32 @@ export default {
   <div id="calendar"></div>
   <div id="demo-filter-popup">
     <div>
+    <div class="mbsc-form-group-title">Operational Status</div>
+    <label>
+      <input
+        type="checkbox"
+        mbsc-checkbox
+        data-label="maintenance"
+        class="mds-status-checkbox mds-status-checkbox-maintenance"
+        checked
+      />
+    </label>
+    <label>
+      <input
+        type="checkbox"
+        mbsc-checkbox
+        data-label="on site"
+        class="mds-status-checkbox mds-status-checkbox-on-site"
+        checked
+      />
+    </label>
+  </div>
       <div id="resource-list-group" mbsc-form-group>
       <div class="mbsc-form-group-title">Resources</div>
-        <div class="mds-resource-filtering-popup-placeholder" style="display: none">
-          <div class="mds-placeholder">No resources available</div>
-        </div>
         <div id="resource-list"></div>
       </div>
       <div id="checkbox-group" mbsc-form-group>
-      <div class="mbsc-form-group-title">Operational Status</div>
-        <label>
-          <input
-            type="checkbox"
-            mbsc-checkbox
-            data-label="maintenance"
-            class="mds-status-checkbox mds-status-checkbox-maintenance"
-            checked
-          />
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            mbsc-checkbox
-            data-label="on site"
-            class="mds-status-checkbox mds-status-checkbox-on-site"
-            checked
-          />
-        </label>
-      </div>
+
     </div>
   </div>
   `,
@@ -511,6 +753,19 @@ export default {
     height: 10px;
     border-radius: 50%;
     margin-right: 5px;
+  }
+
+  .mbsc-form-control-label{
+    font-size: 14px;
+  }
+
+  .mbsc-icon-material-search {
+    top: 0px !important;
+    font-size: 22px;
+  }
+
+  .mbsc-checkbox-box{
+    width: 10px;
   }
   
   .mds-construction-machine-name {
@@ -550,13 +805,6 @@ export default {
     font-weight: normal;
   }
   
-  .mds-resource-filtering-popup-placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-  
   .mds-placeholder {
     color: #999;
     font-style: italic;
@@ -567,7 +815,6 @@ export default {
     margin: 0 !important;
     width: auto;
   }
-
   
   .mds-resource-header-template-search-input {
     height: 30px !important;
