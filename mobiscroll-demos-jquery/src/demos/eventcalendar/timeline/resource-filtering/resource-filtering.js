@@ -587,6 +587,17 @@ export default {
         })
         .mobiscroll('getInst');
 
+      $calendarElement.on('input', '#demo-search-input', function (event) {
+        clearTimeout(searchTimeout);
+        searchQuery = event.target.value.toLowerCase();
+        searchTimeout = setTimeout(filterResources, 300);
+      });
+
+      $calendarElement.on('click', '#demo-filter-button', function () {
+        popup.setOptions({ anchor: this });
+        popup.open();
+      });
+
       $calendarElement.on('click', '#demo-reset-filters', function () {
         filterCheckboxes.forEach(function (checkbox) {
           checkbox.checked = true;
@@ -599,20 +610,6 @@ export default {
           maintenanceFilter = false;
           filterResources();
         });
-      });
-
-      $calendarElement.on('input', '#demo-search-input', function (event) {
-        searchQuery = event.target.value.toLowerCase();
-
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(function () {
-          filterResources();
-        }, 300);
-      });
-
-      $calendarElement.on('click', '#demo-filter-button', function () {
-        popup.setOptions({ anchor: this });
-        popup.open();
       });
 
       var content = '';
