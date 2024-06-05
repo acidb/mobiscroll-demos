@@ -584,31 +584,28 @@ export default {
           },
           renderResourceEmpty: function () {
             return (
-              '<div class="mds-filtering-empty-resource-container mbsc-flex mbsc-align-items-center">' +
-              '<div class="mds-filtering-empty-resource-content">' +
-              '<div class="mds-filtering-empty-resource-text">No resources match your search. Adjust your filters or try a different keyword.</div>' +
-              '<button mbsc-button class="mds-filtering-reset-filters-button"' +
-              '>Reset Filters</button>' +
+              '<div class="mds-filtering-empty-resource mbsc-flex mbsc-align-items-center">' +
+              '<div>' +
+              '<p class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search. Adjust your filters or try a different keyword.</p>' +
+              '<button mbsc-button id="demo-reset-filters" data-variant="outline">Reset Filters</button>' +
               '</div>' +
               '</div>'
             );
           },
           renderResourceHeader: function () {
             return (
-              '<div class="mbsc-flex mbsc-align-items-center mds-resource-filtering-header-container">' +
-              '<label class=mds-search-label>' +
-              '<input type="text" mbsc-input id="demo-search-input" autocomplete="off" data-input-style="box" data-start-icon="material-search" placeholder="Search..." class="mds-resource-header-template-search-input"/>' +
+              '<div class="mbsc-flex mbsc-align-items-center mbsc-font mds-filtering-search">' +
+              '<label class="mbsc-flex-1-1">' +
+              '<input type="text" mbsc-input id="demo-search-input" autocomplete="off" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." />' +
               '</label>' +
-              '<button mbsc-button id="demo-filter-button" class="mds-resource-header-template-filter-button" data-icon="">' +
-              'Filter' +
-              '</button>' +
+              '<button mbsc-button id="demo-filter-button"">Filter</button>' +
               '</div>'
             );
           },
         })
         .mobiscroll('getInst');
 
-      $calendarElement.on('click', '.mds-filtering-reset-filters-button', function () {
+      $calendarElement.on('click', '#demo-reset-filters', function () {
         filterCheckboxes.forEach(function (checkbox) {
           checkbox.checked = true;
         });
@@ -639,15 +636,15 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <div id="demo-filtering-calendar"></div>
-  <div id="demo-filtering-popup" class="mds-resrouce-filtering-popup">
-    <div>
+<div id="demo-filtering-calendar"></div>
+<div id="demo-filtering-popup">
+  <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Operational Status</div>
     <label>
       <input
         type="checkbox"
         mbsc-checkbox
-        data-label="maintenance"
+        data-label="Maintenance"
         class="mds-popup-checkbox mds-status-checkbox-maintenance"
         checked
       />
@@ -656,115 +653,106 @@ export default {
       <input
         type="checkbox"
         mbsc-checkbox
-        data-label="on site"
+        data-label="On site"
         class="mds-popup-checkbox mds-status-checkbox-on-site"
         checked
       />
     </label>
-   </div>
-      <div>
-      <div class="mbsc-form-group-title">Resources</div>
-        <div id="demo-resource-list"></div>
-      </div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Resources</div>
+      <div id="demo-resource-list"></div>
     </div>
   </div>
-  `,
+</div>
+`,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-    /* mbsc customs */
-    
-    .mds-resrouce-filtering-popup
-    .mbsc-form-control-label {
-      font-size: 14px;
-    }
+.mds-resource-filtering-calendar .mbsc-timeline-resource-header {
+  padding: 8px;
+}
 
-    .mds-resource-filtering-calendar 
-    .mbsc-textfield-wrapper {
-      max-width: 500px;
-      margin: 18px auto;
-    }
+.mds-resource-filtering-calendar .mbsc-timeline-resource-col {
+  width: 300px;
+}
 
-    .mds-resource-filtering-calendar 
-    .mbsc-timeline-row-gutter {
-      height: 6px;
-    }
+@supports (overflow: clip) {
+  .mds-resource-filtering-calendar.mbsc-ltr .mbsc-schedule-event-inner {
+    left: 300px;
+  }
 
-    .mds-resource-filtering-calendar 
-    .mbsc-timeline-resources {
-      width: 300px;
-    }
+  .mds-resource-filtering-calendar.mbsc-rtl .mbsc-schedule-event-inner {
+    right: 300px;
+  }
+}
 
-    .mds-resource-filtering-calendar 
-    .mbsc-timeline-resource-header-cont {
-      width: 300px;
-      height: 60px;
-    }
+.mds-resource-filtering-calendar .mbsc-timeline-resource-title {
+  height: 100%;
+  box-sizing: border-box;
+}
 
-    .mds-resource-filtering-calendar 
-    .mbsc-timeline-resource-header {
-      margin-top: 4px;
-      padding: 0;
-    }
+.mds-resource-filtering-calendar .mbsc-timeline-parent {
+  height: 34px;
+}
 
-    .mds-resource-filtering-calendar 
-    .mbsc-timeline-resource-title {
-      height: 100%;
-    }
+.mds-resource-filtering-calendar .mbsc-timeline-row-gutter {
+  height: 6px;
+}
 
-    .mds-resource-filtering-calendar 
-    .mbsc-timeline-parent {
-      height: 34px;
-    }
+.mds-filtering-search .mbsc-textfield-wrapper {
+  margin: 0;
+}
 
-    .mds-resource-filtering-calendar 
-    .mbsc-textfield-wrapper.mbsc-form-control-wrapper {
-      margin: 3px;
-    }
+.mds-filtering-search .mbsc-textfield-wrapper.mbsc-ltr {
+  margin-right: 8px;
+}
 
-    /* resrouce header */
+.mds-filtering-search .mbsc-textfield-wrapper.mbsc-rtl {
+  margin-left: 8px;
+}
 
-    .mds-resource-header-template-filter-button {
-      white-space: nowrap;
-    }
+.mds-filtering-search .mbsc-textfield-wrapper.mbsc-material {
+  margin-top: 2px;
+}
 
-    .mds-resource-header-template {
-      width: 300px;
-    }
+.mds-filtering-search .mbsc-textfield {
+  height: 36px;
+}
 
-    /* resources */
+.mds-filtering-search .mbsc-textfield-icon {
+  top: 50%;
+  font-size: 20px;
+  height: 24px;
+  line-height: 24px;
+  margin-top: -12px;
+}
 
-    .mds-construction-machine-name {
-      font-size: 14px;
-      font-weight: normal;
-      margin-bottom: 7px;
-    }
+.mds-filtering-search .mbsc-button {
+  margin: 0;
+}
 
-    .mds-construction-machine-status-dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-right: 5px;
-    }
+.mds-construction-machine-name {
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 7px;
+}
 
-    .mds-construction-machine-status-label {
-      font-size: 13px;
-      font-weight: normal;
-    }
+.mds-construction-machine-status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
 
-    /* empty resources */
-    .mds-filtering-empty-resource-container {
-      height: 100%;
-    }
+.mds-construction-machine-status-label {
+  font-size: 13px;
+  font-weight: normal;
+}
 
-    .mds-filtering-empty-resource-content {
-      text-align: center;
-    }
-
-    .mds-filtering-empty-resource-text {
-      color: #999;
-      font-style: italic;
-      margin-bottom: 15px;
-    }
-  `,
+.mds-filtering-empty-resource {
+  height: 100%;
+  text-align: center;
+}
+`,
 };
