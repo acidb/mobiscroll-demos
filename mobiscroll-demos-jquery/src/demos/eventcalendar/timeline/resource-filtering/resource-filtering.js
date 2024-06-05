@@ -550,24 +550,6 @@ export default {
           },
           data: myEvents,
           resources: myResources,
-          onInit: function () {
-            $resourceList.empty();
-            var content = '';
-            myResources.forEach(function (site) {
-              site.children.forEach(function (resource) {
-                content +=
-                  '<label>' +
-                  '<input type="checkbox" mbsc-checkbox class="mds-resource-checkbox mds-popup-checkbox" value="' +
-                  resource.id +
-                  '" checked> ' +
-                  resource.name +
-                  '</label>';
-              });
-            });
-
-            $resourceList.html(content);
-            mobiscroll.enhance($resourceList[0]);
-          },
           renderResource: function (resource) {
             var statusHtml = '';
             if (resource.status) {
@@ -632,6 +614,22 @@ export default {
         popup.setOptions({ anchor: this });
         popup.open();
       });
+
+      var content = '';
+      myResources.forEach(function (site) {
+        site.children.forEach(function (resource) {
+          content +=
+            '<label>' +
+            '<input type="checkbox" mbsc-checkbox class="mds-resource-checkbox mds-popup-checkbox" value="' +
+            resource.id +
+            '" checked> ' +
+            resource.name +
+            '</label>';
+        });
+      });
+
+      $resourceList.html(content);
+      mobiscroll.enhance($resourceList[0]);
     });
   },
   // eslint-disable-next-line es5/no-template-literals
