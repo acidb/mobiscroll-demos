@@ -662,7 +662,7 @@ export default {
       />
     </label>
    </div>
-      <div>
+      <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Resources</div>
         <div id="demo-resource-list"></div>
       </div>
