@@ -7,6 +7,8 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -550,24 +552,6 @@ export default {
           },
           data: myEvents,
           resources: myResources,
-          onInit: function () {
-            $resourceList.empty();
-            var content = '';
-            myResources.forEach(function (site) {
-              site.children.forEach(function (resource) {
-                content +=
-                  '<label>' +
-                  '<input type="checkbox" mbsc-checkbox class="mds-resource-checkbox mds-popup-checkbox" value="' +
-                  resource.id +
-                  '" checked> ' +
-                  resource.name +
-                  '</label>';
-              });
-            });
-
-            $resourceList.html(content);
-            mobiscroll.enhance($resourceList[0]);
-          },
           renderResource: function (resource) {
             var statusHtml = '';
             if (resource.status) {
@@ -587,7 +571,7 @@ export default {
               '<div class="mds-filtering-empty-resource-container mbsc-flex mbsc-align-items-center">' +
               '<div class="mds-filtering-empty-resource-content">' +
               '<div class="mds-filtering-empty-resource-text">No resources match your search. Adjust your filters or try a different keyword.</div>' +
-              '<button mbsc-button class="mds-filtering-reset-filters-button"' +
+              '<button id="demo-reset-filters-button" mbsc-button"' +
               '>Reset Filters</button>' +
               '</div>' +
               '</div>'
@@ -608,7 +592,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $calendarElement.on('click', '.mds-filtering-reset-filters-button', function () {
+      $calendarElement.on('click', '#demo-reset-filters-button', function () {
         filterCheckboxes.forEach(function (checkbox) {
           checkbox.checked = true;
         });
@@ -635,6 +619,22 @@ export default {
         popup.setOptions({ anchor: this });
         popup.open();
       });
+
+      var content = '';
+      myResources.forEach(function (site) {
+        site.children.forEach(function (resource) {
+          content +=
+            '<label>' +
+            '<input type="checkbox" mbsc-checkbox class="mds-resource-checkbox mds-popup-checkbox" value="' +
+            resource.id +
+            '" checked> ' +
+            resource.name +
+            '</label>';
+        });
+      });
+
+      $resourceList.html(content);
+      mobiscroll.enhance($resourceList[0]);
     });
   },
   // eslint-disable-next-line es5/no-template-literals
