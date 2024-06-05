@@ -414,33 +414,16 @@ export default {
         },
       ];
 
-      var $calendarElement = $('#demo-filtering-calendar');
+      var $calendarElm = $('#demo-filtering-calendar');
+      var $popupElm = $('#demo-filtering-popup');
       var $resourceList = $('#demo-resource-list');
-      var $maintenanceCheckbox = $('.mds-status-checkbox-maintenance');
-      var $onSiteCheckbox = $('.mds-status-checkbox-on-site');
 
-      var initialFilterCheckboxStates = [];
-      var filterCheckboxes = [];
+      var filters = {};
       var filteredResources = myResources;
       var searchTimeout;
       var searchQuery;
-      var success = false;
-      var onSiteFilter = false;
-      var onSiteFilterTemp = false;
-      var maintenanceFilter = false;
-      var maintenanceFilterTemp = false;
 
       function filterResources() {
-        maintenanceFilter = !$maintenanceCheckbox.is(':checked');
-        onSiteFilter = !$onSiteCheckbox.is(':checked');
-
-        // todo
-        var selectedResources = $('.mds-resource-checkbox:checked')
-          .map(function () {
-            return $(this).val();
-          })
-          .get();
-
         filteredResources = myResources
           .map(function (site) {
             return {
@@ -450,9 +433,8 @@ export default {
               eventCreation: site.eventCreation,
               children: site.children.filter(function (resource) {
                 return (
-                  selectedResources.includes(resource.id) &&
-                  !(maintenanceFilter && resource.status === 'maintenance') &&
-                  !(onSiteFilter && resource.status === 'on site') &&
+                  filters[resource.id] &&
+                  filters[resource.status] &&
                   (!searchQuery || resource.name.toLowerCase().includes(searchQuery.toLowerCase()))
                 );
               }),
@@ -465,24 +447,7 @@ export default {
         calendar.setOptions({ resources: filteredResources });
       }
 
-      function refreshPopupResourceList() {
-        $resourceList.children().hide();
-
-        myResources.forEach(function (site) {
-          site.children.forEach(function (resource) {
-            var resourceItem = $resourceList.find('input[value="' + resource.id + '"]').parent();
-            if (
-              (!maintenanceFilter || resource.status !== 'maintenance') &&
-              (!onSiteFilter || resource.status !== 'on site') &&
-              (!searchQuery || resource.name.toLowerCase().includes(searchQuery.toLowerCase()))
-            ) {
-              resourceItem.show();
-            }
-          });
-        });
-      }
-
-      var popup = $('#demo-filtering-popup')
+      var popup = $popupElm
         .mobiscroll()
         .popup({
           buttons: [
@@ -491,36 +456,15 @@ export default {
               text: 'Apply',
               keyCode: 'enter',
               handler: function () {
-                success = true;
+                $('.mds-resource-filtering-checkbox').each(function () {
+                  filters[this.value] = this.checked;
+                });
                 filterResources();
                 popup.close();
               },
               cssClass: 'mbsc-popup-button-primary',
             },
           ],
-          onOpen: function () {
-            refreshPopupResourceList();
-            success = false;
-            // todo
-            $('.mds-popup-checkbox').each(function () {
-              var checkbox = $(this).mobiscroll('getInst');
-              filterCheckboxes.push(checkbox);
-            });
-            initialFilterCheckboxStates = filterCheckboxes.map(function (checkbox) {
-              return checkbox.checked;
-            });
-            maintenanceFilterTemp = maintenanceFilter;
-            onSiteFilterTemp = onSiteFilter;
-          },
-          onClose: function () {
-            if (!success) {
-              maintenanceFilter = maintenanceFilterTemp;
-              onSiteFilter = onSiteFilterTemp;
-              filterCheckboxes.forEach(function (checkbox, index) {
-                checkbox.checked = initialFilterCheckboxStates[index];
-              });
-            }
-          },
           contentPadding: false,
           display: 'anchored',
           focusOnClose: false,
@@ -530,10 +474,10 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var calendar = $calendarElement
+      var calendar = $calendarElm
         .mobiscroll()
         .eventcalendar({
-          class: 'mds-resource-filtering-calendar',
+          cssClass: 'mds-resource-filtering-calendar',
           clickToCreate: true,
           dragToCreate: true,
           dragToResize: true,
@@ -551,22 +495,25 @@ export default {
           data: myEvents,
           resources: myResources,
           renderResource: function (resource) {
-            var statusHtml = '';
-            if (resource.status) {
-              var statusColor = resource.status === 'on site' ? 'green' : 'orange';
-              statusHtml =
-                '<div class="mds-construction-machine-status-label">' +
-                '<span class="mds-construction-machine-status-dot" style="background-color:' +
-                statusColor +
-                ';"></span>' +
-                resource.status +
-                '</div>';
-            }
-            return '<div>' + '<div class="mds-construction-machine-name">' + resource.name + '</div>' + statusHtml + '</div>';
+            return (
+              '<div>' +
+              '<div class="mds-resource-filtering-name">' +
+              resource.name +
+              '</div>' +
+              (resource.status
+                ? '<div class="mds-resource-filtering-status">' +
+                  '<span class="mds-resource-filtering-status-dot" style="background-color:' +
+                  (resource.status === 'on site' ? 'green' : 'orange') +
+                  ';"></span>' +
+                  resource.status +
+                  '</div>'
+                : '') +
+              '</div>'
+            );
           },
           renderResourceEmpty: function () {
             return (
-              '<div class="mds-filtering-empty-resource mbsc-flex mbsc-align-items-center">' +
+              '<div class="mds-resource-filtering-empty mbsc-flex mbsc-align-items-center">' +
               '<div>' +
               '<p class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search. Adjust your filters or try a different keyword.</p>' +
               '<button mbsc-button id="demo-reset-filters" data-variant="outline">Reset Filters</button>' +
@@ -576,87 +523,108 @@ export default {
           },
           renderResourceHeader: function () {
             return (
-              '<div class="mbsc-flex mbsc-align-items-center mbsc-font mds-filtering-search">' +
+              '<div class="mbsc-flex mbsc-align-items-center mbsc-font mds-resource-filtering-search">' +
               '<label class="mbsc-flex-1-1">' +
               '<input type="text" mbsc-input id="demo-search-input" autocomplete="off" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." />' +
               '</label>' +
-              '<button mbsc-button id="demo-filter-button"">Filter</button>' +
+              '<button mbsc-button id="demo-filter-button">Filter</button>' +
               '</div>'
             );
           },
         })
         .mobiscroll('getInst');
 
-      $calendarElement.on('input', '#demo-search-input', function (event) {
+      $calendarElm.on('input', '#demo-search-input', function (event) {
         clearTimeout(searchTimeout);
         searchQuery = event.target.value.toLowerCase();
         searchTimeout = setTimeout(filterResources, 300);
       });
 
-      $calendarElement.on('click', '#demo-filter-button', function () {
+      $calendarElm.on('click', '#demo-filter-button', function () {
+        // Create resource checkbox list
+        var checkboxes = '';
+        myResources.forEach(function (site) {
+          site.children.forEach(function (resource) {
+            if (filters[resource.status] && (!searchQuery || resource.name.toLowerCase().includes(searchQuery.toLowerCase()))) {
+              checkboxes +=
+                '<label>' +
+                '<input type="checkbox" mbsc-checkbox class="mds-resource-filtering-checkbox" value="' +
+                resource.id +
+                '" checked /> ' +
+                resource.name +
+                '</label>';
+            }
+          });
+        });
+
+        $resourceList.html(checkboxes);
+        mobiscroll.enhance($resourceList[0]);
+
+        // Set checkbox checked states
+        $('.mds-resource-filtering-checkbox').each(function () {
+          var checkbox = $(this).mobiscroll('getInst');
+          checkbox.checked = filters[this.value];
+        });
+
         popup.setOptions({ anchor: this });
         popup.open();
       });
 
-      $calendarElement.on('click', '#demo-reset-filters', function () {
-        filterCheckboxes.forEach(function (checkbox) {
+      $calendarElm.on('click', '#demo-reset-filters', function () {
+        searchQuery = '';
+
+        $('#demo-search-input').val('');
+        $('.mds-resource-filtering-checkbox').each(function () {
+          var checkbox = $(this).mobiscroll('getInst');
           checkbox.checked = true;
+          filters[this.value] = true;
         });
 
-        setTimeout(function () {
-          searchQuery = '';
-          $('#demo-search-input').val('');
-          onSiteFilter = false;
-          maintenanceFilter = false;
-          filterResources();
-        });
+        filterResources();
       });
 
-      var content = '';
+      // Set initial filters
+      filters['on site'] = true;
+      filters['maintenance'] = true;
       myResources.forEach(function (site) {
         site.children.forEach(function (resource) {
-          content +=
-            '<label>' +
-            '<input type="checkbox" mbsc-checkbox class="mds-resource-checkbox mds-popup-checkbox" value="' +
-            resource.id +
-            '" checked> ' +
-            resource.name +
-            '</label>';
+          filters[resource.id] = true;
         });
       });
-
-      $resourceList.html(content);
-      mobiscroll.enhance($resourceList[0]);
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-filtering-calendar"></div>
-<div id="demo-filtering-popup">
-  <div class="mbsc-form-group">
-    <div class="mbsc-form-group-title">Operational Status</div>
-    <label>
-      <input
-        type="checkbox"
-        mbsc-checkbox
-        data-label="Maintenance"
-        class="mds-popup-checkbox mds-status-checkbox-maintenance"
-        checked
-      />
-    </label>
-    <label>
-      <input
-        type="checkbox"
-        mbsc-checkbox
-        data-label="On site"
-        class="mds-popup-checkbox mds-status-checkbox-on-site"
-        checked
-      />
-    </label>
-  </div>
-  <div class="mbsc-form-group">
-    <div class="mbsc-form-group-title">Resources</div>
-      <div id="demo-resource-list"></div>
+<div style="display:none">
+  <div id="demo-filtering-popup">
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Operational Status</div>
+      <label>
+        <input
+          type="checkbox"
+          mbsc-checkbox
+          data-label="Maintenance"
+          class="mds-resource-filtering-checkbox"
+          value="maintenance"
+          checked
+        />
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          mbsc-checkbox
+          data-label="On site"
+          class="mds-resource-filtering-checkbox"
+          value="on site"
+          checked
+        />
+      </label>
+    </div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Resources</div>
+        <div id="demo-resource-list"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -694,27 +662,27 @@ export default {
   height: 6px;
 }
 
-.mds-filtering-search .mbsc-textfield-wrapper {
+.mds-resource-filtering-search .mbsc-textfield-wrapper {
   margin: 0;
 }
 
-.mds-filtering-search .mbsc-textfield-wrapper.mbsc-ltr {
+.mds-resource-filtering-search .mbsc-textfield-wrapper.mbsc-ltr {
   margin-right: 8px;
 }
 
-.mds-filtering-search .mbsc-textfield-wrapper.mbsc-rtl {
+.mds-resource-filtering-search .mbsc-textfield-wrapper.mbsc-rtl {
   margin-left: 8px;
 }
 
-.mds-filtering-search .mbsc-textfield-wrapper.mbsc-material {
+.mds-resource-filtering-search .mbsc-textfield-wrapper.mbsc-material {
   margin-top: 2px;
 }
 
-.mds-filtering-search .mbsc-textfield {
+.mds-resource-filtering-search .mbsc-textfield {
   height: 36px;
 }
 
-.mds-filtering-search .mbsc-textfield-icon {
+.mds-resource-filtering-search .mbsc-textfield-icon {
   top: 50%;
   font-size: 20px;
   height: 24px;
@@ -722,17 +690,17 @@ export default {
   margin-top: -12px;
 }
 
-.mds-filtering-search .mbsc-button {
+.mds-resource-filtering-search .mbsc-button {
   margin: 0;
 }
 
-.mds-construction-machine-name {
+.mds-resource-filtering-name {
   font-size: 14px;
   font-weight: normal;
   margin-bottom: 7px;
 }
 
-.mds-construction-machine-status-dot {
+.mds-resource-filtering-status-dot {
   display: inline-block;
   width: 10px;
   height: 10px;
@@ -740,12 +708,12 @@ export default {
   margin-right: 5px;
 }
 
-.mds-construction-machine-status-label {
+.mds-resource-filtering-status {
   font-size: 13px;
   font-weight: normal;
 }
 
-.mds-filtering-empty-resource {
+.mds-resource-filtering-empty {
   height: 100%;
   text-align: center;
 }
