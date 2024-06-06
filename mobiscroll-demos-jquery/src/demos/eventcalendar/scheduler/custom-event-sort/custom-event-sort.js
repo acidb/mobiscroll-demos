@@ -96,7 +96,7 @@ export default {
               id: 10,
               start: 'dyndatetime(y,m,d-1,2)',
               end: 'dyndatetime(y,m,d-1,14)',
-              title: 'Event 11 - order 2',
+              title: 'event 11 - order 1',
               order: 1,
               color: '#f5850c',
             },
