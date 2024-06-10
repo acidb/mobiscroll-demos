@@ -523,7 +523,7 @@ export default {
               '<label class="mbsc-flex-1-1">' +
               '<input type="text" mbsc-input id="demo-search-input" autocomplete="off" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." />' +
               '</label>' +
-              '<button mbsc-button id="demo-filter-button" data-variant="outline">Filter</button>' +
+              '<button mbsc-button id="demo-filter-button" data-start-icon="material-filter-list" data-variant="outline" class="mbsc-flex-none">Filter</button>' +
               '</div>'
             );
           },
@@ -625,13 +625,10 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-resource-filtering-calendar .mbsc-textfield-icon{
-    margin-left: -10px;
-  }
-
 .mds-resource-filtering-calendar .mbsc-timeline-resource-header {
+  height: 100%;
   padding: 8px;
-  margin-top: 15px;
+  box-sizing: border-box;
 }
 
 .mds-resource-filtering-calendar .mbsc-timeline-resource-col {
@@ -661,6 +658,10 @@ export default {
   height: 6px;
 }
 
+.mds-resource-filtering-search {
+  height: 100%;
+}
+
 .mds-resource-filtering-search .mbsc-textfield-wrapper {
   margin: 0;
 }
@@ -679,10 +680,12 @@ export default {
 
 .mds-resource-filtering-search .mbsc-textfield {
   height: 36px;
+  padding: 0 8px 0 46px;
 }
 
 .mds-resource-filtering-search .mbsc-textfield-icon {
   top: 50%;
+  left: 8px;
   font-size: 20px;
   height: 24px;
   line-height: 24px;
@@ -691,6 +694,7 @@ export default {
 
 .mds-resource-filtering-search .mbsc-button {
   margin: 0;
+  height: 36px;
 }
 
 .mds-resource-filtering-name {
