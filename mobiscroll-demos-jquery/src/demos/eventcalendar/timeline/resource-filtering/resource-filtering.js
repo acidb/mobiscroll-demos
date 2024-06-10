@@ -170,7 +170,7 @@ export default {
       var myResources = [
         {
           id: 'site1',
-          name: 'Downtown Construction',
+          name: '123 Main St, Downtown City',
           color: '#76e083',
           eventCreation: false,
           children: [
@@ -184,7 +184,7 @@ export default {
               id: 'concrete mixer - CA5678',
               name: 'Concrete Mixer - CA5678',
               color: '#76e083',
-              status: 'maintenance',
+              status: 'in maintenance',
             },
             {
               id: 'crane - NY9101',
@@ -202,7 +202,7 @@ export default {
               id: 'drill - OH1415',
               name: 'Drill - OH1415',
               color: '#34c8e0',
-              status: 'maintenance',
+              status: 'in maintenance',
             },
             {
               id: 'crane - IL1617',
@@ -220,7 +220,7 @@ export default {
         },
         {
           id: 'site2',
-          name: 'Uptown Development',
+          name: '456 Elm St, Uptown City',
           color: '#ff1717',
           eventCreation: false,
           children: [
@@ -228,7 +228,7 @@ export default {
               id: 'bulldozer - TX2021',
               name: 'Bulldozer - TX2021',
               color: '#1dab2f',
-              status: 'maintenance',
+              status: 'in maintenance',
             },
             {
               id: 'concrete mixer - CA2223',
@@ -252,7 +252,7 @@ export default {
               id: 'drill - OH2829',
               name: 'Drill - OH2829',
               color: '#34c8e0',
-              status: 'maintenance',
+              status: 'in maintenance',
             },
             {
               id: 'crane - IL3031',
@@ -270,7 +270,7 @@ export default {
         },
         {
           id: 'site3',
-          name: 'Suburban Project',
+          name: '789 Maple Ave, Suburban Area',
           color: '#d6d145',
           eventCreation: false,
           children: [
@@ -284,7 +284,7 @@ export default {
               id: 'concrete mixer - CA3637',
               name: 'Concrete Mixer - CA3637',
               color: '#76e083',
-              status: 'maintenance',
+              status: 'in maintenance',
             },
             {
               id: 'crane - NY3839',
@@ -314,7 +314,7 @@ export default {
         },
         {
           id: 'site4',
-          name: 'Industrial Park',
+          name: '101 Industrial Blvd, Industrial City',
           color: '#a1d6e2',
           eventCreation: false,
           children: [
@@ -322,7 +322,7 @@ export default {
               id: 'bulldozer - TX4849',
               name: 'Bulldozer - TX4849',
               color: '#1dab2f',
-              status: 'maintenance',
+              status: 'in maintenance',
             },
             {
               id: 'concrete mixer - CA5051',
@@ -346,7 +346,7 @@ export default {
               id: 'drill - OH5657',
               name: 'Drill - OH5657',
               color: '#34c8e0',
-              status: 'maintenance',
+              status: 'in maintenance',
             },
             {
               id: 'crane - IL5859',
@@ -364,7 +364,7 @@ export default {
         },
         {
           id: 'site5',
-          name: 'Bridge Construction',
+          name: '202 River Rd, Riverside City',
           color: '#00ff00',
           eventCreation: false,
           children: [
@@ -378,7 +378,7 @@ export default {
               id: 'concrete mixer - CA6465',
               name: 'Concrete Mixer - CA6465',
               color: '#76e083',
-              status: 'maintenance',
+              status: 'in maintenance',
             },
             {
               id: 'crane - NY6667',
@@ -402,7 +402,7 @@ export default {
               id: 'crane - IL7273',
               name: 'Crane - IL7273',
               color: '#e25dd2',
-              status: 'maintenance',
+              status: 'in maintenance',
             },
             {
               id: 'bulldozer - PA7475',
@@ -510,8 +510,10 @@ export default {
           renderResourceEmpty: function () {
             return (
               '<div class="mds-resource-filtering-empty mbsc-flex mbsc-align-items-center">' +
-              '<div>' +
-              '<p class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search. Adjust your filters or try a different keyword.</p>' +
+              '<div  class="mds-resource-filtering-empty-text-cont">' +
+              '<img src="https://i.ibb.co/2MMT3cQ/search.png" alt="Empty list" style="width:100px;" />' +
+              '<p class="mds-resource-filtering-empty-text mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>' +
+              '<p class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>' +
               '<button mbsc-button id="demo-reset-filters" data-variant="outline">Reset Filters</button>' +
               '</div>' +
               '</div>'
@@ -577,7 +579,7 @@ export default {
 
       // Set initial filters
       filters['on site'] = true;
-      filters['maintenance'] = true;
+      filters['in maintenance'] = true;
       myResources.forEach(function (site) {
         filters[site.id] = true;
         site.children.forEach(function (resource) {
@@ -597,9 +599,9 @@ export default {
         <input
           type="checkbox"
           mbsc-checkbox
-          data-label="Maintenance"
+          data-label="In maintenance"
           class="mds-resource-filtering-checkbox"
-          value="maintenance"
+          value="in maintenance"
           checked
         />
       </label>
@@ -632,16 +634,16 @@ export default {
 }
 
 .mds-resource-filtering-calendar .mbsc-timeline-resource-col {
-  width: 300px;
+  width: 350px;
 }
 
 @supports (overflow: clip) {
   .mds-resource-filtering-calendar.mbsc-ltr .mbsc-schedule-event-inner {
-    left: 300px;
+    left: 350px;
   }
 
   .mds-resource-filtering-calendar.mbsc-rtl .mbsc-schedule-event-inner {
-    right: 300px;
+    right: 350px;
   }
 }
 
@@ -719,6 +721,18 @@ export default {
 .mds-resource-filtering-empty {
   height: 100%;
   text-align: center;
+}
+
+.mds-resource-filtering-empty-text-cont {
+  width: 100%;
+}
+
+.mds-resource-filtering-empty-text {
+  font-size: 16px;
+}
+
+.mds-resource-filtering-search button {
+  font-size: 14px;
 }
 `,
 };
