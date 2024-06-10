@@ -7,6 +7,9 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
+      ///
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -432,16 +435,12 @@ export default {
               color: site.color,
               eventCreation: site.eventCreation,
               children: site.children.filter(function (resource) {
-                return (
-                  filters[resource.id] &&
-                  filters[resource.status] &&
-                  (!searchQuery || resource.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                );
+                return filters[resource.status] && (!searchQuery || resource.name.toLowerCase().includes(searchQuery.toLowerCase()));
               }),
             };
           })
           .filter(function (site) {
-            return site.children.length > 0;
+            return site.children.length > 0 && filters[site.id];
           });
 
         calendar.setOptions({ resources: filteredResources });
@@ -484,12 +483,12 @@ export default {
           dragToMove: true,
           view: {
             timeline: {
-              type: 'day',
+              type: 'month',
               startTime: '05:00',
               endTime: '22:00',
               timeCellStep: 60,
               timeLabelStep: 60,
-              weekNumbers: false,
+              weekNumbers: true,
             },
           },
           data: myEvents,
@@ -527,7 +526,7 @@ export default {
               '<label class="mbsc-flex-1-1">' +
               '<input type="text" mbsc-input id="demo-search-input" autocomplete="off" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." />' +
               '</label>' +
-              '<button mbsc-button id="demo-filter-button">Filter</button>' +
+              '<button mbsc-button id="demo-filter-button" data-variant="outline">Filter</button>' +
               '</div>'
             );
           },
@@ -544,17 +543,13 @@ export default {
         // Create resource checkbox list
         var checkboxes = '';
         myResources.forEach(function (site) {
-          site.children.forEach(function (resource) {
-            if (filters[resource.status] && (!searchQuery || resource.name.toLowerCase().includes(searchQuery.toLowerCase()))) {
-              checkboxes +=
-                '<label>' +
-                '<input type="checkbox" mbsc-checkbox class="mds-resource-filtering-checkbox" value="' +
-                resource.id +
-                '" checked /> ' +
-                resource.name +
-                '</label>';
-            }
-          });
+          checkboxes +=
+            '<label>' +
+            '<input type="checkbox" mbsc-checkbox class="mds-resource-filtering-checkbox" value="' +
+            site.id +
+            '" checked /> ' +
+            site.name +
+            '</label>';
         });
 
         $resourceList.html(checkboxes);
@@ -587,6 +582,7 @@ export default {
       filters['on site'] = true;
       filters['maintenance'] = true;
       myResources.forEach(function (site) {
+        filters[site.id] = true;
         site.children.forEach(function (resource) {
           filters[resource.id] = true;
         });
@@ -622,7 +618,8 @@ export default {
       </label>
     </div>
     <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Resources</div>
+      <div class="mbsc-form-group-title">Job
+          sites</div>
         <div id="demo-resource-list"></div>
       </div>
     </div>
@@ -631,8 +628,13 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+  .mds-resource-filtering-calendar .mbsc-textfield-icon{
+    margin-left: -10px;
+  }
+
 .mds-resource-filtering-calendar .mbsc-timeline-resource-header {
   padding: 8px;
+  margin-top: 15px;
 }
 
 .mds-resource-filtering-calendar .mbsc-timeline-resource-col {
