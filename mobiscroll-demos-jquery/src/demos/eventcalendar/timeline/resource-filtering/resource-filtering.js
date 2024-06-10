@@ -510,9 +510,9 @@ export default {
           renderResourceEmpty: function () {
             return (
               '<div class="mds-resource-filtering-empty mbsc-flex mbsc-align-items-center">' +
-              '<div  class="mds-resource-filtering-empty-text-cont">' +
+              '<div  class="mbsc-flex-1-1">' +
               '<img src="https://i.ibb.co/2MMT3cQ/search.png" alt="Empty list" style="width:100px;" />' +
-              '<p class="mds-resource-filtering-empty-text mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>' +
+              '<p class="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>' +
               '<p class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>' +
               '<button mbsc-button id="demo-reset-filters" data-variant="outline">Reset Filters</button>' +
               '</div>' +
@@ -697,6 +697,7 @@ export default {
 .mds-resource-filtering-search .mbsc-button {
   margin: 0;
   height: 36px;
+  font-size: 14px;
 }
 
 .mds-resource-filtering-name {
@@ -721,18 +722,6 @@ export default {
 .mds-resource-filtering-empty {
   height: 100%;
   text-align: center;
-}
-
-.mds-resource-filtering-empty-text-cont {
-  width: 100%;
-}
-
-.mds-resource-filtering-empty-text {
-  font-size: 16px;
-}
-
-.mds-resource-filtering-search button {
-  font-size: 14px;
 }
 `,
 };
