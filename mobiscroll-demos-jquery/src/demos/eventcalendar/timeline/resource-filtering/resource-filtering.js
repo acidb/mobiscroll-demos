@@ -7,6 +7,8 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
+      ///
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -19,18 +21,18 @@ export default {
         },
         {
           start: 'dyndatetime(y,m,d,8)',
-          end: 'dyndatetime(y,m,d,h+18)',
+          end: 'dyndatetime(y,m,d,18)',
           title: 'Install Framing',
           resource: 'crane - NY9101',
         },
         {
-          start: 'dyndatetime(y,m,d,10)',
+          start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,20)',
           title: 'Electrical Wiring',
           resource: 'excavator - FL1213',
         },
         {
-          start: 'dyndatetime(y,m,d,14)',
+          start: 'dyndatetime(y,m,d,5)',
           end: 'dyndatetime(y,m,d,22)',
           title: 'Roofing',
           resource: 'crane - IL1617',
@@ -41,7 +43,6 @@ export default {
           title: 'Site Cleanup',
           resource: 'bulldozer - PA1819',
         },
-
         {
           start: 'dyndatetime(y,m,d,5)',
           end: 'dyndatetime(y,m,d,18)',
@@ -49,101 +50,98 @@ export default {
           resource: 'concrete mixer - CA2223',
         },
         {
-          start: 'dyndatetime(y,m,d,9)',
-          end: 'dyndatetime(y,m,d,18)',
+          start: 'dyndatetime(y,m,d,5)',
+          end: 'dyndatetime(y,m,d,22)',
           title: 'Steel Framing',
           resource: 'crane - NY2425',
         },
         {
-          start: 'dyndatetime(y,m,d,h+8)',
-          end: 'dyndatetime(y,m,d,h+13)',
+          start: 'dyndatetime(y,m,d,7)',
+          end: 'dyndatetime(y,m,d,16)',
           title: 'Interior Plumbing',
           resource: 'excavator - FL2627',
         },
         {
-          start: 'dyndatetime(y,m,d,8)',
-          end: 'dyndatetime(y,m,d,20)',
+          start: 'dyndatetime(y,m,d,7)',
+          end: 'dyndatetime(y,m,d,16)',
           title: 'Masonry Work',
           resource: 'crane - IL3031',
         },
         {
-          start: 'dyndatetime(y,m,d,h-4)',
-          end: 'dyndatetime(y,m,d,h+8)',
-          title: 'Exterior Finishing',
+          start: 'dyndatetime(y,m,d,6)',
+          end: 'dyndatetime(y,m,d,15)',
+          title: 'Exterior Work',
           resource: 'bulldozer - PA3233',
         },
-
         {
-          start: 'dyndatetime(y,m,d,h+1)',
-          end: 'dyndatetime(y,m,d,h+6)',
+          start: 'dyndatetime(y,m,d,6)',
+          end: 'dyndatetime(y,m,d,15)',
           title: 'Ground Breaking',
           resource: 'bulldozer - TX3435',
         },
         {
-          start: 'dyndatetime(y,m,d,7)',
-          end: 'dyndatetime(y,m,d,19)',
+          start: 'dyndatetime(y,m,d,9)',
+          end: 'dyndatetime(y,m,d,21)',
           title: 'Wall Construction',
           resource: 'crane - NY3839',
         },
         {
-          start: 'dyndatetime(y,m,d,h+9)',
-          end: 'dyndatetime(y,m,d,h+14)',
+          start: 'dyndatetime(y,m,d,7)',
+          end: 'dyndatetime(y,m,d,16)',
           title: 'Roof Installation',
           resource: 'excavator - FL4041',
         },
         {
-          start: 'dyndatetime(y,m,d,h-4)',
-          end: 'dyndatetime(y,m,d,h+6)',
+          start: 'dyndatetime(y,m,d,6)',
+          end: 'dyndatetime(y,m,d,19)',
           title: 'Painting',
           resource: 'crane - IL4445',
         },
         {
-          start: 'dyndatetime(y,m,d,h-3)',
-          end: 'dyndatetime(y,m,d,h+8)',
+          start: 'dyndatetime(y,m,d,5)',
+          end: 'dyndatetime(y,m,d,20)',
           title: 'Driveway Paving',
           resource: 'bulldozer - PA4647',
         },
-
         {
-          start: 'dyndatetime(y,m,d,h+1)',
-          end: 'dyndatetime(y,m,d,h+6)',
+          start: 'dyndatetime(y,m,d,5)',
+          end: 'dyndatetime(y,m,d,18)',
           title: 'Foundation',
           resource: 'concrete mixer - CA5051',
         },
         {
-          start: 'dyndatetime(y,m,d,h+4)',
-          end: 'dyndatetime(y,m,d,h+9)',
-          title: 'Building Erection',
+          start: 'dyndatetime(y,m,d,5)',
+          end: 'dyndatetime(y,m,d,19)',
+          title: 'Demolition',
           resource: 'crane - NY5253',
         },
         {
-          start: 'dyndatetime(y,m,d,h+7)',
-          end: 'dyndatetime(y,m,d,h+12)',
+          start: 'dyndatetime(y,m,d,6)',
+          end: 'dyndatetime(y,m,d,16)',
           title: 'Electrical Wiring',
           resource: 'excavator - FL5455',
         },
         {
-          start: 'dyndatetime(y,m,d,h-4)',
-          end: 'dyndatetime(y,m,d,h+5)',
+          start: 'dyndatetime(y,m,d,5)',
+          end: 'dyndatetime(y,m,d,17)',
           title: 'Roofing',
           resource: 'crane - IL5859',
         },
         {
-          start: 'dyndatetime(y,m,d,7)',
-          end: 'dyndatetime(y,m,d,20)',
+          start: 'dyndatetime(y,m,d,8)',
+          end: 'dyndatetime(y,m,d,18)',
           title: 'Finishing Touches',
           resource: 'bulldozer - PA6061',
         },
-
         {
-          start: 'dyndatetime(y,m,d,8)',
-          end: 'dyndatetime(y,m,d,19)',
+          start: 'dyndatetime(y,m,d,12)',
+          end: 'dyndatetime(y,m,d,22)',
           title: 'Site Preparation',
           resource: 'bulldozer - TX6263',
         },
         {
-          start: 'dyndatetime(y,m,d,h+4)',
-          end: 'dyndatetime(y,m,d,h+9)',
+          start: 'dyndatetime(y,m,d,8)',
+          end: 'dyndatetime(y,m,d,19)',
           title: 'Piling Work',
           resource: 'crane - NY6667',
         },
@@ -154,51 +152,52 @@ export default {
           resource: 'excavator - FL6869',
         },
         {
-          start: 'dyndatetime(y,m,d,6)',
-          end: 'dyndatetime(y,m,d,22)',
+          start: 'dyndatetime(y,m,d,5)',
+          end: 'dyndatetime(y,m,d,21)',
           title: 'Deck Construction',
           resource: 'drill - OH7071',
         },
         {
-          start: 'dyndatetime(y,m,d,h-3)',
-          end: 'dyndatetime(y,m,d,h+8)',
+          start: 'dyndatetime(y,m,d,5)',
+          end: 'dyndatetime(y,m,d,20)',
           title: 'Final Touches',
           resource: 'bulldozer - PA7475',
         },
+        /// +1
         {
           start: 'dyndatetime(y,m,d+1,5)',
           end: 'dyndatetime(y,m,d+1,19)',
-          title: 'Foundation Inspection',
+          title: 'Foundation Work',
           resource: 'bulldozer - TX1234',
         },
         {
           start: 'dyndatetime(y,m,d+1,8)',
-          end: 'dyndatetime(y,m,d+1,h+18)',
-          title: 'Exterior Framing',
+          end: 'dyndatetime(y,m,d+1,18)',
+          title: 'Steel Framing',
           resource: 'crane - NY9101',
         },
         {
           start: 'dyndatetime(y,m,d+1,10)',
           end: 'dyndatetime(y,m,d+1,20)',
-          title: 'HVAC Installation',
+          title: 'Electrical Wiring',
           resource: 'excavator - FL1213',
         },
         {
           start: 'dyndatetime(y,m,d+1,14)',
           end: 'dyndatetime(y,m,d+1,22)',
-          title: 'Window Installation',
+          title: 'Roofing',
           resource: 'crane - IL1617',
         },
         {
           start: 'dyndatetime(y,m,d+1,7)',
           end: 'dyndatetime(y,m,d+1,19)',
-          title: 'Site Clearing',
+          title: 'Site Cleanup',
           resource: 'bulldozer - PA1819',
         },
         {
           start: 'dyndatetime(y,m,d+1,5)',
           end: 'dyndatetime(y,m,d+1,18)',
-          title: 'Concrete Pouring',
+          title: 'Foundation Work',
           resource: 'concrete mixer - CA2223',
         },
         {
@@ -208,130 +207,263 @@ export default {
           resource: 'crane - NY2425',
         },
         {
+          start: 'dyndatetime(y,m,d+1,8)',
+          end: 'dyndatetime(y,m,d+1,19)',
+          title: 'Interior Plumbing',
+          resource: 'excavator - FL2627',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,8)',
+          end: 'dyndatetime(y,m,d+1,20)',
+          title: 'Masonry Work',
+          resource: 'crane - IL3031',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,5)',
+          end: 'dyndatetime(y,m,d+1,13)',
+          title: 'Exterior Work',
+          resource: 'bulldozer - PA3233',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,5)',
+          end: 'dyndatetime(y,m,d+1,16)',
+          title: 'Ground Work',
+          resource: 'bulldozer - TX3435',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,7)',
+          end: 'dyndatetime(y,m,d+1,19)',
+          title: 'Wall Construction',
+          resource: 'crane - NY3839',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,9)',
+          end: 'dyndatetime(y,m,d+1,14)',
+          title: 'Roof Installation',
+          resource: 'excavator - FL4041',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,5)',
+          end: 'dyndatetime(y,m,d+1,16)',
+          title: 'Painting',
+          resource: 'crane - IL4445',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,6)',
+          end: 'dyndatetime(y,m,d+1,18)',
+          title: 'Driveway Paving',
+          resource: 'bulldozer - PA4647',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,7)',
+          end: 'dyndatetime(y,m,d+1,16)',
+          title: 'Foundation',
+          resource: 'concrete mixer - CA5051',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,8)',
+          end: 'dyndatetime(y,m,d+1,22)',
+          title: 'Demolition',
+          resource: 'crane - NY5253',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,7)',
+          end: 'dyndatetime(y,m,d+1,17)',
+          title: 'Electrical Wiring',
+          resource: 'excavator - FL5455',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,4)',
+          end: 'dyndatetime(y,m,d+1,15)',
+          title: 'Roofing',
+          resource: 'crane - IL5859',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,7)',
+          end: 'dyndatetime(y,m,d+1,20)',
+          title: 'Finishing Touches',
+          resource: 'bulldozer - PA6061',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,8)',
+          end: 'dyndatetime(y,m,d+1,19)',
+          title: 'Site Preparation',
+          resource: 'bulldozer - TX6263',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,8)',
+          end: 'dyndatetime(y,m,d+1,19)',
+          title: 'Piling Work',
+          resource: 'crane - NY6667',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,7)',
+          end: 'dyndatetime(y,m,d+1,18)',
+          title: 'Concrete Pouring',
+          resource: 'excavator - FL6869',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,6)',
+          end: 'dyndatetime(y,m,d+1,22)',
+          title: 'Deck Construction',
+          resource: 'drill - OH7071',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,8)',
+          end: 'dyndatetime(y,m,d+1,18)',
+          title: 'Final Touches',
+          resource: 'bulldozer - PA7475',
+        },
+        // +2
+        {
+          start: 'dyndatetime(y,m,d+2,5)',
+          end: 'dyndatetime(y,m,d+2,19)',
+          title: 'Site Preparation',
+          resource: 'bulldozer - TX1234',
+        },
+        {
+          start: 'dyndatetime(y,m,d+2,8)',
+          end: 'dyndatetime(y,m,d+2,18)',
+          title: 'Install Framing',
+          resource: 'crane - NY9101',
+        },
+        {
+          start: 'dyndatetime(y,m,d+2,10)',
+          end: 'dyndatetime(y,m,d+2,20)',
+          title: 'Electrical Wiring',
+          resource: 'excavator - FL1213',
+        },
+        {
           start: 'dyndatetime(y,m,d+2,14)',
           end: 'dyndatetime(y,m,d+2,22)',
-          title: 'Roof Shingling',
+          title: 'Roofing',
           resource: 'crane - IL1617',
         },
         {
           start: 'dyndatetime(y,m,d+2,7)',
           end: 'dyndatetime(y,m,d+2,19)',
-          title: 'Landscape Grading',
+          title: 'Site Cleanup',
           resource: 'bulldozer - PA1819',
         },
         {
           start: 'dyndatetime(y,m,d+2,5)',
           end: 'dyndatetime(y,m,d+2,18)',
-          title: 'Concrete Curing',
+          title: 'Foundation Work',
           resource: 'concrete mixer - CA2223',
         },
         {
           start: 'dyndatetime(y,m,d+2,9)',
           end: 'dyndatetime(y,m,d+2,18)',
-          title: 'Structural Steel Installation',
+          title: 'Steel Framing',
           resource: 'crane - NY2425',
         },
         {
-          start: 'dyndatetime(y,m,d+2,h+8)',
-          end: 'dyndatetime(y,m,d+2,h+13)',
-          title: 'Plumbing Rough-In',
+          start: 'dyndatetime(y,m,d+2,8)',
+          end: 'dyndatetime(y,m,d+2,19)',
+          title: 'Interior Plumbing',
           resource: 'excavator - FL2627',
         },
         {
           start: 'dyndatetime(y,m,d+2,8)',
           end: 'dyndatetime(y,m,d+2,20)',
-          title: 'Bricklaying',
+          title: 'Masonry Work',
           resource: 'crane - IL3031',
         },
         {
-          start: 'dyndatetime(y,m,d+2,h-4)',
-          end: 'dyndatetime(y,m,d+2,h+8)',
-          title: 'Exterior Insulation',
+          start: 'dyndatetime(y,m,d+2,5)',
+          end: 'dyndatetime(y,m,d+2,13)',
+          title: 'Exterior Finishing',
           resource: 'bulldozer - PA3233',
         },
         {
-          start: 'dyndatetime(y,m,d+3,h+1)',
-          end: 'dyndatetime(y,m,d+3,h+6)',
-          title: 'Concrete Pour',
+          start: 'dyndatetime(y,m,d+2,5)',
+          end: 'dyndatetime(y,m,d+2,16)',
+          title: 'Fundation',
           resource: 'bulldozer - TX3435',
         },
         {
-          start: 'dyndatetime(y,m,d+3,7)',
-          end: 'dyndatetime(y,m,d+3,19)',
-          title: 'Interior Finishing',
+          start: 'dyndatetime(y,m,d+2,7)',
+          end: 'dyndatetime(y,m,d+2,19)',
+          title: 'Wall Construction',
           resource: 'crane - NY3839',
         },
         {
-          start: 'dyndatetime(y,m,d+3,h+9)',
-          end: 'dyndatetime(y,m,d+3,h+14)',
-          title: 'Roof Framing',
+          start: 'dyndatetime(y,m,d+2,9)',
+          end: 'dyndatetime(y,m,d+2,14)',
+          title: 'Roof Installation',
           resource: 'excavator - FL4041',
         },
         {
-          start: 'dyndatetime(y,m,d+3,h-4)',
-          end: 'dyndatetime(y,m,d+3,h+6)',
+          start: 'dyndatetime(y,m,d+2,5)',
+          end: 'dyndatetime(y,m,d+2,16)',
           title: 'Painting',
           resource: 'crane - IL4445',
         },
         {
-          start: 'dyndatetime(y,m,d+3,h-3)',
-          end: 'dyndatetime(y,m,d+3,h+8)',
+          start: 'dyndatetime(y,m,d+2,6)',
+          end: 'dyndatetime(y,m,d+2,18)',
           title: 'Driveway Paving',
           resource: 'bulldozer - PA4647',
         },
         {
-          start: 'dyndatetime(y,m,d+3,h+1)',
-          end: 'dyndatetime(y,m,d+3,h+6)',
+          start: 'dyndatetime(y,m,d+2,7)',
+          end: 'dyndatetime(y,m,d+2,16)',
           title: 'Foundation',
           resource: 'concrete mixer - CA5051',
         },
         {
-          start: 'dyndatetime(y,m,d+3,h+4)',
-          end: 'dyndatetime(y,m,d+3,h+9)',
-          title: 'Building Erection',
+          start: 'dyndatetime(y,m,d+2,8)',
+          end: 'dyndatetime(y,m,d+2,22)',
+          title: 'Demolition',
           resource: 'crane - NY5253',
         },
         {
-          start: 'dyndatetime(y,m,d+4,h+7)',
-          end: 'dyndatetime(y,m,d+4,h+12)',
+          start: 'dyndatetime(y,m,d+2,7)',
+          end: 'dyndatetime(y,m,d+2,17)',
           title: 'Electrical Wiring',
           resource: 'excavator - FL5455',
         },
         {
-          start: 'dyndatetime(y,m,d+4,h-4)',
-          end: 'dyndatetime(y,m,d+4,h+5)',
+          start: 'dyndatetime(y,m,d+2,4)',
+          end: 'dyndatetime(y,m,d+2,15)',
           title: 'Roofing',
           resource: 'crane - IL5859',
         },
         {
-          start: 'dyndatetime(y,m,d+4,7)',
-          end: 'dyndatetime(y,m,d+4,20)',
+          start: 'dyndatetime(y,m,d+2,7)',
+          end: 'dyndatetime(y,m,d+2,20)',
           title: 'Finishing Touches',
           resource: 'bulldozer - PA6061',
         },
         {
-          start: 'dyndatetime(y,m,d+4,8)',
-          end: 'dyndatetime(y,m,d+4,19)',
+          start: 'dyndatetime(y,m,d+2,8)',
+          end: 'dyndatetime(y,m,d+2,19)',
           title: 'Site Preparation',
           resource: 'bulldozer - TX6263',
         },
         {
-          start: 'dyndatetime(y,m,d+4,h+4)',
-          end: 'dyndatetime(y,m,d+4,h+9)',
+          start: 'dyndatetime(y,m,d+2,8)',
+          end: 'dyndatetime(y,m,d+2,19)',
           title: 'Piling Work',
           resource: 'crane - NY6667',
         },
         {
-          start: 'dyndatetime(y,m,d+4,7)',
-          end: 'dyndatetime(y,m,d+4,18)',
+          start: 'dyndatetime(y,m,d+2,7)',
+          end: 'dyndatetime(y,m,d+2,18)',
           title: 'Concrete Pouring',
           resource: 'excavator - FL6869',
         },
         {
-          start: 'dyndatetime(y,m,d+4,6)',
-          end: 'dyndatetime(y,m,d+4,22)',
+          start: 'dyndatetime(y,m,d+2,6)',
+          end: 'dyndatetime(y,m,d+2,22)',
           title: 'Deck Construction',
           resource: 'drill - OH7071',
+        },
+        {
+          start: 'dyndatetime(y,m,d+2,8)',
+          end: 'dyndatetime(y,m,d+2,18)',
+          title: 'Final Touches',
+          resource: 'bulldozer - PA7475',
         },
       ];
 
@@ -339,7 +471,6 @@ export default {
         {
           id: 'site1',
           name: '123 Main St, Downtown City',
-          color: '#76e083',
           eventCreation: false,
           children: [
             {
@@ -351,37 +482,37 @@ export default {
             {
               id: 'concrete mixer - CA5678',
               name: 'Concrete Mixer - CA5678',
-              color: '#76e083',
+              color: '#1dab2f',
               status: 'in maintenance',
             },
             {
               id: 'crane - NY9101',
               name: 'Crane - NY9101',
-              color: '#4981d6',
+              color: '#1dab2f',
               status: 'on site',
             },
             {
               id: 'excavator - FL1213',
               name: 'Excavator - FL1213',
-              color: '#f7961e',
+              color: '#1dab2f',
               status: 'on site',
             },
             {
               id: 'drill - OH1415',
               name: 'Drill - OH1415',
-              color: '#34c8e0',
+              color: '#1dab2f',
               status: 'in maintenance',
             },
             {
               id: 'crane - IL1617',
               name: 'Crane - IL1617',
-              color: '#e25dd2',
+              color: '#1dab2f',
               status: 'on site',
             },
             {
               id: 'bulldozer - PA1819',
               name: 'Bulldozer - PA1819',
-              color: '#d6d145',
+              color: '#1dab2f',
               status: 'on site',
             },
           ],
@@ -389,19 +520,18 @@ export default {
         {
           id: 'site2',
           name: '456 Elm St, Uptown City',
-          color: '#ff1717',
           eventCreation: false,
           children: [
             {
               id: 'bulldozer - TX2021',
               name: 'Bulldozer - TX2021',
-              color: '#1dab2f',
+              color: '#4981d6',
               status: 'in maintenance',
             },
             {
               id: 'concrete mixer - CA2223',
               name: 'Concrete Mixer - CA2223',
-              color: '#76e083',
+              color: '#4981d6',
               status: 'on site',
             },
             {
@@ -413,25 +543,25 @@ export default {
             {
               id: 'excavator - FL2627',
               name: 'Excavator - FL2627',
-              color: '#f7961e',
+              color: '#4981d6',
               status: 'on site',
             },
             {
               id: 'drill - OH2829',
               name: 'Drill - OH2829',
-              color: '#34c8e0',
+              color: '#4981d6',
               status: 'in maintenance',
             },
             {
               id: 'crane - IL3031',
               name: 'Crane - IL3031',
-              color: '#e25dd2',
+              color: '#4981d6',
               status: 'on site',
             },
             {
               id: 'bulldozer - PA3233',
               name: 'Bulldozer - PA3233',
-              color: '#d6d145',
+              color: '#4981d6',
               status: 'on site',
             },
           ],
@@ -439,25 +569,24 @@ export default {
         {
           id: 'site3',
           name: '789 Maple Ave, Suburban Area',
-          color: '#d6d145',
           eventCreation: false,
           children: [
             {
               id: 'bulldozer - TX3435',
               name: 'Bulldozer - TX3435',
-              color: '#1dab2f',
+              color: '#f7961e',
               status: 'on site',
             },
             {
               id: 'concrete mixer - CA3637',
               name: 'Concrete Mixer - CA3637',
-              color: '#76e083',
+              color: '#f7961e',
               status: 'in maintenance',
             },
             {
               id: 'crane - NY3839',
               name: 'Crane - NY3839',
-              color: '#4981d6',
+              color: '#f7961e',
               status: 'on site',
             },
             {
@@ -469,13 +598,13 @@ export default {
             {
               id: 'crane - IL4445',
               name: 'Crane - IL4445',
-              color: '#e25dd2',
+              color: '#f7961e',
               status: 'on site',
             },
             {
               id: 'bulldozer - PA4647',
               name: 'Bulldozer - PA4647',
-              color: '#d6d145',
+              color: '#f7961e',
               status: 'on site',
             },
           ],
@@ -483,37 +612,36 @@ export default {
         {
           id: 'site4',
           name: '101 Industrial Blvd, Industrial City',
-          color: '#a1d6e2',
           eventCreation: false,
           children: [
             {
               id: 'bulldozer - TX4849',
               name: 'Bulldozer - TX4849',
-              color: '#1dab2f',
+              color: '#e25dd2',
               status: 'in maintenance',
             },
             {
               id: 'concrete mixer - CA5051',
               name: 'Concrete Mixer - CA5051',
-              color: '#76e083',
+              color: '#e25dd2',
               status: 'on site',
             },
             {
               id: 'crane - NY5253',
               name: 'Crane - NY5253',
-              color: '#4981d6',
+              color: '#e25dd2',
               status: 'on site',
             },
             {
               id: 'excavator - FL5455',
               name: 'Excavator - FL5455',
-              color: '#f7961e',
+              color: '#e25dd2',
               status: 'on site',
             },
             {
               id: 'drill - OH5657',
               name: 'Drill - OH5657',
-              color: '#34c8e0',
+              color: '#e25dd2',
               status: 'in maintenance',
             },
             {
@@ -525,7 +653,7 @@ export default {
             {
               id: 'bulldozer - PA6061',
               name: 'Bulldozer - PA6061',
-              color: '#d6d145',
+              color: '#e25dd2',
               status: 'on site',
             },
           ],
@@ -533,31 +661,30 @@ export default {
         {
           id: 'site5',
           name: '202 River Rd, Riverside City',
-          color: '#00ff00',
           eventCreation: false,
           children: [
             {
               id: 'bulldozer - TX6263',
               name: 'Bulldozer - TX6263',
-              color: '#1dab2f',
+              color: '#34c8e0',
               status: 'on site',
             },
             {
               id: 'concrete mixer - CA6465',
               name: 'Concrete Mixer - CA6465',
-              color: '#76e083',
+              color: '#34c8e0',
               status: 'in maintenance',
             },
             {
               id: 'crane - NY6667',
               name: 'Crane - NY6667',
-              color: '#4981d6',
+              color: '#34c8e0',
               status: 'on site',
             },
             {
               id: 'excavator - FL6869',
               name: 'Excavator - FL6869',
-              color: '#f7961e',
+              color: '#34c8e0',
               status: 'on site',
             },
             {
@@ -569,13 +696,13 @@ export default {
             {
               id: 'crane - IL7273',
               name: 'Crane - IL7273',
-              color: '#e25dd2',
+              color: '#34c8e0',
               status: 'in maintenance',
             },
             {
               id: 'bulldozer - PA7475',
               name: 'Bulldozer - PA7475',
-              color: '#d6d145',
+              color: '#34c8e0',
               status: 'on site',
             },
           ],
@@ -852,7 +979,7 @@ export default {
 
 .mds-resource-filtering-search .mbsc-textfield {
   height: 36px;
-  padding: 0 8px 0 46px;
+  padding: 0 8px 0 38px;
 }
 
 .mds-resource-filtering-search .mbsc-textfield-icon {
@@ -872,7 +999,7 @@ export default {
 
 .mds-resource-filtering-name {
   font-size: 14px;
-  font-weight: normal;
+  font-weight: bold;
   margin-bottom: 7px;
 }
 
