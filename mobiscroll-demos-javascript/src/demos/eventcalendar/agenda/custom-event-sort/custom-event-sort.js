@@ -16,6 +16,9 @@ export default {
       view: {
         agenda: { type: 'week' },
       },
+      eventOrder: function (event) {
+        return event.accepted ? 1 : -1;
+      },
       data: [
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday),

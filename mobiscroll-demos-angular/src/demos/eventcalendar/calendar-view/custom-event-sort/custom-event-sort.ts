@@ -151,4 +151,8 @@ export class AppComponent {
       type: 'week',
     },
   };
+
+  orderMyEvents(event: MbscCalendarEvent) {
+    return event['accepted'] ? 1 : -1;
+  }
 }
