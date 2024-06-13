@@ -1,0 +1,69 @@
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [resources]="myResources"
+  [resourceTemplate]="customResourceTemplate"
+  [resourceHeaderTemplate]="customResourceHeaderTemplate"
+  [options]="calendarOptions"
+>
+</mbsc-eventcalendar>
+
+<ng-template #customResourceHeaderTemplate>
+  <div class="mbsc-flex mbsc-align-items-center mbsc-font mds-resource-filtering-search">
+    <mbsc-input
+      type="text"
+      startIcon="material-search"
+      autocomplete="off"
+      id="demo-search-input"
+      class="mbsc-input mbsc-input-outline"
+      placeholder="Search..."
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="handleSearch()"
+    />
+
+    <mbsc-button
+      #buttonRef
+      id="demo-filter-button"
+      startIcon="material-filter-list"
+      class="mbsc-button mbsc-flex-none"
+      (click)="handleClick($event)"
+    >
+      Filter
+    </mbsc-button>
+  </div>
+</ng-template>
+
+<ng-template #customResourceTemplate let-resource>
+  <div>
+    <div class="mds-resource-filtering-name">{{ resource.name }}</div>
+    <div *ngIf="resource.status" class="mds-resource-filtering-status">
+      <span
+        class="mds-resource-filtering-status-dot"
+        [ngStyle]="{ backgroundColor: resource.status === 'on site' ? 'green' : 'orange' }"
+      ></span>
+      {{ resource.status }}
+    </div>
+  </div>
+</ng-template>
+
+<mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" #popup>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Operational Status</div>
+
+    <mbsc-checkbox
+      label="In maintenance"
+      [(ngModel)]="maintenanceChecked"
+      class="mds-resource-filtering-checkbox"
+      value="in maintenance"
+      checked
+    />
+    <mbsc-checkbox label="On site" [(ngModel)]="onSiteChecked" class="mds-resource-filtering-checkbox" value="on site" checked />
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Job sites</div>
+    <div id="demo-resource-list">
+      <label *ngFor="let checkbox of checkboxes">
+        <mbsc-checkbox />
+      </label>
+    </div>
+  </div>
+</mbsc-popup>

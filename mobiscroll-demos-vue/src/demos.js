@@ -234,6 +234,7 @@ import Demo732 from './demos/eventcalendar/timeline/assign-unassign-work-orders-
 import Demo745 from './demos/eventcalendar/timeline/check-list-tasks-within-events/check-list-tasks-within-events.vue'
 import Demo735 from './demos/eventcalendar/timeline/flight-scheduling-two-synchronized-timelines/flight-scheduling-two-synchronized-timelines.vue'
 import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/show-task-progress-on-event.vue'
+import Demo747 from './demos/eventcalendar/timeline/resource-filtering/resource-filtering.vue'
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline.vue'
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution.vue'
 import Demo734 from './demos/eventcalendar/timeline/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events.vue'
@@ -1370,6 +1371,11 @@ export const demos = [
                 name: 'Display task progress',
                 unique: 'show-task-progress-on-event',
                 component: Demo746
+              },
+              {
+                name: 'Resource filtering',
+                unique: 'resource-filtering',
+                component: Demo747
               }
             ]
           },
