@@ -1,5 +1,5 @@
 import { Button, Checkbox, Eventcalendar, Input, Popup, setOptions, Toast } from '@mobiscroll/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import './resource-filtering-search.css';
 
@@ -461,7 +461,7 @@ const myEvents = [
   },
 ];
 
-const myResourcesDefault = [
+const myResources = [
   {
     id: 'site1',
     name: '123 Main St, Downtown City',
@@ -703,36 +703,36 @@ const myResourcesDefault = [
   },
 ];
 
+const myFilters = [
+  { id: 'on site', name: 'On site', value: true },
+  { id: 'in maintenance', name: 'In maintenance', value: true },
+];
+
+myResources.forEach((site) => {
+  myFilters.push({ id: site.id, name: site.name, value: true });
+});
+
 function App() {
-  const buttonRef = useRef();
-  const searchTimeout = useRef(null);
-  const [myResources, setMyResources] = useState(myResourcesDefault);
+  const [filteredResources, setFilteredResources] = useState(myResources);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [isSuccess, setSuccess] = useState(true);
-  const searchQuery = useRef('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [myAnchor, setAnchor] = useState();
-  const [filters, setFilters] = useState({});
-  const [initialFilters, setInitialFilters] = useState({});
+  const [filters, setFilters] = useState(
+    myFilters.reduce((map, f) => {
+      map[f.id] = true;
+      return map;
+    }, {}),
+  );
+  const [tempFilters, setTempFilters] = useState({});
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
 
-  useEffect(() => {
-    const myFilters = {
-      'on site': { name: 'On site', value: true },
-      'in maintenance': { name: 'In maintenance', value: true },
-    };
+  const buttonRef = useRef();
+  const searchTimeout = useRef(null);
 
-    myResourcesDefault.forEach((site) => {
-      myFilters[site.id] = { name: site.name, value: true };
-    });
-
-    setFilters(myFilters);
-    setInitialFilters(myFilters);
-  }, []);
-
-  const filterResources = useCallback(() => {
-    setMyResources(
-      myResourcesDefault
+  const filterResources = useCallback((currentFilters, currentQuery) => {
+    setFilteredResources(
+      myResources
         .map(function (site) {
           return {
             id: site.id,
@@ -740,68 +740,85 @@ function App() {
             color: site.color,
             eventCreation: site.eventCreation,
             children: site.children.filter(function (resource) {
-              return (
-                filters[resource.status].value &&
-                (!searchQuery.current || resource.name.toLowerCase().includes(searchQuery.current.toLowerCase()))
-              );
+              return currentFilters[resource.status] && (!currentQuery || resource.name.toLowerCase().includes(currentQuery.toLowerCase()));
             }),
           };
         })
         .filter(function (site) {
-          return site.children.length > 0 && filters[site.id].value;
+          return site.children.length > 0 && currentFilters[site.id];
         }),
     );
-  }, [filters, searchQuery]);
-
-  const resetFilters = () => {
-    searchQuery.current = '';
-    Object.keys(filters).forEach((key) => {
-      filters[key].value = true;
-    });
-    filterResources();
-    openToast('Filters cleared');
-  };
+  }, []);
 
   const openToast = useCallback((message) => {
     setToastMsg(message);
     setToastOpen(true);
   }, []);
 
-  const handleClick = useCallback(() => {
-    if (isSuccess) {
-      setInitialFilters(filters);
-      setSuccess(false);
-    } else {
-      setFilters(initialFilters);
-    }
+  const resetFilters = useCallback(() => {
+    const updatedFilters = myFilters.reduce((map, f) => {
+      map[f.id] = true;
+      return map;
+    }, {});
+    setSearchQuery('');
+    setFilters(updatedFilters);
+    filterResources(updatedFilters, '');
+    openToast('Filters cleared');
+  }, [filterResources, openToast]);
 
+  const openFilters = useCallback(() => {
+    setTempFilters({ ...filters });
     setAnchor(buttonRef.current.nativeElement);
     setPopupOpen(true);
-  }, [filters, initialFilters, isSuccess]);
+  }, [filters]);
 
-  const handleSearch = (e) => {
-    // 300ms to change the input text?
-    clearTimeout(searchTimeout);
-    searchQuery.current = e.target.value.toLowerCase();
-    searchTimeout.current = setTimeout(filterResources, 300);
-  };
+  const applyFilters = useCallback(() => {
+    setFilters({ ...tempFilters });
+    setPopupOpen(false);
+    filterResources(tempFilters, searchQuery);
+    openToast('Filters applied');
+  }, [filterResources, openToast, searchQuery, tempFilters]);
 
-  const handleCheckboxChange = (key) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: { ...prev[key], value: !prev[key].value },
-    }));
-  };
+  const handleSearch = useCallback(
+    (ev) => {
+      const query = ev.target.value;
+      setSearchQuery(query);
+      clearTimeout(searchTimeout.current);
+      searchTimeout.current = setTimeout(() => filterResources(filters, query), 300);
+    },
+    [filterResources, filters],
+  );
+
+  const handleCheckboxChange = useCallback(
+    (ev) => {
+      const key = ev.target.value;
+      tempFilters[key] = !tempFilters[key];
+      setTempFilters({ ...tempFilters });
+    },
+    [tempFilters],
+  );
+
+  const popupButtons = useMemo(
+    () => [
+      'cancel',
+      {
+        text: 'Apply',
+        keyCode: 'enter',
+        handler: applyFilters,
+        cssClass: 'mbsc-popup-button-primary',
+      },
+    ],
+    [applyFilters],
+  );
 
   return (
-    <div>
+    <>
       <Eventcalendar
         cssClass="mds-resource-filtering-calendar"
         clickToCreate={true}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
-        height={1000}
         view={{
           timeline: {
             type: 'week',
@@ -815,9 +832,9 @@ function App() {
           },
         }}
         data={myEvents}
-        resources={myResources}
+        resources={filteredResources}
         renderResource={(resource) => (
-          <div>
+          <>
             <div className="mds-resource-filtering-name">{resource.name}</div>
             {resource.status && (
               <div className="mds-resource-filtering-status">
@@ -828,7 +845,7 @@ function App() {
                 {resource.status}
               </div>
             )}
-          </div>
+          </>
         )}
         renderResourceEmpty={() => (
           <div className="mds-resource-filtering-empty mbsc-flex mbsc-align-items-center">
@@ -836,7 +853,7 @@ function App() {
               <img src="https://i.ibb.co/2MMT3cQ/search.png" alt="Empty list" style={{ width: '100px' }} />
               <p className="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>
               <p className="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>
-              <Button mbsc-button="true" id="demo-reset-filters" variant="outline" onClick={resetFilters}>
+              <Button mbsc-button="true" variant="outline" onClick={resetFilters}>
                 Reset Filters
               </Button>
             </div>
@@ -847,23 +864,15 @@ function App() {
             <label className="mbsc-flex-1-1">
               <Input
                 type="text"
-                id="demo-search-input"
                 autoComplete="off"
                 inputStyle="outline"
                 startIcon="material-search"
                 placeholder="Search..."
-                value={searchQuery.current}
+                value={searchQuery}
                 onChange={handleSearch}
               />
             </label>
-            <Button
-              ref={buttonRef}
-              id="demo-filter-button"
-              startIcon="material-filter-list"
-              variant="outline"
-              className="mbsc-flex-none"
-              onClick={handleClick}
-            >
+            <Button ref={buttonRef} startIcon="material-filter-list" variant="outline" className="mbsc-flex-none" onClick={openFilters}>
               Filter
             </Button>
           </div>
@@ -877,20 +886,7 @@ function App() {
         focusOnOpen={false}
         showOverlay={false}
         width={400}
-        buttons={[
-          'cancel',
-          {
-            text: 'Apply',
-            keyCode: 'enter',
-            handler: function () {
-              setSuccess(true);
-              filterResources();
-              setPopupOpen(false);
-              openToast('Filters applied');
-            },
-            cssClass: 'mbsc-popup-button-primary',
-          },
-        ]}
+        buttons={popupButtons}
         isOpen={isPopupOpen}
         onClose={() => {
           setPopupOpen(false);
@@ -898,38 +894,32 @@ function App() {
       >
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Operational Status</div>
-          {Object.keys(filters)
-            .slice(0, 2)
-            .map((key) => (
-              <Checkbox
-                key={key}
-                className="mds-resource-filtering-checkbox"
-                label={filters[key].name}
-                value={filters[key].value}
-                checked={filters[key].value}
-                onChange={() => handleCheckboxChange(key)}
-              />
-            ))}
+          {myFilters.slice(0, 2).map((filter) => (
+            <Checkbox
+              key={filter.id}
+              label={filter.name}
+              value={filter.id}
+              checked={tempFilters[filter.id]}
+              onChange={handleCheckboxChange}
+            />
+          ))}
         </div>
 
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Job sites</div>
-          {Object.keys(filters)
-            .slice(2)
-            .map((key) => (
-              <Checkbox
-                key={key}
-                className="mds-resource-filtering-checkbox"
-                label={filters[key].name}
-                value={filters[key].value}
-                checked={filters[key].value}
-                onChange={() => handleCheckboxChange(key)}
-              />
-            ))}
+          {myFilters.slice(2).map((filter) => (
+            <Checkbox
+              key={filter.id}
+              label={filter.name}
+              value={filter.id}
+              checked={tempFilters[filter.id]}
+              onChange={handleCheckboxChange}
+            />
+          ))}
         </div>
       </Popup>
       <Toast message={toastMsg} isOpen={isToastOpen} onClose={() => setToastOpen(false)} />
-    </div>
+    </>
   );
 }
 
