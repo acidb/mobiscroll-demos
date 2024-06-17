@@ -566,19 +566,43 @@ export class AppComponent {
     },
   ];
 
+  @ViewChild('popup', { static: false })
+  popup!: MbscPopup;
   searchQuery: any = '';
-  handleSearch() {
-    console.log('todo');
+  filters: { [id: string]: { name: string; value: boolean } } = {};
+  initialFilters: { [id: string]: { name: string; value: boolean } } = {};
+  filteredResources = this.myResources;
+  searchTimeout: any;
+  isSuccess: boolean = true;
+
+  constructor() {
+    this.filters['on site'] = { name: 'On site', value: true };
+    this.filters['in maintenance'] = { name: 'In maintenance', value: true };
+
+    this.myResources.forEach((site) => {
+      this.filters[site.id] = { name: site.name, value: true };
+    });
   }
+
+  handleSearch() {
+    console.log(this.filters);
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.filterResources();
+    }, 300);
+  }
+
   handleClick(event: MouseEvent) {
+    if (this.isSuccess) {
+      this.initialFilters = structuredClone(this.filters);
+      this.isSuccess = false;
+    } else {
+      this.filters = structuredClone(this.initialFilters);
+    }
     this.popupAnchor = event.target as HTMLElement;
     this.popup.open();
   }
 
-  @ViewChild('popup', { static: false })
-  popup!: MbscPopup;
-
-  // refactor
   filterResources() {
     this.filteredResources = this.myResources
       .map((site) => ({
@@ -587,16 +611,18 @@ export class AppComponent {
         eventCreation: site.eventCreation,
         children: site.children.filter(
           (resource) =>
-            this.filters[resource.status] && (!this.searchQuery || resource.name.toLowerCase().includes(this.searchQuery.toLowerCase())),
+            this.filters[resource.status].value &&
+            (!this.searchQuery || resource.name.toLowerCase().includes(this.searchQuery.toLowerCase())),
         ),
       }))
-      .filter((site) => site.children.length > 0 && this.filters[site.id]);
+      .filter((site) => site.children.length > 0 && this.filters[site.id].value);
   }
 
   popupButtons: Array<MbscPopupButton | 'cancel'> = [
     'cancel',
     {
       handler: () => {
+        this.isSuccess = true;
         this.filterResources();
         this.popup.close();
       },
@@ -607,6 +633,7 @@ export class AppComponent {
   ];
 
   calendarOptions: MbscEventcalendarOptions = {
+    class: 'mds-resource-filtering-calendar',
     clickToCreate: true,
     dragToCreate: true,
     dragToMove: true,

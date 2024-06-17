@@ -1,6 +1,6 @@
 <mbsc-eventcalendar
   [data]="myEvents"
-  [resources]="myResources"
+  [resources]="filteredResources"
   [resourceTemplate]="customResourceTemplate"
   [resourceHeaderTemplate]="customResourceHeaderTemplate"
   [options]="calendarOptions"
@@ -14,17 +14,18 @@
       startIcon="material-search"
       autocomplete="off"
       id="demo-search-input"
-      class="mbsc-input mbsc-input-outline"
+      class="mbsc-input"
+      inputStyle="outline"
       placeholder="Search..."
       [(ngModel)]="searchQuery"
       (ngModelChange)="handleSearch()"
     />
-
     <mbsc-button
       #buttonRef
       id="demo-filter-button"
       startIcon="material-filter-list"
       class="mbsc-button mbsc-flex-none"
+      variant="outline"
       (click)="handleClick($event)"
     >
       Filter
@@ -48,22 +49,15 @@
 <mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" #popup>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Operational Status</div>
-
-    <mbsc-checkbox
-      label="In maintenance"
-      [(ngModel)]="maintenanceChecked"
-      class="mds-resource-filtering-checkbox"
-      value="in maintenance"
-      checked
-    />
-    <mbsc-checkbox label="On site" [(ngModel)]="onSiteChecked" class="mds-resource-filtering-checkbox" value="on site" checked />
+    <div *ngFor="let resource of filters | keyvalue | slice:0:2">
+      <mbsc-checkbox class="mds-resource-filtering-checkbox" [label]="resource.value.name" [(ngModel)]="resource.value.value" />
+    </div>
   </div>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Job sites</div>
-    <div id="demo-resource-list">
-      <label *ngFor="let checkbox of checkboxes">
-        <mbsc-checkbox />
-      </label>
+
+    <div *ngFor="let resource of filters | keyvalue | slice:2">
+      <mbsc-checkbox class="mds-resource-filtering-checkbox" [label]="resource.value.name" [(ngModel)]="resource.value.value" />
     </div>
   </div>
 </mbsc-popup>

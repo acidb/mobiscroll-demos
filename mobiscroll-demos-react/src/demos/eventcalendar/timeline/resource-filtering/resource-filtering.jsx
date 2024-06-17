@@ -1,5 +1,5 @@
 import { Button, Checkbox, Eventcalendar, Input, Popup, setOptions } from '@mobiscroll/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import './resource-filtering.css';
 
@@ -704,26 +704,29 @@ const myResourcesDefault = [
 ];
 
 function App() {
-  const resourceListRef = useRef();
   const buttonRef = useRef();
   const searchTimeout = useRef(null);
-
-  const [checkboxes, setCheckboxes] = useState([]);
   const [myResources, setMyResources] = useState(myResourcesDefault);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [isSuccess, setSuccess] = useState(true);
+  const searchQuery = useRef('');
   const [myAnchor, setAnchor] = useState();
+  const [filters, setFilters] = useState({});
+  const [initialFilters, setInitialFilters] = useState({});
 
-  const [filters] = useState(() => {
-    const initialFilters = { 'on site': true, 'in maintenance': true };
-    myResources.forEach((site) => {
-      initialFilters[site.id] = true;
-      site.children.forEach((resource) => {
-        initialFilters[resource.id] = true;
-      });
+  useEffect(() => {
+    const myFilters = {
+      'on site': { name: 'On site', value: true },
+      'in maintenance': { name: 'In maintenance', value: true },
+    };
+
+    myResourcesDefault.forEach((site) => {
+      myFilters[site.id] = { name: site.name, value: true };
     });
-    return initialFilters;
-  });
+
+    setFilters(myFilters);
+    setInitialFilters(myFilters);
+  }, []);
 
   const filterResources = useCallback(() => {
     setMyResources(
@@ -735,50 +738,44 @@ function App() {
             color: site.color,
             eventCreation: site.eventCreation,
             children: site.children.filter(function (resource) {
-              return filters[resource.status] && (!searchQuery || resource.name.toLowerCase().includes(searchQuery.toLowerCase()));
+              return (
+                filters[resource.status].value &&
+                (!searchQuery.current || resource.name.toLowerCase().includes(searchQuery.current.toLowerCase()))
+              );
             }),
           };
         })
         .filter(function (site) {
-          return site.children.length > 0 && filters[site.id];
+          return site.children.length > 0 && filters[site.id].value;
         }),
     );
   }, [filters, searchQuery]);
 
-  const handleCheckboxChange = useCallback(
-    (ev) => {
-      filters[ev.target.value] = ev.target.checked;
-    },
-    [filters],
-  );
-
   const handleClick = useCallback(() => {
-    const checkboxElements = myResourcesDefault.map((site) => (
-      <label key={site.id}>
-        <Checkbox
-          className="mds-resource-filtering-checkbox"
-          label={site.name}
-          value={site.id}
-          checked={filters[site.id]}
-          onChange={handleCheckboxChange}
-        />
-      </label>
-    ));
+    if (isSuccess) {
+      setInitialFilters(filters);
+      setSuccess(false);
+    } else {
+      setFilters(initialFilters);
+    }
 
-    setCheckboxes(checkboxElements);
     setAnchor(buttonRef.current.nativeElement);
     setPopupOpen(true);
-  }, [filters, handleCheckboxChange]);
+  }, [filters, initialFilters, isSuccess]);
 
-  const handleSearch = useCallback(
-    (e) => {
-      console.log('here');
-      clearTimeout(searchTimeout);
-      setSearchQuery(e.target.value.toLowerCase());
-      searchTimeout.current = setTimeout(filterResources, 300);
-    },
-    [filterResources],
-  );
+  const handleSearch = (e) => {
+    // 300ms to change the input text?
+    clearTimeout(searchTimeout);
+    searchQuery.current = e.target.value.toLowerCase();
+    searchTimeout.current = setTimeout(filterResources, 300);
+  };
+
+  const handleCheckboxChange = (key) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: { ...prev[key], value: !prev[key].value },
+    }));
+  };
 
   return (
     <div>
@@ -827,6 +824,7 @@ function App() {
                 inputStyle="outline"
                 startIcon="material-search"
                 placeholder="Search..."
+                value={searchQuery.current}
                 onChange={handleSearch}
               />
             </label>
@@ -857,6 +855,7 @@ function App() {
             text: 'Apply',
             keyCode: 'enter',
             handler: function () {
+              setSuccess(true);
               filterResources();
               setPopupOpen(false);
             },
@@ -864,21 +863,40 @@ function App() {
           },
         ]}
         isOpen={isPopupOpen}
+        onClose={() => {
+          setPopupOpen(false);
+        }}
       >
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Operational Status</div>
-          <label>
-            <Checkbox label="In maintenance" className="mds-resource-filtering-checkbox" value="in maintenance" defaultChecked />
-          </label>
-          <label>
-            <Checkbox label="On site" className="mds-resource-filtering-checkbox" value="on site" defaultChecked />
-          </label>
+          {Object.keys(filters)
+            .slice(0, 2)
+            .map((key) => (
+              <Checkbox
+                key={key}
+                className="mds-resource-filtering-checkbox"
+                label={filters[key].name}
+                value={filters[key].value}
+                checked={filters[key].value}
+                onChange={() => handleCheckboxChange(key)}
+              />
+            ))}
         </div>
+
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Job sites</div>
-          <div id="demo-resource-list" ref={resourceListRef}>
-            {checkboxes}
-          </div>
+          {Object.keys(filters)
+            .slice(2)
+            .map((key) => (
+              <Checkbox
+                key={key}
+                className="mds-resource-filtering-checkbox"
+                label={filters[key].name}
+                value={filters[key].value}
+                checked={filters[key].value}
+                onChange={() => handleCheckboxChange(key)}
+              />
+            ))}
         </div>
       </Popup>
     </div>

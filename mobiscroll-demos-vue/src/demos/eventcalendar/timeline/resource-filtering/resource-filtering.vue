@@ -7,7 +7,7 @@ import {
   MbscPopup,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 
 setOptions({
   // locale,
@@ -467,7 +467,7 @@ const myEvents = [
   }
 ]
 
-const myResourcesDefault = [
+const myResources = [
   {
     id: 'site1',
     name: '123 Main St, Downtown City',
@@ -722,9 +722,66 @@ const myView = {
   }
 }
 
+const buttonRef = ref(null)
+const searchTimeout = ref(null)
+const filteredResources = ref(myResources)
 const isPopupOpen = ref(false)
-const checkboxes = ref('')
-const popupAnchor = ref(null)
+const isSuccess = ref(true)
+const searchQuery = ref('')
+const myAnchor = ref(null)
+
+const filters = reactive({
+  'on site': { name: 'On site', value: true },
+  'in maintenance': { name: 'In maintenance', value: true }
+})
+const initialFilters = ref({ ...filters })
+
+onMounted(() => {
+  myResources.forEach((site) => {
+    filters[site.id] = { name: site.name, value: true }
+  })
+})
+
+const filterResources = () => {
+  filteredResources.value = myResources
+    .map((site) => ({
+      id: site.id,
+      name: site.name,
+      color: site.color,
+      eventCreation: site.eventCreation,
+      children: site.children.filter(
+        (resource) =>
+          filters[resource.status].value &&
+          (!searchQuery.value ||
+            resource.name.toLowerCase().includes(searchQuery.value.toLowerCase()))
+      )
+    }))
+    .filter((site) => site.children.length > 0 && filters[site.id].value)
+}
+
+const handleClick = () => {
+  if (isSuccess.value) {
+    initialFilters.value = JSON.parse(JSON.stringify(filters))
+    isSuccess.value = false
+  } else {
+    Object.keys(initialFilters.value).forEach((key) => {
+      filters[key].value = initialFilters.value[key].value
+    })
+  }
+
+  myAnchor.value = buttonRef.value?.instance.nativeElement
+  isPopupOpen.value = true
+}
+
+const handleSearch = (e) => {
+  clearTimeout(searchTimeout.value)
+  searchQuery.value = e.target.value.toLowerCase()
+  searchTimeout.value = setTimeout(filterResources, 300)
+}
+
+const handlePopupClose = () => {
+  isPopupOpen.value = false
+}
 </script>
 
 <template>
@@ -733,7 +790,7 @@ const popupAnchor = ref(null)
       cssClass="mds-resource-filtering-calendar"
       :view="myView"
       :data="myEvents"
-      :resources="myResourcesDefault"
+      :resources="filteredResources"
       :clickToCreate="true"
       :dragToCreate="true"
       :dragToMove="true"
@@ -749,15 +806,13 @@ const popupAnchor = ref(null)
               input-style="outline"
               start-icon="material-search"
               placeholder="Search..."
-              @change="handleSearch"
+              @input="handleSearch"
             />
           </label>
           <MbscButton
             ref="buttonRef"
-            id="demo-filter-button"
             start-icon="material-filter-list"
             variant="outline"
-            class="mbsc-flex-none"
             @click="handleClick"
           >
             Filter
@@ -782,44 +837,43 @@ const popupAnchor = ref(null)
     <MbscPopup
       :contentPadding="false"
       display="anchored"
-      :anchor="popupAnchor"
+      :anchor="myAnchor"
+      width="400"
       :buttons="[
         'cancel',
         {
           text: 'Apply',
           keyCode: 'enter',
           handler: function () {
+            isSuccess = true
             filterResources()
-            isPopupOpen.value = false
+            isPopupOpen = false
           },
           cssClass: 'mbsc-popup-button-primary'
         }
       ]"
-      :headerText="popupHeaderText"
       @close="handlePopupClose"
       :isOpen="isPopupOpen"
     >
       <div class="mbsc-form-group">
         <div class="mbsc-form-group-title">Operational Status</div>
-        <MbscCheckbox
-          class="mds-resource-filtering-checkbox"
-          value="in maintenance"
-          label="In maintenance"
-        />
-        <MbscCheckbox class="mds-resource-filtering-checkbox" value="on site" label="On site" />
+        <div v-for="key in Object.keys(filters).slice(0, 2)" :key="key">
+          <MbscCheckbox
+            :label="filters[key].name"
+            :value="filters[key].value"
+            v-model="filters[key].value"
+          />
+        </div>
       </div>
+
       <div class="mbsc-form-group">
         <div class="mbsc-form-group-title">Job sites</div>
-        <div v-if="isPopupOpen" ref="popup">
-          <div id="demo-resource-list" ref="resourceListRef">
-            <div v-for="checkbox in checkboxes" :key="checkbox.value">
-              <MbscCheckbox
-                v-model="checkbox.checked"
-                :value="checkbox.value"
-                :label="checkbox.label"
-              />
-            </div>
-          </div>
+        <div v-for="key in Object.keys(filters).slice(2)" :key="key">
+          <MbscCheckbox
+            :label="filters[key].name"
+            :value="filters[key].value"
+            v-model="filters[key].value"
+          />
         </div>
       </div>
     </MbscPopup>
