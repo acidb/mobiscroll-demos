@@ -745,9 +745,6 @@ export default {
             filterResources();
             popup.close();
             mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               message: 'Filters applied',
             });
           },
@@ -872,9 +869,6 @@ export default {
 
         filterResources();
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: 'Filters cleared',
         });
       }
