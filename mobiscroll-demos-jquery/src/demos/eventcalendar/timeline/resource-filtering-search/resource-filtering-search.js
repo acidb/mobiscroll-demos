@@ -748,6 +748,12 @@ export default {
                 });
                 filterResources();
                 popup.close();
+                mobiscroll.toast({
+                  //<hidden>
+                  // theme,//</hidden>
+                  // context,
+                  message: 'Filters applied',
+                });
               },
               cssClass: 'mbsc-popup-button-primary',
             },
@@ -868,6 +874,12 @@ export default {
         });
 
         filterResources();
+        mobiscroll.toast({
+          //<hidden>
+          // theme,//</hidden>
+          // context,
+          message: 'Filters cleared',
+        });
       });
 
       // Set initial filters

@@ -1,7 +1,7 @@
-import { Button, Checkbox, Eventcalendar, Input, Popup, setOptions } from '@mobiscroll/react';
+import { Button, Checkbox, Eventcalendar, Input, Popup, setOptions, Toast } from '@mobiscroll/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import './resource-filtering.css';
+import './resource-filtering-search.css';
 
 setOptions({
   // localeJs,
@@ -713,6 +713,8 @@ function App() {
   const [myAnchor, setAnchor] = useState();
   const [filters, setFilters] = useState({});
   const [initialFilters, setInitialFilters] = useState({});
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMsg, setToastMsg] = useState('');
 
   useEffect(() => {
     const myFilters = {
@@ -751,6 +753,20 @@ function App() {
     );
   }, [filters, searchQuery]);
 
+  const resetFilters = () => {
+    searchQuery.current = '';
+    Object.keys(filters).forEach((key) => {
+      filters[key].value = true;
+    });
+    filterResources();
+    openToast('Filters cleared');
+  };
+
+  const openToast = useCallback((message) => {
+    setToastMsg(message);
+    setToastOpen(true);
+  }, []);
+
   const handleClick = useCallback(() => {
     if (isSuccess) {
       setInitialFilters(filters);
@@ -785,6 +801,7 @@ function App() {
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
+        height={1000}
         view={{
           timeline: {
             type: 'week',
@@ -813,7 +830,18 @@ function App() {
             )}
           </div>
         )}
-        renderResourceEmpty={() => <div>custom empty resource</div>}
+        renderResourceEmpty={() => (
+          <div className="mds-resource-filtering-empty mbsc-flex mbsc-align-items-center">
+            <div className="mbsc-flex-1-1">
+              <img src="https://i.ibb.co/2MMT3cQ/search.png" alt="Empty list" style={{ width: '100px' }} />
+              <p className="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>
+              <p className="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>
+              <Button mbsc-button="true" id="demo-reset-filters" variant="outline" onClick={resetFilters}>
+                Reset Filters
+              </Button>
+            </div>
+          </div>
+        )}
         renderResourceHeader={() => (
           <div className="mbsc-flex mbsc-align-items-center mbsc-font mds-resource-filtering-search">
             <label className="mbsc-flex-1-1">
@@ -858,6 +886,7 @@ function App() {
               setSuccess(true);
               filterResources();
               setPopupOpen(false);
+              openToast('Filters applied');
             },
             cssClass: 'mbsc-popup-button-primary',
           },
@@ -899,6 +928,7 @@ function App() {
             ))}
         </div>
       </Popup>
+      <Toast message={toastMsg} isOpen={isToastOpen} onClose={() => setToastOpen(false)} />
     </div>
   );
 }

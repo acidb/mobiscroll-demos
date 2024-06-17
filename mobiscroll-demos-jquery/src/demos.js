@@ -235,7 +235,7 @@ import Demo732 from './demos/eventcalendar/timeline/assign-unassign-work-orders-
 import Demo745 from './demos/eventcalendar/timeline/check-list-tasks-within-events/check-list-tasks-within-events';
 import Demo735 from './demos/eventcalendar/timeline/flight-scheduling-two-synchronized-timelines/flight-scheduling-two-synchronized-timelines';
 import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/show-task-progress-on-event';
-import Demo747 from './demos/eventcalendar/timeline/resource-filtering/resource-filtering';
+import Demo747 from './demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search';
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
 import Demo734 from './demos/eventcalendar/timeline/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events';
@@ -929,7 +929,6 @@ export const demos = [
               { name: 'Sub-tasks and lists', unique: 'check-list-tasks-within-events', component: Demo745 },
               { name: 'Flight scheduling with two timelines', unique: 'flight-scheduling-two-synchronized-timelines', component: Demo735 },
               { name: 'Display task progress', unique: 'show-task-progress-on-event', component: Demo746 },
-              { name: 'Resource filtering', unique: 'resource-filtering', component: Demo747 },
             ],
           },
           {
@@ -985,10 +984,11 @@ export const demos = [
             name: 'Resources',
             unique: 17,
             items: [
+              { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
               { name: 'Resource grid', unique: 'timeline-resource-details-side-panel-footer', component: Demo607 },
               { name: 'Resource grouping & hierarchy', unique: 'resource-grouping-hierarchy', component: Demo625 },
               // { name: 'Resource group summaries', unique: 'show-summaries-aggregates-for-resource-groups', component: Demo747 },
-              { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
+              { name: 'Resource filtering & search', unique: 'resource-filtering-search', component: Demo747 },
             ],
           },
           {

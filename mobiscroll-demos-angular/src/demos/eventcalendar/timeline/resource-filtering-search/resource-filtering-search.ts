@@ -16,9 +16,9 @@ setOptions({
 
 @Component({
   selector: 'app-resource-filtering',
-  styleUrl: './resource-filtering.css',
+  styleUrl: './resource-filtering-search.css',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './resource-filtering.html',
+  templateUrl: './resource-filtering-search.html',
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [
