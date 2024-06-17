@@ -733,20 +733,17 @@ function App() {
   const filterResources = useCallback((currentFilters, currentQuery) => {
     setFilteredResources(
       myResources
-        .map(function (site) {
-          return {
-            id: site.id,
-            name: site.name,
-            color: site.color,
-            eventCreation: site.eventCreation,
-            children: site.children.filter(function (resource) {
-              return currentFilters[resource.status] && (!currentQuery || resource.name.toLowerCase().includes(currentQuery.toLowerCase()));
-            }),
-          };
-        })
-        .filter(function (site) {
-          return site.children.length > 0 && currentFilters[site.id];
-        }),
+        .map((site) => ({
+          id: site.id,
+          name: site.name,
+          color: site.color,
+          eventCreation: site.eventCreation,
+          children: site.children.filter(
+            (resource) =>
+              currentFilters[resource.status] && (!currentQuery || resource.name.toLowerCase().includes(currentQuery.toLowerCase())),
+          ),
+        }))
+        .filter((site) => site.children.length > 0 && currentFilters[site.id]),
     );
   }, []);
 
