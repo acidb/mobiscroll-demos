@@ -730,6 +730,22 @@ function App() {
   const buttonRef = useRef();
   const searchTimeout = useRef(null);
 
+  const myView = useMemo(
+    () => ({
+      timeline: {
+        type: 'week',
+        startTime: '05:00',
+        endTime: '22:00',
+        startDay: 1,
+        endDay: 5,
+        timeCellStep: 60,
+        timeLabelStep: 60,
+        weekNumbers: true,
+      },
+    }),
+    [],
+  );
+
   const filterResources = useCallback((currentFilters, currentQuery) => {
     setFilteredResources(
       myResources
@@ -752,17 +768,6 @@ function App() {
     setToastOpen(true);
   }, []);
 
-  const resetFilters = useCallback(() => {
-    const updatedFilters = myFilters.reduce((map, f) => {
-      map[f.id] = true;
-      return map;
-    }, {});
-    setSearchQuery('');
-    setFilters(updatedFilters);
-    filterResources(updatedFilters, '');
-    openToast('Filters cleared');
-  }, [filterResources, openToast]);
-
   const openFilters = useCallback(() => {
     setTempFilters({ ...filters });
     setAnchor(buttonRef.current.nativeElement);
@@ -775,6 +780,25 @@ function App() {
     filterResources(tempFilters, searchQuery);
     openToast('Filters applied');
   }, [filterResources, openToast, searchQuery, tempFilters]);
+
+  const resetFilters = useCallback(() => {
+    const updatedFilters = myFilters.reduce((map, f) => {
+      map[f.id] = true;
+      return map;
+    }, {});
+    setSearchQuery('');
+    setFilters(updatedFilters);
+    filterResources(updatedFilters, '');
+    openToast('Filters cleared');
+  }, [filterResources, openToast]);
+
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const handlePopupClose = useCallback(() => {
+    setPopupOpen(false);
+  }, []);
 
   const handleSearch = useCallback(
     (ev) => {
@@ -793,6 +817,62 @@ function App() {
       setTempFilters({ ...tempFilters });
     },
     [tempFilters],
+  );
+
+  const renderCustomResource = useCallback(
+    (resource) => (
+      <>
+        <div className="mds-resource-filtering-name">{resource.name}</div>
+        {resource.status && (
+          <div className="mds-resource-filtering-status">
+            <span
+              className="mds-resource-filtering-status-dot"
+              style={{ backgroundColor: resource.status === 'on site' ? 'green' : 'orange' }}
+            ></span>
+            {resource.status}
+          </div>
+        )}
+      </>
+    ),
+    [],
+  );
+
+  const renderCustomResourceEmpty = useCallback(
+    () => (
+      <div className="mds-resource-filtering-empty mbsc-flex mbsc-align-items-center">
+        <div className="mbsc-flex-1-1">
+          <img src="https://i.ibb.co/2MMT3cQ/search.png" alt="Empty list" style={{ width: '100px' }} />
+          <p className="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>
+          <p className="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>
+          <Button mbsc-button="true" variant="outline" onClick={resetFilters}>
+            Reset Filters
+          </Button>
+        </div>
+      </div>
+    ),
+    [resetFilters],
+  );
+
+  const renderCustomResourceHeader = useCallback(
+    () => (
+      <div className="mbsc-flex mbsc-align-items-center mbsc-font mds-resource-filtering-search">
+        <label className="mbsc-flex-1-1">
+          <Input
+            type="text"
+            autoComplete="off"
+            inputStyle="outline"
+            startIcon="material-search"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={handleSearch}
+          />
+        </label>
+        <Button ref={buttonRef} startIcon="material-filter-list" variant="outline" className="mbsc-flex-none" onClick={openFilters}>
+          Filter
+        </Button>
+      </div>
+    ),
+    [handleSearch, openFilters, searchQuery],
   );
 
   const popupButtons = useMemo(
@@ -816,64 +896,12 @@ function App() {
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
-        view={{
-          timeline: {
-            type: 'week',
-            startTime: '05:00',
-            endTime: '22:00',
-            startDay: 1,
-            endDay: 5,
-            timeCellStep: 60,
-            timeLabelStep: 60,
-            weekNumbers: true,
-          },
-        }}
+        view={myView}
         data={myEvents}
         resources={filteredResources}
-        renderResource={(resource) => (
-          <>
-            <div className="mds-resource-filtering-name">{resource.name}</div>
-            {resource.status && (
-              <div className="mds-resource-filtering-status">
-                <span
-                  className="mds-resource-filtering-status-dot"
-                  style={{ backgroundColor: resource.status === 'on site' ? 'green' : 'orange' }}
-                ></span>
-                {resource.status}
-              </div>
-            )}
-          </>
-        )}
-        renderResourceEmpty={() => (
-          <div className="mds-resource-filtering-empty mbsc-flex mbsc-align-items-center">
-            <div className="mbsc-flex-1-1">
-              <img src="https://i.ibb.co/2MMT3cQ/search.png" alt="Empty list" style={{ width: '100px' }} />
-              <p className="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>
-              <p className="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>
-              <Button mbsc-button="true" variant="outline" onClick={resetFilters}>
-                Reset Filters
-              </Button>
-            </div>
-          </div>
-        )}
-        renderResourceHeader={() => (
-          <div className="mbsc-flex mbsc-align-items-center mbsc-font mds-resource-filtering-search">
-            <label className="mbsc-flex-1-1">
-              <Input
-                type="text"
-                autoComplete="off"
-                inputStyle="outline"
-                startIcon="material-search"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={handleSearch}
-              />
-            </label>
-            <Button ref={buttonRef} startIcon="material-filter-list" variant="outline" className="mbsc-flex-none" onClick={openFilters}>
-              Filter
-            </Button>
-          </div>
-        )}
+        renderResource={renderCustomResource}
+        renderResourceEmpty={renderCustomResourceEmpty}
+        renderResourceHeader={renderCustomResourceHeader}
       />
       <Popup
         contentPadding={false}
@@ -885,9 +913,7 @@ function App() {
         width={400}
         buttons={popupButtons}
         isOpen={isPopupOpen}
-        onClose={() => {
-          setPopupOpen(false);
-        }}
+        onClose={handlePopupClose}
       >
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Operational Status</div>
@@ -915,7 +941,7 @@ function App() {
           ))}
         </div>
       </Popup>
-      <Toast message={toastMsg} isOpen={isToastOpen} onClose={() => setToastOpen(false)} />
+      <Toast message={toastMsg} isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 }

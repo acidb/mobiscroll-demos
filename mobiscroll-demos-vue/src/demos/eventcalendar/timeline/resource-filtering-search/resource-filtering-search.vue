@@ -5,9 +5,10 @@ import {
   MbscEventcalendar,
   MbscInput,
   MbscPopup,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { onMounted, reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -709,6 +710,32 @@ const myResources = [
   }
 ]
 
+const myFilters = [
+  { id: 'on site', name: 'On site', value: true },
+  { id: 'in maintenance', name: 'In maintenance', value: true }
+]
+
+myResources.forEach((site) => {
+  myFilters.push({ id: site.id, name: site.name, value: true })
+})
+
+const filteredResources = ref(myResources)
+const isPopupOpen = ref(false)
+const searchQuery = ref('')
+const myAnchor = ref(null)
+const filters = ref(
+  myFilters.reduce((map, f) => {
+    map[f.id] = true
+    return map
+  }, {})
+)
+const tempFilters = ref({})
+const isToastOpen = ref(false)
+const toastMessage = ref('')
+
+const buttonRef = ref(null)
+const searchTimeout = ref(null)
+
 const myView = {
   timeline: {
     type: 'week',
@@ -722,27 +749,7 @@ const myView = {
   }
 }
 
-const buttonRef = ref(null)
-const searchTimeout = ref(null)
-const filteredResources = ref(myResources)
-const isPopupOpen = ref(false)
-const isSuccess = ref(true)
-const searchQuery = ref('')
-const myAnchor = ref(null)
-
-const filters = reactive({
-  'on site': { name: 'On site', value: true },
-  'in maintenance': { name: 'In maintenance', value: true }
-})
-const initialFilters = ref({ ...filters })
-
-onMounted(() => {
-  myResources.forEach((site) => {
-    filters[site.id] = { name: site.name, value: true }
-  })
-})
-
-const filterResources = () => {
+const filterResources = (currentFilters, currentQuery) => {
   filteredResources.value = myResources
     .map((site) => ({
       id: site.id,
@@ -751,133 +758,168 @@ const filterResources = () => {
       eventCreation: site.eventCreation,
       children: site.children.filter(
         (resource) =>
-          filters[resource.status].value &&
-          (!searchQuery.value ||
-            resource.name.toLowerCase().includes(searchQuery.value.toLowerCase()))
+          currentFilters[resource.status] &&
+          (!currentQuery.value ||
+            resource.name.toLowerCase().includes(currentQuery.value.toLowerCase()))
       )
     }))
-    .filter((site) => site.children.length > 0 && filters[site.id].value)
+    .filter((site) => site.children.length > 0 && currentFilters[site.id])
 }
 
-const handleClick = () => {
-  if (isSuccess.value) {
-    initialFilters.value = JSON.parse(JSON.stringify(filters))
-    isSuccess.value = false
-  } else {
-    Object.keys(initialFilters.value).forEach((key) => {
-      filters[key].value = initialFilters.value[key].value
-    })
-  }
+const openToast = (message) => {
+  toastMessage.value = message
+  isToastOpen.value = true
+}
 
+const openFilters = () => {
+  tempFilters.value = { ...filters.value }
   myAnchor.value = buttonRef.value?.instance.nativeElement
   isPopupOpen.value = true
 }
 
-const handleSearch = (e) => {
-  clearTimeout(searchTimeout.value)
-  searchQuery.value = e.target.value.toLowerCase()
-  searchTimeout.value = setTimeout(filterResources, 300)
+const applyFilters = () => {
+  filters.value = { ...tempFilters.value }
+  isPopupOpen.value = false
+  filterResources(tempFilters.value, searchQuery)
+  openToast('Filters applied')
+}
+
+const resetFilters = () => {
+  searchQuery.value = ''
+  Object.keys(filters).forEach((key) => {
+    filters[key].value = true
+  })
+  filterResources()
+  openToast('Filters cleared')
 }
 
 const handlePopupClose = () => {
   isPopupOpen.value = false
 }
+
+const handleSearch = (ev) => {
+  const query = ev.target.value
+  searchQuery.value = query
+  clearTimeout(searchTimeout.value)
+  searchTimeout.value = setTimeout(() => filterResources(filters, query), 300)
+}
+
+const handleCheckboxChange = (ev) => {
+  const key = ev.target.value
+  tempFilters.value[key] = !tempFilters.value[key]
+  tempFilters.value = { ...tempFilters.value }
+}
 </script>
 
 <template>
-  <div @mousedown.capture="handleProgressArrowMouseDown">
-    <MbscEventcalendar
-      cssClass="mds-resource-filtering-calendar"
-      :view="myView"
-      :data="myEvents"
-      :resources="filteredResources"
-      :clickToCreate="true"
-      :dragToCreate="true"
-      :dragToMove="true"
-      :dragToResize="true"
-    >
-      <template #resourceHeader>
-        <div class="mbsc-flex mbsc-align-items-center mbsc-font mds-resource-filtering-search">
-          <label class="mbsc-flex-1-1">
-            <MbscInput
-              type="text"
-              id="demo-search-input"
-              autocomplete="off"
-              input-style="outline"
-              start-icon="material-search"
-              placeholder="Search..."
-              @input="handleSearch"
-            />
-          </label>
-          <MbscButton
-            ref="buttonRef"
-            start-icon="material-filter-list"
-            variant="outline"
-            @click="handleClick"
-          >
-            Filter
-          </MbscButton>
-        </div>
-      </template>
-
-      <template #resource="resource">
-        <div>
-          <div class="mds-resource-filtering-name">{{ resource.name }}</div>
-          <div v-if="resource.status" class="mds-resource-filtering-status">
-            <span
-              class="mds-resource-filtering-status-dot"
-              :style="{ backgroundColor: resource.status === 'on site' ? 'green' : 'orange' }"
-            ></span>
-            {{ resource.status }}
-          </div>
-        </div>
-      </template>
-    </MbscEventcalendar>
-
-    <MbscPopup
-      :contentPadding="false"
-      display="anchored"
-      :anchor="myAnchor"
-      width="400"
-      :buttons="[
-        'cancel',
-        {
-          text: 'Apply',
-          keyCode: 'enter',
-          handler: function () {
-            isSuccess = true
-            filterResources()
-            isPopupOpen = false
-          },
-          cssClass: 'mbsc-popup-button-primary'
-        }
-      ]"
-      @close="handlePopupClose"
-      :isOpen="isPopupOpen"
-    >
-      <div class="mbsc-form-group">
-        <div class="mbsc-form-group-title">Operational Status</div>
-        <div v-for="key in Object.keys(filters).slice(0, 2)" :key="key">
-          <MbscCheckbox
-            :label="filters[key].name"
-            :value="filters[key].value"
-            v-model="filters[key].value"
+  <MbscEventcalendar
+    cssClass="mds-resource-filtering-calendar"
+    :view="myView"
+    :data="myEvents"
+    :resources="filteredResources"
+    :clickToCreate="true"
+    :dragToCreate="true"
+    :dragToMove="true"
+    :dragToResize="true"
+  >
+    <template #resourceHeader>
+      <div class="mbsc-flex mbsc-align-items-center mbsc-font mds-resource-filtering-search">
+        <label class="mbsc-flex-1-1">
+          <MbscInput
+            type="text"
+            id="demo-search-input"
+            autocomplete="off"
+            input-style="outline"
+            start-icon="material-search"
+            placeholder="Search..."
+            v-model="searchQuery"
+            @input="handleSearch"
           />
+        </label>
+        <MbscButton
+          ref="buttonRef"
+          start-icon="material-filter-list"
+          variant="outline"
+          @click="openFilters"
+        >
+          Filter
+        </MbscButton>
+      </div>
+    </template>
+
+    <template #resource="resource">
+      <div>
+        <div class="mds-resource-filtering-name">{{ resource.name }}</div>
+        <div v-if="resource.status" class="mds-resource-filtering-status">
+          <span
+            class="mds-resource-filtering-status-dot"
+            :style="{ backgroundColor: resource.status === 'on site' ? 'green' : 'orange' }"
+          ></span>
+          {{ resource.status }}
         </div>
       </div>
+    </template>
 
-      <div class="mbsc-form-group">
-        <div class="mbsc-form-group-title">Job sites</div>
-        <div v-for="key in Object.keys(filters).slice(2)" :key="key">
-          <MbscCheckbox
-            :label="filters[key].name"
-            :value="filters[key].value"
-            v-model="filters[key].value"
-          />
+    <template #resourceEmpty>
+      <div class="mds-resource-filtering-empty mbsc-flex mbsc-align-items-center">
+        <div class="mbsc-flex-1-1">
+          <img src="https://i.ibb.co/2MMT3cQ/search.png" alt="Empty list" style="width: 100px" />
+          <p class="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">
+            No resources match your search.
+          </p>
+          <p class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">
+            Adjust your filters or try a different keyword.
+          </p>
+          <MbscButton @click="resetFilters" variant="outline">Reset Filters</MbscButton>
         </div>
       </div>
-    </MbscPopup>
-  </div>
+    </template>
+  </MbscEventcalendar>
+
+  <MbscPopup
+    :contentPadding="false"
+    display="anchored"
+    :anchor="myAnchor"
+    width="400"
+    :buttons="[
+      'cancel',
+      {
+        text: 'Apply',
+        keyCode: 'enter',
+        handler: applyFilters,
+        cssClass: 'mbsc-popup-button-primary'
+      }
+    ]"
+    @close="handlePopupClose"
+    :isOpen="isPopupOpen"
+  >
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Operational Status</div>
+      <div v-for="filter in myFilters.slice(0, 2)" :key="filter">
+        <MbscCheckbox
+          :key="filter.id"
+          :label="filter.name"
+          :value="filter.value"
+          v-model="tempFilters[filter.id]"
+          @change="handleCheckboxChange"
+        />
+      </div>
+    </div>
+
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Job sites</div>
+      <div v-for="filter in myFilters.slice(2)" :key="filter">
+        <MbscCheckbox
+          :key="filter.id"
+          :label="filter.name"
+          :value="filter.id"
+          v-model="tempFilters[filter.id]"
+          @change="handleCheckboxChange"
+        />
+      </div>
+    </div>
+  </MbscPopup>
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="() => (isToastOpen = false)" />
 </template>
 
 <style>
