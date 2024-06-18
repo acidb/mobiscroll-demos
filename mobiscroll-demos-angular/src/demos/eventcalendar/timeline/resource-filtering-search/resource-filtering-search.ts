@@ -15,7 +15,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-resource-filtering',
+  selector: 'app-resource-filtering-search',
   styleUrl: './resource-filtering-search.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-filtering-search.html',
@@ -566,44 +566,59 @@ export class AppComponent {
     },
   ];
 
+  myFilters: { id: string; name: string; value: boolean }[] = [
+    { id: 'on site', name: 'On site', value: true },
+    { id: 'in maintenance', name: 'In maintenance', value: true },
+  ];
+
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
   searchQuery: any = '';
-  filters: { [id: string]: { name: string; value: boolean } } = {};
-  initialFilters: { [id: string]: { name: string; value: boolean } } = {};
+
+  filters: { [key: string]: boolean } = {};
+  tempFilters: { [key: string]: boolean } = {};
   filteredResources = this.myResources;
   searchTimeout: any;
   isSuccess: boolean = true;
 
   constructor() {
-    this.filters['on site'] = { name: 'On site', value: true };
-    this.filters['in maintenance'] = { name: 'In maintenance', value: true };
-
     this.myResources.forEach((site) => {
-      this.filters[site.id] = { name: site.name, value: true };
+      this.myFilters.push({ id: site.id, name: site.name, value: true });
     });
+
+    this.filters = this.myFilters.reduce<{ [key: string]: boolean }>((map, filter) => {
+      map[filter.id] = true;
+      return map;
+    }, {});
   }
 
   handleSearch() {
-    console.log(this.filters);
     clearTimeout(this.searchTimeout);
     this.searchTimeout = setTimeout(() => {
-      this.filterResources();
+      this.filterResources(this.filters, this.searchQuery);
     }, 300);
   }
 
-  handleClick(event: MouseEvent) {
-    if (this.isSuccess) {
-      this.initialFilters = structuredClone(this.filters);
-      this.isSuccess = false;
-    } else {
-      this.filters = structuredClone(this.initialFilters);
-    }
+  openFilters(event: MouseEvent) {
+    this.tempFilters = { ...this.filters };
+    // ok
+    console.table(this.filters);
+    console.table(this.tempFilters);
     this.popupAnchor = event.target as HTMLElement;
     this.popup.open();
+    this.filterResources(this.tempFilters, this.searchQuery);
   }
 
-  filterResources() {
+  applyFilters() {
+    this.filters = { ...this.tempFilters };
+    this.filterResources(this.tempFilters, this.searchQuery);
+    this.popup.close();
+    console.error('Filters applied');
+  }
+
+  resetFitlers() {}
+
+  filterResources(currentFilters: { [key: string]: boolean }, currentQuery: string) {
     this.filteredResources = this.myResources
       .map((site) => ({
         id: site.id,
@@ -611,20 +626,25 @@ export class AppComponent {
         eventCreation: site.eventCreation,
         children: site.children.filter(
           (resource) =>
-            this.filters[resource.status].value &&
-            (!this.searchQuery || resource.name.toLowerCase().includes(this.searchQuery.toLowerCase())),
+            currentFilters[resource.status] && (!currentQuery || resource.name.toLowerCase().includes(currentQuery.toLowerCase())),
         ),
       }))
-      .filter((site) => site.children.length > 0 && this.filters[site.id].value);
+      .filter((site) => site.children.length > 0 && currentFilters[site.id]);
+  }
+
+  handleCheckboxChange(key: string) {
+    this.tempFilters[key] = !this.tempFilters[key];
+    this.tempFilters = { ...this.tempFilters };
   }
 
   popupButtons: Array<MbscPopupButton | 'cancel'> = [
     'cancel',
     {
       handler: () => {
-        this.isSuccess = true;
-        this.filterResources();
+        this.filters = { ...this.tempFilters };
+        this.filterResources(this.tempFilters, this.searchQuery);
         this.popup.close();
+        console.error('Filters applied');
       },
       keyCode: 'enter',
       text: 'Apply',

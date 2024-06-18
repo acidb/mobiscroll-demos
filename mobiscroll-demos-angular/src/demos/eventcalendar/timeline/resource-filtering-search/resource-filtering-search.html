@@ -26,7 +26,7 @@
       startIcon="material-filter-list"
       class="mbsc-button mbsc-flex-none"
       variant="outline"
-      (click)="handleClick($event)"
+      (click)="openFilters($event)"
     >
       Filter
     </mbsc-button>
@@ -49,15 +49,24 @@
 <mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" #popup>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Operational Status</div>
-    <div *ngFor="let resource of filters | keyvalue | slice:0:2">
-      <mbsc-checkbox class="mds-resource-filtering-checkbox" [label]="resource.value.name" [(ngModel)]="resource.value.value" />
+    <div *ngFor="let filter of myFilters.slice(0, 2)">
+      <mbsc-checkbox
+        class="mds-resource-filtering-checkbox"
+        [label]="filter.name"
+        [(ngModel)]="filters[filter.id]"
+        (change)="handleCheckboxChange(filter.id)"
+      />
     </div>
   </div>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Job sites</div>
-
-    <div *ngFor="let resource of filters | keyvalue | slice:2">
-      <mbsc-checkbox class="mds-resource-filtering-checkbox" [label]="resource.value.name" [(ngModel)]="resource.value.value" />
+    <div *ngFor="let filter of myFilters.slice(2)">
+      <mbsc-checkbox
+        class="mds-resource-filtering-checkbox"
+        [label]="filter.name"
+        [(ngModel)]="filters[filter.id]"
+        (change)="handleCheckboxChange(filter.id)"
+      />
     </div>
   </div>
 </mbsc-popup>
