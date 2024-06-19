@@ -5,6 +5,7 @@ import {
   MbscPopup,
   MbscPopupButton,
   MbscPopupOptions,
+  Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
@@ -19,6 +20,7 @@ setOptions({
   styleUrl: './resource-filtering-search.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-filtering-search.html',
+  providers: [Notifications],
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [
@@ -571,17 +573,7 @@ export class AppComponent {
     { id: 'in maintenance', name: 'In maintenance', value: true },
   ];
 
-  @ViewChild('popup', { static: false })
-  popup!: MbscPopup;
-  searchQuery: any = '';
-
-  filters: { [key: string]: boolean } = {};
-  tempFilters: { [key: string]: boolean } = {};
-  filteredResources = this.myResources;
-  searchTimeout: any;
-  isSuccess: boolean = true;
-
-  constructor() {
+  constructor(private notify: Notifications) {
     this.myResources.forEach((site) => {
       this.myFilters.push({ id: site.id, name: site.name, value: true });
     });
@@ -592,31 +584,13 @@ export class AppComponent {
     }, {});
   }
 
-  handleSearch() {
-    clearTimeout(this.searchTimeout);
-    this.searchTimeout = setTimeout(() => {
-      this.filterResources(this.filters, this.searchQuery);
-    }, 300);
-  }
-
-  openFilters(event: MouseEvent) {
-    this.tempFilters = { ...this.filters };
-    // ok
-    console.table(this.filters);
-    console.table(this.tempFilters);
-    this.popupAnchor = event.target as HTMLElement;
-    this.popup.open();
-    this.filterResources(this.tempFilters, this.searchQuery);
-  }
-
-  applyFilters() {
-    this.filters = { ...this.tempFilters };
-    this.filterResources(this.tempFilters, this.searchQuery);
-    this.popup.close();
-    console.error('Filters applied');
-  }
-
-  resetFitlers() {}
+  @ViewChild('popup', { static: false })
+  popup!: MbscPopup;
+  filteredResources = this.myResources;
+  searchQuery: any = '';
+  filters: { [key: string]: boolean } = {};
+  tempFilters: { [key: string]: boolean } = {};
+  searchTimeout: any;
 
   filterResources(currentFilters: { [key: string]: boolean }, currentQuery: string) {
     this.filteredResources = this.myResources
@@ -632,6 +606,42 @@ export class AppComponent {
       .filter((site) => site.children.length > 0 && currentFilters[site.id]);
   }
 
+  openFilters(event: MouseEvent) {
+    this.tempFilters = { ...this.filters };
+    this.popupAnchor = event.target as HTMLElement;
+    this.popup.open();
+    this.filterResources(this.tempFilters, this.searchQuery);
+  }
+
+  applyFilters() {
+    this.filters = { ...this.tempFilters };
+    this.filterResources(this.tempFilters, this.searchQuery);
+    this.popup.close();
+    this.notify.toast({
+      message: 'Filters applied',
+    });
+  }
+
+  resetFilters() {
+    const updatedFilters = this.myFilters.reduce<{ [key: string]: boolean }>((map, filter) => {
+      map[filter.id] = true;
+      return map;
+    }, {});
+    this.searchQuery = '';
+    this.filters = { ...updatedFilters };
+    this.filterResources(updatedFilters, '');
+    this.notify.toast({
+      message: 'Filters cleared',
+    });
+  }
+
+  handleSearch() {
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.filterResources(this.filters, this.searchQuery);
+    }, 300);
+  }
+
   handleCheckboxChange(key: string) {
     this.tempFilters[key] = !this.tempFilters[key];
     this.tempFilters = { ...this.tempFilters };
@@ -641,10 +651,7 @@ export class AppComponent {
     'cancel',
     {
       handler: () => {
-        this.filters = { ...this.tempFilters };
-        this.filterResources(this.tempFilters, this.searchQuery);
-        this.popup.close();
-        console.error('Filters applied');
+        this.applyFilters();
       },
       keyCode: 'enter',
       text: 'Apply',
