@@ -793,10 +793,6 @@ const resetFilters = () => {
   openToast('Filters cleared')
 }
 
-const handlePopupClose = () => {
-  isPopupOpen.value = false
-}
-
 const handleSearch = (ev) => {
   const query = ev.target.value
   searchQuery.value = query
@@ -807,7 +803,6 @@ const handleSearch = (ev) => {
 const handleCheckboxChange = (ev) => {
   const key = ev.target.value
   tempFilters.value[key] = !tempFilters.value[key]
-  tempFilters.value = { ...tempFilters.value }
 }
 </script>
 
@@ -890,7 +885,7 @@ const handleCheckboxChange = (ev) => {
         cssClass: 'mbsc-popup-button-primary'
       }
     ]"
-    @close="handlePopupClose"
+    @close="isPopupOpen = false"
     :isOpen="isPopupOpen"
   >
     <div class="mbsc-form-group">
@@ -919,7 +914,7 @@ const handleCheckboxChange = (ev) => {
       </div>
     </div>
   </MbscPopup>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="() => (isToastOpen = false)" />
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>
