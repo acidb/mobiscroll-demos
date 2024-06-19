@@ -587,10 +587,10 @@ export class AppComponent {
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
   filteredResources = this.myResources;
-  searchQuery: any = '';
+  searchQuery: string = '';
   filters: { [key: string]: boolean } = {};
   tempFilters: { [key: string]: boolean } = {};
-  searchTimeout: any;
+  searchTimeout: NodeJS.Timeout | undefined;
 
   filterResources(currentFilters: { [key: string]: boolean }, currentQuery: string) {
     this.filteredResources = this.myResources
@@ -647,18 +647,6 @@ export class AppComponent {
     this.tempFilters = { ...this.tempFilters };
   }
 
-  popupButtons: Array<MbscPopupButton | 'cancel'> = [
-    'cancel',
-    {
-      handler: () => {
-        this.applyFilters();
-      },
-      keyCode: 'enter',
-      text: 'Apply',
-      cssClass: 'mbsc-popup-button-primary',
-    },
-  ];
-
   calendarOptions: MbscEventcalendarOptions = {
     class: 'mds-resource-filtering-calendar',
     clickToCreate: true,
@@ -689,4 +677,16 @@ export class AppComponent {
     showOverlay: false,
     width: 400,
   };
+
+  popupButtons: Array<MbscPopupButton | 'cancel'> = [
+    'cancel',
+    {
+      handler: () => {
+        this.applyFilters();
+      },
+      keyCode: 'enter',
+      text: 'Apply',
+      cssClass: 'mbsc-popup-button-primary',
+    },
+  ];
 }
