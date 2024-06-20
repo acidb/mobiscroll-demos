@@ -20,7 +20,7 @@
       [(ngModel)]="searchQuery"
       (ngModelChange)="handleSearch()"
     />
-    <mbsc-button #buttonRef startIcon="material-filter-list" class="mbsc-flex-none" variant="outline" (click)="openFilters($event)">
+    <mbsc-button startIcon="material-filter-list" class="mbsc-flex-none" variant="outline" (click)="openFilters()" #filterButton>
       Filter
     </mbsc-button>
   </div>

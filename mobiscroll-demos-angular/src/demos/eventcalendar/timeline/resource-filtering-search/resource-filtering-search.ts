@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
@@ -1338,6 +1338,9 @@ export class AppComponent {
 
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
+
+  @ViewChild('filterButton') anchorElm!: ElementRef;
+  popupAnchor!: HTMLButtonElement;
   filteredResources: MbscResource[] = this.myResources;
   searchQuery: string = '';
   filters: { [key: string]: boolean } = {};
@@ -1359,9 +1362,9 @@ export class AppComponent {
       .filter((site) => site.children.length > 0 && currentFilters[site.id]);
   }
 
-  openFilters(event: MouseEvent) {
+  openFilters() {
+    this.popupAnchor = this.anchorElm.nativeElement;
     this.tempFilters = { ...this.filters };
-    this.popupAnchor = event.target as HTMLElement;
     this.popup.open();
     this.filterResources(this.tempFilters, this.searchQuery);
   }
@@ -1419,8 +1422,6 @@ export class AppComponent {
       },
     },
   };
-
-  popupAnchor: HTMLElement | undefined;
 
   popupOptions: MbscPopupOptions = {
     display: 'anchored',
