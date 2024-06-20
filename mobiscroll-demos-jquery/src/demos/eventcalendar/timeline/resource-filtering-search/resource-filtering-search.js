@@ -161,7 +161,6 @@ export default {
           title: 'Final Touches',
           resource: 'bulldozer - PA7475',
         },
-        /// +1
         {
           start: 'dyndatetime(y,m,d+1,5)',
           end: 'dyndatetime(y,m,d+1,19)',
@@ -312,7 +311,6 @@ export default {
           title: 'Final Touches',
           resource: 'bulldozer - PA7475',
         },
-        // +2
         {
           start: 'dyndatetime(y,m,d+2,5)',
           end: 'dyndatetime(y,m,d+2,19)',
@@ -750,6 +748,12 @@ export default {
                 });
                 filterResources();
                 popup.close();
+                mobiscroll.toast({
+                  //<hidden>
+                  // theme,//</hidden>
+                  // context,
+                  message: 'Filters applied',
+                });
               },
               cssClass: 'mbsc-popup-button-primary',
             },
@@ -773,7 +777,7 @@ export default {
           dragToMove: true,
           view: {
             timeline: {
-              type: 'month',
+              type: 'week',
               startTime: '05:00',
               endTime: '22:00',
               startDay: 1,
@@ -870,6 +874,12 @@ export default {
         });
 
         filterResources();
+        mobiscroll.toast({
+          //<hidden>
+          // theme,//</hidden>
+          // context,
+          message: 'Filters cleared',
+        });
       });
 
       // Set initial filters
