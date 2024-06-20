@@ -14,21 +14,13 @@
       type="text"
       startIcon="material-search"
       autocomplete="off"
-      id="demo-search-input"
       class="mbsc-input"
       inputStyle="outline"
       placeholder="Search..."
       [(ngModel)]="searchQuery"
       (ngModelChange)="handleSearch()"
     />
-    <mbsc-button
-      #buttonRef
-      id="demo-filter-button"
-      startIcon="material-filter-list"
-      class="mbsc-flex-none"
-      variant="outline"
-      (click)="openFilters($event)"
-    >
+    <mbsc-button #buttonRef startIcon="material-filter-list" class="mbsc-flex-none" variant="outline" (click)="openFilters($event)">
       Filter
     </mbsc-button>
   </div>
@@ -62,23 +54,13 @@
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Operational Status</div>
     <div *ngFor="let filter of myFilters.slice(0, 2)">
-      <mbsc-checkbox
-        class="mds-resource-filtering-checkbox"
-        [label]="filter.name"
-        [checked]="tempFilters[filter.id]"
-        (change)="handleCheckboxChange(filter.id)"
-      />
+      <mbsc-checkbox [label]="filter.name" [checked]="tempFilters[filter.id]" (change)="handleCheckboxChange(filter.id)" />
     </div>
   </div>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Job sites</div>
     <div *ngFor="let filter of myFilters.slice(2)">
-      <mbsc-checkbox
-        class="mds-resource-filtering-checkbox"
-        [label]="filter.name"
-        [checked]="tempFilters[filter.id]"
-        (change)="handleCheckboxChange(filter.id)"
-      />
+      <mbsc-checkbox [label]="filter.name" [checked]="tempFilters[filter.id]" (change)="handleCheckboxChange(filter.id)" />
     </div>
   </div>
 </mbsc-popup>

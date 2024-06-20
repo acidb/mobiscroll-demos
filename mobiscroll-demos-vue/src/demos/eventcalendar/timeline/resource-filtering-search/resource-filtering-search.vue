@@ -822,7 +822,6 @@ const handleCheckboxChange = (ev) => {
         <label class="mbsc-flex-1-1">
           <MbscInput
             type="text"
-            id="demo-search-input"
             autocomplete="off"
             input-style="outline"
             start-icon="material-search"

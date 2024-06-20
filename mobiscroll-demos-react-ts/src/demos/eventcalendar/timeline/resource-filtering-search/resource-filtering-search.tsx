@@ -11,7 +11,7 @@ import {
   setOptions,
   Toast,
 } from '@mobiscroll/react';
-import { ChangeEvent, RefObject, useCallback, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useMemo, useRef, useState } from 'react';
 
 import './resource-filtering-search.css';
 
@@ -473,7 +473,7 @@ const myEvents: MbscCalendarEvent[] = [
   },
 ];
 
-const myResources = [
+const myResources: MbscResource[] = [
   {
     id: 'site1',
     name: '123 Main St, Downtown City',
@@ -721,11 +721,11 @@ const myFilters = [
 ];
 
 myResources.forEach((site) => {
-  myFilters.push({ id: site.id, name: site.name, value: true });
+  myFilters.push({ id: site.id as string, name: site.name as string, value: true });
 });
 
 function App() {
-  const [filteredResources, setFilteredResources] = useState(myResources);
+  const [filteredResources, setFilteredResources] = useState<MbscResource[]>(myResources);
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [myAnchor, setAnchor] = useState<HTMLElement>();
@@ -742,8 +742,8 @@ function App() {
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastMsg, setToastMsg] = useState<string>('');
 
-  const buttonRef: RefObject<Button> = useRef(null);
-  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
+  const buttonRef = useRef<Button>(null);
+  const searchTimeout = useRef<ReturnType<typeof setTimeout>>();
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
@@ -768,9 +768,10 @@ function App() {
           id: site.id,
           name: site.name,
           eventCreation: site.eventCreation,
-          children: site.children.filter(
+          children: (site.children ?? []).filter(
             (resource) =>
-              currentFilters[resource.status] && (!currentQuery || resource.name.toLowerCase().includes(currentQuery.toLowerCase())),
+              currentFilters[resource.status] &&
+              (!currentQuery || (resource.name && resource.name.toLowerCase().includes(currentQuery.toLowerCase()))),
           ),
         }))
         .filter((site) => site.children.length > 0 && currentFilters[site.id]),

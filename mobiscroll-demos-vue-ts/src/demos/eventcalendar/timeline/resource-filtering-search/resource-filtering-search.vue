@@ -8,7 +8,7 @@ import {
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import type { MbscCalendarEvent } from '@mobiscroll/vue'
+import type { MbscCalendarEvent, MbscResource } from '@mobiscroll/vue'
 import { ref } from 'vue'
 
 setOptions({
@@ -469,7 +469,7 @@ const myEvents: MbscCalendarEvent[] = [
   }
 ]
 
-const myResources = [
+const myResources: MbscResource[] = [
   {
     id: 'site1',
     name: '123 Main St, Downtown City',
@@ -717,10 +717,10 @@ const myFilters = [
 ]
 
 myResources.forEach((site) => {
-  myFilters.push({ id: site.id, name: site.name, value: true })
+  myFilters.push({ id: site.id as string, name: site.name as string, value: true })
 })
 
-const filteredResources = ref(myResources)
+const filteredResources = ref<MbscResource[]>(myResources)
 const isPopupOpen = ref<boolean>(false)
 const searchQuery = ref<string>('')
 const myAnchor = ref<HTMLElement>()
@@ -737,8 +737,8 @@ const tempFilters = ref<{ [key: string]: boolean }>({})
 const isToastOpen = ref<boolean>(false)
 const toastMessage = ref<string>('')
 
-const buttonRef = ref()
-const searchTimeout = ref()
+const buttonRef = ref<typeof MbscButton>()
+const searchTimeout = ref<ReturnType<typeof setTimeout>>()
 
 const myView = {
   timeline: {
@@ -759,10 +759,11 @@ const filterResources = (currentFilters: { [key: string]: boolean }, currentQuer
       id: site.id,
       name: site.name,
       eventCreation: site.eventCreation,
-      children: site.children.filter(
+      children: (site.children ?? []).filter(
         (resource) =>
           currentFilters[resource.status] &&
-          (!currentQuery || resource.name.toLowerCase().includes(currentQuery.toLowerCase()))
+          (!currentQuery ||
+            (resource.name && resource.name.toLowerCase().includes(currentQuery.toLowerCase())))
       )
     }))
     .filter((site) => site.children.length > 0 && currentFilters[site.id])
@@ -799,15 +800,15 @@ const resetFilters = () => {
   openToast('Filters cleared')
 }
 
-const handleSearch = (ev: any) => {
-  const query = ev.target.value
+const handleSearch = (ev: Event) => {
+  const query = (ev.target as HTMLInputElement).value
   searchQuery.value = query
   clearTimeout(searchTimeout.value)
   searchTimeout.value = setTimeout(() => filterResources(filters.value, query), 300)
 }
 
-const handleCheckboxChange = (ev: any) => {
-  const key = ev.target.value
+const handleCheckboxChange = (ev: Event) => {
+  const key = (ev.target as HTMLInputElement).value
   tempFilters.value[key] = !tempFilters.value[key]
 }
 </script>
@@ -828,7 +829,6 @@ const handleCheckboxChange = (ev: any) => {
         <label class="mbsc-flex-1-1">
           <MbscInput
             type="text"
-            id="demo-search-input"
             autocomplete="off"
             input-style="outline"
             start-icon="material-search"
