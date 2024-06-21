@@ -922,10 +922,8 @@ export default {
       </label>
     </div>
     <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Job
-          sites</div>
-        <div id="demo-resource-list"></div>
-      </div>
+      <div class="mbsc-form-group-title">Job sites</div>
+      <div id="demo-resource-list"></div>
     </div>
   </div>
 </div>

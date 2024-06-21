@@ -828,7 +828,7 @@ export default {
       }
     });
 
-    calendarElm.addEventListener('click', function () {
+    calendarElm.addEventListener('click', function (event) {
       if (event.target.matches('#demo-filter-button')) {
         // Create resource checkbox list
         var checkboxes = '';
@@ -856,7 +856,7 @@ export default {
       }
     });
 
-    calendarElm.addEventListener('click', function () {
+    calendarElm.addEventListener('click', function (event) {
       if (event.target.matches('#demo-reset-filters')) {
         searchQuery = '';
 
@@ -913,10 +913,8 @@ export default {
       </label>
     </div>
     <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Job
-          sites</div>
-        <div id="demo-resource-list"></div>
-      </div>
+      <div class="mbsc-form-group-title">Job sites</div>
+      <div id="demo-resource-list"></div>
     </div>
   </div>
 </div>
