@@ -22,8 +22,8 @@ const myEvents = ref([
     color: '#35bb5a'
   }
 ])
-const toastMessage = ref('')
 const isToastOpen = ref(false)
+const toastMessage = ref('')
 const mySelectedDate = ref(now)
 
 const myView = {
@@ -52,17 +52,17 @@ function addEvent() {
   isToastOpen.value = true
 }
 
-function handleToastClose() {
+function handleCloseToast() {
   isToastOpen.value = false
 }
 </script>
 
 <template>
   <MbscPage>
-    <MbscEventcalendar :view="myView" :data="myEvents" :selectedDate="mySelectedDate" />
-    <div class="mbsc-button-group-block">
+    <div class="mbsc-flex-none">
       <MbscButton @click="addEvent()">Add event to calendar</MbscButton>
     </div>
-    <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+    <MbscEventcalendar :view="myView" :data="myEvents" :selectedDate="mySelectedDate" />
+    <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleCloseToast" />
   </MbscPage>
 </template>

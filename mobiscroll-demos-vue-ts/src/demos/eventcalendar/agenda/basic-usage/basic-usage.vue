@@ -14,8 +14,8 @@ setOptions({
 })
 
 const myEvents = ref<MbscCalendarEvent[]>([])
-const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
+const toastMessage = ref<string>('')
 
 const myView: MbscEventcalendarView = {
   agenda: { type: 'month' }
@@ -26,7 +26,7 @@ function handleEventClick(args: MbscEventClickEvent) {
   isToastOpen.value = true
 }
 
-function handleToastClose() {
+function handleCloseToast() {
   isToastOpen.value = false
 }
 
@@ -42,6 +42,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar :view="myView" :data="myEvents" @event-click="handleEventClick" />
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+  <MbscEventcalendar :data="myEvents" :view="myView" @event-click="handleEventClick" />
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleCloseToast" />
 </template>

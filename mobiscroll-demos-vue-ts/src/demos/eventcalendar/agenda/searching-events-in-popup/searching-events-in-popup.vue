@@ -19,6 +19,7 @@ import type {
   MbscPageLoadingEvent
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
+import './searching-events-in-popup.css'
 
 setOptions({
   // locale,
@@ -26,13 +27,14 @@ setOptions({
 })
 
 const calEvents = ref<MbscCalendarEvent[]>([])
-const listEvents = ref<MbscCalendarEvent[]>([])
-const mySelectedEvent = ref<MbscCalendarEvent[]>([])
 const isPopupOpen = ref<boolean>(false)
-const currentDate = ref<any>(new Date())
+const listEvents = ref<MbscCalendarEvent[]>([])
 const searchInput = ref<any>(null)
-const inputRef = ref<any>(null)
+const selectedDate = ref<any>(new Date())
+const selectedEvent = ref<MbscCalendarEvent[]>([])
+
 const timer = ref<any>(null)
+const inputRef = ref<any>(null)
 
 const calView: MbscEventcalendarView = {
   agenda: {
@@ -47,7 +49,7 @@ const listView: MbscEventcalendarView = {
   }
 }
 
-function handleSearch(ev: any) {
+function handleInputChange(ev: any) {
   const text = ev.target.value
 
   if (timer.value) {
@@ -71,6 +73,12 @@ function handleSearch(ev: any) {
   }, 200)
 }
 
+function handleInputFocus(ev: any) {
+  if (ev.target.value.length > 0) {
+    isPopupOpen.value = true
+  }
+}
+
 function handlePageLoading(args: MbscPageLoadingEvent) {
   const start = formatDate('YYYY-MM-DD', args.viewStart!)
   const end = formatDate('YYYY-MM-DD', args.viewEnd!)
@@ -86,10 +94,14 @@ function handlePageLoading(args: MbscPageLoadingEvent) {
   })
 }
 
-function handleInputFocus(ev: any) {
-  if (ev.target.value.length > 0) {
-    isPopupOpen.value = true
-  }
+function handlePopupClose() {
+  isPopupOpen.value = false
+}
+
+function handleEventClick(args: MbscEventClickEvent) {
+  selectedDate.value = args.event.start
+  selectedEvent.value = [args.event]
+  isPopupOpen.value = false
 }
 
 function handlePopupInit() {
@@ -97,42 +109,32 @@ function handlePopupInit() {
     searchInput.value = inputRef.value.instance.nativeElement
   })
 }
-
-function handlePopupClose() {
-  isPopupOpen.value = false
-}
-
-function handleEventClick(args: MbscEventClickEvent) {
-  currentDate.value = args.event.start
-  mySelectedEvent.value = [args.event]
-  isPopupOpen.value = false
-}
 </script>
 
 <template>
   <MbscPage>
     <MbscEventcalendar
-      className="md-search-events"
       :clickToCreate="false"
+      :data="calEvents"
       :dragToCreate="false"
       :dragToMove="false"
       :dragToResize="false"
       :selectMultipleEvents="true"
       :view="calView"
-      :data="calEvents"
-      :selectedEvents="mySelectedEvent"
-      :selectedDate="currentDate"
+      :selectedEvents="selectedEvent"
+      :selectedDate="selectedDate"
       @page-loading="handlePageLoading"
     >
       <template #header>
         <MbscCalendarNav />
-        <div class="md-seach-header-bar mbsc-flex-1-0">
+        <div className="mds-search-bar mbsc-flex-1-0">
           <MbscInput
-            ref="inputRef"
-            startIcon="material-search"
+            autocomplete="off"
             inputStyle="box"
             placeholder="Search events"
-            @input="handleSearch"
+            startIcon="material-search"
+            ref="inputRef"
+            @input="handleInputChange"
             @focus="handleInputFocus"
           />
         </div>
@@ -142,7 +144,7 @@ function handleEventClick(args: MbscEventClickEvent) {
       </template>
     </MbscEventcalendar>
     <MbscPopup
-      className="md-search-popup"
+      className="mds-search-popup"
       display="anchored"
       :showArrow="false"
       :showOverlay="false"
@@ -157,7 +159,7 @@ function handleEventClick(args: MbscEventClickEvent) {
       @close="handlePopupClose"
     >
       <MbscEventcalendar
-        className="mbsc-popover-list"
+        className="mds-search-results mbsc-popover-list"
         :view="listView"
         :data="listEvents"
         :showControls="false"
@@ -166,23 +168,3 @@ function handleEventClick(args: MbscEventClickEvent) {
     </MbscPopup>
   </MbscPage>
 </template>
-
-<style>
-.md-seach-header-bar .mbsc-textfield-wrapper.mbsc-form-control-wrapper {
-  width: 400px;
-  margin: 12px auto;
-}
-
-.md-search-popup .mbsc-popover-list {
-  width: 400px;
-}
-
-.md-search-popup .mbsc-event-list {
-  margin-top: -1px;
-  margin-bottom: -1px;
-}
-
-.md-search-events .mbsc-ios-dark.mbsc-textfield-box {
-  background: #313131;
-}
-</style>

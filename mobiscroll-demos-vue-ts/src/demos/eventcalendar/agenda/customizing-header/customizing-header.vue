@@ -17,10 +17,25 @@ setOptions({
   // theme
 })
 
+function changeView() {
+  switch (currentView.value) {
+    case 'calendar':
+      myView.value = {
+        calendar: { labels: true }
+      }
+      break
+    case 'agenda':
+      myView.value = {
+        agenda: { type: 'month' }
+      }
+      break
+  }
+}
+
 const myEvents = ref<MbscCalendarEvent[]>([])
 const currentDate = ref<any>(new Date())
-const view = ref<string>('agenda')
-const calView = ref<MbscEventcalendarView>({
+const currentView = ref<string>('agenda')
+const myView = ref<MbscEventcalendarView>({
   agenda: { type: 'month' }
 })
 
@@ -32,7 +47,7 @@ function getFirstDayOfWeek(d: Date, prev: boolean) {
 
 function navigatePage(prev: boolean) {
   const newCurrentDate = currentDate.value
-  if (view.value === 'calendar') {
+  if (currentView.value === 'calendar') {
     const prevNextPage = new Date(
       newCurrentDate.getFullYear(),
       newCurrentDate.getMonth() + (prev ? -1 : 1),
@@ -42,21 +57,6 @@ function navigatePage(prev: boolean) {
   } else {
     const prevNextSunday = getFirstDayOfWeek(newCurrentDate, prev)
     currentDate.value = prevNextSunday
-  }
-}
-
-function changeView() {
-  switch (view.value) {
-    case 'calendar':
-      calView.value = {
-        calendar: { labels: true }
-      }
-      break
-    case 'agenda':
-      calView.value = {
-        agenda: { type: 'month' }
-      }
-      break
   }
 }
 
@@ -72,33 +72,32 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar
-    :data="myEvents"
-    :view="calView"
-    :selectedDate="currentDate"
-    className="md-custom-header"
-  >
+  <MbscEventcalendar :data="myEvents" :view="myView" :selectedDate="currentDate">
     <template #header>
-      <MbscCalendarNav className="md-custom-header-nav"></MbscCalendarNav>
-      <div class="md-custom-header-controls">
+      <MbscCalendarNav className="mds-custom-header-nav"></MbscCalendarNav>
+      <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
         <MbscButton
           @click="navigatePage(true)"
           icon="material-arrow-back"
           variant="flat"
-          className="md-custom-header-button"
+          className="mds-custom-header-button"
         ></MbscButton>
-        <MbscCalendarToday className="md-custom-header-today"></MbscCalendarToday>
+        <MbscCalendarToday></MbscCalendarToday>
         <MbscButton
           @click="navigatePage(false)"
           icon="material-arrow-forward"
           variant="flat"
-          className="md-custom-header-button"
+          className="mds-custom-header-button"
         ></MbscButton>
       </div>
-      <div class="md-custom-header-view">
-        <MbscSegmentedGroup v-model="view" @change="changeView()">
-          <MbscSegmented value="agenda" v-model="view" icon="material-view-day"></MbscSegmented>
-          <MbscSegmented value="calendar" v-model="view" icon="calendar"></MbscSegmented>
+      <div class="mds-custom-header-switch">
+        <MbscSegmentedGroup v-model="currentView" @change="changeView()">
+          <MbscSegmented
+            value="agenda"
+            v-model="currentView"
+            icon="material-view-day"
+          ></MbscSegmented>
+          <MbscSegmented value="calendar" v-model="currentView" icon="calendar"></MbscSegmented>
         </MbscSegmentedGroup>
       </div>
     </template>
@@ -106,38 +105,29 @@ onMounted(() => {
 </template>
 
 <style>
-.md-custom-header-controls {
-  display: flex;
-  flex: 1 0 auto;
-  justify-content: center;
-  align-items: center;
-}
-
-.md-custom-header-nav,
-.md-custom-header-view {
+.mds-custom-header-nav {
   width: 180px;
 }
 
-.md-custom-header-button.mbsc-button {
+.mds-custom-header-button.mbsc-button {
   font-size: 20px;
   height: auto;
   padding: 0;
   margin: 0;
 }
 
-.md-custom-header .mbsc-segmented {
+.mds-custom-header-switch .mbsc-segmented {
   width: 110px;
-  float: right;
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.md-custom-header .mbsc-material.mbsc-segmented,
-.md-custom-header .mbsc-windows.mbsc-segmented {
+.mds-custom-header-switch .mbsc-segmented.mbsc-material,
+.mds-custom-header-switch .mbsc-segmented.mbsc-windows {
   padding: 0;
 }
 
-.md-custom-header .mbsc-segmented .mbsc-segmented-button {
+.mds-custom-header-switch .mbsc-segmented-button.mbsc-button {
   font-size: 20px;
   height: 32px;
   padding: 0;

@@ -91,9 +91,9 @@ function App() {
             ))}
           </SegmentedGroup>
         </div>
-        <CalendarPrev className="md-header-filter-prev" />
+        <CalendarPrev />
         <CalendarToday />
-        <CalendarNext className="md-header-filter-next" />
+        <CalendarNext />
       </>
     ),
     [handleChange, myResources, selectedResources],

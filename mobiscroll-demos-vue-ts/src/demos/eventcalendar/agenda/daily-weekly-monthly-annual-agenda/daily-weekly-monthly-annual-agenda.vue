@@ -44,19 +44,19 @@ onMounted(() => {
       <div class="mbsc-row">
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
-            <div class="mbsc-form-group-title">Daily schedule</div>
+            <div class="mbsc-form-group-title">Daily agenda</div>
             <MbscEventcalendar :view="dayView" :data="myEvents" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
-            <div class="mbsc-form-group-title">Weekly schedule</div>
+            <div class="mbsc-form-group-title">Weekly agenda</div>
             <MbscEventcalendar :view="weekView" :data="myEvents" />
           </div>
         </div>
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
-            <div class="mbsc-form-group-title">Monthly schedule</div>
+            <div class="mbsc-form-group-title">Monthly agenda</div>
             <MbscEventcalendar :view="monthView" :data="myEvents" />
           </div>
         </div>

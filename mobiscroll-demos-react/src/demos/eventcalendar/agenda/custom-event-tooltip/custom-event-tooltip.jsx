@@ -555,7 +555,7 @@ function App() {
         isOpen={isTooltipOpen}
         showOverlay={false}
         touchUi={false}
-        width={350}
+        width={380}
       >
         <div className="mds-tooltip" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <div className="mds-tooltip-header" style={{ backgroundColor: tooltipColor }}>

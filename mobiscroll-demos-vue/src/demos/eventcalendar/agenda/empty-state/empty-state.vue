@@ -12,6 +12,8 @@ setOptions({
   // theme
 })
 
+const isToastOpen = ref(false)
+
 const myEvents = [
   {
     title: 'Zumba Class',
@@ -34,8 +36,6 @@ const myEvents = [
     end: '2023-11-03T22:00'
   }
 ]
-
-const isToastOpen = ref(false)
 
 const myView = {
   calendar: { type: 'week' },

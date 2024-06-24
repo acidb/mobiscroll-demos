@@ -248,111 +248,115 @@ const appointments = ref<MbscCalendarEvent[]>([
   }
 ])
 
+const appointment = ref<MbscCalendarEvent>()
+const appointmentInfo = ref<string>()
+const appointmentLocation = ref<string>()
+const appointmentReason = ref<string>()
+const appointmentStatus = ref<string>()
+const appointmentTime = ref<any>()
+const buttonText = ref<string>()
+const buttonType = ref<string>()
+const isTooltipOpen = ref<boolean>(false)
+const isToastOpen = ref<boolean>(false)
+const toastMessage = ref<string>('')
+const tooltipAnchor = ref<any>()
+const tooltipColor = ref<string>()
+const timer = ref<any>()
+
 const myView = ref<MbscEventcalendarView>({
   agenda: {
     type: 'week'
   }
 })
 
-const toastMessage = ref<string>('')
-const isToastOpen = ref<boolean>(false)
-const tooltipOpen = ref<boolean>(false)
-const currentEvent = ref<MbscCalendarEvent>()
-const status = ref<string>()
-const buttonText = ref<string>()
-const buttonType = ref<string>()
-const bgColor = ref<string>()
-const info = ref<string>()
-const time = ref<any>()
-const reason = ref<string>()
-const location = ref<string>()
-const myAnchor = ref<any>()
-const timer = ref<any>()
-
-function mouseEnter() {
-  if (timer.value) {
-    clearTimeout(timer.value)
-    timer.value = null
-  }
-}
-
-function mouseLeave() {
-  timer.value = setTimeout(() => {
-    tooltipOpen.value = false
-  }, 200)
-}
-
-function setStatus() {
-  const index = appointments.value.findIndex((item) => item.id === currentEvent.value!.id)
-  appointments.value[index].confirmed = !appointments.value[index].confirmed
-  tooltipOpen.value = false
-  toastMessage.value = 'Appointment ' + (currentEvent.value!.confirmed ? 'confirmed' : 'canceled')
-  isToastOpen.value = true
-}
-
-function viewFile() {
-  tooltipOpen.value = false
-  toastMessage.value = 'View file'
-  isToastOpen.value = true
-}
-
-function deleteApp() {
-  appointments.value = appointments.value.filter((item) => item.id !== currentEvent.value!.id)
-  tooltipOpen.value = false
-  toastMessage.value = 'Appointment deleted'
-  isToastOpen.value = true
-}
-
-function handleTooltipClose() {
-  tooltipOpen.value = false
-}
-
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
-function handleEventHoverIn(args: MbscEventClickEvent) {
+function openTooltip(args: MbscEventClickEvent) {
   const event: any = args.event
   const newTime =
     formatDate('hh:mm A', new Date(event.start)) +
     ' - ' +
     formatDate('hh:mm A', new Date(event.end))
 
-  currentEvent.value = event
+  appointment.value = event
 
   if (event.confirmed) {
-    status.value = 'Confirmed'
+    appointmentStatus.value = 'Confirmed'
     buttonText.value = 'Cancel appointment'
     buttonType.value = 'warning'
   } else {
-    status.value = 'Canceled'
+    appointmentStatus.value = 'Canceled'
     buttonText.value = 'Confirm appointment'
     buttonType.value = 'success'
   }
 
-  bgColor.value = event.color
-  info.value = event.title + ', Age: ' + event.age
-  time.value = newTime
-  reason.value = event.reason
-  location.value = event.location
+  tooltipColor.value = event.color
+  appointmentInfo.value = event.title + ', Age: ' + event.age
+  appointmentTime.value = newTime
+  appointmentReason.value = event.reason
+  appointmentLocation.value = event.location
 
   clearTimeout(timer.value)
   timer.value = null
 
-  myAnchor.value = args.domEvent.target
-  tooltipOpen.value = true
+  tooltipAnchor.value = args.domEvent.target
+  isTooltipOpen.value = true
+}
+
+function handleEventHoverIn(args: MbscEventClickEvent) {
+  openTooltip(args)
 }
 
 function handleEventHoverout() {
   if (!timer.value) {
     timer.value = setTimeout(() => {
-      tooltipOpen.value = false
+      isTooltipOpen.value = false
     }, 200)
   }
 }
 
 function handleEventClick() {
-  tooltipOpen.value = true
+  isTooltipOpen.value = true
+}
+
+function handleMouseEnter() {
+  if (timer.value) {
+    clearTimeout(timer.value)
+    timer.value = null
+  }
+}
+
+function handleMouseLeave() {
+  timer.value = setTimeout(() => {
+    isTooltipOpen.value = false
+  }, 200)
+}
+
+function handleToastClose() {
+  isToastOpen.value = false
+}
+
+function updateAppointmentStatus() {
+  const index = appointments.value.findIndex((item) => item.id === appointment.value!.id)
+  appointments.value[index].confirmed = !appointments.value[index].confirmed
+  isTooltipOpen.value = false
+  toastMessage.value = 'Appointment ' + (appointment.value!.confirmed ? 'confirmed' : 'canceled')
+  isToastOpen.value = true
+}
+
+function viewAppointmentFile() {
+  isTooltipOpen.value = false
+  toastMessage.value = 'View file'
+  isToastOpen.value = true
+}
+
+function deleteAppointment() {
+  appointments.value = appointments.value.filter((item) => item.id !== appointment.value!.id)
+  isTooltipOpen.value = false
+  toastMessage.value = 'Appointment deleted'
+  isToastOpen.value = true
+}
+
+function handleTooltipClose() {
+  isTooltipOpen.value = false
 }
 </script>
 
@@ -368,48 +372,48 @@ function handleEventClick() {
     @event-click-in="handleEventClick"
   />
   <MbscPopup
-    className="md-tooltip"
+    className="mds-tooltip"
     display="anchored"
-    :anchor="myAnchor"
+    :anchor="tooltipAnchor"
     :touchUi="false"
     :showOverlay="false"
     :contentPadding="false"
     :closeOnOverlayClick="false"
-    :width="350"
-    :isOpen="tooltipOpen"
+    :width="380"
+    :isOpen="isTooltipOpen"
     @close="handleTooltipClose"
   >
-    <div @mouseenter="mouseEnter()" @mouseleave="mouseLeave()">
-      <div class="md-tooltip-header" :style="{ background: bgColor }">
-        <span class="md-tooltip-name-age">{{ info }}</span>
-        <span class="md-tooltip-time">{{ time }}</span>
+    <div @mouseenter="handleMouseEnter()" @mouseleave="handleMouseLeave()">
+      <div class="mds-tooltip-header" :style="{ background: tooltipColor }">
+        <span>{{ appointmentInfo }}</span>
+        <span class="mbsc-pull-right">{{ appointmentTime }}</span>
       </div>
-      <div class="md-tooltip-info">
+      <div class="mbsc-padding">
         <div class="md-tooltip-title">
-          Status: <span class="md-tooltip-status md-tooltip-text">{{ status }}</span>
+          Status: <span class="mds-tooltip-label mbsc-margin">{{ appointmentStatus }}</span>
           <MbscButton
             :color="buttonType"
             variant="outline"
-            className="md-tooltip-status-button"
-            @click="setStatus()"
+            className="mds-tooltip-button mbsc-pull-right"
+            @click="updateAppointmentStatus()"
           >
             {{ buttonText }}
           </MbscButton>
         </div>
-        <div class="md-tooltip-title">
-          Reason for visit: <span class="md-tooltip-reason md-tooltip-text">{{ reason }}</span>
+        <div class="mds-tooltip-label mbsc-margin">
+          Reason for visit: <span class="mbsc-light">{{ appointmentReason }}</span>
         </div>
-        <div class="md-tooltip-title">
-          Location: <span class="md-tooltip-location md-tooltip-text">{{ location }}</span>
+        <div class="mds-tooltip-label mbsc-margin">
+          Location: <span class="mbsc-light">{{ appointmentLocation }}</span>
         </div>
-        <MbscButton color="secondary" className="md-tooltip-view-button" @click="viewFile()">
+        <MbscButton color="secondary" className="mds-tooltip-button" @click="viewAppointmentFile()">
           View patient file
         </MbscButton>
         <MbscButton
           color="danger"
           variant="outline"
-          className="md-tooltip-delete-button"
-          @click="deleteApp()"
+          className="mds-tooltip-button mbsc-pull-right"
+          @click="deleteAppointment()"
         >
           Delete appointment
         </MbscButton>
@@ -420,57 +424,26 @@ function handleEventClick() {
 </template>
 
 <style>
-.md-tooltip .mbsc-popup-content {
-  padding: 0;
-}
-
-.md-tooltip {
+.mds-tooltip {
   font-size: 15px;
   font-weight: 600;
 }
 
-.md-tooltip-header {
+.mds-tooltip-header {
   padding: 12px 16px;
   color: #eee;
 }
 
-.md-tooltip-info {
-  padding: 16px 16px 60px 16px;
-  position: relative;
+.mds-tooltip-label {
   line-height: 32px;
 }
 
-.md-tooltip-time,
-.md-tooltip-status-button {
-  float: right;
-}
-
-.md-tooltip-title {
-  margin-bottom: 15px;
-}
-
-.md-tooltip-text {
-  font-weight: 300;
-}
-
-.md-tooltip-info .mbsc-button {
+.mds-tooltip-button.mbsc-button {
   font-size: 14px;
   margin: 0;
 }
 
-.md-tooltip-info .mbsc-button.mbsc-material {
+.mds-tooltip-button.mbsc-material {
   font-size: 12px;
-}
-
-.md-tooltip-view-button {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-}
-
-.md-tooltip-delete-button {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
 }
 </style>

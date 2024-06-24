@@ -28,7 +28,6 @@ const selectedDate = ref(new Date())
 const selectedEvent = ref([])
 
 const timer = ref(null)
-
 const inputRef = ref(null)
 
 const calView = { agenda: { type: 'month' } }

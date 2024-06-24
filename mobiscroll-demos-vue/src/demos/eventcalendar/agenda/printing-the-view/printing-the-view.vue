@@ -30,7 +30,7 @@ function printView() {
 
 onMounted(() => {
   getJson(
-    'https://trial.mobiscroll.com/work-events/',
+    'https://trial.mobiscroll.com/events/?vers=5',
     (events) => {
       myEvents.value = events
     },
@@ -46,7 +46,7 @@ onMounted(() => {
         <MbscButton @click="printView()" startIcon="print"> Print agenda </MbscButton>
       </div>
       <div className="mds-overflow-hidden mbsc-flex-1-1">
-        <MbscEventcalendar ref="inst" :data="myEvents" :view="myView" :modules="[print]" />
+        <MbscEventcalendar :data="myEvents" :modules="[print]" ref="inst" :view="myView" />
       </div>
     </div>
   </MbscPage>

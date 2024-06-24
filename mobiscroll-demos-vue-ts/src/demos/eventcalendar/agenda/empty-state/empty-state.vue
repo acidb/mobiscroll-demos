@@ -13,6 +13,8 @@ setOptions({
   // theme
 })
 
+const isToastOpen = ref(false)
+
 const myEvents: MbscCalendarEvent[] = [
   {
     title: 'Zumba Class',
@@ -35,8 +37,6 @@ const myEvents: MbscCalendarEvent[] = [
     end: '2023-11-03T22:00'
   }
 ]
-
-const isToastOpen = ref(false)
 
 const myView: MbscEventcalendarView = {
   calendar: { type: 'week' },

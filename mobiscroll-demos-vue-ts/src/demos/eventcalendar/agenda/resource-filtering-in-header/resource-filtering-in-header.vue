@@ -20,11 +20,18 @@ setOptions({
   // theme
 })
 
-const myEvents = ref<MbscCalendarEvent[]>([])
 const filteredEvents = ref<MbscCalendarEvent[]>([])
-const selected = ref<string[]>(['1'])
-const toastMessage = ref<string>('')
+const myEvents = ref<MbscCalendarEvent[]>([])
+const selectedResources = ref<string[]>(['1'])
 const isToastOpen = ref<boolean>(false)
+const toastMessage = ref<string>('')
+
+const myView: MbscEventcalendarView = {
+  agenda: {
+    type: 'month'
+  }
+}
+
 const myResources: MbscResource[] = [
   {
     id: '1',
@@ -49,36 +56,30 @@ const myResources: MbscResource[] = [
   }
 ]
 
-const myView: MbscEventcalendarView = {
-  agenda: {
-    type: 'month'
-  }
-}
-
 function handleToastClose() {
   isToastOpen.value = false
+}
+
+function handleChange(ev: any) {
+  const value = ev.target.value
+  const checked = ev.target.checked
+  const name = document.querySelector('.mds-header-filter-name-' + value)
+
+  filterEvents()
+  toastMessage.value =
+    (checked ? 'Showing ' : 'Hiding ') + (name ? name.textContent : '') + ' events'
+  isToastOpen.value = true
 }
 
 function filterEvents() {
   const evs = []
   for (const value of myEvents.value) {
     const item = value
-    if (selected.value.indexOf('' + item.resource) > -1) {
+    if (selectedResources.value.indexOf('' + item.resource) > -1) {
       evs.push(item)
     }
   }
   filteredEvents.value = evs
-}
-
-function filter(ev: any) {
-  const value = ev.target.value
-  const checked = ev.target.checked
-  const name = document.querySelector('.md-header-filter-name-' + value)
-
-  filterEvents()
-  toastMessage.value =
-    (checked ? 'Showing ' : 'Hiding ') + (name ? name.textContent : '') + ' events'
-  isToastOpen.value = true
 }
 
 onMounted(() => {
@@ -95,75 +96,75 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar
-    cssClass="md-custom-header-filtering"
+    cssClass="mds-custom-header-filtering"
     :view="myView"
     :data="filteredEvents"
     :resources="myResources"
   >
     <template #header>
-      <MbscCalendarNav class="md-header-filter-nav" />
-      <div class="md-header-filter-controls">
-        <MbscSegmentedGroup select="multiple" v-model="selected" @change="filter">
+      <MbscCalendarNav class="mds-header-filter-nav" />
+      <div class="mds-header-filter-controls">
+        <MbscSegmentedGroup select="multiple" v-model="selectedResources" @change="handleChange">
           <MbscSegmented v-for="res in myResources" :value="res.id" :key="res.id">
-            <img class="md-header-filter-img" :src="res.img" />
-            <span :class="'md-header-filter-name md-header-filter-name-' + res.id">
+            <img class="mds-header-filter-img" :src="res.img" />
+            <span :class="'mds-header-filter-name mds-header-filter-name-' + res.id">
               {{ res.name }}
             </span>
           </MbscSegmented>
         </MbscSegmentedGroup>
       </div>
-      <MbscCalendarPrev className="md-header-filter-prev" />
-      <MbscCalendarToday className="md-header-filter-today" />
-      <MbscCalendarNext className="md-header-filter-next" />
+      <MbscCalendarPrev />
+      <MbscCalendarToday />
+      <MbscCalendarNext />
     </template>
   </MbscEventcalendar>
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>
 
 <style>
-.md-header-filter-controls {
+.mds-header-filter-controls {
   flex: 1 0 auto;
   display: flex;
   justify-content: center;
 }
 
-.md-custom-header-filtering .mbsc-segmented {
+.mds-custom-header-filtering .mbsc-segmented {
   max-width: 400px;
   margin: 0 auto;
   flex: 1 0 auto;
 }
 
-.md-header-filter-img {
+.mds-header-filter-img {
   width: 25px;
 }
 
-.md-header-filter-name {
+.mds-header-filter-name {
   margin-left: 10px;
 }
 
-.md-header-filter-nav {
+.mds-header-filter-nav {
   width: 200px;
 }
 
-.md-header-filter-controls .mbsc-segmented-button.mbsc-selected {
+.mds-header-filter-controls .mbsc-segmented-button.mbsc-selected {
   color: #fff;
 }
 
-.md-custom-header-filtering .mbsc-segmented-item:first-child .mbsc-selected.mbsc-material,
-.md-custom-header-filtering .mbsc-segmented-item:first-child .mbsc-selected.mbsc-windows,
-.md-custom-header-filtering .mbsc-segmented-item:first-child .mbsc-segmented-selectbox-inner {
+.mds-custom-header-filtering .mbsc-segmented-item:first-child .mbsc-selected.mbsc-material,
+.mds-custom-header-filtering .mbsc-segmented-item:first-child .mbsc-selected.mbsc-windows,
+.mds-custom-header-filtering .mbsc-segmented-item:first-child .mbsc-segmented-selectbox-inner {
   background: #328e39;
 }
 
-.md-custom-header-filtering .mbsc-segmented-item:nth-child(2) .mbsc-selected.mbsc-material,
-.md-custom-header-filtering .mbsc-segmented-item:nth-child(2) .mbsc-selected.mbsc-windows,
-.md-custom-header-filtering .mbsc-segmented-item:nth-child(2) .mbsc-segmented-selectbox-inner {
+.mds-custom-header-filtering .mbsc-segmented-item:nth-child(2) .mbsc-selected.mbsc-material,
+.mds-custom-header-filtering .mbsc-segmented-item:nth-child(2) .mbsc-selected.mbsc-windows,
+.mds-custom-header-filtering .mbsc-segmented-item:nth-child(2) .mbsc-segmented-selectbox-inner {
   background: #00aabb;
 }
 
-.md-custom-header-filtering .mbsc-segmented-item:nth-child(3) .mbsc-selected.mbsc-material,
-.md-custom-header-filtering .mbsc-segmented-item:nth-child(3) .mbsc-selected.mbsc-windows,
-.md-custom-header-filtering .mbsc-segmented-item:nth-child(3) .mbsc-segmented-selectbox-inner {
+.mds-custom-header-filtering .mbsc-segmented-item:nth-child(3) .mbsc-selected.mbsc-material,
+.mds-custom-header-filtering .mbsc-segmented-item:nth-child(3) .mbsc-selected.mbsc-windows,
+.mds-custom-header-filtering .mbsc-segmented-item:nth-child(3) .mbsc-segmented-selectbox-inner {
   background: #ea72c0;
 }
 </style>

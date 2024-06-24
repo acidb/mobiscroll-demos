@@ -7,7 +7,7 @@ import {
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
-import './event-content-customization.css';
+import './event-content-customization.css'
 
 setOptions({
   // locale,
