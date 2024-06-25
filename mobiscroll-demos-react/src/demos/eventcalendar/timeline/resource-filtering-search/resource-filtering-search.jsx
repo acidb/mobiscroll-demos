@@ -1442,7 +1442,7 @@ function App() {
     () => (
       <div className="mds-resource-filtering-empty mbsc-flex mbsc-align-items-center">
         <div className="mbsc-flex-1-1">
-          <img src="https://i.ibb.co/2MMT3cQ/search.png" alt="Empty list" style={{ width: '100px' }} />
+          <img src="https://img.mobiscroll.com/demos/filter-no-result.png" alt="Empty list" style={{ width: '100px' }} />
           <p className="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>
           <p className="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>
           <Button mbsc-button="true" variant="outline" onClick={resetFilters}>
