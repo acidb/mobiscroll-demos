@@ -9,7 +9,7 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useEffect, useState } from 'react';
-import './customizing-header.css';
+import './customizing-calendar-header.css';
 
 setOptions({
   // localeJs,

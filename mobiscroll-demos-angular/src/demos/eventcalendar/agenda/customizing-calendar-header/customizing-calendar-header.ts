@@ -8,10 +8,10 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-agenda-customizing-header',
-  styleUrl: './customizing-header.css',
+  selector: 'app-agenda-customizing-calendar-header',
+  styleUrl: './customizing-calendar-header.css',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './customizing-header.html',
+  templateUrl: './customizing-calendar-header.html',
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
