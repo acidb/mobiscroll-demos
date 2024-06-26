@@ -10,7 +10,9 @@ export default {
     });
 
     $(function () {
-      $('#demo-show-empty-days')
+      var agenda;
+
+      agenda = $('#demo-show-empty-days')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -18,12 +20,38 @@ export default {
               type: 'month',
             },
           },
+        })
+        .mobiscroll('getInst');
+
+      $('#showEmptyDays').on('change', function () {
+        agenda.setOptions({
+          view: {
+            agenda: {
+              type: 'month',
+              showEmptyDays: $(this).prop('checked'),
+            },
+          },
         });
+      });
+
+      $.getJSON(
+        'https://trial.mobiscroll.com/events-new/?vers=5&callback=?',
+        function (events) {
+          agenda.setEvents(events);
+        },
+        'jsonp',
+      );
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
+   <label>
+    <input id="showEmptyDays" mbsc-switch data-label="Show empty days" type="checkbox" />
+   </label>
+
 <div id="demo-show-empty-days"></div>
+
+
 `,
   css: ``,
 };
