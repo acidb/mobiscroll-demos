@@ -15,6 +15,7 @@ export default {
       agenda = $('#demo-show-empty-days')
         .mobiscroll()
         .eventcalendar({
+          class: 'mds-custom-day-header-agenda',
           view: {
             agenda: {
               type: 'month',
@@ -22,13 +23,14 @@ export default {
             },
           },
           renderDay: function (events, date) {
+            // data-day=date passing ?! passed only the day from the date string
             return (
-              '<div class="mbsc-flex">' +
+              '<div class="mbsc-flex mds-custom-header-cont">' +
               '<div class="mbsc-flex mbsc-align-items-center">' +
               date +
               '</div>' +
               '<div>' +
-              '<button class="add" mbsc-button data-icon="plus" data-date=' +
+              '<button class="add" mbsc-button data-icon="plus" data-variant="outline" data-day=' +
               date +
               '></button>' +
               '</div>' +
@@ -41,9 +43,9 @@ export default {
       $('#demo-show-empty-days').on('click', '.add', function () {
         var currentYear = new Date().getFullYear();
         var currentMonth = new Date().getMonth();
-        var day = $(this).data('date');
-        console.log('day:', day);
+        var day = $(this).data('day');
 
+        // some counter ?! Event 1.. Event 2..
         var newEvent = {
           title: 'Event',
           start: new Date(currentYear, currentMonth, day),
@@ -51,7 +53,7 @@ export default {
         };
 
         agenda.addEvent(newEvent);
-        // agenda.navigateToEvent(newEvent);
+        agenda.navigateToEvent(newEvent);
 
         mobiscroll.toast({
           //<hidden>
@@ -76,6 +78,12 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+    .mds-custom-day-header-agenda .mbsc-event-day-header {
+      width: 100%;
+    }
 
+    .mds-custom-header-cont {
+      justify-content: space-between;
+    }
   `,
 };

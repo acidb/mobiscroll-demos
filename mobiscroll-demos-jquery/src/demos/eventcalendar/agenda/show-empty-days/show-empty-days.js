@@ -15,6 +15,7 @@ export default {
       agenda = $('#demo-show-empty-days')
         .mobiscroll()
         .eventcalendar({
+          class: 'mds-empty-days-agenda',
           view: {
             agenda: {
               type: 'month',
@@ -23,6 +24,7 @@ export default {
         })
         .mobiscroll('getInst');
 
+      // the "Show empty days" button and this logic where should be ?!
       $('#showEmptyDays').on('change', function () {
         agenda.setOptions({
           view: {
@@ -53,5 +55,6 @@ export default {
 
 
 `,
+  // eslint-disable-next-line es5/no-template-literals
   css: ``,
 };
