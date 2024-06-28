@@ -29,13 +29,9 @@ export default {
               '<div class="mbsc-flex mbsc-align-items-center">' +
               mobiscroll.formatDate('D MMM YYYY', date) +
               '</div>' +
-              '<div>' +
               '<button class="add" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
               mobiscroll.formatDate('YYYY-MM-DD', date) +
-              // '" data-sum="' +
-              // (events.length + 1) +
               '"></button>' +
-              '</div>' +
               '</div>'
             );
           },
@@ -44,9 +40,7 @@ export default {
 
       $('#demo-show-empty-days').on('click', '.add', function () {
         var newEvent = {
-          // title: 'Event ' + $(this).data('sum'),
           title: 'Event',
-
           start: new Date($(this).data('date')),
           allDay: true,
         };
@@ -78,7 +72,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
     .mds-custom-header-cont {
-    width: 100%;
+      width: 100%;
       justify-content: space-between;
     }
   `,

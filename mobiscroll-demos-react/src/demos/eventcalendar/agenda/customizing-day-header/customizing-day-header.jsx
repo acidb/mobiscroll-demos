@@ -1,5 +1,5 @@
-import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useEffect, useMemo, useState } from 'react';
+import { Button, Eventcalendar, formatDate, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import './customizing-day-header.css';
 
 setOptions({
@@ -12,11 +12,36 @@ function App() {
 
   const myView = useMemo(
     () => ({
-      timeline: {
-        type: 'week',
+      agenda: {
+        type: 'month',
+        showEmptyDays: true,
       },
     }),
     [],
+  );
+
+  const addEvent = useCallback(
+    (date) => {
+      const newEvent = {
+        title: 'Event',
+        start: date,
+      };
+
+      setEvents([...myEvents, newEvent]);
+    },
+    [myEvents],
+  );
+
+  const renderCustomDay = useCallback(
+    (events, date) => (
+      <div className="mbsc-flex mds-custom-header-cont">
+        <div className="mbsc-flex mbsc-align-items-center">
+          <div className="md-date-header-day-name">{formatDate('D MMM YYYY', date)}</div>
+        </div>
+        <Button variant="outline" icon="plus" onClick={() => addEvent(date)}></Button>
+      </div>
+    ),
+    [addEvent],
   );
 
   useEffect(() => {
@@ -29,13 +54,7 @@ function App() {
     );
   }, []);
 
-  return (
-    <Eventcalendar
-      // drag
-      view={myView}
-      data={myEvents}
-    />
-  );
+  return <Eventcalendar view={myView} data={myEvents} renderDay={renderCustomDay} />;
 }
 
 export default App;
