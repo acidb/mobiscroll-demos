@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/jquery';
+// import { formatDate } from '@mobiscroll/jquery/dist/src/core/util/datetime.js';
 import $ from 'jquery';
 
 export default {
@@ -23,16 +24,17 @@ export default {
             },
           },
           renderDay: function (events, date) {
-            // data-day=date passing ?! passed only the day from the date string
             return (
               '<div class="mbsc-flex mds-custom-header-cont">' +
               '<div class="mbsc-flex mbsc-align-items-center">' +
-              date +
+              mobiscroll.formatDate('D MMM YYYY', date) +
               '</div>' +
               '<div>' +
-              '<button class="add" mbsc-button data-icon="plus" data-variant="outline" data-day=' +
-              date +
-              '></button>' +
+              '<button class="add" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
+              mobiscroll.formatDate('YYYY-MM-DD', date) +
+              // '" data-sum="' +
+              // (events.length + 1) +
+              '"></button>' +
               '</div>' +
               '</div>'
             );
@@ -41,14 +43,11 @@ export default {
         .mobiscroll('getInst');
 
       $('#demo-show-empty-days').on('click', '.add', function () {
-        var currentYear = new Date().getFullYear();
-        var currentMonth = new Date().getMonth();
-        var day = $(this).data('day');
-
-        // some counter ?! Event 1.. Event 2..
         var newEvent = {
+          // title: 'Event ' + $(this).data('sum'),
           title: 'Event',
-          start: new Date(currentYear, currentMonth, day),
+
+          start: new Date($(this).data('date')),
           allDay: true,
         };
 
@@ -78,11 +77,8 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-    .mds-custom-day-header-agenda .mbsc-event-day-header {
-      width: 100%;
-    }
-
     .mds-custom-header-cont {
+    width: 100%;
       justify-content: space-between;
     }
   `,
