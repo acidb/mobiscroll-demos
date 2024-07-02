@@ -1,6 +1,7 @@
 import {
   Eventcalendar,
   MbscCalendarEvent,
+  MbscCalendarEventData,
   MbscEventcalendarView,
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
@@ -54,7 +55,7 @@ const blockedOutTimes: MyBlockedTimes[] = [
 ];
 
 const App: FC = () => {
-  const timelineInst = useRef<Eventcalendar>();
+  const timelineInst = useRef<Eventcalendar>(null);
   const [myInvalids, setInvalid] = useState(blockedOutTimes);
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -1644,21 +1645,23 @@ const App: FC = () => {
     [],
   );
 
-  const myDefaultEvent = useCallback((args: MbscNewEventData) => {
-    if (timelineInst.current) {
-      const events = timelineInst.current.getEvents(args.start, new Date(+args.start + 3600000)).filter(function (e) {
-        return e.resource === args.resource;
-      });
-      const isShift = events.length === 0;
-      return {
-        order: isShift ? 1 : 2,
-        cssClass: isShift ? 'mds-task-shift' : 'mds-task-subtask',
-        color: isShift ? '#513737' : '',
-        title: isShift ? 'New Shift' : 'New Task',
-        tasks: isShift ? [] : undefined,
-        shift: isShift ? undefined : events[0].id,
-      } as MbscCalendarEvent;
-    }
+  const myDefaultEvent = useCallback((args: MbscNewEventData): MbscCalendarEvent => {
+    // if (timelineInst.current) {
+    const events = timelineInst.current
+      ? timelineInst.current.getEvents(args.start, new Date(+args.start + 3600000)).filter(function (e) {
+          return e.resource === args.resource;
+        })
+      : [];
+    const isShift = events.length === 0;
+    return {
+      order: isShift ? 1 : 2,
+      cssClass: isShift ? 'mds-task-shift' : 'mds-task-subtask',
+      color: isShift ? '#513737' : '',
+      title: isShift ? 'New Shift' : 'New Task',
+      tasks: isShift ? [] : undefined,
+      shift: isShift ? undefined : events[0].id,
+    };
+    // }
   }, []);
 
   const handelEventCreate = useCallback(
@@ -1880,7 +1883,7 @@ const App: FC = () => {
     }
   }, []);
 
-  const myEvent = useCallback((args: MbscCalendarEvent) => {
+  const myEvent = useCallback((args: MbscCalendarEventData) => {
     const duration = (+args.endDate - +args.startDate) / 3600000;
     return (
       <>
