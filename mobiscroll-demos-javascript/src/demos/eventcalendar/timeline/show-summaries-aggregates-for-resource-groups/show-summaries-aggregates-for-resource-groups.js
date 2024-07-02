@@ -47,7 +47,6 @@ export default {
     }
 
     var myResources = [
-      // relevant resources
       {
         id: 'orlando',
         name: 'CNL Tower II',
@@ -143,7 +142,6 @@ export default {
     ];
 
     var myEvents = [
-      // relevant events
       {
         id: 1,
         allDay: true,
@@ -962,7 +960,7 @@ export default {
           event.original.distance +
           ' mi</span></div><div class="mds-aggregates-label">Est. consumption: <span class="mds-aggregates-value">' +
           event.original.consumption +
-          ' gal</span></div></div><div class="mds-aggregates-label mbsc-flex"><div class="mbsc-flex-1-1">Pick up: <span class="mds-aggregates-value""> ' +
+          ' gal</span></div></div><div class="mds-aggregates-label mbsc-flex"><div class="mbsc-flex-1-1">Pick up: <span class="mds-aggregates-value"> ' +
           mobiscroll.formatDate('hh:mm A', new Date(event.original.start)) +
           '</span></div><div> Drop off: <span class="mds-aggregates-value">' +
           mobiscroll.formatDate('hh:mm A', new Date(event.original.end)) +

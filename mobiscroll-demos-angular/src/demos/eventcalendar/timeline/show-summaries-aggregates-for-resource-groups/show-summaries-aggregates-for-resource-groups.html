@@ -3,14 +3,14 @@
   [options]="calendarOptions"
   [data]="eventsWithSummaries"
   [resources]="myResources"
-  [scheduleEventContentTemplate]="eventTemp"
-  [resourceTemplate]="resourceTemp"
+  [scheduleEventContentTemplate]="customEventTemp"
+  [resourceTemplate]="customResourceTemp"
   (onPageLoading)="handlePageLoading($event)"
   (onEventCreated)="handleEventCreated($event)"
   (onEventDeleted)="handleEventDeleted($event)"
   (onEventUpdated)="handleEventUpdated($event)"
 >
-  <ng-template #eventTemp let-event>
+  <ng-template #customEventTemp let-event>
     <ng-container *ngIf="event.currentResource.isParent; else notSummary">
       <div class="mds-aggregates-summary-event mbsc-flex">
         <div class="mds-aggregates-summary-details mbsc-flex mbsc-flex-1-1">
@@ -54,7 +54,7 @@
     </ng-template>
   </ng-template>
 
-  <ng-template #resourceTemp let-res>
+  <ng-template #customResourceTemp let-res>
     <ng-container *ngIf="res.isParent;else notParent">
       <div>{{res.name}}</div>
       <div class="mds-aggregates-address">{{res.address}}</div>
