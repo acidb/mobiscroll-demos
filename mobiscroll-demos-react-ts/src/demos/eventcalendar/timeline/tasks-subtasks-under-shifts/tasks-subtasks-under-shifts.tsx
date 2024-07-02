@@ -1893,7 +1893,6 @@ const App: FC = () => {
   return (
     <>
       <Eventcalendar
-        // drag
         ref={timelineInst}
         dragToCreate={true}
         dragToMove={true}

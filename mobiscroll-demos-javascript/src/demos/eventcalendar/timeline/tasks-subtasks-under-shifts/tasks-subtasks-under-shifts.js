@@ -28,7 +28,9 @@ export default {
     ];
 
     var timelineInst = mobiscroll.eventcalendar('#demo-tasks-subtasks-under-shifts', {
-      // drag,
+      dragToCreate: true,
+      dragToMove: true,
+      dragToResize: true,
       view: {
         timeline: {
           type: 'week',
@@ -60,10 +62,10 @@ export default {
         });
 
         if (event.shift) {
-          /* tasks was created */
+          // Task was created
           var shift = overlapEvents[0];
           if (overlapEvents.length > 2) {
-            // prevent task overlap
+            // Prevent task overlap
             inst.removeEvent(event);
             mobiscroll.toast({
               //<hidden>
@@ -72,10 +74,10 @@ export default {
               message: 'No space for task',
             });
           } else {
-            /* update the shift */
+            // Update the shift
             shift.tasks.push(event.id);
             inst.updateEvent(shift);
-            /* update subtask */
+            // Update subtask
             event.start = new Date(Math.max(+new Date(shift.start), +event.start));
             event.end = new Date(Math.min(+new Date(shift.end), +event.end));
             event.shift = shift.id;
@@ -93,7 +95,7 @@ export default {
           var shift = inst.getEvents().find(function (ev) {
             return ev.resource === event.resource && ev.id === event.shift;
           });
-          // remove the deleted task id from the shift data
+          // Remove the deleted task id from the shift data
           shift.tasks = shift.tasks.filter(function (t) {
             return t !== event.id;
           });
@@ -107,7 +109,7 @@ export default {
         var tempInvalid = [];
 
         if (event.tasks) {
-          /* shift */
+          // Shift
           var shiftsInResource = events.filter(function (e) {
             return e.tasks !== undefined && e.resource === event.resource && e.id !== event.id;
           });
@@ -126,7 +128,7 @@ export default {
             invalid: tempInvalid.concat(myInvalids),
           });
         } else {
-          /* subtask */
+          // Subtask
           var shift = events.find(function (ev) {
             return ev.resource === event.resource && ev.id === event.shift;
           });
@@ -162,7 +164,7 @@ export default {
         var oldEvent = args.oldEvent;
 
         if (event.tasks) {
-          // shift was updated
+          // Shift was updated
           var shiftStart = new Date(event.start);
           var shiftEnd = new Date(event.end);
           var startDiff = +shiftStart - +new Date(oldEvent.start);
@@ -189,10 +191,10 @@ export default {
             inst.updateEvent(event);
           }
 
-          // resize or move
+          // Resize or move
           if (isResize || startDiff === endDiff) {
             var updatedTasks = [];
-            /* update subtask */
+            // Update subtask
             tasks.forEach(function (task, i) {
               var taskStart = new Date(task.start);
               var taskEnd = new Date(task.end);
@@ -209,12 +211,12 @@ export default {
             inst.updateEvent(updatedTasks);
           }
         } else {
-          // subtask was updated
+          // Subtask was updated
           var eventOverlap = inst.getEvents(event.start, event.end).filter(function (e) {
             return e.resource === event.resource;
           });
           if (eventOverlap.length > 2) {
-            // don't let subtask to overlap
+            // Don't let subtask to overlap
             inst.updateEvent(oldEvent);
 
             mobiscroll.toast({
@@ -1828,35 +1830,35 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-task-shift {
-    height: 30px;
-  }
-  
-  .mds-task-subtask {
-    height: 40px;
-  }
-  
-  .mds-task-subtask .mbsc-schedule-event-range,
-  .mds-task-subtask .mbsc-schedule-event-title  {
-    font-size: 10px;
-    line-height: 13px;
-  }
-  
-  .mds-task-shift .mbsc-schedule-event-range,
-  .mds-task-shift .mbsc-schedule-event-title {
-    display: inline-block;
-    margin: 0 4px;
-  }
-  
-  .mds-task-hours {
-    font-size: 10px;
-    font-weight: 400;
-  }
-  
-  .mds-task-blocked.mbsc-schedule-invalid {
-    text-align: center;
-    align-items: center;
-    font-weight: bold;
-    background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
-  }
+  height: 30px;
+}
+
+.mds-task-subtask {
+  height: 40px;
+}
+
+.mds-task-subtask .mbsc-schedule-event-range,
+.mds-task-subtask .mbsc-schedule-event-title  {
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.mds-task-shift .mbsc-schedule-event-range,
+.mds-task-shift .mbsc-schedule-event-title {
+  display: inline-block;
+  margin: 0 4px;
+}
+
+.mds-task-hours {
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.mds-task-blocked.mbsc-schedule-invalid {
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+  background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
+}
   `,
 };

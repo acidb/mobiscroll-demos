@@ -1861,7 +1861,6 @@ const handelEventUpdateFailed = (args: MbscEventUpdateFailedEvent) => {
 </script>
 
 <template>
-  <!-- dragOptions -->
   <MbscEventcalendar
     ref="timelineInst"
     :view="myView"

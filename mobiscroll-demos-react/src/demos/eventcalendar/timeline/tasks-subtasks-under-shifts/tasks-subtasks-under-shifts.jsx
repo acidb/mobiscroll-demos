@@ -1857,7 +1857,6 @@ function App() {
   return (
     <>
       <Eventcalendar
-        // drag
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}

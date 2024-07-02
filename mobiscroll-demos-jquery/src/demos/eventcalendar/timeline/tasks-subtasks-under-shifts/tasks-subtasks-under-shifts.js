@@ -32,7 +32,9 @@ export default {
       var timelineInst = $('#demo-tasks-subtasks-under-shifts')
         .mobiscroll()
         .eventcalendar({
-          // drag,
+          dragToCreate: true,
+          dragToMove: true,
+          dragToResize: true,
           view: {
             timeline: {
               type: 'week',
@@ -67,7 +69,7 @@ export default {
               // Tasks was created
               var shift = overlapEvents[0];
               if (overlapEvents.length > 2) {
-                // prevent task overlap
+                // Prevent task overlap
                 inst.removeEvent(event);
                 mobiscroll.toast({
                   //<hidden>
