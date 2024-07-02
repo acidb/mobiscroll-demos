@@ -1,0 +1,19 @@
+<mbsc-eventcalendar
+  #timeline
+  [view]="myView"
+  [resources]="myResources"
+  [dragToCreate]="true"
+  [dragToMove]="true"
+  [dragToResize]="true"
+  [data]="myEvents"
+  [invalid]="myInvalids"
+  [eventContentTemplate]="scheduleEventContent"
+  [options]="calendarOptions"
+>
+  <ng-template #scheduleEventContent let-data>
+    {{ data.title }}
+    <span className="mds-task-hours">
+      - {{ (+data.endDate - +data.startDate) / 3600000 + ((+data.endDate - +data.startDate) / 3600000 === 1 ? 'h' : 'hrs') }}</span
+    >
+  </ng-template>
+</mbsc-eventcalendar>
