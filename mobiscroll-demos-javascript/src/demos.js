@@ -932,7 +932,7 @@ export const demos = [
             name: 'Common use cases',
             unique: 20,
             items: [
-              { name: 'Employee shift planning', unique: 'employee-shifts', component: Demo621 },
+              { name: 'Employee shift/rota planning', unique: 'employee-shifts', component: Demo621 },
               { name: 'Work order scheduling', unique: 'work-order-scheduling', component: Demo626 },
               { name: 'Meeting planner across timezones', unique: 'timezone-meeting-planner', component: Demo627 },
               { name: 'Restaurant shift management', unique: 'restaurant-shift-management', component: Demo634 },
