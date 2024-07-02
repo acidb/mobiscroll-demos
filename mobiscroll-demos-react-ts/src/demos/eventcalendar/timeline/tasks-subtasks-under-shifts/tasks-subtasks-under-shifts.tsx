@@ -1646,7 +1646,6 @@ const App: FC = () => {
   );
 
   const myDefaultEvent = useCallback((args: MbscNewEventData): MbscCalendarEvent => {
-    // if (timelineInst.current) {
     const events = timelineInst.current
       ? timelineInst.current.getEvents(args.start, new Date(+args.start + 3600000)).filter(function (e) {
           return e.resource === args.resource;
@@ -1661,7 +1660,6 @@ const App: FC = () => {
       tasks: isShift ? [] : undefined,
       shift: isShift ? undefined : events[0].id,
     };
-    // }
   }, []);
 
   const handelEventCreate = useCallback(
