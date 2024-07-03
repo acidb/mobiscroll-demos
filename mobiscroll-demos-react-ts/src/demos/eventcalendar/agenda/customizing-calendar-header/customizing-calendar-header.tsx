@@ -12,7 +12,7 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
-import './customizing-header.css';
+import './customizing-calendar-header.css';
 
 setOptions({
   // localeJs,
