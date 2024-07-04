@@ -1,31 +1,55 @@
 import {
+  Button,
   Eventcalendar,
+  formatDate,
   getJson,
   MbscCalendarEvent,
+  MbscCalendarEventData,
   MbscEventcalendarView,
-  MbscResource,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useEffect, useMemo, useState } from 'react';
-import './customizing-day-header.css';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const myResources: MbscResource[] = [];
-
 const App: FC = () => {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
-      timeline: {
-        type: 'week',
+      agenda: {
+        type: 'month',
+        showEmptyDays: true,
       },
     }),
     [],
+  );
+
+  const addEvent = useCallback(
+    (date: Date) => {
+      const newEvent = {
+        title: 'Event',
+        start: date,
+      };
+
+      setEvents([...myEvents, newEvent]);
+    },
+    [myEvents],
+  );
+
+  const renderCustomDay = useCallback(
+    (events: MbscCalendarEventData[], date: Date) => (
+      <div className="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
+        <div className="mbsc-flex-1-1">
+          <div>{formatDate('D MMM YYYY', date)}</div>
+        </div>
+        <Button variant="outline" icon="plus" onClick={() => addEvent(date)}></Button>
+      </div>
+    ),
+    [addEvent],
   );
 
   useEffect(() => {
@@ -38,13 +62,6 @@ const App: FC = () => {
     );
   }, []);
 
-  return (
-    <Eventcalendar
-      // drag
-      view={myView}
-      resources={myResources}
-      data={myEvents}
-    />
-  );
+  return <Eventcalendar view={myView} data={myEvents} renderDay={renderCustomDay} />;
 };
 export default App;
