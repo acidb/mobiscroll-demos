@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   addEvent(date: Date): void {
     const newEvent = {
       title: 'Event',
-      start: new Date(formatDate('YYYY-MM-DD', date)),
+      start: date,
       allDay: true,
     };
 
