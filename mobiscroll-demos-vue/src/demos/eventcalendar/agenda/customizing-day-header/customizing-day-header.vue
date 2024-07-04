@@ -1,8 +1,10 @@
 <script setup>
 import {
+  formatDate,
   getJson,
   MbscButton,
   MbscEventcalendar,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
@@ -13,14 +15,30 @@ setOptions({
 })
 
 const myEvents = ref([])
-
-const myResources = []
+const toastMessage = ref('')
+const isToastOpen = ref(false)
 
 const myView = {
   agenda: {
     type: 'month',
     showEmptyDays: true
   }
+}
+
+function newEvent(date) {
+  const newEvent = {
+    title: 'Event',
+    start: date
+  }
+
+  myEvents.value = [...myEvents.value, newEvent]
+
+  toastMessage.value = 'Event added'
+  isToastOpen.value = true
+}
+
+function handleToastClose() {
+  isToastOpen.value = false
 }
 
 onMounted(() => {
@@ -35,13 +53,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources">
+  <MbscEventcalendar :view="myView" :data="myEvents">
     <template #day="events, date">
       <div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
         <div class="mbsc-flex-1-1">
-          <div>{{ date }}</div>
+          <div>{{ formatDate('D MMM YYYY', date) }}</div>
         </div>
-        <MbscButton variant="outline" icon="plus"></MbscButton>
+        <MbscButton variant="outline" icon="plus" @click="newEvent(date)"></MbscButton>
+        <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
       </div>
     </template>
   </MbscEventcalendar>
