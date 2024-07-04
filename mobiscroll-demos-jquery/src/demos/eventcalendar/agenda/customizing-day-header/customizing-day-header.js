@@ -1,5 +1,4 @@
 import * as mobiscroll from '@mobiscroll/jquery';
-// import { formatDate } from '@mobiscroll/jquery/dist/src/core/util/datetime.js';
 import $ from 'jquery';
 
 export default {
@@ -13,10 +12,9 @@ export default {
     $(function () {
       var agenda;
 
-      agenda = $('#demo-show-empty-days')
+      agenda = $('#demo-custom-day-header')
         .mobiscroll()
         .eventcalendar({
-          class: 'mds-custom-day-header-agenda',
           view: {
             agenda: {
               type: 'month',
@@ -25,11 +23,11 @@ export default {
           },
           renderDay: function (events, date) {
             return (
-              '<div class="mbsc-flex mds-custom-header-cont">' +
-              '<div class="mbsc-flex mbsc-align-items-center">' +
+              '<div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">' +
+              '<div class="mbsc-flex-1-1">' +
               mobiscroll.formatDate('D MMM YYYY', date) +
               '</div>' +
-              '<button class="add" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
+              '<button class="mds-custom-header-add" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
               mobiscroll.formatDate('YYYY-MM-DD', date) +
               '"></button>' +
               '</div>'
@@ -38,7 +36,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#demo-show-empty-days').on('click', '.add', function () {
+      $('#demo-custom-day-header').on('click', '.mds-custom-header-add', function () {
         var newEvent = {
           title: 'Event',
           start: new Date($(this).data('date')),
@@ -46,7 +44,6 @@ export default {
         };
 
         agenda.addEvent(newEvent);
-        agenda.navigateToEvent(newEvent);
 
         mobiscroll.toast({
           //<hidden>
@@ -67,13 +64,8 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <div id="demo-show-empty-days"></div>
+  <div id="demo-custom-day-header"></div>
 `,
   // eslint-disable-next-line es5/no-template-literals
-  css: `
-    .mds-custom-header-cont {
-      width: 100%;
-      justify-content: space-between;
-    }
-  `,
+  css: ``,
 };
