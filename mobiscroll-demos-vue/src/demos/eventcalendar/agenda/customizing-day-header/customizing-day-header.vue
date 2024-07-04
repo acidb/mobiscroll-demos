@@ -1,6 +1,10 @@
-
 <script setup>
-import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import {
+  getJson,
+  MbscButton,
+  MbscEventcalendar,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
 
 setOptions({
@@ -10,17 +14,12 @@ setOptions({
 
 const myEvents = ref([])
 
-const myResources = [
-]
+const myResources = []
 
 const myView = {
-  timeline: {
-    allDay: false,
-    type: 'week',
-    startDay: 1,
-    endDay: 5,
-    startTime: '09:00',
-    endTime: '18:00'
+  agenda: {
+    type: 'month',
+    showEmptyDays: true
   }
 }
 
@@ -36,14 +35,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- dragOptions -->
-  <MbscEventcalendar
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-  />
+  <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources">
+    <template #day="events, date">
+      <div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
+        <div class="mbsc-flex-1-1">
+          <div>{{ date }}</div>
+        </div>
+        <MbscButton variant="outline" icon="plus"></MbscButton>
+      </div>
+    </template>
+  </MbscEventcalendar>
 </template>
-
-<style>
-
-</style>

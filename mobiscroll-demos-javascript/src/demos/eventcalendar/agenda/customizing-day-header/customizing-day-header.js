@@ -8,18 +8,56 @@ export default {
       // theme
     });
 
-    mobiscroll.eventcalendar('#demo-customizing-day-header', {
+    var agenda = mobiscroll.eventcalendar('#demo-custom-day-header', {
       view: {
-        timeline: {
-          type: 'week',
+        agenda: {
+          type: 'month',
+          showEmptyDays: true,
         },
       },
-
+      renderDay: function (events, date) {
+        return (
+          '<div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">' +
+          '<div class="mbsc-flex-1-1">' +
+          mobiscroll.formatDate('D MMM YYYY', date) +
+          '</div>' +
+          '<button class="mds-custom-header-add" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
+          mobiscroll.formatDate('YYYY-MM-DD', date) +
+          '"></button>' +
+          '</div>'
+        );
+      },
     });
+
+    document.getElementById('demo-custom-day-header').addEventListener('click', function (e) {
+      var target = e.target.closest('.mds-custom-header-add');
+      if (target) {
+        var newEvent = {
+          title: 'Event',
+          start: new Date(target.getAttribute('data-date')),
+          allDay: true,
+        };
+
+        agenda.addEvent(newEvent);
+
+        mobiscroll.toast({
+          message: 'Event added',
+        });
+      }
+    });
+
+    mobiscroll.getJson(
+      'https://trial.mobiscroll.com/events/?vers=5',
+      function (events) {
+        agenda.setEvents(events);
+      },
+      'jsonp',
+    );
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-customizing-day-header"></div>
+<div id="demo-custom-day-header"></div>
 `,
-  css: ``, 
+  // eslint-disable-next-line es5/no-template-literals
+  css: ``,
 };
