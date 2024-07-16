@@ -46,7 +46,6 @@ export default {
         };
 
         agenda.addEvent(newEvent);
-        agenda.navigateToEvent(newEvent);
 
         mobiscroll.toast({
           //<hidden>
