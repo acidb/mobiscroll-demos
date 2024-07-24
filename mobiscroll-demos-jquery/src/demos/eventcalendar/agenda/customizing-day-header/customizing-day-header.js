@@ -29,7 +29,7 @@ export default {
               '<div class="mbsc-flex mbsc-align-items-center">' +
               mobiscroll.formatDate('D MMM YYYY', date) +
               '</div>' +
-              '<button class="add" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
+              '<button class="mds-custom-day-header-add" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
               mobiscroll.formatDate('YYYY-MM-DD', date) +
               '"></button>' +
               '</div>'
@@ -38,7 +38,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#demo-show-empty-days').on('click', '.add', function () {
+      $('#demo-show-empty-days').on('click', '.mds-custom-day-header-add', function () {
         var newEvent = {
           title: 'Event',
           start: new Date($(this).data('date')),
@@ -73,6 +73,11 @@ export default {
     .mds-custom-header-cont {
       width: 100%;
       justify-content: space-between;
+    }
+    .mds-custom-day-header-add {
+      height: 25px;
+      width: 25px;
+      margin: 0 !important;
     }
   `,
 };

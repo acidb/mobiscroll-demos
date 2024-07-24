@@ -89,7 +89,7 @@ import Demo576 from './demos/datepicker/range/rtl-right-to-left/rtl-right-to-lef
 import Demo518 from './demos/eventcalendar/agenda/daily-agenda-with-week-calendar/daily-agenda-with-week-calendar';
 import Demo573 from './demos/eventcalendar/agenda/basic-usage/basic-usage';
 import Demo501 from './demos/eventcalendar/agenda/daily-weekly-monthly-annual-agenda/daily-weekly-monthly-annual-agenda';
-import Demo749 from './demos/eventcalendar/agenda/show-empty-days/show-empty-days';
+import Demo754 from './demos/eventcalendar/agenda/show-empty-days/show-empty-days';
 import Demo662 from './demos/eventcalendar/agenda/printing-the-view/printing-the-view';
 import Demo596 from './demos/eventcalendar/agenda/custom-event-sort/custom-event-sort';
 import Demo611 from './demos/eventcalendar/agenda/setting-the-timezone/setting-the-timezone';
@@ -97,7 +97,7 @@ import Demo711 from './demos/eventcalendar/agenda/searching-events-in-popup/sear
 import Demo742 from './demos/eventcalendar/agenda/navigate-from-external-calendar/navigate-from-external-calendar';
 import Demo506 from './demos/eventcalendar/agenda/event-content-customization/event-content-customization';
 import Demo508 from './demos/eventcalendar/agenda/full-event-customization/full-event-customization';
-import Demo748 from './demos/eventcalendar/agenda/customizing-day-header/customizing-day-header';
+import Demo753 from './demos/eventcalendar/agenda/customizing-day-header/customizing-day-header';
 import Demo514 from './demos/eventcalendar/agenda/customizing-calendar-header/customizing-calendar-header';
 import Demo657 from './demos/eventcalendar/agenda/custom-event-tooltip/custom-event-tooltip';
 import Demo730 from './demos/eventcalendar/agenda/empty-state/empty-state';
@@ -571,7 +571,7 @@ export const demos = [
               { name: 'Compact daily schedule', unique: 'daily-agenda-with-week-calendar', component: Demo518 },
               { name: 'How to initialize', unique: 'basic-usage', component: Demo573 },
               { name: 'Customize the range', unique: 'daily-weekly-monthly-annual-agenda', component: Demo501 },
-              { name: 'Show empty days', unique: 'show-empty-days', component: Demo749 },
+              { name: 'Show empty days', unique: 'show-empty-days', component: Demo754 },
               { name: 'Print mode', unique: 'printing-the-view', component: Demo662 },
             ],
           },
@@ -591,7 +591,7 @@ export const demos = [
             items: [
               { name: 'Content customization', unique: 'event-content-customization', component: Demo506 },
               { name: 'Full event customization', unique: 'full-event-customization', component: Demo508 },
-              { name: 'Customizing the day header', unique: 'customizing-day-header', component: Demo748 },
+              { name: 'Customizing the day header', unique: 'customizing-day-header', component: Demo753 },
               { name: 'Customizing the calendar header', unique: 'customizing-calendar-header', component: Demo514 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo657 },
               { name: 'Empty state', unique: 'empty-state', component: Demo730 },
