@@ -7,7 +7,6 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
-      theme: 'ios',
     });
 
     //<hide-comment>
