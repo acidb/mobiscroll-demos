@@ -155,6 +155,7 @@ import Demo681 from './demos/eventcalendar/calendar-view/sync-events-google-cale
 import Demo683 from './demos/eventcalendar/calendar-view/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import Demo492 from './demos/eventcalendar/calendar-view/load-events-from-google-calendar/load-events-from-google-calendar';
 import Demo565 from './demos/eventcalendar/calendar-view/create-read-update-delete-CRUD/create-read-update-delete-CRUD';
+import Demo752 from './demos/eventcalendar/calendar-view/property-booking-calendar/property-booking-calendar';
 import Demo615 from './demos/eventcalendar/calendar-view/recurring-event-add-edit-dialog/recurring-event-add-edit-dialog';
 import Demo692 from './demos/eventcalendar/calendar-view/disallow-past-event-creation/disallow-past-event-creation';
 import Demo700 from './demos/eventcalendar/calendar-view/event-bulk-actions-edit-delete-update/event-bulk-actions-edit-delete-update';
@@ -662,6 +663,11 @@ export const demos = [
               { name: 'Responsive', unique: 'responsive-month-view', component: Demo442 },
               { name: 'Print mode', unique: 'printing-the-view', component: Demo661 },
             ],
+          },
+          {
+            name: 'Common use cases',
+            unique: 20,
+            items: [{ name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 }],
           },
           {
             name: 'Displaying events',
