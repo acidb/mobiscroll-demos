@@ -14,6 +14,9 @@ export default {
       '<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="48px" height="48px"><path fill="#ff5252" d="M42.459,32.519c-1.037-3.336-9.539-19.596-12.12-24.5l-0.026-0.048C29.153,5.559,26.676,4,24,4 s-5.153,1.559-6.291,3.929L17.661,8.02C15.08,12.923,6.578,29.183,5.542,32.518C5.261,33.421,5,34.407,5,35.5 c0,4.687,3.813,8.5,8.5,8.5c4.654,0,7.612-1.949,10.5-5.184C26.888,42.051,29.846,44,34.5,44c4.687,0,8.5-3.813,8.5-8.5 C43,34.407,42.739,33.421,42.459,32.519z M23.999,34.662C22.33,32.515,20,28.881,20,26c0-2.206,1.794-4,4-4s4,1.794,4,4 C28,28.872,25.668,32.511,23.999,34.662z M34.5,41c-3.287,0-5.521-1.107-8.325-4.258C27.878,34.596,31,30.104,31,26 c0-3.86-3.141-7-7-7s-7,3.14-7,7c0,4.104,3.122,8.596,4.825,10.742C19.021,39.893,16.787,41,13.5,41C10.468,41,8,38.533,8,35.5 c0-0.653,0.162-1.308,0.406-2.09C9.17,30.95,15.3,18.948,20.316,9.417l0.076-0.146C21.055,7.891,22.471,7,24,7 s2.945,0.891,3.615,2.285l0.068,0.132C32.7,18.948,38.83,30.95,39.595,33.411C39.838,34.192,40,34.847,40,35.5 C40,38.533,37.532,41,34.5,41z"/></svg>';
     var booking =
       '<svg clip-rule="evenodd" fill-rule="evenodd" height="2445" stroke-linejoin="round" stroke-miterlimit="1.414" viewBox="-.092 .015 2732.125 2671.996" width="2500" xmlns="http://www.w3.org/2000/svg"><path d="m2732.032 513.03c0-283.141-229.978-513.015-513.118-513.015h-1705.89c-283.138 0-513.116 229.874-513.116 513.015v1645.965c0 283.066 229.978 513.016 513.118 513.016h1705.889c283.14 0 513.118-229.95 513.118-513.016z" fill="#0c3b7c"/><path d="m.001 1659.991h1364.531v1012.019h-1364.53z" fill="#0c3b7c"/><g fill-rule="nonzero"><path d="m1241.6 1768.638-220.052-.22v-263.12c0-56.22 21.808-85.48 69.917-92.165h150.136c107.068 0 176.328 67.507 176.328 176.766 0 112.219-67.507 178.63-176.328 178.739zm-220.052-709.694v-69.26c0-60.602 25.643-89.424 81.862-93.15h112.657c96.547 0 154.41 57.753 154.41 154.52 0 73.643-39.671 159.67-150.903 159.67h-198.026zm501.037 262.574-39.78-22.356 34.74-29.699c40.437-34.74 108.163-112.876 108.163-247.67 0-206.464-160.109-339.614-407.888-339.614h-282.738v-.11h-32.219c-73.424 2.74-132.273 62.466-133.04 136.329v1171.499h453.586c275.396 0 453.148-149.917 453.148-382.135 0-125.04-57.424-231.889-153.972-286.244" fill="#fff"/><path d="m1794.688 1828.066c0-89.492 72.178-161.894 161.107-161.894 89.154 0 161.669 72.402 161.669 161.894 0 89.379-72.515 161.894-161.67 161.894-88.928 0-161.106-72.515-161.106-161.894" fill="#00bafc"/></g></svg>';
+    var booking1 =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 3.036 3.037"><path d="M1.113 2.524h-.51v-.61c0-.13.05-.2.162-.214h.35a.38.38 0 0 1 .41.411c0 .26-.157.415-.41.415zM.602.875v-.16c0-.14.06-.208.19-.216h.262c.224 0 .36.134.36.36 0 .17-.092.37-.35.37h-.46zm1.164.61l-.092-.052.08-.07c.094-.08.25-.262.25-.575 0-.48-.372-.79-.947-.79h-.73a.32.32 0 0 0-.309.317v2.72H1.07c.64 0 1.052-.348 1.052-.888 0-.29-.133-.54-.358-.665" fill="#273b7d"/><path d="M2.288 2.67c0-.203.163-.367.365-.367s.367.164.367.367-.164.367-.367.367-.365-.164-.365-.367" fill="#499fdd"/></svg>';
+
     var makeMyTrip =
       '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 152.8 152.8" style="enable-background:new 0 0 152.8 152.8;" xml:space="preserve">' +
       '<style type="text/css">' +
@@ -37,102 +40,102 @@ export default {
 
     var myEvents = [
       {
-        start: 'dyndatetime(y,m,d-18,14)',
-        end: 'dyndatetime(y,m,d-15,11)',
+        start: 'dyndatetime(y,m,d-18,12)',
+        end: 'dyndatetime(y,m,d-15,12)',
         icon: airBnB,
         title: 'Mary Smith',
-        color: '#fdf500',
+        color: '#fffa61', //'#fdf500',
       },
       {
-        start: 'dyndatetime(y,m,d-7,14)',
-        end: 'dyndatetime(y,m,d-1,11)',
+        start: 'dyndatetime(y,m,d-7,12)',
+        end: 'dyndatetime(y,m,d-1,12)',
         title: 'James Johnson',
         icon: airBnB,
-        color: '#fdf500',
+        color: '#fffa61',
       },
       {
-        start: 'dyndatetime(y,m,d-12,14)',
-        end: 'dyndatetime(y,m,d-9,11)',
+        start: 'dyndatetime(y,m,d-12,12)',
+        end: 'dyndatetime(y,m,d-9,12)',
         title: 'Patricia Williams',
         icon: airBnB,
-        color: '#fdf500',
+        color: '#fffa61',
       },
       {
-        start: 'dyndatetime(y,m,d+3,14)',
-        end: 'dyndatetime(y,m,d+5,11)',
+        start: 'dyndatetime(y,m,d+3,12)',
+        end: 'dyndatetime(y,m,d+5,12)',
         title: 'Michael Brown',
         icon: airBnB,
-        color: '#fdf500',
+        color: '#fffa61',
       },
       {
-        start: 'dyndatetime(y,m,d+10,14)',
-        end: 'dyndatetime(y,m,d+11,11)',
+        start: 'dyndatetime(y,m,d+10,12)',
+        end: 'dyndatetime(y,m,d+11,12)',
         title: 'Jennifer Jones',
         icon: booking,
-        color: '#e20000',
+        color: '#ff9999', //'#e20000',
       },
       {
-        start: 'dyndatetime(y,m,d,14)',
-        end: 'dyndatetime(y,m,d+3,11)',
+        start: 'dyndatetime(y,m,d,12)',
+        end: 'dyndatetime(y,m,d+3,12)',
         title: 'Robert Garcia',
         icon: booking,
-        color: '#e20000',
+        color: '#ff9999',
       },
       {
-        start: 'dyndatetime(y,m,d+19,14)',
-        end: 'dyndatetime(y,m,d+20,11)',
+        start: 'dyndatetime(y,m,d+19,12)',
+        end: 'dyndatetime(y,m,d+20,12)',
         title: 'Linda Miller',
         icon: booking,
-        color: '#e20000',
+        color: '#ff9999',
       },
       {
-        start: 'dyndatetime(y,m,d+26,14)',
-        end: 'dyndatetime(y,m,d+27,11)',
+        start: 'dyndatetime(y,m,d+26,12)',
+        end: 'dyndatetime(y,m,d+27,12)',
         title: 'John Davis',
         icon: booking,
-        color: '#e20000',
+        color: '#ff9999',
       },
       {
-        start: 'dyndatetime(y,m,d-15,14)',
-        end: 'dyndatetime(y,m,d-13,11)',
+        start: 'dyndatetime(y,m,d-15,12)',
+        end: 'dyndatetime(y,m,d-13,12)',
         title: 'Elizabeth Rodriguez',
         icon: makeMyTrip,
-        color: '#1dab2f',
+        color: '#a0efaa', //'#1dab2f',
       },
       {
-        start: 'dyndatetime(y,m,d+13,14)',
-        end: 'dyndatetime(y,m,d+15,11)',
+        start: 'dyndatetime(y,m,d+13,12)',
+        end: 'dyndatetime(y,m,d+15,12)',
         title: 'David Martinez',
         icon: makeMyTrip,
-        color: '#1dab2f',
+        color: '#a0efaa',
       },
       {
-        start: 'dyndatetime(y,m,d+16,14)',
-        end: 'dyndatetime(y,m,d+18,11)',
+        start: 'dyndatetime(y,m,d+16,12)',
+        end: 'dyndatetime(y,m,d+18,12)',
         title: 'Barbara Wilson',
         icon: makeMyTrip,
-        color: '#1dab2f',
+        color: '#a0efaa',
       },
       {
-        start: 'dyndatetime(y,m,d-9,14)',
-        end: 'dyndatetime(y,m,d-8,11)',
+        start: 'dyndatetime(y,m,d-9,12)',
+        end: 'dyndatetime(y,m,d-8,12)',
         title: 'William Anderson',
         icon: makeMyTrip,
-        color: '#1dab2f',
+        color: '#a0efaa',
       },
       {
-        start: 'dyndatetime(y,m,d+23,14)',
-        end: 'dyndatetime(y,m,d+26,11)',
+        start: 'dyndatetime(y,m,d+23,12)',
+        end: 'dyndatetime(y,m,d+26,12)',
         title: 'Susan Taylor',
         icon: makeMyTrip,
-        color: '#1dab2f',
+        color: '#a0efaa',
       },
       {
-        start: 'dyndatetime(y,m,d+6,14)',
-        end: 'dyndatetime(y,m,d+9,11)',
+        start: 'dyndatetime(y,m,d+6,12)',
+        end: 'dyndatetime(y,m,d+9,12)',
         title: 'Richard Jackson',
         icon: airBnB,
-        color: '#fdf500',
+        color: '#fffa61',
       },
     ];
 
@@ -167,7 +170,7 @@ export default {
           renderLabelContent: function (event) {
             if (event.original.icon) {
               return (
-                '<div class="mbsc-flex"><span class="mds-property-booking-icon">' +
+                '<div class="mbsc-flex mds-booking-content-wrapper"><span class="mds-property-booking-icon">' +
                 event.original.icon +
                 '</span>' +
                 '<span>' +
@@ -175,25 +178,40 @@ export default {
                 '</span></div>'
               );
             }
-            return '<div><span>' + event.title + '</span></div>';
+            return '<div class="mds-booking-content-wrapper"><span class="mds-booking-default-event">' + event.title + '</span></div>';
           },
-        });
+        })
+        .mobiscroll('getInst');
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-property-booking-calendar"></div>
+<div id="demo-property-booking-calendar" class="property-booking"></div>
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+.property-booking .mbsc-calendar-text {
+    height: 3em !important;  
+}
+.property-booking .mbsc-calendar-text:before {
+    height: 3em !important; 
+}
+.mds-booking-content-wrapper {
+    align-items: center;
+    font-size: 16px;
+}
 .mds-property-booking-icon {
-    padding: 2px 4px 2px 0;
-    width: 15px;
-    height: 15px;
+    padding: 2px 2px 2px 0;
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
 }
 .mds-property-booking-icon svg {
-    width: 15px;
-    height: 15px;
+    width: 24px;
+    height: 24px;
+}
+.mds-booking-default-event {
+    margin: auto 0px;
 }
   `,
 };
