@@ -8,6 +8,8 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
+      theme: 'windows',
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -74,10 +76,16 @@ export default {
       width: 100%;
       justify-content: space-between;
     }
+
     .mds-custom-day-header-add {
-      height: 25px;
-      width: 25px;
+      height: 22px;
+      width: 22px;
       margin: 0 !important;
+    }
+      
+    .mds-custom-day-header-agenda .mbsc-windows .mbsc-icon-button {
+      height: 22px;
+      width: 22px;
     }
   `,
 };
