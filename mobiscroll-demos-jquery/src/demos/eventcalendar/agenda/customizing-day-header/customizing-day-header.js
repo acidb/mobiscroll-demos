@@ -8,8 +8,6 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
-      theme: 'windows',
-      themeVariant: 'light',
     });
 
     $(function () {
@@ -82,7 +80,7 @@ export default {
       width: 22px;
       margin: 0 !important;
     }
-      
+
     .mds-custom-day-header-agenda .mbsc-windows .mbsc-icon-button {
       height: 22px;
       width: 22px;
