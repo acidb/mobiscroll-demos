@@ -162,7 +162,7 @@ export default {
             var endDate = new Date(args.start.setDate(args.start.getDate() + 1));
             var endDateAndTime = new Date(endDate.setHours(11));
             return {
-              title: 'New booking',
+              title: 'New reservation',
               start: startDateAndTime,
               end: endDateAndTime,
             };
@@ -197,13 +197,12 @@ export default {
     height: 3em !important; 
 }
 .mds-booking-content-wrapper {
-    margin-top: 1px;
+    margin-top: 3px;
     align-items: center;
     font-size: 16px;
     height: 100%; 
 }
 .mds-property-booking-icon {
-    padding: 2px 2px 2px 0;
     margin-right: 8px;
     width: 24px;
     height: 24px;
@@ -213,7 +212,7 @@ export default {
     height: 24px;
 }
 .mds-booking-default-event {
-    margin: auto 0px;
+    margin-left: 16px;
 }
   `,
 };
