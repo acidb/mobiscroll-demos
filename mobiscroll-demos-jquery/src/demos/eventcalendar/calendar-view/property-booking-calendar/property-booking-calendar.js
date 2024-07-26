@@ -197,8 +197,10 @@ export default {
     height: 3em !important; 
 }
 .mds-booking-content-wrapper {
+    margin-top: 1px;
     align-items: center;
     font-size: 16px;
+    height: 100%; 
 }
 .mds-property-booking-icon {
     padding: 2px 2px 2px 0;
