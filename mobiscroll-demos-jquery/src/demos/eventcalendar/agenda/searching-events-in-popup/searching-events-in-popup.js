@@ -70,11 +70,11 @@ export default {
         .popup({
           anchor: $searchInput[0],
           contentPadding: false,
-          disableLeftRight: true,
           display: 'anchored',
           focusElm: $searchInput[0],
           focusOnClose: false,
           focusOnOpen: false,
+          maxHeight: 500,
           scrollLock: false,
           showArrow: false,
           showOverlay: false,
