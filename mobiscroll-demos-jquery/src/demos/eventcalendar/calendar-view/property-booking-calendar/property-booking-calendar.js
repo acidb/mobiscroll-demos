@@ -115,7 +115,7 @@ export default {
     ];
 
     $(function () {
-      $('#demo-property-booking-calendar')
+      $('#demo-booking-calendar')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -132,8 +132,7 @@ export default {
           eventOverlap: false,
           extendDefaultEvent: function (args) {
             var startDateAndTime = new Date(args.start.setHours(12));
-            var endDate = new Date(args.start.setDate(args.start.getDate() + 1));
-            var endDateAndTime = new Date(endDate.setHours(12));
+            var endDateAndTime = new Date(args.start.setDate(args.start.getDate() + 1)).setHours(12);
             return {
               title: 'New reservation',
               start: startDateAndTime,
@@ -141,53 +140,36 @@ export default {
             };
           },
           renderLabelContent: function (event) {
-            if (event.original.icon) {
-              return (
-                '<div class="mbsc-flex mds-booking-content-wrapper"><img "mds-property-booking-icon" src=' +
-                event.original.icon +
-                '>' +
-                '<span>' +
-                event.title +
-                '</span></div>'
-              );
-            }
-            return '<div class="mds-booking-content-wrapper"><span class="mds-booking-default-event">' + event.title + '</span></div>';
+            return (
+              '<div class="mbsc-flex mds-booking-item mbsc-align-items-center">' +
+              (event.original.icon ? '<img class="mds-booking-icon" src=' + event.original.icon + '>' : '') +
+              '<span>' +
+              event.title +
+              '</span></div>'
+            );
           },
         });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-property-booking-calendar" class="mds-property-booking"></div>
+<div id="demo-booking-calendar" class="mds-booking-calendar"></div>
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-property-booking .mbsc-calendar-text {
-  height: 3em !important;  
+.mds-booking-calendar .mbsc-calendar-text {
+  height: 30px !important;  
 }
 
-.mds-property-booking .mbsc-calendar-label-inner,
-.mds-property-booking .mbsc-calendar-label-text {
-  height: 100%;  
-}
-
-.mds-booking-content-wrapper {
-  align-items: center;
+.mds-booking-item {
   font-size: 16px;
-  height: 100%;  
+  height: 30px;  
 }
 
-.mds-booking-content-wrapper img {
+.mds-booking-icon {
   margin-right: 8px;
-  // width: 24px;
+  width: 24px;
   height: 24px;
-}
-
-.mds-booking-default-event {
-  margin-left: 16px;
-  display: block;
-  align-content: center;
-  height: 100%;
 }
   `,
 };
