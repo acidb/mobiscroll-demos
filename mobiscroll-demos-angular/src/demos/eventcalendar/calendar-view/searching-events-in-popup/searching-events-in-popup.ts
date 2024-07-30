@@ -5,6 +5,9 @@ import {
   MbscCalendarEvent,
   MbscEventcalendar,
   MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscInput,
+  MbscPageLoadingEvent,
   MbscPopup,
   MbscPopupOptions,
   setOptions /* localeImport */,
@@ -25,7 +28,11 @@ export class AppComponent {
   constructor(private http: HttpClient) {}
 
   @ViewChild('searchInput', { static: false })
-  searchInputElm!: any;
+  set searchInputElm(elm: MbscInput) {
+    setTimeout(() => {
+      this.searchInput = elm.nativeElement;
+    });
+  }
 
   @ViewChild('calendar', { static: false })
   calendar!: MbscEventcalendar;
@@ -33,86 +40,68 @@ export class AppComponent {
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
 
-  mySelectedEvent: MbscCalendarEvent[] = [];
-  searchInput: HTMLElement | undefined;
-  timer: any;
-
   calEvents: MbscCalendarEvent[] = [];
-  listEvents: MbscCalendarEvent[] = [];
-
   calView: MbscEventcalendarView = {
     calendar: {
       labels: true,
     },
   };
-
-  listView: MbscEventcalendarView = {
-    agenda: {
-      type: 'year',
-      size: 5,
-    },
-  };
+  listEvents: MbscCalendarEvent[] = [];
+  listView: MbscEventcalendarView = { agenda: { type: 'year', size: 5 } };
+  searchInput: HTMLElement | undefined;
+  selectedEvent: MbscCalendarEvent[] = [];
+  timer?: ReturnType<typeof setTimeout>;
 
   popupOptions: MbscPopupOptions = {
+    contentPadding: false,
+    disableLeftRight: true,
     display: 'anchored',
+    focusOnClose: false,
+    focusOnOpen: false,
+    scrollLock: false,
     showArrow: false,
     showOverlay: false,
-    scrollLock: false,
-    contentPadding: false,
-    focusOnOpen: false,
-    focusOnClose: false,
+    width: 400,
   };
 
-  initPopup(): void {
-    setTimeout(() => {
-      this.searchInput = this.searchInputElm.nativeElement;
-    });
-  }
-
-  onSearch(ev: any): void {
-    const text = ev.target.value;
+  onInput(ev: Event): void {
+    const searchText = (ev.target as HTMLInputElement).value;
 
     clearTimeout(this.timer);
-    this.timer = null;
-
-    if (!this.timer) {
-      this.timer = setTimeout(() => {
-        if (text.length > 0) {
-          this.http
-            .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/searchevents/?text=' + text, 'callback')
-            .subscribe((resp: MbscCalendarEvent[]) => {
-              this.listEvents = resp;
-              this.popup.open();
-            });
-        } else {
-          this.popup.close();
-        }
-      }, 200);
-    }
+    this.timer = setTimeout(() => {
+      if (searchText.length > 0) {
+        this.http
+          .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/searchevents/?text=' + searchText, 'callback')
+          .subscribe((resp) => {
+            this.listEvents = resp;
+            this.popup.open();
+          });
+      } else {
+        this.popup.close();
+      }
+    }, 200);
   }
 
-  onFocus(ev: any): void {
-    if (ev.target.value.length > 0) {
+  onFocus(ev: Event): void {
+    if ((ev.target as HTMLInputElement).value.length > 0) {
       this.popup.open();
     }
   }
 
-  onPageLoading(args: any): void {
+  onPageLoading(args: MbscPageLoadingEvent): void {
     const start = formatDate('YYYY-MM-DD', args.viewStart);
     const end = formatDate('YYYY-MM-DD', args.viewEnd);
 
-    setTimeout(() => {
-      this.http
-        .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/searchevents/?start=' + start + '&end=' + end, 'callback')
-        .subscribe((resp: MbscCalendarEvent[]) => {
-          this.calEvents = resp;
-        });
-    });
+    this.http
+      .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/searchevents/?start=' + start + '&end=' + end, 'callback')
+      .subscribe((resp) => {
+        this.calEvents = resp;
+      });
   }
 
-  eventClick(args: any): void {
+  onEventClick(args: MbscEventClickEvent): void {
     this.calendar.navigateToEvent(args.event);
-    this.mySelectedEvent = [args.event];
+    this.selectedEvent = [args.event];
     this.popup.close();
   }
 }

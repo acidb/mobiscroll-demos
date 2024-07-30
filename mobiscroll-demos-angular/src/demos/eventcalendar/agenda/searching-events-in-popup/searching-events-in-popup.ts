@@ -50,6 +50,7 @@ export class AppComponent {
 
   popupOptions: MbscPopupOptions = {
     contentPadding: false,
+    disableLeftRight: true,
     display: 'anchored',
     focusOnClose: false,
     focusOnOpen: false,

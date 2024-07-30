@@ -22,6 +22,7 @@ export default {
               size: 5,
             },
           },
+          refDate: new Date(),
           showControls: false,
           onEventClick: function (args) {
             calendar.navigateToEvent(args.event);
@@ -88,7 +89,7 @@ export default {
     <div class="md-search-events-sidebar mbsc-flex">
         <div class="md-search-events-cont mbsc-flex-col mbsc-flex-none">
             <label>
-                <input id="md-search-sidebar-demo-input" mbsc-input data-start-icon="material-search" data-input-style="outline" placeholder="Search events"></input>
+                <input id="md-search-sidebar-demo-input" mbsc-input autocomplete="off" data-start-icon="material-search" data-input-style="outline" placeholder="Search events"></input>
             </label>
             <div id="demo-search-sidebar-list"></div>
         </div>

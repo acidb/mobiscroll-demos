@@ -18,6 +18,7 @@ export default {
           view: {
             agenda: { type: 'year', size: 5 },
           },
+          refDate: new Date(),
           showControls: false,
           onEventClick: function (args) {
             calendar.navigateToEvent(args.event);
@@ -69,6 +70,7 @@ export default {
         .popup({
           anchor: $searchInput[0],
           contentPadding: false,
+          disableLeftRight: true,
           display: 'anchored',
           focusElm: $searchInput[0],
           focusOnClose: false,
