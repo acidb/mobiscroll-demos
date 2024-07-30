@@ -1,0 +1,14 @@
+.mds-booking-calendar .mbsc-calendar-text {
+  height: 30px !important;
+}
+
+.mds-booking-item {
+  font-size: 16px;
+  height: 30px;
+}
+
+.mds-booking-icon {
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+}
