@@ -145,7 +145,7 @@ function handleDefaultEvent(args: MbscNewEventData) {
     <template #labelContent="event">
       <div class="mbsc-flex mds-booking-item mbsc-align-items-center">
         <template v-if="event.original.icon">
-          <img class="mds-booking-icon" :src="event.original.icon" />
+          <img class="mds-booking-icon" draggable="false" :src="event.original.icon" />
         </template>
         <span>{{ event.title }}</span>
       </div>

@@ -139,7 +139,7 @@ function App() {
   const handleLabelContent = useCallback(
     (event) => (
       <div className="mbsc-flex mds-booking-item mbsc-align-items-center">
-        {event.original.icon && <img className="mds-booking-icon" src={`${event.original.icon}`} />}
+        {event.original.icon && <img className="mds-booking-icon" draggable="false" src={`${event.original.icon}`} />}
         <span>{event.title}</span>
       </div>
     ),
