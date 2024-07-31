@@ -8,7 +8,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-eventcalendar-custom-event-sort',
+  selector: 'app-scheduler-custom-event-sort',
   templateUrl: './custom-event-sort.html',
 })
 export class AppComponent {
