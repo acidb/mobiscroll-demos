@@ -9,14 +9,11 @@ export default {
     });
 
     var timer;
-    var searchList = document.getElementById('demo-search-sidebar-list');
+    var searchResults = document.getElementById('demo-search-results');
 
-    var list = mobiscroll.eventcalendar('#demo-search-sidebar-list', {
+    var list = mobiscroll.eventcalendar('#demo-search-results', {
       view: {
-        agenda: {
-          type: 'year',
-          size: 5,
-        },
+        agenda: { type: 'year', size: 5 },
       },
       showControls: false,
       onEventClick: function (args) {
@@ -25,16 +22,14 @@ export default {
       },
     });
 
-    var calendar = mobiscroll.eventcalendar('#demo-search-sidebar-events', {
+    var calendar = mobiscroll.eventcalendar('#demo-search-events', {
       clickToCreate: false,
       dragToCreate: false,
       dragToMove: false,
       dragToResize: false,
       selectMultipleEvents: true,
       view: {
-        calendar: {
-          labels: true,
-        },
+        calendar: { labels: true },
       },
       onPageLoading: function (args) {
         var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
@@ -50,77 +45,78 @@ export default {
       },
     });
 
-    searchList.style.display = 'none';
+    searchResults.style.visibility = 'hidden';
 
-    document.getElementById('md-search-sidebar-demo-input').addEventListener('input', function (ev) {
-      var text = ev.target.value;
+    document.getElementById('demo-search-input').addEventListener('input', function (ev) {
+      var searchText = ev.target.value;
       clearTimeout(timer);
       timer = setTimeout(function () {
-        if (text.length > 0) {
+        if (searchText.length > 0) {
           mobiscroll.getJson(
-            'https://trial.mobiscroll.com/searchevents/?text=' + text,
+            'https://trial.mobiscroll.com/searchevents/?text=' + searchText,
             function (data) {
               list.setEvents(data);
-              searchList.style.display = 'block';
+              searchResults.style.visibility = 'visible';
             },
             'jsonp',
           );
         } else {
-          searchList.style.display = 'none';
+          searchResults.style.visibility = 'hidden';
         }
       }, 200);
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="md-search-events-sidebar mbsc-flex">
-    <div class="md-search-events-cont mbsc-flex-col mbsc-flex-none">
-        <label>
-            <input id="md-search-sidebar-demo-input" mbsc-input data-start-icon="material-search" data-input-style="outline" placeholder="Search events"></input>
-        </label>
-        <div id="demo-search-sidebar-list"></div>
+<div mbsc-page class="mds-full-height">
+  <div class="mds-full-height mbsc-flex">
+    <div class="mds-search-sidebar mbsc-flex-col mbsc-flex-none">
+      <label>
+        <input id="demo-search-input" mbsc-input autocomplete="off" data-start-icon="material-search" data-input-style="outline" placeholder="Search events"></input>
+      </label>
+      <div id="demo-search-results"></div>
     </div>
-    <div class="md-search-events-calendar mbsc-flex-1-1">
-        <div id="demo-search-sidebar-events"></div>
+    <div class="mds-search-calendar mbsc-flex-1-1">
+      <div id="demo-search-events"></div>
     </div>
+  </div>
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-search-events-cont {
-    width: 350px;
+.mds-full-height {
+  height: 100%;
 }
 
-.md-search-events-cont .mbsc-textfield-wrapper.mbsc-ios {
-    margin-top: 8px;
-    margin-bottom: 9px;
+.mds-search-calendar {
+  border-left: 1px solid #ccc;
+  overflow: hidden;
 }
 
-.md-search-events-cont .mbsc-textfield-wrapper.mbsc-material {
-    margin-top: 15px;
-    margin-bottom: 15px;
+.mds-search-sidebar {
+  width: 350px;
 }
 
-.md-search-events-cont .mbsc-textfield-wrapper.mbsc-windows {
-    margin-top: 28px;
-    margin-bottom: 29px;
+.mds-search-sidebar .mbsc-textfield-wrapper.mbsc-ios {
+  margin-top: 27px;
+  margin-bottom: 26px;
 }
 
-@media (min-width:1135px) {
-    .md-search-events-cont .mbsc-textfield-wrapper.mbsc-ios {
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
+.mds-search-sidebar .mbsc-textfield-wrapper.mbsc-material {
+  margin-top: 26px;
+  margin-bottom: 26px;
 }
 
-.md-search-events-calendar {
-    border-left: 1px solid #ccc;
+.mds-search-sidebar .mbsc-textfield-wrapper.mbsc-windows {
+  margin-top: 35px;
+  margin-bottom: 35px;
 }
 
-.demo-searching-events-in-sidebar,
-.md-search-events-sidebar,
-.md-search-events-calendar {
-    height: 100%;
+@media (min-width: 1135px) {
+  .mds-search-sidebar .mbsc-textfield-wrapper.mbsc-windows {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
 }
   `,
 };

@@ -41,11 +41,7 @@ export class AppComponent {
   popup!: MbscPopup;
 
   calEvents: MbscCalendarEvent[] = [];
-  calView: MbscEventcalendarView = {
-    calendar: {
-      labels: true,
-    },
-  };
+  calView: MbscEventcalendarView = { calendar: { labels: true } };
   listEvents: MbscCalendarEvent[] = [];
   listView: MbscEventcalendarView = { agenda: { type: 'year', size: 5 } };
   searchInput: HTMLElement | undefined;

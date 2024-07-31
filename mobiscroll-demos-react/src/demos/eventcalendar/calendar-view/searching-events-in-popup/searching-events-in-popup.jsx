@@ -23,9 +23,9 @@ function App() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [listEvents, setListEvents] = useState([]);
   const [searchInput, setSearchInput] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState([]);
 
+  const calInst = useRef();
   const timer = useRef(null);
 
   const calView = useMemo(() => ({ calendar: { labels: true } }), []);
@@ -77,9 +77,9 @@ function App() {
   }, []);
 
   const handleEventClick = useCallback((args) => {
-    setSelectedDate(args.event.start);
     setSelectedEvent([args.event]);
     setPopupOpen(false);
+    calInst.current.navigateToEvent(args.event);
   }, []);
 
   const searchInputRef = useCallback((input) => {
@@ -117,8 +117,8 @@ function App() {
         dragToMove={false}
         dragToResize={false}
         data={calEvents}
+        ref={calInst}
         renderHeader={customHeader}
-        selectedDate={selectedDate}
         selectedEvents={selectedEvent}
         selectMultipleEvents={true}
         view={calView}
