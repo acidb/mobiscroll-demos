@@ -7,29 +7,16 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
-      themeVariant: 'light',
     });
 
-    // DESCRIPTION V1
-
-    // The popup has four built-in display modes that can be controlled through the display option:
-    //      top - modal that slides down from the top
-    //      bottom - modal that slides up from the bottom
-    //      center - modal that shows up in the middle with a pop animation
-    //      anchored - modal that shows up anchored to an input or any dom element
-
-    // Use the touchUi option to switch between touch optimized mobile rendering and pointer optimized desktop rendering.
-    // It can be dynamically switched with the help of the responsive option.
-
-    // The defaults change on a theme to theme basis. The ios theme comes with bottom on mobile and anchored on
-    // desktop while the material and windows themes have center on mobile and anchored on desktop.
-
-    // Want to see how to set up responsiveness?  Check out the previous example →
+    // refactor ids, class names
+    // change the popup content from "showing the control"
 
     $(function () {
-      var bottomDemo = $('#demo-bottom')
+      var bottomPopup = $('#popup-bottom')
         .mobiscroll()
         .popup({
+          // context,
           display: 'bottom',
           buttons: [
             {
@@ -41,9 +28,10 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var topDemo = $('#demo-top')
+      var topPopup = $('#popup-top')
         .mobiscroll()
         .popup({
+          // context,
           display: 'top',
           buttons: [
             {
@@ -55,9 +43,10 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var centerDemo = $('#demo-center')
+      var centerPopup = $('#popup-center')
         .mobiscroll()
         .popup({
+          // context,
           display: 'center',
           buttons: [
             {
@@ -70,9 +59,10 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var bubbleDemo = $('#demo-anchored')
+      var anchoredPopup = $('#popup-anchored')
         .mobiscroll()
         .popup({
+          // context,
           display: 'anchored',
           anchor: $('#show-anchored')[0],
           buttons: [
@@ -85,35 +75,33 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#show-bottom').click(function () {
-        bottomDemo.open();
+      $('#show-bottom').on('click', function () {
+        bottomPopup.open();
         return false;
       });
 
-      $('#show-top').click(function () {
-        topDemo.open();
+      $('#show-top').on('click', function () {
+        topPopup.open();
         return false;
       });
 
-      $('#show-center').click(function () {
-        centerDemo.open();
+      $('#show-center').on('click', function () {
+        centerPopup.open();
         return false;
       });
 
-      $('#show-anchored').click(function () {
-        bubbleDemo.open();
+      $('#show-anchored').on('click', function () {
+        anchoredPopup.open();
         return false;
       });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-
-
-  <div mbsc-form>
+<div mbsc-form>
   <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Try different display modes</div>
-      <div class="mbsc-form-group mbsc-btn-group-block">
+      <div class="mbsc-form-group mbsc-button-group-block">
       <button mbsc-button id="show-anchored">Try anhored display mode</button>
       <button mbsc-button id="show-top">Try top display mode</button>
       <button mbsc-button id="show-center">Try center display mode</button>
@@ -121,32 +109,28 @@ export default {
       </div>
   </div>
 </div>
-
-<div id="demo-bottom" class="mbsc-cloak">
+<div id="popup-bottom" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
       <h4>Welcome on our website!</h4>
       <p>Have fun navigating through the demos.</p>
   </div>
 </div>
-
-<div id="demo-top" class="mbsc-cloak">
+<div id="popup-top" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
       <h4>Welcome on our website!</h4>
       <p>Have fun navigating through the demos.</p>
   </div>
 </div>
-
-<div id="demo-center" class="mbsc-cloak">
+<div id="popup-center" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
       <h4>Welcome on our website!</h4>
       <p>Have fun navigating through the demos.</p>
   </div>
 </div>
-
-<div id="demo-anchored" class="mbsc-cloak">
+<div id="popup-anchored" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
       <h4>Welcome on our website!</h4>

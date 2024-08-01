@@ -7,23 +7,16 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
-      themeVariant: 'light',
     });
 
-    // DESCRIPTION V1
+    // remove css important, refactor ids, class names
+    // customPositioning buttons not appear
 
     $(function () {
-      var noButtons = $('#no-button')
-        .mobiscroll()
-        .popup({
-          display: 'center',
-          buttons: [],
-        })
-        .mobiscroll('getInst');
-
       var defaultButtons = $('#default')
         .mobiscroll()
         .popup({
+          // context,
           display: 'center',
         })
         .mobiscroll('getInst');
@@ -31,16 +24,18 @@ export default {
       var customButtons = $('#custom')
         .mobiscroll()
         .popup({
+          // context,
           display: 'center',
           buttons: [
             'set',
             {
               text: 'Custom',
               icon: 'checkmark',
-              handler: function () {
-                customButtons.hide();
+              cssClass: 'my-btn',
+              handler: function (event) {
                 mobiscroll.toast({
-                  message: ' Custom button clicked',
+                  // context,
+                  message: 'Custom button clicked!',
                 });
               },
             },
@@ -49,58 +44,66 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#showNoButton').click(function () {
-        noButtons.open();
-        return false;
-      });
+      var customPositioning = $('#positioned')
+        .mobiscroll()
+        .popup({
+          // context,
+          display: 'bottom',
+          buttons: ['set', 'cancel'],
+        })
+        .mobiscroll('getInst');
 
-      $('#showDefault').click(function () {
+      $('#showDefault').on('click', function () {
         defaultButtons.open();
         return false;
       });
-
-      $('#showCustom').click(function () {
+      $('#showCustom').on('click', function () {
         customButtons.open();
+        return false;
+      });
+      $('#showCustomPos').on('click', function () {
+        customPositioning.open();
         return false;
       });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-    <div mbsc-form>
-    <div class="mbsc-align-center">
-        <div class="mbsc-note mbsc-note-primary">Customize popup buttons depending on your context.</div>
+<div mbsc-form>
+<div class="mbsc-align-center">
+    <div class="mbsc-note mbsc-note-primary">Customize popup buttons depending on your context.</div>
+</div>
+<div class="mbsc-form-group">
+    <div class="mbsc-button-group-block">
+        <button mbsc-button id="showDefault">Default</button>
+        <button mbsc-button id="showCustom">Custom buttons</buttom>
+            <button mbsc-button id="showCustomPos">Buttons positioning</buttom>
     </div>
-    <div class="mbsc-form-group">
-        <div class="mbsc-btn-group-block">
-            <button mbsc-button id="showNoButton">No button</button>
-            <button mbsc-button id="showDefault">Default</button>
-            <button mbsc-button id="showCustom">Custom buttons</buttom>
-        </div>
-    </div>
-    </div>
-
-    <div id="no-button" class="mbsc-cloak">
-    <div class="mbsc-align-center mbsc-padding">
-        <h3 class="md-text-center">Hi!</h3>
-        <p class="md-text-center">This is a popup with no buttons</p>
-    </div>
-    </div>
-
-    <div id="default" class="mbsc-cloak">
-    <div class="mbsc-align-center mbsc-padding">
-        <h3 class="md-text-center">Hi there!</h3>
-        <p class="md-text-center">This is a popup with default button</p>
-    </div>
-    </div>
-
-    <div id="custom" class="mbsc-cloak">
-    <div class="mbsc-align-center mbsc-padding">
-        <h3 class="md-text-center">Hi again!</h3>
-        <p class="md-text-center">This is a popup with three custom buttons</p>
-    </div>
-    </div>
+</div>
+</div>
+<div id="default" class="mbsc-cloak">
+  <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi there!</h3>
+      <p class="md-text-center">This is the default with no buttons.</p>
+  </div>
+</div>
+<div id="custom" class="mbsc-cloak">
+  <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi again!</h3>
+      <p class="md-text-center">This is a popup with a custom button and predefined buttons.</p>
+  </div>
+</div>
+<div id="positioned" class="mbsc-cloak">
+  <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi again!</h3>
+      <p class="md-text-center">This is a popup with custom positioned buttons!</p>
+  </div>
+</div>
   `,
   // eslint-disable-next-line es5/no-template-literals
-  css: ``,
+  css: `
+.mbsc-popup-button {
+  line-height: 0 !important;
+}
+  `,
 };
