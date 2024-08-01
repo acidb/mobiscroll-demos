@@ -1,5 +1,4 @@
-<mbsc-eventcalendar [data]="myEvents" [resources]="myResources" [options]="calendarOptions" [(selectedDate)]="calendarSelectedDate">
-</mbsc-eventcalendar>
+<mbsc-eventcalendar #calendar [data]="myEvents" [resources]="myResources" [options]="calendarOptions"></mbsc-eventcalendar>
 <mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" [headerText]="popupHeaderText" #popup>
   <div class="mbsc-form-group">
     <mbsc-input label="Title" [(ngModel)]="popupEventTitle"></mbsc-input>
