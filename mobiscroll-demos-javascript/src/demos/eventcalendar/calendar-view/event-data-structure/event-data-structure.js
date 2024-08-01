@@ -3,15 +3,15 @@ import * as mobiscroll from '@mobiscroll/javascript';
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    var now = new Date();
-    var cal = mobiscroll.eventcalendar('#demo', {
+    mobiscroll.setOptions({
       // locale,
-      // theme,
-      // drag,
+      // theme
+    });
+
+    var now = new Date();
+    var calendar = mobiscroll.eventcalendar('#demo-event-data', {
       view: {
-        calendar: {
-          labels: true,
-        },
+        calendar: { labels: true },
       },
       data: [
         {
@@ -23,7 +23,7 @@ export default {
       ],
     });
 
-    document.getElementById('add-event').addEventListener('click', function () {
+    document.getElementById('demo-event-data-add').addEventListener('click', function () {
       var newEvent = {
         // base properties
         title: 'Product planning',
@@ -36,8 +36,8 @@ export default {
         location: 'Office',
       };
 
-      cal.addEvent(newEvent);
-      cal.navigateToEvent(newEvent);
+      calendar.addEvent(newEvent);
+      calendar.navigateToEvent(newEvent);
 
       mobiscroll.toast({
         message: 'Event added',
@@ -46,9 +46,19 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo"></div>
-<div class="mbsc-button-group-block">
-    <button mbsc-button id="add-event">Add event to calendar</button>
+<div mbsc-page class="mds-full-height">
+  <div class="mds-full-height mbsc-flex-col">
+    <div class="mbsc-flex-none">
+      <button mbsc-button id="demo-event-data-add" data-start-icon="plus">Add event to calendar</button>
+    </div>
+    <div id="demo-event-data" class="mbsc-flex-1-1"></div>
+  </div>
 </div>
+  `,
+  // eslint-disable-next-line es5/no-template-literals
+  css: `
+.mds-full-height {
+  height: 100%;
+}
   `,
 };

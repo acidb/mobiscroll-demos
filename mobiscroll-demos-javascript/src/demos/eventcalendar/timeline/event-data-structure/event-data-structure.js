@@ -8,11 +8,9 @@ export default {
       // theme
     });
 
-    var cal = mobiscroll.eventcalendar('#demo', {
+    var calendar = mobiscroll.eventcalendar('#demo-event-data', {
       view: {
-        timeline: {
-          type: 'day',
-        },
+        timeline: { type: 'day' },
       },
       data: [
         {
@@ -25,35 +23,15 @@ export default {
         },
       ],
       resources: [
-        {
-          id: 1,
-          name: 'Resource A',
-          color: '#fdf500',
-        },
-        {
-          id: 2,
-          name: 'Resource B',
-          color: '#ff0101',
-        },
-        {
-          id: 3,
-          name: 'Resource C',
-          color: '#01adff',
-        },
-        {
-          id: 4,
-          name: 'Resource D',
-          color: '#239a21',
-        },
-        {
-          id: 5,
-          name: 'Resource E',
-          color: '#ff4600',
-        },
+        { id: 1, name: 'Resource A', color: '#fdf500' },
+        { id: 2, name: 'Resource B', color: '#ff0101' },
+        { id: 3, name: 'Resource C', color: '#01adff' },
+        { id: 4, name: 'Resource D', color: '#239a21' },
+        { id: 5, name: 'Resource E', color: '#ff4600' },
       ],
     });
 
-    document.getElementById('add-event').addEventListener('click', function () {
+    document.getElementById('demo-event-data-add').addEventListener('click', function () {
       var newEvent = {
         // base properties
         title: 'Product planning',
@@ -68,8 +46,8 @@ export default {
         location: 'Office',
       };
 
-      cal.addEvent(newEvent);
-      cal.navigateToEvent(newEvent);
+      calendar.addEvent(newEvent);
+      calendar.navigateToEvent(newEvent);
 
       mobiscroll.toast({
         message: 'Event added',
@@ -78,9 +56,19 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo"></div>
-<div class="mbsc-button-group-block">
-    <button mbsc-button id="add-event">Add event to calendar</button>
+<div mbsc-page class="mds-full-height">
+  <div class="mds-full-height mbsc-flex-col">
+    <div class="mbsc-flex-none">
+      <button mbsc-button id="demo-event-data-add" data-start-icon="plus">Add event to calendar</button>
+    </div>
+    <div id="demo-event-data" class="mbsc-flex-1-1"></div>
+  </div>
 </div>
+  `,
+  // eslint-disable-next-line es5/no-template-literals
+  css: `
+.mds-full-height {
+  height: 100%;
+}
   `,
 };

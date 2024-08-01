@@ -1,5 +1,11 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscDateType, MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendar,
+  MbscEventcalendarView,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -18,6 +24,9 @@ const now = new Date();
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
+
   myEvents: MbscCalendarEvent[] = [
     {
       start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
@@ -26,8 +35,6 @@ export class AppComponent {
       color: '#35bb5a',
     },
   ];
-
-  mySelectedDate: MbscDateType = new Date();
 
   myView: MbscEventcalendarView = { agenda: { type: 'month' } };
 
@@ -44,8 +51,8 @@ export class AppComponent {
       location: 'Office',
     };
 
-    this.mySelectedDate = new Date(2018, 11, 21);
     this.myEvents = [...this.myEvents, newEvent];
+    this.calendar.navigateToEvent(newEvent);
 
     this.notify.toast({
       message: 'Event added',
