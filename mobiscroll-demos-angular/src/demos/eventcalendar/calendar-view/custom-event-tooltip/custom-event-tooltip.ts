@@ -2,15 +2,15 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
-  MbscEventcalendarOptions,
+  MbscEventcalendarView,
+  MbscEventClickEvent,
   MbscPopup,
-  MbscPopupOptions,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
-interface MyEvent extends MbscCalendarEvent {
+interface Appointment extends MbscCalendarEvent {
   age?: number;
   confirmed?: boolean;
   location?: string;
@@ -31,10 +31,11 @@ setOptions({
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
+
   @ViewChild('popup', { static: false })
   tooltip!: MbscPopup;
 
-  appointments: MyEvent[] = [
+  appointments: Appointment[] = [
     {
       title: 'Jude Chester',
       age: 69,
@@ -267,110 +268,89 @@ export class AppComponent {
     },
   ];
 
-  currentEvent!: MyEvent;
-  status?: string;
+  appointment!: Appointment;
+  appointmentColor?: string;
+  appointmentInfo?: string;
+  appointmentLocation?: string;
+  appointmentReason?: string;
+  appointmentStatus?: string;
+  appointmentTime?: string;
   buttonText?: string;
   buttonType?: 'success' | 'warning';
-  bgColor?: string;
-  info?: string;
-  time?: string;
-  reason?: string;
-  location?: string;
-  anchor?: HTMLElement;
-  timer: any;
+  myView: MbscEventcalendarView = { calendar: { type: 'week' } };
+  popupAnchor?: HTMLElement;
+  timer?: ReturnType<typeof setTimeout>;
 
-  calendarOptions: MbscEventcalendarOptions = {
-    view: {
-      calendar: {
-        type: 'week',
-      },
-    },
-    clickToCreate: false,
-    dragToCreate: false,
-    dragToMove: true,
-    dragToResize: false,
-    showEventTooltip: false,
-    height: 260,
-    onEventHoverIn: (args) => {
-      const event: MyEvent = args.event;
-      const time = formatDate('hh:mm A', new Date(event.start as string)) + ' - ' + formatDate('hh:mm A', new Date(event.end as string));
+  onEventDragStart(): void {
+    this.tooltip.close();
+  }
 
-      this.currentEvent = event;
+  onEventHoverIn(args: MbscEventClickEvent): void {
+    const event: Appointment = args.event;
+    const time = formatDate('hh:mm A', new Date(event.start as string)) + ' - ' + formatDate('hh:mm A', new Date(event.end as string));
 
-      if (event.confirmed) {
-        this.status = 'Confirmed';
-        this.buttonText = 'Cancel appointment';
-        this.buttonType = 'warning';
-      } else {
-        this.status = 'Canceled';
-        this.buttonText = 'Confirm appointment';
-        this.buttonType = 'success';
-      }
+    if (event.confirmed) {
+      this.appointmentStatus = 'Confirmed';
+      this.buttonText = 'Cancel appointment';
+      this.buttonType = 'warning';
+    } else {
+      this.appointmentStatus = 'Canceled';
+      this.buttonText = 'Confirm appointment';
+      this.buttonType = 'success';
+    }
 
-      this.bgColor = event.color;
-      this.info = event.title + ', Age: ' + event.age;
-      this.time = time;
-      this.reason = event.reason;
-      this.location = event.location;
+    this.appointment = event;
+    this.appointmentColor = event.color;
+    this.appointmentInfo = event.title + ', Age: ' + event.age;
+    this.appointmentLocation = event.location;
+    this.appointmentReason = event.reason;
+    this.appointmentTime = time;
+    this.popupAnchor = args.domEvent.target.closest('.mbsc-calendar-label');
 
-      clearTimeout(this.timer);
-      this.timer = null;
+    clearTimeout(this.timer);
+    this.timer = undefined;
 
-      this.anchor = args.domEvent.target;
-      this.tooltip.open();
-    },
-    onEventHoverOut: () => {
-      if (!this.timer) {
-        this.timer = setTimeout(() => {
-          this.tooltip.close();
-        }, 200);
-      }
-    },
-    onEventClick: () => {
-      this.tooltip.open();
-    },
-  };
+    this.tooltip.open();
+  }
 
-  popupOptions: MbscPopupOptions = {
-    display: 'anchored',
-    touchUi: false,
-    showOverlay: false,
-    contentPadding: false,
-    closeOnOverlayClick: false,
-    width: 350,
-  };
-
-  mouseEnter(): void {
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
+  onEventHoverOut(): void {
+    if (!this.timer) {
+      this.timer = setTimeout(() => {
+        this.tooltip.close();
+      }, 200);
     }
   }
 
-  mouseLeave(): void {
+  onMouseEnter(): void {
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = undefined;
+    }
+  }
+
+  onMouseLeave(): void {
     this.timer = setTimeout(() => {
       this.tooltip.close();
     }, 200);
   }
 
-  setStatus(): void {
-    const index = this.appointments.findIndex((item: any) => item.id === this.currentEvent.id);
-    this.appointments[index].confirmed = !this.appointments[index].confirmed;
+  setAppointmentStatus(): void {
+    this.appointment.confirmed = !this.appointment.confirmed;
     this.tooltip.close();
     this.notify.toast({
-      message: 'Appointment ' + (this.currentEvent.confirmed ? 'confirmed' : 'canceled'),
+      message: 'Appointment ' + (this.appointment.confirmed ? 'confirmed' : 'canceled'),
     });
   }
 
-  viewFile(): void {
+  viewAppointmentFile(): void {
     this.tooltip.close();
     this.notify.toast({
       message: 'View file',
     });
   }
 
-  deleteApp(): void {
-    this.appointments = this.appointments.filter((item: any) => item.id !== this.currentEvent.id);
+  deleteAppointment(): void {
+    this.appointments = this.appointments.filter((item) => item.id !== this.appointment.id);
     this.tooltip.close();
     this.notify.toast({
       message: 'Appointment deleted',
