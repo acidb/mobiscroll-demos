@@ -9,11 +9,10 @@ export default {
       // theme
     });
 
-    // refactor ids, class names
-    // change the popup content from "showing the control"
+    // change the popup content
 
     $(function () {
-      var bottomPopup = $('#popup-bottom')
+      var bottomPopup = $('#demo-popup-display-bottom')
         .mobiscroll()
         .popup({
           // context,
@@ -28,7 +27,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var topPopup = $('#popup-top')
+      var topPopup = $('#demo-popup-display-top')
         .mobiscroll()
         .popup({
           // context,
@@ -43,7 +42,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var centerPopup = $('#popup-center')
+      var centerPopup = $('#demo-popup-display-center')
         .mobiscroll()
         .popup({
           // context,
@@ -59,12 +58,12 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var anchoredPopup = $('#popup-anchored')
+      var anchoredPopup = $('#demo-popup-display-anchored')
         .mobiscroll()
         .popup({
           // context,
           display: 'anchored',
-          anchor: $('#show-anchored')[0],
+          anchor: $('#demo-popup-display-anchored-btn')[0],
           buttons: [
             {
               text: 'Ok',
@@ -75,22 +74,22 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#show-bottom').on('click', function () {
+      $('#demo-popup-display-bottom-btn').on('click', function () {
         bottomPopup.open();
         return false;
       });
 
-      $('#show-top').on('click', function () {
+      $('#demo-popup-display-top-btn').on('click', function () {
         topPopup.open();
         return false;
       });
 
-      $('#show-center').on('click', function () {
+      $('#demo-popup-display-center-btn').on('click', function () {
         centerPopup.open();
         return false;
       });
 
-      $('#show-anchored').on('click', function () {
+      $('#demo-popup-display-anchored-btn').on('click', function () {
         anchoredPopup.open();
         return false;
       });
@@ -102,35 +101,35 @@ export default {
   <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Try different display modes</div>
       <div class="mbsc-form-group mbsc-button-group-block">
-      <button mbsc-button id="show-anchored">Try anhored display mode</button>
-      <button mbsc-button id="show-top">Try top display mode</button>
-      <button mbsc-button id="show-center">Try center display mode</button>
-          <button mbsc-button id="show-bottom">Try bottom display mode</button>
+        <button mbsc-button id="demo-popup-display-anchored-btn">Try anhored display mode</button>
+        <button mbsc-button id="demo-popup-display-top-btn">Try top display mode</button>
+        <button mbsc-button id="demo-popup-display-center-btn">Try center display mode</button>
+        <button mbsc-button id="demo-popup-display-bottom-btn">Try bottom display mode</button>
       </div>
   </div>
 </div>
-<div id="popup-bottom" class="mbsc-cloak">
+<div id="demo-popup-display-bottom" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
       <h4>Welcome on our website!</h4>
       <p>Have fun navigating through the demos.</p>
   </div>
 </div>
-<div id="popup-top" class="mbsc-cloak">
+<div id="demo-popup-display-top" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
       <h4>Welcome on our website!</h4>
       <p>Have fun navigating through the demos.</p>
   </div>
 </div>
-<div id="popup-center" class="mbsc-cloak">
+<div id="demo-popup-display-center" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
       <h4>Welcome on our website!</h4>
       <p>Have fun navigating through the demos.</p>
   </div>
 </div>
-<div id="popup-anchored" class="mbsc-cloak">
+<div id="demo-popup-display-anchored" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
       <h4>Welcome on our website!</h4>
@@ -138,6 +137,4 @@ export default {
   </div>
 </div>
   `,
-  // eslint-disable-next-line es5/no-template-literals
-  css: ``,
 };

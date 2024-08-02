@@ -323,10 +323,13 @@ import Demo387 from './demos/pickers/select/themes-ios-material-windows/themes-i
 import Demo276 from './demos/pickers/select/event-hooks/event-hooks';
 import Demo471 from './demos/pickers/select/localization/localization';
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
-import Demo752 from './demos/pickers/popup/showing-popover/showing-popover';
-import Demo754 from './demos/pickers/popup/mobile-desktop-display/mobile-desktop-display';
-import Demo755 from './demos/pickers/popup/button-configuration/button-configuration';
-import Demo756 from './demos/pickers/popup/responsive/responsive';
+
+// temporary ids
+import Demo901 from './demos/pickers/popup/showing-popover/showing-popover';
+import Demo902 from './demos/pickers/popup/mobile-desktop-display/mobile-desktop-display';
+import Demo903 from './demos/pickers/popup/button-configuration/button-configuration';
+import Demo904 from './demos/pickers/popup/range-picking-popover/range-picking-popover';
+import Demo905 from './demos/pickers/popup/hover-popover/hover-popover';
 
 export const demos = [
   {
@@ -1192,38 +1195,21 @@ export const demos = [
         items: [
           {
             name: 'Using the popup',
-            unique: 7, // ???
+            unique: 7,
             items: [
-              { name: 'Showing the control', unique: 'showing-popover', component: Demo752 },
-              //              { name: 'Adding content to it', unique: 'content-initialization', component: DemoXXX},
-              { name: 'Understanding display modes', unique: 'mobile-desktop-display', component: Demo754 },
-              { name: 'Configure buttons', unique: 'button-configuration', component: Demo755 },
-              { name: 'Responsive', unique: 'responsive', component: Demo756 },
+              { name: 'Showing the control', unique: 'showing-popover', component: Demo901 },
+              { name: 'Understanding display modes', unique: 'mobile-desktop-display', component: Demo902 },
+              { name: 'Configure buttons', unique: 'button-configuration', component: Demo903 },
             ],
           },
-          // {
-          //   name: 'Common use cases',
-          //   unique: 20, // ???
-          //   items: [
-          //     { name: '', unique: '', component: Demo468 },
-
-          //   ],
-          // },
-          // {
-          //   name: 'Customizing the look and feel',
-          //   unique: 5, // ???
-          //   items: [
-          //     { name: '', unique: '', component: Demo468 },
-
-          //   ],
-          // },
-          // {
-          //   name: 'Lifecycle events',
-          //   unique: 6, // ???
-          //   items: [
-          //     { name: '', unique: '', component: Demo468 },
-          //   ],
-          // },
+          {
+            name: 'Common use cases',
+            unique: 20,
+            items: [
+              { name: 'Custom range picking popover', unique: 'range-picking-popover', component: Demo904 },
+              { name: 'Opening a popup on hover', unique: 'hover-popover', component: Demo905 },
+            ],
+          },
         ],
       },
     ],

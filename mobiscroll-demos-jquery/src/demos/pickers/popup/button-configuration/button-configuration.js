@@ -9,11 +9,11 @@ export default {
       // theme
     });
 
-    // remove css important, refactor ids, class names
-    // customPositioning buttons not appear
+    // custom icon with icon, why dont align well out of box?
+    // custom positioning, need? too much css workaround
 
     $(function () {
-      var defaultButtons = $('#default')
+      var defaultButtons = $('#demo-popup-btn-conf-default')
         .mobiscroll()
         .popup({
           // context,
@@ -21,18 +21,18 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var customButtons = $('#custom')
+      var customButtons = $('#demo-popup-btn-conf-custom')
         .mobiscroll()
         .popup({
           // context,
+          class: 'popup-btn-conf-custom',
           display: 'center',
           buttons: [
             'set',
             {
               text: 'Custom',
               icon: 'checkmark',
-              cssClass: 'my-btn',
-              handler: function (event) {
+              handler: function () {
                 mobiscroll.toast({
                   // context,
                   message: 'Custom button clicked!',
@@ -44,12 +44,19 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var customPositioning = $('#positioned')
+      var customPositioning = $('#demo-popup-btn-conf-positioned')
         .mobiscroll()
         .popup({
           // context,
-          display: 'bottom',
-          buttons: ['set', 'cancel'],
+          class: 'popup-btn-conf-positioned',
+          display: 'center',
+          buttons: [
+            'set',
+            {
+              text: 'Close',
+              handler: 'cancel',
+            },
+          ],
         })
         .mobiscroll('getInst');
 
@@ -81,19 +88,19 @@ export default {
     </div>
 </div>
 </div>
-<div id="default" class="mbsc-cloak">
+<div id="demo-popup-btn-conf-default" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <h3 class="md-text-center">Hi there!</h3>
       <p class="md-text-center">This is the default with no buttons.</p>
   </div>
 </div>
-<div id="custom" class="mbsc-cloak">
+<div id="demo-popup-btn-conf-custom" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <h3 class="md-text-center">Hi again!</h3>
       <p class="md-text-center">This is a popup with a custom button and predefined buttons.</p>
   </div>
 </div>
-<div id="positioned" class="mbsc-cloak">
+<div id="demo-popup-btn-conf-positioned" class="mbsc-cloak">
   <div class="mbsc-align-center mbsc-padding">
       <h3 class="md-text-center">Hi again!</h3>
       <p class="md-text-center">This is a popup with custom positioned buttons!</p>
@@ -102,8 +109,21 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mbsc-popup-button {
-  line-height: 0 !important;
+.popup-btn-conf-custom .mbsc-icon-button {
+  padding: 0;
+  height: 2.5em;
 }
+
+.popup-btn-conf-custom .mbsc-material .mbsc-icon-button{
+  width: 7em;
+	border-radius: .285715em;
+}
+
+/* 
+.popup-btn-conf-positioned .mbsc-popup-buttons {
+  order: -1;
+  border-bottom: 1px solid; 
+}
+*/
   `,
 };

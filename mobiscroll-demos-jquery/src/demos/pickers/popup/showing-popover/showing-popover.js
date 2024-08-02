@@ -9,30 +9,40 @@ export default {
       // theme
     });
 
-    // refactor ids, class names
-
     $(function () {
-      var account = $('#demo')
+      var subscribe = $('#demo-showing-popover')
         .mobiscroll()
         .popup({
           // context,
           display: 'center',
+          buttons: [
+            {
+              text: 'Subscribe',
+              handler: 'cancel',
+            },
+          ],
         })
         .mobiscroll('getInst');
 
-      var update = $('#list')
+      var update = $('#showing-popover-list')
         .mobiscroll()
         .popup({
           // context,
           display: 'center',
-          onClose: function (event, inst) {
+          buttons: [
+            {
+              text: 'Ok',
+              handler: 'cancel',
+            },
+          ],
+          onClose: function () {
             $('#showPopup').val($('input[name="update"]:checked').val());
           },
         })
         .mobiscroll('getInst');
 
       $('#showAccount').on('click', function () {
-        account.open();
+        subscribe.open();
         return false;
       });
       $('#showPopup').on('click', function () {
@@ -61,7 +71,7 @@ export default {
   </div>
 </div>
 
-<div id="demo" class="mbsc-cloak">
+<div id="demo-showing-popover" class="mbsc-cloak">
   <div class="mbsc-align-center Offmbsc-padding">
     <img class="responsive-logo" src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
     <h2>Stay with us!</h2>
@@ -81,15 +91,10 @@ export default {
         <input mbsc-segmented type="radio" name="range">
       </label>
     </div>
-    <div class="mbsc-button-group-block">
-      <button mbsc-button id="close-popup">
-        Subscribe
-      </button>
-    </div>
   </div>
 </div>
 
-<div id="list" class="mbsc-cloak">
+<div id="showing-popover-list" class="mbsc-cloak">
   <div mbsc-form>
     <div class="mbsc-form-group-inset">
       <p>Some updates are available for you. <br> When would you like to install them?</p>
@@ -108,7 +113,4 @@ export default {
   </div>
 </div>
   `,
-  // eslint-disable-next-line es5/no-template-literals
-  css: `
-`,
 };
