@@ -62,9 +62,9 @@ export default {
 
         header +=
           '</div>' +
-          '<button mbsc-calendar-prev></button>' +
-          '<button mbsc-calendar-today></button>' +
-          '<button mbsc-calendar-next></button>';
+          '<button mbsc-calendar-prev class="mds-header-filter-prev"></button>' +
+          '<button mbsc-calendar-today class="mds-header-filter-today"></button>' +
+          '<button mbsc-calendar-next class="mds-header-filter-next"></button>';
         return header;
       },
     });
@@ -142,6 +142,22 @@ export default {
 .mds-header-filter-3 .mbsc-button.mbsc-selected.mbsc-windows,
 .mds-header-filter-3 .mbsc-segmented-selectbox-inner {
   background: #ea72c0;
+}
+
+.mbsc-material .mds-header-filter-prev {
+  order: 1;
+}
+
+.mbsc-material .mds-header-filter-next {
+  order: 2;
+}
+
+.mbsc-material .mds-header-filter {
+  order: 3;
+}
+
+.mbsc-material .mds-header-filter-today {
+  order: 4;
 }
   `,
 };

@@ -1,4 +1,12 @@
-<mbsc-eventcalendar [data]="filteredEvents" [headerTemplate]="customHeaderTemplate" [view]="myView">
+<mbsc-eventcalendar
+  [clickToCreate]="false"
+  [dragToCreate]="false"
+  [dragToMove]="true"
+  [dragToResize]="true"
+  [data]="filteredEvents"
+  [headerTemplate]="customHeaderTemplate"
+  [view]="myView"
+>
   <ng-template #customHeaderTemplate>
     <mbsc-calendar-nav class="mds-header-filter-nav"></mbsc-calendar-nav>
     <div class="mds-header-filter mbsc-flex-1-0">
@@ -9,8 +17,8 @@
         </mbsc-segmented>
       </mbsc-segmented-group>
     </div>
-    <mbsc-calendar-prev></mbsc-calendar-prev>
-    <mbsc-calendar-today></mbsc-calendar-today>
-    <mbsc-calendar-next></mbsc-calendar-next>
+    <mbsc-calendar-prev class="mds-header-filter-prev"></mbsc-calendar-prev>
+    <mbsc-calendar-today class="mds-header-filter-today"></mbsc-calendar-today>
+    <mbsc-calendar-next class="mds-header-filter-next"></mbsc-calendar-next>
   </ng-template>
 </mbsc-eventcalendar>
