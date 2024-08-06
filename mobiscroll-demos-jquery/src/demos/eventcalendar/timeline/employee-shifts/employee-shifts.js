@@ -23,15 +23,29 @@ export default {
       }
 
       function fillPopup(event) {
-        // Load event properties
-        eventStart = new Date(event.start);
-        eventEnd = new Date(event.end);
-        eventTitle = event.title;
-
-        // Set event fields
-        $eventNotes.mobiscroll('getInst').value = event.notes || '';
+        $shiftNotes.mobiscroll('getInst').value = event.notes || '';
         eventStartEndPicker.setOptions({ minTime: event.slot == 1 ? '07:00' : '12:00', maxTime: event.slot == 1 ? '13:00' : '18:00' });
-        eventStartEndPicker.setVal([eventStart, eventEnd]);
+        eventStartEndPicker.setVal([new Date(event.start), new Date(event.end)]);
+      }
+
+      function saveEvent(event) {
+        var dates = eventStartEndPicker.getVal();
+        var start = dates[0];
+        var end = dates[1] ? dates[1] : dates[0];
+
+        var shiftStart = new Date(event.start);
+        var shiftEnd = new Date(event.end);
+
+        shiftStart.setHours(start.getHours(), start.getMinutes(), 0, 0);
+        shiftEnd.setHours(end.getHours(), end.getMinutes(), 0, 0);
+
+        event.start = shiftStart;
+        event.end = shiftEnd;
+        event.title = formatDate('HH:mm', start) + ' - ' + formatDate('HH:mm', end);
+        event.notes = $shiftNotes.val();
+
+        calendar.updateEvent(event);
+        addEditPopup.close();
       }
 
       function createAddPopup(event) {
@@ -42,20 +56,19 @@ export default {
         });
 
         // Hide delete button inside add popup
-        $eventDeleteButton.parent().hide();
+        $shiftDeleteButton.parent().hide();
 
-        // Fill popup with the event data
-        fillPopup(event);
+        shift = event;
 
         // Set popup header text and buttons
         addEditPopup.setOptions({
           headerText:
             '<div>New shift</div><div class="mds-employee-shifts-header">' +
-            formatDate('DDDD', eventStart) +
+            formatDate('DDDD', new Date(event.start)) +
             ' ' +
             slot.name +
             ', ' +
-            formatDate('D MMMM YYYY', eventStart) +
+            formatDate('D MMMM YYYY', new Date(event.start)) +
             '</div>',
           buttons: [
             'cancel',
@@ -64,14 +77,7 @@ export default {
               keyCode: 'enter',
               handler: function () {
                 success = true;
-
-                event.start = eventStart;
-                event.end = eventEnd;
-                event.title = eventTitle;
-                event.notes = $eventNotes.val();
-
-                calendar.updateEvent(event);
-                addEditPopup.close();
+                saveEvent(event);
               },
               addEditPopup: 'mbsc-popup-button-primary',
             },
@@ -89,9 +95,9 @@ export default {
 
       function createEditPopup(event) {
         // Show delete button inside edit popup
-        $eventDeleteButton.parent().show();
+        $shiftDeleteButton.parent().show();
 
-        editedEvent = event;
+        shift = event;
 
         var resource = staff.find(function (r) {
           return r.id === event.resource;
@@ -108,11 +114,11 @@ export default {
             '<div>Edit ' +
             resource.name +
             '\'s hours</div><div class="mds-employee-shifts-header">' +
-            formatDate('DDDD', eventStart) +
+            formatDate('DDDD', new Date(event.start)) +
             ' ' +
             slot.name +
             ', ' +
-            formatDate('D MMMM YYYY', eventStart) +
+            formatDate('D MMMM YYYY', new Date(event.start)) +
             '</div>',
           buttons: [
             'cancel',
@@ -120,13 +126,7 @@ export default {
               text: 'Save',
               keyCode: 'enter',
               handler: function () {
-                event.start = eventStart;
-                event.end = eventEnd;
-                event.title = eventTitle;
-                event.notes = $eventNotes.val();
-
-                calendar.updateEvent(event);
-                addEditPopup.close();
+                saveEvent(event);
               },
               cssClass: 'mbsc-popup-button-primary',
             },
@@ -138,13 +138,10 @@ export default {
 
       var formatDate = mobiscroll.formatDate;
 
-      var editedEvent;
-      var eventStart;
-      var eventEnd;
-      var eventTitle;
+      var shift;
 
-      var $eventNotes = $('#demo-popup-shift-notes');
-      var $eventDeleteButton = $('#demo-popup-shift-delete');
+      var $shiftNotes = $('#demo-popup-shift-notes');
+      var $shiftDeleteButton = $('#demo-popup-shift-delete');
 
       var staff = [
         {
@@ -474,8 +471,7 @@ export default {
           },
           scrollLock: false,
           onOpen: function () {
-            // Trigger textarea sizing
-            $eventNotes.mobiscroll('getInst').value = $eventNotes.val();
+            fillPopup(shift);
           },
         })
         .mobiscroll('getInst');
@@ -492,25 +488,16 @@ export default {
           endInput: '#demo-popup-shift-end',
           timeWheels: '|h:mm A|',
           touchUi: false,
-          onChange: function (args) {
-            var date = args.value;
-            var start = date[0];
-            var end = date[1] ? date[1] : date[0];
-
-            eventStart.setHours(start.getHours(), start.getMinutes(), 0, 0);
-            eventEnd.setHours(end.getHours(), end.getMinutes(), 0, 0);
-            eventTitle = formatDate('HH:mm', eventStart) + ' - ' + formatDate('HH:mm', eventEnd);
-          },
         })
         .mobiscroll('getInst');
 
-      $eventDeleteButton.on('click', function () {
-        calendar.removeEvent(editedEvent);
+      $shiftDeleteButton.on('click', function () {
+        calendar.removeEvent(shift);
 
         addEditPopup.close();
 
         // Save a local reference to the deleted event
-        var deletedEvent = editedEvent;
+        var deletedEvent = shift;
 
         mobiscroll.snackbar({
           //<hidden>
