@@ -1,28 +1,68 @@
 <mbsc-eventcalendar
+  class="mds-employee-shifts"
+  [clickToCreate]="true"
+  [dragToCreate]="false"
+  [dragToResize]="false"
+  [dragToMove]="true"
   [data]="shifts"
-  [options]="calendarOptions"
-  [resourceTemplate]="resourceTemp"
-  [extendDefaultEvent]="defaultShift"
-  class="md-employee-shifts"
+  [eventOverlap]="false"
+  [extendDefaultEvent]="getShiftTimes"
+  [invalid]="myInvalids"
+  [resources]="staff"
+  [resourceTemplate]="myResourceTemplate"
+  [slots]="mySlots"
+  [view]="myView"
+  (onEventClick)="handleEventClick($event)"
+  (onEventCreated)="handleEventCreated($event)"
+  (onEventCreateFailed)="handleEventCreateFailed()"
+  (onEventDeleted)="handleEventDeleted($event)"
+  (onEventUpdated)="handleEventUpdated($event)"
+  (onEventUpdateFailed)="handleEventUpdateFailed()"
 >
-  <ng-template #resourceTemp let-resource>
-    <div class="employee-shifts-cont">
-      <div class="employee-shifts-name">{{resource.name}}</div>
-      <div class="employee-shifts-title">{{resource.title}}</div>
-      <img class="employee-shifts-avatar" [attr.alt]="resource.name" [src]="resource.img" />
+  <ng-template #myResourceTemplate let-resource>
+    <div class="mbsc-flex">
+      <img class="mds-employee-shifts-avatar" [attr.alt]="resource.name" [src]="resource.img" />
+      <div class="mds-employee-shifts-cont">
+        <div class="mds-employee-shifts-name">{{resource.name}}</div>
+        <div class="mds-employee-shifts-title">{{resource.title}}</div>
+      </div>
     </div>
   </ng-template>
 </mbsc-eventcalendar>
-<mbsc-popup [options]="popupOptions" [buttons]="popupButtons" [headerText]="popupHeader" #popup class="employee-shifts-popup">
+
+<mbsc-popup
+  #popup
+  display="bottom"
+  [buttons]="popupButtons"
+  [contentPadding]="false"
+  [fullScreen]="true"
+  [headerText]="popupHeader"
+  [responsive]="popupResponsive"
+  [scrollLock]="false"
+  (onClose)="handlePopupClose()"
+>
+  <mbsc-datepicker
+    display="anchored"
+    select="range"
+    timeWheels="|h:mm A|"
+    [controls]="['time']"
+    [minTime]="minTime"
+    [maxTime]="maxTime"
+    [showRangeLabels]="false"
+    [stepMinute]="30"
+    [startInput]="start"
+    [endInput]="end"
+    [touchUi]="false"
+    [(ngModel)]="shiftDates"
+  />
   <div class="mbsc-form-group">
-    <mbsc-input #start label="Shift start" data-dropdown="true"></mbsc-input>
-    <mbsc-input #end label="Shift end" data-dropdown="true"></mbsc-input>
-    <mbsc-datepicker [(ngModel)]="shiftDate" [startInput]="start" [endInput]="end" [options]="rangeOptions"></mbsc-datepicker>
+    <mbsc-input #start [dropdown]="true" label="Shift start"></mbsc-input>
+    <mbsc-input #end [dropdown]="true" label="Shift end"></mbsc-input>
   </div>
   <div class="mbsc-form-group">
     <mbsc-textarea label="Notes" [(ngModel)]="shiftNotes"></mbsc-textarea>
   </div>
   <div *ngIf="isEdit" class="mbsc-button-group">
-    <mbsc-button class="mbsc-button-block" color="danger" variant="outline" (click)="onDeleteClick()">Delete shift</mbsc-button>
+    <mbsc-button class="mbsc-button-block" color="danger" variant="outline" (click)="handleShiftDeleteClick()"> Delete shift </mbsc-button>
   </div>
 </mbsc-popup>
