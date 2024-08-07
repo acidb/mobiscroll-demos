@@ -477,7 +477,7 @@ const myView = ref<MbscEventcalendarView>({
 
 function openTooltip(args: MbscEventClickEvent) {
   const event: MbscCalendarEvent = args.event
-  const doctor = doctors.find((dr) => dr.id === event.resource)!
+  const doctor: MbscResource = args.resourceObj
   const time =
     formatDate('hh:mm A', new Date(event.start as string)) +
     ' - ' +
