@@ -133,7 +133,7 @@ export class AppComponent implements OnInit {
     }),
     onEventClick: (args: any) => {
       const event = args.event;
-      const resource = args.resourceObj;
+      const resource = args.resourceObj!;
       this.isEdit = true;
       this.tempMeal = event;
       // fill popup form with event data

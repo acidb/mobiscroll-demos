@@ -402,7 +402,7 @@ export class AppComponent {
   handleEventCreated(args: MbscEventCreatedEvent) {
     setTimeout(() => {
       const event = args.event;
-      const slot = args.slotObj;
+      const slot = args.slotObj!;
 
       this.fillPopup(event, false);
       this.popupButtons = [

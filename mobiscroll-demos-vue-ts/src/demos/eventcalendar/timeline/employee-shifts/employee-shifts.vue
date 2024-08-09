@@ -370,8 +370,8 @@ function saveEvent(event: MbscCalendarEvent) {
 
 function handleEventClick(args: MbscEventClickEvent) {
   const event = args.event
-  const resource = args.resourceObj
-  const slot = args.slotObj
+  const resource = args.resourceObj!
+  const slot = args.slotObj!
 
   fillPopup(event, true)
   popupButtons.value = [
@@ -400,7 +400,7 @@ function handleEventClick(args: MbscEventClickEvent) {
 
 function handleEventCreated(args: MbscEventCreatedEvent) {
   const event = args.event
-  const slot = args.slotObj
+  const slot = args.slotObj!
 
   fillPopup(event, false)
   popupButtons.value = [

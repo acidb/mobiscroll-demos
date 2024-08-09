@@ -208,13 +208,13 @@ function fillPopup(args: MbscEventClickEvent | MbscEventCreatedEvent) {
   popupTravelTime.value = event.bufferBefore || 0
   popupEventDates.value = [event.start, event.end]
   popupEventStatus.value = event.status || 'busy'
-  popupEventColor.value = event.color || args.resourceObj.color
+  popupEventColor.value = event.color || args.resourceObj!.color
 }
 
 function createAddPopup(args: MbscEventCreatedEvent) {
   const event: MbscCalendarEvent = args.event
   const target: any = args.target
-  const resource: MbscResource = args.resourceObj
+  const resource = args.resourceObj!
   // Hide delete button inside add popup
   isEdit.value = false
 
@@ -256,7 +256,7 @@ function createAddPopup(args: MbscEventCreatedEvent) {
 function createEditPopup(args: MbscEventClickEvent) {
   const event: MbscCalendarEvent = args.event
   const target: any = args.domEvent.currentTarget
-  const resource: MbscResource = args.resourceObj
+  const resource = args.resourceObj!
   // Show delete button inside edit popup
   isEdit.value = true
 

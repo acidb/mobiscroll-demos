@@ -493,7 +493,7 @@ export class AppComponent {
 
   onEventHoverIn(args: MbscEventClickEvent): void {
     const event: Appointment = args.event;
-    const doctor: MbscResource = args.resourceObj;
+    const doctor = args.resourceObj!;
     const time = formatDate('hh:mm A', new Date(event.start as string)) + ' - ' + formatDate('hh:mm A', new Date(event.end as string));
 
     if (event.confirmed) {

@@ -160,7 +160,7 @@ export class AppComponent {
   };
 
   loadChildResources(args: any) {
-    const resource = args.resourceObj;
+    const resource = args.resourceObj!;
 
     if (!resource['loaded']) {
       this.http.jsonp<any>('https://trial.mobiscroll.com/load-resources/?res=' + args.resource, 'callback').subscribe((data) => {

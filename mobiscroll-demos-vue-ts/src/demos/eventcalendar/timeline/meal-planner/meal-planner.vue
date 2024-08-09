@@ -172,7 +172,7 @@ function handleEventClick(args: any) {
 
 function handleEventCreated(args: any) {
   const event = args.event
-  const resource = args.resourceObj
+  const resource = args.resourceObj!
   isEdit.value = false
   tempMeal.value = event
   // fill popup form with event data

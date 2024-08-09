@@ -426,8 +426,8 @@ function App() {
   const handleEventClick = useCallback(
     (args: MbscEventClickEvent) => {
       const event = args.event;
-      const resource = args.resourceObj;
-      const slot = args.slotObj;
+      const resource = args.resourceObj!;
+      const slot = args.slotObj!;
 
       fillPopup(event, true);
       setPopupHeader(
@@ -449,7 +449,7 @@ function App() {
   const handleEventCreated = useCallback(
     (args: MbscEventCreatedEvent) => {
       const event = args.event;
-      const slot = args.slotObj;
+      const slot = args.slotObj!;
 
       fillPopup(event, false);
       setPopupHeader(

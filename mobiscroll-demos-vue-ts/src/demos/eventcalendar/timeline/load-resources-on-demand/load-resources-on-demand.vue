@@ -155,7 +155,7 @@ const myView: MbscEventcalendarView = {
 }
 
 function loadChildResources(args: any) {
-  const resource = args.resourceObj
+  const resource = args.resourceObj!
 
   if (resource && !resource.loaded) {
     getJson(
