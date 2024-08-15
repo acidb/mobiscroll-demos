@@ -73,6 +73,12 @@ export class AppComponent implements OnInit {
   onEventDragEnd(): void {
     // Logic for event drag end
   }
+  onEventDragEnter(): void {
+    // Logic for event drag enter
+  }
+  onEventDragLeave(): void {
+    // Logic for event drag leave
+  }
   onEventHoverIn(): void {
     // Logic for event hover in
   }

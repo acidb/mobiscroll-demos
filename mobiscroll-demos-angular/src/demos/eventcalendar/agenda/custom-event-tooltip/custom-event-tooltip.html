@@ -2,16 +2,16 @@
   [data]="appointments"
   [showEventTooltip]="false"
   [view]="myView"
+  (onEventClick)="onEventHoverIn($event)"
   (onEventHoverIn)="onEventHoverIn($event)"
   (onEventHoverOut)="onEventHoverOut()"
-  (onEventClick)="onEventHoverIn($event)"
 ></mbsc-eventcalendar>
 
 <mbsc-popup
   #popup
   [anchor]="popupAnchor"
-  [closeOnOverlayClick]="false"
   [contentPadding]="false"
+  [scrollLock]="false"
   [showOverlay]="false"
   [touchUi]="false"
   [width]="350"

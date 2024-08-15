@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
-import { MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendar,
+  MbscEventcalendarView,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -10,13 +16,18 @@ const now = new Date();
 
 @Component({
   selector: 'app-scheduler-event-data-structure',
+  styleUrl: './event-data-structure.css',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './event-data-structure.html',
   providers: [Notifications],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  myEvents = [
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
+
+  myEvents: MbscCalendarEvent[] = [
     {
       start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13),
       end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
@@ -27,16 +38,10 @@ export class AppComponent {
     },
   ];
 
-  selectedDate: any;
-
-  view: MbscEventcalendarView = {
-    schedule: {
-      type: 'day',
-    },
-  };
+  myView: MbscEventcalendarView = { schedule: { type: 'day' } };
 
   addEvent(): void {
-    const newEvent = {
+    const newEvent: MbscCalendarEvent = {
       // base properties
       title: 'Product planning',
       color: '#56ca70',
@@ -50,8 +55,8 @@ export class AppComponent {
       location: 'Office',
     };
 
-    this.selectedDate = new Date(2018, 11, 21);
     this.myEvents = [...this.myEvents, newEvent];
+    this.calendar.navigateToEvent(newEvent);
 
     this.notify.toast({
       message: 'Event added',

@@ -107,7 +107,7 @@ const myView: MbscEventcalendarView = {
 }
 const isEdit = ref<boolean>(false)
 const popupEventColor = ref<string>('')
-const mySelectedDate = ref<Date>()
+
 let addedEvent: MbscCalendarEvent | null = null
 let editedEvent: MbscCalendarEvent | null = null
 
@@ -168,6 +168,7 @@ const isColorPickerOpen = ref<boolean>(false)
 const tempColor = ref<string>('')
 const colorElm = ref<any>(null)
 const colorPopup = ref<any>(null)
+const calInst = ref<typeof MbscEventcalendar>()
 
 const colorButtons: any = [
   'cancel',
@@ -199,17 +200,21 @@ const snackbarButton: any = {
 }
 
 // Fills the popup with the event's data
-function fillPopup(event: MbscCalendarEvent) {
+function fillPopup(args: MbscEventClickEvent | MbscEventCreatedEvent) {
+  const event: MbscCalendarEvent = args.event
   popupEventTitle.value = event.title || ''
   popupEventDescription.value = event.description
   popupEventAllDay.value = event.allDay || false
   popupTravelTime.value = event.bufferBefore || 0
   popupEventDates.value = [event.start, event.end]
   popupEventStatus.value = event.status || 'busy'
-  popupEventColor.value = event.color || ''
+  popupEventColor.value = event.color || args.resourceObj!.color
 }
 
-function createAddPopup(event: MbscCalendarEvent, target: any) {
+function createAddPopup(args: MbscEventCreatedEvent) {
+  const event: MbscCalendarEvent = args.event
+  const target: any = args.target
+  const resource = args.resourceObj!
   // Hide delete button inside add popup
   isEdit.value = false
 
@@ -232,23 +237,26 @@ function createAddPopup(event: MbscCalendarEvent, target: any) {
           status: popupEventStatus.value,
           start: popupEventDates.value[0],
           end: popupEventDates.value[1],
-          color: popupEventColor.value,
+          color: popupEventColor.value || resource.color,
           resource: event.resource
         }
         myEvents.value = [...myEvents.value, newEvent]
-        mySelectedDate.value = popupEventDates.value[0]
         isPopupOpen.value = false
+        calInst.value?.instance.navigateToEvent(newEvent)
       },
       cssClass: 'mbsc-popup-button-primary'
     }
   ]
   popupAnchor.value = target
 
-  fillPopup(event)
+  fillPopup(args)
   isPopupOpen.value = true
 }
 
-function createEditPopup(event: MbscCalendarEvent, target: any) {
+function createEditPopup(args: MbscEventClickEvent) {
+  const event: MbscCalendarEvent = args.event
+  const target: any = args.domEvent.currentTarget
+  const resource = args.resourceObj!
   // Show delete button inside edit popup
   isEdit.value = true
 
@@ -271,31 +279,31 @@ function createEditPopup(event: MbscCalendarEvent, target: any) {
         updatedEvent.bufferBefore = popupTravelTime.value
         updatedEvent.start = popupEventDates.value[0]
         updatedEvent.end = popupEventDates.value[1]
-        updatedEvent.color = popupEventColor.value
+        updatedEvent.color = popupEventColor.value || resource.color
         updatedEvent.status = popupEventStatus.value
         // Update event
         let newEventList = [...myEvents.value]
         const index = newEventList.findIndex((x) => x.id === updatedEvent.id)
         newEventList[index] = updatedEvent
         myEvents.value = newEventList
-
         isPopupOpen.value = false
+        calInst.value?.instance.navigateToEvent(updatedEvent)
       },
       cssClass: 'mbsc-popup-button-primary'
     }
   ]
   popupAnchor.value = target
-  fillPopup(event)
+  fillPopup(args)
   isPopupOpen.value = true
 }
 
 // Calendar events
 function handleEventClick(args: MbscEventClickEvent) {
-  createEditPopup(args.event, args.domEvent.currentTarget)
+  createEditPopup(args)
 }
 
 function handleEventCreated(args: MbscEventCreatedEvent) {
-  createAddPopup(args.event, args.target)
+  createAddPopup(args)
 }
 
 function deleteEvent(event: MbscCalendarEvent) {
@@ -344,14 +352,14 @@ function handleSnackbarClose() {
 
 <template>
   <MbscEventcalendar
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-    clickToCreate="double"
+    ref="calInst"
+    :clickToCreate="true"
     :dragToCreate="true"
     :dragToMove="true"
     :dragToResize="true"
-    :selectedDate="mySelectedDate"
+    :data="myEvents"
+    :resources="myResources"
+    :view="myView"
     @event-click="handleEventClick"
     @event-created="handleEventCreated"
     @event-deleted="handleEventDeleted"

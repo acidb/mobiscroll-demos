@@ -53,6 +53,7 @@ export class AppComponent {
     display: 'anchored',
     focusOnClose: false,
     focusOnOpen: false,
+    maxHeight: 500,
     scrollLock: false,
     showArrow: false,
     showOverlay: false,
