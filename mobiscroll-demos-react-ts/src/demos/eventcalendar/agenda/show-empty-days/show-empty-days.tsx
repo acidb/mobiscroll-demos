@@ -1,20 +1,10 @@
-import {
-  Eventcalendar,
-  getJson,
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-  MbscResource,
-  setOptions /* localeImport */,
-} from '@mobiscroll/react';
+import { Eventcalendar, getJson, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { FC, useEffect, useMemo, useState } from 'react';
-import './show-empty-days.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
-
-const myResources: MbscResource[] = [];
 
 const App: FC = () => {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
@@ -23,6 +13,7 @@ const App: FC = () => {
     () => ({
       agenda: {
         type: 'month',
+        showEmptyDays: true,
       },
     }),
     [],
@@ -38,13 +29,6 @@ const App: FC = () => {
     );
   }, []);
 
-  return (
-    <Eventcalendar
-      // drag
-      view={myView}
-      resources={myResources}
-      data={myEvents}
-    />
-  );
+  return <Eventcalendar view={myView} data={myEvents} />;
 };
 export default App;

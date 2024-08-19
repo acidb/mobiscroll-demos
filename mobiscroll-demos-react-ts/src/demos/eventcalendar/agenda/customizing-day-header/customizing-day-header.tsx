@@ -9,6 +9,7 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import './customizing-day-header.css';
 
 setOptions({
   // localeJs,
@@ -42,12 +43,12 @@ const App: FC = () => {
 
   const renderCustomDay = useCallback(
     (events: MbscCalendarEventData[], date: Date) => (
-      <div className="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
+      <>
         <div className="mbsc-flex-1-1">
           <div>{formatDate('D MMM YYYY', date)}</div>
         </div>
-        <Button variant="outline" icon="plus" onClick={() => addEvent(date)}></Button>
-      </div>
+        <Button className="mds-custom-day-header-btn" variant="outline" icon="plus" onClick={() => addEvent(date)}></Button>
+      </>
     ),
     [addEvent],
   );

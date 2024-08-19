@@ -1,6 +1,5 @@
 import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useEffect, useMemo, useState } from 'react';
-import './show-empty-days.css';
 
 setOptions({
   // localeJs,
@@ -14,6 +13,7 @@ function App() {
     () => ({
       agenda: {
         type: 'month',
+        showEmptyDays: true,
       },
     }),
     [],
@@ -29,13 +29,7 @@ function App() {
     );
   }, []);
 
-  return (
-    <Eventcalendar
-      // drag
-      view={myView}
-      data={myEvents}
-    />
-  );
+  return <Eventcalendar view={myView} data={myEvents} />;
 }
 
 export default App;

@@ -14,5 +14,5 @@ setOptions({
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [];
-  myView: MbscEventcalendarView = { agenda: { type: 'month' } };
+  myView: MbscEventcalendarView = { agenda: { type: 'month', showEmptyDays: true } };
 }

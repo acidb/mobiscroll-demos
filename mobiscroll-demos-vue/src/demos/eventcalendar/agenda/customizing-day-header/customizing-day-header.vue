@@ -55,13 +55,24 @@ onMounted(() => {
 <template>
   <MbscEventcalendar :view="myView" :data="myEvents">
     <template #day="events, date">
-      <div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
-        <div class="mbsc-flex-1-1">
-          <div>{{ formatDate('D MMM YYYY', date) }}</div>
-        </div>
-        <MbscButton variant="outline" icon="plus" @click="newEvent(date)"></MbscButton>
-        <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+      <div class="mbsc-flex-1-1">
+        <div>{{ formatDate('D MMM YYYY', date) }}</div>
       </div>
+      <MbscButton
+        className="mds-custom-day-header-btn"
+        variant="outline"
+        icon="plus"
+        @click="newEvent(date)"
+      ></MbscButton>
+      <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
     </template>
   </MbscEventcalendar>
 </template>
+
+<style>
+.mds-custom-day-header-btn.mbsc-button.mbsc-icon-button {
+  height: 22px;
+  width: 22px;
+  margin: 0;
+}
+</style>

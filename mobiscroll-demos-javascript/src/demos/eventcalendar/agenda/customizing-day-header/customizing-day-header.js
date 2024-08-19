@@ -17,20 +17,18 @@ export default {
       },
       renderDay: function (events, date) {
         return (
-          '<div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">' +
           '<div class="mbsc-flex-1-1">' +
           mobiscroll.formatDate('D MMM YYYY', date) +
           '</div>' +
-          '<button class="mds-custom-header-add" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
+          '<button class="mds-custom-day-header-btn" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
           mobiscroll.formatDate('YYYY-MM-DD', date) +
-          '"></button>' +
-          '</div>'
+          '"></button>'
         );
       },
     });
 
     document.getElementById('demo-custom-day-header').addEventListener('click', function (e) {
-      var target = e.target.closest('.mds-custom-header-add');
+      var target = e.target.closest('.mds-custom-day-header-btn');
       if (target) {
         var newEvent = {
           title: 'Event',
@@ -59,5 +57,11 @@ export default {
 <div id="demo-custom-day-header"></div>
 `,
   // eslint-disable-next-line es5/no-template-literals
-  css: ``,
+  css: `
+.mds-custom-day-header-btn.mbsc-button.mbsc-icon-button {
+  height: 22px;
+  width: 22px;
+  margin: 0;
+}
+  `,
 };

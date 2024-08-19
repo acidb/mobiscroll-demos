@@ -9,16 +9,10 @@ setOptions({
 
 const myEvents = ref([])
 
-const myResources = []
-
 const myView = {
   agenda: {
-    allDay: false,
     type: 'month',
-    startDay: 1,
-    endDay: 5,
-    startTime: '09:00',
-    endTime: '18:00'
+    showEmptyDays: true
   }
 }
 
@@ -34,8 +28,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- dragOptions -->
-  <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources" />
+  <MbscEventcalendar :view="myView" :data="myEvents" />
 </template>
-
-<style></style>
