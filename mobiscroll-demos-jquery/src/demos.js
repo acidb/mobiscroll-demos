@@ -324,12 +324,18 @@ import Demo276 from './demos/pickers/select/event-hooks/event-hooks';
 import Demo471 from './demos/pickers/select/localization/localization';
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
 
-// temporary ids
+// todo clean up
+// temporary ids, in dev database: 748 -> 756 (same order like here)
 import Demo901 from './demos/pickers/popup/showing-popover/showing-popover';
 import Demo902 from './demos/pickers/popup/mobile-desktop-display/mobile-desktop-display';
 import Demo903 from './demos/pickers/popup/button-configuration/button-configuration';
-import Demo904 from './demos/pickers/popup/range-picking-popover/range-picking-popover';
-import Demo905 from './demos/pickers/popup/hover-popover/hover-popover';
+import Demo904 from './demos/pickers/popup/responsive/responsive';
+import Demo905 from './demos/pickers/popup/range-picking-popover/range-picking-popover';
+import Demo906 from './demos/pickers/popup/event-creation-popover/event-creation-popover';
+import Demo907 from './demos/pickers/popup/hover-popover/hover-popover';
+import Demo908 from './demos/pickers/popup/themes-ios-material-windows/themes-ios-material-windows';
+import Demo909 from './demos/pickers/popup/event-hooks/event-hooks';
+// todo end
 
 export const demos = [
   {
@@ -1200,15 +1206,27 @@ export const demos = [
               { name: 'Showing the control', unique: 'showing-popover', component: Demo901 },
               { name: 'Understanding display modes', unique: 'mobile-desktop-display', component: Demo902 },
               { name: 'Configure buttons', unique: 'button-configuration', component: Demo903 },
+              { name: 'Responsive', unique: 'responsive', component: Demo904 },
             ],
           },
           {
             name: 'Common use cases',
             unique: 20,
             items: [
-              { name: 'Custom range picking popover', unique: 'range-picking-popover', component: Demo904 },
-              { name: 'Opening a popup on hover', unique: 'hover-popover', component: Demo905 },
+              { name: 'Custom range picking popover', unique: 'range-picking-popover', component: Demo905 },
+              { name: 'Event creation popup', unique: 'event-creation-popover', component: Demo906 },
+              { name: 'Opening a popup on hover', unique: 'hover-popover', component: Demo907 },
             ],
+          },
+          {
+            name: 'Customizing the look & feel',
+            unique: 5,
+            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo908 }],
+          },
+          {
+            name: 'Localization & tapping into the lifecycle',
+            unique: 6,
+            items: [{ name: 'Event hooks', unique: 'event-hooks', component: Demo909 }],
           },
         ],
       },

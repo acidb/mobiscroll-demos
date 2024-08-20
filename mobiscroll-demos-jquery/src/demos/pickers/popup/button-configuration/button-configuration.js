@@ -9,11 +9,8 @@ export default {
       // theme
     });
 
-    // custom icon with icon, why dont align well out of box?
-    // custom positioning, need? too much css workaround
-
     $(function () {
-      var defaultButtons = $('#demo-popup-btn-conf-default')
+      var defaultButtons = $('#demo-popup-buttons-default')
         .mobiscroll()
         .popup({
           // context,
@@ -21,17 +18,15 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var customButtons = $('#demo-popup-btn-conf-custom')
+      var customButtons = $('#demo-popup-buttons-custom')
         .mobiscroll()
         .popup({
           // context,
-          class: 'popup-btn-conf-custom',
           display: 'center',
           buttons: [
-            'set',
+            'ok',
             {
               text: 'Custom',
-              icon: 'checkmark',
               handler: function () {
                 mobiscroll.toast({
                   // context,
@@ -39,24 +34,17 @@ export default {
                 });
               },
             },
-            'cancel',
+            'close',
           ],
         })
         .mobiscroll('getInst');
 
-      var customPositioning = $('#demo-popup-btn-conf-positioned')
+      var customPositioning = $('#demo-popup-buttons-positioned')
         .mobiscroll()
         .popup({
           // context,
-          class: 'popup-btn-conf-positioned',
           display: 'center',
-          buttons: [
-            'set',
-            {
-              text: 'Close',
-              handler: 'cancel',
-            },
-          ],
+          buttons: ['ok', 'close'],
         })
         .mobiscroll('getInst');
 
@@ -83,47 +71,28 @@ export default {
 <div class="mbsc-form-group">
     <div class="mbsc-button-group-block">
         <button mbsc-button id="showDefault">Default</button>
-        <button mbsc-button id="showCustom">Custom buttons</buttom>
-            <button mbsc-button id="showCustomPos">Buttons positioning</buttom>
+        <button mbsc-button id="showCustom">Custom button</buttom>
+            <button mbsc-button id="showCustomPos">Button positioning ?!</buttom>
     </div>
 </div>
 </div>
-<div id="demo-popup-btn-conf-default" class="mbsc-cloak">
+<div id="demo-popup-buttons-default">
   <div class="mbsc-align-center mbsc-padding">
       <h3 class="md-text-center">Hi there!</h3>
       <p class="md-text-center">This is the default with no buttons.</p>
   </div>
 </div>
-<div id="demo-popup-btn-conf-custom" class="mbsc-cloak">
+<div id="demo-popup-buttons-custom">
   <div class="mbsc-align-center mbsc-padding">
       <h3 class="md-text-center">Hi again!</h3>
       <p class="md-text-center">This is a popup with a custom button and predefined buttons.</p>
   </div>
 </div>
-<div id="demo-popup-btn-conf-positioned" class="mbsc-cloak">
+<div id="demo-popup-buttons-positioned">
   <div class="mbsc-align-center mbsc-padding">
       <h3 class="md-text-center">Hi again!</h3>
       <p class="md-text-center">This is a popup with custom positioned buttons!</p>
   </div>
 </div>
-  `,
-  // eslint-disable-next-line es5/no-template-literals
-  css: `
-.popup-btn-conf-custom .mbsc-icon-button {
-  padding: 0;
-  height: 2.5em;
-}
-
-.popup-btn-conf-custom .mbsc-material .mbsc-icon-button{
-  width: 7em;
-	border-radius: .285715em;
-}
-
-/* 
-.popup-btn-conf-positioned .mbsc-popup-buttons {
-  order: -1;
-  border-bottom: 1px solid; 
-}
-*/
   `,
 };
