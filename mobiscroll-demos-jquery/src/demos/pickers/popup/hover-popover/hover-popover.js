@@ -9,16 +9,15 @@ export default {
       // theme
     });
 
-    // mouse out should not triggered when moving the cursor on link
-    // need some other approach than setTimeout
-
     $(function () {
       var popupContent = $('#demo-popup-hover');
+      var timer;
 
       var popup = $('#demo-popup-hover')
         .mobiscroll()
         .popup({
           // context,
+          showOverlay: false,
           display: 'anchored',
           buttons: [],
         })
@@ -50,18 +49,30 @@ export default {
         );
       };
 
-      $('#demo-popup-hover-link').on('mouseover', function () {
+      $('#demo-popup-hover-link').on('mouseenter', function () {
+        clearTimeout(timer);
         setContent('#demo-popup-hover-link', content1);
       });
 
-      $('#demo-popup-hover-link2').on('mouseover', function () {
+      $('#demo-popup-hover-link2').on('mouseenter', function () {
+        clearTimeout(timer);
         setContent('#demo-popup-hover-link2', content2);
       });
 
-      $('#demo-popup-hover-link, #demo-popup-hover-link2').on('mouseout', function () {
-        setTimeout(function () {
+      $('#demo-popup-hover-link, #demo-popup-hover-link2').on('mouseleave', function () {
+        timer = setTimeout(function () {
           popup.close();
-        }, 1000);
+        }, 800);
+      });
+
+      popupContent.on('mouseenter', function () {
+        clearTimeout(timer);
+      });
+
+      popupContent.on('mouseleave', function () {
+        timer = setTimeout(function () {
+          popup.close();
+        }, 800);
       });
     });
   },
@@ -91,6 +102,6 @@ export default {
     </p>
   </div>
 </div>
-<div id="demo-popup-hover" class="mbsc-cloak"></div>
+<div id="demo-popup-hover"></div>
   `,
 };

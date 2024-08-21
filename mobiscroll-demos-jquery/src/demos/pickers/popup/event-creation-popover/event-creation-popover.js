@@ -10,6 +10,9 @@ export default {
     });
 
     $(function () {
+      var $startInput = $('#add-event-popup-start');
+      var $endInput = $('#add-event-popup-end');
+
       var popup = $('#demo-add-event-popup')
         .mobiscroll()
         .popup({
@@ -33,6 +36,7 @@ export default {
               cssClass: 'mbsc-popup-button-primary',
             },
           ],
+          showOverlay: false,
         })
         .mobiscroll('getInst');
 
@@ -40,18 +44,19 @@ export default {
         .mobiscroll()
         .datepicker({
           // context,
-          controls: ['calendar', 'datetime'],
+          controls: ['date'],
           select: 'range',
           startInput: '#start-input',
           endInput: '#end-input',
-          showRangeLabels: false,
+          display: 'anchored',
           touchUi: true,
+          showRangeLabels: false,
         })
         .mobiscroll('getInst');
 
       $('#mds-popup-event-add-btn').on('click', function () {
-        console.log('add clicked');
-        $('#event-title').mobiscroll('getInst').value = '';
+        range.setVal([new Date(), new Date()]);
+        $('#event-title').mobiscroll('getInst').value = 'New Event';
         $('#event-status-busy').mobiscroll('getInst').checked = true;
         popup.open();
         return false;
@@ -103,6 +108,7 @@ export default {
           <option value="120">2 hours</option>
         </select>
       </label>
+        <div id="event-date"></div>
     </div>
      <div class="mbsc-form-group">
       <label>
