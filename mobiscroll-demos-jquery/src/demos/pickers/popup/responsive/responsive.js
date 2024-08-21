@@ -7,13 +7,13 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
+      theme: 'ios',
     });
 
     $(function () {
       var popup = $('#demo-popup-responsive')
         .mobiscroll()
         .popup({
-          context: '#demo-static-resp-context',
           responsive: {
             xsmall: {
               display: 'bottom',
@@ -38,10 +38,9 @@ export default {
         return false;
       });
 
-      $('#close-popup').click(function () {
+      $('#close-popup').on('click', function () {
         popup.close();
         mobiscroll.toast({
-          context: '#demo-static-resp-context',
           message: 'Subscribed!',
         });
       });

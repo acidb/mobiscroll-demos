@@ -10,7 +10,7 @@ export default {
     });
 
     $(function () {
-      var subscribe = $('#demo-showing-popover')
+      var subscribePopup = $('#demo-showing-popover')
         .mobiscroll()
         .popup({
           // context,
@@ -18,7 +18,13 @@ export default {
           buttons: [
             {
               text: 'Subscribe',
-              handler: 'cancel',
+              handler: function () {
+                subscribePopup.close();
+                mobiscroll.toast({
+                  // context,
+                  message: 'Subscribed!',
+                });
+              },
             },
           ],
         })
@@ -42,7 +48,7 @@ export default {
         .mobiscroll('getInst');
 
       $('#showAccount').on('click', function () {
-        subscribe.open();
+        subscribePopup.open();
         return false;
       });
       $('#showPopup').on('click', function () {
@@ -71,16 +77,14 @@ export default {
   </div>
 </div>
 
-<div id="demo-showing-popover" class="mbsc-cloak">
-  <div class="mbsc-align-center Offmbsc-padding">
+<div id="demo-showing-popover">
+  <div class="mbsc-align-center>
     <img class="responsive-logo" src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
     <h2>Stay with us!</h2>
     <p>Join our newsletter and be the first <br> to receive exciting updates and news!</p>
-    <div class="mbsc-col-12 mbsc-col-md-6 mbsc-col-lg-3">
       <label>
-          <input mbsc-input data-label="Email" data-input-style="" data-label-style="floating" placeholder="Enter your email address" />
+          <input mbsc-input data-input-style="box" placeholder="Enter your email address" />
       </label>
-    </div>
     <div class="mbsc-form-group">
       <label>
         Weekly
@@ -94,7 +98,7 @@ export default {
   </div>
 </div>
 
-<div id="showing-popover-list" class="mbsc-cloak">
+<div id="showing-popover-list">
   <div mbsc-form>
     <div class="mbsc-form-group-inset">
       <p>Some updates are available for you. <br> When would you like to install them?</p>

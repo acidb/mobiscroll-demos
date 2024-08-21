@@ -99,41 +99,41 @@ export default {
   markup: `
 <div mbsc-form>
   <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Try different display modes</div>
-      <div class="mbsc-form-group mbsc-button-group-block">
-        <button mbsc-button id="demo-popup-display-anchored-btn">Try anhored display mode</button>
-        <button mbsc-button id="demo-popup-display-top-btn">Try top display mode</button>
-        <button mbsc-button id="demo-popup-display-center-btn">Try center display mode</button>
-        <button mbsc-button id="demo-popup-display-bottom-btn">Try bottom display mode</button>
-      </div>
+    <div class="mbsc-form-group-title">Try different display modes</div>
+    <div class="mbsc-form-group mbsc-button-group-block">
+      <button mbsc-button id="demo-popup-display-anchored-btn">Try anhored display mode</button>
+      <button mbsc-button id="demo-popup-display-top-btn">Try top display mode</button>
+      <button mbsc-button id="demo-popup-display-center-btn">Try center display mode</button>
+      <button mbsc-button id="demo-popup-display-bottom-btn">Try bottom display mode</button>
+    </div>
   </div>
 </div>
-<div id="demo-popup-display-bottom" class="mbsc-cloak">
+<div id="demo-popup-display-bottom">
   <div class="mbsc-align-center mbsc-padding">
-      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-      <h4>Welcome on our website!</h4>
-      <p>Have fun navigating through the demos.</p>
+    <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
+    <h4>Welcome on our website!</h4>
+    <p>Have fun navigating through the demos.</p>
   </div>
 </div>
-<div id="demo-popup-display-top" class="mbsc-cloak">
+<div id="demo-popup-display-top">
   <div class="mbsc-align-center mbsc-padding">
-      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-      <h4>Welcome on our website!</h4>
-      <p>Have fun navigating through the demos.</p>
+    <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
+    <h4>Welcome on our website!</h4>
+    <p>Have fun navigating through the demos.</p>
   </div>
 </div>
-<div id="demo-popup-display-center" class="mbsc-cloak">
+<div id="demo-popup-display-center">
   <div class="mbsc-align-center mbsc-padding">
-      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-      <h4>Welcome on our website!</h4>
-      <p>Have fun navigating through the demos.</p>
+    <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
+    <h4>Welcome on our website!</h4>
+    <p>Have fun navigating through the demos.</p>
   </div>
 </div>
-<div id="demo-popup-display-anchored" class="mbsc-cloak">
+<div id="demo-popup-display-anchored">
   <div class="mbsc-align-center mbsc-padding">
-      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-      <h4>Welcome on our website!</h4>
-      <p>Have fun navigating through the demos.</p>
+    <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
+    <h4>Welcome on our website!</h4>
+    <p>Have fun navigating through the demos.</p>
   </div>
 </div>
   `,

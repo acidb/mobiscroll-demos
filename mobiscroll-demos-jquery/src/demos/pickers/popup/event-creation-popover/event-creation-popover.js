@@ -10,9 +10,6 @@ export default {
     });
 
     $(function () {
-      var $startInput = $('#add-event-popup-start');
-      var $endInput = $('#add-event-popup-end');
-
       var popup = $('#demo-add-event-popup')
         .mobiscroll()
         .popup({
@@ -67,9 +64,9 @@ export default {
   markup: `
 <div mbsc-form>
   <div class="mbsc-form-group">
-      <div class="mbsc-button-group-block">
-          <button mbsc-button id="mds-popup-event-add-btn">Add event</button>
-      </div>
+    <div class="mbsc-button-group-block">
+      <button mbsc-button id="mds-popup-event-add-btn">Add event</button>
+    </div>
   </div>
 </div>
 <div style="display: none">
@@ -108,7 +105,7 @@ export default {
           <option value="120">2 hours</option>
         </select>
       </label>
-        <div id="event-date"></div>
+      <div id="event-date"></div>
     </div>
      <div class="mbsc-form-group">
       <label>

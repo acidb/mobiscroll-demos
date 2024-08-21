@@ -13,15 +13,15 @@ export default {
       var formatDate = mobiscroll.formatDate;
       var startDate = 'dyndatetime(y,m,d)';
       var endDate = 'dyndatetime(y,m,d + 6)';
-      var $dateInput = $('#popover-date-filtering');
-      var $startInput = $('#popover-date-filtering-start');
-      var $endInput = $('#popover-date-filtering-end');
+      var $dateInput = $('#popup-date-filtering');
+      var $startInput = $('#popup-date-filtering-start');
+      var $endInput = $('#popup-date-filtering-end');
 
       var now = new Date();
       var day = now.getDay();
       var monday = now.getDate() - day + (day === 0 ? -6 : 1);
 
-      var select = $('#popover-date-filtering-select')
+      var select = $('#popup-date-filtering-select')
         .mobiscroll()
         .select({
           inputElement: document.getElementById('date-select-input'),
@@ -77,7 +77,7 @@ export default {
         endInst.setOptions({ disabled: disable });
       }
 
-      var calendar = $('#popover-date-filtering-calendar')
+      var calendar = $('#popup-date-filtering-calendar')
         .mobiscroll()
         .datepicker({
           controls: ['calendar'],
@@ -85,8 +85,8 @@ export default {
           display: 'inline',
           showRangeLabels: false,
           pages: 'auto',
-          startInput: '#popover-date-filtering-start',
-          endInput: '#popover-date-filtering-end',
+          startInput: '#popup-date-filtering-start',
+          endInput: '#popup-date-filtering-end',
           returnFormat: 'iso8601',
           showOnClick: false,
           showOnFocus: false,
@@ -101,7 +101,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var popup = $('#popover-date-filtering-popup')
+      var popup = $('#popup-date-filtering-popup')
         .mobiscroll()
         .popup({
           responsive: {
@@ -162,20 +162,20 @@ export default {
     <!--/hidden-->
     <div class="mbsc-form-group">
         <label>
-            <input id="popover-date-filtering" mbsc-input data-input-style="box" readonly />
+            <input id="popup-date-filtering" mbsc-input data-input-style="box" readonly />
         </label>
     </div>
     <div>
-        <div id="popover-date-filtering-popup" class="demo-popover-date-filtering-popup">
+        <div id="popup-date-filtering-popup" class="demo-popup-date-filtering-popup">
             <div class="mbsc-grid mbsc-no-padding">
                 <div class="mbsc-row">
-                    <div class="mbsc-col-sm-4 mbsc-push-sm-8 demo-popover-date-filtering-dates">
-                        <div class="demo-popover-date-filtering-inputs">
+                    <div class="mbsc-col-sm-4 mbsc-push-sm-8 demo-popup-date-filtering-dates">
+                        <div class="demo-popup-date-filtering-inputs">
                             <label>
                                 Date range
                                 <input mbsc-input id="date-select-input" data-dropdown="true" data-input-style="box" data-label-style="stacked" />
                             </label>
-                            <select id="popover-date-filtering-select">
+                            <select id="popup-date-filtering-select">
                                 <option value="custom" selected>Custom</option>
                                 <option value="today">Today</option>
                                 <option value="yesterday">Yesterday</option>
@@ -184,22 +184,22 @@ export default {
                                 <option value="last-7-days">Last 7 days</option>
                                 <option value="last-30-days">Last 30 days</option>
                             </select>
-                            <label class="demo-popover-date-filtering-range-input">
+                            <label class="demo-popup-date-filtering-range-input">
                                 Start
-                                <input id="popover-date-filtering-start" mbsc-input data-input-style="box" data-label-style="stacked" />
+                                <input id="popup-date-filtering-start" mbsc-input data-input-style="box" data-label-style="stacked" />
                             </label>
-                            <label class="demo-popover-date-filtering-range-input">
+                            <label class="demo-popup-date-filtering-range-input">
                                 End
-                                <input id="popover-date-filtering-end" mbsc-input data-input-style="box" data-label-style="stacked" />
+                                <input id="popup-date-filtering-end" mbsc-input data-input-style="box" data-label-style="stacked" />
                             </label>
                         </div>
-                        <div class="demo-popover-date-filtering-desktop-buttons mbsc-button-group-justified">
+                        <div class="demo-popup-date-filtering-desktop-buttons mbsc-button-group-justified">
                             <button class="apply-button" mbsc-button>Apply</button>
                             <button class="cancel-button" mbsc-button>Cancel</button>
                         </div>
                     </div>
                     <div class="mbsc-col-sm-8 mbsc-pull-sm-4">
-                        <div id="popover-date-filtering-calendar"></div>
+                        <div id="popup-date-filtering-calendar"></div>
                     </div>
                 </div>
             </div>
@@ -211,36 +211,36 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.demo-popover-date-filtering-popup .mbsc-ios.mbsc-datepicker-inline {
+.demo-popup-date-filtering-popup .mbsc-ios.mbsc-datepicker-inline {
     border: none;
     border-radius: 4px;
     overflow: hidden;
 }
 
-.demo-popover-date-filtering-popup .mbsc-textfield-wrapper-box {
+.demo-popup-date-filtering-popup .mbsc-textfield-wrapper-box {
     margin-top: 0;
     margin-right: 0;
 }
 
-.demo-popover-date-filtering-dates {
+.demo-popup-date-filtering-dates {
     display: flex;
     flex-direction: column;
 }
 
-.demo-popover-date-filtering-inputs {
+.demo-popup-date-filtering-inputs {
     flex: 1;
 }
 
-.demo-popover-date-filtering-desktop-buttons.mbsc-button-group-justified,
-.demo-popover-date-filtering-desktop-buttons.mbsc-button-group-justified button {
+.demo-popup-date-filtering-desktop-buttons.mbsc-button-group-justified,
+.demo-popup-date-filtering-desktop-buttons.mbsc-button-group-justified button {
     margin-bottom: 0;
 }
 
 @media (max-width: 575px) {
-    .demo-popover-date-filtering-desktop-buttons {
+    .demo-popup-date-filtering-desktop-buttons {
         display: none;
     }
-    .demo-popover-date-filtering-popup .mbsc-textfield-wrapper-box {
+    .demo-popup-date-filtering-popup .mbsc-textfield-wrapper-box {
         margin-left: 0;
     }
 }

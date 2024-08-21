@@ -39,6 +39,7 @@ export default {
         })
         .mobiscroll('getInst');
 
+      // not clear yet how this will be
       var customPositioning = $('#demo-popup-buttons-positioned')
         .mobiscroll()
         .popup({
@@ -66,32 +67,32 @@ export default {
   markup: `
 <div mbsc-form>
 <div class="mbsc-align-center">
-    <div class="mbsc-note mbsc-note-primary">Customize popup buttons depending on your context.</div>
+  <div class="mbsc-note mbsc-note-primary">Customize popup buttons depending on your context.</div>
 </div>
 <div class="mbsc-form-group">
-    <div class="mbsc-button-group-block">
-        <button mbsc-button id="showDefault">Default</button>
-        <button mbsc-button id="showCustom">Custom button</buttom>
-            <button mbsc-button id="showCustomPos">Button positioning ?!</buttom>
-    </div>
+  <div class="mbsc-button-group-block">
+    <button mbsc-button id="showDefault">Default</button>
+    <button mbsc-button id="showCustom">Custom button</buttom>
+    <button mbsc-button id="showCustomPos">Button positioning</buttom>
+  </div>
 </div>
 </div>
 <div id="demo-popup-buttons-default">
   <div class="mbsc-align-center mbsc-padding">
-      <h3 class="md-text-center">Hi there!</h3>
-      <p class="md-text-center">This is the default with no buttons.</p>
+    <h3 class="md-text-center">Hi there!</h3>
+    <p class="md-text-center">This is the default with no buttons.</p>
   </div>
 </div>
 <div id="demo-popup-buttons-custom">
   <div class="mbsc-align-center mbsc-padding">
-      <h3 class="md-text-center">Hi again!</h3>
-      <p class="md-text-center">This is a popup with a custom button and predefined buttons.</p>
+    <h3 class="md-text-center">Hi again!</h3>
+    <p class="md-text-center">This is a popup with a custom button and predefined buttons.</p>
   </div>
 </div>
 <div id="demo-popup-buttons-positioned">
   <div class="mbsc-align-center mbsc-padding">
-      <h3 class="md-text-center">Hi again!</h3>
-      <p class="md-text-center">This is a popup with custom positioned buttons!</p>
+    <h3 class="md-text-center">Hi again!</h3>
+    <p class="md-text-center">This is a popup with custom positioned buttons!</p>
   </div>
 </div>
   `,

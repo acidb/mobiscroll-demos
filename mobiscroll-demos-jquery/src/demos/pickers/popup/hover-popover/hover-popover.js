@@ -19,7 +19,6 @@ export default {
           // context,
           showOverlay: false,
           display: 'anchored',
-          buttons: [],
         })
         .mobiscroll('getInst');
 
