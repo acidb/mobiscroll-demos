@@ -10,10 +10,10 @@ export default {
     });
 
     $(function () {
-      var popupContent = $('#demo-popup-hover');
+      var $popupContent = $('#demo-popup-hover');
       var timer;
 
-      var popup = $('#demo-popup-hover')
+      var popup = $popupContent
         .mobiscroll()
         .popup({
           // context,
@@ -22,56 +22,50 @@ export default {
         })
         .mobiscroll('getInst');
 
-      function setContent(anchorId, content) {
-        popupContent.html(content);
-        mobiscroll.enhance(popupContent[0]);
-        popup.setOptions({ anchor: $(anchorId)[0] });
+      function setContent(anchor, content) {
+        $popupContent.html(content);
+        popup.setOptions({ anchor: anchor });
         popup.open();
       }
-      var content1 = function () {
-        return (
-          '<div class="mbsc-align-center mbsc-padding">' +
-          '<img src="https://img.mobiscroll.com/demos/f1.png">' +
-          '<h3><b>Liza Taylor</b></h3>' +
-          '<p>liza.taylor@mobiscroll.com <br> (202) 555-0127</p>' +
-          '</div>'
-        );
-      };
 
-      var content2 = function () {
-        return (
-          '<div class="mbsc-align-center mbsc-padding">' +
-          '<img src="https://img.mobiscroll.com/demos/m1.png">' +
-          '<h3><b>Mike Smith</b></h3>' +
-          '<p>mike.smith@mobiscroll.com <br> (202) 555-9126</p>' +
-          '</div>'
-        );
-      };
+      var content1 =
+        '<div class="mbsc-align-center mbsc-padding">' +
+        '<img style="height: 80px;" src="https://img.mobiscroll.com/demos/f1.png">' +
+        '<h3><b>Liza Taylor</b></h3>' +
+        '<p>liza.taylor@mobiscroll.com <br> (202) 555-0127</p>' +
+        '</div>';
+
+      var content2 =
+        '<div class="mbsc-align-center mbsc-padding">' +
+        '<img style="height: 80px;" src="https://img.mobiscroll.com/demos/m1.png">' +
+        '<h3><b>Mike Smith</b></h3>' +
+        '<p>mike.smith@mobiscroll.com <br> (202) 555-9126</p>' +
+        '</div>';
 
       $('#demo-popup-hover-link').on('mouseenter', function () {
         clearTimeout(timer);
-        setContent('#demo-popup-hover-link', content1);
+        setContent(this, content1);
       });
 
       $('#demo-popup-hover-link2').on('mouseenter', function () {
         clearTimeout(timer);
-        setContent('#demo-popup-hover-link2', content2);
+        setContent(this, content2);
       });
 
       $('#demo-popup-hover-link, #demo-popup-hover-link2').on('mouseleave', function () {
         timer = setTimeout(function () {
           popup.close();
-        }, 800);
+        }, 500);
       });
 
-      popupContent.on('mouseenter', function () {
+      $popupContent.on('mouseenter', function () {
         clearTimeout(timer);
       });
 
-      popupContent.on('mouseleave', function () {
+      $popupContent.on('mouseleave', function () {
         timer = setTimeout(function () {
           popup.close();
-        }, 800);
+        }, 500);
       });
     });
   },
@@ -79,7 +73,7 @@ export default {
   markup: `
 <div mbsc-form>
   <div class="mbsc-align-center">
-    <div class="mbsc-note mbsc-note-primary">
+    <div class="mbsc-note">
       Hover on the link to show popup.
     </div>
   </div>

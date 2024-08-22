@@ -27,7 +27,7 @@ export default {
                 popup.close();
                 mobiscroll.toast({
                   // context,
-                  message: 'Event added!',
+                  message: 'Event added',
                 });
               },
               cssClass: 'mbsc-popup-button-primary',
@@ -37,24 +37,24 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var range = $('#event-date')
+      var range = $('#demo-event-date')
         .mobiscroll()
         .datepicker({
           // context,
           controls: ['date'],
           select: 'range',
-          startInput: '#start-input',
-          endInput: '#end-input',
+          startInput: '#demo-popup-start-input',
+          endInput: '#demo-popup-end-input',
           display: 'anchored',
           touchUi: true,
           showRangeLabels: false,
         })
         .mobiscroll('getInst');
 
-      $('#mds-popup-event-add-btn').on('click', function () {
+      $('#demo-popup-add-btn').on('click', function () {
         range.setVal([new Date(), new Date()]);
-        $('#event-title').mobiscroll('getInst').value = 'New Event';
-        $('#event-status-busy').mobiscroll('getInst').checked = true;
+        $('#demo-popup-event-title').mobiscroll('getInst').value = 'New Event';
+        $('#demo-popup-status-busy').mobiscroll('getInst').checked = true;
         popup.open();
         return false;
       });
@@ -62,11 +62,9 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div mbsc-form>
-  <div class="mbsc-form-group">
-    <div class="mbsc-button-group-block">
-      <button mbsc-button id="mds-popup-event-add-btn">Add event</button>
-    </div>
+<div class="mbsc-form-group">
+  <div class="mbsc-button-group-block">
+    <button mbsc-button id="demo-popup-add-btn">Add event</button>
   </div>
 </div>
 <div style="display: none">
@@ -74,28 +72,28 @@ export default {
     <div class="mbsc-form-group">
       <label>
         Title
-        <input mbsc-input id="event-title">
+        <input mbsc-input id="demo-popup-event-title">
       </label>
       <label>
         Description
-          <input mbsc-input id="event-desc">
+          <input mbsc-input>
       </label>
     </div>
     <div class="mbsc-form-group">
       <label>
         All-day
-        <input mbsc-switch id="event-all-day" type="checkbox" />
+        <input mbsc-switch type="checkbox" />
       </label>
       <label>
         Starts
-        <input mbsc-input id="start-input" />
+        <input mbsc-input id="demo-popup-start-input" />
       </label>
       <label>
         Ends
-        <input mbsc-input id="end-input" />
+        <input mbsc-input id="demo-popup-end-input" />
       </label>
-      <label id="travel-time-group">
-        <select data-label="Travel time" mbsc-dropdown id="travel-time-selection">
+      <label>
+        <select data-label="Travel time" mbsc-dropdown>
           <option value="0">None</option>
           <option value="5">5 minutes</option>
           <option value="15">15 minutes</option>
@@ -105,19 +103,19 @@ export default {
           <option value="120">2 hours</option>
         </select>
       </label>
-      <div id="event-date"></div>
     </div>
-     <div class="mbsc-form-group">
-      <label>
+      <div class="mbsc-form-group">
+        <label>
           Show as busy
-          <input id="event-status-busy" mbsc-segmented type="radio" name="event-status" value="busy">
+          <input id="demo-popup-status-busy" mbsc-segmented type="radio" name="event-status" value="busy">
         </label>
         <label>
           Show as free
-          <input id="event-status-free" mbsc-segmented type="radio" name="event-status" value="free">
+          <input id="demo-popup-status-free" mbsc-segmented type="radio" name="event-status" value="free">
         </label>
       </div>
-  </div>
+    </div>
+  <div id="demo-event-date"></div>
 </div>
   `,
 };

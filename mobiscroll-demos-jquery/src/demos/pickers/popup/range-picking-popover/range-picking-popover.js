@@ -160,51 +160,51 @@ export default {
 <!--hidden-->
 <div class="demo-inline demo-max-width-400" mbsc-page>
     <!--/hidden-->
-    <div class="mbsc-form-group">
-        <label>
-            <input id="popup-date-filtering" mbsc-input data-input-style="box" readonly />
-        </label>
-    </div>
-    <div>
-        <div id="popup-date-filtering-popup" class="demo-popup-date-filtering-popup">
-            <div class="mbsc-grid mbsc-no-padding">
-                <div class="mbsc-row">
-                    <div class="mbsc-col-sm-4 mbsc-push-sm-8 demo-popup-date-filtering-dates">
-                        <div class="demo-popup-date-filtering-inputs">
-                            <label>
-                                Date range
-                                <input mbsc-input id="date-select-input" data-dropdown="true" data-input-style="box" data-label-style="stacked" />
-                            </label>
-                            <select id="popup-date-filtering-select">
-                                <option value="custom" selected>Custom</option>
-                                <option value="today">Today</option>
-                                <option value="yesterday">Yesterday</option>
-                                <option value="last-week">Last week</option>
-                                <option value="last-month">Last month</option>
-                                <option value="last-7-days">Last 7 days</option>
-                                <option value="last-30-days">Last 30 days</option>
-                            </select>
-                            <label class="demo-popup-date-filtering-range-input">
-                                Start
-                                <input id="popup-date-filtering-start" mbsc-input data-input-style="box" data-label-style="stacked" />
-                            </label>
-                            <label class="demo-popup-date-filtering-range-input">
-                                End
-                                <input id="popup-date-filtering-end" mbsc-input data-input-style="box" data-label-style="stacked" />
-                            </label>
-                        </div>
-                        <div class="demo-popup-date-filtering-desktop-buttons mbsc-button-group-justified">
-                            <button class="apply-button" mbsc-button>Apply</button>
-                            <button class="cancel-button" mbsc-button>Cancel</button>
-                        </div>
+<div class="mbsc-form-group">
+    <label>
+        <input id="popup-date-filtering" mbsc-input data-input-style="box" readonly />
+    </label>
+</div>
+<div>
+    <div id="popup-date-filtering-popup" class="demo-popup-date-filtering-popup">
+        <div class="mbsc-grid mbsc-no-padding">
+            <div class="mbsc-row">
+                <div class="mbsc-col-sm-4 mbsc-push-sm-8 demo-popup-date-filtering-dates">
+                    <div class="demo-popup-date-filtering-inputs">
+                        <label>
+                            Date range
+                            <input mbsc-input id="date-select-input" data-dropdown="true" data-input-style="box" data-label-style="stacked" />
+                        </label>
+                        <select id="popup-date-filtering-select">
+                            <option value="custom" selected>Custom</option>
+                            <option value="today">Today</option>
+                            <option value="yesterday">Yesterday</option>
+                            <option value="last-week">Last week</option>
+                            <option value="last-month">Last month</option>
+                            <option value="last-7-days">Last 7 days</option>
+                            <option value="last-30-days">Last 30 days</option>
+                        </select>
+                        <label class="demo-popup-date-filtering-range-input">
+                            Start
+                            <input id="popup-date-filtering-start" mbsc-input data-input-style="box" data-label-style="stacked" />
+                        </label>
+                        <label class="demo-popup-date-filtering-range-input">
+                            End
+                            <input id="popup-date-filtering-end" mbsc-input data-input-style="box" data-label-style="stacked" />
+                        </label>
                     </div>
-                    <div class="mbsc-col-sm-8 mbsc-pull-sm-4">
-                        <div id="popup-date-filtering-calendar"></div>
+                    <div class="demo-popup-date-filtering-desktop-buttons mbsc-button-group-justified">
+                        <button class="apply-button" mbsc-button>Apply</button>
+                        <button class="cancel-button" mbsc-button>Cancel</button>
                     </div>
+                </div>
+                <div class="mbsc-col-sm-8 mbsc-pull-sm-4">
+                    <div id="popup-date-filtering-calendar"></div>
                 </div>
             </div>
         </div>
     </div>
+</div>
     <!--hidden-->
 </div>
 <!--/hidden-->
