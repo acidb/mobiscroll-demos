@@ -1,40 +1,61 @@
-import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useEffect, useMemo, useState } from 'react';
-import './event-hooks.css';
+import { Button, Popup, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useState } from 'react';
 
 setOptions({
-  // localeJs,
-  // themeJs
+  // locale,
+  // theme
 });
 
 function App() {
-  const [myEvents, setEvents] = useState([]);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [myAnchor, setAnchor] = useState();
 
-  const myView = useMemo(
-    () => ({
-      timeline: {
-        type: 'week',
-      },
-    }),
-    [],
-  );
+  const openPopup = useCallback((args) => {
+    setAnchor(args.target);
+    setPopupOpen(true);
+  }, []);
 
-  useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/timeline-events/',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
+  const handleClose = useCallback(() => {
+    setPopupOpen(false);
   }, []);
 
   return (
-    <Eventcalendar
-      // drag
-      view={myView}
-      data={myEvents}
-    />
+    <>
+      <div className="mbsc-form-group">
+        <div className="mbsc-button-group-block">
+          <Button onClick={openPopup}>Show Popup</Button>
+        </div>
+      </div>
+      <Popup
+        display="anchored"
+        anchor={myAnchor}
+        showOverlay={false}
+        isOpen={isPopupOpen}
+        buttons={['ok', 'cancel']}
+        onClose={() => {
+          handleClose();
+          // Your custom event handler goes here
+        }}
+        onDestroy={() => {
+          // Your custom event handler goes here
+        }}
+        onInit={() => {
+          // Logic running on component init
+        }}
+        onOpen={() => {
+          // Your custom event handler goes here
+        }}
+        onPosition={() => {
+          // Logic for component positioning
+        }}
+      >
+        <div className="mbsc-align-center mbsc-padding">
+          <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="Logo" />
+          <h4>Welcome on our website!</h4>
+          <p>Have fun navigating through the demos.</p>
+        </div>
+      </Popup>
+    </>
   );
 }
 

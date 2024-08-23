@@ -71,29 +71,27 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div mbsc-form>
-  <div class="mbsc-align-center">
-    <div class="mbsc-note">
-      Hover on the link to show popup.
-    </div>
+<div class="mbsc-align-center">
+  <div class="mbsc-note">
+    Hover on the link to show popup.
   </div>
-  <div class="mbsc-padding">
-    <p>
-      Meet web developer
-      <a id="demo-popup-hover-link" style="cursor: pointer; text-decoration: underline">Liza</a>
-      who designs and builds websites. She is responsible for the appearance, of
-      the site and technical aspects, such as site speed and how much traffic
-      the site can handle. She also creates site content that requires technical
-      features.
-    </p><br>
-    <p>
-      Meet
-      <a id="demo-popup-hover-link2" style="cursor: pointer; text-decoration: underline">Mike</a
-      >, a backend developer specializing in server management and database
-      integration. He ensures the site runs smoothly by handling server-side
-      logic, optimizing performance, and implementing security measures.
-    </p>
-  </div>
+</div>
+<div class="mbsc-padding">
+  <p>
+    Meet web developer
+    <a id="demo-popup-hover-link" style="cursor: pointer; text-decoration: underline">Liza</a>
+    who designs and builds websites. She is responsible for the appearance, of
+    the site and technical aspects, such as site speed and how much traffic
+    the site can handle. She also creates site content that requires technical
+    features.
+  </p><br>
+  <p>
+    Meet
+    <a id="demo-popup-hover-link2" style="cursor: pointer; text-decoration: underline">Mike</a
+    >, a backend developer specializing in server management and database
+    integration. He ensures the site runs smoothly by handling server-side
+    logic, optimizing performance, and implementing security measures.
+  </p>
 </div>
 <div id="demo-popup-hover"></div>
   `,

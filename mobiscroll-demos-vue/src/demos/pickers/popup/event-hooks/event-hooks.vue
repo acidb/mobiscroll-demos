@@ -1,49 +1,65 @@
-
 <script setup>
-import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
-import { onMounted, ref } from 'vue'
+import { MbscButton, MbscPopup, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
 
-const myEvents = ref([])
+const buttonRef = ref(null)
+const isPopupOpen = ref(false)
+const myAnchor = ref()
 
-const myResources = [
-]
-
-const myView = {
-  timeline: {
-    allDay: false,
-    type: 'week',
-    startDay: 1,
-    endDay: 5,
-    startTime: '09:00',
-    endTime: '18:00'
-  }
+function openPopup() {
+  myAnchor.value = buttonRef.value.instance.nativeElement
+  isPopupOpen.value = true
 }
 
-onMounted(() => {
-  getJson(
-    'https://trial.mobiscroll.com/timeline-events/',
-    (events) => {
-      myEvents.value = events
-    },
-    'jsonp'
-  )
-})
+function handleClose() {
+  isPopupOpen.value = false
+  // Your custom event handler goes here
+}
+
+function handleDestroy() {
+  // Your custom event handler goes here
+}
+
+function handleInit() {
+  // Logic running on component init
+}
+
+function handleOpen() {
+  // Your custom event handler goes here
+}
+
+function handlePosition() {
+  // Logic for component positioning
+}
 </script>
 
 <template>
-  <!-- dragOptions -->
-  <MbscEventcalendar
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-  />
+  <div class="mbsc-form-group">
+    <div class="mbsc-button-group-block">
+      <MbscButton ref="buttonRef" @click="openPopup">Show Popup</MbscButton>
+    </div>
+  </div>
+  <MbscPopup
+    display="anchored"
+    :anchor="myAnchor"
+    :showOverlay="false"
+    :isOpen="isPopupOpen"
+    :buttons="['ok', 'cancel']"
+    @close="handleClose"
+    @destroy="handleDestroy"
+    @init="handleInit"
+    @open="handleOpen"
+    @position="handlePosition"
+  >
+    <div class="mbsc-align-center mbsc-padding">
+      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="Logo" />
+      <h4>Welcome on our website!</h4>
+      <p>Have fun navigating through the demos.</p>
+    </div>
+  </MbscPopup>
 </template>
-
-<style>
-
-</style>

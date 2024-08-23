@@ -16,13 +16,7 @@ export default {
           display: 'anchored',
           anchor: $('#popup-events-show-btn')[0],
           showOverlay: false,
-          buttons: [
-            {
-              text: 'Ok',
-              handler: 'set',
-            },
-            'cancel',
-          ],
+          buttons: ['ok', 'cancel'],
           onClose: function (event, inst) {
             // Your custom event handler goes here
           },
@@ -51,11 +45,9 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div mbsc-form>
-  <div class="mbsc-form-group">
-    <div class="mbsc-button-group-block">
-      <button mbsc-button id="popup-events-show-btn">Show popup</button>
-    </div>
+<div class="mbsc-form-group">
+  <div class="mbsc-button-group-block">
+    <button mbsc-button id="popup-events-show-btn">Show popup</button>
   </div>
 </div>
 <div id="demo-popup-hooks">
