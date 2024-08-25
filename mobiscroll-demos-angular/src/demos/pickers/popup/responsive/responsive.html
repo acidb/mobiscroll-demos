@@ -1,1 +1,27 @@
-<div></div>
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="openPopup($event)">Open popup</mbsc-button>
+    </div>
+  </div>
+
+  <mbsc-popup #popup [anchor]="popupAnchor" [options]="popupOptions">
+    <div class="mbsc-align-center">
+      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="Logo" />
+      <h2>Stay with us!</h2>
+      <p>Join our newsletter and be the first <br> to receive exciting updates and news!</p>
+      <mbsc-input inputStyle="box" placeholder="Enter your email address"></mbsc-input>
+
+      <mbsc-segmented-group>
+        <mbsc-segmented vtype="radio" name="range" checked>Weekly</mbsc-segmented>
+        <mbsc-segmented vtype="radio" name="range">Monthly</mbsc-segmented>
+      </mbsc-segmented-group>
+
+      <div class="mbsc-button-group-block">
+        <mbsc-button (click)="subscribe()">
+          Subscribe
+        </mbsc-button>
+      </div>
+    </div>
+  </mbsc-popup>
+</mbsc-page>

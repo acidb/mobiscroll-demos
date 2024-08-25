@@ -58,7 +58,7 @@ export default {
 <div class="mbsc-form-group">
   <div class="mbsc-button-group-block">
     <button mbsc-button id="showDefault">Default</button>
-    <button mbsc-button id="showCustom">Custom button</buttom>
+    <button mbsc-button id="showCustom">Custom button</button>
   </div>
 </div>
 <div id="demo-popup-buttons-default">

@@ -1,49 +1,74 @@
-
 <script setup>
-import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
-import { onMounted, ref } from 'vue'
+import { MbscButton, MbscPopup, MbscToast, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
 
-const myEvents = ref([])
+const isPopupDefaultOpen = ref(false)
+const isPopupCustomOpen = ref(false)
 
-const myResources = [
-]
+const toastMessage = ref('')
+const isToastOpen = ref(false)
 
-const myView = {
-  timeline: {
-    allDay: false,
-    type: 'week',
-    startDay: 1,
-    endDay: 5,
-    startTime: '09:00',
-    endTime: '18:00'
-  }
+function openPopupDefault() {
+  isPopupDefaultOpen.value = true
 }
 
-onMounted(() => {
-  getJson(
-    'https://trial.mobiscroll.com/timeline-events/',
-    (events) => {
-      myEvents.value = events
-    },
-    'jsonp'
-  )
-})
+function openPopupCustom() {
+  isPopupCustomOpen.value = true
+}
+
+function handleDefaultClose() {
+  isPopupDefaultOpen.value = false
+}
+
+function handleCustomClose() {
+  isPopupCustomOpen.value = false
+}
 </script>
 
 <template>
-  <!-- dragOptions -->
-  <MbscEventcalendar
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-  />
+  <div class="mbsc-align-center">
+    <div class="mbsc-note">Customize popup buttons depending on your context.</div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-button-group-block">
+      <MbscButton @click="openPopupDefault">Default</MbscButton>
+      <MbscButton @click="openPopupCustom">Custom button</MbscButton>
+    </div>
+  </div>
+
+  <MbscPopup display="center" :isOpen="isPopupDefaultOpen" @close="handleDefaultClose">
+    <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi there!</h3>
+      <p class="md-text-center">This is the default with no buttons.</p>
+    </div>
+  </MbscPopup>
+
+  <MbscPopup
+    display="center"
+    :isOpen="isPopupCustomOpen"
+    :buttons="[
+      'ok',
+      {
+        text: 'Custom',
+        handler: () => {
+          // ?!
+          toastMessage.value = 'Custom button clicked'
+          isToastOpen.value = true
+        }
+      },
+      'close'
+    ]"
+    @close="handleCustomClose"
+  >
+    <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi again!</h3>
+      <p class="md-text-center">This is a popup with a custom and predefined buttons.</p>
+    </div>
+  </MbscPopup>
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
 </template>
-
-<style>
-
-</style>

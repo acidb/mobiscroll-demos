@@ -1,14 +1,16 @@
-<div class="mbsc-form-group">
-  <div class="mbsc-button-group-block">
-    <mbsc-button #showButton (click)="openPopup($event)">Show Popup</mbsc-button>
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="openPopup($event)">Open popup</mbsc-button>
+    </div>
   </div>
-</div>
 
-<mbsc-popup #popup [anchor]="popupAnchor" [options]="popupOptions" (onClose)="onClose()" (onDestroy)="onDestroy()"
-  (onInit)="onInit()" (onOpen)="onOpen()" (onPosition)="onPosition()">
-  <div class="mbsc-align-center mbsc-padding">
-    <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="Logo" />
-    <h4>Welcome on our website!</h4>
-    <p>Have fun navigating through the demos.</p>
-  </div>
-</mbsc-popup>
+  <mbsc-popup #popup [anchor]="popupAnchor" [options]="popupOptions" (onClose)="onClose()" (onDestroy)="onDestroy()"
+    (onInit)="onInit()" (onOpen)="onOpen()" (onPosition)="onPosition()">
+    <div class="mbsc-align-center mbsc-padding">
+      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="Logo" />
+      <h4>Welcome on our website!</h4>
+      <p>Have fun navigating through the demos.</p>
+    </div>
+  </mbsc-popup>
+</mbsc-page>

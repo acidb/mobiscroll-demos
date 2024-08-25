@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { setOptions } from '@mobiscroll/angular';
+import { Component, ViewChild } from '@angular/core';
+import { MbscPopup, MbscPopupOptions, setOptions } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -10,4 +10,19 @@ setOptions({
   selector: 'app-popup-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
 })
-export class AppComponent {}
+export class AppComponent {
+  @ViewChild('popup', { static: false }) popup!: MbscPopup;
+  popupAnchor: HTMLElement | undefined;
+
+  popupOptions: MbscPopupOptions = {
+    theme: 'material', // can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', the theme will automatically be set based on the platform
+    themeVariant: 'dark', // can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
+    display: 'anchored',
+    buttons: ['set', 'cancel'],
+  };
+
+  openPopup(ev: any): void {
+    this.popupAnchor = ev.currentTarget;
+    this.popup.open();
+  }
+}

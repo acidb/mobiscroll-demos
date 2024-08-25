@@ -1,6 +1,5 @@
-import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useEffect, useMemo, useState } from 'react';
-import './themes-ios-material-windows.css';
+import { Button, Page, Popup, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -8,33 +7,41 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = useState([]);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [myAnchor, setAnchor] = useState();
 
-  const myView = useMemo(
-    () => ({
-      timeline: {
-        type: 'week',
-      },
-    }),
-    [],
-  );
+  const openPopup = useCallback((args) => {
+    setAnchor(args.target);
+    setPopupOpen(true);
+  }, []);
 
-  useEffect(() => {
-    getJson(
-      'https://trial.mobiscroll.com/timeline-events/',
-      (events) => {
-        setEvents(events);
-      },
-      'jsonp',
-    );
+  const handleClose = useCallback(() => {
+    setPopupOpen(false);
   }, []);
 
   return (
-    <Eventcalendar
-      // drag
-      view={myView}
-      data={myEvents}
-    />
+    <Page>
+      <div className="mbsc-button-group-block">
+        <Button onClick={openPopup}>Open popup</Button>
+      </div>
+
+      <Popup
+        theme="material" // can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', the theme will automatically be set based on the platform
+        themeVariant="dark" // can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
+        display="anchored"
+        anchor={myAnchor}
+        buttons={['set', 'cancel']}
+        isOpen={isPopupOpen}
+        onClose={() => {
+          handleClose();
+        }}
+      >
+        <div className="mbsc-align-center mbsc-padding">
+          <h3>Hi again!</h3>
+          <p>This is a popup with three custom buttons</p>
+        </div>
+      </Popup>
+    </Page>
   );
 }
 

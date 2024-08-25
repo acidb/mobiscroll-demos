@@ -31,12 +31,12 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-button-group-block">
-  <button class="static-form-color-elm" id="popup-themes-show-btn" mbsc-button>Show</button>
+  <button id="popup-themes-show-btn" mbsc-button>Open popup</button>
 </div>
 <div id="demo-theming-popup">
   <div class="mbsc-align-center mbsc-padding">
-    <h3 class="md-text-center">Hi again!</h3>
-    <p class="md-text-center">This is a popup with three custom buttons</p>
+    <h3>Hi again!</h3>
+    <p>This is a popup with three custom buttons</p>
   </div>
 </div>
   `,

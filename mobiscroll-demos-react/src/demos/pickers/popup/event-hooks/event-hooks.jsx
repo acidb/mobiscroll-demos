@@ -1,4 +1,4 @@
-import { Button, Popup, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Page, Popup, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useState } from 'react';
 
 setOptions({
@@ -20,7 +20,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <Page>
       <div className="mbsc-form-group">
         <div className="mbsc-button-group-block">
           <Button onClick={openPopup}>Show Popup</Button>
@@ -55,7 +55,7 @@ function App() {
           <p>Have fun navigating through the demos.</p>
         </div>
       </Popup>
-    </>
+    </Page>
   );
 }
 

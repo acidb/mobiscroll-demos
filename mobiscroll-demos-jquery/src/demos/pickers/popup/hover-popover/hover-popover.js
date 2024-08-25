@@ -84,7 +84,7 @@ export default {
     the site and technical aspects, such as site speed and how much traffic
     the site can handle. She also creates site content that requires technical
     features.
-  </p><br>
+  </p>
   <p>
     Meet
     <a id="demo-popup-hover-link2" style="cursor: pointer; text-decoration: underline">Mike</a

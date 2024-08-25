@@ -1,1 +1,43 @@
-<div></div>
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Try different display modes</div>
+    <div class="mbsc-form-group mbsc-button-group-block">
+      <mbsc-button (click)="openAnchored($event)">Try anhored display mode</mbsc-button>
+      <mbsc-button (click)="openTop()">Try top display mode</mbsc-button>
+      <mbsc-button (click)="openCenter()">Try center display mode</mbsc-button>
+      <mbsc-button (click)="openBottom()">Try bottom display mode</mbsc-button>
+    </div>
+  </div>
+
+  <mbsc-popup #popupAnchored [anchor]="popupAnchor" [options]="anchoredOptions">
+    <div class="mbsc-align-center mbsc-padding">
+      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="logo" />
+      <h4>Welcome on our website!</h4>
+      <p>Have fun navigating through the demos.</p>
+    </div>
+  </mbsc-popup>
+
+  <mbsc-popup #popupTop [options]="topOptions">
+    <div class="mbsc-align-center mbsc-padding">
+      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="logo" />
+      <h4>Welcome on our website!</h4>
+      <p>Have fun navigating through the demos.</p>
+    </div>
+  </mbsc-popup>
+
+  <mbsc-popup #popupCenter [options]="centerOptions">
+    <div class="mbsc-align-center mbsc-padding">
+      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="logo" />
+      <h4>Welcome on our website!</h4>
+      <p>Have fun navigating through the demos.</p>
+    </div>
+  </mbsc-popup>
+
+  <mbsc-popup #popupBottom [options]="bottomOptions">
+    <div class="mbsc-align-center mbsc-padding">
+      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="logo" />
+      <h4>Welcome on our website!</h4>
+      <p>Have fun navigating through the demos.</p>
+    </div>
+  </mbsc-popup>
+</mbsc-page>

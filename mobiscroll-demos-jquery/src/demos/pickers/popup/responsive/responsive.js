@@ -55,7 +55,7 @@ export default {
 </div>
 <div id="demo-popup-responsive">
   <div class="mbsc-align-center">
-    <img class="responsive-logo" src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
+    <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
     <h2>Stay with us!</h2>
     <p>Join our newsletter and be the first <br> to receive exciting updates and news!</p>
     <label>

@@ -1,0 +1,12 @@
+<mbsc-page>
+  <div class="mbsc-button-group-block">
+    <mbsc-button (click)="openPopup($event)">Open popup</mbsc-button>
+  </div>
+
+  <mbsc-popup #popup [anchor]="popupAnchor" [options]="popupOptions">
+    <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi again!</h3>
+      <p class="md-text-center">This is a popup with three custom buttons</p>
+    </div>
+  </mbsc-popup>
+</mbsc-page>

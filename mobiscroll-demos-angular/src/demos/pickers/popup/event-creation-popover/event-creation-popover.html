@@ -1,1 +1,51 @@
-<div></div>
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="addEvent()">Add event</mbsc-button>
+    </div>
+  </div>
+
+  <mbsc-popup #popup [options]="popupOptions">
+
+
+    <div class="mbsc-form-group">
+      <mbsc-input label="Title"></mbsc-input>
+      <mbsc-input label="Description"></mbsc-input>
+    </div>
+
+
+    <div class="mbsc-form-group">
+      <mbsc-switch label="All-day" [(ngModel)]="popupEventAllDay"></mbsc-switch>
+
+
+      <mbsc-datepicker [(ngModel)]="popupEventDates" [options]="datePickerOptions"
+        [controls]="popupEventAllDay ? datePickerControls : datetimePickerControls" [startInput]="startInput"
+        [endInput]="endInput"></mbsc-datepicker>
+      <mbsc-input #startInput label="Starts"></mbsc-input>
+      <mbsc-input #endInput label="Ends"></mbsc-input>
+
+
+
+      <div id="travel-time-group" *ngIf="!popupEventAllDay">
+        <mbsc-dropdown [(ngModel)]="popupTravelTime" label="Travel time" id="travel-time-selection">
+          <option value="0">None</option>
+          <option value="5">5 minutes</option>
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="90">1.5 hours</option>
+          <option value="120">2 hours</option>
+        </mbsc-dropdown>
+      </div>
+
+
+    </div>
+
+    <mbsc-segmented-group [(ngModel)]="popupEventStatus">
+      <mbsc-segmented value="busy">Show as busy</mbsc-segmented>
+      <mbsc-segmented value="free">Show as free</mbsc-segmented>
+    </mbsc-segmented-group>
+
+    <div id="demo-event-date"></div>
+  </mbsc-popup>
+</mbsc-page>
