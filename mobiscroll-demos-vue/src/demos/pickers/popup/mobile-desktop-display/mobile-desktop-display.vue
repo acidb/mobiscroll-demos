@@ -18,37 +18,6 @@ function openAnchored() {
   myAnchor.value = buttonRef.value.instance.nativeElement
   isAnchoredOpen.value = true
 }
-
-function openTop() {
-  myAnchor.value = buttonRef.value.instance.nativeElement
-  isTopOpen.value = true
-}
-
-function openCenter() {
-  myAnchor.value = buttonRef.value.instance.nativeElement
-  isCenterOpen.value = true
-}
-
-function openBottom() {
-  myAnchor.value = buttonRef.value.instance.nativeElement
-  isBottomOpen.value = true
-}
-
-function closeAnchored() {
-  isAnchoredOpen.value = false
-}
-
-function closeTop() {
-  isTopOpen.value = false
-}
-
-function closeCenter() {
-  isCenterOpen.value = false
-}
-
-function closeBottom() {
-  isBottomOpen.value = false
-}
 </script>
 
 <template>
@@ -57,9 +26,9 @@ function closeBottom() {
       <div class="mbsc-form-group-title">Try different display modes</div>
       <div class="mbsc-form-group mbsc-button-group-block">
         <MbscButton ref="buttonRef" @click="openAnchored">Try anhored display mode</MbscButton>
-        <MbscButton @click="openTop">Try top display mode</MbscButton>
-        <MbscButton @click="openCenter">Try center display mode</MbscButton>
-        <MbscButton @click="openBottom">Try bottom display mode</MbscButton>
+        <MbscButton @click="isTopOpen = true">Try top display mode</MbscButton>
+        <MbscButton @click="isCenterOpen = true">Try center display mode</MbscButton>
+        <MbscButton @click="isBottomOpen = true">Try bottom display mode</MbscButton>
       </div>
     </div>
 
@@ -68,7 +37,7 @@ function closeBottom() {
       :anchor="myAnchor"
       :showOverlay="false"
       :isOpen="isAnchoredOpen"
-      @close="closeAnchored"
+      @close="isAnchoredOpen = false"
     >
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
@@ -77,7 +46,7 @@ function closeBottom() {
       </div>
     </MbscPopup>
 
-    <MbscPopup display="top" :showOverlay="false" :isOpen="isTopOpen" @close="closeTop">
+    <MbscPopup display="top" :showOverlay="false" :isOpen="isTopOpen" @close="isTopOpen = false">
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
         <h4>Welcome on our website!</h4>
@@ -85,7 +54,12 @@ function closeBottom() {
       </div>
     </MbscPopup>
 
-    <MbscPopup display="center" :showOverlay="false" :isOpen="isCenterOpen" @close="closeCenter">
+    <MbscPopup
+      display="center"
+      :showOverlay="false"
+      :isOpen="isCenterOpen"
+      @close="isCenterOpen = false"
+    >
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
         <h4>Welcome on our website!</h4>
@@ -93,7 +67,12 @@ function closeBottom() {
       </div>
     </MbscPopup>
 
-    <MbscPopup display="bottom" :showOverlay="false" :isOpen="isBottomOpen" @close="closeBottom">
+    <MbscPopup
+      display="bottom"
+      :showOverlay="false"
+      :isOpen="isBottomOpen"
+      @close="isBottomOpen = false"
+    >
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
         <h4>Welcome on our website!</h4>

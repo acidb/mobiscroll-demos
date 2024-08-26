@@ -19,22 +19,6 @@ setOptions({
 
 const isSubscribeOpen = ref(false)
 const isListOpen = ref(false)
-
-function openSubscribe() {
-  isSubscribeOpen.value = true
-}
-
-function openList() {
-  isListOpen.value = true
-}
-
-function subscribeClose() {
-  isSubscribeOpen.value = false
-}
-
-function listClose() {
-  isListOpen.value = false
-}
 </script>
 
 <template>
@@ -45,13 +29,13 @@ function listClose() {
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Without return value</div>
       <div class="mbsc-button-group-block">
-        <MbscButton @click="openSubscribe">Open Popup</MbscButton>
+        <MbscButton @click="isSubscribeOpen = true">Open Popup</MbscButton>
       </div>
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">With return value</div>
       <label>
-        <MbscInput @click="openList" placeholder="Please Select..." />
+        <MbscInput label="Update" @click="isListOpen = true" placeholder="Please Select..." />
       </label>
     </div>
 
@@ -63,12 +47,12 @@ function listClose() {
         {
           text: 'Subscribe',
           handler: function () {
-            subscribeClose()
-            // toast
+            isSubscribeOpen = false
+            // add toast
           }
         }
       ]"
-      @close="subscribeClose"
+      @close="isSubscribeOpen = false"
     >
       <div class="mbsc-align-center">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
@@ -92,7 +76,7 @@ function listClose() {
       :showOverlay="false"
       :isOpen="isListOpen"
       :buttons="['ok', 'cancel']"
-      @close="listClose"
+      @close="isListOpen = false"
     >
       <div class="mbsc-form-group-inset">
         <p>
