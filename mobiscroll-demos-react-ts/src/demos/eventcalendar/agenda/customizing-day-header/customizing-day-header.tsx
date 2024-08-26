@@ -47,7 +47,9 @@ const App: FC = () => {
         <div className="mbsc-flex-1-1">
           <div>{formatDate('D MMM YYYY', date)}</div>
         </div>
-        <Button className="mds-custom-day-header-btn" variant="outline" icon="plus" onClick={() => addEvent(date)}></Button>
+        <Button className="mds-custom-day-header-btn" variant="outline" icon="plus" onClick={() => addEvent(date)}>
+          Add event
+        </Button>
       </>
     ),
     [addEvent],

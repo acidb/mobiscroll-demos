@@ -63,7 +63,8 @@ onMounted(() => {
         variant="outline"
         icon="plus"
         @click="addEvent(date)"
-      ></MbscButton>
+        >Add event</MbscButton
+      >
       <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
     </template>
   </MbscEventcalendar>
@@ -72,7 +73,7 @@ onMounted(() => {
 <style>
 .mds-custom-day-header-btn.mbsc-button.mbsc-icon-button {
   height: 22px;
-  width: 22px;
+  width: auto;
   margin: 0;
 }
 </style>

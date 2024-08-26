@@ -26,7 +26,7 @@ export default {
               '</div>' +
               '<button class="mds-custom-day-header-btn" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
               mobiscroll.formatDate('YYYY-MM-DD', date) +
-              '"></button>'
+              '">Add event</button>'
             );
           },
         })
@@ -66,7 +66,7 @@ export default {
   css: `
 .mds-custom-day-header-btn.mbsc-button.mbsc-icon-button {
   height: 22px;
-  width: 22px;
+  width: auto;
   margin: 0;
 }
   `,
