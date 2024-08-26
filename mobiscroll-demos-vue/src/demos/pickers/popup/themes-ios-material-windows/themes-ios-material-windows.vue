@@ -16,11 +16,6 @@ function openPopup() {
   myAnchor.value = buttonRef.value.instance.nativeElement
   isPopupOpen.value = true
 }
-
-function handleClose() {
-  isPopupOpen.value = false
-  // Your custom event handler goes here
-}
 </script>
 
 <template>
@@ -38,7 +33,7 @@ function handleClose() {
       themeVariant="dark"
       :isOpen="isPopupOpen"
       :buttons="['set', 'cancel']"
-      @close="handleClose"
+      @close="isPopupOpen = false"
       @destroy="handleDestroy"
       @init="handleInit"
       @open="handleOpen"

@@ -95,5 +95,3 @@ const isListOpen = ref(false)
     </MbscPopup>
   </MbscPage>
 </template>
-
-<style></style>

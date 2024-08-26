@@ -10,6 +10,7 @@ import {
   MbscSegmentedGroup,
   MbscSwitch,
   MbscTextarea,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
@@ -26,7 +27,7 @@ const datePickerControls = ['date']
 const datetimePickerControls = ['datetime']
 const popupEventTitle = ref('')
 
-const toastMessage = ref('aaaaa')
+const toastMessage = ref('Event added')
 const isToastOpen = ref(false)
 
 const startInput = ref(null)
@@ -35,15 +36,6 @@ const endInput = ref(null)
 function openPopup() {
   popupEventTitle.value = 'New Event'
   isPopupOpen.value = true
-}
-
-function handleClose() {
-  isPopupOpen.value = false
-  // Your custom event handler goes here
-}
-
-function handleToastClose() {
-  isToastOpen.value = false
 }
 </script>
 
@@ -69,8 +61,8 @@ function handleToastClose() {
           text: 'Add',
           keyCode: 'enter',
           handler: function () {
-            // toastMessage.value = 'Event added'
-            // isToastOpen.value = true
+            isPopupOpen = false
+            isToastOpen = true
             handleClose()
           },
           cssClass: 'mbsc-popup-button-primary'
@@ -110,7 +102,7 @@ function handleToastClose() {
           <MbscSegmented value="busy" :defaultChecked="true">Show as busy</MbscSegmented>
           <MbscSegmented value="free">Show as free</MbscSegmented>
         </MbscSegmentedGroup>
-        <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+        <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
       </div>
     </MbscPopup>
   </MbscPage>

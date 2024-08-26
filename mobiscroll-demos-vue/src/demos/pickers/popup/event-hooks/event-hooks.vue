@@ -1,5 +1,5 @@
 <script setup>
-import { MbscButton, MbscPopup, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { MbscButton, MbscPage, MbscPopup, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import { ref } from 'vue'
 
 setOptions({
@@ -39,27 +39,29 @@ function handlePosition() {
 </script>
 
 <template>
-  <div class="mbsc-form-group">
-    <div class="mbsc-button-group-block">
-      <MbscButton ref="buttonRef" @click="openPopup">Open Popup</MbscButton>
+  <MbscPage>
+    <div class="mbsc-form-group">
+      <div class="mbsc-button-group-block">
+        <MbscButton ref="buttonRef" @click="openPopup">Open Popup</MbscButton>
+      </div>
     </div>
-  </div>
-  <MbscPopup
-    display="anchored"
-    :anchor="myAnchor"
-    :showOverlay="false"
-    :isOpen="isPopupOpen"
-    :buttons="['ok', 'cancel']"
-    @close="handleClose"
-    @destroy="handleDestroy"
-    @init="handleInit"
-    @open="handleOpen"
-    @position="handlePosition"
-  >
-    <div class="mbsc-align-center mbsc-padding">
-      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="Logo" />
-      <h4>Welcome on our website!</h4>
-      <p>Have fun navigating through the demos.</p>
-    </div>
-  </MbscPopup>
+    <MbscPopup
+      display="anchored"
+      :anchor="myAnchor"
+      :showOverlay="false"
+      :isOpen="isPopupOpen"
+      :buttons="['ok', 'cancel']"
+      @close="handleClose"
+      @destroy="handleDestroy"
+      @init="handleInit"
+      @open="handleOpen"
+      @position="handlePosition"
+    >
+      <div class="mbsc-align-center mbsc-padding">
+        <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="Logo" />
+        <h4>Welcome on our website!</h4>
+        <p>Have fun navigating through the demos.</p>
+      </div>
+    </MbscPopup>
+  </MbscPage>
 </template>

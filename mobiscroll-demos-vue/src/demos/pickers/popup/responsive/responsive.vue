@@ -83,5 +83,3 @@ function openPopup() {
     <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
   </MbscPage>
 </template>
-
-<style></style>
