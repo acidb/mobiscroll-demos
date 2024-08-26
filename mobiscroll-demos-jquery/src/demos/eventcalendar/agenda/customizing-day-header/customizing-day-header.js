@@ -50,7 +50,7 @@ export default {
       });
 
       $.getJSON(
-        'https://trial.mobiscroll.com/events-new/?vers=5&callback=?',
+        'https://trial.mobiscroll.com/events/?vers=5&callback=?',
         function (events) {
           agenda.setEvents(events);
         },

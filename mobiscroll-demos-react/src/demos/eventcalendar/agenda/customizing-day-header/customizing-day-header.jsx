@@ -46,7 +46,7 @@ function App() {
 
   useEffect(() => {
     getJson(
-      'https://trial.mobiscroll.com/timeline-events/',
+      'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
         setEvents(events);
       },

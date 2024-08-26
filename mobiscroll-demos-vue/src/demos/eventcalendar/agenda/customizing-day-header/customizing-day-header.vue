@@ -25,7 +25,7 @@ const myView = {
   }
 }
 
-function newEvent(date) {
+function addEvent(date) {
   const newEvent = {
     title: 'Event',
     start: date
@@ -37,13 +37,9 @@ function newEvent(date) {
   isToastOpen.value = true
 }
 
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
 onMounted(() => {
   getJson(
-    'https://trial.mobiscroll.com/timeline-events/',
+    'https://trial.mobiscroll.com/events/?vers=5',
     (events) => {
       myEvents.value = events
     },
@@ -62,9 +58,9 @@ onMounted(() => {
         className="mds-custom-day-header-btn"
         variant="outline"
         icon="plus"
-        @click="newEvent(date)"
+        @click="addEvent(date)"
       ></MbscButton>
-      <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+      <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
     </template>
   </MbscEventcalendar>
 </template>
