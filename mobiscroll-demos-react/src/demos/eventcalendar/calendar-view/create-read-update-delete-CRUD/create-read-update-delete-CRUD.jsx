@@ -421,6 +421,7 @@ function App() {
           )}
           <Datepicker
             select="range"
+            display="anchored"
             controls={controls}
             touchUi={true}
             startInput={start}

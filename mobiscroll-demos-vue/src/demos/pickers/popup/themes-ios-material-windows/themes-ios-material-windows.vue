@@ -1,49 +1,53 @@
-
 <script setup>
-import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
-import { onMounted, ref } from 'vue'
+import { MbscButton, MbscPage, MbscPopup, setOptions /* localeImport */ } from '@mobiscroll/vue'
+
+import { ref } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
 
-const myEvents = ref([])
+const buttonRef = ref(null)
+const isPopupOpen = ref(false)
+const myAnchor = ref()
 
-const myResources = [
-]
-
-const myView = {
-  timeline: {
-    allDay: false,
-    type: 'week',
-    startDay: 1,
-    endDay: 5,
-    startTime: '09:00',
-    endTime: '18:00'
-  }
+function openPopup() {
+  myAnchor.value = buttonRef.value.instance.nativeElement
+  isPopupOpen.value = true
 }
 
-onMounted(() => {
-  getJson(
-    'https://trial.mobiscroll.com/timeline-events/',
-    (events) => {
-      myEvents.value = events
-    },
-    'jsonp'
-  )
-})
+function handleClose() {
+  isPopupOpen.value = false
+  // Your custom event handler goes here
+}
 </script>
 
 <template>
-  <!-- dragOptions -->
-  <MbscEventcalendar
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-  />
+  <MbscPage>
+    <div class="mbsc-button-group-block">
+      <MbscButton ref="buttonRef" @click="openPopup">Open Popup</MbscButton>
+    </div>
+
+    <!-- theme: can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', the theme will automatically be set based on the platform -->
+    <!-- themeVariant: can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme -->
+    <MbscPopup
+      display="anchored"
+      :anchor="myAnchor"
+      theme="material"
+      themeVariant="dark"
+      :isOpen="isPopupOpen"
+      :buttons="['set', 'cancel']"
+      @close="handleClose"
+      @destroy="handleDestroy"
+      @init="handleInit"
+      @open="handleOpen"
+      @position="handlePosition"
+    >
+      <div class="mbsc-align-center mbsc-padding">
+        <h3>Hi again!</h3>
+        <p>This is a popup with three custom buttons</p>
+      </div>
+    </MbscPopup>
+  </MbscPage>
 </template>
-
-<style>
-
-</style>

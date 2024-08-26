@@ -41,7 +41,7 @@ function handlePosition() {
 <template>
   <div class="mbsc-form-group">
     <div class="mbsc-button-group-block">
-      <MbscButton ref="buttonRef" @click="openPopup">Show Popup</MbscButton>
+      <MbscButton ref="buttonRef" @click="openPopup">Open Popup</MbscButton>
     </div>
   </div>
   <MbscPopup
