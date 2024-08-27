@@ -1,4 +1,5 @@
-.mds-custom-header-cont {
-  width: 100%;
-  justify-content: space-between;
+.mds-custom-day-header-btn.mbsc-button.mbsc-icon-button {
+  height: 22px;
+  width: auto;
+  margin: 0;
 }

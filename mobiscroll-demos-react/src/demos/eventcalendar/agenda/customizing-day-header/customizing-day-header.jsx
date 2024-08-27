@@ -34,19 +34,21 @@ function App() {
 
   const renderCustomDay = useCallback(
     (events, date) => (
-      <div className="mbsc-flex mds-custom-header-cont">
-        <div className="mbsc-flex mbsc-align-items-center">
-          <div className="md-date-header-day-name">{formatDate('D MMM YYYY', date)}</div>
+      <>
+        <div className="mbsc-flex-1-1">
+          <div>{formatDate('D MMM YYYY', date)}</div>
         </div>
-        <Button variant="outline" icon="plus" onClick={() => addEvent(date)}></Button>
-      </div>
+        <Button className="mds-custom-day-header-btn" variant="outline" icon="plus" onClick={() => addEvent(date)}>
+          Add event
+        </Button>
+      </>
     ),
     [addEvent],
   );
 
   useEffect(() => {
     getJson(
-      'https://trial.mobiscroll.com/timeline-events/',
+      'https://trial.mobiscroll.com/events/?vers=5',
       (events) => {
         setEvents(events);
       },

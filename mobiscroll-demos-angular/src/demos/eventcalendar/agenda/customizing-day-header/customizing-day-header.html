@@ -1,1 +1,7 @@
-<mbsc-eventcalendar [data]="myEvents" [view]="myView"> </mbsc-eventcalendar>
+<mbsc-eventcalendar [view]="myView" [data]="myEvents" [dayTemplate]="dayTemp">
+  <ng-template #dayTemp let-day>
+    <div class="mbsc-flex-1-1">{{ formatDate('D MMM YYYY', day.date) }}</div>
+    <mbsc-button class="mds-custom-day-header-btn" (click)="addEvent(day.date)" icon="plus" variant="outline">Add
+      event</mbsc-button>
+  </ng-template>
+</mbsc-eventcalendar>

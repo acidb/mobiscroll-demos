@@ -10,31 +10,17 @@ export default {
     });
 
     $(function () {
-      var agenda;
-
-      agenda = $('#demo-show-empty-days')
+      var agenda = $('#demo-show-empty-days')
         .mobiscroll()
         .eventcalendar({
-          class: 'mds-empty-days-agenda',
           view: {
             agenda: {
               type: 'month',
+              showEmptyDays: true,
             },
           },
         })
         .mobiscroll('getInst');
-
-      // the "Show empty days" button and this logic where should be ?!
-      $('#showEmptyDays').on('change', function () {
-        agenda.setOptions({
-          view: {
-            agenda: {
-              type: 'month',
-              showEmptyDays: $(this).prop('checked'),
-            },
-          },
-        });
-      });
 
       $.getJSON(
         'https://trial.mobiscroll.com/events-new/?vers=5&callback=?',
@@ -47,14 +33,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-   <label>
-    <input id="showEmptyDays" mbsc-switch data-label="Show empty days" type="checkbox" />
-   </label>
-
 <div id="demo-show-empty-days"></div>
-
-
 `,
-  // eslint-disable-next-line es5/no-template-literals
-  css: ``,
 };

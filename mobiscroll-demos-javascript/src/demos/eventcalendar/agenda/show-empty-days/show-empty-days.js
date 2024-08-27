@@ -8,17 +8,25 @@ export default {
       // theme
     });
 
-    mobiscroll.eventcalendar('#demo-show-empty-days', {
+    var agenda = mobiscroll.eventcalendar('#demo-show-empty-days', {
       view: {
         agenda: {
           type: 'month',
+          showEmptyDays: true,
         },
       },
     });
+
+    mobiscroll.getJson(
+      'https://trial.mobiscroll.com/events/?vers=5',
+      function (events) {
+        agenda.setEvents(events);
+      },
+      'jsonp',
+    );
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-show-empty-days"></div>
 `,
-  css: ``,
 };
