@@ -9,20 +9,23 @@ export default {
     });
 
     var agenda = mobiscroll.eventcalendar('#demo-custom-day-header', {
+      cssClass: 'mds-custom-day-header',
       view: {
         agenda: {
           type: 'month',
           showEmptyDays: true,
         },
       },
-      renderDay: function (events, date) {
+      renderDay: function (day) {
         return (
+          '<div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">' +
           '<div class="mbsc-flex-1-1">' +
-          mobiscroll.formatDate('D MMM YYYY', date) +
+          mobiscroll.formatDate('D MMM YYYY', day.date) +
           '</div>' +
-          '<button class="mds-custom-day-header-btn" mbsc-button data-icon="plus" data-variant="outline" data-date="' +
-          mobiscroll.formatDate('YYYY-MM-DD', date) +
-          '">Add event</button>'
+          '<button class="mds-custom-day-header-btn" mbsc-button data-start-icon="plus" data-color="primary" data-variant="outline" data-date="' +
+          mobiscroll.formatDate('YYYY-MM-DD', day.date) +
+          '">Add event</button>' +
+          '</div>'
         );
       },
     });
@@ -58,9 +61,15 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-custom-day-header-btn.mbsc-button.mbsc-icon-button {
-  height: 22px;
-  width: auto;
+.mds-custom-day-header .mbsc-event-day.mbsc-windows {
+  padding: 8px 24px;
+}
+
+.mds-custom-day-header-btn.mbsc-button {
+  height: 24px;
+  line-height: 24px;
+  font-size: 12px;
+  border-radius: 12px;
   margin: 0;
 }
   `,
