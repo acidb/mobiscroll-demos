@@ -12,11 +12,11 @@ export default {
     $(function () {
       var formatDate = mobiscroll.formatDate;
       var timer;
-      var $tooltip = $('#event-tooltip-popup');
+      var $tooltip = $('#demo-event-tooltip-popup');
 
-      var $title = $('.mds-tooltip-event-title');
-      var $startDate = $('.mds-tooltip-event-start');
-      var $endDate = $('.mds-tooltip-event-end');
+      var $title = $('#demo-tooltip-event-title');
+      var $startDate = $('#demo-tooltip-event-start');
+      var $endDate = $('#demo-tooltip-event-end');
 
       var myEvents = [
         {
@@ -122,14 +122,14 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $tooltip.mouseenter(function () {
+      $tooltip.on('mouseenter', function () {
         if (timer) {
           clearTimeout(timer);
           timer = null;
         }
       });
 
-      $tooltip.mouseleave(function () {
+      $tooltip.on('mouseleave', function () {
         timer = setTimeout(function () {
           tooltip.close();
         }, 200);
@@ -138,24 +138,21 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="event-tooltip-popup">
+<div id="demo-event-tooltip-calendar"></div>
 
+<div id="demo-event-tooltip-popup" style="display: none;">
     <div class="mds-tooltip-event-title-cont">
-        <span class="mds-tooltip-event-title"></span>
+        <span id="demo-tooltip-event-title"></span>
     </div>
-
     <div class="mds-tooltip-start-cont mbsc-flex">
         <span class="mds-tooltip-label">Start:</span>
-        <span class="mds-tooltip-event-start"></span>
+        <span id="demo-tooltip-event-start"></span>
     </div>
-
     <div class="mds-tooltip-end-cont mbsc-flex">
         <span class="mds-tooltip-label">End:</span>
-        <span class="mds-tooltip-event-end"></span>
+        <span id="demo-tooltip-event-end"></span>
     </div>
-
 </div>
-<div id="demo-event-tooltip-calendar"></div>
 `,
   css: `
 .mds-tooltip-event-title-cont {

@@ -9,12 +9,10 @@ export default {
       // theme
     });
 
-    var tempEvent = {};
-    var $travelTime = $('#travel-time-selection');
-    var $status = $('#demo-popup-status-busy');
-    var $title = $('#demo-popup-event-title');
-    var $description = $('#demo-popup-event-description');
-    var $allDay = $('#demo-popup-all-day');
+    var $eventStatus = $('#demo-popup-status-busy');
+    var $eventTitle = $('#demo-popup-event-title');
+    var $eventDescription = $('#demo-popup-event-description');
+    var $eventAllDay = $('#demo-popup-all-day');
 
     var myData = [
       {
@@ -77,16 +75,17 @@ export default {
               text: 'Add',
               keyCode: 'enter',
               handler: function () {
-                calendar.addEvent({
-                  title: $title.val(),
-                  description: $description.val(),
-                  allDay: $allDay.val(),
-                  status: $status.val(),
-                  bufferBefore: $travelTime.val(),
-                  start: tempEvent.start || new Date(),
-                  end: tempEvent.end || new Date(),
-                });
-                // move to eventcalendar lifecycle hook
+                var eventTimes = range.getVal();
+                var newEvent = {
+                  title: $eventTitle.val(),
+                  description: $eventDescription.val(),
+                  allDay: $eventAllDay.val(),
+                  status: $eventStatus.val(),
+                  start: eventTimes[0],
+                  end: eventTimes[1] || eventTimes[0],
+                };
+                calendar.addEvent(newEvent);
+                calendar.navigateToEvent(newEvent);
                 mobiscroll.toast({
                   // context,
                   message: 'Event added',
@@ -104,18 +103,13 @@ export default {
         .mobiscroll()
         .datepicker({
           // context,
-          controls: ['date'],
+          controls: ['calendar', 'time'],
           select: 'range',
           startInput: '#demo-popup-start-input',
           endInput: '#demo-popup-end-input',
           display: 'anchored',
           touchUi: true,
           showRangeLabels: false,
-          onChange: function (args) {
-            var date = args.value;
-            tempEvent.start = date[0];
-            tempEvent.end = date[1];
-          },
         })
         .mobiscroll('getInst');
 
@@ -123,107 +117,85 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
-          // drag,
           view: {
             calendar: { labels: true },
           },
           data: myData,
-          onEventCreated: function (event) {
-            mobiscroll.toast({
-              // context,
-              message: 'Event added',
-            });
-          },
         })
         .mobiscroll('getInst');
 
       $('#demo-popup-add-btn').on('click', function () {
         range.setVal([new Date(), new Date()]);
-        console.log('here');
-        $title.mobiscroll('getInst').value = 'New Event';
-        $description.mobiscroll('getInst').value = '';
-        $allDay.mobiscroll('getInst').checked = false;
-        $status.mobiscroll('getInst').checked = true;
-        $('#travel-time-group').show();
+        $eventTitle.mobiscroll('getInst').value = 'New Event';
+        $eventDescription.mobiscroll('getInst').value = '';
+        $eventAllDay.mobiscroll('getInst').checked = false;
+        $eventStatus.mobiscroll('getInst').checked = true;
         popup.open();
-        return false;
       });
 
-      $allDay.on('change', function () {
+      $eventAllDay.on('change', function () {
         var checked = this.checked;
-
-        if (checked) {
-          $('#travel-time-group').hide();
-          $travelTime.val(0);
-        } else {
-          $('#travel-time-group').show();
-        }
-
         // change range settings based on the allDay
         range.setOptions({
-          controls: checked ? ['date'] : ['datetime'],
+          controls: checked ? ['calendar'] : ['calendar', 'time'],
         });
-
-        // update current event's allDay property
-        tempEvent.allDay = checked;
       });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mbsc-button-group-block">
-  <button mbsc-button id="demo-popup-add-btn">Add new event</button>
+<div mbsc-page class="mds-full-height">
+  <div class="mds-full-height mbsc-flex-col">
+    <div class="mbsc-button-group-block">
+      <button mbsc-button id="demo-popup-add-btn">Add new event</button>
+    </div>
+    <div style="display: none">
+      <div id="demo-add-event-popup">
+        <div class="mbsc-form-group">
+          <label>
+            Title
+            <input mbsc-input id="demo-popup-event-title">
+          </label>
+          <label>
+            Description
+              <input mbsc-input id="demo-popup-event-description">
+          </label>
+        </div>
+        <div class="mbsc-form-group">
+          <label>
+            All-day
+            <input mbsc-switch type="checkbox" id="demo-popup-all-day"/>
+          </label>
+          <label>
+            Starts
+            <input mbsc-input id="demo-popup-start-input" />
+          </label>
+          <label>
+            Ends
+            <input mbsc-input id="demo-popup-end-input" />
+          </label>
+        </div>
+          <div class="mbsc-form-group">
+            <label>
+              Show as busy
+              <input id="demo-popup-status-busy" mbsc-segmented type="radio" name="event-status" value="busy">
+            </label>
+            <label>
+              Show as free
+              <input id="demo-popup-status-free" mbsc-segmented type="radio" name="event-status" value="free">
+            </label>
+          </div>
+        </div>
+      <div id="demo-event-date"></div>
+    </div>
+    <div id="demo-calendar" class="mbsc-flex-1-1"></div>
+  </div>
 </div>
-<div style="display: none">
-  <div id="demo-add-event-popup">
-    <div class="mbsc-form-group">
-      <label>
-        Title
-        <input mbsc-input id="demo-popup-event-title">
-      </label>
-      <label>
-        Description
-          <input mbsc-input id="demo-popup-event-description">
-      </label>
-    </div>
-    <div class="mbsc-form-group">
-      <label>
-        All-day
-        <input mbsc-switch type="checkbox" id="demo-popup-all-day"/>
-      </label>
-      <label>
-        Starts
-        <input mbsc-input id="demo-popup-start-input" />
-      </label>
-      <label>
-        Ends
-        <input mbsc-input id="demo-popup-end-input" />
-      </label>
-      <label id="travel-time-group">
-        <select data-label="Travel time" mbsc-dropdown id="travel-time-selection>
-        <option value="15">why this dont appear</option>
-          <option value="0">None</option>
-          <option value="15">15 minutes</option>
-          <option value="30">30 minutes</option>
-          <option value="60">1 hour</option>
-          <option value="90">1.5 hours</option>
-          <option value="120">2 hours</option>
-        </select>
-      </label>
-    </div>
-      <div class="mbsc-form-group">
-        <label>
-          Show as busy
-          <input id="demo-popup-status-busy" mbsc-segmented type="radio" name="event-status" value="busy">
-        </label>
-        <label>
-          Show as free
-          <input id="demo-popup-status-free" mbsc-segmented type="radio" name="event-status" value="free">
-        </label>
-      </div>
-    </div>
-  <div id="demo-event-date"></div>
-</div>
-<div id="demo-calendar"></div>
   `,
+  // eslint-disable-next-line es5/no-template-literals
+  css: `
+.mds-full-height {
+  height: 100%;
+}
+      `,
 };
