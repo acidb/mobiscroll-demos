@@ -14,6 +14,9 @@ setOptions({
   // theme
 })
 
+const localeAll = locale
+const localeStr = ref<string>('en')
+
 const myEvents = ref<MbscCalendarEvent[]>([])
 const languages = ref<any[]>([
   { name: 'Arabic', value: 'ar' },
@@ -59,9 +62,6 @@ const myView: MbscEventcalendarView = {
   agenda: { type: 'day' }
 }
 
-const localeStr = ref<string>('en')
-const localeAll = locale
-
 onMounted(() => {
   getJson(
     'https://trial.mobiscroll.com/events/?vers=5',
@@ -75,7 +75,7 @@ onMounted(() => {
 
 <template>
   <MbscPage>
-    <div class="md-localization">
+    <div class="mds-localization">
       <div class="mbsc-grid">
         <div class="mbsc-row mbsc-justify-content-center">
           <div class="mbsc-col-sm-8">
