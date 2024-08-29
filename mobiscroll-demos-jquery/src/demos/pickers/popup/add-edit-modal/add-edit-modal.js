@@ -109,6 +109,7 @@ export default {
           endInput: '#demo-popup-end-input',
           display: 'anchored',
           touchUi: true,
+          showOverlay: false,
           showRangeLabels: false,
         })
         .mobiscroll('getInst');
