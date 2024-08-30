@@ -37,7 +37,7 @@ export default {
     <div class="mbsc-align-center">
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-        <h4>Welcome on our website!</h4>
+        <h4>Welcome to our website!</h4>
         <p>Have fun navigating through the demos.</p>
       </div>
       <div class="mbsc-button-group-block">

@@ -29,12 +29,9 @@ export class AppComponent {
       },
     },
   };
+
   openPopup(ev: any): void {
     this.popupAnchor = ev.currentTarget;
     this.popup.open();
-  }
-  subscribe(): void {
-    // !!! how to toast "Subscribe"
-    this.popup.close();
   }
 }

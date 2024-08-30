@@ -333,13 +333,13 @@ import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-le
 
 // todo clean up
 // temporary ids, in dev database: 748 -> 756 (same order like here)
-import { AppComponent as Demo901 } from '../demos/pickers/popup/showing-popover/showing-popover';
+import { AppComponent as Demo901 } from '../demos/pickers/popup/showing-the-popover/showing-the-popover';
 import { AppComponent as Demo902 } from '../demos/pickers/popup/mobile-desktop-display/mobile-desktop-display';
 import { AppComponent as Demo903 } from '../demos/pickers/popup/button-configuration/button-configuration';
 import { AppComponent as Demo904 } from '../demos/pickers/popup/responsive/responsive';
-import { AppComponent as Demo905 } from '../demos/pickers/popup/range-picking-popover/range-picking-popover';
-import { AppComponent as Demo906 } from '../demos/pickers/popup/event-creation-popover/event-creation-popover';
-import { AppComponent as Demo907 } from '../demos/pickers/popup/hover-popover/hover-popover';
+import { AppComponent as Demo906 } from '../demos/pickers/popup/add-event-modal/add-event-modal';
+import { AppComponent as Demo907 } from '../demos/pickers/popup/show-hide-tooltip-hover-in-out/show-hide-tooltip-hover-in-out';
+import { AppComponent as Demo905 } from '../demos/pickers/popup/range-picker-popup-presets/range-picker-popup-presets';
 import { AppComponent as Demo908 } from '../demos/pickers/popup/themes-ios-material-windows/themes-ios-material-windows';
 import { AppComponent as Demo909 } from '../demos/pickers/popup/event-hooks/event-hooks';
 // todo end
@@ -1210,7 +1210,7 @@ export const demos: any[] = [
             name: 'Using the popup',
             unique: 7,
             items: [
-              { name: 'Showing the control', unique: 'showing-popover', component: Demo901 },
+              { name: 'Opening closing the popup', unique: 'showing-the-popover', component: Demo901 },
               { name: 'Understanding display modes', unique: 'mobile-desktop-display', component: Demo902 },
               { name: 'Configure buttons', unique: 'button-configuration', component: Demo903 },
               { name: 'Responsive', unique: 'responsive', component: Demo904 },
@@ -1220,9 +1220,9 @@ export const demos: any[] = [
             name: 'Common use cases',
             unique: 20,
             items: [
-              { name: 'Custom range picking popover', unique: 'range-picking-popover', component: Demo905 },
-              { name: 'Event creation popup', unique: 'event-creation-popover', component: Demo906 },
-              { name: 'Opening a popup on hover', unique: 'hover-popover', component: Demo907 },
+              { name: 'Event creation modal', unique: 'add-event-modal', component: Demo906 },
+              { name: 'Using as a tooltip', unique: 'show-hide-tooltip-hover-in-out', component: Demo907 },
+              { name: 'Range picker with presets', unique: 'range-picker-popup-presets', component: Demo905 },
             ],
           },
           {

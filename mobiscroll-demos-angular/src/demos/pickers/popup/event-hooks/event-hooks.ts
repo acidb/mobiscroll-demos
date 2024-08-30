@@ -16,9 +16,7 @@ export class AppComponent {
   popupAnchor: HTMLElement | undefined;
 
   popupOptions: MbscPopupOptions = {
-    contentPadding: false,
     display: 'anchored',
-    showOverlay: false,
     buttons: ['ok', 'cancel'],
   };
 

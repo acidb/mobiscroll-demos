@@ -7,9 +7,9 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-popup-hover-popover',
+  selector: 'app-popup-show-hide-tooltip-hover-in-out',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './hover-popover.html',
+  templateUrl: './show-hide-tooltip-hover-in-out.html',
 })
 export class AppComponent {
   @ViewChild('popup', { static: false }) popup!: MbscPopup;

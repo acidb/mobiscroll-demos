@@ -25,10 +25,10 @@ const startDate = dyndatetime('y,m,d');
 const endDate = dyndatetime('y,m,d+6');
 
 @Component({
-  selector: 'app-popup-range-picking-popover',
-  styleUrl: './range-picking-popover.css',
+  selector: 'app-popup-range-picker-popup-presets',
+  styleUrl: './range-picker-popup-presets.css',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './range-picking-popover.html',
+  templateUrl: './range-picker-popup-presets.html',
 })
 export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('popup', { static: false })

@@ -36,12 +36,15 @@ export class AppComponent {
     this.popupAnchor = ev.currentTarget;
     this.popupAnchored.open();
   }
+
   openTop(): void {
     this.popupTop.open();
   }
+
   openCenter(): void {
     this.popupCenter.open();
   }
+
   openBottom(): void {
     this.popupBottom.open();
   }

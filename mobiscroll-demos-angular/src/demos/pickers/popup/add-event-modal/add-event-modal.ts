@@ -7,9 +7,9 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-popup-event-creation-popover',
+  selector: 'app-popup-add-event-modal',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './event-creation-popover.html',
+  templateUrl: './add-event-modal.html',
 })
 export class AppComponent {
   @ViewChild('popup', { static: false }) popup!: MbscPopup;

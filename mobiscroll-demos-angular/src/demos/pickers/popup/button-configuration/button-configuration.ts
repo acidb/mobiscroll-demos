@@ -15,35 +15,41 @@ setOptions({
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  @ViewChild('popupDefault', { static: false }) popupDefault!: MbscPopup;
+  @ViewChild('popupNoBtn', { static: false }) popupNoBtn!: MbscPopup;
+  @ViewChild('popupPredefined', { static: false }) popupPredefined!: MbscPopup;
   @ViewChild('popupCustom', { static: false }) popupCustom!: MbscPopup;
 
-  popupOptionsDefault: MbscPopupOptions = {
+  popupOptionsNoBtn: MbscPopupOptions = {
     display: 'center',
+  };
+
+  popupOptionsPredefined: MbscPopupOptions = {
+    display: 'center',
+    buttons: ['ok', 'cancel'],
   };
 
   popupOptionsCustom: MbscPopupOptions = {
     display: 'center',
     buttons: [
-      'ok',
       {
         text: 'Custom',
-        handler: function () {
-          // ?!
-          // this.notify.toast({
-          //   // context,
-          //   message: 'Custom button clicked',
-          // });
-          console.log('clicked');
+        handler: () => {
+          this.notify.toast({
+            message: 'Custom button clicked',
+          });
         },
       },
-      'close',
     ],
   };
 
-  openPopupDefault(): void {
-    this.popupDefault.open();
+  openPopupNoBtn(): void {
+    this.popupNoBtn.open();
   }
+
+  openPopupPredefined(): void {
+    this.popupPredefined.open();
+  }
+
   openPopupCustom(): void {
     this.popupCustom.open();
   }
