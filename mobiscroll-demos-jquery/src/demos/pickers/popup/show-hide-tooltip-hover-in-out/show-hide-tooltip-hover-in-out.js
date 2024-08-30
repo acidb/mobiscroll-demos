@@ -154,6 +154,7 @@ export default {
     </div>
 </div>
 `,
+  // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-tooltip-event-title-cont {
     margin-bottom: 15px;

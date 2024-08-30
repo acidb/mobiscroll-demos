@@ -9,58 +9,58 @@ export default {
       // theme
     });
 
-    var $eventStatus = $('#demo-popup-status-busy');
-    var $eventTitle = $('#demo-popup-event-title');
-    var $eventDescription = $('#demo-popup-event-description');
-    var $eventAllDay = $('#demo-popup-all-day');
-
-    var myData = [
-      {
-        id: 1,
-        start: 'dyndatetime(y,m,8,13)',
-        end: 'dyndatetime(y,m,8,13,45)',
-        title: "Lunch @ Butcher's",
-        description: '',
-        allDay: false,
-        bufferBefore: 15,
-        free: true,
-        color: '#009788',
-      },
-      {
-        id: 2,
-        start: 'dyndatetime(y,m,d,15)',
-        end: 'dyndatetime(y,m,d,16)',
-        title: 'Conference',
-        description: '',
-        allDay: false,
-        bufferBefore: 30,
-        free: false,
-        color: '#ff9900',
-      },
-      {
-        id: 3,
-        start: 'dyndatetime(y,m,d-1,18)',
-        end: 'dyndatetime(y,m,d-1,22)',
-        title: 'Site Visit',
-        description: '',
-        allDay: false,
-        bufferBefore: 60,
-        free: true,
-        color: '#3f51b5',
-      },
-      {
-        id: 4,
-        start: 'dyndatetime(y,m,d+1,10,30)',
-        end: 'dyndatetime(y,m,d+1,11,30)',
-        title: 'Stakeholder mtg.',
-        description: '',
-        allDay: false,
-        free: false,
-        color: '#f44437',
-      },
-    ];
-
     $(function () {
+      var $eventStatus = $('#demo-popup-status-busy');
+      var $eventTitle = $('#demo-popup-event-title');
+      var $eventDescription = $('#demo-popup-event-description');
+      var $eventAllDay = $('#demo-popup-all-day');
+
+      var myData = [
+        {
+          id: 1,
+          start: 'dyndatetime(y,m,8,13)',
+          end: 'dyndatetime(y,m,8,13,45)',
+          title: "Lunch @ Butcher's",
+          description: '',
+          allDay: false,
+          bufferBefore: 15,
+          free: true,
+          color: '#009788',
+        },
+        {
+          id: 2,
+          start: 'dyndatetime(y,m,d,15)',
+          end: 'dyndatetime(y,m,d,16)',
+          title: 'Conference',
+          description: '',
+          allDay: false,
+          bufferBefore: 30,
+          free: false,
+          color: '#ff9900',
+        },
+        {
+          id: 3,
+          start: 'dyndatetime(y,m,d-1,18)',
+          end: 'dyndatetime(y,m,d-1,22)',
+          title: 'Site Visit',
+          description: '',
+          allDay: false,
+          bufferBefore: 60,
+          free: true,
+          color: '#3f51b5',
+        },
+        {
+          id: 4,
+          start: 'dyndatetime(y,m,d+1,10,30)',
+          end: 'dyndatetime(y,m,d+1,11,30)',
+          title: 'Stakeholder mtg.',
+          description: '',
+          allDay: false,
+          free: false,
+          color: '#f44437',
+        },
+      ];
+
       var popup = $('#demo-add-event-popup')
         .mobiscroll()
         .popup({

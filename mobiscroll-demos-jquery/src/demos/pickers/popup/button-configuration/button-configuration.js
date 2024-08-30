@@ -10,14 +10,14 @@ export default {
     });
 
     $(function () {
-      var emptyPopup = $('#demo-popup-no-btn')
+      var noBtnPopup = $('#demo-popup-no-btn')
         .mobiscroll()
         .popup({
           display: 'center',
         })
         .mobiscroll('getInst');
 
-      var commonPopup = $('#demo-popup-predefined-btn')
+      var predefinedBtnPopup = $('#demo-popup-predefined-btn')
         .mobiscroll()
         .popup({
           display: 'center',
@@ -25,7 +25,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var customPopup = $('#demo-popup-custom-btn')
+      var customBtnPopup = $('#demo-popup-custom-btn')
         .mobiscroll()
         .popup({
           display: 'center',
@@ -43,15 +43,15 @@ export default {
         .mobiscroll('getInst');
 
       $('#demo-no-buttons-btn').on('click', function () {
-        emptyPopup.open();
+        noBtnPopup.open();
       });
 
       $('#demo-predefined-btn').on('click', function () {
-        commonPopup.open();
+        predefinedBtnPopup.open();
       });
 
       $('#demo-custom-btn').on('click', function () {
-        customPopup.open();
+        customBtnPopup.open();
       });
     });
   },
