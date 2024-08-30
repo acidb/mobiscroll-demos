@@ -42,7 +42,7 @@ function handlePosition() {
   <MbscPage>
     <div class="mbsc-form-group">
       <div class="mbsc-button-group-block">
-        <MbscButton ref="buttonRef" @click="openPopup">Open Popup</MbscButton>
+        <MbscButton ref="buttonRef" @click="openPopup">Open popup</MbscButton>
       </div>
     </div>
     <MbscPopup
@@ -59,7 +59,7 @@ function handlePosition() {
     >
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="Logo" />
-        <h4>Welcome on our website!</h4>
+        <h4>Welcome to our website!</h4>
         <p>Have fun navigating through the demos.</p>
       </div>
     </MbscPopup>

@@ -21,7 +21,7 @@ function openPopup() {
 <template>
   <MbscPage>
     <div class="mbsc-button-group-block">
-      <MbscButton ref="buttonRef" @click="openPopup">Open Popup</MbscButton>
+      <MbscButton ref="buttonRef" @click="openPopup">Open popup</MbscButton>
     </div>
 
     <!-- theme: can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', the theme will automatically be set based on the platform -->
@@ -32,16 +32,13 @@ function openPopup() {
       theme="material"
       themeVariant="dark"
       :isOpen="isPopupOpen"
-      :buttons="['set', 'cancel']"
+      :buttons="['ok', 'cancel']"
       @close="isPopupOpen = false"
-      @destroy="handleDestroy"
-      @init="handleInit"
-      @open="handleOpen"
-      @position="handlePosition"
     >
       <div class="mbsc-align-center mbsc-padding">
-        <h3>Hi again!</h3>
-        <p>This is a popup with three custom buttons</p>
+        <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
+        <h4>Welcome to our website!</h4>
+        <p>Have fun navigating through the demos.</p>
       </div>
     </MbscPopup>
   </MbscPage>

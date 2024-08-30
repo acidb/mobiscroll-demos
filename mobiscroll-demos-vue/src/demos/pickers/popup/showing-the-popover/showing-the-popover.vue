@@ -8,48 +8,24 @@ setOptions({
 })
 
 const isPopupOpen = ref(false)
-const buttonRef = ref(null)
-const myAnchor = ref()
-
-const myResponsive = {
-  xsmall: {
-    display: 'bottom'
-  },
-  small: {
-    display: 'center'
-  },
-  custom: {
-    // Custom breakpoint
-    breakpoint: 800,
-    display: 'anchored'
-    //
-    // anchor: myAnchor
-  }
-}
-
-function openPopup() {
-  myAnchor.value = buttonRef.value.instance.nativeElement
-  isPopupOpen.value = true
-}
 </script>
+
 <template>
   <MbscPage>
     <div class="mbsc-form-group">
       <div class="mbsc-button-group-block">
-        <MbscButton ref="buttonRef" @click="openPopup">Open popup</MbscButton>
+        <MbscButton @click="isPopupOpen = true">Open popup</MbscButton>
       </div>
     </div>
 
-    <MbscPopup
-      :isOpen="isPopupOpen"
-      :anchor="myAnchor"
-      :responsive="myResponsive"
-      @close="isPopupOpen = false"
-    >
+    <MbscPopup display="center" :isOpen="isPopupOpen" @close="isPopupOpen = false">
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
         <h4>Welcome to our website!</h4>
         <p>Have fun navigating through the demos.</p>
+      </div>
+      <div class="mbsc-button-group-block">
+        <MbscButton @click="isPopupOpen = false">Close</MbscButton>
       </div>
     </MbscPopup>
   </MbscPage>

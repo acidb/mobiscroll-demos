@@ -35,47 +35,36 @@ function openAnchored() {
     <MbscPopup
       display="anchored"
       :anchor="myAnchor"
-      :showOverlay="false"
       :isOpen="isAnchoredOpen"
       @close="isAnchoredOpen = false"
     >
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
-        <h4>Welcome on our website!</h4>
+        <h4>Welcome to our website!</h4>
         <p>Have fun navigating through the demos.</p>
       </div>
     </MbscPopup>
 
-    <MbscPopup display="top" :showOverlay="false" :isOpen="isTopOpen" @close="isTopOpen = false">
+    <MbscPopup display="top" :isOpen="isTopOpen" @close="isTopOpen = false">
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
-        <h4>Welcome on our website!</h4>
+        <h4>Welcome to our website!</h4>
         <p>Have fun navigating through the demos.</p>
       </div>
     </MbscPopup>
 
-    <MbscPopup
-      display="center"
-      :showOverlay="false"
-      :isOpen="isCenterOpen"
-      @close="isCenterOpen = false"
-    >
+    <MbscPopup display="center" :isOpen="isCenterOpen" @close="isCenterOpen = false">
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
-        <h4>Welcome on our website!</h4>
+        <h4>Welcome to our website!</h4>
         <p>Have fun navigating through the demos.</p>
       </div>
     </MbscPopup>
 
-    <MbscPopup
-      display="bottom"
-      :showOverlay="false"
-      :isOpen="isBottomOpen"
-      @close="isBottomOpen = false"
-    >
+    <MbscPopup display="bottom" :isOpen="isBottomOpen" @close="isBottomOpen = false">
       <div class="mbsc-align-center mbsc-padding">
         <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
-        <h4>Welcome on our website!</h4>
+        <h4>Welcome to our website!</h4>
         <p>Have fun navigating through the demos.</p>
       </div>
     </MbscPopup>

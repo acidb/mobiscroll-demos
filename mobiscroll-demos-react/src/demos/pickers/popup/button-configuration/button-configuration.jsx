@@ -21,7 +21,7 @@ function App() {
       </div>
       <div className="mbsc-form-group">
         <div className="mbsc-button-group-block">
-          <Button onClick={() => setNoBtnOpen(true)}>No Buttons</Button>
+          <Button onClick={() => setNoBtnOpen(true)}>No buttons</Button>
           <Button onClick={() => setPredefinedBtnOpen(true)}>Predefined buttons</Button>
           <Button onClick={() => setCustomBtnOpen(true)}>Custom button</Button>
         </div>

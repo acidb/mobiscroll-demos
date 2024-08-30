@@ -13,10 +13,11 @@ setOptions({
   // theme
 })
 
-const isDefaultOpen = ref(false)
-const isCustomOpen = ref(false)
+const isNoBtnOpen = ref(false)
+const isPredefinedBtnOpen = ref(false)
+const isCustomBtnOpen = ref(false)
 
-const toastMessage = ref('Custom button clicked')
+const toastMessage = ref('')
 const isToastOpen = ref(false)
 </script>
 
@@ -27,12 +28,13 @@ const isToastOpen = ref(false)
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-button-group-block">
-        <MbscButton @click="isDefaultOpen = true">Default</MbscButton>
-        <MbscButton @click="isCustomOpen = true">Custom button</MbscButton>
+        <MbscButton @click="isNoBtnOpen = true">No Buttons</MbscButton>
+        <MbscButton @click="isPredefinedBtnOpen = true">Predefined buttons</MbscButton>
+        <MbscButton @click="isCustomBtnOpen = true">Custom button</MbscButton>
       </div>
     </div>
 
-    <MbscPopup display="center" :isOpen="isDefaultOpen" @close="isDefaultOpen = false">
+    <MbscPopup display="center" :isOpen="isNoBtnOpen" @close="isNoBtnOpen = false">
       <div class="mbsc-align-center mbsc-padding">
         <h3 class="md-text-center">Hi there!</h3>
         <p class="md-text-center">This is the default with no buttons.</p>
@@ -41,25 +43,36 @@ const isToastOpen = ref(false)
 
     <MbscPopup
       display="center"
-      :isOpen="isCustomOpen"
-      :buttons="[
-        'ok',
-        {
-          text: 'Custom',
-          handler: () => {
-            isToastOpen = true
-            isCustomOpen = false
-          }
-        },
-        'close'
-      ]"
-      @close="isCustomOpen = false"
+      :isOpen="isPredefinedBtnOpen"
+      :buttons="['ok', 'cancel']"
+      @close="isPredefinedBtnOpen = false"
     >
       <div class="mbsc-align-center mbsc-padding">
         <h3 class="md-text-center">Hi again!</h3>
-        <p class="md-text-center">This is a popup with a custom and predefined buttons.</p>
+        <p class="md-text-center">This is a popup with predefined buttons.</p>
       </div>
     </MbscPopup>
-    <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+
+    <MbscPopup
+      display="center"
+      :isOpen="isCustomBtnOpen"
+      :buttons="[
+        {
+          text: 'Custom',
+          handler: () => {
+            toastMessage = 'Custom button clicked'
+            isToastOpen = true
+          }
+        }
+      ]"
+      @close="isCustomBtnOpen = false"
+    >
+      <div class="mbsc-align-center mbsc-padding">
+        <h3 class="md-text-center">Hi again!</h3>
+        <p class="md-text-center">This is a popup with a custom button.</p>
+      </div>
+    </MbscPopup>
+
+    <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
   </MbscPage>
 </template>
