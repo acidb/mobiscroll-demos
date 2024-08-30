@@ -15,10 +15,6 @@ function App() {
     setPopupOpen(true);
   }, []);
 
-  const handleClose = useCallback(() => {
-    setPopupOpen(false);
-  }, []);
-
   return (
     <Page>
       <div className="mbsc-button-group-block">
@@ -30,15 +26,14 @@ function App() {
         themeVariant="dark" // can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
         display="anchored"
         anchor={myAnchor}
-        buttons={['set', 'cancel']}
+        buttons={['ok', 'cancel']}
         isOpen={isPopupOpen}
-        onClose={() => {
-          handleClose();
-        }}
+        onClose={() => setPopupOpen(false)}
       >
         <div className="mbsc-align-center mbsc-padding">
-          <h3>Hi again!</h3>
-          <p>This is a popup with three custom buttons</p>
+          <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="logo" />
+          <h4>Welcome to our website!</h4>
+          <p>Have fun navigating through the demos.</p>
         </div>
       </Popup>
     </Page>

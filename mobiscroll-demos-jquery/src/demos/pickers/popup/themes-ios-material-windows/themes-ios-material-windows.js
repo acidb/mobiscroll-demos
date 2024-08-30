@@ -16,7 +16,7 @@ export default {
           themeVariant: 'dark', // can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
           display: 'anchored',
           anchor: $('#demo-popup-open-btn')[0],
-          buttons: ['set', 'cancel'],
+          buttons: ['ok', 'cancel'],
         })
         .mobiscroll('getInst');
 

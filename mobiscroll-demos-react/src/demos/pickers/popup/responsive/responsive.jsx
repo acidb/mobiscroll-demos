@@ -1,4 +1,4 @@
-import { Button, Input, Page, Popup, Segmented, SegmentedGroup, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Button, Page, Popup, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useState } from 'react';
 
 setOptions({
@@ -13,15 +13,6 @@ function App() {
   const openPopup = useCallback((args) => {
     setAnchor(args.target);
     setPopupOpen(true);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setPopupOpen(false);
-  }, []);
-
-  const handleSubscribe = useCallback(() => {
-    // toast: subscribed
-    setPopupOpen(false);
   }, []);
 
   return (
@@ -47,25 +38,12 @@ function App() {
           },
         }}
         isOpen={isPopupOpen}
-        onClose={() => {
-          handleClose();
-        }}
+        onClose={() => setPopupOpen(false)}
       >
-        <div className="mbsc-align-center">
+        <div className="mbsc-align-center mbsc-padding">
           <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="logo" />
-          <h2>Stay with us!</h2>
-          <p>
-            Join our newsletter and be the first <br></br> to receive exciting updates and news!
-          </p>
-          <Input inputStyle="box" placeholder="Enter your email address"></Input>
-          <SegmentedGroup name="range">
-            <Segmented defaultChecked={true}>Weekly</Segmented>
-            <Segmented>Monthly</Segmented>
-          </SegmentedGroup>
-
-          <div className="mbsc-button-group-block">
-            <Button onClick={handleSubscribe}>Subscribe</Button>
-          </div>
+          <h4>Welcome to our website!</h4>
+          <p>Have fun navigating through the demos.</p>
         </div>
       </Popup>
     </Page>

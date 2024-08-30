@@ -15,25 +15,20 @@ function App() {
     setPopupOpen(true);
   }, []);
 
-  const handleClose = useCallback(() => {
-    setPopupOpen(false);
-  }, []);
-
   return (
     <Page>
       <div className="mbsc-form-group">
         <div className="mbsc-button-group-block">
-          <Button onClick={openPopup}>Show Popup</Button>
+          <Button onClick={openPopup}>Open popup</Button>
         </div>
       </div>
       <Popup
         display="anchored"
         anchor={myAnchor}
-        showOverlay={false}
         isOpen={isPopupOpen}
         buttons={['ok', 'cancel']}
         onClose={() => {
-          handleClose();
+          setPopupOpen(false);
           // Your custom event handler goes here
         }}
         onDestroy={() => {
@@ -51,7 +46,7 @@ function App() {
       >
         <div className="mbsc-align-center mbsc-padding">
           <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="Logo" />
-          <h4>Welcome on our website!</h4>
+          <h4>Welcome to our website!</h4>
           <p>Have fun navigating through the demos.</p>
         </div>
       </Popup>
