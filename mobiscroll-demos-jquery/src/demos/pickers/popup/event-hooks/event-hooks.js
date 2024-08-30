@@ -14,8 +14,7 @@ export default {
         .mobiscroll()
         .popup({
           display: 'anchored',
-          anchor: $('#popup-events-show-btn')[0],
-          showOverlay: false,
+          anchor: $('#demo-popup-open-btn')[0],
           buttons: ['ok', 'cancel'],
           onClose: function (event, inst) {
             // Your custom event handler goes here
@@ -35,11 +34,8 @@ export default {
         })
         .mobiscroll('getInst');
 
-      popup.open();
-
-      $('#popup-events-show-btn').on('click', function () {
+      $('#demo-popup-open-btn').on('click', function () {
         popup.open();
-        return false;
       });
     });
   },
@@ -47,13 +43,13 @@ export default {
   markup: `
 <div class="mbsc-form-group">
   <div class="mbsc-button-group-block">
-    <button mbsc-button id="popup-events-show-btn">Show popup</button>
+    <button mbsc-button id="demo-popup-open-btn">Open popup</button>
   </div>
 </div>
-<div id="demo-popup-hooks">
+<div id="demo-popup-hooks" style="display:none;">
   <div class="mbsc-align-center mbsc-padding">
     <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-    <h4>Welcome on our website!</h4>
+    <h4>Welcome to our website!</h4>
     <p>Have fun navigating through the demos.</p>
   </div>
 </div>

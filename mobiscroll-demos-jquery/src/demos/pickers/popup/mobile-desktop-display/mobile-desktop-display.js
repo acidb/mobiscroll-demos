@@ -9,13 +9,10 @@ export default {
       // theme
     });
 
-    // change the popup content
-
     $(function () {
       var bottomPopup = $('#demo-popup-bottom')
         .mobiscroll()
         .popup({
-          // context,
           display: 'bottom',
           buttons: ['ok', 'cancel'],
         })
@@ -24,7 +21,6 @@ export default {
       var topPopup = $('#demo-popup-top')
         .mobiscroll()
         .popup({
-          // context,
           display: 'top',
           buttons: ['ok', 'cancel'],
         })
@@ -33,7 +29,6 @@ export default {
       var centerPopup = $('#demo-popup-center')
         .mobiscroll()
         .popup({
-          // context,
           display: 'center',
           buttons: ['ok', 'cancel'],
           touchUi: false,
@@ -43,7 +38,6 @@ export default {
       var anchoredPopup = $('#demo-popup-anchored')
         .mobiscroll()
         .popup({
-          // context,
           display: 'anchored',
           anchor: $('#demo-popup-anchored-btn')[0],
           buttons: ['ok', 'cancel'],
@@ -82,28 +76,28 @@ export default {
   <div id="demo-popup-bottom">
     <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-      <h4>Welcome on our website!</h4>
+      <h4>Welcome to our website!</h4>
       <p>Have fun navigating through the demos.</p>
     </div>
   </div>
   <div id="demo-popup-top">
     <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-      <h4>Welcome on our website!</h4>
+      <h4>Welcome to our website!</h4>
       <p>Have fun navigating through the demos.</p>
     </div>
   </div>
   <div id="demo-popup-center">
     <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-      <h4>Welcome on our website!</h4>
+      <h4>Welcome to our website!</h4>
       <p>Have fun navigating through the demos.</p>
     </div>
   </div>
   <div id="demo-popup-anchored">
     <div class="mbsc-align-center mbsc-padding">
       <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-      <h4>Welcome on our website!</h4>
+      <h4>Welcome to our website!</h4>
       <p>Have fun navigating through the demos.</p>
     </div>
   </div>

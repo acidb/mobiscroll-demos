@@ -7,7 +7,6 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
-      theme: 'ios',
     });
 
     $(function () {
@@ -31,18 +30,8 @@ export default {
         })
         .mobiscroll('getInst');
 
-      popup.open();
-
       $('#demo-popup-show-btn').on('click', function () {
         popup.open();
-        return false;
-      });
-
-      $('#demo-popup-subscribe-btn').on('click', function () {
-        popup.close();
-        mobiscroll.toast({
-          message: 'Subscribed',
-        });
       });
     });
   },
@@ -50,30 +39,14 @@ export default {
   markup: `
 <div class="mbsc-form-group">
   <div class="mbsc-button-group-block">
-    <button mbsc-button id="demo-popup-show-btn">Show popup</button>
+    <button mbsc-button id="demo-popup-show-btn">Open popup</button>
   </div>
 </div>
-<div id="demo-popup-responsive">
-  <div class="mbsc-align-center">
+<div id="demo-popup-responsive" style="display: none;">
+  <div class="mbsc-align-center mbsc-padding">
     <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg">
-    <h2>Stay with us!</h2>
-    <p>Join our newsletter and be the first <br> to receive exciting updates and news!</p>
-    <label>
-      <input mbsc-input data-input-style="box" placeholder="Enter your email address" />
-    </label>
-    <label>
-      Weekly
-      <input mbsc-segmented type="radio" name="range" checked>
-    </label>
-    <label>
-      Monthly
-      <input mbsc-segmented type="radio" name="range">
-    </label>
-    <div class="mbsc-button-group-block">
-      <button mbsc-button id="demo-popup-subscribe-btn">
-        Subscribe
-      </button>
-    </div>
+    <h4>Welcome to our website!</h4>
+    <p>Have fun navigating through the demos.</p>
   </div>
 </div>
   `,

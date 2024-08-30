@@ -2,6 +2,7 @@ import * as mobiscroll from '@mobiscroll/jquery';
 import $ from 'jquery';
 
 export default {
+  // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     mobiscroll.setOptions({
       // locale,
@@ -9,34 +10,30 @@ export default {
     });
 
     $(function () {
-      var emptyPopup = $('#demo-popup-empty')
+      var emptyPopup = $('#demo-popup-no-btn')
         .mobiscroll()
         .popup({
-          // context,
           display: 'center',
         })
         .mobiscroll('getInst');
 
-      var commonPopup = $('#demo-popup-common')
+      var commonPopup = $('#demo-popup-predefined-btn')
         .mobiscroll()
         .popup({
-          // context,
           display: 'center',
           buttons: ['ok', 'cancel'],
         })
         .mobiscroll('getInst');
 
-      var customPopup = $('#demo-popup-custom')
+      var customPopup = $('#demo-popup-custom-btn')
         .mobiscroll()
         .popup({
-          // context,
           display: 'center',
           buttons: [
             {
               text: 'Custom',
               handler: function () {
                 mobiscroll.toast({
-                  // context,
                   message: 'Custom button clicked',
                 });
               },
@@ -45,50 +42,50 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#showDefault').on('click', function () {
+      $('#demo-no-buttons-btn').on('click', function () {
         emptyPopup.open();
-        return false;
       });
 
-      $('#showCommon').on('click', function () {
+      $('#demo-predefined-btn').on('click', function () {
         commonPopup.open();
-        return false;
       });
 
-      $('#showCustom').on('click', function () {
+      $('#demo-custom-btn').on('click', function () {
         customPopup.open();
-        return false;
       });
     });
   },
+  // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div class="mbsc-align-center">
   <div class="mbsc-note">Customize popup buttons depending on your context.</div>
 </div>
 <div class="mbsc-form-group">
   <div class="mbsc-button-group-block">
-    <button mbsc-button id="showDefault">Empty</button>
-    <button mbsc-button id="showCommon">Common</button>
-    <button mbsc-button id="showCustom">Custom</button>
+    <button mbsc-button id="demo-no-buttons-btn">No Buttons</button>
+    <button mbsc-button id="demo-predefined-btn">Predefined buttons</button>
+    <button mbsc-button id="demo-custom-btn">Custom button</button>
   </div>
 </div>
-<div id="demo-popup-empty">
-  <div class="mbsc-align-center mbsc-padding">
-    <h3 class="md-text-center">Hi there!</h3>
-    <p class="md-text-center">This is the default with no buttons.</p>
+<div style="display: none;">
+  <div id="demo-popup-no-btn">
+    <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi there!</h3>
+      <p class="md-text-center">This is the default with no buttons.</p>
+    </div>
   </div>
-</div>
-<div id="demo-popup-common">
-  <div class="mbsc-align-center mbsc-padding">
-    <h3 class="md-text-center">Hi again!</h3>
-    <p class="md-text-center">This is a popup with predefined buttons.</p>
+  <div id="demo-popup-predefined-btn">
+    <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi again!</h3>
+      <p class="md-text-center">This is a popup with predefined buttons.</p>
+    </div>
   </div>
-</div>
-<div id="demo-popup-custom">
-  <div class="mbsc-align-center mbsc-padding">
-    <h3 class="md-text-center">Hi again!</h3>
-    <p class="md-text-center">This is a popup with a custom button.</p>
+  <div id="demo-popup-custom-btn">
+    <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi again!</h3>
+      <p class="md-text-center">This is a popup with a custom button.</p>
+    </div>
   </div>
-</div>
+<div>
   `,
 };
