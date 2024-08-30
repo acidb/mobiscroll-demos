@@ -1,5 +1,5 @@
 import { Button, Page, Popup, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -9,16 +9,19 @@ setOptions({
 function App() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [myAnchor, setAnchor] = useState();
+  const buttonRef = useRef(null);
 
-  const openPopup = useCallback((args) => {
-    setAnchor(args.target);
+  const openPopup = useCallback(() => {
+    setAnchor(buttonRef.current.nativeElement);
     setPopupOpen(true);
   }, []);
 
   return (
     <Page>
       <div className="mbsc-button-group-block">
-        <Button onClick={openPopup}>Open popup</Button>
+        <Button ref={buttonRef} onClick={openPopup}>
+          Open popup
+        </Button>
       </div>
 
       <Popup

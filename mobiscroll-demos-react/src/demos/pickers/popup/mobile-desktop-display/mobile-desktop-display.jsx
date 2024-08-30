@@ -1,5 +1,5 @@
 import { Button, Page, Popup, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -12,9 +12,10 @@ function App() {
   const [isTopOpen, setTopOpen] = useState(false);
   const [isCenterOpen, setCenterOpen] = useState(false);
   const [isBottomOpen, setBottomOpen] = useState(false);
+  const buttonRef = useRef(null);
 
-  const openAnchored = useCallback((args) => {
-    setAnchor(args.target);
+  const openAnchored = useCallback(() => {
+    setAnchor(buttonRef.current.nativeElement);
     setAnchoredOpen(true);
   }, []);
 
@@ -23,7 +24,9 @@ function App() {
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Try different display modes</div>
         <div className="mbsc-form-group mbsc-button-group-block">
-          <Button onClick={openAnchored}>Try anhored display mode</Button>
+          <Button ref={buttonRef} onClick={openAnchored}>
+            Try anhored display mode
+          </Button>
           <Button onClick={() => setTopOpen(true)}>Try top display mode</Button>
           <Button onClick={() => setCenterOpen(true)}>Try center display mode</Button>
           <Button onClick={() => setBottomOpen(true)}>Try bottom display mode</Button>

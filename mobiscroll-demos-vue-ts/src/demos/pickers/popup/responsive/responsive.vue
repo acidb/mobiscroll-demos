@@ -1,41 +1,56 @@
 <script setup lang="ts">
-import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
-import type {
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-  MbscResource
-} from '@mobiscroll/vue'
-import { onMounted, ref } from 'vue'
+import { MbscButton, MbscPage, MbscPopup, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
 
-const myEvents = ref<MbscCalendarEvent[]>([])
+const isPopupOpen = ref(false)
+const buttonRef = ref<any>(null)
+const myAnchor = ref<any>(null)
 
-const myResources: MbscResource[] = []
-
-const myView: MbscEventcalendarView = {
-  timeline: {
-    type: 'week'
+const myResponsive = {
+  xsmall: {
+    display: 'bottom'
+  },
+  small: {
+    display: 'center'
+  },
+  custom: {
+    // Custom breakpoint
+    breakpoint: 800,
+    display: 'anchored'
+    //
+    // anchor: myAnchor
   }
 }
 
-onMounted(() => {
-  getJson(
-    'https://trial.mobiscroll.com/timeline-events/',
-    (events: MbscCalendarEvent[]) => {
-      myEvents.value = events
-    },
-    'jsonp'
-  )
-})
+function openPopup() {
+  myAnchor.value = buttonRef.value.instance.nativeElement
+  isPopupOpen.value = true
+}
 </script>
-
 <template>
-  <!-- dragOptions -->
-  <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources" />
-</template>
+  <MbscPage>
+    <div class="mbsc-form-group">
+      <div class="mbsc-button-group-block">
+        <MbscButton ref="buttonRef" @click="openPopup">Open popup</MbscButton>
+      </div>
+    </div>
 
-<style></style>
+    <MbscPopup
+      :isOpen="isPopupOpen"
+      :anchor="myAnchor"
+      :responsive="myResponsive"
+      @close="isPopupOpen = false"
+    >
+      <div class="mbsc-align-center mbsc-padding">
+        <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" />
+        <h4>Welcome to our website!</h4>
+        <p>Have fun navigating through the demos.</p>
+      </div>
+    </MbscPopup>
+  </MbscPage>
+</template>
