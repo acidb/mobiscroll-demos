@@ -329,7 +329,7 @@ import Demo901 from './demos/pickers/popup/showing-the-popover/showing-the-popov
 import Demo902 from './demos/pickers/popup/mobile-desktop-display/mobile-desktop-display';
 import Demo903 from './demos/pickers/popup/button-configuration/button-configuration';
 import Demo904 from './demos/pickers/popup/responsive/responsive';
-import Demo906 from './demos/pickers/popup/add-event-modal/add-event-modal';
+import Demo906 from './demos/pickers/popup/add-edit-modal/add-edit-modal';
 import Demo907 from './demos/pickers/popup/show-hide-tooltip-hover-in-out/show-hide-tooltip-hover-in-out';
 import Demo905 from './demos/pickers/popup/range-picker-popup-presets/range-picker-popup-presets';
 import Demo908 from './demos/pickers/popup/themes-ios-material-windows/themes-ios-material-windows';
@@ -1212,7 +1212,7 @@ export const demos = [
             name: 'Common use cases',
             unique: 20,
             items: [
-              { name: 'Event creation modal', unique: 'add-event-modal', component: Demo906 },
+              { name: 'Event creation modal', unique: 'add-edit-modal', component: Demo906 },
               { name: 'Using as a tooltip', unique: 'show-hide-tooltip-hover-in-out', component: Demo907 },
               { name: 'Range picker with presets', unique: 'range-picker-popup-presets', component: Demo905 },
             ],

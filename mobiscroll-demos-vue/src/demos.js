@@ -329,7 +329,7 @@ import Demo901 from './demos/pickers/popup/showing-the-popover/showing-the-popov
 import Demo902 from './demos/pickers/popup/mobile-desktop-display/mobile-desktop-display.vue'
 import Demo903 from './demos/pickers/popup/button-configuration/button-configuration.vue'
 import Demo904 from './demos/pickers/popup/responsive/responsive.vue'
-import Demo906 from './demos/pickers/popup/add-event-modal/add-event-modal.vue'
+import Demo906 from './demos/pickers/popup/add-edit-modal/add-edit-modal.vue'
 import Demo907 from './demos/pickers/popup/show-hide-tooltip-hover-in-out/show-hide-tooltip-hover-in-out.vue'
 import Demo905 from './demos/pickers/popup/range-picker-popup-presets/range-picker-popup-presets.vue'
 import Demo908 from './demos/pickers/popup/themes-ios-material-windows/themes-ios-material-windows.vue'
@@ -1838,7 +1838,7 @@ export const demos = [
             name: 'Common use cases',
             unique: 20,
             items: [
-              { name: 'Event creation modal', unique: 'add-event-modal', component: Demo906 },
+              { name: 'Event creation modal', unique: 'add-edit-modal', component: Demo906 },
               {
                 name: 'Using as a tooltip',
                 unique: 'show-hide-tooltip-hover-in-out',
