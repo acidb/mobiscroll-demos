@@ -15,9 +15,9 @@ export default {
         size: 4,
         resolutionHorizontal: 'day',
         eventList: false,
-        resourceOrder: false,
+        resourceOrder: true,
       };
-      var inst = $('#demo-resource-drag-drop-reorder')
+      var calInst = $('#demo-resource-drag-drop-reorder')
         .mobiscroll()
         .eventcalendar({
           refDate: new Date(2024, 8, 1),
@@ -89,7 +89,7 @@ export default {
             { id: 12, name: 'Resource 10' },
             {
               id: 13,
-              name: 'Group 4',
+              name: 'Group 4 (Dropping not allowed)',
               children: [
                 { id: '4-1', name: 'Child 1' },
                 { id: '4-2', name: 'Child 2' },
@@ -113,7 +113,7 @@ export default {
             return (
               '<div mbsc-calendar-nav class="mds-header-filter-nav"></div>' +
               '<div class="mds-header-filter mbsc-flex-1-0">' +
-              '<label><input class="md-reorder-switch" type="checkbox" mbsc-checkbox data-label="Enable reorder" data-input-style="outline" data-lable-style="stacked"/></label>' +
+              '<label><input class="md-reorder-switch" type="checkbox" defaultChecked="true" mbsc-switch data-label="Enable reorder"  data-input-style="outline" data-lable-style="stacked"/></label>' +
               '</div>' +
               '<button mbsc-calendar-prev class="mds-header-filter-prev"></button>' +
               '<button mbsc-calendar-today class="mds-header-filter-today"></button>' +
@@ -127,7 +127,7 @@ export default {
 
       $('.md-reorder-switch').on('change', function (ev) {
         timelineView.resourceOrder = ev.target.checked;
-        inst.setOptions({
+        calInst.setOptions({
           view: {
             timeline: timelineView,
           },
