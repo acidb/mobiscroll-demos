@@ -1,6 +1,6 @@
 import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useEffect, useMemo, useState } from 'react';
-import './resource-order.css';
+import './resource-drag-drop-reorder.css';
 
 setOptions({
   // localeJs,

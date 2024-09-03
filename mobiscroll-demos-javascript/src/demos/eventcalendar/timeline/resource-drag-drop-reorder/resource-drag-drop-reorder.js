@@ -8,7 +8,7 @@ export default {
       // theme
     });
 
-    mobiscroll.eventcalendar('#demo-resource-order', {
+    mobiscroll.eventcalendar('#demo-resource-drag-drop-reorder', {
       view: {
         timeline: {
           type: 'week',
@@ -19,7 +19,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-order"></div>
+<div id="demo-resource-drag-drop-reorder"></div>
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: ``, 
