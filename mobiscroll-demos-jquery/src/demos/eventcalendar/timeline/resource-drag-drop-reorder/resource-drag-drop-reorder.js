@@ -99,7 +99,13 @@ export default {
             { id: 14, name: 'Resource 11' },
           ],
           onResourceOrderUpdate: function (args) {
-            if (args.parent === 13) {
+            if (args.parent && args.parent.id === 13) {
+              mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
+                message: 'Drop to Group 4 is not allowed!',
+              });
               return false;
             }
           },
@@ -107,7 +113,7 @@ export default {
             return (
               '<div mbsc-calendar-nav class="mds-header-filter-nav"></div>' +
               '<div class="mds-header-filter mbsc-flex-1-0">' +
-              '<label><input id="reorder-switch" type="checkbox" mbsc-checkbox data-label="Enable reorder" data-input-style="outline" data-lable-style="stacked"/></label>' +
+              '<label><input class="md-reorder-switch" type="checkbox" mbsc-checkbox data-label="Enable reorder" data-input-style="outline" data-lable-style="stacked"/></label>' +
               '</div>' +
               '<button mbsc-calendar-prev class="mds-header-filter-prev"></button>' +
               '<button mbsc-calendar-today class="mds-header-filter-today"></button>' +
@@ -119,7 +125,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#reorder-switch').on('change', function (ev) {
+      $('.md-reorder-switch').on('change', function (ev) {
         timelineView.resourceOrder = ev.target.checked;
         inst.setOptions({
           view: {
