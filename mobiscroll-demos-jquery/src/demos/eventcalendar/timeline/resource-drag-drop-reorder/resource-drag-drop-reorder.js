@@ -132,7 +132,7 @@ export default {
         .mobiscroll('getInst');
 
       function updateView(enableOrder) {
-        timelineView.resourceOrder = enableOrder;
+        // timelineView.resourceOrder = enableOrder;
 
         if (enableOrder) {
           $('.mds-update').show();
@@ -141,28 +141,38 @@ export default {
           $('.mds-update').hide();
           $('.mds-enable').show();
         }
-        return {
-          timeline: timelineView,
-        };
+        // return {
+        //   timeline: timelineView,
+        // };
       }
 
       $('.mds-reorder-switch').on('click', function () {
+        updateView(true);
         calInst.setOptions({
           view: {
-            type: 'week',
-            size: 4,
-            resolutionHorizontal: 'day',
-            eventList: false,
-            resourceOrder: true,
+            timeline: {
+              type: 'week',
+              size: 4,
+              resolutionHorizontal: 'day',
+              resourceOrder: true,
+            },
           },
         });
       });
 
       $('.mds-reorder-cancel').on('click', function () {
-        timelineView.resourceOrder = false;
+        // timelineView.resourceOrder = false;
+        updateView(false);
         calInst.setOptions({
           resources: resources.slice(),
-          view: updateView(false),
+          view: {
+            timeline: {
+              type: 'week',
+              size: 4,
+              resolutionHorizontal: 'day',
+              resourceOrder: false,
+            },
+          },
         });
       });
 
@@ -170,7 +180,18 @@ export default {
         if (tempResources.length) {
           resources = tempResources;
         }
-        calInst.setOptions({ resources: resources.slice(), view: updateView(false) });
+        updateView(false);
+        calInst.setOptions({
+          resources: resources.slice(),
+          view: {
+            timeline: {
+              type: 'week',
+              size: 4,
+              resolutionHorizontal: 'day',
+              resourceOrder: false,
+            },
+          },
+        });
       });
     });
   },
