@@ -148,7 +148,7 @@ export default {
 
       $('.mds-reorder-switch').on('click', function () {
         calInst.setOptions({
-          view: updateView(true),
+          view: Object.assign({}, updateView(true)),
         });
       });
 
@@ -156,7 +156,7 @@ export default {
         timelineView.resourceOrder = false;
         calInst.setOptions({
           resources: resources.slice(),
-          view: updateView(false),
+          view: Object.assign({}, updateView(false)),
         });
       });
 
