@@ -142,7 +142,7 @@ export default {
           $('.mds-enable').show();
         }
         return {
-          timeline: timelineView,
+          timeline: Object.assign({}, timelineView),
         };
       }
 
