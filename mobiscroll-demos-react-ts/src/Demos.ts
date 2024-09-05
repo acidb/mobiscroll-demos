@@ -324,6 +324,8 @@ import Demo387 from './demos/pickers/select/themes-ios-material-windows/themes-i
 import Demo276 from './demos/pickers/select/event-hooks/event-hooks';
 import Demo471 from './demos/pickers/select/localization/localization';
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
+//id has to be reassigned (prod database)
+import Demo777 from './demos/eventcalendar/calendar-view/property-booking-calendar/property-booking-calendar';
 
 export const demos = [
   {
@@ -661,6 +663,11 @@ export const demos = [
               { name: 'Responsive', unique: 'responsive-month-view', component: Demo442 },
               { name: 'Print mode', unique: 'printing-the-view', component: Demo661 },
             ],
+          },
+          {
+            name: 'Common use cases',
+            unique: 20,
+            items: [{ name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo777 }],
           },
           {
             name: 'Displaying events',

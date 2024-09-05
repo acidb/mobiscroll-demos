@@ -142,7 +142,7 @@ export default {
           renderLabelContent: function (event) {
             return (
               '<div class="mbsc-flex mds-booking-item mbsc-align-items-center">' +
-              (event.original.icon ? '<img class="mds-booking-icon" src=' + event.original.icon + '>' : '') +
+              (event.original.icon ? '<img class="mds-booking-icon" draggable="false" src=' + event.original.icon + '>' : '') +
               '<span>' +
               event.title +
               '</span></div>'

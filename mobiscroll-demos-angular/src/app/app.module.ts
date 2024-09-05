@@ -332,6 +332,8 @@ import { AppComponent as Demo387 } from '../demos/pickers/select/themes-ios-mate
 import { AppComponent as Demo276 } from '../demos/pickers/select/event-hooks/event-hooks';
 import { AppComponent as Demo471 } from '../demos/pickers/select/localization/localization';
 import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
+//id has to be reassigned (prod database)
+import { AppComponent as Demo777 } from '../demos/eventcalendar/calendar-view/property-booking-calendar/property-booking-calendar';
 
 export const demos: any[] = [
   {
@@ -669,6 +671,11 @@ export const demos: any[] = [
               { name: 'Responsive', unique: 'responsive-month-view', component: Demo442 },
               { name: 'Print mode', unique: 'printing-the-view', component: Demo661 },
             ],
+          },
+          {
+            name: 'Common use cases',
+            unique: 20,
+            items: [{ name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo777 }],
           },
           {
             name: 'Displaying events',
@@ -1526,6 +1533,7 @@ export const demoTitleMap: { [key: string]: string } = {};
     Demo276,
     Demo471,
     Demo601,
+    Demo777,
     HomeComponent,
   ],
   imports: [CommonModule, FormsModule, MbscModule, HttpClientJsonpModule, HttpClientModule, RouterLink],
