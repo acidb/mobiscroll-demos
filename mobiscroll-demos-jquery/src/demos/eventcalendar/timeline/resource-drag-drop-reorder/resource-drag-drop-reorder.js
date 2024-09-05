@@ -142,13 +142,19 @@ export default {
           $('.mds-enable').show();
         }
         return {
-          timeline: Object.assign({}, timelineView),
+          timeline: timelineView,
         };
       }
 
       $('.mds-reorder-switch').on('click', function () {
         calInst.setOptions({
-          view: Object.assign({}, updateView(true)),
+          view: {
+            type: 'week',
+            size: 4,
+            resolutionHorizontal: 'day',
+            eventList: false,
+            resourceOrder: true,
+          },
         });
       });
 
@@ -156,7 +162,7 @@ export default {
         timelineView.resourceOrder = false;
         calInst.setOptions({
           resources: resources.slice(),
-          view: Object.assign({}, updateView(false)),
+          view: updateView(false),
         });
       });
 
