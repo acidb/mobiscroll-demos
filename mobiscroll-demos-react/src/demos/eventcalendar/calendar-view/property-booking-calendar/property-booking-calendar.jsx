@@ -1,5 +1,5 @@
-import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useMemo } from 'react';
+import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
 import './property-booking-calendar.css';
 
 setOptions({
@@ -12,6 +12,8 @@ const booking = 'https://img.mobiscroll.com/demos/booking-icon.png';
 const makeMyTrip = 'https://img.mobiscroll.com/demos/make-my-trip-icon.png';
 
 function App() {
+  const [isToastOpen, setToastOpen] = useState(false);
+
   const myEvents = useMemo(
     () => [
       {
@@ -126,39 +128,52 @@ function App() {
     [],
   );
 
-  const handleDefaultEvent = useCallback((args) => {
-    const startDateAndTime = new Date(args.start.setHours(12));
-    const endDateAndTime = new Date(args.start.setDate(args.start.getDate() + 1)).setHours(12);
+  const customDefaultEvent = useCallback((args) => {
+    const start = new Date(args.start.setHours(12));
+    const end = new Date(args.start.getFullYear(), args.start.getMonth(), args.start.getDate() + 1, 12);
     return {
       title: 'New reservation',
-      start: startDateAndTime,
-      end: endDateAndTime,
+      start,
+      end,
     };
   }, []);
 
-  const handleLabelContent = useCallback(
+  const customLabelContent = useCallback(
     (event) => (
       <div className="mbsc-flex mds-booking-item mbsc-align-items-center">
-        {event.original.icon && <img className="mds-booking-icon" draggable="false" src={`${event.original.icon}`} />}
+        {event.original.icon && <img className="mds-booking-icon" draggable="false" src={event.original.icon} />}
         <span>{event.title}</span>
       </div>
     ),
     [],
   );
 
+  const handleOverlap = useCallback(() => {
+    setToastOpen(true);
+  }, []);
+
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
   return (
-    <Eventcalendar
-      cssClass="mds-booking-calendar"
-      view={myView}
-      data={myEvents}
-      clickToCreate={true}
-      dragToCreate={true}
-      dragToMove={true}
-      dragToResize={true}
-      eventOverlap={false}
-      extendDefaultEvent={handleDefaultEvent}
-      renderLabelContent={handleLabelContent}
-    />
+    <>
+      <Eventcalendar
+        cssClass="mds-booking-calendar"
+        view={myView}
+        data={myEvents}
+        clickToCreate={true}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
+        eventOverlap={false}
+        extendDefaultEvent={customDefaultEvent}
+        renderLabelContent={customLabelContent}
+        onEventCreateFailed={handleOverlap}
+        onEventUpdateFailed={handleOverlap}
+      />
+      <Toast message="Reservations cannot overlap" isOpen={isToastOpen} onClose={handleCloseToast} />
+    </>
   );
 }
 

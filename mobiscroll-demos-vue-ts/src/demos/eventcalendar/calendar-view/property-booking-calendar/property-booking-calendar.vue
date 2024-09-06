@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscNewEventData } from '@mobiscroll/vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -119,13 +120,20 @@ const myView: MbscEventcalendarView = {
   }
 }
 
-function handleDefaultEvent(args: MbscNewEventData) {
-  var startDateAndTime = new Date(args.start.setHours(12))
-  var endDateAndTime = new Date(args.start.setDate(args.start.getDate() + 1)).setHours(12)
+const isToastOpen = ref(false)
+
+function customDefaultEvent(args: MbscNewEventData) {
+  const start = new Date(args.start.setHours(12))
+  const end = new Date(
+    args.start.getFullYear(),
+    args.start.getMonth(),
+    args.start.getDate() + 1,
+    12
+  )
   return {
     title: 'New reservation',
-    start: startDateAndTime,
-    end: endDateAndTime
+    start,
+    end
   }
 }
 </script>
@@ -140,27 +148,37 @@ function handleDefaultEvent(args: MbscNewEventData) {
     :dragToMove="true"
     :dragToResize="true"
     :eventOverlap="false"
-    :extendDefaultEvent="handleDefaultEvent"
+    :extendDefaultEvent="customDefaultEvent"
+    @event-create-failed="isToastOpen = true"
+    @event-update-failed="isToastOpen = true"
   >
     <template #labelContent="event">
       <div class="mbsc-flex mds-booking-item mbsc-align-items-center">
-        <template v-if="event.original.icon">
-          <img class="mds-booking-icon" draggable="false" :src="event.original.icon" />
-        </template>
+        <img
+          v-if="event.original.icon"
+          class="mds-booking-icon"
+          draggable="false"
+          :src="event.original.icon"
+        />
         <span>{{ event.title }}</span>
       </div>
     </template>
   </MbscEventcalendar>
+  <MbscToast
+    message="Reservations cannot overlap"
+    :isOpen="isToastOpen"
+    @close="isToastOpen = false"
+  />
 </template>
-
 <style>
-.mds-booking-calendar .mbsc-calendar-text {
-  height: 30px !important;
+.mds-booking-calendar .mbsc-calendar-day .mbsc-calendar-text {
+  height: 30px;
+  line-height: 30px;
+  margin: 0 0.2em 0.2em 0.3em;
 }
 
 .mds-booking-item {
   font-size: 16px;
-  height: 30px;
 }
 
 .mds-booking-icon {

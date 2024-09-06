@@ -9,6 +9,8 @@
   [extendDefaultEvent]="handleDefaultEvent"
   [view]="myView"
   [labelContentTemplate]="customLabelContent"
+  (onEventCreateFailed)="handleOverlap()"
+  (onEventUpdateFailed)="handleOverlap()"
 >
   <ng-template #customLabelContent let-label>
     <div *ngIf="label" class="mbsc-flex mds-booking-item mbsc-align-items-center">

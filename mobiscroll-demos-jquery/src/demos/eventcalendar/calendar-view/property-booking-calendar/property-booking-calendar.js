@@ -9,6 +9,15 @@ export default {
       // theme
     });
 
+    function handleOverlap() {
+      mobiscroll.toast({
+        //<hidden>
+        // theme,//</hidden>
+        // context,
+        message: 'Reservations cannot overlap',
+      });
+    }
+
     var airBnB = 'https://img.mobiscroll.com/demos/air-bnb-icon.png';
     var booking = 'https://img.mobiscroll.com/demos/booking-icon.png';
     var makeMyTrip = 'https://img.mobiscroll.com/demos/make-my-trip-icon.png';
@@ -131,12 +140,12 @@ export default {
           dragToResize: true,
           eventOverlap: false,
           extendDefaultEvent: function (args) {
-            var startDateAndTime = new Date(args.start.setHours(12));
-            var endDateAndTime = new Date(args.start.setDate(args.start.getDate() + 1)).setHours(12);
+            var start = new Date(args.start.setHours(12));
+            var end = new Date(args.start.getFullYear(), args.start.getMonth(), args.start.getDate() + 1, 12);
             return {
               title: 'New reservation',
-              start: startDateAndTime,
-              end: endDateAndTime,
+              start: start,
+              end: end,
             };
           },
           renderLabelContent: function (event) {
@@ -148,6 +157,8 @@ export default {
               '</span></div>'
             );
           },
+          onEventCreateFailed: handleOverlap,
+          onEventUpdateFailed: handleOverlap,
         });
     });
   },
@@ -157,13 +168,14 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-booking-calendar .mbsc-calendar-text {
-  height: 30px !important;  
+.mds-booking-calendar .mbsc-calendar-day .mbsc-calendar-text {
+  height: 30px;
+  line-height: 30px;
+  margin: 0 0.2em 0.2em 0.3em;
 }
 
 .mds-booking-item {
   font-size: 16px;
-  height: 30px;  
 }
 
 .mds-booking-icon {
@@ -171,5 +183,5 @@ export default {
   width: 24px;
   height: 24px;
 }
-  `,
+`,
 };

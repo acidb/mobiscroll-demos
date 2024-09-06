@@ -1,5 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscNewEventData, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscNewEventData,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -16,8 +22,11 @@ const makeMyTrip = 'https://img.mobiscroll.com/demos/make-my-trip-icon.png';
   styleUrl: './property-booking-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './property-booking-calendar.html',
+  providers: [Notifications],
 })
 export class AppComponent {
+  constructor(private notify: Notifications) {}
+
   myEvents: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d-18,12'),
@@ -118,19 +127,27 @@ export class AppComponent {
       color: '#fffa61',
     },
   ];
+
   myView: MbscEventcalendarView = {
     calendar: {
       type: 'month',
       eventDisplay: 'exact',
     },
   };
-  handleDefaultEvent = (args: MbscNewEventData) => {
-    const startDateAndTime = new Date(args.start.setHours(12));
-    const endDateAndTime = new Date(args.start.setDate(args.start.getDate() + 1)).setHours(12);
+
+  handleDefaultEvent(args: MbscNewEventData) {
+    const start = new Date(args.start.setHours(12));
+    const end = new Date(args.start.getFullYear(), args.start.getMonth(), args.start.getDate() + 1, 12);
     return {
       title: 'New reservation',
-      start: startDateAndTime,
-      end: new Date(endDateAndTime),
+      start,
+      end,
     };
-  };
+  }
+
+  handleOverlap() {
+    this.notify.toast({
+      message: 'Reservations cannot overlap',
+    });
+  }
 }
