@@ -178,7 +178,7 @@ const App: FC = () => {
       setCalendarIds([]);
       setCalendarData({});
       setEvents([]);
-      setOpen(false);
+      setPopupOpen(false);
     };
 
     // Init Google client

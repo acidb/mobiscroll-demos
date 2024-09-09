@@ -17,13 +17,32 @@ setOptions({
   // theme
 })
 
+const confirmMessage = ref()
+const menuAnchor = ref()
+const menuOpen = ref()
+const myEvents = ref([])
+const isConfirmOpen = ref()
+const isToastOpen = ref()
+const toastMessage = ref()
+const mySelectedEvents = ref([])
+
+// ?
+const eventTitles = ref()
+
+const firstDay = ref()
+const lastDay = ref()
+const selected = ref()
+const confirmCallback = ref()
+
+const calElm = ref()
+
 const myView = {
   agenda: {
     type: 'month'
   }
 }
 
-const contextMenu = [
+const menuData = [
   {
     text: 'Update',
     value: 'update'
@@ -33,67 +52,6 @@ const contextMenu = [
     value: 'delete'
   }
 ]
-
-const myEvents = ref([])
-const mySelectedEvents = ref([])
-const eventTitles = ref()
-const firstDay = ref()
-const lastDay = ref()
-const menuAnchor = ref()
-const menuOpen = ref()
-const selected = ref()
-const isConfirmOpen = ref()
-const confirmMessage = ref()
-const confirmCallback = ref()
-const toastMessage = ref()
-const isToastOpen = ref()
-const calElm = ref()
-
-function getSelectedEventTitles(events) {
-  let titles = []
-
-  for (const event of events) {
-    titles = [...titles, event.title]
-  }
-  return titles
-}
-
-function refreshSelectedEvents(events) {
-  mySelectedEvents.value = events
-  eventTitles.value = getSelectedEventTitles(events)
-}
-
-function deleteSelectedEvents() {
-  isConfirmOpen.value = true
-  confirmMessage.value = getSelectedEventTitles(mySelectedEvents.value).join(', ')
-  confirmCallback.value = function (result) {
-    if (result) {
-      let eventsToUpdate = [...myEvents.value]
-
-      for (const event of mySelectedEvents.value) {
-        if (event.recurring) {
-          const origEvent = event.original
-          let exc = origEvent.recurringException || []
-          exc = [...exc, event.start]
-          origEvent.recurringException = exc
-
-          // update the event in the list
-          const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id)
-          eventsToUpdate.splice(index, 1, origEvent)
-        } else {
-          eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id)
-        }
-      }
-
-      myEvents.value = eventsToUpdate
-      refreshSelectedEvents([])
-
-      toastMessage.value = 'Deleted'
-      isToastOpen.value = true
-    }
-    isConfirmOpen.value = false
-  }
-}
 
 function updateSelectedEvents() {
   const events =
@@ -132,6 +90,38 @@ function updateSelectedEvents() {
   refreshSelectedEvents([])
 }
 
+function deleteSelectedEvents() {
+  isConfirmOpen.value = true
+  confirmMessage.value = getSelectedEventTitles(mySelectedEvents.value).join(', ')
+  confirmCallback.value = function (result) {
+    if (result) {
+      let eventsToUpdate = [...myEvents.value]
+
+      for (const event of mySelectedEvents.value) {
+        if (event.recurring) {
+          const origEvent = event.original
+          let exc = origEvent.recurringException || []
+          exc = [...exc, event.start]
+          origEvent.recurringException = exc
+
+          // update the event in the list
+          const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id)
+          eventsToUpdate.splice(index, 1, origEvent)
+        } else {
+          eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id)
+        }
+      }
+
+      myEvents.value = eventsToUpdate
+      refreshSelectedEvents([])
+
+      toastMessage.value = 'Deleted'
+      isToastOpen.value = true
+    }
+    isConfirmOpen.value = false
+  }
+}
+
 function selectAllEvents() {
   const selectedEvents = calElm.value.instance.getEvents(firstDay.value, lastDay.value)
   refreshSelectedEvents(selectedEvents)
@@ -145,12 +135,35 @@ function resetSelection() {
   isToastOpen.value = true
 }
 
-function handlePageLoading(args) {
-  setTimeout(() => {
-    firstDay.value = args.firstDay
-    lastDay.value = args.lastDay
-  })
+function handleToastClose() {
+  isToastOpen.value = false
 }
+
+function handleConfirmClose() {
+  isConfirmOpen.value = false
+}
+
+
+
+////////
+
+
+
+function getSelectedEventTitles(events) {
+  let titles = []
+
+  for (const event of events) {
+    titles = [...titles, event.title]
+  }
+  return titles
+}
+
+function refreshSelectedEvents(events) {
+  mySelectedEvents.value = events
+  eventTitles.value = getSelectedEventTitles(events)
+}
+
+
 
 function handleSelectedEventsChange(args) {
   if (args.events) {
@@ -187,14 +200,6 @@ function handleMenuClose() {
   menuOpen.value = false
 }
 
-function handleConfirmClose() {
-  isConfirmOpen.value = false
-}
-
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
 onMounted(() => {
   getJson(
     'https://trial.mobiscroll.com/events/?vers=5',
@@ -226,7 +231,6 @@ onMounted(() => {
             :selectMultipleEvents="true"
             :selectedEvents="mySelectedEvents"
             @event-delete="handleEventDelete"
-            @page-loading="handlePageLoading"
             @selected-events-change="handleSelectedEventsChange"
             @event-right-click="handleEventRightClick"
           />
@@ -235,7 +239,7 @@ onMounted(() => {
             :inputProps="{ type: 'hidden' }"
             :touchUi="false"
             :anchor="menuAnchor"
-            :data="contextMenu"
+            :data="menuData"
             :value="selected"
             :isOpen="menuOpen"
             @change="handleSelectChange"
@@ -272,23 +276,21 @@ onMounted(() => {
 </template>
 
 <style>
-.md-bulk-operations-border {
+.mds-bulk-actions,
+.mds-bulk-actions .mbsc-grid,
+.mds-bulk-actions .mbsc-row,
+.mds-bulk-actions .mbsc-col-sm-9,
+.mds-bulk-actions .mbsc-col-sm-3 {
+  height: 100%;
+}
+
+.mds-bulk-actions-calendar {
   border-left: 1px solid #ccc;
 }
 
-.md-selected-event-list {
-  height: 500px;
+.mds-bulk-actions-event-list {
   overflow: auto;
   padding-top: 0;
   padding-bottom: 0;
-}
-
-.md-bulk-operations,
-.md-bulk-operations .mbsc-grid,
-.md-bulk-operations .mbsc-row,
-.md-bulk-operations .mbsc-col-sm-9,
-.md-bulk-operations .mbsc-push-sm-3,
-.md-bulk-operations .mbsc-calendar {
-  height: 100%;
 }
 </style>

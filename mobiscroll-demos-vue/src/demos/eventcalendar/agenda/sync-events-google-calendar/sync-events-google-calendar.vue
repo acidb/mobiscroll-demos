@@ -19,32 +19,61 @@ setOptions({
   // theme
 })
 
-const myEvents = ref([])
+const calendarData = ref({})
+const calendarIds = ref([])
 const isLoggedIn = ref(false)
 const isLoading = ref(false)
-const isHidden = ref(true)
-const calendarIds = ref([])
-const myCalendars = ref([])
-const mySelectedDate = ref(new Date())
-const startDate = ref(null)
-const endDate = ref(null)
-const debounce = ref(null)
-const calendarData = ref({})
-const toastMessage = ref('')
-const isToastOpen = ref(false)
 const isPopupOpen = ref(false)
+const isToastOpen = ref(false)
 const myAnchor = ref(null)
-const buttonRef = ref(null)
+const myCalendars = ref([])
+const myEvents = ref([])
+const mySelectedDate = ref(new Date())
+const toastMessage = ref('')
 
 const myView = {
   agenda: {
     type: 'month'
   }
 }
+const buttonRef = ref(null)
+const startDate = ref(null)
+const endDate = ref(null)
+const timer = ref(null)
 
-function onError(resp) {
+function handleError(resp) {
   toastMessage.value = resp.error ? resp.error : resp.result.error.message
   isToastOpen.value = true
+}
+
+function handleToastClose() {
+  isToastOpen.value = false
+}
+
+function handlePopupClose() {
+  isPopupOpen.value = false
+}
+
+function handleSelectedDateChange(args) {
+  mySelectedDate.value = args.date
+}
+
+function handlePageLoading(args) {
+  clearTimeout(timer.value)
+  startDate.value = args.viewStart
+  endDate.value = args.viewEnd
+  timer.value = setTimeout(() => {
+    if (googleCalendarSync.isSignedIn()) {
+      isLoading.value = true
+      googleCalendarSync
+        .getEvents(calendarIds.value, startDate.value, endDate.value)
+        .then((events) => {
+          myEvents.value = events
+          isLoading.value = false
+        })
+        .catch(handleError)
+    }
+  }, 200)
 }
 
 function toggleCalendars(ev, calendarId) {
@@ -60,64 +89,34 @@ function toggleCalendars(ev, calendarId) {
         isLoading.value = false
         myEvents.value = [...myEvents.value, ...events]
       })
-      .catch(onError)
+      .catch(handleError)
   } else {
     calendarIds.value = calendarIds.value.filter((id) => id !== calendarId)
     myEvents.value = myEvents.value.filter((item) => item.googleCalendarId !== calendarId)
   }
 }
 
-function navigate() {
-  mySelectedDate.value = new Date()
+function openPopup() {
+  myAnchor.value = buttonRef.value.instance.nativeElement
+  isPopupOpen.value = true
 }
 
-function signOut() {
-  googleCalendarSync.signOut().catch((error) => {
-    onError(error)
-  })
+function navigate() {
+  mySelectedDate.value = new Date()
 }
 
 function signIn() {
   if (!googleCalendarSync.isSignedIn()) {
     googleCalendarSync.signIn().catch((error) => {
-      onError(error)
+      handleError(error)
     })
   }
 }
 
-function handleSelectedDateChange(args) {
-  mySelectedDate.value = args.date
-}
-
-function handlePageLoading(args) {
-  clearTimeout(debounce.value)
-  startDate.value = args.viewStart
-  endDate.value = args.viewEnd
-  debounce.value = setTimeout(() => {
-    if (googleCalendarSync.isSignedIn()) {
-      isLoading.value = true
-      googleCalendarSync
-        .getEvents(calendarIds.value, startDate.value, endDate.value)
-        .then((events) => {
-          myEvents.value = events
-          isLoading.value = false
-        })
-        .catch(onError)
-    }
-  }, 200)
-}
-
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
-function handlePopupClose() {
-  isPopupOpen.value = false
-}
-
-function openPopup() {
-  myAnchor.value = buttonRef.value.instance.nativeElement
-  isPopupOpen.value = true
+function signOut() {
+  googleCalendarSync.signOut().catch((error) => {
+    handleError(error)
+  })
 }
 
 onMounted(() => {
@@ -147,7 +146,7 @@ onMounted(() => {
         myEvents.value = events
         isLoading.value = false
       })
-      .catch(onError)
+      .catch(handleError)
   }
 
   const onSignedOut = () => {
@@ -158,8 +157,6 @@ onMounted(() => {
     myEvents.value = []
     isPopupOpen.value = false
   }
-
-  isHidden.value = false
 
   // init google client
   googleCalendarSync.init({
@@ -182,37 +179,19 @@ onMounted(() => {
       @selected-date-change="handleSelectedDateChange"
     >
       <template #header>
-        <MbscCalendarNav className="md-sync-events-google-nav" />
-        <div class="md-spinner">
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-          <div class="md-spinner-blade"></div>
-        </div>
-        <div class="md-google-calendar-buttons">
-          <MbscButton
-            v-if="isLoggedIn"
-            ref="buttonRef"
-            @click="openPopup"
-            className="md-sync-events-google-button"
-          >
+        <MbscCalendarNav />
+        <div :class="{ 'mds-loader': true, 'mds-loader-visible': isLoading }"></div>
+        <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
+          <MbscButton v-if="isLoggedIn" ref="buttonRef" @click="openPopup">
             My Calendars
           </MbscButton>
           <MbscButton v-if="!isLoggedIn" @click="signIn" className="md-sync-events-google-button"
-            >Sync my google calendars</MbscButton
+            >Sync my Google calendars</MbscButton
           >
           <MbscButton @click="navigate">Today</MbscButton>
-          <MbscCalendarPrev />
-          <MbscCalendarNext />
         </div>
+        <MbscCalendarPrev />
+        <MbscCalendarNext />
       </template>
     </MbscEventcalendar>
     <MbscPopup
@@ -247,183 +226,28 @@ onMounted(() => {
 </template>
 
 <style>
-.md-google-calendar-buttons {
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 10px;
-}
-
-.md-sync-events-google-calendar {
-  border-left: 1px solid #ccc;
-}
-
-.md-google-calendar-header {
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.md-sync-events-google-nav {
-  justify-content: flex-start;
-}
-
-.md-sync-events-google-button.mbsc-button {
-  text-transform: capitalize;
-}
-
-.md-sync-events-google-inset {
-  margin-bottom: 0;
-}
-
-/* loading spinner and overlay */
-
-.md-loading-events .md-sync-events-overlay {
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
-
-.md-spinner {
+.mds-loader {
+  width: 32px;
+  height: 32px;
+  border: 4px solid #8c8c8c;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: mds-loader-rotation 1s linear infinite;
   visibility: hidden;
-  position: relative;
-  width: 20px;
-  height: 20px;
 }
 
-.md-loading-events .md-spinner {
+.mds-loader-visible {
   visibility: visible;
 }
 
-.md-spinner .md-spinner-blade {
-  position: absolute;
-  left: 44.5%;
-  top: 37%;
-  width: 10%;
-  height: 25%;
-  border-radius: 50%/20%;
-  background-color: #8c8c8c;
-  -webkit-animation: md-spinner-fade 1s linear infinite;
-  animation: md-spinner-fade 1s linear infinite;
-  -webkit-animation-play-state: paused;
-  animation-play-state: paused;
-}
-
-.md-spinner .md-spinner-blade:nth-child(1) {
-  -webkit-animation-delay: -1.66667s;
-  animation-delay: -1.66667s;
-  -webkit-transform: rotate(30deg) translate(0, -150%);
-  transform: rotate(30deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(2) {
-  -webkit-animation-delay: -1.58333s;
-  animation-delay: -1.58333s;
-  -webkit-transform: rotate(60deg) translate(0, -150%);
-  transform: rotate(60deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(3) {
-  -webkit-animation-delay: -1.5s;
-  animation-delay: -1.5s;
-  -webkit-transform: rotate(90deg) translate(0, -150%);
-  transform: rotate(90deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(4) {
-  -webkit-animation-delay: -1.41667s;
-  animation-delay: -1.41667s;
-  -webkit-transform: rotate(120deg) translate(0, -150%);
-  transform: rotate(120deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(5) {
-  -webkit-animation-delay: -1.33333s;
-  animation-delay: -1.33333s;
-  -webkit-transform: rotate(150deg) translate(0, -150%);
-  transform: rotate(150deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(6) {
-  -webkit-animation-delay: -1.25s;
-  animation-delay: -1.25s;
-  -webkit-transform: rotate(180deg) translate(0, -150%);
-  transform: rotate(180deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(7) {
-  -webkit-animation-delay: -1.16667s;
-  animation-delay: -1.16667s;
-  -webkit-transform: rotate(210deg) translate(0, -150%);
-  transform: rotate(210deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(8) {
-  -webkit-animation-delay: -1.08333s;
-  animation-delay: -1.08333s;
-  -webkit-transform: rotate(240deg) translate(0, -150%);
-  transform: rotate(240deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(9) {
-  -webkit-animation-delay: -1s;
-  animation-delay: -1s;
-  -webkit-transform: rotate(270deg) translate(0, -150%);
-  transform: rotate(270deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(10) {
-  -webkit-animation-delay: -0.91667s;
-  animation-delay: -0.91667s;
-  -webkit-transform: rotate(300deg) translate(0, -150%);
-  transform: rotate(300deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(11) {
-  -webkit-animation-delay: -0.83333s;
-  animation-delay: -0.83333s;
-  -webkit-transform: rotate(330deg) translate(0, -150%);
-  transform: rotate(330deg) translate(0, -150%);
-}
-
-.md-spinner .md-spinner-blade:nth-child(12) {
-  -webkit-animation-delay: -0.75s;
-  animation-delay: -0.75s;
-  -webkit-transform: rotate(360deg) translate(0, -150%);
-  transform: rotate(360deg) translate(0, -150%);
-}
-
-.md-loading-events .md-spinner-blade {
-  -webkit-animation-play-state: running;
-  animation-play-state: running;
-}
-
-@-webkit-keyframes md-spinner-fade {
+@keyframes mds-loader-rotation {
   0% {
-    opacity: 0.85;
-  }
-  50% {
-    opacity: 0.25;
+    transform: rotate(0deg);
   }
   100% {
-    opacity: 0.25;
-  }
-}
-
-@keyframes md-spinner-fade {
-  0% {
-    opacity: 0.85;
-  }
-  50% {
-    opacity: 0.25;
-  }
-  100% {
-    opacity: 0.25;
+    transform: rotate(360deg);
   }
 }
 </style>
