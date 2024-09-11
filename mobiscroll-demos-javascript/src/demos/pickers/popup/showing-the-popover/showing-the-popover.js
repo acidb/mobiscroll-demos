@@ -12,10 +12,10 @@ export default {
       display: 'center',
     });
 
-    document.getElementById('#demo-popup-open').addEventListener('click', function () {
+    document.getElementById('demo-popup-open').addEventListener('click', function () {
       popup.open();
     });
-    document.getElementById('#demo-popup-close').addEventListener('click', function () {
+    document.getElementById('demo-popup-close').addEventListener('click', function () {
       popup.close();
     });
   },

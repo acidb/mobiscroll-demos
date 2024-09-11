@@ -1,42 +1,18 @@
 <mbsc-page>
-  <div class="mbsc-align-center">
-    <div class="mbsc-note">
-      Hover on the link to show popup.
-    </div>
-  </div>
-  <div class="mbsc-padding">
-    <p>
-      Meet web developer
-      <a (mouseenter)="openPopup($event,'Liza')" (mouseleave)="closePopup()"
-        style="cursor: pointer; text-decoration: underline">Liza</a>
-      who designs and builds websites. She is responsible for the appearance, of
-      the site and technical aspects, such as site speed and how much traffic
-      the site can handle. She also creates site content that requires technical
-      features.
-    </p><br>
-    <p>
-      Meet
-      <a (mouseenter)="openPopup($event,'Mike')" (mouseleave)="closePopup()"
-        style="cursor: pointer; text-decoration: underline">Mike</a>, a backend developer
-      specializing in server management and database
-      integration. He ensures the site runs smoothly by handling server-side
-      logic, optimizing performance, and implementing security measures.
-    </p>
-  </div>
-
+  <mbsc-eventcalendar [data]="myEvents" [view]="myView" (onEventHoverIn)="handleEventHoverIn($event)"
+    (onEventHoverOut)="handleEventHoverOut()"></mbsc-eventcalendar>
   <mbsc-popup #popup [anchor]="popupAnchor" [options]="popupOptions">
-    <div *ngIf="currentDeveloper === 'Liza'">
-      <div class="mbsc-align-center mbsc-padding">
-        <img style="height: 80px;" src="https://img.mobiscroll.com/demos/f1.png" alt="avatar" />
-        <h3><b>Liza Taylor</b></h3>
-        <p>liza.taylor"&#64;"mobiscroll.com <br> (202) 555-0127</p>
+    <div (mouseenter)="handleMouseEnter()" (mouseleave)="handleMouseLeave()">
+      <div class="mds-tooltip-event-title-cont">
+        <span>{{eventTitle}}</span>
       </div>
-    </div>
-    <div *ngIf="currentDeveloper === 'Mike'">
-      <div class="mbsc-align-center mbsc-padding">
-        <img style="height: 80px;" src="https://img.mobiscroll.com/demos/m1.png" alt="avatar" />
-        <h3><b>Mike Smith</b></h3>
-        <p>mike.smith"&#64;"mobiscroll.com <br> (202) 555-9126</p>
+      <div class="mds-tooltip-start-cont mbsc-flex">
+        <span class="mds-tooltip-label">Start:</span>
+        <span>{{eventStart}}</span>
+      </div>
+      <div class="mds-tooltip-end-cont mbsc-flex">
+        <span class="mds-tooltip-label">End:</span>
+        <span>{{eventEnd}}</span>
       </div>
     </div>
   </mbsc-popup>

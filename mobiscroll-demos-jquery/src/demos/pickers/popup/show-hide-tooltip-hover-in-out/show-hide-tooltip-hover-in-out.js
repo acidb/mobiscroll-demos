@@ -174,5 +174,11 @@ export default {
 .mds-tooltip-label {
     font-weight: 600;
 }
+
+/*<hidden>*/
+.demo-show-hide-tooltip-hover-in-out {
+  height: 100%;
+}
+/*</hidden>*/
 `,
 };

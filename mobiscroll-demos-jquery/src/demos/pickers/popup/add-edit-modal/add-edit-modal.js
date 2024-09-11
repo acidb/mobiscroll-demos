@@ -198,5 +198,11 @@ export default {
 .mds-full-height {
   height: 100%;
 }
-      `,
+
+/*<hidden>*/
+.demo-add-edit-modal {
+  height: 100%;
+}
+/*</hidden>*/
+`,
 };

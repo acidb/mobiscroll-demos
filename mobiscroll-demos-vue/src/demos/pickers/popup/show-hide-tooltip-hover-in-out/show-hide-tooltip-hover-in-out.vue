@@ -1,5 +1,11 @@
 <script setup>
-import { MbscPage, MbscPopup, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import {
+  formatDate,
+  MbscEventcalendar,
+  MbscPage,
+  MbscPopup,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 import { ref } from 'vue'
 
 setOptions({
@@ -7,96 +13,168 @@ setOptions({
   // theme
 })
 
+const myEvents = ref([
+  {
+    title: 'CEO Strategy Meeting',
+    start: 'dyndatetime(y,m,1,10)',
+    end: 'dyndatetime(y,m,1,11)',
+    color: '#FF5733'
+  },
+  {
+    title: 'Board of Directors Briefing',
+    start: 'dyndatetime(y,m,3,14)',
+    end: 'dyndatetime(y,m,3,15)',
+    color: '#33C4FF'
+  },
+  {
+    title: 'Quarterly Review',
+    start: 'dyndatetime(y,m,5,9)',
+    end: 'dyndatetime(y,m,5,10)',
+    color: '#33FF77'
+  },
+  {
+    title: 'Executive Team Lunch',
+    start: 'dyndatetime(y,m,7,12)',
+    end: 'dyndatetime(y,m,7,13)',
+    color: '#FFC733'
+  },
+  {
+    title: 'Investor Meeting',
+    start: 'dyndatetime(y,m,10,11)',
+    end: 'dyndatetime(y,m,10,12)',
+    color: '#9B59B6'
+  },
+  {
+    title: 'Product Launch Review',
+    start: 'dyndatetime(y,m,12,13)',
+    end: 'dyndatetime(y,m,12,14)',
+    color: '#FF6347'
+  },
+  {
+    title: 'Press Conference Preparation',
+    start: 'dyndatetime(y,m,14,16)',
+    end: 'dyndatetime(y,m,14,17)',
+    color: '#1E90FF'
+  },
+  {
+    title: 'Client Partnership Discussion',
+    start: 'dyndatetime(y,m,18,10)',
+    end: 'dyndatetime(y,m,18,11)',
+    color: '#FFD700'
+  },
+  {
+    title: 'CEO’s Weekly Report',
+    start: 'dyndatetime(y,m,20,9)',
+    end: 'dyndatetime(y,m,20,10)',
+    color: '#20B2AA'
+  },
+  {
+    title: 'Town Hall Meeting',
+    start: 'dyndatetime(y,m,25,14)',
+    end: 'dyndatetime(y,m,25,15)',
+    color: '#FF4500'
+  }
+])
+
 const isPopupOpen = ref(false)
 const myAnchor = ref()
+const eventTitle = ref()
+const eventStart = ref()
+const eventEnd = ref()
+const timer = ref()
 
-const currentDeveloper = ''
-const timeoutRef = null
+function handleEventHoverIn(args) {
+  const event = args.event
 
-function openPopup(event, developer) {
-  myAnchor.value = event.target
-  this.currentDeveloper = developer
+  eventTitle.value = event.title
+  eventStart.value = formatDate('hh:mm A', new Date(event.start))
+  eventEnd.value = formatDate('hh:mm A', new Date(event.end))
+
+  clearTimeout(timer.value)
+  timer.value = null
+
+  myAnchor.value = args.domEvent.target
   isPopupOpen.value = true
 }
 
-function handleClose() {
-  this.timeoutRef = setTimeout(() => {
-    isPopupOpen.value = false
-  }, 500)
+function handleEventHoverout() {
+  if (!timer.value) {
+    timer.value = setTimeout(() => {
+      isPopupOpen.value = false
+    }, 200)
+  }
 }
 
-function cancelClosePopup() {
-  clearTimeout(timeoutRef)
+function mouseEnter() {
+  if (timer.value) {
+    clearTimeout(timer.value)
+    timer.value = null
+  }
 }
+
+function mouseLeave() {
+  timer.value = setTimeout(() => {
+    isPopupOpen.value = false
+  }, 200)
+}
+
+const myView = ref({
+  calendar: {
+    type: 'month'
+  }
+})
 </script>
 
 <template>
   <MbscPage>
-    <div class="mbsc-align-center">
-      <div class="mbsc-note">Hover on the link to show popup.</div>
-    </div>
-    <div class="mbsc-padding">
-      <p>
-        Meet web developer
-        <a
-          @mouseenter="openPopup($event, 'Liza')"
-          @mouseleave="handleClose"
-          style="cursor: pointer; text-decoration: underline"
-        >
-          Liza
-        </a>
-        who designs and builds websites. She is responsible for the appearance, of the site and
-        technical aspects, such as site speed and how much traffic the site can handle. She also
-        creates site content that requires technical features.
-      </p>
-      <p>
-        Meet
-        <a
-          @mouseenter="openPopup($event, 'Mike')"
-          @mouseleave="handleClose"
-          style="cursor: pointer; text-decoration: underline"
-        >
-          Mike
-        </a>
-        , a backend developer specializing in server management and database integration. He ensures
-        the site runs smoothly by handling server-side logic, optimizing performance, and
-        implementing security measures.
-      </p>
-    </div>
+    <MbscEventcalendar
+      :view="myView"
+      :data="myEvents"
+      @event-hover-in="handleEventHoverIn($event)"
+      @event-hover-out="handleEventHoverout()"
+    />
     <MbscPopup
       display="anchored"
       :anchor="myAnchor"
       :isOpen="isPopupOpen"
-      @close="isPopupOpen = false"
-      @mouseenter="cancelClosePopup"
-      @mouseleave="handleClose"
+      :touchUi="false"
+      :showOverlay="false"
+      :width="250"
     >
-      <template v-if="currentDeveloper === 'Liza'">
-        <div class="mbsc-align-center mbsc-padding">
-          <img style="height: 80px" src="https://img.mobiscroll.com/demos/f1.png" alt="avatar" />
-          <h3>
-            <b>Liza Taylor</b>
-          </h3>
-          <p>
-            liza.taylor@mobiscroll.com <br />
-            (202) 555-0127
-          </p>
+      <div @mouseenter="mouseEnter()" @mouseleave="mouseLeave()">
+        <div class="mds-tooltip-event-title-cont">
+          <span>{{ eventTitle }}</span>
         </div>
-      </template>
-      <template v-if="currentDeveloper === 'Mike'">
-        <div class="mbsc-align-center mbsc-padding">
-          <img style="height: 80px" src="https://img.mobiscroll.com/demos/m1.png" alt="avatar" />
-          <h3>
-            <b>Mike Smith</b>
-          </h3>
-          <p>
-            mike.smith@mobiscroll.com <br />
-            (202) 555-9126
-          </p>
+        <div class="mds-tooltip-start-cont mbsc-flex">
+          <span class="mds-tooltip-label">Start:</span>
+          <span>{{ eventStart }}</span>
         </div>
-      </template>
+        <div class="mds-tooltip-end-cont mbsc-flex">
+          <span class="mds-tooltip-label">End:</span>
+          <span>{{ eventEnd }}</span>
+        </div>
+      </div>
     </MbscPopup>
   </MbscPage>
 </template>
 
-<style></style>
+<style>
+.mds-tooltip-event-title-cont {
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.mds-tooltip-start-cont,
+.mds-tooltip-end-cont {
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 14px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.mds-tooltip-label {
+  font-weight: 600;
+}
+</style>
