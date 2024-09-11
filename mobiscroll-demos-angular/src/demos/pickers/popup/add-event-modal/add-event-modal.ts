@@ -16,9 +16,9 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-popup-add-edit-modal',
+  selector: 'app-popup-add-event-modal',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './add-edit-modal.html',
+  templateUrl: './add-event-modal.html',
   providers: [Notifications],
 })
 export class AppComponent {
