@@ -86,6 +86,91 @@ export default {
           price: 700,
         },
       ];
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // sorting
+
+      var sorting = {
+        currentColumn: null,
+        order: 'default',
+      };
+
+      function getSortArrow(column) {
+        if (sorting.column === column) {
+          return sorting.order === 'asc' ? '▲' : sorting.order === 'desc' ? '▼' : '';
+        }
+        return '';
+      }
+
+      function sortResources(column, day) {
+        if (sorting.column === column) {
+          sorting.order = sorting.order === 'asc' ? 'desc' : sorting.order === 'desc' ? 'default' : 'asc';
+        } else {
+          sorting.column = column;
+          sorting.order = 'asc';
+        }
+
+        if (sorting.order !== 'default') {
+          myResources.sort(function (a, b) {
+            var valueA = column === 'revenue' ? getRevenue(a) : column === 'day' ? getBusyHours(a, day) : a[column];
+            var valueB = column === 'revenue' ? getRevenue(b) : column === 'day' ? getBusyHours(b, day) : b[column];
+
+            if (sorting.order === 'asc') {
+              return valueA > valueB ? 1 : -1;
+            } else if (sorting.order === 'desc') {
+              return valueA < valueB ? 1 : -1;
+            }
+          });
+        } else {
+          myResources.sort(function (a, b) {
+            return a.id - b.id;
+          });
+        }
+        calendar.setOptions({ resources: myResources.slice() });
+      }
+
+      function getBusyHours(resource, day) {
+        var startOfDay = new Date(day.setHours(0, 0, 0, 0));
+        var endOfDay = new Date(day.setHours(23, 59, 59, 999));
+
+        var totalBusyHours = 0;
+        var events = calendar.getEvents();
+
+        for (var i = 0; i < events.length; i++) {
+          var event = events[i];
+
+          if (event.resource === resource.id) {
+            var overlapStart = Math.max(startOfDay, new Date(event.start));
+            var overlapEnd = Math.min(endOfDay, new Date(event.end));
+
+            if (overlapStart < overlapEnd) {
+              totalBusyHours += (overlapEnd - overlapStart) / (1000 * 60 * 60);
+            }
+          }
+        }
+        // better name?
+        return totalBusyHours - 24;
+      }
+
+      $(document).on(
+        'click',
+        '.md-resource-details-title .md-resource-header, .md-resource-details-sidebar-header, .mbsc-timeline-header-date',
+        function () {
+          var sortColumn = $(this).data('sort') || 'day';
+          var selectedDay;
+          if (sortColumn == 'day') {
+            var dateString = $(this).find('.mbsc-hidden-content').text().trim();
+            selectedDay = new Date(dateString);
+          }
+          sortResources(sortColumn, selectedDay);
+        },
+      );
+
+      // sorting
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       var calendar = $('#demo-resource-details')
         .mobiscroll()
         .eventcalendar({
@@ -99,11 +184,27 @@ export default {
           renderResourceHeader: function () {
             return (
               '<div class="md-resource-details-title">' +
-              '<div class="md-resource-header md-resource-details-name">Room</div>' +
-              '<div class="md-resource-header md-resource-details-seats">Capacity</div>' +
-              '<div class="md-resource-header md-resource-details-price">Price/day</div>' +
+              '<div class="md-resource-header md-resource-details-name" data-sort="name">' +
+              'Room ' +
+              getSortArrow('name') +
+              '</div>' +
+              '<div class="md-resource-header md-resource-details-seats" data-sort="seats">' +
+              'Capacity ' +
+              getSortArrow('seats') +
+              '</div>' +
+              '<div class="md-resource-header md-resource-details-price" data-sort="price">' +
+              'Price/day ' +
+              getSortArrow('price') +
+              '</div>' +
               '</div>'
             );
+            // return (
+            //   '<div class="md-resource-details-title">' +
+            //   '<div class="md-resource-header md-resource-details-name">Room</div>' +
+            //   '<div class="md-resource-header md-resource-details-seats">Capacity</div>' +
+            //   '<div class="md-resource-header md-resource-details-seats">Price/day</div>' +
+            //   '</div>'
+            // );
           },
           renderResource: function (resource) {
             return (
@@ -121,7 +222,8 @@ export default {
             );
           },
           renderSidebarHeader: function () {
-            return '<div class="md-resource-details-sidebar-header">Revenue</div>';
+            return '<div class="md-resource-details-sidebar-header" data-sort="revenue">Revenue' + getSortArrow('revenue') + '</div>';
+            // return '<div class="md-resource-details-sidebar-header">Revenue</div>';
           },
           renderSidebar: function (resource) {
             return '<div class="md-resource-details-sidebar">$' + getRevenue(resource) + '</div>';
@@ -167,6 +269,26 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+
+/* sorting ///////////////////////////////////////////////////////////////////////////*/
+.md-resource-details-title .md-resource-header , .mbsc-timeline-header-date {
+    cursor: pointer;
+}
+
+.md-resource-header .md-resource-details-name {
+  width: 400px;
+}
+
+/* to delete */
+.md-resource-details-seats,
+.md-resource-details-price {
+    width: 100px !important;
+}
+.md-resource-details .mbsc-timeline-resource-col {
+    width: 330px !important;
+}
+/* sorting ///////////////////////////////////////////////////////////////////////////*/
+
 /*<hidden>*/
 
 .demo-timeline-resource-details {
