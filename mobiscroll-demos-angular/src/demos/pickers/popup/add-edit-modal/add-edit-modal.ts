@@ -114,10 +114,6 @@ export class AppComponent {
           this.myEvents = [...this.myEvents, newEvent];
           this.mySelectedDate = this.popupEventDates[0];
 
-          // navigate the calendar
-          // this.calendarSelectedDate = this.popupEventDates[0];
-          // setSelectedDate(newEvent.start);
-
           this.popup.close();
           this.notify.toast({
             message: 'Event added',

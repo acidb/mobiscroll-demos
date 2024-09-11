@@ -2,7 +2,7 @@
 import {
   MbscButton,
   MbscDatepicker,
-  MbscDropdown,
+  MbscEventcalendar,
   MbscInput,
   MbscPage,
   MbscPopup,
@@ -20,12 +20,60 @@ setOptions({
   // theme
 })
 
-const buttonRef = ref(null)
+const myEvents = ref([
+  {
+    id: 1,
+    start: 'dyndatetime(y,m,8,13)',
+    end: 'dyndatetime(y,m,8,13,45)',
+    title: "Lunch @ Butcher's",
+    description: '',
+    allDay: false,
+    bufferBefore: 15,
+    free: true,
+    color: '#009788'
+  },
+  {
+    id: 2,
+    start: 'dyndatetime(y,m,d,15)',
+    end: 'dyndatetime(y,m,d,16)',
+    title: 'Conference',
+    description: '',
+    allDay: false,
+    bufferBefore: 30,
+    free: false,
+    color: '#ff9900'
+  },
+  {
+    id: 3,
+    start: 'dyndatetime(y,m,d-1,18)',
+    end: 'dyndatetime(y,m,d-1,22)',
+    title: 'Site Visit',
+    description: '',
+    allDay: false,
+    bufferBefore: 60,
+    free: true,
+    color: '#3f51b5'
+  },
+  {
+    id: 4,
+    start: 'dyndatetime(y,m,d+1,10,30)',
+    end: 'dyndatetime(y,m,d+1,11,30)',
+    title: 'Stakeholder mtg.',
+    description: '',
+    allDay: false,
+    free: false,
+    color: '#f44437'
+  }
+])
+
+const mySelectedDate = ref(new Date())
 const isPopupOpen = ref(false)
 const popupEventAllDay = ref(false)
-const datePickerControls = ['date']
-const datetimePickerControls = ['datetime']
+const datePickerControls = ['calendar']
+const datetimePickerControls = ['calendar', 'time']
 const popupEventTitle = ref('')
+const popupEventDescription = ref('')
+const popupEventDates = ref([new Date(), new Date()])
 
 const toastMessage = ref('Event added')
 const isToastOpen = ref(false)
@@ -43,7 +91,7 @@ function openPopup() {
   <MbscPage>
     <div class="mbsc-form-group">
       <div class="mbsc-button-group-block">
-        <MbscButton ref="buttonRef" @click="openPopup">Add event</MbscButton>
+        <MbscButton @click="openPopup">Add event</MbscButton>
       </div>
     </div>
 
@@ -53,22 +101,30 @@ function openPopup() {
       headerText="Add new event"
       display="center"
       :isOpen="isPopupOpen"
-      :responsive="myResponsive"
-      :anchor="popupAnchor"
       :buttons="[
         'cancel',
         {
           text: 'Add',
           keyCode: 'enter',
           handler: function () {
+            const newEvent = {
+              title: popupEventTitle,
+              description: popupEventDescription,
+              allDay: popupEventAllDay,
+              status: popupEventStatus,
+              start: popupEventDates[0],
+              end: popupEventDates[1]
+            }
+
+            myEvents = [...myEvents, newEvent]
+            mySelectedDate = popupEventDates[0]
+
             isPopupOpen = false
             isToastOpen = true
-            handleClose()
           },
           cssClass: 'mbsc-popup-button-primary'
         }
       ]"
-      @close="handleClose"
     >
       <div class="mbsc-form-group">
         <MbscInput label="Title" v-model="popupEventTitle" />
@@ -80,32 +136,23 @@ function openPopup() {
         <MbscInput ref="startInput" label="Starts" />
         <MbscInput ref="endInput" label="Ends" />
 
-        <template v-if="!popupEventAllDay">
-          <MbscDropdown v-model="popupTravelTime" label="Travel time">
-            <option value="0">None</option>
-            <option value="5">5 minutes</option>
-            <option value="15">15 minutes</option>
-            <option value="30">30 minutes</option>
-            <option value="60">1 hour</option>
-            <option value="90">1.5 hours</option>
-            <option value="120">2 hours</option>
-          </MbscDropdown>
-        </template>
         <MbscDatepicker
           v-model="popupEventDates"
           select="range"
+          :touchUi="true"
+          display="anchored"
           :controls="popupEventAllDay ? datePickerControls : datetimePickerControls"
           :startInput="startInput"
           :endInput="endInput"
+          :showRangeLabels="false"
         />
-        <MbscSegmentedGroup v-model="popupEventStatus">
+        <MbscSegmentedGroup>
           <MbscSegmented value="busy" :defaultChecked="true">Show as busy</MbscSegmented>
           <MbscSegmented value="free">Show as free</MbscSegmented>
         </MbscSegmentedGroup>
         <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
       </div>
     </MbscPopup>
+    <MbscEventcalendar :selectedDate="mySelectedDate" :data="myEvents"> </MbscEventcalendar>
   </MbscPage>
 </template>
-
-<style></style>
