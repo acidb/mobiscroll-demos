@@ -200,7 +200,7 @@ export default {
 }
 
 /*<hidden>*/
-.demo-add-edit-modal {
+.demo-add-event-modal {
   height: 100%;
 }
 /*</hidden>*/
