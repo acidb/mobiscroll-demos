@@ -63,7 +63,64 @@ export default {
           color: '#8f1ed6',
           price: 700,
         },
+        {
+          id: 7,
+          name: 'Lakeside',
+          seats: 300,
+          color: '#0077b6',
+          price: 650,
+        },
+        {
+          id: 8,
+          name: 'Mountain Hall',
+          seats: 1200,
+          color: '#4a4a4a',
+          price: 1000,
+        },
+        {
+          id: 9,
+          name: 'City Arena',
+          seats: 450,
+          color: '#e63946',
+          price: 850,
+        },
+        {
+          id: 10,
+          name: 'Ocean Center',
+          seats: 700,
+          color: '#00aaff',
+          price: 900,
+        },
       ];
+
+      // performance
+      // the revenue calculation is a little slower 3-4sec at 2000 resource
+      // at 500 almost instant
+      // function generateResources(count) {
+      //   var baseResources = [
+      //     { id: 1, name: 'Flatiron Room', seats: 90, color: '#fdf500', price: 600 },
+      //     { id: 2, name: 'The Capital City', seats: 250, color: '#ff0101', price: 800 },
+      //     { id: 3, name: 'Heroes Square', seats: 400, color: '#01adff', price: 1100 },
+      //     { id: 4, name: 'Hall of Faces', seats: 850, color: '#239a21', price: 750 },
+      //     { id: 5, name: 'King’s Landing', seats: 550, color: '#ff4600', price: 950 },
+      //     { id: 6, name: 'Gathering Field', seats: 900, color: '#8f1ed6', price: 700 },
+      //     { id: 7, name: 'Lakeside', seats: 300, color: '#0077b6', price: 650 },
+      //     { id: 8, name: 'Mountain Hall', seats: 1200, color: '#4a4a4a', price: 1000 },
+      //     { id: 9, name: 'City Arena', seats: 450, color: '#e63946', price: 850 },
+      //     { id: 10, name: 'Ocean Center', seats: 700, color: '#00aaff', price: 900 },
+      //   ];
+      //   var additionalResources = [];
+      //   for (var i = baseResources.length + 1; i <= count; i++) {
+      //     additionalResources.push({
+      //       id: i,
+      //       name: 'Test Resource',
+      //       seats: Math.floor(Math.random() * 1000) + 100,
+      //       price: Math.floor(Math.random() * 1500) + 500,
+      //     });
+      //   }
+      //   return baseResources.concat(additionalResources).slice(0, count);
+      // }
+      // myResources = generateResources(500);
 
       function getUTCDateOnly(d) {
         return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
@@ -177,13 +234,6 @@ export default {
               '</div>' +
               '</div>'
             );
-            // return (
-            //   '<div class="mds-resource-details-title">' +
-            //   '<div class="mds-resource-header mds-resource-details-name">Room</div>' +
-            //   '<div class="mds-resource-header mds-resource-details-seats">Capacity</div>' +
-            //   '<div class="mds-resource-header mds-resource-details-seats">Price/day</div>' +
-            //   '</div>'
-            // );
           },
           renderResource: function (resource) {
             return (
@@ -255,6 +305,12 @@ export default {
         },
       );
 
+      // jeeez, need some simplier solution, dark/light border color
+      $('.mds-resource-details-seats').css({
+        'border-left': '1px solid ' + $('.mbsc-timeline-sidebar-col').css('border-color'),
+        'border-right': '1px solid ' + $('.mbsc-timeline-sidebar-col').css('border-color'),
+      });
+
       $.getJSON(
         'https://trial.mobiscroll.com/multiday-events/?callback=?',
         function (events) {
@@ -279,31 +335,37 @@ export default {
   cursor: pointer;
 }
 
-.mds-date-header-day-name.def::after,
-.mds-resource-header.def::after,
-.mds-resource-details-sidebar-header::after {
-  content: '▲▼';
-  font-size: 14px;
-  position: absolute;
-  right: 5px;
-  top: 12px;
-  transform: translateY(-50%);
-}
-
 .mds-date-header-day-name.asc::after,
 .mds-resource-header.asc::after,
 .mds-resource-details-sidebar-header.asc::after {
-  content: '▲'; 
-  color: green;
+  content: '↑'; 
+  opacity: 0.5;
   right: 8px; 
 }
 
 .mds-date-header-day-name.desc::after,
 .mds-resource-header.desc::after,
 .mds-resource-details-sidebar-header.desc::after {
-  content: '▼';
-  color: green;
+  content: '↓';
+  opacity: 0.5;
   right: 8px;
+}
+
+.mds-date-header-day-name.def::after,
+.mds-resource-header.def::after,
+.mds-resource-details-sidebar-header.def::after {
+  content: '‹›';
+  opacity: 0.5;
+  font-size: 16px;
+  position: absolute;
+  right: 5px;
+  top: 12px;
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.mds-resource-details-sidebar-header.desc::after,
+.mds-resource-details-sidebar-header.asc::after {
+  position: absolute;
 }
 
 .mds-date-header-day-name.asc::after, 
@@ -329,7 +391,7 @@ export default {
 .mds-date-header-day-name.desc:hover::after,
 .mds-resource-header.desc:hover::after,
 .mds-resource-details-sidebar-header.desc:hover::after {
-  animation: enlargeIcon 0.3s forwards; 
+  opacity: 1;
 }
 
 .mds-date-header-day-name.asc::after, 
@@ -337,15 +399,6 @@ export default {
   font-size: 14px;
   top: 12px;
   transform: translateY(-50%);
-}
-
-@keyframes enlargeIcon {
-  from {
-    font-size: 14px;
-  }
-  to {
-    font-size: 18px;
-  }
 }
 
 .mds-date-header-day-name,
@@ -357,7 +410,7 @@ export default {
 /*<hidden>*/
 
 .demo-timeline-resource-details {
-    height: 100%;
+  height: 100%;
 }
 
 /*</hidden>*/
@@ -365,111 +418,106 @@ export default {
 /* Header */
 
 .mds-resource-details .mbsc-timeline-resource-col {
-    width: 335px;
+  width: 335px;
 }
 
 .mds-resource-details .mbsc-timeline-resource-header,
 .mds-resource-details .mbsc-timeline-resource-title,
 .mds-resource-details .mbsc-timeline-resource-footer,
 .mds-resource-details .mbsc-timeline-sidebar-header {
-    padding: 0;
+  padding: 0;
 }
 
 .mds-resource-details .mbsc-timeline-resource-title {
-    height: 100%;
+  height: 100%;
 }
 
 .mds-resource-details-cont {
-    line-height: 50px;
-    height: 100%;
+  line-height: 50px;
+  height: 100%;
 }
 
 .mds-resource-header {
-    display: inline-block;
-    height: 100%;
-    padding: 0 5px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    vertical-align: top;
+  display: inline-block;
+  height: 100%;
+  padding: 0 5px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: top;
 }
 
 .mds-resource-details-name {
-    width: 120px;
+  width: 120px;
 }
 
 .mds-resource-details-seats,
 .mds-resource-details-price {
-    width: 106px;
-}
-
-.mds-resource-details-seats {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+  width: 106px;
 }
 
 .mds-resource-details-title {
-    font-weight: 600;
-    line-height: 26px;
+  font-weight: 600;
+  line-height: 26px;
 }
 
 .mds-resource-details-sidebar-header {
-    line-height: 26px;
-    padding: 0 5px;
+  line-height: 26px;
+  padding: 0 5px;
 }
 
 .mds-resource-details .mbsc-timeline-day {
-    width: 144px;
+  width: 144px;
 }
 
 .mds-resource-details-sidebar {
-    line-height: 36px;
-    text-align: center;
+  line-height: 36px;
+  text-align: center;
 }
 
 /* Footer */
 
 .mds-resource-details-occuppancy {
-    font-size: 15px;
-    text-align: right;
-    background: #f8f8f8;
-    padding-right: 15px;
+  font-size: 15px;
+  text-align: right;
+  background-color: rgba(150, 150, 150, 0.1);
+  padding-right: 15px;
 }
 
 .mds-resource-details-footer {
-    line-height: 50px;
+  line-height: 50px;
 }
 
 .mds-resource-details-total {
-    font-size: 18px;
-    text-align: center;
-    line-height: 36px;
+  font-size: 18px;
+  text-align: center;
+  line-height: 36px;
 }
 
 .mds-resource-details-footer-day {
-    font-size: 15px;
-    font-weight: 600;
-    text-align: center;
-    background: #f8f8f8;
-    padding: 0 5px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  background-color: rgba(150, 150, 150, 0.1);
+  padding: 0 5px;
 }
 
 .mds-resource-details .mbsc-timeline-sidebar-footer {
-    background: #feefee;
-    border-top-color: #5a0101;
-    color: #5a0101;
+  background-color: rgba(150, 150, 150, 0.1);
+  border-top-color: #5a0101;
+  color: #8c0000;;
 }
 
 .mds-resource-details .mbsc-timeline-sidebar-col {
-    width: 98px;
+  width: 98px;
 }
 
 @supports (overflow:clip) {
-    .mds-resource-details.mbsc-ltr .mbsc-schedule-event-inner {
-        left: 280px;
-    }
-    .mds-resource-details.mbsc-rtl .mbsc-schedule-event-inner {
-        right: 280px;
-    }
+  .mds-resource-details.mbsc-ltr .mbsc-schedule-event-inner {
+    left: 280px;
+  }
+  .mds-resource-details.mbsc-rtl .mbsc-schedule-event-inner {
+    right: 280px;
+  }
 }
   `,
 };
