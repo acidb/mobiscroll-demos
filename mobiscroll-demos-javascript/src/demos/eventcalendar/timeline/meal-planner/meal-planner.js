@@ -100,6 +100,7 @@ export default {
 
     function editMealPopup(args) {
       var ev = args.event;
+      var resource = args.resourceObj;
 
       // show delete button inside edit popup
       deleteButton.style.display = 'block';
@@ -109,7 +110,8 @@ export default {
 
       // // set popup header text and buttons for editing
       popup.setOptions({
-        headerText: '<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start)) + '</div>',
+        headerText:
+          '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(ev.start)) + '</div>',
         buttons: [
           'cancel',
           {

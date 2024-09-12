@@ -371,8 +371,8 @@ export class AppComponent {
 
   handleEventClick(args: MbscEventClickEvent) {
     const event = args.event;
-    const resource = this.staff.find((r) => r.id === event.resource)!;
-    const slot = this.mySlots.find((s) => s.id === event.slot)!;
+    const resource = args.resourceObj!;
+    const slot = args.slotObj!;
 
     this.fillPopup(event, true);
     this.popupButtons = [
@@ -402,7 +402,7 @@ export class AppComponent {
   handleEventCreated(args: MbscEventCreatedEvent) {
     setTimeout(() => {
       const event = args.event;
-      const slot = this.mySlots.find((s) => s.id === event.slot)!;
+      const slot = args.slotObj!;
 
       this.fillPopup(event, false);
       this.popupButtons = [

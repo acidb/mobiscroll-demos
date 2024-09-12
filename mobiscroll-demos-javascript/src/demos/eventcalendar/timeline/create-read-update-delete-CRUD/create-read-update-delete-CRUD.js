@@ -13,6 +13,7 @@ export default {
     var range;
     var oldEvent;
     var tempEvent = {};
+    var tempResource = {};
     var deleteEvent;
     var restoreEvent;
     var colorPicker;
@@ -151,7 +152,7 @@ export default {
         controls: tempEvent.allDay ? ['date'] : ['datetime'],
         responsive: tempEvent.allDay ? datePickerResponsive : datetimePickerResponsive,
       });
-      selectColor(getResource(tempEvent.resource).color, true);
+      selectColor(tempResource.color, true);
       travelTime.value = 0;
 
       // set anchor for the popup
@@ -208,7 +209,7 @@ export default {
       mobiscroll.getInst(descriptionTextarea).value = ev.description || '';
       mobiscroll.getInst(allDaySwitch).checked = ev.allDay || false;
       range.setVal([ev.start, ev.end]);
-      selectColor(ev.color || getResource(ev.resource).color, true);
+      selectColor(ev.color || args.resourceObj.color, true);
       travelTime.value = ev.bufferBefore !== undefined ? ev.bufferBefore : 0;
 
       if (ev.free) {
@@ -241,6 +242,7 @@ export default {
       onEventClick: function (args) {
         oldEvent = Object.assign({}, args.event);
         tempEvent = args.event;
+        tempResource = args.resourceObj;
 
         if (!popup.isVisible()) {
           createEditPopup(args);
@@ -250,6 +252,8 @@ export default {
         popup.close();
         // store temporary event
         tempEvent = args.event;
+        // store temporary resource object
+        tempResource = args.resourceObj;
         createAddPopup(args.target);
       },
       onEventDeleted: function (args) {
@@ -405,14 +409,8 @@ export default {
       colorPicker.close();
     }
 
-    function getResource(res) {
-      return myResources.find(function (r) {
-        return r.id == res;
-      });
-    }
-
     colorSelect.addEventListener('click', function () {
-      selectColor(tempEvent.color || getResource(tempEvent.resource).color);
+      selectColor(tempEvent.color || tempResource.color);
       colorPicker.open();
     });
 
