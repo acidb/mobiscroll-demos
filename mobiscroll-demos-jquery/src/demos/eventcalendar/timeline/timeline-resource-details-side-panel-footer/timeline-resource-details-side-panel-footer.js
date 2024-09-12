@@ -86,6 +86,109 @@ export default {
           price: 700,
         },
       ];
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // sorting
+
+      var tempDay;
+      var myEvents;
+
+      var sorting = {
+        currentColumn: null,
+        order: 'default',
+      };
+
+      function getSortArrow(column) {
+        if (sorting.column === column) {
+          return sorting.order === 'asc' ? 'asc' : sorting.order === 'desc' ? 'desc' : 'def';
+        }
+        return 'def';
+      }
+
+      function sortResources(column, day) {
+        myEvents = calendar.getEvents();
+
+        if (sorting.column === column) {
+          sorting.order = sorting.order === 'asc' ? 'desc' : sorting.order === 'desc' ? 'default' : 'asc';
+        } else {
+          sorting.column = column;
+          sorting.order = 'asc';
+        }
+
+        if (sorting.order !== 'default') {
+          myResources.sort(function (a, b) {
+            var valueA = column === 'revenue' ? getRevenue(a) : column === 'day' ? getBusyHours(a, day) - 24 : a[column];
+            var valueB = column === 'revenue' ? getRevenue(b) : column === 'day' ? getBusyHours(b, day) - 24 : b[column];
+
+            if (sorting.order === 'asc') {
+              return valueA > valueB ? 1 : -1;
+            } else if (sorting.order === 'desc') {
+              return valueA < valueB ? 1 : -1;
+            }
+          });
+        } else {
+          myResources.sort(function (a, b) {
+            return a.id - b.id;
+          });
+        }
+        calendar.setOptions({ resources: myResources.slice() });
+      }
+
+      function getBusyHours(resource, day) {
+        var startOfDay = new Date(day.setHours(0, 0, 0, 0));
+        var endOfDay = new Date(day.setHours(23, 59, 59, 999));
+
+        var totalBusyHours = 0;
+
+        for (var i = 0; i < myEvents.length; i++) {
+          var event = myEvents[i];
+
+          if (event.resource === resource.id) {
+            var overlapStart = Math.max(startOfDay, new Date(event.start));
+            var overlapEnd = Math.min(endOfDay, new Date(event.end));
+
+            if (overlapStart < overlapEnd) {
+              totalBusyHours += (overlapEnd - overlapStart) / (1000 * 60 * 60);
+            }
+          }
+        }
+        return totalBusyHours;
+      }
+
+      $(document).on(
+        'click',
+        '.md-resource-details-title .md-resource-header, .md-resource-details-sidebar-header, .mbsc-timeline-header-date',
+        function () {
+          $('.mbsc-timeline-header-date').removeClass('asc desc');
+          var sortColumn = $(this).data('sort') || 'day';
+
+          if (sortColumn === 'day') {
+            var dateString = $(this).find('.mbsc-hidden-content').text().trim();
+            var selectedDay = new Date(dateString);
+
+            if (tempDay != dateString) {
+              sorting.order = 'default';
+            }
+
+            if (sorting.order === 'default') {
+              $(this).addClass('asc');
+            } else if (sorting.order === 'asc') {
+              $(this).addClass('desc');
+            }
+
+            sortResources('day', selectedDay);
+            tempDay = dateString;
+          } else {
+            sortResources(sortColumn);
+          }
+        },
+      );
+
+      // sorting
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       var calendar = $('#demo-resource-details')
         .mobiscroll()
         .eventcalendar({
@@ -99,11 +202,30 @@ export default {
           renderResourceHeader: function () {
             return (
               '<div class="md-resource-details-title">' +
-              '<div class="md-resource-header md-resource-details-name">Room</div>' +
-              '<div class="md-resource-header md-resource-details-seats">Capacity</div>' +
-              '<div class="md-resource-header md-resource-details-price">Price/day</div>' +
+              '<div class="md-resource-header md-resource-details-name ' +
+              getSortArrow('name') +
+              '" data-sort="name">' +
+              'Room' +
+              '</div>' +
+              '<div class="md-resource-header md-resource-details-seats ' +
+              getSortArrow('seats') +
+              '" data-sort="seats">' +
+              'Capacity' +
+              '</div>' +
+              '<div class="md-resource-header md-resource-details-price ' +
+              getSortArrow('price') +
+              '" data-sort="price">' +
+              'Price/day' +
+              '</div>' +
               '</div>'
             );
+            // return (
+            //   '<div class="md-resource-details-title">' +
+            //   '<div class="md-resource-header md-resource-details-name">Room</div>' +
+            //   '<div class="md-resource-header md-resource-details-seats">Capacity</div>' +
+            //   '<div class="md-resource-header md-resource-details-seats">Price/day</div>' +
+            //   '</div>'
+            // );
           },
           renderResource: function (resource) {
             return (
@@ -121,7 +243,8 @@ export default {
             );
           },
           renderSidebarHeader: function () {
-            return '<div class="md-resource-details-sidebar-header">Revenue</div>';
+            return '<div class="md-resource-details-sidebar-header ' + getSortArrow('revenue') + '" data-sort="revenue">Revenue</div>';
+            // return '<div class="md-resource-details-sidebar-header">Revenue</div>';
           },
           renderSidebar: function (resource) {
             return '<div class="md-resource-details-sidebar">$' + getRevenue(resource) + '</div>';
@@ -167,6 +290,93 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+/* to refactor */
+
+.md-resource-details-title .md-resource-header , .mbsc-timeline-header-date {
+    cursor: pointer;
+}
+
+.md-resource-header .md-resource-details-name {
+  width: 400px;
+}
+
+.mbsc-timeline-sidebar-header{
+  width: 95px !important;
+}
+
+.md-resource-details-seats,
+.md-resource-details-price {
+    width: 106px !important;
+}
+.md-resource-details .mbsc-timeline-resource-col {
+    width: 335px !important;
+}
+
+/* to refactor */
+
+/* sorting arrows /////////////////////////////////////////////////////////////////////////// */
+
+.mbsc-timeline-header-date::after,
+.md-resource-header.def::after,
+.md-resource-details-sidebar-header::after {
+  content: '▲▼';
+  position: absolute;
+  right: 5px;
+  top: 12px;
+  transform: translateY(-50%);
+}
+
+.mbsc-timeline-header-date.asc::after,
+.md-resource-header.asc::after,
+.md-resource-details-sidebar-header.asc::after {
+  content: '▲'; 
+  color: green;
+  right: 8px; 
+}
+
+.mbsc-timeline-header-date.desc::after,
+.md-resource-header.desc::after,
+.md-resource-details-sidebar-header.desc::after {
+  content: '▼';
+  color: green;
+  right: 8px;
+}
+
+.md-resource-header.asc::after, 
+.md-resource-header.desc::after {
+  position: absolute;
+  top: 0px; 
+}
+
+.mbsc-timeline-header-date:hover::after,
+.md-resource-header.def:hover::after, 
+.md-resource-details-sidebar-header.def:hover::after,
+.mbsc-timeline-header-date.asc:hover::after,
+.md-resource-header.asc:hover::after,
+.md-resource-details-sidebar-header.asc:hover::after,
+.mbsc-timeline-header-date.desc:hover::after,
+.md-resource-header.desc:hover::after,
+.md-resource-details-sidebar-header.desc:hover::after {
+  animation: enlargeIcon 0.4s forwards; 
+}
+
+@keyframes enlargeIcon {
+  from {
+    font-size: 100%;
+  }
+  to {
+    font-size: 130%;
+  }
+}
+
+.mbsc-timeline-header-date,
+.md-resource-header,
+.md-resource-details-sidebar-header {
+  position: relative;
+}
+
+/* sorting arrows end /////////////////////////////////////////////////////////////////////////// */
+
 /*<hidden>*/
 
 .demo-timeline-resource-details {
@@ -273,7 +483,7 @@ export default {
 }
 
 .md-resource-details .mbsc-timeline-sidebar-col {
-    width: 85px;
+    width: 98px;
 }
 
 @supports (overflow:clip) {
