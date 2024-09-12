@@ -26,45 +26,45 @@ export default {
           id: 5,
           name: 'Group 1',
           children: [
-            { id: '1-1', name: 'Child 1' },
-            { id: '1-2', name: 'Child 2' },
-            { id: '1-3', name: 'Child 3' },
+            { id: '1-1', name: 'Resource 5' },
+            { id: '1-2', name: 'Resource 6' },
+            { id: '1-3', name: 'Resource 7' },
           ],
         },
-        { id: 6, name: 'Resource 6' },
-        { id: 7, name: 'Resource 7' },
+        { id: 6, name: 'Resource 8' },
+        { id: 7, name: 'Resource 9' },
         {
           id: 8,
           name: 'Group 2 (Reorder disabled)',
           reorder: false,
           children: [
-            { id: '2-1', name: 'Child 1' },
-            { id: '2-2', name: 'Child 2' },
-            { id: '2-3', name: 'Child 3' },
+            { id: '2-1', name: 'Resource 10' },
+            { id: '2-2', name: 'Resource 11' },
+            { id: '2-3', name: 'Resource 12' },
           ],
         },
-        { id: 9, name: 'Resource 8' },
-        { id: 10, name: 'Resource 9' },
+        { id: 9, name: 'Resource 13' },
+        { id: 10, name: 'Resource 14' },
         {
           id: 11,
           name: 'Group 3',
           children: [
-            { id: '3-1', name: 'Child 1' },
-            { id: '3-2', name: 'Child 2' },
-            { id: '3-3', name: 'Child 3' },
+            { id: '3-1', name: 'Resource 15' },
+            { id: '3-2', name: 'Resource 16' },
+            { id: '3-3', name: 'Resource 17' },
           ],
         },
-        { id: 12, name: 'Resource 10' },
+        { id: 12, name: 'Resource 18' },
         {
           id: 13,
           name: 'Group 4 (Dropping not allowed)',
           children: [
-            { id: '4-1', name: 'Child 1' },
-            { id: '4-2', name: 'Child 2' },
-            { id: '4-3', name: 'Child 3' },
+            { id: '4-1', name: 'Resource 19' },
+            { id: '4-2', name: 'Resource 20' },
+            { id: '4-3', name: 'Resource 21' },
           ],
         },
-        { id: 14, name: 'Resource 11' },
+        { id: 14, name: 'Resource 22' },
       ];
       var tempResources = [];
       var calInst = $('#demo-resource-drag-drop-reorder')
@@ -131,9 +131,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      function updateView(enableOrder) {
-        // timelineView.resourceOrder = enableOrder;
-
+      function updateHeaderBtns(enableOrder) {
         if (enableOrder) {
           $('.mds-update').show();
           $('.mds-enable').hide();
@@ -141,13 +139,10 @@ export default {
           $('.mds-update').hide();
           $('.mds-enable').show();
         }
-        // return {
-        //   timeline: timelineView,
-        // };
       }
 
       $('.mds-reorder-switch').on('click', function () {
-        updateView(true);
+        updateHeaderBtns(true);
         calInst.setOptions({
           view: {
             timeline: {
@@ -161,8 +156,7 @@ export default {
       });
 
       $('.mds-reorder-cancel').on('click', function () {
-        // timelineView.resourceOrder = false;
-        updateView(false);
+        updateHeaderBtns(false);
         calInst.setOptions({
           resources: resources.slice(),
           view: {
@@ -180,7 +174,7 @@ export default {
         if (tempResources.length) {
           resources = tempResources;
         }
-        updateView(false);
+        updateHeaderBtns(false);
         calInst.setOptions({
           resources: resources.slice(),
           view: {
