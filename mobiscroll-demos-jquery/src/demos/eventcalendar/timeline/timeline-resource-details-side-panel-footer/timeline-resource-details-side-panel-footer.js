@@ -93,14 +93,15 @@ export default {
 
       var tempDay;
       var myEvents;
+      var formatDate = mobiscroll.formatDate;
 
       var sorting = {
         currentColumn: null,
         order: 'default',
       };
 
-      function getSortArrow(column) {
-        if (sorting.column === column) {
+      function getSortArrow(column, day) {
+        if (sorting.column === column && day == tempDay) {
           return sorting.order === 'asc' ? 'asc' : sorting.order === 'desc' ? 'desc' : 'def';
         }
         return 'def';
@@ -109,12 +110,14 @@ export default {
       function sortResources(column, day) {
         myEvents = calendar.getEvents();
 
-        if (sorting.column === column) {
+        if (sorting.column === column && day === tempDay) {
           sorting.order = sorting.order === 'asc' ? 'desc' : sorting.order === 'desc' ? 'default' : 'asc';
         } else {
           sorting.column = column;
           sorting.order = 'asc';
         }
+
+        tempDay = day;
 
         if (sorting.order !== 'default') {
           myResources.sort(function (a, b) {
@@ -136,52 +139,26 @@ export default {
       }
 
       function getBusyHours(resource, day) {
-        var startOfDay = new Date(day.setHours(0, 0, 0, 0));
-        var endOfDay = new Date(day.setHours(23, 59, 59, 999));
+        var startOfDay = new Date(day).setHours(0, 0, 0, 0);
+        var endOfDay = new Date(day).setHours(23, 59, 59, 999);
 
-        var totalBusyHours = 0;
-
-        for (var i = 0; i < myEvents.length; i++) {
-          var event = myEvents[i];
-
+        return myEvents.reduce(function (total, event) {
           if (event.resource === resource.id) {
-            var overlapStart = Math.max(startOfDay, new Date(event.start));
-            var overlapEnd = Math.min(endOfDay, new Date(event.end));
-
-            if (overlapStart < overlapEnd) {
-              totalBusyHours += (overlapEnd - overlapStart) / (1000 * 60 * 60);
-            }
+            var eventStart = Math.max(startOfDay, new Date(event.start).getTime());
+            var eventEnd = Math.min(endOfDay, new Date(event.end).getTime());
+            return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total;
           }
-        }
-        return totalBusyHours;
+          return total;
+        }, 0);
       }
 
       $(document).on(
         'click',
-        '.md-resource-details-title .md-resource-header, .md-resource-details-sidebar-header, .mbsc-timeline-header-date',
+        '.md-resource-details-title .md-resource-header, .md-resource-details-sidebar-header, .md-date-header-day-name',
         function () {
-          $('.mbsc-timeline-header-date').removeClass('asc desc');
-          var sortColumn = $(this).data('sort') || 'day';
-
-          if (sortColumn === 'day') {
-            var dateString = $(this).find('.mbsc-hidden-content').text().trim();
-            var selectedDay = new Date(dateString);
-
-            if (tempDay != dateString) {
-              sorting.order = 'default';
-            }
-
-            if (sorting.order === 'default') {
-              $(this).addClass('asc');
-            } else if (sorting.order === 'asc') {
-              $(this).addClass('desc');
-            }
-
-            sortResources('day', selectedDay);
-            tempDay = dateString;
-          } else {
-            sortResources(sortColumn);
-          }
+          var sortColumn = $(this).data('sort');
+          var selectedDay = $(this).data('day');
+          sortResources(sortColumn, selectedDay);
         },
       );
 
@@ -252,6 +229,20 @@ export default {
           renderResourceFooter: function () {
             return '<div class="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>';
           },
+          //////////////////////////////////////////////////////////////////////////////////////
+          renderDay: function (data) {
+            // date, events[resource id]
+            // console.log(data);
+            return (
+              '<div class="md-date-header-day-name  ' +
+              getSortArrow('day', data.date) +
+              '" data-sort="day" data-day="' +
+              data.date +
+              '">' +
+              formatDate('DD DDD', data.date)
+            );
+          },
+          //////////////////////////////////////////////////////////////////////////////////////
           renderDayFooter: function (data) {
             var events = data.events;
             var occuppancy = 0;
@@ -316,7 +307,7 @@ export default {
 
 /* sorting arrows /////////////////////////////////////////////////////////////////////////// */
 
-.mbsc-timeline-header-date::after,
+.md-date-header-day-name.def::after,
 .md-resource-header.def::after,
 .md-resource-details-sidebar-header::after {
   content: '▲▼';
@@ -326,7 +317,7 @@ export default {
   transform: translateY(-50%);
 }
 
-.mbsc-timeline-header-date.asc::after,
+.md-date-header-day-name.asc::after,
 .md-resource-header.asc::after,
 .md-resource-details-sidebar-header.asc::after {
   content: '▲'; 
@@ -334,7 +325,7 @@ export default {
   right: 8px; 
 }
 
-.mbsc-timeline-header-date.desc::after,
+.md-date-header-day-name.desc::after,
 .md-resource-header.desc::after,
 .md-resource-details-sidebar-header.desc::after {
   content: '▼';
@@ -342,19 +333,26 @@ export default {
   right: 8px;
 }
 
+.md-date-header-day-name.asc::after, 
+.md-date-header-day-name.desc::after, 
 .md-resource-header.asc::after, 
 .md-resource-header.desc::after {
   position: absolute;
   top: 0px; 
 }
 
-.mbsc-timeline-header-date:hover::after,
+.md-date-header-day-name{
+  font-size: 14px;
+  line-height: 25px;
+}
+
+.md-date-header-day-name:hover::after,
 .md-resource-header.def:hover::after, 
 .md-resource-details-sidebar-header.def:hover::after,
-.mbsc-timeline-header-date.asc:hover::after,
+.md-date-header-day-name.asc:hover::after,
 .md-resource-header.asc:hover::after,
 .md-resource-details-sidebar-header.asc:hover::after,
-.mbsc-timeline-header-date.desc:hover::after,
+.md-date-header-day-name.desc:hover::after,
 .md-resource-header.desc:hover::after,
 .md-resource-details-sidebar-header.desc:hover::after {
   animation: enlargeIcon 0.4s forwards; 
@@ -369,7 +367,7 @@ export default {
   }
 }
 
-.mbsc-timeline-header-date,
+.md-date-header-day-name,
 .md-resource-header,
 .md-resource-details-sidebar-header {
   position: relative;
