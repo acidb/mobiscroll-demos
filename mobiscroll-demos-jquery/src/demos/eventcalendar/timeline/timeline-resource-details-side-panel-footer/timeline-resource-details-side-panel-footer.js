@@ -483,7 +483,7 @@ export default {
 }
 
 .md-resource-details .mbsc-timeline-sidebar-col {
-    width: 85px;
+    width: 98px;
 }
 
 @supports (overflow:clip) {
