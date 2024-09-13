@@ -11,7 +11,7 @@ export default {
 
     $(function () {
       var formatDate = mobiscroll.formatDate;
-      var myEvents;
+      var myEvents = [];
       var oneDay = 60000 * 60 * 24;
       var tempDay;
       var sortColumn;
@@ -90,34 +90,26 @@ export default {
         },
       ];
 
-      // performance
-      // the revenue calculation is a little slower 3-4sec at 2000 resource
-      // at 500 almost instant
-      // function generateResources(count) {
-      //   var baseResources = [
-      //     { id: 1, name: 'Flatiron Room', seats: 90, color: '#fdf500', price: 600 },
-      //     { id: 2, name: 'The Capital City', seats: 250, color: '#ff0101', price: 800 },
-      //     { id: 3, name: 'Heroes Square', seats: 400, color: '#01adff', price: 1100 },
-      //     { id: 4, name: 'Hall of Faces', seats: 850, color: '#239a21', price: 750 },
-      //     { id: 5, name: 'King’s Landing', seats: 550, color: '#ff4600', price: 950 },
-      //     { id: 6, name: 'Gathering Field', seats: 900, color: '#8f1ed6', price: 700 },
-      //     { id: 7, name: 'Lakeside', seats: 300, color: '#0077b6', price: 650 },
-      //     { id: 8, name: 'Mountain Hall', seats: 1200, color: '#4a4a4a', price: 1000 },
-      //     { id: 9, name: 'City Arena', seats: 450, color: '#e63946', price: 850 },
-      //     { id: 10, name: 'Ocean Center', seats: 700, color: '#00aaff', price: 900 },
-      //   ];
-      //   var additionalResources = [];
-      //   for (var i = baseResources.length + 1; i <= count; i++) {
-      //     additionalResources.push({
-      //       id: i,
-      //       name: 'Test Resource',
-      //       seats: Math.floor(Math.random() * 1000) + 100,
-      //       price: Math.floor(Math.random() * 1500) + 500,
-      //     });
-      //   }
-      //   return baseResources.concat(additionalResources).slice(0, count);
-      // }
-      // myResources = generateResources(500);
+      /////////////////////
+      // performance test
+
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+      }
+
+      var resourceNr = 500;
+      var eventsNr = 500;
+      myResources = [];
+      var myEventColors = ['#ff0101', '#239a21', '#8f1ed6', '#01adff', '#d8ca1a'];
+
+      console.log('generated resources');
+
+      for (var i = 1; i <= resourceNr; i++) {
+        myResources.push({ name: 'Resource ' + i, id: i, seats: getRandomInt(100, 2000), price: getRandomInt(500, 20000) });
+      }
+
+      //
+      ///////////////////////
 
       function getUTCDateOnly(d) {
         return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
@@ -151,46 +143,35 @@ export default {
 
       function getSortArrow(column, day) {
         if (sortColumn === column && day == tempDay) {
-          return sortDirection === 'mds-resource-sort-asc'
-            ? 'mds-resource-sort-asc'
-            : sortDirection === 'mds-resource-sort-desc'
-              ? 'mds-resource-sort-desc'
-              : 'mds-resource-sort-def';
+          return sortDirection === 'asc' ? 'asc' : sortDirection === 'desc' ? 'desc' : 'def';
         }
-        return 'mds-resource-sort-def';
+        return 'def';
       }
 
       function sortResources(column, day) {
         if (sortColumn === column && day === tempDay) {
-          sortDirection =
-            sortDirection === 'mds-resource-sort-asc'
-              ? 'mds-resource-sort-desc'
-              : sortDirection === 'mds-resource-sort-desc'
-                ? 'mds-resource-sort-def'
-                : 'mds-resource-sort-asc';
+          sortDirection = sortDirection === 'asc' ? 'desc' : sortDirection === 'desc' ? 'def' : 'asc';
         } else {
           sortColumn = column;
-          sortDirection = 'mds-resource-sort-asc';
+          sortDirection = 'asc';
         }
-
         tempDay = day;
 
-        if (sortDirection !== 'mds-resource-sort-def') {
-          myResources.sort(function (a, b) {
-            var valueA = column === 'revenue' ? getRevenue(a) : column === 'day' ? getBusyHours(a, day) - 24 : a[column];
-            var valueB = column === 'revenue' ? getRevenue(b) : column === 'day' ? getBusyHours(b, day) - 24 : b[column];
+        // precalculate busy hours for the clicked day
+        myResources.forEach(function (resource) {
+          resource.busyHours = getBusyHours(resource, day) - 24;
+        });
+        calendar.setOptions({ resources: myResources });
 
-            if (sortDirection === 'mds-resource-sort-asc') {
-              return valueA > valueB ? 1 : -1;
-            } else if (sortDirection === 'mds-resource-sort-desc') {
-              return valueA < valueB ? 1 : -1;
-            }
-          });
-        } else {
-          myResources.sort(function (a, b) {
-            return a.id - b.id;
-          });
-        }
+        myResources.sort(function (a, b) {
+          if (sortDirection === 'asc') {
+            return a[column] > b[column] ? 1 : -1;
+          }
+          if (sortDirection === 'desc') {
+            return a[column] < b[column] ? 1 : -1;
+          }
+          return a.id - b.id;
+        });
         calendar.setOptions({ resources: myResources.slice() });
       }
 
@@ -219,17 +200,17 @@ export default {
           renderResourceHeader: function () {
             return (
               '<div class="mds-resource-details-title">' +
-              '<div class="mds-resource-header mds-resource-details-name ' +
+              '<div class="mds-resource-header mds-resource-details-name mds-resource-sort-' +
               getSortArrow('name') +
               '" data-sort="name">' +
               'Room' +
               '</div>' +
-              '<div class="mds-resource-header mds-resource-details-seats ' +
+              '<div class="mds-resource-header mds-resource-details-seats mds-resource-sort-' +
               getSortArrow('seats') +
               '" data-sort="seats">' +
               'Capacity' +
               '</div>' +
-              '<div class="mds-resource-header mds-resource-details-price ' +
+              '<div class="mds-resource-header mds-resource-details-price mds-resource-sort-' +
               getSortArrow('price') +
               '" data-sort="price">' +
               'Price/day' +
@@ -253,22 +234,25 @@ export default {
             );
           },
           renderSidebarHeader: function () {
-            return '<div class="mds-resource-details-sidebar-header ' + getSortArrow('revenue') + '" data-sort="revenue">Revenue</div>';
+            return (
+              '<div class="mds-resource-details-sidebar-header mds-resource-sort-' +
+              getSortArrow('revenue') +
+              '" data-sort="revenue">Revenue</div>'
+            );
           },
           renderSidebar: function (resource) {
+            // change reveniue also here
             return '<div class="mds-resource-details-sidebar">$' + getRevenue(resource) + '</div>';
           },
           renderResourceFooter: function () {
             return '<div class="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>';
           },
           renderDay: function (data) {
-            // var day = new Date(data.date).toISOString().slice(0, 10);
-            var day = getUTCDateOnly(data.date);
-            // console.log(typeof day);
+            var day = data.date.getTime();
             return (
-              '<div class="mds-date-header-day-name  ' +
-              getSortArrow('day', day) +
-              '" data-sort="day" data-day="' +
+              '<div class="mds-date-header-day-name  mds-resource-sort-' +
+              getSortArrow('busyHours', day) +
+              '" data-sort="busyHours" data-day="' +
               day +
               '">' +
               '<span>' +
@@ -296,6 +280,33 @@ export default {
           renderSidebarFooter: function () {
             return '<div class="mds-resource-details-footer mds-resource-details-total">$' + getTotal() + '</div>';
           },
+          /////////////////////////////////////
+          // performance test
+          onPageLoading: function (args, inst) {
+            setTimeout(function () {
+              myEvents = [];
+              var year = new Date().getFullYear();
+              var month = new Date().getMonth();
+              // Generate random events
+              for (var i = 0; i < eventsNr; i++) {
+                var day = getRandomInt(1, 31);
+                var length = getRandomInt(2, 5);
+                var resource = getRandomInt(1, resourceNr + 1);
+                var color = getRandomInt(0, 6);
+                myEvents.push({
+                  color: myEventColors[color],
+                  end: new Date(year, month, day + length),
+                  resource: resource,
+                  start: new Date(year, month, day),
+                  title: 'Event ' + i,
+                });
+              }
+              inst.setEvents(myEvents);
+              console.log('events generated');
+            });
+          },
+          ////
+          ///////////////////////////////
         })
         .mobiscroll('getInst');
 
@@ -312,8 +323,16 @@ export default {
       $.getJSON(
         'https://trial.mobiscroll.com/multiday-events/?callback=?',
         function (events) {
-          calendar.setEvents(events);
-          myEvents = events;
+          /////// commented out when performance test
+          // calendar.setEvents(events);
+          // myEvents = events;
+
+          // precalculate revenue for performance
+          console.log('precalculated revenue - after generated events');
+          myResources.forEach(function (resource) {
+            resource.revenue = getRevenue(resource);
+          });
+          calendar.setOptions({ resources: myResources });
         },
         'jsonp',
       );
