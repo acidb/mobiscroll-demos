@@ -16,6 +16,7 @@ export default {
       var tempDay;
       var sortColumn;
       var sortDirection;
+      var totalRevenue;
 
       var myResources = [
         {
@@ -98,7 +99,7 @@ export default {
       }
 
       var resourceNr = 500;
-      var eventsNr = 500;
+      var eventsNr = 1000;
       myResources = [];
       var myEventColors = ['#ff0101', '#239a21', '#8f1ed6', '#01adff', '#d8ca1a'];
 
@@ -108,7 +109,7 @@ export default {
         myResources.push({ name: 'Resource ' + i, id: i, seats: getRandomInt(100, 2000), price: getRandomInt(500, 20000) });
       }
 
-      //
+      // performance test end
       ///////////////////////
 
       function getUTCDateOnly(d) {
@@ -133,13 +134,13 @@ export default {
         }
       }
 
-      function getTotal() {
-        var total = 0;
-        for (var i = 0; i < myResources.length; ++i) {
-          total += getRevenue(myResources[i]);
-        }
-        return total;
-      }
+      // function getTotal() {
+      //   var total = 0;
+      //   for (var i = 0; i < myResources.length; ++i) {
+      //     total += getRevenue(myResources[i]);
+      //   }
+      //   return total;
+      // }
 
       function getSortArrow(column, day) {
         if (sortColumn === column && day == tempDay) {
@@ -241,8 +242,7 @@ export default {
             );
           },
           renderSidebar: function (resource) {
-            // change reveniue also here
-            return '<div class="mds-resource-details-sidebar">$' + getRevenue(resource) + '</div>';
+            return '<div class="mds-resource-details-sidebar">$' + resource.revenue + '</div>';
           },
           renderResourceFooter: function () {
             return '<div class="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>';
@@ -278,12 +278,14 @@ export default {
             return '<div class="mds-resource-details-footer mds-resource-details-footer-day">' + occuppancy + '%</div>';
           },
           renderSidebarFooter: function () {
-            return '<div class="mds-resource-details-footer mds-resource-details-total">$' + getTotal() + '</div>';
+            return '<div class="mds-resource-details-footer mds-resource-details-total">$' + totalRevenue + '</div>';
           },
-          /////////////////////////////////////
-          // performance test
+
           onPageLoading: function (args, inst) {
             setTimeout(function () {
+              /////////////////////////////////////
+              // performance test
+
               myEvents = [];
               var year = new Date().getFullYear();
               var month = new Date().getMonth();
@@ -302,11 +304,31 @@ export default {
                 });
               }
               inst.setEvents(myEvents);
-              console.log('events generated');
+
+              //// performance test end
+              ///////////////////////////////
+              // gotRevenue the performance killer
+
+              // precalculate revenue for performance
+              // 12sec for 500 resource 5000event
+              console.time('Update Revenue');
+              myResources.forEach(function (resource) {
+                resource.revenue = getRevenue(resource);
+              });
+              console.timeEnd('Update Revenue');
+              calendar.setOptions({ resources: myResources });
+
+              // total revenue
+              console.time('Get Total Revenue');
+              // totalRevenue = getTotal();
+              totalRevenue = myResources.reduce(function (total, resource) {
+                return total + resource.revenue;
+              }, 0);
+              console.timeEnd('Get Total Revenue');
+
+              console.log(totalRevenue);
             });
           },
-          ////
-          ///////////////////////////////
         })
         .mobiscroll('getInst');
 
@@ -320,22 +342,22 @@ export default {
         },
       );
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/multiday-events/?callback=?',
-        function (events) {
-          /////// commented out when performance test
-          // calendar.setEvents(events);
-          // myEvents = events;
+      // $.getJSON(
+      //   'https://trial.mobiscroll.com/multiday-events/?callback=?',
+      //   function (events) {
+      //     /////// commented out when performance test
+      //     calendar.setEvents(events);
+      //     myEvents = events;
 
-          // precalculate revenue for performance
-          console.log('precalculated revenue - after generated events');
-          myResources.forEach(function (resource) {
-            resource.revenue = getRevenue(resource);
-          });
-          calendar.setOptions({ resources: myResources });
-        },
-        'jsonp',
-      );
+      //     // precalculate revenue for performance
+      //     console.log('precalculated revenue - after generated events');
+      //     myResources.forEach(function (resource) {
+      //       resource.revenue = getRevenue(resource);
+      //     });
+      //     calendar.setOptions({ resources: myResources });
+      //   },
+      //   'jsonp',
+      // );
     });
   },
   // eslint-disable-next-line es5/no-template-literals
