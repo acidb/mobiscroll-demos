@@ -10,7 +10,114 @@ export default {
     });
 
     $(function () {
+      var formatDate = mobiscroll.formatDate;
+      var myEvents;
       var oneDay = 60000 * 60 * 24;
+      var tempDay;
+      var sortColumn;
+      var sortDirection;
+
+      var myResources = [
+        {
+          id: 1,
+          name: 'Horizon',
+          seats: 1200,
+          color: '#4a4a4a',
+          price: 1000,
+        },
+        {
+          id: 2,
+          name: 'Apex Hall',
+          seats: 90,
+          color: '#fdf500',
+          price: 600,
+        },
+        {
+          id: 3,
+          name: 'Jade Room',
+          seats: 700,
+          color: '#00aaff',
+          price: 900,
+        },
+        {
+          id: 4,
+          name: 'Dome Arena',
+          seats: 850,
+          color: '#239a21',
+          price: 750,
+        },
+        {
+          id: 5,
+          name: 'Forum Plaza',
+          seats: 900,
+          color: '#8f1ed6',
+          price: 700,
+        },
+        {
+          id: 6,
+          name: 'Gallery',
+          seats: 300,
+          color: '#0077b6',
+          price: 650,
+        },
+        {
+          id: 7,
+          name: 'Icon Hall',
+          seats: 450,
+          color: '#e63946',
+          price: 850,
+        },
+        {
+          id: 8,
+          name: 'Broadway',
+          seats: 250,
+          color: '#ff0101',
+          price: 800,
+        },
+        {
+          id: 9,
+          name: 'Central Hub',
+          seats: 400,
+          color: '#01adff',
+          price: 1100,
+        },
+        {
+          id: 10,
+          name: 'Empire Hall',
+          seats: 550,
+          color: '#ff4600',
+          price: 950,
+        },
+      ];
+
+      // performance
+      // the revenue calculation is a little slower 3-4sec at 2000 resource
+      // at 500 almost instant
+      // function generateResources(count) {
+      //   var baseResources = [
+      //     { id: 1, name: 'Flatiron Room', seats: 90, color: '#fdf500', price: 600 },
+      //     { id: 2, name: 'The Capital City', seats: 250, color: '#ff0101', price: 800 },
+      //     { id: 3, name: 'Heroes Square', seats: 400, color: '#01adff', price: 1100 },
+      //     { id: 4, name: 'Hall of Faces', seats: 850, color: '#239a21', price: 750 },
+      //     { id: 5, name: 'King’s Landing', seats: 550, color: '#ff4600', price: 950 },
+      //     { id: 6, name: 'Gathering Field', seats: 900, color: '#8f1ed6', price: 700 },
+      //     { id: 7, name: 'Lakeside', seats: 300, color: '#0077b6', price: 650 },
+      //     { id: 8, name: 'Mountain Hall', seats: 1200, color: '#4a4a4a', price: 1000 },
+      //     { id: 9, name: 'City Arena', seats: 450, color: '#e63946', price: 850 },
+      //     { id: 10, name: 'Ocean Center', seats: 700, color: '#00aaff', price: 900 },
+      //   ];
+      //   var additionalResources = [];
+      //   for (var i = baseResources.length + 1; i <= count; i++) {
+      //     additionalResources.push({
+      //       id: i,
+      //       name: 'Test Resource',
+      //       seats: Math.floor(Math.random() * 1000) + 100,
+      //       price: Math.floor(Math.random() * 1500) + 500,
+      //     });
+      //   }
+      //   return baseResources.concat(additionalResources).slice(0, count);
+      // }
+      // myResources = generateResources(500);
 
       function getUTCDateOnly(d) {
         return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
@@ -42,88 +149,40 @@ export default {
         return total;
       }
 
-      var myResources = [
-        {
-          id: 1,
-          name: 'Flatiron Room',
-          seats: 90,
-          color: '#fdf500',
-          price: 600,
-        },
-        {
-          id: 2,
-          name: 'The Capital City',
-          seats: 250,
-          color: '#ff0101',
-          price: 800,
-        },
-        {
-          id: 3,
-          name: 'Heroes Square',
-          seats: 400,
-          color: '#01adff',
-          price: 1100,
-        },
-        {
-          id: 4,
-          name: 'Hall of Faces',
-          seats: 850,
-          color: '#239a21',
-          price: 750,
-        },
-        {
-          id: 5,
-          name: 'King’s Landing',
-          seats: 550,
-          color: '#ff4600',
-          price: 950,
-        },
-        {
-          id: 6,
-          name: 'Gathering Field',
-          seats: 900,
-          color: '#8f1ed6',
-          price: 700,
-        },
-      ];
-
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      // sorting
-
-      var tempDay;
-      var myEvents;
-
-      var sorting = {
-        currentColumn: null,
-        order: 'default',
-      };
-
-      function getSortArrow(column) {
-        if (sorting.column === column) {
-          return sorting.order === 'asc' ? 'asc' : sorting.order === 'desc' ? 'desc' : 'def';
+      function getSortArrow(column, day) {
+        if (sortColumn === column && day == tempDay) {
+          return sortDirection === 'mds-resource-sort-asc'
+            ? 'mds-resource-sort-asc'
+            : sortDirection === 'mds-resource-sort-desc'
+              ? 'mds-resource-sort-desc'
+              : 'mds-resource-sort-def';
         }
-        return 'def';
+        return 'mds-resource-sort-def';
       }
 
       function sortResources(column, day) {
-        myEvents = calendar.getEvents();
-
-        if (sorting.column === column) {
-          sorting.order = sorting.order === 'asc' ? 'desc' : sorting.order === 'desc' ? 'default' : 'asc';
+        if (sortColumn === column && day === tempDay) {
+          sortDirection =
+            sortDirection === 'mds-resource-sort-asc'
+              ? 'mds-resource-sort-desc'
+              : sortDirection === 'mds-resource-sort-desc'
+                ? 'mds-resource-sort-def'
+                : 'mds-resource-sort-asc';
         } else {
-          sorting.column = column;
-          sorting.order = 'asc';
+          sortColumn = column;
+          sortDirection = 'mds-resource-sort-asc';
         }
 
-        if (sorting.order !== 'default') {
+        tempDay = day;
+
+        if (sortDirection !== 'mds-resource-sort-def') {
           myResources.sort(function (a, b) {
             var valueA = column === 'revenue' ? getRevenue(a) : column === 'day' ? getBusyHours(a, day) - 24 : a[column];
             var valueB = column === 'revenue' ? getRevenue(b) : column === 'day' ? getBusyHours(b, day) - 24 : b[column];
 
-            if (sorting.order === 'asc') {
+            if (sortDirection === 'mds-resource-sort-asc') {
               return valueA > valueB ? 1 : -1;
-            } else if (sorting.order === 'desc') {
+            } else if (sortDirection === 'mds-resource-sort-desc') {
               return valueA < valueB ? 1 : -1;
             }
           });
@@ -135,59 +194,17 @@ export default {
         calendar.setOptions({ resources: myResources.slice() });
       }
 
-      function getBusyHours(resource, day) {
-        var startOfDay = new Date(day.setHours(0, 0, 0, 0));
-        var endOfDay = new Date(day.setHours(23, 59, 59, 999));
-
-        var totalBusyHours = 0;
-
-        for (var i = 0; i < myEvents.length; i++) {
-          var event = myEvents[i];
-
+      function getBusyHours(resource, startOfDay) {
+        var endOfDay = startOfDay + 86400000;
+        return myEvents.reduce(function (total, event) {
           if (event.resource === resource.id) {
-            var overlapStart = Math.max(startOfDay, new Date(event.start));
-            var overlapEnd = Math.min(endOfDay, new Date(event.end));
-
-            if (overlapStart < overlapEnd) {
-              totalBusyHours += (overlapEnd - overlapStart) / (1000 * 60 * 60);
-            }
+            var eventStart = Math.max(startOfDay, new Date(event.start).getTime());
+            var eventEnd = Math.min(endOfDay, new Date(event.end).getTime());
+            return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total;
           }
-        }
-        return totalBusyHours;
+          return total;
+        }, 0);
       }
-
-      $(document).on(
-        'click',
-        '.md-resource-details-title .md-resource-header, .md-resource-details-sidebar-header, .mbsc-timeline-header-date',
-        function () {
-          $('.mbsc-timeline-header-date').removeClass('asc desc');
-          var sortColumn = $(this).data('sort') || 'day';
-
-          if (sortColumn === 'day') {
-            var dateString = $(this).find('.mbsc-hidden-content').text().trim();
-            var selectedDay = new Date(dateString);
-
-            if (tempDay != dateString) {
-              sorting.order = 'default';
-            }
-
-            if (sorting.order === 'default') {
-              $(this).addClass('asc');
-            } else if (sorting.order === 'asc') {
-              $(this).addClass('desc');
-            }
-
-            sortResources('day', selectedDay);
-            tempDay = dateString;
-          } else {
-            sortResources(sortColumn);
-          }
-        },
-      );
-
-      // sorting
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       var calendar = $('#demo-resource-details')
         .mobiscroll()
@@ -201,56 +218,63 @@ export default {
           resources: myResources,
           renderResourceHeader: function () {
             return (
-              '<div class="md-resource-details-title">' +
-              '<div class="md-resource-header md-resource-details-name ' +
+              '<div class="mds-resource-details-title">' +
+              '<div class="mds-resource-header mds-resource-details-name ' +
               getSortArrow('name') +
               '" data-sort="name">' +
               'Room' +
               '</div>' +
-              '<div class="md-resource-header md-resource-details-seats ' +
+              '<div class="mds-resource-header mds-resource-details-seats ' +
               getSortArrow('seats') +
               '" data-sort="seats">' +
               'Capacity' +
               '</div>' +
-              '<div class="md-resource-header md-resource-details-price ' +
+              '<div class="mds-resource-header mds-resource-details-price ' +
               getSortArrow('price') +
               '" data-sort="price">' +
               'Price/day' +
               '</div>' +
               '</div>'
             );
-            // return (
-            //   '<div class="md-resource-details-title">' +
-            //   '<div class="md-resource-header md-resource-details-name">Room</div>' +
-            //   '<div class="md-resource-header md-resource-details-seats">Capacity</div>' +
-            //   '<div class="md-resource-header md-resource-details-seats">Price/day</div>' +
-            //   '</div>'
-            // );
           },
           renderResource: function (resource) {
             return (
-              '<div class="md-resource-details-cont">' +
-              '<div class="md-resource-header md-resource-details-name">' +
+              '<div class="mds-resource-details-cont">' +
+              '<div class="mds-resource-header mds-resource-details-name">' +
               resource.name +
               '</div>' +
-              '<div class="md-resource-header md-resource-details-seats">' +
+              '<div class="mds-resource-header mds-resource-details-seats">' +
               resource.seats +
               ' seats</div>' +
-              '<div class="md-resource-header md-resource-details-price">$' +
+              '<div class="mds-resource-header mds-resource-details-price">$' +
               resource.price +
               '</div>' +
               '</div>'
             );
           },
           renderSidebarHeader: function () {
-            return '<div class="md-resource-details-sidebar-header ' + getSortArrow('revenue') + '" data-sort="revenue">Revenue</div>';
-            // return '<div class="md-resource-details-sidebar-header">Revenue</div>';
+            return '<div class="mds-resource-details-sidebar-header ' + getSortArrow('revenue') + '" data-sort="revenue">Revenue</div>';
           },
           renderSidebar: function (resource) {
-            return '<div class="md-resource-details-sidebar">$' + getRevenue(resource) + '</div>';
+            return '<div class="mds-resource-details-sidebar">$' + getRevenue(resource) + '</div>';
           },
           renderResourceFooter: function () {
-            return '<div class="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>';
+            return '<div class="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>';
+          },
+          renderDay: function (data) {
+            // var day = new Date(data.date).toISOString().slice(0, 10);
+            var day = getUTCDateOnly(data.date);
+            // console.log(typeof day);
+            return (
+              '<div class="mds-date-header-day-name  ' +
+              getSortArrow('day', day) +
+              '" data-sort="day" data-day="' +
+              day +
+              '">' +
+              '<span>' +
+              formatDate('DD DDD', data.date) +
+              '</span>'
+            );
           },
           renderDayFooter: function (data) {
             var events = data.events;
@@ -267,18 +291,29 @@ export default {
               }
               occuppancy = ((nr * 100) / myResources.length).toFixed(0);
             }
-            return '<div class="md-resource-details-footer md-resource-details-footer-day">' + occuppancy + '%</div>';
+            return '<div class="mds-resource-details-footer mds-resource-details-footer-day">' + occuppancy + '%</div>';
           },
           renderSidebarFooter: function () {
-            return '<div class="md-resource-details-footer md-resource-details-total">$' + getTotal() + '</div>';
+            return '<div class="mds-resource-details-footer mds-resource-details-total">$' + getTotal() + '</div>';
           },
         })
         .mobiscroll('getInst');
+
+      $('#demo-resource-details').on(
+        'click',
+        '.mds-resource-details-title .mds-resource-header, .mds-resource-details-sidebar-header, .mds-date-header-day-name',
+        function () {
+          var sortColumn = $(this).data('sort');
+          var selectedDay = $(this).data('day');
+          sortResources(sortColumn, selectedDay);
+        },
+      );
 
       $.getJSON(
         'https://trial.mobiscroll.com/multiday-events/?callback=?',
         function (events) {
           calendar.setEvents(events);
+          myEvents = events;
         },
         'jsonp',
       );
@@ -286,213 +321,193 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-details" class="md-resource-details"></div>
+<div id="demo-resource-details" class="mds-resource-details"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-/* to refactor */
+/* Sorting */
 
-.md-resource-details-title .md-resource-header , .mbsc-timeline-header-date {
-    cursor: pointer;
+.mds-resource-details-title 
+.mds-resource-header, 
+.mds-date-header-day-name,
+.mds-resource-details-sidebar-header {
+  cursor: pointer;
 }
 
-.md-resource-header .md-resource-details-name {
-  width: 400px;
+.mds-resource-sort-asc::after {
+  content: '↑'; 
 }
 
-.mbsc-timeline-sidebar-header{
-  width: 95px !important;
+.mds-resource-sort-desc::after {
+  content: '↓';
 }
 
-.md-resource-details-seats,
-.md-resource-details-price {
-    width: 106px !important;
-}
-.md-resource-details .mbsc-timeline-resource-col {
-    width: 335px !important;
-}
-
-/* to refactor */
-
-/* sorting arrows /////////////////////////////////////////////////////////////////////////// */
-
-.mbsc-timeline-header-date::after,
-.md-resource-header.def::after,
-.md-resource-details-sidebar-header::after {
-  content: '▲▼';
+.mds-resource-sort-asc::after,
+.mds-resource-sort-desc::after,
+.mds-resource-sort-def::after {
   position: absolute;
+  opacity: 0.5;
+  right: 8px;
+}
+
+.mds-resource-sort-def::after {
+  content: '‹›';
   right: 5px;
+  top: 12px;
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.mds-date-header-day-name span{
+  font-size: 14px;
+  line-height: 25px;
+  margin-left: 7px;
+}
+
+.mds-resource-sort-def:hover::after,
+.mds-resource-sort-asc:hover::after,
+.mds-resource-sort-desc:hover::after {
+  opacity: 1;
+}
+
+.mds-date-header-day-name.mds-resource-sort-asc::after, 
+.mds-date-header-day-name.mds-resource-sort-desc::after {
+  font-size: 14px;
   top: 12px;
   transform: translateY(-50%);
 }
 
-.mbsc-timeline-header-date.asc::after,
-.md-resource-header.asc::after,
-.md-resource-details-sidebar-header.asc::after {
-  content: '▲'; 
-  color: green;
-  right: 8px; 
-}
-
-.mbsc-timeline-header-date.desc::after,
-.md-resource-header.desc::after,
-.md-resource-details-sidebar-header.desc::after {
-  content: '▼';
-  color: green;
-  right: 8px;
-}
-
-.md-resource-header.asc::after, 
-.md-resource-header.desc::after {
-  position: absolute;
-  top: 0px; 
-}
-
-.mbsc-timeline-header-date:hover::after,
-.md-resource-header.def:hover::after, 
-.md-resource-details-sidebar-header.def:hover::after,
-.mbsc-timeline-header-date.asc:hover::after,
-.md-resource-header.asc:hover::after,
-.md-resource-details-sidebar-header.asc:hover::after,
-.mbsc-timeline-header-date.desc:hover::after,
-.md-resource-header.desc:hover::after,
-.md-resource-details-sidebar-header.desc:hover::after {
-  animation: enlargeIcon 0.4s forwards; 
-}
-
-@keyframes enlargeIcon {
-  from {
-    font-size: 100%;
-  }
-  to {
-    font-size: 130%;
-  }
-}
-
-.mbsc-timeline-header-date,
-.md-resource-header,
-.md-resource-details-sidebar-header {
+.mds-date-header-day-name,
+.mds-resource-header,
+.mds-resource-details-sidebar-header {
   position: relative;
 }
-
-/* sorting arrows end /////////////////////////////////////////////////////////////////////////// */
 
 /*<hidden>*/
 
 .demo-timeline-resource-details {
-    height: 100%;
+  height: 100%;
 }
 
 /*</hidden>*/
 
+.mds-resource-details-seats{
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.mbsc-timeline-resource-header-cont.mbsc-ios-dark .mds-resource-details-seats,
+.mbsc-timeline-resource-header-cont.mbsc-material-dark .mds-resource-details-seats,
+.mbsc-timeline-resource-header-cont.mbsc-windows-dark .mds-resource-details-seats,
+.mbsc-timeline-resource.mbsc-ios-dark .mds-resource-details-seats,
+.mbsc-timeline-resource.mbsc-material-dark .mds-resource-details-seats,
+.mbsc-timeline-resource.mbsc-windows-dark .mds-resource-details-seats {
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+}
+
 /* Header */
 
-.md-resource-details .mbsc-timeline-resource-col {
-    width: 280px;
+.mds-resource-details .mbsc-timeline-resource-col {
+  width: 335px;
 }
 
-.md-resource-details .mbsc-timeline-resource-header,
-.md-resource-details .mbsc-timeline-resource-title,
-.md-resource-details .mbsc-timeline-resource-footer,
-.md-resource-details .mbsc-timeline-sidebar-header {
-    padding: 0;
+.mds-resource-details .mbsc-timeline-resource-header,
+.mds-resource-details .mbsc-timeline-resource-title,
+.mds-resource-details .mbsc-timeline-resource-footer,
+.mds-resource-details .mbsc-timeline-sidebar-header {
+  padding: 0;
 }
 
-.md-resource-details .mbsc-timeline-resource-title {
-    height: 100%;
+.mds-resource-details .mbsc-timeline-resource-title {
+  height: 100%;
 }
 
-.md-resource-details-cont {
-    line-height: 50px;
-    height: 100%;
+.mds-resource-details-cont {
+  line-height: 50px;
+  height: 100%;
 }
 
-.md-resource-header {
-    display: inline-block;
-    height: 100%;
-    padding: 0 5px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    vertical-align: top;
+.mds-resource-header {
+  display: inline-block;
+  height: 100%;
+  padding: 0 5px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: top;
 }
 
-.md-resource-details-name {
-    width: 120px;
+.mds-resource-details-name {
+  width: 120px;
 }
 
-.md-resource-details-seats,
-.md-resource-details-price {
-    width: 78px;
+.mds-resource-details-seats,
+.mds-resource-details-price {
+  width: 106px;
 }
 
-.md-resource-details-seats {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+.mds-resource-details-title {
+  font-weight: 600;
+  line-height: 26px;
 }
 
-.md-resource-details-title {
-    font-weight: 600;
-    line-height: 26px;
+.mds-resource-details-sidebar-header {
+  line-height: 26px;
+  padding: 0 5px;
 }
 
-.md-resource-details-sidebar-header {
-    line-height: 26px;
-    padding: 0 5px;
+.mds-resource-details .mbsc-timeline-day {
+  width: 144px;
 }
 
-.md-resource-details .mbsc-timeline-day {
-    width: 144px;
-}
-
-.md-resource-details-sidebar {
-    line-height: 36px;
-    text-align: center;
+.mds-resource-details-sidebar {
+  line-height: 36px;
+  text-align: center;
 }
 
 /* Footer */
 
-.md-resource-details-occuppancy {
-    font-size: 15px;
-    text-align: right;
-    background: #f8f8f8;
-    padding-right: 15px;
+.mds-resource-details-occuppancy {
+  font-size: 15px;
+  text-align: right;
+  background-color: rgba(150, 150, 150, 0.1);
+  padding-right: 15px;
 }
 
-.md-resource-details-footer {
-    line-height: 50px;
+.mds-resource-details-footer {
+  line-height: 50px;
 }
 
-.md-resource-details-total {
-    font-size: 18px;
-    text-align: center;
-    line-height: 36px;
+.mds-resource-details-total {
+  font-size: 18px;
+  text-align: center;
+  line-height: 36px;
 }
 
-.md-resource-details-footer-day {
-    font-size: 15px;
-    font-weight: 600;
-    text-align: center;
-    background: #f8f8f8;
-    padding: 0 5px;
+.mds-resource-details-footer-day {
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  background-color: rgba(150, 150, 150, 0.1);
+  padding: 0 5px;
 }
 
-.md-resource-details .mbsc-timeline-sidebar-footer {
-    background: #feefee;
-    border-top-color: #5a0101;
-    color: #5a0101;
+.mds-resource-details .mbsc-timeline-sidebar-footer {
+  background-color: rgba(150, 150, 150, 0.1);
+  border-top-color: #5a0101;
+  color: #8c0000;;
 }
 
-.md-resource-details .mbsc-timeline-sidebar-col {
-    width: 98px;
+.mds-resource-details .mbsc-timeline-sidebar-col {
+  width: 98px;
 }
 
 @supports (overflow:clip) {
-    .md-resource-details.mbsc-ltr .mbsc-schedule-event-inner {
-        left: 280px;
-    }
-    .md-resource-details.mbsc-rtl .mbsc-schedule-event-inner {
-        right: 280px;
-    }
+  .mds-resource-details.mbsc-ltr .mbsc-schedule-event-inner {
+    left: 280px;
+  }
+  .mds-resource-details.mbsc-rtl .mbsc-schedule-event-inner {
+    right: 280px;
+  }
 }
   `,
 };
