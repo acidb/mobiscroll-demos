@@ -98,8 +98,8 @@ export default {
         return Math.floor(Math.random() * (max - min) + min);
       }
 
-      var resourceNr = 500;
-      var eventsNr = 1000;
+      var resourceNr = 10000;
+      var eventsNr = 10000;
       myResources = [];
       var myEventColors = ['#ff0101', '#239a21', '#8f1ed6', '#01adff', '#d8ca1a'];
 
@@ -121,11 +121,10 @@ export default {
       }
 
       function getRevenue(resource) {
-        if (calendar) {
+        if (calendar && myEvents) {
           var days = 0;
-          var events = calendar.getEvents();
-          for (var i = 0; i < events.length; ++i) {
-            var event = events[i];
+          for (var i = 0; i < myEvents.length; ++i) {
+            var event = myEvents[i];
             if (event.resource === resource.id) {
               days += getDayDiff(new Date(event.start), new Date(event.end));
             }
