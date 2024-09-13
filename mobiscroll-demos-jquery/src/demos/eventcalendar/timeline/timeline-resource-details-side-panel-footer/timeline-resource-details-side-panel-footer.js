@@ -11,85 +11,82 @@ export default {
 
     $(function () {
       var formatDate = mobiscroll.formatDate;
+      var myEvents;
       var oneDay = 60000 * 60 * 24;
       var tempDay;
-      var myEvents;
-
-      var sorting = {
-        currentColumn: null,
-        order: 'default',
-      };
+      var sortColumn;
+      var sortDirection;
 
       var myResources = [
         {
           id: 1,
-          name: 'Flatiron Room',
+          name: 'Horizon',
+          seats: 1200,
+          color: '#4a4a4a',
+          price: 1000,
+        },
+        {
+          id: 2,
+          name: 'Apex Hall',
           seats: 90,
           color: '#fdf500',
           price: 600,
         },
         {
-          id: 2,
-          name: 'The Capital City',
-          seats: 250,
-          color: '#ff0101',
-          price: 800,
-        },
-        {
           id: 3,
-          name: 'Heroes Square',
-          seats: 400,
-          color: '#01adff',
-          price: 1100,
+          name: 'Jade Room',
+          seats: 700,
+          color: '#00aaff',
+          price: 900,
         },
         {
           id: 4,
-          name: 'Hall of Faces',
+          name: 'Dome Arena',
           seats: 850,
           color: '#239a21',
           price: 750,
         },
         {
           id: 5,
-          name: 'King’s Landing',
-          seats: 550,
-          color: '#ff4600',
-          price: 950,
-        },
-        {
-          id: 6,
-          name: 'Gathering Field',
+          name: 'Forum Plaza',
           seats: 900,
           color: '#8f1ed6',
           price: 700,
         },
         {
-          id: 7,
-          name: 'Lakeside',
+          id: 6,
+          name: 'Gallery',
           seats: 300,
           color: '#0077b6',
           price: 650,
         },
         {
-          id: 8,
-          name: 'Mountain Hall',
-          seats: 1200,
-          color: '#4a4a4a',
-          price: 1000,
-        },
-        {
-          id: 9,
-          name: 'City Arena',
+          id: 7,
+          name: 'Icon Hall',
           seats: 450,
           color: '#e63946',
           price: 850,
         },
         {
+          id: 8,
+          name: 'Broadway',
+          seats: 250,
+          color: '#ff0101',
+          price: 800,
+        },
+        {
+          id: 9,
+          name: 'Central Hub',
+          seats: 400,
+          color: '#01adff',
+          price: 1100,
+        },
+        {
           id: 10,
-          name: 'Ocean Center',
-          seats: 700,
-          color: '#00aaff',
-          price: 900,
+          name: 'Empire Hall',
+          seats: 550,
+          color: '#ff4600',
+          price: 950,
         },
       ];
 
@@ -153,32 +150,39 @@ export default {
       }
 
       function getSortArrow(column, day) {
-        if (sorting.column === column && day == tempDay) {
-          return sorting.order === 'asc' ? 'asc' : sorting.order === 'desc' ? 'desc' : 'def';
+        if (sortColumn === column && day == tempDay) {
+          return sortDirection === 'mds-resource-sort-asc'
+            ? 'mds-resource-sort-asc'
+            : sortDirection === 'mds-resource-sort-desc'
+              ? 'mds-resource-sort-desc'
+              : 'mds-resource-sort-def';
         }
-        return 'def';
+        return 'mds-resource-sort-def';
       }
 
       function sortResources(column, day) {
-        myEvents = calendar.getEvents();
-
-        if (sorting.column === column && day === tempDay) {
-          sorting.order = sorting.order === 'asc' ? 'desc' : sorting.order === 'desc' ? 'default' : 'asc';
+        if (sortColumn === column && day === tempDay) {
+          sortDirection =
+            sortDirection === 'mds-resource-sort-asc'
+              ? 'mds-resource-sort-desc'
+              : sortDirection === 'mds-resource-sort-desc'
+                ? 'mds-resource-sort-def'
+                : 'mds-resource-sort-asc';
         } else {
-          sorting.column = column;
-          sorting.order = 'asc';
+          sortColumn = column;
+          sortDirection = 'mds-resource-sort-asc';
         }
 
         tempDay = day;
 
-        if (sorting.order !== 'default') {
+        if (sortDirection !== 'mds-resource-sort-def') {
           myResources.sort(function (a, b) {
             var valueA = column === 'revenue' ? getRevenue(a) : column === 'day' ? getBusyHours(a, day) - 24 : a[column];
             var valueB = column === 'revenue' ? getRevenue(b) : column === 'day' ? getBusyHours(b, day) - 24 : b[column];
 
-            if (sorting.order === 'asc') {
+            if (sortDirection === 'mds-resource-sort-asc') {
               return valueA > valueB ? 1 : -1;
-            } else if (sorting.order === 'desc') {
+            } else if (sortDirection === 'mds-resource-sort-desc') {
               return valueA < valueB ? 1 : -1;
             }
           });
@@ -190,10 +194,8 @@ export default {
         calendar.setOptions({ resources: myResources.slice() });
       }
 
-      function getBusyHours(resource, day) {
-        var startOfDay = new Date(day).setHours(0, 0, 0, 0);
-        var endOfDay = new Date(day).setHours(23, 59, 59, 999);
-
+      function getBusyHours(resource, startOfDay) {
+        var endOfDay = startOfDay + 86400000;
         return myEvents.reduce(function (total, event) {
           if (event.resource === resource.id) {
             var eventStart = Math.max(startOfDay, new Date(event.start).getTime());
@@ -252,7 +254,6 @@ export default {
           },
           renderSidebarHeader: function () {
             return '<div class="mds-resource-details-sidebar-header ' + getSortArrow('revenue') + '" data-sort="revenue">Revenue</div>';
-            // return '<div class="mds-resource-details-sidebar-header">Revenue</div>';
           },
           renderSidebar: function (resource) {
             return '<div class="mds-resource-details-sidebar">$' + getRevenue(resource) + '</div>';
@@ -261,11 +262,14 @@ export default {
             return '<div class="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>';
           },
           renderDay: function (data) {
+            // var day = new Date(data.date).toISOString().slice(0, 10);
+            var day = getUTCDateOnly(data.date);
+            // console.log(typeof day);
             return (
               '<div class="mds-date-header-day-name  ' +
-              getSortArrow('day', data.date) +
+              getSortArrow('day', day) +
               '" data-sort="day" data-day="' +
-              data.date +
+              day +
               '">' +
               '<span>' +
               formatDate('DD DDD', data.date) +
@@ -295,7 +299,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $(document).on(
+      $('#demo-resource-details').on(
         'click',
         '.mds-resource-details-title .mds-resource-header, .mds-resource-details-sidebar-header, .mds-date-header-day-name',
         function () {
@@ -305,16 +309,11 @@ export default {
         },
       );
 
-      // jeeez, need some simplier solution, dark/light border color
-      $('.mds-resource-details-seats').css({
-        'border-left': '1px solid ' + $('.mbsc-timeline-sidebar-col').css('border-color'),
-        'border-right': '1px solid ' + $('.mbsc-timeline-sidebar-col').css('border-color'),
-      });
-
       $.getJSON(
         'https://trial.mobiscroll.com/multiday-events/?callback=?',
         function (events) {
           calendar.setEvents(events);
+          myEvents = events;
         },
         'jsonp',
       );
@@ -335,45 +334,27 @@ export default {
   cursor: pointer;
 }
 
-.mds-date-header-day-name.asc::after,
-.mds-resource-header.asc::after,
-.mds-resource-details-sidebar-header.asc::after {
+.mds-resource-sort-asc::after {
   content: '↑'; 
-  opacity: 0.5;
-  right: 8px; 
 }
 
-.mds-date-header-day-name.desc::after,
-.mds-resource-header.desc::after,
-.mds-resource-details-sidebar-header.desc::after {
+.mds-resource-sort-desc::after {
   content: '↓';
+}
+
+.mds-resource-sort-asc::after,
+.mds-resource-sort-desc::after,
+.mds-resource-sort-def::after {
+  position: absolute;
   opacity: 0.5;
   right: 8px;
 }
 
-.mds-date-header-day-name.def::after,
-.mds-resource-header.def::after,
-.mds-resource-details-sidebar-header.def::after {
+.mds-resource-sort-def::after {
   content: '‹›';
-  opacity: 0.5;
-  font-size: 16px;
-  position: absolute;
   right: 5px;
   top: 12px;
   transform: translateY(-50%) rotate(90deg);
-}
-
-.mds-resource-details-sidebar-header.desc::after,
-.mds-resource-details-sidebar-header.asc::after {
-  position: absolute;
-}
-
-.mds-date-header-day-name.asc::after, 
-.mds-date-header-day-name.desc::after, 
-.mds-resource-header.asc::after, 
-.mds-resource-header.desc::after {
-  position: absolute;
-  top: 0px; 
 }
 
 .mds-date-header-day-name span{
@@ -382,20 +363,14 @@ export default {
   margin-left: 7px;
 }
 
-.mds-date-header-day-name:hover::after,
-.mds-resource-header.def:hover::after, 
-.mds-resource-details-sidebar-header.def:hover::after,
-.mds-date-header-day-name.asc:hover::after,
-.mds-resource-header.asc:hover::after,
-.mds-resource-details-sidebar-header.asc:hover::after,
-.mds-date-header-day-name.desc:hover::after,
-.mds-resource-header.desc:hover::after,
-.mds-resource-details-sidebar-header.desc:hover::after {
+.mds-resource-sort-def:hover::after,
+.mds-resource-sort-asc:hover::after,
+.mds-resource-sort-desc:hover::after {
   opacity: 1;
 }
 
-.mds-date-header-day-name.asc::after, 
-.mds-date-header-day-name.desc::after {
+.mds-date-header-day-name.mds-resource-sort-asc::after, 
+.mds-date-header-day-name.mds-resource-sort-desc::after {
   font-size: 14px;
   top: 12px;
   transform: translateY(-50%);
@@ -414,6 +389,21 @@ export default {
 }
 
 /*</hidden>*/
+
+.mds-resource-details-seats{
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.mbsc-timeline-resource-header-cont.mbsc-ios-dark .mds-resource-details-seats,
+.mbsc-timeline-resource-header-cont.mbsc-material-dark .mds-resource-details-seats,
+.mbsc-timeline-resource-header-cont.mbsc-windows-dark .mds-resource-details-seats,
+.mbsc-timeline-resource.mbsc-ios-dark .mds-resource-details-seats,
+.mbsc-timeline-resource.mbsc-material-dark .mds-resource-details-seats,
+.mbsc-timeline-resource.mbsc-windows-dark .mds-resource-details-seats {
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+}
 
 /* Header */
 
