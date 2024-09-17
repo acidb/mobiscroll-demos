@@ -105,6 +105,7 @@ import { AppComponent as Demo742 } from '../demos/eventcalendar/agenda/navigate-
 import { AppComponent as Demo506 } from '../demos/eventcalendar/agenda/event-content-customization/event-content-customization';
 import { AppComponent as Demo508 } from '../demos/eventcalendar/agenda/full-event-customization/full-event-customization';
 import { AppComponent as Demo514 } from '../demos/eventcalendar/agenda/customizing-calendar-header/customizing-calendar-header';
+import { AppComponent as Demo754 } from '../demos/eventcalendar/agenda/customizing-day-header/customizing-day-header';
 import { AppComponent as Demo657 } from '../demos/eventcalendar/agenda/custom-event-tooltip/custom-event-tooltip';
 import { AppComponent as Demo730 } from '../demos/eventcalendar/agenda/empty-state/empty-state';
 import { AppComponent as Demo512 } from '../demos/eventcalendar/agenda/resource-filtering-in-header/resource-filtering-in-header';
@@ -313,6 +314,15 @@ import { AppComponent as Demo650 } from '../demos/form-components/forms/checkbox
 import { AppComponent as Demo651 } from '../demos/form-components/forms/switch/switch';
 import { AppComponent as Demo652 } from '../demos/form-components/forms/radio-button/radio-button';
 import { AppComponent as Demo466 } from '../demos/form-components/forms/themes-ios-material-windows/themes-ios-material-windows';
+import { AppComponent as Demo755 } from '../demos/pickers/popup/showing-the-popover/showing-the-popover';
+import { AppComponent as Demo756 } from '../demos/pickers/popup/mobile-desktop-display/mobile-desktop-display';
+import { AppComponent as Demo757 } from '../demos/pickers/popup/button-configuration/button-configuration';
+import { AppComponent as Demo758 } from '../demos/pickers/popup/responsive/responsive';
+import { AppComponent as Demo760 } from '../demos/pickers/popup/add-event-modal/add-event-modal';
+import { AppComponent as Demo761 } from '../demos/pickers/popup/show-hide-tooltip-hover-in-out/show-hide-tooltip-hover-in-out';
+import { AppComponent as Demo759 } from '../demos/pickers/popup/range-picker-popup-presets/range-picker-popup-presets';
+import { AppComponent as Demo762 } from '../demos/pickers/popup/themes-ios-material-windows/themes-ios-material-windows';
+import { AppComponent as Demo763 } from '../demos/pickers/popup/event-hooks/event-hooks';
 import { AppComponent as Demo468 } from '../demos/pickers/select/mobile-desktop-usage/mobile-desktop-usage';
 import { AppComponent as Demo599 } from '../demos/pickers/select/responsive/responsive';
 import { AppComponent as Demo597 } from '../demos/pickers/select/mobile-desktop-display/mobile-desktop-display';
@@ -332,19 +342,6 @@ import { AppComponent as Demo387 } from '../demos/pickers/select/themes-ios-mate
 import { AppComponent as Demo276 } from '../demos/pickers/select/event-hooks/event-hooks';
 import { AppComponent as Demo471 } from '../demos/pickers/select/localization/localization';
 import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
-
-// todo clean up
-// temporary ids, in dev database: 748 -> 756 (same order like here)
-import { AppComponent as Demo901 } from '../demos/pickers/popup/showing-the-popover/showing-the-popover';
-import { AppComponent as Demo902 } from '../demos/pickers/popup/mobile-desktop-display/mobile-desktop-display';
-import { AppComponent as Demo903 } from '../demos/pickers/popup/button-configuration/button-configuration';
-import { AppComponent as Demo904 } from '../demos/pickers/popup/responsive/responsive';
-import { AppComponent as Demo906 } from '../demos/pickers/popup/add-event-modal/add-event-modal';
-import { AppComponent as Demo907 } from '../demos/pickers/popup/show-hide-tooltip-hover-in-out/show-hide-tooltip-hover-in-out';
-import { AppComponent as Demo905 } from '../demos/pickers/popup/range-picker-popup-presets/range-picker-popup-presets';
-import { AppComponent as Demo908 } from '../demos/pickers/popup/themes-ios-material-windows/themes-ios-material-windows';
-import { AppComponent as Demo909 } from '../demos/pickers/popup/event-hooks/event-hooks';
-// todo end
 
 export const demos: any[] = [
   {
@@ -481,7 +478,9 @@ export const demos: any[] = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo375 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo375 },
+            ],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -611,6 +610,7 @@ export const demos: any[] = [
               { name: 'Content customization', unique: 'event-content-customization', component: Demo506 },
               { name: 'Full event customization', unique: 'full-event-customization', component: Demo508 },
               { name: 'Customizing the calendar header', unique: 'customizing-calendar-header', component: Demo514 },
+              { name: 'Customizing the day header', unique: 'customizing-day-header', component: Demo754 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo657 },
               { name: 'Empty state', unique: 'empty-state', component: Demo730 },
             ],
@@ -618,7 +618,9 @@ export const demos: any[] = [
           {
             name: 'Resources',
             unique: 17,
-            items: [{ name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo512 }],
+            items: [
+              { name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo512 },
+            ],
           },
           {
             name: 'Event data structure',
@@ -650,12 +652,16 @@ export const demos: any[] = [
           {
             name: 'CRUD operations',
             unique: 4,
-            items: [{ name: 'Multiple select & bulk operations', unique: 'event-bulk-actions-edit-delete-update', component: Demo703 }],
+            items: [
+              { name: 'Multiple select & bulk operations', unique: 'event-bulk-actions-edit-delete-update', component: Demo703 },
+            ],
           },
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo521 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo521 },
+            ],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -740,7 +746,9 @@ export const demos: any[] = [
           {
             name: 'Resources',
             unique: 17,
-            items: [{ name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo510 }],
+            items: [
+              { name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo510 },
+            ],
           },
           {
             name: 'Event data structure',
@@ -783,7 +791,9 @@ export const demos: any[] = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo455 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo455 },
+            ],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -972,11 +982,7 @@ export const demos: any[] = [
             unique: 13,
             items: [
               { name: 'Configure the timeline', unique: 'daily-weekly-monthly-yearly-timeline', component: Demo605 },
-              {
-                name: 'Configure the page, size, resolution',
-                unique: 'multiple-days-weeks-months-quarters-years-variable-resolution',
-                component: Demo663,
-              },
+              { name: 'Configure the page, size, resolution', unique: 'multiple-days-weeks-months-quarters-years-variable-resolution', component: Demo663 },
               { name: 'Set event stack size', unique: 'control-number-of-concurrently-shown-events', component: Demo734 },
               { name: 'Event buffer', unique: 'event-buffer', component: Demo739 },
               { name: 'View with custom range picker', unique: 'custom-range-view', component: Demo697 },
@@ -996,11 +1002,7 @@ export const demos: any[] = [
             unique: 19,
             items: [
               { name: 'Timeline event template', unique: 'timeline-custom-event-rendering', component: Demo609 },
-              {
-                name: 'Hour, day, week, month, year header and footer template',
-                unique: 'hour-day-week-month-quarter-year-header-footer-template',
-                component: Demo714,
-              },
+              { name: 'Hour, day, week, month, year header and footer template', unique: 'hour-day-week-month-quarter-year-header-footer-template', component: Demo714 },
               { name: 'Time slot template', unique: 'shift-template', component: Demo633 },
               { name: 'Resource header template', unique: 'resource-header-template', component: Demo639 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo656 },
@@ -1145,7 +1147,9 @@ export const demos: any[] = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo466 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo466 },
+            ],
           },
         ],
       },
@@ -1155,6 +1159,45 @@ export const demos: any[] = [
     name: 'Pickers & dropdowns',
     unique: 'pickers',
     items: [
+      {
+        name: 'Popup',
+        unique: 'popup',
+        items: [
+          {
+            name: 'Using the popup',
+            unique: 28,
+            items: [
+              { name: 'Opening closing the popup', unique: 'showing-the-popover', component: Demo755 },
+              { name: 'Understanding display modes', unique: 'mobile-desktop-display', component: Demo756 },
+              { name: 'Configure buttons', unique: 'button-configuration', component: Demo757 },
+              { name: 'Responsive', unique: 'responsive', component: Demo758 },
+            ],
+          },
+          {
+            name: 'Common use cases',
+            unique: 20,
+            items: [
+              { name: 'Event creation modal', unique: 'add-event-modal', component: Demo760 },
+              { name: 'Using as a tooltip', unique: 'show-hide-tooltip-hover-in-out', component: Demo761 },
+              { name: 'Range picker with presets', unique: 'range-picker-popup-presets', component: Demo759 },
+            ],
+          },
+          {
+            name: 'Customizing the look & feel',
+            unique: 5,
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo762 },
+            ],
+          },
+          {
+            name: 'Lifecycle events',
+            unique: 29,
+            items: [
+              { name: 'Lifecycle events', unique: 'event-hooks', component: Demo763 },
+            ],
+          },
+        ],
+      },
       {
         name: 'Select',
         unique: 'select',
@@ -1194,12 +1237,16 @@ export const demos: any[] = [
           {
             name: 'Validation & restricting selection',
             unique: 11,
-            items: [{ name: 'Disabled values', unique: 'disabled-invalid-values', component: Demo603 }],
+            items: [
+              { name: 'Disabled values', unique: 'disabled-invalid-values', component: Demo603 },
+            ],
           },
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo387 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo387 },
+            ],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -1212,41 +1259,6 @@ export const demos: any[] = [
           },
         ],
       },
-      {
-        name: 'Popup',
-        unique: 'popup',
-        items: [
-          {
-            name: 'Using the popup',
-            unique: 7,
-            items: [
-              { name: 'Opening closing the popup', unique: 'showing-the-popover', component: Demo901 },
-              { name: 'Understanding display modes', unique: 'mobile-desktop-display', component: Demo902 },
-              { name: 'Configure buttons', unique: 'button-configuration', component: Demo903 },
-              { name: 'Responsive', unique: 'responsive', component: Demo904 },
-            ],
-          },
-          {
-            name: 'Common use cases',
-            unique: 20,
-            items: [
-              { name: 'Event creation modal', unique: 'add-event-modal', component: Demo906 },
-              { name: 'Using as a tooltip', unique: 'show-hide-tooltip-hover-in-out', component: Demo907 },
-              { name: 'Range picker with presets', unique: 'range-picker-popup-presets', component: Demo905 },
-            ],
-          },
-          {
-            name: 'Customizing the look & feel',
-            unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo908 }],
-          },
-          {
-            name: 'Localization & tapping into the lifecycle',
-            unique: 6,
-            items: [{ name: 'Lifecycle events', unique: 'event-hooks', component: Demo909 }],
-          },
-        ],
-      },
     ],
   },
 ];
@@ -1255,15 +1267,6 @@ export const demoTitleMap: { [key: string]: string } = {};
 
 @NgModule({
   declarations: [
-    Demo901,
-    Demo902,
-    Demo903,
-    Demo904,
-    Demo905,
-    Demo906,
-    Demo907,
-    Demo908,
-    Demo909,
     Demo439,
     Demo571,
     Demo529,
@@ -1362,6 +1365,7 @@ export const demoTitleMap: { [key: string]: string } = {};
     Demo506,
     Demo508,
     Demo514,
+    Demo754,
     Demo657,
     Demo730,
     Demo512,
@@ -1570,6 +1574,15 @@ export const demoTitleMap: { [key: string]: string } = {};
     Demo651,
     Demo652,
     Demo466,
+    Demo755,
+    Demo756,
+    Demo757,
+    Demo758,
+    Demo760,
+    Demo761,
+    Demo759,
+    Demo762,
+    Demo763,
     Demo468,
     Demo599,
     Demo597,
