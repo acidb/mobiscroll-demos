@@ -267,13 +267,4 @@ onMounted(() => {
 .md-resource-details .mbsc-timeline-sidebar-col {
   width: 85px;
 }
-
-@supports (overflow: clip) {
-  .md-resource-details.mbsc-ltr .mbsc-schedule-event-inner {
-    left: 280px;
-  }
-  .md-resource-details.mbsc-rtl .mbsc-schedule-event-inner {
-    right: 280px;
-  }
-}
 </style>
