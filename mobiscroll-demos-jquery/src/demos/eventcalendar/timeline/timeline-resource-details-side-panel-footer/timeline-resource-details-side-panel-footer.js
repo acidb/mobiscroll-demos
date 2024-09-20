@@ -540,14 +540,5 @@ export default {
 .mds-resource-details .mbsc-timeline-sidebar-col {
   width: 98px;
 }
-
-@supports (overflow:clip) {
-  .mds-resource-details.mbsc-ltr .mbsc-schedule-event-inner {
-    left: 280px;
-  }
-  .mds-resource-details.mbsc-rtl .mbsc-schedule-event-inner {
-    right: 280px;
-  }
-}
   `,
 };

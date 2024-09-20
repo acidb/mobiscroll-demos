@@ -88,6 +88,7 @@ import Demo576 from './demos/datepicker/range/rtl-right-to-left/rtl-right-to-lef
 import Demo518 from './demos/eventcalendar/agenda/daily-agenda-with-week-calendar/daily-agenda-with-week-calendar.vue';
 import Demo573 from './demos/eventcalendar/agenda/basic-usage/basic-usage.vue';
 import Demo501 from './demos/eventcalendar/agenda/daily-weekly-monthly-annual-agenda/daily-weekly-monthly-annual-agenda.vue';
+import Demo753 from './demos/eventcalendar/agenda/show-empty-days/show-empty-days.vue';
 import Demo662 from './demos/eventcalendar/agenda/printing-the-view/printing-the-view.vue';
 import Demo596 from './demos/eventcalendar/agenda/custom-event-sort/custom-event-sort.vue';
 import Demo611 from './demos/eventcalendar/agenda/setting-the-timezone/setting-the-timezone.vue';
@@ -95,7 +96,8 @@ import Demo711 from './demos/eventcalendar/agenda/searching-events-in-popup/sear
 import Demo742 from './demos/eventcalendar/agenda/navigate-from-external-calendar/navigate-from-external-calendar.vue';
 import Demo506 from './demos/eventcalendar/agenda/event-content-customization/event-content-customization.vue';
 import Demo508 from './demos/eventcalendar/agenda/full-event-customization/full-event-customization.vue';
-import Demo514 from './demos/eventcalendar/agenda/customizing-header/customizing-header.vue';
+import Demo514 from './demos/eventcalendar/agenda/customizing-calendar-header/customizing-calendar-header.vue';
+import Demo754 from './demos/eventcalendar/agenda/customizing-day-header/customizing-day-header.vue';
 import Demo657 from './demos/eventcalendar/agenda/custom-event-tooltip/custom-event-tooltip.vue';
 import Demo730 from './demos/eventcalendar/agenda/empty-state/empty-state.vue';
 import Demo512 from './demos/eventcalendar/agenda/resource-filtering-in-header/resource-filtering-in-header.vue';
@@ -117,6 +119,7 @@ import Demo349 from './demos/eventcalendar/calendar-view/mobile-month-view/mobil
 import Demo346 from './demos/eventcalendar/calendar-view/desktop-month-view/desktop-month-view.vue';
 import Demo442 from './demos/eventcalendar/calendar-view/responsive-month-view/responsive-month-view.vue';
 import Demo661 from './demos/eventcalendar/calendar-view/printing-the-view/printing-the-view.vue';
+import Demo752 from './demos/eventcalendar/calendar-view/property-booking-calendar/property-booking-calendar.vue';
 import Demo447 from './demos/eventcalendar/calendar-view/event-labels/event-labels.vue';
 import Demo443 from './demos/eventcalendar/calendar-view/event-popover/event-popover.vue';
 import Demo595 from './demos/eventcalendar/calendar-view/custom-event-sort/custom-event-sort.vue';
@@ -303,6 +306,15 @@ import Demo650 from './demos/form-components/forms/checkbox/checkbox.vue';
 import Demo651 from './demos/form-components/forms/switch/switch.vue';
 import Demo652 from './demos/form-components/forms/radio-button/radio-button.vue';
 import Demo466 from './demos/form-components/forms/themes-ios-material-windows/themes-ios-material-windows.vue';
+import Demo755 from './demos/pickers/popup/showing-the-popover/showing-the-popover.vue';
+import Demo756 from './demos/pickers/popup/mobile-desktop-display/mobile-desktop-display.vue';
+import Demo757 from './demos/pickers/popup/button-configuration/button-configuration.vue';
+import Demo758 from './demos/pickers/popup/responsive/responsive.vue';
+import Demo760 from './demos/pickers/popup/add-event-modal/add-event-modal.vue';
+import Demo761 from './demos/pickers/popup/show-hide-tooltip-hover-in-out/show-hide-tooltip-hover-in-out.vue';
+import Demo759 from './demos/pickers/popup/range-picker-popup-presets/range-picker-popup-presets.vue';
+import Demo762 from './demos/pickers/popup/themes-ios-material-windows/themes-ios-material-windows.vue';
+import Demo763 from './demos/pickers/popup/event-hooks/event-hooks.vue';
 import Demo468 from './demos/pickers/select/mobile-desktop-usage/mobile-desktop-usage.vue';
 import Demo599 from './demos/pickers/select/responsive/responsive.vue';
 import Demo597 from './demos/pickers/select/mobile-desktop-display/mobile-desktop-display.vue';
@@ -569,6 +581,7 @@ export const demos = [
               { name: 'Compact daily schedule', unique: 'daily-agenda-with-week-calendar', component: Demo518 },
               { name: 'How to initialize', unique: 'basic-usage', component: Demo573 },
               { name: 'Customize the range', unique: 'daily-weekly-monthly-annual-agenda', component: Demo501 },
+              { name: 'Show empty days', unique: 'show-empty-days', component: Demo753 },
               { name: 'Print mode', unique: 'printing-the-view', component: Demo662 },
             ],
           },
@@ -588,7 +601,8 @@ export const demos = [
             items: [
               { name: 'Content customization', unique: 'event-content-customization', component: Demo506 },
               { name: 'Full event customization', unique: 'full-event-customization', component: Demo508 },
-              { name: 'Customizing the header', unique: 'customizing-header', component: Demo514 },
+              { name: 'Customizing the calendar header', unique: 'customizing-calendar-header', component: Demo514 },
+              { name: 'Customizing the day header', unique: 'customizing-day-header', component: Demo754 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo657 },
               { name: 'Empty state', unique: 'empty-state', component: Demo730 },
             ],
@@ -664,6 +678,13 @@ export const demos = [
               { name: 'Desktop month view', unique: 'desktop-month-view', component: Demo346 },
               { name: 'Responsive', unique: 'responsive-month-view', component: Demo442 },
               { name: 'Print mode', unique: 'printing-the-view', component: Demo661 },
+            ],
+          },
+          {
+            name: 'Common use cases',
+            unique: 20,
+            items: [
+              { name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 },
             ],
           },
           {
@@ -1130,6 +1151,45 @@ export const demos = [
     name: 'Pickers & dropdowns',
     unique: 'pickers',
     items: [
+      {
+        name: 'Popup',
+        unique: 'popup',
+        items: [
+          {
+            name: 'Using the popup',
+            unique: 28,
+            items: [
+              { name: 'Opening closing the popup', unique: 'showing-the-popover', component: Demo755 },
+              { name: 'Understanding display modes', unique: 'mobile-desktop-display', component: Demo756 },
+              { name: 'Configure buttons', unique: 'button-configuration', component: Demo757 },
+              { name: 'Responsive', unique: 'responsive', component: Demo758 },
+            ],
+          },
+          {
+            name: 'Common use cases',
+            unique: 20,
+            items: [
+              { name: 'Event creation modal', unique: 'add-event-modal', component: Demo760 },
+              { name: 'Using as a tooltip', unique: 'show-hide-tooltip-hover-in-out', component: Demo761 },
+              { name: 'Range picker with presets', unique: 'range-picker-popup-presets', component: Demo759 },
+            ],
+          },
+          {
+            name: 'Customizing the look & feel',
+            unique: 5,
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo762 },
+            ],
+          },
+          {
+            name: 'Lifecycle events',
+            unique: 29,
+            items: [
+              { name: 'Lifecycle events', unique: 'event-hooks', component: Demo763 },
+            ],
+          },
+        ],
+      },
       {
         name: 'Select',
         unique: 'select',

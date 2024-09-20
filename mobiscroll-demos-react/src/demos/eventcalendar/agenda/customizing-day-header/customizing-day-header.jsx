@@ -33,15 +33,15 @@ function App() {
   );
 
   const renderCustomDay = useCallback(
-    (events, date) => (
-      <>
+    (day) => (
+      <div className="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
         <div className="mbsc-flex-1-1">
-          <div>{formatDate('D MMM YYYY', date)}</div>
+          <div>{formatDate('D MMM YYYY', day.date)}</div>
         </div>
-        <Button className="mds-custom-day-header-btn" variant="outline" icon="plus" onClick={() => addEvent(date)}>
+        <Button className="mds-custom-day-header-btn" color="primary" startIcon="plus" variant="outline" onClick={() => addEvent(day.date)}>
           Add event
         </Button>
-      </>
+      </div>
     ),
     [addEvent],
   );
@@ -56,7 +56,7 @@ function App() {
     );
   }, []);
 
-  return <Eventcalendar view={myView} data={myEvents} renderDay={renderCustomDay} />;
+  return <Eventcalendar className="mds-custom-day-header" view={myView} data={myEvents} renderDay={renderCustomDay} />;
 }
 
 export default App;

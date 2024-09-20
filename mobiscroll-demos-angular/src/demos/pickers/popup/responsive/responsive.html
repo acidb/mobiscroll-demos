@@ -1,0 +1,15 @@
+<mbsc-page>
+  <div class="mbsc-form-group">
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="openPopup($event)">Open popup</mbsc-button>
+    </div>
+  </div>
+
+  <mbsc-popup #popup [anchor]="popupAnchor" [options]="popupOptions">
+    <div class="mbsc-align-center mbsc-padding">
+      <img src="https://img.mobiscroll.com/demos/logo-noshadow.jpg" alt="logo" />
+      <h4>Welcome to our website!</h4>
+      <p>Have fun navigating through the demos.</p>
+    </div>
+  </mbsc-popup>
+</mbsc-page>

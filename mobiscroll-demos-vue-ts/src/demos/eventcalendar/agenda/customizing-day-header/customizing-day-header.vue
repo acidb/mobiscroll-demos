@@ -53,27 +53,36 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar :view="myView" :data="myEvents">
-    <template #day="events, date">
-      <div class="mbsc-flex-1-1">
-        <div>{{ formatDate('D MMM YYYY', date) }}</div>
+  <MbscEventcalendar cssClass="mds-custom-day-header" :view="myView" :data="myEvents">
+    <template #day="day">
+      <div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
+        <div class="mbsc-flex-1-1">
+          <div>{{ formatDate('D MMM YYYY', day.date) }}</div>
+        </div>
+        <MbscButton
+          className="mds-custom-day-header-btn"
+          color="primary"
+          startIcon="plus"
+          variant="outline"
+          @click="addEvent(day.date)"
+          >Add event</MbscButton
+        >
       </div>
-      <MbscButton
-        className="mds-custom-day-header-btn"
-        variant="outline"
-        icon="plus"
-        @click="addEvent(date)"
-        >Add event</MbscButton
-      >
-      <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
     </template>
   </MbscEventcalendar>
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>
-.mds-custom-day-header-btn.mbsc-button.mbsc-icon-button {
-  height: 22px;
-  width: auto;
+.mds-custom-day-header .mbsc-event-day.mbsc-windows {
+  padding: 8px 24px;
+}
+
+.mds-custom-day-header-btn.mbsc-button {
+  height: 24px;
+  line-height: 24px;
+  font-size: 12px;
+  border-radius: 12px;
   margin: 0;
 }
 </style>
