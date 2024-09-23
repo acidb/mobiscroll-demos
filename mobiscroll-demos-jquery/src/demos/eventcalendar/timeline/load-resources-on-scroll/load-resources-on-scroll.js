@@ -52,6 +52,7 @@ export default {
           },
           resources: resources,
           onVirtualLoading: function (args, inst) {
+            console.log('onVirtualLoading', args, inst);
             var newData = getScrollEvents(
               args.viewStart,
               args.viewEnd,
@@ -66,7 +67,7 @@ export default {
                 data: newData.events,
               });
             } else {
-              inst.setEvents(getScrollEvents(args.viewStart, args.viewEnd));
+              inst.setEvents(newData.events);
             }
           },
         });
@@ -83,6 +84,7 @@ export default {
         startDate.setHours(0, 0, 0, 0);
         var endDate = new Date(end);
         endDate.setHours(23, 59, 59, 99);
+        console.log('getScrollEvents', startDate, endDate);
 
         var events = [];
         var resources = [];
@@ -90,9 +92,9 @@ export default {
 
         // Helper function to create a deterministic event index based on date and resourceId
         function generateEventIndex(date, resourceId) {
-          var baseDate = new Date(2020, 0, 1);
-          var timeDiff = Math.floor((date - baseDate) / (1000 * 60 * 60));
-          return timeDiff + resourceId;
+          var baseDate = new Date(2020, 0, 1); // Arbitrary base date for consistent indexing
+          var timeDiff = Math.floor((date - baseDate) / (1000 * 60 * 60)); // Difference in hours
+          return timeDiff + resourceId; // Create a unique index based on hours and resource
         }
 
         function generateEvent(date, resourceId) {
