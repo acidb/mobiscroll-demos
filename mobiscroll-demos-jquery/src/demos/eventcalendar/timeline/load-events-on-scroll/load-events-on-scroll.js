@@ -13,9 +13,6 @@ export default {
       $('#demo-load-events-on-scroll')
         .mobiscroll()
         .eventcalendar({
-          dragToCreate: true,
-          dragToResize: true,
-          dragToMove: true,
           view: {
             timeline: {
               type: 'month',
@@ -38,52 +35,30 @@ export default {
             { id: 13, name: 'Resource 13', color: '#FF33F6' },
             { id: 14, name: 'Resource 14', color: '#33FF57' },
             { id: 15, name: 'Resource 15', color: '#33A6FF' },
+            { id: 16, name: 'Resource 16', color: '#DAF7A6' },
+            { id: 17, name: 'Resource 17', color: '#581845' },
+            { id: 18, name: 'Resource 18', color: '#900C3F' },
+            { id: 19, name: 'Resource 19', color: '#C70039' },
+            { id: 20, name: 'Resource 20', color: '#FF33F6' },
+            { id: 21, name: 'Resource 21', color: '#FF5733' },
+            { id: 22, name: 'Resource 22', color: '#33FF57' },
+            { id: 23, name: 'Resource 23', color: '#3357FF' },
+            { id: 24, name: 'Resource 24', color: '#FF33A6' },
+            { id: 25, name: 'Resource 25', color: '#FFC300' },
           ],
           onVirtualLoading: function (args, inst) {
-            // console.log('Virtual loading', args, getScrollEvents(args.viewStart, args.viewEnd));
-            inst.setEvents(getScrollEvents(args.viewStart, args.viewEnd));
+            var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
+            var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
+            $.getJSON(
+              'https://trialdev.mobiscroll.com/load-data-scroll/?start=' + start + '&end=' + end + '&callback=?',
+              function (data) {
+                inst.setEvents(data.events);
+              },
+              'jsonp',
+            );
           },
         });
     });
-
-    function getScrollEvents(start, end) {
-      var startDate = new Date(start);
-      startDate.setHours(0, 0, 0, 0);
-      var endDate = new Date(end);
-      endDate.setHours(23, 59, 59, 99);
-
-      var events = [];
-
-      function generateEventIndex(date, resourceId) {
-        var baseDate = new Date(2020, 0, 1);
-        var timeDiff = Math.floor((date - baseDate) / (1000 * 60 * 60));
-        return timeDiff + resourceId;
-      }
-
-      function generateEvent(date, resourceId) {
-        var isEven = resourceId % 2 === 0 ? 1 : -1;
-        var hoursOffset = (date.getHours() + resourceId * isEven) % 24;
-        var startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hoursOffset, 30);
-        var endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.min(hoursOffset + 3, 23));
-        var eventIndex = generateEventIndex(date, resourceId);
-
-        return {
-          start: startTime,
-          end: endTime,
-          title: 'Event ' + eventIndex,
-          resource: resourceId,
-        };
-      }
-
-      // Loop through the time range in 6-hour increments
-      for (var d = new Date(startDate); d <= endDate; d.setHours(d.getHours() + 6)) {
-        for (var resourceId = 1; resourceId <= 15; resourceId++) {
-          events.push(generateEvent(new Date(d), resourceId));
-        }
-      }
-
-      return events;
-    }
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
