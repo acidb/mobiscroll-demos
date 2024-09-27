@@ -10,6 +10,7 @@ export default {
     });
 
     $(function () {
+      var isLoading = false;
       var resources = [
         { id: 1, name: 'Resource 1' },
         { id: 2, name: 'Resource 2' },
@@ -51,32 +52,35 @@ export default {
           onVirtualLoading: function (args, inst) {
             var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
             var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
-
-            $.getJSON(
-              'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
-                start +
-                '&end=' +
-                end +
-                '&rstart=' +
-                args.resourceStart +
-                '&rend=' +
-                args.resourceEnd +
-                '&load=' +
-                (isIdInEnd(args.resourceEnd) || args.resourceEnd === 0 ? resources[resources.length - 1].id : 0) +
-                '&callback=?',
-              function (newData) {
-                if (newData.resources) {
-                  resources = resources.concat(newData.resources);
-                  inst.setOptions({
-                    resources: resources,
-                    data: newData.events,
-                  });
-                } else {
-                  inst.setEvents(newData.events);
-                }
-              },
-              'jsonp',
-            );
+            if (!isLoading) {
+              isLoading = true;
+              $.getJSON(
+                'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
+                  start +
+                  '&end=' +
+                  end +
+                  '&rstart=' +
+                  args.resourceStart +
+                  '&rend=' +
+                  args.resourceEnd +
+                  '&load=' +
+                  (isIdInEnd(args.resourceEnd) ? resources[resources.length - 1].id : 0) +
+                  '&callback=?',
+                function (newData) {
+                  if (newData.resources) {
+                    resources = resources.concat(newData.resources);
+                    inst.setOptions({
+                      resources: resources,
+                      data: newData.events,
+                    });
+                  } else {
+                    inst.setEvents(newData.events);
+                  }
+                  isLoading = false;
+                },
+                'jsonp',
+              );
+            }
           },
         });
 
@@ -84,7 +88,7 @@ export default {
         var resIndx = resources.findIndex(function (r) {
           return r.id === resId;
         });
-        return resources.length - resIndx <= 15;
+        return resources.length - resIndx <= 5;
       }
     });
   },
