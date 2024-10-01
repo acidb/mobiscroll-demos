@@ -91,27 +91,6 @@ export default {
         },
       ];
 
-      /////////////////////
-      // performance test
-
-      function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
-      }
-
-      var resourceNr = 10000;
-      var eventsNr = 10000;
-      myResources = [];
-      var myEventColors = ['#ff0101', '#239a21', '#8f1ed6', '#01adff', '#d8ca1a'];
-
-      console.log('generated resources');
-
-      for (var i = 1; i <= resourceNr; i++) {
-        myResources.push({ name: 'Resource ' + i, id: i, seats: getRandomInt(100, 2000), price: getRandomInt(500, 20000) });
-      }
-
-      // performance test end
-      ///////////////////////
-
       function getUTCDateOnly(d) {
         return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
       }
@@ -132,14 +111,6 @@ export default {
           return days * resource.price;
         }
       }
-
-      // function getTotal() {
-      //   var total = 0;
-      //   for (var i = 0; i < myResources.length; ++i) {
-      //     total += getRevenue(myResources[i]);
-      //   }
-      //   return total;
-      // }
 
       function getSortArrow(column, day) {
         if (sortColumn === column && day == tempDay) {
@@ -280,52 +251,15 @@ export default {
             return '<div class="mds-resource-details-footer mds-resource-details-total">$' + totalRevenue + '</div>';
           },
 
-          onPageLoading: function (args, inst) {
+          onPageLoading: function () {
             setTimeout(function () {
-              /////////////////////////////////////
-              // performance test
-
-              myEvents = [];
-              var year = new Date().getFullYear();
-              var month = new Date().getMonth();
-              // Generate random events
-              for (var i = 0; i < eventsNr; i++) {
-                var day = getRandomInt(1, 31);
-                var length = getRandomInt(2, 5);
-                var resource = getRandomInt(1, resourceNr + 1);
-                var color = getRandomInt(0, 6);
-                myEvents.push({
-                  color: myEventColors[color],
-                  end: new Date(year, month, day + length),
-                  resource: resource,
-                  start: new Date(year, month, day),
-                  title: 'Event ' + i,
-                });
-              }
-              inst.setEvents(myEvents);
-
-              //// performance test end
-              ///////////////////////////////
-              // gotRevenue the performance killer
-
-              // precalculate revenue for performance
-              // 12sec for 500 resource 5000event
-              console.time('Update Revenue');
               myResources.forEach(function (resource) {
                 resource.revenue = getRevenue(resource);
               });
-              console.timeEnd('Update Revenue');
               calendar.setOptions({ resources: myResources });
-
-              // total revenue
-              console.time('Get Total Revenue');
-              // totalRevenue = getTotal();
               totalRevenue = myResources.reduce(function (total, resource) {
                 return total + resource.revenue;
               }, 0);
-              console.timeEnd('Get Total Revenue');
-
-              console.log(totalRevenue);
             });
           },
         })
@@ -341,22 +275,19 @@ export default {
         },
       );
 
-      // $.getJSON(
-      //   'https://trial.mobiscroll.com/multiday-events/?callback=?',
-      //   function (events) {
-      //     /////// commented out when performance test
-      //     calendar.setEvents(events);
-      //     myEvents = events;
+      $.getJSON(
+        'https://trial.mobiscroll.com/multiday-events/?callback=?',
+        function (events) {
+          calendar.setEvents(events);
+          myEvents = events;
 
-      //     // precalculate revenue for performance
-      //     console.log('precalculated revenue - after generated events');
-      //     myResources.forEach(function (resource) {
-      //       resource.revenue = getRevenue(resource);
-      //     });
-      //     calendar.setOptions({ resources: myResources });
-      //   },
-      //   'jsonp',
-      // );
+          myResources.forEach(function (resource) {
+            resource.revenue = getRevenue(resource);
+          });
+          calendar.setOptions({ resources: myResources });
+        },
+        'jsonp',
+      );
     });
   },
   // eslint-disable-next-line es5/no-template-literals

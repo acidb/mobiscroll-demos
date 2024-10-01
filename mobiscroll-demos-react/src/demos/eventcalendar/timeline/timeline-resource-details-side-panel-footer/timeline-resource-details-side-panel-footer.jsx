@@ -1,4 +1,4 @@
-import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { Eventcalendar, formatDate, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './timeline-resource-details-side-panel-footer.css';
 
@@ -22,53 +22,105 @@ function App() {
     [],
   );
 
-  const myResources = useMemo(
-    () => [
-      {
-        id: 1,
-        name: 'Flatiron Room',
-        seats: 90,
-        color: '#fdf500',
-        price: 600,
-      },
-      {
-        id: 2,
-        name: 'The Capital City',
-        seats: 250,
-        color: '#ff0101',
-        price: 800,
-      },
-      {
-        id: 3,
-        name: 'Heroes Square',
-        seats: 400,
-        color: '#01adff',
-        price: 1100,
-      },
-      {
-        id: 4,
-        name: 'Hall of Faces',
-        seats: 850,
-        color: '#239a21',
-        price: 750,
-      },
-      {
-        id: 5,
-        name: 'King’s Landing',
-        seats: 550,
-        color: '#ff4600',
-        price: 950,
-      },
-      {
-        id: 6,
-        name: 'Gathering Field',
-        seats: 900,
-        color: '#8f1ed6',
-        price: 700,
-      },
-    ],
-    [],
-  );
+  // variables //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const [sortColumn, setSortColumn] = useState('name');
+  const [sortDirection, setSortDirection] = useState('asc');
+  const [tempDay, setTempDay] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
+  ///////////////////////////////////////////////////////////////////////////////////////////
+
+  // const myResources = useMemo(
+  //   () => [
+  //     {
+  //       id: 1,
+  //       name: 'Flatiron Room',
+  //       seats: 90,
+  //       color: '#fdf500',
+  //       price: 600,
+  //     },
+  //     {
+  //       id: 2,
+  //       name: 'The Capital City',
+  //       seats: 250,
+  //       color: '#ff0101',
+  //       price: 800,
+  //     },
+  //     {
+  //       id: 3,
+  //       name: 'Heroes Square',
+  //       seats: 400,
+  //       color: '#01adff',
+  //       price: 1100,
+  //     },
+  //     {
+  //       id: 4,
+  //       name: 'Hall of Faces',
+  //       seats: 850,
+  //       color: '#239a21',
+  //       price: 750,
+  //     },
+  //     {
+  //       id: 5,
+  //       name: 'King’s Landing',
+  //       seats: 550,
+  //       color: '#ff4600',
+  //       price: 950,
+  //     },
+  //     {
+  //       id: 6,
+  //       name: 'Gathering Field',
+  //       seats: 900,
+  //       color: '#8f1ed6',
+  //       price: 700,
+  //     },
+  //   ],
+  //   [],
+  // );
+
+  const [myResources, setMyResources] = useState([
+    {
+      id: 1,
+      name: 'Flatiron Room',
+      seats: 90,
+      color: '#fdf500',
+      price: 600,
+    },
+    {
+      id: 2,
+      name: 'The Capital City',
+      seats: 250,
+      color: '#ff0101',
+      price: 800,
+    },
+    {
+      id: 3,
+      name: 'Heroes Square',
+      seats: 400,
+      color: '#01adff',
+      price: 1100,
+    },
+    {
+      id: 4,
+      name: 'Hall of Faces',
+      seats: 850,
+      color: '#239a21',
+      price: 750,
+    },
+    {
+      id: 5,
+      name: 'King’s Landing',
+      seats: 550,
+      color: '#ff4600',
+      price: 950,
+    },
+    {
+      id: 6,
+      name: 'Gathering Field',
+      seats: 900,
+      color: '#8f1ed6',
+      price: 700,
+    },
+  ]);
 
   const getUTCDateOnly = useCallback((d) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()), []);
 
@@ -91,6 +143,92 @@ function App() {
     [getDayDiff],
   );
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //// sort  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const handleSortClick = useCallback((event) => {
+    // Get the data-sort and data-day attributes from the clicked element
+    const sortColumn = event.currentTarget.getAttribute('data-sort');
+    const selectedDay = event.currentTarget.getAttribute('data-day');
+
+    // Set the state with the retrieved values
+    setSortColumn(sortColumn);
+    setSelectedDay(selectedDay);
+
+    // You can call sortResources or other logic here if needed
+    sortResources(sortColumn, selectedDay);
+  }, []);
+
+  const getSortArrow = useCallback((column, day) => {
+    if (sortColumn === column && day === tempDay) {
+      return sortDirection === 'asc' ? 'asc' : sortDirection === 'desc' ? 'desc' : 'def';
+    }
+    return 'def';
+  });
+
+  const sortResources = (column, day) => {
+    if (sortColumn === column && day === tempDay) {
+      setSortDirection((prevDirection) => (prevDirection === 'asc' ? 'desc' : prevDirection === 'desc' ? 'def' : 'asc'));
+    } else {
+      setSortColumn(column);
+      setSortDirection('asc');
+    }
+    setTempDay(day);
+
+    // Pre-calculate busy hours for the clicked day
+    const updatedResources = myResources.map((resource) => ({
+      ...resource,
+      busyHours: getBusyHours(resource, day) - 24,
+    }));
+
+    // Sort the resources
+    updatedResources.sort((a, b) => {
+      if (sortDirection === 'asc') {
+        return a[column] > b[column] ? 1 : -1;
+      }
+      if (sortDirection === 'desc') {
+        return a[column] < b[column] ? 1 : -1;
+      }
+      return a.id - b.id;
+    });
+
+    // Update state with sorted resources
+    setMyResources(updatedResources);
+  };
+
+  const myCustomRenderDay = useCallback(
+    (data) => {
+      const day = data.date.getTime();
+
+      return (
+        <div
+          className={`mds-date-header-day-name mds-resource-sort-${getSortArrow('busyHours', day)}`}
+          data-sort="busyHours"
+          data-day={day}
+          onClick={handleSortClick}
+        >
+          <span>{formatDate('DD DDD', data.date)}</span>
+        </div>
+      );
+    },
+    [getSortArrow, handleSortClick],
+  );
+
+  function getBusyHours(resource, startOfDay) {
+    var endOfDay = startOfDay + 86400000;
+    return myEvents.reduce((total, event) => {
+      if (event.resource === resource.id) {
+        var eventStart = Math.max(startOfDay, new Date(event.start).getTime());
+        var eventEnd = Math.min(endOfDay, new Date(event.end).getTime());
+        return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total;
+      }
+      return total;
+    }, 0);
+  }
+
+  ///// sort //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   const getTotal = useCallback(() => {
     let total = 0;
     for (const resource of myResources) {
@@ -101,35 +239,64 @@ function App() {
 
   const myCustomResourceHeader = useCallback(
     () => (
-      <div className="md-resource-details-title">
-        <div className="md-resource-header md-resource-details-name">Room</div>
-        <div className="md-resource-header md-resource-details-seats">Capacity</div>
-        <div className="md-resource-header md-resource-details-price">Price</div>
+      <div className="mds-resource-details-title">
+        <div
+          className={`mds-resource-header mds-resource-details-name mds-resource-sort-${getSortArrow('name')}`}
+          data-sort="name"
+          onClick={handleSortClick}
+        >
+          Room
+        </div>
+        <div
+          className={`mds-resource-header mds-resource-details-seats mds-resource-sort-${getSortArrow('seats')}`}
+          data-sort="seats"
+          onClick={handleSortClick}
+        >
+          Capacity
+        </div>
+        <div
+          className={`mds-resource-header mds-resource-details-price mds-resource-sort-${getSortArrow('price')}`}
+          data-sort="price"
+          onClick={handleSortClick}
+        >
+          Price/day
+        </div>
       </div>
     ),
-    [],
+    [getSortArrow, handleSortClick],
   );
 
   const myCustomResource = useCallback(
     (resource) => (
-      <div className="md-resource-details-cont">
-        <div className="md-resource-header md-resource-details-name">{resource.name}</div>
-        <div className="md-resource-header md-resource-details-seats">{resource.seats} seats</div>
-        <div className="md-resource-header md-resource-details-price">{'$' + resource.price}</div>
+      <div className="mds-resource-details-cont">
+        <div className="mds-resource-header mds-resource-details-name">{resource.name}</div>
+        <div className="mds-resource-header mds-resource-details-seats">{resource.seats} seats</div>
+        <div className="mds-resource-header mds-resource-details-price">{'$' + resource.price}</div>
       </div>
     ),
     [],
   );
 
-  const myCustomSidebarHeader = useCallback(() => <div className="md-resource-details-sidebar-header">Revenue</div>, []);
+  const myCustomSidebarHeader = useCallback(
+    () => (
+      <div
+        className={`mds-resource-details-sidebar-header mds-resource-sort-${getSortArrow('revenue')}`}
+        data-sort="revenue"
+        onClick={handleSortClick}
+      >
+        Revenue
+      </div>
+    ),
+    [getSortArrow, handleSortClick],
+  );
 
   const myCustomSidebar = useCallback(
-    (resource) => <div className="md-resource-details-sidebar">{'$' + getRevenue(resource)}</div>,
+    (resource) => <div className="mds-resource-details-sidebar">{'$' + getRevenue(resource)}</div>,
     [getRevenue],
   );
 
   const myCustomResourceFooter = useCallback(
-    () => <div className="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>,
+    () => <div className="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>,
     [],
   );
 
@@ -148,13 +315,13 @@ function App() {
         }
         occuppancy = ((nr * 100) / myResources.length).toFixed(0);
       }
-      return <div className="md-resource-details-footer md-resource-details-footer-day">{occuppancy + '%'}</div>;
+      return <div className="mds-resource-details-footer mds-resource-details-footer-day">{occuppancy + '%'}</div>;
     },
     [myEvents, myResources.length],
   );
 
   const myCustomSidebarFooter = useCallback(
-    () => <div className="md-resource-details-footer md-resource-details-total">{'$' + getTotal()}</div>,
+    () => <div className="mds-resource-details-footer mds-resource-details-total">{'$' + getTotal()}</div>,
     [getTotal],
   );
 
@@ -175,12 +342,13 @@ function App() {
       view={myView}
       data={myEvents}
       resources={myResources}
-      cssClass="md-resource-details"
+      cssClass="mds-resource-details"
       renderResourceHeader={myCustomResourceHeader}
       renderResource={myCustomResource}
       renderSidebarHeader={myCustomSidebarHeader}
       renderSidebar={myCustomSidebar}
       renderResourceFooter={myCustomResourceFooter}
+      renderDay={myCustomRenderDay}
       renderDayFooter={myCustomDayFooter}
       renderSidebarFooter={myCustomSidebarFooter}
     />
