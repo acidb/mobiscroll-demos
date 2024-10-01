@@ -11,6 +11,10 @@ const oneDay = 60000 * 60 * 24;
 
 function App() {
   const [myEvents, setEvents] = useState([]);
+  const [sortColumn, setSortColumn] = useState('name');
+  const [sortDirection, setSortDirection] = useState('asc');
+  const [tempDay, setTempDay] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
   const calRef = useRef();
 
   const myView = useMemo(
@@ -21,61 +25,6 @@ function App() {
     }),
     [],
   );
-
-  // variables //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const [sortColumn, setSortColumn] = useState('name');
-  const [sortDirection, setSortDirection] = useState('asc');
-  const [tempDay, setTempDay] = useState(null);
-  const [selectedDay, setSelectedDay] = useState(null);
-  ///////////////////////////////////////////////////////////////////////////////////////////
-
-  // const myResources = useMemo(
-  //   () => [
-  //     {
-  //       id: 1,
-  //       name: 'Flatiron Room',
-  //       seats: 90,
-  //       color: '#fdf500',
-  //       price: 600,
-  //     },
-  //     {
-  //       id: 2,
-  //       name: 'The Capital City',
-  //       seats: 250,
-  //       color: '#ff0101',
-  //       price: 800,
-  //     },
-  //     {
-  //       id: 3,
-  //       name: 'Heroes Square',
-  //       seats: 400,
-  //       color: '#01adff',
-  //       price: 1100,
-  //     },
-  //     {
-  //       id: 4,
-  //       name: 'Hall of Faces',
-  //       seats: 850,
-  //       color: '#239a21',
-  //       price: 750,
-  //     },
-  //     {
-  //       id: 5,
-  //       name: 'King’s Landing',
-  //       seats: 550,
-  //       color: '#ff4600',
-  //       price: 950,
-  //     },
-  //     {
-  //       id: 6,
-  //       name: 'Gathering Field',
-  //       seats: 900,
-  //       color: '#8f1ed6',
-  //       price: 700,
-  //     },
-  //   ],
-  //   [],
-  // );
 
   const [myResources, setMyResources] = useState([
     {
@@ -143,20 +92,15 @@ function App() {
     [getDayDiff],
   );
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //// sort  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   const handleSortClick = useCallback((event) => {
-    // Get the data-sort and data-day attributes from the clicked element
     const sortColumn = event.currentTarget.getAttribute('data-sort');
     const selectedDay = event.currentTarget.getAttribute('data-day');
 
-    // Set the state with the retrieved values
     setSortColumn(sortColumn);
     setSelectedDay(selectedDay);
 
-    // You can call sortResources or other logic here if needed
     sortResources(sortColumn, selectedDay);
+    console.log('-> handleSortClick( sortColumn:', sortColumn, ', selectedDay:', selectedDay, ')');
   }, []);
 
   const getSortArrow = useCallback((column, day) => {
@@ -167,21 +111,24 @@ function App() {
   });
 
   const sortResources = (column, day) => {
+    console.log('-> sortResources( column:', column, ', day:', day, ')');
+    console.log('sortColumn:', sortColumn);
+
     if (sortColumn === column && day === tempDay) {
-      setSortDirection((prevDirection) => (prevDirection === 'asc' ? 'desc' : prevDirection === 'desc' ? 'def' : 'asc'));
+      setSortDirection((sortDirection) => (sortDirection === 'asc' ? 'desc' : sortDirection === 'desc' ? 'def' : 'asc'));
+      console.log('sortColumn === column && day === tempDay');
     } else {
+      console.log('else');
       setSortColumn(column);
       setSortDirection('asc');
     }
     setTempDay(day);
 
-    // Pre-calculate busy hours for the clicked day
     const updatedResources = myResources.map((resource) => ({
       ...resource,
       busyHours: getBusyHours(resource, day) - 24,
     }));
 
-    // Sort the resources
     updatedResources.sort((a, b) => {
       if (sortDirection === 'asc') {
         return a[column] > b[column] ? 1 : -1;
@@ -191,8 +138,6 @@ function App() {
       }
       return a.id - b.id;
     });
-
-    // Update state with sorted resources
     setMyResources(updatedResources);
   };
 
@@ -225,9 +170,6 @@ function App() {
       return total;
     }, 0);
   }
-
-  ///// sort //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const getTotal = useCallback(() => {
     let total = 0;
