@@ -10,7 +10,7 @@ export default {
     });
 
     $(function () {
-      var isLoading = false;
+      var timer;
       var resources = [
         { id: 1, name: 'Resource 1' },
         { id: 2, name: 'Resource 2' },
@@ -49,11 +49,12 @@ export default {
             },
           },
           resources: resources,
+          selectedDate: '2021-01-05',
           onVirtualLoading: function (args, inst) {
             var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
             var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
-            if (!isLoading) {
-              isLoading = true;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
               $.getJSON(
                 'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
                   start +
@@ -76,11 +77,10 @@ export default {
                   } else {
                     inst.setEvents(newData.events);
                   }
-                  isLoading = false;
                 },
                 'jsonp',
               );
-            }
+            }, 50);
           },
         });
 
