@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { formatDate, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -17,6 +17,7 @@ const oneDay = 60000 * 60 * 24;
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
+  formatDate = formatDate;
 
   @ViewChild('mycalendar', { static: false })
   mycalendar: any;
@@ -74,6 +75,56 @@ export class AppComponent implements OnInit {
     },
   ];
 
+  tempDay: any = null;
+  sortColumn: string = '';
+  sortDirection: string = 'asc';
+  totalRevenue: any;
+
+  getSortArrow(column: string, day: any = null): string {
+    if (this.sortColumn === column && day === this.tempDay) {
+      return this.sortDirection === 'asc' ? 'asc' : this.sortDirection === 'desc' ? 'desc' : 'def';
+    }
+    return 'def';
+  }
+
+  sortResources(column: string, day: any = null): void {
+    if (this.sortColumn === column && day === this.tempDay) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : this.sortDirection === 'desc' ? 'def' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.tempDay = day;
+
+    this.myResources = this.myResources
+      .map((resource) => ({
+        ...resource,
+        busyHours: this.getBusyHours(resource, this.tempDay) - 24,
+      }))
+      .sort((a: any, b: any) => {
+        if (this.sortDirection === 'asc') {
+          return a[this.sortColumn] > b[this.sortColumn] ? 1 : -1;
+        }
+        if (this.sortDirection === 'desc') {
+          return a[this.sortColumn] < b[this.sortColumn] ? 1 : -1;
+        }
+        return a.id - b.id;
+      });
+  }
+
+  getBusyHours(resource: MbscResource, startOfDay: number): number {
+    const endOfDay = startOfDay + 86400000;
+
+    return this.myEvents.reduce((total, event) => {
+      if (event.resource === resource.id) {
+        const eventStart = Math.max(startOfDay, new Date(event.start as Date).getTime());
+        const eventEnd = Math.min(endOfDay, new Date(event.end as Date).getTime());
+        return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total;
+      }
+      return total;
+    }, 0);
+  }
+
   getUTCDateOnly(d: Date) {
     return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
   }
@@ -94,14 +145,6 @@ export class AppComponent implements OnInit {
     } else {
       return 0;
     }
-  }
-
-  getTotal() {
-    let total = 0;
-    for (const resource of this.myResources) {
-      total += this.getRevenue(resource);
-    }
-    return total;
   }
 
   getOccuppancy(data: any) {
@@ -125,6 +168,13 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/multiday-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
+      setTimeout(() => {
+        this.myResources.forEach((resource) => {
+          resource['revenue'] = this.getRevenue(resource);
+        });
+
+        this.totalRevenue = this.myResources.reduce((total, resource) => total + resource['revenue'], 0);
+      }, 0);
     });
   }
 }
