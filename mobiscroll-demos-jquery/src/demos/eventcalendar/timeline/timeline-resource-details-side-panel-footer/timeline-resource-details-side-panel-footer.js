@@ -250,18 +250,6 @@ export default {
           renderSidebarFooter: function () {
             return '<div class="mds-resource-details-footer mds-resource-details-total">$' + totalRevenue + '</div>';
           },
-
-          onPageLoading: function () {
-            setTimeout(function () {
-              myResources.forEach(function (resource) {
-                resource.revenue = getRevenue(resource);
-              });
-              calendar.setOptions({ resources: myResources });
-              totalRevenue = myResources.reduce(function (total, resource) {
-                return total + resource.revenue;
-              }, 0);
-            });
-          },
         })
         .mobiscroll('getInst');
 
@@ -285,6 +273,9 @@ export default {
             resource.revenue = getRevenue(resource);
           });
           calendar.setOptions({ resources: myResources });
+          totalRevenue = myResources.reduce(function (total, resource) {
+            return total + resource.revenue;
+          }, 0);
         },
         'jsonp',
       );
