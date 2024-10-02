@@ -72,7 +72,7 @@
 /* Header */
 
 .mds-resource-details .mbsc-timeline-resource-col {
-  width: 280px;
+  width: 335px;
 }
 
 .mds-resource-details .mbsc-timeline-resource-header,
@@ -106,7 +106,7 @@
 
 .mds-resource-details-seats,
 .mds-resource-details-price {
-  width: 78px;
+  width: 106px;
 }
 
 .mds-resource-details-seats {
@@ -138,7 +138,7 @@
 .mds-resource-details-occuppancy {
   font-size: 15px;
   text-align: right;
-  background: #f8f8f8;
+  background-color: rgba(150, 150, 150, 0.1);
   padding-right: 15px;
 }
 
@@ -156,18 +156,18 @@
   font-size: 15px;
   font-weight: 600;
   text-align: center;
-  background: #f8f8f8;
+  background: rgba(150, 150, 150, 0.1);
   padding: 0 5px;
 }
 
 .mds-resource-details .mbsc-timeline-sidebar-footer {
-  background: #feefee;
+  background-color: rgba(150, 150, 150, 0.1);
   border-top-color: #5a0101;
-  color: #5a0101;
+  color: #8c0000;
 }
 
 .mds-resource-details .mbsc-timeline-sidebar-col {
-  width: 85px;
+  width: 98px;
 }
 
 @supports (overflow: clip) {
