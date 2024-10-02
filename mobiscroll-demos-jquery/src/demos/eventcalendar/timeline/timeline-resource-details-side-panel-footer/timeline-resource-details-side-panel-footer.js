@@ -128,7 +128,6 @@ export default {
         }
         tempDay = day;
 
-        // precalculate busy hours for the clicked day
         myResources.forEach(function (resource) {
           resource.busyHours = getBusyHours(resource, day) - 24;
         });
