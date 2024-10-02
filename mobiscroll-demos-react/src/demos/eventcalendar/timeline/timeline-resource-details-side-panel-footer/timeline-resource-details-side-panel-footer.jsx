@@ -11,10 +11,10 @@ const oneDay = 60000 * 60 * 24;
 
 function App() {
   const [myEvents, setEvents] = useState([]);
-  const [sortColumn, setSortColumn] = useState('name');
-  const [sortDirection, setSortDirection] = useState('asc');
-  const [tempDay, setTempDay] = useState(null);
-  const [selectedDay, setSelectedDay] = useState(null);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const sortColumn = useRef('');
+  const sortDirection = useRef('');
+  const tempDay = useRef(null);
   const calRef = useRef();
 
   const myView = useMemo(
@@ -29,45 +29,73 @@ function App() {
   const [myResources, setMyResources] = useState([
     {
       id: 1,
-      name: 'Flatiron Room',
+      name: 'Horizon',
+      seats: 1200,
+      color: '#4a4a4a',
+      price: 1000,
+    },
+    {
+      id: 2,
+      name: 'Apex Hall',
       seats: 90,
       color: '#fdf500',
       price: 600,
     },
     {
-      id: 2,
-      name: 'The Capital City',
-      seats: 250,
-      color: '#ff0101',
-      price: 800,
-    },
-    {
       id: 3,
-      name: 'Heroes Square',
-      seats: 400,
-      color: '#01adff',
-      price: 1100,
+      name: 'Jade Room',
+      seats: 700,
+      color: '#00aaff',
+      price: 900,
     },
     {
       id: 4,
-      name: 'Hall of Faces',
+      name: 'Dome Arena',
       seats: 850,
       color: '#239a21',
       price: 750,
     },
     {
       id: 5,
-      name: 'King’s Landing',
-      seats: 550,
-      color: '#ff4600',
-      price: 950,
-    },
-    {
-      id: 6,
-      name: 'Gathering Field',
+      name: 'Forum Plaza',
       seats: 900,
       color: '#8f1ed6',
       price: 700,
+    },
+    {
+      id: 6,
+      name: 'Gallery',
+      seats: 300,
+      color: '#0077b6',
+      price: 650,
+    },
+    {
+      id: 7,
+      name: 'Icon Hall',
+      seats: 450,
+      color: '#e63946',
+      price: 850,
+    },
+    {
+      id: 8,
+      name: 'Broadway',
+      seats: 250,
+      color: '#ff0101',
+      price: 800,
+    },
+    {
+      id: 9,
+      name: 'Central Hub',
+      seats: 400,
+      color: '#01adff',
+      price: 1100,
+    },
+    {
+      id: 10,
+      name: 'Empire Hall',
+      seats: 550,
+      color: '#ff4600',
+      price: 950,
     },
   ]);
 
@@ -92,54 +120,57 @@ function App() {
     [getDayDiff],
   );
 
-  const handleSortClick = useCallback((event) => {
-    const sortColumn = event.currentTarget.getAttribute('data-sort');
-    const selectedDay = event.currentTarget.getAttribute('data-day');
-
-    setSortColumn(sortColumn);
-    setSelectedDay(selectedDay);
-
-    sortResources(sortColumn, selectedDay);
-    console.log('-> handleSortClick( sortColumn:', sortColumn, ', selectedDay:', selectedDay, ')');
-  }, []);
-
   const getSortArrow = useCallback((column, day) => {
-    if (sortColumn === column && day === tempDay) {
-      return sortDirection === 'asc' ? 'asc' : sortDirection === 'desc' ? 'desc' : 'def';
+    if (sortColumn.current === column && day === tempDay.current) {
+      return sortDirection.current === 'asc' ? 'asc' : sortDirection.current === 'desc' ? 'desc' : 'def';
     }
     return 'def';
-  });
+  }, []);
 
-  const sortResources = (column, day) => {
-    console.log('-> sortResources( column:', column, ', day:', day, ')');
-    console.log('sortColumn:', sortColumn);
+  const sortResources = useCallback(
+    (column, day) => {
+      sortColumn.current = column;
 
-    if (sortColumn === column && day === tempDay) {
-      setSortDirection((sortDirection) => (sortDirection === 'asc' ? 'desc' : sortDirection === 'desc' ? 'def' : 'asc'));
-      console.log('sortColumn === column && day === tempDay');
-    } else {
-      console.log('else');
-      setSortColumn(column);
-      setSortDirection('asc');
-    }
-    setTempDay(day);
-
-    const updatedResources = myResources.map((resource) => ({
-      ...resource,
-      busyHours: getBusyHours(resource, day) - 24,
-    }));
-
-    updatedResources.sort((a, b) => {
-      if (sortDirection === 'asc') {
-        return a[column] > b[column] ? 1 : -1;
+      if (sortColumn.current === column && day === tempDay.current) {
+        sortDirection.current = sortDirection.current === 'asc' ? 'desc' : sortDirection.current === 'desc' ? 'def' : 'asc';
+      } else {
+        sortColumn.current = column;
+        sortDirection.current = 'asc';
       }
-      if (sortDirection === 'desc') {
-        return a[column] < b[column] ? 1 : -1;
-      }
-      return a.id - b.id;
-    });
-    setMyResources(updatedResources);
-  };
+      tempDay.current = day;
+
+      const updatedResources = myResources.map((resource) => {
+        const endOfDay = day + 86400000;
+
+        const busyHours = myEvents.reduce((total, event) => {
+          if (event.resource === resource.id) {
+            const eventStart = Math.max(day, new Date(event.start).getTime());
+            const eventEnd = Math.min(endOfDay, new Date(event.end).getTime());
+            return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total;
+          }
+          return total;
+        }, 0);
+
+        return {
+          ...resource,
+          busyHours: busyHours - 24,
+        };
+      });
+
+      updatedResources.sort((a, b) => {
+        if (sortDirection.current === 'asc') {
+          return a[column] > b[column] ? 1 : -1;
+        }
+        if (sortDirection.current === 'desc') {
+          return a[column] < b[column] ? 1 : -1;
+        }
+        return a.id - b.id;
+      });
+
+      setMyResources(updatedResources);
+    },
+    [myResources, myEvents],
+  );
 
   const myCustomRenderDay = useCallback(
     (data) => {
@@ -148,64 +179,39 @@ function App() {
       return (
         <div
           className={`mds-date-header-day-name mds-resource-sort-${getSortArrow('busyHours', day)}`}
-          data-sort="busyHours"
-          data-day={day}
-          onClick={handleSortClick}
+          onClick={() => sortResources('busyHours', day)}
         >
           <span>{formatDate('DD DDD', data.date)}</span>
         </div>
       );
     },
-    [getSortArrow, handleSortClick],
+    [getSortArrow, sortResources],
   );
-
-  function getBusyHours(resource, startOfDay) {
-    var endOfDay = startOfDay + 86400000;
-    return myEvents.reduce((total, event) => {
-      if (event.resource === resource.id) {
-        var eventStart = Math.max(startOfDay, new Date(event.start).getTime());
-        var eventEnd = Math.min(endOfDay, new Date(event.end).getTime());
-        return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total;
-      }
-      return total;
-    }, 0);
-  }
-
-  const getTotal = useCallback(() => {
-    let total = 0;
-    for (const resource of myResources) {
-      total += getRevenue(resource);
-    }
-    return total;
-  }, [getRevenue, myResources]);
 
   const myCustomResourceHeader = useCallback(
     () => (
       <div className="mds-resource-details-title">
         <div
           className={`mds-resource-header mds-resource-details-name mds-resource-sort-${getSortArrow('name')}`}
-          data-sort="name"
-          onClick={handleSortClick}
+          onClick={() => sortResources('name')}
         >
           Room
         </div>
         <div
           className={`mds-resource-header mds-resource-details-seats mds-resource-sort-${getSortArrow('seats')}`}
-          data-sort="seats"
-          onClick={handleSortClick}
+          onClick={() => sortResources('seats')}
         >
           Capacity
         </div>
         <div
           className={`mds-resource-header mds-resource-details-price mds-resource-sort-${getSortArrow('price')}`}
-          data-sort="price"
-          onClick={handleSortClick}
+          onClick={() => sortResources('price')}
         >
           Price/day
         </div>
       </div>
     ),
-    [getSortArrow, handleSortClick],
+    [getSortArrow, sortResources],
   );
 
   const myCustomResource = useCallback(
@@ -223,19 +229,15 @@ function App() {
     () => (
       <div
         className={`mds-resource-details-sidebar-header mds-resource-sort-${getSortArrow('revenue')}`}
-        data-sort="revenue"
-        onClick={handleSortClick}
+        onClick={() => sortResources('revenue')}
       >
         Revenue
       </div>
     ),
-    [getSortArrow, handleSortClick],
+    [getSortArrow, sortResources],
   );
 
-  const myCustomSidebar = useCallback(
-    (resource) => <div className="mds-resource-details-sidebar">{'$' + getRevenue(resource)}</div>,
-    [getRevenue],
-  );
+  const myCustomSidebar = useCallback((resource) => <div className="mds-resource-details-sidebar">{'$' + resource.revenue}</div>, []);
 
   const myCustomResourceFooter = useCallback(
     () => <div className="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>,
@@ -263,8 +265,8 @@ function App() {
   );
 
   const myCustomSidebarFooter = useCallback(
-    () => <div className="mds-resource-details-footer mds-resource-details-total">{'$' + getTotal()}</div>,
-    [getTotal],
+    () => <div className="mds-resource-details-footer mds-resource-details-total">{'$' + totalRevenue}</div>,
+    [totalRevenue],
   );
 
   useEffect(() => {
@@ -272,10 +274,14 @@ function App() {
       'https://trial.mobiscroll.com/multiday-events/',
       (events) => {
         setEvents(events);
+        myResources.forEach((resource) => {
+          resource['revenue'] = getRevenue(resource);
+        });
+        setTotalRevenue(myResources.reduce((total, resource) => total + resource['revenue'], 0));
       },
       'jsonp',
     );
-  }, []);
+  }, [getRevenue, myResources]);
 
   return (
     <Eventcalendar
