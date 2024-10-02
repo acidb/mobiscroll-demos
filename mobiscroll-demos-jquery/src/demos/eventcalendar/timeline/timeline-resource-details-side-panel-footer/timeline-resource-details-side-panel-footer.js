@@ -16,7 +16,7 @@ export default {
       var tempDay;
       var sortColumn;
       var sortDirection;
-      var totalRevenue;
+      var totalRevenue = 0;
 
       var myResources = [
         {
@@ -131,7 +131,6 @@ export default {
         myResources.forEach(function (resource) {
           resource.busyHours = getBusyHours(resource, day) - 24;
         });
-        calendar.setOptions({ resources: myResources });
 
         myResources.sort(function (a, b) {
           if (sortDirection === 'asc') {
