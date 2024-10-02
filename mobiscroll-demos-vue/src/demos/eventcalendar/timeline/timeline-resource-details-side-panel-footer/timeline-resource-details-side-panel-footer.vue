@@ -14,46 +14,80 @@ setOptions({
 
 const oneDay = 60000 * 60 * 24
 const totalRevenue = ref(0)
-var sortColumn = ''
-var sortDirection = 'def'
-var tempDay = null
+const sortColumn = ref('')
+const sortDirection = ref('')
+const tempDay = ref(null)
 
 const myResources = ref([
-  { id: 1, name: 'Flatiron Room', seats: 90, color: '#fdf500', price: 600 },
+  {
+    id: 1,
+    name: 'Horizon',
+    seats: 1200,
+    color: '#4a4a4a',
+    price: 1000
+  },
   {
     id: 2,
-    name: 'The Capital City',
-    seats: 250,
-    color: '#ff0101',
-    price: 800
+    name: 'Apex Hall',
+    seats: 90,
+    color: '#fdf500',
+    price: 600
   },
   {
     id: 3,
-    name: 'Heroes Square',
-    seats: 400,
-    color: '#01adff',
-    price: 1100
+    name: 'Jade Room',
+    seats: 700,
+    color: '#00aaff',
+    price: 900
   },
   {
     id: 4,
-    name: 'Hall of Faces',
+    name: 'Dome Arena',
     seats: 850,
     color: '#239a21',
     price: 750
   },
   {
     id: 5,
-    name: 'King’s Landing',
-    seats: 550,
-    color: '#ff4600',
-    price: 950
-  },
-  {
-    id: 6,
-    name: 'Gathering Field',
+    name: 'Forum Plaza',
     seats: 900,
     color: '#8f1ed6',
     price: 700
+  },
+  {
+    id: 6,
+    name: 'Gallery',
+    seats: 300,
+    color: '#0077b6',
+    price: 650
+  },
+  {
+    id: 7,
+    name: 'Icon Hall',
+    seats: 450,
+    color: '#e63946',
+    price: 850
+  },
+  {
+    id: 8,
+    name: 'Broadway',
+    seats: 250,
+    color: '#ff0101',
+    price: 800
+  },
+  {
+    id: 9,
+    name: 'Central Hub',
+    seats: 400,
+    color: '#01adff',
+    price: 1100
+  },
+  {
+    id: 10,
+    name: 'Empire Hall',
+    seats: 550,
+    color: '#ff4600',
+    price: 950
   }
 ])
 
@@ -68,48 +102,51 @@ const myView = {
 }
 
 function getSortArrow(column, day = null) {
-  if (sortColumn === column && day === tempDay) {
-    return sortDirection === 'asc' ? 'asc' : sortDirection === 'desc' ? 'desc' : 'def'
+  if (sortColumn.value === column && day === tempDay.value) {
+    return sortDirection.value === 'asc' ? 'asc' : sortDirection.value === 'desc' ? 'desc' : 'def'
   }
   return 'def'
 }
 
 function sortResources(column, day = null) {
-  if (sortColumn === column && day === tempDay) {
-    sortDirection = sortDirection === 'asc' ? 'desc' : sortDirection === 'desc' ? 'def' : 'asc'
+  if (sortColumn.value === column && day === tempDay.value) {
+    sortDirection.value =
+      sortDirection.value === 'asc' ? 'desc' : sortDirection.value === 'desc' ? 'def' : 'asc'
   } else {
-    sortColumn = column
-    sortDirection = 'asc'
+    sortColumn.value = column
+    sortDirection.value = 'asc'
   }
-  tempDay = day
+  tempDay.value = day
 
-  const endOfDay = tempDay + 86400000
+  const endOfDay = day !== null ? day + 86400000 : null
 
-  myResources.value = myResources.value
-    .map((resource) => {
-      const busyHours = myEvents.value.reduce((total, event) => {
+  myResources.value.forEach((resource) => {
+    let busyHours = 0
+    if (day !== null) {
+      busyHours = myEvents.value.reduce((total, event) => {
         if (event.resource === resource.id) {
-          const eventStart = Math.max(tempDay, new Date(event.start).getTime())
+          const eventStart = Math.max(day, new Date(event.start).getTime())
           const eventEnd = Math.min(endOfDay, new Date(event.end).getTime())
           return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total
         }
         return total
       }, 0)
+    }
+    resource.busyHours = day !== null ? busyHours - 24 : 0
+  })
 
-      return {
-        ...resource,
-        busyHours: busyHours - 24
-      }
-    })
-    .sort((a, b) => {
-      if (sortDirection === 'asc') {
-        return a[sortColumn] > b[sortColumn] ? 1 : -1
-      }
-      if (sortDirection === 'desc') {
-        return a[sortColumn] < b[sortColumn] ? 1 : -1
-      }
-      return a.id - b.id
-    })
+  myResources.value.sort((a, b) => {
+    if (sortDirection.value === 'asc') {
+      return a[column] > b[column] ? 1 : -1
+    }
+    if (sortDirection.value === 'desc') {
+      return a[column] < b[column] ? 1 : -1
+    }
+    return a.id - b.id
+  })
+
+  // cause rendering free spaces !??!
+  myResources.value = [...myResources.value]
 }
 
 function getUTCDateOnly(d) {
@@ -161,7 +198,6 @@ onMounted(() => {
           resource.revenue = getRevenue(resource)
         })
         for (let i = 0; i < myResources.value.length; i++) {
-          console.log(myResources.value[i].revenue)
           totalRevenue.value += myResources.value[i].revenue
         }
       })
@@ -209,7 +245,7 @@ onMounted(() => {
           ]"
           @click="sortResources('price')"
         >
-          Price
+          Price/day
         </div>
       </div>
     </template>
@@ -343,7 +379,7 @@ onMounted(() => {
 /* Header */
 
 .mds-resource-details .mbsc-timeline-resource-col {
-  width: 280px;
+  width: 335px;
 }
 
 .mds-resource-details .mbsc-timeline-resource-header,
@@ -377,7 +413,7 @@ onMounted(() => {
 
 .mds-resource-details-seats,
 .mds-resource-details-price {
-  width: 78px;
+  width: 106px;
 }
 
 .mds-resource-details-seats {
@@ -409,7 +445,7 @@ onMounted(() => {
 .mds-resource-details-occuppancy {
   font-size: 15px;
   text-align: right;
-  background: #f8f8f8;
+  background-color: rgba(150, 150, 150, 0.1);
   padding-right: 15px;
 }
 
@@ -427,18 +463,18 @@ onMounted(() => {
   font-size: 15px;
   font-weight: 600;
   text-align: center;
-  background: #f8f8f8;
+  background: rgba(150, 150, 150, 0.1);
   padding: 0 5px;
 }
 
 .mds-resource-details .mbsc-timeline-sidebar-footer {
-  background: #feefee;
+  background-color: rgba(150, 150, 150, 0.1);
   border-top-color: #5a0101;
-  color: #5a0101;
+  color: #8c0000;
 }
 
 .mds-resource-details .mbsc-timeline-sidebar-col {
-  width: 85px;
+  width: 98px;
 }
 
 @supports (overflow: clip) {
