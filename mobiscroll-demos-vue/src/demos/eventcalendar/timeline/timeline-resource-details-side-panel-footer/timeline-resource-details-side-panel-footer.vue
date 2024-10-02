@@ -135,7 +135,7 @@ function sortResources(column, day = null) {
     resource.busyHours = day !== null ? busyHours - 24 : 0
   })
 
-  myResources.value.sort((a, b) => {
+  myResources.value = myResources.value.sort((a, b) => {
     if (sortDirection.value === 'asc') {
       return a[column] > b[column] ? 1 : -1
     }
@@ -145,7 +145,6 @@ function sortResources(column, day = null) {
     return a.id - b.id
   })
 
-  // cause rendering free spaces !??!
   myResources.value = [...myResources.value]
 }
 
