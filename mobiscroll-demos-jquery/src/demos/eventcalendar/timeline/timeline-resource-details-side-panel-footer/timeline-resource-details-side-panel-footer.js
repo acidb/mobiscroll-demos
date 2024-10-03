@@ -112,10 +112,28 @@ export default {
         calendar.setOptions({ resources: myResources.slice() });
       }
 
+      function updateSidebar() {
+        // <--- t3st
+        myResources.forEach(function (resource) {
+          $('#demo-resource-details .mds-resource-cell[data-resource-id="' + resource.id + '"]').html('$' + resource.revenue);
+        });
+        $('#demo-resource-details .mds-resource-details-total').html('$' + totalRevenue);
+      }
+
       var calendar = $('#demo-resource-details')
         .mobiscroll()
         .eventcalendar({
           // drag,
+          dragToResize: true, // <--- t3st
+          dragToMove: true, // <--- t3st
+          dragToCreate: true, // <--- t3st
+          clickToCreate: true, // <--- t3st
+          onPageLoaded: function (args, inst) {
+            // <--- t3st
+            console.log('on page loaded');
+            prepareData(inst);
+            updateSidebar();
+          },
           view: {
             timeline: {
               type: 'month',
@@ -160,7 +178,8 @@ export default {
             );
           },
           renderSidebar: function (resource) {
-            return '<div class="mds-resource-cell">$' + resource.revenue + '</div>';
+            // return '<div class="mds-resource-cell">$' + resource.revenue + '</div>';
+            return '<div class="mds-resource-cell" data-resource-id="' + resource.id + '">$' + resource.revenue + '</div>'; // <--- t3st
           },
           renderResourceFooter: function () {
             return '<div class="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>';
