@@ -215,52 +215,51 @@ onMounted(() => {
     :resources="myResources"
   >
     <template #resourceHeader>
-      <div class="mds-resource-details-title">
-        <div
-          :class="[
-            'mds-resource-header',
-            'mds-resource-details-name',
-            'mds-resource-sort-' + getSortArrow('name')
-          ]"
-          @click="sortResources('name')"
-        >
-          Room
-        </div>
-        <div
-          :class="[
-            'mds-resource-header',
-            'mds-resource-details-seats',
-            'mds-resource-sort-' + getSortArrow('seats')
-          ]"
-          @click="sortResources('seats')"
-        >
-          Capacity
-        </div>
-        <div
-          :class="[
-            'mds-resource-header',
-            'mds-resource-details-price',
-            'mds-resource-sort-' + getSortArrow('price')
-          ]"
-          @click="sortResources('price')"
-        >
-          Price/day
-        </div>
+      <div
+        :class="[
+          'mds-resource-sort-header',
+          'mds-resource-cell',
+          'mds-resource-cell-name',
+          'mds-resource-sort-' + getSortArrow('name')
+        ]"
+        @click="sortResources('name')"
+      >
+        Room
+      </div>
+      <div
+        :class="[
+          'mds-resource-sort-header',
+          'mds-resource-cell',
+          'mds-resource-cell-seats',
+          'mds-resource-sort-' + getSortArrow('seats')
+        ]"
+        @click="sortResources('seats')"
+      >
+        Capacity
+      </div>
+      <div
+        :class="[
+          'mds-resource-sort-header',
+          'mds-resource-cell',
+          'mds-resource-cell-price',
+          'mds-resource-sort-' + getSortArrow('price')
+        ]"
+        @click="sortResources('price')"
+      >
+        Price/day
       </div>
     </template>
 
     <template #resource="resource">
-      <div class="mds-resource-details-cont">
-        <div class="mds-resource-header mds-resource-details-name">{{ resource.name }}</div>
-        <div class="mds-resource-header mds-resource-details-seats">
-          {{ resource.seats + ' seats' }}
-        </div>
-        <div class="mds-resource-header mds-resource-details-seats">{{ '$' + resource.price }}</div>
+      <div class="mds-resource-cell mds-resource-cell-name">{{ resource.name }}</div>
+      <div class="mds-resource-cell mds-resource-cell-seats">
+        {{ resource.seats + ' seats' }}
       </div>
+      <div class="mds-resource-cell mds-resource-cell-price">{{ '$' + resource.price }}</div>
     </template>
 
     <template #sidebar="resource">
-      <div class="mds-resource-details-sidebar">{{ resource.revenue }}</div>
+      <div class="mds-resource-cell">${{ resource.revenue }}</div>
     </template>
 
     <template #resourceFooter>
@@ -269,10 +268,7 @@ onMounted(() => {
 
     <template #sidebarHeader>
       <div
-        :class="[
-          'mds-resource-details-sidebar-header',
-          'mds-resource-sort-' + getSortArrow('revenue')
-        ]"
+        :class="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('revenue')]"
         @click="sortResources('revenue')"
       >
         Revenue
@@ -282,12 +278,12 @@ onMounted(() => {
     <template #day="data">
       <div
         :class="[
-          'mds-date-header-day-name',
+          'mds-resource-sort-header',
           'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())
         ]"
         @click="sortResources('busyHours', data.date.getTime())"
       >
-        <span>{{ formatDate('DD DDD', data.date) }}</span>
+        <span>{{ formatDate('D DDD', data.date) }}</span>
       </div>
     </template>
 
@@ -304,12 +300,91 @@ onMounted(() => {
 </template>
 
 <style>
-/* Sorting */
+/* Overrides */
+.mds-resource-details .mbsc-timeline-resource-header,
+.mds-resource-details .mbsc-timeline-resource-title,
+.mds-resource-details .mbsc-timeline-resource-footer,
+.mds-resource-details .mbsc-timeline-sidebar-header,
+.mds-resource-details .mbsc-timeline-sidebar-resource-title,
+.mds-resource-details .mbsc-timeline-sidebar-footer {
+  padding: 0;
+}
 
-.mds-resource-details-title .mds-resource-header,
-.mds-date-header-day-name,
-.mds-resource-details-sidebar-header {
+.mds-resource-details .mbsc-timeline-resource-col {
+  width: 335px;
+}
+
+.mds-resource-details .mbsc-timeline-sidebar-col {
+  width: 98px;
+}
+
+.mds-resource-details .mbsc-timeline-day {
+  width: 144px;
+}
+
+.mds-resource-details .mbsc-timeline-resource-title {
+  height: 100%;
+}
+
+@supports (overflow: clip) {
+  .mds-resource-details.mbsc-ltr .mbsc-schedule-event-inner {
+    left: 335px;
+  }
+  .mds-resource-details.mbsc-rtl .mbsc-schedule-event-inner {
+    right: 335px;
+  }
+}
+
+/* Resource grid */
+
+.mds-resource-cell {
+  display: inline-block;
+  height: 100%;
+  padding: 0 5px;
+  box-sizing: border-box;
+  vertical-align: top;
+  line-height: 50px;
+}
+
+.mds-resource-cell-name {
+  width: 120px;
+}
+
+.mds-resource-cell-seats,
+.mds-resource-cell-price {
+  width: 107px;
+}
+
+.mds-resource-cell-seats {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.mds-resource-details.mbsc-ios-dark .mds-resource-cell-seats,
+.mds-resource-details.mbsc-material-dark .mds-resource-cell-seats,
+.mds-resource-details.mbsc-windows-dark .mds-resource-cell-seats {
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+}
+
+/* Sort arrows */
+
+.mds-resource-sort-header {
   cursor: pointer;
+  position: relative;
+  line-height: 25px;
+  padding: 0 5px;
+  font-size: 14px;
+}
+
+.mds-resource-sort-header::after {
+  position: absolute;
+  opacity: 0.5;
+  right: 8px;
+}
+
+.mds-resource-sort-header:hover::after {
+  opacity: 1;
 }
 
 .mds-resource-sort-asc::after {
@@ -320,14 +395,6 @@ onMounted(() => {
   content: '↓';
 }
 
-.mds-resource-sort-asc::after,
-.mds-resource-sort-desc::after,
-.mds-resource-sort-def::after {
-  position: absolute;
-  opacity: 0.5;
-  right: 8px;
-}
-
 .mds-resource-sort-def::after {
   content: '‹›';
   right: 5px;
@@ -335,153 +402,30 @@ onMounted(() => {
   transform: translateY(-50%) rotate(90deg);
 }
 
-.mds-date-header-day-name span {
-  font-size: 14px;
-  line-height: 25px;
-  margin-left: 7px;
-}
-
-.mds-resource-sort-def:hover::after,
-.mds-resource-sort-asc:hover::after,
-.mds-resource-sort-desc:hover::after {
-  opacity: 1;
-}
-
-.mds-date-header-day-name.mds-resource-sort-asc::after,
-.mds-date-header-day-name.mds-resource-sort-desc::after {
-  font-size: 14px;
-  top: 12px;
-  transform: translateY(-50%);
-}
-
-.mds-date-header-day-name,
-.mds-resource-header,
-.mds-resource-details-sidebar-header {
-  position: relative;
-}
-
-.mds-resource-details-seats {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-}
-
-.mbsc-timeline-resource-header-cont.mbsc-ios-dark .mds-resource-details-seats,
-.mbsc-timeline-resource-header-cont.mbsc-material-dark .mds-resource-details-seats,
-.mbsc-timeline-resource-header-cont.mbsc-windows-dark .mds-resource-details-seats,
-.mbsc-timeline-resource.mbsc-ios-dark .mds-resource-details-seats,
-.mbsc-timeline-resource.mbsc-material-dark .mds-resource-details-seats,
-.mbsc-timeline-resource.mbsc-windows-dark .mds-resource-details-seats {
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
-}
-
-/* Header */
-
-.mds-resource-details .mbsc-timeline-resource-col {
-  width: 335px;
-}
-
-.mds-resource-details .mbsc-timeline-resource-header,
-.mds-resource-details .mbsc-timeline-resource-title,
-.mds-resource-details .mbsc-timeline-resource-footer,
-.mds-resource-details .mbsc-timeline-sidebar-header {
-  padding: 0;
-}
-
-.mds-resource-details .mbsc-timeline-resource-title {
-  height: 100%;
-}
-
-.mds-resource-details-cont {
-  line-height: 50px;
-  height: 100%;
-}
-
-.mds-resource-header {
-  display: inline-block;
-  height: 100%;
-  padding: 0 5px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  vertical-align: top;
-}
-
-.mds-resource-details-name {
-  width: 120px;
-}
-
-.mds-resource-details-seats,
-.mds-resource-details-price {
-  width: 106px;
-}
-
-.mds-resource-details-seats {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-}
-
-.mds-resource-details-title {
-  font-weight: 600;
-  line-height: 26px;
-}
-
-.mds-resource-details-sidebar-header {
-  line-height: 26px;
-  padding: 0 5px;
-}
-
-.mds-resource-details .mbsc-timeline-day {
-  width: 144px;
-}
-
-.mds-resource-details-sidebar {
-  line-height: 36px;
-  text-align: center;
-}
-
 /* Footer */
-
-.mds-resource-details-occuppancy {
-  font-size: 15px;
-  text-align: right;
-  background-color: rgba(150, 150, 150, 0.1);
-  padding-right: 15px;
-}
 
 .mds-resource-details-footer {
   line-height: 50px;
-}
-
-.mds-resource-details-total {
-  font-size: 18px;
-  text-align: center;
-  line-height: 36px;
+  background: rgba(150, 150, 150, 0.1);
 }
 
 .mds-resource-details-footer-day {
   font-size: 15px;
   font-weight: 600;
   text-align: center;
-  background: rgba(150, 150, 150, 0.1);
   padding: 0 5px;
 }
 
-.mds-resource-details .mbsc-timeline-sidebar-footer {
-  background-color: rgba(150, 150, 150, 0.1);
-  border-top-color: #5a0101;
+.mds-resource-details-occuppancy {
+  font-size: 15px;
+  text-align: end;
+  text-align: right;
+  padding: 0 15px;
+}
+
+.mds-resource-details-total {
+  font-size: 18px;
+  padding: 0 5px;
   color: #8c0000;
-}
-
-.mds-resource-details .mbsc-timeline-sidebar-col {
-  width: 98px;
-}
-
-@supports (overflow: clip) {
-  .mds-resource-details.mbsc-ltr .mbsc-schedule-event-inner {
-    left: 280px;
-  }
-  .mds-resource-details.mbsc-rtl .mbsc-schedule-event-inner {
-    right: 280px;
-  }
 }
 </style>
