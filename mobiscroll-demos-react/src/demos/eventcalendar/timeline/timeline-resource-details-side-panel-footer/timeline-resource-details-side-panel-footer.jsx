@@ -120,12 +120,36 @@ function App() {
     [getDayDiff],
   );
 
+  // <--- d3l
+  const prepareData = useCallback(() => {
+    myResources.forEach((resource) => {
+      resource['revenue'] = getRevenue(resource);
+    });
+    setTotalRevenue(myResources.reduce((total, resource) => total + resource['revenue'], 0));
+  }, [getRevenue, myResources]);
+
   const getSortArrow = useCallback((column, day) => {
     if (sortColumn.current === column && day === tempDay.current) {
       return sortDirection.current === 'asc' ? 'asc' : sortDirection.current === 'desc' ? 'desc' : 'def';
     }
     return 'def';
   }, []);
+
+  const getBusyHours = useCallback(
+    (resource, timestamp) => {
+      var startOfDay = new Date(timestamp);
+      var endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1);
+      return myEvents.reduce((totalHours, event) => {
+        if (event.resource === resource.id) {
+          var eventStart = Math.max(+startOfDay, +new Date(event.start));
+          var eventEnd = Math.min(+endOfDay, +new Date(event.end));
+          return totalHours + (eventStart < eventEnd ? (eventEnd - eventStart) / (60 * 60 * 1000) : 0);
+        }
+        return totalHours;
+      }, 0);
+    },
+    [myEvents],
+  );
 
   const sortResources = useCallback(
     (column, day) => {
@@ -140,17 +164,7 @@ function App() {
       tempDay.current = day;
 
       const updatedResources = myResources.map((resource) => {
-        const endOfDay = day + 86400000;
-
-        const busyHours = myEvents.reduce((total, event) => {
-          if (event.resource === resource.id) {
-            const eventStart = Math.max(day, new Date(event.start).getTime());
-            const eventEnd = Math.min(endOfDay, new Date(event.end).getTime());
-            return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total;
-          }
-          return total;
-        }, 0);
-
+        const busyHours = getBusyHours(resource, day, myEvents);
         return {
           ...resource,
           busyHours: busyHours - 24,
@@ -169,7 +183,7 @@ function App() {
 
       setMyResources(updatedResources);
     },
-    [myResources, myEvents],
+    [myResources, getBusyHours, myEvents],
   );
 
   const myCustomRenderDay = useCallback(
@@ -271,18 +285,19 @@ function App() {
       'https://trial.mobiscroll.com/multiday-events/',
       (events) => {
         setEvents(events);
-        myResources.forEach((resource) => {
-          resource['revenue'] = getRevenue(resource);
-        });
-        setTotalRevenue(myResources.reduce((total, resource) => total + resource['revenue'], 0));
+        prepareData();
       },
       'jsonp',
     );
-  }, [getRevenue, myResources]);
+  }, [getRevenue, myResources, prepareData]);
 
   return (
     <Eventcalendar
       // drag
+      dragToResize={true} // <--- t3st
+      dragToMove={true} // <--- t3st
+      dragToCreate={true} // <--- t3st
+      clickToCreate={true} // <--- t3st
       ref={calRef}
       view={myView}
       data={myEvents}
@@ -296,6 +311,7 @@ function App() {
       renderDay={myCustomRenderDay}
       renderDayFooter={myCustomDayFooter}
       renderSidebarFooter={myCustomSidebarFooter}
+      onPageLoaded={prepareData}
     />
   );
 }
