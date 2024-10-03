@@ -5,6 +5,10 @@ import { formatDate, MbscCalendarEvent, MbscEventcalendarView, MbscResource, set
 setOptions({
   // locale,
   // theme
+  themeVariant: 'light', // <--- t3st
+  // theme: 'ios', // <--- t3st
+  theme: 'windows', // <--- t3st
+  // theme: 'material', // <--- t3st
 });
 
 const oneDay = 60000 * 60 * 24;

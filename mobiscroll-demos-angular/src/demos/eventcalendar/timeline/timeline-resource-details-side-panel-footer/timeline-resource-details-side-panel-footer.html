@@ -1,44 +1,41 @@
-<div class="mds-resource-details">
-  <mbsc-eventcalendar #mycalendar [view]="view" [data]="myEvents" [resources]="myResources"
-    [resourceHeaderTemplate]="resourceHeaderTemp" [resourceTemplate]="resourceTemp" [sidebarTemplate]="sidebarTemp"
-    [resourceFooterTemplate]="resourceFooterTemp" [dayTemplate]="dayTemp" [sidebarHeaderTemplate]="sidebarHeaderTemp"
-    [dayFooterTemplate]="dayFooterTemp" [sidebarFooterTemplate]="sidebarFooterTemp"></mbsc-eventcalendar>
-</div>
+<mbsc-eventcalendar class="mds-resource-details" #mycalendar [view]="view" [data]="myEvents" [resources]="myResources"
+  [resourceHeaderTemplate]="resourceHeaderTemp" [resourceTemplate]="resourceTemp" [sidebarTemplate]="sidebarTemp"
+  [resourceFooterTemplate]="resourceFooterTemp" [dayTemplate]="dayTemp" [sidebarHeaderTemplate]="sidebarHeaderTemp"
+  [dayFooterTemplate]="dayFooterTemp" [sidebarFooterTemplate]="sidebarFooterTemp"></mbsc-eventcalendar>
 
 <ng-template #resourceHeaderTemp>
-  <div class="mds-resource-details-title">
-    <div [ngClass]="['mds-resource-header', 'mds-resource-details-name', 'mds-resource-sort-' + getSortArrow('name')]"
-      class="mds-resource-header mds-resource-details-name" (click)="sortResources('name')">
-      Room
-    </div>
-    <div [ngClass]="['mds-resource-header', 'mds-resource-details-seats', 'mds-resource-sort-' + getSortArrow('seats')]"
-      class="mds-resource-header mds-resource-details-seats" (click)="sortResources('seats')">
-      Capacity
-    </div>
-    <div [ngClass]="['mds-resource-header', 'mds-resource-details-price', 'mds-resource-sort-' + getSortArrow('price')]"
-      class="mds-resource-header mds-resource-details-price" (click)="sortResources('price')">
-      Price
-    </div>
+  <div
+    [ngClass]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-name', 'mds-resource-sort-' + getSortArrow('name')]"
+    (click)="sortResources('name')">
+    Room
+  </div>
+  <div
+    [ngClass]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-seats', 'mds-resource-sort-' + getSortArrow('seats')]"
+    (click)="sortResources('seats')" class="">
+    Capacity
+  </div>
+  <div
+    [ngClass]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-price', 'mds-resource-sort-' + getSortArrow('price')]"
+    (click)="sortResources('price')">
+    Price/day
   </div>
 </ng-template>
 
 <ng-template #resourceTemp let-resource>
-  <div class="mds-resource-details-cont">
-    <div class="mds-resource-header mds-resource-details-name">{{resource.name}}</div>
-    <div class="mds-resource-header mds-resource-details-seats">{{resource.seats + ' seats'}}</div>
-    <div class="mds-resource-header mds-resource-details-seats">{{'$' + resource.price}}</div>
-  </div>
+  <div class="mds-resource-cell mds-resource-cell-name">{{resource.name}}</div>
+  <div class="mds-resource-cell mds-resource-cell-seats">{{resource.seats + ' seats'}}</div>
+  <div class="mds-resource-cell mds-resource-cell-seats">{{'$' + resource.price}}</div>
 </ng-template>
 
 <ng-template #dayTemp let-data>
-  <div [ngClass]="['mds-date-header-day-name', 'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())]"
+  <div [ngClass]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())]"
     (click)="sortResources('busyHours', data.date.getTime())">
-    <span>{{ formatDate('DD DDD', data.date) }}</span>
+    <span>{{ formatDate('D DDD', data.date) }}</span>
   </div>
 </ng-template>
 
 <ng-template #sidebarTemp let-resource>
-  <div class="mds-resource-details-sidebar">{{resource.revenue}}</div>
+  <div class="mds-resource-cell">${{resource.revenue}}</div>
 </ng-template>
 
 <ng-template #resourceFooterTemp>
@@ -46,7 +43,7 @@
 </ng-template>
 
 <ng-template #sidebarHeaderTemp>
-  <div [ngClass]="['mds-resource-details-sidebar-header', 'mds-resource-sort-' + getSortArrow('revenue')]"
+  <div [ngClass]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('revenue')]"
     (click)="sortResources('revenue')">
     Revenue
   </div>
