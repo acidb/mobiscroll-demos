@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
 
   formatDate = formatDate;
   myEvents: MbscCalendarEvent[] = [];
+  loadedEvents: MbscCalendarEvent[] = [];
   sortColumn: string = '';
   sortDirection: string = 'asc';
   sortDay: any = null;
@@ -116,7 +117,7 @@ export class AppComponent implements OnInit {
   getRevenue(resource: MbscResource) {
     if (this.myCalendar) {
       let days = 0;
-      for (const event of this.myEvents) {
+      for (const event of this.loadedEvents) {
         if (event.resource === resource.id) {
           days += this.getDayDiff(new Date(event.start as Date), new Date(event.end as Date));
         }
@@ -191,15 +192,11 @@ export class AppComponent implements OnInit {
   }
 
   prepareData() {
-    console.log('here'); // <--- d3l
     setTimeout(() => {
-      // ?!?!
-      this.myEvents = this.myCalendar.getEvents();
-
+      this.loadedEvents = this.myCalendar.getEvents();
       this.myResources.forEach((resource) => {
         resource['revenue'] = this.getRevenue(resource);
       });
-
       this.totalRevenue = this.myResources.reduce((total, resource) => total + resource['revenue'], 0);
     }, 0);
   }
