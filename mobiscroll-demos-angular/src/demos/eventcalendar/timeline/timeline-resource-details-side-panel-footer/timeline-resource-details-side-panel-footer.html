@@ -1,24 +1,45 @@
-<mbsc-eventcalendar (onPageLoaded)="prepareData()" [clickToCreate]="true" [dragToCreate]="true" [dragToMove]="true"
-  [dragToResize]="true" class="mds-resource-details" #myCalendar [view]="view" [data]="myEvents"
-  [resources]="myResources" [resourceHeaderTemplate]="resourceHeaderTemp" [resourceTemplate]="resourceTemp"
-  [sidebarTemplate]="sidebarTemp" [resourceFooterTemplate]="resourceFooterTemp" [dayTemplate]="dayTemp"
-  [sidebarHeaderTemplate]="sidebarHeaderTemp" [dayFooterTemplate]="dayFooterTemp"
-  [sidebarFooterTemplate]="sidebarFooterTemp"></mbsc-eventcalendar>
+<mbsc-eventcalendar
+  #myCalendar
+  class="mds-resource-details"
+  [clickToCreate]="true"
+  [data]="myEvents"
+  [dayFooterTemplate]="dayFooterTemp"
+  [dayTemplate]="dayTemp"
+  [dragToCreate]="true"
+  [dragToMove]="true"
+  [dragToResize]="true"
+  [resourceFooterTemplate]="resourceFooterTemp"
+  [resourceHeaderTemplate]="resourceHeaderTemp"
+  [resourceTemplate]="resourceTemp"
+  [resources]="myResources"
+  [sidebarFooterTemplate]="sidebarFooterTemp"
+  [sidebarHeaderTemplate]="sidebarHeaderTemp"
+  [sidebarTemplate]="sidebarTemp"
+  [view]="view"
+  (onEventCreated)="onEventCreated()"
+  (onEventDeleted)="onEventDeleted()"
+  (onEventUpdated)="onEventUpdated()"
+  (onPageLoading)="refreshData()"
+></mbsc-eventcalendar>
 
 <ng-template #resourceHeaderTemp>
   <div
     [ngClass]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-name', 'mds-resource-sort-' + getSortArrow('name')]"
-    (click)="sortResources('name')">
+    (click)="sortResources('name')"
+  >
     Room
   </div>
   <div
     [ngClass]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-seats', 'mds-resource-sort-' + getSortArrow('seats')]"
-    (click)="sortResources('seats')" class="">
+    (click)="sortResources('seats')"
+    class=""
+  >
     Capacity
   </div>
   <div
     [ngClass]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-price', 'mds-resource-sort-' + getSortArrow('price')]"
-    (click)="sortResources('price')">
+    (click)="sortResources('price')"
+  >
     Price/day
   </div>
 </ng-template>
@@ -30,8 +51,10 @@
 </ng-template>
 
 <ng-template #dayTemp let-data>
-  <div [ngClass]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())]"
-    (click)="sortResources('busyHours', data.date.getTime())">
+  <div
+    [ngClass]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())]"
+    (click)="sortResources('busyHours', data.date.getTime())"
+  >
     <span>{{ formatDate('D DDD', data.date) }}</span>
   </div>
 </ng-template>
@@ -45,8 +68,7 @@
 </ng-template>
 
 <ng-template #sidebarHeaderTemp>
-  <div [ngClass]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('revenue')]"
-    (click)="sortResources('revenue')">
+  <div [ngClass]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('revenue')]" (click)="sortResources('revenue')">
     Revenue
   </div>
 </ng-template>
