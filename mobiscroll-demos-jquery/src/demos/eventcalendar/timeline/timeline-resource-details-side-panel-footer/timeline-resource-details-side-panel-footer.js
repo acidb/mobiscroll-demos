@@ -69,7 +69,7 @@ export default {
         }, 0);
       }
 
-      function prepareData(inst) {
+      function refreshData(inst) {
         // Events for the current view
         myEvents = inst.getEvents();
 
@@ -83,28 +83,29 @@ export default {
       }
 
       function sortResources(column, day) {
-        if (sortColumn === column && day === sortDay) {
-          sortDirection = sortDirection === 'asc' ? 'desc' : sortDirection === 'desc' ? 'def' : 'asc';
-        } else {
-          sortColumn = column;
-          sortDirection = 'asc';
+        if (column) {
+          if (sortColumn === column && day === sortDay) {
+            sortDirection = sortDirection === 'asc' ? 'desc' : sortDirection === 'desc' ? 'def' : 'asc';
+          } else {
+            sortColumn = column;
+            sortDirection = 'asc';
+          }
+          sortDay = day;
         }
 
-        sortDay = day;
-
-        if (day) {
+        if (sortDay) {
           // Precalculate busy hours for the clicked day
           myResources.forEach(function (resource) {
-            resource.busyHours = getBusyHours(resource, day);
+            resource.busyHours = getBusyHours(resource, sortDay);
           });
         }
 
         myResources.sort(function (a, b) {
           if (sortDirection === 'asc') {
-            return a[column] > b[column] ? 1 : -1;
+            return a[sortColumn] > b[sortColumn] ? 1 : -1;
           }
           if (sortDirection === 'desc') {
-            return a[column] < b[column] ? 1 : -1;
+            return a[sortColumn] < b[sortColumn] ? 1 : -1;
           }
           return a.id - b.id;
         });
@@ -112,28 +113,13 @@ export default {
         calendar.setOptions({ resources: myResources.slice() });
       }
 
-      function updateSidebar() {
-        // <--- t3st
-        myResources.forEach(function (resource) {
-          $('#demo-resource-details .mds-resource-cell[data-resource-id="' + resource.id + '"]').html('$' + resource.revenue);
-        });
-        $('#demo-resource-details .mds-resource-details-total').html('$' + totalRevenue);
-      }
-
       var calendar = $('#demo-resource-details')
         .mobiscroll()
         .eventcalendar({
-          // drag,
-          dragToResize: true, // <--- t3st
-          dragToMove: true, // <--- t3st
-          dragToCreate: true, // <--- t3st
-          clickToCreate: true, // <--- t3st
-          onPageLoaded: function (args, inst) {
-            // <--- t3st
-            console.log('on page loaded');
-            prepareData(inst);
-            updateSidebar();
-          },
+          clickToCreate: true,
+          dragToResize: true,
+          dragToMove: true,
+          dragToCreate: true,
           view: {
             timeline: {
               type: 'month',
@@ -178,8 +164,7 @@ export default {
             );
           },
           renderSidebar: function (resource) {
-            // return '<div class="mds-resource-cell">$' + resource.revenue + '</div>';
-            return '<div class="mds-resource-cell" data-resource-id="' + resource.id + '">$' + resource.revenue + '</div>'; // <--- t3st
+            return '<div class="mds-resource-cell">$' + resource.revenue + '</div>';
           },
           renderResourceFooter: function () {
             return '<div class="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>';
@@ -218,8 +203,19 @@ export default {
             return '<div class="mds-resource-details-footer mds-resource-details-total">$' + totalRevenue + '</div>';
           },
           onPageLoading: function (args, inst) {
-            // <--- d3l
-            // prepareData(inst);
+            refreshData(inst);
+          },
+          onEventCreated: function (args, inst) {
+            refreshData(inst);
+            sortResources();
+          },
+          onEventDeleted: function (args, inst) {
+            refreshData(inst);
+            sortResources();
+          },
+          onEventUpdated: function (args, inst) {
+            refreshData(inst);
+            sortResources();
           },
         })
         .mobiscroll('getInst');
@@ -234,7 +230,7 @@ export default {
         'https://trial.mobiscroll.com/multiday-events/?callback=?',
         function (events) {
           calendar.setEvents(events);
-          prepareData(calendar);
+          refreshData(calendar);
         },
         'jsonp',
       );
