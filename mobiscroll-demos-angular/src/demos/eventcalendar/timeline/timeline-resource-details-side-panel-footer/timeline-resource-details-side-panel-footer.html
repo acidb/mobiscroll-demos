@@ -1,4 +1,6 @@
-<mbsc-eventcalendar class="mds-resource-details" #mycalendar [view]="view" [data]="myEvents" [resources]="myResources"
+<!-- remove drag and click to create t3st -->
+<mbsc-eventcalendar (onPageLoaded)="prepareData()" [clickToCreate]="true" [dragToCreate]="true" [dragToMove]="true"
+  class="mds-resource-details" #myCalendar [view]="view" [data]="myEvents" [resources]="myResources"
   [resourceHeaderTemplate]="resourceHeaderTemp" [resourceTemplate]="resourceTemp" [sidebarTemplate]="sidebarTemp"
   [resourceFooterTemplate]="resourceFooterTemp" [dayTemplate]="dayTemp" [sidebarHeaderTemplate]="sidebarHeaderTemp"
   [dayFooterTemplate]="dayFooterTemp" [sidebarFooterTemplate]="sidebarFooterTemp"></mbsc-eventcalendar>

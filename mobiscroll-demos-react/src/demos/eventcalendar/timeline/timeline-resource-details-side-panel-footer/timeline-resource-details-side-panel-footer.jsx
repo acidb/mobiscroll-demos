@@ -10,7 +10,6 @@ setOptions({
 function App() {
   const calRef = useRef();
   const [myEvents, setEvents] = useState([]);
-  const oneDay = 60000 * 60 * 24;
   const sortColumn = useRef('');
   const sortDirection = useRef('');
   const sortDay = useRef(null);
@@ -100,7 +99,10 @@ function App() {
 
   const getUTCDateOnly = useCallback((d) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()), []);
 
-  const getDayDiff = useCallback((d1, d2) => Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1, [getUTCDateOnly]);
+  const getDayDiff = useCallback(
+    (d1, d2) => Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / (60000 * 60 * 24)) + 1,
+    [getUTCDateOnly],
+  );
 
   const getRevenue = useCallback(
     (resource) => {

@@ -14,7 +14,6 @@ setOptions({
 
 const calendarElm = ref(null)
 const myEvents = ref()
-const oneDay = 60000 * 60 * 24
 const sortColumn = ref('')
 const sortDirection = ref('')
 const sortDay = ref(null)
@@ -104,7 +103,7 @@ function getUTCDateOnly(d) {
 }
 
 function getDayDiff(d1, d2) {
-  return Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1
+  return Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / (60000 * 60 * 24)) + 1
 }
 
 function getRevenue(resource) {

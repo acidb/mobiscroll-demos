@@ -5,13 +5,7 @@ import { formatDate, MbscCalendarEvent, MbscEventcalendarView, MbscResource, set
 setOptions({
   // locale,
   // theme
-  themeVariant: 'light', // <--- t3st
-  // theme: 'ios', // <--- t3st
-  theme: 'windows', // <--- t3st
-  // theme: 'material', // <--- t3st
 });
-
-const oneDay = 60000 * 60 * 24;
 
 @Component({
   selector: 'app-timeline-timeline-resource-details-side-panel-footer',
@@ -21,18 +15,16 @@ const oneDay = 60000 * 60 * 24;
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
+
+  @ViewChild('myCalendar', { static: false })
+  myCalendar: any;
+
   formatDate = formatDate;
-
-  @ViewChild('mycalendar', { static: false })
-  mycalendar: any;
-
-  view: MbscEventcalendarView = {
-    timeline: {
-      type: 'month',
-    },
-  };
-
   myEvents: MbscCalendarEvent[] = [];
+  sortColumn: string = '';
+  sortDirection: string = 'asc';
+  sortDay: any = null;
+  totalRevenue: any;
 
   myResources: MbscResource[] = [
     {
@@ -107,70 +99,26 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  tempDay: any = null;
-  sortColumn: string = '';
-  sortDirection: string = 'asc';
-  totalRevenue: any;
-
-  getSortArrow(column: string, day: any = null): string {
-    if (this.sortColumn === column && day === this.tempDay) {
-      return this.sortDirection === 'asc' ? 'asc' : this.sortDirection === 'desc' ? 'desc' : 'def';
-    }
-    return 'def';
-  }
-
-  sortResources(column: string, day: any = null): void {
-    if (this.sortColumn === column && day === this.tempDay) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : this.sortDirection === 'desc' ? 'def' : 'asc';
-    } else {
-      this.sortColumn = column;
-      this.sortDirection = 'asc';
-    }
-    this.tempDay = day;
-
-    this.myResources = this.myResources
-      .map((resource) => ({
-        ...resource,
-        busyHours: this.getBusyHours(resource, this.tempDay) - 24,
-      }))
-      .sort((a: any, b: any) => {
-        if (this.sortDirection === 'asc') {
-          return a[this.sortColumn] > b[this.sortColumn] ? 1 : -1;
-        }
-        if (this.sortDirection === 'desc') {
-          return a[this.sortColumn] < b[this.sortColumn] ? 1 : -1;
-        }
-        return a.id - b.id;
-      });
-  }
-
-  getBusyHours(resource: MbscResource, startOfDay: number): number {
-    const endOfDay = startOfDay + 86400000;
-
-    return this.myEvents.reduce((total, event) => {
-      if (event.resource === resource.id) {
-        const eventStart = Math.max(startOfDay, new Date(event.start as Date).getTime());
-        const eventEnd = Math.min(endOfDay, new Date(event.end as Date).getTime());
-        return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total;
-      }
-      return total;
-    }, 0);
-  }
+  view: MbscEventcalendarView = {
+    timeline: {
+      type: 'month',
+    },
+  };
 
   getUTCDateOnly(d: Date) {
     return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
   }
 
   getDayDiff(d1: Date, d2: Date) {
-    return Math.round((this.getUTCDateOnly(d2) - this.getUTCDateOnly(d1)) / oneDay) + 1;
+    return Math.round((this.getUTCDateOnly(d2) - this.getUTCDateOnly(d1)) / (60 * 60 * 24 * 1000)) + 1;
   }
 
   getRevenue(resource: MbscResource) {
-    if (this.mycalendar) {
+    if (this.myCalendar) {
       let days = 0;
-      for (const event of this.mycalendar.getEvents()) {
+      for (const event of this.myEvents) {
         if (event.resource === resource.id) {
-          days += this.getDayDiff(new Date(event.start), new Date(event.end));
+          days += this.getDayDiff(new Date(event.start as Date), new Date(event.end as Date));
         }
       }
       return days * resource['price'];
@@ -197,16 +145,69 @@ export class AppComponent implements OnInit {
     return occuppancy.toFixed(0);
   }
 
+  getSortArrow(column: string, day: any = null): string {
+    if (this.sortColumn === column && day === this.sortDay) {
+      return this.sortDirection === 'asc' ? 'asc' : this.sortDirection === 'desc' ? 'desc' : 'def';
+    }
+    return 'def';
+  }
+
+  getBusyHours(resource: MbscResource, startOfDay: number): number {
+    const endOfDay = startOfDay + 86400000;
+
+    return this.myEvents.reduce((total, event) => {
+      if (event.resource === resource.id) {
+        const eventStart = Math.max(startOfDay, new Date(event.start as Date).getTime());
+        const eventEnd = Math.min(endOfDay, new Date(event.end as Date).getTime());
+        return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total;
+      }
+      return total;
+    }, 0);
+  }
+
+  sortResources(column: string, day: any = null): void {
+    if (this.sortColumn === column && day === this.sortDay) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : this.sortDirection === 'desc' ? 'def' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.sortDay = day;
+
+    this.myResources = this.myResources
+      .map((resource) => ({
+        ...resource,
+        busyHours: this.getBusyHours(resource, this.sortDay) - 24,
+      }))
+      .sort((a: any, b: any) => {
+        if (this.sortDirection === 'asc') {
+          return a[this.sortColumn] > b[this.sortColumn] ? 1 : -1;
+        }
+        if (this.sortDirection === 'desc') {
+          return a[this.sortColumn] < b[this.sortColumn] ? 1 : -1;
+        }
+        return a.id - b.id;
+      });
+  }
+
+  prepareData() {
+    console.log('here'); // <--- d3l
+    setTimeout(() => {
+      // ?!?!
+      this.myEvents = this.myCalendar.getEvents();
+
+      this.myResources.forEach((resource) => {
+        resource['revenue'] = this.getRevenue(resource);
+      });
+
+      this.totalRevenue = this.myResources.reduce((total, resource) => total + resource['revenue'], 0);
+    }, 0);
+  }
+
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/multiday-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
-      setTimeout(() => {
-        this.myResources.forEach((resource) => {
-          resource['revenue'] = this.getRevenue(resource);
-        });
-
-        this.totalRevenue = this.myResources.reduce((total, resource) => total + resource['revenue'], 0);
-      }, 0);
+      this.prepareData();
     });
   }
 }
