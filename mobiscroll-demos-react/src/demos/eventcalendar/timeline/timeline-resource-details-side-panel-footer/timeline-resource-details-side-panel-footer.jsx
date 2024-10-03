@@ -7,24 +7,14 @@ setOptions({
   // themeJs
 });
 
-const oneDay = 60000 * 60 * 24;
-
 function App() {
+  const calRef = useRef();
   const [myEvents, setEvents] = useState([]);
-  const [totalRevenue, setTotalRevenue] = useState(0);
+  const oneDay = 60000 * 60 * 24;
   const sortColumn = useRef('');
   const sortDirection = useRef('');
-  const tempDay = useRef(null);
-  const calRef = useRef();
-
-  const myView = useMemo(
-    () => ({
-      timeline: {
-        type: 'month',
-      },
-    }),
-    [],
-  );
+  const sortDay = useRef(null);
+  const [totalRevenue, setTotalRevenue] = useState(0);
 
   const [myResources, setMyResources] = useState([
     {
@@ -99,6 +89,15 @@ function App() {
     },
   ]);
 
+  const myView = useMemo(
+    () => ({
+      timeline: {
+        type: 'month',
+      },
+    }),
+    [],
+  );
+
   const getUTCDateOnly = useCallback((d) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()), []);
 
   const getDayDiff = useCallback((d1, d2) => Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / oneDay) + 1, [getUTCDateOnly]);
@@ -120,16 +119,8 @@ function App() {
     [getDayDiff],
   );
 
-  // <--- d3l
-  const prepareData = useCallback(() => {
-    myResources.forEach((resource) => {
-      resource['revenue'] = getRevenue(resource);
-    });
-    setTotalRevenue(myResources.reduce((total, resource) => total + resource['revenue'], 0));
-  }, [getRevenue, myResources]);
-
   const getSortArrow = useCallback((column, day) => {
-    if (sortColumn.current === column && day === tempDay.current) {
+    if (sortColumn.current === column && day === sortDay.current) {
       return sortDirection.current === 'asc' ? 'asc' : sortDirection.current === 'desc' ? 'desc' : 'def';
     }
     return 'def';
@@ -137,6 +128,10 @@ function App() {
 
   const getBusyHours = useCallback(
     (resource, timestamp) => {
+      if (timestamp === null) {
+        // ?!?
+        return 0;
+      }
       var startOfDay = new Date(timestamp);
       var endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1);
       return myEvents.reduce((totalHours, event) => {
@@ -151,18 +146,24 @@ function App() {
     [myEvents],
   );
 
+  const prepareData = useCallback(() => {
+    myResources.forEach((resource) => {
+      resource['revenue'] = getRevenue(resource);
+    });
+    setTotalRevenue(myResources.reduce((total, resource) => total + resource['revenue'], 0));
+  }, [getRevenue, myResources]);
+
   const sortResources = useCallback(
     (column, day) => {
-      sortColumn.current = column;
-
-      if (sortColumn.current === column && day === tempDay.current) {
+      if (sortColumn.current === column && day === sortDay.current) {
         sortDirection.current = sortDirection.current === 'asc' ? 'desc' : sortDirection.current === 'desc' ? 'def' : 'asc';
       } else {
         sortColumn.current = column;
         sortDirection.current = 'asc';
       }
-      tempDay.current = day;
+      sortDay.current = day;
 
+      // ?!?!
       const updatedResources = myResources.map((resource) => {
         const busyHours = getBusyHours(resource, day, myEvents);
         return {
