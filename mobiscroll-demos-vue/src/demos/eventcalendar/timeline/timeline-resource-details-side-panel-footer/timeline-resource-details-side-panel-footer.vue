@@ -20,76 +20,16 @@ const sortDay = ref(null)
 const totalRevenue = ref(0)
 
 const myResources = ref([
-  {
-    id: 1,
-    name: 'Horizon',
-    seats: 1200,
-    color: '#4a4a4a',
-    price: 1000
-  },
-  {
-    id: 2,
-    name: 'Apex Hall',
-    seats: 90,
-    color: '#fdf500',
-    price: 600
-  },
-  {
-    id: 3,
-    name: 'Jade Room',
-    seats: 700,
-    color: '#00aaff',
-    price: 900
-  },
-  {
-    id: 4,
-    name: 'Dome Arena',
-    seats: 850,
-    color: '#239a21',
-    price: 750
-  },
-  {
-    id: 5,
-    name: 'Forum Plaza',
-    seats: 900,
-    color: '#8f1ed6',
-    price: 700
-  },
-  {
-    id: 6,
-    name: 'Gallery',
-    seats: 300,
-    color: '#0077b6',
-    price: 650
-  },
-  {
-    id: 7,
-    name: 'Icon Hall',
-    seats: 450,
-    color: '#e63946',
-    price: 850
-  },
-  {
-    id: 8,
-    name: 'Broadway',
-    seats: 250,
-    color: '#ff0101',
-    price: 800
-  },
-  {
-    id: 9,
-    name: 'Central Hub',
-    seats: 400,
-    color: '#01adff',
-    price: 1100
-  },
-  {
-    id: 10,
-    name: 'Empire Hall',
-    seats: 550,
-    color: '#ff4600',
-    price: 950
-  }
+  { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },
+  { id: 2, name: 'Apex Hall', seats: 90, color: '#fdf500', price: 600 },
+  { id: 3, name: 'Jade Room', seats: 700, color: '#00aaff', price: 900 },
+  { id: 4, name: 'Dome Arena', seats: 850, color: '#239a21', price: 750 },
+  { id: 5, name: 'Forum Plaza', seats: 900, color: '#8f1ed6', price: 700 },
+  { id: 6, name: 'Gallery', seats: 300, color: '#0077b6', price: 650 },
+  { id: 7, name: 'Icon Hall', seats: 450, color: '#e63946', price: 850 },
+  { id: 8, name: 'Broadway', seats: 250, color: '#ff0101', price: 800 },
+  { id: 9, name: 'Central Hub', seats: 400, color: '#01adff', price: 1100 },
+  { id: 10, name: 'Empire Hall', seats: 550, color: '#ff4600', price: 950 }
 ])
 
 const myView = {
@@ -157,7 +97,7 @@ function getBusyHours(resource, timestamp) {
   }, 0)
 }
 
-function prepareData() {
+function refreshData() {
   setTimeout(function () {
     myResources.value.forEach(function (resource) {
       resource.revenue = getRevenue(resource)
@@ -165,38 +105,40 @@ function prepareData() {
     for (let i = 0; i < myResources.value.length; i++) {
       totalRevenue.value += myResources.value[i].revenue
     }
+    sortResources()
   })
 }
 
 function sortResources(column, day = null) {
-  if (sortColumn.value === column && day === sortDay.value) {
-    sortDirection.value =
-      sortDirection.value === 'asc' ? 'desc' : sortDirection.value === 'desc' ? 'def' : 'asc'
-  } else {
-    sortColumn.value = column
-    sortDirection.value = 'asc'
+  if (column) {
+    if (sortColumn.value === column && day === sortDay.value) {
+      sortDirection.value =
+        sortDirection.value === 'asc' ? 'desc' : sortDirection.value === 'desc' ? 'def' : 'asc'
+    } else {
+      sortColumn.value = column
+      sortDirection.value = 'asc'
+    }
+    sortDay.value = day
   }
 
-  sortDay.value = day
-
-  if (day) {
+  if (sortDay.value) {
     // Precalculate busy hours for the clicked day
     myResources.value.forEach(function (resource) {
       resource.busyHours = getBusyHours(resource, day)
     })
   }
 
-  myResources.value = myResources.value.sort((a, b) => {
-    if (sortDirection.value === 'asc') {
-      return a[column] > b[column] ? 1 : -1
-    }
-    if (sortDirection.value === 'desc') {
-      return a[column] < b[column] ? 1 : -1
-    }
-    return a.id - b.id
-  })
-
-  myResources.value = [...myResources.value]
+  myResources.value = [
+    ...myResources.value.sort((a, b) => {
+      if (sortDirection.value === 'asc') {
+        return a[column] > b[column] ? 1 : -1
+      }
+      if (sortDirection.value === 'desc') {
+        return a[column] < b[column] ? 1 : -1
+      }
+      return a.id - b.id
+    })
+  ]
 }
 
 onMounted(() => {
@@ -204,26 +146,28 @@ onMounted(() => {
     'https://trial.mobiscroll.com/multiday-events/',
     (events) => {
       myEvents.value = events
-      prepareData()
+      refreshData()
     },
     'jsonp'
   )
 })
 </script>
 
-<!-- remove drags/click to create t3st-->
 <template>
   <MbscEventcalendar
-    dragToResize="true"
-    dragToMove="true"
-    dragToCreate="true"
-    clickToCreate="true"
+    :clickToCreate="true"
+    :dragToCreate="true"
+    :dragToMove="true"
+    :dragToResize="true"
     ref="calendarElm"
     className="mds-resource-details"
     :view="myView"
     :data="myEvents"
     :resources="myResources"
-    :onPageLoaded="prepareData"
+    :onPageLoading="refreshData"
+    :onEventCreated="refreshData"
+    :onEventDeleted="refreshData"
+    :onEventUpdated="refreshData"
   >
     <template #resourceHeader>
       <div
