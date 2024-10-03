@@ -12,11 +12,13 @@ setOptions({
   // theme
 })
 
+const calendarElm = ref(null)
+const myEvents = ref()
 const oneDay = 60000 * 60 * 24
-const totalRevenue = ref(0)
 const sortColumn = ref('')
 const sortDirection = ref('')
-const tempDay = ref(null)
+const sortDay = ref(null)
+const totalRevenue = ref(0)
 
 const myResources = ref([
   {
@@ -91,61 +93,10 @@ const myResources = ref([
   }
 ])
 
-const myEvents = ref()
-
-const calendarElm = ref(null)
-
 const myView = {
   timeline: {
     type: 'month'
   }
-}
-
-function getSortArrow(column, day = null) {
-  if (sortColumn.value === column && day === tempDay.value) {
-    return sortDirection.value === 'asc' ? 'asc' : sortDirection.value === 'desc' ? 'desc' : 'def'
-  }
-  return 'def'
-}
-
-function sortResources(column, day = null) {
-  if (sortColumn.value === column && day === tempDay.value) {
-    sortDirection.value =
-      sortDirection.value === 'asc' ? 'desc' : sortDirection.value === 'desc' ? 'def' : 'asc'
-  } else {
-    sortColumn.value = column
-    sortDirection.value = 'asc'
-  }
-  tempDay.value = day
-
-  const endOfDay = day !== null ? day + 86400000 : null
-
-  myResources.value.forEach((resource) => {
-    let busyHours = 0
-    if (day !== null) {
-      busyHours = myEvents.value.reduce((total, event) => {
-        if (event.resource === resource.id) {
-          const eventStart = Math.max(day, new Date(event.start).getTime())
-          const eventEnd = Math.min(endOfDay, new Date(event.end).getTime())
-          return eventStart < eventEnd ? total + (eventEnd - eventStart) / (1000 * 60 * 60) : total
-        }
-        return total
-      }, 0)
-    }
-    resource.busyHours = day !== null ? busyHours - 24 : 0
-  })
-
-  myResources.value = myResources.value.sort((a, b) => {
-    if (sortDirection.value === 'asc') {
-      return a[column] > b[column] ? 1 : -1
-    }
-    if (sortDirection.value === 'desc') {
-      return a[column] < b[column] ? 1 : -1
-    }
-    return a.id - b.id
-  })
-
-  myResources.value = [...myResources.value]
 }
 
 function getUTCDateOnly(d) {
@@ -187,32 +138,93 @@ function getOccuppancy(data) {
   return occuppancy
 }
 
+function getSortArrow(column, day = null) {
+  if (sortColumn.value === column && day === sortDay.value) {
+    return sortDirection.value === 'asc' ? 'asc' : sortDirection.value === 'desc' ? 'desc' : 'def'
+  }
+  return 'def'
+}
+
+function getBusyHours(resource, timestamp) {
+  var startOfDay = new Date(timestamp)
+  var endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1)
+  return myEvents.value.reduce(function (totalHours, event) {
+    if (event.resource === resource.id) {
+      var eventStart = Math.max(+startOfDay, +new Date(event.start))
+      var eventEnd = Math.min(+endOfDay, +new Date(event.end))
+      return totalHours + (eventStart < eventEnd ? (eventEnd - eventStart) / (60 * 60 * 1000) : 0)
+    }
+    return totalHours
+  }, 0)
+}
+
+function prepareData() {
+  setTimeout(function () {
+    myResources.value.forEach(function (resource) {
+      resource.revenue = getRevenue(resource)
+    })
+    for (let i = 0; i < myResources.value.length; i++) {
+      totalRevenue.value += myResources.value[i].revenue
+    }
+  })
+}
+
+function sortResources(column, day = null) {
+  if (sortColumn.value === column && day === sortDay.value) {
+    sortDirection.value =
+      sortDirection.value === 'asc' ? 'desc' : sortDirection.value === 'desc' ? 'def' : 'asc'
+  } else {
+    sortColumn.value = column
+    sortDirection.value = 'asc'
+  }
+
+  sortDay.value = day
+
+  if (day) {
+    // Precalculate busy hours for the clicked day
+    myResources.value.forEach(function (resource) {
+      resource.busyHours = getBusyHours(resource, day)
+    })
+  }
+
+  myResources.value = myResources.value.sort((a, b) => {
+    if (sortDirection.value === 'asc') {
+      return a[column] > b[column] ? 1 : -1
+    }
+    if (sortDirection.value === 'desc') {
+      return a[column] < b[column] ? 1 : -1
+    }
+    return a.id - b.id
+  })
+
+  myResources.value = [...myResources.value]
+}
+
 onMounted(() => {
   getJson(
     'https://trial.mobiscroll.com/multiday-events/',
     (events) => {
       myEvents.value = events
-      setTimeout(function () {
-        myResources.value.forEach(function (resource) {
-          resource.revenue = getRevenue(resource)
-        })
-        for (let i = 0; i < myResources.value.length; i++) {
-          totalRevenue.value += myResources.value[i].revenue
-        }
-      })
+      prepareData()
     },
     'jsonp'
   )
 })
 </script>
 
+<!-- remove drags/click to create t3st-->
 <template>
   <MbscEventcalendar
+    dragToResize="true"
+    dragToMove="true"
+    dragToCreate="true"
+    clickToCreate="true"
     ref="calendarElm"
     className="mds-resource-details"
     :view="myView"
     :data="myEvents"
     :resources="myResources"
+    :onPageLoaded="prepareData"
   >
     <template #resourceHeader>
       <div

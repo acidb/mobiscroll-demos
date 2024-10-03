@@ -218,7 +218,8 @@ export default {
             return '<div class="mds-resource-details-footer mds-resource-details-total">$' + totalRevenue + '</div>';
           },
           onPageLoading: function (args, inst) {
-            prepareData(inst);
+            // <--- d3l
+            // prepareData(inst);
           },
         })
         .mobiscroll('getInst');
