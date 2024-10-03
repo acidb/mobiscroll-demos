@@ -178,10 +178,10 @@ function App() {
 
       return (
         <div
-          className={`mds-date-header-day-name mds-resource-sort-${getSortArrow('busyHours', day)}`}
+          className={`mds-resource-sort-header mds-resource-sort-${getSortArrow('busyHours', day)}`}
           onClick={() => sortResources('busyHours', day)}
         >
-          <span>{formatDate('DD DDD', data.date)}</span>
+          <span>{formatDate('D DDD', data.date)}</span>
         </div>
       );
     },
@@ -190,54 +190,51 @@ function App() {
 
   const myCustomResourceHeader = useCallback(
     () => (
-      <div className="mds-resource-details-title">
+      <>
         <div
-          className={`mds-resource-header mds-resource-details-name mds-resource-sort-${getSortArrow('name')}`}
+          className={`mds-resource-sort-header mds-resource-cell mds-resource-cell-name mds-resource-sort-${getSortArrow('name')}`}
           onClick={() => sortResources('name')}
         >
           Room
         </div>
         <div
-          className={`mds-resource-header mds-resource-details-seats mds-resource-sort-${getSortArrow('seats')}`}
+          className={`mds-resource-sort-header mds-resource-cell mds-resource-cell-seats mds-resource-sort-${getSortArrow('seats')}`}
           onClick={() => sortResources('seats')}
         >
           Capacity
         </div>
         <div
-          className={`mds-resource-header mds-resource-details-price mds-resource-sort-${getSortArrow('price')}`}
+          className={`mds-resource-sort-header mds-resource-cell mds-resource-cell-price mds-resource-sort-${getSortArrow('price')}`}
           onClick={() => sortResources('price')}
         >
           Price/day
         </div>
-      </div>
+      </>
     ),
     [getSortArrow, sortResources],
   );
 
   const myCustomResource = useCallback(
     (resource) => (
-      <div className="mds-resource-details-cont">
-        <div className="mds-resource-header mds-resource-details-name">{resource.name}</div>
-        <div className="mds-resource-header mds-resource-details-seats">{resource.seats} seats</div>
-        <div className="mds-resource-header mds-resource-details-price">{'$' + resource.price}</div>
-      </div>
+      <>
+        <div className="mds-resource-cell mds-resource-cell-name">{resource.name}</div>
+        <div className="mds-resource-cell mds-resource-cell-seats">{resource.seats} seats</div>
+        <div className="mds-resource-cell mds-resource-cell-price">{'$' + resource.price}</div>
+      </>
     ),
     [],
   );
 
   const myCustomSidebarHeader = useCallback(
     () => (
-      <div
-        className={`mds-resource-details-sidebar-header mds-resource-sort-${getSortArrow('revenue')}`}
-        onClick={() => sortResources('revenue')}
-      >
+      <div className={`mds-resource-sort-header mds-resource-sort-${getSortArrow('revenue')}`} onClick={() => sortResources('revenue')}>
         Revenue
       </div>
     ),
     [getSortArrow, sortResources],
   );
 
-  const myCustomSidebar = useCallback((resource) => <div className="mds-resource-details-sidebar">{'$' + resource.revenue}</div>, []);
+  const myCustomSidebar = useCallback((resource) => <div className="mds-resource-cell">{'$' + resource.revenue}</div>, []);
 
   const myCustomResourceFooter = useCallback(
     () => <div className="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>,
