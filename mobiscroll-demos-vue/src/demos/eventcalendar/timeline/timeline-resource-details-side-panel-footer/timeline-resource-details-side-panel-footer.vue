@@ -14,6 +14,7 @@ setOptions({
 
 const calendarElm = ref(null)
 const myEvents = ref()
+const loadedEvents = ref()
 const sortColumn = ref('')
 const sortDirection = ref('')
 const sortDay = ref(null)
@@ -47,17 +48,13 @@ function getDayDiff(d1, d2) {
 }
 
 function getRevenue(resource) {
-  if (calendarElm.value) {
-    let days = 0
-    for (const event of calendarElm.value.instance.getEvents()) {
-      if (event.resource === resource.id) {
-        days += getDayDiff(new Date(event.start), new Date(event.end))
-      }
+  let days = 0
+  for (const event of loadedEvents.value) {
+    if (event.resource === resource.id) {
+      days += getDayDiff(new Date(event.start), new Date(event.end))
     }
-    return days * resource.price
-  } else {
-    return 0
   }
+  return days * resource.price
 }
 
 function getOccuppancy(data) {
@@ -99,6 +96,7 @@ function getBusyHours(resource, timestamp) {
 
 function refreshData() {
   setTimeout(function () {
+    loadedEvents.value = calendarElm.value.instance.getEvents()
     myResources.value.forEach(function (resource) {
       resource.revenue = getRevenue(resource)
     })
@@ -131,10 +129,10 @@ function sortResources(column, day = null) {
   myResources.value = [
     ...myResources.value.sort((a, b) => {
       if (sortDirection.value === 'asc') {
-        return a[column] > b[column] ? 1 : -1
+        return a[sortColumn.value] > b[sortColumn.value] ? 1 : -1
       }
       if (sortDirection.value === 'desc') {
-        return a[column] < b[column] ? 1 : -1
+        return a[sortColumn.value] < b[sortColumn.value] ? 1 : -1
       }
       return a.id - b.id
     })
