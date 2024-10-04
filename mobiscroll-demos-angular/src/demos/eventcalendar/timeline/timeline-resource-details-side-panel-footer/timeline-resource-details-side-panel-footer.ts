@@ -145,20 +145,8 @@ export class AppComponent implements OnInit {
         resource['revenue'] = this.getRevenue(resource);
       });
       this.totalRevenue = this.myResources.reduce((total, resource) => total + resource['revenue'], 0);
+      this.sortResources();
     }, 0);
-  }
-
-  onEventCreated(): void {
-    this.refreshData();
-    this.sortResources();
-  }
-  onEventDeleted(): void {
-    this.refreshData();
-    this.sortResources();
-  }
-  onEventUpdated(): void {
-    this.refreshData();
-    this.sortResources();
   }
 
   ngOnInit(): void {

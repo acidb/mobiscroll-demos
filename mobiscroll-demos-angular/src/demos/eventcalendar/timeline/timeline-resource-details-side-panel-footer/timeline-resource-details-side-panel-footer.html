@@ -16,9 +16,9 @@
   [sidebarHeaderTemplate]="sidebarHeaderTemp"
   [sidebarTemplate]="sidebarTemp"
   [view]="view"
-  (onEventCreated)="onEventCreated()"
-  (onEventDeleted)="onEventDeleted()"
-  (onEventUpdated)="onEventUpdated()"
+  (onEventCreated)="refreshData()"
+  (onEventDeleted)="refreshData()"
+  (onEventUpdated)="refreshData()"
   (onPageLoading)="refreshData()"
 ></mbsc-eventcalendar>
 
