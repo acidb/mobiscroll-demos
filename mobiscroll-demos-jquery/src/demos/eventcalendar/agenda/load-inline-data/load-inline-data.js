@@ -17,9 +17,7 @@ export default {
         .eventcalendar({
           // context,
           view: {
-            agenda: {
-              type: 'month',
-            },
+            agenda: { type: 'month' },
           },
           data: [
             {

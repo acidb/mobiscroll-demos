@@ -64,17 +64,17 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <div id="demo-agenda-empty"></div>
-    `,
+<div id="demo-agenda-empty"></div>
+  `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-empty-img {
-    width: 150px;
-    margin: 50px 0;
-  }
-  
-  .mds-empty-txt {
-    padding-top: 150px;
-  }
-    `,
+.mds-empty-img {
+  width: 150px;
+  margin: 50px 0;
+}
+
+.mds-empty-txt {
+  padding-top: 150px;
+}
+  `,
 };

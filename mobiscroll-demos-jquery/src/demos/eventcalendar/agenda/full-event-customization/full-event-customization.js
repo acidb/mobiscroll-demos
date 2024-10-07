@@ -48,13 +48,9 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/agenda-events/?callback=?',
-        function (events) {
-          inst.setEvents(events);
-        },
-        'jsonp',
-      );
+      $.getJSON('https://trial.mobiscroll.com/agenda-events/?callback=?', function (events) {
+        inst.setEvents(events);
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals

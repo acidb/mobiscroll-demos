@@ -37,20 +37,16 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('.mds-custom-header-view-change').change(function (ev) {
+      $('.mds-custom-header-view-change').on('change', function (ev) {
         switch (ev.target.value) {
           case 'calendar':
             calendar.setOptions({
-              view: {
-                calendar: { type: 'month' },
-              },
+              view: { calendar: { type: 'month' } },
             });
             break;
           case 'agenda':
             calendar.setOptions({
-              view: {
-                agenda: { type: 'month' },
-              },
+              view: { agenda: { type: 'month' } },
             });
             break;
         }
@@ -66,13 +62,9 @@ export default {
         calendar.navigate(currentDate);
       });
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/events/?vers=5&callback=?',
-        function (events) {
-          calendar.setEvents(events);
-        },
-        'jsonp',
-      );
+      $.getJSON('https://trial.mobiscroll.com/events/?vers=5&callback=?', function (events) {
+        calendar.setEvents(events);
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -87,32 +79,32 @@ export default {
      `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-custom-header-nav {
-    width: 180px;
-  }
-  
-  .mds-custom-header-button.mbsc-button {
-    font-size: 20px;
-    height: auto;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .mds-custom-header-switch .mbsc-segmented {
-    width: 110px;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  
-  .mds-custom-header-switch .mbsc-segmented.mbsc-material,
-  .mds-custom-header-switch .mbsc-segmented.mbsc-windows {
-    padding: 0;
-  }
-  
-  .mds-custom-header-switch .mbsc-segmented-button.mbsc-button {
-    font-size: 20px;
-    height: 32px;
-    padding: 0;
-  }
-    `,
+.mds-custom-header-nav {
+  width: 180px;
+}
+
+.mds-custom-header-button.mbsc-button {
+  font-size: 20px;
+  height: auto;
+  padding: 0;
+  margin: 0;
+}
+
+.mds-custom-header-switch .mbsc-segmented {
+  width: 110px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.mds-custom-header-switch .mbsc-segmented.mbsc-material,
+.mds-custom-header-switch .mbsc-segmented.mbsc-windows {
+  padding: 0;
+}
+
+.mds-custom-header-switch .mbsc-segmented-button.mbsc-button {
+  font-size: 20px;
+  height: 32px;
+  padding: 0;
+}
+`,
 };

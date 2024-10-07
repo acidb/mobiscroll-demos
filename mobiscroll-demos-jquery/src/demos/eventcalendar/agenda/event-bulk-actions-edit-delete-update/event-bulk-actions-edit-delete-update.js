@@ -178,6 +178,9 @@ export default {
       $('#demo-bulk-actions-select-all').on('click', function () {
         selectEvents(calendar.getEvents());
         mobiscroll.toast({
+          //<hidden>
+          // theme,//</hidden>
+          // context,
           message: 'All events selected this month',
         });
       });
@@ -185,6 +188,9 @@ export default {
       $('#demo-bulk-actions-reset').on('click', function () {
         selectEvents([]);
         mobiscroll.toast({
+          //<hidden>
+          // theme,//</hidden>
+          // context,
           message: 'Selection cleared',
         });
       });
@@ -199,13 +205,9 @@ export default {
         }
       });
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/events/?vers=5&callback=?',
-        function (events) {
-          calendar.setEvents(events);
-        },
-        'jsonp',
-      );
+      $.getJSON('https://trial.mobiscroll.com/events/?vers=5&callback=?', function (events) {
+        calendar.setEvents(events);
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals

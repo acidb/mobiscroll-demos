@@ -15,9 +15,7 @@ export default {
         .eventcalendar({
           // context,
           view: {
-            agenda: {
-              labels: 'month',
-            },
+            agenda: { type: 'month' },
           },
           onPageLoading: function (event, inst) {
             var year = event.firstDay.getFullYear();
@@ -34,7 +32,6 @@ export default {
                   message: 'New events loaded',
                 });
               },
-              'jsonp',
             );
           },
         });

@@ -15,9 +15,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           view: {
-            agenda: {
-              type: 'month',
-            },
+            agenda: { type: 'month' },
           },
           data: [
             {
@@ -36,9 +34,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           view: {
-            agenda: {
-              type: 'month',
-            },
+            agenda: { type: 'month' },
           },
           data: [
             {
@@ -57,9 +53,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           view: {
-            agenda: {
-              type: 'month',
-            },
+            agenda: { type: 'month' },
           },
           data: [
             {
@@ -74,7 +68,7 @@ export default {
 
       dateMoment.navigate(moment([2020, 4, 21]));
 
-      $('#demo-add-date-obj').click(function () {
+      $('#demo-add-date-obj').on('click', function () {
         dateObj.addEvent({
           start: new Date(2020, 4, 19, 10, 45),
           end: new Date(2020, 4, 19, 11, 45),
@@ -83,7 +77,7 @@ export default {
         dateObj.navigate(new Date(2020, 4, 19));
       });
 
-      $('#demo-add-iso').click(function () {
+      $('#demo-add-iso').on('click', function () {
         dateISO.addEvent({
           start: '2020-05-20T12:30:00',
           end: '2020-05-20T13:00:00',
@@ -92,7 +86,7 @@ export default {
         dateISO.navigate('2020-05-20');
       });
 
-      $('#demo-add-moment').click(function () {
+      $('#demo-add-moment').on('click', function () {
         // make sure that moment js is loaded
         dateMoment.addEvent({
           start: moment([2020, 4, 21, 11]),

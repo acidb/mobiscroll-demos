@@ -13,11 +13,11 @@ export default {
       },
     });
 
-    document.getElementById('data-theme-select').addEventListener('change', function (ev) {
+    document.getElementById('demo-theme-select').addEventListener('change', function (ev) {
       inst.setOptions({ theme: ev.target.value });
     });
 
-    document.getElementById('data-theme-variant-select').addEventListener('change', function (ev) {
+    document.getElementById('demo-theme-variant-select').addEventListener('change', function (ev) {
       inst.setOptions({ themeVariant: ev.target.value });
     });
 
@@ -37,7 +37,7 @@ export default {
       <div class="mbsc-row">
         <div class="mbsc-col-sm-6">
           <label>
-            <select id="data-theme-select" mbsc-dropdown data-input-style="box" label="Theme" data-label-style="stacked">
+            <select id="demo-theme-select" mbsc-dropdown data-input-style="box" label="Theme" data-label-style="stacked">
               <option value="auto">Auto</option>
               <option value="ios">iOS</option>
               <option value="material">Material</option>
@@ -47,7 +47,7 @@ export default {
         </div>
         <div class="mbsc-col-sm-6">
           <label>
-            <select id="data-theme-variant-select" mbsc-dropdown data-input-style="box" label="Theme variant" data-label-style="stacked">
+            <select id="demo-theme-variant-select" mbsc-dropdown data-input-style="box" label="Theme variant" data-label-style="stacked">
               <option value="auto">Auto</option>
               <option value="light">Light</option>
               <option value="dark">Dark</option>

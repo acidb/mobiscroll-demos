@@ -10,7 +10,7 @@ export default {
     });
 
     $(function () {
-      var calInst = $('#demo-localization')
+      var calendar = $('#demo-localization')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -20,21 +20,15 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#demo-localization-select').change(function () {
-        var la = $(this).val();
-
-        calInst.setOptions({
-          locale: mobiscroll.locale[la],
+      $('#demo-localization-select').on('change', function () {
+        calendar.setOptions({
+          locale: mobiscroll.locale[$(this).val()],
         });
       });
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/events/?vers=5&callback=?',
-        function (events) {
-          calInst.setEvents(events);
-        },
-        'jsonp',
-      );
+      $.getJSON('https://trial.mobiscroll.com/events/?vers=5&callback=?', function (events) {
+        calendar.setEvents(events);
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -94,18 +88,18 @@ export default {
       <div id="demo-localization" class="mbsc-flex-1-1"></div>
     </div>
   </div>
-    <!--hidden-->
+  <!--hidden-->
 </div>
 <!--/hidden-->
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
- .mds-full-height {
-   height: 100%;
- }
- 
- .mds-agenda-locale-cont .mbsc-col-sm-8 {
-   margin: 0 auto;
- }
-   `,
+.mds-full-height {
+  height: 100%;
+}
+
+.mds-agenda-locale-cont .mbsc-col-sm-8 {
+  margin: 0 auto;
+}
+  `,
 };

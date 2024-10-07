@@ -10,11 +10,7 @@ export default {
     });
 
     $(function () {
-      var daily;
-      var weekly;
-      var monthly;
-
-      daily = $('#demo-agenda-daily')
+      var daily = $('#demo-agenda-daily')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -23,7 +19,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      weekly = $('#demo-agenda-weekly')
+      var weekly = $('#demo-agenda-weekly')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -32,7 +28,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      monthly = $('#demo-agenda-monthly')
+      var monthly = $('#demo-agenda-monthly')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -41,15 +37,11 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/events-new/?vers=5&callback=?',
-        function (events) {
-          daily.setEvents(events);
-          weekly.setEvents(events);
-          monthly.setEvents(events);
-        },
-        'jsonp',
-      );
+      $.getJSON('https://trial.mobiscroll.com/events-new/?vers=5&callback=?', function (events) {
+        daily.setEvents(events);
+        weekly.setEvents(events);
+        monthly.setEvents(events);
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals

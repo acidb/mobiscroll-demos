@@ -25,13 +25,9 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/events/?vers=5&callback=?',
-        function (events) {
-          inst.setEvents(events);
-        },
-        'jsonp',
-      );
+      $.getJSON('https://trial.mobiscroll.com/events/?vers=5&callback=?', function (events) {
+        inst.setEvents(events);
+      });
 
       $('#demo-print-button').on('click', function () {
         inst.print();
@@ -51,8 +47,8 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-full-height {
-    height: 100%;
-  }
+.mds-full-height {
+  height: 100%;
+}
   `,
 };

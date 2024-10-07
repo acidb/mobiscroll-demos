@@ -44,26 +44,21 @@ export default {
             );
           },
           onEventClick: function (args) {
-            var ev = args.event.original || args.event;
             if (args.domEvent.target.classList.contains('mds-agenda-event-btn')) {
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
                 // context,
-                message: ev.title + ' clicked',
+                message: args.event.title + ' clicked',
               });
             }
           },
         })
         .mobiscroll('getInst');
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/custom-events/?callback=?',
-        function (events) {
-          inst.setEvents(events);
-        },
-        'jsonp',
-      );
+      $.getJSON('https://trial.mobiscroll.com/custom-events/?callback=?', function (events) {
+        inst.setEvents(events);
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals

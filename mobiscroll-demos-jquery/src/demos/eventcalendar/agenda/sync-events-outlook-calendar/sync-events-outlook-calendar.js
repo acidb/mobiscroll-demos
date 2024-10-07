@@ -24,9 +24,7 @@ export default {
 
       function isLoading(loading) {
         loader = loader || $('#demo-sync-outlook-cal-loader');
-        if (loader.length) {
-          loader.css('visibility', loading ? 'visible' : 'hidden');
-        }
+        loader.css('visibility', loading ? 'visible' : 'hidden');
       }
 
       function toggleButtons(loggedIn) {
@@ -98,8 +96,8 @@ export default {
               calendarIds.push(c.id);
             });
 
-            $calendarList.innerHTML = calList;
-            mobiscroll.enhance($calendarList);
+            $calendarList.html(calList);
+            mobiscroll.enhance($calendarList[0]);
 
             isLoading(true);
 
@@ -129,10 +127,6 @@ export default {
             agenda: { type: 'month' },
           },
           exclusiveEndDates: true,
-          clickToCreate: false,
-          dragToCreate: false,
-          dragToMove: false,
-          dragToResize: false,
           onPageLoading: function (args) {
             startDate = args.viewStart;
             endDate = args.viewEnd;
@@ -176,7 +170,7 @@ export default {
       var popup = $('#demo-sync-outlook-cal-popup')
         .mobiscroll()
         .popup({
-          anchor: $btnCalPopup,
+          anchor: $btnCalPopup[0],
           contentPadding: false,
           display: 'anchored',
           scrollLock: false,
@@ -204,10 +198,8 @@ export default {
         outlookCalendarSync.signOut().catch(onError);
       });
 
-      $calendarList.on('change', function (ev) {
-        if ($(ev.target).hasClass('mds-outlook-cal-switch')) {
-          toggleCalendar(ev.target.checked, ev.target.value);
-        }
+      $calendarList.on('change', '.mds-outlook-cal-switch', function (ev) {
+        toggleCalendar(ev.target.checked, ev.target.value);
       });
 
       // Init Outlook Client

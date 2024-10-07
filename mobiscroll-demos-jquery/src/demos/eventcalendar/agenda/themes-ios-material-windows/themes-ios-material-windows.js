@@ -18,21 +18,17 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#data-theme-select').change(function () {
+      $('#data-theme-select').on('change', function () {
         inst.setOptions({ theme: $(this).val() });
       });
 
-      $('#data-theme-variant-select').change(function () {
+      $('#data-theme-variant-select').on('change', function () {
         inst.setOptions({ themeVariant: $(this).val() });
       });
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/events/?vers=5&callback=?',
-        function (events) {
-          inst.setEvents(events);
-        },
-        'jsonp',
-      );
+      $.getJSON('https://trial.mobiscroll.com/events/?vers=5&callback=?', function (events) {
+        inst.setEvents(events);
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals

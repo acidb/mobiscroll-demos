@@ -24,15 +24,11 @@ export default {
 
       function showLoader() {
         loader = loader || $('#demo-google-cal-loader');
-        if (loader.length) {
-          loader.css('visibility', 'visible');
-        }
+        loader.css('visibility', 'visible');
       }
 
       function hideLoader() {
-        if (loader.length) {
-          loader.css('visibility', 'hidden');
-        }
+        loader.css('visibility', 'hidden');
       }
 
       function loadEvents() {
@@ -100,35 +96,33 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('.mds-google-cal-view').each(function () {
-        $(this).on('change', function (ev) {
-          currentView = ev.target.value;
-          switch (currentView) {
-            case 'month':
-              calendar.setOptions({
-                view: { calendar: { labels: true } },
-              });
-              break;
-            case 'week':
-              calendar.setOptions({
-                view: { schedule: { type: 'week' } },
-              });
-              break;
-            case 'day':
-              calendar.setOptions({
-                view: { schedule: { type: 'day' } },
-              });
-              break;
-            case 'agenda':
-              calendar.setOptions({
-                view: {
-                  calendar: { type: 'week' },
-                  agenda: { type: 'week' },
-                },
-              });
-              break;
-          }
-        });
+      $('.mds-google-cal-view').on('change', function (ev) {
+        currentView = ev.target.value;
+        switch (currentView) {
+          case 'month':
+            calendar.setOptions({
+              view: { calendar: { labels: true } },
+            });
+            break;
+          case 'week':
+            calendar.setOptions({
+              view: { schedule: { type: 'week' } },
+            });
+            break;
+          case 'day':
+            calendar.setOptions({
+              view: { schedule: { type: 'day' } },
+            });
+            break;
+          case 'agenda':
+            calendar.setOptions({
+              view: {
+                calendar: { type: 'week' },
+                agenda: { type: 'week' },
+              },
+            });
+            break;
+        }
       });
 
       //<hidden>
@@ -136,7 +130,6 @@ export default {
         apiLoaded = true;
       } else {
         //</hidden>
-
         googleCalendarSync.init({
           apiKey: '<YOUR_GOOGLE_API_KEY>',
           onInit: loadEvents,
