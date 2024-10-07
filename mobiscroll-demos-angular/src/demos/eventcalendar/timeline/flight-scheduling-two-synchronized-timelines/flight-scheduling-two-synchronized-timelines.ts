@@ -529,7 +529,7 @@ export class AppComponent {
         group.children &&
           group.children.forEach((jet) => {
             if (unavailable[jet.id as number]) {
-              invalid['resource'].push(jet.id);
+              (invalid.resource as number[]).push(jet.id as number);
             }
           });
       });

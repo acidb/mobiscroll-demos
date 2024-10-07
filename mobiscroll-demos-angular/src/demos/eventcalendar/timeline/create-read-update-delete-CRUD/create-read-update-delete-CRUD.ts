@@ -132,7 +132,7 @@ export class AppComponent {
       this.tempEvent = args.event;
       // fill popup form with event data
       this.loadPopupForm(args.event);
-      this.selectedColor = args.event.color || args.resourceObj!.color;
+      this.selectedColor = args.event.color || args.resourceObj!.color || '';
       // set popup options
       this.popupHeaderText = 'Edit event';
       this.popupButtons = this.popupEditButtons;
@@ -146,7 +146,7 @@ export class AppComponent {
         this.tempEvent = args.event;
         // fill popup form with event data
         this.loadPopupForm(args.event);
-        this.selectedColor = args.resourceObj!.color;
+        this.selectedColor = args.resourceObj!.color || '';
         // set popup options
         this.popupHeaderText = 'New Event';
         this.popupButtons = this.popupAddButtons;
