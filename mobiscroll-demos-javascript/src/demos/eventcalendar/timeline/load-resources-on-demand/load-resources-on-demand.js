@@ -140,31 +140,15 @@ export default {
       },
     ];
 
-    function getResourceById(resources, resourceId) {
-      for (var i = 0; i < resources.length; i++) {
-        var resource = resources[i];
-        if (resource.id === resourceId) {
-          return resource;
-        } else {
-          if (resource.children) {
-            var child = getResourceById(resource.children, resourceId);
-            if (child) {
-              return child;
-            }
-          }
-        }
-      }
-    }
-
-    function loadChildResources(resourceId) {
+    function loadChildResources(args) {
       var newResources = myResources.slice();
-      var resource = getResourceById(newResources, resourceId);
+      var resource = args.resourceObj;
 
       if (!resource.loaded) {
         var newEvents = myEvents.slice();
 
         mobiscroll.getJson(
-          'https://trial.mobiscroll.com/load-resources/?res=' + resourceId,
+          'https://trial.mobiscroll.com/load-resources/?res=' + args.resource,
           function (data) {
             newEvents = newEvents.concat(data.events);
 
@@ -196,7 +180,7 @@ export default {
       resources: myResources,
       data: myEvents,
       onResourceExpand: function (args) {
-        loadChildResources(args.resource);
+        loadChildResources(args);
       },
     });
   },

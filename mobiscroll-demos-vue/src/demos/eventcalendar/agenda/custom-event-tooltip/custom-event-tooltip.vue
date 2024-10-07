@@ -262,22 +262,19 @@ const tooltipAnchor = ref()
 const tooltipColor = ref()
 const timer = ref()
 
-const myView = ref({
-  agenda: {
-    type: 'week',
-    startDay: 1,
-    endDay: 5
-  }
-})
+const myView = ref({ agenda: { type: 'week' } })
 
 function openTooltip(args) {
   const event = args.event
-  const newTime =
+  const time =
     formatDate('hh:mm A', new Date(event.start)) +
     ' - ' +
     formatDate('hh:mm A', new Date(event.end))
 
-  appointment.value = event
+  if (timer.value) {
+    clearTimeout(timer.value)
+    timer.value = null
+  }
 
   if (event.confirmed) {
     appointmentStatus.value = 'Confirmed'
@@ -289,17 +286,20 @@ function openTooltip(args) {
     buttonType.value = 'success'
   }
 
-  tooltipColor.value = event.color
+  appointment.value = event
   appointmentInfo.value = event.title + ', Age: ' + event.age
-  appointmentTime.value = newTime
+  appointmentLocation.value = event.location
+  appointmentTime.value = time
   appointmentReason.value = event.reason
-  location.value = event.location
 
-  clearTimeout(timer.value)
-  timer.value = null
+  tooltipColor.value = event.color
+  tooltipAnchor.value = args.domEvent.target.closest('.mbsc-event')
 
-  tooltipAnchor.value = args.domEvent.target
   isTooltipOpen.value = true
+}
+
+function handleEventClick(args) {
+  openTooltip(args)
 }
 
 function handleEventHoverIn(args) {
@@ -312,10 +312,6 @@ function handleEventHoverout() {
       isTooltipOpen.value = false
     }, 200)
   }
-}
-
-function handleEventClick() {
-  isTooltipOpen.value = true
 }
 
 function handleMouseEnter() {
@@ -331,60 +327,48 @@ function handleMouseLeave() {
   }, 200)
 }
 
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
 function updateAppointmentStatus() {
-  const index = appointments.value.findIndex((item) => item.id === appointment.value.id)
-  appointments.value[index].confirmed = !appointments.value[index].confirmed
-  isTooltipOpen.value = false
+  appointment.value.confirmed = !appointment.value.confirmed
   toastMessage.value = 'Appointment ' + (appointment.value.confirmed ? 'confirmed' : 'canceled')
   isToastOpen.value = true
+  isTooltipOpen.value = false
 }
 
 function viewAppointmentFile() {
-  isTooltipOpen.value = false
   toastMessage.value = 'View file'
   isToastOpen.value = true
+  isTooltipOpen.value = false
 }
 
 function deleteAppointment() {
   appointments.value = appointments.value.filter((item) => item.id !== appointment.value.id)
-  isTooltipOpen.value = false
   toastMessage.value = 'Appointment deleted'
   isToastOpen.value = true
-}
-
-function handleTooltipClose() {
   isTooltipOpen.value = false
 }
 </script>
 
 <template>
   <MbscEventcalendar
-    :view="myView"
     :data="appointments"
-    :clickToCreate="false"
-    :dragToCreate="false"
     :showEventTooltip="false"
+    :view="myView"
+    @event-click="handleEventClick"
     @event-hover-in="handleEventHoverIn"
     @event-hover-out="handleEventHoverout"
-    @event-click-in="handleEventClick"
   />
   <MbscPopup
-    className="mds-tooltip"
     display="anchored"
     :anchor="tooltipAnchor"
-    :touchUi="false"
-    :showOverlay="false"
     :contentPadding="false"
-    :closeOnOverlayClick="false"
-    :width="380"
     :isOpen="isTooltipOpen"
-    @close="handleTooltipClose"
+    :scrollLock="false"
+    :showOverlay="false"
+    :touchUi="false"
+    :width="380"
+    @close="isTooltipOpen = false"
   >
-    <div @mouseenter="handleMouseEnter()" @mouseleave="handleMouseLeave()">
+    <div class="mds-tooltip" @mouseenter="handleMouseEnter()" @mouseleave="handleMouseLeave()">
       <div class="mds-tooltip-header" :style="{ background: tooltipColor }">
         <span>{{ appointmentInfo }}</span>
         <span class="mbsc-pull-right">{{ appointmentTime }}</span>
@@ -421,7 +405,7 @@ function handleTooltipClose() {
       </div>
     </div>
   </MbscPopup>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>

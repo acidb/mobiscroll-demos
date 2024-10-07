@@ -24,21 +24,9 @@ function App() {
   const dayView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'day' } }), []);
   const myResources = useMemo<MbscResource[]>(
     () => [
-      {
-        id: 1,
-        name: 'Resource 1',
-        color: 'red',
-      },
-      {
-        id: 2,
-        name: 'Resource 2',
-        color: 'orange',
-      },
-      {
-        id: 3,
-        name: 'Resource 3',
-        color: 'blue',
-      },
+      { id: 1, name: 'Resource 1', color: 'red' },
+      { id: 2, name: 'Resource 2', color: 'orange' },
+      { id: 3, name: 'Resource 3', color: 'blue' },
     ],
     [],
   );
@@ -55,7 +43,7 @@ function App() {
 
   useEffect(() => {
     getJson(
-      'https://trial.mobiscroll.com/filter-resource-events/?callback=?',
+      'https://trial.mobiscroll.com/filter-resource-events/',
       (events: MbscCalendarEvent[]) => {
         setEvents(events);
       },

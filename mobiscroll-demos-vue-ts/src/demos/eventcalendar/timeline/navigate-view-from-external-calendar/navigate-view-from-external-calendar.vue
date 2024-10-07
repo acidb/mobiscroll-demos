@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import {
   getJson,
-  MbscCalendarEvent,
   MbscDatepicker,
+  MbscEventcalendar,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
+import type {
+  MbscCalendarEvent,
   MbscDatepickerChangeEvent,
   MbscDateType,
-  MbscEventcalendar,
   MbscEventcalendarView,
   MbscResource,
-  MbscSelectedDateChangeEvent,
-  setOptions /* localeImport */
+  MbscSelectedDateChangeEvent
 } from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
 
@@ -18,27 +20,15 @@ setOptions({
   // theme
 })
 
-const myEvents = ref<MbscCalendarEvent>([])
+const myEvents = ref<MbscCalendarEvent[]>([])
 const mySelectedDate = ref<MbscDateType>(new Date())
 const dayView: MbscEventcalendarView = {
   timeline: { type: 'day' }
 }
 const myResources: MbscResource[] = [
-  {
-    id: 1,
-    name: 'Resource 1',
-    color: 'red'
-  },
-  {
-    id: 2,
-    name: 'Resource 2',
-    color: 'orange'
-  },
-  {
-    id: 3,
-    name: 'Resource 3',
-    color: 'blue'
-  }
+  { id: 1, name: 'Resource 1', color: 'red' },
+  { id: 2, name: 'Resource 2', color: 'orange' },
+  { id: 3, name: 'Resource 3', color: 'blue' }
 ]
 
 function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
@@ -53,8 +43,8 @@ function handleDateChange(args: MbscDatepickerChangeEvent) {
 
 onMounted(() => {
   getJson(
-    'https://trial.mobiscroll.com/filter-resource-events/?callback=?',
-    (events: MbscCalendarEvent) => {
+    'https://trial.mobiscroll.com/filter-resource-events/ ',
+    (events: MbscCalendarEvent[]) => {
       myEvents.value = events
     },
     'jsonp'

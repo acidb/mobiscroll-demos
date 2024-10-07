@@ -8,12 +8,10 @@ import {
   MbscCalendarToday,
   MbscEventcalendar,
   MbscInput,
-  MbscPage,
   MbscPopup,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
-import './searching-events-in-popup.css'
 
 setOptions({
   // locale,
@@ -24,9 +22,9 @@ const calEvents = ref([])
 const isPopupOpen = ref(false)
 const listEvents = ref([])
 const searchInput = ref(null)
-const selectedDate = ref(new Date())
 const selectedEvent = ref([])
 
+const calInst = ref(null)
 const timer = ref(null)
 const inputRef = ref(null)
 
@@ -36,11 +34,7 @@ const listView = { agenda: { type: 'year', size: 5 } }
 function handleInputChange(ev) {
   const searchText = ev.target.value
 
-  if (timer.value) {
-    clearTimeout(timer.value)
-    timer.value = null
-  }
-
+  clearTimeout(timer.value)
   timer.value = setTimeout(() => {
     if (searchText.length > 0) {
       getJson(
@@ -83,12 +77,12 @@ function handlePopupClose() {
 }
 
 function handleEventClick(args) {
-  selectedDate.value = args.event.start
   selectedEvent.value = [args.event]
   isPopupOpen.value = false
+  calInst.value.instance.navigateToEvent(args.event)
 }
 
-function handlePopupInit() {
+function handleInit() {
   setTimeout(() => {
     searchInput.value = inputRef.value.instance.nativeElement
   })
@@ -96,59 +90,68 @@ function handlePopupInit() {
 </script>
 
 <template>
-  <MbscPage>
+  <MbscEventcalendar
+    ref="calInst"
+    :data="calEvents"
+    :selectMultipleEvents="true"
+    :selectedEvents="selectedEvent"
+    :view="calView"
+    @init="handleInit"
+    @page-loading="handlePageLoading"
+  >
+    <template #header>
+      <MbscCalendarNav />
+      <div class="mds-search-bar mbsc-flex-1-0">
+        <MbscInput
+          autocomplete="off"
+          inputStyle="box"
+          placeholder="Search events"
+          startIcon="material-search"
+          ref="inputRef"
+          @input="handleInputChange"
+          @focus="handleInputFocus"
+        />
+      </div>
+      <MbscCalendarPrev />
+      <MbscCalendarToday />
+      <MbscCalendarNext />
+    </template>
+  </MbscEventcalendar>
+  <MbscPopup
+    display="anchored"
+    :anchor="searchInput"
+    :contentPadding="false"
+    :focusElm="searchInput"
+    :focusOnClose="false"
+    :focusOnOpen="false"
+    :isOpen="isPopupOpen"
+    :scrollLock="false"
+    :showArrow="false"
+    :showOverlay="false"
+    :width="200"
+    @close="handlePopupClose"
+  >
     <MbscEventcalendar
-      :clickToCreate="false"
-      :data="calEvents"
-      :dragToCreate="false"
-      :dragToMove="false"
-      :dragToResize="false"
-      :selectMultipleEvents="true"
-      :view="calView"
-      :selectedEvents="selectedEvent"
-      :selectedDate="selectedDate"
-      @page-loading="handlePageLoading"
-    >
-      <template #header>
-        <MbscCalendarNav />
-        <div className="mds-search-bar mbsc-flex-1-0">
-          <MbscInput
-            autocomplete="off"
-            inputStyle="box"
-            placeholder="Search events"
-            startIcon="material-search"
-            ref="inputRef"
-            @input="handleInputChange"
-            @focus="handleInputFocus"
-          />
-        </div>
-        <MbscCalendarPrev />
-        <MbscCalendarToday />
-        <MbscCalendarNext />
-      </template>
-    </MbscEventcalendar>
-    <MbscPopup
-      className="mds-search-popup"
-      display="anchored"
-      :showArrow="false"
-      :showOverlay="false"
-      :scrollLock="false"
-      :contentPadding="false"
-      :focusOnOpen="false"
-      :focusOnClose="false"
-      :anchor="searchInput"
-      :focusElm="searchInput"
-      :isOpen="isPopupOpen"
-      @init="handlePopupInit"
-      @close="handlePopupClose"
-    >
-      <MbscEventcalendar
-        className="mds-search-results mbsc-popover-list"
-        :view="listView"
-        :data="listEvents"
-        :showControls="false"
-        @event-click="handleEventClick"
-      />
-    </MbscPopup>
-  </MbscPage>
+      cssClass="mds-search-results"
+      :data="listEvents"
+      :showControls="false"
+      :view="listView"
+      @event-click="handleEventClick"
+    />
+  </MbscPopup>
 </template>
+
+<style>
+.mds-search-bar .mbsc-textfield-wrapper {
+  max-width: 400px;
+  margin: 8px auto;
+}
+
+.mds-search-bar .mbsc-textfield.mbsc-ios-dark {
+  background: #313131;
+}
+
+.mds-search-results .mbsc-calendar-wrapper {
+  margin-top: -1px;
+}
+</style>

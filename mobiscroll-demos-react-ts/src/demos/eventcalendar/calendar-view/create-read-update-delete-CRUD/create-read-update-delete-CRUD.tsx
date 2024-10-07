@@ -1,6 +1,7 @@
 import {
   Button,
   Datepicker,
+  Dropdown,
   Eventcalendar,
   Input,
   MbscCalendarEvent,
@@ -12,7 +13,6 @@ import {
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscPopupButton,
-  MbscSelectedDateChangeEvent,
   Popup,
   Segmented,
   SegmentedGroup,
@@ -29,8 +29,6 @@ setOptions({
   // themeJs
 });
 
-const now = new Date();
-
 const defaultEvents: MbscCalendarEvent[] = [
   {
     id: 1,
@@ -39,6 +37,7 @@ const defaultEvents: MbscCalendarEvent[] = [
     title: "Lunch @ Butcher's",
     description: '',
     allDay: false,
+    bufferBefore: 15,
     free: true,
     color: '#009788',
   },
@@ -46,9 +45,10 @@ const defaultEvents: MbscCalendarEvent[] = [
     id: 2,
     start: 'dyndatetime(y,m,d,15)',
     end: 'dyndatetime(y,m,d,16)',
-    title: 'General orientation',
+    title: 'Conference',
     description: '',
     allDay: false,
+    bufferBefore: 30,
     free: false,
     color: '#ff9900',
   },
@@ -56,9 +56,10 @@ const defaultEvents: MbscCalendarEvent[] = [
     id: 3,
     start: 'dyndatetime(y,m,d-1,18)',
     end: 'dyndatetime(y,m,d-1,22)',
-    title: 'Dexter BD',
+    title: 'Site Visit',
     description: '',
     allDay: false,
+    bufferBefore: 60,
     free: true,
     color: '#3f51b5',
   },
@@ -88,15 +89,16 @@ const App: FC = () => {
   const [popupEventTitle, setTitle] = useState<string | undefined>('');
   const [popupEventDescription, setDescription] = useState<string>('');
   const [popupEventAllDay, setAllDay] = useState<boolean>(true);
+  const [popupTravelTime, setTravelTime] = useState<number>(0);
   const [popupEventDate, setDate] = useState<MbscDateType[]>([]);
   const [popupEventStatus, setStatus] = useState<string>('busy');
-  const [mySelectedDate, setSelectedDate] = useState<MbscDateType>(now);
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const [colorAnchor, setColorAnchor] = useState<HTMLDivElement>();
   const [selectedColor, setSelectedColor] = useState('');
   const [tempColor, setTempColor] = useState('');
   const [isSnackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
+  const calInst = useRef<Eventcalendar>(null);
   const colorPicker = useRef<Popup>(null);
 
   const myView: MbscEventcalendarView = useMemo(() => ({ calendar: { labels: true } }), []);
@@ -150,6 +152,7 @@ const App: FC = () => {
       start: popupEventDate![0],
       end: popupEventDate![1],
       allDay: popupEventAllDay,
+      bufferBefore: popupTravelTime,
       status: popupEventStatus,
       color: selectedColor,
     };
@@ -168,13 +171,14 @@ const App: FC = () => {
       // here you can add the event to your storage as well
       // ...
     }
-    setSelectedDate(popupEventDate![0]);
+    calInst.current?.navigateToEvent(newEvent);
     // close the popup
     setOpen(false);
   }, [
     isEdit,
     myEvents,
     popupEventAllDay,
+    popupTravelTime,
     popupEventDate,
     popupEventDescription,
     popupEventStatus,
@@ -200,10 +204,9 @@ const App: FC = () => {
     setDescription(event.description);
     setDate([event.start!, event.end!]);
     setAllDay(event.allDay || false);
+    setTravelTime(event.bufferBefore || 0);
     setStatus(event.status || 'busy');
   }, []);
-
-  // handle popup form changes
 
   const titleChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setTitle(ev.target.value);
@@ -215,6 +218,10 @@ const App: FC = () => {
 
   const allDayChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setAllDay(ev.target.checked);
+  }, []);
+
+  const travelTimeChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    setTravelTime(Number(ev.target.value));
   }, []);
 
   const dateChange = useCallback((args: MbscDatepickerChangeEvent) => {
@@ -229,12 +236,6 @@ const App: FC = () => {
     deleteEvent(tempEvent!);
     setOpen(false);
   }, [deleteEvent, tempEvent]);
-
-  // scheduler options
-
-  const onSelectedDateChange = useCallback((event: MbscSelectedDateChangeEvent) => {
-    setSelectedDate(new Date(event.date as string));
-  }, []);
 
   const onEventClick = useCallback(
     (args: MbscEventClickEvent) => {
@@ -273,7 +274,6 @@ const App: FC = () => {
     // ...
   }, []);
 
-  // datepicker options
   const controls = useMemo(() => (popupEventAllDay ? ['date'] : ['datetime']) as MbscDatepickerControl[], [popupEventAllDay]);
   const datepickerResponsive = useMemo(
     () =>
@@ -293,7 +293,6 @@ const App: FC = () => {
     [popupEventAllDay],
   );
 
-  // popup options
   const headerText = useMemo<string>(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
   const popupButtons = useMemo<(string | MbscPopupButton)[]>(() => {
     if (isEdit) {
@@ -371,14 +370,13 @@ const App: FC = () => {
   return (
     <>
       <Eventcalendar
-        view={myView}
-        data={myEvents}
-        clickToCreate="double"
+        clickToCreate={true}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
-        selectedDate={mySelectedDate}
-        onSelectedDateChange={onSelectedDateChange}
+        data={myEvents}
+        ref={calInst}
+        view={myView}
         onEventClick={onEventClick}
         onEventCreated={onEventCreated}
         onEventDeleted={onEventDeleted}
@@ -403,6 +401,19 @@ const App: FC = () => {
           <Switch label="All-day" checked={popupEventAllDay} onChange={allDayChange} />
           <Input ref={startRef} label="Starts" />
           <Input ref={endRef} label="Ends" />
+          {!popupEventAllDay && (
+            <div id="travel-time-group">
+              <Dropdown label="Travel time" value={String(popupTravelTime)} onChange={travelTimeChange}>
+                <option value="0">None</option>
+                <option value="5">5 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="90">1.5 hours</option>
+                <option value="120">2 hours</option>
+              </Dropdown>
+            </div>
+          )}
           <Datepicker
             select="range"
             controls={controls}

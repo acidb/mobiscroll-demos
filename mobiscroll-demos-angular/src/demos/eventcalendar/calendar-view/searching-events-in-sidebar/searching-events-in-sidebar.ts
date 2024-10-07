@@ -1,6 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewEncapsulation } from '@angular/core';
-import { formatDate, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  formatDate,
+  MbscCalendarEvent,
+  MbscEventcalendar,
+  MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscPageLoadingEvent,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -16,64 +24,50 @@ setOptions({
 export class AppComponent {
   constructor(private http: HttpClient) {}
 
-  currentDate: any = new Date();
-  mySelectedEvent: MbscCalendarEvent[] = [];
-  timer: any;
-  showList = false;
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
 
   calEvents: MbscCalendarEvent[] = [];
+  calView: MbscEventcalendarView = { calendar: { labels: true } };
   listEvents: MbscCalendarEvent[] = [];
+  listView: MbscEventcalendarView = { agenda: { type: 'year', size: 5 } };
+  timer?: ReturnType<typeof setTimeout>;
+  selectedEvent: MbscCalendarEvent[] = [];
+  displayResults = false;
 
-  calView: MbscEventcalendarView = {
-    calendar: {
-      labels: true,
-    },
-  };
-
-  listView: MbscEventcalendarView = {
-    agenda: {
-      type: 'year',
-      size: 5,
-    },
-  };
-
-  onSearch(ev: any): void {
-    const text = ev.target.value;
+  onInput(ev: Event): void {
+    const searchText = (ev.target as HTMLInputElement).value;
 
     clearTimeout(this.timer);
-    this.timer = null;
-
-    if (!this.timer) {
-      this.timer = setTimeout(() => {
-        if (text.length > 0) {
-          this.http
-            .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/searchevents/?text=' + text, 'callback')
-            .subscribe((resp: MbscCalendarEvent[]) => {
-              this.listEvents = resp;
-              this.showList = true;
-            });
-        } else {
-          this.showList = false;
-        }
-      }, 200);
-    }
+    this.timer = setTimeout(() => {
+      if (searchText.length > 0) {
+        this.http
+          .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/searchevents/?text=' + searchText, 'callback')
+          .subscribe((resp: MbscCalendarEvent[]) => {
+            this.listEvents = resp;
+            this.displayResults = true;
+          });
+      } else {
+        this.displayResults = false;
+      }
+    }, 200);
   }
 
-  onPageLoading(args: any): void {
+  onPageLoading(args: MbscPageLoadingEvent): void {
     const start = formatDate('YYYY-MM-DD', args.viewStart);
     const end = formatDate('YYYY-MM-DD', args.viewEnd);
 
     setTimeout(() => {
       this.http
         .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/searchevents/?start=' + start + '&end=' + end, 'callback')
-        .subscribe((resp: MbscCalendarEvent[]) => {
+        .subscribe((resp) => {
           this.calEvents = resp;
         });
     });
   }
 
-  eventClick(args: any): void {
-    this.currentDate = args.event.start;
-    this.mySelectedEvent = [args.event];
+  onEventClick(args: MbscEventClickEvent): void {
+    this.calendar.navigateToEvent(args.event);
+    this.selectedEvent = [args.event];
   }
 }

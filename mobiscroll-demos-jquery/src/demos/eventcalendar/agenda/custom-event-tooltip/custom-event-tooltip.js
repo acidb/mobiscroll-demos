@@ -10,64 +10,58 @@ export default {
     });
 
     $(function () {
-      var appointment;
-      var appointmentInfo = $('#demo-tooltip-info');
-      var appointmentLocation = $('#demo-tooltip-location');
-      var appointmentReason = $('#demo-tooltip-reason');
-      var appointmentStatus = $('#demo-tooltip-status');
-      var appointmentTime = $('#demo-tooltip-time');
-      var btnDelete = $('#demo-tooltip-delete');
-      var btnStatus = $('#demo-tooltip-status-update');
-      var btnView = $('#demo-tooltip-view');
-      var timer;
-      var tooltipElm = $('#demo-tooltip-popup');
-      var tooltipHeader = $('#demo-tooltip-header');
-
       function openTooltip(args) {
-        console.log(args);
         var formatDate = mobiscroll.formatDate;
         var event = args.event;
         var time = formatDate('hh:mm A', new Date(event.start)) + ' - ' + formatDate('hh:mm A', new Date(event.end));
-        var button = {};
+        var buttonText;
+        var buttonType;
 
         if (event.confirmed) {
-          button.text = 'Cancel appointment';
-          button.type = 'warning';
+          buttonText = 'Cancel appointment';
+          buttonType = 'warning';
         } else {
-          button.text = 'Confirm appointment';
-          button.type = 'success';
+          buttonText = 'Confirm appointment';
+          buttonType = 'success';
         }
 
         appointment = event;
-        appointmentInfo.text(event.title + ', Age: ' + event.age);
-        appointmentLocation.text(event.location);
-        appointmentReason.text(event.reason);
-        appointmentTime.text(time);
-        appointmentStatus.text(event.confirmed ? 'Confirmed' : 'Canceled');
+        $appointmentInfo.text(event.title + ', Age: ' + event.age);
+        $appointmentLocation.text(event.location);
+        $appointmentReason.text(event.reason);
+        $appointmentTime.text(time);
+        $appointmentStatus.text(event.confirmed ? 'Confirmed' : 'Canceled');
 
-        btnStatus.text(button.text);
-        btnStatus.mobiscroll('setOptions', { color: button.type });
+        $btnStatus.text(buttonText);
+        $btnStatus.mobiscroll('setOptions', { color: buttonType });
 
-        tooltipHeader.css('background-color', event.color);
+        $tooltipHeader.css('background-color', event.color);
 
         clearTimeout(timer);
         timer = null;
 
-        tooltip.setOptions({ anchor: args.domEvent.target });
+        tooltip.setOptions({ anchor: args.domEvent.target.closest('.mbsc-event') });
         tooltip.open();
       }
+
+      var appointment;
+      var $appointmentInfo = $('#demo-tooltip-info');
+      var $appointmentLocation = $('#demo-tooltip-location');
+      var $appointmentReason = $('#demo-tooltip-reason');
+      var $appointmentStatus = $('#demo-tooltip-status');
+      var $appointmentTime = $('#demo-tooltip-time');
+      var $btnDelete = $('#demo-tooltip-delete');
+      var $btnStatus = $('#demo-tooltip-status-update');
+      var $btnView = $('#demo-tooltip-view');
+      var timer;
+      var $tooltip = $('#demo-tooltip-popup');
+      var $tooltipHeader = $('#demo-tooltip-header');
 
       var calendar = $('#demo-tooltip-calendar')
         .mobiscroll()
         .eventcalendar({
           // context,
-          view: {
-            agenda: {
-              type: 'week',
-              startDay: 1,
-              endDay: 5,
-            },
-          },
+          view: { agenda: { type: 'week' } },
           data: [
             {
               title: 'Jude Chester',
@@ -503,36 +497,35 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var tooltip = tooltipElm
+      var tooltip = $tooltip
         .mobiscroll()
         .popup({
-          closeOnOverlayClick: false,
           contentPadding: false,
           display: 'anchored',
+          scrollLock: false,
           showOverlay: false,
           touchUi: false,
           width: 350,
         })
         .mobiscroll('getInst');
 
-      tooltipElm.mouseenter(function () {
+      $tooltip.on('mouseenter', function () {
         if (timer) {
           clearTimeout(timer);
           timer = null;
         }
       });
 
-      tooltipElm.mouseleave(function () {
+      $tooltip.on('mouseleave', function () {
         timer = setTimeout(function () {
           tooltip.close();
         }, 200);
       });
 
-      btnStatus.on('click', function () {
-        tooltip.close();
+      $btnStatus.on('click', function () {
         appointment.confirmed = !appointment.confirmed;
         calendar.updateEvent(appointment);
-
+        tooltip.close();
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -541,9 +534,8 @@ export default {
         });
       });
 
-      btnView.on('click', function () {
+      $btnView.on('click', function () {
         tooltip.close();
-
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -552,11 +544,9 @@ export default {
         });
       });
 
-      btnDelete.on('click', function () {
+      $btnDelete.on('click', function () {
         calendar.removeEvent(appointment);
-
         tooltip.close();
-
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
@@ -568,52 +558,52 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <div id="demo-tooltip-calendar"></div>
-  <div id="demo-tooltip-popup" class="mds-tooltip mds-popup">
-    <div id="demo-tooltip-header" class="mds-tooltip-header">
-      <span id="demo-tooltip-info"></span>
-      <span id="demo-tooltip-time" class="mbsc-pull-right"></span>
-    </div>
-    <div class="mbsc-padding">
-      <div class="mds-tooltip-label mbsc-margin">
-        Status: <span id="demo-tooltip-status" class="mbsc-light"></span>
-        <button id="demo-tooltip-status-update" mbsc-button data-color="warning" data-variant="outline" class="mds-tooltip-button mbsc-pull-right">
-        </button>
-      </div>
-      <div class="mds-tooltip-label mbsc-margin">Reason for visit: <span id="demo-tooltip-reason" class="mbsc-light"></span></div>
-      <div class="mds-tooltip-label mbsc-margin">Location: <span id="demo-tooltip-location" class="mbsc-light"></span></div>
-      <button id="demo-tooltip-view" mbsc-button data-color="secondary" class="mds-tooltip-button">
-        View patient file
-      </button>
-      <button id="demo-tooltip-delete" mbsc-button data-color="danger" data-variant="outline" class="mds-tooltip-button mbsc-pull-right">
-        Delete appointment
-      </button>
-    </div>
+<div id="demo-tooltip-calendar"></div>
+<div id="demo-tooltip-popup" class="mds-tooltip mds-popup">
+  <div id="demo-tooltip-header" class="mds-tooltip-header">
+    <span id="demo-tooltip-info"></span>
+    <span id="demo-tooltip-time" class="mbsc-pull-right"></span>
   </div>
-  `,
+  <div class="mbsc-padding">
+    <div class="mds-tooltip-label mbsc-margin">
+      Status: <span id="demo-tooltip-status" class="mbsc-light"></span>
+      <button id="demo-tooltip-status-update" mbsc-button data-color="warning" data-variant="outline" class="mds-tooltip-button mbsc-pull-right">
+      </button>
+    </div>
+    <div class="mds-tooltip-label mbsc-margin">Reason for visit: <span id="demo-tooltip-reason" class="mbsc-light"></span></div>
+    <div class="mds-tooltip-label mbsc-margin">Location: <span id="demo-tooltip-location" class="mbsc-light"></span></div>
+    <button id="demo-tooltip-view" mbsc-button data-color="secondary" class="mds-tooltip-button">
+      View patient file
+    </button>
+    <button id="demo-tooltip-delete" mbsc-button data-color="danger" data-variant="outline" class="mds-tooltip-button mbsc-pull-right">
+      Delete appointment
+    </button>
+  </div>
+</div>
+`,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-tooltip {
-    font-size: 15px;
-    font-weight: 600;
-  }
-  
-  .mds-tooltip-header {
-    padding: 12px 16px;
-    color: #eee;
-  }
-  
-  .mds-tooltip-label {
-    line-height: 32px;
-  }
-  
-  .mds-tooltip-button.mbsc-button {
-    font-size: 14px;
-    margin: 0;
-  }
-  
-  .mds-tooltip-button.mbsc-material {
-    font-size: 12px;
-  }
-  `,
+.mds-tooltip {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.mds-tooltip-header {
+  padding: 12px 16px;
+  color: #eee;
+}
+
+.mds-tooltip-label {
+  line-height: 32px;
+}
+
+.mds-tooltip-button.mbsc-button {
+  font-size: 14px;
+  margin: 0;
+}
+
+.mds-tooltip-button.mbsc-material {
+  font-size: 12px;
+}
+`,
 };

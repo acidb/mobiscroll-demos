@@ -16,9 +16,6 @@ export default {
       view: {
         agenda: { type: 'week' },
       },
-      eventOrder: function (event) {
-        return event.accepted ? 1 : -1;
-      },
       data: [
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -26,6 +23,7 @@ export default {
           color: '#e7b300',
           allDay: true,
           accepted: false,
+          order: 1,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -33,6 +31,7 @@ export default {
           color: '#00ca10',
           allDay: true,
           accepted: true,
+          order: 2,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -40,6 +39,7 @@ export default {
           color: '#e7b300',
           allDay: true,
           accepted: false,
+          order: 1,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday),
@@ -47,6 +47,7 @@ export default {
           color: '#e7b300',
           allDay: true,
           accepted: false,
+          order: 1,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -54,6 +55,7 @@ export default {
           color: '#00ca10',
           allDay: true,
           accepted: true,
+          order: 2,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 1),
@@ -61,6 +63,7 @@ export default {
           color: '#e7b300',
           allDay: true,
           accepted: false,
+          order: 1,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -68,6 +71,7 @@ export default {
           color: '#e7b300',
           allDay: true,
           accepted: false,
+          order: 1,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -75,6 +79,7 @@ export default {
           color: '#00ca10',
           allDay: true,
           accepted: true,
+          order: 2,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -82,6 +87,7 @@ export default {
           color: '#00ca10',
           allDay: true,
           accepted: true,
+          order: 2,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -89,6 +95,7 @@ export default {
           color: '#e7b300',
           allDay: true,
           accepted: false,
+          order: 1,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -96,6 +103,7 @@ export default {
           color: '#00ca10',
           allDay: true,
           accepted: true,
+          order: 2,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 2),
@@ -103,6 +111,7 @@ export default {
           color: '#00ca10',
           allDay: true,
           accepted: true,
+          order: 2,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 3),
@@ -110,6 +119,7 @@ export default {
           color: '#00ca10',
           allDay: true,
           accepted: true,
+          order: 2,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -117,6 +127,7 @@ export default {
           color: '#e7b300',
           allDay: true,
           accepted: false,
+          order: 1,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -124,6 +135,7 @@ export default {
           color: '#00ca10',
           allDay: true,
           accepted: true,
+          order: 2,
         },
         {
           start: new Date(now.getFullYear(), now.getMonth(), monday + 4),
@@ -131,6 +143,7 @@ export default {
           color: '#e7b300',
           allDay: true,
           accepted: false,
+          order: 1,
         },
       ],
     });

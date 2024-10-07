@@ -10,16 +10,13 @@ export default {
 
     var timer;
 
-    var list = mobiscroll.eventcalendar('#demo-search-list', {
+    var list = mobiscroll.eventcalendar('#demo-search-results', {
       view: {
-        agenda: {
-          type: 'year',
-          size: 5,
-        },
+        agenda: { type: 'year', size: 5 },
       },
       showControls: false,
       onEventClick: function (args) {
-        calendar.navigate(args.event.start);
+        calendar.navigateToEvent(args.event);
         calendar.setSelectedEvents([args.event]);
         popup.close();
       },
@@ -32,19 +29,19 @@ export default {
       dragToResize: false,
       selectMultipleEvents: true,
       view: {
-        calendar: {
-          labels: true,
-        },
+        calendar: { labels: true },
       },
       renderHeader: function () {
         return (
           '<div mbsc-calendar-nav></div>' +
-          '<div class="md-seach-header-bar mbsc-flex-1-0">' +
-          '<label><input id="md-search-demo-input" mbsc-input data-start-icon="material-search" data-input-style="box" placeholder="Search events"></input></label>' +
+          '<div class="mds-search-bar mbsc-flex-1-0">' +
+          '<label>' +
+          '<input id="demo-search-input" mbsc-input autocomplete="off" data-start-icon="material-search" data-input-style="box" placeholder="Search events" />' +
+          '</label>' +
           '</div>' +
-          '<div mbsc-calendar-prev></div>' +
-          '<div mbsc-calendar-today></div>' +
-          '<div mbsc-calendar-next></div>'
+          '<button mbsc-calendar-prev></button>' +
+          '<button mbsc-calendar-today></button>' +
+          '<button mbsc-calendar-next></button>'
         );
       },
       onPageLoading: function (args) {
@@ -61,27 +58,28 @@ export default {
       },
     });
 
-    var searchInput = document.getElementById('md-search-demo-input');
+    var searchInput = document.getElementById('demo-search-input');
 
     var popup = mobiscroll.popup('#demo-search-popup', {
+      anchor: searchInput,
+      contentPadding: false,
       display: 'anchored',
+      focusElm: searchInput,
+      focusOnClose: false,
+      focusOnOpen: false,
+      scrollLock: false,
       showArrow: false,
       showOverlay: false,
-      scrollLock: false,
-      contentPadding: false,
-      focusOnOpen: false,
-      focusOnClose: false,
-      focusElm: searchInput,
-      anchor: searchInput,
+      width: 400,
     });
 
     searchInput.addEventListener('input', function (ev) {
-      var text = ev.target.value;
+      var searchText = ev.target.value;
       clearTimeout(timer);
       timer = setTimeout(function () {
-        if (text.length > 0) {
+        if (searchText.length > 0) {
           mobiscroll.getJson(
-            'https://trial.mobiscroll.com/searchevents/?text=' + text,
+            'https://trial.mobiscroll.com/searchevents/?text=' + searchText,
             function (data) {
               list.setEvents(data);
               popup.open();
@@ -102,31 +100,26 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-search-events" class="md-search-events"></div>
-<div id="demo-search-popup" class="md-search-popup">
-    <div>
-        <div id="demo-search-list" class="mbsc-popover-list"></div>
-    </div>
+<div id="demo-search-events"></div>
+<div id="demo-search-popup">
+  <div>
+    <div id="demo-search-results" class="mds-search-results"></div>
+  </div>
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-seach-header-bar .mbsc-textfield-wrapper.mbsc-form-control-wrapper {
-    width: 400px;
-    margin: 12px auto;
+.mds-search-bar .mbsc-textfield-wrapper {
+  max-width: 400px;
+  margin: 8px auto;
 }
 
-.md-search-popup .mbsc-popover-list {
-    width: 400px;
+.mds-search-bar .mbsc-textfield.mbsc-ios-dark {
+  background: #313131;
 }
 
-.md-search-popup .mbsc-event-list {
-    margin-top: -1px;
-    margin-bottom: -1px;
-}
-
-.md-search-events .mbsc-ios-dark.mbsc-textfield-box {
-    background: #313131;
+.mds-search-results .mbsc-calendar-wrapper {
+  margin-top: -1px;
 }
   `,
 };

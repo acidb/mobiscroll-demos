@@ -8,7 +8,6 @@ import {
   getJson,
   Input,
   MbscCalendarEvent,
-  MbscDateType,
   MbscEventcalendarView,
   MbscEventClickEvent,
   MbscPageLoadingEvent,
@@ -28,29 +27,13 @@ const App: FC = () => {
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [listEvents, setListEvents] = useState<MbscCalendarEvent[]>([]);
   const [searchInput, setSearchInput] = useState<HTMLElement>();
-  const [selectedDate, setSelectedDate] = useState<MbscDateType>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<MbscCalendarEvent[]>([]);
 
+  const calInst = useRef<Eventcalendar | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
-  const calView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: {
-        type: 'month',
-      },
-    }),
-    [],
-  );
-
-  const listView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: {
-        type: 'year',
-        size: 5,
-      },
-    }),
-    [],
-  );
+  const calView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
+  const listView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'year', size: 5 } }), []);
 
   const handleInputChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     const searchText = ev.target.value;
@@ -98,9 +81,9 @@ const App: FC = () => {
   }, []);
 
   const handleEventClick = useCallback((args: MbscEventClickEvent) => {
-    setSelectedDate(args.event.start!);
     setSelectedEvent([args.event]);
     setPopupOpen(false);
+    calInst.current?.navigateToEvent(args.event);
   }, []);
 
   const searchInputRef = useCallback((input: Input) => {
@@ -134,8 +117,8 @@ const App: FC = () => {
     <>
       <Eventcalendar
         data={calEvents}
+        ref={calInst}
         renderHeader={customHeader}
-        selectedDate={selectedDate}
         selectedEvents={selectedEvent}
         selectMultipleEvents={true}
         view={calView}

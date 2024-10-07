@@ -11,6 +11,7 @@ export default {
 
     $(function () {
       var myEvents = [];
+
       var myResources = [
         {
           id: 1,
@@ -39,9 +40,7 @@ export default {
         .eventcalendar({
           // context,
           view: {
-            agenda: {
-              type: 'month',
-            },
+            agenda: { type: 'month' },
           },
           resources: myResources,
           renderHeader: function () {
@@ -68,9 +67,9 @@ export default {
 
             header +=
               '</div>' +
-              '<button mbsc-calendar-prev></button>' +
-              '<button mbsc-calendar-today></button>' +
-              '<button mbsc-calendar-next></button>';
+              '<button mbsc-calendar-prev class="mds-header-filter-prev"></button>' +
+              '<button mbsc-calendar-today class="mds-header-filter-today"></button>' +
+              '<button mbsc-calendar-next class="mds-header-filter-next"></button>';
             return header;
           },
         })
@@ -88,78 +87,89 @@ export default {
         'jsonp',
       );
 
-      $('.mds-header-filter-input').each(function () {
-        var target = $(this);
-        target.change(function () {
-          selectedResources[target.val()] = target.prop('checked');
-          var resource = myResources.find(function (r) {
-            return r.id === +target.val();
-          });
-          var filteredEvents = myEvents.filter(function (e) {
-            return selectedResources[e.resource];
-          });
+      $('.mds-header-filter-input').on('change', function (ev) {
+        var value = +ev.target.value;
+        var checked = ev.target.checked;
 
-          calendar.setEvents(filteredEvents);
+        selectedResources[value] = checked;
 
-          mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
-            message: (target.prop('checked') ? 'Showing ' : 'Hiding ') + (resource ? resource.name : '') + ' events',
-          });
+        var resource = myResources.find(function (r) {
+          return r.id === value;
+        });
+        var filteredEvents = myEvents.filter(function (e) {
+          return selectedResources[e.resource];
+        });
+
+        calendar.setEvents(filteredEvents);
+
+        mobiscroll.toast({
+          //<hidden>
+          // theme,//</hidden>
+          // context,
+          message: (checked ? 'Showing ' : 'Hiding ') + (resource ? resource.name : '') + ' events',
         });
       });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-  <!--hidden-->
-  <div class="demo-inline demo-max-width-900">
-      <!--/hidden-->
-      <div id="demo-header-filter"></div>
-      <!--hidden-->
-  </div>
-  <!--/hidden-->
+<div id="demo-header-filter"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-header-filter-nav {
-    width: 180px;
-  }
-  
-  .mds-header-filter-img {
-    width: 25px;
-  }
-  
-  .mds-header-filter-name {
-    margin-left: 10px;
-  }
-  
-  .mds-header-filter .mbsc-segmented {
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  .mds-header-filter .mbsc-segmented-button.mbsc-selected {
-    color: #fff;
-  }
-  
-  .mds-header-filter-1 .mbsc-button.mbsc-selected.mbsc-material,
-  .mds-header-filter-1 .mbsc-button.mbsc-selected.mbsc-windows,
-  .mds-header-filter-1 .mbsc-segmented-selectbox-inner {
-    background: #328e39;
-  }
-  
-  .mds-header-filter-2 .mbsc-button.mbsc-selected.mbsc-material,
-  .mds-header-filter-2 .mbsc-button.mbsc-selected.mbsc-windows,
-  .mds-header-filter-2 .mbsc-segmented-selectbox-inner {
-    background: #00aabb;
-  }
-  
-  .mds-header-filter-3 .mbsc-button.mbsc-selected.mbsc-material,
-  .mds-header-filter-3 .mbsc-button.mbsc-selected.mbsc-windows,
-  .mds-header-filter-3 .mbsc-segmented-selectbox-inner {
-    background: #ea72c0;
-  }
-    `,
+.mds-header-filter-nav {
+  width: 180px;
+}
+
+.mds-header-filter-img {
+  width: 25px;
+}
+
+.mds-header-filter-name {
+  margin-left: 10px;
+}
+
+.mds-header-filter .mbsc-segmented {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.mds-header-filter .mbsc-segmented-button.mbsc-selected {
+  color: #fff;
+}
+
+.mds-header-filter-1 .mbsc-button.mbsc-selected.mbsc-material,
+.mds-header-filter-1 .mbsc-button.mbsc-selected.mbsc-windows,
+.mds-header-filter-1 .mbsc-segmented-selectbox-inner {
+  background: #328e39;
+}
+
+.mds-header-filter-2 .mbsc-button.mbsc-selected.mbsc-material,
+.mds-header-filter-2 .mbsc-button.mbsc-selected.mbsc-windows,
+.mds-header-filter-2 .mbsc-segmented-selectbox-inner {
+  background: #00aabb;
+}
+
+.mds-header-filter-3 .mbsc-button.mbsc-selected.mbsc-material,
+.mds-header-filter-3 .mbsc-button.mbsc-selected.mbsc-windows,
+.mds-header-filter-3 .mbsc-segmented-selectbox-inner {
+  background: #ea72c0;
+}
+
+.mbsc-material .mds-header-filter-prev {
+  order: 1;
+}
+
+.mbsc-material .mds-header-filter-next {
+  order: 2;
+}
+
+.mbsc-material .mds-header-filter {
+  order: 3;
+}
+
+.mbsc-material .mds-header-filter-today {
+  order: 4;
+}
+  `,
 };

@@ -18,9 +18,10 @@ export default {
           view: {
             agenda: { type: 'year', size: 5 },
           },
+          refDate: new Date(),
           showControls: false,
           onEventClick: function (args) {
-            calendar.navigate(args.event.start);
+            calendar.navigateToEvent(args.event);
             calendar.setSelectedEvents([args.event]);
             popup.close();
           },
@@ -73,6 +74,7 @@ export default {
           focusElm: $searchInput[0],
           focusOnClose: false,
           focusOnOpen: false,
+          maxHeight: 500,
           scrollLock: false,
           showArrow: false,
           showOverlay: false,

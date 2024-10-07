@@ -13,7 +13,7 @@ import {
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './resource-filtering-in-header.css';
 
 setOptions({
@@ -28,14 +28,8 @@ const App: FC = () => {
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>();
 
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: {
-        type: 'month',
-      },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
+
   const myResources = useMemo<MbscResource[]>(
     () => [
       {
@@ -43,21 +37,18 @@ const App: FC = () => {
         name: 'Barry',
         color: '#328e39',
         img: 'https://img.mobiscroll.com/demos/m1.png',
-        checked: true,
       },
       {
         id: 2,
         name: 'Hortense',
         color: '#00aabb',
         img: 'https://img.mobiscroll.com/demos/f1.png',
-        checked: false,
       },
       {
         id: 3,
         name: 'Carl',
         color: '#ea72c0',
         img: 'https://img.mobiscroll.com/demos/m2.png',
-        checked: false,
       },
     ],
     [],
@@ -68,7 +59,7 @@ const App: FC = () => {
   }, []);
 
   const handleChange = useCallback(
-    (ev: MbscCalendarEvent) => {
+    (ev: ChangeEvent<HTMLInputElement>) => {
       const value = +ev.target.value;
       const checked = ev.target.checked;
       const resource = myResources.find((r) => r.id === value);
@@ -103,9 +94,9 @@ const App: FC = () => {
             ))}
           </SegmentedGroup>
         </div>
-        <CalendarPrev className="md-header-filter-prev" />
-        <CalendarToday />
-        <CalendarNext className="md-header-filter-next" />
+        <CalendarPrev className="mds-header-filter-prev" />
+        <CalendarToday className="mds-header-filter-today" />
+        <CalendarNext className="mds-header-filter-next" />
       </>
     ),
     [handleChange, myResources, selectedResources],

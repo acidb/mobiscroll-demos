@@ -1,0 +1,21 @@
+<mbsc-eventcalendar
+  class="mds-booking-calendar"
+  [data]="myEvents"
+  [clickToCreate]="true"
+  [dragToCreate]="true"
+  [dragToMove]="true"
+  [dragToResize]="true"
+  [eventOverlap]="false"
+  [extendDefaultEvent]="handleDefaultEvent"
+  [view]="myView"
+  [labelContentTemplate]="customLabelContent"
+  (onEventCreateFailed)="handleOverlap()"
+  (onEventUpdateFailed)="handleOverlap()"
+>
+  <ng-template #customLabelContent let-label>
+    <div *ngIf="label" class="mbsc-flex mds-booking-item mbsc-align-items-center">
+      <img *ngIf="label.original.icon" draggable="false" class="mds-booking-icon" [src]="label.original.icon" alt="booking icon" />
+      <span> {{label.title}} </span>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>

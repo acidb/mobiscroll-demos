@@ -2,6 +2,7 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscDatepickerOptions,
+  MbscEventcalendar,
   MbscEventcalendarOptions,
   MbscPopup,
   MbscPopupOptions,
@@ -24,16 +25,22 @@ setOptions({
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
+
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
+
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
+
   @ViewChild('colorPicker', { static: false })
   colorPicker: any;
+
   popupEventTitle: string | undefined;
   popupEventDescription = '';
   popupEventAllDay = true;
+  popupTravelTime = 0;
   popupEventDates: any;
   popupEventStatus = 'busy';
-  calendarSelectedDate: any = new Date();
   switchLabel: any = 'All-day';
   tempColor = '';
   selectedColor = '';
@@ -47,6 +54,7 @@ export class AppComponent {
       title: "Lunch @ Butcher's",
       description: '',
       allDay: false,
+      bufferBefore: 15,
       free: true,
       color: '#009788',
     },
@@ -54,9 +62,10 @@ export class AppComponent {
       id: 2,
       start: dyndatetime('y,m,d,15'),
       end: dyndatetime('y,m,d,16'),
-      title: 'General orientation',
+      title: 'Conference',
       description: '',
       allDay: false,
+      bufferBefore: 30,
       free: false,
       color: '#ff9900',
     },
@@ -64,9 +73,10 @@ export class AppComponent {
       id: 3,
       start: dyndatetime('y,m,d-1,18'),
       end: dyndatetime('y,m,d-1,22'),
-      title: 'Dexter BD',
+      title: 'Site Visit',
       description: '',
       allDay: false,
+      bufferBefore: 60,
       free: true,
       color: '#3f51b5',
     },
@@ -219,6 +229,7 @@ export class AppComponent {
     this.popupEventDescription = event['description'];
     this.popupEventDates = [event.start, event.end];
     this.popupEventAllDay = event.allDay || false;
+    this.popupTravelTime = event.bufferBefore || 0;
     this.popupEventStatus = event['status'] || 'busy';
     this.selectedColor = event.color || '';
   }
@@ -228,6 +239,7 @@ export class AppComponent {
     this.tempEvent.start = this.popupEventDates[0];
     this.tempEvent.end = this.popupEventDates[1];
     this.tempEvent.allDay = this.popupEventAllDay;
+    this.tempEvent.bufferBefore = this.popupTravelTime;
     this.tempEvent['status'] = this.popupEventStatus;
     this.tempEvent.color = this.selectedColor;
     if (this.isEdit) {
@@ -242,7 +254,7 @@ export class AppComponent {
       // ...
     }
     // navigate the calendar
-    this.calendarSelectedDate = this.popupEventDates[0];
+    this.calendar.navigateToEvent(this.tempEvent);
     // close the popup
     this.popup.close();
   }

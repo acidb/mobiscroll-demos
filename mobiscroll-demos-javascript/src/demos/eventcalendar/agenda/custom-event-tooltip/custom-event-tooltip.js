@@ -8,19 +8,6 @@ export default {
       // theme
     });
 
-    var appointment;
-    var appointmentInfo = document.getElementById('demo-tooltip-info');
-    var appointmentLocation = document.getElementById('demo-tooltip-location');
-    var appointmentReason = document.getElementById('demo-tooltip-reason');
-    var appointmentStatus = document.getElementById('demo-tooltip-status');
-    var appointmentTime = document.getElementById('demo-tooltip-time');
-    var btnDelete = document.getElementById('demo-tooltip-delete');
-    var btnStatus = document.getElementById('demo-tooltip-status-update');
-    var btnView = document.getElementById('demo-tooltip-view');
-    var timer;
-    var tooltipElm = document.getElementById('demo-tooltip-popup');
-    var tooltipHeader = document.getElementById('demo-tooltip-header');
-
     function openTooltip(args) {
       var formatDate = mobiscroll.formatDate;
       var event = args.event;
@@ -51,9 +38,22 @@ export default {
       clearTimeout(timer);
       timer = null;
 
-      tooltip.setOptions({ anchor: args.domEvent.target });
+      tooltip.setOptions({ anchor: args.domEvent.target.closest('.mbsc-event') });
       tooltip.open();
     }
+
+    var appointment;
+    var appointmentInfo = document.getElementById('demo-tooltip-info');
+    var appointmentLocation = document.getElementById('demo-tooltip-location');
+    var appointmentReason = document.getElementById('demo-tooltip-reason');
+    var appointmentStatus = document.getElementById('demo-tooltip-status');
+    var appointmentTime = document.getElementById('demo-tooltip-time');
+    var btnDelete = document.getElementById('demo-tooltip-delete');
+    var btnStatus = document.getElementById('demo-tooltip-status-update');
+    var btnView = document.getElementById('demo-tooltip-view');
+    var timer;
+    var tooltipElm = document.getElementById('demo-tooltip-popup');
+    var tooltipHeader = document.getElementById('demo-tooltip-header');
 
     var calendar = mobiscroll.eventcalendar('#demo-tooltip-calendar', {
       view: { agenda: { type: 'week' } },
@@ -492,9 +492,9 @@ export default {
     });
 
     var tooltip = mobiscroll.popup('#demo-tooltip-popup', {
-      closeOnOverlayClick: false,
       contentPadding: false,
       display: 'anchored',
+      scrollLock: false,
       showOverlay: false,
       touchUi: false,
       width: 350,
@@ -561,7 +561,7 @@ export default {
     </button>
   </div>
 </div>
-  `,
+`,
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-tooltip {
@@ -586,5 +586,5 @@ export default {
 .mds-tooltip-button.mbsc-material {
   font-size: 12px;
 }
-  `,
+`,
 };

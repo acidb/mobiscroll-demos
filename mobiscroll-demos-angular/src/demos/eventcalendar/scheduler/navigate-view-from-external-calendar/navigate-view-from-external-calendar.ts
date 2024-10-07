@@ -9,9 +9,9 @@ setOptions({
 
 @Component({
   selector: 'app-agenda-external-navigation',
-  styleUrl: './navigate-from-external-calendarn.css',
+  styleUrl: './navigate-view-from-external-calendar.css',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './navigate-from-external-calendar.html',
+  templateUrl: './navigate-view-from-external-calendar.html',
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

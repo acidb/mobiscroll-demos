@@ -1,0 +1,33 @@
+<mbsc-page>
+  <div class="mbsc-align-center">
+    <div class="mbsc-note">Customize popup buttons depending on your context.</div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-button-group-block">
+      <mbsc-button (click)="openPopupNoBtn()">No Buttons</mbsc-button>
+      <mbsc-button (click)="openPopupPredefined()">Predefined buttons</mbsc-button>
+      <mbsc-button (click)="openPopupCustom()">Custom button</mbsc-button>
+    </div>
+  </div>
+
+  <mbsc-popup #popupNoBtn [options]="popupOptionsNoBtn">
+    <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi there!</h3>
+      <p class="md-text-center">This is the default with no buttons.</p>
+    </div>
+  </mbsc-popup>
+
+  <mbsc-popup #popupPredefined [options]="popupOptionsPredefined">
+    <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi again!</h3>
+      <p class="md-text-center">This is a popup with predifined buttons.</p>
+    </div>
+  </mbsc-popup>
+
+  <mbsc-popup #popupCustom [options]="popupOptionsCustom">
+    <div class="mbsc-align-center mbsc-padding">
+      <h3 class="md-text-center">Hi again!</h3>
+      <p class="md-text-center">This is a popup with a custom button.</p>
+    </div>
+  </mbsc-popup>
+</mbsc-page>

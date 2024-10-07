@@ -449,9 +449,7 @@ function App() {
   const [appointmentStatus, setAppointmentStatus] = useState<string>('');
   const [appointmentTime, setAppointmentTime] = useState<string>('');
   const [buttonText, setButtonText] = useState<string>('');
-  const [buttonType, setButtonType] = useState<
-    'info' | 'warning' | 'success' | 'light' | 'dark' | 'primary' | 'secondary' | 'danger' | undefined
-  >();
+  const [buttonType, setButtonType] = useState<'warning' | 'success' | undefined>();
   const [isTooltipOpen, setTooltipOpen] = useState<boolean>(false);
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
@@ -460,16 +458,7 @@ function App() {
 
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: {
-        type: 'week',
-        startDay: 1,
-        endDay: 5,
-      },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'week' } }), []);
 
   const openTooltip = useCallback((args: MbscEventClickEvent) => {
     const event: MbscCalendarEvent = args.event;
@@ -477,6 +466,7 @@ function App() {
 
     if (timer.current) {
       clearTimeout(timer.current);
+      timer.current = undefined;
     }
 
     if (event.confirmed) {
@@ -495,9 +485,16 @@ function App() {
     setAppointmentTime(time);
     setAppointmentReason(event.reason);
     setTooltipColor(event.color!);
-    setTooltipAnchor(args.domEvent.target);
+    setTooltipAnchor(args.domEvent.target.closest('.mbsc-event'));
     setTooltipOpen(true);
   }, []);
+
+  const handleEventClick = useCallback(
+    (args: MbscEventClickEvent) => {
+      openTooltip(args);
+    },
+    [openTooltip],
+  );
 
   const handleEventHoverIn = useCallback(
     (args: MbscEventClickEvent) => {
@@ -514,16 +511,10 @@ function App() {
     }
   }, []);
 
-  const handleEventClick = useCallback(
-    (args: MbscEventClickEvent) => {
-      openTooltip(args);
-    },
-    [openTooltip],
-  );
-
   const handleMouseEnter = useCallback(() => {
     if (timer.current) {
       clearTimeout(timer.current);
+      timer.current = undefined;
     }
   }, []);
 
@@ -531,6 +522,10 @@ function App() {
     timer.current = setTimeout(() => {
       setTooltipOpen(false);
     }, 200);
+  }, []);
+
+  const handleTooltipClose = useCallback(() => {
+    setTooltipOpen(false);
   }, []);
 
   const handleToastClose = useCallback(() => {
@@ -563,19 +558,20 @@ function App() {
         data={appointments}
         showEventTooltip={false}
         view={myView}
+        onEventClick={handleEventClick}
         onEventHoverIn={handleEventHoverIn}
         onEventHoverOut={handleEventHoverOut}
-        onEventClick={handleEventClick}
       />
       <Popup
         anchor={tooltipAnchor}
-        closeOnOverlayClick={false}
         contentPadding={false}
         display="anchored"
         isOpen={isTooltipOpen}
+        scrollLock={false}
         showOverlay={false}
         touchUi={false}
         width={350}
+        onClose={handleTooltipClose}
       >
         <div className="mds-tooltip" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <div className="mds-tooltip-header" style={{ backgroundColor: tooltipColor }}>

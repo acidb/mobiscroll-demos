@@ -3,12 +3,11 @@ import {
   Eventcalendar,
   MbscCalendarEvent,
   MbscEventcalendarView,
-  MbscSelectedDateChangeEvent,
   Page,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useRef, useState } from 'react';
 import './event-data-structure.css';
 
 setOptions({
@@ -28,22 +27,12 @@ const App: FC = () => {
       color: '#35bb5a',
     },
   ]);
-  const [mySelectedDate, setSelectedDate] = useState<Date>();
 
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: {
-        type: 'month',
-      },
-    }),
-    [],
-  );
+  const calInst = useRef<Eventcalendar>(null);
 
-  const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
-    setSelectedDate(new Date(args.date as string));
-  }, []);
+  const myView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
 
-  const handleCloseToast = useCallback(() => {
+  const handleToastClose = useCallback(() => {
     setToastOpen(false);
   }, []);
 
@@ -60,9 +49,10 @@ const App: FC = () => {
       location: 'Office',
     };
 
-    setSelectedDate(new Date(2018, 11, 21));
     setEvents((myEvents) => [...myEvents, newEvent]);
     setToastOpen(true);
+
+    calInst.current?.navigateToEvent(newEvent);
   }, []);
 
   return (
@@ -74,10 +64,10 @@ const App: FC = () => {
           </Button>
         </div>
         <div className="mds-overflow-hidden mbsc-flex-1-1">
-          <Eventcalendar data={myEvents} view={myView} selectedDate={mySelectedDate} onSelectedDateChange={handleSelectedDateChange} />
+          <Eventcalendar data={myEvents} ref={calInst} view={myView} />
         </div>
       </div>
-      <Toast message="Event added" isOpen={isToastOpen} onClose={handleCloseToast} />
+      <Toast message="Event added" isOpen={isToastOpen} onClose={handleToastClose} />
     </Page>
   );
 };

@@ -1,6 +1,7 @@
 import {
   Button,
   Datepicker,
+  Dropdown,
   Eventcalendar,
   Input,
   Popup,
@@ -19,8 +20,6 @@ setOptions({
   // themeJs
 });
 
-const now = new Date();
-
 const defaultEvents = [
   {
     id: 1,
@@ -29,6 +28,7 @@ const defaultEvents = [
     title: "Lunch @ Butcher's",
     description: '',
     allDay: false,
+    bufferBefore: 15,
     free: true,
     color: '#009788',
   },
@@ -36,9 +36,10 @@ const defaultEvents = [
     id: 2,
     start: 'dyndatetime(y,m,d,15)',
     end: 'dyndatetime(y,m,d,16)',
-    title: 'General orientation',
+    title: 'Conference',
     description: '',
     allDay: false,
+    bufferBefore: 30,
     free: false,
     color: '#ff9900',
   },
@@ -46,9 +47,10 @@ const defaultEvents = [
     id: 3,
     start: 'dyndatetime(y,m,d-1,18)',
     end: 'dyndatetime(y,m,d-1,22)',
-    title: 'Dexter BD',
+    title: 'Site Visit',
     description: '',
     allDay: false,
+    bufferBefore: 60,
     free: true,
     color: '#3f51b5',
   },
@@ -78,15 +80,16 @@ function App() {
   const [popupEventTitle, setTitle] = useState('');
   const [popupEventDescription, setDescription] = useState('');
   const [popupEventAllDay, setAllDay] = useState(true);
+  const [popupTravelTime, setTravelTime] = useState(0);
   const [popupEventDate, setDate] = useState([]);
   const [popupEventStatus, setStatus] = useState('busy');
-  const [mySelectedDate, setSelectedDate] = useState(now);
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const [colorAnchor, setColorAnchor] = useState(null);
   const [selectedColor, setSelectedColor] = useState('');
   const [tempColor, setTempColor] = useState('');
   const [isSnackbarOpen, setSnackbarOpen] = useState(false);
 
+  const calInst = useRef();
   const colorPicker = useRef();
 
   const myView = useMemo(() => ({ calendar: { labels: true } }), []);
@@ -140,9 +143,9 @@ function App() {
       start: popupEventDate[0],
       end: popupEventDate[1],
       allDay: popupEventAllDay,
+      bufferBefore: popupTravelTime,
       status: popupEventStatus,
       color: tempEvent.color,
-      //color: selectedColor,
     };
     if (isEdit) {
       // update the event in the list
@@ -159,10 +162,20 @@ function App() {
       // here you can add the event to your storage as well
       // ...
     }
-    setSelectedDate(popupEventDate[0]);
+    calInst.current.navigateToEvent(newEvent);
     // close the popup
     setOpen(false);
-  }, [isEdit, myEvents, popupEventAllDay, popupEventDate, popupEventDescription, popupEventStatus, popupEventTitle, tempEvent]);
+  }, [
+    isEdit,
+    myEvents,
+    popupEventAllDay,
+    popupEventDate,
+    popupEventDescription,
+    popupEventStatus,
+    popupEventTitle,
+    popupTravelTime,
+    tempEvent,
+  ]);
 
   const deleteEvent = useCallback(
     (event) => {
@@ -180,11 +193,10 @@ function App() {
     setDescription(event.description);
     setDate([event.start, event.end]);
     setAllDay(event.allDay || false);
+    setTravelTime(event.bufferBefore || 0);
     setStatus(event.status || 'busy');
     setSelectedColor(event.color || '');
   }, []);
-
-  // handle popup form changes
 
   const titleChange = useCallback((ev) => {
     setTitle(ev.target.value);
@@ -196,6 +208,10 @@ function App() {
 
   const allDayChange = useCallback((ev) => {
     setAllDay(ev.target.checked);
+  }, []);
+
+  const travelTimeChange = useCallback((ev) => {
+    setTravelTime(ev.target.value);
   }, []);
 
   const dateChange = useCallback((args) => {
@@ -211,12 +227,6 @@ function App() {
     setOpen(false);
   }, [deleteEvent, tempEvent]);
 
-  // scheduler options
-
-  const onSelectedDateChange = useCallback((event) => {
-    setSelectedDate(event.date);
-  }, []);
-
   const onEventClick = useCallback(
     (args) => {
       setEdit(true);
@@ -231,7 +241,6 @@ function App() {
 
   const onEventCreated = useCallback(
     (args) => {
-      // createNewEvent(args.event, args.target)
       setEdit(false);
       setTempEvent(args.event);
       // fill popup form with event data
@@ -255,7 +264,6 @@ function App() {
     // ...
   }, []);
 
-  // datepicker options
   const controls = useMemo(() => (popupEventAllDay ? ['date'] : ['datetime']), [popupEventAllDay]);
   const datepickerResponsive = useMemo(
     () =>
@@ -275,7 +283,6 @@ function App() {
     [popupEventAllDay],
   );
 
-  // popup options
   const headerText = useMemo(() => (isEdit ? 'Edit event' : 'New Event'), [isEdit]);
   const popupButtons = useMemo(() => {
     if (isEdit) {
@@ -353,14 +360,13 @@ function App() {
   return (
     <>
       <Eventcalendar
-        view={myView}
-        data={myEvents}
-        clickToCreate="double"
+        clickToCreate={true}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
-        selectedDate={mySelectedDate}
-        onSelectedDateChange={onSelectedDateChange}
+        data={myEvents}
+        ref={calInst}
+        view={myView}
         onEventClick={onEventClick}
         onEventCreated={onEventCreated}
         onEventDeleted={onEventDeleted}
@@ -385,8 +391,22 @@ function App() {
           <Switch label="All-day" checked={popupEventAllDay} onChange={allDayChange} />
           <Input ref={startRef} label="Starts" />
           <Input ref={endRef} label="Ends" />
+          {!popupEventAllDay && (
+            <div id="travel-time-group">
+              <Dropdown label="Travel time" value={popupTravelTime} onChange={travelTimeChange}>
+                <option value="0">None</option>
+                <option value="5">5 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="90">1.5 hours</option>
+                <option value="120">2 hours</option>
+              </Dropdown>
+            </div>
+          )}
           <Datepicker
             select="range"
+            display="anchored"
             controls={controls}
             touchUi={true}
             startInput={start}

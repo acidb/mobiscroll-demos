@@ -28,21 +28,18 @@ export class AppComponent implements OnInit {
       name: 'Barry',
       color: '#328e39',
       img: 'https://img.mobiscroll.com/demos/m1.png',
-      checked: true,
     },
     {
       id: 2,
       name: 'Hortense',
       color: '#00aabb',
       img: 'https://img.mobiscroll.com/demos/f1.png',
-      checked: false,
     },
     {
       id: 3,
       name: 'Carl',
       color: '#ea72c0',
       img: 'https://img.mobiscroll.com/demos/m2.png',
-      checked: false,
     },
   ];
 
@@ -56,9 +53,7 @@ export class AppComponent implements OnInit {
     const target = ev.target as HTMLInputElement;
     const resource = this.myResources.find((r) => r.id === +target.value);
 
-    this.filteredEvents = this.myEvents
-      .filter((e) => this.selectedResources.indexOf(e['participant']) !== -1)
-      .map((e) => ({ ...e, color: this.myResources.find((r) => r.id === e['participant'])!.color }));
+    this.filteredEvents = this.myEvents.filter((e) => this.selectedResources.indexOf(e['participant']) !== -1);
 
     this.notify.toast({
       message: (target.checked ? 'Showing ' : 'Hiding ') + (resource ? resource.name : '') + ' events',
@@ -67,10 +62,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/custom-events/', 'callback').subscribe((resp) => {
-      this.myEvents = resp;
-      this.filteredEvents = this.myEvents
-        .filter((e) => this.selectedResources.indexOf(e['participant']) !== -1)
-        .map((e) => ({ ...e, color: this.myResources.find((r) => r.id === e['participant'])!.color }));
+      this.myEvents = resp.map((e) => {
+        e.color = this.myResources.find((r) => r.id === e['participant'])!.color;
+        return e;
+      });
+      this.filteredEvents = this.myEvents.filter((e) => this.selectedResources.indexOf(e['participant']) !== -1);
     });
   }
 }

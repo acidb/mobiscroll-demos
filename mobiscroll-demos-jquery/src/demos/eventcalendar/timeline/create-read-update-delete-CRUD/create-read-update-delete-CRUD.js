@@ -15,6 +15,7 @@ export default {
       var range;
       var oldEvent;
       var tempEvent = {};
+      var tempResource = {};
       var deleteEvent;
       var restoreEvent;
       var colorPicker;
@@ -26,6 +27,7 @@ export default {
       var $statusBusy = $('#event-status-busy');
       var $deleteButton = $('#event-delete');
       var $color = $('#event-color');
+      var $travelTime = $('#travel-time-selection');
       var datePickerResponsive = {
         medium: {
           controls: ['calendar'],
@@ -46,6 +48,7 @@ export default {
           title: "Lunch @ Butcher's",
           description: '',
           allDay: false,
+          bufferBefore: 15,
           free: true,
           resource: 3,
         },
@@ -53,9 +56,10 @@ export default {
           id: 2,
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,16)',
-          title: 'General orientation',
+          title: 'Site visit',
           description: '',
           allDay: false,
+          bufferBefore: 30,
           free: false,
           resource: 5,
         },
@@ -63,9 +67,10 @@ export default {
           id: 3,
           start: 'dyndatetime(y,m,d,18)',
           end: 'dyndatetime(y,m,d,22)',
-          title: 'Dexter BD',
+          title: 'Conference',
           description: '',
           allDay: false,
+          bufferBefore: 60,
           free: true,
           resource: 4,
         },
@@ -124,6 +129,7 @@ export default {
               text: 'Add',
               keyCode: 'enter',
               handler: function () {
+                tempEvent.bufferBefore = $travelTime.val();
                 calendar.updateEvent(tempEvent);
                 // navigate the calendar to the correct view
                 calendar.navigateToEvent(tempEvent);
@@ -138,14 +144,15 @@ export default {
         // fill popup with a new event data
         $title.mobiscroll('getInst').value = tempEvent.title;
         $description.mobiscroll('getInst').value = '';
-        $allDay.mobiscroll('getInst').checked = tempEvent.allDay;
+        $allDay.mobiscroll('getInst').checked = false;
         range.setVal([tempEvent.start, tempEvent.end]);
         $statusBusy.mobiscroll('getInst').checked = true;
         range.setOptions({
           controls: tempEvent.allDay ? ['date'] : ['datetime'],
           responsive: tempEvent.allDay ? datePickerResponsive : datetimePickerResponsive,
         });
-        selectColor(getResource(tempEvent.resource).color, true);
+        selectColor(tempResource.color, true);
+        $travelTime.val(0);
 
         // set anchor for the popup
         popup.setOptions({ anchor: elm });
@@ -176,6 +183,7 @@ export default {
                   title: $title.val(),
                   description: $description.val(),
                   allDay: $allDay.mobiscroll('getInst').checked,
+                  bufferBefore: $travelTime.val(),
                   start: date[0],
                   end: date[1],
                   free: $statusFree.mobiscroll('getInst').checked,
@@ -199,7 +207,8 @@ export default {
         $description.mobiscroll('getInst').value = ev.description || '';
         $allDay.mobiscroll('getInst').checked = ev.allDay || false;
         range.setVal([ev.start, ev.end]);
-        selectColor(ev.color || getResource(ev.resource).color, true);
+        selectColor(ev.color || args.resourceObj.color, true);
+        $travelTime.val(ev.bufferBefore !== undefined ? ev.bufferBefore : 0);
 
         if (ev.free) {
           $statusFree.mobiscroll('getInst').checked = true;
@@ -235,6 +244,7 @@ export default {
           onEventClick: function (args) {
             oldEvent = $.extend({}, args.event);
             tempEvent = args.event;
+            tempResource = args.resourceObj;
 
             if (!popup.isVisible()) {
               createEditPopup(args);
@@ -245,6 +255,8 @@ export default {
 
             // store temporary event
             tempEvent = args.event;
+            // store temporary resource
+            tempResource = args.resourceObj;
             createAddPopup(args.target);
           },
           onEventDeleted: function (args) {
@@ -300,6 +312,13 @@ export default {
 
       $allDay.on('change', function () {
         var checked = this.checked;
+
+        if (checked) {
+          $('#travel-time-group').hide();
+          $travelTime.val(0);
+        } else {
+          $('#travel-time-group').show();
+        }
 
         // change range settings based on the allDay
         range.setOptions({
@@ -402,14 +421,8 @@ export default {
         colorPicker.close();
       }
 
-      function getResource(res) {
-        return myResources.find(function (r) {
-          return r.id == res;
-        });
-      }
-
       $('#event-color-picker').on('click', function () {
-        selectColor(tempEvent.color || getResource(tempEvent.resource).color);
+        selectColor(tempEvent.color || tempResource.color);
         colorPicker.open();
       });
 
@@ -453,6 +466,17 @@ export default {
         <label>
             Ends
             <input mbsc-input id="end-input" />
+        </label>
+        <label id="travel-time-group">
+            <select data-label="Travel time" mbsc-dropdown id="travel-time-selection">
+                <option value="0">None</option>
+                <option value="5">5 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="90">1.5 hours</option>
+                <option value="120">2 hours</option>
+            </select>
         </label>
         <div id="event-date"></div>
         <div id="event-color-picker" class="event-color-c">

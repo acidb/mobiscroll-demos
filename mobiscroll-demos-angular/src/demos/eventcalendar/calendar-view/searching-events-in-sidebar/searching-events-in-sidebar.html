@@ -1,27 +1,33 @@
-<mbsc-page>
-  <div class="md-search-events-sidebar mbsc-flex">
-    <div class="md-search-events-cont mbsc-flex-col mbsc-flex-none">
-      <mbsc-input (input)="onSearch($event)" startIcon="material-search" inputStyle="outline" placeholder="Search events"></mbsc-input>
+<mbsc-page class="mds-full-height">
+  <div class="mds-full-height mbsc-flex">
+    <div class="mds-search-sidebar mbsc-flex-col mbsc-flex-none">
+      <mbsc-input
+        (input)="onInput($event)"
+        autocomplete="off"
+        startIcon="material-search"
+        inputStyle="outline"
+        placeholder="Search events"
+      ></mbsc-input>
       <mbsc-eventcalendar
-        *ngIf="showList"
+        *ngIf="displayResults"
         [data]="listEvents"
-        [view]="listView"
         [showControls]="false"
-        (onEventClick)="eventClick($event)"
+        [view]="listView"
+        (onEventClick)="onEventClick($event)"
       ></mbsc-eventcalendar>
     </div>
-    <div class="md-search-events-calendar mbsc-flex-1-1">
+    <div class="mds-search-calendar mbsc-flex-1-1">
       <mbsc-eventcalendar
-        [data]="calEvents"
-        [view]="calView"
-        [selectMultipleEvents]="true"
-        [(selectedDate)]="currentDate"
-        [(selectedEvents)]="mySelectedEvent"
-        (onPageLoading)="onPageLoading($event)"
+        #calendar
         [clickToCreate]="false"
         [dragToCreate]="false"
         [dragToMove]="false"
         [dragToResize]="false"
+        [data]="calEvents"
+        [view]="calView"
+        [selectMultipleEvents]="true"
+        [(selectedEvents)]="selectedEvent"
+        (onPageLoading)="onPageLoading($event)"
       ></mbsc-eventcalendar>
     </div>
   </div>

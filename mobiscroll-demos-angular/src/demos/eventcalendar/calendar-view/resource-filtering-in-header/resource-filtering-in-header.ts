@@ -28,21 +28,18 @@ export class AppComponent implements OnInit {
       name: 'Barry',
       color: '#328e39',
       img: 'https://img.mobiscroll.com/demos/m1.png',
-      checked: true,
     },
     {
       id: 2,
       name: 'Hortense',
       color: '#00aabb',
       img: 'https://img.mobiscroll.com/demos/f1.png',
-      checked: false,
     },
     {
       id: 3,
       name: 'Carl',
       color: '#ea72c0',
       img: 'https://img.mobiscroll.com/demos/m2.png',
-      checked: false,
     },
   ];
 

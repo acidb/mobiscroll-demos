@@ -2,10 +2,17 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
-  MbscDatepickerOptions,
-  MbscEventcalendarOptions,
+  MbscDatepickerValue,
+  MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscEventCreatedEvent,
+  MbscEventDeletedEvent,
+  MbscEventUpdatedEvent,
   MbscPopup,
+  MbscPopupButton,
   MbscPopupOptions,
+  MbscResource,
+  MbscSlot,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -25,15 +32,31 @@ setOptions({
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
+
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
-  shiftNotes: string | undefined;
-  shiftDate: any;
-  tempShift!: MbscCalendarEvent;
+
+  deletedShift!: MbscCalendarEvent;
+  isEdit = false;
   minTime = '';
   maxTime = '';
-  popupHeader!: string;
-  staff = [
+  shift!: MbscCalendarEvent;
+  shiftDates?: MbscDatepickerValue;
+  shiftNotes?: string;
+
+  popupHeader = '';
+  popupButtons: Array<MbscPopupButton | 'cancel'> = [];
+
+  popupResponsive: { [key: string]: MbscPopupOptions } = {
+    medium: {
+      display: 'center',
+      fullScreen: false,
+      touchUi: false,
+      width: 400,
+    },
+  };
+
+  staff: MbscResource[] = [
     {
       id: 1,
       name: 'Ryan',
@@ -77,6 +100,7 @@ export class AppComponent {
       img: 'https://img.mobiscroll.com/demos/f3.png',
     },
   ];
+
   shifts: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d-2,7'),
@@ -247,17 +271,13 @@ export class AppComponent {
       slot: 2,
     },
   ];
-  slots = [
-    {
-      id: 1,
-      name: 'Morning',
-    },
-    {
-      id: 2,
-      name: 'Afternoon',
-    },
+
+  mySlots: MbscSlot[] = [
+    { id: 1, name: 'Morning' },
+    { id: 2, name: 'Afternoon' },
   ];
-  invalid = [
+
+  myInvalids: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d+1,0'),
       end: dyndatetime('y,m,d+1,23,59'),
@@ -271,187 +291,43 @@ export class AppComponent {
       slot: 2,
     },
   ];
-  calendarOptions: MbscEventcalendarOptions = {
-    view: {
-      timeline: {
-        type: 'week',
-        eventList: true,
-        startDay: 1,
-        endDay: 5,
-      },
-    },
-    dragToCreate: false,
-    dragToResize: false,
-    dragToMove: true,
-    clickToCreate: true,
-    resources: this.staff,
-    invalid: this.invalid,
-    slots: this.slots,
-    extendDefaultEvent: (ev) => {
-      const d = ev.start;
-      const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), ev.slot === 1 ? 7 : 12);
-      const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), ev.slot === 1 ? 13 : 18);
 
-      return {
-        title: formatDate('HH:mm', start) + ' - ' + formatDate('HH:mm', end),
-        start,
-        end,
-        resource: ev.resource,
-      };
-    },
-    onEventClick: (args: any) => {
-      const shift: any = args.event;
-      const resource: any = this.staff.find((r) => r.id === shift.resource);
-      const slot: any = this.slots.find((s) => s.id === shift.slot);
-
-      this.isEdit = true;
-      this.tempShift = args.event;
-      this.minTime = shift.slot === 1 ? '07:00' : '12:00';
-      this.maxTime = shift.slot === 1 ? '13:00' : '18:00';
-      // fill popup form with event data
-      this.loadPopupForm(args.event);
-      // set popup options
-      this.popupButtons = this.popupEditButtons;
-      this.popupHeader =
-        '<div>Edit ' +
-        resource.name +
-        '\'s hours</div><div class="employee-shifts-day">' +
-        formatDate('DDDD', new Date(shift.start)) +
-        ' ' +
-        slot.name +
-        ',' +
-        formatDate('DD MMMM YYYY', new Date(shift.start)) +
-        '</div>';
-      // open the popup
-      this.popup.open();
-    },
-    onEventCreated: (args: any) => {
-      setTimeout(() => {
-        const shift: any = args.event;
-        const start: any = shift.start;
-        const slot: any = this.slots.find((s) => s.id === shift.slot);
-        this.isEdit = false;
-        this.tempShift = shift;
-        this.minTime = shift.slot === 1 ? '07:00' : '12:00';
-        this.maxTime = shift.slot === 1 ? '13:00' : '18:00';
-        // fill popup form with event data
-        this.loadPopupForm(shift);
-        // set popup options
-        this.popupButtons = this.popupAddButtons;
-        this.popupHeader =
-          '<div>New shift</div><div class="employee-shifts-day">' +
-          formatDate('DDDD', new Date(start)) +
-          ' ' +
-          slot.name +
-          ',' +
-          formatDate('DD MMMM YYYY', new Date(start)) +
-          '</div>';
-        // open the popup
-        this.popup.open();
-      });
-    },
-    onEventDeleted: (args) => {
-      setTimeout(() => {
-        this.deleteShift(args.event);
-      });
-    },
-  };
-  rangeOptions: MbscDatepickerOptions = {
-    controls: ['time'],
-    select: 'range',
-    display: 'anchored',
-    showRangeLabels: false,
-    touchUi: false,
-    stepMinute: 30,
-    timeWheels: '|h:mm A|',
-    onChange: (args: any) => {
-      const date = args.value;
-
-      // update shift's start/end date
-      this.tempShift.start = date[0];
-      this.tempShift.end = date[1] ? date[1] : date[0];
-      this.tempShift.title = formatDate('HH:mm', date[0]) + ' - ' + formatDate('HH:mm', date[1] ? date[1] : date[0]);
-    },
-  };
-  popupAddButtons = [
-    'cancel',
-    {
-      handler: () => {
-        this.saveShift();
-      },
-      keyCode: 'enter',
-      text: 'Add',
-      cssClass: 'mbsc-popup-button-primary',
-    },
-  ];
-
-  popupEditButtons = [
-    'cancel',
-    {
-      handler: () => {
-        this.saveShift();
-      },
-      keyCode: 'enter',
-      text: 'Save',
-      cssClass: 'mbsc-popup-button-primary',
-    },
-  ];
-
-  popupButtons: any = [];
-
-  popupOptions: MbscPopupOptions = {
-    display: 'bottom',
-    contentPadding: false,
-    fullScreen: true,
-    onClose: () => {
-      if (!this.isEdit) {
-        // refresh the list, if add popup was canceled, to remove the temporary shift
-        this.shifts = [...this.shifts];
-      }
-    },
-    responsive: {
-      medium: {
-        display: 'center',
-        width: 400,
-        fullScreen: false,
-        touchUi: false,
-        showOverlay: false,
-      },
+  myView: MbscEventcalendarView = {
+    timeline: {
+      type: 'week',
+      eventList: true,
+      startDay: 1,
+      endDay: 5,
     },
   };
 
-  isEdit = false;
+  getShiftTimes(event: MbscCalendarEvent) {
+    const d = event.start as Date;
+    const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), event.slot === 1 ? 7 : 12);
+    const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), event.slot === 1 ? 13 : 18);
 
-  loadPopupForm(shift: any): void {
-    this.shiftNotes = shift.notes;
-    this.shiftDate = [shift.start, shift.end];
+    return {
+      title: formatDate('HH:mm', start) + ' - ' + formatDate('HH:mm', end),
+      start: start,
+      end: end,
+    };
   }
 
-  saveShift(): void {
-    const start = new Date(this.shiftDate[0]);
-    const end = new Date(this.shiftDate[1]);
-    this.tempShift.title = formatDate('HH:mm', start) + ' - ' + formatDate('HH:mm', end);
-    this.tempShift['notes'] = this.shiftNotes;
-    this.tempShift.start = start;
-    this.tempShift.end = end;
-
-    if (this.isEdit) {
-      // update the shift in the list
-      this.shifts = [...this.shifts];
-    } else {
-      // add the new shift to the list
-      this.shifts = [...this.shifts, this.tempShift];
-    }
-    // close the popup
-    this.popup.close();
+  fillPopup(event: MbscCalendarEvent, isEdit: boolean) {
+    this.isEdit = isEdit;
+    this.minTime = event.slot === 1 ? '07:00' : '12:00';
+    this.maxTime = event.slot === 1 ? '13:00' : '18:00';
+    this.shift = event;
+    this.shiftDates = [new Date(event.start as Date), new Date(event.end as Date)];
+    this.shiftNotes = event['notes'];
   }
 
-  deleteShift(shift: MbscCalendarEvent): void {
-    this.shifts = this.shifts.filter((item) => item.id !== shift.id);
+  deleteEvent(event: MbscCalendarEvent) {
+    this.shifts = this.shifts.filter((s) => s.id !== event.id);
     this.notify.snackbar({
       button: {
         action: () => {
-          this.shifts = [...this.shifts, shift];
+          this.shifts = [...this.shifts, event];
         },
         text: 'Undo',
       },
@@ -459,21 +335,135 @@ export class AppComponent {
     });
   }
 
-  onDeleteClick(): void {
-    this.deleteShift(this.tempShift);
+  updateEvent(event: MbscCalendarEvent) {
+    const index = this.shifts.findIndex((s) => s.id === event.id);
+    const newShifts = [...this.shifts];
+
+    newShifts.splice(index, 1, event);
+
+    this.shifts = newShifts;
+  }
+
+  saveEvent(event: MbscCalendarEvent) {
+    const dates = this.shiftDates as Date[];
+    const start = dates[0];
+    const end = dates[1] ? dates[1] : dates[0];
+
+    const shiftStart = new Date(event.start as Date);
+    const shiftEnd = new Date(event.end as Date);
+
+    shiftStart.setHours(start.getHours(), start.getMinutes(), 0, 0);
+    shiftEnd.setHours(end.getHours(), end.getMinutes(), 0, 0);
+
+    event.start = shiftStart;
+    event.end = shiftEnd;
+    event.title = formatDate('HH:mm', start) + ' - ' + formatDate('HH:mm', end);
+    event['notes'] = this.shiftNotes;
+
+    if (this.isEdit) {
+      this.updateEvent(event);
+    } else {
+      // Add the new event to the list
+      this.shifts = [...this.shifts, event];
+    }
     this.popup.close();
   }
 
-  defaultShift(args: any): any {
-    const d = args.start;
-    const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), args.slot === 1 ? 7 : 12);
-    const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), args.slot === 1 ? 13 : 18);
+  handleEventClick(args: MbscEventClickEvent) {
+    const event = args.event;
+    const resource = args.resourceObj!;
+    const slot = args.slotObj!;
 
-    return {
-      title: formatDate('HH:mm', start) + ' - ' + formatDate('HH:mm', end),
-      start,
-      end,
-      resource: args.resource,
-    };
+    this.fillPopup(event, true);
+    this.popupButtons = [
+      'cancel',
+      {
+        handler: () => {
+          this.saveEvent(event);
+        },
+        keyCode: 'enter',
+        text: 'Save',
+        cssClass: 'mbsc-popup-button-primary',
+      },
+    ];
+    this.popupHeader =
+      '<div>Edit ' +
+      resource.name +
+      '\'s hours</div><div class="mds-employee-shifts-header">' +
+      formatDate('DDDD', new Date(event.start as Date)) +
+      ' ' +
+      slot.name +
+      ', ' +
+      formatDate('D MMMM YYYY', new Date(event.start as Date)) +
+      '</div>';
+    this.popup.open();
+  }
+
+  handleEventCreated(args: MbscEventCreatedEvent) {
+    setTimeout(() => {
+      const event = args.event;
+      const slot = args.slotObj!;
+
+      this.fillPopup(event, false);
+      this.popupButtons = [
+        'cancel',
+        {
+          handler: () => {
+            this.saveEvent(event);
+          },
+          keyCode: 'enter',
+          text: 'Add',
+          cssClass: 'mbsc-popup-button-primary',
+        },
+      ];
+      this.popupHeader =
+        '<div>New shift</div><div class="mds-employee-shifts-header">' +
+        formatDate('DDDD', new Date(event.start as Date)) +
+        ' ' +
+        slot.name +
+        ', ' +
+        formatDate('D MMMM YYYY', new Date(event.start as Date)) +
+        '</div>';
+      this.popup.open();
+    });
+  }
+
+  handleEventCreateFailed() {
+    this.notify.toast({ message: "Can't create shift" });
+  }
+
+  handleEventDeleted(args: MbscEventDeletedEvent) {
+    setTimeout(() => {
+      this.deleteEvent(args.event);
+    });
+  }
+
+  handleEventUpdated(args: MbscEventUpdatedEvent) {
+    setTimeout(() => {
+      const shift = args.event;
+      if (shift.slot !== args.oldEvent!.slot) {
+        const data = this.getShiftTimes(shift);
+        shift.start = data.start;
+        shift.end = data.end;
+        shift.title = data.title;
+        this.updateEvent(shift);
+      }
+    });
+  }
+
+  handleEventUpdateFailed() {
+    this.notify.toast({ message: "Can't move shift" });
+  }
+
+  handlePopupClose() {
+    if (!this.isEdit) {
+      // Remove event if popup is cancelled
+      this.shifts = [...this.shifts];
+    }
+  }
+
+  handleShiftDeleteClick() {
+    this.deleteEvent(this.shift);
+    this.popup.close();
   }
 }

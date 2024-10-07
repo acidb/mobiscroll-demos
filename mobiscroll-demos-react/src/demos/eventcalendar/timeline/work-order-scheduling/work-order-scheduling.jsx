@@ -7,10 +7,10 @@ import {
   Input,
   Popup,
   setOptions,
-  snackbar,
+  Snackbar,
   Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './work-order-scheduling.css';
 
 setOptions({
@@ -241,6 +241,7 @@ const myResources = [
     ],
   },
 ];
+
 const viewSettings = {
   timeline: {
     type: 'week',
@@ -248,6 +249,7 @@ const viewSettings = {
     endDay: 5,
   },
 };
+
 const responsivePopup = {
   medium: {
     display: 'anchored',
@@ -270,8 +272,20 @@ function App() {
   const [popupEventBill, setBill] = useState(0);
   const [popupEventNotes, setNotes] = useState('');
   const [popupEventDate, setDate] = useState([]);
-  const [mySelectedDate, setSelectedDate] = useState(new Date());
   const [checkedResources, setCheckedResources] = useState([]);
+  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
+
+  const calInst = useRef();
+
+  const snackbarButton = useMemo(
+    () => ({
+      action: () => {
+        setMyEvents([...myEvents, tempEvent]);
+      },
+      text: 'Undo',
+    }),
+    [myEvents, tempEvent],
+  );
 
   const checkboxChange = useCallback(
     (ev) => {
@@ -313,7 +327,7 @@ function App() {
       // here you can add the event to your storage as well
       // ...
     }
-    setSelectedDate(popupEventDate[0]);
+    calInst.current.navigateToEvent(newEvent);
     // close the popup
     setPopupOpen(false);
   }, [isEdit, myEvents, popupEventDate, popupEventNotes, popupEventTitle, popupEventLocation, popupEventBill, tempEvent, checkedResources]);
@@ -321,17 +335,8 @@ function App() {
   const deleteEvent = useCallback(
     (event) => {
       setMyEvents(myEvents.filter((item) => item.id !== event.id));
-      setTimeout(() => {
-        snackbar({
-          button: {
-            action: () => {
-              setMyEvents((prevEvents) => [...prevEvents, event]);
-            },
-            text: 'Undo',
-          },
-          message: 'Event deleted',
-        });
-      });
+      setTempEvent(event);
+      setSnackbarOpen(true);
     },
     [myEvents],
   );
@@ -344,8 +349,6 @@ function App() {
     setDate([event.start, event.end]);
     setCheckedResources(event.resource);
   }, []);
-
-  // handle popup form changes
 
   const titleChange = useCallback((ev) => {
     setTitle(ev.target.value);
@@ -367,16 +370,10 @@ function App() {
     setDate(args.value);
   }, []);
 
-  const onDeleteClick = useCallback(() => {
+  const handleDeleteClick = useCallback(() => {
     deleteEvent(tempEvent);
     setPopupOpen(false);
   }, [deleteEvent, tempEvent]);
-
-  // scheduler options
-
-  const handleSelectedDateChange = useCallback((event) => {
-    setSelectedDate(event.date);
-  }, []);
 
   const handleEventClick = useCallback(
     (args) => {
@@ -410,8 +407,8 @@ function App() {
     [deleteEvent],
   );
 
-  // popup options
   const headerText = useMemo(() => (isEdit ? 'Edit work order' : 'New work order'), [isEdit]);
+
   const popupButtons = useMemo(() => {
     if (isEdit) {
       return [
@@ -440,13 +437,15 @@ function App() {
     }
   }, [isEdit, saveEvent]);
 
-  const onPopupClose = useCallback(() => {
+  const handlePopupClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setMyEvents([...myEvents]);
     }
     setPopupOpen(false);
   }, [isEdit, myEvents]);
+
+  const handleSnackbarClose = useCallback(() => setSnackbarOpen(false), []);
 
   const extendMyDefaultEvent = useCallback(
     () => ({
@@ -496,14 +495,13 @@ function App() {
         className="md-work-order-scheduling"
         view={viewSettings}
         data={myEvents}
+        ref={calInst}
         resources={myResources}
         clickToCreate="double"
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
         dragTimeStep={30}
-        selectedDate={mySelectedDate}
-        onSelectedDateChange={handleSelectedDateChange}
         onEventClick={handleEventClick}
         onEventCreated={handleEventCreated}
         onEventDeleted={handleEventDeleted}
@@ -519,7 +517,7 @@ function App() {
         anchor={anchor}
         buttons={popupButtons}
         isOpen={isPopupOpen}
-        onClose={onPopupClose}
+        onClose={handlePopupClose}
         responsive={responsivePopup}
       >
         <div className="mbsc-form-group">
@@ -572,13 +570,14 @@ function App() {
         <div className="mbsc-form-group">
           {isEdit && (
             <div className="mbsc-button-group">
-              <Button className="mbsc-button-block" color="danger" variant="outline" onClick={onDeleteClick}>
+              <Button className="mbsc-button-block" color="danger" variant="outline" onClick={handleDeleteClick}>
                 Delete event
               </Button>
             </div>
           )}
         </div>
       </Popup>
+      <Snackbar message="Event deleted" isOpen={isSnackbarOpen} onClose={handleSnackbarClose} button={snackbarButton} />
     </div>
   );
 }

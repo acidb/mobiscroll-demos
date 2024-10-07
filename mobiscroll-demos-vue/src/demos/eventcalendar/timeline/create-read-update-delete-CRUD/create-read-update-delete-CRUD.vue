@@ -2,6 +2,7 @@
 import {
   MbscButton,
   MbscDatepicker,
+  MbscDropdown,
   MbscEventcalendar,
   MbscInput,
   MbscPopup,
@@ -27,6 +28,7 @@ const myEvents = ref([
     title: "Lunch @ Butcher's",
     description: '',
     allDay: false,
+    bufferBefore: 15,
     free: true,
     resource: 3
   },
@@ -34,9 +36,10 @@ const myEvents = ref([
     id: 2,
     start: 'dyndatetime(y,m,d,14)',
     end: 'dyndatetime(y,m,d,16)',
-    title: 'General orientation',
+    title: 'Conference',
     description: '',
     allDay: false,
+    bufferBefore: 30,
     free: false,
     resource: 5
   },
@@ -44,9 +47,10 @@ const myEvents = ref([
     id: 3,
     start: 'dyndatetime(y,m,d,18)',
     end: 'dyndatetime(y,m,d,22)',
-    title: 'Dexter BD',
+    title: 'Site Visit',
     description: '',
     allDay: false,
+    bufferBefore: 60,
     free: true,
     resource: 4
   },
@@ -95,7 +99,7 @@ const myView = {
 }
 const isEdit = ref(false)
 const popupEventColor = ref('')
-const mySelectedDate = ref()
+
 let addedEvent = null
 let editedEvent = null
 
@@ -112,6 +116,7 @@ const popupEventTitle = ref('')
 const popupEventDescription = ref('')
 const popupEventDates = ref([])
 const popupEventAllDay = ref(false)
+const popupTravelTime = ref(0)
 const popupEventStatus = ref('free')
 const popupAnchor = ref(null)
 const popupButtons = ref([])
@@ -155,6 +160,7 @@ const isColorPickerOpen = ref(false)
 const tempColor = ref('')
 const colorElm = ref(null)
 const colorPopup = ref(null)
+const calInst = ref(null)
 
 const colorButtons = [
   'cancel',
@@ -186,16 +192,21 @@ const snackbarButton = {
 }
 
 // Fills the popup with the event's data
-function fillPopup(event) {
+function fillPopup(args) {
+  const event = args.event
   popupEventTitle.value = event.title
   popupEventDescription.value = event.description
   popupEventAllDay.value = event.allDay || false
+  popupTravelTime.value = event.bufferBefore || 0
   popupEventDates.value = [event.start, event.end]
   popupEventStatus.value = event.status || 'busy'
-  popupEventColor.value = event.color || ''
+  popupEventColor.value = event.color || args.resourceObj.color
 }
 
-function createAddPopup(event, target) {
+function createAddPopup(args) {
+  const event = args.event
+  const target = args.target
+  const resource = args.resourceObj
   // Hide delete button inside add popup
   isEdit.value = false
 
@@ -214,25 +225,30 @@ function createAddPopup(event, target) {
           title: popupEventTitle.value,
           description: popupEventDescription.value,
           allDay: popupEventAllDay.value,
+          bufferBefore: popupTravelTime.value,
           status: popupEventStatus.value,
           start: popupEventDates.value[0],
           end: popupEventDates.value[1],
-          color: popupEventColor.value
+          color: popupEventColor.value || resource.color,
+          resource: event.resource
         }
         myEvents.value = [...myEvents.value, newEvent]
-        mySelectedDate.value = popupEventDates.value[0]
         isPopupOpen.value = false
+        calInst.value.instance.navigateToEvent(newEvent)
       },
       cssClass: 'mbsc-popup-button-primary'
     }
   ]
   popupAnchor.value = target
 
-  fillPopup(event)
+  fillPopup(args)
   isPopupOpen.value = true
 }
 
-function createEditPopup(event, target) {
+function createEditPopup(args) {
+  const event = args.event
+  const target = args.domEvent.currentTarget
+  const resource = args.resourceObj
   // Show delete button inside edit popup
   isEdit.value = true
 
@@ -252,33 +268,34 @@ function createEditPopup(event, target) {
         updatedEvent.title = popupEventTitle.value
         updatedEvent.description = popupEventDescription.value
         updatedEvent.allDay = popupEventAllDay.value
+        updatedEvent.bufferBefore = popupTravelTime.value
         updatedEvent.start = popupEventDates.value[0]
         updatedEvent.end = popupEventDates.value[1]
-        updatedEvent.color = popupEventColor.value
+        updatedEvent.color = popupEventColor.value || resource.color
         updatedEvent.status = popupEventStatus.value
         // Update event
         let newEventList = [...myEvents.value]
         const index = newEventList.findIndex((x) => x.id === updatedEvent.id)
         newEventList[index] = updatedEvent
         myEvents.value = newEventList
-
         isPopupOpen.value = false
+        calInst.value.instance.navigateToEvent(updatedEvent)
       },
       cssClass: 'mbsc-popup-button-primary'
     }
   ]
   popupAnchor.value = target
-  fillPopup(event)
+  fillPopup(args)
   isPopupOpen.value = true
 }
 
 // Calendar events
 function handleEventClick(args) {
-  createEditPopup(args.event, args.domEvent.currentTarget)
+  createEditPopup(args)
 }
 
 function handleEventCreated(args) {
-  createAddPopup(args.event, args.target)
+  createAddPopup(args)
 }
 
 function deleteEvent(event) {
@@ -327,14 +344,14 @@ function handleSnackbarClose() {
 
 <template>
   <MbscEventcalendar
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-    clickToCreate="double"
+    ref="calInst"
+    :clickToCreate="true"
     :dragToCreate="true"
     :dragToMove="true"
     :dragToResize="true"
-    :selectedDate="mySelectedDate"
+    :data="myEvents"
+    :resources="myResources"
+    :view="myView"
     @event-click="handleEventClick"
     @event-created="handleEventCreated"
     @event-deleted="handleEventDeleted"
@@ -359,6 +376,17 @@ function handleSnackbarClose() {
 
       <MbscInput ref="startInput" label="Starts" />
       <MbscInput ref="endInput" label="Ends" />
+      <template v-if="!popupEventAllDay">
+        <MbscDropdown v-model="popupTravelTime" label="Travel time">
+          <option value="0">None</option>
+          <option value="5">5 minutes</option>
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="90">1.5 hours</option>
+          <option value="120">2 hours</option>
+        </MbscDropdown>
+      </template>
       <MbscDatepicker
         v-model="popupEventDates"
         select="range"

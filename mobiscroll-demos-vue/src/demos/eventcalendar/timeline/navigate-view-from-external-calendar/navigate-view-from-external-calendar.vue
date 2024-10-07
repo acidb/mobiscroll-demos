@@ -18,21 +18,9 @@ const dayView = {
   timeline: { type: 'day' }
 }
 const myResoruces = [
-  {
-    id: 1,
-    name: 'Resource 1',
-    color: 'red'
-  },
-  {
-    id: 2,
-    name: 'Resource 2',
-    color: 'orange'
-  },
-  {
-    id: 3,
-    name: 'Resource 3',
-    color: 'blue'
-  }
+  { id: 1, name: 'Resource 1', color: 'red' },
+  { id: 2, name: 'Resource 2', color: 'orange' },
+  { id: 3, name: 'Resource 3', color: 'blue' }
 ]
 
 function handleSelectedDateChange(args) {
@@ -45,7 +33,7 @@ function handleDateChange(args) {
 
 onMounted(() => {
   getJson(
-    'https://trial.mobiscroll.com/events/?vers=5',
+    'https://trial.mobiscroll.com/filter-resource-events/ ',
     (events) => {
       myEvents.value = events
     },

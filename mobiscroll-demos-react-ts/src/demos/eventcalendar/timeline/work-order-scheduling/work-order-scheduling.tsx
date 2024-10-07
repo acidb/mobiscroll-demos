@@ -5,7 +5,7 @@ import {
   Eventcalendar,
   formatDate,
   Input,
-  // MbscCalendarDayData,
+  MbscCalendarDayData,
   MbscCalendarEvent,
   MbscCalendarEventData,
   MbscDatepickerChangeEvent,
@@ -16,13 +16,12 @@ import {
   MbscEventDeletedEvent,
   MbscPopupButton,
   MbscResource,
-  MbscSelectedDateChangeEvent,
   Popup,
   setOptions,
   Snackbar,
   Textarea /* localeImport */,
 } from '@mobiscroll/react';
-import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react';
 import './work-order-scheduling.css';
 
 setOptions({
@@ -285,9 +284,20 @@ const App: FC = () => {
   const [popupEventBill, setBill] = useState<number>(0);
   const [popupEventNotes, setNotes] = useState<string>('');
   const [popupEventDate, setDate] = useState<MbscDateType[]>([]);
-  const [mySelectedDate, setSelectedDate] = useState<MbscDateType>(new Date());
   const [checkedResources, setCheckedResources] = useState<string[]>([]);
   const [isSnackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+
+  const calInst = useRef<Eventcalendar | null>(null);
+
+  const snackbarButton = useMemo(
+    () => ({
+      action: () => {
+        setMyEvents([...myEvents, tempEvent!]);
+      },
+      text: 'Undo',
+    }),
+    [myEvents, tempEvent],
+  );
 
   const checkboxChange = useCallback(
     (ev: ChangeEvent<HTMLInputElement>) => {
@@ -329,15 +339,14 @@ const App: FC = () => {
       // here you can add the event to your storage as well
       // ...
     }
-    setSelectedDate(popupEventDate[0]);
+    calInst.current?.navigateToEvent(newEvent);
     // close the popup
     setPopupOpen(false);
   }, [isEdit, myEvents, popupEventDate, popupEventNotes, popupEventTitle, popupEventLocation, popupEventBill, tempEvent, checkedResources]);
 
   const deleteEvent = useCallback(
     (event: MbscCalendarEvent) => {
-      const filteredEvents = myEvents.filter((item) => item.id !== event.id);
-      setMyEvents(filteredEvents);
+      setMyEvents(myEvents.filter((item) => item.id !== event.id));
       setTempEvent(event);
       setSnackbarOpen(true);
     },
@@ -375,18 +384,12 @@ const App: FC = () => {
     setDate(args.value as MbscDateType[]);
   }, []);
 
-  const onDeleteClick = useCallback(() => {
+  const handleDeleteClick = useCallback(() => {
     deleteEvent(tempEvent!);
     setPopupOpen(false);
   }, [deleteEvent, tempEvent]);
 
-  // scheduler options
-
-  const onSelectedDateChange = useCallback((event: MbscSelectedDateChangeEvent) => {
-    setSelectedDate(event.date);
-  }, []);
-
-  const onEventClick = useCallback(
+  const handleEventClick = useCallback(
     (args: MbscEventClickEvent) => {
       setEdit(true);
       setTempEvent({ ...args.event });
@@ -398,7 +401,7 @@ const App: FC = () => {
     [loadPopupForm],
   );
 
-  const onEventCreated = useCallback(
+  const handleEventCreated = useCallback(
     (args: MbscEventCreatedEvent) => {
       setEdit(false);
       setTempEvent(args.event);
@@ -411,7 +414,7 @@ const App: FC = () => {
     [loadPopupForm],
   );
 
-  const onEventDeleted = useCallback(
+  const handleEventDeleted = useCallback(
     (args: MbscEventDeletedEvent) => {
       deleteEvent(args.event);
     },
@@ -419,6 +422,7 @@ const App: FC = () => {
   );
 
   const headerText = useMemo(() => (isEdit ? 'Edit work order' : 'New work order'), [isEdit]);
+
   const popupButtons = useMemo<(string | MbscPopupButton)[]>(() => {
     if (isEdit) {
       return [
@@ -447,13 +451,15 @@ const App: FC = () => {
     }
   }, [isEdit, saveEvent]);
 
-  const onClose = useCallback(() => {
+  const handlePopupClose = useCallback(() => {
     if (!isEdit) {
       // refresh the list, if add popup was canceled, to remove the temporary event
       setMyEvents([...myEvents]);
     }
     setPopupOpen(false);
   }, [isEdit, myEvents]);
+
+  const handleSnackbarClose = useCallback(() => setSnackbarOpen(false), []);
 
   const extendDefaultEvent = useCallback(
     () => ({
@@ -466,7 +472,7 @@ const App: FC = () => {
 
   const getCostString = (cost: number) => cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-  const renderCustomDay = (args: { date: Date; events: MbscCalendarEvent[] }) => {
+  const renderCustomDay = (args: MbscCalendarDayData) => {
     const events = args.events;
     let costs = 0;
 
@@ -494,25 +500,22 @@ const App: FC = () => {
     [],
   );
 
-  const handleSnackbarClose = useCallback(() => setSnackbarOpen(false), []);
-
   return (
     <div>
       <Eventcalendar
         className="md-work-order-scheduling"
         view={viewSettings}
         data={myEvents}
+        ref={calInst}
         resources={myResources}
         clickToCreate="double"
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
         dragTimeStep={30}
-        selectedDate={mySelectedDate}
-        onSelectedDateChange={onSelectedDateChange}
-        onEventClick={onEventClick}
-        onEventCreated={onEventCreated}
-        onEventDeleted={onEventDeleted}
+        onEventClick={handleEventClick}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDeleted}
         extendDefaultEvent={extendDefaultEvent}
         renderDay={renderCustomDay}
         renderScheduleEventContent={myScheduleEvent}
@@ -525,7 +528,7 @@ const App: FC = () => {
         anchor={anchor}
         buttons={popupButtons}
         isOpen={isPopupOpen}
-        onClose={onClose}
+        onClose={handlePopupClose}
         responsive={responsivePopup}
       >
         <div className="mbsc-form-group">
@@ -581,24 +584,14 @@ const App: FC = () => {
         <div className="mbsc-form-group">
           {isEdit && (
             <div className="mbsc-button-group">
-              <Button className="mbsc-button-block" color="danger" variant="outline" onClick={onDeleteClick}>
+              <Button className="mbsc-button-block" color="danger" variant="outline" onClick={handleDeleteClick}>
                 Delete work order
               </Button>
             </div>
           )}
         </div>
       </Popup>
-      <Snackbar
-        message="Event deleted"
-        isOpen={isSnackbarOpen}
-        onClose={handleSnackbarClose}
-        button={{
-          action: () => {
-            setMyEvents([...myEvents, tempEvent!]);
-          },
-          text: 'Undo',
-        }}
-      />
+      <Snackbar message="Event deleted" isOpen={isSnackbarOpen} onClose={handleSnackbarClose} button={snackbarButton} />
     </div>
   );
 };
