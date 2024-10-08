@@ -133,6 +133,7 @@ export class AppComponent implements OnInit {
     }),
     onEventClick: (args: any) => {
       const event = args.event;
+      const resource = args.resourceObj!;
       this.isEdit = true;
       this.tempMeal = event;
       // fill popup form with event data
@@ -140,7 +141,7 @@ export class AppComponent implements OnInit {
       // set popup options
       this.popupButtons = this.popupEditButtons;
       this.popupHeader =
-        '<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(this.tempMeal.start)) + '</div>';
+        '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>';
       this.type = +event.resource;
       // open the popup
       this.popup.open();
