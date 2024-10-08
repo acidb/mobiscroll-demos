@@ -3,18 +3,18 @@
   class="mds-resource-details"
   [clickToCreate]="true"
   [data]="myEvents"
-  [dayFooterTemplate]="dayFooterTemp"
-  [dayTemplate]="dayTemp"
+  [dayFooterTemplate]="dayFooterTemplate"
+  [dayTemplate]="dayTemplate"
   [dragToCreate]="true"
   [dragToMove]="true"
   [dragToResize]="true"
-  [resourceFooterTemplate]="resourceFooterTemp"
-  [resourceHeaderTemplate]="resourceHeaderTemp"
-  [resourceTemplate]="resourceTemp"
+  [resourceFooterTemplate]="resourceFooterTemplate"
+  [resourceHeaderTemplate]="resourceHeaderTemplate"
+  [resourceTemplate]="resourceTemplate"
   [resources]="myResources"
-  [sidebarFooterTemplate]="sidebarFooterTemp"
-  [sidebarHeaderTemplate]="sidebarHeaderTemp"
-  [sidebarTemplate]="sidebarTemp"
+  [sidebarFooterTemplate]="sidebarFooterTemplate"
+  [sidebarHeaderTemplate]="sidebarHeaderTemplate"
+  [sidebarTemplate]="sidebarTemplate"
   [view]="view"
   (onEventCreated)="refreshData()"
   (onEventDeleted)="refreshData()"
@@ -22,61 +22,60 @@
   (onPageLoading)="refreshData()"
 ></mbsc-eventcalendar>
 
-<ng-template #resourceHeaderTemp>
+<ng-template #resourceHeaderTemplate>
   <div
-    [ngClass]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-name', 'mds-resource-sort-' + getSortArrow('name')]"
+    [class]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-name', 'mds-resource-sort-' + getSortArrow('name')]"
     (click)="sortResources('name')"
   >
     Room
   </div>
   <div
-    [ngClass]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-seats', 'mds-resource-sort-' + getSortArrow('seats')]"
+    [class]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-seats', 'mds-resource-sort-' + getSortArrow('seats')]"
     (click)="sortResources('seats')"
-    class=""
   >
     Capacity
   </div>
   <div
-    [ngClass]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-price', 'mds-resource-sort-' + getSortArrow('price')]"
+    [class]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-price', 'mds-resource-sort-' + getSortArrow('price')]"
     (click)="sortResources('price')"
   >
     Price/day
   </div>
 </ng-template>
 
-<ng-template #resourceTemp let-resource>
+<ng-template #resourceTemplate let-resource>
   <div class="mds-resource-cell mds-resource-cell-name">{{resource.name}}</div>
   <div class="mds-resource-cell mds-resource-cell-seats">{{resource.seats + ' seats'}}</div>
   <div class="mds-resource-cell mds-resource-cell-seats">{{'$' + resource.price}}</div>
 </ng-template>
 
-<ng-template #dayTemp let-data>
+<ng-template #dayTemplate let-data>
   <div
-    [ngClass]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())]"
+    [class]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())]"
     (click)="sortResources('busyHours', data.date.getTime())"
   >
     <span>{{ formatDate('D DDD', data.date) }}</span>
   </div>
 </ng-template>
 
-<ng-template #sidebarTemp let-resource>
+<ng-template #sidebarTemplate let-resource>
   <div class="mds-resource-cell">${{resource.revenue}}</div>
 </ng-template>
 
-<ng-template #resourceFooterTemp>
+<ng-template #resourceFooterTemplate>
   <div class="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>
 </ng-template>
 
-<ng-template #sidebarHeaderTemp>
-  <div [ngClass]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('revenue')]" (click)="sortResources('revenue')">
+<ng-template #sidebarHeaderTemplate>
+  <div [class]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('revenue')]" (click)="sortResources('revenue')">
     Revenue
   </div>
 </ng-template>
 
-<ng-template #dayFooterTemp let-data>
-  <div class="mds-resource-details-footer mds-resource-details-footer-day">{{getOccuppancy(data)}}%</div>
+<ng-template #dayFooterTemplate let-data>
+  <div class="mds-resource-details-footer mds-resource-details-footer-day">{{getOccuppancy(data.events)}}%</div>
 </ng-template>
 
-<ng-template #sidebarFooterTemp>
+<ng-template #sidebarFooterTemplate>
   <div class="mds-resource-details-footer mds-resource-details-total">${{totalRevenue}}</div>
 </ng-template>

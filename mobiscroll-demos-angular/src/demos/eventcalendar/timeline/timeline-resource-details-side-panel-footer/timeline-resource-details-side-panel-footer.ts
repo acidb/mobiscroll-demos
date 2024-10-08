@@ -1,6 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { formatDate, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  formatDate,
+  MbscCalendarEvent,
+  MbscEventcalendar,
+  MbscEventcalendarView,
+  MbscResource,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -17,15 +24,15 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   @ViewChild('myCalendar', { static: false })
-  myCalendar: any;
+  myCalendar!: MbscEventcalendar;
 
   formatDate = formatDate;
   myEvents: MbscCalendarEvent[] = [];
   loadedEvents: MbscCalendarEvent[] = [];
   sortColumn: string = '';
   sortDirection: string = 'asc';
-  sortDay: any = null;
-  totalRevenue: any;
+  sortDay: number | undefined = 0;
+  totalRevenue: number = 0;
 
   myResources: MbscResource[] = [
     { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },
@@ -68,17 +75,16 @@ export class AppComponent implements OnInit {
     }
   }
 
-  getOccuppancy(data: any) {
-    const events: MbscCalendarEvent[] = data.events;
+  getOccuppancy(events: MbscCalendarEvent[]) {
     let occuppancy = 0;
     if (events) {
-      let resourceIds: string[] = [];
+      const resourceIds: string[] = [];
       let nr = 0;
       for (const event of events) {
         const resource = event.resource as string;
         if (resourceIds.indexOf(resource) < 0) {
           nr++;
-          resourceIds = [...resourceIds, resource];
+          resourceIds.push(resource);
         }
       }
       occuppancy = (nr * 100) / this.myResources.length;
@@ -86,7 +92,7 @@ export class AppComponent implements OnInit {
     return occuppancy.toFixed(0);
   }
 
-  getSortArrow(column: string, day: any = null): string {
+  getSortArrow(column: string, day?: number): string {
     if (this.sortColumn === column && day === this.sortDay) {
       return this.sortDirection === 'asc' ? 'asc' : this.sortDirection === 'desc' ? 'desc' : 'def';
     }
@@ -97,7 +103,7 @@ export class AppComponent implements OnInit {
     const startOfDay = new Date(timestamp);
     const endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1);
 
-    return this.myEvents.reduce((totalHours, event) => {
+    return this.loadedEvents.reduce((totalHours, event) => {
       if (event.resource === resource.id) {
         const eventStart = Math.max(+startOfDay, new Date(event.start as Date).getTime());
         const eventEnd = Math.min(+endOfDay, new Date(event.end as Date).getTime());
@@ -107,7 +113,7 @@ export class AppComponent implements OnInit {
     }, 0);
   }
 
-  sortResources(column?: string, day: any = null): void {
+  sortResources(column?: string, day?: number): void {
     if (column) {
       if (this.sortColumn === column && day === this.sortDay) {
         this.sortDirection = this.sortDirection === 'asc' ? 'desc' : this.sortDirection === 'desc' ? 'def' : 'asc';
@@ -119,21 +125,20 @@ export class AppComponent implements OnInit {
     }
 
     if (day) {
-      this.myResources = this.myResources.map((resource) => ({
-        ...resource,
-        busyHours: this.getBusyHours(resource, this.sortDay),
-      }));
+      this.myResources.forEach((resource) => {
+        resource['busyHours'] = this.getBusyHours(resource, this.sortDay!);
+      });
     }
 
     this.myResources = [
-      ...this.myResources.sort((a: any, b: any) => {
+      ...this.myResources.sort((a: MbscResource, b: MbscResource) => {
         if (this.sortDirection === 'asc') {
           return a[this.sortColumn] > b[this.sortColumn] ? 1 : -1;
         }
         if (this.sortDirection === 'desc') {
           return a[this.sortColumn] < b[this.sortColumn] ? 1 : -1;
         }
-        return a.id - b.id;
+        return +a.id - +b.id;
       }),
     ];
   }
