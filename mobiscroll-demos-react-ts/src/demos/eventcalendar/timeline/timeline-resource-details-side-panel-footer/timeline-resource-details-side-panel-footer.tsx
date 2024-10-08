@@ -93,7 +93,7 @@ const App: FC = () => {
   }, []);
 
   const sortResources = useCallback(
-    (column: string, day?: number) => {
+    (column?: string, day?: number) => {
       if (column) {
         if (sortColumn.current === column && day === sortDay.current) {
           sortDirection.current = sortDirection.current === 'asc' ? 'desc' : sortDirection.current === 'desc' ? 'def' : 'asc';
