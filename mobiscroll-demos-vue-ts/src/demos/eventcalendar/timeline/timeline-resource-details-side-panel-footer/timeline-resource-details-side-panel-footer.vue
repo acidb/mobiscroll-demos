@@ -13,7 +13,7 @@ setOptions({
   // theme
 })
 
-const calendarElm = ref<any>(null)
+const calendarElm = ref<any>()
 const myEvents = ref<MbscCalendarEvent[]>()
 const loadedEvents = ref<MbscCalendarEvent[]>()
 const sortColumn = ref<string>('')
@@ -21,18 +21,18 @@ const sortDirection = ref<string>('')
 const sortDay = ref<number | undefined>(undefined)
 const totalRevenue = ref<number>(0)
 
-var myResources: MbscResource[] = [
-  { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },
-  { id: 2, name: 'Apex Hall', seats: 90, color: '#fdf500', price: 600 },
-  { id: 3, name: 'Jade Room', seats: 700, color: '#00aaff', price: 900 },
-  { id: 4, name: 'Dome Arena', seats: 850, color: '#239a21', price: 750 },
-  { id: 5, name: 'Forum Plaza', seats: 900, color: '#8f1ed6', price: 700 },
-  { id: 6, name: 'Gallery', seats: 300, color: '#0077b6', price: 650 },
-  { id: 7, name: 'Icon Hall', seats: 450, color: '#e63946', price: 850 },
-  { id: 8, name: 'Broadway', seats: 250, color: '#ff0101', price: 800 },
-  { id: 9, name: 'Central Hub', seats: 400, color: '#01adff', price: 1100 },
-  { id: 10, name: 'Empire Hall', seats: 550, color: '#ff4600', price: 950 }
-]
+const myResources = ref([
+  { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000, revenue: 0 },
+  { id: 2, name: 'Apex Hall', seats: 90, color: '#fdf500', price: 600, revenue: 0 },
+  { id: 3, name: 'Jade Room', seats: 700, color: '#00aaff', price: 900, revenue: 0 },
+  { id: 4, name: 'Dome Arena', seats: 850, color: '#239a21', price: 750, revenue: 0 },
+  { id: 5, name: 'Forum Plaza', seats: 900, color: '#8f1ed6', price: 700, revenue: 0 },
+  { id: 6, name: 'Gallery', seats: 300, color: '#0077b6', price: 650, revenue: 0 },
+  { id: 7, name: 'Icon Hall', seats: 450, color: '#e63946', price: 850, revenue: 0 },
+  { id: 8, name: 'Broadway', seats: 250, color: '#ff0101', price: 800, revenue: 0 },
+  { id: 9, name: 'Central Hub', seats: 400, color: '#01adff', price: 1100, revenue: 0 },
+  { id: 10, name: 'Empire Hall', seats: 550, color: '#ff4600', price: 950, revenue: 0 }
+])
 
 const myView: MbscEventcalendarView = {
   timeline: {
@@ -68,10 +68,10 @@ function getOccuppancy(events: MbscCalendarEvent[]) {
     for (const event of events) {
       if (resourceIds.indexOf(event.resource as string) < 0) {
         nr++
-        resourceIds = [...resourceIds, event.resource as string]
+        resourceIds.push(event.resource as string)
       }
     }
-    occuppancy = (nr * 100) / myResources.length
+    occuppancy = (nr * 100) / myResources.value.length
   }
   return occuppancy.toFixed(0)
 }
@@ -86,7 +86,7 @@ function getSortArrow(column: string, day?: undefined) {
 function getBusyHours(resource: MbscResource, timestamp: number) {
   var startOfDay = new Date(timestamp)
   var endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1)
-  return myEvents.value!.reduce(function (totalHours, event) {
+  return loadedEvents.value!.reduce(function (totalHours, event) {
     if (event.resource === resource.id) {
       var eventStart = Math.max(+startOfDay, +new Date(event.start as Date))
       var eventEnd = Math.min(+endOfDay, +new Date(event.end as Date))
@@ -99,11 +99,11 @@ function getBusyHours(resource: MbscResource, timestamp: number) {
 function refreshData() {
   setTimeout(function () {
     loadedEvents.value = calendarElm.value.instance.getEvents()
-    myResources.forEach(function (resource: MbscResource) {
+    myResources.value.forEach(function (resource: MbscResource) {
       resource.revenue = getRevenue(resource)
     })
-    for (let i = 0; i < myResources.length; i++) {
-      totalRevenue.value += myResources[i].revenue
+    for (let i = 0; i < myResources.value.length; i++) {
+      totalRevenue.value += myResources.value[i].revenue
     }
     sortResources()
   })
@@ -123,18 +123,19 @@ function sortResources(column?: string, day?: number) {
 
   if (sortDay.value) {
     // Precalculate busy hours for the clicked day
-    myResources.forEach(function (resource: MbscResource) {
+    myResources.value.forEach(function (resource: MbscResource) {
       resource.busyHours = getBusyHours(resource, day as number)
     })
   }
 
-  myResources = [
-    ...myResources.sort((a, b) => {
+  myResources.value = [
+    ...myResources.value.sort((a, b) => {
+      const column = sortColumn.value as keyof typeof a
       if (sortDirection.value === 'asc') {
-        return a[sortColumn.value] > b[sortColumn.value] ? 1 : -1
+        return a[column] > b[column] ? 1 : -1
       }
       if (sortDirection.value === 'desc') {
-        return a[sortColumn.value] < b[sortColumn.value] ? 1 : -1
+        return a[column] < b[column] ? 1 : -1
       }
       return +a.id - +b.id
     })
@@ -244,7 +245,7 @@ onMounted(() => {
 
     <template #dayFooter="data">
       <div class="mds-resource-details-footer mds-resource-details-footer-day">
-        {{ getOccuppancy(data) }}%
+        {{ getOccuppancy(data.events) }}%
       </div>
     </template>
 

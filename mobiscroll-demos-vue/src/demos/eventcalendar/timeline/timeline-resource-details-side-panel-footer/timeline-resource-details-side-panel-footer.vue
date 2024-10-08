@@ -66,7 +66,7 @@ function getOccuppancy(data) {
     for (const event of events) {
       if (resourceIds.indexOf(event.resource) < 0) {
         nr++
-        resourceIds = [...resourceIds, event.resource]
+        resourceIds.push(event.resource)
       }
     }
     occuppancy = ((nr * 100) / myResources.value.length).toFixed(0)
@@ -84,7 +84,7 @@ function getSortArrow(column, day = null) {
 function getBusyHours(resource, timestamp) {
   var startOfDay = new Date(timestamp)
   var endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1)
-  return myEvents.value.reduce(function (totalHours, event) {
+  return loadedEvents.value.reduce(function (totalHours, event) {
     if (event.resource === resource.id) {
       var eventStart = Math.max(+startOfDay, +new Date(event.start))
       var eventEnd = Math.min(+endOfDay, +new Date(event.end))
@@ -242,7 +242,7 @@ onMounted(() => {
 
     <template #dayFooter="data">
       <div class="mds-resource-details-footer mds-resource-details-footer-day">
-        {{ getOccuppancy(data) }}%
+        {{ getOccuppancy(data.events) }}%
       </div>
     </template>
 
