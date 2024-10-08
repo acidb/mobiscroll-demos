@@ -17,14 +17,7 @@ setOptions({
 });
 
 const App: FC = () => {
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      timeline: {
-        type: 'month',
-      },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'month' } }), []);
 
   const myResources = useMemo<MbscResource[]>(
     () => [
@@ -46,10 +39,10 @@ const App: FC = () => {
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [sortedResources, setResources] = useState(myResources);
 
-  const calRef = useRef<Eventcalendar | null>(null);
+  const calRef = useRef<Eventcalendar>(null);
   const sortColumn = useRef<string>('');
   const sortDirection = useRef<string>('');
-  const sortDay = useRef<number | undefined>(undefined);
+  const sortDay = useRef<number>();
   const loadedEvents = useRef<MbscCalendarEvent[]>([]);
 
   const getUTCDateOnly = useCallback((d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()), []);
@@ -216,9 +209,9 @@ const App: FC = () => {
             resourceIds.push(event.resource);
           }
         }
-        occuppancy = Number(((nr * 100) / myResources.length).toFixed(0));
+        occuppancy = (nr * 100) / myResources.length;
       }
-      return <div className="mds-resource-details-footer mds-resource-details-footer-day">{occuppancy + '%'}</div>;
+      return <div className="mds-resource-details-footer mds-resource-details-footer-day">{occuppancy.toFixed(0) + '%'}</div>;
     },
     [myResources.length],
   );

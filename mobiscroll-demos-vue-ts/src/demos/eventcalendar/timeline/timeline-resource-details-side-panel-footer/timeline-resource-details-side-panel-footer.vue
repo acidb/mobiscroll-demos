@@ -13,15 +13,15 @@ setOptions({
   // theme
 })
 
-const calendarElm = ref<any>()
+const calRef = ref<typeof MbscEventcalendar>()
 const myEvents = ref<MbscCalendarEvent[]>()
-const loadedEvents = ref<MbscCalendarEvent[]>()
+const loadedEvents = ref<MbscCalendarEvent[]>([])
 const sortColumn = ref<string>('')
 const sortDirection = ref<string>('')
-const sortDay = ref<number | undefined>(undefined)
+const sortDay = ref<number>()
 const totalRevenue = ref<number>(0)
 
-const myResources = ref([
+const myResources = ref<MbscResource[]>([
   { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000, revenue: 0 },
   { id: 2, name: 'Apex Hall', seats: 90, color: '#fdf500', price: 600, revenue: 0 },
   { id: 3, name: 'Jade Room', seats: 700, color: '#00aaff', price: 900, revenue: 0 },
@@ -50,11 +50,9 @@ function getDayDiff(d1: Date, d2: Date) {
 
 function getRevenue(resource: MbscResource) {
   let days = 0
-  if (loadedEvents.value) {
-    for (const event of loadedEvents.value) {
-      if (event.resource === resource.id) {
-        days += getDayDiff(new Date(event.start as Date), new Date(event.end as Date))
-      }
+  for (const event of loadedEvents.value) {
+    if (event.resource === resource.id) {
+      days += getDayDiff(new Date(event.start as Date), new Date(event.end as Date))
     }
   }
   return days * resource.price
@@ -63,7 +61,7 @@ function getRevenue(resource: MbscResource) {
 function getOccuppancy(events: MbscCalendarEvent[]) {
   let occuppancy = 0
   if (events) {
-    let resourceIds: string[] = []
+    const resourceIds: string[] = []
     let nr = 0
     for (const event of events) {
       if (resourceIds.indexOf(event.resource as string) < 0) {
@@ -84,29 +82,20 @@ function getSortArrow(column: string, day?: undefined) {
 }
 
 function getBusyHours(resource: MbscResource, timestamp: number) {
-  var startOfDay = new Date(timestamp)
-  var endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1)
-  return loadedEvents.value!.reduce(function (totalHours, event) {
+  const startOfDay = new Date(timestamp)
+  const endOfDay = new Date(
+    startOfDay.getFullYear(),
+    startOfDay.getMonth(),
+    startOfDay.getDate() + 1
+  )
+  return loadedEvents.value.reduce((totalHours, event) => {
     if (event.resource === resource.id) {
-      var eventStart = Math.max(+startOfDay, +new Date(event.start as Date))
-      var eventEnd = Math.min(+endOfDay, +new Date(event.end as Date))
+      const eventStart = Math.max(+startOfDay, +new Date(event.start as Date))
+      const eventEnd = Math.min(+endOfDay, +new Date(event.end as Date))
       return totalHours + (eventStart < eventEnd ? (eventEnd - eventStart) / (60 * 60 * 1000) : 0)
     }
     return totalHours
   }, 0)
-}
-
-function refreshData() {
-  setTimeout(function () {
-    loadedEvents.value = calendarElm.value.instance.getEvents()
-    myResources.value.forEach(function (resource: MbscResource) {
-      resource.revenue = getRevenue(resource)
-    })
-    for (let i = 0; i < myResources.value.length; i++) {
-      totalRevenue.value += myResources.value[i].revenue
-    }
-    sortResources()
-  })
 }
 
 function sortResources(column?: string, day?: number) {
@@ -123,23 +112,37 @@ function sortResources(column?: string, day?: number) {
 
   if (sortDay.value) {
     // Precalculate busy hours for the clicked day
-    myResources.value.forEach(function (resource: MbscResource) {
-      resource.busyHours = getBusyHours(resource, day as number)
+    myResources.value.forEach((resource) => {
+      resource.busyHours = getBusyHours(resource, sortDay.value!)
     })
   }
 
   myResources.value = [
     ...myResources.value.sort((a, b) => {
-      const column = sortColumn.value as keyof typeof a
+      const col = sortColumn.value as keyof typeof a
       if (sortDirection.value === 'asc') {
-        return a[column] > b[column] ? 1 : -1
+        return a[col] > b[col] ? 1 : -1
       }
       if (sortDirection.value === 'desc') {
-        return a[column] < b[column] ? 1 : -1
+        return a[col] < b[col] ? 1 : -1
       }
       return +a.id - +b.id
     })
   ]
+}
+
+function refreshData() {
+  setTimeout(() => {
+    loadedEvents.value = calRef.value.instance.getEvents()
+
+    myResources.value.forEach((resource) => {
+      resource.revenue = getRevenue(resource)
+    })
+
+    totalRevenue.value = myResources.value.reduce((total, resource) => total + resource.revenue, 0)
+
+    sortResources()
+  })
 }
 
 onMounted(() => {
@@ -156,15 +159,15 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar
+    className="mds-resource-details"
+    ref="calRef"
     :clickToCreate="true"
+    :data="myEvents"
     :dragToCreate="true"
     :dragToMove="true"
     :dragToResize="true"
-    ref="calendarElm"
-    className="mds-resource-details"
-    :view="myView"
-    :data="myEvents"
     :resources="myResources"
+    :view="myView"
     :onPageLoading="refreshData"
     :onEventCreated="refreshData"
     :onEventDeleted="refreshData"

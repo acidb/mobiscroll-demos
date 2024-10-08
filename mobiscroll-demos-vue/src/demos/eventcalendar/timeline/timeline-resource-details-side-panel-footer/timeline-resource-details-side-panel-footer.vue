@@ -12,7 +12,7 @@ setOptions({
   // theme
 })
 
-const calendarElm = ref(null)
+const calRef = ref(null)
 const myEvents = ref()
 const loadedEvents = ref()
 const sortColumn = ref('')
@@ -61,7 +61,7 @@ function getOccuppancy(data) {
   const events = data.events
   let occuppancy = 0
   if (events) {
-    let resourceIds = []
+    const resourceIds = []
     let nr = 0
     for (const event of events) {
       if (resourceIds.indexOf(event.resource) < 0) {
@@ -69,9 +69,9 @@ function getOccuppancy(data) {
         resourceIds.push(event.resource)
       }
     }
-    occuppancy = ((nr * 100) / myResources.value.length).toFixed(0)
+    occuppancy = (nr * 100) / myResources.value.length
   }
-  return occuppancy
+  return occuppancy.toFixed(0)
 }
 
 function getSortArrow(column, day = null) {
@@ -82,29 +82,20 @@ function getSortArrow(column, day = null) {
 }
 
 function getBusyHours(resource, timestamp) {
-  var startOfDay = new Date(timestamp)
-  var endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1)
-  return loadedEvents.value.reduce(function (totalHours, event) {
+  const startOfDay = new Date(timestamp)
+  const endOfDay = new Date(
+    startOfDay.getFullYear(),
+    startOfDay.getMonth(),
+    startOfDay.getDate() + 1
+  )
+  return loadedEvents.value.reduce((totalHours, event) => {
     if (event.resource === resource.id) {
-      var eventStart = Math.max(+startOfDay, +new Date(event.start))
-      var eventEnd = Math.min(+endOfDay, +new Date(event.end))
+      const eventStart = Math.max(+startOfDay, +new Date(event.start))
+      const eventEnd = Math.min(+endOfDay, +new Date(event.end))
       return totalHours + (eventStart < eventEnd ? (eventEnd - eventStart) / (60 * 60 * 1000) : 0)
     }
     return totalHours
   }, 0)
-}
-
-function refreshData() {
-  setTimeout(function () {
-    loadedEvents.value = calendarElm.value.instance.getEvents()
-    myResources.value.forEach(function (resource) {
-      resource.revenue = getRevenue(resource)
-    })
-    for (let i = 0; i < myResources.value.length; i++) {
-      totalRevenue.value += myResources.value[i].revenue
-    }
-    sortResources()
-  })
 }
 
 function sortResources(column, day = null) {
@@ -121,8 +112,8 @@ function sortResources(column, day = null) {
 
   if (sortDay.value) {
     // Precalculate busy hours for the clicked day
-    myResources.value.forEach(function (resource) {
-      resource.busyHours = getBusyHours(resource, day)
+    myResources.value.forEach((resource) => {
+      resource.busyHours = getBusyHours(resource, sortDay.value)
     })
   }
 
@@ -139,6 +130,20 @@ function sortResources(column, day = null) {
   ]
 }
 
+function refreshData() {
+  setTimeout(() => {
+    loadedEvents.value = calRef.value.instance.getEvents()
+
+    myResources.value.forEach((resource) => {
+      resource.revenue = getRevenue(resource)
+    })
+
+    totalRevenue.value = myResources.value.reduce((total, resource) => total + resource.revenue, 0)
+
+    sortResources()
+  })
+}
+
 onMounted(() => {
   getJson(
     'https://trial.mobiscroll.com/multiday-events/',
@@ -153,15 +158,15 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar
+    className="mds-resource-details"
+    ref="calRef"
     :clickToCreate="true"
+    :data="myEvents"
     :dragToCreate="true"
     :dragToMove="true"
     :dragToResize="true"
-    ref="calendarElm"
-    className="mds-resource-details"
-    :view="myView"
-    :data="myEvents"
     :resources="myResources"
+    :view="myView"
     :onPageLoading="refreshData"
     :onEventCreated="refreshData"
     :onEventDeleted="refreshData"

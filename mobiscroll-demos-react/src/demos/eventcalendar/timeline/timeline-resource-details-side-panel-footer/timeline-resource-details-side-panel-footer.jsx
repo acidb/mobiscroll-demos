@@ -9,6 +9,7 @@ setOptions({
 
 function App() {
   const myView = useMemo(() => ({ timeline: { type: 'month' } }), []);
+
   const myResources = useMemo(
     () => [
       { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },
@@ -199,9 +200,9 @@ function App() {
             resourceIds.push(event.resource);
           }
         }
-        occuppancy = ((nr * 100) / myResources.length).toFixed(0);
+        occuppancy = (nr * 100) / myResources.length;
       }
-      return <div className="mds-resource-details-footer mds-resource-details-footer-day">{occuppancy + '%'}</div>;
+      return <div className="mds-resource-details-footer mds-resource-details-footer-day">{occuppancy.toFixed(0) + '%'}</div>;
     },
     [myResources.length],
   );

@@ -14,6 +14,13 @@ setOptions({
   // theme
 });
 
+interface MyResource extends MbscResource {
+  busyHours?: number;
+  price: number;
+  revenue?: number;
+  seats: number;
+}
+
 @Component({
   selector: 'app-timeline-timeline-resource-details-side-panel-footer',
   styleUrl: './timeline-resource-details-side-panel-footer.css',
@@ -31,10 +38,10 @@ export class AppComponent implements OnInit {
   loadedEvents: MbscCalendarEvent[] = [];
   sortColumn: string = '';
   sortDirection: string = 'asc';
-  sortDay: number | undefined = 0;
+  sortDay: number | undefined;
   totalRevenue: number = 0;
 
-  myResources: MbscResource[] = [
+  myResources: MyResource[] = [
     { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },
     { id: 2, name: 'Apex Hall', seats: 90, color: '#fdf500', price: 600 },
     { id: 3, name: 'Jade Room', seats: 700, color: '#00aaff', price: 900 },
@@ -61,7 +68,7 @@ export class AppComponent implements OnInit {
     return Math.round((this.getUTCDateOnly(d2) - this.getUTCDateOnly(d1)) / (60 * 60 * 24 * 1000)) + 1;
   }
 
-  getRevenue(resource: MbscResource) {
+  getRevenue(resource: MyResource) {
     if (this.myCalendar) {
       let days = 0;
       for (const event of this.loadedEvents) {
@@ -69,7 +76,7 @@ export class AppComponent implements OnInit {
           days += this.getDayDiff(new Date(event.start as Date), new Date(event.end as Date));
         }
       }
-      return days * resource['price'];
+      return days * resource.price;
     } else {
       return 0;
     }
@@ -126,7 +133,7 @@ export class AppComponent implements OnInit {
 
     if (day) {
       this.myResources.forEach((resource) => {
-        resource['busyHours'] = this.getBusyHours(resource, this.sortDay!);
+        resource.busyHours = this.getBusyHours(resource, this.sortDay!);
       });
     }
 
@@ -147,9 +154,9 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       this.loadedEvents = this.myCalendar.getEvents();
       this.myResources.forEach((resource) => {
-        resource['revenue'] = this.getRevenue(resource);
+        resource.revenue = this.getRevenue(resource);
       });
-      this.totalRevenue = this.myResources.reduce((total, resource) => total + resource['revenue'], 0);
+      this.totalRevenue = this.myResources.reduce((total, resource) => total + resource.revenue!, 0);
       this.sortResources();
     }, 0);
   }

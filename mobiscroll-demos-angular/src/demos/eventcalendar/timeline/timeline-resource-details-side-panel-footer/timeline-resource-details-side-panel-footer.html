@@ -24,19 +24,19 @@
 
 <ng-template #resourceHeaderTemplate>
   <div
-    [class]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-name', 'mds-resource-sort-' + getSortArrow('name')]"
+    [class]="'mds-resource-sort-header mds-resource-cell mds-resource-cell-name mds-resource-sort-' + getSortArrow('name')"
     (click)="sortResources('name')"
   >
     Room
   </div>
   <div
-    [class]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-seats', 'mds-resource-sort-' + getSortArrow('seats')]"
+    [class]="'mds-resource-sort-header mds-resource-cell mds-resource-cell-seats mds-resource-sort-' + getSortArrow('seats')"
     (click)="sortResources('seats')"
   >
     Capacity
   </div>
   <div
-    [class]="['mds-resource-sort-header', 'mds-resource-cell','mds-resource-cell-price', 'mds-resource-sort-' + getSortArrow('price')]"
+    [class]="'mds-resource-sort-header mds-resource-cell mds-resource-cell-price mds-resource-sort-' + getSortArrow('price')"
     (click)="sortResources('price')"
   >
     Price/day
@@ -46,12 +46,12 @@
 <ng-template #resourceTemplate let-resource>
   <div class="mds-resource-cell mds-resource-cell-name">{{resource.name}}</div>
   <div class="mds-resource-cell mds-resource-cell-seats">{{resource.seats + ' seats'}}</div>
-  <div class="mds-resource-cell mds-resource-cell-seats">{{'$' + resource.price}}</div>
+  <div class="mds-resource-cell mds-resource-cell-price">{{'$' + resource.price}}</div>
 </ng-template>
 
 <ng-template #dayTemplate let-data>
   <div
-    [class]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())]"
+    [class]="'mds-resource-sort-header mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())"
     (click)="sortResources('busyHours', data.date.getTime())"
   >
     <span>{{ formatDate('D DDD', data.date) }}</span>
@@ -67,9 +67,7 @@
 </ng-template>
 
 <ng-template #sidebarHeaderTemplate>
-  <div [class]="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('revenue')]" (click)="sortResources('revenue')">
-    Revenue
-  </div>
+  <div [class]="'mds-resource-sort-header mds-resource-sort-' + getSortArrow('revenue')" (click)="sortResources('revenue')">Revenue</div>
 </ng-template>
 
 <ng-template #dayFooterTemplate let-data>
