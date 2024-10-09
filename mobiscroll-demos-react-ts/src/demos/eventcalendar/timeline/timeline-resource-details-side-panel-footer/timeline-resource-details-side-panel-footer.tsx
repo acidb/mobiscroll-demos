@@ -16,10 +16,17 @@ setOptions({
   // themeJs
 });
 
+interface MyResource extends MbscResource {
+  busyHours?: number;
+  price: number;
+  revenue?: number;
+  seats: number;
+}
+
 const App: FC = () => {
   const myView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'month' } }), []);
 
-  const myResources = useMemo<MbscResource[]>(
+  const myResources = useMemo<MyResource[]>(
     () => [
       { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },
       { id: 2, name: 'Apex Hall', seats: 90, color: '#fdf500', price: 600 },
@@ -53,7 +60,7 @@ const App: FC = () => {
   );
 
   const getRevenue = useCallback(
-    (resource: MbscResource) => {
+    (resource: MyResource) => {
       let days = 0;
       for (const event of loadedEvents.current) {
         if (event.resource === resource.id) {
@@ -72,7 +79,7 @@ const App: FC = () => {
     return 'def';
   }, []);
 
-  const getBusyHours = useCallback((resource: MbscResource, timestamp: number) => {
+  const getBusyHours = useCallback((resource: MyResource, timestamp: number) => {
     const startOfDay = new Date(timestamp);
     const endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1);
     return loadedEvents.current.reduce((totalHours, event) => {
@@ -104,7 +111,7 @@ const App: FC = () => {
         });
       }
 
-      const updatedResources = [...myResources].sort((a: MbscResource, b: MbscResource) => {
+      const updatedResources = [...myResources].sort((a: MyResource, b: MyResource) => {
         if (sortDirection.current === 'asc') {
           return a[sortColumn.current] > b[sortColumn.current] ? 1 : -1;
         }
@@ -126,7 +133,7 @@ const App: FC = () => {
       resource.revenue = getRevenue(resource);
     });
 
-    setTotalRevenue(myResources.reduce((total, resource) => total + resource.revenue, 0));
+    setTotalRevenue(myResources.reduce((total, resource) => total + resource.revenue!, 0));
   }, [getRevenue, myResources]);
 
   const handlePageLoading = useCallback(() => {
@@ -165,7 +172,7 @@ const App: FC = () => {
   );
 
   const myCustomResource = useCallback(
-    (resource: MbscResource) => (
+    (resource: MyResource) => (
       <>
         <div className="mds-resource-cell mds-resource-cell-name">{resource.name}</div>
         <div className="mds-resource-cell mds-resource-cell-seats">{resource.seats} seats</div>
@@ -225,7 +232,7 @@ const App: FC = () => {
     [getSortArrow, sortResources],
   );
 
-  const myCustomSidebar = useCallback((resource: MbscResource) => <div className="mds-resource-cell">{'$' + resource.revenue}</div>, []);
+  const myCustomSidebar = useCallback((resource: MyResource) => <div className="mds-resource-cell">{'$' + resource.revenue}</div>, []);
 
   const myCustomSidebarFooter = useCallback(
     () => <div className="mds-resource-details-footer mds-resource-details-total">{'$' + totalRevenue}</div>,

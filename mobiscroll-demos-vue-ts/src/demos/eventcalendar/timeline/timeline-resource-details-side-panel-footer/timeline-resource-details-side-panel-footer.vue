@@ -13,6 +13,13 @@ setOptions({
   // theme
 })
 
+interface MyResource extends MbscResource {
+  busyHours?: number
+  price: number
+  revenue?: number
+  seats: number
+}
+
 const calRef = ref<typeof MbscEventcalendar>()
 const myEvents = ref<MbscCalendarEvent[]>()
 const loadedEvents = ref<MbscCalendarEvent[]>([])
@@ -21,7 +28,7 @@ const sortDirection = ref<string>('')
 const sortDay = ref<number>()
 const totalRevenue = ref<number>(0)
 
-const myResources = ref<MbscResource[]>([
+const myResources = ref<MyResource[]>([
   { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000, revenue: 0 },
   { id: 2, name: 'Apex Hall', seats: 90, color: '#fdf500', price: 600, revenue: 0 },
   { id: 3, name: 'Jade Room', seats: 700, color: '#00aaff', price: 900, revenue: 0 },
@@ -48,7 +55,7 @@ function getDayDiff(d1: Date, d2: Date) {
   return Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / (60000 * 60 * 24)) + 1
 }
 
-function getRevenue(resource: MbscResource) {
+function getRevenue(resource: MyResource) {
   let days = 0
   for (const event of loadedEvents.value) {
     if (event.resource === resource.id) {
@@ -81,7 +88,7 @@ function getSortArrow(column: string, day?: undefined) {
   return 'def'
 }
 
-function getBusyHours(resource: MbscResource, timestamp: number) {
+function getBusyHours(resource: MyResource, timestamp: number) {
   const startOfDay = new Date(timestamp)
   const endOfDay = new Date(
     startOfDay.getFullYear(),
@@ -113,7 +120,7 @@ function sortResources(column?: string, day?: number) {
   if (sortDay.value) {
     // Precalculate busy hours for the clicked day
     myResources.value.forEach((resource) => {
-      resource.busyHours = getBusyHours(resource, sortDay.value!)
+      resource.busyHours = getBusyHours(resource, sortDay.value)
     })
   }
 
@@ -175,34 +182,28 @@ onMounted(() => {
   >
     <template #resourceHeader>
       <div
-        :class="[
-          'mds-resource-sort-header',
-          'mds-resource-cell',
-          'mds-resource-cell-name',
-          'mds-resource-sort-' + getSortArrow('name')
-        ]"
+        :class="
+          'mds-resource-sort-header mds-resource-cell mds-resource-cell-name mds-resource-sort-' +
+          getSortArrow('name')
+        "
         @click="sortResources('name')"
       >
         Room
       </div>
       <div
-        :class="[
-          'mds-resource-sort-header',
-          'mds-resource-cell',
-          'mds-resource-cell-seats',
-          'mds-resource-sort-' + getSortArrow('seats')
-        ]"
+        :class="
+          'mds-resource-sort-header mds-resource-cell mds-resource-cell-seats mds-resource-sort-' +
+          getSortArrow('seats')
+        "
         @click="sortResources('seats')"
       >
         Capacity
       </div>
       <div
-        :class="[
-          'mds-resource-sort-header',
-          'mds-resource-cell',
-          'mds-resource-cell-price',
-          'mds-resource-sort-' + getSortArrow('price')
-        ]"
+        :class="
+          'mds-resource-sort-header mds-resource-cell mds-resource-cell-price mds-resource-sort-' +
+          getSortArrow('price')
+        "
         @click="sortResources('price')"
       >
         Price/day
@@ -227,7 +228,7 @@ onMounted(() => {
 
     <template #sidebarHeader>
       <div
-        :class="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('revenue')]"
+        :class="'mds-resource-sort-header mds-resource-sort-' + getSortArrow('revenue')"
         @click="sortResources('revenue')"
       >
         Revenue
@@ -236,10 +237,10 @@ onMounted(() => {
 
     <template #day="data">
       <div
-        :class="[
-          'mds-resource-sort-header',
-          'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())
-        ]"
+        :class="
+          'mds-resource-sort-header mds-resource-sort-' +
+          getSortArrow('busyHours', data.date.getTime())
+        "
         @click="sortResources('busyHours', data.date.getTime())"
       >
         <span>{{ formatDate('D DDD', data.date) }}</span>

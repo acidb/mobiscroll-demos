@@ -174,34 +174,28 @@ onMounted(() => {
   >
     <template #resourceHeader>
       <div
-        :class="[
-          'mds-resource-sort-header',
-          'mds-resource-cell',
-          'mds-resource-cell-name',
-          'mds-resource-sort-' + getSortArrow('name')
-        ]"
+        :class="
+          'mds-resource-sort-header mds-resource-cell mds-resource-cell-name mds-resource-sort-' +
+          getSortArrow('name')
+        "
         @click="sortResources('name')"
       >
         Room
       </div>
       <div
-        :class="[
-          'mds-resource-sort-header',
-          'mds-resource-cell',
-          'mds-resource-cell-seats',
-          'mds-resource-sort-' + getSortArrow('seats')
-        ]"
+        :class="
+          'mds-resource-sort-header mds-resource-cell mds-resource-cell-seats mds-resource-sort-' +
+          getSortArrow('seats')
+        "
         @click="sortResources('seats')"
       >
         Capacity
       </div>
       <div
-        :class="[
-          'mds-resource-sort-header',
-          'mds-resource-cell',
-          'mds-resource-cell-price',
-          'mds-resource-sort-' + getSortArrow('price')
-        ]"
+        :class="
+          'mds-resource-sort-header mds-resource-cell mds-resource-cell-price mds-resource-sort-' +
+          getSortArrow('price')
+        "
         @click="sortResources('price')"
       >
         Price/day
@@ -226,7 +220,7 @@ onMounted(() => {
 
     <template #sidebarHeader>
       <div
-        :class="['mds-resource-sort-header', 'mds-resource-sort-' + getSortArrow('revenue')]"
+        :class="'mds-resource-sort-header mds-resource-sort-' + getSortArrow('revenue')"
         @click="sortResources('revenue')"
       >
         Revenue
@@ -235,10 +229,10 @@ onMounted(() => {
 
     <template #day="data">
       <div
-        :class="[
-          'mds-resource-sort-header',
-          'mds-resource-sort-' + getSortArrow('busyHours', data.date.getTime())
-        ]"
+        :class="
+          'mds-resource-sort-header mds-resource-sort-' +
+          getSortArrow('busyHours', data.date.getTime())
+        "
         @click="sortResources('busyHours', data.date.getTime())"
       >
         <span>{{ formatDate('D DDD', data.date) }}</span>
