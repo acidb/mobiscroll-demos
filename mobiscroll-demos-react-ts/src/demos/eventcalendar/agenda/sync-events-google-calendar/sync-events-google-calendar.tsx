@@ -68,7 +68,7 @@ const App: FC = () => {
           setLoading(true);
           googleCalendarSync
             .getEvents(calendarIds, startDate.current!, endDate.current!)
-            .then((resp) => {
+            .then((resp: MbscCalendarEvent[]) => {
               setEvents(resp);
               setLoading(false);
             })
@@ -91,7 +91,7 @@ const App: FC = () => {
         setCalendarIds((calIds) => [...calIds, calendarId]);
         googleCalendarSync
           .getEvents([calendarId], startDate.current!, endDate.current!)
-          .then((events) => {
+          .then((events: MbscCalendarEvent[]) => {
             setLoading(false);
             setEvents((oldEvents) => [...oldEvents, ...events]);
           })
@@ -165,7 +165,7 @@ const App: FC = () => {
           setLoading(true);
           return googleCalendarSync.getEvents(newCalendarIds, startDate.current!, endDate.current!);
         })
-        .then((events) => {
+        .then((events: MbscCalendarEvent[]) => {
           setEvents(events);
           setLoading(false);
         })

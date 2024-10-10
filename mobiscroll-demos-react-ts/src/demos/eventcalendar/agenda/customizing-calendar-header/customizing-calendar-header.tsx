@@ -23,9 +23,7 @@ const App: FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentView, setCurrentView] = useState<string>('agenda');
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
-  const [myView, setView] = useState<MbscEventcalendarView>({
-    agenda: { type: 'month' },
-  });
+  const [myView, setView] = useState<MbscEventcalendarView>({ agenda: { type: 'month' } });
 
   const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
     setCurrentDate(args.date as Date);
@@ -36,9 +34,7 @@ const App: FC = () => {
     switch (event.target.value) {
       case 'calendar':
         view = {
-          calendar: {
-            labels: true,
-          },
+          calendar: { type: 'month' },
         };
         break;
       case 'agenda':

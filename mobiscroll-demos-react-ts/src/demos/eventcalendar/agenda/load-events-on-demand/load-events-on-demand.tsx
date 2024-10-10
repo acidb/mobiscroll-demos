@@ -19,12 +19,7 @@ const App: FC = () => {
   const [events, setEvents] = useState<MbscCalendarEvent[]>([]);
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
 
-  const view = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'month' },
-    }),
-    [],
-  );
+  const view = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
 
   const handleToastClose = useCallback(() => {
     setToastOpen(false);

@@ -10,12 +10,7 @@ setOptions({
 const App: FC = () => {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'month' },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
 
   useEffect(() => {
     getJson(

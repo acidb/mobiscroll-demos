@@ -13,7 +13,7 @@ import {
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { ChangeEvent, FC, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import './load-events-from-google-calendar.css';
 
 setOptions({
@@ -37,7 +37,7 @@ const App: FC = () => {
   const firstDay = useRef<Date>();
   const lastDay = useRef<Date>();
 
-  const handleError = useCallback((resp: { error: SetStateAction<string>; result: { error: { message: SetStateAction<string> } } }) => {
+  const handleError = useCallback((resp: { error: string; result: { error: { message: string } } }) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);
     setToastOpen(true);
   }, []);
@@ -48,7 +48,7 @@ const App: FC = () => {
     });
     googleCalendarSync
       .getEvents(CALENDAR_ID, firstDay.current!, lastDay.current!)
-      .then((resp) => {
+      .then((resp: MbscCalendarEvent[]) => {
         setLoading(false);
         setEvents(resp);
       })
@@ -61,7 +61,7 @@ const App: FC = () => {
     switch (event.target.value) {
       case 'month':
         view = {
-          calendar: { labels: true },
+          calendar: { type: 'month' },
         };
         break;
       case 'week':

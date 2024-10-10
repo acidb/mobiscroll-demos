@@ -68,7 +68,7 @@ const App: FC = () => {
           setLoading(true);
           outlookCalendarSync
             .getEvents(calendarIds, startDate.current!, endDate.current!)
-            .then((resp) => {
+            .then((resp: MbscCalendarEvent[]) => {
               setEvents(resp);
               setLoading(false);
             })
@@ -165,7 +165,7 @@ const App: FC = () => {
           setLoading(true);
           return outlookCalendarSync.getEvents(newCalendarIds, startDate.current!, endDate.current!);
         })
-        .then((events) => {
+        .then((events: MbscCalendarEvent[]) => {
           setEvents(events);
           setLoading(false);
         })

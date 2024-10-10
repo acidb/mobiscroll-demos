@@ -10,7 +10,7 @@ setOptions({
 function App() {
   const [confirmMessage, setConfirmMessage] = useState('');
   const [menuAnchor, setMenuAnchor] = useState();
-  const [menuAction, setMenuAction] = useState(false);
+  const [menuAction, setMenuAction] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [myEvents, setMyEvents] = useState([]);
   const [isConfirmOpen, setConfirmOpen] = useState(false);

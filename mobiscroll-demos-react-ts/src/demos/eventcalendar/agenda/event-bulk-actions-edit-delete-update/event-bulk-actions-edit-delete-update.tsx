@@ -15,7 +15,7 @@ import {
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './event-bulk-actions-edit-delete-update.css';
 
 setOptions({
@@ -35,7 +35,7 @@ function App() {
   const [selectedEvents, setSelectedEvents] = useState<MbscCalendarEvent[]>([]);
   const [toastMessage, setToastMessage] = useState<string>('');
 
-  const [calRef, setCalRef] = useState<Eventcalendar | null>(null);
+  const calRef = useRef<Eventcalendar>(null);
 
   const myView: MbscEventcalendarView = useMemo(() => ({ agenda: { type: 'month' } }), []);
 
@@ -86,11 +86,11 @@ function App() {
   }, [selectedEvents]);
 
   const selectAllEvents = useCallback(() => {
-    const selectedEvents = calRef!.getEvents();
+    const selectedEvents = calRef.current!.getEvents();
     setSelectedEvents(selectedEvents);
     setToastMessage('All events selected from view');
     setToastOpen(true);
-  }, [calRef]);
+  }, []);
 
   const resetSelection = useCallback(() => {
     setSelectedEvents([]);
@@ -207,7 +207,7 @@ function App() {
           <div className="mds-bulk-actions-calendar mbsc-col-sm-9 mbsc-push-sm-3">
             <Eventcalendar
               data={myEvents}
-              ref={setCalRef}
+              ref={calRef}
               view={myView}
               selectMultipleEvents={true}
               selectedEvents={selectedEvents}

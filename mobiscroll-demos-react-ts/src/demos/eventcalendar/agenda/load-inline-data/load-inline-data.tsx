@@ -285,12 +285,7 @@ const App: FC = () => {
     [],
   );
 
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'month' },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
 
   return <Eventcalendar data={myEvents} view={myView} />;
 };

@@ -22,12 +22,7 @@ const App: FC = () => {
   const [inst, setInst] = useState<Eventcalendar | null>(null);
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'month' },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
 
   const printView = useCallback(() => {
     inst!.print();

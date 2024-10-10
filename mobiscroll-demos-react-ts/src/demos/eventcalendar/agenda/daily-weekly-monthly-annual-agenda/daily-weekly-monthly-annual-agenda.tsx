@@ -9,26 +9,9 @@ setOptions({
 const App: FC = () => {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
 
-  const dayView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'day' },
-    }),
-    [],
-  );
-
-  const weekView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'week' },
-    }),
-    [],
-  );
-
-  const monthView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'month' },
-    }),
-    [],
-  );
+  const dayView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'day' } }), []);
+  const weekView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'week' } }), []);
+  const monthView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
 
   useEffect(() => {
     getJson(

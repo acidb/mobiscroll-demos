@@ -58,12 +58,7 @@ const App: FC = () => {
     [],
   );
 
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      agenda: { type: 'week' },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'week' } }), []);
 
   return <Eventcalendar data={myEvents} dataTimezone="utc" displayTimezone="local" timezonePlugin={momentTimezone} view={myView} />;
 };
