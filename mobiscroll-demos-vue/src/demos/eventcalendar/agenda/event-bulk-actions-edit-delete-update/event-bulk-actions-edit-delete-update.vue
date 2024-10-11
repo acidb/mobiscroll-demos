@@ -17,24 +17,19 @@ setOptions({
   // theme
 })
 
+const confirmCallback = ref()
 const confirmMessage = ref()
+const eventTitles = ref()
 const menuAnchor = ref()
+const menuAction = ref()
 const menuOpen = ref()
 const myEvents = ref([])
 const isConfirmOpen = ref()
 const isToastOpen = ref()
+const selectedEvents = ref([])
 const toastMessage = ref()
-const mySelectedEvents = ref([])
 
-// ?
-const eventTitles = ref()
-
-const firstDay = ref()
-const lastDay = ref()
-const selected = ref()
-const confirmCallback = ref()
-
-const calElm = ref()
+const calRef = ref()
 
 const myView = {
   agenda: {
@@ -54,8 +49,7 @@ const menuData = [
 ]
 
 function updateSelectedEvents() {
-  const events =
-    mySelectedEvents.value.length === 0 ? [mySelectedEvents.value] : mySelectedEvents.value
+  const events = selectedEvents.value.length === 0 ? [selectedEvents.value] : selectedEvents.value
   let eventsToUpdate = [...myEvents.value]
 
   for (const event of events) {
@@ -92,12 +86,12 @@ function updateSelectedEvents() {
 
 function deleteSelectedEvents() {
   isConfirmOpen.value = true
-  confirmMessage.value = getSelectedEventTitles(mySelectedEvents.value).join(', ')
+  confirmMessage.value = getSelectedEventTitles(selectedEvents.value).join(', ')
   confirmCallback.value = function (result) {
     if (result) {
       let eventsToUpdate = [...myEvents.value]
 
-      for (const event of mySelectedEvents.value) {
+      for (const event of selectedEvents.value) {
         if (event.recurring) {
           const origEvent = event.original
           let exc = origEvent.recurringException || []
@@ -123,7 +117,7 @@ function deleteSelectedEvents() {
 }
 
 function selectAllEvents() {
-  const selectedEvents = calElm.value.instance.getEvents(firstDay.value, lastDay.value)
+  const selectedEvents = calRef.value.instance.getEvents()
   refreshSelectedEvents(selectedEvents)
   toastMessage.value = 'All events selected from view'
   isToastOpen.value = true
@@ -143,31 +137,10 @@ function handleConfirmClose() {
   isConfirmOpen.value = false
 }
 
-
-
-////////
-
-
-
-function getSelectedEventTitles(events) {
-  let titles = []
-
-  for (const event of events) {
-    titles = [...titles, event.title]
-  }
-  return titles
-}
-
-function refreshSelectedEvents(events) {
-  mySelectedEvents.value = events
-  eventTitles.value = getSelectedEventTitles(events)
-}
-
-
-
-function handleSelectedEventsChange(args) {
-  if (args.events) {
-    refreshSelectedEvents(args.events)
+function handleEventDelete() {
+  if (!isConfirmOpen.value) {
+    deleteSelectedEvents()
+    return false
   }
 }
 
@@ -179,15 +152,14 @@ function handleEventRightClick(args) {
   })
 }
 
-function handleEventDelete() {
-  if (!isConfirmOpen.value) {
-    deleteSelectedEvents()
-    return false
+function handleSelectedEventsChange(args) {
+  if (args.events) {
+    refreshSelectedEvents(args.events)
   }
 }
 
-function handleSelectChange(args) {
-  selected.value = args.value
+function handleMenuChange(args) {
+  menuAction.value = args.value
   if (args.value === 'update') {
     updateSelectedEvents()
   } else if (args.value === 'delete') {
@@ -196,8 +168,22 @@ function handleSelectChange(args) {
 }
 
 function handleMenuClose() {
-  selected.value = ''
+  menuAction.value = ''
   menuOpen.value = false
+}
+
+function getSelectedEventTitles(events) {
+  let titles = []
+
+  for (const event of events) {
+    titles = [...titles, event.title]
+  }
+  return titles
+}
+
+function refreshSelectedEvents(events) {
+  selectedEvents.value = events
+  eventTitles.value = getSelectedEventTitles(events)
 }
 
 onMounted(() => {
@@ -224,25 +210,25 @@ onMounted(() => {
         <div class="mbsc-col-sm-9 mbsc-push-sm-3">
           <MbscEventcalendar
             className="md-bulk-operations-border"
-            ref="calElm"
+            ref="calRef"
             :data="myEvents"
             :view="myView"
             :clickToCreate="true"
             :selectMultipleEvents="true"
-            :selectedEvents="mySelectedEvents"
+            :selectedEvents="selectedEvents"
             @event-delete="handleEventDelete"
-            @selected-events-change="handleSelectedEventsChange"
             @event-right-click="handleEventRightClick"
+            @selected-events-change="handleSelectedEventsChange"
           />
           <MbscSelect
-            display="anchored"
-            :inputProps="{ type: 'hidden' }"
-            :touchUi="false"
             :anchor="menuAnchor"
             :data="menuData"
-            :value="selected"
+            display="anchored"
             :isOpen="menuOpen"
-            @change="handleSelectChange"
+            :inputProps="{ type: 'hidden' }"
+            :touchUi="false"
+            :value="menuAction"
+            @change="handleMenuChange"
             @close="handleMenuClose"
           />
         </div>
@@ -264,11 +250,11 @@ onMounted(() => {
       </div>
     </div>
     <MbscConfirm
-      title="Are you sure you want to delete the following events?"
-      okText="Delete"
-      :message="confirmMessage"
-      :callback="confirmCallback"
       :isOpen="isConfirmOpen"
+      title="Are you sure you want to delete the following events?"
+      :callback="confirmCallback"
+      :message="confirmMessage"
+      okText="Delete"
       @close="handleConfirmClose"
     />
     <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
