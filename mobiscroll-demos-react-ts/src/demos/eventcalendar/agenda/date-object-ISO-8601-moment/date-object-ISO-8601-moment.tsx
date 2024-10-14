@@ -4,6 +4,7 @@ import {
   MbscCalendarEvent,
   MbscDateType,
   MbscEventcalendarView,
+  MbscSelectedDateChangeEvent,
   Page,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
@@ -16,9 +17,9 @@ setOptions({
 });
 
 const App: FC = () => {
-  const [selectedDateObj, setSelectedObj] = useState<MbscDateType>(new Date(2020, 4, 19));
-  const [selectedDateISO, setSelectedISO] = useState<MbscDateType>('2020-05-20');
-  const [selectedDateMoment, setSelectedMoment] = useState<MbscDateType>(moment([2020, 4, 21]));
+  const [selectedDateObj, setSelectedDateObj] = useState<MbscDateType>(new Date(2020, 4, 19));
+  const [selectedDateISO, setSelectedDateISO] = useState<MbscDateType>('2020-05-20');
+  const [selectedDateMoment, setSelectedDateMoment] = useState<MbscDateType>(moment([2020, 4, 21]));
 
   const [dateObjEvents, setDateObjData] = useState<MbscCalendarEvent[]>([
     {
@@ -56,7 +57,7 @@ const App: FC = () => {
       text: 'New Event',
     };
     setDateObjData((dateObjData) => [...dateObjData, newEvent]);
-    setSelectedObj(new Date(2020, 4, 19));
+    setSelectedDateObj(new Date(2020, 4, 19));
   }, []);
 
   const addDateISOEvent = useCallback(() => {
@@ -66,7 +67,7 @@ const App: FC = () => {
       text: 'New Event',
     };
     setISOData((isoData) => [...isoData, newEvent]);
-    setSelectedISO('2020-05-20');
+    setSelectedDateISO('2020-05-20');
   }, []);
 
   const addDateMomentEvent = useCallback(() => {
@@ -76,7 +77,19 @@ const App: FC = () => {
       text: 'New Event',
     };
     setMomentData((momentData) => [...momentData, newEvent]);
-    setSelectedMoment(moment([2020, 4, 21]));
+    setSelectedDateMoment(moment([2020, 4, 21]));
+  }, []);
+
+  const handleSelectedDateObjChange = useCallback((args: MbscSelectedDateChangeEvent) => {
+    setSelectedDateObj(args.date);
+  }, []);
+
+  const handleSelectedDateISOChange = useCallback((args: MbscSelectedDateChangeEvent) => {
+    setSelectedDateISO(args.date);
+  }, []);
+
+  const handleSelectedDateMomentChange = useCallback((args: MbscSelectedDateChangeEvent) => {
+    setSelectedDateMoment(args.date);
   }, []);
 
   return (
@@ -93,7 +106,12 @@ const App: FC = () => {
                   end: new Date(2020, 4, 19, 11, 45)
                 </Button>
               </div>
-              <Eventcalendar data={dateObjEvents} view={myView} selectedDate={selectedDateObj} />
+              <Eventcalendar
+                data={dateObjEvents}
+                view={myView}
+                selectedDate={selectedDateObj}
+                onSelectedDateChange={handleSelectedDateObjChange}
+              />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
@@ -106,7 +124,12 @@ const App: FC = () => {
                   end: &apos;2020-05-20T13:00:00&apos;
                 </Button>
               </div>
-              <Eventcalendar data={dateISOEvents} view={myView} selectedDate={selectedDateISO} />
+              <Eventcalendar
+                data={dateISOEvents}
+                view={myView}
+                selectedDate={selectedDateISO}
+                onSelectedDateChange={handleSelectedDateISOChange}
+              />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
@@ -119,7 +142,12 @@ const App: FC = () => {
                   end: moment([2020, 4, 21, 14])
                 </Button>
               </div>
-              <Eventcalendar data={dateMomentEvents} view={myView} selectedDate={selectedDateMoment} />
+              <Eventcalendar
+                data={dateMomentEvents}
+                view={myView}
+                selectedDate={selectedDateMoment}
+                onSelectedDateChange={handleSelectedDateMomentChange}
+              />
             </div>
           </div>
         </div>

@@ -19,6 +19,14 @@ const App: FC = () => {
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>();
 
+  const myView = useMemo<MbscEventcalendarView>(
+    () => ({
+      calendar: { type: 'week' },
+      agenda: { type: 'day' },
+    }),
+    [],
+  );
+
   const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
@@ -27,14 +35,6 @@ const App: FC = () => {
     setToastMessage(args.event.title);
     setToastOpen(true);
   }, []);
-
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      calendar: { type: 'week' },
-      agenda: { type: 'day' },
-    }),
-    [],
-  );
 
   useEffect(() => {
     getJson(
