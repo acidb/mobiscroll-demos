@@ -305,7 +305,7 @@ export class AppComponent {
     this.appointmentLocation = event.location;
     this.appointmentReason = event.reason;
     this.appointmentTime = time;
-    this.popupAnchor = args.domEvent.target.closest('.mbsc-calendar-label');
+    this.popupAnchor = args.domEvent.target;
 
     clearTimeout(this.timer);
     this.timer = undefined;

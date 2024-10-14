@@ -1,7 +1,6 @@
 <script setup>
 import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
-import './full-event-customization.css'
 
 setOptions({
   // locale,
@@ -10,9 +9,7 @@ setOptions({
 
 const myEvents = ref([])
 
-const myView = {
-  agenda: { type: 'month' }
-}
+const myView = { agenda: { type: 'month' } }
 
 onMounted(() => {
   getJson(
@@ -31,6 +28,7 @@ onMounted(() => {
       <div class="mbsc-flex mbsc-flex-1-1">
         <img
           class="mds-agenda-event-img"
+          :alt="data.title"
           :src="'https://img.mobiscroll.com/demos/' + data.original.img"
         />
         <div class="mbsc-flex-1-1">
@@ -50,3 +48,32 @@ onMounted(() => {
     </template>
   </MbscEventcalendar>
 </template>
+
+<style>
+.mds-agenda-event-img {
+  width: 100px;
+  margin-right: 10px;
+  border-radius: 6px;
+}
+
+.mds-agenda-event-title {
+  font-size: 17px;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+.mds-agenda-event-location {
+  line-height: 1.4;
+  margin-right: 40px;
+}
+
+.mds-agenda-event-time {
+  line-height: 1.4;
+}
+
+.mds-agenda-event-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #aaa;
+}
+</style>
