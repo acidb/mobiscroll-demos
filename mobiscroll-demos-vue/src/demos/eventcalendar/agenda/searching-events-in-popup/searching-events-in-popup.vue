@@ -72,10 +72,6 @@ function handlePageLoading(args) {
   })
 }
 
-function handlePopupClose() {
-  isPopupOpen.value = false
-}
-
 function handleEventClick(args) {
   selectedEvent.value = [args.event]
   isPopupOpen.value = false
@@ -93,8 +89,8 @@ function handleInit() {
   <MbscEventcalendar
     ref="calInst"
     :data="calEvents"
-    :selectMultipleEvents="true"
     :selectedEvents="selectedEvent"
+    :selectMultipleEvents="true"
     :view="calView"
     @init="handleInit"
     @page-loading="handlePageLoading"
@@ -128,8 +124,8 @@ function handleInit() {
     :scrollLock="false"
     :showArrow="false"
     :showOverlay="false"
-    :width="200"
-    @close="handlePopupClose"
+    :width="400"
+    @close="isPopupOpen = false"
   >
     <MbscEventcalendar
       cssClass="mds-search-results"

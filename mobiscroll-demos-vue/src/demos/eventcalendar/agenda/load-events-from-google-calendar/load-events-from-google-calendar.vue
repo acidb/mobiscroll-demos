@@ -43,8 +43,8 @@ function loadEvents() {
   googleCalendarSync
     .getEvents(CALENDAR_ID, firstDay.value, lastDay.value)
     .then((resp) => {
-      isLoading.value = false
       myEvents.value = resp
+      isLoading.value = false
     })
     .catch(handleError)
 }
@@ -53,7 +53,7 @@ function changeView() {
   switch (currentView.value) {
     case 'month':
       myView.value = {
-        calendar: { labels: true }
+        calendar: { type: 'month' }
       }
       break
     case 'week':
@@ -93,10 +93,6 @@ function handlePageLoading(args) {
   loadEvents()
 }
 
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
 onMounted(() => {
   // init google client
   googleCalendarSync.init({
@@ -108,16 +104,14 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar
-    className="md-google-calendar "
-    :class="{ 'md-loading-events': isLoading }"
+    :data="myEvents"
     :exclusiveEndDates="true"
     :view="myView"
-    :data="myEvents"
     @page-loading="handlePageLoading"
   >
     <template #header>
       <MbscCalendarNav className="mds-google-cal-nav" />
-      <div :class="['mds-loader', { 'mds-loader-visible': isLoading }]"></div>
+      <div :class="'mds-loader' + (isLoading ? ' mds-loader-visible' : '')"></div>
       <div class="mds-google-cal-switch mbsc-flex-1-0">
         <MbscSegmentedGroup v-model="currentView" @change="changeView">
           <MbscSegmented value="month"> Month </MbscSegmented>
@@ -131,7 +125,7 @@ onMounted(() => {
       <MbscCalendarNext className="mds-google-cal-next" />
     </template>
   </MbscEventcalendar>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>

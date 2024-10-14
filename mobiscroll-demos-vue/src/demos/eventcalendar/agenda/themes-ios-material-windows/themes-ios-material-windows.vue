@@ -10,18 +10,7 @@ import { onMounted, ref } from 'vue'
 const myEvents = ref([])
 const myTheme = ref('material')
 const myThemeVariant = ref('dark')
-
-const myView = {
-  agenda: { type: 'month' }
-}
-
-function handleThemeChange(args) {
-  myTheme.value = args.target.value
-}
-
-function handleThemeVariantChange(args) {
-  myThemeVariant.value = args.target.value
-}
+const myView = { agenda: { type: 'month' } }
 
 onMounted(() => {
   getJson(
@@ -35,18 +24,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscPage class="mds-full-height">
+  <MbscPage cssClass="mds-full-height">
     <div class="mds-full-height mbsc-flex-col">
       <div class="mbsc-grid">
         <div class="mbsc-row">
           <div class="mbsc-col-sm-6">
-            <MbscDropdown
-              inputStyle="box"
-              label="Theme"
-              labelStyle="stacked"
-              :value="myTheme"
-              @change="handleThemeChange"
-            >
+            <MbscDropdown inputStyle="box" label="Theme" labelStyle="stacked" v-model="myTheme">
               <option value="auto">Auto</option>
               <option value="ios">iOS</option>
               <option value="material">Material</option>
@@ -58,8 +41,7 @@ onMounted(() => {
               inputStyle="box"
               label="Theme variant"
               labelStyle="stacked"
-              :value="myThemeVariant"
-              @change="handleThemeVariantChange"
+              v-model="myThemeVariant"
             >
               <option value="auto">Auto</option>
               <option value="light">Light</option>
@@ -68,12 +50,14 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <MbscEventcalendar
-        :view="myView"
-        :data="myEvents"
-        :theme="myTheme"
-        :themeVariant="myThemeVariant"
-      />
+      <div className="mds-overflow-hidden mbsc-flex-1-1">
+        <MbscEventcalendar
+          :data="myEvents"
+          :theme="myTheme"
+          :themeVariant="myThemeVariant"
+          :view="myView"
+        />
+      </div>
     </div>
   </MbscPage>
 </template>
