@@ -158,16 +158,12 @@ export default {
         });
       }
 
-      function sortResources() {
-        myResources.sort(function (a, b) {
-          if (sortDirection === 'asc') {
-            return a[sortColumn] > b[sortColumn] ? 1 : -1;
-          }
-          if (sortDirection === 'desc') {
-            return a[sortColumn] < b[sortColumn] ? 1 : -1;
-          }
-          return a.id - b.id;
-        });
+      function sortResources(crudAction) {
+        if (!crudAction || (crudAction && sortColumn === 'availability')) {
+          myResources.sort(function (a, b) {
+            return sortDirection === 'asc' ? a[sortColumn] - b[sortColumn] : b[sortColumn] - a[sortColumn];
+          });
+        }
         calendar.setOptions({ resources: myResources.slice() });
       }
 
@@ -289,15 +285,16 @@ export default {
           },
           onEventCreated: function (args, inst) {
             refreshData(inst);
-            if (sortColumn == 'availability') sortResources();
+            sortResources(true);
           },
           onEventDeleted: function (args, inst) {
             refreshData(inst);
-            if (sortColumn == 'availability') sortResources();
+            sortResources(true);
           },
           onEventUpdated: function (args, inst) {
+            console.log('on event updated');
             refreshData(inst);
-            if (sortColumn == 'availability') sortResources();
+            sortResources(true);
           },
         })
         .mobiscroll('getInst');
