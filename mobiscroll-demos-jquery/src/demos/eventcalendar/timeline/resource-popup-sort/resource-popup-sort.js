@@ -161,7 +161,13 @@ export default {
       function sortResources(crudAction) {
         if (!crudAction || (crudAction && sortColumn === 'availability')) {
           myResources.sort(function (a, b) {
-            return sortDirection === 'asc' ? a[sortColumn] - b[sortColumn] : b[sortColumn] - a[sortColumn];
+            if (sortDirection === 'asc') {
+              return a[sortColumn] > b[sortColumn] ? 1 : -1;
+            }
+            if (sortDirection === 'desc') {
+              return a[sortColumn] < b[sortColumn] ? 1 : -1;
+            }
+            return a.id - b.id;
           });
         }
         calendar.setOptions({ resources: myResources.slice() });
