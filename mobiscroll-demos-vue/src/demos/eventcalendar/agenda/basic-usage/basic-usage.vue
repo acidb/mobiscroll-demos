@@ -25,10 +25,6 @@ function handleEventClick(args) {
   isToastOpen.value = true
 }
 
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
 onMounted(() => {
   getJson(
     'https://trial.mobiscroll.com/events/?vers=5',
@@ -42,5 +38,5 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar :view="myView" :data="myEvents" @event-click="handleEventClick" />
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>

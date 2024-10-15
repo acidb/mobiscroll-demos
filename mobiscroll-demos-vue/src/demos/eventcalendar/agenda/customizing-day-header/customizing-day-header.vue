@@ -15,7 +15,6 @@ setOptions({
 })
 
 const myEvents = ref([])
-const toastMessage = ref('')
 const isToastOpen = ref(false)
 
 const myView = {
@@ -32,8 +31,6 @@ function addEvent(date) {
   }
 
   myEvents.value = [...myEvents.value, newEvent]
-
-  toastMessage.value = 'Event added'
   isToastOpen.value = true
 }
 
@@ -66,7 +63,7 @@ onMounted(() => {
       </div>
     </template>
   </MbscEventcalendar>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
+  <MbscToast message="Event added" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>
