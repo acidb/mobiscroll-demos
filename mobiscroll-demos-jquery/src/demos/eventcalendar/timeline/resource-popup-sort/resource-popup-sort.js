@@ -134,13 +134,13 @@ export default {
       var myResources = [
         { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', availability: 168 },
         { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', availability: 168 },
-        { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Chicago', availability: 168 },
+        { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', availability: 168 },
         { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', availability: 168 },
-        { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Phoenix', availability: 168 },
+        { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', availability: 168 },
         { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', availability: 168 },
-        { id: 8, name: 'SD-TRK-0250', capacity: 12, location: 'San Diego', availability: 168 },
+        { id: 8, name: 'SD-TRK-0250', capacity: 12, location: 'San Francisco', availability: 168 },
         { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', availability: 168 },
-        { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Francisco', availability: 168 },
+        { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', availability: 168 },
       ];
 
       function refreshData(inst) {
