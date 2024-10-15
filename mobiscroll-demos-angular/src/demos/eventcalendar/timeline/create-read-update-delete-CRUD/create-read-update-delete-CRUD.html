@@ -31,7 +31,7 @@
 
     <div class="event-color-c" (click)="openColorPicker($event)">
       <div class="event-color-label">Color</div>
-      <div class="event-color" [ngStyle]="{background: selectedColor}"></div>
+      <div class="event-color" [ngStyle]="{ background: selectedColor }"></div>
     </div>
     <mbsc-segmented-group [(ngModel)]="popupEventStatus">
       <mbsc-segmented value="busy">Show as busy</mbsc-segmented>

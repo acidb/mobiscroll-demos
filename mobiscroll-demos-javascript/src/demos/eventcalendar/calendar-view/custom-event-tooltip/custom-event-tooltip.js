@@ -38,7 +38,7 @@ export default {
       clearTimeout(timer);
       timer = null;
 
-      tooltip.setOptions({ anchor: args.domEvent.target.closest('.mbsc-calendar-label') });
+      tooltip.setOptions({ anchor: args.domEvent.target });
       tooltip.open();
     }
 
