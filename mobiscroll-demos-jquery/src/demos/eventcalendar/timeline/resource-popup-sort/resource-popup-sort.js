@@ -11,6 +11,8 @@ export default {
 
     $(function () {
       var $popupElm = $('#demo-filtering-popup');
+      var initialSortColumn;
+      var initialSortDirection;
       var sortColumn = 'name';
       var sortDirection = 'asc';
 
@@ -175,7 +177,7 @@ export default {
           buttons: [
             'cancel',
             {
-              text: 'Clear filters',
+              text: 'Clear sort',
               handler: function () {
                 popup.close();
                 sortDirection = '';
@@ -197,6 +199,8 @@ export default {
               text: 'Apply',
               keyCode: 'enter',
               handler: function () {
+                initialSortColumn = sortColumn;
+                initialSortDirection = sortDirection;
                 popup.close();
                 sortResources();
                 mobiscroll.toast({
@@ -209,6 +213,12 @@ export default {
               cssClass: 'mbsc-popup-button-primary',
             },
           ],
+          onClose: function () {
+            $('input[name="group"][data-value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
+            $('input[name="group2"][data-value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
+            sortColumn = initialSortColumn;
+            sortDirection = initialSortDirection;
+          },
           contentPadding: false,
           display: 'anchored',
           focusOnClose: false,
@@ -279,20 +289,22 @@ export default {
           },
           onEventCreated: function (args, inst) {
             refreshData(inst);
-            sortResources();
+            if (sortColumn == 'availability') sortResources();
           },
           onEventDeleted: function (args, inst) {
             refreshData(inst);
-            sortResources();
+            if (sortColumn == 'availability') sortResources();
           },
           onEventUpdated: function (args, inst) {
             refreshData(inst);
-            sortResources();
+            if (sortColumn == 'availability') sortResources();
           },
         })
         .mobiscroll('getInst');
 
       $('#demo-popup-sort-button').on('click', function () {
+        initialSortColumn = $('input[name="group"]:checked').attr('data-value');
+        initialSortDirection = $('input[name="group2"]:checked').attr('data-value');
         popup.setOptions({ anchor: this });
         popup.open();
       });
