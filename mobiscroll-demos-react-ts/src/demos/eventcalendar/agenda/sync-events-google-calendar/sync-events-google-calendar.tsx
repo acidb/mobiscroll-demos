@@ -30,7 +30,7 @@ const App: FC = () => {
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [myAnchor, setAnchor] = useState<HTMLElement>();
-  const [myCalendars, setCalendars] = useState<Array<{ summary: string; id: number }>>([]);
+  const [myCalendars, setCalendars] = useState<Array<{ summary: string; id: string }>>([]);
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
   const [mySelectedDate, setSelectedDate] = useState(new Date());
   const [toastMessage, setToastMessage] = useState<string>('');
@@ -148,19 +148,19 @@ const App: FC = () => {
       setIsLoggedIn(true);
       googleCalendarSync
         .getCalendars()
-        .then((calendars) => {
+        .then((calendars: { summary: string; id: string; primary: boolean }[]) => {
           const newCalendarIds: string[] = [];
-          const calData: { [key: string]: { checked: boolean } } = {};
+          const newCalendarData: { [key: string]: { checked: boolean } } = {};
 
-          calendars.sort((c: { primary: boolean }) => (c.primary ? -1 : 1));
+          calendars.sort((c) => (c.primary ? -1 : 1));
 
           for (const c of calendars) {
             newCalendarIds.push(c.id);
-            calData[c.id] = { checked: true };
+            newCalendarData[c.id] = { checked: true };
           }
 
           setCalendarIds(newCalendarIds);
-          setCalendarData(calData);
+          setCalendarData(newCalendarData);
           setCalendars(calendars);
           setLoading(true);
           return googleCalendarSync.getEvents(newCalendarIds, startDate.current!, endDate.current!);

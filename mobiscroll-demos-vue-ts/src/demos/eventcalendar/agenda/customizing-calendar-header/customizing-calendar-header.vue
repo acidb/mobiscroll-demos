@@ -17,11 +17,16 @@ setOptions({
   // theme
 })
 
+const currentDate = ref<Date>(new Date())
+const currentView = ref<string>('agenda')
+const myEvents = ref<MbscCalendarEvent[]>([])
+const myView = ref<MbscEventcalendarView>({ agenda: { type: 'month' } })
+
 function changeView() {
   switch (currentView.value) {
     case 'calendar':
       myView.value = {
-        calendar: { labels: true }
+        calendar: { type: 'month' }
       }
       break
     case 'agenda':
@@ -32,32 +37,12 @@ function changeView() {
   }
 }
 
-const myEvents = ref<MbscCalendarEvent[]>([])
-const currentDate = ref<any>(new Date())
-const currentView = ref<string>('agenda')
-const myView = ref<MbscEventcalendarView>({
-  agenda: { type: 'month' }
-})
-
-function getFirstDayOfWeek(d: Date, prev: boolean) {
-  const day = d.getDay()
-  const diff = d.getDate() - day + (prev ? -7 : 7)
-  return new Date(d.setDate(diff))
+function prevPage() {
+  currentDate.value = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() - 1, 1)
 }
 
-function navigatePage(prev: boolean) {
-  const newCurrentDate = currentDate.value
-  if (currentView.value === 'calendar') {
-    const prevNextPage = new Date(
-      newCurrentDate.getFullYear(),
-      newCurrentDate.getMonth() + (prev ? -1 : 1),
-      1
-    )
-    currentDate.value = prevNextPage
-  } else {
-    const prevNextSunday = getFirstDayOfWeek(newCurrentDate, prev)
-    currentDate.value = prevNextSunday
-  }
+function nextPage() {
+  currentDate.value = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth() + 1, 1)
 }
 
 onMounted(() => {
@@ -72,32 +57,28 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar :data="myEvents" :view="myView" :selectedDate="currentDate">
+  <MbscEventcalendar :data="myEvents" :selectedDate="currentDate" :view="myView">
     <template #header>
       <MbscCalendarNav className="mds-custom-header-nav"></MbscCalendarNav>
       <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-center">
         <MbscButton
-          @click="navigatePage(true)"
+          cssClass="mds-custom-header-button"
           icon="material-arrow-back"
           variant="flat"
-          className="mds-custom-header-button"
-        ></MbscButton>
-        <MbscCalendarToday></MbscCalendarToday>
+          @click="prevPage()"
+        />
+        <MbscCalendarToday />
         <MbscButton
-          @click="navigatePage(false)"
+          cssClass="mds-custom-header-button"
           icon="material-arrow-forward"
           variant="flat"
-          className="mds-custom-header-button"
-        ></MbscButton>
+          @click="nextPage()"
+        />
       </div>
       <div class="mds-custom-header-switch">
         <MbscSegmentedGroup v-model="currentView" @change="changeView()">
-          <MbscSegmented
-            value="agenda"
-            v-model="currentView"
-            icon="material-view-day"
-          ></MbscSegmented>
-          <MbscSegmented value="calendar" v-model="currentView" icon="calendar"></MbscSegmented>
+          <MbscSegmented value="agenda" icon="material-view-day" />
+          <MbscSegmented value="calendar" icon="calendar" />
         </MbscSegmentedGroup>
       </div>
     </template>

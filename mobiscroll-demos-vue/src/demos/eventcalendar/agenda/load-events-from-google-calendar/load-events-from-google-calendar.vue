@@ -30,8 +30,8 @@ const myView = ref({
 })
 const toastMessage = ref('')
 
-const firstDay = ref(null)
-const lastDay = ref(null)
+const firstDay = ref()
+const lastDay = ref()
 
 function handleError(resp) {
   toastMessage.value = resp.error ? resp.error : resp.result.error.message

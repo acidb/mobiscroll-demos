@@ -21,12 +21,12 @@ setOptions({
 const calEvents = ref([])
 const isPopupOpen = ref(false)
 const listEvents = ref([])
-const searchInput = ref(null)
+const searchInput = ref()
 const selectedEvent = ref([])
 
-const calInst = ref(null)
-const timer = ref(null)
-const inputRef = ref(null)
+const calInst = ref()
+const timer = ref()
+const inputRef = ref()
 
 const calView = { agenda: { type: 'month' } }
 const listView = { agenda: { type: 'year', size: 5 } }

@@ -30,7 +30,7 @@ const App: FC = () => {
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [myAnchor, setAnchor] = useState<HTMLElement>();
-  const [myCalendars, setCalendars] = useState<Array<{ summary: string; id: number }>>([]);
+  const [myCalendars, setCalendars] = useState<Array<{ name: string; id: string }>>([]);
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
   const [mySelectedDate, setSelectedDate] = useState(new Date());
   const [toastMessage, setToastMessage] = useState<string>('');
@@ -148,19 +148,19 @@ const App: FC = () => {
       setIsLoggedIn(true);
       outlookCalendarSync
         .getCalendars()
-        .then((calendars) => {
+        .then((calendars: { name: string; id: string; isDefaultCalendar: boolean }[]) => {
           const newCalendarIds: string[] = [];
-          const calData: { [key: string]: { checked: boolean } } = {};
+          const newCalendarData: { [key: string]: { checked: boolean } } = {};
 
-          calendars.sort((c: { primary: boolean }) => (c.primary ? -1 : 1));
+          calendars.sort((c) => (c.isDefaultCalendar ? -1 : 1));
 
           for (const c of calendars) {
             newCalendarIds.push(c.id);
-            calData[c.id] = { checked: true };
+            newCalendarData[c.id] = { checked: true };
           }
 
           setCalendarIds(newCalendarIds);
-          setCalendarData(calData);
+          setCalendarData(newCalendarData);
           setCalendars(calendars);
           setLoading(true);
           return outlookCalendarSync.getEvents(newCalendarIds, startDate.current!, endDate.current!);
@@ -181,7 +181,7 @@ const App: FC = () => {
       setPopupOpen(false);
     };
 
-    // Init outlook client
+    // Init Outlook client
     outlookCalendarSync.init({
       clientId: '<YOUR_OUTLOOK_CLIENT_ID>',
       redirectUri: '<YOUR_OUTLOOK_REDIRECT_URI>',
@@ -215,7 +215,7 @@ const App: FC = () => {
         <div className="mbsc-form-group-inset">
           <div className="mbsc-form-group-title">My Calendars</div>
           {myCalendars.map((cal) => (
-            <Switch label={cal.summary} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
+            <Switch label={cal.name} key={cal.id} value={cal.id} checked={calendarData[cal.id].checked} onChange={toggleCalendar} />
           ))}
         </div>
         <div className="mbsc-form-group-inset">

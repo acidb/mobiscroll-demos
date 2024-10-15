@@ -6,7 +6,6 @@ import {
   MbscCalendarNext,
   MbscCalendarPrev,
   MbscEventcalendar,
-  MbscPage,
   MbscPopup,
   MbscSwitch,
   MbscToast,
@@ -14,6 +13,7 @@ import {
 } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
+  MbscDateType,
   MbscEventcalendarView,
   MbscPageLoadingEvent
 } from '@mobiscroll/vue'
@@ -24,43 +24,27 @@ setOptions({
   // theme
 })
 
-const calendarData = ref<any>({})
-const calendarIds = ref<any>([])
+const calendarData = ref<{ [key: string]: { checked: boolean } }>({})
+const calendarIds = ref<string[]>([])
 const isLoggedIn = ref<boolean>(false)
 const isLoading = ref<boolean>(false)
 const isPopupOpen = ref<boolean>(false)
 const isToastOpen = ref<boolean>(false)
-const myAnchor = ref<any>(null)
-const myCalendars = ref<any>([])
+const myAnchor = ref<HTMLElement>()
+const myCalendars = ref<{ name: string; id: string }[]>([])
 const myEvents = ref<MbscCalendarEvent[]>([])
-const mySelectedDate = ref<any>(new Date())
+const mySelectedDate = ref<MbscDateType>(new Date())
+const myView: MbscEventcalendarView = { agenda: { type: 'month' } }
 const toastMessage = ref<string>('')
 
-const myView: MbscEventcalendarView = {
-  agenda: {
-    type: 'month'
-  }
-}
-const buttonRef = ref<any>(null)
-const startDate = ref<any>(null)
-const endDate = ref<any>(null)
-const timer = ref<any>(null)
+const buttonRef = ref<typeof MbscButton>()
+const startDate = ref<Date>()
+const endDate = ref<Date>()
+const timer = ref<ReturnType<typeof setTimeout>>()
 
-function handleError(resp: any) {
+function handleError(resp: { error?: string; result: { error: { message: string } } }) {
   toastMessage.value = resp.error ? resp.error : resp.result.error.message
   isToastOpen.value = true
-}
-
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
-function handlePopupClose() {
-  isPopupOpen.value = false
-}
-
-function handleSelectedDateChange(args: any) {
-  mySelectedDate.value = args.date
 }
 
 function handlePageLoading(args: MbscPageLoadingEvent) {
@@ -71,7 +55,7 @@ function handlePageLoading(args: MbscPageLoadingEvent) {
     if (outlookCalendarSync.isSignedIn()) {
       isLoading.value = true
       outlookCalendarSync
-        .getEvents(calendarIds.value, startDate.value, endDate.value)
+        .getEvents(calendarIds.value, startDate.value!, endDate.value!)
         .then((events: MbscCalendarEvent[]) => {
           myEvents.value = events
           isLoading.value = false
@@ -81,28 +65,27 @@ function handlePageLoading(args: MbscPageLoadingEvent) {
   }, 200)
 }
 
-function toggleCalendars(ev: any, calendarId: string) {
-  const checked = ev.target.checked
+function toggleCalendar(ev: Event, calendarId: string) {
+  const checked = (ev.target as HTMLInputElement).checked
   calendarData.value[calendarId].checked = checked
-
   if (checked) {
     isLoading.value = true
     calendarIds.value = [...calendarIds.value, calendarId]
     outlookCalendarSync
-      .getEvents([calendarId], startDate.value, endDate.value)
+      .getEvents([calendarId], startDate.value!, endDate.value!)
       .then((events) => {
         isLoading.value = false
         myEvents.value = [...myEvents.value, ...events]
       })
       .catch(handleError)
   } else {
-    calendarIds.value = calendarIds.value.filter((id: string) => id !== calendarId)
-    myEvents.value = myEvents.value.filter((item: any) => item.outlookCalendarId !== calendarId)
+    calendarIds.value = calendarIds.value.filter((id) => id !== calendarId)
+    myEvents.value = myEvents.value.filter((item) => item.outlookCalendarId !== calendarId)
   }
 }
 
 function openPopup() {
-  myAnchor.value = buttonRef.value.instance.nativeElement
+  myAnchor.value = buttonRef.value!.instance.nativeElement
   isPopupOpen.value = true
 }
 
@@ -112,16 +95,12 @@ function navigate() {
 
 function signIn() {
   if (!outlookCalendarSync.isSignedIn()) {
-    outlookCalendarSync.signIn().catch((error: any) => {
-      handleError(error)
-    })
+    outlookCalendarSync.signIn().catch(handleError)
   }
 }
 
 function signOut() {
-  outlookCalendarSync.signOut().catch((error: any) => {
-    handleError(error)
-  })
+  outlookCalendarSync.signOut().catch(handleError)
 }
 
 onMounted(() => {
@@ -129,25 +108,25 @@ onMounted(() => {
     isLoggedIn.value = true
     outlookCalendarSync
       .getCalendars()
-      .then((calendars) => {
+      .then((calendars: { name: string; id: string; isDefaultCalendar: boolean }[]) => {
         const newCalendarIds = []
-        const calData: any = {}
+        const newCalendarData: { [key: string]: { checked: boolean } } = {}
 
-        calendars.sort((c: any) => (c.isDefaultCalendar ? -1 : 1))
+        calendars.sort((c) => (c.isDefaultCalendar ? -1 : 1))
 
         for (const c of calendars) {
           newCalendarIds.push(c.id)
-          calData[c.id] = { name: c.summary, color: c.backgroundColor, checked: true }
+          newCalendarData[c.id] = { checked: true }
         }
 
         calendarIds.value = newCalendarIds
-        calendarData.value = calData
+        calendarData.value = newCalendarData
         myCalendars.value = calendars
         isLoading.value = true
 
-        return outlookCalendarSync.getEvents(newCalendarIds, startDate.value, endDate.value)
+        return outlookCalendarSync.getEvents(newCalendarIds, startDate.value!, endDate.value!)
       })
-      .then((events) => {
+      .then((events: MbscCalendarEvent[]) => {
         myEvents.value = events
         isLoading.value = false
       })
@@ -155,12 +134,12 @@ onMounted(() => {
   }
 
   const onSignedOut = () => {
-    isLoggedIn.value = false
-    myCalendars.value = []
     calendarIds.value = []
     calendarData.value = {}
-    myEvents.value = []
+    isLoggedIn.value = false
     isPopupOpen.value = false
+    myCalendars.value = []
+    myEvents.value = []
   }
 
   // Init Outlook Client
@@ -174,60 +153,52 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscPage :className="'md-sync-events-outlook-cont' + (isLoading ? ' md-loading-events' : '')">
-    <MbscEventcalendar
-      :view="myView"
-      :data="myEvents"
-      :exclusiveEndDates="true"
-      :selectedDate="mySelectedDate"
-      @page-loading="handlePageLoading"
-      @selected-date-change="handleSelectedDateChange"
-    >
-      <template #header>
-        <MbscCalendarNav />
-        <div :class="{ 'mds-loader': true, 'mds-loader-visible': isLoading }"></div>
-        <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
-          <MbscButton v-if="isLoggedIn" ref="buttonRef" @click="openPopup">
-            My Calendars
-          </MbscButton>
-          <MbscButton v-if="!isLoggedIn" @click="signIn" className="md-sync-events-outlook-button"
-            >Sync my outlook calendars</MbscButton
-          >
-          <MbscButton @click="navigate">Today</MbscButton>
-        </div>
-        <MbscCalendarPrev />
-        <MbscCalendarNext />
-      </template>
-    </MbscEventcalendar>
-    <MbscPopup
-      display="anchored"
-      :anchor="myAnchor"
-      :width="400"
-      :touchUi="false"
-      :showOverlay="false"
-      :scrollLock="false"
-      :contentPadding="false"
-      :isOpen="isPopupOpen"
-      @close="handlePopupClose"
-    >
-      <div class="mbsc-form-group-inset md-sync-events-outlook-inset">
-        <div class="mbsc-form-group-title">My Calendars</div>
-        <template v-for="cal in myCalendars" :key="cal.id">
-          <MbscSwitch
-            :label="cal.name"
-            v-model="calendarData[cal.id].checked"
-            @change="toggleCalendars($event, cal.id)"
-          />
-        </template>
+  <MbscEventcalendar
+    :data="myEvents"
+    :exclusiveEndDates="true"
+    :selectedDate="mySelectedDate"
+    :view="myView"
+    @page-loading="handlePageLoading"
+    @selected-date-change="mySelectedDate = $event.date"
+  >
+    <template #header>
+      <MbscCalendarNav />
+      <div :class="'mds-loader' + (isLoading ? ' mds-loader-visible' : '')"></div>
+      <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
+        <MbscButton v-if="isLoggedIn" ref="buttonRef" @click="openPopup"> My Calendars </MbscButton>
+        <MbscButton v-if="!isLoggedIn" @click="signIn">Sync my outlook calendars</MbscButton>
+        <MbscButton @click="navigate">Today</MbscButton>
       </div>
-      <div class="mbsc-form-group-inset">
-        <MbscButton className="md-sync-events-outlook-button mbsc-button-block" @click="signOut"
-          >Log out of my account</MbscButton
-        >
-      </div>
-    </MbscPopup>
-  </MbscPage>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+      <MbscCalendarPrev />
+      <MbscCalendarNext />
+    </template>
+  </MbscEventcalendar>
+  <MbscPopup
+    display="anchored"
+    :anchor="myAnchor"
+    :contentPadding="false"
+    :isOpen="isPopupOpen"
+    :scrollLock="false"
+    :showOverlay="false"
+    :touchUi="false"
+    :width="400"
+    @close="isPopupOpen = false"
+  >
+    <div class="mbsc-form-group-inset">
+      <div class="mbsc-form-group-title">My Calendars</div>
+      <MbscSwitch
+        v-for="cal in myCalendars"
+        :key="cal.id"
+        :label="cal.name"
+        v-model="calendarData[cal.id].checked"
+        @change="toggleCalendar($event, cal.id)"
+      />
+    </div>
+    <div class="mbsc-form-group-inset">
+      <MbscButton cssClass="mbsc-button-block" @click="signOut">Log out of my account</MbscButton>
+    </div>
+  </MbscPopup>
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>

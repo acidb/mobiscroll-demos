@@ -9,20 +9,9 @@ import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
 
 const myEvents = ref<MbscCalendarEvent[]>([])
-const myTheme = ref<string>('material') // can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', it will automatically be set based on the platform
-const myThemeVariant = ref<'light' | 'dark' | 'auto'>('dark') // can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
-
-const myView: MbscEventcalendarView = {
-  agenda: { type: 'month' }
-}
-
-function handleThemeChange(args: any) {
-  myTheme.value = args.target.value
-}
-
-function handleThemeVariantChange(args: any) {
-  myThemeVariant.value = args.target.value
-}
+const myTheme = ref<string>('material')
+const myThemeVariant = ref<'light' | 'dark' | 'auto'>('dark')
+const myView: MbscEventcalendarView = { agenda: { type: 'month' } }
 
 onMounted(() => {
   getJson(
@@ -36,18 +25,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscPage class="mds-full-height">
+  <MbscPage cssClass="mds-full-height">
     <div class="mds-full-height mbsc-flex-col">
       <div class="mbsc-grid">
         <div class="mbsc-row">
           <div class="mbsc-col-sm-6">
-            <MbscDropdown
-              inputStyle="box"
-              label="Theme"
-              labelStyle="stacked"
-              :value="myTheme"
-              @change="handleThemeChange"
-            >
+            <MbscDropdown inputStyle="box" label="Theme" labelStyle="stacked" v-model="myTheme">
               <option value="auto">Auto</option>
               <option value="ios">iOS</option>
               <option value="material">Material</option>
@@ -59,8 +42,7 @@ onMounted(() => {
               inputStyle="box"
               label="Theme variant"
               labelStyle="stacked"
-              :value="myThemeVariant"
-              @change="handleThemeVariantChange"
+              v-model="myThemeVariant"
             >
               <option value="auto">Auto</option>
               <option value="light">Light</option>
@@ -69,12 +51,14 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <MbscEventcalendar
-        :view="myView"
-        :data="myEvents"
-        :theme="myTheme"
-        :themeVariant="myThemeVariant"
-      />
+      <div className="mds-overflow-hidden mbsc-flex-1-1">
+        <MbscEventcalendar
+          :data="myEvents"
+          :theme="myTheme"
+          :themeVariant="myThemeVariant"
+          :view="myView"
+        />
+      </div>
     </div>
   </MbscPage>
 </template>

@@ -24,17 +24,17 @@ const isLoggedIn = ref(false)
 const isLoading = ref(false)
 const isPopupOpen = ref(false)
 const isToastOpen = ref(false)
-const myAnchor = ref(null)
+const myAnchor = ref()
 const myCalendars = ref([])
 const myEvents = ref([])
 const mySelectedDate = ref(new Date())
 const myView = { agenda: { type: 'month' } }
 const toastMessage = ref('')
 
-const buttonRef = ref(null)
-const startDate = ref(null)
-const endDate = ref(null)
-const timer = ref(null)
+const buttonRef = ref()
+const startDate = ref()
+const endDate = ref()
+const timer = ref()
 
 function handleError(resp) {
   toastMessage.value = resp.error ? resp.error : resp.result.error.message
@@ -89,16 +89,12 @@ function navigate() {
 
 function signIn() {
   if (!outlookCalendarSync.isSignedIn()) {
-    outlookCalendarSync.signIn().catch((error) => {
-      handleError(error)
-    })
+    outlookCalendarSync.signIn().catch(handleError)
   }
 }
 
 function signOut() {
-  outlookCalendarSync.signOut().catch((error) => {
-    handleError(error)
-  })
+  outlookCalendarSync.signOut().catch(handleError)
 }
 
 onMounted(() => {

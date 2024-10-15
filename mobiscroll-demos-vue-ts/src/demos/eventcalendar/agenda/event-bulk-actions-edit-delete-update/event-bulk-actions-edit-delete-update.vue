@@ -14,6 +14,8 @@ import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
+  MbscEventUpdateEvent,
+  MbscSelectChangeEvent,
   MbscSelectedEventsChangeEvent
 } from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
@@ -23,125 +25,120 @@ setOptions({
   // theme
 })
 
-const confirmCallback = ref<any>()
-const confirmMessage = ref<string>('')
-const eventTitles = ref<string[]>([])
-const menuAnchor = ref<any>(null)
-const menuAction = ref<string>('')
-const menuOpen = ref<boolean>(false)
+const calRef = ref<typeof MbscEventcalendar>()
+const confirmMessage = ref('')
+const menuAction = ref('')
+const menuAnchor = ref<HTMLElement>()
+const menuOpen = ref(false)
 const myEvents = ref<MbscCalendarEvent[]>([])
-const isConfirmOpen = ref<boolean>(false)
-const isToastOpen = ref<boolean>(false)
+const isConfirmOpen = ref(false)
+const isToastOpen = ref(false)
+const selectedEvent = ref<MbscCalendarEvent>()
 const selectedEvents = ref<MbscCalendarEvent[]>([])
-const toastMessage = ref<string>('')
+const toastMessage = ref('')
 
-const calRef = ref<any>()
-
-const myView: MbscEventcalendarView = {
-  agenda: {
-    type: 'month'
-  }
-}
+const myView: MbscEventcalendarView = { agenda: { type: 'month' } }
 
 const menuData = [
-  {
-    text: 'Update',
-    value: 'update'
-  },
-  {
-    text: 'Delete',
-    value: 'delete'
-  }
+  { text: 'Update', value: 'update' },
+  { text: 'Delete', value: 'delete' }
 ]
 
 function updateSelectedEvents() {
-  const events: any =
-    selectedEvents.value.length === 0 ? [selectedEvents.value] : selectedEvents.value
-  let eventsToUpdate = [...myEvents.value]
-
+  const updatedEvents = [...myEvents.value]
+  const events =
+    selectedEvents.value.length === 0 && selectedEvent.value
+      ? [selectedEvent.value]
+      : selectedEvents.value
   for (const event of events) {
+    const index = updatedEvents.findIndex((x) => x.id === event.id)
+    // Handle recurring event occurrence
     if (event.recurring) {
-      const origEvent = event.original
-      let exc = origEvent.recurringException || []
-      const newEvent = event
-
-      newEvent.recurring = undefined
-      newEvent.color = 'orange'
-      newEvent.id += '_' + formatDate('YYYY-MM-DD', event.start)
-      eventsToUpdate = [...eventsToUpdate, newEvent]
-
-      exc = [...exc, event.start]
-      origEvent.recurringException = exc
-
-      // update the event in the list
-      const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id)
-      eventsToUpdate.splice(index, 1, origEvent)
+      // Create a new event, with updated color and id
+      const newEvent = {
+        ...event,
+        color: 'orange',
+        id: event.id + '_' + formatDate('YYYY-MM-DD', event.start as Date),
+        recurring: undefined
+      }
+      // Update the original event with a recurring exception
+      const updatedEvent = event.original!
+      const updatedExceptionDates = (updatedEvent.recurringException || []) as Date[]
+      updatedExceptionDates.push(event.start as Date)
+      updatedEvent.recurringException = updatedExceptionDates
+      updatedEvents.splice(index, 1, updatedEvent)
+      updatedEvents.push(newEvent)
     } else {
-      const newEv = event
-      newEv.color = 'orange'
-      const index = eventsToUpdate.findIndex((x) => x.id === newEv.id)
-      eventsToUpdate.splice(index, 1, newEv)
+      // Update the event color
+      const updatedEvent = { ...event, color: 'orange' }
+      updatedEvents.splice(index, 1, updatedEvent)
     }
   }
-
+  myEvents.value = updatedEvents
+  selectedEvents.value = []
   toastMessage.value = "All selected event's color changed to orange"
   isToastOpen.value = true
-
-  myEvents.value = eventsToUpdate
-  refreshSelectedEvents([])
 }
 
 function deleteSelectedEvents() {
+  const events =
+    selectedEvents.value.length === 0 && selectedEvent.value
+      ? [selectedEvent.value]
+      : selectedEvents.value
+  confirmMessage.value = events.map((e) => e.title).join(', ')
   isConfirmOpen.value = true
-  confirmMessage.value = getSelectedEventTitles(selectedEvents.value).join(', ')
-  confirmCallback.value = (result: boolean) => {
-    if (result) {
-      let eventsToUpdate = [...myEvents.value]
-
-      for (const event of selectedEvents.value) {
-        if (event.recurring) {
-          const origEvent = event.original!
-          let exc: any = origEvent.recurringException || []
-          exc = [...exc, event.start]
-          origEvent.recurringException = exc
-
-          // update the event in the list
-          const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id)
-          eventsToUpdate.splice(index, 1, origEvent)
-        } else {
-          eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id)
-        }
-      }
-
-      myEvents.value = eventsToUpdate
-      refreshSelectedEvents([])
-
-      toastMessage.value = 'Deleted'
-      isToastOpen.value = true
-    }
-    isConfirmOpen.value = false
-  }
 }
 
 function selectAllEvents() {
-  const selectedEvents = calRef.value.instance.getEvents()
-  refreshSelectedEvents(selectedEvents)
+  selectedEvents.value = calRef.value!.instance.getEvents()
   toastMessage.value = 'All events selected from view'
   isToastOpen.value = true
 }
 
 function resetSelection() {
-  refreshSelectedEvents([])
+  selectedEvents.value = []
   toastMessage.value = 'Selection cleared'
   isToastOpen.value = true
 }
 
-function handleToastClose() {
-  isToastOpen.value = false
+function handleConfirmClose(result: boolean) {
+  if (result) {
+    const events =
+      selectedEvents.value.length === 0 && selectedEvent.value
+        ? [selectedEvent.value]
+        : selectedEvents.value
+    const updatedEvents = [...myEvents.value]
+    for (const event of events) {
+      const index = updatedEvents.findIndex((x) => x.id === event.id)
+      // Handle recurring event occurrence
+      if (event.recurring) {
+        // Update the original event with a recurring exception
+        const updatedEvent = event.original!
+        const updatedExceptionDates = (updatedEvent.recurringException || []) as Date[]
+        updatedExceptionDates.push(event.start as Date)
+        updatedEvent.recurringException = updatedExceptionDates
+        updatedEvents.splice(index, 1, updatedEvent)
+      } else {
+        // Remove the event
+        updatedEvents.splice(index, 1)
+      }
+    }
+
+    myEvents.value = updatedEvents
+    selectedEvents.value = []
+    toastMessage.value = 'Deleted'
+    isToastOpen.value = true
+  }
+  isConfirmOpen.value = false
 }
 
-function handleConfirmClose() {
-  isConfirmOpen.value = false
+function handleEventUpdate(args: MbscEventUpdateEvent) {
+  if (args.isDelete) {
+    if (!isConfirmOpen.value) {
+      deleteSelectedEvents()
+    }
+    return false
+  }
 }
 
 function handleEventDelete() {
@@ -153,19 +150,16 @@ function handleEventDelete() {
 
 function handleEventRightClick(args: MbscEventClickEvent) {
   args.domEvent.preventDefault()
+  selectedEvent.value = args.event
   menuAnchor.value = args.domEvent.target
-  setTimeout(() => {
-    menuOpen.value = true
-  })
+  menuOpen.value = true
 }
 
 function handleSelectedEventsChange(args: MbscSelectedEventsChangeEvent) {
-  if (args.events) {
-    refreshSelectedEvents(args.events)
-  }
+  selectedEvents.value = args.events
 }
 
-function handleMenuChange(args: any) {
+function handleMenuChange(args: MbscSelectChangeEvent) {
   menuAction.value = args.value
   if (args.value === 'update') {
     updateSelectedEvents()
@@ -179,18 +173,13 @@ function handleMenuClose() {
   menuOpen.value = false
 }
 
-function getSelectedEventTitles(events: MbscCalendarEvent[]) {
-  let titles: string[] = []
-
-  for (const event of events) {
-    titles = [...titles, event.title || '']
+function handleDeleteKey(ev: KeyboardEvent) {
+  if (
+    !isConfirmOpen.value &&
+    (ev.code === 'Delete' || ev.code === 'Backspace' || ev.keyCode === 8 || ev.keyCode === 46)
+  ) {
+    deleteSelectedEvents()
   }
-  return titles
-}
-
-function refreshSelectedEvents(events: MbscCalendarEvent[]) {
-  selectedEvents.value = events
-  eventTitles.value = getSelectedEventTitles(events)
 }
 
 onMounted(() => {
@@ -201,70 +190,60 @@ onMounted(() => {
     },
     'jsonp'
   )
-
-  document.querySelector('.md-bulk-operations')!.addEventListener('keydown', (ev: any) => {
-    if (!isConfirmOpen.value && (ev.keyCode === 8 || ev.keyCode === 46)) {
-      deleteSelectedEvents()
-    }
-  })
 })
 </script>
 
 <template>
-  <MbscPage className="md-bulk-operations">
+  <MbscPage cssClass="mds-bulk-actions" @keydown="handleDeleteKey">
     <div class="mbsc-grid mbsc-no-padding">
       <div class="mbsc-row">
-        <div class="mbsc-col-sm-9 mbsc-push-sm-3">
+        <div class="mds-bulk-actions-calendar mbsc-col-sm-9 mbsc-push-sm-3">
           <MbscEventcalendar
-            className="md-bulk-operations-border"
             ref="calRef"
             :data="myEvents"
             :view="myView"
-            :clickToCreate="true"
             :selectMultipleEvents="true"
             :selectedEvents="selectedEvents"
             @event-delete="handleEventDelete"
+            @event-update="handleEventUpdate"
             @event-right-click="handleEventRightClick"
             @selected-events-change="handleSelectedEventsChange"
           />
           <MbscSelect
+            display="anchored"
             :anchor="menuAnchor"
             :data="menuData"
-            display="anchored"
             :isOpen="menuOpen"
-            :inputProps="{ type: 'hidden' }"
+            :showInput="false"
             :touchUi="false"
             :value="menuAction"
             @change="handleMenuChange"
             @close="handleMenuClose"
           />
         </div>
-        <div class="mbsc-col-sm-3 mbsc-pull-sm-9">
-          <div class="mbsc-form-group">
-            <div class="mbsc-button-group-block">
-              <MbscButton @click="selectAllEvents">Select all this month</MbscButton>
-              <MbscButton @click="resetSelection">Reset selection</MbscButton>
-              <MbscButton @click="updateSelectedEvents">Update selected</MbscButton>
-            </div>
+        <div class="mbsc-col-sm-3 mbsc-pull-sm-9 mbsc-flex-col">
+          <div class="mbsc-button-group-block">
+            <MbscButton @click="selectAllEvents">Select all from view</MbscButton>
+            <MbscButton @click="resetSelection">Reset selection</MbscButton>
+            <MbscButton @click="updateSelectedEvents">Update selected</MbscButton>
           </div>
           <div class="mbsc-form-group-title">Currently selected</div>
-          <div class="mbsc-padding md-selected-event-list">
+          <div class="mds-bulk-actions-event-list mbsc-padding mbsc-flex-1-1">
             <ul>
-              <li v-for="title in eventTitles" :key="title">{{ title }}</li>
+              <li v-for="event in selectedEvents" :key="event.id">{{ event.title }}</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
     <MbscConfirm
-      title="Are you sure you want to delete the following events?"
       okText="Delete"
-      :message="confirmMessage"
-      :callback="confirmCallback"
+      title="Are you sure you want to delete the following events?"
       :isOpen="isConfirmOpen"
+      :message="confirmMessage"
       @close="handleConfirmClose"
     />
-    <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+    <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
   </MbscPage>
 </template>
 

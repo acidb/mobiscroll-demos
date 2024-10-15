@@ -35,10 +35,10 @@ const myView = ref<MbscEventcalendarView>({
 })
 const toastMessage = ref<string>('')
 
-const firstDay = ref<any>(null)
-const lastDay = ref<any>(null)
+const firstDay = ref<Date>()
+const lastDay = ref<Date>()
 
-function handleError(resp: any) {
+function handleError(resp: { error: string; result: { error: { message: string } } }) {
   toastMessage.value = resp.error ? resp.error : resp.result.error.message
   isToastOpen.value = true
 }
@@ -46,10 +46,10 @@ function handleError(resp: any) {
 function loadEvents() {
   isLoading.value = true
   googleCalendarSync
-    .getEvents(CALENDAR_ID, firstDay.value, lastDay.value)
+    .getEvents(CALENDAR_ID, firstDay.value!, lastDay.value!)
     .then((resp: MbscCalendarEvent[]) => {
-      isLoading.value = false
       myEvents.value = resp
+      isLoading.value = false
     })
     .catch(handleError)
 }
@@ -58,7 +58,7 @@ function changeView() {
   switch (currentView.value) {
     case 'month':
       myView.value = {
-        calendar: { labels: true }
+        calendar: { type: 'month' }
       }
       break
     case 'week':
@@ -98,10 +98,6 @@ function handlePageLoading(args: MbscPageLoadingEvent) {
   loadEvents()
 }
 
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
 onMounted(() => {
   // init google client
   googleCalendarSync.init({
@@ -113,15 +109,14 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar
-    :className="'md-google-calendar' + (isLoading ? ' md-loading-events' : '')"
+    :data="myEvents"
     :exclusiveEndDates="true"
     :view="myView"
-    :data="myEvents"
     @page-loading="handlePageLoading"
   >
     <template #header>
       <MbscCalendarNav className="mds-google-cal-nav" />
-      <div :class="['mds-loader', { 'mds-loader-visible': isLoading }]"></div>
+      <div :class="'mds-loader' + (isLoading ? ' mds-loader-visible' : '')"></div>
       <div class="mds-google-cal-switch mbsc-flex-1-0">
         <MbscSegmentedGroup v-model="currentView" @change="changeView">
           <MbscSegmented value="month"> Month </MbscSegmented>
@@ -135,7 +130,7 @@ onMounted(() => {
       <MbscCalendarNext className="mds-google-cal-next" />
     </template>
   </MbscEventcalendar>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>

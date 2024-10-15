@@ -71,7 +71,7 @@ onMounted(() => {
           cssClass="mds-custom-header-button"
           icon="material-arrow-forward"
           variant="flat"
-          @click="nextPage(false)"
+          @click="nextPage()"
         />
       </div>
       <div class="mds-custom-header-switch">

@@ -20,11 +20,10 @@ setOptions({
 
 const filteredEvents = ref([])
 const myEvents = ref([])
+const myView = { agenda: { type: 'month' } }
 const selectedResources = ref([1])
 const isToastOpen = ref(false)
 const toastMessage = ref('')
-
-const myView = { agenda: { type: 'month' } }
 
 const myResources = [
   { id: 1, name: 'Barry', color: '#328e39', img: 'https://img.mobiscroll.com/demos/m1.png' },

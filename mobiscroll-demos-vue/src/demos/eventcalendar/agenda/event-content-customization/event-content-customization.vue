@@ -14,8 +14,8 @@ setOptions({
 })
 
 const myEvents = ref([])
-const toastMessage = ref('')
 const isToastOpen = ref(false)
+const toastMessage = ref('')
 
 const myParticipants = {
   1: { name: 'Barry L.', img: 'https://img.mobiscroll.com/demos/m1.png' },
