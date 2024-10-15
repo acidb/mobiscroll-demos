@@ -13,7 +13,7 @@ export default {
       var $popupElm = $('#demo-filtering-popup');
       var initialSortColumn;
       var initialSortDirection;
-      var sortColumn = 'name';
+      var sortColumn = 'initial';
       var sortDirection = 'asc';
 
       var myEvents = [
@@ -182,13 +182,13 @@ export default {
               text: 'Clear sort',
               handler: function () {
                 popup.close();
+                sortColumn = 'initial';
                 sortDirection = '';
-                sortColumn = 'name';
 
-                $('input[name="group"][data-value="name"]').mobiscroll('getInst').checked = true;
-                $('input[name="group2"][data-value="asc"]').mobiscroll('getInst').checked = true;
-
+                $('input[name="group"][data-value="initial"]').mobiscroll('getInst').checked = true;
+                $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
                 sortResources();
+                sortDirection = 'asc';
                 mobiscroll.toast({
                   //<hidden>
                   // theme,//</hidden>
@@ -203,7 +203,11 @@ export default {
               handler: function () {
                 initialSortColumn = sortColumn;
                 initialSortDirection = sortDirection;
+
                 popup.close();
+                if (sortColumn != 'initial' && sortDirection == '') {
+                  $('input[name="group"][data-value="asc"]').mobiscroll('getInst').checked = true;
+                }
                 sortResources();
                 mobiscroll.toast({
                   //<hidden>
@@ -217,9 +221,14 @@ export default {
           ],
           onClose: function () {
             $('input[name="group"][data-value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
-            $('input[name="group2"][data-value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
+            if (sortColumn != 'initial')
+              $('input[name="group2"][data-value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
+
             sortColumn = initialSortColumn;
             sortDirection = initialSortDirection;
+            if (!sortDirection) {
+              $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
+            }
           },
           contentPadding: false,
           display: 'anchored',
@@ -230,7 +239,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var calendar = $('#demo-popup-sort')
+      var calendar = $('#demo-timeline-popup-sort')
         .mobiscroll()
         .eventcalendar({
           clickToCreate: true,
@@ -247,16 +256,16 @@ export default {
           resources: myResources,
           renderResourceHeader: function () {
             return (
-              '<div class="mds-resource-sort-header mds-resource-cell mds-resource-cell-name">' +
+              '<div class="mds-resource-cell mds-resource-cell-name">' +
               'Truck' +
               '</div>' +
-              '<div class="mds-resource-sort-header mds-resource-cell mds-resource-cell-capacity">' +
+              '<div class="mds-resource-cell mds-resource-cell-capacity">' +
               'Capacity' +
               '</div>' +
-              '<div class="mds-resource-sort-header mds-resource-cell mds-resource-cell-location">' +
+              '<div class="mds-resource-cell mds-resource-cell-location">' +
               'Location' +
               '</div>' +
-              '<div class="mds-resource-sort-header mds-resource-cell mds-resource-cell-availability">' +
+              '<div class="mds-resource-cell mds-resource-cell-availability">' +
               'Availability' +
               '</div>'
             );
@@ -283,7 +292,7 @@ export default {
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-next></div>' +
               '<div mbsc-calendar-nav></div>' +
-              '<button id="demo-popup-sort-button" mbsc-button style="margin-left: auto;">Sort</button>'
+              '<button id="demo-popup-sort-button" mbsc-button style="margin-left: auto;">⇅ Sort</button>'
             );
           },
           onPageLoading: function (args, inst) {
@@ -298,7 +307,6 @@ export default {
             sortResources(true);
           },
           onEventUpdated: function (args, inst) {
-            console.log('on event updated');
             refreshData(inst);
             sortResources(true);
           },
@@ -323,14 +331,17 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-popup-sort" class="mds-resource-details"></div>
+<div id="demo-timeline-popup-sort" class="mds-timeline-popup-sort"></div>
 <div style="display:none">
   <div id="demo-filtering-popup">
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Sort by</div>
       <div mbsc-radio-group>
         <label>
-          <input mbsc-radio data-label="Truck name" data-value="name" name="group" type="radio" checked />
+          <input mbsc-radio data-label="Initial" data-value="initial" name="group" type="radio" checked/>
+        </label>
+        <label>
+          <input mbsc-radio data-label="Truck name" data-value="name" name="group" type="radio" />
         </label>
         <label>
           <input mbsc-radio data-label="Capacity" data-value="capacity" name="group" type="radio" />
@@ -347,10 +358,10 @@ export default {
       <div class="mbsc-form-group-title">Sort direction</div>
       <div mbsc-radio-group>
         <label>
-          <input mbsc-radio data-label="Ascending" data-value="asc" name="group2" type="radio" checked />
+          <input mbsc-radio data-label="Ascending" data-value="asc" name="group2" type="radio"/>
         </label>
         <label>
-          <input mbsc-radio data-label="Descending" data-value="desc" name="group2" type="radio" />
+          <input mbsc-radio data-label="Descending" data-value="desc" name="group2" type="radio"/>
         </label>
       </div>
     </div>
@@ -361,20 +372,20 @@ export default {
   css: `
 /* Overrides */
 
-.mds-resource-details .mbsc-timeline-resource-header,
-.mds-resource-details .mbsc-timeline-resource-title,
-.mds-resource-details .mbsc-timeline-resource-footer,
-.mds-resource-details .mbsc-timeline-sidebar-header,
-.mds-resource-details .mbsc-timeline-sidebar-resource-title,
-.mds-resource-details .mbsc-timeline-sidebar-footer {
+.mds-timeline-popup-sort .mbsc-timeline-resource-header,
+.mds-timeline-popup-sort .mbsc-timeline-resource-title,
+.mds-timeline-popup-sort .mbsc-timeline-resource-footer,
+.mds-timeline-popup-sort .mbsc-timeline-sidebar-header,
+.mds-timeline-popup-sort .mbsc-timeline-sidebar-resource-title,
+.mds-timeline-popup-sort .mbsc-timeline-sidebar-footer {
   padding: 0;
 }
 
-.mds-resource-details .mbsc-timeline-resource-col {
+.mds-timeline-popup-sort .mbsc-timeline-resource-col {
   width: 430px;
 }
 
-.mds-resource-details .mbsc-timeline-resource-title {
+.mds-timeline-popup-sort .mbsc-timeline-resource-title {
   height: 100%;
 }
 
@@ -408,22 +419,22 @@ export default {
   border-right: 1px solid #ccc;
 }
 
-.mds-resource-details.mbsc-ios-dark .mds-resource-cell-capacity,
-.mds-resource-details.mbsc-material-dark .mds-resource-cell-capacity,
-.mds-resource-details.mbsc-windows-dark .mds-resource-cell-capacity {
+.mds-timeline-popup-sort.mbsc-ios-dark .mds-resource-cell-capacity,
+.mds-timeline-popup-sort.mbsc-material-dark .mds-resource-cell-capacity,
+.mds-timeline-popup-sort.mbsc-windows-dark .mds-resource-cell-capacity {
   border-left: 1px solid #333;
   border-right: 1px solid #333;
 }
 
-.mds-resource-details.mbsc-ios-dark .mds-resource-cell-location,
-.mds-resource-details.mbsc-material-dark .mds-resource-cell-location,
-.mds-resource-details.mbsc-windows-dark .mds-resource-cell-location {
+.mds-timeline-popup-sort.mbsc-ios-dark .mds-resource-cell-location,
+.mds-timeline-popup-sort.mbsc-material-dark .mds-resource-cell-location,
+.mds-timeline-popup-sort.mbsc-windows-dark .mds-resource-cell-location {
   border-right: 1px solid #333;
 }
 
 /*<hidden>*/
 
-.demo-timeline-resource-details {
+.demo-timeline-popup-sort {
   height: 100%;
 }
 
