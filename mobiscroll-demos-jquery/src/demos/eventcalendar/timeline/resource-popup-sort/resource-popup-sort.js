@@ -220,13 +220,14 @@ export default {
             },
           ],
           onClose: function () {
+            console.log('hello');
             $('input[name="group"][data-value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
             if (sortColumn != 'initial')
               $('input[name="group2"][data-value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
 
             sortColumn = initialSortColumn;
             sortDirection = initialSortDirection;
-            if (!sortDirection) {
+            if (!sortDirection || sortColumn == 'initial') {
               $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
             }
           },
@@ -256,32 +257,32 @@ export default {
           resources: myResources,
           renderResourceHeader: function () {
             return (
-              '<div class="mds-resource-cell mds-resource-cell-name">' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' +
               'Truck' +
               '</div>' +
-              '<div class="mds-resource-cell mds-resource-cell-capacity">' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-capacity">' +
               'Capacity' +
               '</div>' +
-              '<div class="mds-resource-cell mds-resource-cell-location">' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-location">' +
               'Location' +
               '</div>' +
-              '<div class="mds-resource-cell mds-resource-cell-availability">' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-availability">' +
               'Availability' +
               '</div>'
             );
           },
           renderResource: function (resource) {
             return (
-              '<div class="mds-resource-cell mds-resource-cell-name">' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' +
               resource.name +
               '</div>' +
-              '<div class="mds-resource-cell mds-resource-cell-capacity">' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-capacity">' +
               resource.capacity +
               'T</div>' +
-              '<div class="mds-resource-cell mds-resource-cell-location">' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-location">' +
               resource.location +
               '</div>' +
-              '<div class="mds-resource-cell mds-resource-cell-availability">' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-availability">' +
               resource.availability +
               'H' +
               '</div>'
@@ -391,7 +392,7 @@ export default {
 
 /* Resource grid */
 
-.mds-resource-cell {
+.mds-popup-sort-resource-cell {
   display: inline-block;
   height: 100%;
   padding: 0 5px;
@@ -400,35 +401,35 @@ export default {
   line-height: 25px;
 }
 
-.mds-resource-cell-name {
+.mds-popup-sort-resource-cell-name {
   width: 120px;
 }
 
-.mds-resource-cell-capacity,
-.mds-resource-cell-availability,
-.mds-resource-cell-location {
+.mds-popup-sort-resource-cell-capacity,
+.mds-popup-sort-resource-cell-availability,
+.mds-popup-sort-resource-cell-location {
   width: 100px;
 }
 
-.mds-resource-cell-capacity {
+.mds-popup-sort-resource-cell-capacity {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
 }
 
-.mds-resource-cell-location {
+.mds-popup-sort-resource-cell-location {
   border-right: 1px solid #ccc;
 }
 
-.mds-timeline-popup-sort.mbsc-ios-dark .mds-resource-cell-capacity,
-.mds-timeline-popup-sort.mbsc-material-dark .mds-resource-cell-capacity,
-.mds-timeline-popup-sort.mbsc-windows-dark .mds-resource-cell-capacity {
+.mds-timeline-popup-sort.mbsc-ios-dark .mds-popup-sort-resource-cell-capacity,
+.mds-timeline-popup-sort.mbsc-material-dark .mds-popup-sort-resource-cell-capacity,
+.mds-timeline-popup-sort.mbsc-windows-dark .mds-popup-sort-resource-cell-capacity {
   border-left: 1px solid #333;
   border-right: 1px solid #333;
 }
 
-.mds-timeline-popup-sort.mbsc-ios-dark .mds-resource-cell-location,
-.mds-timeline-popup-sort.mbsc-material-dark .mds-resource-cell-location,
-.mds-timeline-popup-sort.mbsc-windows-dark .mds-resource-cell-location {
+.mds-timeline-popup-sort.mbsc-ios-dark .mds-popup-sort-resource-cell-location,
+.mds-timeline-popup-sort.mbsc-material-dark .mds-popup-sort-resource-cell-location,
+.mds-timeline-popup-sort.mbsc-windows-dark .mds-popup-sort-resource-cell-location {
   border-right: 1px solid #333;
 }
 
