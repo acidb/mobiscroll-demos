@@ -17,9 +17,9 @@ setOptions({
 });
 
 function App() {
+  const [myEvents, setEvents] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentView, setCurrentView] = useState('agenda');
-  const [myEvents, setEvents] = useState([]);
   const [myView, setView] = useState({ agenda: { type: 'month' } });
 
   const handleSelectedDateChange = useCallback((args) => {

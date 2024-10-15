@@ -1,4 +1,4 @@
-import { Button, Eventcalendar, formatDate, getJson, setOptions /* localeImport */, Toast } from '@mobiscroll/react';
+import { Button, Eventcalendar, formatDate, getJson, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import './customizing-day-header.css';
 

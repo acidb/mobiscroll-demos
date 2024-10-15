@@ -56,7 +56,6 @@ function addDateObjEvent() {
   }
   dateObjEvents.value = [...dateObjEvents.value, newEvent]
   selectedDateObj.value = new Date(2020, 4, 19)
-  console.log('itt', selectedDateObj.value)
 }
 
 function addDateISOEvent() {

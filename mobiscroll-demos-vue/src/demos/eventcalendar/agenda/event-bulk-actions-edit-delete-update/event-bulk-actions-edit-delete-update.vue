@@ -165,6 +165,15 @@ function handleMenuClose() {
   menuOpen.value = false
 }
 
+function handleDeleteKey(ev) {
+  if (
+    !isConfirmOpen.value &&
+    (ev.code === 'Delete' || ev.code === 'Backspace' || ev.keyCode === 8 || ev.keyCode === 46)
+  ) {
+    deleteSelectedEvents()
+  }
+}
+
 onMounted(() => {
   getJson(
     'https://trial.mobiscroll.com/events/?vers=5',
@@ -173,20 +182,11 @@ onMounted(() => {
     },
     'jsonp'
   )
-
-  document.querySelector('.mds-bulk-actions').addEventListener('keydown', (ev) => {
-    if (
-      !isConfirmOpen.value &&
-      (ev.code === 'Delete' || ev.code === 'Backspace' || ev.keyCode === 8 || ev.keyCode === 46)
-    ) {
-      deleteSelectedEvents()
-    }
-  })
 })
 </script>
 
 <template>
-  <MbscPage cssClass="mds-bulk-actions">
+  <MbscPage cssClass="mds-bulk-actions" @keydown="handleDeleteKey">
     <div class="mbsc-grid mbsc-no-padding">
       <div class="mbsc-row">
         <div class="mds-bulk-actions-calendar mbsc-col-sm-9 mbsc-push-sm-3">
@@ -198,7 +198,7 @@ onMounted(() => {
             :selectedEvents="selectedEvents"
             @event-delete="handleEventDelete"
             @event-update="handleEventUpdate"
-            @event-click="handleEventRightClick"
+            @event-right-click="handleEventRightClick"
             @selected-events-change="handleSelectedEventsChange"
           />
           <MbscSelect
