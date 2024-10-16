@@ -206,10 +206,7 @@ export default {
                   $('input[name="group2"][data-value="asc"]').mobiscroll('getInst').checked = true;
                   sortDirection = 'asc';
                 }
-                if (sortColumn == 'initial') {
-                  $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
-                  sortDirection = '';
-                }
+                sortDirection = sortColumn == 'initial' ? '' : sortDirection;
                 sortResources();
                 //todo
                 initialSortColumn = sortColumn;
