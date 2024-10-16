@@ -14,7 +14,7 @@ export default {
       var initialSortColumn;
       var initialSortDirection;
       var sortColumn = 'initial';
-      var sortDirection = 'asc';
+      var sortDirection = '';
 
       var myEvents = [
         {
@@ -181,14 +181,15 @@ export default {
             {
               text: 'Clear sort',
               handler: function () {
-                popup.close();
                 sortColumn = 'initial';
                 sortDirection = '';
-
                 $('input[name="group"][data-value="initial"]').mobiscroll('getInst').checked = true;
                 $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
                 sortResources();
-                sortDirection = 'asc';
+                // todo
+                initialSortColumn = sortColumn;
+                initialSortDirection = sortDirection;
+                popup.close();
                 mobiscroll.toast({
                   //<hidden>
                   // theme,//</hidden>
@@ -201,14 +202,16 @@ export default {
               text: 'Apply',
               keyCode: 'enter',
               handler: function () {
-                initialSortColumn = sortColumn;
-                initialSortDirection = sortDirection;
-
-                popup.close();
                 if (sortColumn != 'initial' && sortDirection == '') {
-                  $('input[name="group"][data-value="asc"]').mobiscroll('getInst').checked = true;
+                  $('input[name="group2"][data-value="asc"]').mobiscroll('getInst').checked = true;
+                  sortDirection = 'asc';
                 }
                 sortResources();
+                //todo
+                initialSortColumn = sortColumn;
+                initialSortDirection = sortDirection;
+                popup.close();
+
                 mobiscroll.toast({
                   //<hidden>
                   // theme,//</hidden>
@@ -220,15 +223,11 @@ export default {
             },
           ],
           onClose: function () {
-            console.log('hello');
+            // todo
             $('input[name="group"][data-value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
-            if (sortColumn != 'initial')
+            $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
+            if (initialSortDirection != '' && initialSortColumn != 'initial') {
               $('input[name="group2"][data-value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
-
-            sortColumn = initialSortColumn;
-            sortDirection = initialSortDirection;
-            if (!sortDirection || sortColumn == 'initial') {
-              $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
             }
           },
           contentPadding: false,
@@ -315,9 +314,9 @@ export default {
         .mobiscroll('getInst');
 
       $('#demo-popup-sort-button').on('click', function () {
-        initialSortColumn = $('input[name="group"]:checked').attr('data-value');
-        initialSortDirection = $('input[name="group2"]:checked').attr('data-value');
         popup.setOptions({ anchor: this });
+        initialSortColumn = sortColumn;
+        initialSortDirection = sortDirection;
         popup.open();
       });
 
