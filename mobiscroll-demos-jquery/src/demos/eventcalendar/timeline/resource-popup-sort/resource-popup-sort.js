@@ -15,6 +15,7 @@ export default {
       var initialSortDirection;
       var sortColumn = 'initial';
       var sortDirection = '';
+      var selectedMetric = 'Availability';
 
       var myEvents = [
         {
@@ -132,15 +133,15 @@ export default {
       ];
 
       var myResources = [
-        { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', availability: 168 },
-        { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', availability: 168 },
-        { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', availability: 168 },
-        { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', availability: 168 },
-        { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', availability: 168 },
-        { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', availability: 168 },
-        { id: 8, name: 'SD-TRK-0250', capacity: 12, location: 'San Francisco', availability: 168 },
-        { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', availability: 168 },
-        { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', availability: 168 },
+        { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', utilization: 65 },
+        { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', utilization: 55 },
+        { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', utilization: 70 },
+        { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', utilization: 75 },
+        { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', utilization: 80 },
+        { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', utilization: 70 },
+        { id: 8, name: 'SD-TRK-0250', capacity: 12, location: 'San Francisco', utilization: 90 },
+        { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', utilization: 30 },
+        { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', utilization: 50 },
       ];
 
       function refreshData(inst) {
@@ -179,26 +180,6 @@ export default {
           buttons: [
             'cancel',
             {
-              text: 'Clear sort',
-              handler: function () {
-                sortColumn = 'initial';
-                sortDirection = '';
-                $('input[name="group"][data-value="initial"]').mobiscroll('getInst').checked = true;
-                $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
-                sortResources();
-                // todo
-                initialSortColumn = sortColumn;
-                initialSortDirection = sortDirection;
-                popup.close();
-                mobiscroll.toast({
-                  //<hidden>
-                  // theme,//</hidden>
-                  // context,
-                  message: 'Filters cleared',
-                });
-              },
-            },
-            {
               text: 'Apply',
               keyCode: 'enter',
               handler: function () {
@@ -217,7 +198,7 @@ export default {
                   //<hidden>
                   // theme,//</hidden>
                   // context,
-                  message: 'Resources sorted',
+                  message: 'Metrics calculated',
                 });
               },
               cssClass: 'mbsc-popup-button-primary',
@@ -260,40 +241,56 @@ export default {
               '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' +
               'Truck' +
               '</div>' +
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-capacity">' +
-              'Capacity' +
-              '</div>' +
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-location">' +
-              'Location' +
-              '</div>' +
               '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-availability">' +
-              'Availability' +
+              selectedMetric +
               '</div>'
             );
           },
           renderResource: function (resource) {
+            var metricValue = resource[selectedMetric.toLowerCase()];
+
+            var barValue;
+            if (selectedMetric.toLowerCase() === 'utilization') {
+              barValue = metricValue;
+            } else if (selectedMetric.toLowerCase() === 'availability') {
+              barValue = (metricValue / 168) * 100;
+            } else {
+              barValue = 100;
+            }
+
+            var barColorClass;
+            if (barValue <= 33) {
+              barColorClass = 'green-bar';
+            } else if (barValue <= 66) {
+              barColorClass = 'yellow-bar';
+            } else {
+              barColorClass = 'red-bar';
+            }
+
             return (
               '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' +
               resource.name +
               '</div>' +
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-capacity">' +
-              resource.capacity +
-              'T</div>' +
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-location">' +
-              resource.location +
-              '</div>' +
               '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-availability">' +
-              resource.availability +
-              'H' +
+              metricValue +
+              (selectedMetric.toLowerCase() === 'utilization' ? '%' : selectedMetric.toLowerCase() === 'availability' ? 'h' : '') +
+              '<div class="metric-bar-container">' +
+              '<div class="metric-bar ' +
+              barColorClass +
+              '" style="width:' +
+              barValue +
+              '%;"></div>' +
+              '</div>' +
               '</div>'
             );
           },
+
           renderHeader: function () {
             return (
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-next></div>' +
               '<div mbsc-calendar-nav></div>' +
-              '<button id="demo-popup-sort-button" mbsc-button style="margin-left: auto;">⇅ Sort</button>'
+              '<button id="demo-popup-sort-button" data-start-icon="bars" data-variant="flat" mbsc-button style="margin-left: auto;">Metrics</button>'
             );
           },
           onPageLoading: function (args, inst) {
@@ -322,7 +319,8 @@ export default {
       });
 
       $('input[name="group"]').on('change', function () {
-        sortColumn = $(this).attr('data-value');
+        selectedMetric = $(this).attr('data-value');
+        sortColumn = selectedMetric.toLowerCase();
       });
 
       $('input[name="group2"]').on('change', function () {
@@ -336,41 +334,60 @@ export default {
 <div style="display:none">
   <div id="demo-filtering-popup">
     <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Sort by</div>
+      <div class="mbsc-form-group-title">Metric do display</div>
       <div mbsc-radio-group>
         <label>
-          <input mbsc-radio data-label="Initial" data-value="initial" name="group" type="radio" checked/>
+        <input mbsc-radio data-label="Availability" data-value="Availability" name="group" type="radio" checked/>
         </label>
         <label>
-          <input mbsc-radio data-label="Truck name" data-value="name" name="group" type="radio" />
-        </label>
-        <label>
-          <input mbsc-radio data-label="Capacity" data-value="capacity" name="group" type="radio" />
-        </label>
-        <label>
-          <input mbsc-radio data-label="Location" data-value="location" name="group" type="radio" />
-        </label>
-        <label>
-          <input mbsc-radio data-label="Availability" data-value="availability" name="group" type="radio" />
+        <input mbsc-radio data-label="Utilization" data-value="Utilization" name="group" type="radio"/>
         </label>
       </div>
     </div>
     <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Sort direction</div>
-      <div mbsc-radio-group>
-        <label>
-          <input mbsc-radio data-label="Ascending" data-value="asc" name="group2" type="radio"/>
-        </label>
-        <label>
-          <input mbsc-radio data-label="Descending" data-value="desc" name="group2" type="radio"/>
-        </label>
-      </div>
-    </div>
+    <div class="mbsc-form-group-title">Sort direction</div>
+    <label>
+        Asc
+        <input mbsc-segmented type="radio" name="range" checked>
+    </label>
+    <label>
+        Desc
+        <input mbsc-segmented type="radio" name="range">
+    </label>
+</div>
   </div>
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+.metric-bar-container {
+    position: relative;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    height: 10px;
+    width: 100px; 
+    margin-bottom: 5px;
+}
+
+
+.metric-bar {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.3s ease; 
+}
+
+.green-bar {
+    background-color: #4caf50; /* Green for 0-33% */
+}
+
+.yellow-bar {
+    background-color: #ffeb3b; /* Yellow for 33-66% */
+}
+
+.red-bar {
+    background-color: #f44336; /* Red for above 66% */
+}
+
 /* Overrides */
 
 .mds-timeline-popup-sort .mbsc-timeline-resource-header,
@@ -383,7 +400,7 @@ export default {
 }
 
 .mds-timeline-popup-sort .mbsc-timeline-resource-col {
-  width: 430px;
+  width: 250px;
 }
 
 .mds-timeline-popup-sort .mbsc-timeline-resource-title {
@@ -405,32 +422,19 @@ export default {
   width: 120px;
 }
 
-.mds-popup-sort-resource-cell-capacity,
-.mds-popup-sort-resource-cell-availability,
-.mds-popup-sort-resource-cell-location {
+
+.mds-popup-sort-resource-cell-availability {
   width: 100px;
 }
 
-.mds-popup-sort-resource-cell-capacity {
+.mds-popup-sort-resource-cell-availability {
   border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
 }
 
-.mds-popup-sort-resource-cell-location {
-  border-right: 1px solid #ccc;
-}
-
-.mds-timeline-popup-sort.mbsc-ios-dark .mds-popup-sort-resource-cell-capacity,
-.mds-timeline-popup-sort.mbsc-material-dark .mds-popup-sort-resource-cell-capacity,
-.mds-timeline-popup-sort.mbsc-windows-dark .mds-popup-sort-resource-cell-capacity {
+.mds-timeline-popup-sort.mbsc-ios-dark .mds-popup-sort-resource-cell-availability,
+.mds-timeline-popup-sort.mbsc-material-dark .mds-popup-sort-resource-cell-availability,
+.mds-timeline-popup-sort.mbsc-windows-dark .mds-popup-sort-resource-cell-availability {
   border-left: 1px solid #333;
-  border-right: 1px solid #333;
-}
-
-.mds-timeline-popup-sort.mbsc-ios-dark .mds-popup-sort-resource-cell-location,
-.mds-timeline-popup-sort.mbsc-material-dark .mds-popup-sort-resource-cell-location,
-.mds-timeline-popup-sort.mbsc-windows-dark .mds-popup-sort-resource-cell-location {
-  border-right: 1px solid #333;
 }
 
 /*<hidden>*/
