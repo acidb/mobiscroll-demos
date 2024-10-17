@@ -13,9 +13,11 @@ export default {
       var $popupElm = $('#demo-filtering-popup');
       var initialSortColumn;
       var initialSortDirection;
-      var sortColumn = 'initial';
-      var sortDirection = '';
-      var selectedMetric = 'Availability';
+      var sortColumn = 'availability';
+      var sortDirection = 'asc';
+      var selectedMetric = 'availability';
+      var selectedMetricDesc = 'Standby Time';
+      var loadedEvents;
 
       var myEvents = [
         {
@@ -24,6 +26,7 @@ export default {
           title: 'Tour #001 - New York to Los Angeles',
           resource: 7,
           color: '#FF5733',
+          payload: 20,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -31,13 +34,15 @@ export default {
           title: 'Tour #003 - Philadelphia to Phoenix',
           resource: 9,
           color: '#33FF57',
+          payload: 0,
         },
         {
-          start: 'dyndatetime(y,m,d)',
-          end: 'dyndatetime(y,m,d+2)',
+          start: 'dyndatetime(y,m,d-4)',
+          end: 'dyndatetime(y,m,d+1)',
           title: 'Tour #004 - San Antonio to San Diego',
           resource: 10,
           color: '#3357FF',
+          payload: 15,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -45,6 +50,7 @@ export default {
           title: 'Tour #005 - Dallas to San Francisco',
           resource: 7,
           color: '#FF5733',
+          payload: 18,
         },
         {
           start: 'dyndatetime(y,m,d+4)',
@@ -52,6 +58,7 @@ export default {
           title: 'Tour #006 - Los Angeles to Chicago',
           resource: 8,
           color: '#FF33A6',
+          payload: 10,
         },
         {
           start: 'dyndatetime(y,m,d+3)',
@@ -59,6 +66,7 @@ export default {
           title: 'Tour #007 - Houston to New York',
           resource: 9,
           color: '#33FF57',
+          payload: 0,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -66,20 +74,23 @@ export default {
           title: 'Tour #009 - San Diego to Dallas',
           resource: 7,
           color: '#FF5733',
+          payload: 16,
         },
         {
-          start: 'dyndatetime(y,m,d)',
+          start: 'dyndatetime(y,m,d-2)',
           end: 'dyndatetime(y,m,d+2)',
           title: 'Tour #010 - San Francisco to Los Angeles',
           resource: 8,
           color: '#FF33A6',
+          payload: 0,
         },
         {
-          start: 'dyndatetime(y,m,d+2)',
-          end: 'dyndatetime(y,m,d+5)',
+          start: 'dyndatetime(y,m,d-1)',
+          end: 'dyndatetime(y,m,d+3)',
           title: 'Tour #013 - Miami to Seattle',
           resource: 1,
           color: '#FF9933',
+          payload: 25,
         },
         {
           start: 'dyndatetime(y,m,d+1)',
@@ -87,6 +98,7 @@ export default {
           title: 'Tour #014 - Denver to Boston',
           resource: 2,
           color: '#33FFA6',
+          payload: 18,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -94,13 +106,15 @@ export default {
           title: 'Tour #015 - Orlando to Austin',
           resource: 3,
           color: '#9933FF',
+          payload: 20,
         },
         {
-          start: 'dyndatetime(y,m,d+3)',
+          start: 'dyndatetime(y,m,d+1)',
           end: 'dyndatetime(y,m,d+4)',
           title: 'Tour #016 - Detroit to Baltimore',
           resource: 4,
           color: '#33A6FF',
+          payload: 0,
         },
         {
           start: 'dyndatetime(y,m,d+2)',
@@ -108,13 +122,23 @@ export default {
           title: 'Tour #017 - Las Vegas to Portland',
           resource: 5,
           color: '#FF5733',
+          payload: 20,
         },
         {
-          start: 'dyndatetime(y,m,d+1)',
-          end: 'dyndatetime(y,m,d+5)',
+          start: 'dyndatetime(y,m,d,11)',
+          end: 'dyndatetime(y,m,d+3)',
           title: 'Tour #018 - Atlanta to Kansas City',
           resource: 6,
           color: '#33FF99',
+          payload: 0,
+        },
+        {
+          start: 'dyndatetime(y,m,d-4,11)',
+          end: 'dyndatetime(y,m,d)',
+          title: 'Tour #018 - ? to Atlanta',
+          resource: 6,
+          color: '#33FF99',
+          payload: 14,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -122,6 +146,7 @@ export default {
           title: 'Tour #019 - Charlotte to Indianapolis',
           resource: 7,
           color: '#FF5733',
+          payload: 22,
         },
         {
           start: 'dyndatetime(y,m,d+3)',
@@ -129,37 +154,135 @@ export default {
           title: 'Tour #022 - Cleveland to Cincinnati',
           resource: 10,
           color: '#3357FF',
+          payload: 17,
+        },
+        {
+          start: 'dyndatetime(y,m,d-4)',
+          end: 'dyndatetime(y,m,d+1)',
+          title: 'Tour #023 - Boston to Philadelphia',
+          resource: 11,
+          color: '#FF9933',
+          payload: 19,
+        },
+        {
+          start: 'dyndatetime(y,m,d)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #024 - Las Vegas to San Diego',
+          resource: 12,
+          color: '#33FF57',
+          payload: 28,
+        },
+        {
+          start: 'dyndatetime(y,m,d-3)',
+          end: 'dyndatetime(y,m,d)',
+          title: 'Tour #025 - Miami to Charlotte',
+          resource: 13,
+          color: '#9933FF',
+          payload: 26,
+        },
+        {
+          start: 'dyndatetime(y,m,d+2)',
+          end: 'dyndatetime(y,m,d+5)',
+          title: 'Tour #026 - Seattle to Portland',
+          resource: 14,
+          color: '#33A6FF',
+          payload: 12,
+        },
+        {
+          start: 'dyndatetime(y,m,d-1)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #027 - Atlanta to Orlando',
+          resource: 15,
+          color: '#FF5733',
+          payload: 17,
+        },
+        {
+          start: 'dyndatetime(y,m,d-4)',
+          end: 'dyndatetime(y,m,d-1)',
+          title: 'Tour #028 - ? to Philadelphiax',
+          resource: 9,
+          color: '#33FF57',
+          payload: 10,
         },
       ];
 
       var myResources = [
-        { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', utilization: 65 },
-        { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', utilization: 55 },
-        { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', utilization: 70 },
-        { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', utilization: 75 },
-        { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', utilization: 80 },
-        { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', utilization: 70 },
-        { id: 8, name: 'SD-TRK-0250', capacity: 12, location: 'San Francisco', utilization: 90 },
-        { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', utilization: 30 },
-        { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', utilization: 50 },
+        { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
+        { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', model: 'Mercedes Actros' },
+        { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', model: 'Scania R500' },
+        { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
+        { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
+        { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
+        { id: 8, name: 'SD-TRK-0250', capacity: 12, location: 'San Francisco', model: 'Mercedes Arocs' },
+        { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
+        { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
+        { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
+        { id: 12, name: 'LV-TRK-2200', capacity: 30, location: 'Las Vegas', model: 'Volvo FH16' },
+        { id: 13, name: 'MI-TRK-3300', capacity: 26, location: 'Miami', model: 'Peterbilt 579' },
+        { id: 14, name: 'SE-TRK-4400', capacity: 16, location: 'Seattle', model: 'Mack Anthem' },
+        { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' },
       ];
 
       function refreshData(inst) {
-        var myEvents = inst.getEvents();
-        myResources.forEach(function (resource) {
-          return (resource.availability = 168);
-        });
-        myEvents.forEach(function (event) {
-          var resource = myResources.find(function (resource) {
-            return resource.id === event.resource;
+        // todo if alleady selected just sort
+        // merge common logic
+        if (inst) {
+          loadedEvents = inst.getEvents();
+        }
+        if (selectedMetric == 'availability') {
+          myResources.forEach(function (resource) {
+            return (resource.availability = 168);
           });
-          if (resource) {
-            resource.availability -= (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
-          }
-        });
+          loadedEvents.forEach(function (event) {
+            var resource = myResources.find(function (resource) {
+              return resource.id === event.resource;
+            });
+            if (resource) {
+              resource.availability -= (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
+            }
+          });
+        }
+
+        if (selectedMetric == 'utilization') {
+          myResources.forEach(function (resource) {
+            var resourceEvents = loadedEvents.filter(function (event) {
+              return event.resource === resource.id;
+            });
+
+            var totalPayload = resourceEvents.reduce(function (total, event) {
+              return total + (event.payload || 0);
+            }, 0);
+
+            if (resource.capacity) {
+              resource.utilization = Math.round((totalPayload / resource.capacity) * 100);
+            } else {
+              resource.utilization = 0;
+            }
+          });
+        }
+
+        if (selectedMetric === 'deadhead') {
+          myResources.forEach(function (resource) {
+            var resourceEvents = loadedEvents.filter(function (event) {
+              return event.resource === resource.id;
+            });
+
+            var totalLoadedTime = resourceEvents.reduce(function (total, event) {
+              if (event.payload && event.payload > 0) {
+                return total + (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
+              }
+              return total;
+            }, 0);
+
+            resource.deadhead = 168 - totalLoadedTime;
+          });
+        }
       }
 
       function sortResources(crudAction) {
+        console.log(sortColumn);
+        console.log(sortDirection);
+
         if (!crudAction || (crudAction && sortColumn === 'availability')) {
           myResources.sort(function (a, b) {
             if (sortDirection === 'asc') {
@@ -168,7 +291,6 @@ export default {
             if (sortDirection === 'desc') {
               return a[sortColumn] < b[sortColumn] ? 1 : -1;
             }
-            return a.id - b.id;
           });
         }
         calendar.setOptions({ resources: myResources.slice() });
@@ -188,6 +310,7 @@ export default {
                   sortDirection = 'asc';
                 }
                 sortDirection = sortColumn == 'initial' ? '' : sortDirection;
+                refreshData();
                 sortResources();
                 //todo
                 initialSortColumn = sortColumn;
@@ -241,12 +364,14 @@ export default {
               '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' +
               'Truck' +
               '</div>' +
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-availability">' +
-              selectedMetric +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">' +
+              selectedMetricDesc +
               '</div>'
             );
           },
           renderResource: function (resource) {
+            // test
+            if (selectedMetric == 'deadhead') selectedMetric = 'availability';
             var metricValue = resource[selectedMetric.toLowerCase()];
 
             var barValue;
@@ -269,11 +394,21 @@ export default {
 
             return (
               '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' +
+              '<strong>' +
               resource.name +
+              '</strong>' +
+              '<div style="font-size: 12px; color: #666;">Model: ' +
+              (resource.model || 'N/A') +
               '</div>' +
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-availability">' +
+              '<div style="font-size: 12px; color: #666;">Capacity: ' +
+              resource.capacity +
+              'T</div>' +
+              '</div>' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">' +
+              '<div class="metric-value" style="margin-top: 10px;">' +
               metricValue +
               (selectedMetric.toLowerCase() === 'utilization' ? '%' : selectedMetric.toLowerCase() === 'availability' ? 'h' : '') +
+              '</div>' +
               '<div class="metric-bar-container">' +
               '<div class="metric-bar ' +
               barColorClass +
@@ -290,13 +425,25 @@ export default {
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-next></div>' +
               '<div mbsc-calendar-nav></div>' +
-              '<button id="demo-popup-sort-button" data-start-icon="bars" data-variant="flat" mbsc-button style="margin-left: auto;">Metrics</button>'
+              '<button id="demo-popup-sort-button" data-start-icon="bars" data-variant="flat" mbsc-button style="margin-left: auto;">Calculate & Sort</button>'
             );
           },
           onPageLoading: function (args, inst) {
             refreshData(inst);
           },
+          onPageLoaded: function () {
+            sortResources();
+          },
           onEventCreated: function (args, inst) {
+            // add random payload based on resource capacity
+            var eventResource = myResources.find(function (resource) {
+              return resource.id === args.event.resource;
+            });
+
+            var maxPayload = eventResource.capacity;
+            var randomPayload = Math.floor(Math.random() * (maxPayload - 5 + 1)) + 5;
+            args.event.payload = randomPayload;
+
             refreshData(inst);
             sortResources(true);
           },
@@ -307,6 +454,9 @@ export default {
           onEventUpdated: function (args, inst) {
             refreshData(inst);
             sortResources(true);
+          },
+          onEventClick: function (data) {
+            console.log('payload ->', data.event.payload);
           },
         })
         .mobiscroll('getInst');
@@ -320,10 +470,11 @@ export default {
 
       $('input[name="group"]').on('change', function () {
         selectedMetric = $(this).attr('data-value');
-        sortColumn = selectedMetric.toLowerCase();
+        selectedMetricDesc = $(this).attr('data-label');
+        sortColumn = selectedMetric;
       });
 
-      $('input[name="group2"]').on('change', function () {
+      $('input[name="direction"]').on('change', function () {
         sortDirection = $(this).attr('data-value');
       });
     });
@@ -337,22 +488,26 @@ export default {
       <div class="mbsc-form-group-title">Metric do display</div>
       <div mbsc-radio-group>
         <label>
-        <input mbsc-radio data-label="Availability" data-value="Availability" name="group" type="radio" checked/>
+          <input mbsc-radio data-label="Standby Time" data-value="availability" name="group" type="radio" checked/>
         </label>
         <label>
-        <input mbsc-radio data-label="Utilization" data-value="Utilization" name="group" type="radio"/>
+          <input mbsc-radio data-label="Payload Efficiency" data-value="utilization" name="group" type="radio"/>
         </label>
+        <label>
+          <input mbsc-radio data-label="Deadhead Time" data-value="deadhead" name="group" type="radio"/>
+        </label>
+
       </div>
     </div>
     <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Sort direction</div>
     <label>
         Asc
-        <input mbsc-segmented type="radio" name="range" checked>
+        <input mbsc-segmented type="radio" data-value="asc" name="direction" checked>
     </label>
     <label>
         Desc
-        <input mbsc-segmented type="radio" name="range">
+        <input mbsc-segmented type="radio" data-value="desc" name="direction">
     </label>
 </div>
   </div>
@@ -365,8 +520,9 @@ export default {
     background-color: #f0f0f0;
     border-radius: 5px;
     height: 10px;
-    width: 100px; 
+    width: 125px; 
     margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 
@@ -377,15 +533,15 @@ export default {
 }
 
 .green-bar {
-    background-color: #4caf50; /* Green for 0-33% */
+    background-color: #4caf50; 
 }
 
 .yellow-bar {
-    background-color: #ffeb3b; /* Yellow for 33-66% */
+    background-color: #ffeb3b; 
 }
 
 .red-bar {
-    background-color: #f44336; /* Red for above 66% */
+    background-color: #f44336; 
 }
 
 /* Overrides */
@@ -400,7 +556,7 @@ export default {
 }
 
 .mds-timeline-popup-sort .mbsc-timeline-resource-col {
-  width: 250px;
+  width: 310px;
 }
 
 .mds-timeline-popup-sort .mbsc-timeline-resource-title {
@@ -415,25 +571,25 @@ export default {
   padding: 0 5px;
   box-sizing: border-box;
   vertical-align: top;
-  line-height: 25px;
+  line-height: 20px;
 }
 
 .mds-popup-sort-resource-cell-name {
-  width: 120px;
+  width: 170px;
 }
 
 
-.mds-popup-sort-resource-cell-availability {
-  width: 100px;
+.mds-popup-sort-resource-cell-custom {
+  width: 135px;
 }
 
-.mds-popup-sort-resource-cell-availability {
+.mds-popup-sort-resource-cell-custom {
   border-left: 1px solid #ccc;
 }
 
-.mds-timeline-popup-sort.mbsc-ios-dark .mds-popup-sort-resource-cell-availability,
-.mds-timeline-popup-sort.mbsc-material-dark .mds-popup-sort-resource-cell-availability,
-.mds-timeline-popup-sort.mbsc-windows-dark .mds-popup-sort-resource-cell-availability {
+.mds-timeline-popup-sort.mbsc-ios-dark .mds-popup-sort-resource-cell-custom,
+.mds-timeline-popup-sort.mbsc-material-dark .mds-popup-sort-resource-cell-custom,
+.mds-timeline-popup-sort.mbsc-windows-dark .mds-popup-sort-resource-cell-custom {
   border-left: 1px solid #333;
 }
 
