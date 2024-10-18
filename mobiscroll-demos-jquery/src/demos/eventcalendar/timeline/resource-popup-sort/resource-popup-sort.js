@@ -13,9 +13,9 @@ export default {
       var $popupElm = $('#demo-filtering-popup');
       var initialSortColumn;
       var initialSortDirection;
-      var sortColumn = 'availability';
+      var sortColumn = 'standby';
       var sortDirection = 'asc';
-      var selectedMetric = 'availability';
+      var selectedMetric = 'standby';
       var selectedMetricDesc = 'Standby Time';
       var loadedEvents;
 
@@ -224,26 +224,27 @@ export default {
       ];
 
       function refreshData(inst) {
-        // todo if alleady selected just sort
-        // merge common logic
+        console.log('refreshData() selectedMetric:', selectedMetric);
+        // merge common calculations
         if (inst) {
           loadedEvents = inst.getEvents();
         }
-        if (selectedMetric == 'availability') {
+        // todo
+        if (selectedMetric == 'standby') {
           myResources.forEach(function (resource) {
-            return (resource.availability = 168);
+            return (resource.standby = 168);
           });
           loadedEvents.forEach(function (event) {
             var resource = myResources.find(function (resource) {
               return resource.id === event.resource;
             });
             if (resource) {
-              resource.availability -= (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
+              resource.standby -= (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
             }
           });
         }
-
-        if (selectedMetric == 'utilization') {
+        // todo
+        if (selectedMetric == 'payload') {
           myResources.forEach(function (resource) {
             var resourceEvents = loadedEvents.filter(function (event) {
               return event.resource === resource.id;
@@ -254,13 +255,13 @@ export default {
             }, 0);
 
             if (resource.capacity) {
-              resource.utilization = Math.round((totalPayload / resource.capacity) * 100);
+              resource.payload = Math.round((totalPayload / resource.capacity) * 100);
             } else {
-              resource.utilization = 0;
+              resource.payload = 0;
             }
           });
         }
-
+        // todo
         if (selectedMetric === 'deadhead') {
           myResources.forEach(function (resource) {
             var resourceEvents = loadedEvents.filter(function (event) {
@@ -280,10 +281,9 @@ export default {
       }
 
       function sortResources(crudAction) {
-        console.log(sortColumn);
-        console.log(sortDirection);
+        console.log('sortResources(', sortColumn, ',', sortDirection, ')');
 
-        if (!crudAction || (crudAction && sortColumn === 'availability')) {
+        if (!crudAction || (crudAction && sortColumn === 'standby')) {
           myResources.sort(function (a, b) {
             if (sortDirection === 'asc') {
               return a[sortColumn] > b[sortColumn] ? 1 : -1;
@@ -305,14 +305,10 @@ export default {
               text: 'Apply',
               keyCode: 'enter',
               handler: function () {
-                if (sortColumn != 'initial' && sortDirection == '') {
-                  $('input[name="group2"][data-value="asc"]').mobiscroll('getInst').checked = true;
-                  sortDirection = 'asc';
+                if (initialSortColumn != sortColumn) {
+                  refreshData();
                 }
-                sortDirection = sortColumn == 'initial' ? '' : sortDirection;
-                refreshData();
                 sortResources();
-                //todo
                 initialSortColumn = sortColumn;
                 initialSortDirection = sortDirection;
                 popup.close();
@@ -321,19 +317,15 @@ export default {
                   //<hidden>
                   // theme,//</hidden>
                   // context,
-                  message: 'Metrics calculated',
+                  message: 'Resouces sorted',
                 });
               },
               cssClass: 'mbsc-popup-button-primary',
             },
           ],
           onClose: function () {
-            // todo
-            $('input[name="group"][data-value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
-            $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
-            if (initialSortDirection != '' && initialSortColumn != 'initial') {
-              $('input[name="group2"][data-value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
-            }
+            $('.mbsc-popup-sort-metric[value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
+            $('.mbsc-popup-sort-direction[value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
           },
           contentPadding: false,
           display: 'anchored',
@@ -370,14 +362,12 @@ export default {
             );
           },
           renderResource: function (resource) {
-            // test
-            if (selectedMetric == 'deadhead') selectedMetric = 'availability';
-            var metricValue = resource[selectedMetric.toLowerCase()];
+            var metricValue = resource[selectedMetric];
 
             var barValue;
-            if (selectedMetric.toLowerCase() === 'utilization') {
+            if (selectedMetric === 'payload') {
               barValue = metricValue;
-            } else if (selectedMetric.toLowerCase() === 'availability') {
+            } else if (selectedMetric === 'standby' || selectedMetric === 'deadhead') {
               barValue = (metricValue / 168) * 100;
             } else {
               barValue = 100;
@@ -407,7 +397,7 @@ export default {
               '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">' +
               '<div class="metric-value" style="margin-top: 10px;">' +
               metricValue +
-              (selectedMetric.toLowerCase() === 'utilization' ? '%' : selectedMetric.toLowerCase() === 'availability' ? 'h' : '') +
+              (selectedMetric === 'payload' ? '%' : selectedMetric === 'standby' || selectedMetric === 'deadhead' ? 'h' : '') +
               '</div>' +
               '<div class="metric-bar-container">' +
               '<div class="metric-bar ' +
@@ -456,7 +446,7 @@ export default {
             sortResources(true);
           },
           onEventClick: function (data) {
-            console.log('payload ->', data.event.payload);
+            console.log('onEventClick() payload:', data.event.payload);
           },
         })
         .mobiscroll('getInst');
@@ -468,14 +458,14 @@ export default {
         popup.open();
       });
 
-      $('input[name="group"]').on('change', function () {
-        selectedMetric = $(this).attr('data-value');
+      $('.mbsc-popup-sort-metric').on('change', function () {
+        selectedMetric = $(this).val();
         selectedMetricDesc = $(this).attr('data-label');
         sortColumn = selectedMetric;
       });
 
-      $('input[name="direction"]').on('change', function () {
-        sortDirection = $(this).attr('data-value');
+      $('.mbsc-popup-sort-direction').on('change', function () {
+        sortDirection = $('.mbsc-popup-sort-direction:checked').val();
       });
     });
   },
@@ -485,32 +475,32 @@ export default {
 <div style="display:none">
   <div id="demo-filtering-popup">
     <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Metric do display</div>
+      <div class="mbsc-form-group-title">Metric to sort by</div>
       <div mbsc-radio-group>
         <label>
-          <input mbsc-radio data-label="Standby Time" data-value="availability" name="group" type="radio" checked/>
+          <input mbsc-radio data-label="Standby Time" class="mbsc-popup-sort-metric" value="standby" name="sort-metric" type="radio" checked/>
         </label>
         <label>
-          <input mbsc-radio data-label="Payload Efficiency" data-value="utilization" name="group" type="radio"/>
+          <input mbsc-radio data-label="Payload Efficiency" class="mbsc-popup-sort-metric" value="payload" name="sort-metric" type="radio"/>
         </label>
         <label>
-          <input mbsc-radio data-label="Deadhead Time" data-value="deadhead" name="group" type="radio"/>
+          <input mbsc-radio data-label="Deadhead Time" class="mbsc-popup-sort-metric" value="deadhead" name="sort-metric" type="radio"/>
         </label>
 
       </div>
     </div>
-    <div class="mbsc-form-group">
-    <div class="mbsc-form-group-title">Sort direction</div>
-    <label>
-        Asc
-        <input mbsc-segmented type="radio" data-value="asc" name="direction" checked>
-    </label>
-    <label>
-        Desc
-        <input mbsc-segmented type="radio" data-value="desc" name="direction">
-    </label>
+   <div class="mbsc-form-group">
+  <div class="mbsc-form-group-title">Sort direction</div>
+  <label>
+      Asc
+      <input mbsc-segmented type="radio" class="mbsc-popup-sort-direction" value="asc" name="sort-direction" checked>
+  </label>
+  <label>
+      Desc
+      <input mbsc-segmented type="radio" class="mbsc-popup-sort-direction" value="desc" name="sort-direction">
+  </label>
 </div>
-  </div>
+
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
@@ -555,6 +545,10 @@ export default {
   padding: 0;
 }
 
+.mds-timeline-popup-sort .mbsc-timeline-row {
+  min-height: 80px;
+}
+
 .mds-timeline-popup-sort .mbsc-timeline-resource-col {
   width: 310px;
 }
@@ -571,7 +565,7 @@ export default {
   padding: 0 5px;
   box-sizing: border-box;
   vertical-align: top;
-  line-height: 20px;
+  line-height: 25px;
 }
 
 .mds-popup-sort-resource-cell-name {
