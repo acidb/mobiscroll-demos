@@ -18,72 +18,10 @@ export default {
       var selectedMetric = 'standby';
       var selectedMetricDesc = 'Standby Time';
       var loadedEvents;
+      var weekStart;
+      var weekEnd;
 
       var myEvents = [
-        {
-          start: 'dyndatetime(y,m,d+4)',
-          end: 'dyndatetime(y,m,d+6)',
-          title: 'Tour #001 - New York to Los Angeles',
-          resource: 7,
-          color: '#FF5733',
-          payload: 20,
-        },
-        {
-          start: 'dyndatetime(y,m,d)',
-          end: 'dyndatetime(y,m,d+2)',
-          title: 'Tour #003 - Philadelphia to Phoenix',
-          resource: 9,
-          color: '#33FF57',
-          payload: 0,
-        },
-        {
-          start: 'dyndatetime(y,m,d-4)',
-          end: 'dyndatetime(y,m,d+1)',
-          title: 'Tour #004 - San Antonio to San Diego',
-          resource: 10,
-          color: '#3357FF',
-          payload: 15,
-        },
-        {
-          start: 'dyndatetime(y,m,d)',
-          end: 'dyndatetime(y,m,d+2)',
-          title: 'Tour #005 - Dallas to San Francisco',
-          resource: 7,
-          color: '#FF5733',
-          payload: 18,
-        },
-        {
-          start: 'dyndatetime(y,m,d+4)',
-          end: 'dyndatetime(y,m,d+6)',
-          title: 'Tour #006 - Los Angeles to Chicago',
-          resource: 8,
-          color: '#FF33A6',
-          payload: 10,
-        },
-        {
-          start: 'dyndatetime(y,m,d+3)',
-          end: 'dyndatetime(y,m,d+6)',
-          title: 'Tour #007 - Houston to New York',
-          resource: 9,
-          color: '#33FF57',
-          payload: 0,
-        },
-        {
-          start: 'dyndatetime(y,m,d)',
-          end: 'dyndatetime(y,m,d+2)',
-          title: 'Tour #009 - San Diego to Dallas',
-          resource: 7,
-          color: '#FF5733',
-          payload: 16,
-        },
-        {
-          start: 'dyndatetime(y,m,d-2)',
-          end: 'dyndatetime(y,m,d+2)',
-          title: 'Tour #010 - San Francisco to Los Angeles',
-          resource: 8,
-          color: '#FF33A6',
-          payload: 0,
-        },
         {
           start: 'dyndatetime(y,m,d-1)',
           end: 'dyndatetime(y,m,d+3)',
@@ -91,6 +29,7 @@ export default {
           resource: 1,
           color: '#FF9933',
           payload: 25,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d+1)',
@@ -99,6 +38,7 @@ export default {
           resource: 2,
           color: '#33FFA6',
           payload: 18,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -107,6 +47,7 @@ export default {
           resource: 3,
           color: '#9933FF',
           payload: 20,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d+1)',
@@ -115,6 +56,7 @@ export default {
           resource: 4,
           color: '#33A6FF',
           payload: 0,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d+2)',
@@ -123,14 +65,16 @@ export default {
           resource: 5,
           color: '#FF5733',
           payload: 20,
+          overlap: false,
         },
         {
-          start: 'dyndatetime(y,m,d,11)',
-          end: 'dyndatetime(y,m,d+3)',
+          start: 'dyndatetime(y,m,d+2)',
+          end: 'dyndatetime(y,m,d+5)',
           title: 'Tour #018 - Atlanta to Kansas City',
           resource: 6,
           color: '#33FF99',
           payload: 0,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d-4,11)',
@@ -139,6 +83,7 @@ export default {
           resource: 6,
           color: '#33FF99',
           payload: 14,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -147,7 +92,90 @@ export default {
           resource: 7,
           color: '#FF5733',
           payload: 22,
+          overlap: false,
         },
+        {
+          start: 'dyndatetime(y,m,d)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #005 - Dallas to San Francisco',
+          resource: 7,
+          color: '#FF5733',
+          payload: 18,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d+4)',
+          end: 'dyndatetime(y,m,d+6)',
+          title: 'Tour #001 - New York to Los Angeles',
+          resource: 7,
+          color: '#FF5733',
+          payload: 20,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #009 - San Diego to Dallas',
+          resource: 7,
+          color: '#FF5733',
+          payload: 16,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d+4)',
+          end: 'dyndatetime(y,m,d+6)',
+          title: 'Tour #006 - Los Angeles to Chicago',
+          resource: 8,
+          color: '#FF33A6',
+          payload: 10,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d-2)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #010 - San Francisco to Los Angeles',
+          resource: 8,
+          color: '#FF33A6',
+          payload: 0,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d+3)',
+          end: 'dyndatetime(y,m,d+6)',
+          title: 'Tour #007 - Houston to New York',
+          resource: 9,
+          color: '#33FF57',
+          payload: 0,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #003 - Philadelphia to Phoenix',
+          resource: 9,
+          color: '#33FF57',
+          payload: 0,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d-4)',
+          end: 'dyndatetime(y,m,d-1)',
+          title: 'Tour #028 - ? to Philadelphiax',
+          resource: 9,
+          color: '#33FF57',
+          payload: 11,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d-4)',
+          end: 'dyndatetime(y,m,d+1)',
+          title: 'Tour #004 - San Antonio to San Diego',
+          resource: 10,
+          color: '#3357FF',
+          payload: 15,
+          overlap: false,
+        },
+
         {
           start: 'dyndatetime(y,m,d+3)',
           end: 'dyndatetime(y,m,d+6)',
@@ -155,6 +183,7 @@ export default {
           resource: 10,
           color: '#3357FF',
           payload: 17,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d-4)',
@@ -163,6 +192,7 @@ export default {
           resource: 11,
           color: '#FF9933',
           payload: 19,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -171,6 +201,7 @@ export default {
           resource: 12,
           color: '#33FF57',
           payload: 28,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d-3)',
@@ -179,6 +210,7 @@ export default {
           resource: 13,
           color: '#9933FF',
           payload: 26,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d+2)',
@@ -187,6 +219,7 @@ export default {
           resource: 14,
           color: '#33A6FF',
           payload: 12,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d-1)',
@@ -195,14 +228,7 @@ export default {
           resource: 15,
           color: '#FF5733',
           payload: 17,
-        },
-        {
-          start: 'dyndatetime(y,m,d-4)',
-          end: 'dyndatetime(y,m,d-1)',
-          title: 'Tour #028 - ? to Philadelphiax',
-          resource: 9,
-          color: '#33FF57',
-          payload: 10,
+          overlap: false,
         },
       ];
 
@@ -225,59 +251,56 @@ export default {
 
       function refreshData(inst) {
         console.log('refreshData() selectedMetric:', selectedMetric);
-        // merge common calculations
+
         if (inst) {
           loadedEvents = inst.getEvents();
         }
-        // todo
-        if (selectedMetric == 'standby') {
-          myResources.forEach(function (resource) {
-            return (resource.standby = 168);
-          });
-          loadedEvents.forEach(function (event) {
-            var resource = myResources.find(function (resource) {
-              return resource.id === event.resource;
-            });
-            if (resource) {
-              resource.standby -= (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
-            }
-          });
-        }
-        // todo
-        if (selectedMetric == 'payload') {
-          myResources.forEach(function (resource) {
-            var resourceEvents = loadedEvents.filter(function (event) {
-              return event.resource === resource.id;
-            });
 
-            var totalPayload = resourceEvents.reduce(function (total, event) {
-              return total + (event.payload || 0);
-            }, 0);
-
-            if (resource.capacity) {
-              resource.payload = Math.round((totalPayload / resource.capacity) * 100);
-            } else {
-              resource.payload = 0;
-            }
+        myResources.forEach(function (resource) {
+          var resourceEvents = loadedEvents.filter(function (event) {
+            return event.resource === resource.id;
           });
-        }
-        // todo
-        if (selectedMetric === 'deadhead') {
-          myResources.forEach(function (resource) {
-            var resourceEvents = loadedEvents.filter(function (event) {
-              return event.resource === resource.id;
-            });
 
-            var totalLoadedTime = resourceEvents.reduce(function (total, event) {
-              if (event.payload && event.payload > 0) {
-                return total + (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
+          if (selectedMetric === 'standby') {
+            resource.standby = 168;
+
+            resourceEvents.forEach(function (event) {
+              // merge this?
+              var eventStart = new Date(event.start);
+              var eventEnd = new Date(event.end);
+              var effectiveStart = eventStart < weekStart ? weekStart : eventStart;
+              var effectiveEnd = eventEnd > weekEnd ? weekEnd : eventEnd;
+
+              if (effectiveStart < effectiveEnd) {
+                resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60);
+              }
+            });
+          }
+
+          if (selectedMetric === 'deadhead') {
+            var totalDeadheadTime = resourceEvents.reduce(function (total, event) {
+              // with this?
+              var eventStart = new Date(event.start);
+              var eventEnd = new Date(event.end);
+              var effectiveStart = eventStart < weekStart ? weekStart : eventStart;
+              var effectiveEnd = eventEnd > weekEnd ? weekEnd : eventEnd;
+
+              if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
+                return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60);
               }
               return total;
             }, 0);
 
-            resource.deadhead = 168 - totalLoadedTime;
-          });
-        }
+            resource.deadhead = totalDeadheadTime;
+          }
+
+          if (selectedMetric === 'payload') {
+            var totalPayload = resourceEvents.reduce(function (total, event) {
+              return total + (event.payload || 0);
+            }, 0);
+            resource.payload = resource.capacity ? Math.round((totalPayload / resource.capacity) * 100) : 0;
+          }
+        });
       }
 
       function sortResources(crudAction) {
@@ -419,20 +442,18 @@ export default {
             );
           },
           onPageLoading: function (args, inst) {
+            weekStart = args.firstDay;
+            weekEnd = args.lastDay;
             refreshData(inst);
           },
           onPageLoaded: function () {
             sortResources();
           },
           onEventCreated: function (args, inst) {
-            // add random payload based on resource capacity
             var eventResource = myResources.find(function (resource) {
               return resource.id === args.event.resource;
             });
-
-            var maxPayload = eventResource.capacity;
-            var randomPayload = Math.floor(Math.random() * (maxPayload - 5 + 1)) + 5;
-            args.event.payload = randomPayload;
+            args.event.payload = Math.floor(Math.random() * (eventResource.capacity - 5 + 1)) + 5;
 
             refreshData(inst);
             sortResources(true);
@@ -514,7 +535,6 @@ export default {
     margin-bottom: 5px;
     margin-top: 5px;
 }
-
 
 .metric-bar {
     height: 100%;
