@@ -306,6 +306,7 @@ export default {
       function sortResources(crudAction) {
         console.log('sortResources(', sortColumn, ',', sortDirection, ')');
 
+        // ?
         if (!crudAction || (crudAction && sortColumn === 'standby')) {
           myResources.sort(function (a, b) {
             if (sortDirection === 'asc') {

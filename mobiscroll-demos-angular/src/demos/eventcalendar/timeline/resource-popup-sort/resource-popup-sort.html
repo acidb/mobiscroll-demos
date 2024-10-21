@@ -1,42 +1,64 @@
-<div class="md-resource-details">
-  <mbsc-eventcalendar #mycalendar [view]="view" [data]="myEvents" [resources]="myResources"
-    [resourceHeaderTemplate]="resourceHeaderTemp" [resourceTemplate]="resourceTemp" [sidebarTemplate]="sidebarTemp"
-    [resourceFooterTemplate]="resourceFooterTemp" [sidebarHeaderTemplate]="sidebarHeaderTemp"
-    [dayFooterTemplate]="dayFooterTemp" [sidebarFooterTemplate]="sidebarFooterTemp"></mbsc-eventcalendar>
-</div>
+<mbsc-eventcalendar
+  #myCalendar
+  class="mds-timeline-popup-sort"
+  [clickToCreate]="true"
+  [data]="myEvents"
+  [dragToCreate]="true"
+  [dragToMove]="true"
+  [dragToResize]="true"
+  [resourceHeaderTemplate]="resourceHeaderTemplate"
+  [resourceTemplate]="resourceTemplate"
+  [headerTemplate]="headerTemplate"
+  [resources]="myResources"
+  [view]="view"
+  base
+  (onEventCreated)="refreshData()"
+  (onEventDeleted)="refreshData()"
+  (onEventUpdated)="refreshData()"
+  (onPageLoading)="refreshData()"
+></mbsc-eventcalendar>
 
-<ng-template #resourceHeaderTemp>
-  <div class="md-resource-details-title">
-    <div class="md-resource-header md-resource-details-name">Room</div>
-    <div class="md-resource-header md-resource-details-seats">Capacity</div>
-    <div class="md-resource-header md-resource-details-seats">Price</div>
+<ng-template #resourceHeaderTemplate>
+  <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Truck</div>
+  <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">{{ selectedMetricDesc }}</div>
+</ng-template>
+
+<ng-template #resourceTemplate let-resource>
+  <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
+    <strong>{{ resource.name }}</strong>
+    <div style="font-size: 12px; color: #666">Model: {{ resource.model || 'N/A' }}</div>
+    <div style="font-size: 12px; color: #666">Capacity: {{ resource.capacity }}T</div>
+  </div>
+
+  <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">
+    <div class="metric-value" style="margin-top: 10px">{{ getMetricValue(resource) }}</div>
+    <div class="metric-bar-container">
+      <div class="metric-bar {{ getBarColorClass(resource) }}" [style.width.%]="getBarValue(resource)"></div>
+    </div>
   </div>
 </ng-template>
 
-<ng-template #resourceTemp let-resource>
-  <div class="md-resource-details-cont">
-    <div class="md-resource-header md-resource-details-name">{{resource.name}}</div>
-    <div class="md-resource-header md-resource-details-seats">{{resource.seats + ' seats'}}</div>
-    <div class="md-resource-header md-resource-details-seats">{{'$' + resource.price}}</div>
+<ng-template #headerTemplate>
+  <mbsc-calendar-prev></mbsc-calendar-prev>
+  <mbsc-calendar-next></mbsc-calendar-next>
+  <mbsc-calendar-nav></mbsc-calendar-nav>
+  <mbsc-button start-icon="" variant="flat" style="margin-left: auto" (click)="handleSort()" #sortButton> Calculate & Sort </mbsc-button>
+</ng-template>
+
+<mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" #popup>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Metric to sort by</div>
+    <mbsc-radio-group [(ngModel)]="sortColumn" (change)="handleColumnChange()">
+      <mbsc-radio label="Standby Time" value="standby"></mbsc-radio>
+      <mbsc-radio label="Payload Efficiency" value="payload"></mbsc-radio>
+      <mbsc-radio label="Deadhead Time" value="deadhead"></mbsc-radio>
+    </mbsc-radio-group>
   </div>
-</ng-template>
-
-<ng-template #sidebarTemp let-resource>
-  <div class="md-resource-details-sidebar">{{getRevenue(resource)}}</div>
-</ng-template>
-
-<ng-template #resourceFooterTemp>
-  <div class="md-resource-details-footer md-resource-details-occuppancy">Occuppancy</div>
-</ng-template>
-
-<ng-template #sidebarHeaderTemp>
-  <div class="md-resource-details-sidebar-header">Revenue</div>
-</ng-template>
-
-<ng-template #dayFooterTemp let-data>
-  <div class="md-resource-details-footer md-resource-details-footer-day">{{getOccuppancy(data)}}%</div>
-</ng-template>
-
-<ng-template #sidebarFooterTemp>
-  <div class="md-resource-details-footer md-resource-details-total">${{getTotal()}}</div>
-</ng-template>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Sort direction</div>
+    <mbsc-segmented-group [(ngModel)]="sortDirection">
+      <mbsc-segmented value="asc" [checked]="true">asc</mbsc-segmented>
+      <mbsc-segmented value="desc">desc</mbsc-segmented>
+    </mbsc-segmented-group>
+  </div>
+</mbsc-popup>
