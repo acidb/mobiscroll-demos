@@ -17,18 +17,24 @@ export default {
       var sortDay;
       var totalRevenue;
 
-      var myResources = [
-        { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },
-        { id: 2, name: 'Apex Hall', seats: 90, color: '#fdf500', price: 600 },
-        { id: 3, name: 'Jade Room', seats: 700, color: '#00aaff', price: 900 },
-        { id: 4, name: 'Dome Arena', seats: 850, color: '#239a21', price: 750 },
-        { id: 5, name: 'Forum Plaza', seats: 900, color: '#8f1ed6', price: 700 },
-        { id: 6, name: 'Gallery', seats: 300, color: '#0077b6', price: 650 },
-        { id: 7, name: 'Icon Hall', seats: 450, color: '#e63946', price: 850 },
-        { id: 8, name: 'Broadway', seats: 250, color: '#ff0101', price: 800 },
-        { id: 9, name: 'Central Hub', seats: 400, color: '#01adff', price: 1100 },
-        { id: 10, name: 'Empire Hall', seats: 550, color: '#ff4600', price: 950 },
-      ];
+      /////////////////////
+      // performance test
+
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+      }
+
+      var resourceNr = 20000;
+      var eventsNr = 20000;
+      var myResources = [];
+      var myEventColors = ['#ff0101', '#239a21', '#8f1ed6', '#01adff', '#d8ca1a'];
+
+      for (var i = 1; i <= resourceNr; i++) {
+        myResources.push({ name: 'Resource ' + i, id: i, seats: getRandomInt(100, 2000), price: getRandomInt(500, 20000) });
+      }
+
+      // performance test end
+      ///////////////////////
 
       function getUTCDateOnly(d) {
         return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
@@ -56,18 +62,18 @@ export default {
         return 'def';
       }
 
-      function getBusyHours(resource, timestamp) {
-        var startOfDay = new Date(timestamp);
-        var endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1);
-        return myEvents.reduce(function (totalHours, event) {
-          if (event.resource === resource.id) {
-            var eventStart = Math.max(+startOfDay, +new Date(event.start));
-            var eventEnd = Math.min(+endOfDay, +new Date(event.end));
-            return totalHours + (eventStart < eventEnd ? (eventEnd - eventStart) / (60 * 60 * 1000) : 0);
-          }
-          return totalHours;
-        }, 0);
-      }
+      // function getBusyHours(resource, timestamp) {
+      //   var startOfDay = new Date(timestamp);
+      //   var endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1);
+      //   return myEvents.reduce(function (totalHours, event) {
+      //     if (event.resource === resource.id) {
+      //       var eventStart = Math.max(+startOfDay, +new Date(event.start));
+      //       var eventEnd = Math.min(+endOfDay, +new Date(event.end));
+      //       return totalHours + (eventStart < eventEnd ? (eventEnd - eventStart) / (60 * 60 * 1000) : 0);
+      //     }
+      //     return totalHours;
+      //   }, 0);
+      // }
 
       function refreshData(inst) {
         // Events for the current view
@@ -80,6 +86,77 @@ export default {
         totalRevenue = myResources.reduce(function (total, resource) {
           return total + resource.revenue;
         }, 0);
+        setTimeout(function () {
+          setLoadingIndicator(false);
+        }, 0);
+      }
+
+      // function sortResources(column, day) {
+      //   if (column) {
+      //     if (sortColumn === column && day === sortDay) {
+      //       sortDirection = sortDirection === 'asc' ? 'desc' : sortDirection === 'desc' ? 'def' : 'asc';
+      //     } else {
+      //       sortColumn = column;
+      //       sortDirection = 'asc';
+      //     }
+      //     sortDay = day;
+      //   }
+
+      //   if (sortDay) {
+      //     // Precalculate busy hours for the clicked day
+      //     myResources.forEach(function (resource) {
+      //       resource.busyHours = getBusyHours(resource, sortDay);
+      //     });
+      //   }
+
+      //   myResources.sort(function (a, b) {
+      //     if (sortDirection === 'asc') {
+      //       return a[sortColumn] > b[sortColumn] ? 1 : -1;
+      //     }
+      //     if (sortDirection === 'desc') {
+      //       return a[sortColumn] < b[sortColumn] ? 1 : -1;
+      //     }
+      //     return a.id - b.id;
+      //   });
+      // }
+
+      // <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l
+
+      function createWorker() {
+        var workerCode =
+          'function getBusyHours(resource, day, events) {' +
+          'postMessage("getBusyHours()");' +
+          'const startOfDay = new Date(day);' +
+          'const endOfDay = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), startOfDay.getDate() + 1);' +
+          'return events.reduce(function (totalHours, event) {' +
+          'if (event.resource === resource.id) {' +
+          'const eventStart = Math.max(+startOfDay, +new Date(event.start));' +
+          'const eventEnd = Math.min(+endOfDay, +new Date(event.end));' +
+          'return totalHours + (eventStart < eventEnd ? (eventEnd - eventStart) / (60 * 60 * 1000) : 0);' +
+          '}' +
+          'return totalHours;' +
+          '}, 0);' +
+          '};' +
+          'onmessage = function(e) {' +
+          'postMessage("worker received message");' +
+          'const { resources, column, direction, day, events } = e.data;' +
+          'resources.forEach(function (resource) {' +
+          'resource.busyHours = getBusyHours(resource, day, events);' +
+          '});' +
+          'const sortedResources = resources.sort(function (a, b) {' +
+          'if (direction === "asc") {' +
+          'return a[column] > b[column] ? 1 : -1;' +
+          '} else if (direction === "desc") {' +
+          'return a[column] < b[column] ? 1 : -1;' +
+          '} else {' +
+          'return a.id - b.id;' +
+          '}' +
+          '});' +
+          'postMessage(sortedResources);' +
+          '};';
+
+        var blob = new Blob([workerCode], { type: 'application/javascript' });
+        return new Worker(URL.createObjectURL(blob));
       }
 
       function sortResources(column, day) {
@@ -93,25 +170,27 @@ export default {
           sortDay = day;
         }
 
-        if (sortDay) {
-          // Precalculate busy hours for the clicked day
-          myResources.forEach(function (resource) {
-            resource.busyHours = getBusyHours(resource, sortDay);
-          });
-        }
+        var worker = createWorker();
 
-        myResources.sort(function (a, b) {
-          if (sortDirection === 'asc') {
-            return a[sortColumn] > b[sortColumn] ? 1 : -1;
+        worker.onmessage = function (e) {
+          if (typeof e.data === 'string') {
+            console.log('Worker says:', e.data);
+          } else {
+            myResources = e.data;
+            worker.terminate();
           }
-          if (sortDirection === 'desc') {
-            return a[sortColumn] < b[sortColumn] ? 1 : -1;
-          }
-          return a.id - b.id;
+        };
+
+        worker.postMessage({
+          resources: myResources,
+          column: sortColumn,
+          direction: sortDirection,
+          day: sortDay,
+          events: myEvents,
         });
-
-        calendar.setOptions({ resources: myResources.slice() });
       }
+
+      // <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l// <--- d3l
 
       var calendar = $('#demo-resource-details')
         .mobiscroll()
@@ -203,7 +282,46 @@ export default {
             return '<div class="mds-resource-details-footer mds-resource-details-total">$' + totalRevenue + '</div>';
           },
           onPageLoading: function (args, inst) {
+            myEvents = [];
+            var year = new Date().getFullYear();
+            var month = new Date().getMonth();
+            // Generate random events
+            for (var i = 0; i < eventsNr; i++) {
+              var day = getRandomInt(1, 31);
+              var length = getRandomInt(2, 5);
+              var resource = getRandomInt(1, resourceNr + 1);
+              var color = getRandomInt(0, 6);
+              myEvents.push({
+                color: myEventColors[color],
+                end: new Date(year, month, day + length),
+                resource: resource,
+                start: new Date(year, month, day),
+                title: 'Event ' + i,
+              });
+            }
+            inst.setEvents(myEvents);
             refreshData(inst);
+          },
+          onInit: function () {
+            $('.mds-resource-details .mbsc-timeline').append(
+              '<div id="calendar-overlay" class="calendar-overlay">' +
+                '<div class="md-spinner">' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '<div class="md-spinner-blade"></div>' +
+                '</div>' +
+                '</div>',
+            );
+            setLoadingIndicator(true);
           },
           onEventCreated: function (args, inst) {
             refreshData(inst);
@@ -214,6 +332,7 @@ export default {
             sortResources();
           },
           onEventUpdated: function (args, inst) {
+            // eslint-disable-next-line no-debugger
             refreshData(inst);
             sortResources();
           },
@@ -223,23 +342,44 @@ export default {
       $('#demo-resource-details').on('click', '.mds-resource-sort-header', function () {
         var sortColumn = $(this).data('sort');
         var selectedDay = $(this).data('day');
-        sortResources(sortColumn, selectedDay);
+
+        setLoadingIndicator(true);
+
+        setTimeout(function () {
+          sortResources(sortColumn, selectedDay);
+          setLoadingIndicator(false);
+
+          calendar.setOptions({
+            resources: myResources.slice(),
+          });
+        }, 100);
       });
 
-      $.getJSON(
-        'https://trial.mobiscroll.com/multiday-events/?callback=?',
-        function (events) {
-          calendar.setEvents(events);
-          refreshData(calendar);
-        },
-        'jsonp',
-      );
+      function setLoadingIndicator(show) {
+        if (show) {
+          $('#calendar-overlay').addClass('show');
+          $('.md-spinner').css('visibility', 'visible');
+        } else {
+          $('#calendar-overlay').removeClass('show');
+          $('.md-spinner').css('visibility', 'hidden');
+        }
+      }
+      document.getElementById('alert-button').addEventListener('click', function () {
+        alert('Button clicked!');
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-details" class="mds-resource-details"></div>
+  <div class="resource-container">
+   <div class="resource-header" style="border: 1px solid red; height: 500px; display: flex; justify-content: center; align-items: center;">
+  <button mbsc-button id="alert-button">Test button</button>
+
+    </div>
+    <div id="demo-resource-details" class="mds-resource-details" style="height: 800px;"></div>
+  </div>
   `,
+
   // eslint-disable-next-line es5/no-template-literals
   css: `
 /* Overrides */
@@ -379,5 +519,112 @@ export default {
 }
 
 /*</hidden>*/
+
+
+/* Loading spinner and overlay */
+
+/* Spinner and overlay */
+
+.mds-resource-details .mbsc-timeline {
+    position: relative;
+}
+
+.calendar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 9999; 
+    display: none;
+    justify-content: center; 
+    align-items: center;     
+}
+
+.calendar-overlay.show {
+    display: flex;
+}
+
+.md-spinner {
+    margin-left: 20px;
+    position: relative;
+    visibility: visible;
+    width: 50px;
+    height: 50px;
+    transform: rotate(0deg); /* Rotate around its center */
+}
+
+.md-spinner .md-spinner-blade {
+    position: absolute;
+    width: 10%;
+    height: 25%;
+    background-color: #8C8C8C;
+    border-radius: 50%/20%;
+    transform-origin: 50% 150%;
+    transform: rotate(0deg) translate(0, -150%);
+    animation: md-spinner-fade 1s linear infinite;
+}
+
+.md-spinner .md-spinner-blade:nth-child(1) {
+    transform: rotate(30deg) translate(0, -150%);
+    animation-delay: -0.91667s;
+}
+.md-spinner .md-spinner-blade:nth-child(2) {
+    transform: rotate(60deg) translate(0, -150%);
+    animation-delay: -0.83333s;
+}
+.md-spinner .md-spinner-blade:nth-child(3) {
+    transform: rotate(90deg) translate(0, -150%);
+    animation-delay: -0.75s;
+}
+.md-spinner .md-spinner-blade:nth-child(4) {
+    transform: rotate(120deg) translate(0, -150%);
+    animation-delay: -0.66667s;
+}
+.md-spinner .md-spinner-blade:nth-child(5) {
+    transform: rotate(150deg) translate(0, -150%);
+    animation-delay: -0.58333s;
+}
+.md-spinner .md-spinner-blade:nth-child(6) {
+    transform: rotate(180deg) translate(0, -150%);
+    animation-delay: -0.5s;
+}
+.md-spinner .md-spinner-blade:nth-child(7) {
+    transform: rotate(210deg) translate(0, -150%);
+    animation-delay: -0.41667s;
+}
+.md-spinner .md-spinner-blade:nth-child(8) {
+    transform: rotate(240deg) translate(0, -150%);
+    animation-delay: -0.33333s;
+}
+.md-spinner .md-spinner-blade:nth-child(9) {
+    transform: rotate(270deg) translate(0, -150%);
+    animation-delay: -0.25s;
+}
+.md-spinner .md-spinner-blade:nth-child(10) {
+    transform: rotate(300deg) translate(0, -150%);
+    animation-delay: -0.16667s;
+}
+.md-spinner .md-spinner-blade:nth-child(11) {
+    transform: rotate(330deg) translate(0, -150%);
+    animation-delay: -0.08333s;
+}
+.md-spinner .md-spinner-blade:nth-child(12) {
+    transform: rotate(360deg) translate(0, -150%);
+    animation-delay: 0s;
+}
+
+@keyframes md-spinner-fade {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.25;
+    }
+    100% {
+        opacity: 0.25;
+    }
+}
   `,
 };
