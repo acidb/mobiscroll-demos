@@ -306,7 +306,7 @@ export default {
       function sortResources(crudAction) {
         console.log('sortResources(', sortColumn, ',', sortDirection, ')');
 
-        // ?
+        // can be more simple..
         if (!crudAction || (crudAction && sortColumn === 'standby')) {
           myResources.sort(function (a, b) {
             if (sortDirection === 'asc') {
@@ -318,6 +318,32 @@ export default {
           });
         }
         calendar.setOptions({ resources: myResources.slice() });
+      }
+
+      function delayedToastSort(resource, event) {
+        mobiscroll.snackbar({
+          message: 'Sorting in 3s..',
+          button: {
+            text: 'Sort now',
+            action: function () {
+              sortResources(true);
+            },
+          },
+          animation: 'pop',
+          display: 'center',
+          duration: 3000,
+          onClose: function () {
+            resource.highlight = true;
+            sortResources(true);
+            calendar.navigateToEvent(event);
+            setTimeout(function () {
+              document.querySelector('.mds-resource-highlight').classList.remove('mds-resource-highlight');
+            }, 1000);
+          },
+        });
+        setTimeout(function () {
+          document.querySelector('.mbsc-toast-background').classList.add('start-progress');
+        }, 0);
       }
 
       var popup = $popupElm
@@ -405,9 +431,13 @@ export default {
             } else {
               barColorClass = 'red-bar';
             }
+            // ned var?
+            var highlightClass = resource.highlight ? 'mds-resource-highlight' : '';
 
             return (
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' +
+              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name ' +
+              highlightClass +
+              '">' +
               '<strong>' +
               resource.name +
               '</strong>' +
@@ -455,11 +485,17 @@ export default {
               return resource.id === args.event.resource;
             });
             args.event.payload = Math.floor(Math.random() * (eventResource.capacity - 5 + 1)) + 5;
+            args.event.overlap = false;
 
             refreshData(inst);
-            sortResources(true);
+            delayedToastSort(eventResource, args.event);
+
+            // error in docs duration 3000 default for cnack bar !? check spark
+            // new events also cant overlap
           },
           onEventDeleted: function (args, inst) {
+            // navigate to event? navigate to resource??
+            // navigate before deleted?
             refreshData(inst);
             sortResources(true);
           },
@@ -527,6 +563,41 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+
+/* resource highlight */
+
+.mds-resource-highlight {
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.5s ease;
+}
+
+/* progress bar */
+
+.mbsc-toast-background::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 0;  
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 1);
+  transition: width 3s linear; 
+}
+
+.mbsc-toast-background.start-progress::before {
+  width: 100%;
+}
+
+.mbsc-snackbar-message {
+  position: relative;
+}
+
+.mbsc-snackbar-cont {
+  border-radius: 4px;
+}
+
+/* metric bar */
+
 .metric-bar-container {
     position: relative;
     background-color: #f0f0f0;
