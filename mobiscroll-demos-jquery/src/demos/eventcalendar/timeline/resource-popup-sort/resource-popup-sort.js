@@ -340,12 +340,14 @@ export default {
           display: 'center',
           duration: 3000,
           onClose: function () {
-            resource.highlight = true;
+            resource.cssClass = 'mds-resource-highlight';
             sortResources(true);
-            calendar.navigateToEvent(event);
             setTimeout(function () {
-              document.querySelector('.mds-resource-highlight').classList.remove('mds-resource-highlight');
+              resource.cssClass = '';
+              // todo
+              calendar.setOptions({ resources: myResources.slice() });
             }, 1000);
+            calendar.navigateToEvent(event);
           },
         });
         setTimeout(function () {
@@ -443,13 +445,9 @@ export default {
             } else {
               barColorClass = 'red-bar';
             }
-            // ned var?
-            var highlightClass = resource.highlight ? 'mds-resource-highlight' : '';
 
             return (
-              '<div class="mds-popup-sort-resource-cell ' +
-              highlightClass +
-              '">' +
+              '<div class="mds-popup-sort-resource-cell">' +
               '<strong>' +
               resource.name +
               '</strong>' +
