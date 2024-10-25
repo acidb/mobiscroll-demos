@@ -13,77 +13,15 @@ export default {
       var $popupElm = $('#demo-filtering-popup');
       var initialSortColumn;
       var initialSortDirection;
-      var sortColumn = 'availability';
+      var sortColumn = 'standby';
       var sortDirection = 'asc';
-      var selectedMetric = 'availability';
+      var selectedMetric = 'standby';
       var selectedMetricDesc = 'Standby Time';
       var loadedEvents;
+      var weekStart;
+      var weekEnd;
 
       var myEvents = [
-        {
-          start: 'dyndatetime(y,m,d+4)',
-          end: 'dyndatetime(y,m,d+6)',
-          title: 'Tour #001 - New York to Los Angeles',
-          resource: 7,
-          color: '#FF5733',
-          payload: 20,
-        },
-        {
-          start: 'dyndatetime(y,m,d)',
-          end: 'dyndatetime(y,m,d+2)',
-          title: 'Tour #003 - Philadelphia to Phoenix',
-          resource: 9,
-          color: '#33FF57',
-          payload: 0,
-        },
-        {
-          start: 'dyndatetime(y,m,d-4)',
-          end: 'dyndatetime(y,m,d+1)',
-          title: 'Tour #004 - San Antonio to San Diego',
-          resource: 10,
-          color: '#3357FF',
-          payload: 15,
-        },
-        {
-          start: 'dyndatetime(y,m,d)',
-          end: 'dyndatetime(y,m,d+2)',
-          title: 'Tour #005 - Dallas to San Francisco',
-          resource: 7,
-          color: '#FF5733',
-          payload: 18,
-        },
-        {
-          start: 'dyndatetime(y,m,d+4)',
-          end: 'dyndatetime(y,m,d+6)',
-          title: 'Tour #006 - Los Angeles to Chicago',
-          resource: 8,
-          color: '#FF33A6',
-          payload: 10,
-        },
-        {
-          start: 'dyndatetime(y,m,d+3)',
-          end: 'dyndatetime(y,m,d+6)',
-          title: 'Tour #007 - Houston to New York',
-          resource: 9,
-          color: '#33FF57',
-          payload: 0,
-        },
-        {
-          start: 'dyndatetime(y,m,d)',
-          end: 'dyndatetime(y,m,d+2)',
-          title: 'Tour #009 - San Diego to Dallas',
-          resource: 7,
-          color: '#FF5733',
-          payload: 16,
-        },
-        {
-          start: 'dyndatetime(y,m,d-2)',
-          end: 'dyndatetime(y,m,d+2)',
-          title: 'Tour #010 - San Francisco to Los Angeles',
-          resource: 8,
-          color: '#FF33A6',
-          payload: 0,
-        },
         {
           start: 'dyndatetime(y,m,d-1)',
           end: 'dyndatetime(y,m,d+3)',
@@ -91,6 +29,7 @@ export default {
           resource: 1,
           color: '#FF9933',
           payload: 25,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d+1)',
@@ -99,6 +38,7 @@ export default {
           resource: 2,
           color: '#33FFA6',
           payload: 18,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -107,6 +47,7 @@ export default {
           resource: 3,
           color: '#9933FF',
           payload: 20,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d+1)',
@@ -115,6 +56,7 @@ export default {
           resource: 4,
           color: '#33A6FF',
           payload: 0,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d+2)',
@@ -123,14 +65,16 @@ export default {
           resource: 5,
           color: '#FF5733',
           payload: 20,
+          overlap: false,
         },
         {
-          start: 'dyndatetime(y,m,d,11)',
-          end: 'dyndatetime(y,m,d+3)',
+          start: 'dyndatetime(y,m,d+2)',
+          end: 'dyndatetime(y,m,d+5)',
           title: 'Tour #018 - Atlanta to Kansas City',
           resource: 6,
           color: '#33FF99',
           payload: 0,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d-4,11)',
@@ -139,6 +83,7 @@ export default {
           resource: 6,
           color: '#33FF99',
           payload: 14,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -147,7 +92,90 @@ export default {
           resource: 7,
           color: '#FF5733',
           payload: 22,
+          overlap: false,
         },
+        {
+          start: 'dyndatetime(y,m,d)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #005 - Dallas to San Francisco',
+          resource: 7,
+          color: '#FF5733',
+          payload: 18,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d+4)',
+          end: 'dyndatetime(y,m,d+6)',
+          title: 'Tour #001 - New York to Los Angeles',
+          resource: 7,
+          color: '#FF5733',
+          payload: 20,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #009 - San Diego to Dallas',
+          resource: 7,
+          color: '#FF5733',
+          payload: 16,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d+4)',
+          end: 'dyndatetime(y,m,d+6)',
+          title: 'Tour #006 - Los Angeles to Chicago',
+          resource: 8,
+          color: '#FF33A6',
+          payload: 10,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d-2)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #010 - San Francisco to Los Angeles',
+          resource: 8,
+          color: '#FF33A6',
+          payload: 0,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d+3)',
+          end: 'dyndatetime(y,m,d+6)',
+          title: 'Tour #007 - Houston to New York',
+          resource: 9,
+          color: '#33FF57',
+          payload: 0,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d)',
+          end: 'dyndatetime(y,m,d+2)',
+          title: 'Tour #003 - Philadelphia to Phoenix',
+          resource: 9,
+          color: '#33FF57',
+          payload: 0,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d-4)',
+          end: 'dyndatetime(y,m,d-1)',
+          title: 'Tour #028 - ? to Philadelphiax',
+          resource: 9,
+          color: '#33FF57',
+          payload: 11,
+          overlap: false,
+        },
+        {
+          start: 'dyndatetime(y,m,d-4)',
+          end: 'dyndatetime(y,m,d+1)',
+          title: 'Tour #004 - San Antonio to San Diego',
+          resource: 10,
+          color: '#3357FF',
+          payload: 15,
+          overlap: false,
+        },
+
         {
           start: 'dyndatetime(y,m,d+3)',
           end: 'dyndatetime(y,m,d+6)',
@@ -155,6 +183,7 @@ export default {
           resource: 10,
           color: '#3357FF',
           payload: 17,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d-4)',
@@ -163,6 +192,7 @@ export default {
           resource: 11,
           color: '#FF9933',
           payload: 19,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d)',
@@ -171,6 +201,7 @@ export default {
           resource: 12,
           color: '#33FF57',
           payload: 28,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d-3)',
@@ -179,6 +210,7 @@ export default {
           resource: 13,
           color: '#9933FF',
           payload: 26,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d+2)',
@@ -187,6 +219,7 @@ export default {
           resource: 14,
           color: '#33A6FF',
           payload: 12,
+          overlap: false,
         },
         {
           start: 'dyndatetime(y,m,d-1)',
@@ -195,14 +228,7 @@ export default {
           resource: 15,
           color: '#FF5733',
           payload: 17,
-        },
-        {
-          start: 'dyndatetime(y,m,d-4)',
-          end: 'dyndatetime(y,m,d-1)',
-          title: 'Tour #028 - ? to Philadelphiax',
-          resource: 9,
-          color: '#33FF57',
-          payload: 10,
+          overlap: false,
         },
       ];
 
@@ -224,66 +250,64 @@ export default {
       ];
 
       function refreshData(inst) {
-        // todo if alleady selected just sort
-        // merge common logic
+        console.log('refreshData() selectedMetric:', selectedMetric);
+
         if (inst) {
           loadedEvents = inst.getEvents();
         }
-        if (selectedMetric == 'availability') {
-          myResources.forEach(function (resource) {
-            return (resource.availability = 168);
+
+        myResources.forEach(function (resource) {
+          var resourceEvents = loadedEvents.filter(function (event) {
+            return event.resource === resource.id;
           });
-          loadedEvents.forEach(function (event) {
-            var resource = myResources.find(function (resource) {
-              return resource.id === event.resource;
+
+          if (selectedMetric === 'standby') {
+            resource.standby = 168;
+
+            resourceEvents.forEach(function (event) {
+              // merge this?
+              var eventStart = new Date(event.start);
+              var eventEnd = new Date(event.end);
+              var effectiveStart = eventStart < weekStart ? weekStart : eventStart;
+              var effectiveEnd = eventEnd > weekEnd ? weekEnd : eventEnd;
+
+              if (effectiveStart < effectiveEnd) {
+                resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60);
+              }
             });
-            if (resource) {
-              resource.availability -= (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
-            }
-          });
-        }
+          }
 
-        if (selectedMetric == 'utilization') {
-          myResources.forEach(function (resource) {
-            var resourceEvents = loadedEvents.filter(function (event) {
-              return event.resource === resource.id;
-            });
+          if (selectedMetric === 'deadhead') {
+            var totalDeadheadTime = resourceEvents.reduce(function (total, event) {
+              // with this?
+              var eventStart = new Date(event.start);
+              var eventEnd = new Date(event.end);
+              var effectiveStart = eventStart < weekStart ? weekStart : eventStart;
+              var effectiveEnd = eventEnd > weekEnd ? weekEnd : eventEnd;
 
-            var totalPayload = resourceEvents.reduce(function (total, event) {
-              return total + (event.payload || 0);
-            }, 0);
-
-            if (resource.capacity) {
-              resource.utilization = Math.round((totalPayload / resource.capacity) * 100);
-            } else {
-              resource.utilization = 0;
-            }
-          });
-        }
-
-        if (selectedMetric === 'deadhead') {
-          myResources.forEach(function (resource) {
-            var resourceEvents = loadedEvents.filter(function (event) {
-              return event.resource === resource.id;
-            });
-
-            var totalLoadedTime = resourceEvents.reduce(function (total, event) {
-              if (event.payload && event.payload > 0) {
-                return total + (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
+              if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
+                return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60);
               }
               return total;
             }, 0);
 
-            resource.deadhead = 168 - totalLoadedTime;
-          });
-        }
+            resource.deadhead = totalDeadheadTime;
+          }
+
+          if (selectedMetric === 'payload') {
+            var totalPayload = resourceEvents.reduce(function (total, event) {
+              return total + (event.payload || 0);
+            }, 0);
+            resource.payload = resource.capacity ? Math.round((totalPayload / resource.capacity) * 100) : 0;
+          }
+        });
       }
 
       function sortResources(crudAction) {
-        console.log(sortColumn);
-        console.log(sortDirection);
+        console.log('sortResources(', sortColumn, ',', sortDirection, ')');
 
-        if (!crudAction || (crudAction && sortColumn === 'availability')) {
+        // ?
+        if (!crudAction || (crudAction && sortColumn === 'standby')) {
           myResources.sort(function (a, b) {
             if (sortDirection === 'asc') {
               return a[sortColumn] > b[sortColumn] ? 1 : -1;
@@ -305,14 +329,10 @@ export default {
               text: 'Apply',
               keyCode: 'enter',
               handler: function () {
-                if (sortColumn != 'initial' && sortDirection == '') {
-                  $('input[name="group2"][data-value="asc"]').mobiscroll('getInst').checked = true;
-                  sortDirection = 'asc';
+                if (initialSortColumn != sortColumn) {
+                  refreshData();
                 }
-                sortDirection = sortColumn == 'initial' ? '' : sortDirection;
-                refreshData();
                 sortResources();
-                //todo
                 initialSortColumn = sortColumn;
                 initialSortDirection = sortDirection;
                 popup.close();
@@ -321,19 +341,15 @@ export default {
                   //<hidden>
                   // theme,//</hidden>
                   // context,
-                  message: 'Metrics calculated',
+                  message: 'Resouces sorted',
                 });
               },
               cssClass: 'mbsc-popup-button-primary',
             },
           ],
           onClose: function () {
-            // todo
-            $('input[name="group"][data-value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
-            $('input[name="group2"]:checked').mobiscroll('getInst').checked = false;
-            if (initialSortDirection != '' && initialSortColumn != 'initial') {
-              $('input[name="group2"][data-value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
-            }
+            $('.mbsc-popup-sort-metric[value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
+            $('.mbsc-popup-sort-direction[value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
           },
           contentPadding: false,
           display: 'anchored',
@@ -370,14 +386,12 @@ export default {
             );
           },
           renderResource: function (resource) {
-            // test
-            if (selectedMetric == 'deadhead') selectedMetric = 'availability';
-            var metricValue = resource[selectedMetric.toLowerCase()];
+            var metricValue = resource[selectedMetric];
 
             var barValue;
-            if (selectedMetric.toLowerCase() === 'utilization') {
+            if (selectedMetric === 'payload') {
               barValue = metricValue;
-            } else if (selectedMetric.toLowerCase() === 'availability') {
+            } else if (selectedMetric === 'standby' || selectedMetric === 'deadhead') {
               barValue = (metricValue / 168) * 100;
             } else {
               barValue = 100;
@@ -407,7 +421,7 @@ export default {
               '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">' +
               '<div class="metric-value" style="margin-top: 10px;">' +
               metricValue +
-              (selectedMetric.toLowerCase() === 'utilization' ? '%' : selectedMetric.toLowerCase() === 'availability' ? 'h' : '') +
+              (selectedMetric === 'payload' ? '%' : selectedMetric === 'standby' || selectedMetric === 'deadhead' ? 'h' : '') +
               '</div>' +
               '<div class="metric-bar-container">' +
               '<div class="metric-bar ' +
@@ -429,20 +443,18 @@ export default {
             );
           },
           onPageLoading: function (args, inst) {
+            weekStart = args.firstDay;
+            weekEnd = args.lastDay;
             refreshData(inst);
           },
           onPageLoaded: function () {
             sortResources();
           },
           onEventCreated: function (args, inst) {
-            // add random payload based on resource capacity
             var eventResource = myResources.find(function (resource) {
               return resource.id === args.event.resource;
             });
-
-            var maxPayload = eventResource.capacity;
-            var randomPayload = Math.floor(Math.random() * (maxPayload - 5 + 1)) + 5;
-            args.event.payload = randomPayload;
+            args.event.payload = Math.floor(Math.random() * (eventResource.capacity - 5 + 1)) + 5;
 
             refreshData(inst);
             sortResources(true);
@@ -456,7 +468,7 @@ export default {
             sortResources(true);
           },
           onEventClick: function (data) {
-            console.log('payload ->', data.event.payload);
+            console.log('onEventClick() payload:', data.event.payload);
           },
         })
         .mobiscroll('getInst');
@@ -468,14 +480,14 @@ export default {
         popup.open();
       });
 
-      $('input[name="group"]').on('change', function () {
-        selectedMetric = $(this).attr('data-value');
+      $('.mbsc-popup-sort-metric').on('change', function () {
+        selectedMetric = $(this).val();
         selectedMetricDesc = $(this).attr('data-label');
         sortColumn = selectedMetric;
       });
 
-      $('input[name="direction"]').on('change', function () {
-        sortDirection = $(this).attr('data-value');
+      $('.mbsc-popup-sort-direction').on('change', function () {
+        sortDirection = $('.mbsc-popup-sort-direction:checked').val();
       });
     });
   },
@@ -485,32 +497,32 @@ export default {
 <div style="display:none">
   <div id="demo-filtering-popup">
     <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Metric do display</div>
+      <div class="mbsc-form-group-title">Metric to sort by</div>
       <div mbsc-radio-group>
         <label>
-          <input mbsc-radio data-label="Standby Time" data-value="availability" name="group" type="radio" checked/>
+          <input mbsc-radio data-label="Standby Time" class="mbsc-popup-sort-metric" value="standby" name="sort-metric" type="radio" checked/>
         </label>
         <label>
-          <input mbsc-radio data-label="Payload Efficiency" data-value="utilization" name="group" type="radio"/>
+          <input mbsc-radio data-label="Payload Efficiency" class="mbsc-popup-sort-metric" value="payload" name="sort-metric" type="radio"/>
         </label>
         <label>
-          <input mbsc-radio data-label="Deadhead Time" data-value="deadhead" name="group" type="radio"/>
+          <input mbsc-radio data-label="Deadhead Time" class="mbsc-popup-sort-metric" value="deadhead" name="sort-metric" type="radio"/>
         </label>
 
       </div>
     </div>
-    <div class="mbsc-form-group">
-    <div class="mbsc-form-group-title">Sort direction</div>
-    <label>
-        Asc
-        <input mbsc-segmented type="radio" data-value="asc" name="direction" checked>
-    </label>
-    <label>
-        Desc
-        <input mbsc-segmented type="radio" data-value="desc" name="direction">
-    </label>
+   <div class="mbsc-form-group">
+  <div class="mbsc-form-group-title">Sort direction</div>
+  <label>
+      Asc
+      <input mbsc-segmented type="radio" class="mbsc-popup-sort-direction" value="asc" name="sort-direction" checked>
+  </label>
+  <label>
+      Desc
+      <input mbsc-segmented type="radio" class="mbsc-popup-sort-direction" value="desc" name="sort-direction">
+  </label>
 </div>
-  </div>
+
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
@@ -524,7 +536,6 @@ export default {
     margin-bottom: 5px;
     margin-top: 5px;
 }
-
 
 .metric-bar {
     height: 100%;
@@ -555,6 +566,10 @@ export default {
   padding: 0;
 }
 
+.mds-timeline-popup-sort .mbsc-timeline-row {
+  min-height: 80px;
+}
+
 .mds-timeline-popup-sort .mbsc-timeline-resource-col {
   width: 310px;
 }
@@ -571,7 +586,7 @@ export default {
   padding: 0 5px;
   box-sizing: border-box;
   vertical-align: top;
-  line-height: 20px;
+  line-height: 25px;
 }
 
 .mds-popup-sort-resource-cell-name {
