@@ -79,7 +79,7 @@ export default {
         {
           start: 'dyndatetime(y,m,d-4,11)',
           end: 'dyndatetime(y,m,d)',
-          title: 'Tour #018 - ? to Atlanta',
+          title: 'Tour #018 - Dallas to Atlanta',
           resource: 6,
           color: '#33FF99',
           payload: 14,
@@ -298,7 +298,11 @@ export default {
             var totalPayload = resourceEvents.reduce(function (total, event) {
               return total + (event.payload || 0);
             }, 0);
-            resource.payload = resource.capacity ? Math.round((totalPayload / resource.capacity) * 100) : 0;
+            // todo just for that week
+            var numberOfTours = resourceEvents.length;
+
+            resource.payload =
+              numberOfTours > 0 && resource.capacity ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100) : 0;
           }
         });
       }
@@ -401,15 +405,20 @@ export default {
             },
           },
           resources: myResources,
-          renderResourceHeader: function () {
+          renderScheduleEventContent: function (args) {
             return (
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' +
-              'Truck' +
+              '<div>' +
+              args.title +
               '</div>' +
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">' +
-              selectedMetricDesc +
+              '<div style="font-size: 11px;">' +
+              'Payload: ' +
+              (args.original.payload ? args.original.payload + ' T' : 'empty') +
               '</div>'
             );
+          },
+
+          renderResourceHeader: function () {
+            return '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' + 'Truck' + '</div>';
           },
           renderResource: function (resource) {
             var metricValue = resource[selectedMetric];
@@ -435,7 +444,7 @@ export default {
             var highlightClass = resource.highlight ? 'mds-resource-highlight' : '';
 
             return (
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name ' +
+              '<div class="mds-popup-sort-resource-cell ' +
               highlightClass +
               '">' +
               '<strong>' +
@@ -447,13 +456,13 @@ export default {
               '<div style="font-size: 12px; color: #666;">Capacity: ' +
               resource.capacity +
               'T</div>' +
-              '</div>' +
-              '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">' +
-              '<div class="metric-value" style="margin-top: 10px;">' +
+              '<div style="font-size: 12px; color: #666;">' +
+              selectedMetricDesc +
+              ': ' +
               metricValue +
               (selectedMetric === 'payload' ? '%' : selectedMetric === 'standby' || selectedMetric === 'deadhead' ? 'h' : '') +
               '</div>' +
-              '<div class="metric-bar-container">' +
+              '<div class="metric-bar-container" style="margin-top: 5px;">' +
               '<div class="metric-bar ' +
               barColorClass +
               '" style="width:' +
@@ -500,8 +509,12 @@ export default {
             sortResources(true);
           },
           onEventUpdated: function (args, inst) {
+            // todo onEventCreated same..
+            var eventResource = myResources.find(function (resource) {
+              return resource.id === args.event.resource;
+            });
             refreshData(inst);
-            sortResources(true);
+            delayedToastSort(eventResource, args.event);
           },
           onEventClick: function (data) {
             console.log('onEventClick() payload:', data.event.payload);
@@ -533,16 +546,16 @@ export default {
 <div style="display:none">
   <div id="demo-filtering-popup">
     <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Metric to sort by</div>
+      <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
       <div mbsc-radio-group>
         <label>
-          <input mbsc-radio data-label="Standby Time" class="mbsc-popup-sort-metric" value="standby" name="sort-metric" type="radio" checked/>
+          <input mbsc-radio data-label="Standby Time" data-description=" Time the truck is driven without cargo." class="mbsc-popup-sort-metric" value="standby" name="sort-metric" type="radio" checked/>
         </label>
         <label>
-          <input mbsc-radio data-label="Payload Efficiency" class="mbsc-popup-sort-metric" value="payload" name="sort-metric" type="radio"/>
+          <input mbsc-radio data-label="Payload Efficiency" data-description="Truck capacity divided by the average cargo on tours." class="mbsc-popup-sort-metric" value="payload" name="sort-metric" type="radio"/>
         </label>
         <label>
-          <input mbsc-radio data-label="Deadhead Time" class="mbsc-popup-sort-metric" value="deadhead" name="sort-metric" type="radio"/>
+          <input mbsc-radio data-label="Deadhead Time" data-description="Time when the truck is not on a tour. " class="mbsc-popup-sort-metric" value="deadhead" name="sort-metric" type="radio"/>
         </label>
 
       </div>
@@ -550,11 +563,11 @@ export default {
    <div class="mbsc-form-group">
   <div class="mbsc-form-group-title">Sort direction</div>
   <label>
-      Asc
+      Ascending
       <input mbsc-segmented type="radio" class="mbsc-popup-sort-direction" value="asc" name="sort-direction" checked>
   </label>
   <label>
-      Desc
+      Descending
       <input mbsc-segmented type="radio" class="mbsc-popup-sort-direction" value="desc" name="sort-direction">
   </label>
 </div>
@@ -580,7 +593,7 @@ export default {
   height: 100%;
   width: 0;  
   border-radius: 4px;
-  background-color: rgba(0, 0, 0, 1);
+  background-color: rgba(0, 0, 0, 0.5);
   transition: width 3s linear; 
 }
 
@@ -603,9 +616,7 @@ export default {
     background-color: #f0f0f0;
     border-radius: 5px;
     height: 10px;
-    width: 125px; 
-    margin-bottom: 5px;
-    margin-top: 5px;
+    width: 150px; 
 }
 
 .metric-bar {
@@ -638,11 +649,11 @@ export default {
 }
 
 .mds-timeline-popup-sort .mbsc-timeline-row {
-  min-height: 80px;
+  min-height: 110px;
 }
 
 .mds-timeline-popup-sort .mbsc-timeline-resource-col {
-  width: 310px;
+  width: 170px;
 }
 
 .mds-timeline-popup-sort .mbsc-timeline-resource-title {
@@ -657,26 +668,11 @@ export default {
   padding: 0 5px;
   box-sizing: border-box;
   vertical-align: top;
-  line-height: 25px;
+  line-height: 20px;
 }
 
 .mds-popup-sort-resource-cell-name {
   width: 170px;
-}
-
-
-.mds-popup-sort-resource-cell-custom {
-  width: 135px;
-}
-
-.mds-popup-sort-resource-cell-custom {
-  border-left: 1px solid #ccc;
-}
-
-.mds-timeline-popup-sort.mbsc-ios-dark .mds-popup-sort-resource-cell-custom,
-.mds-timeline-popup-sort.mbsc-material-dark .mds-popup-sort-resource-cell-custom,
-.mds-timeline-popup-sort.mbsc-windows-dark .mds-popup-sort-resource-cell-custom {
-  border-left: 1px solid #333;
 }
 
 /*<hidden>*/
