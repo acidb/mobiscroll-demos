@@ -326,6 +326,9 @@ export default {
 
       function delayedToastSort(resource, event) {
         mobiscroll.snackbar({
+          //<hidden>
+          // theme,//</hidden>
+          // context,
           message: 'Sorting in 3s..',
           button: {
             text: 'Sort now',
