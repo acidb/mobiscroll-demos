@@ -1,5 +1,5 @@
 import * as mobiscroll from '@mobiscroll/jquery';
-import $, { event } from 'jquery';
+import $ from 'jquery';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -423,23 +423,14 @@ export default {
           renderResource: function (resource) {
             var metricValue = resource[selectedMetric];
 
-            var barValue;
-            if (selectedMetric === 'payload') {
-              barValue = metricValue;
-            } else if (selectedMetric === 'standby' || selectedMetric === 'deadhead') {
-              barValue = (metricValue / 168) * 100;
-            } else {
-              barValue = 100;
-            }
+            var barValue =
+              selectedMetric === 'payload'
+                ? metricValue
+                : selectedMetric === 'standby' || selectedMetric === 'deadhead'
+                  ? (metricValue / 168) * 100
+                  : 100;
 
-            var barColorClass;
-            if (barValue <= 33) {
-              barColorClass = 'green-bar';
-            } else if (barValue <= 66) {
-              barColorClass = 'yellow-bar';
-            } else {
-              barColorClass = 'red-bar';
-            }
+            var barColorClass = barValue <= 33 ? 'green-bar' : barValue <= 66 ? 'yellow-bar' : 'red-bar';
 
             return (
               '<div class="mds-popup-sort-resource-cell">' +
@@ -461,8 +452,11 @@ export default {
               '<div class="metric-bar-container" style="margin-top: 5px;">' +
               '<div class="metric-bar ' +
               barColorClass +
-              '" style="width:' +
+              '" style="width: ' +
               barValue +
+              '%;"></div>' +
+              '<div class="metric-bar-overlay" style="width: ' +
+              (100 - barValue) +
               '%;"></div>' +
               '</div>' +
               '</div>'
@@ -571,7 +565,7 @@ export default {
 /* resource highlight */
 
 .mds-resource-highlight {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(128, 128, 128, 0.4);
     transition: background-color 0.5s ease;
 }
 
@@ -608,12 +602,30 @@ export default {
     border-radius: 5px;
     height: 10px;
     width: 150px; 
+    overflow: hidden;
 }
 
 .metric-bar {
     height: 100%;
-    border-radius: 5px;
-    transition: width 0.3s ease; 
+    animation: fillBar 1s ease-in-out forwards;
+}
+
+.metric-bar-overlay {
+    content: '';
+    position: absolute; 
+    top: 0;
+    right: 0;
+    height: 100%;
+    background-color: #f0f0f0; 
+}
+
+@keyframes fillBar {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
 }
 
 .green-bar {
@@ -660,13 +672,14 @@ export default {
 .mds-popup-sort-resource-cell {
   display: inline-block;
   height: 100%;
-  padding: 0 5px;
+  padding: 5px 5px;
   box-sizing: border-box;
   vertical-align: top;
   line-height: 20px;
 }
 
 .mds-popup-sort-resource-cell-name {
+  padding: 2px 5px;
   width: 170px;
 }
 
