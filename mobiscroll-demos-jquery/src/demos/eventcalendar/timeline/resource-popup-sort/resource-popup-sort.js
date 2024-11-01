@@ -1,5 +1,5 @@
 import * as mobiscroll from '@mobiscroll/jquery';
-import $ from 'jquery';
+import $, { event } from 'jquery';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -20,6 +20,8 @@ export default {
       var loadedEvents;
       var weekStart;
       var weekEnd;
+      // todo
+      var initialSort = true;
 
       var myEvents = [
         {
@@ -239,7 +241,7 @@ export default {
         { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
         { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
         { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
-        { id: 8, name: 'SD-TRK-0250', capacity: 12, location: 'San Francisco', model: 'Mercedes Arocs' },
+        { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
         { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
         { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
         { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
@@ -250,8 +252,6 @@ export default {
       ];
 
       function refreshData(inst) {
-        console.log('refreshData() selectedMetric:', selectedMetric);
-
         if (inst) {
           loadedEvents = inst.getEvents();
         }
@@ -261,11 +261,11 @@ export default {
             return event.resource === resource.id;
           });
 
+          // todo simplify?
           if (selectedMetric === 'standby') {
             resource.standby = 168;
 
             resourceEvents.forEach(function (event) {
-              // merge this?
               var eventStart = new Date(event.start);
               var eventEnd = new Date(event.end);
               var effectiveStart = eventStart < weekStart ? weekStart : eventStart;
@@ -279,7 +279,6 @@ export default {
 
           if (selectedMetric === 'deadhead') {
             var totalDeadheadTime = resourceEvents.reduce(function (total, event) {
-              // with this?
               var eventStart = new Date(event.start);
               var eventEnd = new Date(event.end);
               var effectiveStart = eventStart < weekStart ? weekStart : eventStart;
@@ -295,36 +294,33 @@ export default {
           }
 
           if (selectedMetric === 'payload') {
-            var totalPayload = resourceEvents.reduce(function (total, event) {
+            var weekEvents = resourceEvents.filter(function (event) {
+              return new Date(event.end) > weekStart && new Date(event.start) < weekEnd;
+            });
+            var totalPayload = weekEvents.reduce(function (total, event) {
               return total + (event.payload || 0);
             }, 0);
-            // todo just for that week
-            var numberOfTours = resourceEvents.length;
 
+            var numberOfTours = weekEvents.length;
             resource.payload =
-              numberOfTours > 0 && resource.capacity ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100) : 0;
+              weekEvents.length > 0 && resource.capacity ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100) : 0;
           }
         });
       }
 
-      function sortResources(crudAction) {
-        console.log('sortResources(', sortColumn, ',', sortDirection, ')');
-
-        // can be more simple..
-        if (!crudAction || (crudAction && sortColumn === 'standby')) {
-          myResources.sort(function (a, b) {
-            if (sortDirection === 'asc') {
-              return a[sortColumn] > b[sortColumn] ? 1 : -1;
-            }
-            if (sortDirection === 'desc') {
-              return a[sortColumn] < b[sortColumn] ? 1 : -1;
-            }
-          });
-        }
+      function sortResources() {
+        initialSort = false;
+        myResources.sort(function (a, b) {
+          return sortDirection === 'asc' ? (a[sortColumn] > b[sortColumn] ? 1 : -1) : a[sortColumn] < b[sortColumn] ? 1 : -1;
+        });
         calendar.setOptions({ resources: myResources.slice() });
       }
 
-      function delayedToastSort(resource, event) {
+      function delayedToastSort(resourceId, event) {
+        var resource = myResources.find(function (resource) {
+          return resource.id === resourceId;
+        });
+
         mobiscroll.snackbar({
           //<hidden>
           // theme,//</hidden>
@@ -333,7 +329,7 @@ export default {
           button: {
             text: 'Sort now',
             action: function () {
-              sortResources(true);
+              sortResources();
             },
           },
           animation: 'pop',
@@ -341,10 +337,9 @@ export default {
           duration: 3000,
           onClose: function () {
             resource.cssClass = 'mds-resource-highlight';
-            sortResources(true);
+            sortResources();
             setTimeout(function () {
               resource.cssClass = '';
-              // todo
               calendar.setOptions({ resources: myResources.slice() });
             }, 1000);
             calendar.navigateToEvent(event);
@@ -487,38 +482,33 @@ export default {
             weekEnd = args.lastDay;
             refreshData(inst);
           },
-          onPageLoaded: function () {
-            sortResources();
+          onPageLoaded: function (args, inst) {
+            // todo remove flag?
+            refreshData(inst);
+            if (initialSort) {
+              sortResources();
+            }
           },
           onEventCreated: function (args, inst) {
-            var eventResource = myResources.find(function (resource) {
-              return resource.id === args.event.resource;
-            });
-            args.event.payload = Math.floor(Math.random() * (eventResource.capacity - 5 + 1)) + 5;
+            args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
             args.event.overlap = false;
-
             refreshData(inst);
-            delayedToastSort(eventResource, args.event);
-
-            // error in docs duration 3000 default for cnack bar !? check spark
-            // new events also cant overlap
+            delayedToastSort(args.event.resource, args.event);
           },
-          onEventDeleted: function (args, inst) {
-            // navigate to event? navigate to resource??
-            // navigate before deleted?
+          onEventDelete: function (args, inst) {
             refreshData(inst);
-            sortResources(true);
+            delayedToastSort(args.event.resource, args.event);
           },
-          onEventUpdated: function (args, inst) {
-            // todo onEventCreated same..
-            var eventResource = myResources.find(function (resource) {
-              return resource.id === args.event.resource;
-            });
+          onEventUpdate: function (args, inst) {
+            // when not resized just dragged
+            if (
+              new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
+              new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime()
+            ) {
+              return;
+            }
             refreshData(inst);
-            delayedToastSort(eventResource, args.event);
-          },
-          onEventClick: function (data) {
-            console.log('onEventClick() payload:', data.event.payload);
+            delayedToastSort(args.event.resource, args.event);
           },
         })
         .mobiscroll('getInst');
@@ -639,6 +629,10 @@ export default {
 }
 
 /* Overrides */
+
+.mds-timeline-popup-sort .mbsc-timeline-events {
+  top: 20px;
+}
 
 .mds-timeline-popup-sort .mbsc-timeline-resource-header,
 .mds-timeline-popup-sort .mbsc-timeline-resource-title,
