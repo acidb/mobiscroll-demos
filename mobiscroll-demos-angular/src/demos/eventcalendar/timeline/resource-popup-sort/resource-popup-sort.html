@@ -6,9 +6,10 @@
   [dragToCreate]="true"
   [dragToMove]="true"
   [dragToResize]="true"
-  [resourceHeaderTemplate]="resourceHeaderTemplate"
-  [resourceTemplate]="resourceTemplate"
   [headerTemplate]="headerTemplate"
+  [resourceHeaderTemplate]="resourceHeaderTemplate"
+  [scheduleEventContentTemplate]="scheduleEventContentTemplate"
+  [resourceTemplate]="resourceTemplate"
   [resources]="myResources"
   [view]="view"
   base
@@ -38,11 +39,18 @@
   </div>
 </ng-template>
 
+<ng-template #scheduleEventContentTemplate let-event>
+  <div>{{ event.title }}</div>
+  <div style="font-size: 11px">Payload: {{ event.payload ? event.payload + ' T' : 'empty' }}</div>
+</ng-template>
+
 <ng-template #headerTemplate>
   <mbsc-calendar-prev></mbsc-calendar-prev>
   <mbsc-calendar-next></mbsc-calendar-next>
   <mbsc-calendar-nav></mbsc-calendar-nav>
-  <mbsc-button start-icon="" variant="flat" style="margin-left: auto" (click)="handleSort()" #sortButton> Calculate & Sort </mbsc-button>
+  <mbsc-button start-icon="bars" variant="flat" style="margin-left: auto" (click)="handleSort()" #sortButton>
+    Calculate & Sort
+  </mbsc-button>
 </ng-template>
 
 <mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" #popup>
@@ -57,8 +65,8 @@
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Sort direction</div>
     <mbsc-segmented-group [(ngModel)]="sortDirection">
-      <mbsc-segmented value="asc" [checked]="true">asc</mbsc-segmented>
-      <mbsc-segmented value="desc">desc</mbsc-segmented>
+      <mbsc-segmented value="asc">Ascending</mbsc-segmented>
+      <mbsc-segmented value="desc">Descending</mbsc-segmented>
     </mbsc-segmented-group>
   </div>
 </mbsc-popup>

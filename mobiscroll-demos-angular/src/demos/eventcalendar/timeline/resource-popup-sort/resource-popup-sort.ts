@@ -49,7 +49,7 @@ export class AppComponent {
   loadedEvents: MbscCalendarEvent[] = [];
   initialSortColumn: string = 'asc';
   initialSortDirection: string = 'standby';
-  sortColumn: string = '';
+  sortColumn: string = 'standby';
   sortDirection: string = 'asc';
   selectedMetric: string = 'standby';
   selectedMetricDesc: string = 'Standby Time';

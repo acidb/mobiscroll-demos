@@ -394,10 +394,10 @@ export default {
         .mobiscroll()
         .eventcalendar({
           clickToCreate: true,
-          dragToResize: true,
-          dragToMove: true,
-          dragToCreate: true,
           data: myEvents,
+          dragToCreate: true,
+          dragToMove: true,
+          dragToResize: true,
           view: {
             timeline: {
               type: 'week',
