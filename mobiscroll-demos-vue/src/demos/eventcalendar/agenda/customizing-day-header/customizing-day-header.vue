@@ -15,14 +15,8 @@ setOptions({
 })
 
 const myEvents = ref([])
+const myView = { agenda: { type: 'month', showEmptyDays: true } }
 const isToastOpen = ref(false)
-
-const myView = {
-  agenda: {
-    type: 'month',
-    showEmptyDays: true
-  }
-}
 
 function addEvent(date) {
   const newEvent = {
@@ -46,7 +40,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <MbscEventcalendar cssClass="mds-custom-day-header" :view="myView" :data="myEvents">
+  <MbscEventcalendar cssClass="mds-custom-day-header" :data="myEvents" :view="myView">
     <template #day="day">
       <div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
         <div class="mbsc-flex-1-1">

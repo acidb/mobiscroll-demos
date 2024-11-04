@@ -8,23 +8,19 @@ export default {
       // theme
     });
 
-    var daily;
-    var weekly;
-    var monthly;
-
-    daily = mobiscroll.eventcalendar('#demo-agenda-daily', {
+    var daily = mobiscroll.eventcalendar('#demo-agenda-daily', {
       view: {
         agenda: { type: 'day' },
       },
     });
 
-    weekly = mobiscroll.eventcalendar('#demo-agenda-weekly', {
+    var weekly = mobiscroll.eventcalendar('#demo-agenda-weekly', {
       view: {
         agenda: { type: 'week' },
       },
     });
 
-    monthly = mobiscroll.eventcalendar('#demo-agenda-monthly', {
+    var monthly = mobiscroll.eventcalendar('#demo-agenda-monthly', {
       view: {
         agenda: { type: 'month' },
       },

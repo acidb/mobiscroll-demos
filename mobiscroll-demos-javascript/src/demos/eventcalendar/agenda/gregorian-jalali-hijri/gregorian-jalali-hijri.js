@@ -7,11 +7,7 @@ export default {
       // theme
     });
 
-    var gregorian;
-    var jalali;
-    var hijri;
-
-    gregorian = mobiscroll.eventcalendar('#demo-gregorian', {
+    var gregorian = mobiscroll.eventcalendar('#demo-gregorian', {
       locale: mobiscroll.localeEn,
       view: {
         calendar: { type: 'week' },
@@ -19,7 +15,7 @@ export default {
       },
     });
 
-    jalali = mobiscroll.eventcalendar('#demo-jalali', {
+    var jalali = mobiscroll.eventcalendar('#demo-jalali', {
       calendarSystem: mobiscroll.jalaliCalendar,
       locale: mobiscroll.locale.fa,
       view: {
@@ -28,7 +24,7 @@ export default {
       },
     });
 
-    hijri = mobiscroll.eventcalendar('#demo-hijri', {
+    var hijri = mobiscroll.eventcalendar('#demo-hijri', {
       calendarSystem: mobiscroll.hijriCalendar,
       locale: mobiscroll.locale.ar,
       view: {

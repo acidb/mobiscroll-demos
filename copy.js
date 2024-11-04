@@ -18,9 +18,13 @@ fse.copySync('mobiscroll-demos-vue-ts', config.demosPathPublic + '/mobiscroll-de
 
 const run = (cmd, repo) => execSync(cmd, { cwd: repo, stdio: 'inherit' });
 const sync = (repo) => {
-  run('git add .', repo);
-  run('git commit -m "Sync demos from main repository"', repo);
-  run('git push origin main', repo);
+  try {
+    run('git add .', repo);
+    run('git commit -m "Sync demos from main repository"', repo);
+    run('git push origin main', repo);
+  } catch (err) {
+    console.error('Error', err);
+  }
 };
 
 [
