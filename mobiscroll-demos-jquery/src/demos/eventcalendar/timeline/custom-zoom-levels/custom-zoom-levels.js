@@ -48,7 +48,7 @@ export default {
 
       var myCalendar = $('#demo-custom-zoom-levels')
         .mobiscroll()
-        .eventcalendar({
+        .eventcalendar('', {
           // drag,
           dragToCreate: true,
           resources: myResources,
@@ -86,8 +86,7 @@ export default {
               '</div>'
             );
           },
-        })
-        .mobiscroll('getInst');
+        });
 
       function handleZoom(zoom) {
         zoomLevel += zoom;

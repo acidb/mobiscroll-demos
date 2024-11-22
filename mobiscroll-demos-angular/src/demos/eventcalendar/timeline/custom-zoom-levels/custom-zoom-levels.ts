@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
-import { dyndatetime } from '../../../../app/app.util';
+import { Component, ViewChild } from '@angular/core';
+import { MbscEventcalendar, MbscEventcalendarView, MbscResource, setOptions } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -12,150 +11,56 @@ setOptions({
   templateUrl: './custom-zoom-levels.html',
 })
 export class AppComponent {
-  view: MbscEventcalendarView = {
+  public refDate: Date = new Date(new Date().setDate(new Date().getDate() - 10));
+
+  public zoomLevel = 4;
+  public viewMode = 'timeline';
+
+  @ViewChild('calendar', { static: false })
+  public calendar!: MbscEventcalendar;
+
+  public myView: MbscEventcalendarView = {
     timeline: {
-      type: 'month',
+      currentTimeIndicator: true,
+      zoomLevels: {
+        [-4]: { type: 'year', size: 9, resolutionHorizontal: 'year' },
+        [-3]: { type: 'month', size: 12, resolutionHorizontal: 'month' },
+        [-2]: { type: 'week', size: 9, resolutionHorizontal: 'week' },
+        [-1]: { type: 'week', size: 5, resolutionHorizontal: 'day' },
+        0: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'large' },
+        1: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
+        2: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 360, timeLabelStep: 360 },
+        3: { type: 'day', size: 3, resolutionHorizontal: 'hour', timeCellStep: 180, timeLabelStep: 360 },
+        4: { type: 'day', size: 3, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 60 },
+      },
     },
   };
 
-  myEvents: MbscCalendarEvent[] = [
-    {
-      start: dyndatetime('y,m,2'),
-      end: dyndatetime('y,m,5'),
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      start: dyndatetime('y,m,10,9'),
-      end: dyndatetime('y,m,15,15'),
-      title: 'Event 2',
-      resource: 3,
-    },
-    {
-      start: dyndatetime('y,m,12'),
-      end: dyndatetime('y,m,14'),
-      title: 'Event 3',
-      resource: 4,
-    },
-    {
-      start: dyndatetime('y,m,15,7'),
-      end: dyndatetime('y,m,20,12'),
-      title: 'Event 4',
-      resource: 5,
-    },
-    {
-      start: dyndatetime('y,m,3'),
-      end: dyndatetime('y,m,10'),
-      title: 'Event 5',
-      resource: 6,
-    },
-    {
-      start: dyndatetime('y,m,10,8'),
-      end: dyndatetime('y,m,11,20'),
-      title: 'Event 6',
-      resource: 7,
-    },
-    {
-      start: dyndatetime('y,m,22'),
-      end: dyndatetime('y,m,28'),
-      title: 'Event 7',
-      resource: 7,
-    },
-    {
-      start: dyndatetime('y,m,8'),
-      end: dyndatetime('y,m,13'),
-      title: 'Event 8',
-      resource: 15,
-    },
-    {
-      start: dyndatetime('y,m,25'),
-      end: dyndatetime('y,m,27'),
-      title: 'Event 9',
-      resource: 10,
-    },
-    {
-      start: dyndatetime('y,m,20'),
-      end: dyndatetime('y,m,23'),
-      title: 'Event 10',
-      resource: 12,
-    },
+  public myResources: MbscResource[] = [
+    { color: '#e20000', id: 1, name: 'Resource A' },
+    { color: '#76e083', id: 2, name: 'Resource B' },
+    { color: '#4981d6', id: 3, name: 'Resource C' },
+    { color: '#e25dd2', id: 4, name: 'Resource D' },
+    { color: '#1dab2f', id: 5, name: 'Resource E' },
+    { color: '#d6d145', id: 6, name: 'Resource F' },
   ];
 
-  myResources = [
-    {
-      id: 1,
-      name: 'Resource A',
-      color: '#e20000',
-    },
-    {
-      id: 2,
-      name: 'Resource B',
-      color: '#76e083',
-    },
-    {
-      id: 3,
-      name: 'Resource C',
-      color: '#4981d6',
-    },
-    {
-      id: 4,
-      name: 'Resource D',
-      color: '#e25dd2',
-    },
-    {
-      id: 5,
-      name: 'Resource E',
-      color: '#1dab2f',
-    },
-    {
-      id: 6,
-      name: 'Resource F',
-      color: '#d6d145',
-    },
-    {
-      id: 7,
-      name: 'Resource G',
-      color: '#34c8e0',
-    },
-    {
-      id: 8,
-      name: 'Resource H',
-      color: '#9dde46',
-    },
-    {
-      id: 9,
-      name: 'Resource I',
-      color: '#166f6f',
-    },
-    {
-      id: 10,
-      name: 'Resource J',
-      color: '#f7961e',
-    },
-    {
-      id: 11,
-      name: 'Resource K',
-      color: '#34c8e0',
-    },
-    {
-      id: 12,
-      name: 'Resource L',
-      color: '#af0000',
-    },
-    {
-      id: 13,
-      name: 'Resource M',
-      color: '#446f1c',
-    },
-    {
-      id: 14,
-      name: 'Resource N',
-      color: '#073138',
-    },
-    {
-      id: 15,
-      name: 'Resource O',
-      color: '#4caf00',
-    },
-  ];
+  public handleZoom(zoom: number): void {
+    this.zoomLevel += zoom;
+    const viewDate = this.calendar?.getViewDate() || new Date();
+
+    const newRefDateMap: { [key: number]: Date } = {
+      [-4]: new Date(viewDate.getFullYear() - 4, 0, 1),
+      [-3]: new Date(viewDate.getFullYear(), viewDate.getMonth() - 5, 1),
+      [-2]: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 28),
+      [-1]: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
+      0: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
+      1: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
+      2: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
+      3: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1),
+      4: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1),
+    };
+
+    this.refDate = newRefDateMap[this.zoomLevel] || viewDate;
+  }
 }
