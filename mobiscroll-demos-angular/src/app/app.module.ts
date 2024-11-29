@@ -342,8 +342,8 @@ import { AppComponent as Demo387 } from '../demos/pickers/select/themes-ios-mate
 import { AppComponent as Demo276 } from '../demos/pickers/select/event-hooks/event-hooks';
 import { AppComponent as Demo471 } from '../demos/pickers/select/localization/localization';
 import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
-// ??
-import { AppComponent as Demo999 } from '../demos/eventcalendar/timeline/resource-popup-sort/resource-popup-sort';
+
+import { AppComponent as DemoZoom } from '../demos/eventcalendar/timeline/custom-zoom-levels/custom-zoom-levels';
 
 export const demos: any[] = [
   {
@@ -979,6 +979,7 @@ export const demos: any[] = [
               { name: 'Event buffer', unique: 'event-buffer', component: Demo739 },
               { name: 'View with custom range picker', unique: 'custom-range-view', component: Demo697 },
               { name: 'Custom event order', unique: 'custom-event-sort', component: Demo749 },
+              { name: 'Custom zoom levels', unique: 'custom-zoom-levels', component: DemoZoom },
               { name: 'Equal row height', unique: 'timeline-resource-height', component: Demo608 },
               { name: 'Variable event height', unique: 'variable-event-height', component: Demo744 },
               { name: 'Daily event summary', unique: 'event-listing', component: Demo620 },
@@ -1255,6 +1256,7 @@ export const demoTitleMap: { [key: string]: string } = {};
 @NgModule({
   declarations: [
     Demo999,
+    DemoZoom,
     Demo439,
     Demo571,
     Demo529,

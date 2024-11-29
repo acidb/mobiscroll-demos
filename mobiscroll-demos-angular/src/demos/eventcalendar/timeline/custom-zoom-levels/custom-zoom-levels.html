@@ -1,0 +1,5 @@
+<mbsc-button (click)="handleZoom(1)" [disabled]="zoomLevel === 4">Zoom In</mbsc-button>
+<span>{{ zoomLevel }}</span>
+<mbsc-button (click)="handleZoom(-1)" [disabled]="zoomLevel === -4">Zoom Out</mbsc-button>
+<mbsc-eventcalendar #calendar [zoomLevel]="zoomLevel" [dragToCreate]="true" [view]="myView" [refDate]="refDate" [resources]="myResources">
+</mbsc-eventcalendar>
