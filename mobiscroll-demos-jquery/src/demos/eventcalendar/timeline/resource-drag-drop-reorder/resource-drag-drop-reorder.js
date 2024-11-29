@@ -68,9 +68,10 @@ export default {
             timeline: {
               type: 'month',
               resolutionHorizontal: 'day',
-              resourceOrder: false,
+              resourceReorder: false,
             },
           },
+          immutableData: true,
           data: [
             { title: 'Event 1', start: 'dyndatetime(y,m,1)', end: 'dyndatetime(y,m,5)', resource: 14, color: 'green' },
             { title: 'Event 2', start: 'dyndatetime(y,m,3)', end: 'dyndatetime(y,m,7)', resource: 2, color: 'blue' },
@@ -134,7 +135,7 @@ export default {
               '<div mbsc-calendar-nav class="mds-header-filter-nav"></div>' +
               '<div class="mds-header-filter mbsc-flex mbsc-flex-1-1">' +
               '<button mbsc-button data-start-icon="material-format-list-numbered" data-variant="flat" class="mds-reorder-switch mds-enable">Reorder resources</button>' +
-              '<button mbsc-button class="mds-reorder-save mds-update">Save resource order</button>' +
+              '<button mbsc-button class="mds-reorder-save mds-update">Save</button>' +
               '<button mbsc-button class="mds-reorder-cancel mds-update ">Cancel</button>' +
               '<div class="mds-header-filter-separator"></div>' +
               '<button mbsc-calendar-prev></button>' +
@@ -161,7 +162,7 @@ export default {
           view: {
             timeline: {
               type: 'month',
-              resourceOrder: true,
+              resourceReorder: true,
             },
           },
         });
@@ -174,7 +175,7 @@ export default {
           view: {
             timeline: {
               type: 'month',
-              resourceOrder: false,
+              resourceReorder: false,
             },
           },
         });
@@ -197,7 +198,7 @@ export default {
           view: {
             timeline: {
               type: 'month',
-              resourceOrder: false,
+              resourceReorder: false,
             },
           },
         });

@@ -117,23 +117,24 @@ const events = [
 const defaultView = {
   timeline: {
     type: 'month',
-    resourceOrder: false,
+    resourceReorder: false,
   },
 };
 
 function App() {
   const [myResources, setResources] = useState(resources);
-  const [tempResources, setTempResources] = useState([]);
+  const [tempResources, setTempResources] = useState([...resources]);
   const [myView, setView] = useState(defaultView);
   const [isReorder, setReorder] = useState(false);
   const [isToastOpen, setToastOpen] = useState(false);
   const [message, setMessage] = useState('');
+
   const enableReorder = useCallback(() => {
     setReorder(true);
     setView({
       timeline: {
         type: 'month',
-        resourceOrder: true,
+        resourceReorder: true,
       },
     });
   }, []);
@@ -141,12 +142,6 @@ function App() {
   const showToast = useCallback((msg) => {
     setMessage(msg);
     setToastOpen(true);
-    // setView({
-    //   timeline: {
-    //     type: 'month',
-    //     resourceOrder: false,
-    //   },
-    // });
   }, []);
 
   const saveReorder = useCallback(() => {
@@ -154,7 +149,7 @@ function App() {
     setView({
       timeline: {
         type: 'month',
-        resourceOrder: false,
+        resourceReorder: false,
       },
     });
     setResources([...tempResources]);
@@ -166,7 +161,7 @@ function App() {
     setView({
       timeline: {
         type: 'month',
-        resourceOrder: false,
+        resourceReorder: false,
       },
     });
     showToast('Resource order canceled');
@@ -201,7 +196,7 @@ function App() {
           {isReorder && (
             <>
               <Button className="mds-reorder-save mds-update" onClick={saveReorder}>
-                Save resource order
+                Save
               </Button>
               <Button className="mds-reorder-cancel mds-update " onClick={cancelReorder}>
                 Cancel
@@ -222,6 +217,7 @@ function App() {
     <>
       <Eventcalendar
         resources={myResources}
+        immutableData={true}
         view={myView}
         data={events}
         renderHeader={customHeader}

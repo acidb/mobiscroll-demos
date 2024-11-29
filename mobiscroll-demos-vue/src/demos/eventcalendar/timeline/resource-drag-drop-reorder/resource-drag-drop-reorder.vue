@@ -378,7 +378,7 @@ const tempResources = ref([])
 const myView = ref({
   timeline: {
     type: 'month',
-    resourceOrder: false
+    resourceReorder: false
   }
 })
 
@@ -387,7 +387,7 @@ const enableReorder = () => {
   myView.value = {
     timeline: {
       type: 'month',
-      resourceOrder: true
+      resourceReorder: true
     }
   }
 }
@@ -397,7 +397,7 @@ function saveReorder() {
   myView.value = {
     timeline: {
       type: 'month',
-      resourceOrder: false
+      resourceReorder: false
     }
   }
   myResources.value = tempResources
@@ -410,7 +410,7 @@ function cancelReorder() {
   myView.value = {
     timeline: {
       type: 'month',
-      resourceOrder: false
+      resourceReorder: false
     }
   }
   showToast('Resource order canceled')
@@ -438,6 +438,7 @@ function handleToastClose() {
   <MbscEventcalendar
     :view="myView"
     :data="myEvents"
+    :immutable-data="true"
     :resources="myResources"
     :onResourceOrderUpdate="handleResourceOrder"
   >
@@ -454,7 +455,7 @@ function handleToastClose() {
         </MbscButton>
 
         <MbscButton @click="saveReorder()" className="mds-reorder-save mds-update" v-if="isReorder">
-          Save resource order
+          Save
         </MbscButton>
         <MbscButton
           @click="cancelReorder()"
