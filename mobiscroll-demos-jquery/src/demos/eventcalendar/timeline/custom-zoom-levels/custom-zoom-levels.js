@@ -14,36 +14,12 @@ export default {
       var refDate = new Date().setDate(new Date().getDate() - 10);
 
       var myResources = [
-        {
-          id: 1,
-          name: 'Resource A',
-          color: '#e20000',
-        },
-        {
-          id: 2,
-          name: 'Resource B',
-          color: '#76e083',
-        },
-        {
-          id: 3,
-          name: 'Resource C',
-          color: '#4981d6',
-        },
-        {
-          id: 4,
-          name: 'Resource D',
-          color: '#e25dd2',
-        },
-        {
-          id: 5,
-          name: 'Resource E',
-          color: '#1dab2f',
-        },
-        {
-          id: 6,
-          name: 'Resource F',
-          color: '#d6d145',
-        },
+        { id: 1, name: 'Resource A', color: '#e20000' },
+        { id: 2, name: 'Resource B', color: '#76e083' },
+        { id: 3, name: 'Resource C', color: '#4981d6' },
+        { id: 4, name: 'Resource D', color: '#e25dd2' },
+        { id: 5, name: 'Resource E', color: '#1dab2f' },
+        { id: 6, name: 'Resource F', color: '#d6d145' },
       ];
 
       var myCalendar = $('#demo-custom-zoom-levels')
@@ -65,8 +41,8 @@ export default {
                 0: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'large' },
                 1: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
                 2: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 360, timeLabelStep: 360 },
-                3: { type: 'day', size: 3, resolutionHorizontal: 'hour', timeCellStep: 180, timeLabelStep: 360 },
-                4: { type: 'day', size: 3, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 60 },
+                3: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 180, timeLabelStep: 360 },
+                4: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 60 },
               },
             },
           },
@@ -103,8 +79,8 @@ export default {
           0: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
           1: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
           2: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
-          3: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1),
-          4: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1),
+          3: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
+          4: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
         };
 
         myCalendar.setOptions({
