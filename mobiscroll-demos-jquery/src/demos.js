@@ -335,9 +335,8 @@ import Demo387 from './demos/pickers/select/themes-ios-material-windows/themes-i
 import Demo276 from './demos/pickers/select/event-hooks/event-hooks';
 import Demo471 from './demos/pickers/select/localization/localization';
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
-// ??
-import Demo999 from './demos/eventcalendar/timeline/resource-popup-sort/resource-popup-sort';
-import Demo1000 from './demos/eventcalendar/timeline/custom-zoom-levels/custom-zoom-levels';
+
+import DemoZoom from './demos/eventcalendar/timeline/custom-zoom-levels/custom-zoom-levels';
 
 export const demos = [
   {
@@ -973,7 +972,7 @@ export const demos = [
               { name: 'Event buffer', unique: 'event-buffer', component: Demo739 },
               { name: 'View with custom range picker', unique: 'custom-range-view', component: Demo697 },
               { name: 'Custom event order', unique: 'custom-event-sort', component: Demo749 },
-              { name: 'Custom zoom levels', unique: 'custom-zoom-levels', component: Demo1000 },
+              { name: 'Custom zoom levels', unique: 'custom-zoom-levels', component: DemoZoom },
               { name: 'Equal row height', unique: 'timeline-resource-height', component: Demo608 },
               { name: 'Variable event height', unique: 'variable-event-height', component: Demo744 },
               { name: 'Daily event summary', unique: 'event-listing', component: Demo620 },
@@ -1015,7 +1014,6 @@ export const demos = [
             unique: 17,
             items: [
               { name: 'Resource grid', unique: 'timeline-resource-details-side-panel-footer', component: Demo607 },
-              { name: 'Resource popup sort', unique: 'resource-popup-sort', component: Demo999 },
               { name: 'Resource grouping & hierarchy', unique: 'resource-grouping-hierarchy', component: Demo625 },
               { name: 'Resource group summaries', unique: 'show-summaries-aggregates-for-resource-groups', component: Demo747 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
