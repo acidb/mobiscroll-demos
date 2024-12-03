@@ -1,11 +1,11 @@
 <script setup>
 import {
-  MbscEventcalendar,
   MbscButton,
-  MbscCalendarToday,
-  MbscCalendarPrev,
   MbscCalendarNav,
   MbscCalendarNext,
+  MbscCalendarPrev,
+  MbscCalendarToday,
+  MbscEventcalendar,
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
@@ -20,6 +20,7 @@ const toastMessage = ref('')
 const isToastOpen = ref(false)
 const myEvents = [
   {
+    id: 1,
     title: 'Event 1',
     start: 'dyndatetime(y,m,1)',
     end: 'dyndatetime(y,m,5)',
@@ -27,6 +28,7 @@ const myEvents = [
     color: 'green'
   },
   {
+    id: 2,
     title: 'Event 2',
     start: 'dyndatetime(y,m,3)',
     end: 'dyndatetime(y,m,7)',
@@ -34,6 +36,7 @@ const myEvents = [
     color: 'blue'
   },
   {
+    id: 3,
     title: 'Event 3',
     start: 'dyndatetime(y,m,5)',
     end: 'dyndatetime(y,m,10)',
@@ -41,6 +44,7 @@ const myEvents = [
     color: 'red'
   },
   {
+    id: 4,
     title: 'Event 4',
     start: 'dyndatetime(y,m,7)',
     end: 'dyndatetime(y,m,11)',
@@ -48,6 +52,7 @@ const myEvents = [
     color: 'yellow'
   },
   {
+    id: 5,
     title: 'Event 5',
     start: 'dyndatetime(y,m,9)',
     end: 'dyndatetime(y,m,12)',
@@ -56,6 +61,7 @@ const myEvents = [
   },
   //<hidden>
   {
+    id: 6,
     title: 'Event 6',
     start: 'dyndatetime(y,m,11)',
     end: 'dyndatetime(y,m,15)',
@@ -63,6 +69,7 @@ const myEvents = [
     color: 'orange'
   },
   {
+    id: 7,
     title: 'Event 7',
     start: 'dyndatetime(y,m,13)',
     end: 'dyndatetime(y,m,17)',
@@ -70,6 +77,7 @@ const myEvents = [
     color: 'pink'
   },
   {
+    id: 8,
     title: 'Event 8',
     start: 'dyndatetime(y,m,15)',
     end: 'dyndatetime(y,m,19)',
@@ -77,6 +85,7 @@ const myEvents = [
     color: 'cyan'
   },
   {
+    id: 9,
     title: 'Event 9',
     start: 'dyndatetime(y,m,17)',
     end: 'dyndatetime(y,m,21)',
@@ -84,6 +93,7 @@ const myEvents = [
     color: 'magenta'
   },
   {
+    id: 10,
     title: 'Event 10',
     start: 'dyndatetime(y,m,19)',
     end: 'dyndatetime(y,m,24)',
@@ -91,6 +101,7 @@ const myEvents = [
     color: 'lime'
   },
   {
+    id: 11,
     title: 'Event 11',
     start: 'dyndatetime(y,m,21)',
     end: 'dyndatetime(y,m,25)',
@@ -98,6 +109,7 @@ const myEvents = [
     color: 'green'
   },
   {
+    id: 12,
     title: 'Event 12',
     start: 'dyndatetime(y,m,26)',
     end: 'dyndatetime(y,m,28)',
@@ -105,6 +117,7 @@ const myEvents = [
     color: 'blue'
   },
   {
+    id: 13,
     title: 'Event 13',
     start: 'dyndatetime(y,m,25)',
     end: 'dyndatetime(y,m,29)',
@@ -112,6 +125,7 @@ const myEvents = [
     color: 'red'
   },
   {
+    id: 14,
     title: 'Event 14',
     start: 'dyndatetime(y,m,28)',
     end: 'dyndatetime(y,m,31)',
@@ -119,6 +133,7 @@ const myEvents = [
     color: 'yellow'
   },
   {
+    id: 15,
     title: 'Event 15',
     start: 'dyndatetime(y,m,29)',
     end: 'dyndatetime(y,m,3)',
@@ -126,6 +141,7 @@ const myEvents = [
     color: 'purple'
   },
   {
+    id: 16,
     title: 'Event 16',
     start: 'dyndatetime(y,m,1)',
     end: 'dyndatetime(y,m,5)',
@@ -133,6 +149,7 @@ const myEvents = [
     color: 'orange'
   },
   {
+    id: 17,
     title: 'Event 17',
     start: 'dyndatetime(y,m,20)',
     end: 'dyndatetime(y,m,25)',
@@ -140,6 +157,7 @@ const myEvents = [
     color: 'pink'
   },
   {
+    id: 18,
     title: 'Event 18',
     start: 'dyndatetime(y,m,5)',
     end: 'dyndatetime(y,m,9)',
@@ -147,6 +165,7 @@ const myEvents = [
     color: 'cyan'
   },
   {
+    id: 19,
     title: 'Event 19',
     start: 'dyndatetime(y,m,7)',
     end: 'dyndatetime(y,m,11)',
@@ -154,6 +173,7 @@ const myEvents = [
     color: 'magenta'
   },
   {
+    id: 20,
     title: 'Event 20',
     start: 'dyndatetime(y,m,9)',
     end: 'dyndatetime(y,m,13)',
@@ -161,6 +181,7 @@ const myEvents = [
     color: 'lime'
   },
   {
+    id: 21,
     title: 'Event 21',
     start: 'dyndatetime(y,m,11)',
     end: 'dyndatetime(y,m,15)',
@@ -168,6 +189,7 @@ const myEvents = [
     color: 'teal'
   },
   {
+    id: 22,
     title: 'Event 22',
     start: 'dyndatetime(y,m,19)',
     end: 'dyndatetime(y,m,27)',
@@ -175,6 +197,7 @@ const myEvents = [
     color: 'violet'
   },
   {
+    id: 23,
     title: 'Event 23',
     start: 'dyndatetime(y,m,15)',
     end: 'dyndatetime(y,m,19)',
@@ -182,6 +205,7 @@ const myEvents = [
     color: 'blue'
   },
   {
+    id: 24,
     title: 'Event 24',
     start: 'dyndatetime(y,m,20)',
     end: 'dyndatetime(y,m,21)',
@@ -189,6 +213,7 @@ const myEvents = [
     color: 'cyan'
   },
   {
+    id: 25,
     title: 'Event 25',
     start: 'dyndatetime(y,m,19)',
     end: 'dyndatetime(y,m,23)',
@@ -196,6 +221,7 @@ const myEvents = [
     color: 'orange'
   },
   {
+    id: 26,
     title: 'Event 26',
     start: 'dyndatetime(y,m,21)',
     end: 'dyndatetime(y,m,25)',
@@ -203,6 +229,7 @@ const myEvents = [
     color: 'green'
   },
   {
+    id: 27,
     title: 'Event 27',
     start: 'dyndatetime(y,m,23)',
     end: 'dyndatetime(y,m,27)',
@@ -210,6 +237,7 @@ const myEvents = [
     color: 'yellow'
   },
   {
+    id: 28,
     title: 'Event 28',
     start: 'dyndatetime(y,m,26)',
     end: 'dyndatetime(y,m,30)',
@@ -217,6 +245,7 @@ const myEvents = [
     color: 'pink'
   },
   {
+    id: 29,
     title: 'Event 29',
     start: 'dyndatetime(y,m,27)',
     end: 'dyndatetime(y,m,31)',
@@ -224,6 +253,7 @@ const myEvents = [
     color: 'magenta'
   },
   {
+    id: 30,
     title: 'Event 30',
     start: 'dyndatetime(y,m,12)',
     end: 'dyndatetime(y,m,18)',
@@ -231,6 +261,7 @@ const myEvents = [
     color: 'lime'
   },
   {
+    id: 31,
     title: 'Event 31',
     start: 'dyndatetime(y,m,8)',
     end: 'dyndatetime(y,m,11)',
@@ -238,6 +269,7 @@ const myEvents = [
     color: 'green'
   },
   {
+    id: 32,
     title: 'Event 32',
     start: 'dyndatetime(y,m,4)',
     end: 'dyndatetime(y,m,10)',
@@ -245,6 +277,7 @@ const myEvents = [
     color: 'blue'
   },
   {
+    id: 33,
     title: 'Event 33',
     start: 'dyndatetime(y,m,3)',
     end: 'dyndatetime(y,m,8)',
@@ -252,6 +285,7 @@ const myEvents = [
     color: 'red'
   },
   {
+    id: 34,
     title: 'Event 34',
     start: 'dyndatetime(y,m,7)',
     end: 'dyndatetime(y,m,13)',
@@ -259,6 +293,7 @@ const myEvents = [
     color: 'yellow'
   },
   {
+    id: 35,
     title: 'Event 35',
     start: 'dyndatetime(y,m,18)',
     end: 'dyndatetime(y,m,26)',
@@ -266,6 +301,7 @@ const myEvents = [
     color: 'purple'
   },
   {
+    id: 36,
     title: 'Event 36',
     start: 'dyndatetime(y,m,9)',
     end: 'dyndatetime(y,m,14)',
@@ -273,6 +309,7 @@ const myEvents = [
     color: 'orange'
   },
   {
+    id: 37,
     title: 'Event 37',
     start: 'dyndatetime(y,m,8)',
     end: 'dyndatetime(y,m,16)',
@@ -280,6 +317,7 @@ const myEvents = [
     color: 'pink'
   },
   {
+    id: 38,
     title: 'Event 38',
     start: 'dyndatetime(y,m,11)',
     end: 'dyndatetime(y,m,19)',
@@ -287,6 +325,7 @@ const myEvents = [
     color: 'cyan'
   },
   {
+    id: 39,
     title: 'Event 39',
     start: 'dyndatetime(y,m,7)',
     end: 'dyndatetime(y,m,11)',
@@ -294,6 +333,7 @@ const myEvents = [
     color: 'magenta'
   },
   {
+    id: 40,
     title: 'Event 40',
     start: 'dyndatetime(y,m,6)',
     end: 'dyndatetime(y,m,15)',
@@ -301,6 +341,7 @@ const myEvents = [
     color: 'lime'
   },
   {
+    id: 41,
     title: 'Event 41',
     start: 'dyndatetime(y,m,13)',
     end: 'dyndatetime(y,m,21)',
@@ -308,6 +349,7 @@ const myEvents = [
     color: 'teal'
   },
   {
+    id: 42,
     title: 'Event 42',
     start: 'dyndatetime(y,m,22)',
     end: 'dyndatetime(y,m,29)',
@@ -315,6 +357,7 @@ const myEvents = [
     color: 'violet'
   },
   {
+    id: 43,
     title: 'Event 43',
     start: 'dyndatetime(y,m,1)',
     end: 'dyndatetime(y,m,9)',
@@ -373,7 +416,7 @@ const myResources = ref([
   },
   { id: 26, name: 'Resource 22' }
 ])
-const tempResources = ref([])
+const tempResources = ref([...myResources.value])
 
 const myView = ref({
   timeline: {
@@ -400,7 +443,7 @@ function saveReorder() {
       resourceReorder: false
     }
   }
-  myResources.value = tempResources
+  myResources.value = tempResources.value
 }
 
 function cancelReorder() {
@@ -417,10 +460,11 @@ function cancelReorder() {
 }
 
 function handleResourceOrder(args) {
-  tempResources.value = args.resources
   if (args.parent && args.parent.id === 11) {
     showToast('Drop to Group 2 is not allowed!')
     return false
+  } else {
+    tempResources.value = args.resources
   }
 }
 
@@ -440,7 +484,7 @@ function handleToastClose() {
     :data="myEvents"
     :immutable-data="true"
     :resources="myResources"
-    :onResourceOrderUpdate="handleResourceOrder"
+    @resource-order-update="handleResourceOrder"
   >
     <template #header>
       <MbscCalendarNav className="md-custom-header-nav"></MbscCalendarNav>
@@ -453,7 +497,6 @@ function handleToastClose() {
         >
           Reorder resources
         </MbscButton>
-
         <MbscButton @click="saveReorder()" className="mds-reorder-save mds-update" v-if="isReorder">
           Save
         </MbscButton>

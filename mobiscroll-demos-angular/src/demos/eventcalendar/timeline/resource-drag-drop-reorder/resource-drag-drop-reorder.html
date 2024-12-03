@@ -2,6 +2,7 @@
   [view]="myView"
   [data]="myEvents"
   [resources]="myResources"
+  [immutableData]="true"
   [onResourceOrderUpdate]="handleResourceOrder"
   headerTemplate="header"
 >
@@ -11,7 +12,6 @@
       <mbsc-button (click)="enableReorder()" variant="flat" class="mds-reorder-switch mds-enable" *ngIf="!isReorder">
         Reorder resources
       </mbsc-button>
-
       <mbsc-button (click)="saveReorder()" class="mds-reorder-save mds-update" *ngIf="isReorder"> Save </mbsc-button>
       <mbsc-button (click)="cancelReorder()" class="mds-reorder-save mds-update" *ngIf="isReorder"> Cancel </mbsc-button>
       <div class="mds-header-filter-separator"></div>

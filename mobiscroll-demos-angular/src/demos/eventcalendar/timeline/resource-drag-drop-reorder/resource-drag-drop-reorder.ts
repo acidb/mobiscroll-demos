@@ -75,9 +75,10 @@ export class AppComponent {
     },
     { id: 26, name: 'Resource 22' },
   ];
-  tempResources: MbscResource[] = [];
+  tempResources: MbscResource[] = [...this.myResources];
   myEvents: MbscCalendarEvent[] = [
     {
+      id: 1,
       title: 'Event 1',
       start: 'dyndatetime(y,m,1)',
       end: 'dyndatetime(y,m,5)',
@@ -85,6 +86,7 @@ export class AppComponent {
       color: 'green',
     },
     {
+      id: 2,
       title: 'Event 2',
       start: 'dyndatetime(y,m,3)',
       end: 'dyndatetime(y,m,7)',
@@ -92,6 +94,7 @@ export class AppComponent {
       color: 'blue',
     },
     {
+      id: 3,
       title: 'Event 3',
       start: 'dyndatetime(y,m,5)',
       end: 'dyndatetime(y,m,10)',
@@ -99,6 +102,7 @@ export class AppComponent {
       color: 'red',
     },
     {
+      id: 4,
       title: 'Event 4',
       start: 'dyndatetime(y,m,7)',
       end: 'dyndatetime(y,m,11)',
@@ -106,6 +110,7 @@ export class AppComponent {
       color: 'yellow',
     },
     {
+      id: 5,
       title: 'Event 5',
       start: 'dyndatetime(y,m,9)',
       end: 'dyndatetime(y,m,12)',
@@ -114,6 +119,7 @@ export class AppComponent {
     },
     //<hidden>
     {
+      id: 6,
       title: 'Event 6',
       start: 'dyndatetime(y,m,11)',
       end: 'dyndatetime(y,m,15)',
@@ -121,6 +127,7 @@ export class AppComponent {
       color: 'orange',
     },
     {
+      id: 7,
       title: 'Event 7',
       start: 'dyndatetime(y,m,13)',
       end: 'dyndatetime(y,m,17)',
@@ -128,6 +135,7 @@ export class AppComponent {
       color: 'pink',
     },
     {
+      id: 8,
       title: 'Event 8',
       start: 'dyndatetime(y,m,15)',
       end: 'dyndatetime(y,m,19)',
@@ -135,6 +143,7 @@ export class AppComponent {
       color: 'cyan',
     },
     {
+      id: 9,
       title: 'Event 9',
       start: 'dyndatetime(y,m,17)',
       end: 'dyndatetime(y,m,21)',
@@ -142,6 +151,7 @@ export class AppComponent {
       color: 'magenta',
     },
     {
+      id: 10,
       title: 'Event 10',
       start: 'dyndatetime(y,m,19)',
       end: 'dyndatetime(y,m,24)',
@@ -149,6 +159,7 @@ export class AppComponent {
       color: 'lime',
     },
     {
+      id: 11,
       title: 'Event 11',
       start: 'dyndatetime(y,m,21)',
       end: 'dyndatetime(y,m,25)',
@@ -156,6 +167,7 @@ export class AppComponent {
       color: 'green',
     },
     {
+      id: 12,
       title: 'Event 12',
       start: 'dyndatetime(y,m,26)',
       end: 'dyndatetime(y,m,28)',
@@ -163,6 +175,7 @@ export class AppComponent {
       color: 'blue',
     },
     {
+      id: 13,
       title: 'Event 13',
       start: 'dyndatetime(y,m,25)',
       end: 'dyndatetime(y,m,29)',
@@ -170,6 +183,7 @@ export class AppComponent {
       color: 'red',
     },
     {
+      id: 14,
       title: 'Event 14',
       start: 'dyndatetime(y,m,28)',
       end: 'dyndatetime(y,m,31)',
@@ -177,6 +191,7 @@ export class AppComponent {
       color: 'yellow',
     },
     {
+      id: 15,
       title: 'Event 15',
       start: 'dyndatetime(y,m,29)',
       end: 'dyndatetime(y,m,3)',
@@ -184,6 +199,7 @@ export class AppComponent {
       color: 'purple',
     },
     {
+      id: 16,
       title: 'Event 16',
       start: 'dyndatetime(y,m,1)',
       end: 'dyndatetime(y,m,5)',
@@ -191,6 +207,7 @@ export class AppComponent {
       color: 'orange',
     },
     {
+      id: 17,
       title: 'Event 17',
       start: 'dyndatetime(y,m,20)',
       end: 'dyndatetime(y,m,25)',
@@ -198,6 +215,7 @@ export class AppComponent {
       color: 'pink',
     },
     {
+      id: 18,
       title: 'Event 18',
       start: 'dyndatetime(y,m,5)',
       end: 'dyndatetime(y,m,9)',
@@ -205,6 +223,7 @@ export class AppComponent {
       color: 'cyan',
     },
     {
+      id: 19,
       title: 'Event 19',
       start: 'dyndatetime(y,m,7)',
       end: 'dyndatetime(y,m,11)',
@@ -212,6 +231,7 @@ export class AppComponent {
       color: 'magenta',
     },
     {
+      id: 20,
       title: 'Event 20',
       start: 'dyndatetime(y,m,9)',
       end: 'dyndatetime(y,m,13)',
@@ -219,6 +239,7 @@ export class AppComponent {
       color: 'lime',
     },
     {
+      id: 21,
       title: 'Event 21',
       start: 'dyndatetime(y,m,11)',
       end: 'dyndatetime(y,m,15)',
@@ -226,6 +247,7 @@ export class AppComponent {
       color: 'teal',
     },
     {
+      id: 22,
       title: 'Event 22',
       start: 'dyndatetime(y,m,19)',
       end: 'dyndatetime(y,m,27)',
@@ -233,6 +255,7 @@ export class AppComponent {
       color: 'violet',
     },
     {
+      id: 23,
       title: 'Event 23',
       start: 'dyndatetime(y,m,15)',
       end: 'dyndatetime(y,m,19)',
@@ -240,6 +263,7 @@ export class AppComponent {
       color: 'blue',
     },
     {
+      id: 24,
       title: 'Event 24',
       start: 'dyndatetime(y,m,20)',
       end: 'dyndatetime(y,m,21)',
@@ -247,6 +271,7 @@ export class AppComponent {
       color: 'cyan',
     },
     {
+      id: 25,
       title: 'Event 25',
       start: 'dyndatetime(y,m,19)',
       end: 'dyndatetime(y,m,23)',
@@ -254,6 +279,7 @@ export class AppComponent {
       color: 'orange',
     },
     {
+      id: 26,
       title: 'Event 26',
       start: 'dyndatetime(y,m,21)',
       end: 'dyndatetime(y,m,25)',
@@ -261,6 +287,7 @@ export class AppComponent {
       color: 'green',
     },
     {
+      id: 27,
       title: 'Event 27',
       start: 'dyndatetime(y,m,23)',
       end: 'dyndatetime(y,m,27)',
@@ -268,6 +295,7 @@ export class AppComponent {
       color: 'yellow',
     },
     {
+      id: 28,
       title: 'Event 28',
       start: 'dyndatetime(y,m,26)',
       end: 'dyndatetime(y,m,30)',
@@ -275,6 +303,7 @@ export class AppComponent {
       color: 'pink',
     },
     {
+      id: 29,
       title: 'Event 29',
       start: 'dyndatetime(y,m,27)',
       end: 'dyndatetime(y,m,31)',
@@ -282,6 +311,7 @@ export class AppComponent {
       color: 'magenta',
     },
     {
+      id: 30,
       title: 'Event 30',
       start: 'dyndatetime(y,m,12)',
       end: 'dyndatetime(y,m,18)',
@@ -289,6 +319,7 @@ export class AppComponent {
       color: 'lime',
     },
     {
+      id: 31,
       title: 'Event 31',
       start: 'dyndatetime(y,m,8)',
       end: 'dyndatetime(y,m,11)',
@@ -296,6 +327,7 @@ export class AppComponent {
       color: 'green',
     },
     {
+      id: 32,
       title: 'Event 32',
       start: 'dyndatetime(y,m,4)',
       end: 'dyndatetime(y,m,10)',
@@ -303,6 +335,7 @@ export class AppComponent {
       color: 'blue',
     },
     {
+      id: 33,
       title: 'Event 33',
       start: 'dyndatetime(y,m,3)',
       end: 'dyndatetime(y,m,8)',
@@ -310,6 +343,7 @@ export class AppComponent {
       color: 'red',
     },
     {
+      id: 34,
       title: 'Event 34',
       start: 'dyndatetime(y,m,7)',
       end: 'dyndatetime(y,m,13)',
@@ -317,6 +351,7 @@ export class AppComponent {
       color: 'yellow',
     },
     {
+      id: 35,
       title: 'Event 35',
       start: 'dyndatetime(y,m,18)',
       end: 'dyndatetime(y,m,26)',
@@ -324,6 +359,7 @@ export class AppComponent {
       color: 'purple',
     },
     {
+      id: 36,
       title: 'Event 36',
       start: 'dyndatetime(y,m,9)',
       end: 'dyndatetime(y,m,14)',
@@ -331,6 +367,7 @@ export class AppComponent {
       color: 'orange',
     },
     {
+      id: 37,
       title: 'Event 37',
       start: 'dyndatetime(y,m,8)',
       end: 'dyndatetime(y,m,16)',
@@ -338,6 +375,7 @@ export class AppComponent {
       color: 'pink',
     },
     {
+      id: 38,
       title: 'Event 38',
       start: 'dyndatetime(y,m,11)',
       end: 'dyndatetime(y,m,19)',
@@ -345,6 +383,7 @@ export class AppComponent {
       color: 'cyan',
     },
     {
+      id: 39,
       title: 'Event 39',
       start: 'dyndatetime(y,m,7)',
       end: 'dyndatetime(y,m,11)',
@@ -352,6 +391,7 @@ export class AppComponent {
       color: 'magenta',
     },
     {
+      id: 40,
       title: 'Event 40',
       start: 'dyndatetime(y,m,6)',
       end: 'dyndatetime(y,m,15)',
@@ -359,6 +399,7 @@ export class AppComponent {
       color: 'lime',
     },
     {
+      id: 41,
       title: 'Event 41',
       start: 'dyndatetime(y,m,13)',
       end: 'dyndatetime(y,m,21)',
@@ -366,6 +407,7 @@ export class AppComponent {
       color: 'teal',
     },
     {
+      id: 42,
       title: 'Event 42',
       start: 'dyndatetime(y,m,22)',
       end: 'dyndatetime(y,m,29)',
@@ -373,6 +415,7 @@ export class AppComponent {
       color: 'violet',
     },
     {
+      id: 43,
       title: 'Event 43',
       start: 'dyndatetime(y,m,1)',
       end: 'dyndatetime(y,m,9)',
@@ -424,10 +467,11 @@ export class AppComponent {
   }
 
   handleResourceOrder(args: MbscResourceOrderEvent) {
-    this.tempResources = args.resource;
     if (args.parent && args.parent.id === 11) {
       this.showToast('Drop to Group 2 is not allowed!');
       return false;
+    } else {
+      this.tempResources = args.resources;
     }
   }
   showToast(message: string): void {
