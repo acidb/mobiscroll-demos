@@ -5,13 +5,17 @@ import {
   CalendarPrev,
   CalendarToday,
   Eventcalendar,
+  MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscEventCreateEvent,
+  MbscEventDeleteEvent,
+  MbscEventUpdateEvent,
   MbscResource,
   MbscResourceOrderEvent,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, Fragment, useCallback, useState } from 'react';
+import { FC, Fragment, useCallback, useRef, useState } from 'react';
 import './resource-drag-drop-reorder.css';
 
 setOptions({
@@ -127,45 +131,53 @@ const defaultView: MbscEventcalendarView = {
 const App: FC = () => {
   const [myResources, setResources] = useState<MbscResource[]>(resources);
   const [tempResources, setTempResources] = useState<MbscResource[]>([...resources]);
-  const [myView, setView] = useState<MbscEventcalendarView>(defaultView);
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>(events);
+  const myView = useRef<MbscEventcalendarView>(defaultView);
   const [isReorder, setReorder] = useState(false);
   const [isToastOpen, setToastOpen] = useState(false);
   const [message, setMessage] = useState('');
   const enableReorder = useCallback(() => {
     setReorder(true);
-    setView({
+    myView.current = {
       timeline: {
         type: 'month',
         resourceReorder: true,
       },
-    });
+    };
   }, []);
 
-  const showToast = useCallback((msg: string) => {
-    setMessage(msg);
-    setToastOpen(true);
-  }, []);
+  const showToast = useCallback(
+    (msg: string) => {
+      setMessage(msg);
+      setToastOpen(true);
+    },
+    [message],
+  );
+
+  const onToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, [isToastOpen]);
 
   const saveReorder = useCallback(() => {
     setReorder(false);
-    setView({
+    myView.current = {
       timeline: {
         type: 'month',
         resourceReorder: false,
       },
-    });
+    };
     setResources([...tempResources]);
   }, [tempResources]);
 
   const cancelReorder = useCallback(() => {
     setReorder(false);
     setResources([...myResources]);
-    setView({
+    myView.current = {
       timeline: {
         type: 'month',
         resourceReorder: false,
       },
-    });
+    };
     showToast('Resource order canceled');
   }, [showToast, myResources]);
 
@@ -180,7 +192,31 @@ const App: FC = () => {
     },
     [showToast],
   );
-  console.log('Resourceheheights');
+
+  const handleEventUpdate = useCallback(
+    (args: MbscEventUpdateEvent) => {
+      const newEvent = args.event;
+      const eventIndex = myEvents.findIndex((e) => e.id === newEvent.id);
+      const newEventList = [...myEvents];
+      newEventList.splice(eventIndex, 1, newEvent);
+      setEvents(newEventList);
+    },
+    [myEvents],
+  );
+
+  const handleEventCreate = useCallback(
+    (args: MbscEventCreateEvent) => {
+      setEvents([...myEvents, args.event]);
+    },
+    [myEvents],
+  );
+
+  const handleEventDelete = useCallback(
+    (args: MbscEventDeleteEvent) => {
+      setEvents(myEvents.filter((item: MbscCalendarEvent) => item.id !== args.event.id));
+    },
+    [myEvents],
+  );
 
   const customHeader = useCallback(
     () => (
@@ -222,12 +258,15 @@ const App: FC = () => {
       <Eventcalendar
         resources={myResources}
         immutableData={true}
-        view={myView}
-        data={events}
+        view={myView.current}
+        data={myEvents}
         renderHeader={customHeader}
         onResourceOrderUpdate={handleResourceOrder}
+        onEventCreate={handleEventCreate}
+        onEventDelete={handleEventDelete}
+        onEventUpdate={handleEventUpdate}
       />
-      <Toast isOpen={isToastOpen} message={message} />
+      <Toast isOpen={isToastOpen} message={message} onClose={onToastClose} />
     </>
   );
 };

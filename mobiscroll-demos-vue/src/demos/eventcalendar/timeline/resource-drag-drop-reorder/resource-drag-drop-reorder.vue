@@ -18,7 +18,7 @@ setOptions({
 
 const toastMessage = ref('')
 const isToastOpen = ref(false)
-const myEvents = [
+const myEvents = ref([
   {
     id: 1,
     title: 'Event 1',
@@ -365,7 +365,8 @@ const myEvents = [
     color: 'brown'
   }
   //</hidden>
-]
+])
+
 const isReorder = ref(false)
 const myResources = ref([
   { id: 1, name: 'Resource 1' },
@@ -468,6 +469,22 @@ function handleResourceOrder(args) {
   }
 }
 
+function handleEventCreate(args) {
+  myEvents.value = [...myEvents.value, args.event]
+}
+
+function handleEventDelete(args) {
+  myEvents.value = myEvents.value.filter((item) => item.id !== args.event.id)
+}
+
+function handleEventUpdate(args) {
+  const newEvent = args.event
+  const eventIndex = myEvents.value.findIndex((e) => e.id === newEvent.id)
+  const newEventList = [...myEvents.value]
+  newEventList.splice(eventIndex, 1, newEvent)
+  myEvents.value = newEventList
+}
+
 function showToast(message) {
   toastMessage.value = message
   isToastOpen.value = true
@@ -480,10 +497,16 @@ function handleToastClose() {
 
 <template>
   <MbscEventcalendar
+    :drag-to-create="true"
+    :drag-to-move="true"
+    :drag-to-resize="true"
     :view="myView"
     :data="myEvents"
     :immutable-data="true"
     :resources="myResources"
+    @event-create="handleEventCreate"
+    @event-delete="handleEventDelete"
+    @event-update="handleEventUpdate"
     @resource-order-update="handleResourceOrder"
   >
     <template #header>

@@ -8,7 +8,7 @@ import {
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import './resource-drag-drop-reorder.css';
 
 setOptions({
@@ -122,50 +122,58 @@ const defaultView = {
 };
 
 function App() {
-  const [myResources, setResources] = useState(resources);
-  const [tempResources, setTempResources] = useState([...resources]);
-  const [myView, setView] = useState(defaultView);
   const [isReorder, setReorder] = useState(false);
   const [isToastOpen, setToastOpen] = useState(false);
+  const [myEvents, setEvents] = useState(events);
+  const [myResources, setResources] = useState(resources);
+  const [tempResources, setTempResources] = useState([...resources]);
   const [message, setMessage] = useState('');
+  const myView = useRef(defaultView);
 
   const enableReorder = useCallback(() => {
     setReorder(true);
-    setView({
+    myView.current = {
       timeline: {
         type: 'month',
         resourceReorder: true,
       },
-    });
-  }, []);
+    };
+  }, [myView]);
 
-  const showToast = useCallback((msg) => {
-    setMessage(msg);
-    setToastOpen(true);
-  }, []);
+  const showToast = useCallback(
+    (msg) => {
+      setMessage(msg);
+      setToastOpen(true);
+    },
+    [message],
+  );
+
+  const onToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, [isToastOpen]);
 
   const saveReorder = useCallback(() => {
     setReorder(false);
-    setView({
+    myView.current = {
       timeline: {
         type: 'month',
         resourceReorder: false,
       },
-    });
+    };
     setResources([...tempResources]);
-  }, [tempResources]);
+  }, [tempResources, myView]);
 
   const cancelReorder = useCallback(() => {
     setReorder(false);
     setResources([...myResources]);
-    setView({
+    myView.current = {
       timeline: {
         type: 'month',
         resourceReorder: false,
       },
-    });
+    };
     showToast('Resource order canceled');
-  }, [showToast, myResources]);
+  }, [showToast, myResources, myView]);
 
   const handleResourceOrder = useCallback(
     (args) => {
@@ -177,6 +185,31 @@ function App() {
       }
     },
     [showToast],
+  );
+
+  const handleEventUpdate = useCallback(
+    (args) => {
+      const newEvent = args.event;
+      const eventIndex = myEvents.findIndex((e) => e.id === newEvent.id);
+      const newEventList = [...myEvents];
+      newEventList.splice(eventIndex, 1, newEvent);
+      setEvents(newEventList);
+    },
+    [myEvents],
+  );
+
+  const handleEventCreate = useCallback(
+    (args) => {
+      setEvents([...myEvents, args.event]);
+    },
+    [myEvents],
+  );
+
+  const handleEventDelete = useCallback(
+    (args) => {
+      setEvents(myEvents.filter((item) => item.id !== args.event.id));
+    },
+    [myEvents],
   );
 
   const customHeader = useCallback(
@@ -219,12 +252,15 @@ function App() {
       <Eventcalendar
         resources={myResources}
         immutableData={true}
-        view={myView}
-        data={events}
+        view={myView.current}
+        data={myEvents}
         renderHeader={customHeader}
         onResourceOrderUpdate={handleResourceOrder}
+        onEventCreate={handleEventCreate}
+        onEventDelete={handleEventDelete}
+        onEventUpdate={handleEventUpdate}
       />
-      <Toast isOpen={isToastOpen} message={message} />
+      <Toast isOpen={isToastOpen} message={message} onClose={onToastClose} />
     </>
   );
 }
