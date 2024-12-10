@@ -10,7 +10,7 @@ export default {
     });
 
     $(function () {
-      var zoomLevel = 0;
+      var zoomLevel = 7;
       var refDate = new Date().setDate(new Date().getDate() - 10);
 
       var myResources = [
@@ -75,7 +75,8 @@ export default {
         .mobiscroll('getInst');
 
       function handleZoom(zoom) {
-        zoomLevel += zoom;
+        zoomLevel = zoom;
+        // zoomLevel += zoom;
         // $('.mds-button-zoom-level-in').prop('disabled', zoomLevel === 4);
         // $('.mds-button-zoom-level-out').prop('disabled', zoomLevel === -4);
 
@@ -105,7 +106,7 @@ export default {
       }
 
       $('#demo-zoom-level-slider').on('change', function (ev) {
-        handleZoom(ev.target.value);
+        handleZoom(+ev.target.value);
       });
 
       // $('.mds-button-zoom-level').on('click', function () {
