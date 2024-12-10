@@ -105,7 +105,7 @@ export default {
         });
       }
 
-      $('#demo-zoom-level-slider').on('change', function (ev) {
+      $('#demo-zoom-level-slider').on('input', function (ev) {
         handleZoom(+ev.target.value);
       });
 
