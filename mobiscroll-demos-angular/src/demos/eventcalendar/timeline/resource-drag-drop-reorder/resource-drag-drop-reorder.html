@@ -3,8 +3,8 @@
   [data]="myEvents"
   [resources]="myResources"
   [immutableData]="true"
-  [onResourceOrderUpdate]="handleResourceOrder"
-  headerTemplate="header"
+  [headerTemplate]="header"
+  (onResourceOrderUpdate)="handleResourceOrder"
 >
   <ng-template #header>
     <mbsc-calendar-nav class="md-custom-header-nav"></mbsc-calendar-nav>
@@ -12,8 +12,8 @@
       <mbsc-button (click)="enableReorder()" variant="flat" class="mds-reorder-switch mds-enable" *ngIf="!isReorder">
         Reorder resources
       </mbsc-button>
-      <mbsc-button (click)="saveReorder()" class="mds-reorder-save mds-update" *ngIf="isReorder"> Save </mbsc-button>
-      <mbsc-button (click)="cancelReorder()" class="mds-reorder-save mds-update" *ngIf="isReorder"> Cancel </mbsc-button>
+      <mbsc-button (click)="saveReorder()" class="mds-reorder-save mds-update" *ngIf="isReorder">Save</mbsc-button>
+      <mbsc-button (click)="cancelReorder()" class="mds-reorder-save mds-update" *ngIf="isReorder">Cancel</mbsc-button>
       <div class="mds-header-filter-separator"></div>
     </div>
     <mbsc-calendar-prev></mbsc-calendar-prev>

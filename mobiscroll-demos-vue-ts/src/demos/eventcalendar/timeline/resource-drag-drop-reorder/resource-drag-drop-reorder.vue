@@ -394,7 +394,7 @@ const myResources = ref<MbscResource[]>([
   { id: 10, name: 'Resource 9' },
   {
     id: 11,
-    name: 'Group 2 (Dropping not allowed)',
+    name: 'Group 2',
     children: [
       { id: 12, name: 'Resource 10' },
       { id: 13, name: 'Resource 11' },
@@ -415,8 +415,7 @@ const myResources = ref<MbscResource[]>([
   { id: 21, name: 'Resource 18' },
   {
     id: 22,
-    name: 'Group 4 (Reorder disabled)',
-    reorder: false,
+    name: 'Group 4',
     children: [
       { id: 23, name: 'Resource 19' },
       { id: 24, name: 'Resource 20' },
@@ -468,12 +467,7 @@ function cancelReorder() {
 }
 
 function handleResourceOrder(args: MbscResourceOrderEvent) {
-  if (args.parent && args.parent.id === 11) {
-    showToast('Drop to Group 2 is not allowed!')
-    return false
-  } else {
-    tempResources.value = args.resources
-  }
+  tempResources.value = args.resources
 }
 
 function handleEventCreate(args: MbscEventCreateEvent) {

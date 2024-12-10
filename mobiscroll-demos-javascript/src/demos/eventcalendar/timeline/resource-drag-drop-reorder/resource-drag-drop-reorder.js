@@ -26,7 +26,7 @@ export default {
       { id: 10, name: 'Resource 9' },
       {
         id: 11,
-        name: 'Group 2 (Dropping not allowed)',
+        name: 'Group 2',
         children: [
           { id: 12, name: 'Resource 10' },
           { id: 13, name: 'Resource 11' },
@@ -47,8 +47,7 @@ export default {
       { id: 21, name: 'Resource 18' },
       {
         id: 22,
-        name: 'Group 4 (Reorder disabled)',
-        reorder: false,
+        name: 'Group 4',
         children: [
           { id: 23, name: 'Resource 19' },
           { id: 24, name: 'Resource 20' },
@@ -138,20 +137,13 @@ export default {
         inst.setEvents(newEventList);
       },
       onResourceOrderUpdate: function (args) {
-        if (args.parent && args.parent.id === 11) {
-          mobiscroll.toast({
-            message: 'Drop to Group 2 is not allowed!',
-          });
-          return false;
-        } else {
-          tempResources = args.resources;
-        }
+        tempResources = args.resources;
       },
       renderHeader: function () {
         return (
           '<div mbsc-calendar-nav class="mds-header-filter-nav"></div>' +
           '<div class="mds-header-filter mbsc-flex mbsc-flex-1-1">' +
-          '<button mbsc-button data-start-icon="material-format-list-numbered" data-variant="flat" class="mds-reorder-switch mds-enable">Reorder resources</button>' +
+          '<button mbsc-button data-variant="flat" class="mds-reorder-switch mds-enable">Reorder resources</button>' +
           '<button mbsc-button class="mds-reorder-save mds-update">Save</button>' +
           '<button mbsc-button class="mds-reorder-cancel mds-update">Cancel</button>' +
           '<div class="mds-header-filter-separator"></div>' +
