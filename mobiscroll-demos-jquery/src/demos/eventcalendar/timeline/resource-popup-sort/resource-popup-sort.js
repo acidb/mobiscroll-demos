@@ -20,8 +20,8 @@ export default {
       var loadedEvents;
       var weekStart;
       var weekEnd;
-      // todo
       var initialSort = true;
+      var metricBarAnimation = true;
 
       var myEvents = [
         {
@@ -261,7 +261,6 @@ export default {
             return event.resource === resource.id;
           });
 
-          // todo simplify?
           if (selectedMetric === 'standby') {
             resource.standby = 168;
 
@@ -309,11 +308,15 @@ export default {
       }
 
       function sortResources() {
+        metricBarAnimation = true;
         initialSort = false;
         myResources.sort(function (a, b) {
           return sortDirection === 'asc' ? (a[sortColumn] > b[sortColumn] ? 1 : -1) : a[sortColumn] < b[sortColumn] ? 1 : -1;
         });
         calendar.setOptions({ resources: myResources.slice() });
+        setTimeout(function () {
+          metricBarAnimation = false;
+        }, 100);
       }
 
       function delayedToastSort(resourceId, event) {
@@ -325,7 +328,6 @@ export default {
           //<hidden>
           // theme,//</hidden>
           // context,
-          message: 'Sorting in 3s..',
           button: {
             text: 'Sort now',
             action: function () {
@@ -333,7 +335,7 @@ export default {
             },
           },
           animation: 'pop',
-          display: 'center',
+          display: 'bottom',
           duration: 3000,
           onClose: function () {
             resource.cssClass = 'mds-resource-highlight';
@@ -418,7 +420,7 @@ export default {
           },
 
           renderResourceHeader: function () {
-            return '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' + 'Truck' + '</div>';
+            return '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' + 'Trucks' + '</div>';
           },
           renderResource: function (resource) {
             var metricValue = resource[selectedMetric];
@@ -432,25 +434,28 @@ export default {
 
             var barColorClass = barValue <= 33 ? 'green-bar' : barValue <= 66 ? 'yellow-bar' : 'red-bar';
 
+            var metricBarClass = metricBarAnimation ? 'metric-bar-animation ' : 'metric-bar-no-animation ';
+
             return (
               '<div class="mds-popup-sort-resource-cell">' +
               '<strong>' +
               resource.name +
               '</strong>' +
-              '<div style="font-size: 12px; color: #666;">Model: ' +
+              '<div class="mds-resource-attribute">Model: ' +
               (resource.model || 'N/A') +
               '</div>' +
-              '<div style="font-size: 12px; color: #666;">Capacity: ' +
+              '<div class="mds-resource-attribute">Capacity: ' +
               resource.capacity +
               'T</div>' +
-              '<div style="font-size: 12px; color: #666;">' +
+              '<div class="mds-resource-attribute">' +
               selectedMetricDesc +
               ': ' +
               metricValue +
               (selectedMetric === 'payload' ? '%' : selectedMetric === 'standby' || selectedMetric === 'deadhead' ? 'h' : '') +
               '</div>' +
               '<div class="metric-bar-container" style="margin-top: 5px;">' +
-              '<div class="metric-bar ' +
+              '<div class=" ' +
+              metricBarClass +
               barColorClass +
               '" style="width: ' +
               barValue +
@@ -468,7 +473,7 @@ export default {
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-next></div>' +
               '<div mbsc-calendar-nav></div>' +
-              '<button id="demo-popup-sort-button" data-start-icon="bars" data-variant="flat" mbsc-button style="margin-left: auto;">Calculate & Sort</button>'
+              '<button id="demo-popup-sort-button" data-start-icon="bars" data-variant="flat" mbsc-button style="margin-left: auto;">Sort Trucks</button>'
             );
           },
           onPageLoading: function (args, inst) {
@@ -477,7 +482,6 @@ export default {
             refreshData(inst);
           },
           onPageLoaded: function (args, inst) {
-            // todo remove flag?
             refreshData(inst);
             if (initialSort) {
               sortResources();
@@ -494,7 +498,6 @@ export default {
             delayedToastSort(args.event.resource, args.event);
           },
           onEventUpdate: function (args, inst) {
-            // when not resized just dragged
             if (
               new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
               new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime()
@@ -542,7 +545,6 @@ export default {
         <label>
           <input mbsc-radio data-label="Deadhead Time" data-description="Time when the truck is not on a tour. " class="mbsc-popup-sort-metric" value="deadhead" name="sort-metric" type="radio"/>
         </label>
-
       </div>
     </div>
    <div class="mbsc-form-group">
@@ -556,17 +558,15 @@ export default {
       <input mbsc-segmented type="radio" class="mbsc-popup-sort-direction" value="desc" name="sort-direction">
   </label>
 </div>
-
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-
 /* resource highlight */
 
 .mds-resource-highlight {
-    background-color: rgba(128, 128, 128, 0.4);
-    transition: background-color 0.5s ease;
+  background-color: rgba(128, 128, 128, 0.4);
+  transition: background-color 0.5s ease;
 }
 
 /* progress bar */
@@ -582,12 +582,46 @@ export default {
   transition: width 3s linear; 
 }
 
-.mbsc-toast-background.start-progress::before {
-  width: 100%;
+.mbsc-snackbar-message::after {
+  content: "Sorting in 1 ."; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // font-weight: bold;
+  animation: changeMessage 3s steps(3) forwards; 
 }
 
 .mbsc-snackbar-message {
   position: relative;
+}
+
+@keyframes countdown {
+  0% {
+    width: 0%;  
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes changeMessage {
+  0% {
+    content: "Sorting in 3 ...";
+  }
+  43% {
+    content: "Sorting in 2 ..";
+  }
+  76% {
+    content: "Sorting in 1 .";
+  }
+  // 100% {
+   
+  // }
+}
+
+.mbsc-toast-background.start-progress::before {
+  animation: countdown 3s linear forwards; 
 }
 
 .mbsc-snackbar-cont {
@@ -597,47 +631,51 @@ export default {
 /* metric bar */
 
 .metric-bar-container {
-    position: relative;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    height: 10px;
-    width: 150px; 
-    overflow: hidden;
+  position: relative;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  height: 10px;
+  width: 150px; 
+  overflow: hidden;
 }
 
-.metric-bar {
-    height: 100%;
-    animation: fillBar 1s ease-in-out forwards;
+.metric-bar-animation {
+  height: 100%;
+  animation: fillBar 1s ease-in-out forwards;
+}
+.metric-bar-no-animation {
+  height: 100%;
+  animation: fillBar 0s ease-in-out forwards;
 }
 
 .metric-bar-overlay {
-    content: '';
-    position: absolute; 
-    top: 0;
-    right: 0;
-    height: 100%;
-    background-color: #f0f0f0; 
+  content: '';
+  position: absolute; 
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: #f0f0f0; 
 }
 
 @keyframes fillBar {
-    from {
-        width: 0%;
-    }
-    to {
-        width: 100%;
-    }
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .green-bar {
-    background-color: #4caf50; 
+  background-color: #4caf50; 
 }
 
 .yellow-bar {
-    background-color: #ffeb3b; 
+  background-color: #ffeb3b; 
 }
 
 .red-bar {
-    background-color: #f44336; 
+  background-color: #f44336; 
 }
 
 /* Overrides */
@@ -683,12 +721,15 @@ export default {
   width: 170px;
 }
 
-/*<hidden>*/
+.mds-resource-attribute {
+  font-size: 12px;
+  font-weight: 400;
+}
 
+/*<hidden>*/
 .demo-timeline-popup-sort {
   height: 100%;
 }
-
 /*</hidden>*/
   `,
 };
