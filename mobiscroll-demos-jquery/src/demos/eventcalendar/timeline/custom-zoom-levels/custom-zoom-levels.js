@@ -34,27 +34,36 @@ export default {
             timeline: {
               currentTimeIndicator: true,
               zoomLevels: {
-                '-4': { type: 'year', size: 9, resolutionHorizontal: 'year' },
-                '-3': { type: 'month', size: 12, resolutionHorizontal: 'month' },
-                '-2': { type: 'week', size: 9, resolutionHorizontal: 'week' },
-                '-1': { type: 'week', size: 5, resolutionHorizontal: 'day' },
-                0: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'large' },
-                1: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
-                2: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 360, timeLabelStep: 360 },
-                3: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 180, timeLabelStep: 360 },
-                4: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 60 },
+                1: { type: 'year', size: 25, resolutionHorizontal: 'year', columnWidth: 'small' },
+                2: { type: 'year', size: 15, resolutionHorizontal: 'year', columnWidth: 'xxxlarge' },
+                3: { type: 'year', size: 7, resolutionHorizontal: 'quarter', columnWidth: 'small' },
+                4: { type: 'year', size: 7, resolutionHorizontal: 'quarter', columnWidth: 'xxxlarge' },
+                5: { type: 'month', size: 15, resolutionHorizontal: 'month', columnWidth: 'xlarge' },
+                6: { type: 'month', size: 15, resolutionHorizontal: 'month', columnWidth: 'xxxlarge' },
+                7: { type: 'week', size: 15, resolutionHorizontal: 'week', columnWidth: 'xlarge' },
+                8: { type: 'week', size: 15, resolutionHorizontal: 'week', columnWidth: 'xxxlarge' },
+                9: { type: 'week', size: 5, resolutionHorizontal: 'day' },
+                10: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
+                11: { type: 'day', size: 15, resolutionHorizontal: 'hour', columnWidth: 'medium', timeCellStep: 720, timeLabelStep: 720 },
+                12: { type: 'day', size: 15, resolutionHorizontal: 'hour', timeCellStep: 360, timeLabelStep: 360 },
+                13: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 180, timeLabelStep: 180 },
+                14: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 60, timeLabelStep: 60 },
+                15: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 30 },
               },
             },
           },
           renderHeader: function () {
             return (
               '<div mbsc-calendar-nav></div>' +
-              '<div class="mds-calendar-controls">' +
-              '<div class="md-zoom-cont mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">' +
-              '<div><button class="mds-button-zoom-level mds-button-zoom-level-in" data-zoom="1" mbsc-button data-icon="material-zoom-in" ' +
-              '></button></div>' +
-              '<div><button class="mds-button-zoom-level mds-button-zoom-level-out" data-zoom="-1" mbsc-button data-icon="material-zoom-out" ' +
-              '></button></div>' +
+              // '<div class="mds-calendar-controls">' +
+              // '<div class="md-zoom-cont mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">' +
+              // '<div><button class="mds-button-zoom-level mds-button-zoom-level-in" data-zoom="1" mbsc-button data-icon="material-zoom-in" ' +
+              // '></button></div>' +
+              // '<div><button class="mds-button-zoom-level mds-button-zoom-level-out" data-zoom="-1" mbsc-button data-icon="material-zoom-out" ' +
+              // '></button></div>' +
+              // '</div>' +
+              '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">' +
+              '<input id="demo-zoom-level-slider" type="range" min="1" max="15" value="8" />' +
               '</div>' +
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-today></div>' +
@@ -67,20 +76,26 @@ export default {
 
       function handleZoom(zoom) {
         zoomLevel += zoom;
-        $('.mds-button-zoom-level-in').prop('disabled', zoomLevel === 4);
-        $('.mds-button-zoom-level-out').prop('disabled', zoomLevel === -4);
+        // $('.mds-button-zoom-level-in').prop('disabled', zoomLevel === 4);
+        // $('.mds-button-zoom-level-out').prop('disabled', zoomLevel === -4);
 
         var viewDate = myCalendar ? myCalendar.getViewDate() : new Date();
         var refDates = {
-          '-4': new Date(viewDate.getFullYear() - 4, 0, 1),
-          '-3': new Date(viewDate.getFullYear(), viewDate.getMonth() - 5, 1),
-          '-2': new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 28),
-          '-1': new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-          0: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-          1: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-          2: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
-          3: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
-          4: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
+          1: new Date(viewDate.getFullYear() - 12, 0, 1),
+          2: new Date(viewDate.getFullYear() - 7, 0, 1),
+          3: new Date(viewDate.getFullYear() - 3, 0, 1),
+          4: new Date(viewDate.getFullYear() - 3, 0, 1),
+          5: new Date(viewDate.getFullYear(), viewDate.getMonth() - 7, 1),
+          6: new Date(viewDate.getFullYear(), viewDate.getMonth() - 7, 1),
+          7: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 49),
+          8: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 49),
+          9: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
+          10: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
+          11: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 7),
+          12: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 7),
+          13: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
+          14: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
+          15: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
         };
 
         myCalendar.setOptions({
@@ -89,9 +104,13 @@ export default {
         });
       }
 
-      $('.mds-button-zoom-level').on('click', function () {
-        handleZoom($(this).data('zoom'));
+      $('#demo-zoom-level-slider').on('change', function (ev) {
+        handleZoom(ev.target.value);
       });
+
+      // $('.mds-button-zoom-level').on('click', function () {
+      //   handleZoom($(this).data('zoom'));
+      // });
 
       $.getJSON(
         'https://trial.mobiscroll.com/timeline-events/?callback=?',
