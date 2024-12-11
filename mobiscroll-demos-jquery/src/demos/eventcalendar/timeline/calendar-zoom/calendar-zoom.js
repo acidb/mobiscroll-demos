@@ -58,7 +58,7 @@ export default {
                 4: { type: 'year', size: 25, resolutionHorizontal: 'quarter', columnWidth: 'xlarge' },
                 5: { type: 'year', size: 25, resolutionHorizontal: 'month', columnWidth: 'medium' },
                 6: { type: 'year', size: 25, resolutionHorizontal: 'month', columnWidth: 'xxxlarge' },
-                7: { type: 'year', size: 25, resolutionHorizontal: 'week', columnWidth: 'medium', weekNumbers: true },
+                7: { type: 'year', size: 25, resolutionHorizontal: 'week', columnWidth: 'medium' },
                 8: { type: 'year', size: 25, resolutionHorizontal: 'week', columnWidth: 'xxxlarge' },
                 9: { type: 'year', size: 25, resolutionHorizontal: 'day', columnWidth: 'small' },
                 10: { type: 'year', size: 25, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
