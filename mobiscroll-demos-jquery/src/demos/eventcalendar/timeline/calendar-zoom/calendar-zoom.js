@@ -24,7 +24,7 @@ export default {
         { id: 6, name: 'Resource F', color: '#d6d145' },
       ];
 
-      var myCalendar = $('#demo-custom-zoom-levels')
+      var myCalendar = $('#demo-calendar-zoom')
         .mobiscroll()
         .eventcalendar({
           // drag,
@@ -130,6 +130,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-custom-zoom-levels"></div>
+<div id="demo-calendar-zoom"></div>
   `,
 };

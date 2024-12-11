@@ -44,7 +44,7 @@ export default {
       },
     ];
 
-    var myCalendar = mobiscroll.eventcalendar('#demo-custom-zoom-levels', {
+    var myCalendar = mobiscroll.eventcalendar('#demo-calendar-zoom', {
       dragToCreate: true,
       resources: myResources,
       refDate: refDate,
@@ -123,7 +123,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-custom-zoom-levels"></div>
+<div id="demo-calendar-zoom"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `

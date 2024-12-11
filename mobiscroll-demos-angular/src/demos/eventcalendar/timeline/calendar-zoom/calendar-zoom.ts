@@ -7,8 +7,8 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-timeline-custom-zoom-levels',
-  templateUrl: './custom-zoom-levels.html',
+  selector: 'app-timeline-calendar-zoom',
+  templateUrl: './calendar-zoom.html',
 })
 export class AppComponent {
   public refDate: Date = new Date(new Date().setDate(new Date().getDate() - 10));
