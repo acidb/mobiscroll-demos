@@ -5,6 +5,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendar,
   MbscEventcalendarView,
+  MbscEventDeleteEvent,
   MbscPopup,
   MbscPopupButton,
   MbscPopupOptions,
@@ -50,6 +51,8 @@ export class AppComponent {
   initialSortColumn: string = 'asc';
   initialSortDirection: string = 'standby';
   sortColumn: string = 'standby';
+  metricBarAnimation: boolean = true;
+  initialSort: boolean = true;
   sortDirection: string = 'asc';
   selectedMetric: string = 'standby';
   selectedMetricDesc: string = 'Standby Time';
@@ -273,7 +276,7 @@ export class AppComponent {
     { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
     { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
     { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
-    { id: 8, name: 'SD-TRK-0250', capacity: 12, location: 'San Francisco', model: 'Mercedes Arocs' },
+    { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
     { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
     { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
     { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
@@ -318,17 +321,22 @@ export class AppComponent {
   ];
 
   sortResources(): void {
+    this.metricBarAnimation = true;
+    this.initialSort = false;
+
     this.myResources = [
       ...this.myResources.sort((a: MbscResource, b: MbscResource) => {
         if (this.sortDirection === 'asc') {
           return a[this.sortColumn] > b[this.sortColumn] ? 1 : -1;
-        }
-        if (this.sortDirection === 'desc') {
+        } else {
           return a[this.sortColumn] < b[this.sortColumn] ? 1 : -1;
         }
-        return +a.id - +b.id;
       }),
     ];
+
+    setTimeout(() => {
+      this.metricBarAnimation = false;
+    }, 100);
   }
 
   refreshData() {
@@ -339,6 +347,8 @@ export class AppComponent {
         const resourceEvents = this.loadedEvents.filter((event) => event.resource === resource.id);
 
         if (this.selectedMetric === 'standby') {
+          resource.standby = 168;
+
           resourceEvents.forEach((event) => {
             const eventStart = new Date(event.start as Date);
             const eventEnd = new Date(event.end as Date);
@@ -368,8 +378,14 @@ export class AppComponent {
         }
 
         if (this.selectedMetric === 'payload') {
-          const totalPayload = resourceEvents.reduce((total, event) => total + (event['payload'] || 0), 0);
-          resource.payload = resource['capacity'] ? Math.round((totalPayload / resource['capacity']) * 100) : 0;
+          const weekEvents = resourceEvents.filter(
+            (event) => new Date(event.end as Date) > this.weekStart && new Date(event.start as Date) < this.weekEnd,
+          );
+          const totalPayload = weekEvents.reduce((total, event) => total + (event['payload'] || 0), 0);
+          const numberOfTours = weekEvents.length;
+
+          resource.payload =
+            numberOfTours > 0 && resource['capacity'] ? Math.round((totalPayload / numberOfTours / resource['capacity']) * 100) : 0;
         }
       });
     }, 0);
@@ -380,6 +396,38 @@ export class AppComponent {
     this.initialSortDirection = this.sortDirection;
     this.popupAnchor = this.anchorElm.nativeElement;
     this.popup.open();
+  }
+
+  handleOnEventUpdate($event: any) {
+    // if (
+    //   new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
+    //   new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime()
+    // ) {
+    //   return;
+    // }
+    // refreshData(inst);
+    // delayedToastSort(args.event.resource, args.event);
+  }
+  handleOnEventDelete($event: MbscEventDeleteEvent) {
+    // refreshData(inst);
+    // delayedToastSort(args.event.resource, args.event);
+  }
+  handleOnPageLoaded($event: any) {
+    // refreshData(inst);
+    // if (initialSort) {
+    //   sortResources();
+    // }
+  }
+  handleOnEventCreated(args: any) {
+    args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
+    args.event.overlap = false;
+    // refreshData(inst);
+    // delayedToastSort(args.event.resource, args.event);
+  }
+  handleOnPageLoading($event: any) {
+    this.weekStart = $event.firstDay;
+    this.weekEnd = $event.lastDay;
+    // refreshData(inst);
   }
 
   handleColumnChange() {}

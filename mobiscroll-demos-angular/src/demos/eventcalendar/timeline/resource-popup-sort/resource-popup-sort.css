@@ -18,12 +18,42 @@
   transition: width 3s linear;
 }
 
-.mbsc-toast-background.start-progress::before {
-  width: 100%;
+.mbsc-snackbar-message::after {
+  content: 'Sorting in 1 .';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: changeMessage 3s steps(3) forwards;
 }
 
 .mbsc-snackbar-message {
   position: relative;
+}
+
+@keyframes countdown {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes changeMessage {
+  0% {
+    content: 'Sorting in 3 ...';
+  }
+  43% {
+    content: 'Sorting in 2 ..';
+  }
+  76% {
+    content: 'Sorting in 1 .';
+  }
+}
+
+.mbsc-toast-background.start-progress::before {
+  animation: countdown 3s linear forwards;
 }
 
 .mbsc-snackbar-cont {
@@ -41,9 +71,13 @@
   overflow: hidden;
 }
 
-.metric-bar {
+.metric-bar-animation {
   height: 100%;
   animation: fillBar 1s ease-in-out forwards;
+}
+.metric-bar-no-animation {
+  height: 100%;
+  animation: fillBar 0s ease-in-out forwards;
 }
 
 .metric-bar-overlay {
@@ -117,4 +151,9 @@
 .mds-popup-sort-resource-cell-name {
   padding: 2px 5px;
   width: 170px;
+}
+
+.mds-resource-attribute {
+  font-size: 12px;
+  font-weight: 400;
 }

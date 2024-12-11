@@ -1,4 +1,16 @@
-import { Button, Eventcalendar, CalendarNav, CalendarPrev, CalendarNext, setOptions /* localeImport */ } from '@mobiscroll/react';
+import {
+  Button,
+  CalendarNav,
+  CalendarNext,
+  CalendarPrev,
+  Eventcalendar,
+  Popup,
+  Radio,
+  RadioGroup,
+  Segmented,
+  SegmentedGroup,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import './resource-popup-sort.css';
 
@@ -8,7 +20,7 @@ setOptions({
 });
 
 function App() {
-  const myView = useMemo(() => ({ timeline: { type: 'month' } }), []);
+  const myView = useMemo(() => ({ timeline: { type: 'week', resolutionHorizontal: 'day' } }), []);
 
   const myResources = useMemo(
     () => [
@@ -18,7 +30,7 @@ function App() {
       { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
       { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
       { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
-      { id: 8, name: 'SD-TRK-0250', capacity: 12, location: 'San Francisco', model: 'Mercedes Arocs' },
+      { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
       { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
       { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
       { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
@@ -88,7 +100,7 @@ function App() {
     {
       start: 'dyndatetime(y,m,d-4,11)',
       end: 'dyndatetime(y,m,d)',
-      title: 'Tour #018 - ? to Atlanta',
+      title: 'Tour #018 - Dallas to Atlanta',
       resource: 6,
       color: '#33FF99',
       payload: 14,
@@ -251,6 +263,19 @@ function App() {
   const loadedEvents = useRef([]);
   const selectedMetric = 'standby';
   const selectedMetricDesc = 'Standby Time';
+  const buttonRef = useRef();
+
+  const [myAnchor, setAnchor] = useState();
+  const [isPopupOpen, setPopupOpen] = useState(false);
+
+  const handlePopupClose = useCallback(() => {
+    setPopupOpen(false);
+  }, []);
+
+  const handlePopupOpen = useCallback(() => {
+    setAnchor(buttonRef.current.nativeElement);
+    setPopupOpen(true);
+  }, []);
 
   const sortResources = useCallback(() => {
     const updatedResources = [...myResources].sort((a, b) => {
@@ -282,50 +307,34 @@ function App() {
   const myCustomResourceHeader = useCallback(
     () => (
       <>
-        <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Truck</div>
+        <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
         <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">{selectedMetricDesc}</div>
       </>
     ),
     [selectedMetricDesc],
   );
-
   const myCustomResource = useCallback(
     (resource) => {
-      // refactor use template syntax
       const metricValue = resource[selectedMetric];
 
-      let barValue;
-      if (selectedMetric === 'payload') {
-        barValue = metricValue;
-      } else if (['standby', 'deadhead'].includes(selectedMetric)) {
-        barValue = (metricValue / 168) * 100;
-      } else {
-        barValue = 100;
-      }
+      const barValue =
+        selectedMetric === 'payload' ? metricValue : ['standby', 'deadhead'].includes(selectedMetric) ? (metricValue / 168) * 100 : 100;
 
-      let barColorClass;
-      if (barValue <= 33) {
-        barColorClass = 'green-bar';
-      } else if (barValue <= 66) {
-        barColorClass = 'yellow-bar';
-      } else {
-        barColorClass = 'red-bar';
-      }
+      const barColorClass = barValue <= 33 ? 'green-bar' : barValue <= 66 ? 'yellow-bar' : 'red-bar';
 
       return (
         <>
           <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
             <strong>{resource.name}</strong>
-            <div style={{ fontSize: '12px', color: '#666' }}>Model: {resource.model || 'N/A'}</div>
-            <div style={{ fontSize: '12px', color: '#666' }}>Capacity: {resource.capacity}T</div>
-          </div>
-          <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">
-            <div className="metric-value" style={{ marginTop: '10px' }}>
-              {metricValue}
+            <div className="mds-resource-attribute">Model: {resource.model || 'N/A'}</div>
+            <div className="mds-resource-attribute">Capacity: {resource.capacity}T</div>
+            <div className="mds-resource-attribute">
+              {selectedMetricDesc}: {metricValue}
               {selectedMetric === 'payload' ? '%' : ['standby', 'deadhead'].includes(selectedMetric) ? 'h' : ''}
             </div>
+
             <div className="metric-bar-container">
-              <div className={`metric-bar ${barColorClass}`} style={{ width: `${barValue}%` }}></div>
+              <div className={`metric-bar ${barColorClass}`} style={{ marginTop: '5px', width: `${barValue}%` }}></div>
             </div>
           </div>
         </>
@@ -338,33 +347,84 @@ function App() {
     () => (
       <>
         <CalendarPrev />
-        <CalendarNav />
         <CalendarNext />
-        <Button style={{ marginLeft: 'auto' }}>Calculate & Sort</Button>
+        <CalendarNav />
+        <Button ref={buttonRef} style={{ marginLeft: 'auto' }} startIcon="bars" variant="flat" onClick={handlePopupOpen}>
+          Sort Trucks
+        </Button>
       </>
     ),
-    [],
+    [handlePopupOpen],
   );
 
   return (
-    <Eventcalendar
-      cssClass="mds-timeline-popup-sort"
-      clickToCreate={true}
-      data={myEvents}
-      dragToCreate={true}
-      dragToMove={true}
-      dragToResize={true}
-      ref={calRef}
-      resources={sortedResources}
-      renderResourceHeader={myCustomResourceHeader}
-      renderResource={myCustomResource}
-      renderHeader={myCustomHeader}
-      onPageLoading={handlePageLoading}
-      onEventCreated={handleEventChange}
-      onEventDeleted={handleEventChange}
-      onEventUpdated={handleEventChange}
-      view={myView}
-    />
+    <>
+      <Eventcalendar
+        cssClass="mds-timeline-popup-sort"
+        clickToCreate={true}
+        data={myEvents}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
+        ref={calRef}
+        resources={sortedResources}
+        renderResourceHeader={myCustomResourceHeader}
+        renderResource={myCustomResource}
+        renderHeader={myCustomHeader}
+        onPageLoading={handlePageLoading}
+        onEventCreated={handleEventChange}
+        onEventDeleted={handleEventChange}
+        onEventUpdated={handleEventChange}
+        view={myView}
+      />
+      <Popup
+        contentPadding={false}
+        display="anchored"
+        anchor={myAnchor}
+        width={400}
+        buttons={[
+          'cancel',
+          {
+            text: 'Apply',
+            keyCode: 'enter',
+            handler: function () {
+              // if (initialSortColumn != sortColumn) {
+              //   refreshData();
+              // }
+              // sortResources();
+              // initialSortColumn = sortColumn;
+              // initialSortDirection = sortDirection;
+              // popup.close();
+              // mobiscroll.toast({
+              //   message: 'Resouces sorted',
+              // });
+            },
+            cssClass: 'mbsc-popup-button-primary',
+          },
+        ]}
+        focusOnClose={false}
+        focusOnOpen={false}
+        showOverlay={false}
+        isOpen={isPopupOpen}
+        onClose={handlePopupClose}
+      >
+        <div className="mbsc-form-group">
+          <div className="mbsc-form-group-title">Metric to calculate and sort by</div>
+          <RadioGroup value={sortColumn}>
+            <Radio value="standby" label="Standby Time" description="Time the truck is driven without cargo." />
+            <Radio value="payload" label="Payload Efficiency" description="Truck capacity divided by the average cargo on tours." />
+            <Radio value="deadhead" label="Deadhead Time" description="Time when the truck is not on a tour." />
+          </RadioGroup>
+        </div>
+        <div className="mbsc-form-group">
+          <div className="mbsc-form-group-title">Sort direction</div>
+          <SegmentedGroup value={sortDirection}>
+            <Segmented value="asc">Ascending</Segmented>
+            <Segmented value="desc">Descending</Segmented>
+          </SegmentedGroup>
+        </div>
+      </Popup>
+    </>
   );
 }
 
