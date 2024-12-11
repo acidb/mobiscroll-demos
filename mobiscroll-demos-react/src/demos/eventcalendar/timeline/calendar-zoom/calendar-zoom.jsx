@@ -2,7 +2,7 @@ import { getJson } from '@mobiscroll/react';
 import { Button, CalendarNav, CalendarNext, CalendarPrev, CalendarToday, Eventcalendar, Page, setOptions } from '@mobiscroll/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import './custom-zoom-levels.css';
+import './calendar-zoom.css';
 
 setOptions({
   // localeJs,

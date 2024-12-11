@@ -335,7 +335,7 @@ import Demo276 from './demos/pickers/select/event-hooks/event-hooks.vue'
 import Demo471 from './demos/pickers/select/localization/localization.vue'
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left.vue'
 
-import DemoZoom from './demos/eventcalendar/timeline/custom-zoom-levels/custom-zoom-levels.vue'
+import DemoZoom from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom.vue'
 
 export const demos = [
   {
@@ -1453,7 +1453,7 @@ export const demos = [
                 component: Demo697
               },
               { name: 'Custom event order', unique: 'custom-event-sort', component: Demo749 },
-              { name: 'Custom zoom levels', unique: 'custom-zoom-levels', component: DemoZoom },
+              { name: 'Custom zoom levels', unique: 'calendar-zoom', component: DemoZoom },
               { name: 'Equal row height', unique: 'timeline-resource-height', component: Demo608 },
               {
                 name: 'Variable event height',
