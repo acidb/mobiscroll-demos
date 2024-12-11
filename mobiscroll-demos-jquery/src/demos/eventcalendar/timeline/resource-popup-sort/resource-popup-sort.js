@@ -537,13 +537,13 @@ export default {
       <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
       <div mbsc-radio-group>
         <label>
-          <input mbsc-radio data-label="Standby Time" data-description=" Time the truck is driven without cargo." class="mbsc-popup-sort-metric" value="standby" name="sort-metric" type="radio" checked/>
+          <input mbsc-radio data-label="Standby Time" data-description="Time the truck is driven without cargo." class="mbsc-popup-sort-metric" value="standby" name="sort-metric" type="radio" checked/>
         </label>
         <label>
           <input mbsc-radio data-label="Payload Efficiency" data-description="Truck capacity divided by the average cargo on tours." class="mbsc-popup-sort-metric" value="payload" name="sort-metric" type="radio"/>
         </label>
         <label>
-          <input mbsc-radio data-label="Deadhead Time" data-description="Time when the truck is not on a tour. " class="mbsc-popup-sort-metric" value="deadhead" name="sort-metric" type="radio"/>
+          <input mbsc-radio data-label="Deadhead Time" data-description="Time when the truck is not on a tour." class="mbsc-popup-sort-metric" value="deadhead" name="sort-metric" type="radio"/>
         </label>
       </div>
     </div>
@@ -588,7 +588,6 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  // font-weight: bold;
   animation: changeMessage 3s steps(3) forwards; 
 }
 
@@ -615,9 +614,6 @@ export default {
   76% {
     content: "Sorting in 1 .";
   }
-  // 100% {
-   
-  // }
 }
 
 .mbsc-toast-background.start-progress::before {

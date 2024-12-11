@@ -1,11 +1,18 @@
 <script setup>
 import {
-  formatDate,
-  getJson,
+  MbscButton,
+  MbscCalendarNav,
+  MbscCalendarNext,
+  MbscCalendarPrev,
   MbscEventcalendar,
+  MbscSegmented,
+  MbscSegmentedGroup,
+  MbscRadioGroup,
+  MbscRadio,
+  MbscPopup,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 setOptions({
   // locale,
@@ -13,147 +20,282 @@ setOptions({
 })
 
 const calRef = ref(null)
-const myEvents = ref()
-const loadedEvents = ref()
-const sortColumn = ref('')
-const sortDirection = ref('')
-const sortDay = ref(null)
-const totalRevenue = ref(0)
+const myAnchor = ref(null)
+const isPopupOpen = ref(false)
+const buttonRef = ref(null)
+const initialSortColumn = ref('')
+const initialSortDirection = ref('')
+const selectedMetric = ref('standby')
+const selectedMetricDesc = ref('Standby Time')
+const weekStart = ref(null)
+const weekEnd = ref(null)
+const initialSort = ref(true)
+const metricBarAnimation = ref(true)
 
 const myResources = ref([
-  { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },
-  { id: 2, name: 'Apex Hall', seats: 90, color: '#fdf500', price: 600 },
-  { id: 3, name: 'Jade Room', seats: 700, color: '#00aaff', price: 900 },
-  { id: 4, name: 'Dome Arena', seats: 850, color: '#239a21', price: 750 },
-  { id: 5, name: 'Forum Plaza', seats: 900, color: '#8f1ed6', price: 700 },
-  { id: 6, name: 'Gallery', seats: 300, color: '#0077b6', price: 650 },
-  { id: 7, name: 'Icon Hall', seats: 450, color: '#e63946', price: 850 },
-  { id: 8, name: 'Broadway', seats: 250, color: '#ff0101', price: 800 },
-  { id: 9, name: 'Central Hub', seats: 400, color: '#01adff', price: 1100 },
-  { id: 10, name: 'Empire Hall', seats: 550, color: '#ff4600', price: 950 }
+  { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
+  { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', model: 'Mercedes Actros' },
+  { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', model: 'Scania R500' },
+  { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
+  { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
+  { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
+  { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
+  { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
+  { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
+  { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
+  { id: 12, name: 'LV-TRK-2200', capacity: 30, location: 'Las Vegas', model: 'Volvo FH16' },
+  { id: 13, name: 'MI-TRK-3300', capacity: 26, location: 'Miami', model: 'Peterbilt 579' },
+  { id: 14, name: 'SE-TRK-4400', capacity: 16, location: 'Seattle', model: 'Mack Anthem' },
+  { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' }
+])
+
+const myEvents = ref([
+  {
+    start: 'dyndatetime(y,m,d-1)',
+    end: 'dyndatetime(y,m,d+3)',
+    title: 'Tour #013 - Miami to Seattle',
+    resource: 1,
+    color: '#FF9933',
+    payload: 25,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d+1)',
+    end: 'dyndatetime(y,m,d+3)',
+    title: 'Tour #014 - Denver to Boston',
+    resource: 2,
+    color: '#33FFA6',
+    payload: 18,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d)',
+    end: 'dyndatetime(y,m,d+3)',
+    title: 'Tour #015 - Orlando to Austin',
+    resource: 3,
+    color: '#9933FF',
+    payload: 20,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d+1)',
+    end: 'dyndatetime(y,m,d+4)',
+    title: 'Tour #016 - Detroit to Baltimore',
+    resource: 4,
+    color: '#33A6FF',
+    payload: 0,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d+2)',
+    end: 'dyndatetime(y,m,d+5)',
+    title: 'Tour #017 - Las Vegas to Portland',
+    resource: 5,
+    color: '#FF5733',
+    payload: 20,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d+2)',
+    end: 'dyndatetime(y,m,d+5)',
+    title: 'Tour #018 - Atlanta to Kansas City',
+    resource: 6,
+    color: '#33FF99',
+    payload: 0,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d-4,11)',
+    end: 'dyndatetime(y,m,d)',
+    title: 'Tour #018 - Dallas to Atlanta',
+    resource: 6,
+    color: '#33FF99',
+    payload: 14,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d)',
+    end: 'dyndatetime(y,m,d+4)',
+    title: 'Tour #019 - Charlotte to Indianapolis',
+    resource: 7,
+    color: '#FF5733',
+    payload: 22,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d)',
+    end: 'dyndatetime(y,m,d+2)',
+    title: 'Tour #005 - Dallas to San Francisco',
+    resource: 7,
+    color: '#FF5733',
+    payload: 18,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d+4)',
+    end: 'dyndatetime(y,m,d+6)',
+    title: 'Tour #001 - New York to Los Angeles',
+    resource: 7,
+    color: '#FF5733',
+    payload: 20,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d)',
+    end: 'dyndatetime(y,m,d+2)',
+    title: 'Tour #009 - San Diego to Dallas',
+    resource: 7,
+    color: '#FF5733',
+    payload: 16,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d+4)',
+    end: 'dyndatetime(y,m,d+6)',
+    title: 'Tour #006 - Los Angeles to Chicago',
+    resource: 8,
+    color: '#FF33A6',
+    payload: 10,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d-2)',
+    end: 'dyndatetime(y,m,d+2)',
+    title: 'Tour #010 - San Francisco to Los Angeles',
+    resource: 8,
+    color: '#FF33A6',
+    payload: 0,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d+3)',
+    end: 'dyndatetime(y,m,d+6)',
+    title: 'Tour #007 - Houston to New York',
+    resource: 9,
+    color: '#33FF57',
+    payload: 0,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d)',
+    end: 'dyndatetime(y,m,d+2)',
+    title: 'Tour #003 - Philadelphia to Phoenix',
+    resource: 9,
+    color: '#33FF57',
+    payload: 0,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d-4)',
+    end: 'dyndatetime(y,m,d-1)',
+    title: 'Tour #028 - ? to Philadelphiax',
+    resource: 9,
+    color: '#33FF57',
+    payload: 11,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d-4)',
+    end: 'dyndatetime(y,m,d+1)',
+    title: 'Tour #004 - San Antonio to San Diego',
+    resource: 10,
+    color: '#3357FF',
+    payload: 15,
+    overlap: false
+  },
+
+  {
+    start: 'dyndatetime(y,m,d+3)',
+    end: 'dyndatetime(y,m,d+6)',
+    title: 'Tour #022 - Cleveland to Cincinnati',
+    resource: 10,
+    color: '#3357FF',
+    payload: 17,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d-4)',
+    end: 'dyndatetime(y,m,d+1)',
+    title: 'Tour #023 - Boston to Philadelphia',
+    resource: 11,
+    color: '#FF9933',
+    payload: 19,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d)',
+    end: 'dyndatetime(y,m,d+2)',
+    title: 'Tour #024 - Las Vegas to San Diego',
+    resource: 12,
+    color: '#33FF57',
+    payload: 28,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d-3)',
+    end: 'dyndatetime(y,m,d)',
+    title: 'Tour #025 - Miami to Charlotte',
+    resource: 13,
+    color: '#9933FF',
+    payload: 26,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d+2)',
+    end: 'dyndatetime(y,m,d+5)',
+    title: 'Tour #026 - Seattle to Portland',
+    resource: 14,
+    color: '#33A6FF',
+    payload: 12,
+    overlap: false
+  },
+  {
+    start: 'dyndatetime(y,m,d-1)',
+    end: 'dyndatetime(y,m,d+2)',
+    title: 'Tour #027 - Atlanta to Orlando',
+    resource: 15,
+    color: '#FF5733',
+    payload: 17,
+    overlap: false
+  }
 ])
 
 const myView = {
   timeline: {
-    type: 'month'
+    type: 'week',
+    resolutionHorizontal: 'day'
   }
 }
 
-function getUTCDateOnly(d) {
-  return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
+const openPopup = () => {
+  myAnchor.value = buttonRef.value?.instance.nativeElement
+  isPopupOpen.value = true
 }
 
-function getDayDiff(d1, d2) {
-  return Math.round((getUTCDateOnly(d2) - getUTCDateOnly(d1)) / (60000 * 60 * 24)) + 1
+const handlePopupClose = () => {
+  isPopupOpen.value = false
+  // $('.mbsc-popup-sort-metric[value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
+  // $('.mbsc-popup-sort-direction[value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
 }
 
-function getRevenue(resource) {
-  let days = 0
-  for (const event of loadedEvents.value) {
-    if (event.resource === resource.id) {
-      days += getDayDiff(new Date(event.start), new Date(event.end))
-    }
+function getBarValue(metricValue) {
+  if (this.selectedMetric === 'payload') {
+    return metricValue
+  } else if (['standby', 'deadhead'].includes(this.selectedMetric)) {
+    return (metricValue / 168) * 100
+  } else {
+    return 100
   }
-  return days * resource.price
 }
-
-function getOccuppancy(data) {
-  const events = data.events
-  let occuppancy = 0
-  if (events) {
-    const resourceIds = []
-    let nr = 0
-    for (const event of events) {
-      if (resourceIds.indexOf(event.resource) < 0) {
-        nr++
-        resourceIds.push(event.resource)
-      }
-    }
-    occuppancy = (nr * 100) / myResources.value.length
+function getBarColorClass(barValue) {
+  if (barValue <= 33) {
+    return 'green-bar'
+  } else if (barValue <= 66) {
+    return 'yellow-bar'
+  } else {
+    return 'red-bar'
   }
-  return occuppancy.toFixed(0)
 }
-
-function getSortArrow(column, day = null) {
-  if (sortColumn.value === column && day === sortDay.value) {
-    return sortDirection.value === 'asc' ? 'asc' : sortDirection.value === 'desc' ? 'desc' : 'def'
-  }
-  return 'def'
-}
-
-function getBusyHours(resource, timestamp) {
-  const startOfDay = new Date(timestamp)
-  const endOfDay = new Date(
-    startOfDay.getFullYear(),
-    startOfDay.getMonth(),
-    startOfDay.getDate() + 1
-  )
-  return loadedEvents.value.reduce((totalHours, event) => {
-    if (event.resource === resource.id) {
-      const eventStart = Math.max(+startOfDay, +new Date(event.start))
-      const eventEnd = Math.min(+endOfDay, +new Date(event.end))
-      return totalHours + (eventStart < eventEnd ? (eventEnd - eventStart) / (60 * 60 * 1000) : 0)
-    }
-    return totalHours
-  }, 0)
-}
-
-function sortResources(column, day = null) {
-  if (column) {
-    if (sortColumn.value === column && day === sortDay.value) {
-      sortDirection.value =
-        sortDirection.value === 'asc' ? 'desc' : sortDirection.value === 'desc' ? 'def' : 'asc'
-    } else {
-      sortColumn.value = column
-      sortDirection.value = 'asc'
-    }
-    sortDay.value = day
-  }
-
-  if (sortDay.value) {
-    // Precalculate busy hours for the clicked day
-    myResources.value.forEach((resource) => {
-      resource.busyHours = getBusyHours(resource, sortDay.value)
-    })
-  }
-
-  myResources.value = [
-    ...myResources.value.sort((a, b) => {
-      if (sortDirection.value === 'asc') {
-        return a[sortColumn.value] > b[sortColumn.value] ? 1 : -1
-      }
-      if (sortDirection.value === 'desc') {
-        return a[sortColumn.value] < b[sortColumn.value] ? 1 : -1
-      }
-      return a.id - b.id
-    })
-  ]
-}
-
-function refreshData() {
-  setTimeout(() => {
-    loadedEvents.value = calRef.value.instance.getEvents()
-
-    myResources.value.forEach((resource) => {
-      resource.revenue = getRevenue(resource)
-    })
-
-    totalRevenue.value = myResources.value.reduce((total, resource) => total + resource.revenue, 0)
-
-    sortResources()
-  })
-}
-
-onMounted(() => {
-  getJson(
-    'https://trial.mobiscroll.com/multiday-events/',
-    (events) => {
-      myEvents.value = events
-      refreshData()
-    },
-    'jsonp'
-  )
-})
 </script>
 
 <template>
@@ -173,211 +315,269 @@ onMounted(() => {
     :onEventUpdated="refreshData"
   >
     <template #resourceHeader>
-      <div
-        :class="
-          'mds-resource-sort-header mds-resource-cell mds-resource-cell-name mds-resource-sort-' +
-          getSortArrow('name')
-        "
-        @click="sortResources('name')"
-      >
-        Room
-      </div>
-      <div
-        :class="
-          'mds-resource-sort-header mds-resource-cell mds-resource-cell-seats mds-resource-sort-' +
-          getSortArrow('seats')
-        "
-        @click="sortResources('seats')"
-      >
-        Capacity
-      </div>
-      <div
-        :class="
-          'mds-resource-sort-header mds-resource-cell mds-resource-cell-price mds-resource-sort-' +
-          getSortArrow('price')
-        "
-        @click="sortResources('price')"
-      >
-        Price/day
-      </div>
+      <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
     </template>
+
+    <template #scheduleEventContent> xxx </template>
 
     <template #resource="resource">
-      <div class="mds-resource-cell mds-resource-cell-name">{{ resource.name }}</div>
-      <div class="mds-resource-cell mds-resource-cell-seats">
-        {{ resource.seats + ' seats' }}
+      <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
+        <strong>{{ resource.name }}</strong>
+        <div class="mds-resource-attribute">Model: {{ resource.model || 'N/A' }}</div>
+        <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
+        <div class="mds-resource-attribute">
+          {{ selectedMetricDesc }}: {{ resource[selectedMetric] }}
+          <span v-if="selectedMetric === 'payload'">%</span>
+          <span v-else-if="['standby', 'deadhead'].includes(selectedMetric)">h</span>
+        </div>
+
+        <div class="metric-bar-container">
+          <div
+            class="metric-bar"
+            :class="getBarColorClass(resource[selectedMetric])"
+            :style="{ marginTop: '5px', width: getBarValue(resource[selectedMetric]) + '%' }"
+          ></div>
+        </div>
       </div>
-      <div class="mds-resource-cell mds-resource-cell-price">{{ '$' + resource.price }}</div>
     </template>
 
-    <template #sidebar="resource">
-      <div class="mds-resource-cell">${{ resource.revenue }}</div>
-    </template>
-
-    <template #resourceFooter>
-      <div class="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>
-    </template>
-
-    <template #sidebarHeader>
-      <div
-        :class="'mds-resource-sort-header mds-resource-sort-' + getSortArrow('revenue')"
-        @click="sortResources('revenue')"
+    <template #header>
+      <MbscCalendarPrev />
+      <MbscCalendarNext />
+      <MbscCalendarNav />
+      <MbscButton
+        ref="buttonRef"
+        style="margin-left: auto"
+        id="demo-popup-sort-button"
+        startIcon="bars"
+        variant="flat"
+        @click="openPopup"
       >
-        Revenue
-      </div>
-    </template>
-
-    <template #day="data">
-      <div
-        :class="
-          'mds-resource-sort-header mds-resource-sort-' +
-          getSortArrow('busyHours', data.date.getTime())
-        "
-        @click="sortResources('busyHours', data.date.getTime())"
-      >
-        <span>{{ formatDate('D DDD', data.date) }}</span>
-      </div>
-    </template>
-
-    <template #dayFooter="data">
-      <div class="mds-resource-details-footer mds-resource-details-footer-day">
-        {{ getOccuppancy(data.events) }}%
-      </div>
-    </template>
-
-    <template #sidebarFooter>
-      <div class="mds-resource-details-footer mds-resource-details-total">${{ totalRevenue }}</div>
+        Sort Trucks
+      </MbscButton>
     </template>
   </MbscEventcalendar>
+  <MbscPopup
+    :contentPadding="false"
+    display="anchored"
+    :anchor="myAnchor"
+    width="400"
+    :buttons="[
+      'cancel',
+      {
+        text: 'Apply',
+        keyCode: 'enter',
+        handler: function () {
+          if (initialSortColumn != sortColumn) {
+            refreshData()
+          }
+          sortResources()
+          initialSortColumn = sortColumn
+          initialSortDirection = sortDirection
+          popup.close()
+
+          mobiscroll.toast({
+            message: 'Resouces sorted'
+          })
+        },
+        cssClass: 'mbsc-popup-button-primary'
+      }
+    ]"
+    @close="handlePopupClose"
+    :isOpen="isPopupOpen"
+    :showOverlay="false"
+    :focusOnClose="false"
+    :focusOnOpen="false"
+  >
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
+      <MbscRadioGroup v-model="sortColumn" @change="handleColumnChange">
+        <MbscRadio
+          label="Standby Time"
+          description="Time the truck is driven without cargo."
+          value="standby"
+          :defaultChecked="true"
+        />
+        <MbscRadio
+          label="Payload Efficiency"
+          description="Truck capacity divided by the average cargo on tours."
+          value="payload"
+        />
+        <MbscRadio
+          label="Deadhead Time"
+          description="Time when the truck is not on a tour."
+          value="deadhead"
+        />
+      </MbscRadioGroup>
+    </div>
+    <div class="mbsc-form-group">
+      <div class="mbsc-form-group-title">Sort direction</div>
+      <MbscSegmentedGroup v-model="sortDirection">
+        <MbscSegmented value="asc" :defaultChecked="true">Ascending</MbscSegmented>
+        <MbscSegmented value="desc">Descending</MbscSegmented>
+      </MbscSegmentedGroup>
+    </div>
+  </MbscPopup>
 </template>
 
 <style>
+/* resource highlight */
+
+.mds-resource-highlight {
+  background-color: rgba(128, 128, 128, 0.4);
+  transition: background-color 0.5s ease;
+}
+
+/* progress bar */
+
+.mbsc-toast-background::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: width 3s linear;
+}
+
+.mbsc-snackbar-message::after {
+  content: 'Sorting in 1 .';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: changeMessage 3s steps(3) forwards;
+}
+
+.mbsc-snackbar-message {
+  position: relative;
+}
+
+@keyframes countdown {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes changeMessage {
+  0% {
+    content: 'Sorting in 3 ...';
+  }
+  43% {
+    content: 'Sorting in 2 ..';
+  }
+  76% {
+    content: 'Sorting in 1 .';
+  }
+}
+
+.mbsc-toast-background.start-progress::before {
+  animation: countdown 3s linear forwards;
+}
+
+.mbsc-snackbar-cont {
+  border-radius: 4px;
+}
+
+/* metric bar */
+
+.metric-bar-container {
+  position: relative;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  height: 10px;
+  width: 150px;
+  overflow: hidden;
+}
+
+.metric-bar-animation {
+  height: 100%;
+  animation: fillBar 1s ease-in-out forwards;
+}
+.metric-bar-no-animation {
+  height: 100%;
+  animation: fillBar 0s ease-in-out forwards;
+}
+
+.metric-bar-overlay {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: #f0f0f0;
+}
+
+@keyframes fillBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.green-bar {
+  background-color: #4caf50;
+}
+
+.yellow-bar {
+  background-color: #ffeb3b;
+}
+
+.red-bar {
+  background-color: #f44336;
+}
+
 /* Overrides */
-.mds-resource-details .mbsc-timeline-resource-header,
-.mds-resource-details .mbsc-timeline-resource-title,
-.mds-resource-details .mbsc-timeline-resource-footer,
-.mds-resource-details .mbsc-timeline-sidebar-header,
-.mds-resource-details .mbsc-timeline-sidebar-resource-title,
-.mds-resource-details .mbsc-timeline-sidebar-footer {
+
+.mds-timeline-popup-sort .mbsc-timeline-events {
+  top: 20px;
+}
+
+.mds-timeline-popup-sort .mbsc-timeline-resource-header,
+.mds-timeline-popup-sort .mbsc-timeline-resource-title,
+.mds-timeline-popup-sort .mbsc-timeline-resource-footer,
+.mds-timeline-popup-sort .mbsc-timeline-sidebar-header,
+.mds-timeline-popup-sort .mbsc-timeline-sidebar-resource-title,
+.mds-timeline-popup-sort .mbsc-timeline-sidebar-footer {
   padding: 0;
 }
 
-.mds-resource-details .mbsc-timeline-resource-col {
-  width: 335px;
+.mds-timeline-popup-sort .mbsc-timeline-row {
+  min-height: 110px;
 }
 
-.mds-resource-details .mbsc-timeline-sidebar-col {
-  width: 98px;
+.mds-timeline-popup-sort .mbsc-timeline-resource-col {
+  width: 170px;
 }
 
-.mds-resource-details .mbsc-timeline-day {
-  width: 144px;
-}
-
-.mds-resource-details .mbsc-timeline-resource-title {
+.mds-timeline-popup-sort .mbsc-timeline-resource-title {
   height: 100%;
-}
-
-@supports (overflow: clip) {
-  .mds-resource-details.mbsc-ltr .mbsc-schedule-event-inner {
-    left: 335px;
-  }
-  .mds-resource-details.mbsc-rtl .mbsc-schedule-event-inner {
-    right: 335px;
-  }
 }
 
 /* Resource grid */
 
-.mds-resource-cell {
+.mds-popup-sort-resource-cell {
   display: inline-block;
   height: 100%;
-  padding: 0 5px;
+  padding: 5px 5px;
   box-sizing: border-box;
   vertical-align: top;
-  line-height: 50px;
+  line-height: 20px;
 }
 
-.mds-resource-cell-name {
-  width: 120px;
+.mds-popup-sort-resource-cell-name {
+  padding: 2px 5px;
+  width: 170px;
 }
 
-.mds-resource-cell-seats,
-.mds-resource-cell-price {
-  width: 107px;
-}
-
-.mds-resource-cell-seats {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-}
-
-.mds-resource-details.mbsc-ios-dark .mds-resource-cell-seats,
-.mds-resource-details.mbsc-material-dark .mds-resource-cell-seats,
-.mds-resource-details.mbsc-windows-dark .mds-resource-cell-seats {
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
-}
-
-/* Sort arrows */
-
-.mds-resource-sort-header {
-  cursor: pointer;
-  position: relative;
-  line-height: 25px;
-  padding: 0 5px;
-  font-size: 14px;
-}
-
-.mds-resource-sort-header::after {
-  position: absolute;
-  opacity: 0.5;
-  right: 8px;
-}
-
-.mds-resource-sort-header:hover::after {
-  opacity: 1;
-}
-
-.mds-resource-sort-asc::after {
-  content: '↑';
-}
-
-.mds-resource-sort-desc::after {
-  content: '↓';
-}
-
-.mds-resource-sort-def::after {
-  content: '‹›';
-  right: 5px;
-  top: 12px;
-  transform: translateY(-50%) rotate(90deg);
-}
-
-/* Footer */
-
-.mds-resource-details-footer {
-  line-height: 50px;
-  background: rgba(150, 150, 150, 0.1);
-}
-
-.mds-resource-details-footer-day {
-  font-size: 15px;
-  font-weight: 600;
-  text-align: center;
-  padding: 0 5px;
-}
-
-.mds-resource-details-occuppancy {
-  font-size: 15px;
-  text-align: end;
-  text-align: right;
-  padding: 0 15px;
-}
-
-.mds-resource-details-total {
-  font-size: 18px;
-  padding: 0 5px;
-  color: #8c0000;
+.mds-resource-attribute {
+  font-size: 12px;
+  font-weight: 400;
 }
 </style>

@@ -1,6 +1,5 @@
 <mbsc-eventcalendar
   #myCalendar
-  class="mds-timeline-popup-sort"
   [clickToCreate]="true"
   [data]="myEvents"
   [dragToCreate]="true"
@@ -8,58 +7,57 @@
   [dragToResize]="true"
   [headerTemplate]="headerTemplate"
   [resourceHeaderTemplate]="resourceHeaderTemplate"
-  [scheduleEventContentTemplate]="scheduleEventContentTemplate"
   [resourceTemplate]="resourceTemplate"
+  [scheduleEventContentTemplate]="scheduleEventContentTemplate"
   [resources]="myResources"
   [view]="view"
   base
-  (onEventCreated)="refreshData()"
-  (onEventDeleted)="refreshData()"
-  (onEventUpdated)="refreshData()"
-  (onPageLoading)="refreshData()"
-></mbsc-eventcalendar>
+  (onPageLoading)="handleOnPageLoading($event)"
+  (onPageLoaded)="handleOnPageLoaded($event)"
+  (onEventCreated)="handleOnEventCreated($event)"
+  (onEventDelete)="handleOnEventDelete($event)"
+  (onEventUpdate)="handleOnEventUpdate($event)"
+>
+  <ng-template #resourceHeaderTemplate>
+    <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
+    <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">{{ selectedMetricDesc }}</div>
+  </ng-template>
 
-<ng-template #resourceHeaderTemplate>
-  <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Truck</div>
-  <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">{{ selectedMetricDesc }}</div>
-</ng-template>
-
-<ng-template #resourceTemplate let-resource>
-  <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
-    <strong>{{ resource.name }}</strong>
-    <div style="font-size: 12px; color: #666">Model: {{ resource.model || 'N/A' }}</div>
-    <div style="font-size: 12px; color: #666">Capacity: {{ resource.capacity }}T</div>
-  </div>
-
-  <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">
-    <div class="metric-value" style="margin-top: 10px">{{ getMetricValue(resource) }}</div>
-    <div class="metric-bar-container">
-      <div class="metric-bar {{ getBarColorClass(resource) }}" [style.width.%]="getBarValue(resource)"></div>
+  <ng-template #resourceTemplate let-resource>
+    <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
+      <strong>{{ resource.name }}</strong>
+      <div class="mds-resource-attribute">Model: {{ resource.model || 'N/A' }}</div>
+      <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
+      <div class="mds-resource-attribute">{{selectedMetricDesc}}: {{ getMetricValue(resource) }}</div>
+      <div class="metric-bar-container" style="margin-top: 5px">
+        <div class="metric-bar {{ getBarColorClass(resource) }}" [style.width.%]="getBarValue(resource)"></div>
+      </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>
 
-<ng-template #scheduleEventContentTemplate let-event>
-  <div>{{ event.title }}</div>
-  <div style="font-size: 11px">Payload: {{ event.payload ? event.payload + ' T' : 'empty' }}</div>
-</ng-template>
+  <ng-template #scheduleEventContentTemplate let-event>
+    <div>{{ event.title }}</div>
+    <div style="font-size: 11px">Payload: {{ event.payload ? event.payload + ' T' : 'empty' }}</div>
+  </ng-template>
 
-<ng-template #headerTemplate>
-  <mbsc-calendar-prev></mbsc-calendar-prev>
-  <mbsc-calendar-next></mbsc-calendar-next>
-  <mbsc-calendar-nav></mbsc-calendar-nav>
-  <mbsc-button start-icon="bars" variant="flat" style="margin-left: auto" (click)="handleSort()" #sortButton>
-    Calculate & Sort
-  </mbsc-button>
-</ng-template>
-
+  <ng-template #headerTemplate>
+    <mbsc-calendar-prev></mbsc-calendar-prev>
+    <mbsc-calendar-next></mbsc-calendar-next>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
+    <mbsc-button startIcon="bars" variant="flat" style="margin-left: auto" (click)="handleSort()" #sortButton>Sort Trucks </mbsc-button>
+  </ng-template>
+</mbsc-eventcalendar>
 <mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" #popup>
   <div class="mbsc-form-group">
-    <div class="mbsc-form-group-title">Metric to sort by</div>
+    <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
     <mbsc-radio-group [(ngModel)]="sortColumn" (change)="handleColumnChange()">
-      <mbsc-radio label="Standby Time" value="standby"></mbsc-radio>
-      <mbsc-radio label="Payload Efficiency" value="payload"></mbsc-radio>
-      <mbsc-radio label="Deadhead Time" value="deadhead"></mbsc-radio>
+      <mbsc-radio label="Standby Time" description="Time the truck is driven without cargo." value="standby"></mbsc-radio>
+      <mbsc-radio
+        label="Payload Efficiency"
+        description="Truck capacity divided by the average cargo on tours."
+        value="payload"
+      ></mbsc-radio>
+      <mbsc-radio label="Deadhead Time" description="Time when the truck is not on a tour." value="deadhead"></mbsc-radio>
     </mbsc-radio-group>
   </div>
   <div class="mbsc-form-group">
