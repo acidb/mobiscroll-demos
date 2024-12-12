@@ -319,7 +319,6 @@ function App() {
     event.current = event;
 
     setSnackbarOpen(true);
-    setSnackbarMessage();
 
     // Add progress animation after rendering the snackbar
     setTimeout(() => {

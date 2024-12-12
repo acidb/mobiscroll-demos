@@ -5,11 +5,13 @@ import {
   MbscCalendarNext,
   MbscCalendarPrev,
   MbscEventcalendar,
+  MbscPopup,
+  MbscRadio,
+  MbscRadioGroup,
   MbscSegmented,
   MbscSegmentedGroup,
-  MbscRadioGroup,
-  MbscRadio,
-  MbscPopup,
+  MbscSnackbar,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
@@ -31,6 +33,15 @@ const weekStart = ref(null)
 const weekEnd = ref(null)
 const initialSort = ref(true)
 const metricBarAnimation = ref(true)
+const loadedEvents = ref()
+const resource = ref()
+const event = ref()
+
+const sortColumn = ref('standby')
+const sortDirection = ref('asc')
+
+const isSnackbarOpen = ref(false)
+const isToastOpen = ref(false)
 
 const myResources = ref([
   { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
@@ -267,6 +278,93 @@ const myView = {
   }
 }
 
+const refreshData = () => {
+  //todo
+  // setTimeout(() => {
+  //   loadedEvents.value = calRef.value.instance.getEvents()
+  // }, 100)
+
+  myResources.value.forEach((resource) => {
+    const resourceEvents = myEvents.value.filter((event) => event.resource === resource.id)
+
+    if (selectedMetric.value === 'standby') {
+      resource.standby = 168
+      resourceEvents.forEach((event) => {
+        const eventStart = new Date(event.start)
+        const eventEnd = new Date(event.end)
+        const effectiveStart = eventStart < weekStart.value ? weekStart : eventStart
+        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd : eventEnd
+
+        if (effectiveStart < effectiveEnd) {
+          resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60) // Convert ms to hours
+        }
+      })
+    }
+
+    if (selectedMetric.value === 'deadhead') {
+      const totalDeadheadTime = resourceEvents.reduce((total, event) => {
+        const eventStart = new Date(event.start)
+        const eventEnd = new Date(event.end)
+        const effectiveStart = eventStart < weekStart.value ? weekStart : eventStart
+        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd : eventEnd
+
+        if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
+          return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60) // Convert ms to hours
+        }
+        return total
+      }, 0)
+      resource.deadhead = totalDeadheadTime
+    }
+
+    if (selectedMetric.value === 'payload') {
+      const weekEvents = resourceEvents.filter(
+        (event) => new Date(event.end) > weekStart.value && new Date(event.start) < weekEnd.value
+      )
+
+      const totalPayload = weekEvents.reduce((total, event) => total + (event.payload || 0), 0)
+
+      const numberOfTours = weekEvents.length
+
+      resource.payload =
+        numberOfTours > 0 && resource.capacity
+          ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100)
+          : 0
+    }
+  })
+}
+
+const sortResources = () => {
+  metricBarAnimation.value = true
+  initialSort.value = false
+
+  myResources.value = [
+    ...myResources.value.sort((a, b) => {
+      if (sortDirection.value === 'asc') {
+        return a[sortColumn.value] > b[sortColumn.value] ? 1 : -1
+      }
+      if (sortDirection.value === 'desc') {
+        return a[sortColumn.value] < b[sortColumn.value] ? 1 : -1
+      }
+      return a.id - b.id
+    })
+  ]
+
+  setTimeout(() => {
+    metricBarAnimation.value = false
+  }, 100)
+}
+
+const delayedToastSort = (resourceId, event) => {
+  resource.value = myResources.value.find((resource) => resource.id === resourceId)
+  event.value = event
+
+  isSnackbarOpen.value = true
+
+  setTimeout(() => {
+    document.querySelector('.mbsc-toast-background').classList.add('start-progress')
+  }, 0)
+}
+
 const openPopup = () => {
   myAnchor.value = buttonRef.value?.instance.nativeElement
   isPopupOpen.value = true
@@ -278,29 +376,91 @@ const handlePopupClose = () => {
   // $('.mbsc-popup-sort-direction[value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
 }
 
-function getBarValue(metricValue) {
+const handleSnackbarClose = () => {
+  isSnackbarOpen.value = false
+
+  resource.value.cssClass = 'mds-resource-highlight'
+  sortResources()
+  setTimeout(() => {
+    resource.value.cssClass = ''
+    myResources.value = [...myResources.value]
+  }, 1000)
+  calRef.value.instance.navigateToEvent(event)
+}
+
+const handlePageLoading = (args) => {
+  weekStart.value = args.firstDay
+  weekEnd.value = args.lastDay
+  refreshData()
+}
+
+const handlePageLoaded = () => {
+  refreshData()
+  if (initialSort.value) {
+    sortResources()
+  }
+}
+
+const handleEventCreated = (args) => {
+  args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5
+  args.event.overlap = false
+  refreshData()
+  delayedToastSort(args.event.resource, args.event)
+}
+
+const handleEventDelete = (args) => {
+  refreshData()
+  delayedToastSort(args.event.resource, args.event)
+}
+
+const handleEventUpdate = (args) => {
+  if (
+    new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
+    new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime()
+  ) {
+    return
+  }
+  refreshData()
+  delayedToastSort(args.event.resource, args.event)
+}
+
+function getMetricValue(resource) {
+  const metricValue = resource[this.selectedMetric]
+  if (this.selectedMetric === 'payload') {
+    return `${metricValue}%`
+  } else if (['standby', 'deadhead'].includes(this.selectedMetric)) {
+    return `${metricValue}h`
+  }
+  return metricValue
+}
+function getBarValue(resource) {
+  const metricValue = resource[this.selectedMetric]
   if (this.selectedMetric === 'payload') {
     return metricValue
   } else if (['standby', 'deadhead'].includes(this.selectedMetric)) {
     return (metricValue / 168) * 100
-  } else {
-    return 100
   }
+  return 100
 }
-function getBarColorClass(barValue) {
+function getBarColorClass(resource) {
+  const barValue = this.getBarValue(resource)
+  const animationClass = this.metricBarAnimation
+    ? 'metric-bar-animation'
+    : 'metric-bar-no-animation'
+
   if (barValue <= 33) {
-    return 'green-bar'
+    return `green-bar ${animationClass}`
   } else if (barValue <= 66) {
-    return 'yellow-bar'
+    return `yellow-bar ${animationClass}`
   } else {
-    return 'red-bar'
+    return `red-bar ${animationClass}`
   }
 }
 </script>
 
 <template>
   <MbscEventcalendar
-    className="mds-resource-details"
+    cssClass="mds-timeline-popup-sort"
     ref="calRef"
     :clickToCreate="true"
     :data="myEvents"
@@ -309,16 +469,24 @@ function getBarColorClass(barValue) {
     :dragToResize="true"
     :resources="myResources"
     :view="myView"
-    :onPageLoading="refreshData"
-    :onEventCreated="refreshData"
-    :onEventDeleted="refreshData"
-    :onEventUpdated="refreshData"
+    :onPageLoading="handlePageLoading"
+    :onPageLoaded="handlePageLoaded"
+    :onEventCreated="handleEventCreated"
+    :onEventDelete="handleEventDelete"
+    :onEventUpdate="handleEventUpdate"
   >
     <template #resourceHeader>
       <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
     </template>
 
-    <template #scheduleEventContent> xxx </template>
+    <template #scheduleEventContent="event">
+      <div>
+        <div>{{ event.title }}</div>
+        <div style="font-size: 11px">
+          Payload: {{ event.original.payload ? event.original.payload + ' T' : 'empty' }}
+        </div>
+      </div>
+    </template>
 
     <template #resource="resource">
       <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
@@ -326,16 +494,18 @@ function getBarColorClass(barValue) {
         <div class="mds-resource-attribute">Model: {{ resource.model || 'N/A' }}</div>
         <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
         <div class="mds-resource-attribute">
-          {{ selectedMetricDesc }}: {{ resource[selectedMetric] }}
-          <span v-if="selectedMetric === 'payload'">%</span>
-          <span v-else-if="['standby', 'deadhead'].includes(selectedMetric)">h</span>
+          {{ selectedMetricDesc }}: {{ getMetricValue(resource) }}
         </div>
 
-        <div class="metric-bar-container">
+        <div class="metric-bar-container" style="margin-top: 5px">
           <div
             class="metric-bar"
-            :class="getBarColorClass(resource[selectedMetric])"
-            :style="{ marginTop: '5px', width: getBarValue(resource[selectedMetric]) + '%' }"
+            :class="getBarColorClass(resource)"
+            :style="{ width: getBarValue(resource) + '%' }"
+          ></div>
+          <div
+            class="metric-bar-overlay"
+            :style="{ width: 100 - getBarValue(resource) + '%' }"
           ></div>
         </div>
       </div>
@@ -368,17 +538,15 @@ function getBarColorClass(barValue) {
         text: 'Apply',
         keyCode: 'enter',
         handler: function () {
-          if (initialSortColumn != sortColumn) {
+          isPopupOpen = false
+          if (initialSortColumn.value != sortColumn.value) {
             refreshData()
           }
           sortResources()
-          initialSortColumn = sortColumn
-          initialSortDirection = sortDirection
-          popup.close()
+          initialSortColumn.value = sortColumn.value
+          initialSortDirection.value = sortDirection.value
 
-          mobiscroll.toast({
-            message: 'Resouces sorted'
-          })
+          isToastOpen = true
         },
         cssClass: 'mbsc-popup-button-primary'
       }
@@ -418,6 +586,20 @@ function getBarColorClass(barValue) {
       </MbscSegmentedGroup>
     </div>
   </MbscPopup>
+  <MbscSnackbar
+    :button="{
+      text: 'Sort now',
+      action: function () {
+        sortResources()
+      }
+    }"
+    :duration="3000"
+    :isOpen="isSnackbarOpen"
+    @close="isSnackbarOpen = false"
+    animation="pop"
+    display="bottom"
+  />
+  <MbscToast :message="'Resouces sorted'" :isOpen="isToastOpen" @close="handleSnackbarClose" />
 </template>
 
 <style>
