@@ -29,6 +29,14 @@ setOptions({
   // themeJs
 });
 
+interface MyResource extends MbscResource {
+  standby?: number;
+  deadhead?: number;
+  payload?: number;
+  model: string;
+  location: string;
+}
+
 function App() {
   const myEvents: MbscCalendarEvent[] = [
     {
@@ -241,7 +249,7 @@ function App() {
     },
   ];
 
-  const myResources = useMemo<MbscResource[]>(
+  const myResources = useMemo<MyResource[]>(
     () => [
       { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
       { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', model: 'Mercedes Actros' },
@@ -273,12 +281,12 @@ function App() {
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const loadedEvents = useRef<MbscCalendarEvent[]>([]);
   const metricBarAnimation = useRef<boolean>(true);
-  const resource = useRef<MbscResource>();
+  const resource = useRef<MyResource>();
   const selectedMetric: string = 'standby';
   const selectedMetricDesc: string = 'Standby Time';
   const [sortColumn, setSortColumn] = useState<string>('standby');
   const [sortDirection, setSortDirection] = useState<string>('asc');
-  const [sortedResources, setResources] = useState<MbscResource[]>(myResources);
+  const [sortedResources, setResources] = useState<MyResource[]>(myResources);
   const weekStart = useRef<Date>();
   const weekEnd = useRef<Date>();
 
@@ -304,8 +312,8 @@ function App() {
         });
       } else if (selectedMetric === 'deadhead') {
         resource.deadhead = resourceEvents.reduce((total, event) => {
-          const eventStart = new Date(event.start as string);
-          const eventEnd = new Date(event.end as string);
+          const eventStart = new Date(event.start as Date);
+          const eventEnd = new Date(event.end as Date);
           const effectiveStart = weekStart.current && eventStart < weekStart.current ? weekStart.current : eventStart;
           const effectiveEnd = weekEnd.current && eventEnd > weekEnd.current ? weekEnd.current : eventEnd;
 
@@ -316,7 +324,7 @@ function App() {
         }, 0);
       } else if (selectedMetric === 'payload') {
         const weekEvents = resourceEvents.filter(
-          (event) => new Date(event.end as string) > weekStart.current! && new Date(event.start as string) < weekEnd.current!,
+          (event) => new Date(event.end as Date) > weekStart.current! && new Date(event.start as Date) < weekEnd.current!,
         );
 
         const totalPayload = weekEvents.reduce((total, event) => total + (event.payload || 0), 0);
@@ -467,7 +475,7 @@ function App() {
   );
 
   const myCustomResource = useCallback(
-    (resource: MbscResource) => {
+    (resource: MyResource) => {
       const metricValue = resource[selectedMetric];
 
       const barValue =
