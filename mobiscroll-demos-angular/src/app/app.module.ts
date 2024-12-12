@@ -344,6 +344,7 @@ import { AppComponent as Demo471 } from '../demos/pickers/select/localization/lo
 import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
 
 import { AppComponent as DemoZoom } from '../demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
+import { AppComponent as PopupSort } from '../demos/eventcalendar/timeline/dynamic-calculation-resource-sort/dynamic-calculation-resource-sort';
 
 export const demos: any[] = [
   {
@@ -1021,7 +1022,7 @@ export const demos: any[] = [
             unique: 17,
             items: [
               { name: 'Resource grid', unique: 'timeline-resource-details-side-panel-footer', component: Demo607 },
-              { name: 'Resource popup sort', unique: 'resource-popup-sort', component: Demo999 },
+              { name: 'Dynamic calculation resource sort', unique: 'dynamic-calculation-resource-sort', component: PopupSort },
               { name: 'Resource grouping & hierarchy', unique: 'resource-grouping-hierarchy', component: Demo625 },
               { name: 'Resource group summaries', unique: 'show-summaries-aggregates-for-resource-groups', component: Demo747 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
@@ -1255,8 +1256,8 @@ export const demoTitleMap: { [key: string]: string } = {};
 
 @NgModule({
   declarations: [
-    Demo999,
     DemoZoom,
+    PopupSort,
     Demo439,
     Demo571,
     Demo529,

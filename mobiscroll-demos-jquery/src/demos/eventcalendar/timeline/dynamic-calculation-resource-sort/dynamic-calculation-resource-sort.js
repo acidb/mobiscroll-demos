@@ -11,17 +11,17 @@ export default {
 
     $(function () {
       var $popupElm = $('#demo-filtering-popup');
+      var initialSort = true;
       var initialSortColumn;
       var initialSortDirection;
-      var sortColumn = 'standby';
-      var sortDirection = 'asc';
+      var loadedEvents;
+      var metricBarAnimation = true;
       var selectedMetric = 'standby';
       var selectedMetricDesc = 'Standby Time';
-      var loadedEvents;
+      var sortColumn = 'standby';
+      var sortDirection = 'asc';
       var weekStart;
       var weekEnd;
-      var initialSort = true;
-      var metricBarAnimation = true;
 
       var myEvents = [
         {
@@ -328,13 +328,14 @@ export default {
           //<hidden>
           // theme,//</hidden>
           // context,
+          animation: 'pop',
           button: {
             text: 'Sort now',
             action: function () {
               sortResources();
             },
           },
-          animation: 'pop',
+          cssClass: 'mds-popup-sort-snackbar',
           display: 'bottom',
           duration: 3000,
           onClose: function () {
@@ -349,7 +350,7 @@ export default {
         });
         setTimeout(function () {
           document.querySelector('.mbsc-toast-background').classList.add('start-progress');
-        }, 0);
+        });
       }
 
       var popup = $popupElm
@@ -373,6 +374,7 @@ export default {
                   //<hidden>
                   // theme,//</hidden>
                   // context,
+                  cssClass: 'mds-popup-sort-toast',
                   message: 'Resouces sorted',
                 });
               },
@@ -407,18 +409,14 @@ export default {
             },
           },
           resources: myResources,
-          renderScheduleEventContent: function (args) {
+          renderHeader: function () {
             return (
-              '<div>' +
-              args.title +
-              '</div>' +
-              '<div style="font-size: 11px;">' +
-              'Payload: ' +
-              (args.original.payload ? args.original.payload + ' T' : 'empty') +
-              '</div>'
+              '<div mbsc-calendar-prev></div>' +
+              '<div mbsc-calendar-next></div>' +
+              '<div mbsc-calendar-nav></div>' +
+              '<button id="demo-popup-sort-button" data-start-icon="bars" data-variant="flat" mbsc-button style="margin-left: auto;">Sort Trucks</button>'
             );
           },
-
           renderResourceHeader: function () {
             return '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' + 'Trucks' + '</div>';
           },
@@ -432,9 +430,10 @@ export default {
                   ? (metricValue / 168) * 100
                   : 100;
 
-            var barColorClass = barValue <= 33 ? 'green-bar' : barValue <= 66 ? 'yellow-bar' : 'red-bar';
+            var barColorClass =
+              barValue <= 33 ? 'mds-resource-green-bar' : barValue <= 66 ? 'mds-resource-yellow-bar' : 'mds-resource-red-bar';
 
-            var metricBarClass = metricBarAnimation ? 'metric-bar-animation ' : 'metric-bar-no-animation ';
+            var metricBarClass = metricBarAnimation ? 'mds-metric-bar-animation ' : 'mds-metric-bar-no-animation ';
 
             return (
               '<div class="mds-popup-sort-resource-cell">' +
@@ -453,27 +452,29 @@ export default {
               metricValue +
               (selectedMetric === 'payload' ? '%' : selectedMetric === 'standby' || selectedMetric === 'deadhead' ? 'h' : '') +
               '</div>' +
-              '<div class="metric-bar-container" style="margin-top: 5px;">' +
+              '<div class="mds-metric-bar-container" style="margin-top: 5px;">' +
               '<div class=" ' +
               metricBarClass +
               barColorClass +
               '" style="width: ' +
               barValue +
               '%;"></div>' +
-              '<div class="metric-bar-overlay" style="width: ' +
+              '<div class="mds-metric-bar-overlay" style="width: ' +
               (100 - barValue) +
               '%;"></div>' +
               '</div>' +
               '</div>'
             );
           },
-
-          renderHeader: function () {
+          renderScheduleEventContent: function (args) {
             return (
-              '<div mbsc-calendar-prev></div>' +
-              '<div mbsc-calendar-next></div>' +
-              '<div mbsc-calendar-nav></div>' +
-              '<button id="demo-popup-sort-button" data-start-icon="bars" data-variant="flat" mbsc-button style="margin-left: auto;">Sort Trucks</button>'
+              '<div>' +
+              args.title +
+              '</div>' +
+              '<div style="font-size: 11px;">' +
+              'Payload: ' +
+              (args.original.payload ? args.original.payload + ' T' : 'empty') +
+              '</div>'
             );
           },
           onPageLoading: function (args, inst) {
@@ -571,7 +572,7 @@ export default {
 
 /* progress bar */
 
-.mbsc-toast-background::before {
+.mds-popup-sort-snackbar .mbsc-toast-background::before {
   content: "";
   position: absolute;
   left: 0;
@@ -582,7 +583,7 @@ export default {
   transition: width 3s linear; 
 }
 
-.mbsc-snackbar-message::after {
+.mds-popup-sort-snackbar .mbsc-snackbar-message::after {
   content: "Sorting in 1 ."; 
   position: absolute;
   top: 50%;
@@ -591,7 +592,7 @@ export default {
   animation: changeMessage 3s steps(3) forwards; 
 }
 
-.mbsc-snackbar-message {
+.mds-popup-sort-snackbar .mbsc-snackbar-message {
   position: relative;
 }
 
@@ -616,17 +617,17 @@ export default {
   }
 }
 
-.mbsc-toast-background.start-progress::before {
+.mds-popup-sort-snackbar .mbsc-toast-background.start-progress::before {
   animation: countdown 3s linear forwards; 
 }
 
-.mbsc-snackbar-cont {
+.mds-popup-sort-snackbar .mbsc-snackbar-cont {
   border-radius: 4px;
 }
 
 /* metric bar */
 
-.metric-bar-container {
+.mds-metric-bar-container {
   position: relative;
   background-color: #f0f0f0;
   border-radius: 5px;
@@ -635,16 +636,17 @@ export default {
   overflow: hidden;
 }
 
-.metric-bar-animation {
+.mds-metric-bar-animation {
   height: 100%;
   animation: fillBar 1s ease-in-out forwards;
 }
-.metric-bar-no-animation {
+
+.mds-metric-bar-no-animation {
   height: 100%;
   animation: fillBar 0s ease-in-out forwards;
 }
 
-.metric-bar-overlay {
+.mds-metric-bar-overlay {
   content: '';
   position: absolute; 
   top: 0;
@@ -662,15 +664,15 @@ export default {
   }
 }
 
-.green-bar {
+.mds-resource-green-bar {
   background-color: #4caf50; 
 }
 
-.yellow-bar {
+.mds-resource-yellow-bar {
   background-color: #ffeb3b; 
 }
 
-.red-bar {
+.mds-resource-red-bar {
   background-color: #f44336; 
 }
 

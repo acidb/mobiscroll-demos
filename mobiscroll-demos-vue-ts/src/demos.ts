@@ -334,8 +334,8 @@ import Demo387 from './demos/pickers/select/themes-ios-material-windows/themes-i
 import Demo276 from './demos/pickers/select/event-hooks/event-hooks.vue'
 import Demo471 from './demos/pickers/select/localization/localization.vue'
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left.vue'
-
 import DemoZoom from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom.vue'
+import PopupSort from './demos/eventcalendar/timeline/dynamic-calculation-resource-sort/dynamic-calculation-resource-sort.vue'
 
 export const demos = [
   {
@@ -1546,6 +1546,11 @@ export const demos = [
                 name: 'Resource grid',
                 unique: 'timeline-resource-details-side-panel-footer',
                 component: Demo607
+              },
+              {
+                name: 'Dynamic calculation resource sort',
+                unique: 'dynamic-calculation-resource-sort',
+                component: PopupSort
               },
               {
                 name: 'Resource grouping & hierarchy',

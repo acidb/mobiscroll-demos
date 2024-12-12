@@ -5,11 +5,13 @@ import {
   MbscCalendarNext,
   MbscCalendarPrev,
   MbscEventcalendar,
+  MbscPopup,
+  MbscRadio,
+  MbscRadioGroup,
   MbscSegmented,
   MbscSegmentedGroup,
-  MbscRadioGroup,
-  MbscRadio,
-  MbscPopup,
+  MbscSnackbar,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
@@ -21,33 +23,23 @@ setOptions({
 
 const calRef = ref(null)
 const myAnchor = ref(null)
-const isPopupOpen = ref(false)
 const buttonRef = ref(null)
+const event = ref()
+const initialSort = ref(true)
 const initialSortColumn = ref('')
 const initialSortDirection = ref('')
+const isPopupOpen = ref(false)
+const isSnackbarOpen = ref(false)
+const isToastOpen = ref(false)
+const loadedEvents = ref()
+const metricBarAnimation = ref(true)
+const resource = ref()
 const selectedMetric = ref('standby')
 const selectedMetricDesc = ref('Standby Time')
+const sortColumn = ref('standby')
+const sortDirection = ref('asc')
 const weekStart = ref(null)
 const weekEnd = ref(null)
-const initialSort = ref(true)
-const metricBarAnimation = ref(true)
-
-const myResources = ref([
-  { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
-  { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', model: 'Mercedes Actros' },
-  { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', model: 'Scania R500' },
-  { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
-  { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
-  { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
-  { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
-  { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
-  { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
-  { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
-  { id: 12, name: 'LV-TRK-2200', capacity: 30, location: 'Las Vegas', model: 'Volvo FH16' },
-  { id: 13, name: 'MI-TRK-3300', capacity: 26, location: 'Miami', model: 'Peterbilt 579' },
-  { id: 14, name: 'SE-TRK-4400', capacity: 16, location: 'Seattle', model: 'Mack Anthem' },
-  { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' }
-])
 
 const myEvents = ref([
   {
@@ -260,6 +252,23 @@ const myEvents = ref([
   }
 ])
 
+const myResources = ref([
+  { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
+  { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', model: 'Mercedes Actros' },
+  { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', model: 'Scania R500' },
+  { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
+  { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
+  { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
+  { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
+  { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
+  { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
+  { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
+  { id: 12, name: 'LV-TRK-2200', capacity: 30, location: 'Las Vegas', model: 'Volvo FH16' },
+  { id: 13, name: 'MI-TRK-3300', capacity: 26, location: 'Miami', model: 'Peterbilt 579' },
+  { id: 14, name: 'SE-TRK-4400', capacity: 16, location: 'Seattle', model: 'Mack Anthem' },
+  { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' }
+])
+
 const myView = {
   timeline: {
     type: 'week',
@@ -267,40 +276,189 @@ const myView = {
   }
 }
 
-const openPopup = () => {
+const refreshData = () => {
+  // setTimeout(() => {
+  //   loadedEvents.value = calRef.value.instance.getEvents()
+  // }, 100)
+
+  myResources.value.forEach((resource) => {
+    const resourceEvents = myEvents.value.filter((event) => event.resource === resource.id)
+
+    if (sortColumn.value === 'standby') {
+      resource.standby = 168
+      resourceEvents.forEach((event) => {
+        const eventStart = new Date(event.start)
+        const eventEnd = new Date(event.end)
+        const effectiveStart = eventStart < weekStart.value ? weekStart : eventStart
+        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd : eventEnd
+
+        if (effectiveStart < effectiveEnd) {
+          resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60)
+        }
+      })
+    }
+
+    if (sortColumn.value === 'deadhead') {
+      const totalDeadheadTime = resourceEvents.reduce((total, event) => {
+        const eventStart = new Date(event.start)
+        const eventEnd = new Date(event.end)
+        const effectiveStart = eventStart < weekStart.value ? weekStart : eventStart
+        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd : eventEnd
+
+        if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
+          return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60)
+        }
+        return total
+      }, 0)
+      resource.deadhead = totalDeadheadTime
+    }
+
+    if (sortColumn.value === 'payload') {
+      const weekEvents = resourceEvents.filter(
+        (event) => new Date(event.end) > weekStart.value && new Date(event.start) < weekEnd.value
+      )
+
+      const totalPayload = weekEvents.reduce((total, event) => total + (event.payload || 0), 0)
+
+      const numberOfTours = weekEvents.length
+
+      resource.payload =
+        numberOfTours > 0 && resource.capacity
+          ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100)
+          : 0
+    }
+  })
+}
+
+const sortResources = () => {
+  metricBarAnimation.value = true
+  initialSort.value = false
+
+  myResources.value = [
+    ...myResources.value.sort((a, b) => {
+      if (sortDirection.value === 'asc') {
+        return a[sortColumn.value] > b[sortColumn.value] ? 1 : -1
+      }
+      if (sortDirection.value === 'desc') {
+        return a[sortColumn.value] < b[sortColumn.value] ? 1 : -1
+      }
+      return a.id - b.id
+    })
+  ]
+
+  setTimeout(() => {
+    metricBarAnimation.value = false
+  }, 100)
+}
+
+const delayedToastSort = (resourceId, event) => {
+  resource.value = myResources.value.find((resource) => resource.id === resourceId)
+  event.value = event
+
+  isSnackbarOpen.value = true
+
+  setTimeout(() => {
+    document.querySelector('.mbsc-toast-background').classList.add('start-progress')
+  })
+}
+
+const handlePopupOpen = () => {
   myAnchor.value = buttonRef.value?.instance.nativeElement
   isPopupOpen.value = true
 }
 
 const handlePopupClose = () => {
   isPopupOpen.value = false
-  // $('.mbsc-popup-sort-metric[value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
-  // $('.mbsc-popup-sort-direction[value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
+  // restore initial state
 }
 
-function getBarValue(metricValue) {
+const handleSnackbarClose = () => {
+  isSnackbarOpen.value = false
+
+  resource.value.cssClass = 'mds-resource-highlight'
+  sortResources()
+  setTimeout(() => {
+    resource.value.cssClass = ''
+    myResources.value = [...myResources.value]
+  }, 1000)
+  calRef.value.instance.navigateToEvent(event)
+}
+
+const handlePageLoading = (args) => {
+  weekStart.value = args.firstDay
+  weekEnd.value = args.lastDay
+  refreshData()
+}
+
+const handlePageLoaded = () => {
+  refreshData()
+  if (initialSort.value) {
+    sortResources()
+  }
+}
+
+const handleEventCreated = (args) => {
+  args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5
+  args.event.overlap = false
+  refreshData()
+  delayedToastSort(args.event.resource, args.event)
+}
+
+const handleEventDelete = (args) => {
+  refreshData()
+  delayedToastSort(args.event.resource, args.event)
+}
+
+const handleEventUpdate = (args) => {
+  if (
+    new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
+    new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime()
+  ) {
+    return
+  }
+  refreshData()
+  delayedToastSort(args.event.resource, args.event)
+}
+
+function getMetricValue(resource) {
+  const metricValue = resource[this.selectedMetric]
+  if (this.selectedMetric === 'payload') {
+    return `${metricValue}%`
+  } else if (['standby', 'deadhead'].includes(this.selectedMetric)) {
+    return `${metricValue}h`
+  }
+  return metricValue
+}
+
+function getBarValue(resource) {
+  const metricValue = resource[this.selectedMetric]
   if (this.selectedMetric === 'payload') {
     return metricValue
   } else if (['standby', 'deadhead'].includes(this.selectedMetric)) {
     return (metricValue / 168) * 100
-  } else {
-    return 100
   }
+  return 100
 }
-function getBarColorClass(barValue) {
+
+function getBarColorClass(resource) {
+  const barValue = this.getBarValue(resource)
+  const animationClass = this.metricBarAnimation
+    ? 'mds-metric-bar-animation'
+    : 'mds-metric-bar-no-animation'
+
   if (barValue <= 33) {
-    return 'green-bar'
+    return `mds-resource-green-bar ${animationClass}`
   } else if (barValue <= 66) {
-    return 'yellow-bar'
+    return `mds-resource-yellow-bar ${animationClass}`
   } else {
-    return 'red-bar'
+    return `mds-resource-red-bar ${animationClass}`
   }
 }
 </script>
 
 <template>
   <MbscEventcalendar
-    className="mds-resource-details"
+    cssClass="mds-timeline-popup-sort"
     ref="calRef"
     :clickToCreate="true"
     :data="myEvents"
@@ -309,38 +467,12 @@ function getBarColorClass(barValue) {
     :dragToResize="true"
     :resources="myResources"
     :view="myView"
-    :onPageLoading="refreshData"
-    :onEventCreated="refreshData"
-    :onEventDeleted="refreshData"
-    :onEventUpdated="refreshData"
+    :onPageLoading="handlePageLoading"
+    :onPageLoaded="handlePageLoaded"
+    :onEventCreated="handleEventCreated"
+    :onEventDelete="handleEventDelete"
+    :onEventUpdate="handleEventUpdate"
   >
-    <template #resourceHeader>
-      <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
-    </template>
-
-    <template #scheduleEventContent> xxx </template>
-
-    <template #resource="resource">
-      <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
-        <strong>{{ resource.name }}</strong>
-        <div class="mds-resource-attribute">Model: {{ resource.model || 'N/A' }}</div>
-        <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
-        <div class="mds-resource-attribute">
-          {{ selectedMetricDesc }}: {{ resource[selectedMetric] }}
-          <span v-if="selectedMetric === 'payload'">%</span>
-          <span v-else-if="['standby', 'deadhead'].includes(selectedMetric)">h</span>
-        </div>
-
-        <div class="metric-bar-container">
-          <div
-            class="metric-bar"
-            :class="getBarColorClass(resource[selectedMetric])"
-            :style="{ marginTop: '5px', width: getBarValue(resource[selectedMetric]) + '%' }"
-          ></div>
-        </div>
-      </div>
-    </template>
-
     <template #header>
       <MbscCalendarPrev />
       <MbscCalendarNext />
@@ -351,10 +483,43 @@ function getBarColorClass(barValue) {
         id="demo-popup-sort-button"
         startIcon="bars"
         variant="flat"
-        @click="openPopup"
+        @click="handlePopupOpen"
       >
         Sort Trucks
       </MbscButton>
+    </template>
+
+    <template #resourceHeader>
+      <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
+    </template>
+
+    <template #resource="resource">
+      <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
+        <strong>{{ resource.name }}</strong>
+        <div class="mds-resource-attribute">Model: {{ resource.model || 'N/A' }}</div>
+        <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
+        <div class="mds-resource-attribute">{{ sortColumn }}: {{ getMetricValue(resource) }}</div>
+
+        <div class="mds-metric-bar-container" style="margin-top: 5px">
+          <div
+            :class="getBarColorClass(resource)"
+            :style="{ width: getBarValue(resource) + '%' }"
+          ></div>
+          <div
+            class="mds-metric-bar-overlay"
+            :style="{ width: 100 - getBarValue(resource) + '%' }"
+          ></div>
+        </div>
+      </div>
+    </template>
+
+    <template #scheduleEventContent="event">
+      <div>
+        <div>{{ event.title }}</div>
+        <div style="font-size: 11px">
+          Payload: {{ event.original.payload ? event.original.payload + ' T' : 'empty' }}
+        </div>
+      </div>
     </template>
   </MbscEventcalendar>
   <MbscPopup
@@ -368,17 +533,16 @@ function getBarColorClass(barValue) {
         text: 'Apply',
         keyCode: 'enter',
         handler: function () {
-          if (initialSortColumn != sortColumn) {
-            refreshData()
-          }
-          sortResources()
-          initialSortColumn = sortColumn
-          initialSortDirection = sortDirection
-          popup.close()
+          isPopupOpen = false
 
-          mobiscroll.toast({
-            message: 'Resouces sorted'
-          })
+          // if (initialSortColumn.value != sortColumn.value) {
+          refreshData()
+          // }
+          sortResources()
+          // initialSortColumn.value = sortColumn.value
+          // initialSortDirection.value = sortDirection.value
+
+          isToastOpen = true
         },
         cssClass: 'mbsc-popup-button-primary'
       }
@@ -391,7 +555,7 @@ function getBarColorClass(barValue) {
   >
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
-      <MbscRadioGroup v-model="sortColumn" @change="handleColumnChange">
+      <MbscRadioGroup v-model="sortColumn">
         <MbscRadio
           label="Standby Time"
           description="Time the truck is driven without cargo."
@@ -418,6 +582,21 @@ function getBarColorClass(barValue) {
       </MbscSegmentedGroup>
     </div>
   </MbscPopup>
+  <MbscSnackbar
+    animation="pop"
+    :button="{
+      text: 'Sort now',
+      action: function () {
+        sortResources()
+      }
+    }"
+    cssClass="mds-popup-sort-snackbar"
+    :duration="3000"
+    display="bottom"
+    :isOpen="isSnackbarOpen"
+    @close="isSnackbarOpen = false"
+  />
+  <MbscToast :message="'Resouces sorted'" :isOpen="isToastOpen" @close="handleSnackbarClose" />
 </template>
 
 <style>
@@ -430,7 +609,7 @@ function getBarColorClass(barValue) {
 
 /* progress bar */
 
-.mbsc-toast-background::before {
+.mds-popup-sort-snackbar .mbsc-toast-background::before {
   content: '';
   position: absolute;
   left: 0;
@@ -441,7 +620,7 @@ function getBarColorClass(barValue) {
   transition: width 3s linear;
 }
 
-.mbsc-snackbar-message::after {
+.mds-popup-sort-snackbar .mbsc-snackbar-message::after {
   content: 'Sorting in 1 .';
   position: absolute;
   top: 50%;
@@ -450,7 +629,7 @@ function getBarColorClass(barValue) {
   animation: changeMessage 3s steps(3) forwards;
 }
 
-.mbsc-snackbar-message {
+.mds-popup-sort-snackbar .mbsc-snackbar-message {
   position: relative;
 }
 
@@ -475,17 +654,17 @@ function getBarColorClass(barValue) {
   }
 }
 
-.mbsc-toast-background.start-progress::before {
+.mds-popup-sort-snackbar .mbsc-toast-background.start-progress::before {
   animation: countdown 3s linear forwards;
 }
 
-.mbsc-snackbar-cont {
+.mds-popup-sort-snackbar .mbsc-snackbar-cont {
   border-radius: 4px;
 }
 
 /* metric bar */
 
-.metric-bar-container {
+.mds-metric-bar-container {
   position: relative;
   background-color: #f0f0f0;
   border-radius: 5px;
@@ -494,16 +673,16 @@ function getBarColorClass(barValue) {
   overflow: hidden;
 }
 
-.metric-bar-animation {
+.mds-metric-bar-animation {
   height: 100%;
   animation: fillBar 1s ease-in-out forwards;
 }
-.metric-bar-no-animation {
+.mds-metric-bar-no-animation {
   height: 100%;
   animation: fillBar 0s ease-in-out forwards;
 }
 
-.metric-bar-overlay {
+.mds-metric-bar-overlay {
   content: '';
   position: absolute;
   top: 0;
@@ -521,15 +700,15 @@ function getBarColorClass(barValue) {
   }
 }
 
-.green-bar {
+.mds-resource-green-bar {
   background-color: #4caf50;
 }
 
-.yellow-bar {
+.mds-resource-yellow-bar {
   background-color: #ffeb3b;
 }
 
-.red-bar {
+.mds-resource-red-bar {
   background-color: #f44336;
 }
 
