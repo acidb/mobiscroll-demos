@@ -10,6 +10,8 @@ import {
   Segmented,
   SegmentedGroup,
   setOptions /* localeImport */,
+  Snackbar,
+  Toast,
 } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import './resource-popup-sort.css';
@@ -270,9 +272,19 @@ function App() {
   const metricBarAnimation = useRef(true);
 
   const buttonRef = useRef();
+  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const resource = useRef('');
+  const event = useRef('');
 
   const [myAnchor, setAnchor] = useState();
   const [isPopupOpen, setPopupOpen] = useState(false);
+
+  const [isToastOpen, setToastOpen] = useState(false);
+
+  const handleCloseToast = useCallback(() => {
+    setToastOpen(false);
+  }, []);
 
   const handlePopupClose = useCallback(() => {
     setPopupOpen(false);
@@ -301,33 +313,18 @@ function App() {
     }, 100);
   }, [myResources, sortColumn, sortDirection]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function delayedToastSort(resourceId, event) {
-    // const resource = myResources.find((resource) => resource.id === resourceId);
-    // mobiscroll.snackbar({
-    //   // Snackbar options
-    //   button: {
-    //     text: 'Sort now',
-    //     action: () => {
-    //       sortResources();
-    //     },
-    //   },
-    //   animation: 'pop',
-    //   display: 'bottom',
-    //   duration: 3000,
-    //   onClose: () => {
-    //     resource.cssClass = 'mds-resource-highlight';
-    //     sortResources();
-    //     setTimeout(() => {
-    //       resource.cssClass = '';
-    //       calendar.setOptions({ resources: [...myResources] }); // Ensure new array reference
-    //     }, 1000);
-    //     calendar.navigateToEvent(event);
-    //   },
-    // });
-    // // Add progress animation after rendering the snackbar
-    // setTimeout(() => {
-    //   document.querySelector('.mbsc-toast-background')?.classList.add('start-progress');
-    // }, 0);
+    resource.current = myResources.find((resource) => resource.id === resourceId);
+    event.current = event;
+
+    setSnackbarOpen(true);
+    setSnackbarMessage();
+
+    // Add progress animation after rendering the snackbar
+    setTimeout(() => {
+      document.querySelector('.mbsc-toast-background')?.classList.add('start-progress');
+    }, 0);
   }
 
   const refreshData = useCallback(() => {
@@ -401,7 +398,7 @@ function App() {
       refreshData();
       delayedToastSort(args.event.resource, args.event);
     },
-    [refreshData],
+    [delayedToastSort, refreshData],
   );
 
   const handleEventUpdate = useCallback(
@@ -415,7 +412,7 @@ function App() {
       refreshData();
       delayedToastSort(args.event.resource, args.event);
     },
-    [refreshData],
+    [delayedToastSort, refreshData],
   );
 
   const handleEventDelete = useCallback(
@@ -423,8 +420,19 @@ function App() {
       refreshData();
       delayedToastSort(args.event.resource, args.event);
     },
-    [refreshData],
+    [delayedToastSort, refreshData],
   );
+
+  const handleSnackbarClose = useCallback(() => {
+    setSnackbarOpen(false);
+    resource.current.cssClass = 'mds-resource-highlight';
+    sortResources();
+    setTimeout(() => {
+      resource.current.cssClass = '';
+      setResources(myResources.slice());
+    }, 1000);
+    calRef.current.navigateToEvent(event);
+  }, [myResources, sortResources]);
 
   const myCustomResourceHeader = useCallback(
     () => (
@@ -492,13 +500,13 @@ function App() {
   return (
     <>
       <Eventcalendar
+        ref={calRef}
         cssClass="mds-timeline-popup-sort"
         clickToCreate={true}
         data={myEvents}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
-        ref={calRef}
         resources={sortedResources}
         renderResourceHeader={myCustomResourceHeader}
         renderResource={myCustomResource}
@@ -528,9 +536,7 @@ function App() {
               initialSortColumn.current = sortColumn;
               initialSortDirection.curent = sortDirection;
               setPopupOpen(false);
-              // mobiscroll.toast({
-              //   message: 'Resouces sorted',
-              // });
+              setToastOpen(true);
             },
             cssClass: 'mbsc-popup-button-primary',
           },
@@ -576,6 +582,21 @@ function App() {
           </SegmentedGroup>
         </div>
       </Popup>
+      <Snackbar
+        isOpen={isSnackbarOpen}
+        duration={3000}
+        animation={'pop'}
+        display={'bottom'}
+        message={snackbarMessage}
+        button={{
+          text: 'Sort now',
+          action: function () {
+            sortResources();
+          },
+        }}
+        onClose={handleSnackbarClose}
+      />
+      <Toast message={'Resouces sorted'} isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
 }
