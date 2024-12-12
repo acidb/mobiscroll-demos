@@ -335,8 +335,7 @@ import Demo387 from './demos/pickers/select/themes-ios-material-windows/themes-i
 import Demo276 from './demos/pickers/select/event-hooks/event-hooks';
 import Demo471 from './demos/pickers/select/localization/localization';
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
-
-import Demo999 from './demos/eventcalendar/timeline/resource-popup-sort/resource-popup-sort';
+import PopupSort from './demos/eventcalendar/timeline/dynamic-calculation-resource-sort/dynamic-calculation-resource-sort';
 
 export const demos = [
   {
@@ -1013,7 +1012,7 @@ export const demos = [
             unique: 17,
             items: [
               { name: 'Resource grid', unique: 'timeline-resource-details-side-panel-footer', component: Demo607 },
-              { name: 'Resource popup sort', unique: 'resource-popup-sort', component: Demo999 },
+              { name: 'Dynamic calculation resource sort', unique: 'dynamic-calculation-resource-sort', component: PopupSort },
               { name: 'Resource grouping & hierarchy', unique: 'resource-grouping-hierarchy', component: Demo625 },
               { name: 'Resource group summaries', unique: 'show-summaries-aggregates-for-resource-groups', component: Demo747 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },

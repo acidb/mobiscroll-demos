@@ -30,10 +30,10 @@ interface MyResource extends MbscResource {
 }
 
 @Component({
-  selector: 'app-timeline-resource-popup-sort',
-  styleUrl: './resource-popup-sort.css',
+  selector: 'app-timeline-dynamic-calculation-resource-sort',
+  styleUrl: './dynamic-calculation-resource-sort.css',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './resource-popup-sort.html',
+  templateUrl: './dynamic-calculation-resource-sort.html',
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
