@@ -19,6 +19,15 @@
   (onEventDelete)="handleOnEventDelete($event)"
   (onEventUpdate)="handleOnEventUpdate($event)"
 >
+  <ng-template #headerTemplate>
+    <mbsc-calendar-prev></mbsc-calendar-prev>
+    <mbsc-calendar-next></mbsc-calendar-next>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
+    <mbsc-button startIcon="bars" variant="flat" style="margin-left: auto" (click)="handlePopupOpen()" #sortButton
+      >Sort Trucks
+    </mbsc-button>
+  </ng-template>
+
   <ng-template #resourceHeaderTemplate>
     <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
     <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">{{ selectedMetricDesc }}</div>
@@ -40,13 +49,6 @@
   <ng-template #scheduleEventContentTemplate let-event>
     <div>{{ event.title }}</div>
     <div style="font-size: 11px">Payload: {{ event.payload ? event.payload + ' T' : 'empty' }}</div>
-  </ng-template>
-
-  <ng-template #headerTemplate>
-    <mbsc-calendar-prev></mbsc-calendar-prev>
-    <mbsc-calendar-next></mbsc-calendar-next>
-    <mbsc-calendar-nav></mbsc-calendar-nav>
-    <mbsc-button startIcon="bars" variant="flat" style="margin-left: auto" (click)="handleSort()" #sortButton>Sort Trucks </mbsc-button>
   </ng-template>
 </mbsc-eventcalendar>
 <mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" #popup>

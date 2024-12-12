@@ -47,18 +47,17 @@ export class AppComponent {
   @ViewChild('sortButton') anchorElm!: ElementRef;
   popupAnchor!: HTMLButtonElement;
 
-  loadedEvents: MbscCalendarEvent[] = [];
+  initialSort: boolean = true;
   initialSortColumn: string = 'asc';
   initialSortDirection: string = 'standby';
-  sortColumn: string = 'standby';
-  sortDirection: string = 'asc';
+  metricBarAnimation: boolean = true;
+  loadedEvents: MbscCalendarEvent[] = [];
   selectedMetric: string = 'standby';
   selectedMetricDesc: string = 'Standby Time';
+  sortColumn: string = 'standby';
+  sortDirection: string = 'asc';
   weekStart: Date = new Date();
   weekEnd: Date = new Date();
-
-  initialSort: boolean = true;
-  metricBarAnimation: boolean = true;
 
   myEvents: MbscCalendarEvent[] = [
     {
@@ -294,15 +293,6 @@ export class AppComponent {
     },
   };
 
-  popupOptions: MbscPopupOptions = {
-    display: 'anchored',
-    contentPadding: false,
-    focusOnClose: false,
-    focusOnOpen: false,
-    showOverlay: false,
-    width: 400,
-  };
-
   popupButtons: Array<MbscPopupButton | 'cancel'> = [
     'cancel',
     {
@@ -321,24 +311,14 @@ export class AppComponent {
     },
   ];
 
-  sortResources(): void {
-    this.metricBarAnimation = true;
-    this.initialSort = false;
-
-    this.myResources = [
-      ...this.myResources.sort((a: MbscResource, b: MbscResource) => {
-        if (this.sortDirection === 'asc') {
-          return a[this.sortColumn] > b[this.sortColumn] ? 1 : -1;
-        } else {
-          return a[this.sortColumn] < b[this.sortColumn] ? 1 : -1;
-        }
-      }),
-    ];
-
-    setTimeout(() => {
-      // this.metricBarAnimation = false;
-    }, 100);
-  }
+  popupOptions: MbscPopupOptions = {
+    display: 'anchored',
+    contentPadding: false,
+    focusOnClose: false,
+    focusOnOpen: false,
+    showOverlay: false,
+    width: 400,
+  };
 
   refreshData() {
     // todo
@@ -396,48 +376,23 @@ export class AppComponent {
     });
   }
 
-  handleSort() {
-    this.initialSortColumn = this.sortColumn;
-    this.initialSortDirection = this.sortDirection;
-    this.popupAnchor = this.anchorElm.nativeElement;
-    this.popup.open();
-  }
+  sortResources(): void {
+    this.metricBarAnimation = true;
+    this.initialSort = false;
 
-  handleOnPageLoading($event: any) {
-    this.weekStart = $event.firstDay;
-    this.weekEnd = $event.lastDay;
-    this.refreshData();
-  }
+    this.myResources = [
+      ...this.myResources.sort((a: MbscResource, b: MbscResource) => {
+        if (this.sortDirection === 'asc') {
+          return a[this.sortColumn] > b[this.sortColumn] ? 1 : -1;
+        } else {
+          return a[this.sortColumn] < b[this.sortColumn] ? 1 : -1;
+        }
+      }),
+    ];
 
-  handleOnPageLoaded() {
-    this.refreshData();
-    if (this.initialSort) {
-      this.sortResources();
-    }
-  }
-
-  handleOnEventCreated(args: MbscEventCreatedEvent) {
-    args.event['payload'] = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
-    args.event.overlap = false;
-    this.refreshData();
-    this.delayedToastSort(args.event.resource, args.event);
-  }
-
-  handleOnEventUpdate(args: MbscEventUpdateEvent) {
-    // when just move no need  sort
-    if (
-      new Date(args.oldEvent!.start as string).getTime() !== new Date(args.event!.start as string).getTime() &&
-      new Date(args.oldEvent!.end as string).getTime() !== new Date(args.event!.end as string).getTime()
-    ) {
-      return;
-    }
-    this.refreshData();
-    this.delayedToastSort(args.event.resource, args.event);
-  }
-
-  handleOnEventDelete(args: MbscEventDeleteEvent) {
-    this.refreshData();
-    this.delayedToastSort(args.event.resource, args.event);
+    setTimeout(() => {
+      // this.metricBarAnimation = false;
+    }, 100);
   }
 
   delayedToastSort(resourceId: any, event: any) {
@@ -474,6 +429,50 @@ export class AppComponent {
     setTimeout(function () {
       document.querySelector('.mbsc-toast-background')!.classList.add('start-progress');
     });
+  }
+
+  handlePopupOpen() {
+    this.initialSortColumn = this.sortColumn;
+    this.initialSortDirection = this.sortDirection;
+    this.popupAnchor = this.anchorElm.nativeElement;
+    this.popup.open();
+  }
+
+  handleOnPageLoading($event: any) {
+    this.weekStart = $event.firstDay;
+    this.weekEnd = $event.lastDay;
+    this.refreshData();
+  }
+
+  handleOnPageLoaded() {
+    this.refreshData();
+    if (this.initialSort) {
+      this.sortResources();
+    }
+  }
+
+  handleOnEventCreated(args: MbscEventCreatedEvent) {
+    args.event['payload'] = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
+    args.event.overlap = false;
+    this.refreshData();
+    this.delayedToastSort(args.event.resource, args.event);
+  }
+
+  handleOnEventDelete(args: MbscEventDeleteEvent) {
+    this.refreshData();
+    this.delayedToastSort(args.event.resource, args.event);
+  }
+
+  handleOnEventUpdate(args: MbscEventUpdateEvent) {
+    // when just move no need  sort
+    if (
+      new Date(args.oldEvent!.start as string).getTime() !== new Date(args.event!.start as string).getTime() &&
+      new Date(args.oldEvent!.end as string).getTime() !== new Date(args.event!.end as string).getTime()
+    ) {
+      return;
+    }
+    this.refreshData();
+    this.delayedToastSort(args.event.resource, args.event);
   }
 
   getMetricValue(resource: any): string | number {

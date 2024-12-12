@@ -23,42 +23,23 @@ setOptions({
 
 const calRef = ref(null)
 const myAnchor = ref(null)
-const isPopupOpen = ref(false)
 const buttonRef = ref(null)
+const event = ref()
+const initialSort = ref(true)
 const initialSortColumn = ref('')
 const initialSortDirection = ref('')
-const selectedMetric = ref('standby')
-const selectedMetricDesc = ref('Standby Time')
-const weekStart = ref(null)
-const weekEnd = ref(null)
-const initialSort = ref(true)
-const metricBarAnimation = ref(true)
-const loadedEvents = ref()
-const resource = ref()
-const event = ref()
-
-const sortColumn = ref('standby')
-const sortDirection = ref('asc')
-
+const isPopupOpen = ref(false)
 const isSnackbarOpen = ref(false)
 const isToastOpen = ref(false)
-
-const myResources = ref([
-  { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
-  { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', model: 'Mercedes Actros' },
-  { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', model: 'Scania R500' },
-  { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
-  { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
-  { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
-  { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
-  { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
-  { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
-  { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
-  { id: 12, name: 'LV-TRK-2200', capacity: 30, location: 'Las Vegas', model: 'Volvo FH16' },
-  { id: 13, name: 'MI-TRK-3300', capacity: 26, location: 'Miami', model: 'Peterbilt 579' },
-  { id: 14, name: 'SE-TRK-4400', capacity: 16, location: 'Seattle', model: 'Mack Anthem' },
-  { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' }
-])
+const loadedEvents = ref()
+const metricBarAnimation = ref(true)
+const resource = ref()
+const selectedMetric = ref('standby')
+const selectedMetricDesc = ref('Standby Time')
+const sortColumn = ref('standby')
+const sortDirection = ref('asc')
+const weekStart = ref(null)
+const weekEnd = ref(null)
 
 const myEvents = ref([
   {
@@ -271,6 +252,23 @@ const myEvents = ref([
   }
 ])
 
+const myResources = ref([
+  { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
+  { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', model: 'Mercedes Actros' },
+  { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', model: 'Scania R500' },
+  { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
+  { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
+  { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
+  { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
+  { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
+  { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
+  { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
+  { id: 12, name: 'LV-TRK-2200', capacity: 30, location: 'Las Vegas', model: 'Volvo FH16' },
+  { id: 13, name: 'MI-TRK-3300', capacity: 26, location: 'Miami', model: 'Peterbilt 579' },
+  { id: 14, name: 'SE-TRK-4400', capacity: 16, location: 'Seattle', model: 'Mack Anthem' },
+  { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' }
+])
+
 const myView = {
   timeline: {
     type: 'week',
@@ -367,7 +365,7 @@ const delayedToastSort = (resourceId, event) => {
   })
 }
 
-const openPopup = () => {
+const handlePopupOpen = () => {
   myAnchor.value = buttonRef.value?.instance.nativeElement
   isPopupOpen.value = true
 }
@@ -435,6 +433,7 @@ function getMetricValue(resource) {
   }
   return metricValue
 }
+
 function getBarValue(resource) {
   const metricValue = resource[this.selectedMetric]
   if (this.selectedMetric === 'payload') {
@@ -444,6 +443,7 @@ function getBarValue(resource) {
   }
   return 100
 }
+
 function getBarColorClass(resource) {
   const barValue = this.getBarValue(resource)
   const animationClass = this.metricBarAnimation
@@ -477,17 +477,24 @@ function getBarColorClass(resource) {
     :onEventDelete="handleEventDelete"
     :onEventUpdate="handleEventUpdate"
   >
-    <template #resourceHeader>
-      <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
+    <template #header>
+      <MbscCalendarPrev />
+      <MbscCalendarNext />
+      <MbscCalendarNav />
+      <MbscButton
+        ref="buttonRef"
+        style="margin-left: auto"
+        id="demo-popup-sort-button"
+        startIcon="bars"
+        variant="flat"
+        @click="handlePopupOpen"
+      >
+        Sort Trucks
+      </MbscButton>
     </template>
 
-    <template #scheduleEventContent="event">
-      <div>
-        <div>{{ event.title }}</div>
-        <div style="font-size: 11px">
-          Payload: {{ event.original.payload ? event.original.payload + ' T' : 'empty' }}
-        </div>
-      </div>
+    <template #resourceHeader>
+      <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
     </template>
 
     <template #resource="resource">
@@ -512,20 +519,13 @@ function getBarColorClass(resource) {
       </div>
     </template>
 
-    <template #header>
-      <MbscCalendarPrev />
-      <MbscCalendarNext />
-      <MbscCalendarNav />
-      <MbscButton
-        ref="buttonRef"
-        style="margin-left: auto"
-        id="demo-popup-sort-button"
-        startIcon="bars"
-        variant="flat"
-        @click="openPopup"
-      >
-        Sort Trucks
-      </MbscButton>
+    <template #scheduleEventContent="event">
+      <div>
+        <div>{{ event.title }}</div>
+        <div style="font-size: 11px">
+          Payload: {{ event.original.payload ? event.original.payload + ' T' : 'empty' }}
+        </div>
+      </div>
     </template>
   </MbscEventcalendar>
   <MbscPopup

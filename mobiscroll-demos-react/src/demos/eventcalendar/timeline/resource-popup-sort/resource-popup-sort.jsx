@@ -22,28 +22,6 @@ setOptions({
 });
 
 function App() {
-  const myView = useMemo(() => ({ timeline: { type: 'week', resolutionHorizontal: 'day' } }), []);
-
-  const myResources = useMemo(
-    () => [
-      { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
-      { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', model: 'Mercedes Actros' },
-      { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', model: 'Scania R500' },
-      { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
-      { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
-      { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
-      { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
-      { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
-      { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
-      { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
-      { id: 12, name: 'LV-TRK-2200', capacity: 30, location: 'Las Vegas', model: 'Volvo FH16' },
-      { id: 13, name: 'MI-TRK-3300', capacity: 26, location: 'Miami', model: 'Peterbilt 579' },
-      { id: 14, name: 'SE-TRK-4400', capacity: 16, location: 'Seattle', model: 'Mack Anthem' },
-      { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' },
-    ],
-    [],
-  );
-
   const myEvents = [
     {
       start: 'dyndatetime(y,m,d-1)',
@@ -255,76 +233,48 @@ function App() {
     },
   ];
 
-  const [sortedResources, setResources] = useState(myResources);
+  const myResources = useMemo(
+    () => [
+      { id: 1, name: 'NY-TRK-1200', capacity: 25, location: 'New York', model: 'Renault Magnum' },
+      { id: 2, name: 'LA-TRK-0090', capacity: 18, location: 'Los Angeles', model: 'Mercedes Actros' },
+      { id: 3, name: 'CH-TRK-0700', capacity: 22, location: 'Phoenix', model: 'Scania R500' },
+      { id: 4, name: 'HO-TRK-0850', capacity: 28, location: 'Houston', model: 'Volvo FH16' },
+      { id: 5, name: 'PH-TRK-0900', capacity: 24, location: 'Chicago', model: 'MAN TGX' },
+      { id: 6, name: 'PA-TRK-0300', capacity: 15, location: 'Philadelphia', model: 'Renault T High' },
+      { id: 8, name: 'SD-TRK-0250', capacity: 21, location: 'San Francisco', model: 'Mercedes Arocs' },
+      { id: 9, name: 'DA-TRK-0400', capacity: 20, location: 'Dallas', model: 'DAF XF' },
+      { id: 10, name: 'SF-TRK-0550', capacity: 17, location: 'San Diego', model: 'Iveco Stralis' },
+      { id: 11, name: 'BO-TRK-1100', capacity: 23, location: 'Boston', model: 'Kenworth T680' },
+      { id: 12, name: 'LV-TRK-2200', capacity: 30, location: 'Las Vegas', model: 'Volvo FH16' },
+      { id: 13, name: 'MI-TRK-3300', capacity: 26, location: 'Miami', model: 'Peterbilt 579' },
+      { id: 14, name: 'SE-TRK-4400', capacity: 16, location: 'Seattle', model: 'Mack Anthem' },
+      { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' },
+    ],
+    [],
+  );
 
   const calRef = useRef();
+  const [myAnchor, setAnchor] = useState();
+  const buttonRef = useRef();
+  const event = useRef('');
+  const initialSort = useRef(true);
   const initialSortColumn = useRef('');
   const initialSortDirection = useRef('');
-  const [sortColumn, setSortColumn] = useState('standby');
-  const [sortDirection, setSortDirection] = useState('asc');
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const loadedEvents = useRef([]);
+  const metricBarAnimation = useRef(true);
+  const resource = useRef('');
   const selectedMetric = 'standby';
   const selectedMetricDesc = 'Standby Time';
-  const loadedEvents = useRef([]);
+  const [sortColumn, setSortColumn] = useState('standby');
+  const [sortDirection, setSortDirection] = useState('asc');
+  const [sortedResources, setResources] = useState(myResources);
   const weekStart = useRef();
   const weekEnd = useRef();
 
-  const initialSort = useRef(true);
-  const metricBarAnimation = useRef(true);
-
-  const buttonRef = useRef();
-  const [isSnackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const resource = useRef('');
-  const event = useRef('');
-
-  const [myAnchor, setAnchor] = useState();
-  const [isPopupOpen, setPopupOpen] = useState(false);
-
-  const [isToastOpen, setToastOpen] = useState(false);
-
-  const handleCloseToast = useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const handlePopupClose = useCallback(() => {
-    setPopupOpen(false);
-  }, []);
-
-  const handlePopupOpen = useCallback(() => {
-    setAnchor(buttonRef.current.nativeElement);
-    setPopupOpen(true);
-  }, []);
-
-  const sortResources = useCallback(() => {
-    initialSort.current = false;
-    metricBarAnimation.current = false;
-    const updatedResources = [...myResources].sort((a, b) => {
-      if (sortDirection === 'asc') {
-        return a[sortColumn] > b[sortColumn] ? 1 : -1;
-      } else {
-        return a[sortColumn] < b[sortColumn] ? 1 : -1;
-      }
-    });
-
-    setResources(updatedResources);
-
-    setTimeout(() => {
-      metricBarAnimation.current = false;
-    }, 100);
-  }, [myResources, sortColumn, sortDirection]);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  function delayedToastSort(resourceId, event) {
-    resource.current = myResources.find((resource) => resource.id === resourceId);
-    event.current = event;
-
-    setSnackbarOpen(true);
-
-    // Add progress animation after rendering the snackbar
-    setTimeout(() => {
-      document.querySelector('.mbsc-toast-background')?.classList.add('start-progress');
-    });
-  }
+  const myView = useMemo(() => ({ timeline: { type: 'week', resolutionHorizontal: 'day' } }), []);
 
   const refreshData = useCallback(() => {
     loadedEvents.current = calRef.current ? calRef.current.getEvents() : [];
@@ -372,6 +322,61 @@ function App() {
     });
   }, [myResources, selectedMetric, calRef, weekStart, weekEnd]);
 
+  const sortResources = useCallback(() => {
+    initialSort.current = false;
+    metricBarAnimation.current = false;
+    const updatedResources = [...myResources].sort((a, b) => {
+      if (sortDirection === 'asc') {
+        return a[sortColumn] > b[sortColumn] ? 1 : -1;
+      } else {
+        return a[sortColumn] < b[sortColumn] ? 1 : -1;
+      }
+    });
+
+    setResources(updatedResources);
+
+    setTimeout(() => {
+      metricBarAnimation.current = false;
+    }, 100);
+  }, [myResources, sortColumn, sortDirection]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const delayedToastSort = useCallback((resourceId, event) => {
+    resource.current = myResources.find((resource) => resource.id === resourceId);
+    event.current = event;
+
+    setSnackbarOpen(true);
+
+    // Add progress animation after rendering the snackbar
+    setTimeout(() => {
+      document.querySelector('.mbsc-toast-background')?.classList.add('start-progress');
+    });
+  });
+
+  const handlePopupOpen = useCallback(() => {
+    setAnchor(buttonRef.current.nativeElement);
+    setPopupOpen(true);
+  }, []);
+
+  const handlePopupClose = useCallback(() => {
+    setPopupOpen(false);
+  }, []);
+
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
+
+  const handleSnackbarClose = useCallback(() => {
+    setSnackbarOpen(false);
+    resource.current.cssClass = 'mds-resource-highlight';
+    sortResources();
+    setTimeout(() => {
+      resource.current.cssClass = '';
+      setResources(myResources.slice());
+    }, 1000);
+    calRef.current.navigateToEvent(event);
+  }, [myResources, sortResources]);
+
   const handlePageLoading = useCallback(
     (args) => {
       weekStart.current = args.firstDay;
@@ -400,6 +405,14 @@ function App() {
     [delayedToastSort, refreshData],
   );
 
+  const handleEventDelete = useCallback(
+    (args) => {
+      refreshData();
+      delayedToastSort(args.event.resource, args.event);
+    },
+    [delayedToastSort, refreshData],
+  );
+
   const handleEventUpdate = useCallback(
     (args) => {
       if (
@@ -414,24 +427,27 @@ function App() {
     [delayedToastSort, refreshData],
   );
 
-  const handleEventDelete = useCallback(
-    (args) => {
-      refreshData();
-      delayedToastSort(args.event.resource, args.event);
-    },
-    [delayedToastSort, refreshData],
-  );
+  const handleSortDirectionChange = useCallback((ev) => {
+    setSortDirection(ev.target.value);
+  }, []);
 
-  const handleSnackbarClose = useCallback(() => {
-    setSnackbarOpen(false);
-    resource.current.cssClass = 'mds-resource-highlight';
-    sortResources();
-    setTimeout(() => {
-      resource.current.cssClass = '';
-      setResources(myResources.slice());
-    }, 1000);
-    calRef.current.navigateToEvent(event);
-  }, [myResources, sortResources]);
+  const handleSortColumnChange = useCallback((ev) => {
+    setSortColumn(ev.target.value);
+  }, []);
+
+  const myCustomHeader = useCallback(
+    () => (
+      <>
+        <CalendarPrev />
+        <CalendarNext />
+        <CalendarNav />
+        <Button ref={buttonRef} style={{ marginLeft: 'auto' }} startIcon="bars" variant="flat" onClick={handlePopupOpen}>
+          Sort Trucks
+        </Button>
+      </>
+    ),
+    [handlePopupOpen],
+  );
 
   const myCustomResourceHeader = useCallback(
     () => (
@@ -478,20 +494,6 @@ function App() {
     [selectedMetric, selectedMetricDesc, metricBarAnimation],
   );
 
-  const myCustomHeader = useCallback(
-    () => (
-      <>
-        <CalendarPrev />
-        <CalendarNext />
-        <CalendarNav />
-        <Button ref={buttonRef} style={{ marginLeft: 'auto' }} startIcon="bars" variant="flat" onClick={handlePopupOpen}>
-          Sort Trucks
-        </Button>
-      </>
-    ),
-    [handlePopupOpen],
-  );
-
   const myScheduleEvent = useCallback(
     (event) => (
       <div>
@@ -501,14 +503,6 @@ function App() {
     ),
     [],
   );
-
-  const sortDirectionChange = useCallback((ev) => {
-    setSortDirection(ev.target.value);
-  }, []);
-
-  const sortColumnChange = useCallback((ev) => {
-    setSortColumn(ev.target.value);
-  }, []);
 
   return (
     <>
@@ -563,7 +557,7 @@ function App() {
       >
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Metric to calculate and sort by</div>
-          <RadioGroup onChange={sortColumnChange}>
+          <RadioGroup onChange={handleSortColumnChange}>
             <Radio
               value="standby"
               label="Standby Time"
@@ -586,7 +580,7 @@ function App() {
         </div>
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Sort direction</div>
-          <SegmentedGroup onChange={sortDirectionChange}>
+          <SegmentedGroup onChange={handleSortDirectionChange}>
             <Segmented value="asc" checked={sortDirection === 'asc'}>
               Ascending
             </Segmented>
@@ -605,13 +599,12 @@ function App() {
           },
         }}
         cssClass="mds-popup-sort-snackbar"
-        message={snackbarMessage}
         display={'bottom'}
         duration={3000}
         isOpen={isSnackbarOpen}
         onClose={handleSnackbarClose}
       />
-      <Toast message={'Resouces sorted'} isOpen={isToastOpen} onClose={handleCloseToast} />
+      <Toast message={'Resouces sorted'} isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );
 }

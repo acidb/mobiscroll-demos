@@ -11,18 +11,17 @@ export default {
 
     $(function () {
       var $popupElm = $('#demo-filtering-popup');
+      var initialSort = true;
       var initialSortColumn;
       var initialSortDirection;
-      var sortColumn = 'standby';
-      var sortDirection = 'asc';
+      var loadedEvents;
+      var metricBarAnimation = true;
       var selectedMetric = 'standby';
       var selectedMetricDesc = 'Standby Time';
-      var loadedEvents;
+      var sortColumn = 'standby';
+      var sortDirection = 'asc';
       var weekStart;
       var weekEnd;
-
-      var initialSort = true;
-      var metricBarAnimation = true;
 
       var myEvents = [
         {
@@ -410,15 +409,12 @@ export default {
             },
           },
           resources: myResources,
-          renderScheduleEventContent: function (args) {
+          renderHeader: function () {
             return (
-              '<div>' +
-              args.title +
-              '</div>' +
-              '<div style="font-size: 11px;">' +
-              'Payload: ' +
-              (args.original.payload ? args.original.payload + ' T' : 'empty') +
-              '</div>'
+              '<div mbsc-calendar-prev></div>' +
+              '<div mbsc-calendar-next></div>' +
+              '<div mbsc-calendar-nav></div>' +
+              '<button id="demo-popup-sort-button" data-start-icon="bars" data-variant="flat" mbsc-button style="margin-left: auto;">Sort Trucks</button>'
             );
           },
           renderResourceHeader: function () {
@@ -470,12 +466,15 @@ export default {
               '</div>'
             );
           },
-          renderHeader: function () {
+          renderScheduleEventContent: function (args) {
             return (
-              '<div mbsc-calendar-prev></div>' +
-              '<div mbsc-calendar-next></div>' +
-              '<div mbsc-calendar-nav></div>' +
-              '<button id="demo-popup-sort-button" data-start-icon="bars" data-variant="flat" mbsc-button style="margin-left: auto;">Sort Trucks</button>'
+              '<div>' +
+              args.title +
+              '</div>' +
+              '<div style="font-size: 11px;">' +
+              'Payload: ' +
+              (args.original.payload ? args.original.payload + ' T' : 'empty') +
+              '</div>'
             );
           },
           onPageLoading: function (args, inst) {
