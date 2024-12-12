@@ -48,8 +48,8 @@ export class AppComponent {
   popupAnchor!: HTMLButtonElement;
 
   initialSort: boolean = true;
-  initialSortColumn: string = 'asc';
-  initialSortDirection: string = 'standby';
+  initialSortColumn: string = 'standby';
+  initialSortDirection: string = 'asc';
   metricBarAnimation: boolean = true;
   loadedEvents: MbscCalendarEvent[] = [];
   selectedMetric: string = 'standby';
