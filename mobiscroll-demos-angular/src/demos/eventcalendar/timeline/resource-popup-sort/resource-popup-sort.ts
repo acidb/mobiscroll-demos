@@ -393,7 +393,7 @@ export class AppComponent {
             numberOfTours > 0 && resource['capacity'] ? Math.round((totalPayload / numberOfTours / resource['capacity']) * 100) : 0;
         }
       });
-    }, 0);
+    });
   }
 
   handleSort() {
@@ -450,13 +450,14 @@ export class AppComponent {
     const myCalendar = this.myCalendar;
 
     this.notify.snackbar({
+      animation: 'pop',
       button: {
         text: 'Sort now',
         action: function () {
           sortResources();
         },
       },
-      animation: 'pop',
+      cssClass: 'mds-popup-sort-snackbar',
       display: 'bottom',
       duration: 3000,
       onClose: function () {
@@ -471,9 +472,8 @@ export class AppComponent {
     });
 
     setTimeout(function () {
-      // document.querySelector('.mbsc-toast-background').classList.add('start-progress');
-      // this.el.nativeElement.querySelector('.mbsc-toast-background').classList.add('start-progress');
-    }, 0);
+      document.querySelector('.mbsc-toast-background')!.classList.add('start-progress');
+    });
   }
 
   getMetricValue(resource: any): string | number {
@@ -501,11 +501,11 @@ export class AppComponent {
     const animationClass = this.metricBarAnimation ? 'metric-bar-animation' : 'metric-bar-no-animation';
 
     if (barValue <= 33) {
-      return `green-bar ${animationClass}`;
+      return `mds-resource-green-bar ${animationClass}`;
     } else if (barValue <= 66) {
-      return `yellow-bar ${animationClass}`;
+      return `mds-resource-yellow-bar ${animationClass}`;
     } else {
-      return `red-bar ${animationClass}`;
+      return `mds-resource-red-bar ${animationClass}`;
     }
   }
 }

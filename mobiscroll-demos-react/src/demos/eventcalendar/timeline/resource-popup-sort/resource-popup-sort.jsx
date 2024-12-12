@@ -323,7 +323,7 @@ function App() {
     // Add progress animation after rendering the snackbar
     setTimeout(() => {
       document.querySelector('.mbsc-toast-background')?.classList.add('start-progress');
-    }, 0);
+    });
   }
 
   const refreshData = useCallback(() => {
@@ -450,10 +450,14 @@ function App() {
       const barValue =
         selectedMetric === 'payload' ? metricValue : ['standby', 'deadhead'].includes(selectedMetric) ? (metricValue / 168) * 100 : 100;
 
-      const animationClass = metricBarAnimation.current ? 'metric-bar-animation' : 'metric-bar-no-animation';
+      const animationClass = metricBarAnimation.current ? 'mds-metric-bar-animation' : 'mds-metric-bar-no-animation';
 
       const barColorClass =
-        barValue <= 33 ? `green-bar ${animationClass}` : barValue <= 66 ? `yellow-bar ${animationClass}` : `red-bar ${animationClass}`;
+        barValue <= 33
+          ? `mds-resource-green-bar ${animationClass}`
+          : barValue <= 66
+            ? `mds-resource-yellow-bar ${animationClass}`
+            : `mds-resource-red-bar ${animationClass}`;
 
       return (
         <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
@@ -464,9 +468,9 @@ function App() {
             {selectedMetricDesc}: {metricValue}
             {selectedMetric === 'payload' ? '%' : ['standby', 'deadhead'].includes(selectedMetric) ? 'h' : ''}
           </div>
-          <div className="metric-bar-container" style={{ marginTop: '5px' }}>
-            <div className={`metric-bar ${barColorClass}`} style={{ width: `${barValue}%` }}></div>
-            <div className="metric-bar-overlay" style={{ width: `${100 - barValue}%` }}></div>
+          <div className="mds-metric-bar-container" style={{ marginTop: '5px' }}>
+            <div className={`${barColorClass}`} style={{ width: `${barValue}%` }}></div>
+            <div className="mds-metric-bar-overlay" style={{ width: `${100 - barValue}%` }}></div>
           </div>
         </div>
       );
@@ -486,6 +490,16 @@ function App() {
       </>
     ),
     [handlePopupOpen],
+  );
+
+  const myScheduleEvent = useCallback(
+    (event) => (
+      <div>
+        <div>{event.title}</div>
+        <div style={{ fontSize: '11px' }}>Payload: {event.original.payload ? `${event.original.payload} T` : 'empty'}</div>
+      </div>
+    ),
+    [],
   );
 
   const sortDirectionChange = useCallback((ev) => {
@@ -510,6 +524,7 @@ function App() {
         renderResourceHeader={myCustomResourceHeader}
         renderResource={myCustomResource}
         renderHeader={myCustomHeader}
+        renderScheduleEventContent={myScheduleEvent}
         onPageLoading={handlePageLoading}
         onPageLoaded={handlePageLoaded}
         onEventCreated={handleEventCreated}
@@ -582,17 +597,18 @@ function App() {
         </div>
       </Popup>
       <Snackbar
-        isOpen={isSnackbarOpen}
-        duration={3000}
         animation={'pop'}
-        display={'bottom'}
-        message={snackbarMessage}
         button={{
           text: 'Sort now',
           action: function () {
             sortResources();
           },
         }}
+        cssClass="mds-popup-sort-snackbar"
+        message={snackbarMessage}
+        display={'bottom'}
+        duration={3000}
+        isOpen={isSnackbarOpen}
         onClose={handleSnackbarClose}
       />
       <Toast message={'Resouces sorted'} isOpen={isToastOpen} onClose={handleCloseToast} />

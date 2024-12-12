@@ -7,7 +7,7 @@
 
 /* progress bar */
 
-.mbsc-toast-background::before {
+.mds-popup-sort-snackbar .mbsc-toast-background::before {
   content: '';
   position: absolute;
   left: 0;
@@ -18,7 +18,7 @@
   transition: width 3s linear;
 }
 
-.mbsc-snackbar-message::after {
+.mds-popup-sort-snackbar .mbsc-snackbar-message::after {
   content: 'Sorting in 1 .';
   position: absolute;
   top: 50%;
@@ -27,7 +27,7 @@
   animation: changeMessage 3s steps(3) forwards;
 }
 
-.mbsc-snackbar-message {
+.mds-popup-sort-snackbar .mbsc-snackbar-message {
   position: relative;
 }
 
@@ -52,17 +52,17 @@
   }
 }
 
-.mbsc-toast-background.start-progress::before {
+.mds-popup-sort-snackbar .mbsc-toast-background.start-progress::before {
   animation: countdown 3s linear forwards;
 }
 
-.mbsc-snackbar-cont {
+.mds-popup-sort-snackbar .mbsc-snackbar-cont {
   border-radius: 4px;
 }
 
 /* metric bar */
 
-.metric-bar-container {
+.mds-metric-bar-container {
   position: relative;
   background-color: #f0f0f0;
   border-radius: 5px;
@@ -71,16 +71,16 @@
   overflow: hidden;
 }
 
-.metric-bar-animation {
+.mds-metric-bar-animation {
   height: 100%;
   animation: fillBar 1s ease-in-out forwards;
 }
-.metric-bar-no-animation {
+.mds-metric-bar-no-animation {
   height: 100%;
   animation: fillBar 0s ease-in-out forwards;
 }
 
-.metric-bar-overlay {
+.mds-metric-bar-overlay {
   content: '';
   position: absolute;
   top: 0;
@@ -98,15 +98,15 @@
   }
 }
 
-.green-bar {
+.mds-resource-green-bar {
   background-color: #4caf50;
 }
 
-.yellow-bar {
+.mds-resource-yellow-bar {
   background-color: #ffeb3b;
 }
 
-.red-bar {
+.mds-resource-red-bar {
   background-color: #f44336;
 }
 

@@ -339,10 +339,12 @@ const sortResources = () => {
 
   myResources.value = [
     ...myResources.value.sort((a, b) => {
+      console.log('asc sort') // <--- d3l
       if (sortDirection.value === 'asc') {
         return a[sortColumn.value] > b[sortColumn.value] ? 1 : -1
       }
       if (sortDirection.value === 'desc') {
+        console.log('desc sort') // <--- d3l
         return a[sortColumn.value] < b[sortColumn.value] ? 1 : -1
       }
       return a.id - b.id
@@ -362,7 +364,7 @@ const delayedToastSort = (resourceId, event) => {
 
   setTimeout(() => {
     document.querySelector('.mbsc-toast-background').classList.add('start-progress')
-  }, 0)
+  })
 }
 
 const openPopup = () => {
@@ -445,15 +447,15 @@ function getBarValue(resource) {
 function getBarColorClass(resource) {
   const barValue = this.getBarValue(resource)
   const animationClass = this.metricBarAnimation
-    ? 'metric-bar-animation'
-    : 'metric-bar-no-animation'
+    ? 'mds-metric-bar-animation'
+    : 'mds-metric-bar-no-animation'
 
   if (barValue <= 33) {
-    return `green-bar ${animationClass}`
+    return `mds-resource-green-bar ${animationClass}`
   } else if (barValue <= 66) {
-    return `yellow-bar ${animationClass}`
+    return `mds-resource-yellow-bar ${animationClass}`
   } else {
-    return `red-bar ${animationClass}`
+    return `mds-resource-red-bar ${animationClass}`
   }
 }
 </script>
@@ -497,14 +499,13 @@ function getBarColorClass(resource) {
           {{ selectedMetricDesc }}: {{ getMetricValue(resource) }}
         </div>
 
-        <div class="metric-bar-container" style="margin-top: 5px">
+        <div class="mds-metric-bar-container" style="margin-top: 5px">
           <div
-            class="metric-bar"
             :class="getBarColorClass(resource)"
             :style="{ width: getBarValue(resource) + '%' }"
           ></div>
           <div
-            class="metric-bar-overlay"
+            class="mds-metric-bar-overlay"
             :style="{ width: 100 - getBarValue(resource) + '%' }"
           ></div>
         </div>
@@ -539,12 +540,12 @@ function getBarColorClass(resource) {
         keyCode: 'enter',
         handler: function () {
           isPopupOpen = false
-          if (initialSortColumn.value != sortColumn.value) {
+          if (initialSortColumn != sortColumn) {
             refreshData()
           }
           sortResources()
-          initialSortColumn.value = sortColumn.value
-          initialSortDirection.value = sortDirection.value
+          initialSortColumn = sortColumn
+          initialSortDirection = sortDirection
 
           isToastOpen = true
         },
@@ -587,17 +588,18 @@ function getBarColorClass(resource) {
     </div>
   </MbscPopup>
   <MbscSnackbar
+    animation="pop"
     :button="{
       text: 'Sort now',
       action: function () {
         sortResources()
       }
     }"
+    cssClass="mds-popup-sort-snackbar"
     :duration="3000"
+    display="bottom"
     :isOpen="isSnackbarOpen"
     @close="isSnackbarOpen = false"
-    animation="pop"
-    display="bottom"
   />
   <MbscToast :message="'Resouces sorted'" :isOpen="isToastOpen" @close="handleSnackbarClose" />
 </template>
@@ -612,7 +614,7 @@ function getBarColorClass(resource) {
 
 /* progress bar */
 
-.mbsc-toast-background::before {
+.mds-popup-sort-snackbar .mbsc-toast-background::before {
   content: '';
   position: absolute;
   left: 0;
@@ -623,7 +625,7 @@ function getBarColorClass(resource) {
   transition: width 3s linear;
 }
 
-.mbsc-snackbar-message::after {
+.mds-popup-sort-snackbar .mbsc-snackbar-message::after {
   content: 'Sorting in 1 .';
   position: absolute;
   top: 50%;
@@ -632,7 +634,7 @@ function getBarColorClass(resource) {
   animation: changeMessage 3s steps(3) forwards;
 }
 
-.mbsc-snackbar-message {
+.mds-popup-sort-snackbar .mbsc-snackbar-message {
   position: relative;
 }
 
@@ -657,17 +659,17 @@ function getBarColorClass(resource) {
   }
 }
 
-.mbsc-toast-background.start-progress::before {
+.mds-popup-sort-snackbar .mbsc-toast-background.start-progress::before {
   animation: countdown 3s linear forwards;
 }
 
-.mbsc-snackbar-cont {
+.mds-popup-sort-snackbar .mbsc-snackbar-cont {
   border-radius: 4px;
 }
 
 /* metric bar */
 
-.metric-bar-container {
+.mds-metric-bar-container {
   position: relative;
   background-color: #f0f0f0;
   border-radius: 5px;
@@ -676,16 +678,16 @@ function getBarColorClass(resource) {
   overflow: hidden;
 }
 
-.metric-bar-animation {
+.mds-metric-bar-animation {
   height: 100%;
   animation: fillBar 1s ease-in-out forwards;
 }
-.metric-bar-no-animation {
+.mds-metric-bar-no-animation {
   height: 100%;
   animation: fillBar 0s ease-in-out forwards;
 }
 
-.metric-bar-overlay {
+.mds-metric-bar-overlay {
   content: '';
   position: absolute;
   top: 0;
@@ -703,15 +705,15 @@ function getBarColorClass(resource) {
   }
 }
 
-.green-bar {
+.mds-resource-green-bar {
   background-color: #4caf50;
 }
 
-.yellow-bar {
+.mds-resource-yellow-bar {
   background-color: #ffeb3b;
 }
 
-.red-bar {
+.mds-resource-red-bar {
   background-color: #f44336;
 }
 
