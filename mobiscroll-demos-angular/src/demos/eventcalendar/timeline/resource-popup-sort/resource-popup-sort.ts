@@ -1,15 +1,16 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-  formatDate,
   MbscCalendarEvent,
   MbscEventcalendar,
   MbscEventcalendarView,
+  MbscEventCreatedEvent,
   MbscEventDeleteEvent,
+  MbscEventUpdateEvent,
   MbscPopup,
   MbscPopupButton,
   MbscPopupOptions,
   MbscResource,
+  Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 
@@ -35,7 +36,7 @@ interface MyResource extends MbscResource {
   templateUrl: './resource-popup-sort.html',
 })
 export class AppComponent {
-  constructor(private http: HttpClient) {}
+  constructor(private notify: Notifications) {}
 
   @ViewChild('myCalendar', { static: false })
   myCalendar!: MbscEventcalendar;
@@ -46,18 +47,18 @@ export class AppComponent {
   @ViewChild('sortButton') anchorElm!: ElementRef;
   popupAnchor!: HTMLButtonElement;
 
-  formatDate = formatDate;
   loadedEvents: MbscCalendarEvent[] = [];
   initialSortColumn: string = 'asc';
   initialSortDirection: string = 'standby';
   sortColumn: string = 'standby';
-  metricBarAnimation: boolean = true;
-  initialSort: boolean = true;
   sortDirection: string = 'asc';
   selectedMetric: string = 'standby';
   selectedMetricDesc: string = 'Standby Time';
   weekStart: Date = new Date();
   weekEnd: Date = new Date();
+
+  initialSort: boolean = true;
+  metricBarAnimation: boolean = true;
 
   myEvents: MbscCalendarEvent[] = [
     {
@@ -335,11 +336,15 @@ export class AppComponent {
     ];
 
     setTimeout(() => {
-      this.metricBarAnimation = false;
+      // this.metricBarAnimation = false;
     }, 100);
   }
 
   refreshData() {
+    // todo
+    this.selectedMetric = this.sortColumn;
+    this.selectedMetricDesc = this.sortColumn;
+    //
     setTimeout(() => {
       this.loadedEvents = this.myCalendar.getEvents();
 
@@ -398,39 +403,78 @@ export class AppComponent {
     this.popup.open();
   }
 
-  handleOnEventUpdate($event: any) {
-    // if (
-    //   new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
-    //   new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime()
-    // ) {
-    //   return;
-    // }
-    // refreshData(inst);
-    // delayedToastSort(args.event.resource, args.event);
-  }
-  handleOnEventDelete($event: MbscEventDeleteEvent) {
-    // refreshData(inst);
-    // delayedToastSort(args.event.resource, args.event);
-  }
-  handleOnPageLoaded($event: any) {
-    // refreshData(inst);
-    // if (initialSort) {
-    //   sortResources();
-    // }
-  }
-  handleOnEventCreated(args: any) {
-    args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
-    args.event.overlap = false;
-    // refreshData(inst);
-    // delayedToastSort(args.event.resource, args.event);
-  }
   handleOnPageLoading($event: any) {
     this.weekStart = $event.firstDay;
     this.weekEnd = $event.lastDay;
-    // refreshData(inst);
+    this.refreshData();
   }
 
-  handleColumnChange() {}
+  handleOnPageLoaded() {
+    this.refreshData();
+    if (this.initialSort) {
+      this.sortResources();
+    }
+  }
+
+  handleOnEventCreated(args: MbscEventCreatedEvent) {
+    args.event['payload'] = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
+    args.event.overlap = false;
+    this.refreshData();
+    this.delayedToastSort(args.event.resource, args.event);
+  }
+
+  handleOnEventUpdate(args: MbscEventUpdateEvent) {
+    // when just move no need  sort
+    if (
+      new Date(args.oldEvent!.start as string).getTime() !== new Date(args.event!.start as string).getTime() &&
+      new Date(args.oldEvent!.end as string).getTime() !== new Date(args.event!.end as string).getTime()
+    ) {
+      return;
+    }
+    this.refreshData();
+    this.delayedToastSort(args.event.resource, args.event);
+  }
+
+  handleOnEventDelete(args: MbscEventDeleteEvent) {
+    this.refreshData();
+    this.delayedToastSort(args.event.resource, args.event);
+  }
+
+  delayedToastSort(resourceId: any, event: any) {
+    const resource = this.myResources.find(function (resource) {
+      return resource.id === resourceId;
+    });
+
+    const sortResources = this.sortResources.bind(this);
+    let myResources = this.myResources;
+    const myCalendar = this.myCalendar;
+
+    this.notify.snackbar({
+      button: {
+        text: 'Sort now',
+        action: function () {
+          sortResources();
+        },
+      },
+      animation: 'pop',
+      display: 'bottom',
+      duration: 3000,
+      onClose: function () {
+        resource!.cssClass = 'mds-resource-highlight';
+        sortResources();
+        setTimeout(function () {
+          resource!.cssClass = '';
+          myResources! = myResources.slice();
+        }, 1000);
+        myCalendar.navigateToEvent(event);
+      },
+    });
+
+    setTimeout(function () {
+      // document.querySelector('.mbsc-toast-background').classList.add('start-progress');
+      // this.el.nativeElement.querySelector('.mbsc-toast-background').classList.add('start-progress');
+    }, 0);
+  }
 
   getMetricValue(resource: any): string | number {
     const metricValue = resource[this.selectedMetric];
@@ -454,12 +498,14 @@ export class AppComponent {
 
   getBarColorClass(resource: any): string {
     const barValue = this.getBarValue(resource);
+    const animationClass = this.metricBarAnimation ? 'metric-bar-animation' : 'metric-bar-no-animation';
+
     if (barValue <= 33) {
-      return 'green-bar';
+      return `green-bar ${animationClass}`;
     } else if (barValue <= 66) {
-      return 'yellow-bar';
+      return `yellow-bar ${animationClass}`;
     } else {
-      return 'red-bar';
+      return `red-bar ${animationClass}`;
     }
   }
 }

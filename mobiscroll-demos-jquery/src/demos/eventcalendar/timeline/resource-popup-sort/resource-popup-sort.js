@@ -20,6 +20,7 @@ export default {
       var loadedEvents;
       var weekStart;
       var weekEnd;
+
       var initialSort = true;
       var metricBarAnimation = true;
 
@@ -418,7 +419,6 @@ export default {
               '</div>'
             );
           },
-
           renderResourceHeader: function () {
             return '<div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">' + 'Trucks' + '</div>';
           },
@@ -467,7 +467,6 @@ export default {
               '</div>'
             );
           },
-
           renderHeader: function () {
             return (
               '<div mbsc-calendar-prev></div>' +

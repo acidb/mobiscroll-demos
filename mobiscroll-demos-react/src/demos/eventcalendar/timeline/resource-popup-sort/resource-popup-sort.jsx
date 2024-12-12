@@ -258,11 +258,17 @@ function App() {
   const calRef = useRef();
   const initialSortColumn = useRef('');
   const initialSortDirection = useRef('');
-  const sortColumn = useRef('');
-  const sortDirection = useRef('');
-  const loadedEvents = useRef([]);
+  const [sortColumn, setSortColumn] = useState('standby');
+  const [sortDirection, setSortDirection] = useState('asc');
   const selectedMetric = 'standby';
   const selectedMetricDesc = 'Standby Time';
+  const loadedEvents = useRef([]);
+  const weekStart = useRef();
+  const weekEnd = useRef();
+
+  const initialSort = useRef(true);
+  const metricBarAnimation = useRef(true);
+
   const buttonRef = useRef();
 
   const [myAnchor, setAnchor] = useState();
@@ -278,31 +284,147 @@ function App() {
   }, []);
 
   const sortResources = useCallback(() => {
+    initialSort.current = false;
+    metricBarAnimation.current = false;
     const updatedResources = [...myResources].sort((a, b) => {
-      if (sortDirection.current === 'asc') {
-        return a[sortColumn.current] > b[sortColumn.current] ? 1 : -1;
+      if (sortDirection === 'asc') {
+        return a[sortColumn] > b[sortColumn] ? 1 : -1;
+      } else {
+        return a[sortColumn] < b[sortColumn] ? 1 : -1;
       }
-      if (sortDirection.current === 'desc') {
-        return a[sortColumn.current] < b[sortColumn.current] ? 1 : -1;
-      }
-      return a.id - b.id;
     });
 
     setResources(updatedResources);
-  }, [myResources]);
+
+    setTimeout(() => {
+      metricBarAnimation.current = false;
+    }, 100);
+  }, [myResources, sortColumn, sortDirection]);
+
+  function delayedToastSort(resourceId, event) {
+    // const resource = myResources.find((resource) => resource.id === resourceId);
+    // mobiscroll.snackbar({
+    //   // Snackbar options
+    //   button: {
+    //     text: 'Sort now',
+    //     action: () => {
+    //       sortResources();
+    //     },
+    //   },
+    //   animation: 'pop',
+    //   display: 'bottom',
+    //   duration: 3000,
+    //   onClose: () => {
+    //     resource.cssClass = 'mds-resource-highlight';
+    //     sortResources();
+    //     setTimeout(() => {
+    //       resource.cssClass = '';
+    //       calendar.setOptions({ resources: [...myResources] }); // Ensure new array reference
+    //     }, 1000);
+    //     calendar.navigateToEvent(event);
+    //   },
+    // });
+    // // Add progress animation after rendering the snackbar
+    // setTimeout(() => {
+    //   document.querySelector('.mbsc-toast-background')?.classList.add('start-progress');
+    // }, 0);
+  }
 
   const refreshData = useCallback(() => {
     loadedEvents.current = calRef.current ? calRef.current.getEvents() : [];
-  }, []);
 
-  const handlePageLoading = useCallback(() => {
+    myResources.forEach((resource) => {
+      const resourceEvents = loadedEvents.current.filter((event) => event.resource === resource.id);
+
+      if (selectedMetric === 'standby') {
+        resource.standby = 168;
+        resourceEvents.forEach((event) => {
+          const eventStart = new Date(event.start);
+          const eventEnd = new Date(event.end);
+          const effectiveStart = eventStart < weekStart ? weekStart : eventStart;
+          const effectiveEnd = eventEnd > weekEnd ? weekEnd : eventEnd;
+
+          if (effectiveStart < effectiveEnd) {
+            resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60);
+          }
+        });
+      }
+
+      if (selectedMetric === 'deadhead') {
+        resource.deadhead = resourceEvents.reduce((total, event) => {
+          const eventStart = new Date(event.start);
+          const eventEnd = new Date(event.end);
+          const effectiveStart = eventStart < weekStart ? weekStart : eventStart;
+          const effectiveEnd = eventEnd > weekEnd ? weekEnd : eventEnd;
+
+          if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
+            return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60);
+          }
+          return total;
+        }, 0);
+      }
+
+      if (selectedMetric === 'payload') {
+        const weekEvents = resourceEvents.filter((event) => new Date(event.end) > weekStart && new Date(event.start) < weekEnd);
+
+        const totalPayload = weekEvents.reduce((total, event) => total + (event.payload || 0), 0);
+        const numberOfTours = weekEvents.length;
+
+        resource.payload =
+          numberOfTours > 0 && resource.capacity ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100) : 0;
+      }
+    });
+  }, [myResources, selectedMetric, calRef, weekStart, weekEnd]);
+
+  const handlePageLoading = useCallback(
+    (args) => {
+      weekStart.current = args.firstDay;
+      weekEnd.current = args.lastDay;
+      refreshData();
+    },
+    [refreshData],
+  );
+
+  const handlePageLoaded = useCallback(() => {
     refreshData();
+    // setTimeout(() => {
+    //   if (initialSort) {
+    //     sortResources();
+    //   }
+    // }, 100);
   }, [refreshData]);
 
-  const handleEventChange = useCallback(() => {
-    refreshData();
-    sortResources();
-  }, [refreshData, sortResources]);
+  const handleEventCreated = useCallback(
+    (args) => {
+      args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
+      args.event.overlap = false;
+      refreshData();
+      delayedToastSort(args.event.resource, args.event);
+    },
+    [refreshData],
+  );
+
+  const handleEventUpdate = useCallback(
+    (args) => {
+      if (
+        new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
+        new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime()
+      ) {
+        return;
+      }
+      refreshData();
+      delayedToastSort(args.event.resource, args.event);
+    },
+    [refreshData],
+  );
+
+  const handleEventDelete = useCallback(
+    (args) => {
+      refreshData();
+      delayedToastSort(args.event.resource, args.event);
+    },
+    [refreshData],
+  );
 
   const myCustomResourceHeader = useCallback(
     () => (
@@ -313,6 +435,7 @@ function App() {
     ),
     [selectedMetricDesc],
   );
+
   const myCustomResource = useCallback(
     (resource) => {
       const metricValue = resource[selectedMetric];
@@ -320,27 +443,28 @@ function App() {
       const barValue =
         selectedMetric === 'payload' ? metricValue : ['standby', 'deadhead'].includes(selectedMetric) ? (metricValue / 168) * 100 : 100;
 
-      const barColorClass = barValue <= 33 ? 'green-bar' : barValue <= 66 ? 'yellow-bar' : 'red-bar';
+      const animationClass = metricBarAnimation.current ? 'metric-bar-animation' : 'metric-bar-no-animation';
+
+      const barColorClass =
+        barValue <= 33 ? `green-bar ${animationClass}` : barValue <= 66 ? `yellow-bar ${animationClass}` : `red-bar ${animationClass}`;
 
       return (
-        <>
-          <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
-            <strong>{resource.name}</strong>
-            <div className="mds-resource-attribute">Model: {resource.model || 'N/A'}</div>
-            <div className="mds-resource-attribute">Capacity: {resource.capacity}T</div>
-            <div className="mds-resource-attribute">
-              {selectedMetricDesc}: {metricValue}
-              {selectedMetric === 'payload' ? '%' : ['standby', 'deadhead'].includes(selectedMetric) ? 'h' : ''}
-            </div>
-
-            <div className="metric-bar-container">
-              <div className={`metric-bar ${barColorClass}`} style={{ marginTop: '5px', width: `${barValue}%` }}></div>
-            </div>
+        <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
+          <strong>{resource.name}</strong>
+          <div className="mds-resource-attribute">Model: {resource.model || 'N/A'}</div>
+          <div className="mds-resource-attribute">Capacity: {resource.capacity}T</div>
+          <div className="mds-resource-attribute">
+            {selectedMetricDesc}: {metricValue}
+            {selectedMetric === 'payload' ? '%' : ['standby', 'deadhead'].includes(selectedMetric) ? 'h' : ''}
           </div>
-        </>
+          <div className="metric-bar-container" style={{ marginTop: '5px' }}>
+            <div className={`metric-bar ${barColorClass}`} style={{ width: `${barValue}%` }}></div>
+            <div className="metric-bar-overlay" style={{ width: `${100 - barValue}%` }}></div>
+          </div>
+        </div>
       );
     },
-    [selectedMetric],
+    [selectedMetric, selectedMetricDesc, metricBarAnimation],
   );
 
   const myCustomHeader = useCallback(
@@ -357,6 +481,14 @@ function App() {
     [handlePopupOpen],
   );
 
+  const sortDirectionChange = useCallback((ev) => {
+    setSortDirection(ev.target.value);
+  }, []);
+
+  const sortColumnChange = useCallback((ev) => {
+    setSortColumn(ev.target.value);
+  }, []);
+
   return (
     <>
       <Eventcalendar
@@ -372,9 +504,10 @@ function App() {
         renderResource={myCustomResource}
         renderHeader={myCustomHeader}
         onPageLoading={handlePageLoading}
-        onEventCreated={handleEventChange}
-        onEventDeleted={handleEventChange}
-        onEventUpdated={handleEventChange}
+        onPageLoaded={handlePageLoaded}
+        onEventCreated={handleEventCreated}
+        onEventDeleted={handleEventDelete}
+        onEventUpdated={handleEventUpdate}
         view={myView}
       />
       <Popup
@@ -388,13 +521,13 @@ function App() {
             text: 'Apply',
             keyCode: 'enter',
             handler: function () {
-              // if (initialSortColumn != sortColumn) {
-              //   refreshData();
-              // }
-              // sortResources();
-              // initialSortColumn = sortColumn;
-              // initialSortDirection = sortDirection;
-              // popup.close();
+              if (initialSortColumn != sortColumn) {
+                refreshData();
+              }
+              sortResources();
+              initialSortColumn.current = sortColumn;
+              initialSortDirection.curent = sortDirection;
+              setPopupOpen(false);
               // mobiscroll.toast({
               //   message: 'Resouces sorted',
               // });
@@ -410,17 +543,36 @@ function App() {
       >
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Metric to calculate and sort by</div>
-          <RadioGroup value={sortColumn}>
-            <Radio value="standby" label="Standby Time" description="Time the truck is driven without cargo." />
-            <Radio value="payload" label="Payload Efficiency" description="Truck capacity divided by the average cargo on tours." />
-            <Radio value="deadhead" label="Deadhead Time" description="Time when the truck is not on a tour." />
+          <RadioGroup onChange={sortColumnChange}>
+            <Radio
+              value="standby"
+              label="Standby Time"
+              description="Time the truck is driven without cargo."
+              checked={sortColumn === 'standby'}
+            />
+            <Radio
+              value="payload"
+              label="Payload Efficiency"
+              description="Truck capacity divided by the average cargo on tours."
+              checked={sortColumn === 'payload'}
+            />
+            <Radio
+              value="deadhead"
+              label="Deadhead Time"
+              description="Time when the truck is not on a tour."
+              checked={sortColumn === 'deadhead'}
+            />
           </RadioGroup>
         </div>
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Sort direction</div>
-          <SegmentedGroup value={sortDirection}>
-            <Segmented value="asc">Ascending</Segmented>
-            <Segmented value="desc">Descending</Segmented>
+          <SegmentedGroup onChange={sortDirectionChange}>
+            <Segmented value="asc" checked={sortDirection === 'asc'}>
+              Ascending
+            </Segmented>
+            <Segmented value="desc" checked={sortDirection === 'desc'}>
+              Descending
+            </Segmented>
           </SegmentedGroup>
         </div>
       </Popup>

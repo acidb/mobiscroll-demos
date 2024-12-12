@@ -1,5 +1,6 @@
 <mbsc-eventcalendar
   #myCalendar
+  class="mds-timeline-popup-sort"
   [clickToCreate]="true"
   [data]="myEvents"
   [dragToCreate]="true"
@@ -13,7 +14,7 @@
   [view]="view"
   base
   (onPageLoading)="handleOnPageLoading($event)"
-  (onPageLoaded)="handleOnPageLoaded($event)"
+  (onPageLoaded)="handleOnPageLoaded()"
   (onEventCreated)="handleOnEventCreated($event)"
   (onEventDelete)="handleOnEventDelete($event)"
   (onEventUpdate)="handleOnEventUpdate($event)"
@@ -30,7 +31,8 @@
       <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
       <div class="mds-resource-attribute">{{selectedMetricDesc}}: {{ getMetricValue(resource) }}</div>
       <div class="metric-bar-container" style="margin-top: 5px">
-        <div class="metric-bar {{ getBarColorClass(resource) }}" [style.width.%]="getBarValue(resource)"></div>
+        <div class="metric-bar-animation {{ getBarColorClass(resource) }}" [style.width.%]="getBarValue(resource)"></div>
+        <div class="metric-bar-overlay" [style.width.%]="100 - getBarValue(resource)"></div>
       </div>
     </div>
   </ng-template>
@@ -50,7 +52,7 @@
 <mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" #popup>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
-    <mbsc-radio-group [(ngModel)]="sortColumn" (change)="handleColumnChange()">
+    <mbsc-radio-group [(ngModel)]="sortColumn">
       <mbsc-radio label="Standby Time" description="Time the truck is driven without cargo." value="standby"></mbsc-radio>
       <mbsc-radio
         label="Payload Efficiency"
