@@ -277,7 +277,6 @@ const myView = {
 }
 
 const refreshData = () => {
-  //todo
   // setTimeout(() => {
   //   loadedEvents.value = calRef.value.instance.getEvents()
   // }, 100)
@@ -285,7 +284,7 @@ const refreshData = () => {
   myResources.value.forEach((resource) => {
     const resourceEvents = myEvents.value.filter((event) => event.resource === resource.id)
 
-    if (selectedMetric.value === 'standby') {
+    if (sortColumn.value === 'standby') {
       resource.standby = 168
       resourceEvents.forEach((event) => {
         const eventStart = new Date(event.start)
@@ -294,12 +293,12 @@ const refreshData = () => {
         const effectiveEnd = eventEnd > weekEnd.value ? weekEnd : eventEnd
 
         if (effectiveStart < effectiveEnd) {
-          resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60) // Convert ms to hours
+          resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60)
         }
       })
     }
 
-    if (selectedMetric.value === 'deadhead') {
+    if (sortColumn.value === 'deadhead') {
       const totalDeadheadTime = resourceEvents.reduce((total, event) => {
         const eventStart = new Date(event.start)
         const eventEnd = new Date(event.end)
@@ -307,14 +306,14 @@ const refreshData = () => {
         const effectiveEnd = eventEnd > weekEnd.value ? weekEnd : eventEnd
 
         if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
-          return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60) // Convert ms to hours
+          return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60)
         }
         return total
       }, 0)
       resource.deadhead = totalDeadheadTime
     }
 
-    if (selectedMetric.value === 'payload') {
+    if (sortColumn.value === 'payload') {
       const weekEvents = resourceEvents.filter(
         (event) => new Date(event.end) > weekStart.value && new Date(event.start) < weekEnd.value
       )
@@ -337,12 +336,10 @@ const sortResources = () => {
 
   myResources.value = [
     ...myResources.value.sort((a, b) => {
-      console.log('asc sort') // <--- d3l
       if (sortDirection.value === 'asc') {
         return a[sortColumn.value] > b[sortColumn.value] ? 1 : -1
       }
       if (sortDirection.value === 'desc') {
-        console.log('desc sort') // <--- d3l
         return a[sortColumn.value] < b[sortColumn.value] ? 1 : -1
       }
       return a.id - b.id
@@ -372,8 +369,7 @@ const handlePopupOpen = () => {
 
 const handlePopupClose = () => {
   isPopupOpen.value = false
-  // $('.mbsc-popup-sort-metric[value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
-  // $('.mbsc-popup-sort-direction[value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
+  // restore initial state
 }
 
 const handleSnackbarClose = () => {
@@ -502,9 +498,7 @@ function getBarColorClass(resource) {
         <strong>{{ resource.name }}</strong>
         <div class="mds-resource-attribute">Model: {{ resource.model || 'N/A' }}</div>
         <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
-        <div class="mds-resource-attribute">
-          {{ selectedMetricDesc }}: {{ getMetricValue(resource) }}
-        </div>
+        <div class="mds-resource-attribute">{{ sortColumn }}: {{ getMetricValue(resource) }}</div>
 
         <div class="mds-metric-bar-container" style="margin-top: 5px">
           <div
@@ -540,12 +534,13 @@ function getBarColorClass(resource) {
         keyCode: 'enter',
         handler: function () {
           isPopupOpen = false
-          if (initialSortColumn != sortColumn) {
-            refreshData()
-          }
+
+          // if (initialSortColumn.value != sortColumn.value) {
+          refreshData()
+          // }
           sortResources()
-          initialSortColumn = sortColumn
-          initialSortDirection = sortDirection
+          // initialSortColumn.value = sortColumn.value
+          // initialSortDirection.value = sortDirection.value
 
           isToastOpen = true
         },
@@ -560,7 +555,7 @@ function getBarColorClass(resource) {
   >
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
-      <MbscRadioGroup v-model="sortColumn" @change="handleColumnChange">
+      <MbscRadioGroup v-model="sortColumn">
         <MbscRadio
           label="Standby Time"
           description="Time the truck is driven without cargo."
