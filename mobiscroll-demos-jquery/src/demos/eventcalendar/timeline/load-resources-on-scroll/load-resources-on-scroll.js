@@ -10,7 +10,7 @@ export default {
     });
 
     $(function () {
-      var isLoading = false;
+      var lastLoadedResource = 25;
       var resources = [
         { id: 1, name: 'Resource 1' },
         { id: 2, name: 'Resource 2' },
@@ -52,44 +52,47 @@ export default {
           onVirtualLoading: function (args, inst) {
             var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
             var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
-            if (!isLoading) {
-              isLoading = true;
-              $.getJSON(
-                'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
-                  start +
-                  '&end=' +
-                  end +
-                  '&rstart=' +
-                  args.resourceStart +
-                  '&rend=' +
-                  args.resourceEnd +
-                  '&load=' +
-                  (isIdInEnd(args.resourceEnd) ? resources[resources.length - 1].id : 0) +
-                  '&callback=?',
-                function (newData) {
-                  if (newData.resources) {
-                    resources = resources.concat(newData.resources);
-                    inst.setOptions({
-                      resources: resources,
-                      data: newData.events,
-                    });
-                  } else {
-                    inst.setEvents(newData.events);
-                  }
-                  isLoading = false;
-                },
-                'jsonp',
-              );
+            var isEndLoaded = lastLoadedResource > args.resourceEnd;
+
+            if (!isEndLoaded) {
+              mobiscroll.toast({
+                message: 'Loading Resources...',
+                duration: 1000,
+              });
             }
+            console.log(
+              '&rstart=' + args.resourceStart + '&rend=' + args.resourceEnd,
+              !isEndLoaded ? 'loading resources from ' + lastLoadedResource : 0,
+            );
+            $.getJSON(
+              'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
+                start +
+                '&end=' +
+                end +
+                '&rstart=' +
+                args.resourceStart +
+                '&rend=' +
+                args.resourceEnd +
+                '&load=' +
+                (!isEndLoaded ? args.resourceEnd : 0) +
+                '&callback=?',
+              function (newData) {
+                if (newData.resources) {
+                  resources = resources.concat(newData.resources);
+                  inst.setOptions({
+                    resources: resources,
+                    data: newData.events,
+                  });
+
+                  lastLoadedResource = newData.resources[newData.resources.length - 1].id;
+                } else {
+                  inst.setEvents(newData.events);
+                }
+              },
+              'jsonp',
+            );
           },
         });
-
-      function isIdInEnd(resId) {
-        var resIndx = resources.findIndex(function (r) {
-          return r.id === resId;
-        });
-        return resources.length - resIndx <= 5;
-      }
     });
   },
   // eslint-disable-next-line es5/no-template-literals
