@@ -1,12 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import {
-  getJson,
   formatDate,
-  MbscCalendarEvent,
+  getJson,
   MbscEventcalendar,
-  MbscResource,
-  MMbscVirtualLoadEvent,
   setOptions /* localeImport */
+} from '@mobiscroll/vue'
+import type {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscResource,
+  MbscVirtualLoadEvent
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
 
@@ -16,8 +19,7 @@ setOptions({
 })
 
 const myEvents = ref<MbscCalendarEvent[]>([])
-
-const myResources =  ref<MbscResource[]>([
+const myResources = ref<MbscResource[]>([
   { id: 1, name: 'Resource 1' },
   { id: 2, name: 'Resource 2' },
   { id: 3, name: 'Resource 3' },
@@ -44,17 +46,24 @@ const myResources =  ref<MbscResource[]>([
   { id: 24, name: 'Resource 24' },
   { id: 25, name: 'Resource 25' }
 ])
+const isToastOpen = ref(false)
 
-const myView = {
+const myView: MbscEventcalendarView = {
   timeline: {
     type: 'month',
     resolutionHorizontal: 'hour'
   }
 }
 
-const handleVirtualLoading = (args: MMbscVirtualLoadEvent) => {
+const handleVirtualLoading = (args: MbscVirtualLoadEvent) => {
   const start = formatDate('YYYY-MM-DD', args.viewStart)
   const end = formatDate('YYYY-MM-DD', args.viewEnd)
+  const isEndLoaded = myResources.value[myResources.value.length - 1].id > args.resourceEnd
+
+  if (!isEndLoaded) {
+    isToastOpen.value = true
+  }
+
   getJson(
     'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
       start +
@@ -65,7 +74,7 @@ const handleVirtualLoading = (args: MMbscVirtualLoadEvent) => {
       '&rend=' +
       args.resourceEnd +
       '&load=' +
-      (isInTheEnd(args.resourceEnd) ? myResources.value[myResources.value.length - 1].id : 0),
+      (!isEndLoaded ? args.resourceEnd : 0),
     (data) => {
       if (data.resources) {
         myResources.value = [...myResources.value, ...data.resources]
@@ -78,13 +87,18 @@ const handleVirtualLoading = (args: MMbscVirtualLoadEvent) => {
 </script>
 
 <template>
-  <!-- dragOptions -->
   <MbscEventcalendar
     :view="myView"
     :data="myEvents"
     :resources="myResources"
     :onVirtualLoading="handleVirtualLoading"
   />
+  <MbscToast
+    message="Loading Resources..."
+    :duration="1000"
+    :isOpen="isToastOpen"
+    @close="isToastOpen = false"
+  ></MbscToast>
 </template>
 
 <style></style>

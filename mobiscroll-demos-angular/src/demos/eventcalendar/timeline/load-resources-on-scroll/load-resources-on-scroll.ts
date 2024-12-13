@@ -7,7 +7,7 @@ import {
   MbscVirtualLoadEvent,
   Notifications,
   setOptions,
-   /* localeImport */
+  /* localeImport */
 } from '@mobiscroll/angular';
 
 setOptions({
@@ -21,25 +21,38 @@ setOptions({
   providers: [Notifications],
 })
 export class AppComponent {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    public notify: Notifications,
+  ) {}
 
   myEvents: MbscCalendarEvent[] = [];
   myResources = [
-    { id: 1, name: 'Resource 1', color: '#FF5733' },
-    { id: 2, name: 'Resource 2', color: '#33FF57' },
-    { id: 3, name: 'Resource 3', color: '#3357FF' },
-    { id: 4, name: 'Resource 4', color: '#FF33A6' },
-    { id: 5, name: 'Resource 5', color: '#FFC300' },
-    { id: 6, name: 'Resource 6', color: '#DAF7A6' },
-    { id: 7, name: 'Resource 7', color: '#581845' },
-    { id: 8, name: 'Resource 8', color: '#900C3F' },
-    { id: 9, name: 'Resource 9', color: '#C70039' },
-    { id: 10, name: 'Resource 10', color: '#FF5733' },
-    { id: 11, name: 'Resource 11', color: '#33FFBD' },
-    { id: 12, name: 'Resource 12', color: '#FFC300' },
-    { id: 13, name: 'Resource 13', color: '#FF33F6' },
-    { id: 14, name: 'Resource 14', color: '#33FF57' },
-    { id: 15, name: 'Resource 15', color: '#33A6FF' },
+    { id: 1, name: 'Resource 1' },
+    { id: 2, name: 'Resource 2' },
+    { id: 3, name: 'Resource 3' },
+    { id: 4, name: 'Resource 4' },
+    { id: 5, name: 'Resource 5' },
+    { id: 6, name: 'Resource 6' },
+    { id: 7, name: 'Resource 7' },
+    { id: 8, name: 'Resource 8' },
+    { id: 9, name: 'Resource 9' },
+    { id: 10, name: 'Resource 10' },
+    { id: 11, name: 'Resource 11' },
+    { id: 12, name: 'Resource 12' },
+    { id: 13, name: 'Resource 13' },
+    { id: 14, name: 'Resource 14' },
+    { id: 15, name: 'Resource 15' },
+    { id: 16, name: 'Resource 16' },
+    { id: 17, name: 'Resource 17' },
+    { id: 18, name: 'Resource 18' },
+    { id: 19, name: 'Resource 19' },
+    { id: 20, name: 'Resource 20' },
+    { id: 21, name: 'Resource 21' },
+    { id: 22, name: 'Resource 22' },
+    { id: 23, name: 'Resource 23' },
+    { id: 24, name: 'Resource 24' },
+    { id: 25, name: 'Resource 25' },
   ];
 
   eventSettings: MbscEventcalendarOptions = {
@@ -50,18 +63,28 @@ export class AppComponent {
     onVirtualLoading: (args: MbscVirtualLoadEvent) => {
       const start = formatDate('YYYY-MM-DD', args.viewStart);
       const end = formatDate('YYYY-MM-DD', args.viewEnd);
+      const isEndLoaded = this.myResources[this.myResources.length - 1].id > +args.resourceEnd;
+
+      if (!isEndLoaded) {
+        this.notify.toast({
+          message: 'Loading Resources...',
+        });
+      }
 
       this.http
-        .jsonp<MbscCalendarEvent[]>('https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
-          start +
-          '&end=' +
-          end +
-          '&rstart=' +
-          args.resourceStart +
-          '&rend=' +
-          args.resourceEnd +
-          '&load=' +
-          (this.isInTheEnd(args.resourceEnd as number) ? this.myResources[this.myResources.length - 1].id : 0),, 'callback')
+        .jsonp<MbscCalendarEvent[]>(
+          'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
+            start +
+            '&end=' +
+            end +
+            '&rstart=' +
+            args.resourceStart +
+            '&rend=' +
+            args.resourceEnd +
+            '&load=' +
+            (!isEndLoaded ? args.resourceEnd : 0),
+          'callback',
+        )
         .subscribe((data: any) => {
           if (data.resources) {
             this.myResources = [...this.myResources, ...data.resources];
@@ -71,9 +94,4 @@ export class AppComponent {
         });
     },
   };
-
-  isInTheEnd(resId: number) {
-    const resIndx = this.myResources.findIndex((r) => r.id === resId);
-    return this.myResources.length - resIndx <= 15;
-  }
 }

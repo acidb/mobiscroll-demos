@@ -47,7 +47,16 @@ export default {
       onVirtualLoading: function (args, inst) {
         var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
         var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
-        mobiscroll.getJSON(
+        var isEndLoaded = resources[resources.length - 1].id > args.resourceEnd;
+
+        if (!isEndLoaded) {
+          mobiscroll.toast({
+            message: 'Loading Resources...',
+            duration: 1000,
+          });
+        }
+
+        mobiscroll.getJson(
           'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
             start +
             '&end=' +
@@ -57,10 +66,8 @@ export default {
             '&rend=' +
             args.resourceEnd +
             '&load=' +
-            (isIdInEnd(args.resourceEnd) ? resources[resources.length - 1].id : 0) +
-            '&callback=?',
+            (!isEndLoaded ? args.resourceEnd : 0),
           function (newData) {
-            console.log('data', newData);
             if (newData.resources) {
               resources = resources.concat(newData.resources);
               inst.setOptions({
@@ -75,13 +82,6 @@ export default {
         );
       },
     });
-
-    function isIdInEnd(resId) {
-      var resIndx = resources.findIndex(function (r) {
-        return r.id === resId;
-      });
-      return resources.length - resIndx <= 15;
-    }
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `

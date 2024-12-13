@@ -10,7 +10,6 @@ export default {
     });
 
     $(function () {
-      var lastLoadedResource = 25;
       var resources = [
         { id: 1, name: 'Resource 1' },
         { id: 2, name: 'Resource 2' },
@@ -52,18 +51,18 @@ export default {
           onVirtualLoading: function (args, inst) {
             var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
             var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
-            var isEndLoaded = lastLoadedResource > args.resourceEnd;
+            var isEndLoaded = resources[resources.length - 1].id > args.resourceEnd;
 
             if (!isEndLoaded) {
               mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
                 message: 'Loading Resources...',
                 duration: 1000,
               });
             }
-            console.log(
-              '&rstart=' + args.resourceStart + '&rend=' + args.resourceEnd,
-              !isEndLoaded ? 'loading resources from ' + lastLoadedResource : 0,
-            );
+
             $.getJSON(
               'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
                 start +
@@ -83,8 +82,6 @@ export default {
                     resources: resources,
                     data: newData.events,
                   });
-
-                  lastLoadedResource = newData.resources[newData.resources.length - 1].id;
                 } else {
                   inst.setEvents(newData.events);
                 }
