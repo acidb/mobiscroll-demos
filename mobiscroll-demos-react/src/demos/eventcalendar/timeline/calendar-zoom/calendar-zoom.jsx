@@ -1,8 +1,14 @@
-import { getJson } from '@mobiscroll/react';
-import { Button, CalendarNav, CalendarNext, CalendarPrev, CalendarToday, Eventcalendar, Page, setOptions } from '@mobiscroll/react';
+import {
+  Button,
+  CalendarNav,
+  CalendarNext,
+  CalendarPrev,
+  CalendarToday,
+  Eventcalendar,
+  getJson,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
-import './calendar-zoom.css';
 
 setOptions({
   // localeJs,
@@ -10,19 +16,19 @@ setOptions({
 });
 
 function App() {
-  const calRef = useRef();
-  const [refDate, setRefDate] = useState(new Date(+new Date() - 10 * 24 * 60 * 60 * 1000));
-  const [zoomLevel, setZoomLevel] = useState(4);
   const [myEvents, setEvents] = useState([]);
+  const [zoomLevel, setZoomLevel] = useState(9);
+
+  const calRef = useRef(null);
 
   const myResources = useMemo(
     () => [
-      { color: '#e20000', id: 1, name: 'Resource A' },
-      { color: '#76e083', id: 2, name: 'Resource B' },
-      { color: '#4981d6', id: 3, name: 'Resource C' },
-      { color: '#e25dd2', id: 4, name: 'Resource D' },
-      { color: '#1dab2f', id: 5, name: 'Resource E' },
-      { color: '#d6d145', id: 6, name: 'Resource F' },
+      { id: 1, name: 'Resource A', color: '#e20000' },
+      { id: 2, name: 'Resource B', color: '#76e083' },
+      { id: 3, name: 'Resource C', color: '#4981d6' },
+      { id: 4, name: 'Resource D', color: '#e25dd2' },
+      { id: 5, name: 'Resource E', color: '#1dab2f' },
+      { id: 6, name: 'Resource F', color: '#d6d145' },
     ],
     [],
   );
@@ -30,80 +36,92 @@ function App() {
   const myView = useMemo(
     () => ({
       timeline: {
-        currentTimeIndicator: true,
         zoomLevels: {
-          [-4]: { type: 'year', size: 9, resolutionHorizontal: 'year' },
-          [-3]: { type: 'month', size: 12, resolutionHorizontal: 'month' },
-          [-2]: { type: 'week', size: 9, resolutionHorizontal: 'week' },
-          [-1]: { type: 'week', size: 5, resolutionHorizontal: 'day' },
-          0: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'large' },
-          1: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
-          2: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 360, timeLabelStep: 360 },
-          3: { type: 'day', size: 3, resolutionHorizontal: 'hour', timeCellStep: 180, timeLabelStep: 360 },
-          4: { type: 'day', size: 3, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 60 },
+          1: { type: 'year', size: 25, resolutionHorizontal: 'year', columnWidth: 'small' },
+          2: { type: 'year', size: 25, resolutionHorizontal: 'year', columnWidth: 'xlarge' },
+          3: { type: 'year', size: 25, resolutionHorizontal: 'quarter', columnWidth: 'small' },
+          4: { type: 'year', size: 25, resolutionHorizontal: 'quarter', columnWidth: 'xlarge' },
+          5: { type: 'year', size: 25, resolutionHorizontal: 'month', columnWidth: 'medium' },
+          6: { type: 'year', size: 25, resolutionHorizontal: 'month', columnWidth: 'xxxlarge' },
+          7: { type: 'year', size: 25, resolutionHorizontal: 'week', columnWidth: 'medium' },
+          8: { type: 'year', size: 25, resolutionHorizontal: 'week', columnWidth: 'xxxlarge' },
+          9: { type: 'year', size: 25, resolutionHorizontal: 'day', columnWidth: 'small' },
+          10: { type: 'year', size: 25, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
+          11: { type: 'year', size: 3, resolutionHorizontal: 'hour', columnWidth: 'xlarge', timeCellStep: 720, timeLabelStep: 720 },
+          12: { type: 'year', size: 3, resolutionHorizontal: 'hour', columnWidth: 'xlarge', timeCellStep: 360, timeLabelStep: 360 },
+          13: { type: 'year', size: 3, resolutionHorizontal: 'hour', columnWidth: 'xlarge', timeCellStep: 180, timeLabelStep: 180 },
+          14: { type: 'year', size: 3, resolutionHorizontal: 'hour', columnWidth: 'medium', timeCellStep: 60, timeLabelStep: 60 },
+          15: { type: 'month', size: 3, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 30, columnWidth: 'medium' },
+          16: { type: 'month', size: 3, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 30, columnWidth: 'xxxlarge' },
+          17: { type: 'month', size: 3, resolutionHorizontal: 'hour', timeCellStep: 15, timeLabelStep: 15, columnWidth: 'xxxlarge' },
+          18: { type: 'month', size: 3, resolutionHorizontal: 'hour', timeCellStep: 5, timeLabelStep: 5, columnWidth: 'large' },
         },
       },
     }),
     [],
   );
 
-  const handleZoom = useCallback(
-    (zoom) => {
-      const newZoomLevel = zoomLevel + zoom;
-      const viewDate = calRef.current?.getViewDate() || new Date();
+  const refDate = useMemo(() => {
+    const viewDate = calRef.current ? calRef.current.getViewDate() : new Date();
+    if (zoomLevel < 11) {
+      return new Date(viewDate.getFullYear() - 12, 0, 1);
+    }
+    if (zoomLevel < 15) {
+      return new Date(viewDate.getFullYear() - 1, 0, 1);
+    }
+    return new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
+  }, [zoomLevel]);
 
-      const newRefDateMap = {
-        [-4]: new Date(viewDate.getFullYear() - 4, 0, 1),
-        [-3]: new Date(viewDate.getFullYear(), viewDate.getMonth() - 5, 1),
-        [-2]: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 28),
-        [-1]: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-        0: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-        1: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-        2: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
-        3: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1),
-        4: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1),
-      };
+  const zoomIn = useCallback(() => {
+    setZoomLevel((prevZoom) => prevZoom + 1);
+  }, []);
 
-      setZoomLevel(newZoomLevel);
-      setRefDate(newRefDateMap[newZoomLevel]);
-    },
-    [calRef, zoomLevel],
-  );
+  const zoomOut = useCallback(() => {
+    setZoomLevel((prevZoom) => prevZoom - 1);
+  }, []);
 
-  const myCustomHeader = useCallback(
+  const handleSliderChange = useCallback((ev) => {
+    setZoomLevel(+ev.target.value);
+  }, []);
+
+  const myHeader = useCallback(
     () => (
       <>
         <CalendarNav />
-        <div className="md-zoom-cont mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
-          <Button onClick={() => handleZoom(1)} disabled={zoomLevel === 4} icon="material-zoom-in" />
-          <Button variant="flat">{zoomLevel}</Button>
-          <Button onClick={() => handleZoom(-1)} disabled={zoomLevel === -4} icon="material-zoom-out" />
+        <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
+          <Button onClick={zoomOut} disabled={zoomLevel === 1} icon="minus" variant="flat" />
+          <input type="range" value={zoomLevel} min="1" max="18" onChange={handleSliderChange} />
+          <Button onClick={zoomIn} disabled={zoomLevel === 18} icon="plus" variant="flat" />
         </div>
         <CalendarPrev />
         <CalendarToday />
         <CalendarNext />
       </>
     ),
-    [handleZoom, zoomLevel],
+    [handleSliderChange, zoomIn, zoomOut, zoomLevel],
   );
 
   useEffect(() => {
-    getJson('https://trial.mobiscroll.com/timeline-events/', (events) => setEvents(events), 'jsonp');
+    getJson(
+      'https://trial.mobiscroll.com/timeline-events/',
+      (events) => {
+        setEvents(events);
+      },
+      'jsonp',
+    );
   }, []);
 
   return (
-    <Page>
-      <Eventcalendar
-        ref={calRef}
-        view={myView}
-        data={myEvents}
-        resources={myResources}
-        refDate={refDate}
-        zoomLevel={zoomLevel}
-        dragToCreate={true}
-        renderHeader={myCustomHeader}
-      />
-    </Page>
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      ref={calRef}
+      refDate={refDate}
+      resources={myResources}
+      view={myView}
+      zoomLevel={zoomLevel}
+      renderHeader={myHeader}
+    />
   );
 }
 

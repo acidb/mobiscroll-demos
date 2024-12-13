@@ -1,5 +1,21 @@
-<mbsc-button (click)="handleZoom(1)" [disabled]="zoomLevel === 4">Zoom In</mbsc-button>
-<span>{{ zoomLevel }}</span>
-<mbsc-button (click)="handleZoom(-1)" [disabled]="zoomLevel === -4">Zoom Out</mbsc-button>
-<mbsc-eventcalendar #calendar [zoomLevel]="zoomLevel" [dragToCreate]="true" [view]="myView" [refDate]="refDate" [resources]="myResources">
+<mbsc-eventcalendar
+  #calendar
+  [data]="myEvents"
+  [headerTemplate]="myHeader"
+  [refDate]="refDate"
+  [resources]="myResources"
+  [view]="myView"
+  [zoomLevel]="zoomLevel"
+>
+  <ng-template #myHeader>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
+    <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
+      <mbsc-button (click)="handleZoom(zoomLevel - 1)" [disabled]="zoomLevel === 1" icon="minus" variant="flat"></mbsc-button>
+      <input type="range" min="1" max="18" [(ngModel)]="zoomLevel" (input)="handleInput($event)" />
+      <mbsc-button (click)="handleZoom(zoomLevel + 1)" [disabled]="zoomLevel === 18" icon="plus" variant="flat"></mbsc-button>
+    </div>
+    <mbsc-calendar-prev></mbsc-calendar-prev>
+    <mbsc-calendar-today></mbsc-calendar-today>
+    <mbsc-calendar-next></mbsc-calendar-next>
+  </ng-template>
 </mbsc-eventcalendar>
