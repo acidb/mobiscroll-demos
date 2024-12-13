@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
-import { MbscEventcalendar, MbscEventcalendarView, MbscResource, setOptions } from '@mobiscroll/angular';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendar, MbscEventcalendarView, MbscResource, setOptions } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -10,31 +11,16 @@ setOptions({
   selector: 'app-timeline-calendar-zoom',
   templateUrl: './calendar-zoom.html',
 })
-export class AppComponent {
-  public refDate: Date = new Date(new Date().setDate(new Date().getDate() - 10));
-
-  public zoomLevel = 4;
-  public viewMode = 'timeline';
+export class AppComponent implements OnInit {
+  constructor(private http: HttpClient) {}
 
   @ViewChild('calendar', { static: false })
-  public calendar!: MbscEventcalendar;
+  public myCalendar!: MbscEventcalendar;
 
-  public myView: MbscEventcalendarView = {
-    timeline: {
-      currentTimeIndicator: true,
-      zoomLevels: {
-        [-4]: { type: 'year', size: 9, resolutionHorizontal: 'year' },
-        [-3]: { type: 'month', size: 12, resolutionHorizontal: 'month' },
-        [-2]: { type: 'week', size: 9, resolutionHorizontal: 'week' },
-        [-1]: { type: 'week', size: 5, resolutionHorizontal: 'day' },
-        0: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'large' },
-        1: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
-        2: { type: 'day', size: 5, resolutionHorizontal: 'hour', timeCellStep: 360, timeLabelStep: 360 },
-        3: { type: 'day', size: 3, resolutionHorizontal: 'hour', timeCellStep: 180, timeLabelStep: 360 },
-        4: { type: 'day', size: 3, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 60 },
-      },
-    },
-  };
+  public zoomLevel = 9;
+  public refDate = this.getRefDate(new Date());
+
+  public myEvents: MbscCalendarEvent[] = [];
 
   public myResources: MbscResource[] = [
     { color: '#e20000', id: 1, name: 'Resource A' },
@@ -45,22 +31,53 @@ export class AppComponent {
     { color: '#d6d145', id: 6, name: 'Resource F' },
   ];
 
+  public myView: MbscEventcalendarView = {
+    timeline: {
+      zoomLevels: {
+        1: { type: 'year', size: 25, resolutionHorizontal: 'year', columnWidth: 'small' },
+        2: { type: 'year', size: 25, resolutionHorizontal: 'year', columnWidth: 'xlarge' },
+        3: { type: 'year', size: 25, resolutionHorizontal: 'quarter', columnWidth: 'small' },
+        4: { type: 'year', size: 25, resolutionHorizontal: 'quarter', columnWidth: 'xlarge' },
+        5: { type: 'year', size: 25, resolutionHorizontal: 'month', columnWidth: 'medium' },
+        6: { type: 'year', size: 25, resolutionHorizontal: 'month', columnWidth: 'xxxlarge' },
+        7: { type: 'year', size: 25, resolutionHorizontal: 'week', columnWidth: 'medium' },
+        8: { type: 'year', size: 25, resolutionHorizontal: 'week', columnWidth: 'xxxlarge' },
+        9: { type: 'year', size: 25, resolutionHorizontal: 'day', columnWidth: 'small' },
+        10: { type: 'year', size: 25, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
+        11: { type: 'year', size: 3, resolutionHorizontal: 'hour', columnWidth: 'xlarge', timeCellStep: 720, timeLabelStep: 720 },
+        12: { type: 'year', size: 3, resolutionHorizontal: 'hour', columnWidth: 'xlarge', timeCellStep: 360, timeLabelStep: 360 },
+        13: { type: 'year', size: 3, resolutionHorizontal: 'hour', columnWidth: 'xlarge', timeCellStep: 180, timeLabelStep: 180 },
+        14: { type: 'year', size: 3, resolutionHorizontal: 'hour', columnWidth: 'medium', timeCellStep: 60, timeLabelStep: 60 },
+        15: { type: 'month', size: 3, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 30, columnWidth: 'medium' },
+        16: { type: 'month', size: 3, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 30, columnWidth: 'xxxlarge' },
+        17: { type: 'month', size: 3, resolutionHorizontal: 'hour', timeCellStep: 15, timeLabelStep: 15, columnWidth: 'xxxlarge' },
+        18: { type: 'month', size: 3, resolutionHorizontal: 'hour', timeCellStep: 5, timeLabelStep: 5, columnWidth: 'large' },
+      },
+    },
+  };
+
+  public getRefDate(viewDate: Date): Date {
+    if (this.zoomLevel < 11) {
+      return new Date(viewDate.getFullYear() - 12, 0, 1);
+    }
+    if (this.zoomLevel < 15) {
+      return new Date(viewDate.getFullYear() - 1, 0, 1);
+    }
+    return new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
+  }
+
   public handleZoom(zoom: number): void {
-    this.zoomLevel += zoom;
-    const viewDate = this.calendar?.getViewDate() || new Date();
+    this.zoomLevel = Math.max(1, Math.min(zoom, 18));
+    this.refDate = this.getRefDate(this.myCalendar.getViewDate());
+  }
 
-    const newRefDateMap: { [key: number]: Date } = {
-      [-4]: new Date(viewDate.getFullYear() - 4, 0, 1),
-      [-3]: new Date(viewDate.getFullYear(), viewDate.getMonth() - 5, 1),
-      [-2]: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 28),
-      [-1]: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-      0: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-      1: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-      2: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
-      3: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1),
-      4: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1),
-    };
+  public handleInput(ev: Event): void {
+    this.handleZoom(+(ev.target as HTMLInputElement).value);
+  }
 
-    this.refDate = newRefDateMap[this.zoomLevel] || viewDate;
+  public ngOnInit(): void {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/timeline-events/', 'callback').subscribe((resp) => {
+      this.myEvents = resp;
+    });
   }
 }

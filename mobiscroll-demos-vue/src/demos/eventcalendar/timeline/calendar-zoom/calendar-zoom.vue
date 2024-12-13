@@ -1,5 +1,14 @@
 <script setup>
-import { getJson, MbscButton, MbscEventcalendar, setOptions } from '@mobiscroll/vue'
+import {
+  getJson,
+  MbscButton,
+  MbscCalendarNav,
+  MbscCalendarNext,
+  MbscCalendarPrev,
+  MbscCalendarToday,
+  MbscEventcalendar,
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
 import { computed, onMounted, ref } from 'vue'
 
 setOptions({
@@ -7,70 +16,111 @@ setOptions({
   // theme
 })
 
+const calRef = ref()
+
+const zoomLevel = ref(9)
+
+const refDate = computed(() => {
+  const viewDate = calRef.value ? calRef.value.instance.getViewDate() : new Date()
+  if (zoomLevel.value < 11) {
+    return new Date(viewDate.getFullYear() - 12, 0, 1)
+  }
+  if (zoomLevel.value < 15) {
+    return new Date(viewDate.getFullYear() - 1, 0, 1)
+  }
+  return new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1)
+})
+
 const myEvents = ref([])
-const zoomLevel = ref(4)
-const refDate = ref(new Date())
-refDate.value.setDate(refDate.value.getDate() - 10)
 
 const myResources = [
-  { color: '#e20000', id: 1, name: 'Resource A' },
-  { color: '#76e083', id: 2, name: 'Resource B' },
-  { color: '#4981d6', id: 3, name: 'Resource C' },
-  { color: '#e25dd2', id: 4, name: 'Resource D' },
-  { color: '#1dab2f', id: 5, name: 'Resource E' },
-  { color: '#d6d145', id: 6, name: 'Resource F' }
+  { id: 1, name: 'Resource A', color: '#e20000' },
+  { id: 2, name: 'Resource B', color: '#76e083' },
+  { id: 3, name: 'Resource C', color: '#4981d6' },
+  { id: 4, name: 'Resource D', color: '#e25dd2' },
+  { id: 5, name: 'Resource E', color: '#1dab2f' },
+  { id: 6, name: 'Resource F', color: '#d6d145' }
 ]
 
-const myView = computed(() => ({
+const myView = {
   timeline: {
-    currentTimeIndicator: true,
     zoomLevels: {
-      [-4]: { type: 'year', size: 9, resolutionHorizontal: 'year' },
-      [-3]: { type: 'month', size: 12, resolutionHorizontal: 'month' },
-      [-2]: { type: 'week', size: 9, resolutionHorizontal: 'week' },
-      [-1]: { type: 'week', size: 5, resolutionHorizontal: 'day' },
-      0: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'large' },
-      1: { type: 'week', size: 5, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
-      2: {
-        type: 'day',
-        size: 5,
+      1: { type: 'year', size: 25, resolutionHorizontal: 'year', columnWidth: 'small' },
+      2: { type: 'year', size: 25, resolutionHorizontal: 'year', columnWidth: 'xlarge' },
+      3: { type: 'year', size: 25, resolutionHorizontal: 'quarter', columnWidth: 'small' },
+      4: { type: 'year', size: 25, resolutionHorizontal: 'quarter', columnWidth: 'xlarge' },
+      5: { type: 'year', size: 25, resolutionHorizontal: 'month', columnWidth: 'medium' },
+      6: { type: 'year', size: 25, resolutionHorizontal: 'month', columnWidth: 'xxxlarge' },
+      7: { type: 'year', size: 25, resolutionHorizontal: 'week', columnWidth: 'medium' },
+      8: { type: 'year', size: 25, resolutionHorizontal: 'week', columnWidth: 'xxxlarge' },
+      9: { type: 'year', size: 25, resolutionHorizontal: 'day', columnWidth: 'small' },
+      10: { type: 'year', size: 25, resolutionHorizontal: 'day', columnWidth: 'xlarge' },
+      11: {
+        type: 'year',
+        size: 3,
         resolutionHorizontal: 'hour',
+        columnWidth: 'xlarge',
+        timeCellStep: 720,
+        timeLabelStep: 720
+      },
+      12: {
+        type: 'year',
+        size: 3,
+        resolutionHorizontal: 'hour',
+        columnWidth: 'xlarge',
         timeCellStep: 360,
         timeLabelStep: 360
       },
-      3: {
-        type: 'day',
+      13: {
+        type: 'year',
         size: 3,
         resolutionHorizontal: 'hour',
+        columnWidth: 'xlarge',
         timeCellStep: 180,
-        timeLabelStep: 360
+        timeLabelStep: 180
       },
-      4: { type: 'day', size: 3, resolutionHorizontal: 'hour', timeCellStep: 30, timeLabelStep: 60 }
+      14: {
+        type: 'year',
+        size: 3,
+        resolutionHorizontal: 'hour',
+        columnWidth: 'medium',
+        timeCellStep: 60,
+        timeLabelStep: 60
+      },
+      15: {
+        type: 'month',
+        size: 3,
+        resolutionHorizontal: 'hour',
+        timeCellStep: 30,
+        timeLabelStep: 30,
+        columnWidth: 'medium'
+      },
+      16: {
+        type: 'month',
+        size: 3,
+        resolutionHorizontal: 'hour',
+        timeCellStep: 30,
+        timeLabelStep: 30,
+        columnWidth: 'xxxlarge'
+      },
+      17: {
+        type: 'month',
+        size: 3,
+        resolutionHorizontal: 'hour',
+        timeCellStep: 15,
+        timeLabelStep: 15,
+        columnWidth: 'xxxlarge'
+      },
+      18: {
+        type: 'month',
+        size: 3,
+        resolutionHorizontal: 'hour',
+        timeCellStep: 5,
+        timeLabelStep: 5,
+        columnWidth: 'large'
+      }
     }
   }
-}))
-
-const handleZoom = (zoom) => {
-  const newZoomLevel = zoomLevel.value + zoom
-  const viewDate = refDate.value
-
-  const newRefDateMap = {
-    [-4]: new Date(viewDate.getFullYear() - 4, 0, 1),
-    [-3]: new Date(viewDate.getFullYear(), viewDate.getMonth() - 5, 1),
-    [-2]: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 28),
-    [-1]: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-    0: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-    1: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 14),
-    2: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 2),
-    3: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1),
-    4: new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate() - 1)
-  }
-
-  zoomLevel.value = newZoomLevel
-  refDate.value = newRefDateMap[newZoomLevel] || viewDate
-
-  console.log('viewDate:', viewDate)
-  console.log('refDate:', refDate.value)
 }
 
 onMounted(() => {
@@ -85,18 +135,25 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <MbscButton @click="handleZoom(1)" :disabled="zoomLevel === 4">Zoom In</MbscButton>
-    <MbscButton>{{ zoomLevel }}</MbscButton>
-    <MbscButton @click="handleZoom(-1)" :disabled="zoomLevel === -4">Zoom Out</MbscButton>
-    <MbscEventcalendar
-      :view="myView"
-      :data="myEvents"
-      :resources="myResources"
-      :ref-date="refDate"
-      :zoomLevel="zoomLevel"
-    />
-  </div>
+  <!-- dragOptions -->
+  <MbscEventcalendar
+    ref="calRef"
+    :data="myEvents"
+    :ref-date="refDate"
+    :resources="myResources"
+    :view="myView"
+    :zoomLevel="zoomLevel"
+  >
+    <template #header>
+      <MbscCalendarNav />
+      <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">
+        <MbscButton @click="zoomLevel--" :disabled="zoomLevel === 1" icon="minus" variant="flat" />
+        <input type="range" v-model="zoomLevel" min="1" max="18" />
+        <MbscButton @click="zoomLevel++" :disabled="zoomLevel === 18" icon="plus" variant="flat" />
+      </div>
+      <MbscCalendarPrev />
+      <MbscCalendarToday />
+      <MbscCalendarNext />
+    </template>
+  </MbscEventcalendar>
 </template>
-
-<style></style>
