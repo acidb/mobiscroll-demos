@@ -3,6 +3,7 @@ import {
   formatDate,
   getJson,
   MbscEventcalendar,
+  MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
@@ -13,7 +14,6 @@ setOptions({
 })
 
 const myEvents = ref([])
-
 const myResources = ref([
   { id: 1, name: 'Resource 1' },
   { id: 2, name: 'Resource 2' },
@@ -41,6 +41,7 @@ const myResources = ref([
   { id: 24, name: 'Resource 24' },
   { id: 25, name: 'Resource 25' }
 ])
+const isToastOpen = ref(false)
 
 const myView = {
   timeline: {
@@ -49,14 +50,15 @@ const myView = {
   }
 }
 
-const isInTheEnd = (resId) => {
-  const resIndx = myResources.value.findIndex((r) => r.id === resId)
-  return myResources.value.length - resIndx <= 15
-}
-
 const handleVirtualLoading = (args) => {
   const start = formatDate('YYYY-MM-DD', args.viewStart)
   const end = formatDate('YYYY-MM-DD', args.viewEnd)
+  const isEndLoaded = myResources.value[myResources.value.length - 1].id > args.resourceEnd
+
+  if (!isEndLoaded) {
+    isToastOpen.value = true
+  }
+
   getJson(
     'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
       start +
@@ -67,7 +69,7 @@ const handleVirtualLoading = (args) => {
       '&rend=' +
       args.resourceEnd +
       '&load=' +
-      (isInTheEnd(args.resourceEnd) ? myResources.value[myResources.value.length - 1].id : 0),
+      (!isEndLoaded ? args.resourceEnd : 0),
     (data) => {
       if (data.resources) {
         myResources.value = [...myResources.value, ...data.resources]
@@ -80,13 +82,18 @@ const handleVirtualLoading = (args) => {
 </script>
 
 <template>
-  <!-- dragOptions -->
   <MbscEventcalendar
     :view="myView"
     :data="myEvents"
     :resources="myResources"
     :onVirtualLoading="handleVirtualLoading"
   />
+  <MbscToast
+    message="Loading Resources..."
+    :duration="1000"
+    :isOpen="isToastOpen"
+    @close="isToastOpen = false"
+  ></MbscToast>
 </template>
 
 <style></style>
