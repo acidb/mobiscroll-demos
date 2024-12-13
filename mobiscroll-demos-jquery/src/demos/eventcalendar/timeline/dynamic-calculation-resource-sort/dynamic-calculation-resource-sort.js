@@ -336,7 +336,7 @@ export default {
             },
           },
           cssClass: 'mds-popup-sort-snackbar',
-          display: 'bottom',
+          display: 'center',
           duration: 3000,
           onClose: function () {
             resource.cssClass = 'mds-resource-highlight';
@@ -349,7 +349,7 @@ export default {
           },
         });
         setTimeout(function () {
-          document.querySelector('.mbsc-toast-background').classList.add('start-progress');
+          document.querySelector('.mds-popup-sort-snackbar .mbsc-toast-background').classList.add('start-progress');
         });
       }
 
@@ -501,7 +501,10 @@ export default {
           onEventUpdate: function (args, inst) {
             if (
               new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
-              new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime()
+              new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime() &&
+              args.oldEvent.resource === args.resource &&
+              args.event.start >= weekStart &&
+              args.event.end <= weekEnd
             ) {
               return;
             }
