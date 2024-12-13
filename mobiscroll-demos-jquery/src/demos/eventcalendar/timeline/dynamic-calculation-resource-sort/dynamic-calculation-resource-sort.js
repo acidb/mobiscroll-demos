@@ -503,8 +503,10 @@ export default {
               new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
               new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime() &&
               args.oldEvent.resource === args.resource &&
-              args.event.start >= weekStart &&
-              args.event.end <= weekEnd
+              new Date(args.oldEvent.start) >= weekStart &&
+              new Date(args.oldEvent.end) <= weekEnd &&
+              new Date(args.event.start) >= weekStart &&
+              new Date(args.event.end) <= weekEnd
             ) {
               return;
             }
