@@ -22,7 +22,7 @@ setOptions({
 });
 
 function App() {
-  const myEvents = [
+  const [myEvents, setMyEvents] = useState([
     {
       start: 'dyndatetime(y,m,d-1)',
       end: 'dyndatetime(y,m,d+3)',
@@ -231,7 +231,7 @@ function App() {
       payload: 17,
       overlap: false,
     },
-  ];
+  ]);
 
   const myResources = useMemo(
     () => [
@@ -256,8 +256,8 @@ function App() {
   const calRef = useRef();
   const [myAnchor, setAnchor] = useState();
   const buttonRef = useRef();
-  const event = useRef('');
-  const initialSort = useRef(true);
+  const event = useRef();
+  const initialSort = useRef(false);
   const initialSortColumn = useRef('');
   const initialSortDirection = useRef('');
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -265,7 +265,7 @@ function App() {
   const [isToastOpen, setToastOpen] = useState(false);
   const loadedEvents = useRef([]);
   const metricBarAnimation = useRef(true);
-  const resource = useRef('');
+  const resource = useRef();
   const selectedMetric = 'standby';
   const selectedMetricDesc = 'Standby Time';
   const [sortColumn, setSortColumn] = useState('standby');
@@ -282,7 +282,7 @@ function App() {
     myResources.forEach((resource) => {
       const resourceEvents = loadedEvents.current.filter((event) => event.resource === resource.id);
 
-      if (selectedMetric === 'standby') {
+      if (sortColumn === 'standby') {
         resource.standby = 168;
         resourceEvents.forEach((event) => {
           const eventStart = new Date(event.start);
@@ -296,7 +296,7 @@ function App() {
         });
       }
 
-      if (selectedMetric === 'deadhead') {
+      if (sortColumn === 'deadhead') {
         resource.deadhead = resourceEvents.reduce((total, event) => {
           const eventStart = new Date(event.start);
           const eventEnd = new Date(event.end);
@@ -310,7 +310,7 @@ function App() {
         }, 0);
       }
 
-      if (selectedMetric === 'payload') {
+      if (sortColumn === 'payload') {
         const weekEvents = resourceEvents.filter((event) => new Date(event.end) > weekStart && new Date(event.start) < weekEnd);
 
         const totalPayload = weekEvents.reduce((total, event) => total + (event.payload || 0), 0);
@@ -318,9 +318,14 @@ function App() {
 
         resource.payload =
           numberOfTours > 0 && resource.capacity ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100) : 0;
+
+        console.log(
+          '!!!!',
+          numberOfTours > 0 && resource.capacity ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100) : 0,
+        ); // <--- d3l
       }
     });
-  }, [myResources, selectedMetric, calRef, weekStart, weekEnd]);
+  }, [myResources, sortColumn]);
 
   const sortResources = useCallback(() => {
     initialSort.current = false;
@@ -340,16 +345,17 @@ function App() {
     }, 100);
   }, [myResources, sortColumn, sortDirection]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const delayedToastSort = useCallback((resourceId, event) => {
-    resource.current = myResources.find((resource) => resource.id === resourceId);
-    event.current = event;
-    setSnackbarOpen(true);
-    // Add progress animation after rendering the snackbar
-    setTimeout(() => {
-      document.querySelector('.mbsc-toast-background')?.classList.add('start-progress');
-    });
-  });
+  const delayedToastSort = useCallback(
+    (resourceId, event) => {
+      resource.current = myResources.find((resource) => resource.id === resourceId);
+      event.current = event;
+      setSnackbarOpen(true);
+      setTimeout(() => {
+        document.querySelector('.mbsc-toast-background')?.classList.add('start-progress');
+      });
+    },
+    [myResources],
+  );
 
   const handlePopupOpen = useCallback(() => {
     setAnchor(buttonRef.current.nativeElement);
@@ -366,42 +372,37 @@ function App() {
 
   const handleSnackbarClose = useCallback(() => {
     setSnackbarOpen(false);
+
     resource.current.cssClass = 'mds-resource-highlight';
     sortResources();
     setTimeout(() => {
       resource.current.cssClass = '';
-      setResources(myResources.slice());
+      // setResources(myResources.slice());
+      setResources((prevResources) => prevResources.slice());
     }, 1000);
     calRef.current.navigateToEvent(event);
-  }, [myResources, sortResources]);
+  }, [sortResources]);
 
-  const handlePageLoading = useCallback(
-    (args) => {
-      weekStart.current = args.firstDay;
-      weekEnd.current = args.lastDay;
-      refreshData();
-    },
-    [refreshData],
-  );
+  const handlePageLoading = useCallback((args) => {
+    weekStart.current = args.firstDay;
+    weekEnd.current = args.lastDay;
+    // refreshData();
+  }, []);
 
   const handlePageLoaded = useCallback(() => {
     refreshData();
-    // setTimeout(() => {
-    //   if (initialSort) {
-    //     sortResources();
-    //   }
-    // }, 100);
-  }, [refreshData]);
+    sortResources();
+  }, [refreshData, sortResources]);
 
   const handleEventCreated = useCallback(
     (args) => {
       args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
       args.event.overlap = false;
+      setMyEvents([...myEvents, args.event]);
       refreshData();
-      // snackbar trigger rerender, event dissapear
       delayedToastSort(args.event.resource, args.event);
     },
-    [delayedToastSort, refreshData],
+    [delayedToastSort, myEvents, refreshData],
   );
 
   const handleEventDelete = useCallback(
@@ -536,9 +537,9 @@ function App() {
             text: 'Apply',
             keyCode: 'enter',
             handler: function () {
-              if (initialSortColumn != sortColumn) {
+              setTimeout(() => {
                 refreshData();
-              }
+              });
               sortResources();
               initialSortColumn.current = sortColumn;
               initialSortDirection.current = sortDirection;
@@ -594,7 +595,7 @@ function App() {
         button={{
           text: 'Sort now',
           action: function () {
-            sortResources();
+            setSnackbarOpen(false);
           },
         }}
         cssClass="mds-popup-sort-snackbar"

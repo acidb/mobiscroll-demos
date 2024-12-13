@@ -596,7 +596,7 @@ function getBarColorClass(resource) {
     :isOpen="isSnackbarOpen"
     @close="isSnackbarOpen = false"
   />
-  <MbscToast :message="'Resouces sorted'" :isOpen="isToastOpen" @close="handleSnackbarClose" />
+  <MbscToast :message="'Resouces sorted'" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>
