@@ -37,6 +37,12 @@ const resource = ref()
 
 const sortColumn = ref('standby')
 const sortColumnLabel = ref('standby')
+const sortColumnLabels = {
+  standby: 'Standby Time',
+  payload: 'Payload Efficiency',
+  deadhead: 'Deadhead Time'
+}
+
 const sortDirection = ref('asc')
 const weekStart = ref(null)
 const weekEnd = ref(null)
@@ -277,7 +283,7 @@ const myView = {
 }
 
 const refreshData = () => {
-  //
+  //?
   setTimeout(() => {
     loadedEvents.value = calRef.value.instance.getEvents()
   })
@@ -382,11 +388,10 @@ const applyFilters = () => {
   isToastOpen.value = true
 }
 
-const handleSnackbarClose = () => {
+const handleToastClose = () => {
   isSnackbarOpen.value = false
-
-  resource.value.cssClass = 'mds-resource-highlight'
   sortResources()
+  resource.value.cssClass = 'mds-resource-highlight'
   setTimeout(() => {
     resource.value.cssClass = ''
     myResources.value = [...myResources.value]
@@ -408,9 +413,15 @@ const handlePageLoaded = () => {
 }
 
 const handleEventCreated = (args) => {
+  // const sortButton = document.querySelector('.mds-popup-sort-snackbar button')
+  // if (sortButton) {
+  //   sortButton.click()
+  // }
   args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5
   args.event.overlap = false
+  myEvents.value.push(args.event)
   refreshData()
+  // setTimeout(() => delayedToastSort(args.event.resource, args.event), 100)
   delayedToastSort(args.event.resource, args.event)
 }
 
@@ -509,7 +520,7 @@ function getBarColorClass(resource) {
         <div class="mds-resource-attribute">Model: {{ resource.model || 'N/A' }}</div>
         <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
         <div class="mds-resource-attribute">
-          {{ sortColumnLabel }}: {{ getMetricValue(resource) }}
+          {{ sortColumnLabels[sortColumnLabel] }}: {{ getMetricValue(resource) }}
         </div>
 
         <div class="mds-metric-bar-container" style="margin-top: 5px">
@@ -590,14 +601,14 @@ function getBarColorClass(resource) {
     :button="{
       text: 'Sort now',
       action: function () {
-        sortResources()
+        isSnackbarOpen = false
       }
     }"
     cssClass="mds-popup-sort-snackbar"
     :duration="3000"
-    display="bottom"
+    display="center"
     :isOpen="isSnackbarOpen"
-    @close="handleSnackbarClose"
+    @close="handleToastClose"
   />
   <MbscToast :message="'Resouces sorted'" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
