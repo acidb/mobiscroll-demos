@@ -2,11 +2,14 @@ import {
   Eventcalendar,
   formatDate,
   getJson,
+  MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscResource,
   MbscVirtualLoadEvent,
-  setOptions /* localeImport */,
+  setOptions,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 setOptions({
   // localeJs,
@@ -41,9 +44,13 @@ const myRes = [
   { id: 25, name: 'Resource 25' },
 ];
 
-function App() {
-  const [myEvents, setEvents] = useState([]);
-  const [myResources, setResources] = useState(myRes);
+const App: FC = () => {
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
+  const [myResources, setResources] = useState<MbscResource[]>(myRes);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
+  }, []);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
@@ -55,19 +62,16 @@ function App() {
     [],
   );
 
-  const isInTheEnd = useCallback(
-    (resId: number) => {
-      const resIndx = myResources.findIndex((r) => r.id === resId);
-
-      return myResources.length - resIndx <= 15;
-    },
-    [myResources],
-  );
-
   const handleVirtualLoading = useCallback(
     (args: MbscVirtualLoadEvent) => {
       const start = formatDate('YYYY-MM-DD', args.viewStart);
       const end = formatDate('YYYY-MM-DD', args.viewEnd);
+      const isEndLoaded = myResources[myResources.length - 1].id > args.resourceEnd;
+
+      if (!isEndLoaded) {
+        setToastOpen(true);
+      }
+
       getJson(
         'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
           start +
@@ -78,7 +82,7 @@ function App() {
           '&rend=' +
           args.resourceEnd +
           '&load=' +
-          (isInTheEnd(args.resourceEnd as number) ? myResources[myResources.length - 1].id : 0),
+          (!isEndLoaded ? args.resourceEnd : 0),
         (data) => {
           if (data.resources) {
             setResources([...myResources, ...data.resources]);
@@ -88,18 +92,14 @@ function App() {
         'jsonp',
       );
     },
-    [myResources, isInTheEnd],
+    [myResources],
   );
 
   return (
-    <Eventcalendar
-      // drag
-      view={myView}
-      data={myEvents}
-      resources={myResources}
-      onVirtualLoading={handleVirtualLoading}
-    />
+    <>
+      <Eventcalendar view={myView} data={myEvents} resources={myResources} onVirtualLoading={handleVirtualLoading} />
+      <Toast message="Loading Resources..." duration={1000} isOpen={isToastOpen} onClose={handleToastClose} />
+    </>
   );
-}
-
+};
 export default App;
