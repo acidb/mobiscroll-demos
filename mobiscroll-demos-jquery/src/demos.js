@@ -243,6 +243,7 @@ import Demo750 from './demos/eventcalendar/timeline/tasks-subtasks-under-shifts/
 import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search';
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
+import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
 import Demo734 from './demos/eventcalendar/timeline/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events';
 import Demo739 from './demos/eventcalendar/timeline/event-buffer/event-buffer';
 import Demo697 from './demos/eventcalendar/timeline/custom-range-view/custom-range-view';
@@ -268,6 +269,8 @@ import Demo728 from './demos/eventcalendar/timeline/prevent-double-booking-event
 import Demo607 from './demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import Demo625 from './demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy';
 import Demo747 from './demos/eventcalendar/timeline/show-summaries-aggregates-for-resource-groups/show-summaries-aggregates-for-resource-groups';
+import Demo765 from './demos/eventcalendar/timeline/resource-drag-drop-reorder/resource-drag-drop-reorder';
+import Demo768 from './demos/eventcalendar/timeline/dynamic-calculation-resource-sort/dynamic-calculation-resource-sort';
 import Demo720 from './demos/eventcalendar/timeline/resource-data-structure/resource-data-structure';
 import Demo666 from './demos/eventcalendar/timeline/event-data-structure/event-data-structure';
 import Demo706 from './demos/eventcalendar/timeline/connecting-linking-events-arrows/connecting-linking-events-arrows';
@@ -276,7 +279,9 @@ import Demo668 from './demos/eventcalendar/timeline/recurring-events/recurring-e
 import Demo677 from './demos/eventcalendar/timeline/load-inline-data/load-inline-data';
 import Demo669 from './demos/eventcalendar/timeline/load-events-from-remote-api/load-events-from-remote-api';
 import Demo670 from './demos/eventcalendar/timeline/load-events-on-demand/load-events-on-demand';
+import Demo766 from './demos/eventcalendar/timeline/load-events-on-scroll/load-events-on-scroll';
 import Demo718 from './demos/eventcalendar/timeline/load-resources-on-demand/load-resources-on-demand';
+import Demo767 from './demos/eventcalendar/timeline/load-resources-on-scroll/load-resources-on-scroll';
 import Demo704 from './demos/eventcalendar/timeline/loading-big-data-sets/loading-big-data-sets';
 import Demo684 from './demos/eventcalendar/timeline/sync-events-google-calendar/sync-events-google-calendar';
 import Demo688 from './demos/eventcalendar/timeline/sync-events-outlook-calendar/sync-events-outlook-calendar';
@@ -335,9 +340,6 @@ import Demo387 from './demos/pickers/select/themes-ios-material-windows/themes-i
 import Demo276 from './demos/pickers/select/event-hooks/event-hooks';
 import Demo471 from './demos/pickers/select/localization/localization';
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
-
-import DemoZoom from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
-import PopupSort from './demos/eventcalendar/timeline/dynamic-calculation-resource-sort/dynamic-calculation-resource-sort';
 
 export const demos = [
   {
@@ -474,7 +476,9 @@ export const demos = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo375 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo375 },
+            ],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -612,7 +616,9 @@ export const demos = [
           {
             name: 'Resources',
             unique: 17,
-            items: [{ name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo512 }],
+            items: [
+              { name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo512 },
+            ],
           },
           {
             name: 'Event data structure',
@@ -644,12 +650,16 @@ export const demos = [
           {
             name: 'CRUD operations',
             unique: 4,
-            items: [{ name: 'Multiple select & bulk operations', unique: 'event-bulk-actions-edit-delete-update', component: Demo703 }],
+            items: [
+              { name: 'Multiple select & bulk operations', unique: 'event-bulk-actions-edit-delete-update', component: Demo703 },
+            ],
           },
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo521 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo521 },
+            ],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -679,7 +689,9 @@ export const demos = [
           {
             name: 'Common use cases',
             unique: 20,
-            items: [{ name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 }],
+            items: [
+              { name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 },
+            ],
           },
           {
             name: 'Displaying events',
@@ -732,7 +744,9 @@ export const demos = [
           {
             name: 'Resources',
             unique: 17,
-            items: [{ name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo510 }],
+            items: [
+              { name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo510 },
+            ],
           },
           {
             name: 'Event data structure',
@@ -775,7 +789,9 @@ export const demos = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo455 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo455 },
+            ],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -964,16 +980,12 @@ export const demos = [
             unique: 13,
             items: [
               { name: 'Configure the timeline', unique: 'daily-weekly-monthly-yearly-timeline', component: Demo605 },
-              {
-                name: 'Configure the page, size, resolution',
-                unique: 'multiple-days-weeks-months-quarters-years-variable-resolution',
-                component: Demo663,
-              },
+              { name: 'Configure the page, size, resolution', unique: 'multiple-days-weeks-months-quarters-years-variable-resolution', component: Demo663 },
+              { name: 'Dynamically zoom in/out', unique: 'calendar-zoom', component: Demo764 },
               { name: 'Set event stack size', unique: 'control-number-of-concurrently-shown-events', component: Demo734 },
               { name: 'Event buffer', unique: 'event-buffer', component: Demo739 },
               { name: 'View with custom range picker', unique: 'custom-range-view', component: Demo697 },
               { name: 'Custom event order', unique: 'custom-event-sort', component: Demo749 },
-              { name: 'Custom zoom levels', unique: 'calendar-zoom', component: DemoZoom },
               { name: 'Equal row height', unique: 'timeline-resource-height', component: Demo608 },
               { name: 'Variable event height', unique: 'variable-event-height', component: Demo744 },
               { name: 'Daily event summary', unique: 'event-listing', component: Demo620 },
@@ -989,11 +1001,7 @@ export const demos = [
             unique: 19,
             items: [
               { name: 'Timeline event template', unique: 'timeline-custom-event-rendering', component: Demo609 },
-              {
-                name: 'Hour, day, week, month, year header and footer template',
-                unique: 'hour-day-week-month-quarter-year-header-footer-template',
-                component: Demo714,
-              },
+              { name: 'Hour, day, week, month, year header and footer template', unique: 'hour-day-week-month-quarter-year-header-footer-template', component: Demo714 },
               { name: 'Time slot template', unique: 'shift-template', component: Demo633 },
               { name: 'Resource header template', unique: 'resource-header-template', component: Demo639 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo656 },
@@ -1015,9 +1023,10 @@ export const demos = [
             unique: 17,
             items: [
               { name: 'Resource grid', unique: 'timeline-resource-details-side-panel-footer', component: Demo607 },
-              { name: 'Dynamic calculation resource sort', unique: 'dynamic-calculation-resource-sort', component: PopupSort },
               { name: 'Resource grouping & hierarchy', unique: 'resource-grouping-hierarchy', component: Demo625 },
               { name: 'Resource group summaries', unique: 'show-summaries-aggregates-for-resource-groups', component: Demo747 },
+              { name: 'Resource reorder with d&d', unique: 'resource-drag-drop-reorder', component: Demo765 },
+              { name: 'Dynamic resource sort', unique: 'dynamic-calculation-resource-sort', component: Demo768 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
             ],
           },
@@ -1038,7 +1047,9 @@ export const demos = [
               { name: 'Loading inline data', unique: 'load-inline-data', component: Demo677 },
               { name: 'Events from remote API ', unique: 'load-events-from-remote-api', component: Demo669 },
               { name: 'Loading events on demand', unique: 'load-events-on-demand', component: Demo670 },
+              { name: 'Loading events on scroll', unique: 'load-events-on-scroll', component: Demo766 },
               { name: 'Loading resources on demand', unique: 'load-resources-on-demand', component: Demo718 },
+              { name: 'Loading resources on scroll', unique: 'load-resources-on-scroll', component: Demo767 },
               { name: 'Working with large data sets', unique: 'loading-big-data-sets', component: Demo704 },
             ],
           },
@@ -1139,7 +1150,9 @@ export const demos = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo466 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo466 },
+            ],
           },
         ],
       },
@@ -1175,12 +1188,16 @@ export const demos = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo762 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo762 },
+            ],
           },
           {
             name: 'Lifecycle events',
             unique: 29,
-            items: [{ name: 'Lifecycle events', unique: 'event-hooks', component: Demo763 }],
+            items: [
+              { name: 'Lifecycle events', unique: 'event-hooks', component: Demo763 },
+            ],
           },
         ],
       },
@@ -1223,12 +1240,16 @@ export const demos = [
           {
             name: 'Validation & restricting selection',
             unique: 11,
-            items: [{ name: 'Disabled values', unique: 'disabled-invalid-values', component: Demo603 }],
+            items: [
+              { name: 'Disabled values', unique: 'disabled-invalid-values', component: Demo603 },
+            ],
           },
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo387 }],
+            items: [
+              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo387 },
+            ],
           },
           {
             name: 'Localization & tapping into the lifecycle',
