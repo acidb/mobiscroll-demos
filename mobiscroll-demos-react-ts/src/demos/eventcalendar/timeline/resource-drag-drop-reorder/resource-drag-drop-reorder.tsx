@@ -145,17 +145,9 @@ const App: FC = () => {
     };
   }, []);
 
-  const showToast = useCallback(
-    (msg: string) => {
-      setMessage(msg);
-      setToastOpen(true);
-    },
-    [message],
-  );
-
   const onToastClose = useCallback(() => {
     setToastOpen(false);
-  }, [isToastOpen]);
+  }, []);
 
   const saveReorder = useCallback(() => {
     setReorder(false);
@@ -177,15 +169,13 @@ const App: FC = () => {
         resourceReorder: false,
       },
     };
-    showToast('Resource order canceled');
-  }, [showToast, myResources]);
+    setMessage('Resource order canceled');
+    setToastOpen(true);
+  }, [myResources]);
 
-  const handleResourceOrder = useCallback(
-    (args: MbscResourceOrderEvent) => {
-      setTempResources(args.resources);
-    },
-    [showToast],
-  );
+  const handleResourceOrder = useCallback((args: MbscResourceOrderEvent) => {
+    setTempResources(args.resources);
+  }, []);
 
   const handleEventUpdate = useCallback(
     (args: MbscEventUpdateEvent) => {

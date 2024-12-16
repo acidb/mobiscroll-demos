@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {
-  getJson,
   formatDate,
+  getJson,
   MbscEventcalendar,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'

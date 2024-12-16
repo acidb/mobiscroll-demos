@@ -139,17 +139,9 @@ function App() {
     };
   }, [myView]);
 
-  const showToast = useCallback(
-    (msg) => {
-      setMessage(msg);
-      setToastOpen(true);
-    },
-    [message],
-  );
-
   const onToastClose = useCallback(() => {
     setToastOpen(false);
-  }, [isToastOpen]);
+  }, []);
 
   const saveReorder = useCallback(() => {
     setReorder(false);
@@ -171,15 +163,13 @@ function App() {
         resourceReorder: false,
       },
     };
-    showToast('Resource order canceled');
-  }, [showToast, myResources, myView]);
+    setMessage('Resource order canceled');
+    setToastOpen(true);
+  }, [myResources, myView]);
 
-  const handleResourceOrder = useCallback(
-    (args) => {
-      setTempResources(args.resources);
-    },
-    [showToast],
-  );
+  const handleResourceOrder = useCallback((args) => {
+    setTempResources(args.resources);
+  }, []);
 
   const handleEventUpdate = useCallback(
     (args) => {
