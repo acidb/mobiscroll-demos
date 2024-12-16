@@ -266,8 +266,8 @@ function App() {
   const loadedEvents = useRef([]);
   const metricBarAnimation = useRef(true);
   const resource = useRef();
-  const selectedMetric = 'standby';
-  const selectedMetricDesc = 'Standby Time';
+  const selectedMetric = useRef('standby');
+  const selectedMetricDesc = useRef('Standby Time');
   const [sortColumn, setSortColumn] = useState('standby');
   const [sortDirection, setSortDirection] = useState('asc');
   const [sortedResources, setResources] = useState(myResources);
@@ -287,8 +287,8 @@ function App() {
         resourceEvents.forEach((event) => {
           const eventStart = new Date(event.start);
           const eventEnd = new Date(event.end);
-          const effectiveStart = eventStart < weekStart ? weekStart : eventStart;
-          const effectiveEnd = eventEnd > weekEnd ? weekEnd : eventEnd;
+          const effectiveStart = eventStart < weekStart.current ? weekStart.current : eventStart;
+          const effectiveEnd = eventEnd > weekEnd.current ? weekEnd.current : eventEnd;
 
           if (effectiveStart < effectiveEnd) {
             resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60);
@@ -300,8 +300,8 @@ function App() {
         resource.deadhead = resourceEvents.reduce((total, event) => {
           const eventStart = new Date(event.start);
           const eventEnd = new Date(event.end);
-          const effectiveStart = eventStart < weekStart ? weekStart : eventStart;
-          const effectiveEnd = eventEnd > weekEnd ? weekEnd : eventEnd;
+          const effectiveStart = eventStart < weekStart.current ? weekStart.current : eventStart;
+          const effectiveEnd = eventEnd > weekEnd.current ? weekEnd.current : eventEnd;
 
           if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
             return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60);
@@ -361,6 +361,8 @@ function App() {
 
   const handlePopupClose = useCallback(() => {
     setPopupOpen(false);
+    setSortColumn(initialSortColumn.current);
+    setSortDirection(initialSortDirection.current);
   }, []);
 
   const handleToastClose = useCallback(() => {
@@ -374,7 +376,6 @@ function App() {
     sortResources();
     setTimeout(() => {
       resource.current.cssClass = '';
-      // setResources(myResources.slice());
       setResources((prevResources) => prevResources.slice());
     }, 1000);
     calRef.current.navigateToEvent(event);
@@ -383,7 +384,6 @@ function App() {
   const handlePageLoading = useCallback((args) => {
     weekStart.current = args.firstDay;
     weekEnd.current = args.lastDay;
-    // refreshData();
   }, []);
 
   const handlePageLoaded = useCallback(() => {
@@ -430,6 +430,9 @@ function App() {
 
   const handleSortColumnChange = useCallback((ev) => {
     setSortColumn(ev.target.value);
+    //
+    selectedMetricDesc.current = ev.target.value;
+    selectedMetric.current = ev.target.value;
   }, []);
 
   const myCustomHeader = useCallback(
@@ -450,7 +453,7 @@ function App() {
     () => (
       <>
         <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
-        <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">{selectedMetricDesc}</div>
+        <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">{selectedMetricDesc.current}</div>
       </>
     ),
     [selectedMetricDesc],
@@ -458,10 +461,14 @@ function App() {
 
   const myCustomResource = useCallback(
     (resource) => {
-      const metricValue = resource[selectedMetric];
+      const metricValue = resource[selectedMetric.current];
 
       const barValue =
-        selectedMetric === 'payload' ? metricValue : ['standby', 'deadhead'].includes(selectedMetric) ? (metricValue / 168) * 100 : 100;
+        selectedMetric.current === 'payload'
+          ? metricValue
+          : ['standby', 'deadhead'].includes(selectedMetric.current)
+            ? (metricValue / 168) * 100
+            : 100;
 
       const animationClass = metricBarAnimation.current ? 'mds-metric-bar-animation' : 'mds-metric-bar-no-animation';
 
@@ -478,8 +485,8 @@ function App() {
           <div className="mds-resource-attribute">Model: {resource.model || 'N/A'}</div>
           <div className="mds-resource-attribute">Capacity: {resource.capacity}T</div>
           <div className="mds-resource-attribute">
-            {selectedMetricDesc}: {metricValue}
-            {selectedMetric === 'payload' ? '%' : ['standby', 'deadhead'].includes(selectedMetric) ? 'h' : ''}
+            {selectedMetricDesc.current}: {metricValue}
+            {selectedMetric.current === 'payload' ? '%' : ['standby', 'deadhead'].includes(selectedMetric.current) ? 'h' : ''}
           </div>
           <div className="mds-metric-bar-container" style={{ marginTop: '5px' }}>
             <div className={`${barColorClass}`} style={{ width: `${barValue}%` }}></div>
@@ -534,9 +541,7 @@ function App() {
             text: 'Apply',
             keyCode: 'enter',
             handler: function () {
-              setTimeout(() => {
-                refreshData();
-              });
+              refreshData();
               sortResources();
               initialSortColumn.current = sortColumn;
               initialSortDirection.current = sortDirection;
