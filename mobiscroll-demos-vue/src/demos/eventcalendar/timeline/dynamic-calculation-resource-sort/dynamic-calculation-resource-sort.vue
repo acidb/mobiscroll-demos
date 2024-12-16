@@ -431,20 +431,20 @@ const handleEventUpdate = (args) => {
 }
 
 function getMetricValue(resource) {
-  const metricValue = resource[this.selectedMetric]
-  if (this.selectedMetric === 'payload') {
+  const metricValue = resource[this.sortColumnLabel]
+  if (this.sortColumnLabel === 'payload') {
     return `${metricValue}%`
-  } else if (['standby', 'deadhead'].includes(this.selectedMetric)) {
+  } else if (['standby', 'deadhead'].includes(this.sortColumnLabel)) {
     return `${metricValue}h`
   }
   return metricValue
 }
 
 function getBarValue(resource) {
-  const metricValue = resource[this.selectedMetric]
-  if (this.selectedMetric === 'payload') {
+  const metricValue = resource[this.sortColumnLabel]
+  if (this.sortColumnLabel === 'payload') {
     return metricValue
-  } else if (['standby', 'deadhead'].includes(this.selectedMetric)) {
+  } else if (['standby', 'deadhead'].includes(this.sortColumnLabel)) {
     return (metricValue / 168) * 100
   }
   return 100
@@ -597,7 +597,7 @@ function getBarColorClass(resource) {
     :duration="3000"
     display="bottom"
     :isOpen="isSnackbarOpen"
-    @close="isSnackbarOpen = false"
+    @close="handleSnackbarClose"
   />
   <MbscToast :message="'Resouces sorted'" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
