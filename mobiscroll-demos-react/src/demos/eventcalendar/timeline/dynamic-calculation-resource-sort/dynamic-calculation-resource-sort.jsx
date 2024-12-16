@@ -311,18 +311,15 @@ function App() {
       }
 
       if (sortColumn === 'payload') {
-        const weekEvents = resourceEvents.filter((event) => new Date(event.end) > weekStart && new Date(event.start) < weekEnd);
+        const weekEvents = resourceEvents.filter(
+          (event) => new Date(event.end) > weekStart.current && new Date(event.start) < weekEnd.current,
+        );
 
         const totalPayload = weekEvents.reduce((total, event) => total + (event.payload || 0), 0);
         const numberOfTours = weekEvents.length;
 
         resource.payload =
           numberOfTours > 0 && resource.capacity ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100) : 0;
-
-        console.log(
-          '!!!!',
-          numberOfTours > 0 && resource.capacity ? Math.round((totalPayload / numberOfTours / resource.capacity) * 100) : 0,
-        ); // <--- d3l
       }
     });
   }, [myResources, sortColumn]);
