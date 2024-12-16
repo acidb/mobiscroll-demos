@@ -26,17 +26,17 @@ const myAnchor = ref(null)
 const buttonRef = ref(null)
 const event = ref()
 const initialSort = ref(true)
-const initialSortColumn = ref('')
-const initialSortDirection = ref('')
+const initialSortColumn = ref('standby')
+const initialSortDirection = ref('asc')
 const isPopupOpen = ref(false)
 const isSnackbarOpen = ref(false)
 const isToastOpen = ref(false)
 const loadedEvents = ref()
 const metricBarAnimation = ref(true)
 const resource = ref()
-const selectedMetric = ref('standby')
-const selectedMetricDesc = ref('Standby Time')
+
 const sortColumn = ref('standby')
+const sortColumnLabel = ref('standby')
 const sortDirection = ref('asc')
 const weekStart = ref(null)
 const weekEnd = ref(null)
@@ -277,9 +277,10 @@ const myView = {
 }
 
 const refreshData = () => {
-  // setTimeout(() => {
-  //   loadedEvents.value = calRef.value.instance.getEvents()
-  // }, 100)
+  //
+  setTimeout(() => {
+    loadedEvents.value = calRef.value.instance.getEvents()
+  })
 
   myResources.value.forEach((resource) => {
     const resourceEvents = myEvents.value.filter((event) => event.resource === resource.id)
@@ -289,8 +290,8 @@ const refreshData = () => {
       resourceEvents.forEach((event) => {
         const eventStart = new Date(event.start)
         const eventEnd = new Date(event.end)
-        const effectiveStart = eventStart < weekStart.value ? weekStart : eventStart
-        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd : eventEnd
+        const effectiveStart = eventStart < weekStart.value ? weekStart.value : eventStart
+        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd.value : eventEnd
 
         if (effectiveStart < effectiveEnd) {
           resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60)
@@ -302,8 +303,8 @@ const refreshData = () => {
       const totalDeadheadTime = resourceEvents.reduce((total, event) => {
         const eventStart = new Date(event.start)
         const eventEnd = new Date(event.end)
-        const effectiveStart = eventStart < weekStart.value ? weekStart : eventStart
-        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd : eventEnd
+        const effectiveStart = eventStart < weekStart.value ? weekStart.value : eventStart
+        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd.value : eventEnd
 
         if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
           return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60)
@@ -334,17 +335,15 @@ const sortResources = () => {
   metricBarAnimation.value = true
   initialSort.value = false
 
-  myResources.value = [
-    ...myResources.value.sort((a, b) => {
-      if (sortDirection.value === 'asc') {
-        return a[sortColumn.value] > b[sortColumn.value] ? 1 : -1
-      }
-      if (sortDirection.value === 'desc') {
-        return a[sortColumn.value] < b[sortColumn.value] ? 1 : -1
-      }
-      return a.id - b.id
-    })
-  ]
+  myResources.value = [...myResources.value].sort((a, b) =>
+    sortDirection.value === 'asc'
+      ? a[sortColumn.value] > b[sortColumn.value]
+        ? 1
+        : -1
+      : a[sortColumn.value] < b[sortColumn.value]
+        ? 1
+        : -1
+  )
 
   setTimeout(() => {
     metricBarAnimation.value = false
@@ -365,11 +364,22 @@ const delayedToastSort = (resourceId, event) => {
 const handlePopupOpen = () => {
   myAnchor.value = buttonRef.value?.instance.nativeElement
   isPopupOpen.value = true
+  initialSortColumn.value = sortColumn.value
+  initialSortDirection.value = sortDirection.value
 }
 
 const handlePopupClose = () => {
   isPopupOpen.value = false
-  // restore initial state
+  sortColumn.value = initialSortColumn.value
+  sortDirection.value = initialSortDirection.value
+}
+
+const applyFilters = () => {
+  isPopupOpen.value = false
+  refreshData()
+  sortResources()
+  sortColumnLabel.value = sortColumn.value
+  isToastOpen.value = true
 }
 
 const handleSnackbarClose = () => {
@@ -498,7 +508,9 @@ function getBarColorClass(resource) {
         <strong>{{ resource.name }}</strong>
         <div class="mds-resource-attribute">Model: {{ resource.model || 'N/A' }}</div>
         <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
-        <div class="mds-resource-attribute">{{ sortColumn }}: {{ getMetricValue(resource) }}</div>
+        <div class="mds-resource-attribute">
+          {{ sortColumnLabel }}: {{ getMetricValue(resource) }}
+        </div>
 
         <div class="mds-metric-bar-container" style="margin-top: 5px">
           <div
@@ -533,16 +545,7 @@ function getBarColorClass(resource) {
         text: 'Apply',
         keyCode: 'enter',
         handler: function () {
-          isPopupOpen = false
-
-          // if (initialSortColumn.value != sortColumn.value) {
-          refreshData()
-          // }
-          sortResources()
-          // initialSortColumn.value = sortColumn.value
-          // initialSortDirection.value = sortDirection.value
-
-          isToastOpen = true
+          applyFilters()
         },
         cssClass: 'mbsc-popup-button-primary'
       }

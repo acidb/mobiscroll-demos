@@ -267,7 +267,6 @@ function App() {
   const metricBarAnimation = useRef(true);
   const resource = useRef();
   const selectedMetric = useRef('standby');
-  const selectedMetricDesc = useRef('Standby Time');
   const [sortColumn, setSortColumn] = useState('standby');
   const [sortDirection, setSortDirection] = useState('asc');
   const [sortedResources, setResources] = useState(myResources);
@@ -430,8 +429,6 @@ function App() {
 
   const handleSortColumnChange = useCallback((ev) => {
     setSortColumn(ev.target.value);
-    //
-    selectedMetricDesc.current = ev.target.value;
     selectedMetric.current = ev.target.value;
   }, []);
 
@@ -453,10 +450,9 @@ function App() {
     () => (
       <>
         <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
-        <div className="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">{selectedMetricDesc.current}</div>
       </>
     ),
-    [selectedMetricDesc],
+    [],
   );
 
   const myCustomResource = useCallback(
@@ -485,7 +481,7 @@ function App() {
           <div className="mds-resource-attribute">Model: {resource.model || 'N/A'}</div>
           <div className="mds-resource-attribute">Capacity: {resource.capacity}T</div>
           <div className="mds-resource-attribute">
-            {selectedMetricDesc.current}: {metricValue}
+            {selectedMetric.current}: {metricValue}
             {selectedMetric.current === 'payload' ? '%' : ['standby', 'deadhead'].includes(selectedMetric.current) ? 'h' : ''}
           </div>
           <div className="mds-metric-bar-container" style={{ marginTop: '5px' }}>
@@ -495,7 +491,7 @@ function App() {
         </div>
       );
     },
-    [selectedMetric, selectedMetricDesc, metricBarAnimation],
+    [selectedMetric, metricBarAnimation],
   );
 
   const myScheduleEvent = useCallback(
