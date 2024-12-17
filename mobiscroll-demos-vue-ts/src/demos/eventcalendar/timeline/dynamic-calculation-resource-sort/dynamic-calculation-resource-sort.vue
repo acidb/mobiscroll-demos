@@ -303,7 +303,7 @@ const myView: MbscEventcalendarView = {
 
 const refreshData = () => {
   setTimeout(() => {
-    loadedEvents.value = calRef.value.instance.getEvents()
+    loadedEvents.value = calRef.value!.instance.getEvents()
   })
 
   myResources.value.forEach((resource) => {
@@ -312,26 +312,29 @@ const refreshData = () => {
     if (sortColumn.value === 'standby') {
       resource.standby = 168
       resourceEvents.forEach((event) => {
-        const eventStart = new Date(event.start)
-        const eventEnd = new Date(event.end)
-        const effectiveStart = eventStart < weekStart.value ? weekStart.value : eventStart
-        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd.value : eventEnd
+        const eventStart = new Date(event.start as Date)
+        const eventEnd = new Date(event.end as Date)
+        const effectiveStart =
+          weekStart.value && eventStart < weekStart.value ? weekStart.value : eventStart
+        const effectiveEnd = weekEnd.value && eventEnd > weekEnd.value ? weekEnd.value : eventEnd
 
         if (effectiveStart < effectiveEnd) {
-          resource.standby -= (effectiveEnd - effectiveStart) / (1000 * 60 * 60)
+          resource.standby! -=
+            (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60)
         }
       })
     }
 
     if (sortColumn.value === 'deadhead') {
       const totalDeadheadTime = resourceEvents.reduce((total, event) => {
-        const eventStart = new Date(event.start)
-        const eventEnd = new Date(event.end)
-        const effectiveStart = eventStart < weekStart.value ? weekStart.value : eventStart
-        const effectiveEnd = eventEnd > weekEnd.value ? weekEnd.value : eventEnd
+        const eventStart = new Date(event.start as Date)
+        const eventEnd = new Date(event.end as Date)
+        const effectiveStart =
+          weekStart.value && eventStart < weekStart.value ? weekStart.value : eventStart
+        const effectiveEnd = weekEnd.value && eventEnd > weekEnd.value ? weekEnd.value : eventEnd
 
         if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
-          return total + (effectiveEnd - effectiveStart) / (1000 * 60 * 60)
+          return total + (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60)
         }
         return total
       }, 0)
@@ -340,7 +343,9 @@ const refreshData = () => {
 
     if (sortColumn.value === 'payload') {
       const weekEvents = resourceEvents.filter(
-        (event) => new Date(event.end) > weekStart.value && new Date(event.start) < weekEnd.value
+        (event) =>
+          new Date(event.end as Date) > weekStart.value! &&
+          new Date(event.start as Date) < weekEnd.value!
       )
 
       const totalPayload = weekEvents.reduce((total, event) => total + (event.payload || 0), 0)
@@ -374,14 +379,14 @@ const sortResources = () => {
   }, 100)
 }
 
-const delayedToastSort = (resourceId, event) => {
+const delayedToastSort = (resourceId: number, event: MbscCalendarEvent) => {
   resource.value = myResources.value.find((resource) => resource.id === resourceId)
   event.value = event
 
   isSnackbarOpen.value = true
 
   setTimeout(() => {
-    document.querySelector('.mbsc-toast-background').classList.add('start-progress')
+    document.querySelector('.mbsc-toast-background')!.classList.add('start-progress')
   })
 }
 
@@ -409,12 +414,12 @@ const applyFilters = () => {
 const handleToastClose = () => {
   isSnackbarOpen.value = false
   sortResources()
-  resource.value.cssClass = 'mds-resource-highlight'
+  resource.value!.cssClass = 'mds-resource-highlight'
   setTimeout(() => {
-    resource.value.cssClass = ''
+    resource.value!.cssClass = ''
     myResources.value = [...myResources.value]
   }, 1000)
-  calRef.value.instance.navigateToEvent(event)
+  calRef.value!.instance.navigateToEvent(event)
 }
 
 const handlePageLoading = (args: MbscPageLoadingEvent) => {
@@ -435,54 +440,55 @@ const handleEventCreated = (args: MbscEventCreatedEvent) => {
   args.event.overlap = false
   myEvents.value.push(args.event)
   refreshData()
-  delayedToastSort(args.event.resource, args.event)
+  delayedToastSort(args.event.resource as number, args.event)
 }
 
 const handleEventDelete = (args: MbscEventDeleteEvent) => {
   myEvents.value = myEvents.value.filter((event) => event.id !== args.event.id)
   refreshData()
-  delayedToastSort(args.event.resource, args.event)
+  delayedToastSort(args.event.resource as number, args.event)
 }
 
 const handleEventUpdate = (args: MbscEventUpdateEvent) => {
   if (
-    new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
-    new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime() &&
-    args.oldEvent.resource === args.resource &&
-    new Date(args.oldEvent.start) >= weekStart.value &&
-    new Date(args.oldEvent.end) <= weekEnd.value &&
-    new Date(args.event.start) >= weekStart.value &&
-    new Date(args.event.end) <= weekEnd.value
+    new Date(args.oldEvent!.start as Date).getTime() !==
+      new Date(args.event.start as Date).getTime() &&
+    new Date(args.oldEvent!.end as Date).getTime() !== new Date(args.event.end as Date).getTime() &&
+    args.oldEvent!.resource === args.resource &&
+    new Date(args.oldEvent!.start as Date) >= weekStart.value! &&
+    new Date(args.oldEvent!.end as Date) <= weekEnd.value! &&
+    new Date(args.event!.start as Date) >= weekStart.value! &&
+    new Date(args.event!.end as Date) <= weekEnd.value!
   ) {
     return
   }
   refreshData()
-  delayedToastSort(args.event.resource, args.event)
+  delayedToastSort(args.event.resource as number, args.event)
 }
 
 function getMetricValue(resource: MyResource) {
-  const metricValue = resource[this.sortColumnLabel]
-  if (this.sortColumnLabel === 'payload') {
+  const metricValue = resource[sortColumnLabel.value]
+  if (sortColumnLabel.value === 'payload') {
     return `${metricValue}%`
-  } else if (['standby', 'deadhead'].includes(this.sortColumnLabel)) {
+  } else if (['standby', 'deadhead'].includes(sortColumnLabel.value)) {
     return `${metricValue}h`
   }
   return metricValue
 }
 
 function getBarValue(resource: MyResource) {
-  const metricValue = resource[this.sortColumnLabel]
-  if (this.sortColumnLabel === 'payload') {
+  const metricValue = resource[sortColumnLabel.value]
+  if (sortColumnLabel.value === 'payload') {
     return metricValue
-  } else if (['standby', 'deadhead'].includes(this.sortColumnLabel)) {
+  } else if (['standby', 'deadhead'].includes(sortColumnLabel.value)) {
     return (metricValue / 168) * 100
   }
   return 100
 }
 
 function getBarColorClass(resource: MyResource) {
-  const barValue = this.getBarValue(resource)
-  const animationClass = this.metricBarAnimation
+  const barValue = getBarValue(resource)
+  const animationClass = metricBarAnimation.value
     ? 'mds-metric-bar-animation'
     : 'mds-metric-bar-no-animation'
 
