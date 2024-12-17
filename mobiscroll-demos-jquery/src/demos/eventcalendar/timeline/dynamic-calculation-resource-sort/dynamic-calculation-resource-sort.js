@@ -350,9 +350,6 @@ export default {
             calendar.navigateToEvent({ start: weekStart, resource: event.resource });
           },
         });
-        setTimeout(function () {
-          document.querySelector('.mds-popup-sort-snackbar .mbsc-toast-background').classList.add('start-progress');
-        });
       }
 
       var popup = $popupElm
@@ -628,7 +625,7 @@ export default {
   }
 }
 
-.mds-popup-sort-snackbar .mbsc-toast-background.start-progress::before {
+.mds-popup-sort-snackbar .mbsc-toast-background::before {
   animation: countdown 3s linear forwards; 
 }
 
