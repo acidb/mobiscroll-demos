@@ -257,7 +257,7 @@ function App() {
   const [myAnchor, setAnchor] = useState();
   const buttonRef = useRef();
   const event = useRef();
-  const initialSort = useRef(false);
+  const initialSort = useRef(true);
   const initialSortColumn = useRef('');
   const initialSortDirection = useRef('');
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -387,7 +387,9 @@ function App() {
 
   const handlePageLoaded = useCallback(() => {
     refreshData();
-    sortResources();
+    if (initialSort.current) {
+      sortResources();
+    }
   }, [refreshData, sortResources]);
 
   const handleEventCreated = useCallback(
