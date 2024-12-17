@@ -54,7 +54,7 @@ export class AppComponent {
       const end = formatDate('YYYY-MM-DD', args.viewEnd);
 
       this.http
-        .jsonp<MbscCalendarEvent[]>('https://trialdev.mobiscroll.com/load-data-scroll/?start=' + start + '&end=' + end, 'callback')
+        .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/load-data-scroll/?start=' + start + '&end=' + end, 'callback')
         .subscribe((data: any) => {
           this.myEvents = data.events;
           this.notify.toast({

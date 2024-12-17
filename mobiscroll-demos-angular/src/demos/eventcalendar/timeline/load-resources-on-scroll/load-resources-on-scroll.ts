@@ -74,7 +74,7 @@ export class AppComponent {
 
       this.http
         .jsonp<MbscCalendarEvent[]>(
-          'https://trialdev.mobiscroll.com/load-data-scroll/?start=' +
+          'https://trial.mobiscroll.com/load-data-scroll/?start=' +
             start +
             '&end=' +
             end +

@@ -60,7 +60,7 @@ function App() {
     const end = formatDate('YYYY-MM-DD', args.viewEnd);
 
     getJson(
-      'https://trialdev.mobiscroll.com/load-data-scroll/?start=' + start + '&end=' + end,
+      'https://trial.mobiscroll.com/load-data-scroll/?start=' + start + '&end=' + end,
       (data) => {
         setEvents(data.events);
         setToastOpen(true);
