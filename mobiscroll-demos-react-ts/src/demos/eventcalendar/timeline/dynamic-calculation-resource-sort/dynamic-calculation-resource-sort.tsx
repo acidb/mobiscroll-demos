@@ -7,6 +7,7 @@ import {
   MbscCalendarEvent,
   MbscCalendarEventData,
   MbscEventcalendarView,
+  MbscEventCreatedEvent,
   MbscEventDeleteEvent,
   MbscEventUpdateEvent,
   MbscPageLoadingEvent,
@@ -270,7 +271,7 @@ function App() {
 
   const calRef = useRef<Eventcalendar | null>(null);
   const [myAnchor, setAnchor] = useState<HTMLElement>();
-  const buttonRef = useRef<Button | null>();
+  const buttonRef = useRef<Button>(null);
   const event = useRef<MbscCalendarEvent>();
   const initialSort = useRef<boolean>(true);
   const initialSortColumn = useRef<string>('');
@@ -408,12 +409,12 @@ function App() {
   }, [refreshData, sortResources]);
 
   const handleEventCreated = useCallback(
-    (args) => {
+    (args: MbscEventCreatedEvent) => {
       args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
       args.event.overlap = false;
       setMyEvents([...myEvents, args.event]);
       refreshData();
-      delayedToastSort(args.event.resource, args.event);
+      delayedToastSort(args.event.resource as number, args.event);
     },
     [delayedToastSort, myEvents, refreshData],
   );
