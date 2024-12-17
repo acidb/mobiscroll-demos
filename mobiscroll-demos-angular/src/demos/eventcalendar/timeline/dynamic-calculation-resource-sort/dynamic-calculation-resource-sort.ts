@@ -55,6 +55,12 @@ export class AppComponent {
   selectedMetric: string = 'standby';
   selectedMetricDesc: string = 'Standby Time';
   sortColumn: string = 'standby';
+  sortColumnLabels: { [key: string]: string } = {
+    standby: 'Standby Time',
+    payload: 'Payload Efficiency',
+    deadhead: 'Deadhead Time',
+  };
+
   sortDirection: string = 'asc';
   weekStart: Date = new Date();
   weekEnd: Date = new Date();
@@ -321,10 +327,8 @@ export class AppComponent {
   };
 
   refreshData() {
-    // todo
     this.selectedMetric = this.sortColumn;
-    this.selectedMetricDesc = this.sortColumn;
-    //
+    this.selectedMetricDesc = this.sortColumnLabels[this.sortColumn];
     setTimeout(() => {
       this.loadedEvents = this.myCalendar.getEvents();
 
@@ -391,7 +395,7 @@ export class AppComponent {
     ];
 
     setTimeout(() => {
-      // this.metricBarAnimation = false;
+      this.metricBarAnimation = false;
     }, 100);
   }
 
@@ -413,7 +417,7 @@ export class AppComponent {
         },
       },
       cssClass: 'mds-popup-sort-snackbar',
-      display: 'bottom',
+      display: 'center',
       duration: 3000,
       onClose: function () {
         resource!.cssClass = 'mds-resource-highlight';
@@ -436,6 +440,11 @@ export class AppComponent {
     this.initialSortDirection = this.sortDirection;
     this.popupAnchor = this.anchorElm.nativeElement;
     this.popup.open();
+  }
+
+  handlePopupClose() {
+    this.sortColumn = this.initialSortColumn;
+    this.sortDirection = this.initialSortDirection;
   }
 
   handleOnPageLoading($event: any) {
@@ -464,10 +473,14 @@ export class AppComponent {
   }
 
   handleOnEventUpdate(args: MbscEventUpdateEvent) {
-    // when just move no need  sort
     if (
       new Date(args.oldEvent!.start as string).getTime() !== new Date(args.event!.start as string).getTime() &&
-      new Date(args.oldEvent!.end as string).getTime() !== new Date(args.event!.end as string).getTime()
+      new Date(args.oldEvent!.end as string).getTime() !== new Date(args.event!.end as string).getTime() &&
+      args.oldEvent!.resource === args.resource &&
+      new Date(args.oldEvent!.start as string) >= this.weekStart &&
+      new Date(args.oldEvent!.end as string) <= this.weekEnd &&
+      new Date(args.event!.start as string) >= this.weekStart &&
+      new Date(args.event!.end as string) <= this.weekEnd
     ) {
       return;
     }

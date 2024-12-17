@@ -421,6 +421,7 @@ const handleEventCreated = (args) => {
 }
 
 const handleEventDelete = (args) => {
+  myEvents.value = myEvents.value.filter((event) => event.id !== args.event.id)
   refreshData()
   delayedToastSort(args.event.resource, args.event)
 }
