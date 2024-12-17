@@ -4,7 +4,7 @@
   [resources]="myResources"
   [immutableData]="true"
   [headerTemplate]="header"
-  (onResourceOrderUpdate)="handleResourceOrder"
+  (onResourceOrderUpdate)="handleResourceOrder($event)"
 >
   <ng-template #header>
     <mbsc-calendar-nav class="md-custom-header-nav"></mbsc-calendar-nav>
