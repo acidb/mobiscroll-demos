@@ -397,9 +397,7 @@ export class AppComponent {
   }
 
   delayedToastSort(resourceId: any, event: any) {
-    const resource = this.myResources.find(function (resource) {
-      return resource.id === resourceId;
-    });
+    const resource = this.myResources.find((resource) => resource.id === resourceId);
 
     const sortResources = this.sortResources.bind(this);
     let myResources = this.myResources;
@@ -419,7 +417,7 @@ export class AppComponent {
       onClose: function () {
         resource!.cssClass = 'mds-resource-highlight';
         sortResources();
-        setTimeout(function () {
+        setTimeout(() => {
           resource!.cssClass = '';
           myResources! = myResources.slice();
         }, 1000);
