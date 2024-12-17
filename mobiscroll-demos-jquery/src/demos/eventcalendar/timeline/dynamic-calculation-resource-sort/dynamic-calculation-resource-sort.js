@@ -346,7 +346,8 @@ export default {
               resource.cssClass = '';
               calendar.setOptions({ resources: myResources.slice() });
             }, 1000);
-            calendar.navigateToEvent(event);
+
+            calendar.navigateToEvent({ start: weekStart, resource: event.resource });
           },
         });
         setTimeout(function () {

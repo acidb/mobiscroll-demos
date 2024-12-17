@@ -599,7 +599,7 @@ function App() {
           },
         }}
         cssClass="mds-popup-sort-snackbar"
-        display={'bottom'}
+        display={'center'}
         duration={3000}
         isOpen={isSnackbarOpen}
         onClose={handleSnackbarClose}
