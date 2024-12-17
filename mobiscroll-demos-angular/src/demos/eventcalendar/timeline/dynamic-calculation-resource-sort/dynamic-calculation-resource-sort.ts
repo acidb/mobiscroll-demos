@@ -302,6 +302,9 @@ export class AppComponent {
   popupButtons: Array<MbscPopupButton | 'cancel'> = [
     'cancel',
     {
+      text: 'Apply',
+      keyCode: 'enter',
+      cssClass: 'mbsc-popup-button-primary',
       handler: () => {
         if (this.initialSortColumn != this.sortColumn) {
           this.refreshData();
@@ -311,9 +314,6 @@ export class AppComponent {
         this.initialSortDirection = this.sortDirection;
         this.popup.close();
       },
-      text: 'Apply',
-      keyCode: 'enter',
-      cssClass: 'mbsc-popup-button-primary',
     },
   ];
 
@@ -329,54 +329,52 @@ export class AppComponent {
   refreshData() {
     this.selectedMetric = this.sortColumn;
     this.selectedMetricDesc = this.sortColumnLabels[this.sortColumn];
-    setTimeout(() => {
-      this.loadedEvents = this.myCalendar.getEvents();
+    this.loadedEvents = this.myCalendar.getEvents();
 
-      this.myResources.forEach((resource) => {
-        const resourceEvents = this.loadedEvents.filter((event) => event.resource === resource.id);
+    this.myResources.forEach((resource) => {
+      const resourceEvents = this.loadedEvents.filter((event) => event.resource === resource.id);
 
-        if (this.selectedMetric === 'standby') {
-          resource.standby = 168;
+      if (this.selectedMetric === 'standby') {
+        resource.standby = 168;
 
-          resourceEvents.forEach((event) => {
-            const eventStart = new Date(event.start as Date);
-            const eventEnd = new Date(event.end as Date);
-            const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
-            const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
+        resourceEvents.forEach((event) => {
+          const eventStart = new Date(event.start as Date);
+          const eventEnd = new Date(event.end as Date);
+          const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
+          const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
 
-            if (effectiveStart < effectiveEnd) {
-              resource.standby! -= (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
-            }
-          });
-        }
+          if (effectiveStart < effectiveEnd) {
+            resource.standby! -= (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
+          }
+        });
+      }
 
-        if (this.selectedMetric === 'deadhead') {
-          const totalDeadheadTime = resourceEvents.reduce((total, event) => {
-            const eventStart = new Date(event.start as Date);
-            const eventEnd = new Date(event.end as Date);
-            const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
-            const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
+      if (this.selectedMetric === 'deadhead') {
+        const totalDeadheadTime = resourceEvents.reduce((total, event) => {
+          const eventStart = new Date(event.start as Date);
+          const eventEnd = new Date(event.end as Date);
+          const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
+          const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
 
-            if (effectiveStart < effectiveEnd && (!event['payload'] || event['payload'] <= 0)) {
-              return total + (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
-            }
-            return total;
-          }, 0);
+          if (effectiveStart < effectiveEnd && (!event['payload'] || event['payload'] <= 0)) {
+            return total + (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
+          }
+          return total;
+        }, 0);
 
-          resource.deadhead = totalDeadheadTime;
-        }
+        resource.deadhead = totalDeadheadTime;
+      }
 
-        if (this.selectedMetric === 'payload') {
-          const weekEvents = resourceEvents.filter(
-            (event) => new Date(event.end as Date) > this.weekStart && new Date(event.start as Date) < this.weekEnd,
-          );
-          const totalPayload = weekEvents.reduce((total, event) => total + (event['payload'] || 0), 0);
-          const numberOfTours = weekEvents.length;
+      if (this.selectedMetric === 'payload') {
+        const weekEvents = resourceEvents.filter(
+          (event) => new Date(event.end as Date) > this.weekStart && new Date(event.start as Date) < this.weekEnd,
+        );
+        const totalPayload = weekEvents.reduce((total, event) => total + (event['payload'] || 0), 0);
+        const numberOfTours = weekEvents.length;
 
-          resource.payload =
-            numberOfTours > 0 && resource['capacity'] ? Math.round((totalPayload / numberOfTours / resource['capacity']) * 100) : 0;
-        }
-      });
+        resource.payload =
+          numberOfTours > 0 && resource['capacity'] ? Math.round((totalPayload / numberOfTours / resource['capacity']) * 100) : 0;
+      }
     });
   }
 
