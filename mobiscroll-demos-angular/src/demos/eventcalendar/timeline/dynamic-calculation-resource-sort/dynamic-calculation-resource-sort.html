@@ -51,7 +51,7 @@
     <div style="font-size: 11px">Payload: {{ event.payload ? event.payload + ' T' : 'empty' }}</div>
   </ng-template>
 </mbsc-eventcalendar>
-<mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" #popup>
+<mbsc-popup #popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" (onClose)="handlePopupClose()">
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
     <mbsc-radio-group [(ngModel)]="sortColumn">

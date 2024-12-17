@@ -55,6 +55,12 @@ export class AppComponent {
   selectedMetric: string = 'standby';
   selectedMetricDesc: string = 'Standby Time';
   sortColumn: string = 'standby';
+  sortColumnLabels: { [key: string]: string } = {
+    standby: 'Standby Time',
+    payload: 'Payload Efficiency',
+    deadhead: 'Deadhead Time',
+  };
+
   sortDirection: string = 'asc';
   weekStart: Date = new Date();
   weekEnd: Date = new Date();
@@ -296,6 +302,9 @@ export class AppComponent {
   popupButtons: Array<MbscPopupButton | 'cancel'> = [
     'cancel',
     {
+      text: 'Apply',
+      keyCode: 'enter',
+      cssClass: 'mbsc-popup-button-primary',
       handler: () => {
         if (this.initialSortColumn != this.sortColumn) {
           this.refreshData();
@@ -305,9 +314,6 @@ export class AppComponent {
         this.initialSortDirection = this.sortDirection;
         this.popup.close();
       },
-      text: 'Apply',
-      keyCode: 'enter',
-      cssClass: 'mbsc-popup-button-primary',
     },
   ];
 
@@ -321,58 +327,53 @@ export class AppComponent {
   };
 
   refreshData() {
-    // todo
     this.selectedMetric = this.sortColumn;
-    this.selectedMetricDesc = this.sortColumn;
-    //
-    setTimeout(() => {
-      this.loadedEvents = this.myCalendar.getEvents();
+    this.selectedMetricDesc = this.sortColumnLabels[this.sortColumn];
 
-      this.myResources.forEach((resource) => {
-        const resourceEvents = this.loadedEvents.filter((event) => event.resource === resource.id);
+    this.myResources.forEach((resource) => {
+      const resourceEvents = this.myEvents.filter((event) => event.resource === resource.id);
 
-        if (this.selectedMetric === 'standby') {
-          resource.standby = 168;
+      if (this.selectedMetric === 'standby') {
+        resource.standby = 168;
 
-          resourceEvents.forEach((event) => {
-            const eventStart = new Date(event.start as Date);
-            const eventEnd = new Date(event.end as Date);
-            const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
-            const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
+        resourceEvents.forEach((event) => {
+          const eventStart = new Date(event.start as Date);
+          const eventEnd = new Date(event.end as Date);
+          const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
+          const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
 
-            if (effectiveStart < effectiveEnd) {
-              resource.standby! -= (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
-            }
-          });
-        }
+          if (effectiveStart < effectiveEnd) {
+            resource.standby! -= (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
+          }
+        });
+      }
 
-        if (this.selectedMetric === 'deadhead') {
-          const totalDeadheadTime = resourceEvents.reduce((total, event) => {
-            const eventStart = new Date(event.start as Date);
-            const eventEnd = new Date(event.end as Date);
-            const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
-            const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
+      if (this.selectedMetric === 'deadhead') {
+        const totalDeadheadTime = resourceEvents.reduce((total, event) => {
+          const eventStart = new Date(event.start as Date);
+          const eventEnd = new Date(event.end as Date);
+          const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
+          const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
 
-            if (effectiveStart < effectiveEnd && (!event['payload'] || event['payload'] <= 0)) {
-              return total + (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
-            }
-            return total;
-          }, 0);
+          if (effectiveStart < effectiveEnd && (!event['payload'] || event['payload'] <= 0)) {
+            return total + (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
+          }
+          return total;
+        }, 0);
 
-          resource.deadhead = totalDeadheadTime;
-        }
+        resource.deadhead = totalDeadheadTime;
+      }
 
-        if (this.selectedMetric === 'payload') {
-          const weekEvents = resourceEvents.filter(
-            (event) => new Date(event.end as Date) > this.weekStart && new Date(event.start as Date) < this.weekEnd,
-          );
-          const totalPayload = weekEvents.reduce((total, event) => total + (event['payload'] || 0), 0);
-          const numberOfTours = weekEvents.length;
+      if (this.selectedMetric === 'payload') {
+        const weekEvents = resourceEvents.filter(
+          (event) => new Date(event.end as Date) > this.weekStart && new Date(event.start as Date) < this.weekEnd,
+        );
+        const totalPayload = weekEvents.reduce((total, event) => total + (event['payload'] || 0), 0);
+        const numberOfTours = weekEvents.length;
 
-          resource.payload =
-            numberOfTours > 0 && resource['capacity'] ? Math.round((totalPayload / numberOfTours / resource['capacity']) * 100) : 0;
-        }
-      });
+        resource.payload =
+          numberOfTours > 0 && resource['capacity'] ? Math.round((totalPayload / numberOfTours / resource['capacity']) * 100) : 0;
+      }
     });
   }
 
@@ -391,7 +392,7 @@ export class AppComponent {
     ];
 
     setTimeout(() => {
-      // this.metricBarAnimation = false;
+      this.metricBarAnimation = false;
     }, 100);
   }
 
@@ -413,7 +414,7 @@ export class AppComponent {
         },
       },
       cssClass: 'mds-popup-sort-snackbar',
-      display: 'bottom',
+      display: 'center',
       duration: 3000,
       onClose: function () {
         resource!.cssClass = 'mds-resource-highlight';
@@ -425,10 +426,6 @@ export class AppComponent {
         myCalendar.navigateToEvent(event);
       },
     });
-
-    setTimeout(function () {
-      document.querySelector('.mbsc-toast-background')!.classList.add('start-progress');
-    });
   }
 
   handlePopupOpen() {
@@ -436,6 +433,11 @@ export class AppComponent {
     this.initialSortDirection = this.sortDirection;
     this.popupAnchor = this.anchorElm.nativeElement;
     this.popup.open();
+  }
+
+  handlePopupClose() {
+    this.sortColumn = this.initialSortColumn;
+    this.sortDirection = this.initialSortDirection;
   }
 
   handleOnPageLoading($event: any) {
@@ -464,10 +466,14 @@ export class AppComponent {
   }
 
   handleOnEventUpdate(args: MbscEventUpdateEvent) {
-    // when just move no need  sort
     if (
       new Date(args.oldEvent!.start as string).getTime() !== new Date(args.event!.start as string).getTime() &&
-      new Date(args.oldEvent!.end as string).getTime() !== new Date(args.event!.end as string).getTime()
+      new Date(args.oldEvent!.end as string).getTime() !== new Date(args.event!.end as string).getTime() &&
+      args.oldEvent!.resource === args.resource &&
+      new Date(args.oldEvent!.start as string) >= this.weekStart &&
+      new Date(args.oldEvent!.end as string) <= this.weekEnd &&
+      new Date(args.event!.start as string) >= this.weekStart &&
+      new Date(args.event!.end as string) <= this.weekEnd
     ) {
       return;
     }
