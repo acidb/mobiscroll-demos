@@ -443,28 +443,28 @@ const handleEventUpdate = (args) => {
 }
 
 function getMetricValue(resource) {
-  const metricValue = resource[this.sortColumnLabel]
-  if (this.sortColumnLabel === 'payload') {
+  const metricValue = resource[sortColumnLabel.value]
+  if (sortColumnLabel.value === 'payload') {
     return `${metricValue}%`
-  } else if (['standby', 'deadhead'].includes(this.sortColumnLabel)) {
+  } else if (['standby', 'deadhead'].includes(sortColumnLabel.value)) {
     return `${metricValue}h`
   }
   return metricValue
 }
 
 function getBarValue(resource) {
-  const metricValue = resource[this.sortColumnLabel]
-  if (this.sortColumnLabel === 'payload') {
+  const metricValue = resource[sortColumnLabel.value]
+  if (sortColumnLabel.value === 'payload') {
     return metricValue
-  } else if (['standby', 'deadhead'].includes(this.sortColumnLabel)) {
+  } else if (['standby', 'deadhead'].includes(sortColumnLabel.value)) {
     return (metricValue / 168) * 100
   }
   return 100
 }
 
 function getBarColorClass(resource) {
-  const barValue = this.getBarValue(resource)
-  const animationClass = this.metricBarAnimation
+  const barValue = getBarValue(resource)
+  const animationClass = metricBarAnimation.value
     ? 'mds-metric-bar-animation'
     : 'mds-metric-bar-no-animation'
 
