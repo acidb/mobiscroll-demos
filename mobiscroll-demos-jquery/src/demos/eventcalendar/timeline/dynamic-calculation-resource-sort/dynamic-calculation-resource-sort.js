@@ -12,6 +12,7 @@ export default {
     $(function () {
       var $popupElm = $('#demo-filtering-popup');
       var initialSort = true;
+      var initialMetricDesc;
       var initialSortColumn;
       var initialSortDirection;
       var loadedEvents;
@@ -362,6 +363,9 @@ export default {
               text: 'Apply',
               keyCode: 'enter',
               handler: function () {
+                selectedMetricDesc = initialMetricDesc;
+                selectedMetric = sortColumn;
+
                 if (initialSortColumn != sortColumn) {
                   refreshData();
                 }
@@ -382,6 +386,8 @@ export default {
             },
           ],
           onClose: function () {
+            sortColumn = initialSortColumn;
+            sortDirection = initialSortDirection;
             $('.mbsc-popup-sort-metric[value="' + initialSortColumn + '"]').mobiscroll('getInst').checked = true;
             $('.mbsc-popup-sort-direction[value="' + initialSortDirection + '"]').mobiscroll('getInst').checked = true;
           },
@@ -524,9 +530,8 @@ export default {
       });
 
       $('.mbsc-popup-sort-metric').on('change', function () {
-        selectedMetric = $(this).val();
-        selectedMetricDesc = $(this).attr('data-label');
-        sortColumn = selectedMetric;
+        sortColumn = $(this).val();
+        initialMetricDesc = $(this).attr('data-label');
       });
 
       $('.mbsc-popup-sort-direction').on('change', function () {
