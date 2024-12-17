@@ -33,6 +33,7 @@
         "import/order": ["warn", { "alphabetize": { "order": "asc", "caseInsensitive": true } }],
         "no-var": "warn",
         "one-var": ["error", "never"],
+        "prefer-arrow-callback": "warn",
         "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }]
       }
     },

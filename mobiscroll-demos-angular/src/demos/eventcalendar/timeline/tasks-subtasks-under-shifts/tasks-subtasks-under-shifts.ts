@@ -1648,9 +1648,7 @@ export class AppComponent {
   calendarOptions: MbscEventcalendarOptions = {
     extendDefaultEvent: (args: MbscNewEventData) => {
       if (this.timelineInst) {
-        const events = this.timelineInst.getEvents(args.start, new Date(+args.start + 3600000)).filter(function (e) {
-          return e.resource === args.resource;
-        });
+        const events = this.timelineInst.getEvents(args.start, new Date(+args.start + 3600000)).filter((e) => e.resource === args.resource);
         const isShift = events.length === 0;
         return {
           order: isShift ? 1 : 2,
@@ -1665,9 +1663,7 @@ export class AppComponent {
     onEventCreated: (args: MbscEventCreatedEvent) => {
       const event: MyEvent = args.event;
       const inst = args.inst!;
-      const overlapEvents = inst.getEvents(event.start, event.end).filter(function (e) {
-        return e.resource === event.resource;
-      });
+      const overlapEvents = inst.getEvents(event.start, event.end).filter((e) => e.resource === event.resource);
 
       if (event.shift) {
         // Tasks was created
@@ -1716,10 +1712,8 @@ export class AppComponent {
         const isMove = startDiff === endDiff;
         const isResize = !isMove && (startResize || endResize);
 
-        const tasks = event.tasks.map(function (el) {
-          const t = newEventList.find(function (e) {
-            return e.id === el;
-          })!;
+        const tasks = event.tasks.map((el) => {
+          const t = newEventList.find((e) => e.id === el)!;
           subTasksDuration += +new Date(t!.end as Date) - +new Date(t!.start as Date);
           return t;
         });
@@ -1756,9 +1750,7 @@ export class AppComponent {
         }
       } else {
         // Subtask was updated
-        const eventOverlap = inst.getEvents(event.start, event.end).filter(function (e) {
-          return e.resource === event.resource;
-        });
+        const eventOverlap = inst.getEvents(event.start, event.end).filter((e) => e.resource === event.resource);
         if (eventOverlap.length > 2) {
           // Don't let subtask to overlap
           newEventList.splice(evIndex, 1, oldEvent);
@@ -1782,16 +1774,10 @@ export class AppComponent {
       }
 
       if (event.shift) {
-        const shift = newEventList.find(function (ev) {
-          return ev.resource === event.resource && ev.id === event.shift;
-        })!;
+        const shift = newEventList.find((ev) => ev.resource === event.resource && ev.id === event.shift)!;
 
         // Remove the deleted task id from the shift data
-        shift.tasks =
-          shift.tasks &&
-          shift.tasks.filter(function (t: number | string) {
-            return t !== event.id;
-          });
+        shift.tasks = shift.tasks && shift.tasks.filter((t: number | string) => t !== event.id);
       }
       this.myEvents = newEventList;
     },
@@ -1803,11 +1789,9 @@ export class AppComponent {
 
       if (event.tasks) {
         // Shift
-        const shiftsInResource = events.filter(function (e: MyEvent) {
-          return e.tasks !== undefined && e.resource === event.resource && e.id !== event.id;
-        });
+        const shiftsInResource = events.filter((e: MyEvent) => e.tasks !== undefined && e.resource === event.resource && e.id !== event.id);
 
-        shiftsInResource.forEach(function (e) {
+        shiftsInResource.forEach((e) => {
           tempInvalid.push({
             id: 'mds-s-' + e.id,
             start: e.start,
@@ -1821,9 +1805,7 @@ export class AppComponent {
         this.myInvalids = [...blockedOutTimes, ...tempInvalid];
       } else {
         // Subtask
-        const shift: MyEvent = events.find(function (ev) {
-          return ev.resource === event.resource && ev.id === event.shift;
-        })!;
+        const shift: MyEvent = events.find((ev) => ev.resource === event.resource && ev.id === event.shift)!;
         tempInvalid.push(
           {
             id: 'mds-te-' + shift.id,

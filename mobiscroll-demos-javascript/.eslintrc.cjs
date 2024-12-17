@@ -12,11 +12,11 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'es5/no-es6-static-methods': ['error', { exceptMethods: ['Object.assign'] }],
     'es5/no-es6-methods': 'off',
+    'es5/no-es6-static-methods': ['error', { exceptMethods: ['Object.assign'] }],
     'es5/no-modules': 'off',
     'import/order': ['warn', { alphabetize: { order: 'asc', caseInsensitive: true } }],
-    'one-var': ['error', 'never'],
+    'one-var': ['warn', 'never'],
     'sort-imports': ['warn', { ignoreCase: true, ignoreDeclarationSort: true }],
   },
 };
