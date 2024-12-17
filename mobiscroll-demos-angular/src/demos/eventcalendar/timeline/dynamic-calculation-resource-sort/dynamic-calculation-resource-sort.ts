@@ -329,10 +329,9 @@ export class AppComponent {
   refreshData() {
     this.selectedMetric = this.sortColumn;
     this.selectedMetricDesc = this.sortColumnLabels[this.sortColumn];
-    this.loadedEvents = this.myCalendar.getEvents();
 
     this.myResources.forEach((resource) => {
-      const resourceEvents = this.loadedEvents.filter((event) => event.resource === resource.id);
+      const resourceEvents = this.myEvents.filter((event) => event.resource === resource.id);
 
       if (this.selectedMetric === 'standby') {
         resource.standby = 168;
@@ -426,10 +425,6 @@ export class AppComponent {
         }, 1000);
         myCalendar.navigateToEvent(event);
       },
-    });
-
-    setTimeout(function () {
-      document.querySelector('.mbsc-toast-background')!.classList.add('start-progress');
     });
   }
 

@@ -52,7 +52,7 @@
   }
 }
 
-.mds-popup-sort-snackbar .mbsc-toast-background.start-progress::before {
+.mds-popup-sort-snackbar .mbsc-toast-background::before {
   animation: countdown 3s linear forwards;
 }
 
