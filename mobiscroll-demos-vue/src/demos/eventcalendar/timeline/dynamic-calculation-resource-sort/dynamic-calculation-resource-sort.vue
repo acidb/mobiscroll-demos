@@ -413,15 +413,10 @@ const handlePageLoaded = () => {
 }
 
 const handleEventCreated = (args) => {
-  // const sortButton = document.querySelector('.mds-popup-sort-snackbar button')
-  // if (sortButton) {
-  //   sortButton.click()
-  // }
   args.event.payload = Math.floor(Math.random() * (17 - 5 + 1)) + 5
   args.event.overlap = false
   myEvents.value.push(args.event)
   refreshData()
-  // setTimeout(() => delayedToastSort(args.event.resource, args.event), 100)
   delayedToastSort(args.event.resource, args.event)
 }
 
@@ -433,7 +428,12 @@ const handleEventDelete = (args) => {
 const handleEventUpdate = (args) => {
   if (
     new Date(args.oldEvent.start).getTime() !== new Date(args.event.start).getTime() &&
-    new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime()
+    new Date(args.oldEvent.end).getTime() !== new Date(args.event.end).getTime() &&
+    args.oldEvent.resource === args.resource &&
+    new Date(args.oldEvent.start) >= weekStart.value &&
+    new Date(args.oldEvent.end) <= weekEnd.value &&
+    new Date(args.event.start) >= weekStart.value &&
+    new Date(args.event.end) <= weekEnd.value
   ) {
     return
   }
