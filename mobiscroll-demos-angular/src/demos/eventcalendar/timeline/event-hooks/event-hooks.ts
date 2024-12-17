@@ -142,6 +142,12 @@ export class AppComponent implements OnInit {
   onPageLoading(): void {
     // Use it to load data on demand
   }
+  onResourceDragEnd(): void {
+    /* Logic for resource drag start */
+  }
+  onResourceDragStart(): void {
+    /* Logic for resource drag end */
+  }
   onResourceOrderUpdate(): void {
     // Logic for resource update
   }
