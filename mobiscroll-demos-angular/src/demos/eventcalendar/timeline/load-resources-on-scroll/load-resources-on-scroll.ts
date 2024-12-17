@@ -68,6 +68,7 @@ export class AppComponent {
       if (!isEndLoaded) {
         this.notify.toast({
           message: 'Loading Resources...',
+          duration: 1000,
         });
       }
 

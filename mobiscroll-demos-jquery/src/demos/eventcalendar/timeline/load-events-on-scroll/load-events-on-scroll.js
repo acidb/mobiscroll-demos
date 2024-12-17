@@ -53,6 +53,13 @@ export default {
               'https://trialdev.mobiscroll.com/load-data-scroll/?start=' + start + '&end=' + end + '&callback=?',
               function (data) {
                 inst.setEvents(data.events);
+                mobiscroll.toast({
+                  //<hidden>
+                  // theme,//</hidden>
+                  // context,
+                  message: 'Loading events...',
+                  duration: 1000,
+                });
               },
               'jsonp',
             );

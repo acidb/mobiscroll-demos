@@ -20,7 +20,10 @@ setOptions({
   providers: [Notifications],
 })
 export class AppComponent {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    public notify: Notifications,
+  ) {}
 
   myEvents: MbscCalendarEvent[] = [];
   myResources = [
@@ -54,6 +57,10 @@ export class AppComponent {
         .jsonp<MbscCalendarEvent[]>('https://trialdev.mobiscroll.com/load-data-scroll/?start=' + start + '&end=' + end, 'callback')
         .subscribe((data: any) => {
           this.myEvents = data.events;
+          this.notify.toast({
+            message: 'Loading events...',
+            duration: 1000,
+          });
         });
     },
   };
