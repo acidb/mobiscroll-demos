@@ -11,7 +11,7 @@ export default {
 
     $(function () {
       var zoomLevel = 9;
-      var flag = true;
+      var isCalendarZoom = true;
 
       var myResources = [
         { id: 1, name: 'Resource A', color: '#e20000' },
@@ -102,17 +102,15 @@ export default {
 
       $('#demo-zoom-level-in').on('click', function () {
         handleZoom(zoomLevel + 1);
-        flag = true;
       });
 
       $('#demo-zoom-level-out').on('click', function () {
         handleZoom(zoomLevel - 1);
-        flag = false;
       });
 
       $(document).on('keydown', function (e) {
         if (e.metaKey || e.ctrlKey) {
-          if (flag) {
+          if (isCalendarZoom) {
             if (e.key === '+' || e.key === '=') {
               handleZoom(zoomLevel + 1);
               e.preventDefault();
@@ -128,7 +126,7 @@ export default {
       document.addEventListener(
         'wheel',
         function (e) {
-          if (flag) {
+          if (isCalendarZoom) {
             e.preventDefault();
           }
         },
@@ -137,16 +135,16 @@ export default {
 
       $('#demo-calendar-zoom')
         .on('mouseenter', function () {
-          flag = true;
+          isCalendarZoom = true;
         })
         .on('mouseleave', function () {
-          flag = false;
+          isCalendarZoom = false;
         });
 
       $(document).on('wheel', function (e) {
         if ($(e.target).closest('.mbsc-calendar-zoom').length > 0) {
           if (e.ctrlKey || e.metaKey) {
-            flag = true;
+            isCalendarZoom = true;
             if (e.originalEvent.deltaY > 0) {
               handleZoom(zoomLevel - 1);
             } else {
@@ -154,7 +152,7 @@ export default {
             }
             e.preventDefault();
           }
-          flag = false;
+          isCalendarZoom = false;
         }
       });
 
