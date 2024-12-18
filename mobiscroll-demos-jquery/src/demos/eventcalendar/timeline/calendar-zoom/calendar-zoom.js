@@ -11,7 +11,7 @@ export default {
 
     $(function () {
       var zoomLevel = 9;
-      var isCalendarZoom = true;
+      var blockZoomScroll = true;
 
       var myResources = [
         { id: 1, name: 'Resource A', color: '#e20000' },
@@ -82,6 +82,7 @@ export default {
       }
 
       function handleZoom(zoom) {
+        if (zoom <= 0 || zoom >= 19) return;
         zoomLevel = zoom;
 
         $('#demo-zoom-level-slider').val(zoomLevel);
@@ -110,7 +111,7 @@ export default {
 
       $(document).on('keydown', function (e) {
         if (e.metaKey || e.ctrlKey) {
-          if (isCalendarZoom) {
+          if (blockZoomScroll) {
             if (e.key === '+' || e.key === '=') {
               handleZoom(zoomLevel + 1);
               e.preventDefault();
@@ -123,28 +124,27 @@ export default {
         }
       });
 
+      $('#demo-calendar-zoom')
+        .on('mouseenter', function () {
+          blockZoomScroll = true;
+        })
+        .on('mouseleave', function () {
+          blockZoomScroll = false;
+        });
+
       document.addEventListener(
         'wheel',
         function (e) {
-          if (isCalendarZoom) {
+          if (blockZoomScroll) {
             e.preventDefault();
           }
         },
         { passive: false },
       );
 
-      $('#demo-calendar-zoom')
-        .on('mouseenter', function () {
-          isCalendarZoom = true;
-        })
-        .on('mouseleave', function () {
-          isCalendarZoom = false;
-        });
-
       $(document).on('wheel', function (e) {
         if ($(e.target).closest('.mbsc-calendar-zoom').length > 0) {
           if (e.ctrlKey || e.metaKey) {
-            isCalendarZoom = true;
             if (e.originalEvent.deltaY > 0) {
               handleZoom(zoomLevel - 1);
             } else {
@@ -152,7 +152,6 @@ export default {
             }
             e.preventDefault();
           }
-          isCalendarZoom = false;
         }
       });
 
