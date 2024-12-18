@@ -11,6 +11,7 @@ export default {
 
     $(function () {
       var zoomLevel = 9;
+      var flag = true;
 
       var myResources = [
         { id: 1, name: 'Resource A', color: '#e20000' },
@@ -101,29 +102,55 @@ export default {
 
       $('#demo-zoom-level-in').on('click', function () {
         handleZoom(zoomLevel + 1);
+        flag = true;
       });
 
       $('#demo-zoom-level-out').on('click', function () {
         handleZoom(zoomLevel - 1);
+        flag = false;
       });
 
       $(document).on('keydown', function (e) {
         if (e.metaKey || e.ctrlKey) {
-          // + recognized as = ?!
-          if (e.key === '+' || e.key === '=') {
-            handleZoom(zoomLevel + 1);
-            e.preventDefault();
-          }
-          if (e.key === '-') {
-            handleZoom(zoomLevel - 1);
-            e.preventDefault();
+          if (flag) {
+            if (e.key === '+' || e.key === '=') {
+              handleZoom(zoomLevel + 1);
+              e.preventDefault();
+            }
+            if (e.key === '-') {
+              handleZoom(zoomLevel - 1);
+              e.preventDefault();
+            }
+          } else {
+            if (e.key === '+' || e.key === '=' || e.key === '-') {
+              e.preventDefault();
+            }
           }
         }
       });
 
+      document.addEventListener(
+        'wheel',
+        function (e) {
+          if (flag) {
+            e.preventDefault();
+          }
+        },
+        { passive: false },
+      );
+
+      $('#demo-calendar-zoom')
+        .on('mouseenter', function () {
+          flag = true;
+        })
+        .on('mouseleave', function () {
+          flag = false;
+        });
+
       $(document).on('wheel', function (e) {
         if ($(e.target).closest('.mbsc-calendar-zoom').length > 0) {
           if (e.ctrlKey || e.metaKey) {
+            flag = true;
             if (e.originalEvent.deltaY > 0) {
               handleZoom(zoomLevel - 1);
             } else {
@@ -131,6 +158,7 @@ export default {
             }
             e.preventDefault();
           }
+          flag = false;
         }
       });
 
@@ -145,6 +173,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-calendar-zoom"></div>
+  <div id="demo-calendar-zoom"></div>
   `,
 };
