@@ -25,6 +25,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // drag,
+          cssClass: 'mbsc-calendar-zoom',
           resources: myResources,
           refDate: getRefDate(new Date()),
           zoomLevel: zoomLevel,
@@ -121,11 +122,14 @@ export default {
       });
 
       $(document).on('wheel', function (e) {
-        if (e.ctrlKey || e.metaKey) {
-          if (e.originalEvent.deltaY > 0) {
-            handleZoom(zoomLevel - 1);
-          } else {
-            handleZoom(zoomLevel + 1);
+        if ($(e.target).closest('.mbsc-calendar-zoom').length > 0) {
+          if (e.ctrlKey || e.metaKey) {
+            if (e.originalEvent.deltaY > 0) {
+              handleZoom(zoomLevel - 1);
+            } else {
+              handleZoom(zoomLevel + 1);
+            }
+            e.preventDefault();
           }
         }
       });
