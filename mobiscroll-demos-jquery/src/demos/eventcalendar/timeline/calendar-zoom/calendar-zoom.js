@@ -106,6 +106,30 @@ export default {
         handleZoom(zoomLevel - 1);
       });
 
+      $(document).on('keydown', function (e) {
+        if (e.metaKey || e.ctrlKey) {
+          // + recognized as = ?!
+          if (e.key === '+' || e.key === '=') {
+            handleZoom(zoomLevel + 1);
+            e.preventDefault();
+          }
+          if (e.key === '-') {
+            handleZoom(zoomLevel - 1);
+            e.preventDefault();
+          }
+        }
+      });
+
+      $(document).on('wheel', function (e) {
+        if (e.ctrlKey || e.metaKey) {
+          if (e.originalEvent.deltaY > 0) {
+            handleZoom(zoomLevel - 1);
+          } else {
+            handleZoom(zoomLevel + 1);
+          }
+        }
+      });
+
       $.getJSON(
         'https://trial.mobiscroll.com/timeline-zoom-events/?callback=?',
         function (events) {
