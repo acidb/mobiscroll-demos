@@ -152,7 +152,7 @@ export default {
         return '<div class="mds-resource-sort-header mds-resource-sort-' + getSortArrow('revenue') + '" data-sort="revenue">Revenue</div>';
       },
       renderSidebar: function (resource) {
-        return '<div class="mds-resource-cell">$' + resource.revenue + '</div>';
+        return '<div class="mds-sidebar-cell">$' + resource.revenue + '</div>';
       },
       renderResourceFooter: function () {
         return '<div class="mds-resource-details-footer mds-resource-details-occuppancy">Occuppancy</div>';
@@ -290,6 +290,12 @@ export default {
   border-right: 1px solid #333;
 }
 
+.mds-sidebar-cell {
+  padding: 0 5px;
+  line-height: 50px;
+  text-align: center;
+}
+
 /* Sort arrows */
 
 .mds-resource-sort-header {
@@ -311,7 +317,7 @@ export default {
 }
 
 .mds-resource-sort-asc::after {
-  content: '↑'; 
+  content: '↑';
 }
 
 .mds-resource-sort-desc::after {
@@ -350,6 +356,7 @@ export default {
   font-size: 18px;
   padding: 0 5px;
   color: #8c0000;
+  text-align: center;
 }
   `,
 };
