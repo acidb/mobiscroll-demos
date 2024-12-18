@@ -121,10 +121,6 @@ export default {
               handleZoom(zoomLevel - 1);
               e.preventDefault();
             }
-          } else {
-            if (e.key === '+' || e.key === '=' || e.key === '-') {
-              e.preventDefault();
-            }
           }
         }
       });
