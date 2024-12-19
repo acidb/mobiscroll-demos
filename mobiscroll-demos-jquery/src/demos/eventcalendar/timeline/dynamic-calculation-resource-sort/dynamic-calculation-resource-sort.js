@@ -281,12 +281,6 @@ export default {
       }
 
       function delayedSort(event) {
-        var eventStart = new Date(event.start);
-        var navStart = eventStart < weekStart ? weekStart : eventStart;
-        var resource = myResources.find(function (resource) {
-          return resource.id === event.resource;
-        });
-
         sortRequests++;
 
         mobiscroll.snackbar({
@@ -301,6 +295,11 @@ export default {
           onClose: function () {
             sortRequests--;
             if (sortRequests === 0) {
+              var eventStart = new Date(event.start);
+              var navStart = eventStart < weekStart ? weekStart : eventStart;
+              var resource = myResources.find(function (resource) {
+                return resource.id === event.resource;
+              });
               sortResources();
               calendar.navigateToEvent({ start: navStart, resource: event.resource });
               resource.cssClass = 'mbsc-timeline-parent-hover';
@@ -341,16 +340,16 @@ export default {
               cssClass: 'mbsc-popup-button-primary',
             },
           ],
-          onClose: function () {
-            $('.mds-popup-sort-metric[value="' + sortColumn + '"]').mobiscroll('getInst').checked = true;
-            $('.mds-popup-sort-direction[value="' + sortDirection + '"]').mobiscroll('getInst').checked = true;
-          },
           contentPadding: false,
           display: 'anchored',
           focusOnClose: false,
           focusOnOpen: false,
           showOverlay: false,
           width: 400,
+          onClose: function () {
+            $('.mds-popup-sort-metric[value="' + sortColumn + '"]').mobiscroll('getInst').checked = true;
+            $('.mds-popup-sort-direction[value="' + sortDirection + '"]').mobiscroll('getInst').checked = true;
+          },
         })
         .mobiscroll('getInst');
 
@@ -407,9 +406,9 @@ export default {
               '</div>' +
               '<div class="mds-popup-sort-bar-track">' +
               '<div class="mds-popup-sort-bar' +
-              (metricBarAnimation ? ' mds-popup-sort-bar-animation ' : '') +
               ' mds-popup-sort-bar-' +
               barColor +
+              (metricBarAnimation ? ' mds-popup-sort-bar-animation' : '') +
               '" style="width: ' +
               barValue +
               '%;"></div>' +
@@ -485,7 +484,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-timeline-popup-sort" class="mds-timeline-popup-sort"></div>
+<div id="demo-timeline-popup-sort" class="mds-popup-sort"></div>
 <div style="display:none">
   <div id="demo-filtering-popup">
     <div class="mbsc-form-group">
@@ -522,20 +521,20 @@ export default {
   css: `
 /* Overrides */
 
-.mds-timeline-popup-sort .mbsc-timeline-resource-header,
-.mds-timeline-popup-sort .mbsc-timeline-resource-title {
+.mds-popup-sort .mbsc-timeline-resource-header,
+.mds-popup-sort .mbsc-timeline-resource-title {
   padding: 0;
 }
 
-.mds-timeline-popup-sort .mbsc-timeline-resource-col {
+.mds-popup-sort .mbsc-timeline-resource-col {
   width: 170px;
 }
 
-.mds-timeline-popup-sort .mbsc-timeline-row {
+.mds-popup-sort .mbsc-timeline-row {
   height: 110px;
 }
 
-.mds-timeline-popup-sort .mbsc-timeline-events {
+.mds-popup-sort .mbsc-timeline-events {
   top: 20px;
 }
 
