@@ -394,7 +394,7 @@ export default {
               resource.name +
               '</strong>' +
               '<div class="mds-popup-sort-resource-attr">Model: ' +
-              (resource.model || 'N/A') +
+              resource.model +
               '</div>' +
               '<div class="mds-popup-sort-resource-attr">Capacity: ' +
               resource.capacity +
@@ -492,13 +492,13 @@ export default {
       <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
       <div mbsc-radio-group>
         <label>
-          <input mbsc-radio data-label="Standby Time" data-description="Time the truck is driven without cargo." class="mds-popup-sort-metric" value="standby" name="sort-metric" type="radio" checked/>
+          <input mbsc-radio data-label="Standby Time" data-description="Time the truck is driven without cargo." class="mds-popup-sort-metric" value="standby" name="popup-sort-metric" type="radio" checked />
         </label>
         <label>
-          <input mbsc-radio data-label="Payload Efficiency" data-description="Truck capacity divided by the average cargo on tours." class="mds-popup-sort-metric" value="payload" name="sort-metric" type="radio"/>
+          <input mbsc-radio data-label="Payload Efficiency" data-description="Truck capacity divided by the average cargo on tours." class="mds-popup-sort-metric" value="payload" name="popup-sort-metric" type="radio" />
         </label>
         <label>
-          <input mbsc-radio data-label="Deadhead Time" data-description="Time when the truck is not on a tour." class="mds-popup-sort-metric" value="deadhead" name="sort-metric" type="radio"/>
+          <input mbsc-radio data-label="Deadhead Time" data-description="Time when the truck is not on a tour." class="mds-popup-sort-metric" value="deadhead" name="popup-sort-metric" type="radio" />
         </label>
       </div>
     </div>
@@ -507,11 +507,11 @@ export default {
       <div mbsc-segmented-group>
         <label>
           Ascending
-          <input mbsc-segmented type="radio" class="mds-popup-sort-direction" value="asc" name="sort-direction" checked>
+          <input mbsc-segmented type="radio" class="mds-popup-sort-direction" value="asc" name="popup-sort-direction" checked />
         </label>
         <label>
           Descending
-          <input mbsc-segmented type="radio" class="mds-popup-sort-direction" value="desc" name="sort-direction">
+          <input mbsc-segmented type="radio" class="mds-popup-sort-direction" value="desc" name="popup-sort-direction" />
         </label>
       </div>
     </div>
