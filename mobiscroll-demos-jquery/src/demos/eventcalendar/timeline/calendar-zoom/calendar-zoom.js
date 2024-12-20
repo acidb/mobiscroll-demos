@@ -11,7 +11,7 @@ export default {
 
     $(function () {
       var zoomLevel = 9;
-      // var blockZoomScroll = true;
+      var isZooming = false;
 
       var myResources = [
         { id: 1, name: 'Resource A', color: '#e20000' },
@@ -109,38 +109,21 @@ export default {
         handleZoom(zoomLevel - 1);
       });
 
-      // $('#demo-calendar-zoom').on('keydown', function (e) {
-      //   if (e.metaKey || e.ctrlKey) {
-      //     if (blockZoomScroll) {
-      //     if (e.key === '+' || e.key === '=') {
-      //       handleZoom(zoomLevel + 1);
-      //       e.preventDefault();
-      //     }
-      //     if (e.key === '-') {
-      //       handleZoom(zoomLevel - 1);
-      //       e.preventDefault();
-      //     }
-      //     }
-      //   }
-      // });
-
-      // $('#demo-calendar-zoom')
-      //   .on('mouseenter', function () {
-      //     blockZoomScroll = true;
-      //   })
-      //   .on('mouseleave', function () {
-      //     blockZoomScroll = false;
-      //     console.log('flag = false'); // <--- to clean
-      //   });
-
       $('#demo-calendar-zoom').on('wheel', function (e) {
-        if (e.ctrlKey || e.metaKey) {
+        if ((e.ctrlKey || e.metaKey) && !isZooming) {
+          isZooming = true;
+
           if (e.originalEvent.deltaY > 0) {
             handleZoom(zoomLevel - 1);
           } else {
             handleZoom(zoomLevel + 1);
           }
           e.preventDefault();
+
+          //zoom trottle for touch pad
+          setTimeout(function () {
+            return (isZooming = false);
+          }, 100);
         }
       });
 
