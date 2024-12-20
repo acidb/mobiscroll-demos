@@ -120,10 +120,9 @@ export default {
           }
           e.preventDefault();
 
-          //zoom trottle for touch pad
           setTimeout(function () {
             return (isZooming = false);
-          }, 100);
+          }, 200);
         }
       });
 
