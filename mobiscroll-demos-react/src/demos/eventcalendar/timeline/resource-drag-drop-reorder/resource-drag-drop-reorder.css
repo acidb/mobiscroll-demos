@@ -1,0 +1,25 @@
+.mds-resource-drag-drop-reorder .mbsc-timeline-resource-col {
+  width: 240px;
+}
+
+.mds-reorder-header-filter {
+  justify-content: end;
+  align-items: center;
+}
+
+.mbsc-button.mds-reorder-header-filter-separator {
+  height: 25px;
+  min-width: 0;
+  padding: 0;
+  margin: 0 8px 0 12px;
+  border-width: 1px;
+  cursor: none;
+}
+
+.mbsc-material .mds-reorder-switch {
+  margin-right: 10px;
+}
+
+.mds-reorder-cancel.mbsc-button {
+  margin-right: 12px;
+}

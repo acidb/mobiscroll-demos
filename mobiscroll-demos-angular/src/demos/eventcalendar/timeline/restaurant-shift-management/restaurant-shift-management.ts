@@ -1945,7 +1945,7 @@ export class AppComponent {
       if (resource.children) {
         for (const employee of resource.children) {
           if (employee.id === event.resource) {
-            return employee.name.substr(0, employee.name.indexOf(' '));
+            return employee.name.substring(0, employee.name.indexOf(' '));
           }
         }
       }

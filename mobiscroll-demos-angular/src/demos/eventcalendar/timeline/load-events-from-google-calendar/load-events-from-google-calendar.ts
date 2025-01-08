@@ -43,9 +43,7 @@ export class AppComponent implements OnInit {
     { id: 'en.uk#holiday@group.v.calendar.google.com', name: 'Holidays in United Kingdom', color: '#3F51B5' },
     { id: 'en.usa#holiday@group.v.calendar.google.com', name: 'Holidays in United States', color: '#8E24AA' },
   ];
-  calendarIds = this.calendars.map(function (cal) {
-    return cal.id;
-  });
+  calendarIds = this.calendars.map((cal) => cal.id);
 
   calOptions: MbscEventcalendarOptions = {
     clickToCreate: false,
@@ -75,7 +73,7 @@ export class AppComponent implements OnInit {
     googleCalendarSync
       .getEvents(this.calendarIds, this.firstDay, this.lastDay)
       .then((resp: any[]) => {
-        resp.forEach(function (event) {
+        resp.forEach((event) => {
           event.resource = event.googleCalendarId;
         });
         this.zone.run(() => {

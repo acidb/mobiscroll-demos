@@ -1,0 +1,120 @@
+/* Overrides */
+
+.mds-popup-sort .mbsc-timeline-resource-header,
+.mds-popup-sort .mbsc-timeline-resource-title {
+  padding: 0;
+}
+
+.mds-popup-sort .mbsc-timeline-resource-col {
+  width: 170px;
+}
+
+.mds-popup-sort .mbsc-timeline-row {
+  height: 110px;
+}
+
+.mds-popup-sort .mbsc-timeline-events {
+  top: 20px;
+}
+
+/* Resource grid */
+
+.mds-popup-sort-resource-header {
+  padding: 0 5px;
+  line-height: 25px;
+}
+
+.mds-popup-sort-resource-cell {
+  padding: 5px;
+  line-height: 20px;
+}
+
+.mds-popup-sort-resource-attr {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* Event template */
+
+.mds-popup-sort-event-attr {
+  font-size: 11px;
+}
+
+/* Metric bar */
+
+.mds-popup-sort-bar-track {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  height: 10px;
+  width: 150px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.mds-popup-sort-bar {
+  height: 100%;
+}
+
+.mds-popup-sort-bar-green {
+  background-color: #4caf50;
+}
+
+.mds-popup-sort-bar-yellow {
+  background-color: #ffeb3b;
+}
+
+.mds-popup-sort-bar-red {
+  background-color: #f44336;
+}
+
+.mds-popup-sort-bar-animation {
+  animation: mds-popup-sort-fill-bar 1s ease-in-out forwards;
+}
+
+/* Snackbar countdown */
+
+.mds-popup-sort-snackbar .mbsc-snackbar-cont {
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mds-popup-sort-snackbar .mbsc-snackbar-cont::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: mds-popup-sort-fill-bar 3s linear forwards;
+}
+
+.mds-popup-sort-snackbar .mbsc-snackbar-message::after {
+  content: 'Sorting in 1 .';
+  position: relative;
+  z-index: 1;
+  animation: mds-popup-sort-message 3s steps(3) forwards;
+}
+
+/* Animations */
+
+@keyframes mds-popup-sort-fill-bar {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes mds-popup-sort-message {
+  0% {
+    content: 'Sorting in 3 ...';
+  }
+  43% {
+    content: 'Sorting in 2 ..';
+  }
+  76% {
+    content: 'Sorting in 1 .';
+  }
+}

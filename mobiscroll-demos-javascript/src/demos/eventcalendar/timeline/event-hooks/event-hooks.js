@@ -16,6 +16,7 @@ export default {
       view: {
         timeline: {
           type: 'day',
+          resourceReorder: true,
         },
       },
       invalid: [
@@ -135,6 +136,15 @@ export default {
       },
       onPageLoading: function () {
         // Use it to load data on demand
+      },
+      onResourceDragEnd: function () {
+        /* Logic for resource drag end */
+      },
+      onResourceDragStart: function () {
+        /* Logic for resource drag start */
+      },
+      onResourceOrderUpdate: function () {
+        // Logic for resource update
       },
       onSelectedDateChange: function () {
         // Use it to keep track of the selected date externally

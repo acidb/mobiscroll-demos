@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
     // drag,
     view: {
       timeline: {
-        allDay: false,
         type: 'week',
         startDay: 1,
         endDay: 5,

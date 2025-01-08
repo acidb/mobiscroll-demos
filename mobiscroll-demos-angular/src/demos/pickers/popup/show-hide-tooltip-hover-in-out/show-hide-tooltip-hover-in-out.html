@@ -1,0 +1,19 @@
+<mbsc-page>
+  <mbsc-eventcalendar [data]="myEvents" [view]="myView" (onEventHoverIn)="handleEventHoverIn($event)"
+    (onEventHoverOut)="handleEventHoverOut()"></mbsc-eventcalendar>
+  <mbsc-popup #popup [anchor]="popupAnchor" [options]="popupOptions">
+    <div (mouseenter)="handleMouseEnter()" (mouseleave)="handleMouseLeave()">
+      <div class="mds-tooltip-event-title-cont">
+        <span>{{eventTitle}}</span>
+      </div>
+      <div class="mds-tooltip-start-cont mbsc-flex">
+        <span class="mds-tooltip-label">Start:</span>
+        <span>{{eventStart}}</span>
+      </div>
+      <div class="mds-tooltip-end-cont mbsc-flex">
+        <span class="mds-tooltip-label">End:</span>
+        <span>{{eventEnd}}</span>
+      </div>
+    </div>
+  </mbsc-popup>
+</mbsc-page>

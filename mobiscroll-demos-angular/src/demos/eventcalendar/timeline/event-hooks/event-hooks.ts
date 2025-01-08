@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   view: MbscEventcalendarView = {
     timeline: {
       type: 'week',
+      resourceReorder: true,
     },
   };
   myResources = [
@@ -140,6 +141,15 @@ export class AppComponent implements OnInit {
   }
   onPageLoading(): void {
     // Use it to load data on demand
+  }
+  onResourceDragEnd(): void {
+    /* Logic for resource drag start */
+  }
+  onResourceDragStart(): void {
+    /* Logic for resource drag end */
+  }
+  onResourceOrderUpdate(): void {
+    // Logic for resource update
   }
   onSelectedDateChange(): void {
     // Use it to keep track of the selected date externally

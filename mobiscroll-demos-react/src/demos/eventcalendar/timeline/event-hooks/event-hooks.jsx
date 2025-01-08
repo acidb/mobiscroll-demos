@@ -41,6 +41,7 @@ function App() {
     () => ({
       timeline: {
         type: 'day',
+        resourceReorder: true,
       },
     }),
     [],
@@ -145,11 +146,11 @@ function App() {
         onEventDoubleClick={() => {
           // Logic for event double click
         }}
-        onEventDragStart={() => {
-          // Logic for event drag start
+        onResourceDragStart={() => {
+          /* Logic for resource drag start */
         }}
-        onEventDragEnd={() => {
-          // Logic for event drag end
+        onResourceDragEnd={() => {
+          /* Logic for resource drag end */
         }}
         onEventDragEnter={() => {
           // Logic for event drag enter
@@ -186,6 +187,9 @@ function App() {
         }}
         onPageLoading={() => {
           // Use it to load data on demand
+        }}
+        onResourceOrderUpdate={() => {
+          // Logic for resource update
         }}
         onSelectedDateChange={() => {
           // Use it to keep track of the selected date externally

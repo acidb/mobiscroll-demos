@@ -22,6 +22,8 @@ import type {
   MbscPageChangeEvent,
   MbscPageLoadedEvent,
   MbscPageLoadingEvent,
+  MbscResourceDragEvent,
+  MbscResourceOrderEvent,
   MbscSelectedDateChangeEvent
 } from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
@@ -34,9 +36,42 @@ setOptions({
 const myEvents = ref<MbscCalendarEvent[]>([])
 const myView: MbscEventcalendarView = {
   timeline: {
-    type: 'day'
+    type: 'day',
+    resourceReorder: true
   }
 }
+const myResources = ref([
+  {
+    id: 1,
+    name: 'Ryan',
+    color: '#fdf500'
+  },
+  {
+    id: 2,
+    name: 'Kate',
+    color: '#ff4600'
+  },
+  {
+    id: 3,
+    name: 'John',
+    color: '#ff0101'
+  },
+  {
+    id: 4,
+    name: 'Mark',
+    color: '#239a21'
+  },
+  {
+    id: 5,
+    name: 'Sharon',
+    color: '#8f1ed6'
+  },
+  {
+    id: 6,
+    name: 'Ashley',
+    color: '#01adff'
+  }
+])
 const myInvalids = [
   {
     recurring: {
@@ -157,6 +192,18 @@ function handlePageLoading(args: MbscPageLoadingEvent) {
   // Use it to load data on demand
   console.log(args)
 }
+function handleResourceDragEnd(args: MbscResourceDragEvent) {
+  // Logic for resource drag end
+  console.log(args)
+}
+function handleResourceDragStart(args: MbscResourceDragEvent) {
+  // Logic for resource drag start
+  console.log(args)
+}
+function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
+  // Logic for resource update
+  console.log(args)
+}
 function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
   // Use it to keep track of the selected date externally
   console.log(args)
@@ -192,6 +239,7 @@ onMounted(() => {
     :dragToMove="true"
     :dragToResize="true"
     :externalDrop="true"
+    :resources="myResources"
     @cell-click="handleCellClick"
     @cell-double-click="handleCellDoubleClick"
     @cell-right-click="handleCellRightClick"
@@ -216,7 +264,10 @@ onMounted(() => {
     @init="handleInit"
     @page-change="handlePageChange"
     @page-loaded="handlePageLoaded"
-    @page-oading="handlePageLoading"
+    @page-loading="handlePageLoading"
+    @resource-drag-end="handleResourceDragEnd"
+    @resource-drag-start="handleResourceDragStart"
+    @resource-order-update="handleResourceOrderUpdate"
     @selected-date-change="handleSelectedDateChange"
   />
 </template>
