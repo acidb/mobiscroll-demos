@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 import { CommonModule } from '@angular/common';
-import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withJsonpSupport } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -1619,7 +1619,7 @@ export const demoTitleMap: { [key: string]: string } = {};
     Demo601,
     HomeComponent,
   ],
-  imports: [CommonModule, FormsModule, MbscModule, HttpClientJsonpModule, HttpClientModule, RouterLink],
-  providers: [],
+  imports: [CommonModule, FormsModule, MbscModule, RouterLink],
+  providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())],
 })
 export class AppModule {}
