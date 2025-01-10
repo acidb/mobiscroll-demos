@@ -15,6 +15,7 @@ const today = new Date();
   encapsulation: ViewEncapsulation.None,
   templateUrl: './disallow-past-event-creation.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

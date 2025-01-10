@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './navigate-from-external-date-picker.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './navigate-from-external-date-picker.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './switching-calendar-scheduler-agenda.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './switching-calendar-scheduler-agenda.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

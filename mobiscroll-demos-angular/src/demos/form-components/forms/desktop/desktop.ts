@@ -10,5 +10,6 @@ setOptions({
   styleUrl: './desktop.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './desktop.html',
+  standalone: false,
 })
 export class AppComponent {}

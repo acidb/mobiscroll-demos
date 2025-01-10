@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-forms-alert-confirm-prompt',
   templateUrl: './alert-confirm-prompt.html',
+  standalone: false,
 })
 export class AppComponent {
   constructor(public notify: Notifications) {}

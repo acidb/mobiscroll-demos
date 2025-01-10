@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-range-calendar-scroller-dropdown',
   templateUrl: './calendar-scroller-dropdown.html',
+  standalone: false,
 })
 export class AppComponent {}

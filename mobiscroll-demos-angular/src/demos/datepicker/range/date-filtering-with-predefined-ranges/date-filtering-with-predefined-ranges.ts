@@ -29,6 +29,7 @@ const endDate = dyndatetime('y,m,d+6');
   styleUrl: './date-filtering-with-predefined-ranges.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './date-filtering-with-predefined-ranges.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('popup', { static: false })

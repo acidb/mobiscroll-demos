@@ -11,6 +11,7 @@ setOptions({
   selector: 'app-scheduler-desktop-day-view',
   templateUrl: './desktop-day-view.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

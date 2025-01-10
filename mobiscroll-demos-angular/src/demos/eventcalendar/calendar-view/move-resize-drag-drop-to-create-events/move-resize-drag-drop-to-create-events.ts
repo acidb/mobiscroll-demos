@@ -11,6 +11,7 @@ const now = new Date();
 @Component({
   selector: 'app-eventcalendar-move-resize-drag-drop-to-create-events',
   templateUrl: './move-resize-drag-drop-to-create-events.html',
+  standalone: false,
 })
 export class AppComponent {
   myData: MbscCalendarEvent[] = [

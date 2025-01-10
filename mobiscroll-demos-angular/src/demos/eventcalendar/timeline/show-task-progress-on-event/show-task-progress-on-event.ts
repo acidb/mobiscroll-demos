@@ -21,6 +21,7 @@ setOptions({
   styleUrl: './show-task-progress-on-event.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-task-progress-on-event.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('popup', { static: false })

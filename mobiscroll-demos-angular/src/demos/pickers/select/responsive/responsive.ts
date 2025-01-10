@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-select-responsive',
   templateUrl: './responsive.html',
+  standalone: false,
 })
 export class AppComponent {
   myData = [

@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-multiple-days-weeks-months-quarters-years-variable-resolution',
   templateUrl: './multiple-days-weeks-months-quarters-years-variable-resolution.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

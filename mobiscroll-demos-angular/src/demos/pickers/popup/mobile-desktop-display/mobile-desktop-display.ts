@@ -10,6 +10,7 @@ setOptions({
   selector: 'app-popup-mobile-desktop-display',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile-desktop-display.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('popupAnchored', { static: false }) popupAnchored!: MbscPopup;

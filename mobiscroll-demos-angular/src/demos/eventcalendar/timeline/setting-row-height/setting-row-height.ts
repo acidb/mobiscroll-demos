@@ -14,6 +14,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './setting-row-height.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(

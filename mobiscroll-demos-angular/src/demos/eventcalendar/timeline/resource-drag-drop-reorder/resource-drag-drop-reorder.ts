@@ -20,6 +20,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-drag-drop-reorder.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(

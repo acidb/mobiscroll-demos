@@ -13,6 +13,7 @@ const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 @Component({
   selector: 'app-scheduler-resource-view',
   templateUrl: './resource-view.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

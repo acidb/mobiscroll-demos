@@ -11,6 +11,7 @@ setOptions({
   selector: 'app-eventcalendar-event-labels',
   templateUrl: './event-labels.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

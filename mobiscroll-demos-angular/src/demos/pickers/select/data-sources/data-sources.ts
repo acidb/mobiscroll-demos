@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-select-data-sources',
   templateUrl: './data-sources.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   myData = [

@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-localization',
   templateUrl: './localization.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

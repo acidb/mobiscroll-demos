@@ -20,6 +20,7 @@ const endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0);
   encapsulation: ViewEncapsulation.None,
   templateUrl: './presets.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

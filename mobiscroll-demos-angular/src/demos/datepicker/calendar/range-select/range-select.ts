@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-calendar-range-select',
   templateUrl: './range-select.html',
+  standalone: false,
 })
 export class AppComponent {}

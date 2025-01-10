@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-eventcalendar-month-week-view',
   templateUrl: './month-week-view.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

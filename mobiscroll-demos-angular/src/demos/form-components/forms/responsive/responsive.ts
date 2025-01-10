@@ -11,5 +11,6 @@ setOptions({
   styleUrl: './responsive.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './responsive.html',
+  standalone: false,
 })
 export class AppComponent {}

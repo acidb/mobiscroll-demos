@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './resource-header-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-header-template.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

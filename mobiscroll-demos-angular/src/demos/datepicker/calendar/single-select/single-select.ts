@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-calendar-single-select',
   templateUrl: './single-select.html',
+  standalone: false,
 })
 export class AppComponent {
   dateOptions: MbscDatepickerOptions = {

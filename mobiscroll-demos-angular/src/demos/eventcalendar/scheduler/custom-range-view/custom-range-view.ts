@@ -19,6 +19,7 @@ setOptions({
   styleUrl: './custom-range-view.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './custom-range-view.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

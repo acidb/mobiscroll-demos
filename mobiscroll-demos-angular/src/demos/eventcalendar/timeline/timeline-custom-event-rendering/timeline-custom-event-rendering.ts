@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './timeline-custom-event-rendering.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-custom-event-rendering.html',
+  standalone: false,
 })
 export class AppComponent {
   view: MbscEventcalendarView = {

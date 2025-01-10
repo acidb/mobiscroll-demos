@@ -13,6 +13,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './switching-day-week-work-week-timeline.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

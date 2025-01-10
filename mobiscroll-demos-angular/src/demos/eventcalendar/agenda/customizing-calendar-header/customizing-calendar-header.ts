@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './customizing-calendar-header.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customizing-calendar-header.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

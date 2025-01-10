@@ -11,6 +11,7 @@ setOptions({
   styleUrl: './item-templating.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './item-templating.html',
+  standalone: false,
 })
 export class AppComponent {
   myData = [

@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-scheduler-display-multiple-days-weeks',
   templateUrl: './display-multiple-days-weeks.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

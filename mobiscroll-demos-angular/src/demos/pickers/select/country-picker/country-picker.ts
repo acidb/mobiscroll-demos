@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './country-picker.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './country-picker.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   myData: any;

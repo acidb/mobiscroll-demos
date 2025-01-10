@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-calendar-zoom',
   templateUrl: './calendar-zoom.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

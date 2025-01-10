@@ -10,6 +10,7 @@ setOptions({
   selector: 'app-popup-event-hooks',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-hooks.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('popup', { static: false }) popup!: MbscPopup;

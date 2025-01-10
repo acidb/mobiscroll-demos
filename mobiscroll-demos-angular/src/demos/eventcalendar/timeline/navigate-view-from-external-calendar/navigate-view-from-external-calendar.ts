@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './navigate-view-from-external-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './navigate-view-from-external-calendar.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

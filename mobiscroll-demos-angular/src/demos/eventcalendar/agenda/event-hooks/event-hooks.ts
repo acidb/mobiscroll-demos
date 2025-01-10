@@ -19,6 +19,7 @@ setOptions({
 @Component({
   selector: 'app-agenda-event-hooks',
   templateUrl: './event-hooks.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

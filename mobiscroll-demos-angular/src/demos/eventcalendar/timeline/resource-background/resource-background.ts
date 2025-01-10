@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './resource-background.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-background.html',
+  standalone: false,
 })
 export class AppComponent {
   view: MbscEventcalendarView = {

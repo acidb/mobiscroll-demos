@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarView,
@@ -17,8 +17,9 @@ setOptions({
   selector: 'app-agenda-basic-usage',
   templateUrl: './basic-usage.html',
   providers: [Notifications],
+  standalone: false,
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
   constructor(
     private http: HttpClient,
     private notify: Notifications,
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });

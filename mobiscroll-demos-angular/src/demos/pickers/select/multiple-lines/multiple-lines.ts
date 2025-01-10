@@ -11,6 +11,7 @@ setOptions({
   styleUrl: './multiple-lines.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './multiple-lines.html',
+  standalone: false,
 })
 export class AppComponent {
   myData = [

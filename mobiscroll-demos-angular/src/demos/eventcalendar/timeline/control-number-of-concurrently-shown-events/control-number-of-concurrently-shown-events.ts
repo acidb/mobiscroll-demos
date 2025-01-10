@@ -14,6 +14,7 @@ const day = now.getDate();
 @Component({
   selector: 'app-timeline-control-number-of-concurrently-shown-events',
   templateUrl: './control-number-of-concurrently-shown-events.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

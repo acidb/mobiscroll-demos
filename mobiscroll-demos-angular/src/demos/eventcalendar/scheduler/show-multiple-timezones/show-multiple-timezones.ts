@@ -13,6 +13,7 @@ momentTimezone.moment = moment;
 @Component({
   selector: 'app-scheduler-show-multiple-timezones',
   templateUrl: './show-multiple-timezones.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

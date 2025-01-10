@@ -8,6 +8,7 @@ momentTimezone.moment = moment;
 @Component({
   selector: 'app-agenda-setting-the-timezone',
   templateUrl: './setting-the-timezone.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

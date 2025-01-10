@@ -30,6 +30,7 @@ const resources = [
   styleUrl: './dynamic-add-remove-resources-filter.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamic-add-remove-resources-filter.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

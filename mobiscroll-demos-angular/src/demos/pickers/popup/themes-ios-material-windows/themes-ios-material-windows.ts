@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-popup-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('popup', { static: false }) popup!: MbscPopup;

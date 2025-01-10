@@ -5,6 +5,7 @@ import { MbscCalendarEvent, MbscEventcalendarOptions /* localeImport */ } from '
 @Component({
   selector: 'app-eventcalendar-load-events-from-remote-api',
   templateUrl: './load-events-from-remote-api.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

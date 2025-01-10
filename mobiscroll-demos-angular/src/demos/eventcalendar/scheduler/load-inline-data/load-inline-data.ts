@@ -12,6 +12,7 @@ const now = new Date();
 @Component({
   selector: 'app-scheduler-load-inline-data',
   templateUrl: './load-inline-data.html',
+  standalone: false,
 })
 export class AppComponent {
   constructor() {}

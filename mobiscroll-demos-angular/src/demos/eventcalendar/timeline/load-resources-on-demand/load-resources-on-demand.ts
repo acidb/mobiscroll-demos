@@ -14,6 +14,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-resources-on-demand.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(

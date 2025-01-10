@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-scheduler-custom-event-sort',
   templateUrl: './custom-event-sort.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

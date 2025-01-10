@@ -22,6 +22,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-bulk-actions-edit-delete-update.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

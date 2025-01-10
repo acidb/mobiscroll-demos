@@ -20,6 +20,7 @@ const CALENDAR_ID = 'theacidmedia.net_8l6v679q5j2f7q8lpmcjr4mm3k@group.calendar.
   styleUrl: './load-events-from-google-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-from-google-calendar.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

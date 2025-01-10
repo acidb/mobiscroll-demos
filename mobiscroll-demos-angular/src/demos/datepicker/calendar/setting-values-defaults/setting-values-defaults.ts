@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-calendar-setting-values-defaults',
   templateUrl: './setting-values-defaults.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('nowInst')

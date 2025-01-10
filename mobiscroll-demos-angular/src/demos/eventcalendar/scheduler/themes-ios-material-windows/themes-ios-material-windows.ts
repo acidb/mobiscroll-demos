@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-scheduler-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

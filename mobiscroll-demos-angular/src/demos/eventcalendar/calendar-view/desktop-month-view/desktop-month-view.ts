@@ -6,6 +6,7 @@ import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications /* localeImp
   selector: 'app-eventcalendar-desktop-month-view',
   templateUrl: './desktop-month-view.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

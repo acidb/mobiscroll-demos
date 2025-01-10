@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './shift-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './shift-template.html',
+  standalone: false,
 })
 export class AppComponent {
   shifts: MbscCalendarEvent[] = [

@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-rtl-right-to-left',
   templateUrl: './rtl-right-to-left.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

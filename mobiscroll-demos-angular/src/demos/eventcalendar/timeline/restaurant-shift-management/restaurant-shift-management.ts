@@ -40,6 +40,7 @@ const defaultSlots = [
   styleUrl: './restaurant-shift-management.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './restaurant-shift-management.html',
+  standalone: false,
 })
 export class AppComponent {
   resources = [

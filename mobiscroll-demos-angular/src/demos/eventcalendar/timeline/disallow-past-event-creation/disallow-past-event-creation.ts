@@ -17,6 +17,7 @@ const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
   encapsulation: ViewEncapsulation.None,
   templateUrl: './disallow-past-event-creation.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

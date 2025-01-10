@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-calendar-date-object-iso-8601-moment',
   templateUrl: './date-object-ISO-8601-moment.html',
+  standalone: false,
 })
 export class AppComponent {
   date: Date | undefined;

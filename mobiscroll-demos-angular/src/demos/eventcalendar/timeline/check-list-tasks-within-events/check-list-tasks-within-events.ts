@@ -20,6 +20,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './check-list-tasks-within-events.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

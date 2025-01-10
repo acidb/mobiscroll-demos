@@ -21,6 +21,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './meal-planner.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

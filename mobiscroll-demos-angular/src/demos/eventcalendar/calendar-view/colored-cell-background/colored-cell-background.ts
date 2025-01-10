@@ -11,6 +11,7 @@ setOptions({
 @Component({
   selector: 'app-eventcalendar-colored-cell-background',
   templateUrl: './colored-cell-background.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

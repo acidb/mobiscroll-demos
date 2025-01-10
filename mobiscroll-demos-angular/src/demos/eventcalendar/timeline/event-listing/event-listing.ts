@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './event-listing.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-listing.html',
+  standalone: false,
 })
 export class AppComponent {
   view = 'month';

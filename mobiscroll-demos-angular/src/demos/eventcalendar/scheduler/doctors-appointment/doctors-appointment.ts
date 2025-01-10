@@ -25,6 +25,7 @@ const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
   encapsulation: ViewEncapsulation.None,
   templateUrl: './doctors-appointment.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private notify: Notifications) {}

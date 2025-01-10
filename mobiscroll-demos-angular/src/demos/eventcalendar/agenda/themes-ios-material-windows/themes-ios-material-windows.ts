@@ -11,6 +11,7 @@ setOptions({
   styleUrl: './themes-ios-material-windows.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './themes-ios-material-windows.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

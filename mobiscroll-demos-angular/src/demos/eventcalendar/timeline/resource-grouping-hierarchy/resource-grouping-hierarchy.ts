@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './resource-grouping-hierarchy.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-grouping-hierarchy.html',
+  standalone: false,
 })
 export class AppComponent {
   myView: MbscEventcalendarView = {
