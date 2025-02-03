@@ -15,7 +15,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-timeline-load-events-on-demand',
+  selector: 'app-timeline-load-events-on-scroll',
   templateUrl: './load-events-on-scroll.html',
   providers: [Notifications],
 })
