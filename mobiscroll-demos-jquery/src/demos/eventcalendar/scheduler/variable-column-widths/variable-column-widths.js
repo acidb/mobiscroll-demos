@@ -11,14 +11,14 @@ export default {
 
     $(function () {
       var myResources = [
-        { id: 1, name: 'Adam', color: '#328e39', icon1: 'office', icon2: 'bubble', icon3: 'unlocked', cssClass: 'large' },
-        { id: 2, name: 'Bella', color: '#00aabb', icon1: 'office', icon2: 'bubble', cssClass: 'medium' },
-        { id: 3, name: 'Charlie', color: '#ea72c0', icon1: 'office', icon2: 'bubble', cssClass: 'medium' },
-        { id: 4, name: 'Diana', color: '#ff5733', icon1: 'office', cssClass: 'small' },
-        { id: 5, name: 'Ethan', color: '#33ff57', icon1: 'office', icon2: 'bubble', cssClass: 'medium' },
-        { id: 6, name: 'Fiona', color: '#5733ff', icon1: 'office', icon2: 'bubble', icon3: 'unlocked', cssClass: 'large' },
-        { id: 7, name: 'George', color: '#ff33aa', icon1: 'office', cssClass: 'small' },
-        { id: 8, name: 'Hannah', color: '#33aaff', icon1: 'office', icon2: 'bubble', cssClass: 'medium' },
+        { id: 1, name: 'Adam', color: '#328e39', icon1: 'office', icon2: 'bubble', icon3: 'unlocked', cssClass: 'my-col-width-large' },
+        { id: 2, name: 'Bella', color: '#00aabb', icon1: 'office', icon2: 'bubble', cssClass: 'my-col-width-medium' },
+        { id: 3, name: 'Charlie', color: '#ea72c0', icon1: 'office', icon2: 'bubble', cssClass: 'my-col-width-medium' },
+        { id: 4, name: 'Diana', color: '#ff5733', icon1: 'office', cssClass: 'my-col-width-small' },
+        { id: 5, name: 'Ethan', color: '#33ff57', icon1: 'office', icon2: 'bubble', cssClass: 'my-col-width-medium' },
+        { id: 6, name: 'Fiona', color: '#5733ff', icon1: 'office', icon2: 'bubble', icon3: 'unlocked', cssClass: 'my-col-width-large' },
+        { id: 7, name: 'George', color: '#ff33aa', icon1: 'office', cssClass: 'my-col-width-small' },
+        { id: 8, name: 'Hannah', color: '#33aaff', icon1: 'office', icon2: 'bubble', cssClass: 'my-col-width-medium' },
       ];
 
       var myView = {
@@ -57,29 +57,21 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .small {
+  .my-col-width-small {
     width: 70px;
   }
-  .medium {
+
+  .my-col-width-medium {
     width: 120px;
   }
 
-  .large {
+  .my-col-width-large {
     width: 180px;
   }
-
-.my-col-width-small .mbsc-schedule-col-width {
-  width: 50px;
-} 
-.my-col-width-medium .mbsc-schedule-col-width {
-  width: 100px;
-} 
-.my-col-width-large .mbsc-schedule-col-width {
-  width: 150px;
-} 
+ 
 .resource-icons {
   display: flex;
-  gap: 5px; /* Adjust spacing between icons */
+  gap: 5px;
 }
   `,
 };
