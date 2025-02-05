@@ -558,7 +558,7 @@ export default {
               return ' ';
             }
             return (
-              '<div class="resource-template-content">' +
+              '<div class="resource-template-container">' +
               '<div class="resource-name">' +
               resource.name +
               '</div>' +
@@ -597,7 +597,7 @@ export default {
   width: 220px;
 } 
 
-.resource-template-content {
+.resource-template-container {
   position: relative;
   padding-left: 80px;
   text-align: left;
