@@ -25,7 +25,7 @@ export default {
         schedule: { type: 'week', size: 5, allDay: false },
       };
 
-      var calendar = $('#demo-desktop-week-view')
+      $('#demo-desktop-week-view')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -50,13 +50,6 @@ export default {
         })
         .mobiscroll('getInst');
     });
-    $.getJSON(
-      'https://trial.mobiscroll.com/resource-events-shared/?callback=?',
-      function (events) {
-        calendar.setEvents(events);
-      },
-      'jsonp',
-    );
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `

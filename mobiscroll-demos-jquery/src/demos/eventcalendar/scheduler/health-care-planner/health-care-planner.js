@@ -573,26 +573,6 @@ export default {
           },
         })
         .mobiscroll('getInst');
-
-      function logEvents() {
-        var events = calendar.getEvents().map((event) => {
-          var startDate = new Date(event.start);
-          var endDate = new Date(event.end);
-
-          return {
-            id: event.id,
-            resource: event.resource,
-            title: event.title,
-            start: `dyndatetime(y,m,${startDate.getDate()},${startDate.getHours()},${startDate.getMinutes()})`,
-            end: `dyndatetime(y,m,${endDate.getDate()},${endDate.getHours()},${endDate.getMinutes()})`,
-            recurring: event.recurring ? event.recurring : undefined,
-            type: event.type ? event.type : undefined,
-            editable: event.editable !== undefined ? event.editable : undefined,
-          };
-        });
-
-        console.log(JSON.stringify(events, null, 2));
-      }
     });
   },
   // eslint-disable-next-line es5/no-template-literals
