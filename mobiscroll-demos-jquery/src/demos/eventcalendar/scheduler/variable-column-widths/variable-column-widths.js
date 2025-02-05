@@ -25,7 +25,7 @@ export default {
         schedule: { type: 'week', size: 5, allDay: false },
       };
 
-      var inst = $('#demo-desktop-week-view')
+      var calendar = $('#demo-desktop-week-view')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -50,6 +50,13 @@ export default {
         })
         .mobiscroll('getInst');
     });
+    $.getJSON(
+      'https://trial.mobiscroll.com/resource-events-shared/?callback=?',
+      function (events) {
+        calendar.setEvents(events);
+      },
+      'jsonp',
+    );
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
@@ -57,6 +64,11 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+.resource-icons {
+  display: flex;
+  gap: 5px;
+}
+
 .my-col-width-small {
   width: 70px;
 }
@@ -67,11 +79,6 @@ export default {
 
 .my-col-width-large {
   width: 180px;
-}
- 
-.resource-icons {
-  display: flex;
-  gap: 5px;
 }
   `,
 };
