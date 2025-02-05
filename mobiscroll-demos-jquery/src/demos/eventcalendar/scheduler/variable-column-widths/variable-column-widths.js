@@ -57,17 +57,17 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .my-col-width-small {
-    width: 70px;
-  }
+.my-col-width-small {
+  width: 70px;
+}
 
-  .my-col-width-medium {
-    width: 120px;
-  }
+.my-col-width-medium {
+  width: 120px;
+}
 
-  .my-col-width-large {
-    width: 180px;
-  }
+.my-col-width-large {
+  width: 180px;
+}
  
 .resource-icons {
   display: flex;

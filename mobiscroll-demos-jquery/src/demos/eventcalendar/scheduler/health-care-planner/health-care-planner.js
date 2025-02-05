@@ -18,7 +18,7 @@ export default {
         {
           id: 1,
           name: 'Dr. James Cole',
-          color: 'rgb(123, 222, 131)',
+          color: 'rgb(203, 57, 57)',
           cssClass: 'resource-column-parent',
           description: 'Injury Recovery Specialist',
           img: 'https://img.mobiscroll.com/demos/m4.png',
@@ -26,13 +26,13 @@ export default {
         {
           id: 2,
           name: ' ',
-          color: 'rgb(123, 222, 131)',
+          color: 'rgb(28, 161, 26)',
           cssClass: 'resource-column-schedule',
         },
         {
           id: 3,
           name: 'Dr. Anna Hayes',
-          color: 'rgb(0, 170, 187)',
+          color: 'rgb(51, 74, 185)',
           cssClass: 'resource-column-parent',
           description: 'Sports Physiotherapist',
           img: 'https://img.mobiscroll.com/demos/f3.png',
@@ -40,13 +40,13 @@ export default {
         {
           id: 4,
           name: ' ',
-          color: 'rgb(0, 170, 187)',
+          color: 'rgb(28, 161, 26)',
           cssClass: 'resource-column-schedule',
         },
         {
           id: 5,
           name: 'Dr. Mark Lewis',
-          color: 'rgb(246, 121, 68)',
+          color: 'rgb(23, 116, 112)',
           cssClass: 'resource-column-parent',
           description: 'Mobility Recovery Expert',
           img: 'https://img.mobiscroll.com/demos/m3.png',
@@ -54,7 +54,7 @@ export default {
         {
           id: 6,
           name: ' ',
-          color: 'rgb(246, 121, 68)',
+          color: 'rgb(28, 161, 26)',
           cssClass: 'resource-column-schedule',
         },
       ];
@@ -232,31 +232,10 @@ export default {
             },
           ],
           data: myEvents,
-          renderScheduleEvent: function (data) {
-            if (data.original.type == 'availability') {
-              return '<div class="mds-availability-bar" style="background-color: ' + data.color + ';"></div>';
-            } else {
-              return (
-                '<div class="mds-other-event" style="background:' +
-                data.color +
-                ';">' +
-                '<div class="mds-other-content">' +
-                '<div class="mds-other-title">' +
-                data.title +
-                '<br>Start: ' +
-                data.start +
-                '<br>End: ' +
-                data.end +
-                '<br>Patient ID: ' +
-                data.original.patientId +
-                '</div>' +
-                '</div>' +
-                '</div>'
-              );
-            }
-          },
-
           renderResource: function (resource) {
+            if (resource.cssClass !== 'resource-column-parent') {
+              return ' ';
+            }
             return (
               '<div class="resource-template-content">' +
               '<div class="resource-name">' +
@@ -281,9 +260,18 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+.resource-column-schedule .mbsc-schedule-event-range {
+  display: none;
+}
+
+.resource-column-schedule .mbsc-schedule-event {
+  margin-left: 4px;
+}
+
 .resource-column-schedule {
   width: 15px;
 } 
+
 .resource-column-parent {
   width: 220px;
 } 
@@ -309,32 +297,32 @@ export default {
 }
 
 .resource-name {
-font-weight: 600;
+  font-weight: 600;
   font-size: 16px;
 }
 
 .mds-availability-bar {
-    width: 8px;
-    height: 100%;
-    border-radius: 10px;
+  width: 8px;
+  height: 100%;
+  border-radius: 10px;
 }
 
 .mds-other-event {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 }
 
 .mds-other-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .mds-other-title {
-    text-align: center;
-    color: white;
+  text-align: center;
+  color: white;
 }
   `,
 };
