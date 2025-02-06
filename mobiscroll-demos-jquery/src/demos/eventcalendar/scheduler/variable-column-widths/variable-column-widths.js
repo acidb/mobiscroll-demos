@@ -11,21 +11,17 @@ export default {
 
     $(function () {
       var myResources = [
-        { id: 1, name: 'Adam', color: '#328e39', icon1: 'office', icon2: 'bubble', icon3: 'unlocked', cssClass: 'my-column-width-large' },
-        { id: 2, name: 'Bella', color: '#00aabb', icon1: 'office', icon2: 'bubble', cssClass: 'my-column-width-medium' },
-        { id: 3, name: 'Charlie', color: '#ea72c0', icon1: 'office', icon2: 'bubble', cssClass: 'my-column-width-medium' },
-        { id: 4, name: 'Diana', color: '#ff5733', icon1: 'office', cssClass: 'my-column-width-small' },
-        { id: 5, name: 'Ethan', color: '#33ff57', icon1: 'office', icon2: 'bubble', cssClass: 'my-column-width-medium' },
-        { id: 6, name: 'Fiona', color: '#5733ff', icon1: 'office', icon2: 'bubble', icon3: 'unlocked', cssClass: 'my-column-width-large' },
-        { id: 7, name: 'George', color: '#ff33aa', icon1: 'office', cssClass: 'my-column-width-small' },
-        { id: 8, name: 'Hannah', color: '#33aaff', icon1: 'office', icon2: 'bubble', cssClass: 'my-column-width-medium' },
+        { id: 1, name: 'Adam', color: '#328e39', icon1: 'office', icon2: 'bubble', icon3: 'unlocked', cssClass: 'mds-var-column-large' },
+        { id: 2, name: 'Hannah', color: '#00aabb', icon1: 'office', icon2: 'bubble', cssClass: 'mds-var-column-medium' },
+        { id: 3, name: 'Charlie', color: '#ea72c0', icon1: 'office', icon2: 'bubble', cssClass: 'mds-var-column-medium' },
+        { id: 4, name: 'Ethan', color: '#ff5733', icon1: 'office', cssClass: 'mds-var-column-small' },
       ];
 
       var myView = {
         schedule: { type: 'week', size: 5, allDay: false },
       };
 
-      $('#demo-desktop-week-view')
+      var calendar = $('#demo-variable-column-widths')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -39,7 +35,7 @@ export default {
               '<div class="resource-name">' +
               resource.name +
               '</div>' +
-              '<div class="resource-icons">' +
+              '<div class="mds-var-col-res-icons">' +
               (resource.icon1 ? '<button mbsc-button data-start-icon="' + resource.icon1 + '"></button>' : '') +
               (resource.icon2 ? '<button mbsc-button data-start-icon="' + resource.icon2 + '"></button>' : '') +
               (resource.icon3 ? '<button mbsc-button data-start-icon="' + resource.icon3 + '"></button>' : '') +
@@ -49,28 +45,36 @@ export default {
           },
         })
         .mobiscroll('getInst');
+
+      $.getJSON(
+        'https://trial.mobiscroll.com/resource-events-shared/?callback=?',
+        function (events) {
+          calendar.setEvents(events);
+        },
+        'jsonp',
+      );
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-desktop-week-view"></div>
+<div id="demo-variable-column-widths"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.resource-icons {
+.mds-var-col-res-icons {
   display: flex;
   gap: 5px;
 }
 
-.my-column-width-small {
+.mds-var-column-small {
   width: 70px;
 }
 
-.my-column-width-medium {
+.mds-var-column-medium {
   width: 120px;
 }
 
-.my-column-width-large {
+.mds-var-column-large {
   width: 180px;
 }
   `,
