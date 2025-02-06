@@ -35,7 +35,7 @@ export default {
               '<div class="resource-name">' +
               resource.name +
               '</div>' +
-              '<div class="mds-var-col-res-icons">' +
+              '<div class="mbsc-flex-1-0">' +
               (resource.icon1 ? '<button mbsc-button data-start-icon="' + resource.icon1 + '"></button>' : '') +
               (resource.icon2 ? '<button mbsc-button data-start-icon="' + resource.icon2 + '"></button>' : '') +
               (resource.icon3 ? '<button mbsc-button data-start-icon="' + resource.icon3 + '"></button>' : '') +
@@ -62,8 +62,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-var-col-res-icons {
-  display: flex;
-  gap: 5px;
+ justify-content: center;
 }
 
 .mds-var-column-small {
