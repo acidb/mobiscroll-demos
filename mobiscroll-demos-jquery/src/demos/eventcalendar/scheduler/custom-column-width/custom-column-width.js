@@ -59,15 +59,15 @@ export default {
 <div mbsc-segmented-group>
   <label>
       <input type="radio" mbsc-segmented name="group1" value="my-col-width-small" checked>
-      small
+      50px
   </label>
   <label>
       <input type="radio" mbsc-segmented name="group1" value="my-col-width-medium">
-      medium
+      100px
   </label>
   <label>
       <input type="radio" mbsc-segmented name="group1" value="my-col-width-large">
-      large
+      150px
   </label>
 </div>
 <label>
