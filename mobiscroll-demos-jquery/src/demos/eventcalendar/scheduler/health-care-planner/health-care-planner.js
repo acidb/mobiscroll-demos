@@ -10,63 +10,13 @@ export default {
     });
 
     $(function () {
-      var now = new Date();
-      var today = new Date(now.setMinutes(59));
-      var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
-
-      var myResources = [
-        {
-          id: 1,
-          name: 'Dr. James Cole',
-          color: 'rgb(203, 57, 57)',
-          cssClass: 'resource-column-parent',
-          description: 'Injury Recovery Specialist',
-          img: 'https://img.mobiscroll.com/demos/m4.png',
-        },
-        {
-          id: 2,
-          name: ' ',
-          color: 'rgb(28, 161, 26)',
-          cssClass: 'resource-column-schedule',
-        },
-        {
-          id: 3,
-          name: 'Dr. Anna Hayes',
-          color: 'rgb(51, 74, 185)',
-          cssClass: 'resource-column-parent',
-          description: 'Sports Physiotherapist',
-          img: 'https://img.mobiscroll.com/demos/f3.png',
-        },
-        {
-          id: 4,
-          name: ' ',
-          color: 'rgb(28, 161, 26)',
-          cssClass: 'resource-column-schedule',
-        },
-        {
-          id: 5,
-          name: 'Dr. Mark Lewis',
-          color: 'rgb(23, 116, 112)',
-          cssClass: 'resource-column-parent',
-          description: 'Mobility Recovery Expert',
-          img: 'https://img.mobiscroll.com/demos/m3.png',
-        },
-        {
-          id: 6,
-          name: ' ',
-          color: 'rgb(28, 161, 26)',
-          cssClass: 'resource-column-schedule',
-        },
-      ];
-
       var myEvents = [
-        // availability
         {
           id: 1,
           resource: 2,
           title: '',
-          start: 'dyndatetime(y,m,d,10)',
-          end: 'dyndatetime(y,m,d,22)',
+          start: 'dyndatetime(y,m-1,d,10)',
+          end: 'dyndatetime(y,m-1,d,22)',
           recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
@@ -75,8 +25,8 @@ export default {
           id: 2,
           resource: 4,
           title: '',
-          start: 'dyndatetime(y,m,d,8)',
-          end: 'dyndatetime(y,m,d,18)',
+          start: 'dyndatetime(y,m-1,d,8)',
+          end: 'dyndatetime(y,m-1,d,18)',
           recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
@@ -85,13 +35,13 @@ export default {
           id: 3,
           resource: 6,
           title: '',
-          start: 'dyndatetime(y,m,d,12)',
-          end: 'dyndatetime(y,m,d,22)',
+          start: 'dyndatetime(y,m-1,d,12)',
+          end: 'dyndatetime(y,m-1,d,22)',
           recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
-        // events
+        /// 40 min appointments
         {
           id: 4,
           resource: 1,
@@ -479,80 +429,161 @@ export default {
         },
       ];
 
+      var myInvalids = [
+        {
+          resource: [1, 2],
+          start: '00:00',
+          end: '10:00',
+          recurring: {
+            repeat: 'daily',
+          },
+        },
+        {
+          resource: [1, 2],
+          start: '22:00',
+          end: '24:00',
+          recurring: {
+            repeat: 'daily',
+          },
+        },
+        {
+          resource: [3, 4],
+          start: '00:00',
+          end: '08:00',
+          recurring: {
+            repeat: 'daily',
+          },
+        },
+        {
+          resource: [3, 4],
+          start: '18:00',
+          end: '24:00',
+          recurring: {
+            repeat: 'daily',
+          },
+        },
+        {
+          resource: [5, 6],
+          start: '00:00',
+          end: '12:00',
+          recurring: {
+            repeat: 'daily',
+          },
+        },
+        {
+          resource: [5, 6],
+          start: '22:00',
+          end: '24:00',
+          recurring: {
+            repeat: 'daily',
+          },
+        },
+      ];
+
+      var myResources = [
+        {
+          id: 2,
+          name: ' ',
+          color: 'rgb(28, 161, 26)',
+          cssClass: 'resource-column-schedule',
+        },
+        {
+          id: 1,
+          name: 'Dr. James Cole',
+          color: 'rgb(203, 57, 57)',
+          cssClass: 'resource-column-parent',
+          description: 'Injury Recovery Specialist',
+          img: 'https://img.mobiscroll.com/demos/m4.png',
+        },
+        {
+          id: 4,
+          name: ' ',
+          color: 'rgb(28, 161, 26)',
+          cssClass: 'resource-column-schedule',
+        },
+        {
+          id: 3,
+          name: 'Dr. Anna Hayes',
+          color: 'rgb(51, 74, 185)',
+          cssClass: 'resource-column-parent',
+          description: 'Sports Physiotherapist',
+          img: 'https://img.mobiscroll.com/demos/f3.png',
+        },
+        {
+          id: 6,
+          name: ' ',
+          color: 'rgb(28, 161, 26)',
+          cssClass: 'resource-column-schedule',
+        },
+        {
+          id: 5,
+          name: 'Dr. Mark Lewis',
+          color: 'rgb(23, 116, 112)',
+          cssClass: 'resource-column-parent',
+          description: 'Mobility Recovery Expert',
+          img: 'https://img.mobiscroll.com/demos/m3.png',
+        },
+        {
+          id: 8,
+          name: ' ',
+          color: 'rgb(28, 161, 26)',
+          cssClass: 'resource-column-schedule',
+        },
+        {
+          id: 7,
+          name: 'Dr. Emily Carter',
+          color: 'rgb(156, 39, 176)',
+          cssClass: 'resource-column-parent',
+          description: 'Chiropractic Specialist',
+          img: 'https://img.mobiscroll.com/demos/f1.png',
+        },
+        {
+          id: 10,
+          name: ' ',
+          color: 'rgb(28, 161, 26)',
+          cssClass: 'resource-column-schedule',
+        },
+        {
+          id: 9,
+          name: 'Dr. Robert Stone',
+          color: 'rgb(255, 87, 34)',
+          cssClass: 'resource-column-parent',
+          description: 'Orthopedic Surgeon',
+          img: 'https://img.mobiscroll.com/demos/m2.png',
+        },
+        {
+          id: 12,
+          name: ' ',
+          color: 'rgb(28, 161, 26)',
+          cssClass: 'resource-column-schedule',
+        },
+        {
+          id: 11,
+          name: 'Dr. Sophia Miller',
+          color: 'rgb(0, 150, 136)',
+          cssClass: 'resource-column-parent',
+          description: 'Pain Management Specialist',
+          img: 'https://img.mobiscroll.com/demos/f2.png',
+        },
+      ];
+
       var myView = {
-        schedule: { type: 'week', allDay: false },
+        schedule: { type: 'week', startDay: 1, endDay: 5, startTime: '08:00', endTime: '20:00', allDay: false },
       };
 
-      var calendar = $('#demo-desktop-week-view')
+      $('#demo-desktop-week-view')
         .mobiscroll()
         .eventcalendar({
           // context,
           // drag,
-          view: myView,
-          resources: myResources,
-          groupBy: 'date',
-          eventOverlap: false,
-          invalid: [
-            {
-              recurring: {
-                repeat: 'daily',
-                until: yesterday,
-              },
-            },
-            {
-              start: yesterday,
-              end: today,
-            },
-            {
-              resource: [1, 2],
-              start: '00:00',
-              end: '10:00',
-              recurring: {
-                repeat: 'daily',
-              },
-            },
-            {
-              resource: [1, 2],
-              start: '22:00',
-              end: '24:00',
-              recurring: {
-                repeat: 'daily',
-              },
-            },
-            {
-              resource: [3, 4],
-              start: '00:00',
-              end: '08:00',
-              recurring: {
-                repeat: 'daily',
-              },
-            },
-            {
-              resource: [3, 4],
-              start: '18:00',
-              end: '24:00',
-              recurring: {
-                repeat: 'daily',
-              },
-            },
-            {
-              resource: [5, 6],
-              start: '00:00',
-              end: '12:00',
-              recurring: {
-                repeat: 'daily',
-              },
-            },
-            {
-              resource: [5, 6],
-              start: '22:00',
-              end: '24:00',
-              recurring: {
-                repeat: 'daily',
-              },
-            },
-          ],
+          dragToCreate: true,
+          dragToMove: true,
+          dragToResize: true,
+          dragTimeStep: 20,
           data: myEvents,
+          eventOverlap: false,
+          groupBy: 'date',
+          invalid: myInvalids,
           renderResource: function (resource) {
             if (resource.cssClass !== 'resource-column-parent') {
               return ' ';
@@ -571,6 +602,30 @@ export default {
               '</div>'
             );
           },
+          renderScheduleEvent: function (data) {
+            if (data.original.type == 'availability') {
+              return '<div class="mds-availability-bar" style="background-color: ' + data.color + ';"></div>';
+            } else {
+              return (
+                '<div class="mds-other-event" style="background:' +
+                data.color +
+                ';">' +
+                '<div class="mds-other-content">' +
+                '<div class="mds-other-title">' +
+                '<br>Patient ID: ' +
+                data.original.patientId +
+                '<br>Start: ' +
+                data.start +
+                '<br>End: ' +
+                data.end +
+                '</div>' +
+                '</div>' +
+                '</div>'
+              );
+            }
+          },
+          resources: myResources,
+          view: myView,
         })
         .mobiscroll('getInst');
     });
@@ -594,7 +649,7 @@ export default {
 } 
 
 .resource-column-parent {
-  width: 220px;
+  width: 250px;
 } 
 
 .resource-template-container {
@@ -607,8 +662,8 @@ export default {
 
 .resource-avatar {
   position: absolute;
-  max-height: 50px;
-  max-width: 50px;
+  height: 40px;
+  width: 40px;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -644,6 +699,10 @@ export default {
 .mds-other-title {
   text-align: center;
   color: white;
+}
+
+.mds-other-event{
+  font-size: 12px;
 }
   `,
 };
