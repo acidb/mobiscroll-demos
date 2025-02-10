@@ -890,16 +890,16 @@ export default {
 } 
 
 .mds-resource-column-parent {
-  width: 250px;
+  width: 210px;
   border-left: 0 !important;
 } 
 
 .resource-template-container {
   position: relative;
-  padding-left: 80px;
+  padding-left: 50px;
   text-align: left;
   padding-bottom: 10px;
-  font-weight: 400;
+  font-weight: 500;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -910,7 +910,7 @@ export default {
   height: 40px;
   width: 40px;
   top: 20px;
-  left: 10px;
+  left: 0;
   transform: translateY(-50%);
 }
 
@@ -936,6 +936,7 @@ export default {
   height: 100%;
   border-radius: 5px;
   font-size: 12px;
+  line-height: 13px;
 }
 
 .mds-other-event:hover {
@@ -944,8 +945,15 @@ export default {
 
 .mds-other-title {
   text-align: flex-start;
-  padding: 5px 5px;
+  padding: 3px 3px;
   color: black;
+  font-weight: 350;
+}
+
+.mbsc-ios-dark .mds-other-title, 
+.mbsc-windows-dark .mds-other-title, 
+.mbsc-material-dark .mds-other-title  {
+  color: white;
 }
 
 .mds-health-care-title-cont {
