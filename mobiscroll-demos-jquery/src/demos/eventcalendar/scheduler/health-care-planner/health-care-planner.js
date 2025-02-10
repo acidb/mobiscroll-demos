@@ -688,7 +688,7 @@ export default {
         {
           id: 2,
           name: ' ',
-          color: 'rgb(118, 238, 116)',
+          color: 'rgb(28, 161, 26)',
           cssClass: 'mds-resource-column-schedule',
         },
         {
@@ -702,7 +702,7 @@ export default {
         {
           id: 4,
           name: ' ',
-          color: 'rgb(118, 238, 116)',
+          color: 'rgb(28, 161, 26)',
           eventCreation: false,
           cssClass: 'mds-resource-column-schedule',
         },
@@ -717,7 +717,7 @@ export default {
         {
           id: 6,
           name: ' ',
-          color: 'rgb(118, 238, 116)',
+          color: 'rgb(28, 161, 26)',
 
           eventCreation: false,
           cssClass: 'mds-resource-column-schedule',
@@ -733,14 +733,14 @@ export default {
         {
           id: 8,
           name: ' ',
-          color: 'rgb(118, 238, 116)',
+          color: 'rgb(28, 161, 26)',
           eventCreation: false,
           cssClass: 'mds-resource-column-schedule',
         },
         {
           id: 7,
           name: 'Dr. Emily Carter',
-          color: 'rgb(201, 164, 254)',
+          color: 'rgb(187, 163, 221)',
           cssClass: 'mds-resource-column-parent',
           description: 'Chiropractic Specialist',
           img: 'https://img.mobiscroll.com/demos/f1.png',
@@ -748,14 +748,14 @@ export default {
         {
           id: 10,
           name: ' ',
-          color: 'rgb(118, 238, 116)',
+          color: 'rgb(28, 161, 26)',
           eventCreation: false,
           cssClass: 'mds-resource-column-schedule',
         },
         {
           id: 9,
           name: 'Dr. Robert Stone',
-          color: 'rgb(239, 161, 137)',
+          color: 'rgb(213, 158, 142)',
           cssClass: 'mds-resource-column-parent',
           description: 'Orthopedic Surgeon',
           img: 'https://img.mobiscroll.com/demos/m2.png',
@@ -763,14 +763,14 @@ export default {
         {
           id: 12,
           name: ' ',
-          color: 'rgb(118, 238, 116)',
+          color: 'rgb(28, 161, 26)',
           eventCreation: false,
           cssClass: 'mds-resource-column-schedule',
         },
         {
           id: 11,
           name: 'Dr. Sophia Miller',
-          color: 'rgb(0, 150, 136)',
+          color: 'rgb(255, 223, 176)',
           cssClass: 'mds-resource-column-parent',
           description: 'Sports Physiotherapist',
           img: 'https://img.mobiscroll.com/demos/f2.png',
@@ -819,9 +819,9 @@ export default {
                 ';">' +
                 '<div class="mds-other-content">' +
                 '<div class="mds-other-title">' +
-                'Patient: ' +
+                '<b>Patient: ' +
                 data.original.title +
-                '<br>' +
+                '</b><br>' +
                 data.start +
                 '-' +
                 data.end +
@@ -915,7 +915,6 @@ export default {
 }
 
 .resource-name {
-  font-weight: 600;
   font-size: 16px;
   word-wrap: break-word;
   line-height: 1.2;
@@ -936,22 +935,17 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 5px;
+  font-size: 12px;
 }
 
-.mds-other-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+.mds-other-event:hover {
+ filter: saturate(2)
 }
 
 .mds-other-title {
-  text-align: center;
+  text-align: flex-start;
+  padding: 5px 5px;
   color: black;
-}
-
-.mds-other-event {
-  font-size: 12px;
 }
 
 .mds-health-care-title-cont {
