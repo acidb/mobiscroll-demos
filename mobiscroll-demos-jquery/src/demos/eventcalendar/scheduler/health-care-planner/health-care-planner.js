@@ -11,10 +11,10 @@ export default {
 
     $(function () {
       var formatDate = mobiscroll.formatDate;
-      var $tooltip = $('#demo-event-tooltip-popup');
-      var $title = $('#demo-tooltip-event-title');
-      var $startDate = $('#demo-tooltip-event-start');
-      var $endDate = $('#demo-tooltip-event-end');
+      var $tooltip = $('#demo-health-care-popup');
+      var $title = $('#demo-health-care-event-title');
+      var $startDate = $('#demo-health-care-event-start');
+      var $endDate = $('#demo-health-care-event-end');
 
       var myEvents = [
         {
@@ -781,7 +781,7 @@ export default {
         schedule: { type: 'week', startDay: 1, endDay: 5, startTime: '08:00', endTime: '20:00', allDay: false },
       };
 
-      $('#demo-desktop-week-view')
+      $('#demo-health-care-planner')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -860,17 +860,17 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-desktop-week-view"></div>
+<div id="demo-health-care-planner"></div>
 
-<div id="demo-event-tooltip-popup" style="display: none;">
-    <div class="mds-tooltip-event-title-cont">
-        <span id="demo-tooltip-event-title"></span>
+<div id="demo-health-care-popup" style="display: none;">
+    <div class="mds-health-care-title-cont">
+        <span id="demo-health-care-event-title"></span>
     </div>
-    <div class="mds-tooltip-start-cont mbsc-flex">
-        <span class="mds-tooltip-label">From:</span>
-        <span id="demo-tooltip-event-start"></span>
-        <span class="mds-tooltip-label">To:</span>
-        <span id="demo-tooltip-event-end"></span>
+    <div class="mds-health-care-start-cont mbsc-flex">
+        <span class="mds-health-care-label">From:</span>
+        <span id="demo-health-care-event-start"></span>
+        <span class="mds-health-care-label">To:</span>
+        <span id="demo-health-care-event-end"></span>
     </div>
 </div>
   `,
@@ -882,11 +882,11 @@ export default {
 }
 
 .mds-resource-column-schedule .mbsc-schedule-event {
-  margin-left: 4px;
+  margin-left: 5px;
 }
 
 .mds-resource-column-schedule {
-  width: 17px;
+  width: 15px;
 } 
 
 .mds-resource-column-parent {
@@ -927,9 +927,9 @@ export default {
 }
 
 .mds-availability-bar {
-  width: 8px;
+  width: 5px;
   height: 100%;
-  border-radius: 5px;
+  border-radius:5px;
 }
 
 .mds-other-event {
@@ -954,14 +954,14 @@ export default {
   font-size: 12px;
 }
 
-.mds-tooltip-event-title-cont {
+.mds-health-care-title-cont {
     margin-bottom: 15px;
     text-align: center;
     font-size: 16px;
 }
 
-.mds-tooltip-start-cont,
-.mds-tooltip-end-cont {
+.mds-health-care-start-cont,
+.mds-health-care-end-cont {
     justify-content: space-between;
     margin-bottom: 5px;
     font-size: 14px;
@@ -969,7 +969,7 @@ export default {
     border-bottom: 1px solid #ddd;
 }
 
-.mds-tooltip-label {
+.mds-health-care-label {
     font-weight: 600;
 }
   `,

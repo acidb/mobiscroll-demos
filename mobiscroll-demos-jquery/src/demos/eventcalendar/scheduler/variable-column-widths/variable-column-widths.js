@@ -207,7 +207,7 @@ export default {
         schedule: { type: 'week', startDay: 1, endDay: 5, startTime: '08:00', endTime: '19:00', allDay: false },
       };
 
-      var calendar = $('#demo-variable-column-widths')
+      $('#demo-variable-column-widths')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -219,7 +219,6 @@ export default {
           groupBy: 'date',
           renderResource: function (resource) {
             var iconsHtml = '';
-
             if (resource.inOffice) iconsHtml += inOfficeSvg;
             if (resource.role === 'developer') iconsHtml += developerSvg;
             if (resource.role === 'designer') iconsHtml += designerSvg;
@@ -231,76 +230,10 @@ export default {
               '<div>' + '<div class="mds-var-col-resource-name">' + resource.name + '</div>' + '<div>' + iconsHtml + '</div>' + '</div>'
             );
           },
-          onEventClick: function () {
-            extractEvents();
-          },
-
           resources: myResources,
           view: myView,
         })
         .mobiscroll('getInst');
-      function extractEvents() {
-        // to use
-        // var calendar =
-        // onEventClick: function () {
-        //   extractEvents();
-        // },
-        var today = new Date();
-        var currentDay = today.getDate();
-        var currentMonth = today.getMonth(); // 0-based index
-
-        var events = calendar.getEvents().map(function (event, index) {
-          var startDate = new Date(event.start);
-          var endDate = new Date(event.end);
-
-          var startDayOffset = startDate.getDate() - currentDay;
-          var startMonthOffset = startDate.getMonth() - currentMonth;
-
-          var endDayOffset = endDate.getDate() - currentDay;
-          var endMonthOffset = endDate.getMonth() - currentMonth;
-
-          return JSON.stringify(
-            {
-              id: index + 1,
-              resource: event.resource,
-              title: event.title,
-              start:
-                'dyndatetime(y, m + ' +
-                startMonthOffset +
-                ', d + ' +
-                startDayOffset +
-                ',' +
-                startDate.getHours() +
-                ',' +
-                startDate.getMinutes() +
-                ')',
-              end:
-                'dyndatetime(y, m + ' +
-                endMonthOffset +
-                ', d + ' +
-                endDayOffset +
-                ',' +
-                endDate.getHours() +
-                ',' +
-                endDate.getMinutes() +
-                ')',
-              recurring: event.recurring ? event.recurring : undefined,
-              type: event.type ? event.type : undefined,
-              editable: event.editable !== undefined ? event.editable : undefined,
-            },
-            null,
-            2,
-          );
-        });
-
-        var eventsText = events.join(',\n'); // Join without brackets
-
-        navigator.clipboard.writeText(eventsText).then(function () {
-          mobiscroll.toast({
-            message: 'Events copied to clipboard!',
-          });
-        });
-      }
     });
   },
   // eslint-disable-next-line es5/no-template-literals
