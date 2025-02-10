@@ -11,7 +11,6 @@ export default {
 
     $(function () {
       var formatDate = mobiscroll.formatDate;
-      var timer;
       var $tooltip = $('#demo-event-tooltip-popup');
       var $title = $('#demo-tooltip-event-title');
       var $startDate = $('#demo-tooltip-event-start');
@@ -690,13 +689,13 @@ export default {
           id: 2,
           name: ' ',
           color: 'rgb(118, 238, 116)',
-          cssClass: 'resource-column-schedule',
+          cssClass: 'mds-resource-column-schedule',
         },
         {
           id: 1,
           name: 'Dr. James Cole',
           color: 'rgb(209, 155, 155)',
-          cssClass: 'resource-column-parent',
+          cssClass: 'mds-resource-column-parent',
           description: 'Injury Recovery Specialist',
           img: 'https://img.mobiscroll.com/demos/m4.png',
         },
@@ -705,13 +704,13 @@ export default {
           name: ' ',
           color: 'rgb(118, 238, 116)',
           eventCreation: false,
-          cssClass: 'resource-column-schedule',
+          cssClass: 'mds-resource-column-schedule',
         },
         {
           id: 3,
           name: 'Dr. Anna Hayes',
           color: 'rgb(148, 162, 234)',
-          cssClass: 'resource-column-parent',
+          cssClass: 'mds-resource-column-parent',
           description: 'Sports Physiotherapist',
           img: 'https://img.mobiscroll.com/demos/f3.png',
         },
@@ -721,13 +720,13 @@ export default {
           color: 'rgb(118, 238, 116)',
 
           eventCreation: false,
-          cssClass: 'resource-column-schedule',
+          cssClass: 'mds-resource-column-schedule',
         },
         {
           id: 5,
           name: 'Dr. Mark Lewis',
           color: 'rgb(134, 191, 188)',
-          cssClass: 'resource-column-parent',
+          cssClass: 'mds-resource-column-parent',
           description: 'Mobility Recovery Expert',
           img: 'https://img.mobiscroll.com/demos/m3.png',
         },
@@ -736,13 +735,13 @@ export default {
           name: ' ',
           color: 'rgb(118, 238, 116)',
           eventCreation: false,
-          cssClass: 'resource-column-schedule',
+          cssClass: 'mds-resource-column-schedule',
         },
         {
           id: 7,
           name: 'Dr. Emily Carter',
           color: 'rgb(201, 164, 254)',
-          cssClass: 'resource-column-parent',
+          cssClass: 'mds-resource-column-parent',
           description: 'Chiropractic Specialist',
           img: 'https://img.mobiscroll.com/demos/f1.png',
         },
@@ -751,13 +750,13 @@ export default {
           name: ' ',
           color: 'rgb(118, 238, 116)',
           eventCreation: false,
-          cssClass: 'resource-column-schedule',
+          cssClass: 'mds-resource-column-schedule',
         },
         {
           id: 9,
           name: 'Dr. Robert Stone',
           color: 'rgb(239, 161, 137)',
-          cssClass: 'resource-column-parent',
+          cssClass: 'mds-resource-column-parent',
           description: 'Orthopedic Surgeon',
           img: 'https://img.mobiscroll.com/demos/m2.png',
         },
@@ -766,13 +765,13 @@ export default {
           name: ' ',
           color: 'rgb(118, 238, 116)',
           eventCreation: false,
-          cssClass: 'resource-column-schedule',
+          cssClass: 'mds-resource-column-schedule',
         },
         {
           id: 11,
           name: 'Dr. Sophia Miller',
           color: 'rgb(0, 150, 136)',
-          cssClass: 'resource-column-parent',
+          cssClass: 'mds-resource-column-parent',
           description: 'Sports Physiotherapist',
           img: 'https://img.mobiscroll.com/demos/f2.png',
         },
@@ -793,7 +792,7 @@ export default {
           groupBy: 'date',
           invalid: myInvalids,
           renderResource: function (resource) {
-            if (resource.cssClass !== 'resource-column-parent') {
+            if (resource.cssClass !== 'mds-resource-column-parent') {
               return ' ';
             }
             return (
@@ -838,18 +837,11 @@ export default {
             $startDate.text(formatDate('hh:mm A', new Date(event.start)));
             $endDate.text(formatDate('hh:mm A', new Date(event.end)));
 
-            clearTimeout(timer);
-            timer = null;
-
             tooltip.setOptions({ anchor: args.domEvent.target });
             if (event.type === 'availability') tooltip.open();
           },
           onEventHoverOut: function () {
-            if (!timer) {
-              timer = setTimeout(function () {
-                tooltip.close();
-              }, 200);
-            }
+            tooltip.close();
           },
           resources: myResources,
           view: myView,
@@ -864,19 +856,6 @@ export default {
           width: 250,
         })
         .mobiscroll('getInst');
-
-      $tooltip.on('mouseenter', function () {
-        if (timer) {
-          clearTimeout(timer);
-          timer = null;
-        }
-      });
-
-      $tooltip.on('mouseleave', function () {
-        timer = setTimeout(function () {
-          tooltip.close();
-        }, 200);
-      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -898,20 +877,21 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 
-.resource-column-schedule .mbsc-schedule-event-range {
+.mds-resource-column-schedule .mbsc-schedule-event-range {
   display: none;
 }
 
-.resource-column-schedule .mbsc-schedule-event {
+.mds-resource-column-schedule .mbsc-schedule-event {
   margin-left: 4px;
 }
 
-.resource-column-schedule {
-  width: 15px;
+.mds-resource-column-schedule {
+  width: 17px;
 } 
 
-.resource-column-parent {
+.mds-resource-column-parent {
   width: 250px;
+  border-left: 0 !important;
 } 
 
 .resource-template-container {
