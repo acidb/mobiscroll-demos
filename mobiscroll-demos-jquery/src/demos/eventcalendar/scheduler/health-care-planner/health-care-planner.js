@@ -10,6 +10,13 @@ export default {
     });
 
     $(function () {
+      var formatDate = mobiscroll.formatDate;
+      var timer;
+      var $tooltip = $('#demo-event-tooltip-popup');
+      var $title = $('#demo-tooltip-event-title');
+      var $startDate = $('#demo-tooltip-event-start');
+      var $endDate = $('#demo-tooltip-event-end');
+
       var myEvents = [
         {
           id: 1,
@@ -825,15 +832,68 @@ export default {
               );
             }
           },
+          onEventHoverIn: function (args) {
+            var event = args.event;
+            $title.text('Availability');
+            $startDate.text(formatDate('hh:mm A', new Date(event.start)));
+            $endDate.text(formatDate('hh:mm A', new Date(event.end)));
+
+            clearTimeout(timer);
+            timer = null;
+
+            tooltip.setOptions({ anchor: args.domEvent.target });
+            if (event.type === 'availability') tooltip.open();
+          },
+          onEventHoverOut: function () {
+            if (!timer) {
+              timer = setTimeout(function () {
+                tooltip.close();
+              }, 200);
+            }
+          },
           resources: myResources,
           view: myView,
         })
         .mobiscroll('getInst');
+
+      var tooltip = $tooltip
+        .mobiscroll()
+        .popup({
+          display: 'anchored',
+          showOverlay: false,
+          width: 250,
+        })
+        .mobiscroll('getInst');
+
+      $tooltip.on('mouseenter', function () {
+        if (timer) {
+          clearTimeout(timer);
+          timer = null;
+        }
+      });
+
+      $tooltip.on('mouseleave', function () {
+        timer = setTimeout(function () {
+          tooltip.close();
+        }, 200);
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-desktop-week-view"></div>
+
+<div id="demo-event-tooltip-popup" style="display: none;">
+    <div class="mds-tooltip-event-title-cont">
+        <span id="demo-tooltip-event-title"></span>
+    </div>
+    <div class="mds-tooltip-start-cont mbsc-flex">
+        <span class="mds-tooltip-label">From:</span>
+        <span id="demo-tooltip-event-start"></span>
+        <span class="mds-tooltip-label">To:</span>
+        <span id="demo-tooltip-event-end"></span>
+    </div>
+</div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
@@ -912,6 +972,25 @@ export default {
 
 .mds-other-event {
   font-size: 12px;
+}
+
+.mds-tooltip-event-title-cont {
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.mds-tooltip-start-cont,
+.mds-tooltip-end-cont {
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 14px;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.mds-tooltip-label {
+    font-weight: 600;
 }
   `,
 };
