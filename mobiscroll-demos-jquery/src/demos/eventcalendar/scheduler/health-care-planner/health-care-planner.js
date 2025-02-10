@@ -780,9 +780,9 @@ export default {
         .eventcalendar({
           // context,
           // drag,
-          dragToCreate: true,
-          dragToMove: true,
-          dragToResize: true,
+          // dragToCreate: true,
+          // dragToMove: true,
+          // dragToResize: true,
           dragTimeStep: 20,
           data: myEvents,
           eventOverlap: false,
