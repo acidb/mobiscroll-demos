@@ -358,9 +358,9 @@ export const demos = [
             name: 'Using the picker',
             unique: 7,
             items: [
-              { name: 'Custom Column Width', unique: 'custom-column-width', component: CustomColWidth },
-              { name: 'Health Care Planner', unique: 'health-care-planner', component: HealthCarePlanner },
-              { name: 'Variable Column Width', unique: 'variable-column-Width', component: VariableColWidth },
+              { name: '---> Custom Column Width', unique: 'custom-column-width', component: CustomColWidth },
+              { name: '---> Health Care Planner', unique: 'health-care-planner', component: HealthCarePlanner },
+              { name: '---> Variable Column Width', unique: 'variable-column-Width', component: VariableColWidth },
               { name: 'Mobile & Desktop usage', unique: 'mobile-desktop-usage', component: Demo439 },
               { name: 'Initializing the picker', unique: 'usage-on-input-or-inline', component: Demo571 },
               { name: 'Responsive behavior', unique: 'responsive', component: Demo529 },
