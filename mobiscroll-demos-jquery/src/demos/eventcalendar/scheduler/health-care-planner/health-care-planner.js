@@ -775,14 +775,11 @@ export default {
         schedule: { type: 'week', startDay: 1, endDay: 5, startTime: '08:00', endTime: '20:00', allDay: false },
       };
 
-      var calendar = $('#demo-desktop-week-view')
+      $('#demo-desktop-week-view')
         .mobiscroll()
         .eventcalendar({
           // context,
           // drag,
-          // dragToCreate: true,
-          // dragToMove: true,
-          // dragToResize: true,
           dragTimeStep: 20,
           data: myEvents,
           eventOverlap: false,
@@ -828,40 +825,10 @@ export default {
               );
             }
           },
-          onEventClick: function () {
-            extractEvents();
-          },
           resources: myResources,
           view: myView,
         })
         .mobiscroll('getInst');
-
-      function extractEvents() {
-        // to use
-        // onEventClick: function () {
-        //   extractEvents();
-        // },
-        var events = calendar.getEvents().map(function (event, index) {
-          var startDate = new Date(event.start);
-          var endDate = new Date(event.end);
-
-          return {
-            id: index + 1,
-            resource: event.resource,
-            title: event.title,
-            start: 'dyndatetime(y,m,' + startDate.getDate() + ',' + startDate.getHours() + ',' + startDate.getMinutes() + ')',
-            end: 'dyndatetime(y,m,' + endDate.getDate() + ',' + endDate.getHours() + ',' + endDate.getMinutes() + ')',
-            recurring: event.recurring ? event.recurring : undefined,
-            type: event.type ? event.type : undefined,
-            editable: event.editable !== undefined ? event.editable : undefined,
-          };
-        });
-        navigator.clipboard.writeText(JSON.stringify(events, null, 2)).then(function () {
-          mobiscroll.toast({
-            message: 'Events copied to clipboard!',
-          });
-        });
-      }
     });
   },
   // eslint-disable-next-line es5/no-template-literals
