@@ -27,10 +27,13 @@ export default {
           name: 'Carl',
           color: '#ea72c0',
         },
+        { id: 4, name: 'Diana', color: '#FF5733' },
+        { id: 5, name: 'Ethan', color: '#3366FF' },
+        { id: 6, name: 'Fiona', color: '#FFD700' },
       ];
 
       var myView = {
-        schedule: { type: 'week', size: 5, allDay: false },
+        schedule: { type: 'month', startTime: '08:00', endTime: '20:00', allDay: false },
       };
 
       var inst = $('#demo-desktop-week-view')
@@ -59,15 +62,15 @@ export default {
 <div mbsc-segmented-group>
   <label>
       <input type="radio" mbsc-segmented name="group1" value="my-col-width-small" checked>
-      small
+      50px
   </label>
   <label>
       <input type="radio" mbsc-segmented name="group1" value="my-col-width-medium">
-      medium
+      100px
   </label>
   <label>
       <input type="radio" mbsc-segmented name="group1" value="my-col-width-large">
-      large
+      150px
   </label>
 </div>
 <label>
