@@ -76,13 +76,14 @@ export default {
           img: 'https://img.mobiscroll.com/demos/f4.png',
           type: 'resource',
         },
-        // {
-        //   id: 9,
-        //   name: 'Dr. Benjamin Collins',
-        //   color: '#32cd32',
-        //   title: 'General Surgery',
-        //   img: 'https://img.mobiscroll.com/demos/m5.png',
-        // },
+        {
+          id: 9,
+          name: 'Dr. Benjamin Collins',
+          color: '#32cd32',
+          title: 'General Surgery',
+          img: 'https://img.mobiscroll.com/demos/m3.png',
+          type: 'resource',
+        },
         // {
         //   id: 10,
         //   name: 'Dr. Isabella Reed',
@@ -251,7 +252,11 @@ export default {
             var shiftElm =
               '<div id="md-resource-' +
               shift.id +
-              '" class="mbsc-flex mds-ext-res-drop-task">' +
+              '" class="mbsc-flex mds-ext-res-drop-task"' +
+              // ' style="background: ' +
+              // shift.color +
+              // '"' +
+              '>' +
               '<img draggable="false" alt="Dr. Ryan Gregor" class="mds-ext-res-dnd-avatar" src="' +
               shift.img +
               '"/>' +
@@ -275,7 +280,7 @@ export default {
         }
       }
 
-      var myCalendar = $('#mds-ext-res-drop-calendar')
+      $('#mds-ext-res-drop-calendar')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -290,7 +295,7 @@ export default {
           externalDrag: true,
           resources: doctors,
           renderResourceHeader: function () {
-            return '<h3>Shifts</h3>';
+            return '<div class="mds-nightshift-title">Scheduled Shifts</div>';
           },
           renderResource: function (resource) {
             return (
@@ -348,7 +353,7 @@ export default {
 <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
      <div id="mds-ext-res-drop-cont" class="mbsc-col-sm-3 mds-ext-res-drop-cont">
-          <div class="mbsc-form-group-title">Available night shifts</div>
+          <div class="mds-nightshift-title">Available shifts </div>
           <div id="mds-nightshift-list"></div>
       </div>
       <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
@@ -365,11 +370,20 @@ export default {
 }
 
 .mds-ext-res-drop-calendar .mbsc-timeline-row { 
-  height: 78px; 
+  height: 70px; 
 }
 
 .mds-ext-res-drop-calendar .mbsc-timeline-resource-col {
-  width: 350px;
+  width: 250px;
+}
+
+.mds-nightshift-title {
+  padding-top: 1em;
+  text-align: center;
+   font-size: .875em;
+  line-height: 1.5em;
+  text-transform: uppercase;
+  color: #6e6e6e;
 }
 
 .mds-ext-res-drop-cont {
@@ -407,11 +421,11 @@ export default {
   height: 36px;
 }
 
-.demo-external-drag-drop-schedule-unschedule.demo-wrapper,
+/*.demo-external-drag-drop-schedule-unschedule.demo-wrapper,
 .demo-external-drag-drop-schedule-unschedule .mbsc-grid,
 .demo-external-drag-drop-schedule-unschedule .mbsc-row,
 .demo-external-drag-drop-schedule-unschedule .mds-ext-res-drop-calendar {
     height: 100%;
-}
+}*/
   `,
 };
