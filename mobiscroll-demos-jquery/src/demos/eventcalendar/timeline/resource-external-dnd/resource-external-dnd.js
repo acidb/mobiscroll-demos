@@ -11,7 +11,7 @@ export default {
 
     $(function () {
       var $externalCont = $('#mds-ext-res-drop-cont');
-      var $nightShiftList = $('#mds-workers-list');
+      var $availableWorkersList = $('.mds-workers-list');
       var installers = [
         {
           id: 1,
@@ -199,21 +199,21 @@ export default {
       var constructionWork = [
         // Group 1
         {
-          id: 'shift-1',
+          id: 'work-1',
           start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,13)',
           title: 'Electrical wiring installation',
           resource: 2,
         },
         {
-          id: 'shift-2',
+          id: 'work-2',
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Power panel connection',
           resource: 2,
         },
         {
-          id: 'shift-3',
+          id: 'work-3',
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Water pipe fitting',
@@ -221,259 +221,259 @@ export default {
         },
         //<hide-comment>
         {
-          id: 'shift-4',
+          id: 'work-4',
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Leak inspection and sealing',
           resource: 3,
         },
         {
-          id: 'shift-5',
+          id: 'work-5',
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,13)',
           title: 'Wood framing for new walls',
           resource: 5,
         },
         {
-          id: 'shift-6',
+          id: 'work-6',
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Door and window frame assembly',
           resource: 5,
         },
         {
-          id: 'shift-7',
+          id: 'work-7',
           start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,13)',
           title: 'Bricklaying for foundation',
           resource: 6,
         },
         {
-          id: 'shift-8',
+          id: 'work-8',
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,16)',
           title: 'Applying cement mortar',
           resource: 6,
         },
         {
-          id: 'shift-9',
+          id: 'work-9',
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Welding steel beams',
           resource: 8,
         },
         {
-          id: 'shift-10',
+          id: 'work-10',
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Structural reinforcement welding',
           resource: 8,
         },
         {
-          id: 'shift-11',
+          id: 'work-11',
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,13)',
           title: 'Roof tiling',
           resource: 9,
         },
         {
-          id: 'shift-12',
+          id: 'work-12',
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Leak-proofing and insulation',
           resource: 9,
         },
         {
-          id: 'shift-13',
+          id: 'work-13',
           start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,14)',
           title: 'Operating bulldozer for site leveling',
           resource: 11,
         },
         {
-          id: 'shift-14',
+          id: 'work-14',
           start: 'dyndatetime(y,m,d,14,20)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Material lifting with crane',
           resource: 11,
         },
         {
-          id: 'shift-15',
+          id: 'work-15',
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Land survey for new roads',
           resource: 12,
         },
         {
-          id: 'shift-16',
+          id: 'work-16',
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Boundary marking for structures',
           resource: 12,
         },
         {
-          id: 'shift-17',
+          id: 'work-17',
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,13)',
           title: 'Concrete floor polishing',
           resource: 14,
         },
         {
-          id: 'shift-18',
+          id: 'work-18',
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Applying protective coatings on concrete',
           resource: 14,
         },
         {
-          id: 'shift-19',
+          id: 'work-19',
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Steel frame installation',
           resource: 15,
         },
         {
-          id: 'shift-20',
+          id: 'work-20',
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Bolting and securing steel structures',
           resource: 15,
         },
         {
-          id: 'shift-21',
+          id: 'work-21',
           start: 'dyndatetime(y,m,d,10)',
           end: 'dyndatetime(y,m,d,14)',
           title: 'Interior painting preparation',
           resource: 17,
         },
         {
-          id: 'shift-22',
+          id: 'work-22',
           start: 'dyndatetime(y,m,d,15)',
           end: 'dyndatetime(y,m,d,18,10)',
           title: 'Applying finishing coats',
           resource: 17,
         },
         {
-          id: 'shift-23',
+          id: 'work-23',
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Glass panel measurement and cutting',
           resource: 18,
         },
         {
-          id: 'shift-24',
+          id: 'work-24',
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Installing large glass windows',
           resource: 18,
         },
         {
-          id: 'shift-3',
+          id: 'work-3',
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Concrete foundation pouring',
           resource: 19,
         },
         {
-          id: 'shift-4',
+          id: 'work-4',
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Curing and leveling concrete',
           resource: 19,
         },
         {
-          id: 'shift-5',
+          id: 'work-5',
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,15)',
           title: 'Structural steel beam welding',
           resource: 20,
         },
         {
-          id: 'shift-6',
+          id: 'work-6',
           start: 'dyndatetime(y,m,d,16)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Reinforcement bar assembly',
           resource: 20,
         },
         {
-          id: 'shift-7',
+          id: 'work-7',
           start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,14)',
           title: 'Excavation for foundation',
           resource: 21,
         },
         {
-          id: 'shift-8',
+          id: 'work-8',
           start: 'dyndatetime(y,m,d,15)',
           end: 'dyndatetime(y,m,17,30)',
           title: 'Operating crane for material transport',
           resource: 21,
         },
         {
-          id: 'shift-9',
+          id: 'work-9',
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Land survey for new section',
           resource: 22,
         },
         {
-          id: 'shift-10',
+          id: 'work-10',
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Marking layout for construction work',
           resource: 22,
         },
         {
-          id: 'shift-11',
+          id: 'work-11',
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,13)',
           title: 'Exterior wall painting',
           resource: 23,
         },
         {
-          id: 'shift-12',
+          id: 'work-12',
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Applying protective coatings',
           resource: 23,
         },
         {
-          id: 'shift-13',
+          id: 'work-13',
           start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Roof tiling installation',
           resource: 24,
         },
         {
-          id: 'shift-14',
+          id: 'work-14',
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17,45)',
           title: 'Leak-proofing and insulation work',
           resource: 24,
         },
         {
-          id: 'shift-15',
+          id: 'work-15',
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Plastering interior walls',
           resource: 25,
         },
         {
-          id: 'shift-16',
+          id: 'work-16',
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Ceiling plaster and finishing',
           resource: 25,
         },
         {
-          id: 'shift-17',
+          id: 'work-17',
           start: 'dyndatetime(y,m,d,10)',
           end: 'dyndatetime(y,m,d,15)',
           title: 'Controlled demolition of old structure',
           resource: 26,
         },
         {
-          id: 'shift-18',
+          id: 'work-18',
           start: 'dyndatetime(y,m,d,15,15)',
           end: 'dyndatetime(y,m,d,17,45)',
           title: 'Site cleanup and debris removal',
@@ -482,34 +482,34 @@ export default {
         //</hide-comment>
       ];
 
-      function generateExternalResources(nightShift) {
-        if (nightShift && availableInstallers.length) {
-          $nightShiftList.html('');
-          availableInstallers.forEach(function (shift) {
-            var shiftElm =
+      function generateExternalResources(availableWorkers) {
+        if (availableWorkers && availableInstallers.length) {
+          $availableWorkersList.html('');
+          availableInstallers.forEach(function (work) {
+            var workElm =
               '<div id="md-resource-' +
-              shift.id +
+              work.id +
               '" class="mbsc-flex mds-ext-res-drop-task">' +
               '<div class="mds-ext-res-dnd-avatar" style="background: ' +
-              shift.color +
+              work.color +
               '">' +
-              shift.name[0] +
+              work.name[0] +
               '</div>' +
               '<div class="mds-ext-res-dnd-cont">' +
               '<div class="mds-ext-res-dnd-name">' +
-              shift.name +
+              work.name +
               '</div>' +
               '<div class="mds-ext-res-dnd-title">' +
-              shift.title +
+              work.title +
               '</div>' +
               '</div>';
 
-            $nightShiftList.append(shiftElm);
+            $availableWorkersList.append(workElm);
 
-            $('#md-resource-' + shift.id)
+            $('#md-resource-' + work.id)
               .mobiscroll()
               .draggable({
-                dragData: shift,
+                dragData: work,
               });
           });
         }
@@ -530,27 +530,28 @@ export default {
           renderResourceHeader: function () {
             return (
               '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-workers-title">Set up teams</div>' +
-              '<button mbsc-button id="mds-create-new-team" data-variant="outline" class="mds-create-new-team">Add new team</button></div>'
+              '<button mbsc-button id="mds-create-new-team" data-variant="outline" class="mds-create-new-team">Add team</button></div>'
             );
           },
           renderResource: function (resource) {
             return resource.children
               ? '<div class="mds-ext-res-dnd-name mbsc-no-padding">' + resource.name + '</div>'
-              : '<div class="mbsc-flex">' +
-                  '<div class="mds-ext-res-dnd-avatar" style="background: ' +
-                  resource.color +
-                  '">' +
-                  resource.name[0] +
-                  '</div>' +
-                  '<div class="mds-ext-res-dnd-cont">' +
-                  '<div class="mds-ext-res-dnd-name">' +
-                  resource.name +
-                  '</div>' +
-                  '<div class="mds-ext-res-dnd-title">' +
-                  resource.title +
-                  '</div>' +
-                  '</div>' +
-                  '</div>';
+              : resource &&
+                  '<div class="mbsc-flex">' +
+                    '<div class="mds-ext-res-dnd-avatar" style="background: ' +
+                    resource.color +
+                    '">' +
+                    resource.name[0] +
+                    '</div>' +
+                    '<div class="mds-ext-res-dnd-cont">' +
+                    '<div class="mds-ext-res-dnd-name">' +
+                    resource.name +
+                    '</div>' +
+                    '<div class="mds-ext-res-dnd-title">' +
+                    resource.title +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
           },
           onResourceCreate: function (args) {
             var newResId = args.resource.id;
@@ -578,7 +579,7 @@ export default {
 
       $externalCont.mobiscroll().dropcontainer({
         onItemDrop: function (args) {
-          if (args.data) {
+          if (args.data && args.data.type === 'resource') {
             availableInstallers.push(args.data);
             generateExternalResources(availableInstallers);
           }
@@ -606,7 +607,7 @@ export default {
     <div class="mbsc-row">
      <div id="mds-ext-res-drop-cont" class="mbsc-col-sm-3 mds-ext-res-drop-cont mbsc-flex-col">
           <div class="mds-workers-title">Available technicians</div>
-          <div id="mds-workers-list"></div>
+          <div class="mds-workers-list"></div>
       </div>
       <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
           <div id="mds-ext-res-drop-calendar"></div>
@@ -656,7 +657,7 @@ export default {
 }
 
 .mds-ext-res-drop-cont .mds-workers-list {
-overflow: auto;
+   overflow: auto;
 }
 
 .mds-ext-res-drop-task:first-child {
@@ -689,6 +690,7 @@ overflow: auto;
 
 .mds-ext-res-drop-calendar .mds-create-new-team {
   margin-left: auto;
+  padding: 2px 6px;
   line-height: 24px;
 }
 
