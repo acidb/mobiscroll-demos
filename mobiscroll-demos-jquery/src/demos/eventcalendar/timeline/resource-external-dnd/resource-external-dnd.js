@@ -543,7 +543,7 @@ export default {
         }
       }
 
-      var timelineInst = $('#mds-ext-res-drop-calendar')
+      var timelineXInst = $('#mds-ext-res-drop-calendar')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -625,7 +625,8 @@ export default {
       $('.mds-create-new-team').on('click', function () {
         var teamLength = installers.length + 1;
         installers.push({ id: 'it-' + teamLength, name: 'Installer team ' + teamLength, children: [] });
-        timelineInst.setOptions({ resources: installers.slice() });
+        console.log('Testing click', installers);
+        timelineXInst.setOptions({ resources: installers.slice() });
       });
 
       generateExternalResources(availableInstallers);
