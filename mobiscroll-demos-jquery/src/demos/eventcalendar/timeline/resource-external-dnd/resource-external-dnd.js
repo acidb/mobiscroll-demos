@@ -622,7 +622,7 @@ export default {
         },
       });
 
-      $('.mds-create-new-team').on('click', function () {
+      $('.mds-ext-res-drop-calendar .mbsc-timeline-resource-header').on('click', '.mds-create-new-team', function () {
         var teamLength = installers.length + 1;
         installers.push({ id: 'it-' + teamLength, name: 'Installer team ' + teamLength, children: [] });
         console.log('Testing click', installers);
