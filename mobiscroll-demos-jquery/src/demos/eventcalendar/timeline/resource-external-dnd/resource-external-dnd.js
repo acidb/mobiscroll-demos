@@ -16,6 +16,8 @@ export default {
         {
           id: 1,
           name: 'Installer team 1',
+          eventCreation: false,
+          reorder: false,
           children: [
             {
               id: 2,
@@ -33,10 +35,12 @@ export default {
             },
           ],
         },
-        //<hidden>
+        //<hide-comment>
         {
           id: 4,
           name: 'Installer team 2',
+          eventCreation: false,
+          reorder: false,
           children: [
             {
               id: 5,
@@ -51,6 +55,8 @@ export default {
         {
           id: 7,
           name: 'Installer team 3',
+          eventCreation: false,
+          reorder: false,
           children: [
             {
               id: 8,
@@ -64,6 +70,8 @@ export default {
         {
           id: 10,
           name: 'Installer team 4',
+          eventCreation: false,
+          reorder: false,
           children: [
             {
               id: 11,
@@ -77,6 +85,8 @@ export default {
         {
           id: 13,
           name: 'Installer team 5',
+          eventCreation: false,
+          reorder: false,
           children: [
             {
               id: 14,
@@ -94,27 +104,22 @@ export default {
             },
           ],
         },
-        // {
-        //   id: 16,
-        //   name: 'Installer team 6',
-        //   children: [
-        //     {
-        //       id: 17,
-        //       name: 'Alexander Roberts',
-        //       color: '#8E44AD',
-        //       title: 'Painter',
-        //       img: 'https://img.mobiscroll.com/demos/f11.png',
-        //     },
-        //     {
-        //       id: 18,
-        //       name: 'Charlotte White',
-        //       color: '#34495E',
-        //       title: 'Glazier',
-        //       img: 'https://img.mobiscroll.com/demos/f12.png',
-        //     },
-        //   ],
-        // },
-        //</hidden>
+        {
+          id: 16,
+          name: 'Installer team 6',
+          eventCreation: false,
+          reorder: false,
+          children: [
+            {
+              id: 17,
+              name: 'Alexander Roberts',
+              color: '#8E44AD',
+              title: 'Painter',
+              img: 'https://img.mobiscroll.com/demos/f11.png',
+            },
+          ],
+        },
+        //</hide-comment>
       ];
 
       var availableInstallers = [
@@ -142,7 +147,7 @@ export default {
           img: 'https://img.mobiscroll.com/demos/f12.png',
           type: 'resource',
         },
-        //<hidden>
+        //<hide-comment>
         {
           id: 19,
           name: 'Liam Foster',
@@ -207,7 +212,7 @@ export default {
         //   img: 'https://img.mobiscroll.com/demos/f20.png',
         //   type: 'resource',
         // },
-        //</hidden>
+        //</hide-comment>
       ];
 
       var constructionWork = [
@@ -233,7 +238,7 @@ export default {
           title: 'Water pipe fitting',
           resource: 3,
         },
-        //<hidden>
+        //<hide-comment>
         {
           id: 'shift-4',
           start: 'dyndatetime(y,m,d,13)',
@@ -507,7 +512,7 @@ export default {
           title: 'Site cleanup and debris removal',
           resource: 26,
         },
-        //</hidden>
+        //</hide-comment>
       ];
 
       function generateExternalResources(nightShift) {
@@ -543,12 +548,12 @@ export default {
         }
       }
 
-      var timelineXInst = $('#mds-ext-res-drop-calendar')
+      var timelineInst = $('#mds-ext-res-drop-calendar')
         .mobiscroll()
         .eventcalendar({
           // context,
           view: {
-            timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' },
+            timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00', listing: true },
           },
           data: constructionWork,
           dragToMove: true,
@@ -607,7 +612,7 @@ export default {
           onResourceDelete: function (args) {
             mobiscroll.toast({
               // context,
-              message: args.resource.name + ' unscheduled',
+              message: args.resource.name + ' is available',
             });
           },
         })
@@ -623,11 +628,18 @@ export default {
       });
 
       // $('.mds-ext-res-drop-calendar .mbsc-timeline-resource-header').on('click', '.mds-create-new-team', function () {
-      $('#mds-create-new-team').on('click', function () {
+      // $('#mds-create-new-team').on('click', function () {
+      $(document).on('click', '.mds-create-new-team', function () {
         var teamLength = installers.length + 1;
-        installers.push({ id: 'it-' + teamLength, name: 'Installer team ' + teamLength, children: [] });
-        console.log('Testing click', installers);
-        timelineXInst.setOptions({ resources: installers.slice() });
+        installers.push({
+          id: 'it-' + teamLength,
+          eventCreation: false,
+          reorder: false,
+          name: 'Installer team ' + teamLength,
+          children: [],
+        });
+        console.log('Testing click', installers, timelineInst);
+        timelineInst.setOptions({ resources: installers.slice() });
       });
 
       generateExternalResources(availableInstallers);
@@ -652,10 +664,6 @@ export default {
   css: `
 .mds-ext-res-drop-calendar {
     border-left: 1px solid #ccc;
-}
-
-.mds-ext-res-drop-calendar .mbsc-timeline-row { 
-  height: 70px; 
 }
 
 .mds-ext-res-drop-calendar .mbsc-timeline-parent { 
@@ -698,17 +706,21 @@ export default {
 .mds-ext-res-dnd-name {
   font-size: 14px;
   font-weight: 600;
-  line-height: 24px;
 }
 
 .mds-ext-res-dnd-title {
+  padding-top: 2px;
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
 }
 
+.mds-ext-res-drop-calendar .mds-create-new-team {
+  line-height: 24px;
+}
+
 .mds-ext-res-dnd-avatar {
-  width: 36px;
+  min-width: 36px;
   height: 36px;
   line-height: 36px;
   border-radius: 18px;
