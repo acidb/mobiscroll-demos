@@ -24,14 +24,12 @@ export default {
               name: 'Emily Carter',
               color: '#007acc',
               title: 'Electrician',
-              img: 'https://img.mobiscroll.com/demos/f1.png',
             },
             {
               id: 3,
               name: 'Michael Lawson',
               color: '#008000',
               title: 'Plumber',
-              img: 'https://img.mobiscroll.com/demos/f2.png',
             },
           ],
         },
@@ -47,7 +45,6 @@ export default {
               name: 'James Brown',
               color: '#FF5733',
               title: 'Carpenter',
-              img: 'https://img.mobiscroll.com/demos/f3.png',
             },
           ],
         },
@@ -63,7 +60,6 @@ export default {
               name: 'Daniel Wilson',
               color: '#900C3F',
               title: 'Welder',
-              img: 'https://img.mobiscroll.com/demos/f5.png',
             },
           ],
         },
@@ -78,7 +74,6 @@ export default {
               name: 'Benjamin Harris',
               color: '#1ABC9C',
               title: 'Heavy Equipment Operator',
-              img: 'https://img.mobiscroll.com/demos/f7.png',
             },
           ],
         },
@@ -93,14 +88,12 @@ export default {
               name: 'William Anderson',
               color: '#F39C12',
               title: 'Concrete Finisher',
-              img: 'https://img.mobiscroll.com/demos/f9.png',
             },
             {
               id: 15,
               name: 'Emma Thompson',
               color: '#D35400',
               title: 'Steelworker',
-              img: 'https://img.mobiscroll.com/demos/f10.png',
             },
           ],
         },
@@ -115,7 +108,6 @@ export default {
               name: 'Alexander Roberts',
               color: '#8E44AD',
               title: 'Painter',
-              img: 'https://img.mobiscroll.com/demos/f11.png',
             },
           ],
         },
@@ -128,7 +120,6 @@ export default {
           name: 'Adam Miller',
           color: '#C70039',
           title: 'Mason',
-          img: 'https://img.mobiscroll.com/demos/f4.png',
           type: 'resource',
         },
         {
@@ -136,7 +127,6 @@ export default {
           name: 'Isabella Martinez',
           color: '#2ECC71',
           title: 'Surveyor',
-          img: 'https://img.mobiscroll.com/demos/f8.png',
           type: 'resource',
         },
         {
@@ -144,7 +134,6 @@ export default {
           name: 'Mark White',
           color: '#34495E',
           title: 'Glazier',
-          img: 'https://img.mobiscroll.com/demos/f12.png',
           type: 'resource',
         },
         //<hide-comment>
@@ -153,7 +142,6 @@ export default {
           name: 'Liam Foster',
           color: '#1E90FF',
           title: 'Concrete Finisher',
-          img: 'https://img.mobiscroll.com/demos/f13.png',
           type: 'resource',
         },
         {
@@ -161,7 +149,6 @@ export default {
           name: 'Sophia Adams',
           color: '#FF4500',
           title: 'Steelworker',
-          img: 'https://img.mobiscroll.com/demos/f14.png',
           type: 'resource',
         },
         {
@@ -169,7 +156,6 @@ export default {
           name: 'Ethan Murphy',
           color: '#228B22',
           title: 'Heavy Equipment Operator',
-          img: 'https://img.mobiscroll.com/demos/f15.png',
           type: 'resource',
         },
         {
@@ -177,41 +163,36 @@ export default {
           name: 'Ava Mitchell',
           color: '#FFD700',
           title: 'Surveyor',
-          img: 'https://img.mobiscroll.com/demos/f16.png',
           type: 'resource',
         },
-        // {
-        //   id: 23,
-        //   name: 'Noah Carter',
-        //   color: '#8B4513',
-        //   title: 'Painter',
-        //   img: 'https://img.mobiscroll.com/demos/f17.png',
-        //   type: 'resource',
-        // },
-        // {
-        //   id: 24,
-        //   name: 'Emma Scott',
-        //   color: '#800080',
-        //   title: 'Roofer',
-        //   img: 'https://img.mobiscroll.com/demos/f18.png',
-        //   type: 'resource',
-        // },
-        // {
-        //   id: 25,
-        //   name: 'William Bennett',
-        //   color: '#DC143C',
-        //   title: 'Plasterer',
-        //   img: 'https://img.mobiscroll.com/demos/f19.png',
-        //   type: 'resource',
-        // },
-        // {
-        //   id: 26,
-        //   name: 'Olivia Parker',
-        //   color: '#4682B4',
-        //   title: 'Demolition Specialist',
-        //   img: 'https://img.mobiscroll.com/demos/f20.png',
-        //   type: 'resource',
-        // },
+        {
+          id: 23,
+          name: 'Noah Carter',
+          color: '#8B4513',
+          title: 'Painter',
+          type: 'resource',
+        },
+        {
+          id: 24,
+          name: 'Emma Scott',
+          color: '#800080',
+          title: 'Roofer',
+          type: 'resource',
+        },
+        {
+          id: 25,
+          name: 'William Bennett',
+          color: '#DC143C',
+          title: 'Plasterer',
+          type: 'resource',
+        },
+        {
+          id: 26,
+          name: 'Olivia Parker',
+          color: '#4682B4',
+          title: 'Demolition Specialist',
+          type: 'resource',
+        },
         //</hide-comment>
       ];
 
@@ -227,7 +208,7 @@ export default {
         {
           id: 'shift-2',
           start: 'dyndatetime(y,m,d,14)',
-          end: 'dyndatetime(y,m,d,20)',
+          end: 'dyndatetime(y,m,d,18)',
           title: 'Power panel connection',
           resource: 2,
         },
@@ -269,8 +250,8 @@ export default {
         },
         {
           id: 'shift-8',
-          start: 'dyndatetime(y,m,d,14)',
-          end: 'dyndatetime(y,m,d,20)',
+          start: 'dyndatetime(y,m,d,13)',
+          end: 'dyndatetime(y,m,d,16)',
           title: 'Applying cement mortar',
           resource: 6,
         },
@@ -311,8 +292,8 @@ export default {
         },
         {
           id: 'shift-14',
-          start: 'dyndatetime(y,m,d,15)',
-          end: 'dyndatetime(y,m,d,21)',
+          start: 'dyndatetime(y,m,d,14,20)',
+          end: 'dyndatetime(y,m,d,18)',
           title: 'Material lifting with crane',
           resource: 11,
         },
@@ -368,7 +349,7 @@ export default {
         {
           id: 'shift-22',
           start: 'dyndatetime(y,m,d,15)',
-          end: 'dyndatetime(y,m,d,19)',
+          end: 'dyndatetime(y,m,d,18,10)',
           title: 'Applying finishing coats',
           resource: 17,
         },
@@ -384,20 +365,6 @@ export default {
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Installing large glass windows',
-          resource: 18,
-        },
-        {
-          id: 'shift-1',
-          start: 'dyndatetime(y,m,d,7)',
-          end: 'dyndatetime(y,m,d,13)',
-          title: 'Glass panel installation',
-          resource: 18,
-        },
-        {
-          id: 'shift-2',
-          start: 'dyndatetime(y,m,d,14)',
-          end: 'dyndatetime(y,m,d,20)',
-          title: 'Window fitting and sealing',
           resource: 18,
         },
         {
@@ -424,7 +391,7 @@ export default {
         {
           id: 'shift-6',
           start: 'dyndatetime(y,m,d,16)',
-          end: 'dyndatetime(y,m,d,22)',
+          end: 'dyndatetime(y,m,d,18)',
           title: 'Reinforcement bar assembly',
           resource: 20,
         },
@@ -438,7 +405,7 @@ export default {
         {
           id: 'shift-8',
           start: 'dyndatetime(y,m,d,15)',
-          end: 'dyndatetime(y,m,d,21)',
+          end: 'dyndatetime(y,m,17,30)',
           title: 'Operating crane for material transport',
           resource: 21,
         },
@@ -480,7 +447,7 @@ export default {
         {
           id: 'shift-14',
           start: 'dyndatetime(y,m,d,13)',
-          end: 'dyndatetime(y,m,d,19)',
+          end: 'dyndatetime(y,m,d,17,45)',
           title: 'Leak-proofing and insulation work',
           resource: 24,
         },
@@ -507,8 +474,8 @@ export default {
         },
         {
           id: 'shift-18',
-          start: 'dyndatetime(y,m,d,16)',
-          end: 'dyndatetime(y,m,d,22)',
+          start: 'dyndatetime(y,m,d,15,15)',
+          end: 'dyndatetime(y,m,d,17,45)',
           title: 'Site cleanup and debris removal',
           resource: 26,
         },
@@ -556,14 +523,15 @@ export default {
             timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00', listing: true },
           },
           data: constructionWork,
-          dragToMove: true,
-          dragToCreate: true,
           externalDrop: true,
           externalDrag: true,
           resources: installers,
           dragBetweenResources: false,
           renderResourceHeader: function () {
-            return '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-workers-title">Set up teams</div><button mbsc-button id="mds-create-new-team" class="mds-create-new-team">Add new team</button></div>';
+            return (
+              '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-workers-title">Set up teams</div>' +
+              '<button mbsc-button id="mds-create-new-team" data-variant="outline" class="mds-create-new-team">Add new team</button></div>'
+            );
           },
           renderResource: function (resource) {
             return resource.children
@@ -585,26 +553,16 @@ export default {
                   '</div>';
           },
           onResourceCreate: function (args) {
-            var parent = args.parent;
             var newResId = args.resource.id;
+            availableInstallers = availableInstallers.filter(function (s) {
+              return s.id !== newResId;
+            });
 
-            if (parent && parent.children.length >= 2) {
-              mobiscroll.toast({
-                // context,
-                message: 'Build teams up to two members',
-              });
-              return false;
-            } else {
-              availableInstallers = availableInstallers.filter(function (s) {
-                return s.id !== newResId;
-              });
-
-              $('#md-resource-' + newResId).remove();
-              mobiscroll.toast({
-                // context,
-                message: args.resource.name + ' added',
-              });
-            }
+            $('#md-resource-' + newResId).remove();
+            mobiscroll.toast({
+              // context,
+              message: args.resource.name + ' added',
+            });
           },
           onResourceOrderUpdate: function (args) {
             installers = args.resources;
@@ -627,9 +585,7 @@ export default {
         },
       });
 
-      // $('.mds-ext-res-drop-calendar .mbsc-timeline-resource-header').on('click', '.mds-create-new-team', function () {
-      // $('#mds-create-new-team').on('click', function () {
-      $(document).on('click', '.mds-create-new-team', function () {
+      $('.mds-ext-res-drop-calendar').on('click', '.mds-create-new-team', function () {
         var teamLength = installers.length + 1;
         installers.push({
           id: 'it-' + teamLength,
@@ -638,7 +594,6 @@ export default {
           name: 'Installer team ' + teamLength,
           children: [],
         });
-        console.log('Testing click', installers, timelineInst);
         timelineInst.setOptions({ resources: installers.slice() });
       });
 
@@ -663,32 +618,49 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-ext-res-drop-calendar {
-    border-left: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+
+.mds-ext-res-drop-calendar .mbsc-timeline-row { 
+  height: 50px; 
+}
+.mds-ext-res-drop-calendar .mbsc-timeline-row-gutter { 
+  height: 8px; 
+}
+.mds-ext-res-drop-calendar .mbsc-timeline-resource-col {
+  width: 250px;
 }
 
 .mds-ext-res-drop-calendar .mbsc-timeline-parent { 
   height: 32px; 
 }
 
-.mds-ext-res-drop-calendar .mbsc-timeline-resource-col {
-  width: 250px;
+.mds-ext-res-drop-calendar .mbsc-timeline-resource {
+  align-items: center;
 }
 
 .mds-workers-title {
   font-weight: 600;
-   font-size: .875em;
+  font-size: .875em;
   line-height: 1.5em;
   text-transform: uppercase;
   color: #6e6e6e;
 }
 
 .mds-ext-res-drop-cont .mds-workers-title {
-  padding: 16px 16px 0 16px;
+  padding: 12px 16px;
 }
 
 .mds-ext-res-drop-cont {
-    height: 100%;
-    overflow: auto;
+    height: 100%; 
+}
+
+.mds-ext-res-drop-cont .mds-workers-list {
+overflow: auto;
+}
+
+.mds-ext-res-drop-task:first-child {
+  margin-top: 0
 }
 
 .mds-ext-res-drop-task {
@@ -716,10 +688,12 @@ export default {
 }
 
 .mds-ext-res-drop-calendar .mds-create-new-team {
+  margin-left: auto;
   line-height: 24px;
 }
 
 .mds-ext-res-dnd-avatar {
+  width: 36px;
   min-width: 36px;
   height: 36px;
   line-height: 36px;
