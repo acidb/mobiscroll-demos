@@ -558,7 +558,7 @@ export default {
           resources: installers,
           dragBetweenResources: false,
           renderResourceHeader: function () {
-            return '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-workers-title">Set up teams</div><button mbsc-button class="mds-create-new-team">Add new team</button></div>';
+            return '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-workers-title">Set up teams</div><button mbsc-button id="mds-create-new-team" class="mds-create-new-team">Add new team</button></div>';
           },
           renderResource: function (resource) {
             return resource.children
@@ -622,7 +622,8 @@ export default {
         },
       });
 
-      $('.mds-ext-res-drop-calendar .mbsc-timeline-resource-header').on('click', '.mds-create-new-team', function () {
+      // $('.mds-ext-res-drop-calendar .mbsc-timeline-resource-header').on('click', '.mds-create-new-team', function () {
+      $('#mds-create-new-team').on('click', function () {
         var teamLength = installers.length + 1;
         installers.push({ id: 'it-' + teamLength, name: 'Installer team ' + teamLength, children: [] });
         console.log('Testing click', installers);
