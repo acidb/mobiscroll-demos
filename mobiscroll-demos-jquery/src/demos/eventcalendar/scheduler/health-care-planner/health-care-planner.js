@@ -12,7 +12,6 @@ export default {
     $(function () {
       var formatDate = mobiscroll.formatDate;
       var $tooltip = $('#demo-health-care-popup');
-      var $title = $('#demo-health-care-event-title');
       var $startDate = $('#demo-health-care-event-start');
       var $endDate = $('#demo-health-care-event-end');
 
@@ -20,569 +19,583 @@ export default {
         {
           id: 1,
           resource: 2,
-          title: '',
-          start: 'dyndatetime(y,m-1,d,10)',
-          end: 'dyndatetime(y,m-1,d,22)',
-          recurring: { repeat: 'daily' },
+          title: 'Working hours',
+          start: 'dyndatetime(y,m,d-10,10)',
+          end: 'dyndatetime(y,m,d-10,18)',
+          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
           type: 'availability',
           editable: false,
         },
         {
           id: 2,
           resource: 4,
-          title: '',
-          start: 'dyndatetime(y,m-1,d,8)',
-          end: 'dyndatetime(y,m-1,d,18)',
-          recurring: { repeat: 'daily' },
+          title: 'Working hours',
+          start: 'dyndatetime(y,m,d-10,8)',
+          end: 'dyndatetime(y,m,d-10,16)',
+          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
           type: 'availability',
           editable: false,
         },
         {
           id: 3,
           resource: 6,
-          title: '',
-          start: 'dyndatetime(y,m-1,d,12)',
-          end: 'dyndatetime(y,m-1,d,22)',
-          recurring: { repeat: 'daily' },
+          title: 'Working hours',
+          start: 'dyndatetime(y,m,d-10,9)',
+          end: 'dyndatetime(y,m,d-10,17)',
+          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
           type: 'availability',
           editable: false,
         },
         {
           id: 4,
           resource: 8,
-          title: '',
-          start: 'dyndatetime(y,m-1,d,10)',
-          end: 'dyndatetime(y,m-1,d,22)',
-          recurring: { repeat: 'daily' },
+          title: 'Working hours',
+          start: 'dyndatetime(y,m,d-10,10)',
+          end: 'dyndatetime(y,m,d-10,18)',
+          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+
           type: 'availability',
           editable: false,
         },
         {
           id: 5,
           resource: 10,
-          title: '',
-          start: 'dyndatetime(y,m-1,d,8)',
-          end: 'dyndatetime(y,m-1,d,18)',
-          recurring: { repeat: 'daily' },
+          title: 'Working hours',
+          start: 'dyndatetime(y,m,d-10,8)',
+          end: 'dyndatetime(y,m,d-10,16)',
+          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+
           type: 'availability',
           editable: false,
         },
         {
           id: 6,
           resource: 12,
-          title: '',
-          start: 'dyndatetime(y,m-1,d,12)',
-          end: 'dyndatetime(y,m-1,d,22)',
-          recurring: { repeat: 'daily' },
+          title: 'Working hours',
+          start: 'dyndatetime(y,m,d-10,9)',
+          end: 'dyndatetime(y,m,d-10,17)',
+          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
           type: 'availability',
           editable: false,
         },
-        /// 40 min appointments
         {
           id: 1,
-          resource: 5,
-          title: 'Emma Davis',
-          start: 'dyndatetime(y,m,10,13,0)',
-          end: 'dyndatetime(y,m,10,13,40)',
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 10, 40)',
+          end: 'dyndatetime(y, m, d-10, 11, 20)',
         },
         {
           id: 2,
-          resource: 5,
-          title: 'Mary Smith',
-          start: 'dyndatetime(y,m,10,14,20)',
-          end: 'dyndatetime(y,m,10,15,0)',
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 11, 20)',
+          end: 'dyndatetime(y, m, d-10, 12, 0)',
         },
         {
           id: 3,
-          resource: 5,
-          title: 'Peter Johnson',
-          start: 'dyndatetime(y,m,10,18,0)',
-          end: 'dyndatetime(y,m,10,18,40)',
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 13, 40)',
+          end: 'dyndatetime(y, m, d-10, 14, 20)',
         },
         {
           id: 4,
           resource: 3,
-          title: 'Lisa White',
-          start: 'dyndatetime(y,m,10,10,40)',
-          end: 'dyndatetime(y,m,10,11,20)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 9, 20)',
+          end: 'dyndatetime(y, m, d-10, 10, 0)',
         },
         {
           id: 5,
           resource: 3,
-          title: 'James Green',
-          start: 'dyndatetime(y,m,10,14,20)',
-          end: 'dyndatetime(y,m,10,15,0)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 11, 40)',
+          end: 'dyndatetime(y, m, d-10, 12, 20)',
         },
         {
           id: 6,
           resource: 3,
-          title: 'Anna Brown',
-          start: 'dyndatetime(y,m,10,15,40)',
-          end: 'dyndatetime(y,m,10,16,20)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 12, 20)',
+          end: 'dyndatetime(y, m, d-10, 13, 0)',
         },
         {
           id: 7,
-          resource: 7,
-          title: 'Michael Clark',
-          start: 'dyndatetime(y,m,10,10,20)',
-          end: 'dyndatetime(y,m,10,11,0)',
+          resource: 3,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 14, 40)',
+          end: 'dyndatetime(y, m, d-10, 15, 20)',
         },
         {
           id: 8,
-          resource: 7,
-          title: 'Sophia Miller',
-          start: 'dyndatetime(y,m,10,11,20)',
-          end: 'dyndatetime(y,m,10,12,0)',
+          resource: 5,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 14, 0)',
+          end: 'dyndatetime(y, m, d-10, 14, 40)',
         },
         {
           id: 9,
-          resource: 7,
-          title: 'David Lee',
-          start: 'dyndatetime(y,m,10,16,40)',
-          end: 'dyndatetime(y,m,10,17,20)',
+          resource: 5,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 13, 20)',
+          end: 'dyndatetime(y, m, d-10, 14, 0)',
         },
         {
           id: 10,
-          resource: 9,
-          title: 'Elizabeth Taylor',
-          start: 'dyndatetime(y,m,10,11,20)',
-          end: 'dyndatetime(y,m,10,12,0)',
+          resource: 5,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 11, 0)',
+          end: 'dyndatetime(y, m, d-10, 11, 40)',
         },
         {
           id: 11,
-          resource: 9,
-          title: 'John Williams',
-          start: 'dyndatetime(y,m,10,13,40)',
-          end: 'dyndatetime(y,m,10,14,20)',
+          resource: 5,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 9, 40)',
+          end: 'dyndatetime(y, m, d-10, 10, 20)',
         },
         {
           id: 12,
-          resource: 9,
-          title: 'Emma Davis',
-          start: 'dyndatetime(y,m,10,14,40)',
-          end: 'dyndatetime(y,m,10,15,20)',
+          resource: 7,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 15, 40)',
+          end: 'dyndatetime(y, m, d-10, 16, 20)',
         },
         {
           id: 13,
-          resource: 1,
-          title: 'Daniel Harris',
-          start: 'dyndatetime(y,m,10,10,40)',
-          end: 'dyndatetime(y,m,10,11,20)',
+          resource: 7,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 15, 0)',
+          end: 'dyndatetime(y, m, d-10, 15, 40)',
         },
         {
           id: 14,
-          resource: 1,
-          title: 'Grace Johnson',
-          start: 'dyndatetime(y,m,10,13,40)',
-          end: 'dyndatetime(y,m,10,14,20)',
+          resource: 7,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 12, 0)',
+          end: 'dyndatetime(y, m, d-10, 12, 40)',
         },
         {
           id: 15,
-          resource: 1,
-          title: 'Olivia Martinez',
-          start: 'dyndatetime(y,m,10,17,0)',
-          end: 'dyndatetime(y,m,10,17,40)',
+          resource: 7,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 11, 20)',
+          end: 'dyndatetime(y, m, d-10, 12, 0)',
         },
         {
           id: 16,
-          resource: 1,
-          title: 'Ethan Moore',
-          start: 'dyndatetime(y,m,10,18,20)',
-          end: 'dyndatetime(y,m,10,19,0)',
+          resource: 9,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 9, 0)',
+          end: 'dyndatetime(y, m, d-10, 9, 40)',
         },
         {
           id: 17,
-          resource: 11,
-          title: 'Ava Wilson',
-          start: 'dyndatetime(y,m,10,14,0)',
-          end: 'dyndatetime(y,m,10,14,40)',
+          resource: 9,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 9, 40)',
+          end: 'dyndatetime(y, m, d-10, 10, 20)',
         },
         {
           id: 18,
-          resource: 11,
-          title: 'Lucas Anderson',
-          start: 'dyndatetime(y,m,10,15,40)',
-          end: 'dyndatetime(y,m,10,16,20)',
+          resource: 9,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 11, 40)',
+          end: 'dyndatetime(y, m, d-10, 12, 20)',
         },
         {
           id: 19,
-          resource: 11,
-          title: 'Mia Thomas',
-          start: 'dyndatetime(y,m,10,16,40)',
-          end: 'dyndatetime(y,m,10,17,20)',
+          resource: 9,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 13, 40)',
+          end: 'dyndatetime(y, m, d-10, 14, 20)',
         },
         {
           id: 20,
-          resource: 11,
-          title: 'Noah Jackson',
-          start: 'dyndatetime(y,m,10,18,40)',
-          end: 'dyndatetime(y,m,10,19,20)',
+          resource: 9,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 14, 20)',
+          end: 'dyndatetime(y, m, d-10, 15, 0)',
         },
         {
           id: 21,
-          resource: 1,
-          title: 'Charlotte White',
-          start: 'dyndatetime(y,m,11,11,40)',
-          end: 'dyndatetime(y,m,11,12,20)',
+          resource: 11,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 10, 0)',
+          end: 'dyndatetime(y, m, d-10, 10, 40)',
         },
         {
           id: 22,
-          resource: 1,
-          title: 'Mason Harris',
-          start: 'dyndatetime(y,m,11,14,40)',
-          end: 'dyndatetime(y,m,11,15,20)',
+          resource: 11,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 10, 40)',
+          end: 'dyndatetime(y, m, d-10, 11, 20)',
         },
         {
           id: 23,
-          resource: 1,
-          title: 'Lily Clark',
-          start: 'dyndatetime(y,m,11,15,40)',
-          end: 'dyndatetime(y,m,11,16,20)',
+          resource: 11,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 13, 40)',
+          end: 'dyndatetime(y, m, d-10, 14, 20)',
         },
         {
           id: 24,
-          resource: 3,
-          title: 'Benjamin Lewis',
-          start: 'dyndatetime(y,m,11,9,40)',
-          end: 'dyndatetime(y,m,11,10,20)',
+          resource: 11,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 14, 20)',
+          end: 'dyndatetime(y, m, d-10, 15, 0)',
         },
         {
           id: 25,
-          resource: 3,
-          title: 'James Wilson',
-          start: 'dyndatetime(y,m,11,10,40)',
-          end: 'dyndatetime(y,m,11,11,20)',
-        },
-        {
-          id: 26,
-          resource: 3,
-          title: 'Amelia Young',
-          start: 'dyndatetime(y,m,11,14,20)',
-          end: 'dyndatetime(y,m,11,15,0)',
-        },
-        {
-          id: 27,
-          resource: 3,
-          title: 'Jack Moore',
-          start: 'dyndatetime(y,m,11,15,20)',
-          end: 'dyndatetime(y,m,11,16,0)',
-        },
-        {
-          id: 28,
-          resource: 5,
-          title: 'Sophia Scott',
-          start: 'dyndatetime(y,m,11,15,40)',
-          end: 'dyndatetime(y,m,11,16,20)',
-        },
-        {
-          id: 29,
-          resource: 5,
-          title: 'William Lee',
-          start: 'dyndatetime(y,m,11,18,0)',
-          end: 'dyndatetime(y,m,11,18,40)',
-        },
-        {
-          id: 30,
-          resource: 7,
-          title: 'Isabella Turner',
-          start: 'dyndatetime(y,m,11,11,40)',
-          end: 'dyndatetime(y,m,11,12,20)',
-        },
-        {
-          id: 31,
-          resource: 9,
-          title: 'Alex Johnson',
-          start: 'dyndatetime(y,m,11,11,20)',
-          end: 'dyndatetime(y,m,11,12,0)',
-        },
-        {
-          id: 32,
-          resource: 9,
-          title: 'Sara Williams',
-          start: 'dyndatetime(y,m,11,12,40)',
-          end: 'dyndatetime(y,m,11,13,20)',
-        },
-        {
-          id: 33,
-          resource: 9,
-          title: 'John Davis',
-          start: 'dyndatetime(y,m,11,15,40)',
-          end: 'dyndatetime(y,m,11,16,20)',
-        },
-        {
-          id: 34,
           resource: 11,
-          title: 'Michael Brown',
-          start: 'dyndatetime(y,m,11,13,20)',
-          end: 'dyndatetime(y,m,11,14,0)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d-10, 15, 0)',
+          end: 'dyndatetime(y, m, d-10, 15, 40)',
         },
         {
-          id: 35,
-          resource: 11,
-          title: 'Emma Wilson',
-          start: 'dyndatetime(y,m,11,14,40)',
-          end: 'dyndatetime(y,m,11,15,20)',
-        },
-        {
-          id: 36,
-          resource: 11,
-          title: 'Olivia Taylor',
-          start: 'dyndatetime(y,m,11,16,20)',
-          end: 'dyndatetime(y,m,11,17,0)',
-        },
-        {
-          id: 37,
-          resource: 11,
-          title: 'Jake Martin',
-          start: 'dyndatetime(y,m,11,17,20)',
-          end: 'dyndatetime(y,m,11,18,0)',
-        },
-        {
-          id: 38,
-          resource: 3,
-          title: 'Lily Anderson',
-          start: 'dyndatetime(y,m,12,10,40)',
-          end: 'dyndatetime(y,m,12,11,20)',
-        },
-        {
-          id: 39,
+          id: 1,
           resource: 1,
-          title: 'David Thomas',
-          start: 'dyndatetime(y,m,12,12,20)',
-          end: 'dyndatetime(y,m,12,13,0)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 10, 20)',
+          end: 'dyndatetime(y, m, d - 9, 11, 0)',
         },
         {
-          id: 40,
+          id: 2,
           resource: 1,
-          title: 'Ryan Harris',
-          start: 'dyndatetime(y,m,12,15,0)',
-          end: 'dyndatetime(y,m,12,15,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 11, 0)',
+          end: 'dyndatetime(y, m, d - 9, 11, 40)',
         },
         {
-          id: 41,
+          id: 3,
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 13, 0)',
+          end: 'dyndatetime(y, m, d - 9, 13, 40)',
+        },
+        {
+          id: 4,
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 14, 40)',
+          end: 'dyndatetime(y, m, d - 9, 15, 20)',
+        },
+        {
+          id: 5,
           resource: 3,
-          title: 'Sarah Clark',
-          start: 'dyndatetime(y,m,12,15,0)',
-          end: 'dyndatetime(y,m,12,15,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 14, 40)',
+          end: 'dyndatetime(y, m, d - 9, 15, 20)',
         },
         {
-          id: 42,
-          resource: 5,
-          title: 'Andrew Lewis',
-          start: 'dyndatetime(y,m,12,15,0)',
-          end: 'dyndatetime(y,m,12,15,40)',
-        },
-        {
-          id: 43,
-          resource: 5,
-          title: 'Grace Hall',
-          start: 'dyndatetime(y,m,12,15,40)',
-          end: 'dyndatetime(y,m,12,16,20)',
-        },
-        {
-          id: 44,
-          resource: 7,
-          title: 'Thomas Walker',
-          start: 'dyndatetime(y,m,12,12,20)',
-          end: 'dyndatetime(y,m,12,13,0)',
-        },
-        {
-          id: 45,
-          resource: 7,
-          title: 'Ben Allen',
-          start: 'dyndatetime(y,m,12,13,20)',
-          end: 'dyndatetime(y,m,12,14,0)',
-        },
-        {
-          id: 46,
-          resource: 7,
-          title: 'Zoe Young',
-          start: 'dyndatetime(y,m,12,18,20)',
-          end: 'dyndatetime(y,m,12,19,0)',
-        },
-        {
-          id: 47,
-          resource: 9,
-          title: 'Emily Scott',
-          start: 'dyndatetime(y,m,12,9,0)',
-          end: 'dyndatetime(y,m,12,9,40)',
-        },
-        {
-          id: 48,
-          resource: 9,
-          title: 'Jacob White',
-          start: 'dyndatetime(y,m,12,11,0)',
-          end: 'dyndatetime(y,m,12,11,40)',
-        },
-        {
-          id: 49,
-          resource: 9,
-          title: 'Ava Moore',
-          start: 'dyndatetime(y,m,12,14,0)',
-          end: 'dyndatetime(y,m,12,14,40)',
-        },
-        {
-          id: 50,
-          resource: 9,
-          title: 'Lily Jackson',
-          start: 'dyndatetime(y,m,12,15,0)',
-          end: 'dyndatetime(y,m,12,15,40)',
-        },
-        {
-          id: 51,
-          resource: 11,
-          title: 'Noah Carter',
-          start: 'dyndatetime(y,m,12,14,40)',
-          end: 'dyndatetime(y,m,12,15,20)',
-        },
-        {
-          id: 52,
-          resource: 11,
-          title: 'Mia Robinson',
-          start: 'dyndatetime(y,m,12,16,0)',
-          end: 'dyndatetime(y,m,12,16,40)',
-        },
-        {
-          id: 53,
-          resource: 1,
-          title: 'Liam Johnson',
-          start: 'dyndatetime(y,m,13,11,40)',
-          end: 'dyndatetime(y,m,13,12,20)',
-        },
-        {
-          id: 54,
-          resource: 1,
-          title: 'Olivia Martin',
-          start: 'dyndatetime(y,m,13,12,40)',
-          end: 'dyndatetime(y,m,13,13,20)',
-        },
-        {
-          id: 55,
-          resource: 1,
-          title: 'Jack Thompson',
-          start: 'dyndatetime(y,m,13,16,20)',
-          end: 'dyndatetime(y,m,13,17,0)',
-        },
-        {
-          id: 56,
-          resource: 1,
-          title: 'Mia Robinson',
-          start: 'dyndatetime(y,m,13,17,20)',
-          end: 'dyndatetime(y,m,13,18,0)',
-        },
-        {
-          id: 57,
+          id: 6,
           resource: 3,
-          title: 'Ethan Wilson',
-          start: 'dyndatetime(y,m,13,9,40)',
-          end: 'dyndatetime(y,m,13,10,20)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 12, 40)',
+          end: 'dyndatetime(y, m, d - 9, 13, 20)',
         },
         {
-          id: 58,
+          id: 7,
           resource: 3,
-          title: 'Rachel Adams',
-          start: 'dyndatetime(y,m,13,10,40)',
-          end: 'dyndatetime(y,m,13,11,20)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 8, 20)',
+          end: 'dyndatetime(y, m, d - 9, 9, 0)',
         },
         {
-          id: 59,
+          id: 8,
           resource: 3,
-          title: 'James Parker',
-          start: 'dyndatetime(y,m,13,14,0)',
-          end: 'dyndatetime(y,m,13,14,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 9, 20)',
+          end: 'dyndatetime(y, m, d - 9, 10, 0)',
         },
         {
-          id: 60,
+          id: 9,
           resource: 5,
-          title: 'Sophia Hall',
-          start: 'dyndatetime(y,m,13,14,0)',
-          end: 'dyndatetime(y,m,13,14,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 10, 40)',
+          end: 'dyndatetime(y, m, d - 9, 11, 20)',
         },
         {
-          id: 61,
+          id: 10,
           resource: 5,
-          title: 'Charlotte Green',
-          start: 'dyndatetime(y,m,13,15,0)',
-          end: 'dyndatetime(y,m,13,15,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 11, 20)',
+          end: 'dyndatetime(y, m, d - 9, 12, 0)',
         },
         {
-          id: 62,
+          id: 11,
           resource: 5,
-          title: 'Lucas Wright',
-          start: 'dyndatetime(y,m,13,17,40)',
-          end: 'dyndatetime(y,m,13,18,20)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 15, 0)',
+          end: 'dyndatetime(y, m, d - 9, 15, 40)',
         },
         {
-          id: 63,
+          id: 12,
+          resource: 5,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 15, 40)',
+          end: 'dyndatetime(y, m, d - 9, 16, 20)',
+        },
+        {
+          id: 13,
           resource: 7,
-          title: 'Ben Harris',
-          start: 'dyndatetime(y,m,13,12,20)',
-          end: 'dyndatetime(y,m,13,13,0)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 14, 20)',
+          end: 'dyndatetime(y, m, d - 9, 15, 0)',
         },
         {
-          id: 64,
+          id: 14,
           resource: 7,
-          title: 'Lily Evans',
-          start: 'dyndatetime(y,m,13,13,0)',
-          end: 'dyndatetime(y,m,13,13,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 13, 20)',
+          end: 'dyndatetime(y, m, d - 9, 14, 0)',
         },
         {
-          id: 65,
+          id: 15,
           resource: 7,
-          title: 'Jack Thompson',
-          start: 'dyndatetime(y,m,13,17,20)',
-          end: 'dyndatetime(y,m,13,18,0)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 10, 20)',
+          end: 'dyndatetime(y, m, d - 9, 11, 0)',
         },
         {
-          id: 66,
+          id: 16,
           resource: 9,
-          title: 'Ava Mitchell',
-          start: 'dyndatetime(y,m,13,9,40)',
-          end: 'dyndatetime(y,m,13,10,20)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 8, 0)',
+          end: 'dyndatetime(y, m, d - 9, 8, 40)',
         },
         {
-          id: 67,
+          id: 17,
           resource: 9,
-          title: 'Ben Harris',
-          start: 'dyndatetime(y,m,13,10,40)',
-          end: 'dyndatetime(y,m,13,11,20)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 8, 40)',
+          end: 'dyndatetime(y, m, d - 9, 9, 20)',
         },
         {
-          id: 68,
+          id: 18,
           resource: 9,
-          title: 'Isabella Scott',
-          start: 'dyndatetime(y,m,13,14,0)',
-          end: 'dyndatetime(y,m,13,14,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 10, 40)',
+          end: 'dyndatetime(y, m, d - 9, 11, 20)',
         },
         {
-          id: 69,
+          id: 19,
           resource: 9,
-          title: 'Olivia Martin',
-          start: 'dyndatetime(y,m,13,15,0)',
-          end: 'dyndatetime(y,m,13,15,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 11, 20)',
+          end: 'dyndatetime(y, m, d - 9, 12, 0)',
         },
         {
-          id: 70,
+          id: 20,
+          resource: 9,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 13, 40)',
+          end: 'dyndatetime(y, m, d - 9, 14, 20)',
+        },
+        {
+          id: 21,
           resource: 11,
-          title: 'Noah Carter',
-          start: 'dyndatetime(y,m,13,13,20)',
-          end: 'dyndatetime(y,m,13,14,0)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 10, 20)',
+          end: 'dyndatetime(y, m, d - 9, 11, 0)',
         },
         {
-          id: 71,
+          id: 22,
           resource: 11,
-          title: 'Jack Thompson',
-          start: 'dyndatetime(y,m,13,15,0)',
-          end: 'dyndatetime(y,m,13,15,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 13, 20)',
+          end: 'dyndatetime(y, m, d - 9, 14, 0)',
         },
         {
-          id: 72,
+          id: 23,
           resource: 11,
-          title: 'Ella Reed',
-          start: 'dyndatetime(y,m,13,18,0)',
-          end: 'dyndatetime(y,m,13,18,40)',
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 14, 40)',
+          end: 'dyndatetime(y, m, d - 9, 15, 20)',
+        },
+        {
+          id: 24,
+          resource: 11,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 9, 15, 20)',
+          end: 'dyndatetime(y, m, d - 9, 16, 0)',
+        },
+        {
+          id: 1,
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 10, 40)',
+          end: 'dyndatetime(y, m, d - 8, 11, 20)',
+        },
+        {
+          id: 2,
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 11, 20)',
+          end: 'dyndatetime(y, m, d - 8, 12, 0)',
+        },
+        {
+          id: 3,
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 13, 40)',
+          end: 'dyndatetime(y, m, d - 8, 14, 20)',
+        },
+        {
+          id: 4,
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 14, 40)',
+          end: 'dyndatetime(y, m, d - 8, 15, 20)',
+        },
+        {
+          id: 5,
+          resource: 1,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 17, 0)',
+          end: 'dyndatetime(y, m, d - 8, 17, 40)',
+        },
+        {
+          id: 6,
+          resource: 3,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 14, 20)',
+          end: 'dyndatetime(y, m, d - 8, 15, 0)',
+        },
+        {
+          id: 7,
+          resource: 3,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 11, 0)',
+          end: 'dyndatetime(y, m, d - 8, 11, 40)',
+        },
+        {
+          id: 8,
+          resource: 3,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 10, 20)',
+          end: 'dyndatetime(y, m, d - 8, 11, 0)',
+        },
+        {
+          id: 9,
+          resource: 3,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 8, 0)',
+          end: 'dyndatetime(y, m, d - 8, 8, 40)',
+        },
+        {
+          id: 10,
+          resource: 5,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 9, 40)',
+          end: 'dyndatetime(y, m, d - 8, 10, 20)',
+        },
+        {
+          id: 11,
+          resource: 5,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 12, 0)',
+          end: 'dyndatetime(y, m, d - 8, 12, 40)',
+        },
+        {
+          id: 12,
+          resource: 5,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 14, 0)',
+          end: 'dyndatetime(y, m, d - 8, 14, 40)',
+        },
+        {
+          id: 13,
+          resource: 5,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 15, 40)',
+          end: 'dyndatetime(y, m, d - 8, 16, 20)',
+        },
+        {
+          id: 14,
+          resource: 7,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 10, 40)',
+          end: 'dyndatetime(y, m, d - 8, 11, 20)',
+        },
+        {
+          id: 15,
+          resource: 7,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 11, 20)',
+          end: 'dyndatetime(y, m, d - 8, 12, 0)',
+        },
+        {
+          id: 16,
+          resource: 7,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 12, 0)',
+          end: 'dyndatetime(y, m, d - 8, 12, 40)',
+        },
+        {
+          id: 17,
+          resource: 7,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 15, 20)',
+          end: 'dyndatetime(y, m, d - 8, 16, 0)',
+        },
+        {
+          id: 18,
+          resource: 9,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d + 2, 14, 20)',
+          end: 'dyndatetime(y, m, d + 2, 15, 0)',
+        },
+        {
+          id: 19,
+          resource: 9,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 13, 20)',
+          end: 'dyndatetime(y, m, d - 8, 14, 0)',
+        },
+        {
+          id: 20,
+          resource: 9,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 10, 20)',
+          end: 'dyndatetime(y, m, d - 8, 11, 0)',
+        },
+        {
+          id: 21,
+          resource: 11,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 9, 20)',
+          end: 'dyndatetime(y, m, d - 8, 10, 0)',
+        },
+        {
+          id: 22,
+          resource: 11,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 10, 0)',
+          end: 'dyndatetime(y, m, d - 8, 10, 40)',
+        },
+        {
+          id: 23,
+          resource: 11,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 12, 20)',
+          end: 'dyndatetime(y, m, d - 8, 13, 0)',
+        },
+        {
+          id: 24,
+          resource: 11,
+          title: 'New event',
+          start: 'dyndatetime(y, m, d - 8, 15, 0)',
+          end: 'dyndatetime(y, m, d - 8, 15, 40)',
         },
       ];
+
+      myEvents = myEvents.slice(0, 6).concat(
+        myEvents.slice(6).map(function (event) {
+          return Object.assign({}, event, { recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3' });
+        }),
+      );
 
       var myInvalids = [
         {
@@ -595,7 +608,7 @@ export default {
         },
         {
           resource: [1, 2],
-          start: '22:00',
+          start: '18:00',
           end: '24:00',
           recurring: {
             repeat: 'daily',
@@ -611,7 +624,7 @@ export default {
         },
         {
           resource: [3, 4],
-          start: '18:00',
+          start: '16:00',
           end: '24:00',
           recurring: {
             repeat: 'daily',
@@ -620,14 +633,14 @@ export default {
         {
           resource: [5, 6],
           start: '00:00',
-          end: '12:00',
+          end: '09:00',
           recurring: {
             repeat: 'daily',
           },
         },
         {
           resource: [5, 6],
-          start: '22:00',
+          start: '17:00',
           end: '24:00',
           recurring: {
             repeat: 'daily',
@@ -643,7 +656,7 @@ export default {
         },
         {
           resource: [7, 8],
-          start: '22:00',
+          start: '18:00',
           end: '24:00',
           recurring: {
             repeat: 'daily',
@@ -659,7 +672,7 @@ export default {
         },
         {
           resource: [9, 10],
-          start: '18:00',
+          start: '16:00',
           end: '24:00',
           recurring: {
             repeat: 'daily',
@@ -668,14 +681,14 @@ export default {
         {
           resource: [11, 12],
           start: '00:00',
-          end: '12:00',
+          end: '09:00',
           recurring: {
             repeat: 'daily',
           },
         },
         {
           resource: [11, 12],
-          start: '22:00',
+          start: '17:00',
           end: '24:00',
           recurring: {
             repeat: 'daily',
@@ -687,97 +700,105 @@ export default {
         {
           id: 2,
           name: ' ',
-          color: 'rgb(28, 161, 26)',
-          cssClass: 'mds-resource-column-schedule',
+          color: 'rgb(40, 179, 114)',
+          cssClass: 'mds-healthc-resource-column-bar',
         },
         {
           id: 1,
           name: 'Dr. James Cole',
-          color: 'rgb(209, 155, 155)',
-          cssClass: 'mds-resource-column-parent',
+          color: 'rgba(255, 204, 193)',
+          cssClass: 'mds-healthc-resource-column',
           description: 'Injury Recovery Specialist',
           img: 'https://img.mobiscroll.com/demos/m4.png',
         },
         {
           id: 4,
           name: ' ',
-          color: 'rgb(28, 161, 26)',
+          color: 'rgb(40, 179, 114)',
           eventCreation: false,
-          cssClass: 'mds-resource-column-schedule',
+          cssClass: 'mds-healthc-resource-column-bar',
         },
         {
           id: 3,
           name: 'Dr. Anna Hayes',
-          color: 'rgb(148, 162, 234)',
-          cssClass: 'mds-resource-column-parent',
+          color: 'rgb(193, 221, 195)',
+          cssClass: 'mds-healthc-resource-column',
           description: 'Sports Physiotherapist',
           img: 'https://img.mobiscroll.com/demos/f3.png',
         },
         {
           id: 6,
           name: ' ',
-          color: 'rgb(28, 161, 26)',
-
+          color: 'rgb(40, 179, 114)',
           eventCreation: false,
-          cssClass: 'mds-resource-column-schedule',
+          cssClass: 'mds-healthc-resource-column-bar',
         },
         {
           id: 5,
           name: 'Dr. Mark Lewis',
-          color: 'rgb(134, 191, 188)',
-          cssClass: 'mds-resource-column-parent',
+          color: 'rgb(134, 224, 193)',
+          cssClass: 'mds-healthc-resource-column',
           description: 'Mobility Recovery Expert',
           img: 'https://img.mobiscroll.com/demos/m3.png',
         },
         {
           id: 8,
           name: ' ',
-          color: 'rgb(28, 161, 26)',
+          color: 'rgb(40, 179, 114)',
           eventCreation: false,
-          cssClass: 'mds-resource-column-schedule',
+          cssClass: 'mds-healthc-resource-column-bar',
         },
         {
           id: 7,
           name: 'Dr. Emily Carter',
-          color: 'rgb(187, 163, 221)',
-          cssClass: 'mds-resource-column-parent',
+          color: 'rgb(255, 193, 228)',
+          cssClass: 'mds-healthc-resource-column',
           description: 'Chiropractic Specialist',
           img: 'https://img.mobiscroll.com/demos/f1.png',
         },
         {
           id: 10,
           name: ' ',
-          color: 'rgb(28, 161, 26)',
+          color: 'rgb(40, 179, 114)',
           eventCreation: false,
-          cssClass: 'mds-resource-column-schedule',
+          cssClass: 'mds-healthc-resource-column-bar',
         },
         {
           id: 9,
           name: 'Dr. Robert Stone',
-          color: 'rgb(213, 158, 142)',
-          cssClass: 'mds-resource-column-parent',
+          color: 'rgb(193, 204, 255)',
+          cssClass: 'mds-healthc-resource-column',
           description: 'Orthopedic Surgeon',
           img: 'https://img.mobiscroll.com/demos/m2.png',
         },
         {
           id: 12,
           name: ' ',
-          color: 'rgb(28, 161, 26)',
+          color: 'rgb(40, 179, 114)',
           eventCreation: false,
-          cssClass: 'mds-resource-column-schedule',
+          cssClass: 'mds-healthc-resource-column-bar',
         },
         {
           id: 11,
           name: 'Dr. Sophia Miller',
           color: 'rgb(255, 223, 176)',
-          cssClass: 'mds-resource-column-parent',
+          cssClass: 'mds-healthc-resource-column',
           description: 'Sports Physiotherapist',
           img: 'https://img.mobiscroll.com/demos/f2.png',
         },
       ];
 
       var myView = {
-        schedule: { type: 'week', startDay: 1, endDay: 5, startTime: '08:00', endTime: '20:00', allDay: false },
+        timeLabelStep: 20,
+        schedule: {
+          type: 'week',
+          startDay: 1,
+          endDay: 5,
+          startTime: '08:00',
+          endTime: '20:00',
+          timeCellStep: 20,
+          allDay: false,
+        },
       };
 
       $('#demo-health-care-planner')
@@ -785,24 +806,28 @@ export default {
         .eventcalendar({
           // context,
           // drag,
+          cssClass: 'mds-health-care-planner',
+          // dragToCreate: true,
+          // dragToResize: true,
+          // dragToMove: true,
           dragTimeStep: 20,
           data: myEvents,
           eventOverlap: false,
           groupBy: 'date',
           invalid: myInvalids,
           renderResource: function (resource) {
-            if (resource.cssClass !== 'mds-resource-column-parent') {
+            if (resource.cssClass !== 'mds-healthc-resource-column') {
               return ' ';
             }
             return (
-              '<div class="resource-template-container">' +
-              '<div class="resource-name">' +
+              '<div class="mds-healthc-header-cont">' +
+              '<div class="mds-healthc-header-name">' +
               resource.name +
               '</div>' +
-              '<div class="resource-description">' +
+              '<div class="mds-healthc-header-description">' +
               resource.description +
               '</div>' +
-              '<img class="resource-avatar" src="' +
+              '<img class="mds-healthc-header-avatar" src="' +
               resource.img +
               '"/>' +
               '</div>'
@@ -810,20 +835,23 @@ export default {
           },
           renderScheduleEvent: function (data) {
             if (data.original.type == 'availability') {
-              return '<div class="mds-availability-bar" style="background-color: ' + data.color + ';"></div>';
+              return '<div class="mds-healthc-availability-bar" style="background-color: ' + data.color + ';"></div>';
             } else {
               return (
-                '<div class="mds-other-event" style="background:' +
+                '<div class="mds-healthc-event" style="background:' +
                 data.color +
                 ';">' +
                 '<div class="mds-other-content">' +
-                '<div class="mds-other-title">' +
+                '<div class="mds-healthc-event-title">' +
                 '<b>Patient: ' +
                 data.original.title +
                 '</b><br>' +
+                '<span class="mds-start-time">' +
                 data.start +
-                '-' +
+                '</span> - ' +
+                '<span class="mds-end-time">' +
                 data.end +
+                '</span>' +
                 '</div>' +
                 '</div>' +
                 '</div>'
@@ -832,8 +860,7 @@ export default {
           },
           onEventHoverIn: function (args) {
             var event = args.event;
-            $title.text('Availability');
-            $startDate.text(formatDate('hh:mm A', new Date(event.start)));
+            $startDate.text(formatDate('hh:mm A', new Date(event.start)) + ' - ');
             $endDate.text(formatDate('hh:mm A', new Date(event.end)));
 
             tooltip.setOptions({ anchor: args.domEvent.target });
@@ -861,39 +888,41 @@ export default {
   markup: `
 <div id="demo-health-care-planner"></div>
 
-<div id="demo-health-care-popup" style="display: none;">
-    <div class="mds-health-care-title-cont">
-        <span id="demo-health-care-event-title"></span>
-    </div>
-    <div class="mds-health-care-start-cont mbsc-flex">
-        <span class="mds-health-care-label">From:</span>
+<div id="demo-health-care-popup" style="display: none; font-size: 14px;">
+        Availability:
         <span id="demo-health-care-event-start"></span>
-        <span class="mds-health-care-label">To:</span>
         <span id="demo-health-care-event-end"></span>
-    </div>
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
 
-.mds-resource-column-schedule .mbsc-schedule-event-range {
+/* Resouce column */
+
+.mds-healthc-resource-column-bar .mbsc-schedule-event-range {
   display: none;
 }
 
-.mds-resource-column-schedule .mbsc-schedule-event {
+.mds-health-care-planner .mbsc-schedule-resource-title {
+  padding: 0;
+}
+
+.mds-healthc-resource-column-bar .mbsc-schedule-event {
   margin-left: 5px;
 }
 
-.mds-resource-column-schedule {
+.mds-healthc-resource-column-bar {
   width: 15px;
 } 
 
-.mds-resource-column-parent {
+.mds-healthc-resource-column {
   width: 210px;
   border-left: 0 !important;
 } 
 
-.resource-template-container {
+/* Resource Header */
+
+.mds-healthc-header-cont {
   position: relative;
   padding-left: 50px;
   text-align: left;
@@ -904,7 +933,7 @@ export default {
   align-items: flex-start;
 }
 
-.resource-avatar {
+.mds-healthc-header-avatar {
   position: absolute;
   height: 40px;
   width: 40px;
@@ -913,47 +942,56 @@ export default {
   transform: translateY(-50%);
 }
 
-.resource-name {
+.mds-healthc-header-name {
   font-size: 16px;
   word-wrap: break-word;
   line-height: 1.2;
 }
 
-.resource-description {
+.mds-healthc-header-description {
   font-size: 12px;
   margin-top: 5px;
 }
 
-.mds-availability-bar {
+/* Event */
+
+.mds-healthc-availability-bar {
   width: 5px;
   height: 100%;
   border-radius:5px;
 }
 
-.mds-other-event {
+.mds-healthc-event {
   width: 100%;
   height: 100%;
   border-radius: 5px;
   font-size: 12px;
+  font-weight: 600;
   line-height: 13px;
 }
 
-.mds-other-event:hover {
+.mds-start-time, .mds-end-time {
+  font-size: 10px;
+}
+
+.mds-healthc-event:hover {
  filter: saturate(2)
 }
 
-.mds-other-title {
+.mds-healthc-event-title {
   text-align: flex-start;
   padding: 3px 3px;
   color: black;
   font-weight: 350;
 }
 
-.mbsc-ios-dark .mds-other-title, 
-.mbsc-windows-dark .mds-other-title, 
-.mbsc-material-dark .mds-other-title  {
+.mbsc-ios-dark .mds-healthc-event-title, 
+.mbsc-windows-dark .mds-healthc-event-title, 
+.mbsc-material-dark .mds-healthc-event-title  {
   color: white;
 }
+
+/* Popup */
 
 .mds-health-care-title-cont {
     margin-bottom: 15px;
@@ -967,11 +1005,10 @@ export default {
     margin-bottom: 5px;
     font-size: 14px;
     padding: 5px 0;
-    border-bottom: 1px solid #ddd;
 }
 
-.mds-health-care-label {
-    font-weight: 600;
+.mds-healthc-popup-label {
+    // font-weight: 600;
 }
   `,
 };
