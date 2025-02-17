@@ -10,16 +10,11 @@ export default {
     });
 
     $(function () {
-      var formatDate = mobiscroll.formatDate;
-      var $tooltip = $('#demo-health-care-popup');
-      var $startDate = $('#demo-health-care-event-start');
-      var $endDate = $('#demo-health-care-event-end');
-
       var myEvents = [
         {
           id: 1,
           resource: 2,
-          title: 'Working hours',
+          tooltip: 'Availability: 10:00 - 18:00',
           start: 'dyndatetime(y,m,d-10,10)',
           end: 'dyndatetime(y,m,d-10,18)',
           recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
@@ -29,7 +24,7 @@ export default {
         {
           id: 2,
           resource: 4,
-          title: 'Working hours',
+          tooltip: 'Availability: 08:00 - 16:00',
           start: 'dyndatetime(y,m,d-10,8)',
           end: 'dyndatetime(y,m,d-10,16)',
           recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
@@ -39,7 +34,7 @@ export default {
         {
           id: 3,
           resource: 6,
-          title: 'Working hours',
+          tooltip: 'Availability: 09:00 - 17:00',
           start: 'dyndatetime(y,m,d-10,9)',
           end: 'dyndatetime(y,m,d-10,17)',
           recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
@@ -49,7 +44,7 @@ export default {
         {
           id: 4,
           resource: 8,
-          title: 'Working hours',
+          tooltip: 'Availability: 10:00 - 18:00',
           start: 'dyndatetime(y,m,d-10,10)',
           end: 'dyndatetime(y,m,d-10,18)',
           recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
@@ -60,7 +55,7 @@ export default {
         {
           id: 5,
           resource: 10,
-          title: 'Working hours',
+          tooltip: 'Availability: 08:00 - 16:00',
           start: 'dyndatetime(y,m,d-10,8)',
           end: 'dyndatetime(y,m,d-10,16)',
           recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
@@ -71,7 +66,7 @@ export default {
         {
           id: 6,
           resource: 12,
-          title: 'Working hours',
+          tooltip: 'Availability: 09:00 - 17:00',
           start: 'dyndatetime(y,m,d-10,9)',
           end: 'dyndatetime(y,m,d-10,17)',
           recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
@@ -795,7 +790,7 @@ export default {
           startDay: 1,
           endDay: 5,
           startTime: '08:00',
-          endTime: '20:00',
+          endTime: '18:00',
           timeCellStep: 20,
           allDay: false,
         },
@@ -807,10 +802,6 @@ export default {
           // context,
           // drag,
           cssClass: 'mds-health-care-planner',
-          // dragToCreate: true,
-          // dragToResize: true,
-          // dragToMove: true,
-          dragTimeStep: 20,
           data: myEvents,
           eventOverlap: false,
           groupBy: 'date',
@@ -858,28 +849,8 @@ export default {
               );
             }
           },
-          onEventHoverIn: function (args) {
-            var event = args.event;
-            $startDate.text(formatDate('hh:mm A', new Date(event.start)) + ' - ');
-            $endDate.text(formatDate('hh:mm A', new Date(event.end)));
-
-            tooltip.setOptions({ anchor: args.domEvent.target });
-            if (event.type === 'availability') tooltip.open();
-          },
-          onEventHoverOut: function () {
-            tooltip.close();
-          },
           resources: myResources,
           view: myView,
-        })
-        .mobiscroll('getInst');
-
-      var tooltip = $tooltip
-        .mobiscroll()
-        .popup({
-          display: 'anchored',
-          showOverlay: false,
-          width: 250,
         })
         .mobiscroll('getInst');
     });
@@ -887,12 +858,6 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-health-care-planner"></div>
-
-<div id="demo-health-care-popup" style="display: none; font-size: 14px;">
-        Availability:
-        <span id="demo-health-care-event-start"></span>
-        <span id="demo-health-care-event-end"></span>
-</div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
@@ -989,26 +954,6 @@ export default {
 .mbsc-windows-dark .mds-healthc-event-title, 
 .mbsc-material-dark .mds-healthc-event-title  {
   color: white;
-}
-
-/* Popup */
-
-.mds-health-care-title-cont {
-    margin-bottom: 15px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.mds-health-care-start-cont,
-.mds-health-care-end-cont {
-    justify-content: space-between;
-    margin-bottom: 5px;
-    font-size: 14px;
-    padding: 5px 0;
-}
-
-.mds-healthc-popup-label {
-    // font-weight: 600;
 }
   `,
 };
