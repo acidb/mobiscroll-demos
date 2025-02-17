@@ -801,7 +801,7 @@ export default {
         },
       };
 
-      var calendar = $('#demo-health-care-planner')
+      $('#demo-health-care-planner')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -857,68 +857,6 @@ export default {
                 '</div>'
               );
             }
-          },
-          onEventClick: function () {
-            var today = new Date();
-            var currentDay = today.getDate();
-            var currentMonth = today.getMonth(); // 0-based index
-
-            var eventsText = calendar
-              .getEvents()
-              .map(function (event, index) {
-                var startDate = new Date(event.start);
-                var endDate = new Date(event.end);
-
-                var startDayOffset = startDate.getDate() - currentDay;
-                var startMonthOffset = startDate.getMonth() - currentMonth;
-                var endDayOffset = endDate.getDate() - currentDay;
-                var endMonthOffset = endDate.getMonth() - currentMonth;
-
-                function formatOffset(value, unit) {
-                  if (value === 0) {
-                    return unit;
-                  }
-                  return unit + (value > 0 ? ' + ' + value : ' - ' + Math.abs(value));
-                }
-
-                return JSON.stringify(
-                  {
-                    id: index + 1,
-                    resource: event.resource,
-                    title: event.title,
-                    start:
-                      'dyndatetime(y, ' +
-                      formatOffset(startMonthOffset, 'm') +
-                      ', ' +
-                      formatOffset(startDayOffset, 'd') +
-                      ', ' +
-                      startDate.getHours() +
-                      ', ' +
-                      startDate.getMinutes() +
-                      ')',
-                    end:
-                      'dyndatetime(y, ' +
-                      formatOffset(endMonthOffset, 'm') +
-                      ', ' +
-                      formatOffset(endDayOffset, 'd') +
-                      ', ' +
-                      endDate.getHours() +
-                      ', ' +
-                      endDate.getMinutes() +
-                      ')',
-                    recurring: event.recurring || undefined,
-                    type: event.type || undefined,
-                    editable: event.editable !== undefined ? event.editable : undefined,
-                  },
-                  null,
-                  2,
-                );
-              })
-              .join(',\n');
-
-            navigator.clipboard.writeText(eventsText).then(function () {
-              mobiscroll.toast({ message: 'Events copied to clipboard!' });
-            });
           },
           onEventHoverIn: function (args) {
             var event = args.event;
