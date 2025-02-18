@@ -782,13 +782,13 @@ export default {
       ];
 
       var myView = {
-        timeLabelStep: 20,
         schedule: {
           type: 'week',
           startDay: 1,
           endDay: 5,
           startTime: '08:00',
           endTime: '18:00',
+          timeLabelStep: 20,
           timeCellStep: 20,
           allDay: false,
         },
