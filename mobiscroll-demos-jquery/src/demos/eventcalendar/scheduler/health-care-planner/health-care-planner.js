@@ -48,7 +48,6 @@ export default {
           start: 'dyndatetime(y,m,d-10,10)',
           end: 'dyndatetime(y,m,d-10,18)',
           recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
-
           type: 'availability',
           editable: false,
         },
@@ -59,7 +58,6 @@ export default {
           start: 'dyndatetime(y,m,d-10,8)',
           end: 'dyndatetime(y,m,d-10,16)',
           recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
-
           type: 'availability',
           editable: false,
         },
@@ -803,6 +801,7 @@ export default {
           // drag,
           cssClass: 'mds-health-care-planner',
           data: myEvents,
+          dragTimeStep: 20,
           eventOverlap: false,
           groupBy: 'date',
           invalid: myInvalids,
