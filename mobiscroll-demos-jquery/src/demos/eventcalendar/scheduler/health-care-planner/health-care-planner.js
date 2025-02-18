@@ -788,7 +788,6 @@ export default {
           endDay: 5,
           startTime: '08:00',
           endTime: '18:00',
-          timeLabelStep: 20,
           timeCellStep: 20,
           allDay: false,
         },
