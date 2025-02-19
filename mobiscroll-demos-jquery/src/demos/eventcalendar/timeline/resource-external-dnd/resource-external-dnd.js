@@ -523,8 +523,8 @@ export default {
             timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00', listing: true },
           },
           data: constructionWork,
-          externalDrop: true,
-          externalDrag: true,
+          externalResourceDrop: true,
+          externalResourceDrag: true,
           resources: installers,
           dragBetweenResources: false,
           renderResourceHeader: function () {
@@ -565,6 +565,15 @@ export default {
               message: args.resource.name + ' added',
             });
           },
+          onResourceExpand: function (args) {
+            var resource = args.resourceObj;
+
+            if (resource.children) {
+              resource.children = resource.children.filter(function (child) {
+                return !child.temp;
+              });
+            }
+          },
           onResourceOrderUpdate: function (args) {
             installers = args.resources;
           },
@@ -588,14 +597,32 @@ export default {
 
       $('.mds-ext-res-drop-calendar').on('click', '.mds-create-new-team', function () {
         var teamLength = installers.length + 1;
+        var resId = 'it-' + teamLength;
         installers.push({
-          id: 'it-' + teamLength,
+          id: resId,
           eventCreation: false,
+          collapsed: true,
           reorder: false,
           name: 'Installer team ' + teamLength,
-          children: [],
+          temp: resId + 'temp',
+          children: [
+            {
+              id: resId + 'temp',
+              temp: true,
+              name: 'Drag new resource here',
+              title: '',
+              reorder: false,
+            },
+          ],
         });
         timelineInst.setOptions({ resources: installers.slice() });
+
+        setTimeout(function () {
+          timelineInst.navigateToEvent({
+            start: new Date(),
+            resource: 'it-' + teamLength,
+          });
+        });
       });
 
       generateExternalResources(availableInstallers);
