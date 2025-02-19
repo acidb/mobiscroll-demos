@@ -208,8 +208,8 @@ export default {
           id: 26,
           resource: 9,
           title: 'Lucas Adams',
-          start: 'dyndatetime(y, m, d-10, 14, 20)',
-          end: 'dyndatetime(y, m, d-10, 15, 0)',
+          start: 'dyndatetime(y, m, d-10, 15, 20)',
+          end: 'dyndatetime(y, m, d-10, 16, 0)',
         },
         {
           id: 27,
