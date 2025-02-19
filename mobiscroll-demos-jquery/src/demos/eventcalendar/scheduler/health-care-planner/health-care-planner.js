@@ -818,7 +818,9 @@ export default {
           groupBy: 'date',
           invalid: myInvalids,
           renderScheduleEventContent: function (event) {
-            return !event.original.type ? '<div class="mds-tasks-event-title">Patient: ' + event.title + '</div>' : '';
+            return !event.original.type
+              ? '<div class="mds-tasks-event-title">Patient: ' + (event.title === 'New event' ? 'John Doe' : event.title) + '</div>'
+              : '';
           },
           renderResource: function (resource) {
             if (resource.cssClass !== 'mds-healthc-resource-column') {
@@ -838,8 +840,7 @@ export default {
               '</div>'
             );
           },
-          onEventCreate: function (args) {
-            args.event.title = 'John Doe';
+          onEventCreate: function () {
             showToast('Appointment Created');
           },
           onEventDelete: function () {
