@@ -17,7 +17,7 @@ export default {
           tooltip: 'Availability: 10:00 - 18:00',
           start: 'dyndatetime(y,m,d-10,10)',
           end: 'dyndatetime(y,m,d-10,18)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -27,7 +27,7 @@ export default {
           tooltip: 'Availability: 08:00 - 16:00',
           start: 'dyndatetime(y,m,d-10,8)',
           end: 'dyndatetime(y,m,d-10,16)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -37,7 +37,7 @@ export default {
           tooltip: 'Availability: 09:00 - 17:00',
           start: 'dyndatetime(y,m,d-10,9)',
           end: 'dyndatetime(y,m,d-10,17)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -47,7 +47,7 @@ export default {
           tooltip: 'Availability: 10:00 - 18:00',
           start: 'dyndatetime(y,m,d-10,10)',
           end: 'dyndatetime(y,m,d-10,18)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -57,7 +57,7 @@ export default {
           tooltip: 'Availability: 08:00 - 16:00',
           start: 'dyndatetime(y,m,d-10,8)',
           end: 'dyndatetime(y,m,d-10,16)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -67,7 +67,7 @@ export default {
           tooltip: 'Availability: 09:00 - 17:00',
           start: 'dyndatetime(y,m,d-10,9)',
           end: 'dyndatetime(y,m,d-10,17)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -789,9 +789,22 @@ export default {
           startTime: '08:00',
           endTime: '18:00',
           timeCellStep: 20,
+          timeLabelStep: 20,
           allDay: false,
         },
       };
+
+      function showToast(message) {
+        // timeout -> to not show created when updated
+        setTimeout(function () {
+          mobiscroll.toast({
+            //<hidden>
+            // theme,//</hidden>
+            // context,
+            message: message,
+          });
+        });
+      }
 
       $('#demo-health-care-planner')
         .mobiscroll()
@@ -822,30 +835,15 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEvent: function (data) {
-            if (data.original.type == 'availability') {
-              return '<div class="mds-healthc-availability-bar" style="background-color: ' + data.color + ';"></div>';
-            } else {
-              return (
-                '<div class="mds-healthc-event" style="background:' +
-                data.color +
-                ';">' +
-                '<div class="mds-other-content">' +
-                '<div class="mds-healthc-event-title">' +
-                '<b>Patient: ' +
-                data.original.title +
-                '</b><br>' +
-                '<span class="mds-start-time">' +
-                data.start +
-                '</span> - ' +
-                '<span class="mds-end-time">' +
-                data.end +
-                '</span>' +
-                '</div>' +
-                '</div>' +
-                '</div>'
-              );
-            }
+          onEventCreate: function (args) {
+            args.event.title = 'John Doe';
+            showToast('Appointment Created');
+          },
+          onEventDelete: function () {
+            showToast('Appointment Deleted');
+          },
+          onEventUpdate: function () {
+            showToast('Appointment Updated');
           },
           resources: myResources,
           view: myView,
@@ -859,11 +857,20 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+.mds-health-care-planner .mbsc-schedule-time-col,
+.mds-health-care-planner .mbsc-schedule-time-wrapper {
+  width: 80px;
+}
 
 /* Resouce column */
 
 .mds-healthc-resource-column-bar .mbsc-schedule-event-range {
   display: none;
+}
+
+.mds-healthc-resource-column-bar .mbsc-schedule-event-bar {
+  width: 4px;
+  border-radius: 3px;
 }
 
 .mds-health-care-planner .mbsc-schedule-resource-title {
@@ -875,7 +882,7 @@ export default {
 }
 
 .mds-healthc-resource-column-bar {
-  width: 15px;
+  width: 14px;
 } 
 
 .mds-healthc-resource-column {
