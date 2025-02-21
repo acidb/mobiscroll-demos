@@ -5,6 +5,8 @@
   [eventOverlap]="false"
   groupBy="date"
   [invalid]="myInvalid"
+  [dragToCreate]="true"
+  [dragToMove]="true"
   [scheduleEventContentTemplate]="eventTemp"
   [resourceTemplate]="resourceTemp"
   (onEventCreate)="onEventCreate()"
@@ -14,6 +16,16 @@
   [view]="myView"
 ></mbsc-eventcalendar>
 
-<ng-template #resourceTemp let-resource> </ng-template>
+<ng-template #resourceTemp let-resource>
+  <div *ngIf="resource.cssClass === 'mds-healthc-resource-column'" class="mds-healthc-header-cont">
+    <div class="mds-healthc-header-name">{{ resource.name }}</div>
+    <div class="mds-healthc-header-description">{{ resource.description }}</div>
+    <img class="mds-healthc-header-avatar" [src]="resource.img" [alt]="resource.name + ' avatar'" />
+  </div>
+</ng-template>
 
-<ng-template #eventTemp let-event> </ng-template>
+<ng-template #eventTemp let-event>
+  <div class="mds-tasks-event-title" *ngIf="!event.original?.type">
+    Patient: {{ event.title === 'New event' ? 'John Doe' : event.title }}
+  </div>
+</ng-template>

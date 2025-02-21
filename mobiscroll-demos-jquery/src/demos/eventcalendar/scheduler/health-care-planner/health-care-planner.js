@@ -811,16 +811,17 @@ export default {
         .eventcalendar({
           // context,
           // drag,
+          dragToCreate: true,
+          dragToMove: true,
           cssClass: 'mds-health-care-planner',
           data: myEvents,
           dragTimeStep: 20,
           eventOverlap: false,
           groupBy: 'date',
           invalid: myInvalids,
+          // mds-task ???????? check the other codes also
           renderScheduleEventContent: function (event) {
-            return !event.original.type
-              ? '<div class="mds-tasks-event-title">Patient: ' + (event.title === 'New event' ? 'John Doe' : event.title) + '</div>'
-              : '';
+            return !event.original.type ? '<div>Patient: ' + (event.title === 'New event' ? 'John Doe' : event.title) + '</div>' : '';
           },
           renderResource: function (resource) {
             if (resource.cssClass !== 'mds-healthc-resource-column') {
