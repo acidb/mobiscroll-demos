@@ -343,7 +343,7 @@ import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left'
 
 import CustomColWidth from './demos/eventcalendar/scheduler/custom-column-width/custom-column-width';
 import HealthCarePlanner from './demos/eventcalendar/scheduler/health-care-planner/health-care-planner';
-import VariableColWidth from './demos/eventcalendar/scheduler/variable-column-widths/
+import VariableColWidth from './demos/eventcalendar/scheduler/variable-column-widths/variable-column-widths';
 
 export const demos = [
   {

@@ -1,1 +1,19 @@
-<mbsc-eventcalendar [data]="myEvents" [options]="eventSettings"></mbsc-eventcalendar>
+<mbsc-eventcalendar
+  class="mds-health-care-planner'"
+  [data]="myEvents"
+  [dragTimeStep]="20"
+  [eventOverlap]="false"
+  groupBy="date"
+  [invalid]="myInvalid"
+  [scheduleEventContentTemplate]="eventTemp"
+  [resourceTemplate]="resourceTemp"
+  (onEventCreate)="onEventCreate()"
+  (onEventDelete)="onEventDelete()"
+  (onEventUpdate)="onEventUpdate()"
+  [resources]="myResources"
+  [view]="myView"
+></mbsc-eventcalendar>
+
+<ng-template #resourceTemp let-resource> </ng-template>
+
+<ng-template #eventTemp let-event> </ng-template>

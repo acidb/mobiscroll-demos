@@ -1,1 +1,13 @@
-<mbsc-eventcalendar [data]="myEvents" [options]="eventSettings"></mbsc-eventcalendar>
+<mbsc-page>
+  <mbsc-segmented-group [(ngModel)]="myClass" (ngModelChange)="log()">
+    <mbsc-segmented value="my-col-width-small">50px</mbsc-segmented>
+    <mbsc-segmented value="my-col-width-medium">100px</mbsc-segmented>
+    <mbsc-segmented value="my-col-width-large">150px</mbsc-segmented>
+  </mbsc-segmented-group>
+
+  <mbsc-segmented-group [(ngModel)]="showResources" (ngModelChange)="toggleResources()">
+    <mbsc-segmented value="show">With resources</mbsc-segmented>
+    <mbsc-segmented value="hide">Without resources</mbsc-segmented>
+  </mbsc-segmented-group>
+  <mbsc-eventcalendar [class]="myClass" [data]="myEvents" [resources]="myResources" [view]="myView" groupBy="date"></mbsc-eventcalendar>
+</mbsc-page>

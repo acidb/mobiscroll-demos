@@ -1,0 +1,9 @@
+.my-col-width-small .mbsc-schedule-col-width {
+  width: 50px;
+}
+.my-col-width-medium .mbsc-schedule-col-width {
+  width: 100px;
+}
+.my-col-width-large .mbsc-schedule-col-width {
+  width: 150px;
+}
