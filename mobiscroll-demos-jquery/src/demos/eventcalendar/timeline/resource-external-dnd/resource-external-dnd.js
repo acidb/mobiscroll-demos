@@ -613,7 +613,6 @@ export default {
         installers.push({
           id: resId,
           eventCreation: false,
-          // collapsed: true,
           reorder: false,
           name: 'Installer team ' + teamLength,
           temp: resId + 'temp',
@@ -695,6 +694,7 @@ export default {
 }
 
 .mds-ext-res-drop-task {
+   display: flex;
     background: #dde0d8;
     padding: 10px;
     margin: 16px;
