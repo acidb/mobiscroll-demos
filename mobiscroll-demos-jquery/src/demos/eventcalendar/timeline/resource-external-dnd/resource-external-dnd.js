@@ -481,6 +481,12 @@ export default {
         },
         //</hide-comment>
       ];
+      var tempResource = {
+        temp: true,
+        name: 'Drag Technicians here',
+        title: '',
+        reorder: false,
+      };
 
       function generateExternalResources(availableWorkers) {
         if (availableWorkers && availableInstallers.length) {
@@ -565,17 +571,22 @@ export default {
               message: args.resource.name + ' added',
             });
           },
-          onResourceExpand: function (args) {
-            var resource = args.resourceObj;
+          onResourceOrderUpdate: function (args) {
+            installers = args.resources;
+            var parent = args.parent;
+            var oldParent = args.oldParent;
 
-            if (resource.children) {
-              resource.children = resource.children.filter(function (child) {
+            if (parent && parent.children) {
+              // remove placeholder resource
+              parent.children = parent.children.filter(function (child) {
                 return !child.temp;
               });
             }
-          },
-          onResourceOrderUpdate: function (args) {
-            installers = args.resources;
+            if (oldParent && !oldParent.children.length) {
+              // add placeholder resource
+              tempResource.id = 'temp' + (installers.length + 1);
+              oldParent.children.push(tempResource);
+            }
           },
           onResourceDelete: function (args) {
             mobiscroll.toast({
@@ -598,22 +609,15 @@ export default {
       $('.mds-ext-res-drop-calendar').on('click', '.mds-create-new-team', function () {
         var teamLength = installers.length + 1;
         var resId = 'it-' + teamLength;
+        tempResource.id = resId + '-temp';
         installers.push({
           id: resId,
           eventCreation: false,
-          collapsed: true,
+          // collapsed: true,
           reorder: false,
           name: 'Installer team ' + teamLength,
           temp: resId + 'temp',
-          children: [
-            {
-              id: resId + 'temp',
-              temp: true,
-              name: 'Drag new resource here',
-              title: '',
-              reorder: false,
-            },
-          ],
+          children: [tempResource],
         });
         timelineInst.setOptions({ resources: installers.slice() });
 
@@ -639,7 +643,6 @@ export default {
       <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
           <div id="mds-ext-res-drop-calendar"></div>
       </div>
-       
     </div>
 </div>
   `,
