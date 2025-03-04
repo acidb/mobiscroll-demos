@@ -348,10 +348,10 @@ import { AppComponent as Demo276 } from '../demos/pickers/select/event-hooks/eve
 import { AppComponent as Demo471 } from '../demos/pickers/select/localization/localization';
 import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
 
-import { AppComponent as CustomColWidth } from '../demos/eventcalendar/scheduler/custom-column-width/custom-column-width';
+import { AppComponent as CustomColWidth } from '../demos/eventcalendar/scheduler/control-the-column-width/control-the-column-width';
 import { AppComponent as HealthCarePlanner } from '../demos/eventcalendar/scheduler/health-care-planner/health-care-planner';
-import { AppComponent as VariableColWidth } from '../demos/eventcalendar/scheduler/variable-column-widths/variable-column-widths';
-4;
+import { AppComponent as VariableColWidth } from '../demos/eventcalendar/scheduler/content-dependent-resource-width/content-dependent-resource-width';
+
 export const demos: any[] = [
   {
     name: 'Date & time pickers',
@@ -365,9 +365,9 @@ export const demos: any[] = [
             name: 'Using the picker',
             unique: 7,
             items: [
-              { name: '---> Custom Column Width', unique: 'custom-column-width', component: CustomColWidth },
+              { name: '---> Control the column width', unique: 'control-the-column-width', component: CustomColWidth },
               { name: '---> Health Care Planner', unique: 'health-care-planner', component: HealthCarePlanner },
-              { name: '---> Variable Column Widths', unique: 'variable-column-widths', component: VariableColWidth },
+              { name: '---> Content dependent resource widths', unique: 'content-dependent-resource-widths', component: VariableColWidth },
               { name: 'Mobile & Desktop usage', unique: 'mobile-desktop-usage', component: Demo439 },
               { name: 'Initializing the picker', unique: 'usage-on-input-or-inline', component: Demo571 },
               { name: 'Responsive behavior', unique: 'responsive', component: Demo529 },

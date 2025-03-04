@@ -1,5 +1,5 @@
-import { Eventcalendar, Toast, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
+import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './health-care-planner.css';
 
 setOptions({
@@ -8,7 +8,10 @@ setOptions({
 });
 
 function App() {
-  const [myEvents, setEvents] = useState([
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastText, setToastText] = useState();
+
+  const [myEvents] = useState([
     {
       id: 1,
       resource: 2,
@@ -75,6 +78,7 @@ function App() {
       title: 'Jason Smith',
       start: 'dyndatetime(y, m, d-10, 10, 40)',
       end: 'dyndatetime(y, m, d-10, 11, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 8,
@@ -82,6 +86,7 @@ function App() {
       title: 'Emily Johnson',
       start: 'dyndatetime(y, m, d-10, 11, 20)',
       end: 'dyndatetime(y, m, d-10, 12, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 9,
@@ -89,6 +94,7 @@ function App() {
       title: 'Michael Brown',
       start: 'dyndatetime(y, m, d-10, 13, 40)',
       end: 'dyndatetime(y, m, d-10, 14, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 10,
@@ -96,6 +102,7 @@ function App() {
       title: 'Sarah Davis',
       start: 'dyndatetime(y, m, d-10, 9, 20)',
       end: 'dyndatetime(y, m, d-10, 10, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 11,
@@ -103,6 +110,7 @@ function App() {
       title: 'David Wilson',
       start: 'dyndatetime(y, m, d-10, 11, 40)',
       end: 'dyndatetime(y, m, d-10, 12, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 12,
@@ -110,6 +118,7 @@ function App() {
       title: 'Linda Moore',
       start: 'dyndatetime(y, m, d-10, 12, 20)',
       end: 'dyndatetime(y, m, d-10, 13, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 13,
@@ -117,6 +126,7 @@ function App() {
       title: 'James Taylor',
       start: 'dyndatetime(y, m, d-10, 14, 40)',
       end: 'dyndatetime(y, m, d-10, 15, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 14,
@@ -124,6 +134,7 @@ function App() {
       title: 'Maria Anderson',
       start: 'dyndatetime(y, m, d-10, 14, 0)',
       end: 'dyndatetime(y, m, d-10, 14, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 15,
@@ -131,6 +142,7 @@ function App() {
       title: 'Robert Thomas',
       start: 'dyndatetime(y, m, d-10, 13, 20)',
       end: 'dyndatetime(y, m, d-10, 14, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 16,
@@ -138,6 +150,7 @@ function App() {
       title: 'Patricia Jackson',
       start: 'dyndatetime(y, m, d-10, 11, 0)',
       end: 'dyndatetime(y, m, d-10, 11, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 17,
@@ -145,6 +158,7 @@ function App() {
       title: 'John Harris',
       start: 'dyndatetime(y, m, d-10, 9, 40)',
       end: 'dyndatetime(y, m, d-10, 10, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 18,
@@ -152,6 +166,7 @@ function App() {
       title: 'William Clark',
       start: 'dyndatetime(y, m, d-10, 15, 40)',
       end: 'dyndatetime(y, m, d-10, 16, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 19,
@@ -159,6 +174,7 @@ function App() {
       title: 'Elizabeth Lewis',
       start: 'dyndatetime(y, m, d-10, 15, 0)',
       end: 'dyndatetime(y, m, d-10, 15, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 20,
@@ -166,6 +182,7 @@ function App() {
       title: 'Charles Walker',
       start: 'dyndatetime(y, m, d-10, 12, 0)',
       end: 'dyndatetime(y, m, d-10, 12, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 21,
@@ -173,6 +190,7 @@ function App() {
       title: 'Jessica Allen',
       start: 'dyndatetime(y, m, d-10, 11, 20)',
       end: 'dyndatetime(y, m, d-10, 12, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 22,
@@ -180,6 +198,7 @@ function App() {
       title: 'Matthew Young',
       start: 'dyndatetime(y, m, d-10, 9, 0)',
       end: 'dyndatetime(y, m, d-10, 9, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 23,
@@ -187,6 +206,7 @@ function App() {
       title: 'Sophia King',
       start: 'dyndatetime(y, m, d-10, 9, 40)',
       end: 'dyndatetime(y, m, d-10, 10, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 24,
@@ -194,6 +214,7 @@ function App() {
       title: 'Daniel Scott',
       start: 'dyndatetime(y, m, d-10, 11, 40)',
       end: 'dyndatetime(y, m, d-10, 12, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 25,
@@ -201,6 +222,7 @@ function App() {
       title: 'Olivia Green',
       start: 'dyndatetime(y, m, d-10, 13, 40)',
       end: 'dyndatetime(y, m, d-10, 14, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 26,
@@ -208,6 +230,7 @@ function App() {
       title: 'Lucas Adams',
       start: 'dyndatetime(y, m, d-10, 15, 20)',
       end: 'dyndatetime(y, m, d-10, 16, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 27,
@@ -215,6 +238,7 @@ function App() {
       title: 'Ava Baker',
       start: 'dyndatetime(y, m, d-10, 10, 0)',
       end: 'dyndatetime(y, m, d-10, 10, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 28,
@@ -222,6 +246,7 @@ function App() {
       title: 'Ethan Gonzalez',
       start: 'dyndatetime(y, m, d-10, 10, 40)',
       end: 'dyndatetime(y, m, d-10, 11, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 29,
@@ -229,6 +254,7 @@ function App() {
       title: 'Mason Carter',
       start: 'dyndatetime(y, m, d-10, 13, 40)',
       end: 'dyndatetime(y, m, d-10, 14, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 30,
@@ -236,6 +262,7 @@ function App() {
       title: 'Amelia Mitchell',
       start: 'dyndatetime(y, m, d-10, 14, 20)',
       end: 'dyndatetime(y, m, d-10, 15, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 31,
@@ -243,6 +270,7 @@ function App() {
       title: 'Isabella Perez',
       start: 'dyndatetime(y, m, d-10, 15, 0)',
       end: 'dyndatetime(y, m, d-10, 15, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 32,
@@ -250,6 +278,7 @@ function App() {
       title: 'Jason Smith',
       start: 'dyndatetime(y, m, d - 9, 10, 20)',
       end: 'dyndatetime(y, m, d - 9, 11, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 33,
@@ -257,6 +286,7 @@ function App() {
       title: 'Emma Davis',
       start: 'dyndatetime(y, m, d - 9, 11, 0)',
       end: 'dyndatetime(y, m, d - 9, 11, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 34,
@@ -264,6 +294,7 @@ function App() {
       title: 'Liam Johnson',
       start: 'dyndatetime(y, m, d - 9, 13, 0)',
       end: 'dyndatetime(y, m, d - 9, 13, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 35,
@@ -271,6 +302,7 @@ function App() {
       title: 'Olivia Brown',
       start: 'dyndatetime(y, m, d - 9, 14, 40)',
       end: 'dyndatetime(y, m, d - 9, 15, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 36,
@@ -278,6 +310,7 @@ function App() {
       title: 'Noah Wilson',
       start: 'dyndatetime(y, m, d - 9, 14, 40)',
       end: 'dyndatetime(y, m, d - 9, 15, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 37,
@@ -285,6 +318,7 @@ function App() {
       title: 'Ava Taylor',
       start: 'dyndatetime(y, m, d - 9, 12, 40)',
       end: 'dyndatetime(y, m, d - 9, 13, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 38,
@@ -292,6 +326,7 @@ function App() {
       title: 'Mason Martinez',
       start: 'dyndatetime(y, m, d - 9, 8, 20)',
       end: 'dyndatetime(y, m, d - 9, 9, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 39,
@@ -299,6 +334,7 @@ function App() {
       title: 'Isabella Rodriguez',
       start: 'dyndatetime(y, m, d - 9, 9, 20)',
       end: 'dyndatetime(y, m, d - 9, 10, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 40,
@@ -306,6 +342,7 @@ function App() {
       title: 'James Lee',
       start: 'dyndatetime(y, m, d - 9, 10, 40)',
       end: 'dyndatetime(y, m, d - 9, 11, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 41,
@@ -313,6 +350,7 @@ function App() {
       title: 'Charlotte Clark',
       start: 'dyndatetime(y, m, d - 9, 11, 20)',
       end: 'dyndatetime(y, m, d - 9, 12, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 42,
@@ -320,6 +358,7 @@ function App() {
       title: 'Benjamin Lewis',
       start: 'dyndatetime(y, m, d - 9, 15, 0)',
       end: 'dyndatetime(y, m, d - 9, 15, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 43,
@@ -327,6 +366,7 @@ function App() {
       title: 'Amelia Walker',
       start: 'dyndatetime(y, m, d - 9, 15, 40)',
       end: 'dyndatetime(y, m, d - 9, 16, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 44,
@@ -334,6 +374,7 @@ function App() {
       title: 'Elijah Hall',
       start: 'dyndatetime(y, m, d - 9, 14, 20)',
       end: 'dyndatetime(y, m, d - 9, 15, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 45,
@@ -341,6 +382,7 @@ function App() {
       title: 'Harper Allen',
       start: 'dyndatetime(y, m, d - 9, 13, 20)',
       end: 'dyndatetime(y, m, d - 9, 14, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 46,
@@ -348,6 +390,7 @@ function App() {
       title: 'Lucas Young',
       start: 'dyndatetime(y, m, d - 9, 10, 20)',
       end: 'dyndatetime(y, m, d - 9, 11, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 47,
@@ -355,6 +398,7 @@ function App() {
       title: 'Evelyn Hernandez',
       start: 'dyndatetime(y, m, d - 9, 8, 0)',
       end: 'dyndatetime(y, m, d - 9, 8, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 48,
@@ -362,6 +406,7 @@ function App() {
       title: 'Henry King',
       start: 'dyndatetime(y, m, d - 9, 8, 40)',
       end: 'dyndatetime(y, m, d - 9, 9, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 49,
@@ -369,6 +414,7 @@ function App() {
       title: 'Ella Scott',
       start: 'dyndatetime(y, m, d - 9, 10, 40)',
       end: 'dyndatetime(y, m, d - 9, 11, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 50,
@@ -376,6 +422,7 @@ function App() {
       title: 'Jacob Adams',
       start: 'dyndatetime(y, m, d - 9, 11, 20)',
       end: 'dyndatetime(y, m, d - 9, 12, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 51,
@@ -383,6 +430,7 @@ function App() {
       title: 'Grace Mitchell',
       start: 'dyndatetime(y, m, d - 9, 13, 40)',
       end: 'dyndatetime(y, m, d - 9, 14, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 52,
@@ -390,6 +438,7 @@ function App() {
       title: 'Alexander Perez',
       start: 'dyndatetime(y, m, d - 9, 10, 20)',
       end: 'dyndatetime(y, m, d - 9, 11, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 53,
@@ -397,6 +446,7 @@ function App() {
       title: 'Lily Roberts',
       start: 'dyndatetime(y, m, d - 9, 13, 20)',
       end: 'dyndatetime(y, m, d - 9, 14, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 54,
@@ -404,6 +454,7 @@ function App() {
       title: 'Sebastian Carter',
       start: 'dyndatetime(y, m, d - 9, 14, 40)',
       end: 'dyndatetime(y, m, d - 9, 15, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 55,
@@ -411,6 +462,7 @@ function App() {
       title: 'Mia Nelson',
       start: 'dyndatetime(y, m, d - 9, 15, 20)',
       end: 'dyndatetime(y, m, d - 9, 16, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 56,
@@ -418,6 +470,7 @@ function App() {
       title: 'Elisabeth Carter',
       start: 'dyndatetime(y, m, d - 8, 10, 40)',
       end: 'dyndatetime(y, m, d - 8, 11, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 57,
@@ -425,6 +478,7 @@ function App() {
       title: 'James Anderson',
       start: 'dyndatetime(y, m, d - 8, 11, 20)',
       end: 'dyndatetime(y, m, d - 8, 12, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 58,
@@ -432,6 +486,7 @@ function App() {
       title: 'Olivia Johnson',
       start: 'dyndatetime(y, m, d - 8, 13, 40)',
       end: 'dyndatetime(y, m, d - 8, 14, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 59,
@@ -439,6 +494,7 @@ function App() {
       title: 'Michael Smith',
       start: 'dyndatetime(y, m, d - 8, 14, 40)',
       end: 'dyndatetime(y, m, d - 8, 15, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 60,
@@ -446,6 +502,7 @@ function App() {
       title: 'Ava Wilson',
       start: 'dyndatetime(y, m, d - 8, 17, 0)',
       end: 'dyndatetime(y, m, d - 8, 17, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 61,
@@ -453,6 +510,7 @@ function App() {
       title: 'Lucas Brown',
       start: 'dyndatetime(y, m, d - 8, 14, 20)',
       end: 'dyndatetime(y, m, d - 8, 15, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 62,
@@ -460,6 +518,7 @@ function App() {
       title: 'Mia Davis',
       start: 'dyndatetime(y, m, d - 8, 11, 0)',
       end: 'dyndatetime(y, m, d - 8, 11, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 63,
@@ -467,6 +526,7 @@ function App() {
       title: 'Ethan Garcia',
       start: 'dyndatetime(y, m, d - 8, 10, 20)',
       end: 'dyndatetime(y, m, d - 8, 11, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 64,
@@ -474,6 +534,7 @@ function App() {
       title: 'Charlotte Martinez',
       start: 'dyndatetime(y, m, d - 8, 8, 0)',
       end: 'dyndatetime(y, m, d - 8, 8, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 65,
@@ -481,6 +542,7 @@ function App() {
       title: 'Amelia Robinson',
       start: 'dyndatetime(y, m, d - 8, 9, 40)',
       end: 'dyndatetime(y, m, d - 8, 10, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 66,
@@ -488,6 +550,7 @@ function App() {
       title: 'William Clark',
       start: 'dyndatetime(y, m, d - 8, 12, 0)',
       end: 'dyndatetime(y, m, d - 8, 12, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 67,
@@ -495,6 +558,7 @@ function App() {
       title: 'Benjamin Lewis',
       start: 'dyndatetime(y, m, d - 8, 14, 0)',
       end: 'dyndatetime(y, m, d - 8, 14, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 68,
@@ -502,6 +566,7 @@ function App() {
       title: 'Sophia Walker',
       start: 'dyndatetime(y, m, d - 8, 15, 40)',
       end: 'dyndatetime(y, m, d - 8, 16, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 69,
@@ -509,6 +574,7 @@ function App() {
       title: 'Elijah Hall',
       start: 'dyndatetime(y, m, d - 8, 10, 40)',
       end: 'dyndatetime(y, m, d - 8, 11, 20)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 70,
@@ -516,6 +582,7 @@ function App() {
       title: 'Grace Allen',
       start: 'dyndatetime(y, m, d - 8, 11, 20)',
       end: 'dyndatetime(y, m, d - 8, 12, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 71,
@@ -523,6 +590,7 @@ function App() {
       title: 'David Young',
       start: 'dyndatetime(y, m, d - 8, 12, 0)',
       end: 'dyndatetime(y, m, d - 8, 12, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 72,
@@ -530,6 +598,7 @@ function App() {
       title: 'Emily King',
       start: 'dyndatetime(y, m, d - 8, 15, 20)',
       end: 'dyndatetime(y, m, d - 8, 16, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 73,
@@ -537,6 +606,7 @@ function App() {
       title: 'Liam Scott',
       start: 'dyndatetime(y, m, d + 2, 14, 20)',
       end: 'dyndatetime(y, m, d + 2, 15, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 74,
@@ -544,6 +614,7 @@ function App() {
       title: 'Isabella Moore',
       start: 'dyndatetime(y, m, d - 8, 13, 20)',
       end: 'dyndatetime(y, m, d - 8, 14, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 75,
@@ -551,6 +622,7 @@ function App() {
       title: 'Henry Taylor',
       start: 'dyndatetime(y, m, d - 8, 10, 20)',
       end: 'dyndatetime(y, m, d - 8, 11, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 76,
@@ -558,6 +630,7 @@ function App() {
       title: 'Zoe Wilson',
       start: 'dyndatetime(y, m, d - 8, 9, 20)',
       end: 'dyndatetime(y, m, d - 8, 10, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 77,
@@ -565,6 +638,7 @@ function App() {
       title: 'Jack Martinez',
       start: 'dyndatetime(y, m, d - 8, 10, 0)',
       end: 'dyndatetime(y, m, d - 8, 10, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 78,
@@ -572,6 +646,7 @@ function App() {
       title: 'Amelia Perez',
       start: 'dyndatetime(y, m, d - 8, 12, 20)',
       end: 'dyndatetime(y, m, d - 8, 13, 0)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
     {
       id: 79,
@@ -579,9 +654,11 @@ function App() {
       title: 'Evan Harris',
       start: 'dyndatetime(y, m, d - 8, 15, 0)',
       end: 'dyndatetime(y, m, d - 8, 15, 40)',
+      recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
   ]);
-  const [myResources, setResources] = useState([
+
+  const [myResources] = useState([
     {
       id: 2,
       name: ' ',
@@ -672,20 +749,6 @@ function App() {
       img: 'https://img.mobiscroll.com/demos/f2.png',
     },
   ]);
-
-  const [toastOpen, setToastOpen] = useState(false);
-  const [toastText, setToastText] = useState();
-
-  useEffect(() => {
-    setEvents((prevEvents) =>
-      prevEvents.slice(0, 6).concat(
-        prevEvents.slice(6).map((event) => ({
-          ...event,
-          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
-        })),
-      ),
-    );
-  }, []);
 
   const myInvalids = useRef([
     {
@@ -809,29 +872,26 @@ function App() {
     return null;
   }, []);
 
-  const customResource = useCallback((resource) => {
-    if (resource.cssClass !== 'mds-healthc-resource-column') {
-      return '';
-    }
-
-    return (
-      <div className="mds-healthc-header-cont">
-        <div className="mds-healthc-header-name">{resource.name}</div>
-        <div className="mds-healthc-header-description">{resource.description}</div>
-        <img className="mds-healthc-header-avatar" src={resource.img} alt="Resource" />
-      </div>
-    );
-  }, []);
+  const customResource = useCallback(
+    (resource) => (
+      <>
+        {resource.cssClass === 'mds-healthc-resource-column' && (
+          <div className="mds-healthc-header-cont">
+            <div className="mds-healthc-header-name">{resource.name}</div>
+            <div className="mds-healthc-header-description">{resource.description}</div>
+            <img className="mds-healthc-header-avatar" src={resource.img} alt={resource.name + ' avatar'} />
+          </div>
+        )}
+      </>
+    ),
+    [],
+  );
 
   const showToast = useCallback((message) => {
     setTimeout(() => {
       setToastText(message);
       setToastOpen(true);
     });
-  }, []);
-
-  const handleCloseToast = useCallback(() => {
-    setToastOpen(false);
   }, []);
 
   return (
@@ -854,7 +914,7 @@ function App() {
         resources={myResources}
         view={myView}
       />
-      <Toast message={toastText} isOpen={toastOpen} onClose={handleCloseToast} />
+      <Toast message={toastText} isOpen={isToastOpen} onClose={() => setToastOpen(false)} />
     </>
   );
 }

@@ -1,5 +1,5 @@
 <mbsc-eventcalendar
-  class="mds-health-care-planner'"
+  ngClass="mds-health-care-planner"
   [data]="myEvents"
   [dragTimeStep]="20"
   [eventOverlap]="false"
@@ -9,9 +9,9 @@
   [dragToMove]="true"
   [scheduleEventContentTemplate]="eventTemp"
   [resourceTemplate]="resourceTemp"
-  (onEventCreate)="onEventCreate()"
-  (onEventDelete)="onEventDelete()"
-  (onEventUpdate)="onEventUpdate()"
+  (onEventCreate)="showToast('Appointment Created')"
+  (onEventDelete)="showToast('Appointment Deleted')"
+  (onEventUpdate)="showToast('Appointment Updated')"
   [resources]="myResources"
   [view]="myView"
 ></mbsc-eventcalendar>
@@ -25,7 +25,5 @@
 </ng-template>
 
 <ng-template #eventTemp let-event>
-  <div class="mds-tasks-event-title" *ngIf="!event.original?.type">
-    Patient: {{ event.title === 'New event' ? 'John Doe' : event.title }}
-  </div>
+  <div *ngIf="!event.original?.type">Patient: {{ event.title === 'New event' ? 'John Doe' : event.title }}</div>
 </ng-template>

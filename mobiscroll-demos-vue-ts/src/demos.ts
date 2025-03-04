@@ -340,9 +340,9 @@ import Demo276 from './demos/pickers/select/event-hooks/event-hooks.vue'
 import Demo471 from './demos/pickers/select/localization/localization.vue'
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left.vue'
 
-import CustomColWidth from './demos/eventcalendar/scheduler/custom-column-width/custom-column-width.vue'
+import CustomColWidth from './demos/eventcalendar/scheduler/control-the-column-width/control-the-column-width.vue'
 import HealthCarePlanner from './demos/eventcalendar/scheduler/health-care-planner/health-care-planner.vue'
-import VariableColWidth from './demos/eventcalendar/scheduler/variable-column-widths/variable-column-widths.vue'
+import VariableColWidth from './demos/eventcalendar/scheduler/content-dependent-resource-width/content-dependent-resource-width.vue'
 
 export const demos = [
   {
@@ -358,8 +358,8 @@ export const demos = [
             unique: 7,
             items: [
               {
-                name: '---> Custom Column Width',
-                unique: 'custom-column-width',
+                name: '---> Control the column width',
+                unique: 'control-the-column-width',
                 component: CustomColWidth
               },
               {
@@ -368,8 +368,8 @@ export const demos = [
                 component: HealthCarePlanner
               },
               {
-                name: '---> Variable Column Width',
-                unique: 'variable-column-Width',
+                name: '---> Content dependent resource width',
+                unique: 'content-dependent-resource-width',
                 component: VariableColWidth
               },
               {
