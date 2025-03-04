@@ -17,7 +17,7 @@ export default {
           tooltip: 'Availability: 10:00 - 18:00',
           start: 'dyndatetime(y,m,d-10,10)',
           end: 'dyndatetime(y,m,d-10,18)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -27,7 +27,7 @@ export default {
           tooltip: 'Availability: 08:00 - 16:00',
           start: 'dyndatetime(y,m,d-10,8)',
           end: 'dyndatetime(y,m,d-10,16)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -37,7 +37,7 @@ export default {
           tooltip: 'Availability: 09:00 - 17:00',
           start: 'dyndatetime(y,m,d-10,9)',
           end: 'dyndatetime(y,m,d-10,17)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -47,7 +47,7 @@ export default {
           tooltip: 'Availability: 10:00 - 18:00',
           start: 'dyndatetime(y,m,d-10,10)',
           end: 'dyndatetime(y,m,d-10,18)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -57,7 +57,7 @@ export default {
           tooltip: 'Availability: 08:00 - 16:00',
           start: 'dyndatetime(y,m,d-10,8)',
           end: 'dyndatetime(y,m,d-10,16)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -67,7 +67,7 @@ export default {
           tooltip: 'Availability: 09:00 - 17:00',
           start: 'dyndatetime(y,m,d-10,9)',
           end: 'dyndatetime(y,m,d-10,17)',
-          recurring: 'FREQ=DAILY;COUNT=30;INTERVAL=1',
+          recurring: { repeat: 'daily' },
           type: 'availability',
           editable: false,
         },
@@ -77,6 +77,7 @@ export default {
           title: 'Jason Smith',
           start: 'dyndatetime(y, m, d-10, 10, 40)',
           end: 'dyndatetime(y, m, d-10, 11, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 8,
@@ -84,6 +85,7 @@ export default {
           title: 'Emily Johnson',
           start: 'dyndatetime(y, m, d-10, 11, 20)',
           end: 'dyndatetime(y, m, d-10, 12, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 9,
@@ -91,6 +93,7 @@ export default {
           title: 'Michael Brown',
           start: 'dyndatetime(y, m, d-10, 13, 40)',
           end: 'dyndatetime(y, m, d-10, 14, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 10,
@@ -98,6 +101,7 @@ export default {
           title: 'Sarah Davis',
           start: 'dyndatetime(y, m, d-10, 9, 20)',
           end: 'dyndatetime(y, m, d-10, 10, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 11,
@@ -105,6 +109,7 @@ export default {
           title: 'David Wilson',
           start: 'dyndatetime(y, m, d-10, 11, 40)',
           end: 'dyndatetime(y, m, d-10, 12, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 12,
@@ -112,6 +117,7 @@ export default {
           title: 'Linda Moore',
           start: 'dyndatetime(y, m, d-10, 12, 20)',
           end: 'dyndatetime(y, m, d-10, 13, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 13,
@@ -119,6 +125,7 @@ export default {
           title: 'James Taylor',
           start: 'dyndatetime(y, m, d-10, 14, 40)',
           end: 'dyndatetime(y, m, d-10, 15, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 14,
@@ -126,6 +133,7 @@ export default {
           title: 'Maria Anderson',
           start: 'dyndatetime(y, m, d-10, 14, 0)',
           end: 'dyndatetime(y, m, d-10, 14, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 15,
@@ -133,6 +141,7 @@ export default {
           title: 'Robert Thomas',
           start: 'dyndatetime(y, m, d-10, 13, 20)',
           end: 'dyndatetime(y, m, d-10, 14, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 16,
@@ -140,6 +149,7 @@ export default {
           title: 'Patricia Jackson',
           start: 'dyndatetime(y, m, d-10, 11, 0)',
           end: 'dyndatetime(y, m, d-10, 11, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 17,
@@ -147,6 +157,7 @@ export default {
           title: 'John Harris',
           start: 'dyndatetime(y, m, d-10, 9, 40)',
           end: 'dyndatetime(y, m, d-10, 10, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 18,
@@ -154,6 +165,7 @@ export default {
           title: 'William Clark',
           start: 'dyndatetime(y, m, d-10, 15, 40)',
           end: 'dyndatetime(y, m, d-10, 16, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 19,
@@ -161,6 +173,7 @@ export default {
           title: 'Elizabeth Lewis',
           start: 'dyndatetime(y, m, d-10, 15, 0)',
           end: 'dyndatetime(y, m, d-10, 15, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 20,
@@ -168,6 +181,7 @@ export default {
           title: 'Charles Walker',
           start: 'dyndatetime(y, m, d-10, 12, 0)',
           end: 'dyndatetime(y, m, d-10, 12, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 21,
@@ -175,6 +189,7 @@ export default {
           title: 'Jessica Allen',
           start: 'dyndatetime(y, m, d-10, 11, 20)',
           end: 'dyndatetime(y, m, d-10, 12, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 22,
@@ -182,6 +197,7 @@ export default {
           title: 'Matthew Young',
           start: 'dyndatetime(y, m, d-10, 9, 0)',
           end: 'dyndatetime(y, m, d-10, 9, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 23,
@@ -189,6 +205,7 @@ export default {
           title: 'Sophia King',
           start: 'dyndatetime(y, m, d-10, 9, 40)',
           end: 'dyndatetime(y, m, d-10, 10, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 24,
@@ -196,6 +213,7 @@ export default {
           title: 'Daniel Scott',
           start: 'dyndatetime(y, m, d-10, 11, 40)',
           end: 'dyndatetime(y, m, d-10, 12, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 25,
@@ -203,13 +221,15 @@ export default {
           title: 'Olivia Green',
           start: 'dyndatetime(y, m, d-10, 13, 40)',
           end: 'dyndatetime(y, m, d-10, 14, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 26,
           resource: 9,
           title: 'Lucas Adams',
-          start: 'dyndatetime(y, m, d-10, 14, 20)',
-          end: 'dyndatetime(y, m, d-10, 15, 0)',
+          start: 'dyndatetime(y, m, d-10, 15, 20)',
+          end: 'dyndatetime(y, m, d-10, 16, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 27,
@@ -217,6 +237,7 @@ export default {
           title: 'Ava Baker',
           start: 'dyndatetime(y, m, d-10, 10, 0)',
           end: 'dyndatetime(y, m, d-10, 10, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 28,
@@ -224,6 +245,7 @@ export default {
           title: 'Ethan Gonzalez',
           start: 'dyndatetime(y, m, d-10, 10, 40)',
           end: 'dyndatetime(y, m, d-10, 11, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 29,
@@ -231,6 +253,7 @@ export default {
           title: 'Mason Carter',
           start: 'dyndatetime(y, m, d-10, 13, 40)',
           end: 'dyndatetime(y, m, d-10, 14, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 30,
@@ -238,6 +261,7 @@ export default {
           title: 'Amelia Mitchell',
           start: 'dyndatetime(y, m, d-10, 14, 20)',
           end: 'dyndatetime(y, m, d-10, 15, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 31,
@@ -245,6 +269,7 @@ export default {
           title: 'Isabella Perez',
           start: 'dyndatetime(y, m, d-10, 15, 0)',
           end: 'dyndatetime(y, m, d-10, 15, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 32,
@@ -252,6 +277,7 @@ export default {
           title: 'Jason Smith',
           start: 'dyndatetime(y, m, d - 9, 10, 20)',
           end: 'dyndatetime(y, m, d - 9, 11, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 33,
@@ -259,6 +285,7 @@ export default {
           title: 'Emma Davis',
           start: 'dyndatetime(y, m, d - 9, 11, 0)',
           end: 'dyndatetime(y, m, d - 9, 11, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 34,
@@ -266,6 +293,7 @@ export default {
           title: 'Liam Johnson',
           start: 'dyndatetime(y, m, d - 9, 13, 0)',
           end: 'dyndatetime(y, m, d - 9, 13, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 35,
@@ -273,6 +301,7 @@ export default {
           title: 'Olivia Brown',
           start: 'dyndatetime(y, m, d - 9, 14, 40)',
           end: 'dyndatetime(y, m, d - 9, 15, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 36,
@@ -280,6 +309,7 @@ export default {
           title: 'Noah Wilson',
           start: 'dyndatetime(y, m, d - 9, 14, 40)',
           end: 'dyndatetime(y, m, d - 9, 15, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 37,
@@ -287,6 +317,7 @@ export default {
           title: 'Ava Taylor',
           start: 'dyndatetime(y, m, d - 9, 12, 40)',
           end: 'dyndatetime(y, m, d - 9, 13, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 38,
@@ -294,6 +325,7 @@ export default {
           title: 'Mason Martinez',
           start: 'dyndatetime(y, m, d - 9, 8, 20)',
           end: 'dyndatetime(y, m, d - 9, 9, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 39,
@@ -301,6 +333,7 @@ export default {
           title: 'Isabella Rodriguez',
           start: 'dyndatetime(y, m, d - 9, 9, 20)',
           end: 'dyndatetime(y, m, d - 9, 10, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 40,
@@ -308,6 +341,7 @@ export default {
           title: 'James Lee',
           start: 'dyndatetime(y, m, d - 9, 10, 40)',
           end: 'dyndatetime(y, m, d - 9, 11, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 41,
@@ -315,6 +349,7 @@ export default {
           title: 'Charlotte Clark',
           start: 'dyndatetime(y, m, d - 9, 11, 20)',
           end: 'dyndatetime(y, m, d - 9, 12, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 42,
@@ -322,6 +357,7 @@ export default {
           title: 'Benjamin Lewis',
           start: 'dyndatetime(y, m, d - 9, 15, 0)',
           end: 'dyndatetime(y, m, d - 9, 15, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 43,
@@ -329,6 +365,7 @@ export default {
           title: 'Amelia Walker',
           start: 'dyndatetime(y, m, d - 9, 15, 40)',
           end: 'dyndatetime(y, m, d - 9, 16, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 44,
@@ -336,6 +373,7 @@ export default {
           title: 'Elijah Hall',
           start: 'dyndatetime(y, m, d - 9, 14, 20)',
           end: 'dyndatetime(y, m, d - 9, 15, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 45,
@@ -343,6 +381,7 @@ export default {
           title: 'Harper Allen',
           start: 'dyndatetime(y, m, d - 9, 13, 20)',
           end: 'dyndatetime(y, m, d - 9, 14, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 46,
@@ -350,6 +389,7 @@ export default {
           title: 'Lucas Young',
           start: 'dyndatetime(y, m, d - 9, 10, 20)',
           end: 'dyndatetime(y, m, d - 9, 11, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 47,
@@ -357,6 +397,7 @@ export default {
           title: 'Evelyn Hernandez',
           start: 'dyndatetime(y, m, d - 9, 8, 0)',
           end: 'dyndatetime(y, m, d - 9, 8, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 48,
@@ -364,6 +405,7 @@ export default {
           title: 'Henry King',
           start: 'dyndatetime(y, m, d - 9, 8, 40)',
           end: 'dyndatetime(y, m, d - 9, 9, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 49,
@@ -371,6 +413,7 @@ export default {
           title: 'Ella Scott',
           start: 'dyndatetime(y, m, d - 9, 10, 40)',
           end: 'dyndatetime(y, m, d - 9, 11, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 50,
@@ -378,6 +421,7 @@ export default {
           title: 'Jacob Adams',
           start: 'dyndatetime(y, m, d - 9, 11, 20)',
           end: 'dyndatetime(y, m, d - 9, 12, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 51,
@@ -385,6 +429,7 @@ export default {
           title: 'Grace Mitchell',
           start: 'dyndatetime(y, m, d - 9, 13, 40)',
           end: 'dyndatetime(y, m, d - 9, 14, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 52,
@@ -392,6 +437,7 @@ export default {
           title: 'Alexander Perez',
           start: 'dyndatetime(y, m, d - 9, 10, 20)',
           end: 'dyndatetime(y, m, d - 9, 11, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 53,
@@ -399,6 +445,7 @@ export default {
           title: 'Lily Roberts',
           start: 'dyndatetime(y, m, d - 9, 13, 20)',
           end: 'dyndatetime(y, m, d - 9, 14, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 54,
@@ -406,6 +453,7 @@ export default {
           title: 'Sebastian Carter',
           start: 'dyndatetime(y, m, d - 9, 14, 40)',
           end: 'dyndatetime(y, m, d - 9, 15, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 55,
@@ -413,6 +461,7 @@ export default {
           title: 'Mia Nelson',
           start: 'dyndatetime(y, m, d - 9, 15, 20)',
           end: 'dyndatetime(y, m, d - 9, 16, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 56,
@@ -420,6 +469,7 @@ export default {
           title: 'Elisabeth Carter',
           start: 'dyndatetime(y, m, d - 8, 10, 40)',
           end: 'dyndatetime(y, m, d - 8, 11, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 57,
@@ -427,6 +477,7 @@ export default {
           title: 'James Anderson',
           start: 'dyndatetime(y, m, d - 8, 11, 20)',
           end: 'dyndatetime(y, m, d - 8, 12, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 58,
@@ -434,6 +485,7 @@ export default {
           title: 'Olivia Johnson',
           start: 'dyndatetime(y, m, d - 8, 13, 40)',
           end: 'dyndatetime(y, m, d - 8, 14, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 59,
@@ -441,6 +493,7 @@ export default {
           title: 'Michael Smith',
           start: 'dyndatetime(y, m, d - 8, 14, 40)',
           end: 'dyndatetime(y, m, d - 8, 15, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 60,
@@ -448,6 +501,7 @@ export default {
           title: 'Ava Wilson',
           start: 'dyndatetime(y, m, d - 8, 17, 0)',
           end: 'dyndatetime(y, m, d - 8, 17, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 61,
@@ -455,6 +509,7 @@ export default {
           title: 'Lucas Brown',
           start: 'dyndatetime(y, m, d - 8, 14, 20)',
           end: 'dyndatetime(y, m, d - 8, 15, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 62,
@@ -462,6 +517,7 @@ export default {
           title: 'Mia Davis',
           start: 'dyndatetime(y, m, d - 8, 11, 0)',
           end: 'dyndatetime(y, m, d - 8, 11, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 63,
@@ -469,6 +525,7 @@ export default {
           title: 'Ethan Garcia',
           start: 'dyndatetime(y, m, d - 8, 10, 20)',
           end: 'dyndatetime(y, m, d - 8, 11, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 64,
@@ -476,6 +533,7 @@ export default {
           title: 'Charlotte Martinez',
           start: 'dyndatetime(y, m, d - 8, 8, 0)',
           end: 'dyndatetime(y, m, d - 8, 8, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 65,
@@ -483,6 +541,7 @@ export default {
           title: 'Amelia Robinson',
           start: 'dyndatetime(y, m, d - 8, 9, 40)',
           end: 'dyndatetime(y, m, d - 8, 10, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 66,
@@ -490,6 +549,7 @@ export default {
           title: 'William Clark',
           start: 'dyndatetime(y, m, d - 8, 12, 0)',
           end: 'dyndatetime(y, m, d - 8, 12, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 67,
@@ -497,6 +557,7 @@ export default {
           title: 'Benjamin Lewis',
           start: 'dyndatetime(y, m, d - 8, 14, 0)',
           end: 'dyndatetime(y, m, d - 8, 14, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 68,
@@ -504,6 +565,7 @@ export default {
           title: 'Sophia Walker',
           start: 'dyndatetime(y, m, d - 8, 15, 40)',
           end: 'dyndatetime(y, m, d - 8, 16, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 69,
@@ -511,6 +573,7 @@ export default {
           title: 'Elijah Hall',
           start: 'dyndatetime(y, m, d - 8, 10, 40)',
           end: 'dyndatetime(y, m, d - 8, 11, 20)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 70,
@@ -518,6 +581,7 @@ export default {
           title: 'Grace Allen',
           start: 'dyndatetime(y, m, d - 8, 11, 20)',
           end: 'dyndatetime(y, m, d - 8, 12, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 71,
@@ -525,6 +589,7 @@ export default {
           title: 'David Young',
           start: 'dyndatetime(y, m, d - 8, 12, 0)',
           end: 'dyndatetime(y, m, d - 8, 12, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 72,
@@ -532,6 +597,7 @@ export default {
           title: 'Emily King',
           start: 'dyndatetime(y, m, d - 8, 15, 20)',
           end: 'dyndatetime(y, m, d - 8, 16, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 73,
@@ -539,6 +605,7 @@ export default {
           title: 'Liam Scott',
           start: 'dyndatetime(y, m, d + 2, 14, 20)',
           end: 'dyndatetime(y, m, d + 2, 15, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 74,
@@ -546,6 +613,7 @@ export default {
           title: 'Isabella Moore',
           start: 'dyndatetime(y, m, d - 8, 13, 20)',
           end: 'dyndatetime(y, m, d - 8, 14, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 75,
@@ -553,6 +621,7 @@ export default {
           title: 'Henry Taylor',
           start: 'dyndatetime(y, m, d - 8, 10, 20)',
           end: 'dyndatetime(y, m, d - 8, 11, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 76,
@@ -560,6 +629,7 @@ export default {
           title: 'Zoe Wilson',
           start: 'dyndatetime(y, m, d - 8, 9, 20)',
           end: 'dyndatetime(y, m, d - 8, 10, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 77,
@@ -567,6 +637,7 @@ export default {
           title: 'Jack Martinez',
           start: 'dyndatetime(y, m, d - 8, 10, 0)',
           end: 'dyndatetime(y, m, d - 8, 10, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 78,
@@ -574,6 +645,7 @@ export default {
           title: 'Amelia Perez',
           start: 'dyndatetime(y, m, d - 8, 12, 20)',
           end: 'dyndatetime(y, m, d - 8, 13, 0)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
         {
           id: 79,
@@ -581,14 +653,101 @@ export default {
           title: 'Evan Harris',
           start: 'dyndatetime(y, m, d - 8, 15, 0)',
           end: 'dyndatetime(y, m, d - 8, 15, 40)',
+          recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
         },
       ];
 
-      myEvents = myEvents.slice(0, 6).concat(
-        myEvents.slice(6).map(function (event) {
-          return Object.assign({}, event, { recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3' });
-        }),
-      );
+      var myResources = [
+        {
+          id: 2,
+          name: ' ',
+          color: 'rgb(40, 179, 114)',
+          cssClass: 'mds-healthc-resource-column-bar',
+        },
+        {
+          id: 1,
+          name: 'Dr. James Cole',
+          color: 'rgba(255, 204, 193)',
+          cssClass: 'mds-healthc-resource-column',
+          description: 'Injury Recovery Specialist',
+          img: 'https://img.mobiscroll.com/demos/m4.png',
+        },
+        {
+          id: 4,
+          name: ' ',
+          color: 'rgb(40, 179, 114)',
+          eventCreation: false,
+          cssClass: 'mds-healthc-resource-column-bar',
+        },
+        {
+          id: 3,
+          name: 'Dr. Anna Hayes',
+          color: 'rgb(193, 221, 195)',
+          cssClass: 'mds-healthc-resource-column',
+          description: 'Sports Physiotherapist',
+          img: 'https://img.mobiscroll.com/demos/f3.png',
+        },
+        {
+          id: 6,
+          name: ' ',
+          color: 'rgb(40, 179, 114)',
+          eventCreation: false,
+          cssClass: 'mds-healthc-resource-column-bar',
+        },
+        {
+          id: 5,
+          name: 'Dr. Mark Lewis',
+          color: 'rgb(134, 224, 193)',
+          cssClass: 'mds-healthc-resource-column',
+          description: 'Mobility Recovery Expert',
+          img: 'https://img.mobiscroll.com/demos/m3.png',
+        },
+        {
+          id: 8,
+          name: ' ',
+          color: 'rgb(40, 179, 114)',
+          eventCreation: false,
+          cssClass: 'mds-healthc-resource-column-bar',
+        },
+        {
+          id: 7,
+          name: 'Dr. Emily Carter',
+          color: 'rgb(255, 193, 228)',
+          cssClass: 'mds-healthc-resource-column',
+          description: 'Chiropractic Specialist',
+          img: 'https://img.mobiscroll.com/demos/f1.png',
+        },
+        {
+          id: 10,
+          name: ' ',
+          color: 'rgb(40, 179, 114)',
+          eventCreation: false,
+          cssClass: 'mds-healthc-resource-column-bar',
+        },
+        {
+          id: 9,
+          name: 'Dr. Robert Stone',
+          color: 'rgb(193, 204, 255)',
+          cssClass: 'mds-healthc-resource-column',
+          description: 'Orthopedic Surgeon',
+          img: 'https://img.mobiscroll.com/demos/m2.png',
+        },
+        {
+          id: 12,
+          name: ' ',
+          color: 'rgb(40, 179, 114)',
+          eventCreation: false,
+          cssClass: 'mds-healthc-resource-column-bar',
+        },
+        {
+          id: 11,
+          name: 'Dr. Sophia Miller',
+          color: 'rgb(255, 223, 176)',
+          cssClass: 'mds-healthc-resource-column',
+          description: 'Sports Physiotherapist',
+          img: 'https://img.mobiscroll.com/demos/f2.png',
+        },
+      ];
 
       var myInvalids = [
         {
@@ -689,98 +848,6 @@ export default {
         },
       ];
 
-      var myResources = [
-        {
-          id: 2,
-          name: ' ',
-          color: 'rgb(40, 179, 114)',
-          cssClass: 'mds-healthc-resource-column-bar',
-        },
-        {
-          id: 1,
-          name: 'Dr. James Cole',
-          color: 'rgba(255, 204, 193)',
-          cssClass: 'mds-healthc-resource-column',
-          description: 'Injury Recovery Specialist',
-          img: 'https://img.mobiscroll.com/demos/m4.png',
-        },
-        {
-          id: 4,
-          name: ' ',
-          color: 'rgb(40, 179, 114)',
-          eventCreation: false,
-          cssClass: 'mds-healthc-resource-column-bar',
-        },
-        {
-          id: 3,
-          name: 'Dr. Anna Hayes',
-          color: 'rgb(193, 221, 195)',
-          cssClass: 'mds-healthc-resource-column',
-          description: 'Sports Physiotherapist',
-          img: 'https://img.mobiscroll.com/demos/f3.png',
-        },
-        {
-          id: 6,
-          name: ' ',
-          color: 'rgb(40, 179, 114)',
-          eventCreation: false,
-          cssClass: 'mds-healthc-resource-column-bar',
-        },
-        {
-          id: 5,
-          name: 'Dr. Mark Lewis',
-          color: 'rgb(134, 224, 193)',
-          cssClass: 'mds-healthc-resource-column',
-          description: 'Mobility Recovery Expert',
-          img: 'https://img.mobiscroll.com/demos/m3.png',
-        },
-        {
-          id: 8,
-          name: ' ',
-          color: 'rgb(40, 179, 114)',
-          eventCreation: false,
-          cssClass: 'mds-healthc-resource-column-bar',
-        },
-        {
-          id: 7,
-          name: 'Dr. Emily Carter',
-          color: 'rgb(255, 193, 228)',
-          cssClass: 'mds-healthc-resource-column',
-          description: 'Chiropractic Specialist',
-          img: 'https://img.mobiscroll.com/demos/f1.png',
-        },
-        {
-          id: 10,
-          name: ' ',
-          color: 'rgb(40, 179, 114)',
-          eventCreation: false,
-          cssClass: 'mds-healthc-resource-column-bar',
-        },
-        {
-          id: 9,
-          name: 'Dr. Robert Stone',
-          color: 'rgb(193, 204, 255)',
-          cssClass: 'mds-healthc-resource-column',
-          description: 'Orthopedic Surgeon',
-          img: 'https://img.mobiscroll.com/demos/m2.png',
-        },
-        {
-          id: 12,
-          name: ' ',
-          color: 'rgb(40, 179, 114)',
-          eventCreation: false,
-          cssClass: 'mds-healthc-resource-column-bar',
-        },
-        {
-          id: 11,
-          name: 'Dr. Sophia Miller',
-          color: 'rgb(255, 223, 176)',
-          cssClass: 'mds-healthc-resource-column',
-          description: 'Sports Physiotherapist',
-          img: 'https://img.mobiscroll.com/demos/f2.png',
-        },
-      ];
-
       var myView = {
         schedule: {
           type: 'week',
@@ -789,9 +856,21 @@ export default {
           startTime: '08:00',
           endTime: '18:00',
           timeCellStep: 20,
+          timeLabelStep: 20,
           allDay: false,
         },
       };
+
+      function showToast(message) {
+        setTimeout(function () {
+          mobiscroll.toast({
+            //<hidden>
+            // theme,//</hidden>
+            // context,
+            message: message,
+          });
+        });
+      }
 
       $('#demo-health-care-planner')
         .mobiscroll()
@@ -804,6 +883,9 @@ export default {
           eventOverlap: false,
           groupBy: 'date',
           invalid: myInvalids,
+          renderScheduleEventContent: function (event) {
+            return !event.original.type ? '<div>Patient: ' + (event.title === 'New event' ? 'John Doe' : event.title) + '</div>' : '';
+          },
           renderResource: function (resource) {
             if (resource.cssClass !== 'mds-healthc-resource-column') {
               return ' ';
@@ -822,30 +904,14 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEvent: function (data) {
-            if (data.original.type == 'availability') {
-              return '<div class="mds-healthc-availability-bar" style="background-color: ' + data.color + ';"></div>';
-            } else {
-              return (
-                '<div class="mds-healthc-event" style="background:' +
-                data.color +
-                ';">' +
-                '<div class="mds-other-content">' +
-                '<div class="mds-healthc-event-title">' +
-                '<b>Patient: ' +
-                data.original.title +
-                '</b><br>' +
-                '<span class="mds-start-time">' +
-                data.start +
-                '</span> - ' +
-                '<span class="mds-end-time">' +
-                data.end +
-                '</span>' +
-                '</div>' +
-                '</div>' +
-                '</div>'
-              );
-            }
+          onEventCreate: function () {
+            showToast('Appointment Created');
+          },
+          onEventDelete: function () {
+            showToast('Appointment Deleted');
+          },
+          onEventUpdate: function () {
+            showToast('Appointment Updated');
           },
           resources: myResources,
           view: myView,
@@ -859,11 +925,20 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+.mds-health-care-planner .mbsc-schedule-time-col,
+.mds-health-care-planner .mbsc-schedule-time-wrapper {
+  width: 80px;
+}
 
 /* Resouce column */
 
 .mds-healthc-resource-column-bar .mbsc-schedule-event-range {
   display: none;
+}
+
+.mds-healthc-resource-column-bar .mbsc-schedule-event-bar {
+  width: 4px;
+  border-radius: 3px;
 }
 
 .mds-health-care-planner .mbsc-schedule-resource-title {
@@ -875,7 +950,7 @@ export default {
 }
 
 .mds-healthc-resource-column-bar {
-  width: 15px;
+  width: 14px;
 } 
 
 .mds-healthc-resource-column {
