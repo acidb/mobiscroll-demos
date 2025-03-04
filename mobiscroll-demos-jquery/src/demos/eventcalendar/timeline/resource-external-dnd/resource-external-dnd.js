@@ -540,24 +540,28 @@ export default {
             );
           },
           renderResource: function (resource) {
-            return resource.children
-              ? '<div class="mds-ext-res-dnd-name mbsc-no-padding">' + resource.name + '</div>'
-              : resource &&
-                  '<div class="mbsc-flex">' +
-                    '<div class="mds-ext-res-dnd-avatar" style="background: ' +
-                    resource.color +
-                    '">' +
-                    resource.name[0] +
-                    '</div>' +
-                    '<div class="mds-ext-res-dnd-cont">' +
-                    '<div class="mds-ext-res-dnd-name">' +
-                    resource.name +
-                    '</div>' +
-                    '<div class="mds-ext-res-dnd-title">' +
-                    resource.title +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
+            return resource.isParent || resource.temp
+              ? '<div class="mds-ext-res-dnd-name mbsc-flex' +
+                  (resource.temp ? ' mds-ext-res-dnd-name-temp' : '') +
+                  '">' +
+                  resource.name +
+                  '</div>'
+              : '<div class="mbsc-flex">' +
+                  '<div class="mds-ext-res-dnd-avatar" style="background: ' +
+                  resource.color +
+                  '">' +
+                  resource.name[0] +
+                  '</div>' +
+                  '<div class="mds-ext-res-dnd-cont">' +
+                  '<div class="mds-ext-res-dnd-name ' +
+                  '">' +
+                  resource.name +
+                  '</div>' +
+                  '<div class="mds-ext-res-dnd-title">' +
+                  resource.title +
+                  '</div>' +
+                  '</div>' +
+                  '</div>';
           },
           onResourceCreate: function (args) {
             var newResId = args.resource.id;
@@ -568,7 +572,7 @@ export default {
             $('#md-resource-' + newResId).remove();
             mobiscroll.toast({
               // context,
-              message: args.resource.name + ' added',
+              message: args.resource.name + ' added to ' + args.parent.name,
             });
           },
           onResourceOrderUpdate: function (args) {
@@ -615,7 +619,6 @@ export default {
           eventCreation: false,
           reorder: false,
           name: 'Installer team ' + teamLength,
-          temp: resId + 'temp',
           children: [tempResource],
         });
         timelineInst.setOptions({ resources: installers.slice() });
@@ -667,6 +670,7 @@ export default {
 
 .mds-ext-res-drop-calendar .mbsc-timeline-resource {
   align-items: center;
+  align-content: center;
 }
 
 .mds-workers-title {
@@ -677,12 +681,12 @@ export default {
   color: #6e6e6e;
 }
 
-.mds-ext-res-drop-cont .mds-workers-title {
-  padding: 12px 16px;
-}
-
 .mds-ext-res-drop-cont {
     height: 100%; 
+}
+
+.mds-ext-res-drop-cont .mds-workers-title {
+  padding: 12px 16px;
 }
 
 .mds-ext-res-drop-cont .mds-workers-list {
@@ -709,6 +713,11 @@ export default {
 .mds-ext-res-dnd-name {
   font-size: 14px;
   font-weight: 600;
+}
+
+.mds-ext-res-dnd-name-temp {
+  font-style: italic;
+  opacity: 0.4;
 }
 
 .mds-ext-res-dnd-title {

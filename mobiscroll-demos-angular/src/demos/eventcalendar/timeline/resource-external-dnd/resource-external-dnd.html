@@ -1,0 +1,50 @@
+<div class="mbsc-grid mbsc-no-padding">
+  <div class="mbsc-row">
+    <div class="mbsc-col-sm-3 ds-ext-res-drop-cont mbsc-flex-col">
+      <mbsc-dropcontainer (onItemDrop)="onItemDrop($event)">
+        <div class="mds-workers-title">Available technicians</div>
+        <div class="mds-workers-list">
+          <div mbsc-draggable *ngFor="let res of availableInstallers; " [dragData]="res" class="mbsc-flex mds-ext-res-drop-task">
+            <div class="mds-ext-res-dnd-avatar" [ngStyle]="{ background: res.color }">{{ res.name![0] }}</div>
+            <div class="mds-ext-res-dnd-cont">
+              <div class="mds-ext-res-dnd-name">{{ res.name }}</div>
+              <div class="mds-ext-res-dnd-titme">{{ res["title"] }}</div>
+            </div>
+          </div>
+        </div>
+      </mbsc-dropcontainer>
+    </div>
+    <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
+      <mbsc-eventcalendar
+        #timeline
+        [data]="myEvents"
+        [resources]="installers"
+        [options]="calendarOptions"
+        [resourceTemplate]="resource"
+        [resourceHeaderTemplate]="resourceHeader"
+      >
+        <ng-template #resourceHeader let-data>
+          <div class="mbsc-flex mbsc-align-items-center">
+            <div class="mds-workers-title">Set up teams</div>
+            <mbsc-button variant="outline" class="mds-create-new-team" (click)="addNewTeam()"> Add team </mbsc-button>
+          </div>
+        </ng-template>
+        <ng-template #resource let-resource>
+          <div
+            *ngIf="resource.children || resource.temp"
+            [ngClass]="{ 'mds-ext-res-dnd-name': true, 'mds-ext-res-dnd-name-temp': resource.temp }"
+          >
+            {{ resource.name }}
+          </div>
+          <div *ngIf="!(resource.children || resource.temp)" class="mbsc-flex">
+            <div class="mds-ext-res-dnd-avatar" [ngStyle]="{ background: resource.color }">{{ resource.name![0] }}</div>
+            <div class="mds-ext-res-dnd-cont">
+              <div class="mds-ext-res-dnd-name">{{ resource.name }}</div>
+              <div class="mds-ext-res-dnd-title">{{ resource["title"] }}</div>
+            </div>
+          </div>
+        </ng-template>
+      </mbsc-eventcalendar>
+    </div>
+  </div>
+</div>

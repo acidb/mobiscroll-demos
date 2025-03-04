@@ -494,7 +494,7 @@ function handleResourceCreate(args) {
   availableInstallers.value = availableInstallers.value.filter(
     (item) => item.id !== args.resource.id
   )
-  toastMessage.value = args.resource.title + ' added'
+  toastMessage.value = args.resource.name + ' added to ' + args.parent.name
   isToastOpen.value = true
 }
 
@@ -516,21 +516,18 @@ function handleToastClose() {
 function addNewTeam() {
   const teamLength = installers.value.length + 1
   const resId = 'it-' + teamLength
-  console.log('here addNewTeam', resId, installers)
   installers.value = [
     ...installers.value,
     {
       id: resId,
       eventCreation: false,
-      collapsed: true,
       reorder: false,
       name: 'Installer team ' + teamLength,
-      temp: resId + 'temp',
       children: [
         {
-          id: resId + 'temp',
+          id: resId + '-temp',
           temp: true,
-          name: 'Drag new resource here',
+          name: 'Drag Technicians here',
           title: '',
           reorder: false
         }
@@ -539,10 +536,29 @@ function addNewTeam() {
   ]
 
   if (timelineRef.value && timelineRef.value.instance) {
-    console.log('here navigateToEvent', teamLength, installers)
     timelineRef.value.instance.navigateToEvent({
       start: new Date(),
       resource: 'it-' + teamLength
+    })
+  }
+}
+
+function handleResourceOrderUpdate(args) {
+  const parent = args.parent
+  const oldParent = args.oldParent
+
+  if (parent && parent.children) {
+    // remove placeholder resource
+    parent.children = parent.children.filter((child) => !child.temp)
+  }
+  if (oldParent && !oldParent.children.length) {
+    // add placeholder resource
+    oldParent.children.push({
+      id: 'temp' + (installers.value.length + 1),
+      temp: true,
+      name: 'Drag Technicians here',
+      title: '',
+      reorder: false
     })
   }
 }
@@ -594,9 +610,12 @@ function addNewTeam() {
           </template>
 
           <template #resource="res">
-            <div v-if="res.children" class="mds-ext-res-dnd-name mbsc-no-padding">
+            <divx
+              v-if="res.children || res.temp"
+              :class="{ 'mds-ext-res-dnd-name': true, 'mds-ext-res-dnd-name-temp': res.temp }"
+            >
               {{ res.name }}
-            </div>
+            </divx>
             <div v-else class="mbsc-flex">
               <div class="mds-ext-res-dnd-avatar" :style="{ background: res.color }">
                 {{ res.name[0] }}
@@ -635,6 +654,7 @@ function addNewTeam() {
 
 .mds-ext-res-drop-calendar .mbsc-timeline-resource {
   align-items: center;
+  align-content: center;
 }
 
 .mds-workers-title {
@@ -645,12 +665,12 @@ function addNewTeam() {
   color: #6e6e6e;
 }
 
-.mds-ext-res-drop-cont .mds-workers-title {
-  padding: 12px 16px;
-}
-
 .mds-ext-res-drop-cont {
   height: 100%;
+}
+
+.mds-ext-res-drop-cont .mds-workers-title {
+  padding: 12px 16px;
 }
 
 .mds-ext-res-drop-cont .mds-workers-list {
@@ -662,6 +682,7 @@ function addNewTeam() {
 }
 
 .mds-ext-res-drop-task {
+  display: flex;
   background: #dde0d8;
   padding: 10px;
   margin: 16px;
@@ -680,6 +701,11 @@ function addNewTeam() {
 .mds-ext-res-dnd-name {
   font-size: 14px;
   font-weight: 600;
+}
+
+.mds-ext-res-dnd-name-temp {
+  font-style: italic;
+  opacity: 0.4;
 }
 
 .mds-ext-res-dnd-title {
