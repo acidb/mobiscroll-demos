@@ -476,6 +476,12 @@ export default {
       },
       //</hide-comment>
     ];
+    var tempResource = {
+      temp: true,
+      name: 'Drag Technicians here',
+      title: '',
+      reorder: false,
+    };
 
     function generateExternalResources(availableWorkers) {
       if (availableWorkers && availableInstallers.length) {
@@ -525,24 +531,28 @@ export default {
         );
       },
       renderResource: function (resource) {
-        return resource.children
-          ? '<div class="mds-ext-res-dnd-name mbsc-no-padding">' + resource.name + '</div>'
-          : resource &&
-              '<div class="mbsc-flex">' +
-                '<div class="mds-ext-res-dnd-avatar" style="background: ' +
-                resource.color +
-                '">' +
-                resource.name[0] +
-                '</div>' +
-                '<div class="mds-ext-res-dnd-cont">' +
-                '<div class="mds-ext-res-dnd-name">' +
-                resource.name +
-                '</div>' +
-                '<div class="mds-ext-res-dnd-title">' +
-                resource.title +
-                '</div>' +
-                '</div>' +
-                '</div>';
+        return resource.isParent || resource.temp
+          ? '<div class="mds-ext-res-dnd-name mbsc-flex' +
+              (resource.temp ? ' mds-ext-res-dnd-name-temp' : '') +
+              '">' +
+              resource.name +
+              '</div>'
+          : '<div class="mbsc-flex">' +
+              '<div class="mds-ext-res-dnd-avatar" style="background: ' +
+              resource.color +
+              '">' +
+              resource.name[0] +
+              '</div>' +
+              '<div class="mds-ext-res-dnd-cont">' +
+              '<div class="mds-ext-res-dnd-name ' +
+              '">' +
+              resource.name +
+              '</div>' +
+              '<div class="mds-ext-res-dnd-title">' +
+              resource.title +
+              '</div>' +
+              '</div>' +
+              '</div>';
       },
       onResourceCreate: function (args) {
         var newResId = args.resource.id;
@@ -553,20 +563,26 @@ export default {
         document.getElementById('md-resource-' + newResId).remove();
 
         mobiscroll.toast({
-          message: args.resource.name + ' added',
+          message: args.resource.name + ' added to ' + args.parent.name,,
         });
-      },
-      onResourceExpand: function (args) {
-        var resource = args.resourceObj;
-
-        if (resource.children) {
-          resource.children = resource.children.filter(function (child) {
-            return !child.temp;
-          });
-        }
       },
       onResourceOrderUpdate: function (args) {
         installers = args.resources;
+
+        var parent = args.parent;
+        var oldParent = args.oldParent;
+
+        if (parent && parent.children) {
+          // remove placeholder resource
+          parent.children = parent.children.filter(function (child) {
+            return !child.temp;
+          });
+        }
+        if (oldParent && !oldParent.children.length) {
+          // add placeholder resource
+          tempResource.id = 'temp' + (installers.length + 1);
+          oldParent.children.push(tempResource);
+        }
       },
       onResourceDelete: function (args) {
         mobiscroll.toast({
@@ -591,19 +607,9 @@ export default {
         installers.push({
           id: resId,
           eventCreation: false,
-          collapsed: true,
           reorder: false,
           name: 'Installer team ' + teamLength,
-          temp: resId + 'temp',
-          children: [
-            {
-              id: resId + 'temp',
-              temp: true,
-              name: 'Drag new resource here',
-              title: '',
-              reorder: false,
-            },
-          ],
+          children: [tempResource],
         });
         timelineInst.setOptions({ resources: installers.slice() });
 
@@ -654,6 +660,7 @@ export default {
 
 .mds-ext-res-drop-calendar .mbsc-timeline-resource {
   align-items: center;
+  align-content: center;
 }
 
 .mds-workers-title {
@@ -664,12 +671,12 @@ export default {
   color: #6e6e6e;
 }
 
-.mds-ext-res-drop-cont .mds-workers-title {
-  padding: 12px 16px;
-}
-
 .mds-ext-res-drop-cont {
     height: 100%; 
+}
+
+.mds-ext-res-drop-cont .mds-workers-title {
+  padding: 12px 16px;
 }
 
 .mds-ext-res-drop-cont .mds-workers-list {
@@ -681,6 +688,7 @@ export default {
 }
 
 .mds-ext-res-drop-task {
+   display: flex;
     background: #dde0d8;
     padding: 10px;
     margin: 16px;
@@ -695,6 +703,11 @@ export default {
 .mds-ext-res-dnd-name {
   font-size: 14px;
   font-weight: 600;
+}
+
+.mds-ext-res-dnd-name-temp {
+  font-style: italic;
+  opacity: 0.4;
 }
 
 .mds-ext-res-dnd-title {

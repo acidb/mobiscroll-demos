@@ -37,291 +37,294 @@ Task.propTypes = {
 
 function App() {
   const timelineRef = useRef();
-  const constructionWork = useMemo(() => [
-    // Group 1
-    {
-      id: 'work-1',
-      start: 'dyndatetime(y,m,d,7)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Electrical wiring installation',
-      resource: 2,
-    },
-    {
-      id: 'work-2',
-      start: 'dyndatetime(y,m,d,14)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Power panel connection',
-      resource: 2,
-    },
-    {
-      id: 'work-3',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,12)',
-      title: 'Water pipe fitting',
-      resource: 3,
-    },
-    //<hide-comment>
-    {
-      id: 'work-4',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Leak inspection and sealing',
-      resource: 3,
-    },
-    {
-      id: 'work-5',
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Wood framing for new walls',
-      resource: 5,
-    },
-    {
-      id: 'work-6',
-      start: 'dyndatetime(y,m,d,14)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Door and window frame assembly',
-      resource: 5,
-    },
-    {
-      id: 'work-7',
-      start: 'dyndatetime(y,m,d,7)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Bricklaying for foundation',
-      resource: 6,
-    },
-    {
-      id: 'work-8',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,16)',
-      title: 'Applying cement mortar',
-      resource: 6,
-    },
-    {
-      id: 'work-9',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,12)',
-      title: 'Welding steel beams',
-      resource: 8,
-    },
-    {
-      id: 'work-10',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,17)',
-      title: 'Structural reinforcement welding',
-      resource: 8,
-    },
-    {
-      id: 'work-11',
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Roof tiling',
-      resource: 9,
-    },
-    {
-      id: 'work-12',
-      start: 'dyndatetime(y,m,d,14)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Leak-proofing and insulation',
-      resource: 9,
-    },
-    {
-      id: 'work-13',
-      start: 'dyndatetime(y,m,d,7)',
-      end: 'dyndatetime(y,m,d,14)',
-      title: 'Operating bulldozer for site leveling',
-      resource: 11,
-    },
-    {
-      id: 'work-14',
-      start: 'dyndatetime(y,m,d,14,20)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Material lifting with crane',
-      resource: 11,
-    },
-    {
-      id: 'work-15',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,12)',
-      title: 'Land survey for new roads',
-      resource: 12,
-    },
-    {
-      id: 'work-16',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,17)',
-      title: 'Boundary marking for structures',
-      resource: 12,
-    },
-    {
-      id: 'work-17',
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Concrete floor polishing',
-      resource: 14,
-    },
-    {
-      id: 'work-18',
-      start: 'dyndatetime(y,m,d,14)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Applying protective coatings on concrete',
-      resource: 14,
-    },
-    {
-      id: 'work-19',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,12)',
-      title: 'Steel frame installation',
-      resource: 15,
-    },
-    {
-      id: 'work-20',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,17)',
-      title: 'Bolting and securing steel structures',
-      resource: 15,
-    },
-    {
-      id: 'work-21',
-      start: 'dyndatetime(y,m,d,10)',
-      end: 'dyndatetime(y,m,d,14)',
-      title: 'Interior painting preparation',
-      resource: 17,
-    },
-    {
-      id: 'work-22',
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,d,18,10)',
-      title: 'Applying finishing coats',
-      resource: 17,
-    },
-    {
-      id: 'work-23',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,12)',
-      title: 'Glass panel measurement and cutting',
-      resource: 18,
-    },
-    {
-      id: 'work-24',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,17)',
-      title: 'Installing large glass windows',
-      resource: 18,
-    },
-    {
-      id: 'work-3',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,12)',
-      title: 'Concrete foundation pouring',
-      resource: 19,
-    },
-    {
-      id: 'work-4',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Curing and leveling concrete',
-      resource: 19,
-    },
-    {
-      id: 'work-5',
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,15)',
-      title: 'Structural steel beam welding',
-      resource: 20,
-    },
-    {
-      id: 'work-6',
-      start: 'dyndatetime(y,m,d,16)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Reinforcement bar assembly',
-      resource: 20,
-    },
-    {
-      id: 'work-7',
-      start: 'dyndatetime(y,m,d,7)',
-      end: 'dyndatetime(y,m,d,14)',
-      title: 'Excavation for foundation',
-      resource: 21,
-    },
-    {
-      id: 'work-8',
-      start: 'dyndatetime(y,m,d,15)',
-      end: 'dyndatetime(y,m,17,30)',
-      title: 'Operating crane for material transport',
-      resource: 21,
-    },
-    {
-      id: 'work-9',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,12)',
-      title: 'Land survey for new section',
-      resource: 22,
-    },
-    {
-      id: 'work-10',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,17)',
-      title: 'Marking layout for construction work',
-      resource: 22,
-    },
-    {
-      id: 'work-11',
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,13)',
-      title: 'Exterior wall painting',
-      resource: 23,
-    },
-    {
-      id: 'work-12',
-      start: 'dyndatetime(y,m,d,14)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Applying protective coatings',
-      resource: 23,
-    },
-    {
-      id: 'work-13',
-      start: 'dyndatetime(y,m,d,7)',
-      end: 'dyndatetime(y,m,d,12)',
-      title: 'Roof tiling installation',
-      resource: 24,
-    },
-    {
-      id: 'work-14',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,17,45)',
-      title: 'Leak-proofing and insulation work',
-      resource: 24,
-    },
-    {
-      id: 'work-15',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,12)',
-      title: 'Plastering interior walls',
-      resource: 25,
-    },
-    {
-      id: 'work-16',
-      start: 'dyndatetime(y,m,d,14)',
-      end: 'dyndatetime(y,m,d,18)',
-      title: 'Ceiling plaster and finishing',
-      resource: 25,
-    },
-    {
-      id: 'work-17',
-      start: 'dyndatetime(y,m,d,10)',
-      end: 'dyndatetime(y,m,d,15)',
-      title: 'Controlled demolition of old structure',
-      resource: 26,
-    },
-    {
-      id: 'work-18',
-      start: 'dyndatetime(y,m,d,15,15)',
-      end: 'dyndatetime(y,m,d,17,45)',
-      title: 'Site cleanup and debris removal',
-      resource: 26,
-    },
-    //</hide-comment>
-  ]);
+  const constructionWork = useMemo(
+    () => [
+      // Group 1
+      {
+        id: 'work-1',
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Electrical wiring installation',
+        resource: 2,
+      },
+      {
+        id: 'work-2',
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Power panel connection',
+        resource: 2,
+      },
+      {
+        id: 'work-3',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Water pipe fitting',
+        resource: 3,
+      },
+      //<hide-comment>
+      {
+        id: 'work-4',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Leak inspection and sealing',
+        resource: 3,
+      },
+      {
+        id: 'work-5',
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Wood framing for new walls',
+        resource: 5,
+      },
+      {
+        id: 'work-6',
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Door and window frame assembly',
+        resource: 5,
+      },
+      {
+        id: 'work-7',
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Bricklaying for foundation',
+        resource: 6,
+      },
+      {
+        id: 'work-8',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,16)',
+        title: 'Applying cement mortar',
+        resource: 6,
+      },
+      {
+        id: 'work-9',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Welding steel beams',
+        resource: 8,
+      },
+      {
+        id: 'work-10',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Structural reinforcement welding',
+        resource: 8,
+      },
+      {
+        id: 'work-11',
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Roof tiling',
+        resource: 9,
+      },
+      {
+        id: 'work-12',
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Leak-proofing and insulation',
+        resource: 9,
+      },
+      {
+        id: 'work-13',
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,14)',
+        title: 'Operating bulldozer for site leveling',
+        resource: 11,
+      },
+      {
+        id: 'work-14',
+        start: 'dyndatetime(y,m,d,14,20)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Material lifting with crane',
+        resource: 11,
+      },
+      {
+        id: 'work-15',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Land survey for new roads',
+        resource: 12,
+      },
+      {
+        id: 'work-16',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Boundary marking for structures',
+        resource: 12,
+      },
+      {
+        id: 'work-17',
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Concrete floor polishing',
+        resource: 14,
+      },
+      {
+        id: 'work-18',
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Applying protective coatings on concrete',
+        resource: 14,
+      },
+      {
+        id: 'work-19',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Steel frame installation',
+        resource: 15,
+      },
+      {
+        id: 'work-20',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Bolting and securing steel structures',
+        resource: 15,
+      },
+      {
+        id: 'work-21',
+        start: 'dyndatetime(y,m,d,10)',
+        end: 'dyndatetime(y,m,d,14)',
+        title: 'Interior painting preparation',
+        resource: 17,
+      },
+      {
+        id: 'work-22',
+        start: 'dyndatetime(y,m,d,15)',
+        end: 'dyndatetime(y,m,d,18,10)',
+        title: 'Applying finishing coats',
+        resource: 17,
+      },
+      {
+        id: 'work-23',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Glass panel measurement and cutting',
+        resource: 18,
+      },
+      {
+        id: 'work-24',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Installing large glass windows',
+        resource: 18,
+      },
+      {
+        id: 'work-3',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Concrete foundation pouring',
+        resource: 19,
+      },
+      {
+        id: 'work-4',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Curing and leveling concrete',
+        resource: 19,
+      },
+      {
+        id: 'work-5',
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,15)',
+        title: 'Structural steel beam welding',
+        resource: 20,
+      },
+      {
+        id: 'work-6',
+        start: 'dyndatetime(y,m,d,16)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Reinforcement bar assembly',
+        resource: 20,
+      },
+      {
+        id: 'work-7',
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,14)',
+        title: 'Excavation for foundation',
+        resource: 21,
+      },
+      {
+        id: 'work-8',
+        start: 'dyndatetime(y,m,d,15)',
+        end: 'dyndatetime(y,m,17,30)',
+        title: 'Operating crane for material transport',
+        resource: 21,
+      },
+      {
+        id: 'work-9',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Land survey for new section',
+        resource: 22,
+      },
+      {
+        id: 'work-10',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Marking layout for construction work',
+        resource: 22,
+      },
+      {
+        id: 'work-11',
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Exterior wall painting',
+        resource: 23,
+      },
+      {
+        id: 'work-12',
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Applying protective coatings',
+        resource: 23,
+      },
+      {
+        id: 'work-13',
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Roof tiling installation',
+        resource: 24,
+      },
+      {
+        id: 'work-14',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,17,45)',
+        title: 'Leak-proofing and insulation work',
+        resource: 24,
+      },
+      {
+        id: 'work-15',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Plastering interior walls',
+        resource: 25,
+      },
+      {
+        id: 'work-16',
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Ceiling plaster and finishing',
+        resource: 25,
+      },
+      {
+        id: 'work-17',
+        start: 'dyndatetime(y,m,d,10)',
+        end: 'dyndatetime(y,m,d,15)',
+        title: 'Controlled demolition of old structure',
+        resource: 26,
+      },
+      {
+        id: 'work-18',
+        start: 'dyndatetime(y,m,d,15,15)',
+        end: 'dyndatetime(y,m,d,17,45)',
+        title: 'Site cleanup and debris removal',
+        resource: 26,
+      },
+      //</hide-comment>
+    ],
+    [],
+  );
 
   const [installers, setInstallers] = useState([
     {
@@ -524,7 +527,7 @@ function App() {
   const handleResourceCreate = useCallback(
     (args) => {
       setAvailableInstallers(availableInstallers.filter((item) => item.id !== args.resource.id));
-      setToastText(args.resource.name + ' added');
+      setToastText(args.resource.name + ' added to ' + args.parent.name);
       setIsToastOpen(true);
     },
     [availableInstallers],
@@ -544,10 +547,28 @@ function App() {
     [availableInstallers],
   );
 
-  const handleResourceOrderUpdate = useCallback((args) => {
-    console.log('handleResourceOrderUpdate', args);
-    setInstallers(args.resources);
-  }, []);
+  const handleResourceOrderUpdate = useCallback(
+    (args) => {
+      const parent = args.parent;
+      const oldParent = args.oldParent;
+
+      if (parent && parent.children) {
+        // remove placeholder resource
+        parent.children = parent.children.filter((child) => !child.temp);
+      }
+      if (oldParent && !oldParent.children.length) {
+        // add placeholder resource
+        oldParent.children.push({
+          id: 'temp' + (installers.length + 1),
+          temp: true,
+          name: 'Drag Technicians here',
+          title: '',
+          reorder: false,
+        });
+      }
+    },
+    [installers],
+  );
 
   const handleCloseToast = useCallback(() => {
     setIsToastOpen(false);
@@ -556,21 +577,18 @@ function App() {
   const addNewTeam = useCallback(() => {
     const teamLength = installers.length + 1;
     const resId = 'it-' + teamLength;
-    console.log('here addNewTeam', resId, installers);
     setInstallers([
       ...installers,
       {
         id: resId,
         eventCreation: false,
-        collapsed: true,
         reorder: false,
         name: 'Installer team ' + teamLength,
-        temp: resId + 'temp',
         children: [
           {
-            id: resId + 'temp',
+            id: resId + '-temp',
             temp: true,
-            name: 'Drag new resource here',
+            name: 'Drag Technicians here',
             title: '',
             reorder: false,
           },
@@ -579,7 +597,6 @@ function App() {
     ]);
 
     if (timelineRef && timelineRef.current) {
-      console.log('here navigateToEvent', teamLength, installers);
       timelineRef.current.navigateToEvent({
         start: new Date(),
         resource: 'it-' + teamLength,
@@ -601,8 +618,8 @@ function App() {
 
   const renderResource = useCallback(
     (resource) =>
-      resource.children ? (
-        <div className="mds-ext-res-dnd-name mbsc-no-padding">{resource.name}</div>
+      resource.children || resource.temp ? (
+        <div className={'mds-ext-res-dnd-name ' + (resource.temp ? ' mds-ext-res-dnd-name-temp' : '')}>{resource.name}</div>
       ) : (
         <div className="mbsc-flex">
           <div className="mds-ext-res-dnd-avatar" style={{ background: resource.color }}>
