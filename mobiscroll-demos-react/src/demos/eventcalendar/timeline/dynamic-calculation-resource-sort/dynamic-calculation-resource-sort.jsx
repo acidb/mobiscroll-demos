@@ -324,6 +324,7 @@ function App() {
       {
         text: 'Apply',
         keyCode: 'enter',
+        cssClass: 'mbsc-popup-button-primary',
         handler: function () {
           setPopupOpen(false);
           setToastOpen(true);
@@ -331,7 +332,6 @@ function App() {
           sortDirection.current = tempSortDirection;
           sortResources();
         },
-        cssClass: 'mbsc-popup-button-primary',
       },
     ],
     [sortResources, tempSortColumn, tempSortDirection],
@@ -557,7 +557,7 @@ function App() {
         isOpen={isSnackbarOpen}
         onClose={handleSnackbarClose}
       />
-      <Toast message="Resouces sorted" isOpen={isToastOpen} onClose={handleToastClose} />
+      <Toast message="Resources sorted" isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );
 }

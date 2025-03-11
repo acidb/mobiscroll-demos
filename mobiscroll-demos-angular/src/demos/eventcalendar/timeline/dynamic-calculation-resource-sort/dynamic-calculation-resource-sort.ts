@@ -6,9 +6,9 @@ import {
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscEventUpdatedEvent,
+  MbscPageLoadingEvent,
   MbscPopup,
   MbscPopupButton,
-  MbscPopupOptions,
   MbscResource,
   Notifications,
   setOptions /* localeImport */,
@@ -21,10 +21,15 @@ setOptions({
   // theme
 });
 
+interface MyEvent extends MbscCalendarEvent {
+  payload?: number;
+}
+
 interface MyResource extends MbscResource {
   standby?: number;
   deadhead?: number;
   payload?: number;
+  capacity: number;
   model: string;
   location: string;
 }
@@ -38,7 +43,7 @@ interface MyResource extends MbscResource {
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  myEvents: MbscCalendarEvent[] = [
+  myEvents: MyEvent[] = [
     {
       start: dyndatetime('y,m,d-1'),
       end: dyndatetime('y,m,d+3'),
@@ -265,27 +270,27 @@ export class AppComponent {
     { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' },
   ];
 
-  @ViewChild('myCalendar', { static: false })
-  myCalendar!: MbscEventcalendar;
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
 
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
 
-  @ViewChild('sortButton') anchorElm!: ElementRef;
-  popupAnchor!: HTMLButtonElement;
+  @ViewChild('sortButton')
+  anchorBtn!: ElementRef;
 
+  popupAnchor!: HTMLButtonElement;
+  sortColumn: 'standby' | 'payload' | 'deadhead' | 'name' = 'standby';
+  sortDirection: 'asc' | 'desc' = 'asc';
   sortRequests: number = 0;
   sortedResources: MyResource[] = this.myResources;
-  tempSortColumn: string = 'standby';
-  tempSortDirection: string = 'asc';
-  metricBarAnimation: boolean = true;
-  sortColumn: string = 'standby';
-  sortDirection: string = 'asc';
-  tempEvent: MbscCalendarEvent = [];
-  weekStart: Date = new Date();
-  weekEnd: Date = new Date();
+  tempEvent!: MyEvent;
+  tempSortColumn: 'standby' | 'payload' | 'deadhead' | 'name' = 'standby';
+  tempSortDirection: 'asc' | 'desc' = 'asc';
+  weekStart!: Date;
+  weekEnd!: Date;
 
-  view: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     timeline: {
       type: 'week',
       resolutionHorizontal: 'day',
@@ -303,27 +308,19 @@ export class AppComponent {
     {
       text: 'Apply',
       keyCode: 'enter',
+      cssClass: 'mbsc-popup-button-primary',
       handler: () => {
         this.popup.close();
+        this.notify.toast({ message: 'Resources sorted' });
         this.sortColumn = this.tempSortColumn;
         this.sortDirection = this.tempSortDirection;
         this.sortResources();
       },
-      cssClass: 'mbsc-popup-button-primary',
     },
   ];
 
-  popupOptions: MbscPopupOptions = {
-    contentPadding: false,
-    display: 'anchored',
-    focusOnClose: false,
-    focusOnOpen: false,
-    showOverlay: false,
-    width: 400,
-  };
-
   calcMetrics() {
-    const loadedEvents = this.myCalendar ? this.myCalendar.getEvents() : this.myEvents;
+    const loadedEvents: MyEvent[] = this.calendar ? this.calendar.getEvents() : [];
 
     this.myResources.forEach((resource) => {
       let standby = 168;
@@ -343,34 +340,30 @@ export class AppComponent {
           standby -= (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
         }
 
-        if (effectiveStart < effectiveEnd && (!event['payload'] || event['payload'] <= 0)) {
+        if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
           deadhead += (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
         }
 
         if (eventEnd > this.weekStart && eventStart < this.weekEnd) {
           numberOfTours++;
-          payload += event['payload'] || 0;
+          payload += event.payload || 0;
         }
       });
 
       resource.standby = standby;
       resource.deadhead = deadhead;
-      resource.payload = numberOfTours && resource['capacity'] ? Math.round((payload / numberOfTours / resource['capacity']) * 100) : 0;
+      resource.payload = numberOfTours && resource.capacity ? Math.round((payload / numberOfTours / resource.capacity) * 100) : 0;
     });
   }
 
-  sortResources(): void {
-    this.metricBarAnimation = false;
+  sortResources() {
     this.sortedResources = [...this.myResources].sort((resource1, resource2) => {
       let col = this.sortColumn;
       if (resource1[col] === resource2[col]) {
         col = 'name';
       }
-      return this.sortDirection === 'asc' ? (resource1[col] > resource2[col] ? 1 : -1) : resource1[col] < resource2[col] ? 1 : -1;
+      return this.sortDirection === 'asc' ? (resource1[col]! > resource2[col]! ? 1 : -1) : resource1[col]! < resource2[col]! ? 1 : -1;
     });
-    setTimeout(() => {
-      this.metricBarAnimation = true;
-    }, 100);
   }
 
   delayedSort(event: MbscCalendarEvent) {
@@ -383,84 +376,79 @@ export class AppComponent {
       cssClass: 'mds-popup-sort-snackbar',
       display: 'center',
       duration: 3000,
-      onClose: () => this.handleSnackbarClose(),
+      onClose: () => {
+        this.sortRequests--;
+        if (this.sortRequests === 0) {
+          const event = this.tempEvent;
+          const resource = this.myResources.find((r) => r.id === event.resource)!;
+          const eventStart = new Date(event.start as Date);
+          const navStart = eventStart < this.weekStart ? this.weekStart : eventStart;
+          this.sortResources();
+          this.calendar.navigateToEvent({ start: navStart, resource: event.resource });
+          resource.cssClass = 'mbsc-timeline-parent-hover';
+          setTimeout(() => {
+            resource.cssClass = '';
+            this.myResources = [...this.myResources];
+          }, 1000);
+        }
+      },
     });
   }
 
-  handleSnackbarClose(): void {
-    this.sortRequests--;
-    if (this.sortRequests === 0) {
-      const event = this.tempEvent;
-      const resource = this.myResources.find((r) => r.id === event.resource);
-      const eventStart = new Date(event.start as Date);
-      const navStart = eventStart < this.weekStart ? this.weekStart : eventStart;
-      this.sortResources();
-      this.myCalendar.navigateToEvent({ start: navStart, resource: event.resource });
-      resource!.cssClass = 'mbsc-timeline-parent-hover';
-      setTimeout(() => {
-        resource!.cssClass = '';
-        this.myResources = [...this.myResources];
-      }, 1000);
-    }
+  addEventPayload() {
+    return {
+      payload: Math.floor(Math.random() * (17 - 5 + 1)) + 5,
+    };
   }
 
   handlePopupOpen() {
     this.tempSortColumn = this.sortColumn;
     this.tempSortDirection = this.sortDirection;
-    this.popupAnchor = this.anchorElm.nativeElement;
+    this.popupAnchor = this.anchorBtn.nativeElement;
     this.popup.open();
   }
 
-  handlePopupClose() {
-    this.popup.close();
-  }
-
-  handlePageLoading($event: any) {
-    this.weekStart = $event.firstDay;
-    this.weekEnd = $event.lastDay;
-    this.calcMetrics();
-    this.sortResources();
+  handlePageLoading(args: MbscPageLoadingEvent) {
+    this.weekStart = args.firstDay;
+    this.weekEnd = args.lastDay;
+    setTimeout(() => {
+      this.calcMetrics();
+      this.sortResources();
+    });
   }
 
   handleEventCreated(args: MbscEventCreatedEvent) {
-    args.event['payload'] = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
-    this.calcMetrics();
-    this.delayedSort(args.event);
+    setTimeout(() => {
+      this.calcMetrics();
+      this.delayedSort(args.event);
+    });
   }
 
   handleEventDeleted(args: MbscEventDeletedEvent) {
-    this.calcMetrics();
-    this.delayedSort(args.event);
+    setTimeout(() => {
+      this.calcMetrics();
+      this.delayedSort(args.event);
+    });
   }
 
   handleEventUpdated(args: MbscEventUpdatedEvent): void {
     const oldEventStart = new Date(args.oldEvent!.start as string);
     const oldEventEnd = new Date(args.oldEvent!.end as string);
     if (
-      +oldEventStart !== +new Date(args.event.start as string) &&
-      +oldEventEnd !== +new Date(args.event.end as string) &&
+      +oldEventStart !== +(args.event.start as Date) &&
+      +oldEventEnd !== +(args.event.end as Date) &&
       oldEventStart >= this.weekStart &&
       oldEventEnd <= this.weekEnd &&
-      new Date(args.event.start as string) >= this.weekStart &&
-      new Date(args.event.end as string) <= this.weekEnd &&
+      (args.event.start as Date) >= this.weekStart &&
+      (args.event.end as Date) <= this.weekEnd &&
       args.oldEvent!.resource === args.event.resource
     ) {
       return;
     }
-    this.calcMetrics();
-    this.delayedSort(args.event);
-  }
-
-  handleSortColumnChange(value: string): void {
-    this.tempSortColumn = value;
-  }
-
-  handleSortDirectionChange(value: string): void {
-    this.tempSortDirection = value;
-  }
-
-  getMetricValue(resource: MbscResource): number {
-    return resource[this.sortColumn];
+    setTimeout(() => {
+      this.calcMetrics();
+      this.delayedSort(args.event);
+    });
   }
 
   getBarColor(resource: MbscResource): string {

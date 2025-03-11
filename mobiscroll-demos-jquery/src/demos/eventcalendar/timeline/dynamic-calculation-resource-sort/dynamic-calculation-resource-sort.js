@@ -333,8 +333,7 @@ export default {
                   //<hidden>
                   // theme,//</hidden>
                   // context,
-                  cssClass: 'mds-popup-sort-toast',
-                  message: 'Resouces sorted',
+                  message: 'Resources sorted',
                 });
               },
               cssClass: 'mbsc-popup-button-primary',

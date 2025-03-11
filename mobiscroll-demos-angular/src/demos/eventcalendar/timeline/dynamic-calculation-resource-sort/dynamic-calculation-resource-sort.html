@@ -1,5 +1,5 @@
 <mbsc-eventcalendar
-  #myCalendar
+  #calendar
   class="mds-popup-sort"
   [clickToCreate]="true"
   [data]="myEvents"
@@ -7,8 +7,9 @@
   [dragToMove]="true"
   [dragToResize]="true"
   [eventOverlap]="false"
+  [extendDefaultEvent]="addEventPayload"
   [resources]="sortedResources"
-  [view]="view"
+  [view]="myView"
   [headerTemplate]="headerTemplate"
   [resourceHeaderTemplate]="resourceHeaderTemplate"
   [resourceTemplate]="resourceTemplate"
@@ -37,13 +38,10 @@
       <div class="mds-popup-sort-resource-attr">Model: {{ resource.model }}</div>
       <div class="mds-popup-sort-resource-attr">Capacity: {{ resource.capacity }}T</div>
       <div class="mds-popup-sort-resource-attr">
-        {{ sortColumnLabels[sortColumn] }}: {{ getMetricValue(resource) }}{{ sortColumn === 'payload' ? '%' : 'h' }}
+        {{ sortColumnLabels[sortColumn] }}: {{ resource[sortColumn] }}{{ sortColumn === 'payload' ? '%' : 'h' }}
       </div>
       <div class="mds-popup-sort-bar-track">
-        <div
-          class="mds-popup-sort-bar mds-popup-sort-bar-{{ getBarColor(resource) }}{{ metricBarAnimation ? ' mds-popup-sort-bar-animation' : '' }}"
-          [style.width.%]="getBarValue(resource)"
-        ></div>
+        <div class="mds-popup-sort-bar mds-popup-sort-bar-{{ getBarColor(resource) }}" [style.width.%]="getBarValue(resource)"></div>
       </div>
     </div>
   </ng-template>
@@ -53,10 +51,21 @@
     <div class="mds-popup-sort-event-attr">Payload: {{ event.original.payload ? event.original.payload + ' T' : 'empty' }}</div>
   </ng-template>
 </mbsc-eventcalendar>
-<mbsc-popup #popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" (onClose)="handlePopupClose()">
+
+<mbsc-popup
+  #popup
+  display="anchored"
+  [anchor]="popupAnchor"
+  [buttons]="popupButtons"
+  [contentPadding]="false"
+  [focusOnClose]="false"
+  [focusOnOpen]="false"
+  [showOverlay]="false"
+  [width]="400"
+>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
-    <mbsc-radio-group [(ngModel)]="tempSortColumn" (ngModelChange)="handleSortColumnChange($event)">
+    <mbsc-radio-group [(ngModel)]="tempSortColumn">
       <mbsc-radio label="Standby Time" description="Time the truck is driven without cargo." value="standby"></mbsc-radio>
       <mbsc-radio
         label="Payload Efficiency"
@@ -68,7 +77,7 @@
   </div>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Sort direction</div>
-    <mbsc-segmented-group [(ngModel)]="tempSortDirection" (ngModelChange)="handleSortDirectionChange($event)">
+    <mbsc-segmented-group [(ngModel)]="tempSortDirection">
       <mbsc-segmented value="asc">Ascending</mbsc-segmented>
       <mbsc-segmented value="desc">Descending</mbsc-segmented>
     </mbsc-segmented-group>
