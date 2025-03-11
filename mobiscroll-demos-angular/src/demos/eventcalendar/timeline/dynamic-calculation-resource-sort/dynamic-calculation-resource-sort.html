@@ -1,60 +1,62 @@
 <mbsc-eventcalendar
   #myCalendar
-  class="mds-timeline-popup-sort"
+  class="mds-popup-sort"
   [clickToCreate]="true"
   [data]="myEvents"
   [dragToCreate]="true"
   [dragToMove]="true"
   [dragToResize]="true"
+  [eventOverlap]="false"
+  [resources]="sortedResources"
+  [view]="view"
   [headerTemplate]="headerTemplate"
   [resourceHeaderTemplate]="resourceHeaderTemplate"
   [resourceTemplate]="resourceTemplate"
   [scheduleEventContentTemplate]="scheduleEventContentTemplate"
-  [resources]="myResources"
-  [view]="view"
-  base
-  (onPageLoading)="handleOnPageLoading($event)"
-  (onPageLoaded)="handleOnPageLoaded()"
-  (onEventCreated)="handleOnEventCreated($event)"
-  (onEventDelete)="handleOnEventDelete($event)"
-  (onEventUpdate)="handleOnEventUpdate($event)"
+  (onPageLoading)="handlePageLoading($event)"
+  (onEventCreated)="handleEventCreated($event)"
+  (onEventDeleted)="handleEventDeleted($event)"
+  (onEventUpdated)="handleEventUpdated($event)"
 >
   <ng-template #headerTemplate>
     <mbsc-calendar-prev></mbsc-calendar-prev>
     <mbsc-calendar-next></mbsc-calendar-next>
     <mbsc-calendar-nav></mbsc-calendar-nav>
-    <mbsc-button startIcon="bars" variant="flat" style="margin-left: auto" (click)="handlePopupOpen()" #sortButton
-      >Sort Trucks
-    </mbsc-button>
+    <div class="mbsc-flex mbsc-flex-1-1 mbsc-justify-content-end">
+      <mbsc-button #sortButton startIcon="bars" variant="flat" (click)="handlePopupOpen()">Sort Trucks </mbsc-button>
+    </div>
   </ng-template>
 
   <ng-template #resourceHeaderTemplate>
-    <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">Trucks</div>
-    <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-custom">{{ selectedMetricDesc }}</div>
+    <div class="mds-popup-sort-resource-header">Trucks</div>
   </ng-template>
 
   <ng-template #resourceTemplate let-resource>
-    <div class="mds-popup-sort-resource-cell mds-popup-sort-resource-cell-name">
+    <div class="mds-popup-sort-resource-cell">
       <strong>{{ resource.name }}</strong>
-      <div class="mds-resource-attribute">Model: {{ resource.model }}</div>
-      <div class="mds-resource-attribute">Capacity: {{ resource.capacity }}T</div>
-      <div class="mds-resource-attribute">{{selectedMetricDesc}}: {{ getMetricValue(resource) }}</div>
-      <div class="mds-metric-bar-container" style="margin-top: 5px">
-        <div class="mds-metric-bar-animation {{ getBarColorClass(resource) }}" [style.width.%]="getBarValue(resource)"></div>
-        <div class="mds-metric-bar-overlay" [style.width.%]="100 - getBarValue(resource)"></div>
+      <div class="mds-popup-sort-resource-attr">Model: {{ resource.model }}</div>
+      <div class="mds-popup-sort-resource-attr">Capacity: {{ resource.capacity }}T</div>
+      <div class="mds-popup-sort-resource-attr">
+        {{ sortColumnLabels[sortColumn] }}: {{ getMetricValue(resource) }}{{ sortColumn === 'payload' ? '%' : 'h' }}
+      </div>
+      <div class="mds-popup-sort-bar-track">
+        <div
+          class="mds-popup-sort-bar mds-popup-sort-bar-{{ getBarColor(resource) }}{{ metricBarAnimation ? ' mds-popup-sort-bar-animation' : '' }}"
+          [style.width.%]="getBarValue(resource)"
+        ></div>
       </div>
     </div>
   </ng-template>
 
   <ng-template #scheduleEventContentTemplate let-event>
     <div>{{ event.title }}</div>
-    <div style="font-size: 11px">Payload: {{ event.payload ? event.payload + ' T' : 'empty' }}</div>
+    <div class="mds-popup-sort-event-attr">Payload: {{ event.original.payload ? event.original.payload + ' T' : 'empty' }}</div>
   </ng-template>
 </mbsc-eventcalendar>
 <mbsc-popup #popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" (onClose)="handlePopupClose()">
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Metric to calculate and sort by</div>
-    <mbsc-radio-group [(ngModel)]="sortColumn">
+    <mbsc-radio-group [(ngModel)]="tempSortColumn" (ngModelChange)="handleSortColumnChange($event)">
       <mbsc-radio label="Standby Time" description="Time the truck is driven without cargo." value="standby"></mbsc-radio>
       <mbsc-radio
         label="Payload Efficiency"
@@ -66,7 +68,7 @@
   </div>
   <div class="mbsc-form-group">
     <div class="mbsc-form-group-title">Sort direction</div>
-    <mbsc-segmented-group [(ngModel)]="sortDirection">
+    <mbsc-segmented-group [(ngModel)]="tempSortDirection" (ngModelChange)="handleSortDirectionChange($event)">
       <mbsc-segmented value="asc">Ascending</mbsc-segmented>
       <mbsc-segmented value="desc">Descending</mbsc-segmented>
     </mbsc-segmented-group>

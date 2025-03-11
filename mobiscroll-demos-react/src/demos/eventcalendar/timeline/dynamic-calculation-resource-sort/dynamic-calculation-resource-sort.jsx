@@ -146,7 +146,7 @@ function App() {
     {
       start: 'dyndatetime(y,m,d-4)',
       end: 'dyndatetime(y,m,d-1)',
-      title: 'Tour #028 - ? to Philadelphiax',
+      title: 'Tour #028 - Trenton to Philadelphia',
       resource: 9,
       color: '#33FF57',
       payload: 11,
@@ -298,7 +298,7 @@ function App() {
   }, [myResources]);
 
   const sortResources = useCallback(() => {
-    metricBarAnimation.current = false;
+    metricBarAnimation.current = true;
     const updatedResources = [...myResources].sort((resource1, resource2) => {
       let col = sortColumn.current;
       if (resource1[col] === resource2[col]) {
@@ -510,9 +510,9 @@ function App() {
         eventOverlap={false}
         resources={sortedResources}
         view={myView}
+        renderHeader={myCustomHeader}
         renderResourceHeader={myCustomResourceHeader}
         renderResource={myCustomResource}
-        renderHeader={myCustomHeader}
         renderScheduleEventContent={myScheduleEvent}
         onPageLoading={handlePageLoading}
         onEventCreated={handleEventCreated}
