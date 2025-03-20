@@ -50,7 +50,7 @@ export default {
               <option value="es">Español</option>
               <option value="fr">Français</option>
               <option value="el">Greek</option>
-              <option value="in">Hindi</option>
+              <option value="hi">Hindi</option>
               <option value="it">Italiano</option>
               <option value="ja">Japanese</option>
               <option value="ko">Korean</option>
