@@ -31,7 +31,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div mbsc-page class="mds-full-height">
-  <div class="mds-agenda-locale-cont mds-full-height mbsc-flex-col">
+  <div class="mds-locale-cont mds-full-height mbsc-flex-col">
     <div class="mbsc-grid">
       <div class="mbsc-row">
         <div class="mbsc-col-sm-8">
@@ -61,7 +61,7 @@ export default {
               <option value="pl">Polski</option>
               <option value="pt-PT">Português Europeu</option>
               <option value="pt-BR">Pt. Brasileiro</option>
-              <option value="ro">Româna</option>
+              <option value="ro">Română</option>
               <option value="sr">Serbian</option>
               <option value="sk">Slovencina</option>
               <option value="fi">Suomi</option>
@@ -89,7 +89,7 @@ export default {
   height: 100%;
 }
 
-.mds-agenda-locale-cont .mbsc-col-sm-8 {
+.mds-locale-cont .mbsc-col-sm-8 {
   margin: 0 auto;
 }
   `,
