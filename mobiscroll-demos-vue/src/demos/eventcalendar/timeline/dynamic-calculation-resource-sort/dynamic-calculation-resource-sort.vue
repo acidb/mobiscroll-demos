@@ -325,12 +325,18 @@ const calcMetrics = () => {
 const sortResources = () => {
   metricBarAnimation = true
 
-  myResources.value = [...myResources.value].sort((a, b) => {
+  myResources.value = [...myResources.value].sort((resource1, resource2) => {
     let col = sortColumn
-    if (a[col] === b[col]) {
+    if (resource1[col] === resource2[col]) {
       col = 'name'
     }
-    return sortDirection === 'asc' ? (a[col] > b[col] ? 1 : -1) : a[col] < b[col] ? 1 : -1
+    return sortDirection === 'asc'
+      ? resource1[col] > resource2[col]
+        ? 1
+        : -1
+      : resource1[col] < resource2[col]
+        ? 1
+        : -1
   })
 
   setTimeout(() => {
