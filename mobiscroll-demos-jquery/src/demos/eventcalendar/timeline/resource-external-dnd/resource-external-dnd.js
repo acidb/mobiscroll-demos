@@ -120,21 +120,18 @@ export default {
           name: 'Adam Miller',
           color: '#C70039',
           title: 'Mason',
-          type: 'resource',
         },
         {
           id: 12,
           name: 'Isabella Martinez',
           color: '#2ECC71',
           title: 'Surveyor',
-          type: 'resource',
         },
         {
           id: 18,
           name: 'Mark White',
           color: '#34495E',
           title: 'Glazier',
-          type: 'resource',
         },
         //<hide-comment>
         {
@@ -142,56 +139,48 @@ export default {
           name: 'Liam Foster',
           color: '#1E90FF',
           title: 'Concrete Finisher',
-          type: 'resource',
         },
         {
           id: 20,
           name: 'Sophia Adams',
           color: '#FF4500',
           title: 'Steelworker',
-          type: 'resource',
         },
         {
           id: 21,
           name: 'Ethan Murphy',
           color: '#228B22',
           title: 'Heavy Equipment Operator',
-          type: 'resource',
         },
         {
           id: 22,
           name: 'Ava Mitchell',
           color: '#FFD700',
           title: 'Surveyor',
-          type: 'resource',
         },
         {
           id: 23,
           name: 'Noah Carter',
           color: '#8B4513',
           title: 'Painter',
-          type: 'resource',
         },
         {
           id: 24,
           name: 'Emma Scott',
           color: '#800080',
           title: 'Roofer',
-          type: 'resource',
         },
         {
           id: 25,
           name: 'William Bennett',
           color: '#DC143C',
           title: 'Plasterer',
-          type: 'resource',
         },
         {
           id: 26,
           name: 'Olivia Parker',
           color: '#4682B4',
           title: 'Demolition Specialist',
-          type: 'resource',
         },
         //</hide-comment>
       ];
@@ -481,6 +470,7 @@ export default {
         },
         //</hide-comment>
       ];
+
       var tempResource = {
         temp: true,
         name: 'Drag Technicians here',
@@ -516,6 +506,7 @@ export default {
               .mobiscroll()
               .draggable({
                 dragData: work,
+                type: 'resource',
               });
           });
         }
