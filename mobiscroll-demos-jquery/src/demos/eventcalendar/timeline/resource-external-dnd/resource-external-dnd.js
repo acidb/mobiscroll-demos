@@ -482,7 +482,7 @@ export default {
         availableInstallers.forEach(function (installer) {
           var workElm =
             '<div id="demo-ext-res-' +
-            installer.id +
+            installer.externalId +
             '" class="mbsc-flex mds-ext-res-item">' +
             '<div class="mds-ext-res-avatar" style="background: ' +
             installer.color +
@@ -500,7 +500,7 @@ export default {
 
           $availableInstallersList.append(workElm);
 
-          $('#demo-ext-res-' + installer.id)
+          $('#demo-ext-res-' + installer.externalId)
             .mobiscroll()
             .draggable({
               dragData: installer,
@@ -628,8 +628,8 @@ export default {
 <div class="mbsc-grid mbsc-no-padding mds-ext-res-drop">
   <div class="mbsc-row">
     <div id="demo-ext-res-drop-cont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
-      <div class="mds-workers-title">Available technicians</div>
-      <div id="demo-ext-res-drop-list" class="mds-workers-list"></div>
+      <div class="mds-ext-res-header">Available technicians</div>
+      <div id="demo-ext-res-drop-list" class="mds-ext-res-list"></div>
     </div>
     <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
       <div id="demo-ext-res-drop-calendar"></div>
@@ -687,7 +687,7 @@ export default {
   height: 100%; 
 }
 
-.mds-ext-res-drop-cont .mds-ext-res-title {
+.mds-ext-res-drop-cont .mds-ext-res-header {
   padding: 12px 16px;
 }
 
