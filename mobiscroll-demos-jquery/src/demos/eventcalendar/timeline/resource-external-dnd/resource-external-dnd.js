@@ -10,8 +10,9 @@ export default {
     });
 
     $(function () {
-      var $externalCont = $('#mds-ext-res-drop-cont');
-      var $availableWorkersList = $('.mds-workers-list');
+      var guid = 0;
+      var $availableInstallersList = $('#demo-ext-res-drop-list');
+
       var installers = [
         {
           id: 1,
@@ -48,15 +49,14 @@ export default {
             },
           ],
         },
-
         {
-          id: 7,
+          id: 6,
           name: 'Installer team 3',
           eventCreation: false,
           reorder: false,
           children: [
             {
-              id: 8,
+              id: 7,
               name: 'Daniel Wilson',
               color: '#900C3F',
               title: 'Welder',
@@ -64,13 +64,13 @@ export default {
           ],
         },
         {
-          id: 10,
+          id: 8,
           name: 'Installer team 4',
           eventCreation: false,
           reorder: false,
           children: [
             {
-              id: 11,
+              id: 9,
               name: 'Benjamin Harris',
               color: '#1ABC9C',
               title: 'Heavy Equipment Operator',
@@ -78,19 +78,19 @@ export default {
           ],
         },
         {
-          id: 13,
+          id: 10,
           name: 'Installer team 5',
           eventCreation: false,
           reorder: false,
           children: [
             {
-              id: 14,
+              id: 11,
               name: 'William Anderson',
               color: '#F39C12',
               title: 'Concrete Finisher',
             },
             {
-              id: 15,
+              id: 12,
               name: 'Emma Thompson',
               color: '#D35400',
               title: 'Steelworker',
@@ -98,13 +98,13 @@ export default {
           ],
         },
         {
-          id: 16,
+          id: 13,
           name: 'Installer team 6',
           eventCreation: false,
           reorder: false,
           children: [
             {
-              id: 17,
+              id: 14,
               name: 'Alexander Roberts',
               color: '#8E44AD',
               title: 'Painter',
@@ -116,68 +116,68 @@ export default {
 
       var availableInstallers = [
         {
-          id: 6,
+          externalId: 1,
           name: 'Adam Miller',
           color: '#C70039',
           title: 'Mason',
         },
         {
-          id: 12,
+          externalId: 2,
           name: 'Isabella Martinez',
           color: '#2ECC71',
           title: 'Surveyor',
         },
         {
-          id: 18,
+          externalId: 3,
           name: 'Mark White',
           color: '#34495E',
           title: 'Glazier',
         },
         //<hide-comment>
         {
-          id: 19,
+          externalId: 4,
           name: 'Liam Foster',
           color: '#1E90FF',
           title: 'Concrete Finisher',
         },
         {
-          id: 20,
+          externalId: 5,
           name: 'Sophia Adams',
           color: '#FF4500',
           title: 'Steelworker',
         },
         {
-          id: 21,
+          externalId: 6,
           name: 'Ethan Murphy',
           color: '#228B22',
           title: 'Heavy Equipment Operator',
         },
         {
-          id: 22,
+          externalId: 7,
           name: 'Ava Mitchell',
           color: '#FFD700',
           title: 'Surveyor',
         },
         {
-          id: 23,
+          externalId: 8,
           name: 'Noah Carter',
           color: '#8B4513',
           title: 'Painter',
         },
         {
-          id: 24,
+          externalId: 9,
           name: 'Emma Scott',
           color: '#800080',
           title: 'Roofer',
         },
         {
-          id: 25,
+          externalId: 10,
           name: 'William Bennett',
           color: '#DC143C',
           title: 'Plasterer',
         },
         {
-          id: 26,
+          externalId: 11,
           name: 'Olivia Parker',
           color: '#4682B4',
           title: 'Demolition Specialist',
@@ -185,8 +185,7 @@ export default {
         //</hide-comment>
       ];
 
-      var constructionWork = [
-        // Group 1
+      var tasks = [
         {
           id: 'work-1',
           start: 'dyndatetime(y,m,d,7)',
@@ -478,89 +477,83 @@ export default {
         reorder: false,
       };
 
-      function generateExternalResources(availableWorkers) {
-        if (availableWorkers && availableInstallers.length) {
-          $availableWorkersList.html('');
-          availableInstallers.forEach(function (work) {
-            var workElm =
-              '<div id="md-resource-' +
-              work.id +
-              '" class="mbsc-flex mds-ext-res-drop-task">' +
-              '<div class="mds-ext-res-dnd-avatar" style="background: ' +
-              work.color +
-              '">' +
-              work.name[0] +
-              '</div>' +
-              '<div class="mds-ext-res-dnd-cont">' +
-              '<div class="mds-ext-res-dnd-name">' +
-              work.name +
-              '</div>' +
-              '<div class="mds-ext-res-dnd-title">' +
-              work.title +
-              '</div>' +
-              '</div>';
+      function generateExternalResources() {
+        $availableInstallersList.empty();
+        availableInstallers.forEach(function (installer) {
+          var workElm =
+            '<div id="demo-ext-res-' +
+            installer.id +
+            '" class="mbsc-flex mds-ext-res-item">' +
+            '<div class="mds-ext-res-avatar" style="background: ' +
+            installer.color +
+            '">' +
+            installer.name[0] +
+            '</div>' +
+            '<div class="mds-ext-res-cont">' +
+            '<div class="mds-ext-res-name">' +
+            installer.name +
+            '</div>' +
+            '<div class="mds-ext-res-title">' +
+            installer.title +
+            '</div>' +
+            '</div>';
 
-            $availableWorkersList.append(workElm);
+          $availableInstallersList.append(workElm);
 
-            $('#md-resource-' + work.id)
-              .mobiscroll()
-              .draggable({
-                dragData: work,
-                type: 'resource',
-              });
-          });
-        }
+          $('#demo-ext-res-' + installer.id)
+            .mobiscroll()
+            .draggable({
+              dragData: installer,
+              type: 'resource',
+            });
+        });
       }
 
-      var timelineInst = $('#mds-ext-res-drop-calendar')
+      var timelineInst = $('#demo-ext-res-drop-calendar')
         .mobiscroll()
         .eventcalendar({
           // context,
           view: {
             timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00', listing: true },
           },
-          data: constructionWork,
+          data: tasks,
+          dragBetweenResources: false,
           externalResourceDrop: true,
           externalResourceDrag: true,
           resources: installers,
-          dragBetweenResources: false,
           renderResourceHeader: function () {
             return (
-              '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-workers-title">Set up teams</div>' +
-              '<button mbsc-button id="mds-create-new-team" data-variant="outline" class="mds-create-new-team">Add team</button></div>'
+              '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-ext-res-header">Set up teams</div>' +
+              '<button mbsc-button id="demo-ext-res-add" data-variant="outline" class="mds-ext-res-add">Add team</button></div>'
             );
           },
           renderResource: function (resource) {
             return resource.isParent || resource.temp
-              ? '<div class="mds-ext-res-dnd-name mbsc-flex' +
-                  (resource.temp ? ' mds-ext-res-dnd-name-temp' : '') +
-                  '">' +
-                  resource.name +
-                  '</div>'
+              ? '<div class="mds-ext-res-name mbsc-flex' + (resource.temp ? ' mds-ext-res-name-temp' : '') + '">' + resource.name + '</div>'
               : '<div class="mbsc-flex">' +
-                  '<div class="mds-ext-res-dnd-avatar" style="background: ' +
+                  '<div class="mds-ext-res-avatar" style="background: ' +
                   resource.color +
                   '">' +
                   resource.name[0] +
                   '</div>' +
-                  '<div class="mds-ext-res-dnd-cont">' +
-                  '<div class="mds-ext-res-dnd-name ' +
+                  '<div class="mds-ext-res-cont">' +
+                  '<div class="mds-ext-res-name ' +
                   '">' +
                   resource.name +
                   '</div>' +
-                  '<div class="mds-ext-res-dnd-title">' +
+                  '<div class="mds-ext-res-title">' +
                   resource.title +
                   '</div>' +
                   '</div>' +
                   '</div>';
           },
           onResourceCreate: function (args) {
-            var newResId = args.resource.id;
-            availableInstallers = availableInstallers.filter(function (s) {
-              return s.id !== newResId;
+            var newResourceId = args.resource.externalId;
+            availableInstallers = availableInstallers.filter(function (installer) {
+              return installer.id !== newResourceId;
             });
 
-            $('#md-resource-' + newResId).remove();
+            $('#demo-ext-res-' + newResourceId).remove();
             mobiscroll.toast({
               // context,
               message: args.resource.name + ' added to ' + args.parent.name,
@@ -572,14 +565,14 @@ export default {
             var oldParent = args.oldParent;
 
             if (parent && parent.children) {
-              // remove placeholder resource
+              // Remove placeholder resource
               parent.children = parent.children.filter(function (child) {
                 return !child.temp;
               });
             }
             if (oldParent && !oldParent.children.length) {
-              // add placeholder resource
-              tempResource.id = 'temp' + (installers.length + 1);
+              // Add placeholder resource
+              tempResource.id = 'temp-it' + guid++;
               oldParent.children.push(tempResource);
             }
           },
@@ -592,21 +585,26 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $externalCont.mobiscroll().dropcontainer({
-        onItemDrop: function (args) {
-          if (args.data && args.data.type === 'resource') {
-            availableInstallers.push(args.data);
-            generateExternalResources(availableInstallers);
-          }
-        },
-      });
+      $('#demo-ext-res-drop-cont')
+        .mobiscroll()
+        .dropcontainer({
+          onItemDrop: function (args) {
+            if (args.data && args.dataType === 'resource') {
+              if (args.data.externalId === undefined) {
+                args.data.externalId = 'res-' + guid++;
+              }
+              availableInstallers.push(args.data);
+              generateExternalResources();
+            }
+          },
+        });
 
-      $('.mds-ext-res-drop-calendar').on('click', '.mds-create-new-team', function () {
+      $('#demo-ext-res-drop-calendar').on('click', '#demo-ext-res-add', function () {
         var teamLength = installers.length + 1;
-        var resId = 'it-' + teamLength;
-        tempResource.id = resId + '-temp';
+        var resourceId = 'it-' + guid++;
+        tempResource.id = 'temp-' + resourceId;
         installers.push({
-          id: resId,
+          id: resourceId,
           eventCreation: false,
           reorder: false,
           name: 'Installer team ' + teamLength,
@@ -617,26 +615,26 @@ export default {
         setTimeout(function () {
           timelineInst.navigateToEvent({
             start: new Date(),
-            resource: 'it-' + teamLength,
+            resource: resourceId,
           });
         });
       });
 
-      generateExternalResources(availableInstallers);
+      generateExternalResources();
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mbsc-grid mbsc-no-padding">
-    <div class="mbsc-row">
-     <div id="mds-ext-res-drop-cont" class="mbsc-col-sm-3 mds-ext-res-drop-cont mbsc-flex-col">
-          <div class="mds-workers-title">Available technicians</div>
-          <div class="mds-workers-list"></div>
-      </div>
-      <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
-          <div id="mds-ext-res-drop-calendar"></div>
-      </div>
+<div class="mbsc-grid mbsc-no-padding mds-ext-res-drop">
+  <div class="mbsc-row">
+    <div id="demo-ext-res-drop-cont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
+      <div class="mds-workers-title">Available technicians</div>
+      <div id="demo-ext-res-drop-list" class="mds-workers-list"></div>
     </div>
+    <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
+      <div id="demo-ext-res-drop-calendar"></div>
+    </div>
+  </div>
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
@@ -648,9 +646,11 @@ export default {
 .mds-ext-res-drop-calendar .mbsc-timeline-row { 
   height: 50px; 
 }
+
 .mds-ext-res-drop-calendar .mbsc-timeline-row-gutter { 
   height: 8px; 
 }
+
 .mds-ext-res-drop-calendar .mbsc-timeline-resource-col {
   width: 250px;
 }
@@ -664,7 +664,13 @@ export default {
   align-content: center;
 }
 
-.mds-workers-title {
+.mds-ext-res-drop-calendar .mds-ext-res-add {
+  margin-left: auto;
+  padding: 2px 6px;
+  line-height: 24px;
+}
+
+.mds-ext-res-header {
   font-weight: 600;
   font-size: .875em;
   line-height: 1.5em;
@@ -672,59 +678,52 @@ export default {
   color: #6e6e6e;
 }
 
-.mds-ext-res-drop-cont {
-    height: 100%; 
-}
-
-.mds-ext-res-drop-cont .mds-workers-title {
-  padding: 12px 16px;
-}
-
-.mds-ext-res-drop-cont .mds-workers-list {
-   overflow: auto;
-}
-
-.mds-ext-res-drop-task:first-child {
-  margin-top: 0
-}
-
-.mds-ext-res-drop-task {
-   display: flex;
-    background: #dde0d8;
-    padding: 10px;
-    margin: 16px;
-    border-radius: 8px;
-    font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-}
-
-.mds-ext-res-dnd-cont {
-  padding: 0 7px;
-}
-
-.mds-ext-res-dnd-name {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.mds-ext-res-dnd-name-temp {
+.mds-ext-res-name-temp {
   font-style: italic;
   opacity: 0.4;
 }
 
-.mds-ext-res-dnd-title {
+.mds-ext-res-drop-cont {
+  height: 100%; 
+}
+
+.mds-ext-res-drop-cont .mds-ext-res-title {
+  padding: 12px 16px;
+}
+
+.mds-ext-res-list {
+  overflow: auto;
+}
+
+.mds-ext-res-item {
+  background: #dde0d8;
+  padding: 10px;
+  margin: 16px;
+  border-radius: 8px;
+  font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.mds-ext-res-item:first-child {
+  margin-top: 0
+}
+
+.mds-ext-res-cont {
+  padding: 0 7px;
+}
+
+.mds-ext-res-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.mds-ext-res-title {
   padding-top: 2px;
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
 }
 
-.mds-ext-res-drop-calendar .mds-create-new-team {
-  margin-left: auto;
-  padding: 2px 6px;
-  line-height: 24px;
-}
-
-.mds-ext-res-dnd-avatar {
+.mds-ext-res-avatar {
   width: 36px;
   min-width: 36px;
   height: 36px;
@@ -736,11 +735,10 @@ export default {
   font-weight: 400;
 }
 
-.demo-resource-external-dnd .demo-wrapper,
-.demo-resource-external-dnd .mbsc-grid,
-.demo-resource-external-dnd .mbsc-row,
-.demo-resource-external-dnd .mds-ext-res-drop-calendar {
-    height: 100%;
+.mds-ext-res-drop,
+.mds-ext-res-drop .mbsc-row,
+.mds-ext-res-drop-calendar {
+  height: 100%;
 }
   `,
 };
