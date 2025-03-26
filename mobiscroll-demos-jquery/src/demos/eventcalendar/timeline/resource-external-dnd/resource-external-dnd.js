@@ -674,10 +674,6 @@ export default {
   opacity: 0.4;
 }
 
-.mds-ext-res-drop-cont {
-  height: 100%; 
-}
-
 .mds-ext-res-drop-cont .mds-ext-res-header {
   padding: 12px 16px;
   line-height: 1.5em;
@@ -731,6 +727,7 @@ export default {
 .mds-ext-res-drop,
 .mds-ext-res-drop .mbsc-grid,
 .mds-ext-res-drop .mbsc-row,
+.mds-ext-res-drop-cont,
 .mds-ext-res-drop-calendar {
   height: 100%;
 }
