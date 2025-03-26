@@ -666,7 +666,7 @@ export default {
   font-size: .875em;
   line-height: 38px;
   text-transform: uppercase;
-  color: #6e6e6e;
+  opacity: 0.6;
 }
 
 .mds-ext-res-name-ph {
