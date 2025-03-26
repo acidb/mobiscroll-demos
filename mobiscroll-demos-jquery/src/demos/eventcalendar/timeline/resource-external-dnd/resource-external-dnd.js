@@ -616,14 +616,16 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mbsc-grid mbsc-no-padding mds-ext-res-drop">
-  <div class="mbsc-row">
-    <div id="demo-ext-res-drop-cont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
-      <div class="mds-ext-res-header">Available technicians</div>
-      <div id="demo-ext-res-drop-list" class="mds-ext-res-list"></div>
-    </div>
-    <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
-      <div id="demo-ext-res-drop-calendar"></div>
+<div class="mds-ext-res-drop" mbsc-page>
+  <div class="mbsc-grid mbsc-no-padding">
+    <div class="mbsc-row">
+      <div id="demo-ext-res-drop-cont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
+        <div class="mds-ext-res-header">Available technicians</div>
+        <div id="demo-ext-res-drop-list" class="mds-ext-res-list"></div>
+      </div>
+      <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
+        <div id="demo-ext-res-drop-calendar"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -727,6 +729,7 @@ export default {
 }
 
 .mds-ext-res-drop,
+.mds-ext-res-drop .mbsc-grid,
 .mds-ext-res-drop .mbsc-row,
 .mds-ext-res-drop-calendar {
   height: 100%;
