@@ -455,38 +455,40 @@ export default {
         //</hide-comment>
       ];
 
-      function generateExternalResources() {
+      function generateExternalResourceItem(installer) {
+        var item =
+          '<div id="demo-ext-res-' +
+          installer.id +
+          '" class="mds-ext-res-item">' +
+          '<div class="mbsc-flex">' +
+          '<div class="mds-ext-res-avatar" style="background: ' +
+          installer.color +
+          '">' +
+          installer.name[0] +
+          '</div>' +
+          '<div class="mds-ext-res-cont">' +
+          '<div class="mds-ext-res-name">' +
+          installer.name +
+          '</div>' +
+          '<div class="mds-ext-res-title">' +
+          installer.title +
+          '</div>' +
+          '</div>' +
+          '</div>';
+
+        $availableInstallersList.append(item);
+
+        return $('#demo-ext-res-' + installer.id)
+          .mobiscroll()
+          .draggable({
+            dragData: installer,
+            type: 'resource',
+          });
+      }
+
+      function generateExternalResourceList() {
         $availableInstallersList.empty();
-        availableInstallers.forEach(function (installer) {
-          var item =
-            '<div id="demo-ext-res-' +
-            installer.id +
-            '" class="mds-ext-res-item">' +
-            '<div class="mbsc-flex">' +
-            '<div class="mds-ext-res-avatar" style="background: ' +
-            installer.color +
-            '">' +
-            installer.name[0] +
-            '</div>' +
-            '<div class="mds-ext-res-cont">' +
-            '<div class="mds-ext-res-name">' +
-            installer.name +
-            '</div>' +
-            '<div class="mds-ext-res-title">' +
-            installer.title +
-            '</div>' +
-            '</div>' +
-            '</div>';
-
-          $availableInstallersList.append(item);
-
-          $('#demo-ext-res-' + installer.id)
-            .mobiscroll()
-            .draggable({
-              dragData: installer,
-              type: 'resource',
-            });
-        });
+        availableInstallers.forEach(generateExternalResourceItem);
       }
 
       var timelineInst = $('#demo-ext-res-drop-calendar')
@@ -538,6 +540,8 @@ export default {
             });
             $('#demo-ext-res-' + newResourceId).remove();
             mobiscroll.toast({
+              //<hidden>
+              // theme,//</hidden>
               // context,
               message: args.resource.name + ' added to ' + args.parent.name,
             });
@@ -547,12 +551,22 @@ export default {
             var parent = args.parent;
             var oldParent = args.oldParent;
 
+            if (parent && oldParent) {
+              mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
+                message: args.resource.name + ' moved to ' + args.parent.name,
+              });
+            }
+
             if (parent && parent.children) {
               // Remove placeholder resource
               parent.children = parent.children.filter(function (child) {
                 return !child.placeholder;
               });
             }
+
             if (oldParent && !oldParent.children.length) {
               // Add placeholder resource
               oldParent.children.push({
@@ -565,8 +579,10 @@ export default {
           },
           onResourceDelete: function (args) {
             mobiscroll.toast({
+              //<hidden>
+              // theme,//</hidden>
               // context,
-              message: args.resource.name + ' is available',
+              message: args.resource.name + ' removed from ' + args.oldParent.name,
             });
           },
         })
@@ -576,9 +592,11 @@ export default {
         .mobiscroll()
         .dropcontainer({
           onItemDrop: function (args) {
-            if (args.data && args.dataType === 'resource') {
-              availableInstallers.push(args.data);
-              generateExternalResources();
+            var installer = args.data;
+            if (installer && args.dataType === 'resource') {
+              availableInstallers.push(installer);
+              var item = generateExternalResourceItem(installer);
+              item[0].scrollIntoView();
             }
           },
         });
@@ -611,7 +629,7 @@ export default {
         });
       });
 
-      generateExternalResources();
+      generateExternalResourceList();
     });
   },
   // eslint-disable-next-line es5/no-template-literals
