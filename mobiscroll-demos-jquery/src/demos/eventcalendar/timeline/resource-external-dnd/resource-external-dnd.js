@@ -582,7 +582,7 @@ export default {
               //<hidden>
               // theme,//</hidden>
               // context,
-              message: args.resource.name + ' removed from ' + args.oldParent.name,
+              message: args.resource.name + ' removed from ' + args.parent.name,
             });
           },
         })
@@ -596,7 +596,7 @@ export default {
             if (installer && args.dataType === 'resource') {
               availableInstallers.push(installer);
               var item = generateExternalResourceItem(installer);
-              item[0].scrollIntoView();
+              item[0].scrollIntoView({ behavior: 'smooth' });
             }
           },
         });
