@@ -461,7 +461,8 @@ export default {
           var item =
             '<div id="demo-ext-res-' +
             installer.id +
-            '" class="mbsc-flex mds-ext-res-item">' +
+            '" class="mds-ext-res-item">' +
+            '<div class="mbsc-flex">' +
             '<div class="mds-ext-res-avatar" style="background: ' +
             installer.color +
             '">' +
@@ -473,6 +474,7 @@ export default {
             '</div>' +
             '<div class="mds-ext-res-title">' +
             installer.title +
+            '</div>' +
             '</div>' +
             '</div>';
 
@@ -684,7 +686,8 @@ export default {
 }
 
 .mds-ext-res-item {
-  background: #dde0d8;
+  background: rgba(48, 48, 48, .7);
+  color: #fff;
   padding: 10px;
   margin: 16px;
   border-radius: 8px;
