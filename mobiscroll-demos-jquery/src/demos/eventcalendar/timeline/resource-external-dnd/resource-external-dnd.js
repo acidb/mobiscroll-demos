@@ -596,7 +596,7 @@ export default {
             if (installer && args.dataType === 'resource') {
               availableInstallers.push(installer);
               var item = generateExternalResourceItem(installer);
-              item[0].scrollIntoView({ behavior: 'smooth' });
+              item[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
           },
         });
