@@ -258,209 +258,195 @@ export default {
         },
         {
           id: 11,
-          start: 'dyndatetime(y,m,d,9)',
-          end: 'dyndatetime(y,m,d,13)',
-          title: 'Roof tiling',
-          resource: 3,
-        },
-        {
-          id: 12,
-          start: 'dyndatetime(y,m,d,14)',
-          end: 'dyndatetime(y,m,d,18)',
-          title: 'Leak-proofing and insulation',
-          resource: 3,
-        },
-        {
-          id: 13,
           start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,14)',
           title: 'Operating bulldozer for site leveling',
           resource: 5,
         },
         {
-          id: 14,
+          id: 12,
           start: 'dyndatetime(y,m,d,14,20)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Material lifting with crane',
           resource: 5,
         },
         {
-          id: 15,
+          id: 13,
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Land survey for new roads',
           resource: 10,
         },
         {
-          id: 16,
+          id: 14,
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Boundary marking for structures',
           resource: 10,
         },
         {
-          id: 17,
+          id: 15,
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,13)',
           title: 'Concrete floor polishing',
           resource: 6,
         },
         {
-          id: 18,
+          id: 16,
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Applying protective coatings on concrete',
           resource: 6,
         },
         {
-          id: 19,
+          id: 17,
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Steel frame installation',
           resource: 7,
         },
         {
-          id: 20,
+          id: 18,
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Bolting and securing steel structures',
           resource: 7,
         },
         {
-          id: 21,
+          id: 19,
           start: 'dyndatetime(y,m,d,10)',
           end: 'dyndatetime(y,m,d,14)',
           title: 'Interior painting preparation',
           resource: 8,
         },
         {
-          id: 22,
+          id: 20,
           start: 'dyndatetime(y,m,d,15)',
           end: 'dyndatetime(y,m,d,18,10)',
           title: 'Applying finishing coats',
           resource: 8,
         },
         {
-          id: 23,
+          id: 21,
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Glass panel measurement and cutting',
           resource: 11,
         },
         {
-          id: 24,
+          id: 22,
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Installing large glass windows',
           resource: 11,
         },
         {
-          id: 25,
+          id: 23,
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Concrete foundation pouring',
           resource: 12,
         },
         {
-          id: 26,
+          id: 24,
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Curing and leveling concrete',
           resource: 12,
         },
         {
-          id: 27,
+          id: 25,
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,15)',
           title: 'Structural steel beam welding',
           resource: 13,
         },
         {
-          id: 28,
+          id: 26,
           start: 'dyndatetime(y,m,d,16)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Reinforcement bar assembly',
           resource: 13,
         },
         {
-          id: 29,
+          id: 27,
           start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,14)',
           title: 'Excavation for foundation',
           resource: 14,
         },
         {
-          id: 30,
+          id: 28,
           start: 'dyndatetime(y,m,d,15)',
           end: 'dyndatetime(y,m,17,30)',
           title: 'Operating crane for material transport',
           resource: 14,
         },
         {
-          id: 31,
+          id: 29,
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Land survey for new section',
           resource: 15,
         },
         {
-          id: 32,
+          id: 30,
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
           title: 'Marking layout for construction work',
           resource: 15,
         },
         {
-          id: 33,
+          id: 31,
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,13)',
           title: 'Exterior wall painting',
           resource: 16,
         },
         {
-          id: 34,
+          id: 31,
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Applying protective coatings',
           resource: 16,
         },
         {
-          id: 35,
+          id: 33,
           start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Roof tiling installation',
           resource: 17,
         },
         {
-          id: 36,
+          id: 34,
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17,45)',
           title: 'Leak-proofing and insulation work',
           resource: 17,
         },
         {
-          id: 37,
+          id: 35,
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,12)',
           title: 'Plastering interior walls',
           resource: 18,
         },
         {
-          id: 38,
+          id: 36,
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Ceiling plaster and finishing',
           resource: 18,
         },
         {
-          id: 39,
+          id: 37,
           start: 'dyndatetime(y,m,d,10)',
           end: 'dyndatetime(y,m,d,15)',
           title: 'Controlled demolition of old structure',
           resource: 19,
         },
         {
-          id: 40,
+          id: 38,
           start: 'dyndatetime(y,m,d,15,15)',
           end: 'dyndatetime(y,m,d,17,45)',
           title: 'Site cleanup and debris removal',
@@ -515,14 +501,14 @@ export default {
           resources: installers,
           renderResourceHeader: function () {
             return (
-              '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-ext-res-header">Set up teams</div>' +
+              '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-ext-res-header mbsc-flex-1-1">Set up teams</div>' +
               '<button mbsc-button id="demo-ext-res-add" data-variant="outline" class="mds-ext-res-add">Add team</button></div>'
             );
           },
           renderResource: function (resource) {
             return resource.isParent || resource.placeholder
               ? '<div class="mds-ext-res-name mbsc-flex' +
-                  (resource.placeholder ? ' mds-ext-res-name-temp' : '') +
+                  (resource.placeholder ? ' mds-ext-res-name-ph' : '') +
                   '">' +
                   resource.name +
                   '</div>'
@@ -562,7 +548,7 @@ export default {
             if (parent && parent.children) {
               // Remove placeholder resource
               parent.children = parent.children.filter(function (child) {
-                return !child.temp;
+                return !child.placeholder;
               });
             }
             if (oldParent && !oldParent.children.length) {
@@ -612,6 +598,7 @@ export default {
             },
           ],
         });
+
         timelineInst.setOptions({ resources: installers.slice() });
 
         setTimeout(function () {
@@ -667,20 +654,18 @@ export default {
 }
 
 .mds-ext-res-drop-calendar .mds-ext-res-add {
-  margin-left: auto;
-  padding: 2px 6px;
-  line-height: 24px;
+  margin: 0;
 }
 
 .mds-ext-res-header {
   font-weight: 600;
   font-size: .875em;
-  line-height: 1.5em;
+  line-height: 38px;
   text-transform: uppercase;
   color: #6e6e6e;
 }
 
-.mds-ext-res-name-temp {
+.mds-ext-res-name-ph {
   font-style: italic;
   opacity: 0.4;
 }
@@ -691,6 +676,7 @@ export default {
 
 .mds-ext-res-drop-cont .mds-ext-res-header {
   padding: 12px 16px;
+  line-height: 1.5em;
 }
 
 .mds-ext-res-list {
