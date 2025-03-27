@@ -22,6 +22,7 @@ import type {
   MbscPageChangeEvent,
   MbscPageLoadedEvent,
   MbscPageLoadingEvent,
+  MbscResourceClickEvent,
   MbscResourceDragEvent,
   MbscResourceOrderEvent,
   MbscSelectedDateChangeEvent
@@ -192,6 +193,18 @@ function handlePageLoading(args: MbscPageLoadingEvent) {
   // Use it to load data on demand
   console.log(args)
 }
+function onResourceClick(args: MbscResourceClickEvent) {
+  // Logic for resource click
+  console.log(args)
+}
+function onResourceDoubleClick(args: MbscResourceClickEvent) {
+  // Logic for resource double click
+  console.log(args)
+}
+function onResourceRightClick(args: MbscResourceClickEvent) {
+  // Logic for resource right click
+  console.log(args)
+}
 function handleResourceDragEnd(args: MbscResourceDragEvent) {
   // Logic for resource drag end
   console.log(args)
@@ -211,7 +224,7 @@ function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
 
 onMounted(() => {
   getJson(
-    'https://trial.mobiscroll.com/events/?vers=5',
+    'https://trial.mobiscroll.com/timeline-events/',
     (events) => {
       myEvents.value = events
     },
@@ -265,9 +278,12 @@ onMounted(() => {
     @page-change="handlePageChange"
     @page-loaded="handlePageLoaded"
     @page-loading="handlePageLoading"
+    @resource-click="onResourceClick"
+    @resource-double-click="onResourceDoubleClick"
     @resource-drag-end="handleResourceDragEnd"
     @resource-drag-start="handleResourceDragStart"
     @resource-order-update="handleResourceOrderUpdate"
+    @resource-right-click="onResourceRightClick"
     @selected-date-change="handleSelectedDateChange"
   />
 </template>

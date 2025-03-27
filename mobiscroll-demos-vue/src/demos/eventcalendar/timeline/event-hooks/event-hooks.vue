@@ -143,6 +143,12 @@ function handlePageLoaded() {
 function handlePageLoading() {
   // Use it to load data on demand
 }
+function onResourceClick() {
+  // Logic for resource click
+}
+function onResourceDoubleClick() {
+  // Logic for resource double click
+}
 function handleResourceDragEnd() {
   // Logic for resource drag end
 }
@@ -152,13 +158,16 @@ function handleResourceDragStart() {
 function handleResourceOrderUpdate() {
   // Logic for resource update
 }
+function onResourceRightClick() {
+  // Logic for resource right click
+}
 function handleSelectedDateChange() {
   // Use it to keep track of the selected date externally
 }
 
 onMounted(() => {
   getJson(
-    'https://trial.mobiscroll.com/events/?vers=5',
+    'https://trial.mobiscroll.com/timeline-events/',
     (events) => {
       myEvents.value = events
     },
@@ -211,10 +220,13 @@ onMounted(() => {
     @init="handleInit"
     @page-change="handlePageChange"
     @page-loaded="handlePageLoaded"
-    @page-oading="handlePageLoading"
+    @page-loading="handlePageLoading"
+    @resource-click="onResourceClick"
+    @resource-double-click="onResourceDoubleClick"
     @resource-drag-end="handleResourceDragEnd"
     @resource-drag-start="handleResourceDragStart"
     @resource-order-update="handleResourceOrderUpdate"
+    @resource-right-click="onResourceRightClick"
     @selected-date-change="handleSelectedDateChange"
   />
 </template>
