@@ -47,22 +47,46 @@ import { chromium } from "playwright";
   const limit = Number(process.argv[2]) || screenshotsList.length;
   const limitedList = screenshotsList.slice(0, limit);
   const total = limitedList.length;
-  const screenshotPaths = [];
 
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
+  const browser = await chromium.launch({
+    // !!! just for the prod - no certificate
+    headless: true,
+    args: ["--ignore-certificate-errors"],
+  });
+
+  const desktopPage = await browser.newPage();
+  const mobileContext = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+    userAgent:
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1",
+  });
+  const mobilePage = await mobileContext.newPage();
+
   for (const [index, { category, unique }] of limitedList.entries()) {
-    const filePath = `./demos-screenshots/${category}-${unique}.png`;
-    screenshotPaths.push(filePath);
-    await page.goto(
-      `https://demo.mobiscroll.com/fullscreen/${category}/${unique}?screenshot=true`
-    );
-    await page.screenshot({ path: filePath });
-    const percentage = Math.round(((index + 1) / total) * 100);
-    console.log(
-      `${index + 1}/${total} (${percentage}%) screenshot saved → ${filePath}`
-    );
+    const url = `https://demo.mobiscrollprod.com/fullscreen/${category}/${unique}?screenshot=true`;
+
+    try {
+      const filePathDesktop = `./demos-screenshots/${category}-${unique}.png`;
+      await desktopPage.goto(url, { waitUntil: "networkidle", timeout: 10000 });
+      await desktopPage.screenshot({ path: filePathDesktop });
+
+      const filePathMobile = `./demos-screenshots/mobile-${category}-${unique}.png`;
+      await mobilePage.goto(url, { waitUntil: "networkidle", timeout: 10000 });
+      await mobilePage.screenshot({ path: filePathMobile });
+
+      const percentage = Math.round(((index + 1) / total) * 100);
+      console.log(
+        `${
+          index + 1
+        }/${total} (${percentage}%) desktop & mobile screenshot saved → ${filePathDesktop}`
+      );
+    } catch (err) {
+      console.warn(`Failed: ${category}/${unique} → ${err.message}`);
+    }
   }
+
   await browser.close();
 
   //  _     _                   ____    _   _    ____
@@ -72,23 +96,23 @@ import { chromium } from "playwright";
   //  \__| |_| |_| |_|  \__, | |_|     |_| \_|  \____|
   //                    |___/
 
-  for (const [index, file] of screenshotPaths.entries()) {
-    const output = file.replace(".png", "-compressed.png");
-    await new Promise((resolve, reject) => {
-      tinify.fromFile(file).toFile(output, (err) => {
-        if (err) {
-          console.error(`Error compressing ${file}:`, err);
-          reject(err);
-        } else {
-          const compPercentage = Math.round(((index + 1) / total) * 100);
-          console.log(
-            `${index + 1}/${total} (${compPercentage}%) compressed → ${output}`
-          );
-          resolve();
-        }
-      });
-    });
-  }
+  // for (const [index, file] of screenshotPaths.entries()) {
+  //   const output = file.replace(".png", "-compressed.png");
+  //   await new Promise((resolve, reject) => {
+  //     tinify.fromFile(file).toFile(output, (err) => {
+  //       if (err) {
+  //         console.error(`Error compressing ${file}:`, err);
+  //         reject(err);
+  //       } else {
+  //         const compPercentage = Math.round(((index + 1) / total) * 100);
+  //         console.log(
+  //           `${index + 1}/${total} (${compPercentage}%) compressed → ${output}`
+  //         );
+  //         resolve();
+  //       }
+  //     });
+  //   });
+  // }
 })();
 
-//todo  when uncanged dont compress
+//todo when uncanged dont compress - but how can be unchanged if date change ?!
