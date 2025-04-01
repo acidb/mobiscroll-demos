@@ -1,29 +1,30 @@
 <mbsc-eventcalendar
-  ngClass="mds-health-care-planner"
+  class="mds-healthcare"
   [data]="myEvents"
   [dragTimeStep]="20"
   [eventOverlap]="false"
   groupBy="date"
-  [invalid]="myInvalid"
+  [invalid]="myInvalids"
   [dragToCreate]="true"
-  [dragToMove]="true"
-  [scheduleEventContentTemplate]="eventTemp"
-  [resourceTemplate]="resourceTemp"
-  (onEventCreate)="showToast('Appointment Created')"
-  (onEventDelete)="showToast('Appointment Deleted')"
-  (onEventUpdate)="showToast('Appointment Updated')"
   [resources]="myResources"
   [view]="myView"
+  [scheduleEventContentTemplate]="eventTemplate"
+  [resourceTemplate]="resourceTemplate"
+  (onEventCreated)="showToast('Appointment created')"
+  (onEventDeleted)="showToast('Appointment deleted')"
+  (onEventUpdated)="showToast('Appointment updated')"
 ></mbsc-eventcalendar>
 
-<ng-template #resourceTemp let-resource>
-  <div *ngIf="resource.cssClass === 'mds-healthc-resource-column'" class="mds-healthc-header-cont">
-    <div class="mds-healthc-header-name">{{ resource.name }}</div>
-    <div class="mds-healthc-header-description">{{ resource.description }}</div>
-    <img class="mds-healthc-header-avatar" [src]="resource.img" [alt]="resource.name + ' avatar'" />
+<ng-template #resourceTemplate let-resource>
+  <div *ngIf="resource.cssClass === 'mds-healthcare-res-col'" class="mbsc-flex">
+    <img class="mds-healthcare-res-avatar mbsc-flex-none" [alt]="resource.name" [src]="resource.img" />
+    <div class="mds-healthcare-res-cont mbsc-flex-1-1">
+      <div class="mds-healthcare-res-name">{{ resource.name }}</div>
+      <div class="mds-healthcare-res-desc">{{ resource.description }}</div>
+    </div>
   </div>
 </ng-template>
 
-<ng-template #eventTemp let-event>
-  <div *ngIf="!event.original?.type">Patient: {{ event.title === 'New event' ? 'John Doe' : event.title }}</div>
+<ng-template #eventTemplate let-event>
+  <ng-container *ngIf="!event.original!.type">Patient: {{ event.title === 'New event' ? 'John Doe' : event.title }}</ng-container>
 </ng-template>

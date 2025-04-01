@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { MbscEventcalendar, MbscToast, setOptions /* localeImport */ } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
+import type {
+  MbscCalendarEvent,
+  MbscCalendarEventData,
+  MbscEventcalendarView,
+  MbscResource
+} from '@mobiscroll/vue'
 import { ref } from 'vue'
 
 setOptions({
@@ -8,10 +13,10 @@ setOptions({
   // theme
 })
 
-const toastMessage = ref<string>('')
-const isToastOpen = ref<boolean>(false)
+const isToastOpen = ref(false)
+const toastMessage = ref('')
 
-const myEvents = ref<MbscCalendarEvent[]>([
+const myEvents: MbscCalendarEvent[] = [
   {
     id: 1,
     resource: 2,
@@ -52,6 +57,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
     type: 'availability',
     editable: false
   },
+  //<hide-comment>
   {
     id: 5,
     resource: 10,
@@ -656,198 +662,109 @@ const myEvents = ref<MbscCalendarEvent[]>([
     end: 'dyndatetime(y, m, d - 8, 15, 40)',
     recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3'
   }
-])
+  //</hide-comment>
+]
 
-const myResources = ref<MbscResource[]>([
+const myResources: MbscResource[] = [
   {
     id: 2,
-    name: ' ',
     color: 'rgb(40, 179, 114)',
-    cssClass: 'mds-healthc-resource-column-bar'
+    cssClass: 'mds-healthcare-res-col-bar'
   },
   {
     id: 1,
     name: 'Dr. James Cole',
     color: 'rgba(255, 204, 193)',
-    cssClass: 'mds-healthc-resource-column',
+    cssClass: 'mds-healthcare-res-col',
     description: 'Injury Recovery Specialist',
     img: 'https://img.mobiscroll.com/demos/m4.png'
   },
   {
     id: 4,
-    name: ' ',
     color: 'rgb(40, 179, 114)',
     eventCreation: false,
-    cssClass: 'mds-healthc-resource-column-bar'
+    cssClass: 'mds-healthcare-res-col-bar'
   },
   {
     id: 3,
     name: 'Dr. Anna Hayes',
     color: 'rgb(193, 221, 195)',
-    cssClass: 'mds-healthc-resource-column',
+    cssClass: 'mds-healthcare-res-col',
     description: 'Sports Physiotherapist',
     img: 'https://img.mobiscroll.com/demos/f3.png'
   },
   {
     id: 6,
-    name: ' ',
     color: 'rgb(40, 179, 114)',
     eventCreation: false,
-    cssClass: 'mds-healthc-resource-column-bar'
+    cssClass: 'mds-healthcare-res-col-bar'
   },
   {
     id: 5,
     name: 'Dr. Mark Lewis',
     color: 'rgb(134, 224, 193)',
-    cssClass: 'mds-healthc-resource-column',
+    cssClass: 'mds-healthcare-res-col',
     description: 'Mobility Recovery Expert',
     img: 'https://img.mobiscroll.com/demos/m3.png'
   },
   {
     id: 8,
-    name: ' ',
     color: 'rgb(40, 179, 114)',
     eventCreation: false,
-    cssClass: 'mds-healthc-resource-column-bar'
+    cssClass: 'mds-healthcare-res-col-bar'
   },
   {
     id: 7,
     name: 'Dr. Emily Carter',
     color: 'rgb(255, 193, 228)',
-    cssClass: 'mds-healthc-resource-column',
+    cssClass: 'mds-healthcare-res-col',
     description: 'Chiropractic Specialist',
     img: 'https://img.mobiscroll.com/demos/f1.png'
   },
   {
     id: 10,
-    name: ' ',
     color: 'rgb(40, 179, 114)',
     eventCreation: false,
-    cssClass: 'mds-healthc-resource-column-bar'
+    cssClass: 'mds-healthcare-res-col-bar'
   },
   {
     id: 9,
     name: 'Dr. Robert Stone',
     color: 'rgb(193, 204, 255)',
-    cssClass: 'mds-healthc-resource-column',
+    cssClass: 'mds-healthcare-res-col',
     description: 'Orthopedic Surgeon',
     img: 'https://img.mobiscroll.com/demos/m2.png'
   },
   {
     id: 12,
-    name: ' ',
     color: 'rgb(40, 179, 114)',
     eventCreation: false,
-    cssClass: 'mds-healthc-resource-column-bar'
+    cssClass: 'mds-healthcare-res-col-bar'
   },
   {
     id: 11,
     name: 'Dr. Sophia Miller',
     color: 'rgb(255, 223, 176)',
-    cssClass: 'mds-healthc-resource-column',
+    cssClass: 'mds-healthcare-res-col',
     description: 'Sports Physiotherapist',
     img: 'https://img.mobiscroll.com/demos/f2.png'
   }
-])
+]
 
-const myInvalids = ref([
-  {
-    resource: [1, 2],
-    start: '00:00',
-    end: '10:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [1, 2],
-    start: '18:00',
-    end: '24:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [3, 4],
-    start: '00:00',
-    end: '08:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [3, 4],
-    start: '16:00',
-    end: '24:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [5, 6],
-    start: '00:00',
-    end: '09:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [5, 6],
-    start: '17:00',
-    end: '24:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [7, 8],
-    start: '00:00',
-    end: '10:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [7, 8],
-    start: '18:00',
-    end: '24:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [9, 10],
-    start: '00:00',
-    end: '08:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [9, 10],
-    start: '16:00',
-    end: '24:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [11, 12],
-    start: '00:00',
-    end: '09:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  },
-  {
-    resource: [11, 12],
-    start: '17:00',
-    end: '24:00',
-    recurring: {
-      repeat: 'daily'
-    }
-  }
-])
+const myInvalids = [
+  { resource: [1, 2], start: '00:00', end: '10:00', recurring: { repeat: 'daily' } },
+  { resource: [1, 2], start: '18:00', end: '24:00', recurring: { repeat: 'daily' } },
+  { resource: [3, 4], start: '00:00', end: '08:00', recurring: { repeat: 'daily' } },
+  { resource: [3, 4], start: '16:00', end: '24:00', recurring: { repeat: 'daily' } },
+  { resource: [5, 6], start: '00:00', end: '09:00', recurring: { repeat: 'daily' } },
+  { resource: [5, 6], start: '17:00', end: '24:00', recurring: { repeat: 'daily' } },
+  { resource: [7, 8], start: '00:00', end: '10:00', recurring: { repeat: 'daily' } },
+  { resource: [7, 8], start: '18:00', end: '24:00', recurring: { repeat: 'daily' } },
+  { resource: [9, 10], start: '00:00', end: '08:00', recurring: { repeat: 'daily' } },
+  { resource: [9, 10], start: '16:00', end: '24:00', recurring: { repeat: 'daily' } },
+  { resource: [11, 12], start: '00:00', end: '09:00', recurring: { repeat: 'daily' } },
+  { resource: [11, 12], start: '17:00', end: '24:00', recurring: { repeat: 'daily' } }
+]
 
 const myView: MbscEventcalendarView = {
   schedule: {
@@ -863,151 +780,104 @@ const myView: MbscEventcalendarView = {
 }
 
 function showToast(message: string) {
-  setTimeout(() => {
-    toastMessage.value = message
-    isToastOpen.value = true
-  })
+  toastMessage.value = message
+  isToastOpen.value = true
 }
 </script>
 
 <template>
   <!-- dragOptions -->
   <MbscEventcalendar
-    :cssClass="'mds-health-care-planner'"
+    cssClass="mds-healthcare"
+    groupBy="date"
     :data="myEvents"
     :dragTimeStep="20"
     :eventOverlap="false"
-    groupBy="date"
     :invalid="myInvalids"
-    :dragToCreate="true"
-    :dragToMove="true"
-    :onEventCreate="() => showToast('Appointment Created')"
-    :onEventDelete="() => showToast('Appointment Deleted')"
-    :onEventUpdate="() => showToast('Appointment Updated')"
     :resources="myResources"
     :view="myView"
+    @event-created="showToast('Appointment created')"
+    @event-deleted="showToast('Appointment deleted')"
+    @event-updated="showToast('Appointment updated')"
   >
-    <template #resource="resource">
-      <div
-        v-if="resource.cssClass === 'mds-healthc-resource-column'"
-        class="mds-healthc-header-cont"
-      >
-        <div class="mds-healthc-header-name">{{ resource.name }}</div>
-        <div class="mds-healthc-header-description">{{ resource.description }}</div>
+    <template #resource="resource: MbscResource">
+      <div v-if="resource.cssClass === 'mds-healthcare-res-col'" class="mbsc-flex">
         <img
-          class="mds-healthc-header-avatar"
+          class="mds-healthcare-res-avatar mbsc-flex-none"
+          :alt="resource.name"
           :src="resource.img"
-          :alt="resource.name + ' avatar'"
         />
+        <div class="mds-healthcare-res-cont mbsc-flex-1-1">
+          <div class="mds-healthcare-res-name">{{ resource.name }}</div>
+          <div class="mds-healthcare-res-desc">{{ resource.description }}</div>
+        </div>
       </div>
+    </template>
+    <template #scheduleEventContent="data: MbscCalendarEventData">
+      <template v-if="!data.original!.type">
+        Patient: {{ data.title === 'New event' ? 'John Doe' : data.title }}
+      </template>
     </template>
   </MbscEventcalendar>
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>
-.mds-health-care-planner .mbsc-schedule-time-col,
-.mds-health-care-planner .mbsc-schedule-time-wrapper {
+.mds-healthcare .mbsc-schedule-time-col,
+.mds-healthcare .mbsc-schedule-time-wrapper {
   width: 80px;
 }
 
-/* Resouce column */
+.mds-healthcare .mbsc-schedule-resource-title {
+  padding: 0;
+}
 
-.mds-healthc-resource-column-bar .mbsc-schedule-event-range {
+.mds-healthcare-res-col {
+  width: 210px;
+  border: 0 !important;
+}
+
+/* Availability column */
+
+.mds-healthcare-res-col-bar {
+  width: 14px;
+}
+
+.mds-healthcare-res-col-bar .mbsc-schedule-event {
+  margin-left: 5px;
+}
+
+.mds-healthcare-res-col-bar .mbsc-schedule-event-range {
   display: none;
 }
 
-.mds-healthc-resource-column-bar .mbsc-schedule-event-bar {
+.mds-healthcare-res-col-bar .mbsc-schedule-event-bar {
   width: 4px;
   border-radius: 3px;
 }
 
-.mds-health-care-planner .mbsc-schedule-resource-title {
-  padding: 0;
-}
+/* Resource header */
 
-.mds-healthc-resource-column-bar .mbsc-schedule-event {
-  margin-left: 5px;
-}
-
-.mds-healthc-resource-column-bar {
-  width: 14px;
-}
-
-.mds-healthc-resource-column {
-  width: 210px;
-  border-left: 0 !important;
-}
-
-/* Resource Header */
-
-.mds-healthc-header-cont {
-  position: relative;
-  padding-left: 50px;
-  text-align: left;
-  padding-bottom: 10px;
+.mds-healthcare-res-cont {
+  padding: 10px;
   font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  text-align: start;
 }
 
-.mds-healthc-header-avatar {
-  position: absolute;
+.mds-healthcare-res-name {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.mds-healthcare-res-desc {
+  font-size: 12px;
+  line-height: 14px;
+  margin-top: 4px;
+}
+
+.mds-healthcare-res-avatar {
   height: 40px;
   width: 40px;
-  top: 20px;
-  left: 0;
-  transform: translateY(-50%);
-}
-
-.mds-healthc-header-name {
-  font-size: 16px;
-  word-wrap: break-word;
-  line-height: 1.2;
-}
-
-.mds-healthc-header-description {
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-/* Event */
-
-.mds-healthc-availability-bar {
-  width: 5px;
-  height: 100%;
-  border-radius: 5px;
-}
-
-.mds-healthc-event {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 13px;
-}
-
-.mds-start-time,
-.mds-end-time {
-  font-size: 10px;
-}
-
-.mds-healthc-event:hover {
-  filter: saturate(2);
-}
-
-.mds-healthc-event-title {
-  text-align: flex-start;
-  padding: 3px 3px;
-  color: black;
-  font-weight: 350;
-}
-
-.mbsc-ios-dark .mds-healthc-event-title,
-.mbsc-windows-dark .mds-healthc-event-title,
-.mbsc-material-dark .mds-healthc-event-title {
-  color: white;
+  margin: 10px 0;
 }
 </style>
