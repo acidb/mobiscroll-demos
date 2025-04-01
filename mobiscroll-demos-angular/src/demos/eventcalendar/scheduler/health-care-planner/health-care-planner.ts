@@ -17,14 +17,6 @@ setOptions({
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  showToast(message: string) {
-    setTimeout(() => {
-      this.notify.toast({
-        message: message,
-      });
-    });
-  }
-
   myEvents: MbscCalendarEvent[] = [
     {
       id: 1,
@@ -66,6 +58,7 @@ export class AppComponent {
       type: 'availability',
       editable: false,
     },
+    //<hide-comment>
     {
       id: 5,
       resource: 10,
@@ -670,98 +663,108 @@ export class AppComponent {
       end: dyndatetime('y, m, d - 8, 15, 40'),
       recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
     },
+    //</hide-comment>
   ];
 
   myResources: MbscResource[] = [
     {
       id: 2,
-      name: ' ',
       color: 'rgb(40, 179, 114)',
-      cssClass: 'mds-healthc-resource-column-bar',
+      cssClass: 'mds-healthcare-res-col-bar',
     },
     {
       id: 1,
       name: 'Dr. James Cole',
       color: 'rgba(255, 204, 193)',
-      cssClass: 'mds-healthc-resource-column',
+      cssClass: 'mds-healthcare-res-col',
       description: 'Injury Recovery Specialist',
       img: 'https://img.mobiscroll.com/demos/m4.png',
     },
     {
       id: 4,
-      name: ' ',
       color: 'rgb(40, 179, 114)',
       eventCreation: false,
-      cssClass: 'mds-healthc-resource-column-bar',
+      cssClass: 'mds-healthcare-res-col-bar',
     },
     {
       id: 3,
       name: 'Dr. Anna Hayes',
       color: 'rgb(193, 221, 195)',
-      cssClass: 'mds-healthc-resource-column',
+      cssClass: 'mds-healthcare-res-col',
       description: 'Sports Physiotherapist',
       img: 'https://img.mobiscroll.com/demos/f3.png',
     },
     {
       id: 6,
-      name: ' ',
       color: 'rgb(40, 179, 114)',
       eventCreation: false,
-      cssClass: 'mds-healthc-resource-column-bar',
+      cssClass: 'mds-healthcare-res-col-bar',
     },
     {
       id: 5,
       name: 'Dr. Mark Lewis',
       color: 'rgb(134, 224, 193)',
-      cssClass: 'mds-healthc-resource-column',
+      cssClass: 'mds-healthcare-res-col',
       description: 'Mobility Recovery Expert',
       img: 'https://img.mobiscroll.com/demos/m3.png',
     },
     {
       id: 8,
-      name: ' ',
       color: 'rgb(40, 179, 114)',
       eventCreation: false,
-      cssClass: 'mds-healthc-resource-column-bar',
+      cssClass: 'mds-healthcare-res-col-bar',
     },
     {
       id: 7,
       name: 'Dr. Emily Carter',
       color: 'rgb(255, 193, 228)',
-      cssClass: 'mds-healthc-resource-column',
+      cssClass: 'mds-healthcare-res-col',
       description: 'Chiropractic Specialist',
       img: 'https://img.mobiscroll.com/demos/f1.png',
     },
     {
       id: 10,
-      name: ' ',
       color: 'rgb(40, 179, 114)',
       eventCreation: false,
-      cssClass: 'mds-healthc-resource-column-bar',
+      cssClass: 'mds-healthcare-res-col-bar',
     },
     {
       id: 9,
       name: 'Dr. Robert Stone',
       color: 'rgb(193, 204, 255)',
-      cssClass: 'mds-healthc-resource-column',
+      cssClass: 'mds-healthcare-res-col',
       description: 'Orthopedic Surgeon',
       img: 'https://img.mobiscroll.com/demos/m2.png',
     },
     {
       id: 12,
-      name: ' ',
       color: 'rgb(40, 179, 114)',
       eventCreation: false,
-      cssClass: 'mds-healthc-resource-column-bar',
+      cssClass: 'mds-healthcare-res-col-bar',
     },
     {
       id: 11,
       name: 'Dr. Sophia Miller',
       color: 'rgb(255, 223, 176)',
-      cssClass: 'mds-healthc-resource-column',
+      cssClass: 'mds-healthcare-res-col',
       description: 'Sports Physiotherapist',
       img: 'https://img.mobiscroll.com/demos/f2.png',
     },
+  ];
+
+  myInvalids: MbscCalendarEvent[] = [
+    { resource: [1, 2], start: '00:00', end: '10:00', recurring: { repeat: 'daily' } },
+    { resource: [1, 2], start: '18:00', end: '24:00', recurring: { repeat: 'daily' } },
+    { resource: [3, 4], start: '00:00', end: '08:00', recurring: { repeat: 'daily' } },
+    { resource: [3, 4], start: '16:00', end: '24:00', recurring: { repeat: 'daily' } },
+    { resource: [5, 6], start: '00:00', end: '09:00', recurring: { repeat: 'daily' } },
+    { resource: [5, 6], start: '17:00', end: '24:00', recurring: { repeat: 'daily' } },
+    { resource: [7, 8], start: '00:00', end: '10:00', recurring: { repeat: 'daily' } },
+    { resource: [7, 8], start: '18:00', end: '24:00', recurring: { repeat: 'daily' } },
+    { resource: [9, 10], start: '00:00', end: '08:00', recurring: { repeat: 'daily' } },
+    { resource: [9, 10], start: '16:00', end: '24:00', recurring: { repeat: 'daily' } },
+    { resource: [11, 12], start: '00:00', end: '09:00', recurring: { repeat: 'daily' } },
+    { resource: [11, 12], start: '17:00', end: '24:00', recurring: { repeat: 'daily' } },
   ];
 
   myView: MbscEventcalendarView = {
@@ -777,102 +780,9 @@ export class AppComponent {
     },
   };
 
-  myInvalid: any = [
-    {
-      resource: [1, 2],
-      start: '00:00',
-      end: '10:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [1, 2],
-      start: '18:00',
-      end: '24:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [3, 4],
-      start: '00:00',
-      end: '08:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [3, 4],
-      start: '16:00',
-      end: '24:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [5, 6],
-      start: '00:00',
-      end: '09:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [5, 6],
-      start: '17:00',
-      end: '24:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [7, 8],
-      start: '00:00',
-      end: '10:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [7, 8],
-      start: '18:00',
-      end: '24:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [9, 10],
-      start: '00:00',
-      end: '08:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [9, 10],
-      start: '16:00',
-      end: '24:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [11, 12],
-      start: '00:00',
-      end: '09:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-    {
-      resource: [11, 12],
-      start: '17:00',
-      end: '24:00',
-      recurring: {
-        repeat: 'daily',
-      },
-    },
-  ];
+  showToast(message: string) {
+    this.notify.toast({
+      message: message,
+    });
+  }
 }

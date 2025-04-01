@@ -39,6 +39,7 @@ export default {
         type: 'availability',
         editable: false,
       },
+      //<hide-comment>
       {
         id: 4,
         resource: 8,
@@ -653,369 +654,235 @@ export default {
         end: 'dyndatetime(y, m, d - 8, 15, 40)',
         recurring: 'FREQ=DAILY;COUNT=10;INTERVAL=3',
       },
+      //</hide-comment>
     ];
 
     var myResources = [
       {
         id: 2,
-        name: ' ',
         color: 'rgb(40, 179, 114)',
-        cssClass: 'mds-healthc-resource-column-bar',
+        cssClass: 'mds-healthcare-res-col-bar',
       },
       {
         id: 1,
         name: 'Dr. James Cole',
         color: 'rgba(255, 204, 193)',
-        cssClass: 'mds-healthc-resource-column',
+        cssClass: 'mds-healthcare-res-col',
         description: 'Injury Recovery Specialist',
         img: 'https://img.mobiscroll.com/demos/m4.png',
       },
       {
         id: 4,
-        name: ' ',
         color: 'rgb(40, 179, 114)',
         eventCreation: false,
-        cssClass: 'mds-healthc-resource-column-bar',
+        cssClass: 'mds-healthcare-res-col-bar',
       },
       {
         id: 3,
         name: 'Dr. Anna Hayes',
         color: 'rgb(193, 221, 195)',
-        cssClass: 'mds-healthc-resource-column',
+        cssClass: 'mds-healthcare-res-col',
         description: 'Sports Physiotherapist',
         img: 'https://img.mobiscroll.com/demos/f3.png',
       },
       {
         id: 6,
-        name: ' ',
         color: 'rgb(40, 179, 114)',
         eventCreation: false,
-        cssClass: 'mds-healthc-resource-column-bar',
+        cssClass: 'mds-healthcare-res-col-bar',
       },
       {
         id: 5,
         name: 'Dr. Mark Lewis',
         color: 'rgb(134, 224, 193)',
-        cssClass: 'mds-healthc-resource-column',
+        cssClass: 'mds-healthcare-res-col',
         description: 'Mobility Recovery Expert',
         img: 'https://img.mobiscroll.com/demos/m3.png',
       },
       {
         id: 8,
-        name: ' ',
         color: 'rgb(40, 179, 114)',
         eventCreation: false,
-        cssClass: 'mds-healthc-resource-column-bar',
+        cssClass: 'mds-healthcare-res-col-bar',
       },
       {
         id: 7,
         name: 'Dr. Emily Carter',
         color: 'rgb(255, 193, 228)',
-        cssClass: 'mds-healthc-resource-column',
+        cssClass: 'mds-healthcare-res-col',
         description: 'Chiropractic Specialist',
         img: 'https://img.mobiscroll.com/demos/f1.png',
       },
       {
         id: 10,
-        name: ' ',
         color: 'rgb(40, 179, 114)',
         eventCreation: false,
-        cssClass: 'mds-healthc-resource-column-bar',
+        cssClass: 'mds-healthcare-res-col-bar',
       },
       {
         id: 9,
         name: 'Dr. Robert Stone',
         color: 'rgb(193, 204, 255)',
-        cssClass: 'mds-healthc-resource-column',
+        cssClass: 'mds-healthcare-res-col',
         description: 'Orthopedic Surgeon',
         img: 'https://img.mobiscroll.com/demos/m2.png',
       },
       {
         id: 12,
-        name: ' ',
         color: 'rgb(40, 179, 114)',
         eventCreation: false,
-        cssClass: 'mds-healthc-resource-column-bar',
+        cssClass: 'mds-healthcare-res-col-bar',
       },
       {
         id: 11,
         name: 'Dr. Sophia Miller',
         color: 'rgb(255, 223, 176)',
-        cssClass: 'mds-healthc-resource-column',
+        cssClass: 'mds-healthcare-res-col',
         description: 'Sports Physiotherapist',
         img: 'https://img.mobiscroll.com/demos/f2.png',
       },
     ];
 
     var myInvalids = [
-      {
-        resource: [1, 2],
-        start: '00:00',
-        end: '10:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [1, 2],
-        start: '18:00',
-        end: '24:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [3, 4],
-        start: '00:00',
-        end: '08:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [3, 4],
-        start: '16:00',
-        end: '24:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [5, 6],
-        start: '00:00',
-        end: '09:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [5, 6],
-        start: '17:00',
-        end: '24:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [7, 8],
-        start: '00:00',
-        end: '10:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [7, 8],
-        start: '18:00',
-        end: '24:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [9, 10],
-        start: '00:00',
-        end: '08:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [9, 10],
-        start: '16:00',
-        end: '24:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [11, 12],
-        start: '00:00',
-        end: '09:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
-      {
-        resource: [11, 12],
-        start: '17:00',
-        end: '24:00',
-        recurring: {
-          repeat: 'daily',
-        },
-      },
+      { resource: [1, 2], start: '00:00', end: '10:00', recurring: { repeat: 'daily' } },
+      { resource: [1, 2], start: '18:00', end: '24:00', recurring: { repeat: 'daily' } },
+      { resource: [3, 4], start: '00:00', end: '08:00', recurring: { repeat: 'daily' } },
+      { resource: [3, 4], start: '16:00', end: '24:00', recurring: { repeat: 'daily' } },
+      { resource: [5, 6], start: '00:00', end: '09:00', recurring: { repeat: 'daily' } },
+      { resource: [5, 6], start: '17:00', end: '24:00', recurring: { repeat: 'daily' } },
+      { resource: [7, 8], start: '00:00', end: '10:00', recurring: { repeat: 'daily' } },
+      { resource: [7, 8], start: '18:00', end: '24:00', recurring: { repeat: 'daily' } },
+      { resource: [9, 10], start: '00:00', end: '08:00', recurring: { repeat: 'daily' } },
+      { resource: [9, 10], start: '16:00', end: '24:00', recurring: { repeat: 'daily' } },
+      { resource: [11, 12], start: '00:00', end: '09:00', recurring: { repeat: 'daily' } },
+      { resource: [11, 12], start: '17:00', end: '24:00', recurring: { repeat: 'daily' } },
     ];
 
-    var myView = {
-      schedule: {
-        type: 'week',
-        startDay: 1,
-        endDay: 5,
-        startTime: '08:00',
-        endTime: '18:00',
-        timeCellStep: 20,
-        timeLabelStep: 20,
-        allDay: false,
-      },
-    };
-
     function showToast(message) {
-      setTimeout(function () {
-        mobiscroll.toast({
-          message: message,
-        });
+      mobiscroll.toast({
+        message: message,
       });
     }
 
-    mobiscroll.eventcalendar('#demo-health-care-planner', {
-      cssClass: 'mds-health-care-planner',
+    mobiscroll.eventcalendar('#demo-healthcare-planner', {
+      // drag,
+      cssClass: 'mds-healthcare',
       data: myEvents,
       dragTimeStep: 20,
       eventOverlap: false,
       groupBy: 'date',
       invalid: myInvalids,
+      resources: myResources,
+      view: {
+        schedule: {
+          type: 'week',
+          startDay: 1,
+          endDay: 5,
+          startTime: '08:00',
+          endTime: '18:00',
+          timeCellStep: 20,
+          timeLabelStep: 20,
+          allDay: false,
+        },
+      },
       renderScheduleEventContent: function (event) {
-        return !event.original.type ? '<div>Patient: ' + (event.title === 'New event' ? 'John Doe' : event.title) + '</div>' : '';
+        return !event.original.type ? 'Patient: ' + (event.title === 'New event' ? 'John Doe' : event.title) : '';
       },
       renderResource: function (resource) {
-        if (resource.cssClass !== 'mds-healthc-resource-column') {
+        if (resource.cssClass !== 'mds-healthcare-res-col') {
           return ' ';
         }
         return (
-          '<div class="mds-healthc-header-cont">' +
-          '<div class="mds-healthc-header-name">' +
+          '<div class="mbsc-flex">' +
+          '<img class="mds-healthcare-res-avatar mbsc-flex-none" alt="' +
           resource.name +
-          '</div>' +
-          '<div class="mds-healthc-header-description">' +
-          resource.description +
-          '</div>' +
-          '<img class="mds-healthc-header-avatar" src="' +
+          '" src="' +
           resource.img +
           '"/>' +
+          '<div class="mds-healthcare-res-cont mbsc-flex-1-1">' +
+          '<div class="mds-healthcare-res-name">' +
+          resource.name +
+          '</div>' +
+          '<div class="mds-healthcare-res-desc">' +
+          resource.description +
+          '</div>' +
+          '</div>' +
           '</div>'
         );
       },
-      onEventCreate: function () {
-        showToast('Appointment Created');
+      onEventCreated: function () {
+        showToast('Appointment created');
       },
-      onEventDelete: function () {
-        showToast('Appointment Deleted');
+      onEventDeleted: function () {
+        showToast('Appointment deleted');
       },
-      onEventUpdate: function () {
-        showToast('Appointment Updated');
+      onEventUpdated: function () {
+        showToast('Appointment updated');
       },
-      resources: myResources,
-      view: myView,
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-health-care-planner"></div>
+<div id="demo-healthcare-planner"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-health-care-planner .mbsc-schedule-time-col,
-.mds-health-care-planner .mbsc-schedule-time-wrapper {
+.mds-healthcare .mbsc-schedule-time-col,
+.mds-healthcare .mbsc-schedule-time-wrapper {
   width: 80px;
 }
 
-/* Resouce column */
+.mds-healthcare .mbsc-schedule-resource-title {
+  padding: 0;
+}
 
-.mds-healthc-resource-column-bar .mbsc-schedule-event-range {
+.mds-healthcare-res-col {
+  width: 210px;
+  border: 0 !important;
+}
+
+/* Availability column */
+
+.mds-healthcare-res-col-bar {
+  width: 14px;
+}
+
+.mds-healthcare-res-col-bar .mbsc-schedule-event {
+  margin-left: 5px;
+}
+
+.mds-healthcare-res-col-bar .mbsc-schedule-event-range {
   display: none;
 }
 
-.mds-healthc-resource-column-bar .mbsc-schedule-event-bar {
+.mds-healthcare-res-col-bar .mbsc-schedule-event-bar {
   width: 4px;
   border-radius: 3px;
 }
 
-.mds-health-care-planner .mbsc-schedule-resource-title {
-  padding: 0;
-}
+/* Resource header */
 
-.mds-healthc-resource-column-bar .mbsc-schedule-event {
-  margin-left: 5px;
-}
-
-.mds-healthc-resource-column-bar {
-  width: 14px;
-} 
-
-.mds-healthc-resource-column {
-  width: 210px;
-  border-left: 0 !important;
-} 
-
-/* Resource Header */
-
-.mds-healthc-header-cont {
-  position: relative;
-  padding-left: 50px;
-  text-align: left;
-  padding-bottom: 10px;
+.mds-healthcare-res-cont {
+  padding: 10px;
   font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  text-align: start;
 }
 
-.mds-healthc-header-avatar {
-  position: absolute;
+.mds-healthcare-res-name {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.mds-healthcare-res-desc {
+  font-size: 12px;
+  line-height: 14px;
+  margin-top: 4px;
+}
+
+.mds-healthcare-res-avatar {
   height: 40px;
   width: 40px;
-  top: 20px;
-  left: 0;
-  transform: translateY(-50%);
-}
-
-.mds-healthc-header-name {
-  font-size: 16px;
-  word-wrap: break-word;
-  line-height: 1.2;
-}
-
-.mds-healthc-header-description {
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-/* Event */
-
-.mds-healthc-availability-bar {
-  width: 5px;
-  height: 100%;
-  border-radius:5px;
-}
-
-.mds-healthc-event {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 13px;
-}
-
-.mds-start-time, .mds-end-time {
-  font-size: 10px;
-}
-
-.mds-healthc-event:hover {
- filter: saturate(2)
-}
-
-.mds-healthc-event-title {
-  text-align: flex-start;
-  padding: 3px 3px;
-  color: black;
-  font-weight: 350;
-}
-
-.mbsc-ios-dark .mds-healthc-event-title, 
-.mbsc-windows-dark .mds-healthc-event-title, 
-.mbsc-material-dark .mds-healthc-event-title  {
-  color: white;
+  margin: 10px 0;
 }
   `,
 };
