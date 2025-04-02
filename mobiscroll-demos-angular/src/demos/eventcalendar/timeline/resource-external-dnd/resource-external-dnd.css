@@ -5,9 +5,11 @@
 .mds-ext-res-drop-calendar .mbsc-timeline-row {
   height: 50px;
 }
+
 .mds-ext-res-drop-calendar .mbsc-timeline-row-gutter {
   height: 8px;
 }
+
 .mds-ext-res-drop-calendar .mbsc-timeline-resource-col {
   width: 250px;
 }
@@ -21,33 +23,35 @@
   align-content: center;
 }
 
-.mds-workers-title {
+.mds-ext-res-drop-calendar .mds-ext-res-add {
+  margin: 0;
+}
+
+.mds-ext-res-header {
   font-weight: 600;
   font-size: 0.875em;
-  line-height: 1.5em;
+  line-height: 38px;
   text-transform: uppercase;
-  color: #6e6e6e;
+  opacity: 0.6;
 }
 
-.mds-ext-res-drop-cont {
-  height: 100%;
+.mds-ext-res-name-ph {
+  font-style: italic;
+  opacity: 0.4;
 }
 
-.mds-ext-res-drop-cont .mds-workers-title {
+.mds-ext-res-drop-cont .mds-ext-res-header {
   padding: 12px 16px;
+  line-height: 1.5em;
 }
 
-.mds-ext-res-drop-cont .mds-workers-list {
+.mds-ext-res-list {
   overflow: auto;
 }
 
-.mds-ext-res-drop-task:first-child {
-  margin-top: 0;
-}
-
-.mds-ext-res-drop-task {
-  display: flex;
-  background: #dde0d8;
+.mds-ext-res-item {
+  background: rgba(48, 48, 48, 0.7);
+  color: #fff;
   padding: 10px;
   margin: 16px;
   border-radius: 8px;
@@ -58,34 +62,27 @@
     sans-serif;
 }
 
-.mds-ext-res-dnd-cont {
+.mds-ext-res-item:first-child {
+  margin-top: 0;
+}
+
+.mds-ext-res-cont {
   padding: 0 7px;
 }
 
-.mds-ext-res-dnd-name {
+.mds-ext-res-name {
   font-size: 14px;
   font-weight: 600;
 }
 
-.mds-ext-res-dnd-name-temp {
-  font-style: italic;
-  opacity: 0.4;
-}
-
-.mds-ext-res-dnd-title {
+.mds-ext-res-title {
   padding-top: 2px;
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
 }
 
-.mds-ext-res-drop-calendar .mds-create-new-team {
-  margin-left: auto;
-  padding: 2px 6px;
-  line-height: 24px;
-}
-
-.mds-ext-res-dnd-avatar {
+.mds-ext-res-avatar {
   width: 36px;
   min-width: 36px;
   height: 36px;
@@ -97,9 +94,10 @@
   font-weight: 400;
 }
 
-.demo-resource-external-dnd .demo-wrapper,
-.demo-resource-external-dnd .mbsc-grid,
-.demo-resource-external-dnd .mbsc-row,
-.demo-resource-external-dnd .mds-ext-res-drop-calendar {
+.mds-ext-res-drop,
+.mds-ext-res-drop .mbsc-grid,
+.mds-ext-res-drop .mbsc-row,
+.mds-ext-res-drop-cont,
+.mds-ext-res-drop-calendar {
   height: 100%;
 }
