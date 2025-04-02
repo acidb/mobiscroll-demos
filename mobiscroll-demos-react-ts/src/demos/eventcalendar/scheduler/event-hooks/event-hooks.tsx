@@ -4,6 +4,7 @@ import {
   getJson,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscResource,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { FC, useEffect, useMemo, useState } from 'react';
@@ -18,6 +19,27 @@ const App: FC = () => {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
   const [draggable1, setDraggable1] = useState<HTMLDivElement | null>(null);
   const [draggable2, setDraggable2] = useState<HTMLDivElement | null>(null);
+
+  const myResources: MbscResource[] = useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'Ryan',
+        color: '#f7c4b4',
+      },
+      {
+        id: 2,
+        name: 'Kate',
+        color: '#c6f1c9',
+      },
+      {
+        id: 3,
+        name: 'John',
+        color: '#e8d0ef',
+      },
+    ],
+    [],
+  );
 
   const invalid = useMemo(
     () => [
@@ -61,7 +83,7 @@ const App: FC = () => {
 
   useEffect(() => {
     getJson(
-      'https://trial.mobiscroll.com/events/?vers=5',
+      'https://trial.mobiscroll.com/resource-events/',
       (events: MbscCalendarEvent[]) => {
         setEvents(events);
       },
@@ -88,6 +110,7 @@ const App: FC = () => {
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
+        resources={myResources}
         view={myView}
         invalid={invalid}
         onCellClick={() => {
@@ -167,6 +190,15 @@ const App: FC = () => {
         }}
         onPageLoading={() => {
           // Use it to load data on demand
+        }}
+        onResourceClick={() => {
+          // Logic for resource click
+        }}
+        onResourceDoubleClick={() => {
+          // Logic for resource double click
+        }}
+        onResourceRightClick={() => {
+          // Logic for resource right click
         }}
         onSelectedDateChange={() => {
           // Use it to keep track of the selected date externally
