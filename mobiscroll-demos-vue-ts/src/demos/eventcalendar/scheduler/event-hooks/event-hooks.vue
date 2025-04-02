@@ -35,21 +35,9 @@ setOptions({
 
 const myEvents = ref<MbscCalendarEvent[]>([])
 const myResources: MbscResource[] = [
-  {
-    id: 1,
-    name: 'Ryan',
-    color: '#f7c4b4'
-  },
-  {
-    id: 2,
-    name: 'Kate',
-    color: '#c6f1c9'
-  },
-  {
-    id: 3,
-    name: 'John',
-    color: '#e8d0ef'
-  }
+  { id: 1, name: 'Ryan', color: '#f7c4b4' },
+  { id: 2, name: 'Kate', color: '#c6f1c9' },
+  { id: 3, name: 'John', color: '#e8d0ef' }
 ]
 const myView: MbscEventcalendarView = {
   schedule: {
@@ -176,15 +164,15 @@ function handlePageLoading(args: MbscPageLoadingEvent) {
   // Use it to load data on demand
   console.log(args)
 }
-function onResourceClick(args: MbscResourceClickEvent) {
+function handleResourceClick(args: MbscResourceClickEvent) {
   // Logic for resource click
   console.log(args)
 }
-function onResourceDoubleClick(args: MbscResourceClickEvent) {
+function handleResourceDoubleClick(args: MbscResourceClickEvent) {
   // Logic for resource double click
   console.log(args)
 }
-function onResourceRightClick(args: MbscResourceClickEvent) {
+function handleResourceRightClick(args: MbscResourceClickEvent) {
   // Logic for resource right click
   console.log(args)
 }
@@ -249,9 +237,9 @@ onMounted(() => {
     @page-change="handlePageChange"
     @page-loaded="handlePageLoaded"
     @page-loading="handlePageLoading"
-    @resource-click="onResourceClick"
-    @resource-double-click="onResourceDoubleClick"
-    @resource-right-click="onResourceRightClick"
+    @resource-click="handleResourceClick"
+    @resource-double-click="handleResourceDoubleClick"
+    @resource-right-click="handleResourceRightClick"
     @selected-date-change="handleSelectedDateChange"
   />
 </template>

@@ -20,36 +20,12 @@ const myView = {
   }
 }
 const myResources = ref([
-  {
-    id: 1,
-    name: 'Ryan',
-    color: '#fdf500'
-  },
-  {
-    id: 2,
-    name: 'Kate',
-    color: '#ff4600'
-  },
-  {
-    id: 3,
-    name: 'John',
-    color: '#ff0101'
-  },
-  {
-    id: 4,
-    name: 'Mark',
-    color: '#239a21'
-  },
-  {
-    id: 5,
-    name: 'Sharon',
-    color: '#8f1ed6'
-  },
-  {
-    id: 6,
-    name: 'Ashley',
-    color: '#01adff'
-  }
+  { id: 1, name: 'Ryan', color: '#fdf500' },
+  { id: 2, name: 'Kate', color: '#ff4600' },
+  { id: 3, name: 'John', color: '#ff0101' },
+  { id: 4, name: 'Mark', color: '#239a21' },
+  { id: 5, name: 'Sharon', color: '#8f1ed6' },
+  { id: 6, name: 'Ashley', color: '#01adff' }
 ])
 const myInvalids = [
   {
@@ -143,10 +119,10 @@ function handlePageLoaded() {
 function handlePageLoading() {
   // Use it to load data on demand
 }
-function onResourceClick() {
+function handleResourceClick() {
   // Logic for resource click
 }
-function onResourceDoubleClick() {
+function handleResourceDoubleClick() {
   // Logic for resource double click
 }
 function handleResourceDragEnd() {
@@ -158,7 +134,7 @@ function handleResourceDragStart() {
 function handleResourceOrderUpdate() {
   // Logic for resource update
 }
-function onResourceRightClick() {
+function handleResourceRightClick() {
   // Logic for resource right click
 }
 function handleSelectedDateChange() {
@@ -221,12 +197,12 @@ onMounted(() => {
     @page-change="handlePageChange"
     @page-loaded="handlePageLoaded"
     @page-loading="handlePageLoading"
-    @resource-click="onResourceClick"
-    @resource-double-click="onResourceDoubleClick"
+    @resource-click="handleResourceClick"
+    @resource-double-click="handleResourceDoubleClick"
     @resource-drag-end="handleResourceDragEnd"
     @resource-drag-start="handleResourceDragStart"
     @resource-order-update="handleResourceOrderUpdate"
-    @resource-right-click="onResourceRightClick"
+    @resource-right-click="handleResourceRightClick"
     @selected-date-change="handleSelectedDateChange"
   />
 </template>

@@ -14,21 +14,9 @@ setOptions({
 
 const myEvents = ref([])
 const myResources = [
-  {
-    id: 1,
-    name: 'Ryan',
-    color: '#f7c4b4'
-  },
-  {
-    id: 2,
-    name: 'Kate',
-    color: '#c6f1c9'
-  },
-  {
-    id: 3,
-    name: 'John',
-    color: '#e8d0ef'
-  }
+  { id: 1, name: 'Ryan', color: '#f7c4b4' },
+  { id: 2, name: 'Kate', color: '#c6f1c9' },
+  { id: 3, name: 'John', color: '#e8d0ef' }
 ]
 const myView = {
   schedule: {
@@ -127,13 +115,13 @@ function handlePageLoaded() {
 function handlePageLoading() {
   // Use it to load data on demand
 }
-function onResourceClick() {
+function handleResourceClick() {
   // Logic for resource click
 }
-function onResourceDoubleClick() {
+function handleResourceDoubleClick() {
   // Logic for resource double click
 }
-function onResourceRightClick() {
+function handleResourceRightClick() {
   // Logic for resource right click
 }
 function handleSelectedDateChange() {
@@ -196,9 +184,9 @@ onMounted(() => {
     @page-change="handlePageChange"
     @page-loaded="handlePageLoaded"
     @page-loading="handlePageLoading"
-    @resource-click="onResourceClick"
-    @resource-double-click="onResourceDoubleClick"
-    @resource-right-click="onResourceRightClick"
+    @resource-click="handleResourceClick"
+    @resource-double-click="handleResourceDoubleClick"
+    @resource-right-click="handleResourceRightClick"
     @selected-date-change="handleSelectedDateChange"
   ></MbscEventcalendar>
 </template>
