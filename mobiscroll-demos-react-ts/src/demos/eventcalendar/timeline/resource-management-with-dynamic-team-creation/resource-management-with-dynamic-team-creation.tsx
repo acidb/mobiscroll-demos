@@ -14,7 +14,7 @@ import {
   Toast /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import './resource-external-dnd.css';
+import './resource-management-with-dynamic-team-creation.css';
 
 setOptions({
   // localeJs,

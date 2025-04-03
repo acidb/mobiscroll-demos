@@ -1,7 +1,7 @@
 import { Button, Draggable, Dropcontainer, Eventcalendar, Page, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import './resource-external-dnd.css';
+import './resource-management-with-dynamic-team-creation.scss';
 
 setOptions({
   // localeJs,

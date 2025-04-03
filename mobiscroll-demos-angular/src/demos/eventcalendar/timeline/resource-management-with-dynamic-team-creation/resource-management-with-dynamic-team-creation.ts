@@ -16,10 +16,10 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-resource-external-dnd',
-  styleUrl: './resource-external-dnd.css',
+  selector: 'app-resource-management-with-dynamic-team-creation',
+  styleUrl: './resource-management-with-dynamic-team-creation.css',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './resource-external-dnd.html',
+  templateUrl: './resource-management-with-dynamic-team-creation.html',
   providers: [Notifications],
 })
 export class AppComponent {
