@@ -480,14 +480,14 @@ export class AppComponent {
       timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' },
     },
     onResourceCreate: (args) => {
-      this.availableInstallers = this.availableInstallers.filter((item) => item.id !== args.resource!.id);
+      this.availableInstallers = this.availableInstallers.filter((item) => item.id !== args.resource.id);
       this.notify.toast({
-        message: args.resource!.name + ' added to ' + args.parent!.name,
+        message: args.resource.name + ' added to ' + args.parent?.name,
       });
     },
     onResourceDelete: (args) => {
       this.notify.toast({
-        message: args.resource.name + ' removed from ' + args.parent!.name,
+        message: args.resource.name + ' removed from ' + args.parent?.name,
       });
     },
     onResourceOrderUpdate: (args) => {
@@ -537,9 +537,9 @@ export class AppComponent {
     });
   }
 
-  onItemDrop(args: MbscItemDragEvent): void {
+  onItemDrop(args: MbscItemDragEvent<MbscResource>): void {
     if (args.data) {
-      this.availableInstallers = [...this.availableInstallers, args.data as MbscResource];
+      this.availableInstallers = [...this.availableInstallers, args.data];
     }
   }
 }

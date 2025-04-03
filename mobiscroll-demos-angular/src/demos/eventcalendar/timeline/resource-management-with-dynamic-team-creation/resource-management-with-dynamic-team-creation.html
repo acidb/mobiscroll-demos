@@ -7,7 +7,7 @@
           <div class="mds-ext-res-list">
             <div mbsc-draggable *ngFor="let res of availableInstallers;" type="resource" [dragData]="res" class="mds-ext-res-item">
               <div class="mbsc-flex">
-                <div class="mds-ext-res-avatar" [ngStyle]="{ background: res.color }">{{ res.name![0] }}</div>
+                <div class="mds-ext-res-avatar" [ngStyle]="{ background: res.color }">{{ res.name && res.name[0] }}</div>
                 <div class="mds-ext-res-cont">
                   <div class="mds-ext-res-name">{{ res.name }}</div>
                   <div class="mds-ext-res-titme">{{ res["title"] }}</div>
@@ -40,7 +40,7 @@
               {{ resource.name }}
             </div>
             <div *ngIf="!(resource.children || resource.placeholder)" class="mbsc-flex">
-              <div class="mds-ext-res-avatar" [ngStyle]="{ background: resource.color }">{{ resource.name![0] }}</div>
+              <div class="mds-ext-res-avatar" [ngStyle]="{ background: resource.color }">{{ resource.name[0] }}</div>
               <div class="mds-ext-res-cont">
                 <div class="mds-ext-res-name">{{ resource.name }}</div>
                 <div class="mds-ext-res-title">{{ resource["title"] }}</div>

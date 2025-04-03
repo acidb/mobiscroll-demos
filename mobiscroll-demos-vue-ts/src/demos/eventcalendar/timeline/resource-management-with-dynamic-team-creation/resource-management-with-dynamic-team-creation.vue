@@ -474,9 +474,9 @@ const isToastOpen = ref(false)
 
 function handleResourceCreate(args: MbscResourceCreateEvent) {
   availableInstallers.value = availableInstallers.value.filter(
-    (item) => item.id !== args.resource!.id
+    (item) => item.id !== args.resource.id
   )
-  toastMessage.value = args.resource!.name + ' added to ' + args.parent!.name
+  toastMessage.value = args.resource.name + ' added to ' + args.parent!.name
   isToastOpen.value = true
 }
 
@@ -485,9 +485,9 @@ function handleResourceDelete(args: MbscResourceDeleteEvent) {
   isToastOpen.value = true
 }
 
-function handleItemDrop(args: MbscItemDragEvent) {
+function handleItemDrop(args: MbscItemDragEvent<MbscResource>) {
   if (args.data) {
-    const dragElems = dragElements.value
+    const dragElems: HTMLElement[] = dragElements.value
 
     if (dragElems && dragElems[dragElems.length - 1]) {
       dragElems[dragElems.length - 1].scrollIntoView({
@@ -496,7 +496,7 @@ function handleItemDrop(args: MbscItemDragEvent) {
       })
     }
 
-    availableInstallers.value = [...availableInstallers.value, args.data as MbscResource]
+    availableInstallers.value = [...availableInstallers.value, args.data]
   }
 }
 
@@ -566,7 +566,7 @@ function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
                 <div ref="dragElements" class="mds-ext-res-item">
                   <div class="mbsc-flex">
                     <div class="mds-ext-res-avatar" :style="{ background: res.color }">
-                      {{ res.name![0] }}
+                      {{ res.name && res.name[0] }}
                     </div>
                     <div class="mds-ext-res-cont">
                       <div class="mds-ext-res-name">{{ res.name }}</div>

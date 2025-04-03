@@ -34,7 +34,7 @@ function Task(props: { data: MbscResource }) {
     <div id={'task-' + resource.id} className="mds-ext-res-item" ref={setDragElm}>
       <div className="mbsc-flex">
         <div className="mds-ext-res-avatar" style={{ background: resource.color }}>
-          {resource.name![0]}
+          {resource.name && resource.name[0]}
         </div>
         <div className="mds-ext-res-cont">
           <div className="mds-ext-res-name">{resource.name}</div>
@@ -522,9 +522,9 @@ function App() {
   }, []);
 
   const handleItemDrop = useCallback(
-    (args: MbscItemDragEvent) => {
+    (args: MbscItemDragEvent<MbscResource>) => {
       if (args.data) {
-        setAvailableInstallers([...availableInstallers, args.data as MbscResource]);
+        setAvailableInstallers([...availableInstallers, args.data]);
       }
     },
     [availableInstallers],
@@ -601,7 +601,7 @@ function App() {
       ) : (
         <div className="mbsc-flex">
           <div className="mds-ext-res-avatar" style={{ background: resource.color }}>
-            {resource.name![0]}
+            {resource.name && resource.name[0]}
           </div>
           <div className="mds-ext-res-cont">
             <div className="mds-ext-res-name">{resource.name}</div>
