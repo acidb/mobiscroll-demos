@@ -8,9 +8,9 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-scheduler-health-care-planner',
-  templateUrl: './health-care-planner.html',
-  styleUrl: './health-care-planner.css',
+  selector: 'app-doctors-availability-calendar-planner',
+  templateUrl: './doctors-availability-calendar-planner.html',
+  styleUrl: './doctors-availability-calendar-planner.css',
   encapsulation: ViewEncapsulation.None,
   providers: [Notifications],
 })

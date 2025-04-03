@@ -1,17 +1,25 @@
-import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useMemo, useState } from 'react';
-import './health-care-planner.css';
+import {
+  Eventcalendar,
+  MbscCalendarEvent,
+  MbscCalendarEventData,
+  MbscEventcalendarView,
+  MbscResource,
+  setOptions,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useMemo, useState } from 'react';
+import './doctors-availability-calendar-planner.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-function App() {
+const App: FC = () => {
   const [isToastOpen, setToastOpen] = useState(false);
-  const [toastText, setToastText] = useState();
+  const [toastText, setToastText] = useState('');
 
-  const myEvents = useMemo(
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         id: 1,
@@ -663,7 +671,7 @@ function App() {
     [],
   );
 
-  const myResources = useMemo(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       {
         id: 2,
@@ -770,7 +778,7 @@ function App() {
     [],
   );
 
-  const myView = useMemo(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       schedule: {
         type: 'week',
@@ -786,15 +794,15 @@ function App() {
     [],
   );
 
-  const customScheduleEventContent = useCallback((event) => {
-    if (!event.original.type) {
-      return <>Patient: {event.title === 'New event' ? 'John Doe' : event.title}</>;
+  const customScheduleEventContent = useCallback((event: MbscCalendarEventData) => {
+    if (!event.original!.type) {
+      return <div>Patient: {event.title === 'New event' ? 'John Doe' : event.title}</div>;
     }
     return null;
   }, []);
 
   const customResource = useCallback(
-    (resource) => (
+    (resource: MbscResource) => (
       <>
         {resource.cssClass === 'mds-healthcare-res-col' && (
           <div className="mbsc-flex">
@@ -810,7 +818,7 @@ function App() {
     [],
   );
 
-  const showToast = useCallback((message) => {
+  const showToast = useCallback((message: string) => {
     setToastText(message);
     setToastOpen(true);
   }, []);
@@ -852,6 +860,6 @@ function App() {
       <Toast message={toastText} isOpen={isToastOpen} onClose={handleToastClose} />
     </>
   );
-}
+};
 
 export default App;
