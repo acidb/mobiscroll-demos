@@ -5,14 +5,16 @@ import {
   MbscDropcontainer,
   MbscEventcalendar,
   MbscToast,
-  setOptions /* localeImport */,
-  type MbscCalendarEvent,
-  type MbscEventcalendarView,
-  type MbscItemDragEvent,
-  type MbscResource,
-  type MbscResourceCreateEvent,
-  type MbscResourceDeleteEvent,
-  type MbscResourceOrderEvent
+  setOptions /* localeImport */
+} from '@mobiscroll/vue'
+import type {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscItemDragEvent,
+  MbscResource,
+  MbscResourceCreateEvent,
+  MbscResourceDeleteEvent,
+  MbscResourceOrderEvent
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
 
@@ -494,7 +496,7 @@ function handleItemDrop(args: MbscItemDragEvent) {
       })
     }
 
-    availableInstallers.value = [...availableInstallers.value, args.data]
+    availableInstallers.value = [...availableInstallers.value, args.data as MbscResource]
   }
 }
 
@@ -564,7 +566,7 @@ function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
                 <div ref="dragElements" class="mds-ext-res-item">
                   <div class="mbsc-flex">
                     <div class="mds-ext-res-avatar" :style="{ background: res.color }">
-                      {{ res.name[0] }}
+                      {{ res.name![0] }}
                     </div>
                     <div class="mds-ext-res-cont">
                       <div class="mds-ext-res-name">{{ res.name }}</div>

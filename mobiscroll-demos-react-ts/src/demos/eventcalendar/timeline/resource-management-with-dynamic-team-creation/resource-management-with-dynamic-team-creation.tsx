@@ -48,7 +48,7 @@ function Task(props: { data: MbscResource }) {
 
 function App() {
   const timelineRef = useRef<Eventcalendar>(null);
-  const installerRef = useRef(HTMLDivElement);
+  const installerRef = useRef<HTMLDivElement>(null);
   const tasks = useMemo(
     () => [
       {
@@ -524,8 +524,7 @@ function App() {
   const handleItemDrop = useCallback(
     (args: MbscItemDragEvent) => {
       if (args.data) {
-        console.log('args', args);
-        setAvailableInstallers([...availableInstallers, args.data]);
+        setAvailableInstallers([...availableInstallers, args.data as MbscResource]);
       }
     },
     [availableInstallers],
