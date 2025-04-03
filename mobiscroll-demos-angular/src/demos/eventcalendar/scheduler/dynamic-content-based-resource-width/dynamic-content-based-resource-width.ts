@@ -16,9 +16,9 @@ interface MyResource extends MbscResource {
 }
 
 @Component({
-  styleUrl: './content-dependent-resource-width.css',
-  selector: 'app-scheduler-content-dependent-resource-widths',
-  templateUrl: './content-dependent-resource-width.html',
+  styleUrl: './dynamic-content-based-resource-width.css',
+  selector: 'app-scheduler-dynamic-content-based-resource-widths',
+  templateUrl: './dynamic-content-based-resource-width.html',
   encapsulation: ViewEncapsulation.None,
   providers: [Notifications],
 })

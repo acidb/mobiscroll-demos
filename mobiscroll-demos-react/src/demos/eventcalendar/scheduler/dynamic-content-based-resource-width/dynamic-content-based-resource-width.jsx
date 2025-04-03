@@ -1,6 +1,6 @@
 import { Eventcalendar, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo } from 'react';
-import './content-dependent-resource-width.css';
+import './dynamic-content-based-resource-width.css';
 
 setOptions({
   // localeJs,

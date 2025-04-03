@@ -349,8 +349,8 @@ import { AppComponent as Demo471 } from '../demos/pickers/select/localization/lo
 import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
 
 import { AppComponent as CustomColWidth } from '../demos/eventcalendar/scheduler/control-the-column-width/control-the-column-width';
-import { AppComponent as HealthCarePlanner } from '../demos/eventcalendar/scheduler/health-care-planner/health-care-planner';
-import { AppComponent as VariableColWidth } from '../demos/eventcalendar/scheduler/content-dependent-resource-width/content-dependent-resource-width';
+import { AppComponent as HealthCarePlanner } from '../demos/eventcalendar/scheduler/doctors-availability-calendar-planner/doctors-availability-calendar-planner';
+import { AppComponent as VariableColWidth } from '../demos/eventcalendar/scheduler/dynamic-content-based-resource-width/dynamic-content-based-resource-width';
 
 export const demos: any[] = [
   {
@@ -366,8 +366,12 @@ export const demos: any[] = [
             unique: 7,
             items: [
               { name: '---> Control the column width', unique: 'control-the-column-width', component: CustomColWidth },
-              { name: '---> Health Care Planner', unique: 'health-care-planner', component: HealthCarePlanner },
-              { name: '---> Content dependent resource widths', unique: 'content-dependent-resource-widths', component: VariableColWidth },
+              { name: '---> Health Care Planner', unique: 'doctors-availability-calendar-planner', component: HealthCarePlanner },
+              {
+                name: '---> Content dependent resource widths',
+                unique: 'dynamic-content-based-resource-widths',
+                component: VariableColWidth,
+              },
               { name: 'Mobile & Desktop usage', unique: 'mobile-desktop-usage', component: Demo439 },
               { name: 'Initializing the picker', unique: 'usage-on-input-or-inline', component: Demo571 },
               { name: 'Responsive behavior', unique: 'responsive', component: Demo529 },
