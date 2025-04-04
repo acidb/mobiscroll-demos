@@ -16,13 +16,14 @@ import type {
   MbscResourceDeleteEvent,
   MbscResourceOrderEvent
 } from '@mobiscroll/vue'
-import { ref } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
 
+const dropCont = useTemplateRef('dropCont')
 const timelineRef = ref()
 const myView: MbscEventcalendarView = {
   timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' }
@@ -558,7 +559,7 @@ function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
     <div class="mbsc-grid mbsc-no-padding">
       <div class="mbsc-row">
         <div ref="dropCont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
-          <MbscDropcontainer :element="$refs.dropCont" @item-drop="handleItemDrop($event)">
+          <MbscDropcontainer :element="dropCont" @item-drop="handleItemDrop($event)">
             <div class="mds-ext-res-header">Available technicians</div>
 
             <div class="mds-ext-res-list">
