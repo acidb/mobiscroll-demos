@@ -102,7 +102,7 @@ export default {
         schedule: { type: 'month', startTime: '08:00', endTime: '20:00', allDay: false },
       };
 
-      var myCalendar = $('#demo-control-the-column-width')
+      var myCalendar = $('#demo-customize-scheduler-column-width')
         .mobiscroll()
         .eventcalendar({
           cssClass: 'mds-col-width-small',
@@ -155,7 +155,7 @@ export default {
         Without resources
       </label>
     </div>
-    <div id="demo-control-the-column-width"></div>
+    <div id="demo-customize-scheduler-column-width"></div>
   </div>
 </div>
 `,

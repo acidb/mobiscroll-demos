@@ -348,7 +348,7 @@ import { AppComponent as Demo276 } from '../demos/pickers/select/event-hooks/eve
 import { AppComponent as Demo471 } from '../demos/pickers/select/localization/localization';
 import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
 
-import { AppComponent as CustomColWidth } from '../demos/eventcalendar/scheduler/control-the-column-width/control-the-column-width';
+import { AppComponent as CustomColWidth } from '../demos/eventcalendar/scheduler/customize-scheduler-column-width/customize-scheduler-column-width';
 import { AppComponent as HealthCarePlanner } from '../demos/eventcalendar/scheduler/doctors-availability-calendar-planner/doctors-availability-calendar-planner';
 import { AppComponent as VariableColWidth } from '../demos/eventcalendar/scheduler/dynamic-content-based-resource-width/dynamic-content-based-resource-width';
 
@@ -365,7 +365,7 @@ export const demos: any[] = [
             name: 'Using the picker',
             unique: 7,
             items: [
-              { name: '---> Control the column width', unique: 'control-the-column-width', component: CustomColWidth },
+              { name: '---> Control the column width', unique: 'customize-scheduler-column-width', component: CustomColWidth },
               { name: '---> Health Care Planner', unique: 'doctors-availability-calendar-planner', component: HealthCarePlanner },
               {
                 name: '---> Content dependent resource widths',

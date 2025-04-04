@@ -1,17 +1,26 @@
-import { Eventcalendar, Page, Segmented, SegmentedGroup, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useMemo, useState } from 'react';
-import './control-the-column-width.css';
+import {
+  Eventcalendar,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscResource,
+  Page,
+  Segmented,
+  SegmentedGroup,
+  setOptions /* localeImport */,
+} from '@mobiscroll/react';
+import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
+import './customize-scheduler-column-width.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-function App() {
+const App: FC = () => {
   const [myWidth, setWidth] = useState('small');
   const [showResources, setShowResources] = useState(true);
 
-  const myResources = useMemo(
+  const myResources = useMemo<MbscResource[]>(
     () => [
       { id: 1, name: 'Bart', color: '#328E39' },
       { id: 2, name: 'Jake', color: '#00AABB' },
@@ -23,7 +32,7 @@ function App() {
     [],
   );
 
-  const myResEvents = useMemo(
+  const myResEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       { start: 'dyndatetime(y,m,d-3,7)', end: 'dyndatetime(y,m,d-3,9)', title: 'Sync', resource: 1 },
       { start: 'dyndatetime(y,m,d-2,8)', end: 'dyndatetime(y,m,d-2,10)', title: 'Kickoff', resource: 1 },
@@ -71,7 +80,7 @@ function App() {
     [],
   );
 
-  const myEvents = useMemo(
+  const myEvents = useMemo<MbscCalendarEvent[]>(
     () => [
       { start: 'dyndatetime(y,m,d+1,9)', end: 'dyndatetime(y,m,d+1,11)', title: 'Review' },
       { start: 'dyndatetime(y,m,d+2,10)', end: 'dyndatetime(y,m,d+2,12)', title: 'Demo' },
@@ -108,18 +117,18 @@ function App() {
     [],
   );
 
-  const myView = useMemo(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       schedule: { type: 'month', startTime: '08:00', endTime: '20:00', allDay: false },
     }),
     [],
   );
 
-  const handleWidthChange = useCallback((ev) => {
+  const handleWidthChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setWidth(ev.target.value);
   }, []);
 
-  const handleResourceChange = useCallback((ev) => {
+  const handleResourceChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setShowResources(ev.target.value === 'on');
   }, []);
 
@@ -145,6 +154,5 @@ function App() {
       </div>
     </Page>
   );
-}
-
+};
 export default App;
