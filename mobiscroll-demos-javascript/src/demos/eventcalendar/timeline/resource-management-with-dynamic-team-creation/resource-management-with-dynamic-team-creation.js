@@ -682,7 +682,6 @@ export default {
   padding: 10px;
   margin: 16px;
   border-radius: 8px;
-  font-family: -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
 .mds-ext-res-item:first-child {
