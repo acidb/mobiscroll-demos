@@ -879,6 +879,7 @@ export default {
 
 .mds-healthcare-res-name {
   font-size: 16px;
+  font-weight: 600;
   line-height: 20px;
 }
 
