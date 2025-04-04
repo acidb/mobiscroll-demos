@@ -1,18 +1,30 @@
-import * as mobiscroll from '@mobiscroll/javascript';
+import { Eventcalendar, Page, Segmented, SegmentedGroup, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useMemo, useState } from 'react';
+import './customize-scheduler-column-width.css';
 
-export default {
-  // eslint-disable-next-line es5/no-shorthand-properties
-  init() {
-    var myResources = [
+setOptions({
+  // localeJs,
+  // themeJs
+});
+
+function App() {
+  const [myWidth, setWidth] = useState('small');
+  const [showResources, setShowResources] = useState(true);
+
+  const myResources = useMemo(
+    () => [
       { id: 1, name: 'Bart', color: '#328E39' },
       { id: 2, name: 'Jake', color: '#00AABB' },
       { id: 3, name: 'Carl', color: '#EA72C0' },
       { id: 4, name: 'Dana', color: '#FF5733' },
       { id: 5, name: 'Evan', color: '#3366FF' },
       { id: 6, name: 'Faye', color: '#FFD700' },
-    ];
+    ],
+    [],
+  );
 
-    var myResEvents = [
+  const myResEvents = useMemo(
+    () => [
       { start: 'dyndatetime(y,m,d-3,7)', end: 'dyndatetime(y,m,d-3,9)', title: 'Sync', resource: 1 },
       { start: 'dyndatetime(y,m,d-2,8)', end: 'dyndatetime(y,m,d-2,10)', title: 'Kickoff', resource: 1 },
       { start: 'dyndatetime(y,m,d-1,9)', end: 'dyndatetime(y,m,d-1,12)', title: 'Planning', resource: 1 },
@@ -55,9 +67,12 @@ export default {
       { start: 'dyndatetime(y,m,d+1,14)', end: 'dyndatetime(y,m,d+1,16)', title: 'Call', resource: 6 },
       { start: 'dyndatetime(y,m,d+2,9)', end: 'dyndatetime(y,m,d+2,11)', title: 'Update', resource: 6 },
       { start: 'dyndatetime(y,m,d+3,16)', end: 'dyndatetime(y,m,d+3,18)', title: 'Strategy', resource: 6 },
-    ];
+    ],
+    [],
+  );
 
-    var myEvents = [
+  const myEvents = useMemo(
+    () => [
       { start: 'dyndatetime(y,m,d+1,9)', end: 'dyndatetime(y,m,d+1,11)', title: 'Review' },
       { start: 'dyndatetime(y,m,d+2,10)', end: 'dyndatetime(y,m,d+2,12)', title: 'Demo' },
       { start: 'dyndatetime(y,m,d+3,8)', end: 'dyndatetime(y,m,d+3,10)', title: 'Kickoff' },
@@ -89,85 +104,47 @@ export default {
       { start: 'dyndatetime(y,m,d-12,13)', end: 'dyndatetime(y,m,d-12,15)', title: 'Onboarding' },
       { start: 'dyndatetime(y,m,d-13,9)', end: 'dyndatetime(y,m,d-13,11)', title: 'Strategy' },
       { start: 'dyndatetime(y,m,d-14,8)', end: 'dyndatetime(y,m,d-14,10)', title: 'Meeting' },
-    ];
+    ],
+    [],
+  );
 
-    var myView = {
+  const myView = useMemo(
+    () => ({
       schedule: { type: 'month', startTime: '08:00', endTime: '20:00', allDay: false },
-    };
+    }),
+    [],
+  );
 
-    var myCalendar = mobiscroll.eventcalendar('#demo-control-the-column-width', {
-      cssClass: 'mds-col-width-small',
-      data: myResEvents,
-      groupBy: 'date',
-      resources: myResources,
-      view: myView,
-    });
+  const handleWidthChange = useCallback((ev) => {
+    setWidth(ev.target.value);
+  }, []);
 
-    document.querySelectorAll('input[name="mds-custom-width-options"]').forEach(function (input) {
-      input.addEventListener('change', function () {
-        myCalendar.setOptions({ cssClass: 'mds-col-width-' + this.value });
-        myCalendar.navigate(new Date());
-      });
-    });
+  const handleResourceChange = useCallback((ev) => {
+    setShowResources(ev.target.value === 'on');
+  }, []);
 
-    document.querySelectorAll('input[name="mds-custom-width-resources-toggle"]').forEach(function (input) {
-      input.addEventListener('change', function () {
-        myCalendar.setOptions({
-          resources: this.value === 'on' ? myResources : [],
-          data: this.value === 'on' ? myResEvents : myEvents,
-        });
-        myCalendar.navigate(new Date());
-      });
-    });
-  },
-  // eslint-disable-next-line es5/no-template-literals
-  markup: `
-<div mbsc-page class="mds-full-height">
-  <div class="mbsc-flex-col mds-full-height">
-    <div mbsc-segmented-group class="mbsc-flex-none">
-      <label>
-        <input type="radio" mbsc-segmented name="mds-custom-width-options" value="small" checked>
-        50px
-      </label>
-      <label>
-        <input type="radio" mbsc-segmented name="mds-custom-width-options" value="medium">
-        100px
-      </label>
-      <label>
-        <input type="radio" mbsc-segmented name="mds-custom-width-options" value="large">
-        150px
-      </label>
-    </div>
-    <div mbsc-segmented-group class="mbsc-flex-none">
-      <label>
-        <input type="radio" mbsc-segmented name="mds-custom-width-resources-toggle" value="on" checked>
-        With resources
-      </label>
-      <label>
-        <input type="radio" mbsc-segmented name="mds-custom-width-resources-toggle" value="off">
-        Without resources
-      </label>
-    </div>
-    <div id="demo-control-the-column-width"></div>
-  </div>
-</div>
-`,
-  // eslint-disable-next-line es5/no-template-literals
-  css: `
-.mds-full-height {
-  height: 100%;
+  return (
+    <Page className="mds-full-height">
+      <div className="mbsc-flex-col mds-full-height">
+        <SegmentedGroup className="mbsc-flex-none" value={myWidth} onChange={handleWidthChange}>
+          <Segmented value="small">50px</Segmented>
+          <Segmented value="medium">100px</Segmented>
+          <Segmented value="large">150px</Segmented>
+        </SegmentedGroup>
+        <SegmentedGroup className="mbsc-flex-none" value={showResources ? 'on' : 'off'} onChange={handleResourceChange}>
+          <Segmented value="on">With resources</Segmented>
+          <Segmented value="off">Without resources</Segmented>
+        </SegmentedGroup>
+        <Eventcalendar
+          cssClass={'mds-col-width-' + myWidth}
+          data={showResources ? myResEvents : myEvents}
+          resources={showResources ? myResources : []}
+          groupBy="date"
+          view={myView}
+        />
+      </div>
+    </Page>
+  );
 }
 
-.mds-col-width-small .mbsc-schedule-col-width {
-  width: 50px;
-} 
-
-.mds-col-width-medium .mbsc-schedule-col-width {
-  width: 100px;
-}
-
-.mds-col-width-large .mbsc-schedule-col-width {
-  width: 150px;
-}
-`,
-};
+export default App;

@@ -8,9 +8,9 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-scheduler-control-the-column-width',
-  styleUrl: './control-the-column-width.css',
-  templateUrl: './control-the-column-width.html',
+  selector: 'app-customize-scheduler-column-width',
+  styleUrl: './customize-scheduler-column-width.css',
+  templateUrl: './customize-scheduler-column-width.html',
   providers: [Notifications],
   encapsulation: ViewEncapsulation.None,
 })
