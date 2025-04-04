@@ -481,6 +481,7 @@ export default {
         return $('#demo-ext-res-' + installer.id)
           .mobiscroll()
           .draggable({
+            context: '#demo-ext-res-page',
             dragData: installer,
             type: 'resource',
           });
@@ -634,7 +635,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mds-ext-res-drop" mbsc-page>
+<div id="demo-ext-res-page" class="mds-ext-res-drop" mbsc-page>
   <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
       <div id="demo-ext-res-drop-cont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
@@ -702,8 +703,7 @@ export default {
 }
 
 .mds-ext-res-item {
-  background: rgba(48, 48, 48, .7);
-  color: #fff;
+  background: rgba(128, 128, 128, .6);
   padding: 10px;
   margin: 16px;
   border-radius: 8px;
@@ -749,5 +749,5 @@ export default {
 .mds-ext-res-drop-calendar {
   height: 100%;
 }
-  `,
+`,
 };

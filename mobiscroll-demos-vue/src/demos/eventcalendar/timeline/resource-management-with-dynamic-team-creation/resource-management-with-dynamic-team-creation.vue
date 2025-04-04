@@ -672,8 +672,7 @@ function handleResourceOrderUpdate(args) {
 }
 
 .mds-ext-res-item {
-  background: rgba(48, 48, 48, 0.7);
-  color: #fff;
+  background: rgba(128, 128, 128, 0.6);
   padding: 10px;
   margin: 16px;
   border-radius: 8px;
