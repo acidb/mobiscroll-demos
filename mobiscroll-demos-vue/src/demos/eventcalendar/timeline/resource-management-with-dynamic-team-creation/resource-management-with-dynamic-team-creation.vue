@@ -8,13 +8,13 @@ import {
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { ref } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
-
+const dropCont = useTemplateRef('dropCont')
 const timelineRef = ref()
 const dragElements = ref([])
 const myView = {
@@ -547,11 +547,11 @@ function handleResourceOrderUpdate(args) {
 </script>
 
 <template>
-  <MbscPage class="mds-ext-res-drop">
+  <MbscPage cssClass="mds-ext-res-drop">
     <div class="mbsc-grid mbsc-no-padding">
       <div class="mbsc-row">
         <div ref="dropCont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
-          <MbscDropcontainer :element="$refs.dropCont" @item-drop="handleItemDrop($event)">
+          <MbscDropcontainer :element="dropCont" @item-drop="handleItemDrop">
             <div class="mds-ext-res-header">Available technicians</div>
 
             <div class="mds-ext-res-list">
@@ -563,7 +563,7 @@ function handleResourceOrderUpdate(args) {
                     </div>
                     <div class="mds-ext-res-cont">
                       <div class="mds-ext-res-name">{{ res.name }}</div>
-                      <div class="mds-ext-res-titme">{{ res.title }}</div>
+                      <div class="mds-ext-res-title">{{ res.title }}</div>
                     </div>
                   </div>
                   <MbscDraggable :element="dragElements[i]" :dragData="res" type="resource" />
@@ -588,7 +588,7 @@ function handleResourceOrderUpdate(args) {
             <template #resourceHeader>
               <div class="mbsc-flex mbsc-align-items-center">
                 <div class="mds-ext-res-header mbsc-flex-1-1">Set up teams</div>
-                <MbscButton variant="outline" class="mds-ext-res-add" :onClick="addNewTeam">
+                <MbscButton variant="outline" cssClass="mds-ext-res-add" :onClick="addNewTeam">
                   Add team
                 </MbscButton>
               </div>
