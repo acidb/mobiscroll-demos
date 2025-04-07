@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -34,6 +34,24 @@ export class AppComponent implements OnInit {
       type: 'day',
     },
   };
+
+  myResources: MbscResource[] = [
+    {
+      id: 1,
+      name: 'Ryan',
+      color: '#f7c4b4',
+    },
+    {
+      id: 2,
+      name: 'Kate',
+      color: '#c6f1c9',
+    },
+    {
+      id: 3,
+      name: 'John',
+      color: '#e8d0ef',
+    },
+  ];
 
   onCellClick(): void {
     /* Logic for cell click */
@@ -110,6 +128,15 @@ export class AppComponent implements OnInit {
   onPageLoading(): void {
     // Use it to load data on demand
   }
+  onResourceClick(): void {
+    // Logic for resource click
+  }
+  onResourceDoubleClick(): void {
+    // Logic for resource double click
+  }
+  onResourceRightClick(): void {
+    // Logic for resource right click
+  }
   onSelectedDateChange(): void {
     // Use it to keep track of the selected date externally
   }
@@ -125,7 +152,7 @@ export class AppComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
+    this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/resource-events/', 'callback').subscribe((resp) => {
       this.myEvents = resp;
     });
   }

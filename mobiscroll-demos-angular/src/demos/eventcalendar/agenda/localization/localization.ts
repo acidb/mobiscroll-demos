@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
     { name: 'Polski', value: 'pl' },
     { name: 'Português Brasileiro', value: 'pt-BR' },
     { name: 'Português Europeu', value: 'pt-PT' },
-    { name: 'Roman', value: 'ro' },
+    { name: 'Română', value: 'ro' },
     { name: 'Russian UA', value: 'ru-UA' },
     { name: 'Russian', value: 'ru' },
     { name: 'Slovencina', value: 'sk' },

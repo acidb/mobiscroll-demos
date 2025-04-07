@@ -4,11 +4,11 @@ import {
   MbscEventcalendar,
   MbscEventcalendarView,
   MbscEventCreatedEvent,
-  MbscEventDeleteEvent,
-  MbscEventUpdateEvent,
+  MbscEventDeletedEvent,
+  MbscEventUpdatedEvent,
+  MbscPageLoadingEvent,
   MbscPopup,
   MbscPopupButton,
-  MbscPopupOptions,
   MbscResource,
   Notifications,
   setOptions /* localeImport */,
@@ -21,10 +21,15 @@ setOptions({
   // theme
 });
 
+interface MyEvent extends MbscCalendarEvent {
+  payload?: number;
+}
+
 interface MyResource extends MbscResource {
   standby?: number;
   deadhead?: number;
   payload?: number;
+  capacity: number;
   model: string;
   location: string;
 }
@@ -39,34 +44,7 @@ interface MyResource extends MbscResource {
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  @ViewChild('myCalendar', { static: false })
-  myCalendar!: MbscEventcalendar;
-
-  @ViewChild('popup', { static: false })
-  popup!: MbscPopup;
-
-  @ViewChild('sortButton') anchorElm!: ElementRef;
-  popupAnchor!: HTMLButtonElement;
-
-  initialSort: boolean = true;
-  initialSortColumn: string = 'standby';
-  initialSortDirection: string = 'asc';
-  metricBarAnimation: boolean = true;
-  loadedEvents: MbscCalendarEvent[] = [];
-  selectedMetric: string = 'standby';
-  selectedMetricDesc: string = 'Standby Time';
-  sortColumn: string = 'standby';
-  sortColumnLabels: { [key: string]: string } = {
-    standby: 'Standby Time',
-    payload: 'Payload Efficiency',
-    deadhead: 'Deadhead Time',
-  };
-
-  sortDirection: string = 'asc';
-  weekStart: Date = new Date();
-  weekEnd: Date = new Date();
-
-  myEvents: MbscCalendarEvent[] = [
+  myEvents: MyEvent[] = [
     {
       start: dyndatetime('y,m,d-1'),
       end: dyndatetime('y,m,d+3'),
@@ -124,7 +102,7 @@ export class AppComponent {
     {
       start: dyndatetime('y,m,d-4,11'),
       end: dyndatetime('y,m,d'),
-      title: 'Tour #018 - ? to Atlanta',
+      title: 'Tour #018 - Dallas to Atlanta',
       resource: 6,
       color: '#33FF99',
       payload: 14,
@@ -205,7 +183,7 @@ export class AppComponent {
     {
       start: dyndatetime('y,m,d-4'),
       end: dyndatetime('y,m,d-1'),
-      title: 'Tour #028 - ? to Philadelphiax',
+      title: 'Tour #028 - Trenton to Philadelphia',
       resource: 9,
       color: '#33FF57',
       payload: 11,
@@ -293,11 +271,37 @@ export class AppComponent {
     { id: 15, name: 'AT-TRK-5500', capacity: 19, location: 'Atlanta', model: 'Renault Magnum' },
   ];
 
-  view: MbscEventcalendarView = {
+  @ViewChild('calendar', { static: false })
+  calendar!: MbscEventcalendar;
+
+  @ViewChild('popup', { static: false })
+  popup!: MbscPopup;
+
+  @ViewChild('sortButton')
+  anchorBtn!: ElementRef;
+
+  popupAnchor!: HTMLButtonElement;
+  sortColumn: 'standby' | 'payload' | 'deadhead' | 'name' = 'standby';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortRequests: number = 0;
+  sortedResources: MyResource[] = this.myResources;
+  tempEvent!: MyEvent;
+  tempSortColumn: 'standby' | 'payload' | 'deadhead' | 'name' = 'standby';
+  tempSortDirection: 'asc' | 'desc' = 'asc';
+  weekStart!: Date;
+  weekEnd!: Date;
+
+  myView: MbscEventcalendarView = {
     timeline: {
       type: 'week',
       resolutionHorizontal: 'day',
     },
+  };
+
+  sortColumnLabels: { [key: string]: string } = {
+    standby: 'Standby Time',
+    payload: 'Payload Efficiency',
+    deadhead: 'Deadhead Time',
   };
 
   popupButtons: Array<MbscPopupButton | 'cancel'> = [
@@ -307,209 +311,154 @@ export class AppComponent {
       keyCode: 'enter',
       cssClass: 'mbsc-popup-button-primary',
       handler: () => {
-        if (this.initialSortColumn != this.sortColumn) {
-          this.refreshData();
-        }
-        this.sortResources();
-        this.initialSortColumn = this.sortColumn;
-        this.initialSortDirection = this.sortDirection;
         this.popup.close();
+        this.notify.toast({ message: 'Resources sorted' });
+        this.sortColumn = this.tempSortColumn;
+        this.sortDirection = this.tempSortDirection;
+        this.sortResources();
       },
     },
   ];
 
-  popupOptions: MbscPopupOptions = {
-    display: 'anchored',
-    contentPadding: false,
-    focusOnClose: false,
-    focusOnOpen: false,
-    showOverlay: false,
-    width: 400,
-  };
-
-  refreshData() {
-    this.selectedMetric = this.sortColumn;
-    this.selectedMetricDesc = this.sortColumnLabels[this.sortColumn];
+  calcMetrics() {
+    const loadedEvents: MyEvent[] = this.calendar ? this.calendar.getEvents() : [];
 
     this.myResources.forEach((resource) => {
-      const resourceEvents = this.myEvents.filter((event) => event.resource === resource.id);
+      let standby = 168;
+      let deadhead = 0;
+      let payload = 0;
+      let numberOfTours = 0;
 
-      if (this.selectedMetric === 'standby') {
-        resource.standby = 168;
+      const resourceEvents = loadedEvents.filter((event) => event.resource === resource.id);
 
-        resourceEvents.forEach((event) => {
-          const eventStart = new Date(event.start as Date);
-          const eventEnd = new Date(event.end as Date);
-          const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
-          const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
+      resourceEvents.forEach((event) => {
+        const eventStart = new Date(event.start as Date);
+        const eventEnd = new Date(event.end as Date);
+        const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
+        const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
 
-          if (effectiveStart < effectiveEnd) {
-            resource.standby! -= (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
-          }
-        });
-      }
+        if (effectiveStart < effectiveEnd) {
+          standby -= (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
+        }
 
-      if (this.selectedMetric === 'deadhead') {
-        const totalDeadheadTime = resourceEvents.reduce((total, event) => {
-          const eventStart = new Date(event.start as Date);
-          const eventEnd = new Date(event.end as Date);
-          const effectiveStart = eventStart < this.weekStart ? this.weekStart : eventStart;
-          const effectiveEnd = eventEnd > this.weekEnd ? this.weekEnd : eventEnd;
+        if (effectiveStart < effectiveEnd && (!event.payload || event.payload <= 0)) {
+          deadhead += (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
+        }
 
-          if (effectiveStart < effectiveEnd && (!event['payload'] || event['payload'] <= 0)) {
-            return total + (effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60);
-          }
-          return total;
-        }, 0);
+        if (eventEnd > this.weekStart && eventStart < this.weekEnd) {
+          numberOfTours++;
+          payload += event.payload || 0;
+        }
+      });
 
-        resource.deadhead = totalDeadheadTime;
-      }
-
-      if (this.selectedMetric === 'payload') {
-        const weekEvents = resourceEvents.filter(
-          (event) => new Date(event.end as Date) > this.weekStart && new Date(event.start as Date) < this.weekEnd,
-        );
-        const totalPayload = weekEvents.reduce((total, event) => total + (event['payload'] || 0), 0);
-        const numberOfTours = weekEvents.length;
-
-        resource.payload =
-          numberOfTours > 0 && resource['capacity'] ? Math.round((totalPayload / numberOfTours / resource['capacity']) * 100) : 0;
-      }
+      resource.standby = standby;
+      resource.deadhead = deadhead;
+      resource.payload = numberOfTours && resource.capacity ? Math.round((payload / numberOfTours / resource.capacity) * 100) : 0;
     });
   }
 
-  sortResources(): void {
-    this.metricBarAnimation = true;
-    this.initialSort = false;
-
-    this.myResources = [
-      ...this.myResources.sort((a: MbscResource, b: MbscResource) => {
-        if (this.sortDirection === 'asc') {
-          return a[this.sortColumn] > b[this.sortColumn] ? 1 : -1;
-        } else {
-          return a[this.sortColumn] < b[this.sortColumn] ? 1 : -1;
-        }
-      }),
-    ];
-
-    setTimeout(() => {
-      this.metricBarAnimation = false;
-    }, 100);
+  sortResources() {
+    this.sortedResources = [...this.myResources].sort((resource1, resource2) => {
+      let col = this.sortColumn;
+      if (resource1[col] === resource2[col]) {
+        col = 'name';
+      }
+      return this.sortDirection === 'asc' ? (resource1[col]! > resource2[col]! ? 1 : -1) : resource1[col]! < resource2[col]! ? 1 : -1;
+    });
   }
 
-  delayedToastSort(resourceId: any, event: any) {
-    const resource = this.myResources.find((resource) => resource.id === resourceId);
-
-    const sortResources = this.sortResources.bind(this);
-    let myResources = this.myResources;
-    const myCalendar = this.myCalendar;
+  delayedSort(event: MbscCalendarEvent) {
+    this.sortRequests++;
+    this.tempEvent = event;
 
     this.notify.snackbar({
       animation: 'pop',
-      button: {
-        text: 'Sort now',
-        action: function () {
-          sortResources();
-        },
-      },
+      button: { text: 'Sort now' },
       cssClass: 'mds-popup-sort-snackbar',
       display: 'center',
       duration: 3000,
-      onClose: function () {
-        resource!.cssClass = 'mds-resource-highlight';
-        sortResources();
-        setTimeout(() => {
-          resource!.cssClass = '';
-          myResources! = myResources.slice();
-        }, 1000);
-        myCalendar.navigateToEvent(event);
+      onClose: () => {
+        this.sortRequests--;
+        if (this.sortRequests === 0) {
+          const event = this.tempEvent;
+          const resource = this.myResources.find((r) => r.id === event.resource)!;
+          const eventStart = new Date(event.start as Date);
+          const navStart = eventStart < this.weekStart ? this.weekStart : eventStart;
+          this.sortResources();
+          this.calendar.navigateToEvent({ start: navStart, resource: event.resource });
+          resource.cssClass = 'mbsc-timeline-parent-hover';
+          setTimeout(() => {
+            resource.cssClass = '';
+            this.myResources = [...this.myResources];
+          }, 1000);
+        }
       },
     });
   }
 
+  addEventPayload() {
+    return {
+      payload: Math.floor(Math.random() * (17 - 5 + 1)) + 5,
+    };
+  }
+
   handlePopupOpen() {
-    this.initialSortColumn = this.sortColumn;
-    this.initialSortDirection = this.sortDirection;
-    this.popupAnchor = this.anchorElm.nativeElement;
+    this.tempSortColumn = this.sortColumn;
+    this.tempSortDirection = this.sortDirection;
+    this.popupAnchor = this.anchorBtn.nativeElement;
     this.popup.open();
   }
 
-  handlePopupClose() {
-    this.sortColumn = this.initialSortColumn;
-    this.sortDirection = this.initialSortDirection;
-  }
-
-  handleOnPageLoading($event: any) {
-    this.weekStart = $event.firstDay;
-    this.weekEnd = $event.lastDay;
-    this.refreshData();
-  }
-
-  handleOnPageLoaded() {
-    this.refreshData();
-    if (this.initialSort) {
+  handlePageLoading(args: MbscPageLoadingEvent) {
+    this.weekStart = args.firstDay;
+    this.weekEnd = args.lastDay;
+    setTimeout(() => {
+      this.calcMetrics();
       this.sortResources();
-    }
+    });
   }
 
-  handleOnEventCreated(args: MbscEventCreatedEvent) {
-    args.event['payload'] = Math.floor(Math.random() * (17 - 5 + 1)) + 5;
-    args.event.overlap = false;
-    this.refreshData();
-    this.delayedToastSort(args.event.resource, args.event);
+  handleEventCreated(args: MbscEventCreatedEvent) {
+    setTimeout(() => {
+      this.calcMetrics();
+      this.delayedSort(args.event);
+    });
   }
 
-  handleOnEventDelete(args: MbscEventDeleteEvent) {
-    this.refreshData();
-    this.delayedToastSort(args.event.resource, args.event);
+  handleEventDeleted(args: MbscEventDeletedEvent) {
+    setTimeout(() => {
+      this.calcMetrics();
+      this.delayedSort(args.event);
+    });
   }
 
-  handleOnEventUpdate(args: MbscEventUpdateEvent) {
+  handleEventUpdated(args: MbscEventUpdatedEvent): void {
+    const oldEventStart = new Date(args.oldEvent!.start as string);
+    const oldEventEnd = new Date(args.oldEvent!.end as string);
     if (
-      new Date(args.oldEvent!.start as string).getTime() !== new Date(args.event!.start as string).getTime() &&
-      new Date(args.oldEvent!.end as string).getTime() !== new Date(args.event!.end as string).getTime() &&
-      args.oldEvent!.resource === args.resource &&
-      new Date(args.oldEvent!.start as string) >= this.weekStart &&
-      new Date(args.oldEvent!.end as string) <= this.weekEnd &&
-      new Date(args.event!.start as string) >= this.weekStart &&
-      new Date(args.event!.end as string) <= this.weekEnd
+      +oldEventStart !== +(args.event.start as Date) &&
+      +oldEventEnd !== +(args.event.end as Date) &&
+      oldEventStart >= this.weekStart &&
+      oldEventEnd <= this.weekEnd &&
+      (args.event.start as Date) >= this.weekStart &&
+      (args.event.end as Date) <= this.weekEnd &&
+      args.oldEvent!.resource === args.event.resource
     ) {
       return;
     }
-    this.refreshData();
-    this.delayedToastSort(args.event.resource, args.event);
+    setTimeout(() => {
+      this.calcMetrics();
+      this.delayedSort(args.event);
+    });
   }
 
-  getMetricValue(resource: any): string | number {
-    const metricValue = resource[this.selectedMetric];
-    if (this.selectedMetric === 'payload') {
-      return `${metricValue}%`;
-    } else if (this.selectedMetric === 'standby' || this.selectedMetric === 'deadhead') {
-      return `${metricValue}h`;
-    }
-    return metricValue;
-  }
-
-  getBarValue(resource: any): number {
-    const metricValue = resource[this.selectedMetric];
-    if (this.selectedMetric === 'payload') {
-      return metricValue;
-    } else if (this.selectedMetric === 'standby' || this.selectedMetric === 'deadhead') {
-      return (metricValue / 168) * 100;
-    }
-    return 100;
-  }
-
-  getBarColorClass(resource: any): string {
+  getBarColor(resource: MbscResource): string {
     const barValue = this.getBarValue(resource);
-    const animationClass = this.metricBarAnimation ? 'metric-bar-animation' : 'metric-bar-no-animation';
+    return barValue <= 33 ? 'green' : barValue <= 66 ? 'yellow' : 'red';
+  }
 
-    if (barValue <= 33) {
-      return `mds-resource-green-bar ${animationClass}`;
-    } else if (barValue <= 66) {
-      return `mds-resource-yellow-bar ${animationClass}`;
-    } else {
-      return `mds-resource-red-bar ${animationClass}`;
-    }
+  getBarValue(resource: MbscResource): number {
+    const metricValue = resource[this.sortColumn];
+    return this.sortColumn === 'payload' ? metricValue : (metricValue / 168) * 100;
   }
 }
