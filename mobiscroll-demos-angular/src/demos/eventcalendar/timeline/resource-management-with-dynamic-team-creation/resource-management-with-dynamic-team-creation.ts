@@ -24,6 +24,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-management-with-dynamic-team-creation.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

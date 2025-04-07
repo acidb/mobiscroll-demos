@@ -21,6 +21,7 @@ interface MyResource extends MbscResource {
   templateUrl: './dynamic-content-based-resource-width.html',
   encapsulation: ViewEncapsulation.None,
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private sanitizer: DomSanitizer) {
