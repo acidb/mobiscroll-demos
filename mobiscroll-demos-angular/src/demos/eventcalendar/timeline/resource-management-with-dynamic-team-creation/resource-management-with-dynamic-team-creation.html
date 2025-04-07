@@ -1,45 +1,58 @@
 <mbsc-page class="mds-ext-res-drop">
   <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
-      <div class="mbsc-col-sm-3 ds-ext-res-drop-cont mbsc-flex-col">
-        <mbsc-dropcontainer (onItemDrop)="onItemDrop($event)">
-          <div class="mds-ext-res-header">Available technicians</div>
-          <div class="mds-ext-res-list">
-            <div mbsc-draggable *ngFor="let res of availableInstallers;" type="resource" [dragData]="res" class="mds-ext-res-item">
-              <div class="mbsc-flex">
-                <div class="mds-ext-res-avatar" [ngStyle]="{ background: res.color }">{{ res.name && res.name[0] }}</div>
-                <div class="mds-ext-res-cont">
-                  <div class="mds-ext-res-name">{{ res.name }}</div>
-                  <div class="mds-ext-res-titme">{{ res["title"] }}</div>
-                </div>
+      <mbsc-dropcontainer class="mbsc-col-sm-3 mds-ext-res-drop-cont mbsc-flex-col" (onItemDrop)="onItemDrop($event)">
+        <div class="mds-ext-res-header">Available technicians</div>
+        <div class="mds-ext-res-list">
+          <div
+            mbsc-draggable
+            *ngFor="let res of availableInstallers;"
+            class="mds-ext-res-item mbsc-font"
+            type="resource"
+            [dragData]="res"
+            #draggables
+          >
+            <div class="mbsc-flex">
+              <div class="mds-ext-res-avatar" [ngStyle]="{ background: res.color }">{{ res.name && res.name[0] }}</div>
+              <div class="mds-ext-res-cont">
+                <div class="mds-ext-res-name">{{ res.name }}</div>
+                <div class="mds-ext-res-title">{{ res["title"] }}</div>
               </div>
             </div>
           </div>
-        </mbsc-dropcontainer>
-      </div>
+        </div>
+      </mbsc-dropcontainer>
       <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
         <mbsc-eventcalendar
           #timeline
           [data]="tasks"
+          [dragToMove]="true"
+          [dragToCreate]="true"
+          [externalResourceDrop]="true"
+          [externalResourceDrag]="true"
+          [externalDrag]="true"
           [resources]="installers"
-          [options]="calendarOptions"
-          [resourceTemplate]="resource"
-          [resourceHeaderTemplate]="resourceHeader"
+          [view]="myView"
+          [resourceHeaderTemplate]="customResourceHeaderTemplate"
+          [resourceTemplate]="customResourceTemplate"
+          (onResourceCreate)="onResourceCreate($event)"
+          (onResourceDelete)="onResourceDelete($event)"
+          (onResourceOrderUpdate)="onResourceOrderUpdate($event)"
         >
-          <ng-template #resourceHeader let-data>
+          <ng-template #customResourceHeaderTemplate let-data>
             <div class="mbsc-flex mbsc-align-items-center">
               <div class="mds-ext-res-header mbsc-flex-1-1">Set up teams</div>
               <mbsc-button variant="outline" class="mds-ext-res-add" (click)="addNewTeam()">Add team</mbsc-button>
             </div>
           </ng-template>
-          <ng-template #resource let-resource>
+          <ng-template #customResourceTemplate let-resource>
             <div
-              *ngIf="resource.children || resource.placeholder"
+              *ngIf="resource.isParent || resource.placeholder"
               [ngClass]="{ 'mds-ext-res-name': true, 'mds-ext-res-name-ph': resource.placeholder }"
             >
               {{ resource.name }}
             </div>
-            <div *ngIf="!(resource.children || resource.placeholder)" class="mbsc-flex">
+            <div *ngIf="!(resource.isParent || resource.placeholder)" class="mbsc-flex">
               <div class="mds-ext-res-avatar" [ngStyle]="{ background: resource.color }">{{ resource.name[0] }}</div>
               <div class="mds-ext-res-cont">
                 <div class="mds-ext-res-name">{{ resource.name }}</div>

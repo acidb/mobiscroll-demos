@@ -404,7 +404,7 @@ export default {
           resource: 16,
         },
         {
-          id: 31,
+          id: 32,
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,18)',
           title: 'Applying protective coatings',
@@ -459,7 +459,7 @@ export default {
         var item =
           '<div id="demo-ext-res-' +
           installer.id +
-          '" class="mds-ext-res-item">' +
+          '" class="mds-ext-res-item mbsc-font">' +
           '<div class="mbsc-flex">' +
           '<div class="mds-ext-res-avatar" style="background: ' +
           installer.color +
@@ -487,23 +487,18 @@ export default {
           });
       }
 
-      function generateExternalResourceList() {
-        $availableInstallersList.empty();
-        availableInstallers.forEach(generateExternalResourceItem);
-      }
-
       var timelineInst = $('#demo-ext-res-drop-calendar')
         .mobiscroll()
         .eventcalendar({
           // context,
-          view: {
-            timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00', listing: true },
-          },
           data: tasks,
           dragBetweenResources: false,
           externalResourceDrop: true,
           externalResourceDrag: true,
           resources: installers,
+          view: {
+            timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00', listing: true },
+          },
           renderResourceHeader: function () {
             return (
               '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-ext-res-header mbsc-flex-1-1">Set up teams</div>' +
@@ -512,11 +507,7 @@ export default {
           },
           renderResource: function (resource) {
             return resource.isParent || resource.placeholder
-              ? '<div class="mds-ext-res-name mbsc-flex' +
-                  (resource.placeholder ? ' mds-ext-res-name-ph' : '') +
-                  '">' +
-                  resource.name +
-                  '</div>'
+              ? '<div class="mds-ext-res-name' + (resource.placeholder ? ' mds-ext-res-name-ph' : '') + '">' + resource.name + '</div>'
               : '<div class="mbsc-flex">' +
                   '<div class="mds-ext-res-avatar" style="background: ' +
                   resource.color +
@@ -545,6 +536,14 @@ export default {
               // theme,//</hidden>
               // context,
               message: args.resource.name + ' added to ' + args.parent.name,
+            });
+          },
+          onResourceDelete: function (args) {
+            mobiscroll.toast({
+              //<hidden>
+              // theme,//</hidden>
+              // context,
+              message: args.resource.name + ' removed from ' + args.parent.name,
             });
           },
           onResourceOrderUpdate: function (args) {
@@ -577,14 +576,6 @@ export default {
                 reorder: false,
               });
             }
-          },
-          onResourceDelete: function (args) {
-            mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
-              message: args.resource.name + ' removed from ' + args.parent.name,
-            });
           },
         })
         .mobiscroll('getInst');
@@ -630,7 +621,7 @@ export default {
         });
       });
 
-      generateExternalResourceList();
+      availableInstallers.forEach(generateExternalResourceItem);
     });
   },
   // eslint-disable-next-line es5/no-template-literals

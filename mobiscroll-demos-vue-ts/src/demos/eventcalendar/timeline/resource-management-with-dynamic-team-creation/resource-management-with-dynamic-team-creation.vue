@@ -17,18 +17,18 @@ import type {
   MbscResourceDeleteEvent,
   MbscResourceOrderEvent
 } from '@mobiscroll/vue'
-import { ref, useTemplateRef } from 'vue'
+import { nextTick, ref } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
 
-const dropCont = useTemplateRef<HTMLElement>('drop-cont')
-const timelineRef = ref()
-const myView: MbscEventcalendarView = {
-  timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' }
-}
+const dragElements = ref<HTMLDivElement[]>([])
+const dropCont = ref<HTMLDivElement | null>(null)
+const toastMessage = ref('')
+const isToastOpen = ref(false)
+const timelineRef = ref<typeof MbscEventcalendar>()
 
 const installers = ref<MbscResource[]>([
   {
@@ -130,6 +130,7 @@ const installers = ref<MbscResource[]>([
   }
   //</hide-comment>
 ])
+
 const availableInstallers = ref<MbscResource[]>([
   {
     id: 9,
@@ -200,7 +201,7 @@ const availableInstallers = ref<MbscResource[]>([
   }
   //</hide-comment>
 ])
-const dragElements = ref([])
+
 const tasks = ref<MbscCalendarEvent[]>([
   {
     id: 1,
@@ -421,7 +422,7 @@ const tasks = ref<MbscCalendarEvent[]>([
     resource: 16
   },
   {
-    id: 31,
+    id: 32,
     start: 'dyndatetime(y,m,d,14)',
     end: 'dyndatetime(y,m,d,18)',
     title: 'Applying protective coatings',
@@ -471,34 +472,62 @@ const tasks = ref<MbscCalendarEvent[]>([
   }
   //</hide-comment>
 ])
-const toastMessage = ref('')
-const isToastOpen = ref(false)
+
+const myView: MbscEventcalendarView = {
+  timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' }
+}
 
 function handleResourceCreate(args: MbscResourceCreateEvent) {
   availableInstallers.value = availableInstallers.value.filter(
-    (item) => item.id !== args.resource.id
+    (installer) => installer.id !== args.resource.id
   )
-  toastMessage.value = args.resource.name + ' added to ' + args.parent!.name
+  toastMessage.value = args.resource.name + ' added to ' + args.parent?.name
   isToastOpen.value = true
 }
 
 function handleResourceDelete(args: MbscResourceDeleteEvent) {
-  toastMessage.value = args.resource.name + ' removed from ' + args.parent!.name
+  toastMessage.value = args.resource.name + ' removed from ' + args.parent?.name
   isToastOpen.value = true
 }
 
+function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
+  const parent = args.parent
+  const oldParent = args.oldParent
+
+  if (parent && oldParent) {
+    toastMessage.value = args.resource.name + ' moved to ' + args.parent?.name
+    isToastOpen.value = true
+  }
+
+  if (parent && parent.children) {
+    // Remove placeholder resource
+    parent.children = parent.children.filter((child) => !child.placeholder)
+  }
+
+  if (oldParent && oldParent.children && !oldParent.children.length) {
+    // Add placeholder resource
+    oldParent.children.push({
+      id: 'ph-' + oldParent.id,
+      name: 'Drag Technicians here',
+      placeholder: true,
+      reorder: false
+    })
+  }
+}
+
 function handleItemDrop(args: MbscItemDragEvent<MbscResource>) {
-  if (args.data) {
-    const dragElems: HTMLElement[] = dragElements.value
-
-    if (dragElems && dragElems[dragElems.length - 1]) {
-      dragElems[dragElems.length - 1].scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest'
-      })
-    }
-
+  if (args.data && args.dataType === 'resource') {
     availableInstallers.value = [...availableInstallers.value, args.data]
+
+    nextTick(() => {
+      const dragElms = dragElements.value
+      if (dragElms && dragElms[dragElms.length - 1]) {
+        dragElms[dragElms.length - 1].scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        })
+      }
+    })
   }
 }
 
@@ -509,6 +538,7 @@ function handleToastClose() {
 function addNewTeam() {
   const teamLength = installers.value.length + 1
   const resourceId = 'it-' + teamLength
+
   installers.value = [
     ...installers.value,
     {
@@ -527,31 +557,10 @@ function addNewTeam() {
     }
   ]
 
-  if (timelineRef.value && timelineRef.value.instance) {
-    timelineRef.value.instance.navigateToEvent({
-      start: new Date(),
-      resource: 'it-' + teamLength
-    })
-  }
-}
-
-function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
-  const parent = args.parent
-  const oldParent = args.oldParent
-
-  if (parent && parent.children) {
-    // remove placeholder resource
-    parent.children = parent.children.filter((child) => !child.placeholder)
-  }
-  if (oldParent && oldParent.children && !oldParent.children.length) {
-    // add placeholder resource
-    oldParent.children.push({
-      id: 'ph-' + oldParent.id,
-      name: 'Drag Technicians here',
-      placeholder: true,
-      reorder: false
-    })
-  }
+  timelineRef.value?.instance.navigateToEvent({
+    start: new Date(),
+    resource: resourceId
+  })
 }
 </script>
 
@@ -559,42 +568,41 @@ function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
   <MbscPage cssClass="mds-ext-res-drop">
     <div class="mbsc-grid mbsc-no-padding">
       <div class="mbsc-row">
-        <div ref="drop-cont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
+        <div ref="dropCont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
           <MbscDropcontainer :element="dropCont" @item-drop="handleItemDrop">
             <div class="mds-ext-res-header">Available technicians</div>
-
             <div class="mds-ext-res-list">
-              <div v-for="(res, i) in availableInstallers" :key="res.id">
-                <div ref="dragElements" class="mds-ext-res-item">
+              <template v-for="(resource, i) in availableInstallers" :key="resource.id">
+                <div ref="dragElements" class="mds-ext-res-item mbsc-font">
                   <div class="mbsc-flex">
-                    <div class="mds-ext-res-avatar" :style="{ background: res.color }">
-                      {{ res.name && res.name[0] }}
+                    <div class="mds-ext-res-avatar" :style="{ background: resource.color }">
+                      {{ resource.name && resource.name[0] }}
                     </div>
                     <div class="mds-ext-res-cont">
-                      <div class="mds-ext-res-name">{{ res.name }}</div>
-                      <div class="mds-ext-res-title">{{ res.title }}</div>
+                      <div class="mds-ext-res-name">{{ resource.name }}</div>
+                      <div class="mds-ext-res-title">{{ resource.title }}</div>
                     </div>
                   </div>
                   <MbscDraggable
                     :element="dragElements[i]"
-                    :dragData="res"
+                    :dragData="resource"
                     type="resource"
                     theme="auto"
                   />
                 </div>
-              </div>
+              </template>
             </div>
           </MbscDropcontainer>
         </div>
         <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
           <MbscEventcalendar
             ref="timelineRef"
-            :view="myView"
             :data="tasks"
             :dragBetweenResources="false"
             :externalResourceDrop="true"
             :externalResourceDrag="true"
             :resources="installers"
+            :view="myView"
             @resource-create="handleResourceCreate"
             @resource-delete="handleResourceDelete"
             @resource-order-update="handleResourceOrderUpdate"
@@ -610,7 +618,7 @@ function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
 
             <template #resource="res">
               <div
-                v-if="res.children || res.placeholder"
+                v-if="res.isParent || res.placeholder"
                 :class="{ 'mds-ext-res-name': true, 'mds-ext-res-name-ph': res.placeholder }"
               >
                 {{ res.name }}

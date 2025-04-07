@@ -9,6 +9,7 @@ export default {
     });
 
     var availableWorkersList = document.getElementById('demo-ext-res-drop-list');
+
     var installers = [
       {
         id: 'it-1',
@@ -109,6 +110,7 @@ export default {
       },
       //</hide-comment>
     ];
+
     var availableInstallers = [
       {
         id: 9,
@@ -179,6 +181,7 @@ export default {
       },
       //</hide-comment>
     ];
+
     var tasks = [
       {
         id: 1,
@@ -399,7 +402,7 @@ export default {
         resource: 16,
       },
       {
-        id: 31,
+        id: 32,
         start: 'dyndatetime(y,m,d,14)',
         end: 'dyndatetime(y,m,d,18)',
         title: 'Applying protective coatings',
@@ -451,11 +454,12 @@ export default {
     ];
 
     function generateExternalResourceItem(installer) {
-      var workElm = document.createElement('div');
-      workElm.innerHTML =
+      var installerElm = document.createElement('div');
+
+      installerElm.innerHTML =
         '<div id="demo-ext-res-' +
         installer.id +
-        '" class="mds-ext-res-item">' +
+        '" class="mds-ext-res-item mbsc-font">' +
         '<div class="mbsc-flex">' +
         '<div class="mds-ext-res-avatar" style="background: ' +
         installer.color +
@@ -472,29 +476,25 @@ export default {
         '</div>' +
         '</div>';
 
-      availableWorkersList.append(workElm);
+      availableWorkersList.append(installerElm);
+
       mobiscroll.draggable('#demo-ext-res-' + installer.id, {
         dragData: installer,
         type: 'resource',
       });
 
-      return workElm;
-    }
-
-    function generateExternalResources() {
-      availableWorkersList.innerHtml = '';
-      availableInstallers.forEach(generateExternalResourceItem);
+      return installerElm;
     }
 
     var timelineInst = mobiscroll.eventcalendar('#demo-ext-res-drop-calendar', {
-      view: {
-        timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00', listing: true },
-      },
       data: tasks,
       dragBetweenResources: false,
       externalResourceDrop: true,
       externalResourceDrag: true,
       resources: installers,
+      view: {
+        timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00', listing: true },
+      },
       renderResourceHeader: function () {
         return (
           '<div class="mbsc-flex mbsc-align-items-center"><div class="mds-ext-res-header mbsc-flex-1-1">Set up teams</div>' +
@@ -503,11 +503,7 @@ export default {
       },
       renderResource: function (resource) {
         return resource.isParent || resource.placeholder
-          ? '<div class="mds-ext-res-name mbsc-flex' +
-              (resource.placeholder ? ' mds-ext-res-name-ph' : '') +
-              '">' +
-              resource.name +
-              '</div>'
+          ? '<div class="mds-ext-res-name' + (resource.placeholder ? ' mds-ext-res-name-ph' : '') + '">' + resource.name + '</div>'
           : '<div class="mbsc-flex">' +
               '<div class="mds-ext-res-avatar" style="background: ' +
               resource.color +
@@ -527,14 +523,19 @@ export default {
       },
       onResourceCreate: function (args) {
         var newResourceId = args.resource.id;
-        availableInstallers = availableInstallers.filter(function (s) {
-          return s.id !== newResourceId;
+        availableInstallers = availableInstallers.filter(function (installer) {
+          return installer.id !== newResourceId;
         });
 
         document.getElementById('demo-ext-res-' + newResourceId).remove();
 
         mobiscroll.toast({
           message: args.resource.name + ' added to ' + args.parent.name,
+        });
+      },
+      onResourceDelete: function (args) {
+        mobiscroll.toast({
+          message: args.resource.name + ' removed from ' + args.parent.name,
         });
       },
       onResourceOrderUpdate: function (args) {
@@ -559,11 +560,6 @@ export default {
           });
         }
       },
-      onResourceDelete: function (args) {
-        mobiscroll.toast({
-          message: args.resource.name + ' removed from ' + args.parent.name,
-        });
-      },
     });
 
     mobiscroll.dropcontainer('#demo-ext-res-drop-cont', {
@@ -577,7 +573,7 @@ export default {
       },
     });
 
-    document.querySelector('#demo-ext-res-drop-calendar').addEventListener('click', function (event) {
+    document.getElementById('demo-ext-res-drop-calendar').addEventListener('click', function (event) {
       if (event.target.closest('#demo-ext-res-add')) {
         var teamLength = installers.length + 1;
         var resourceId = 'it-' + teamLength;
@@ -595,18 +591,19 @@ export default {
             },
           ],
         });
+
         timelineInst.setOptions({ resources: installers.slice() });
 
         setTimeout(function () {
           timelineInst.navigateToEvent({
             start: new Date(),
-            resource: 'it-' + teamLength,
+            resource: resourceId,
           });
         });
       }
     });
 
-    generateExternalResources(availableInstallers);
+    availableInstallers.forEach(generateExternalResourceItem);
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `

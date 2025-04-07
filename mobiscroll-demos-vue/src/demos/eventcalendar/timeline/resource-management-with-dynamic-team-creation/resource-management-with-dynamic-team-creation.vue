@@ -8,18 +8,18 @@ import {
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { ref, useTemplateRef } from 'vue'
+import { nextTick, ref } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
-const dropCont = useTemplateRef('dropCont')
-const timelineRef = ref()
+
 const dragElements = ref([])
-const myView = {
-  timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' }
-}
+const dropCont = ref(null)
+const toastMessage = ref('')
+const isToastOpen = ref(false)
+const timelineRef = ref()
 
 const installers = ref([
   {
@@ -121,6 +121,7 @@ const installers = ref([
   }
   //</hide-comment>
 ])
+
 const availableInstallers = ref([
   {
     id: 9,
@@ -412,7 +413,7 @@ const tasks = ref([
     resource: 16
   },
   {
-    id: 31,
+    id: 32,
     start: 'dyndatetime(y,m,d,14)',
     end: 'dyndatetime(y,m,d,18)',
     title: 'Applying protective coatings',
@@ -462,12 +463,14 @@ const tasks = ref([
   }
   //</hide-comment>
 ])
-const toastMessage = ref(null)
-const isToastOpen = ref(false)
+
+const myView = {
+  timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' }
+}
 
 function handleResourceCreate(args) {
   availableInstallers.value = availableInstallers.value.filter(
-    (item) => item.id !== args.resource.id
+    (installer) => installer.id !== args.resource.id
   )
   toastMessage.value = args.resource.name + ' added to ' + args.parent.name
   isToastOpen.value = true
@@ -478,18 +481,44 @@ function handleResourceDelete(args) {
   isToastOpen.value = true
 }
 
+function handleResourceOrderUpdate(args) {
+  const parent = args.parent
+  const oldParent = args.oldParent
+
+  if (parent && oldParent) {
+    toastMessage.value = args.resource.name + ' moved to ' + args.parent.name
+    isToastOpen.value = true
+  }
+
+  if (parent && parent.children) {
+    // Remove placeholder resource
+    parent.children = parent.children.filter((child) => !child.placeholder)
+  }
+
+  if (oldParent && !oldParent.children.length) {
+    // Add placeholder resource
+    oldParent.children.push({
+      id: 'ph-' + oldParent.id,
+      name: 'Drag Technicians here',
+      placeholder: true,
+      reorder: false
+    })
+  }
+}
+
 function handleItemDrop(args) {
-  if (args.data) {
-    const dragElems = dragElements.value
-
-    if (dragElems && dragElems[dragElems.length - 1]) {
-      dragElems[dragElems.length - 1].scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest'
-      })
-    }
-
+  if (args.data && args.dataType === 'resource') {
     availableInstallers.value = [...availableInstallers.value, args.data]
+
+    nextTick(() => {
+      const dragElms = dragElements.value
+      if (dragElms && dragElms[dragElms.length - 1]) {
+        dragElms[dragElms.length - 1].scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        })
+      }
+    })
   }
 }
 
@@ -500,6 +529,7 @@ function handleToastClose() {
 function addNewTeam() {
   const teamLength = installers.value.length + 1
   const resourceId = 'it-' + teamLength
+
   installers.value = [
     ...installers.value,
     {
@@ -518,31 +548,10 @@ function addNewTeam() {
     }
   ]
 
-  if (timelineRef.value && timelineRef.value.instance) {
-    timelineRef.value.instance.navigateToEvent({
-      start: new Date(),
-      resource: 'it-' + teamLength
-    })
-  }
-}
-
-function handleResourceOrderUpdate(args) {
-  const parent = args.parent
-  const oldParent = args.oldParent
-
-  if (parent && parent.children) {
-    // remove placeholder resource
-    parent.children = parent.children.filter((child) => !child.placeholder)
-  }
-  if (oldParent && !oldParent.children.length) {
-    // add placeholder resource
-    oldParent.children.push({
-      id: 'ph-' + oldParent.id,
-      name: 'Drag Technicians here',
-      placeholder: true,
-      reorder: false
-    })
-  }
+  timelineRef.value.instance.navigateToEvent({
+    start: new Date(),
+    resource: resourceId
+  })
 }
 </script>
 
@@ -553,34 +562,33 @@ function handleResourceOrderUpdate(args) {
         <div ref="dropCont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
           <MbscDropcontainer :element="dropCont" @item-drop="handleItemDrop">
             <div class="mds-ext-res-header">Available technicians</div>
-
             <div class="mds-ext-res-list">
-              <div v-for="(res, i) in availableInstallers" :key="res.id">
-                <div ref="dragElements" class="mds-ext-res-item">
+              <template v-for="(resource, i) in availableInstallers" :key="resource.id">
+                <div ref="dragElements" class="mds-ext-res-item mbsc-font">
                   <div class="mbsc-flex">
-                    <div class="mds-ext-res-avatar" :style="{ background: res.color }">
-                      {{ res.name[0] }}
+                    <div class="mds-ext-res-avatar" :style="{ background: resource.color }">
+                      {{ resource.name[0] }}
                     </div>
                     <div class="mds-ext-res-cont">
-                      <div class="mds-ext-res-name">{{ res.name }}</div>
-                      <div class="mds-ext-res-title">{{ res.title }}</div>
+                      <div class="mds-ext-res-name">{{ resource.name }}</div>
+                      <div class="mds-ext-res-title">{{ resource.title }}</div>
                     </div>
                   </div>
-                  <MbscDraggable :element="dragElements[i]" :dragData="res" type="resource" />
+                  <MbscDraggable :element="dragElements[i]" :dragData="resource" type="resource" />
                 </div>
-              </div>
+              </template>
             </div>
           </MbscDropcontainer>
         </div>
         <div class="mbsc-col-sm-9 mds-ext-res-drop-calendar">
           <MbscEventcalendar
             ref="timelineRef"
-            :view="myView"
             :data="tasks"
             :dragBetweenResources="false"
             :externalResourceDrop="true"
             :externalResourceDrag="true"
             :resources="installers"
+            :view="myView"
             @resource-create="handleResourceCreate"
             @resource-delete="handleResourceDelete"
             @resource-order-update="handleResourceOrderUpdate"
@@ -596,7 +604,7 @@ function handleResourceOrderUpdate(args) {
 
             <template #resource="res">
               <div
-                v-if="res.children || res.placeholder"
+                v-if="res.isParent || res.placeholder"
                 :class="{ 'mds-ext-res-name': true, 'mds-ext-res-name-ph': res.placeholder }"
               >
                 {{ res.name }}
