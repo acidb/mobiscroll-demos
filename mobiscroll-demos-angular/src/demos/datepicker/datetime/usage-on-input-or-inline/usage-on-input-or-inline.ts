@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-datetime-usage-on-input-or-inline',
   templateUrl: './usage-on-input-or-inline.html',
+  standalone: false,
 })
 export class AppComponent {}

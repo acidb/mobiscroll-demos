@@ -13,6 +13,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-content-customization.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

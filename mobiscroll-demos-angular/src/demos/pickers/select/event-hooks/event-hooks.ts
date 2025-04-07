@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-select-event-hooks',
   templateUrl: './event-hooks.html',
+  standalone: false,
 })
 export class AppComponent {
   myData = [

@@ -11,6 +11,7 @@ setOptions({
   selector: 'app-agenda-show-empty-days',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-empty-days.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

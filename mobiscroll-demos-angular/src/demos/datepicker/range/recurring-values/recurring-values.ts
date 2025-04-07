@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-range-recurring-values',
   templateUrl: './recurring-values.html',
+  standalone: false,
 })
 export class AppComponent {
   invalids = [

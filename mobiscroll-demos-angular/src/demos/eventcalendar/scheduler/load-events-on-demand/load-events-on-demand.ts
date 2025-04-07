@@ -11,6 +11,7 @@ setOptions({
   selector: 'app-scheduler-load-events-on-demand',
   templateUrl: './load-events-on-demand.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(

@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-select-localization',
   templateUrl: './localization.html',
+  standalone: false,
 })
 export class AppComponent {
   myData = [

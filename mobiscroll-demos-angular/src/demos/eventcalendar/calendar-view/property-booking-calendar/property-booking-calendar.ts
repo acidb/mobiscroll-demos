@@ -23,6 +23,7 @@ const makeMyTrip = 'https://img.mobiscroll.com/demos/make-my-trip-icon.png';
   encapsulation: ViewEncapsulation.None,
   templateUrl: './property-booking-calendar.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

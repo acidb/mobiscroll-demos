@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './half-day-styling.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './half-day-styling.html',
+  standalone: false,
 })
 export class AppComponent {
   myColors = [

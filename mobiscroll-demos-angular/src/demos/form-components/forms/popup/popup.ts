@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-forms-popup',
   templateUrl: './popup.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('popup', {

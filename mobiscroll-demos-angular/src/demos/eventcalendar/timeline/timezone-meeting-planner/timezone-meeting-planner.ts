@@ -23,6 +23,7 @@ momentTimezone.moment = moment;
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timezone-meeting-planner.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

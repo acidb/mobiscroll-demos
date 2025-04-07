@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-datetime-gregorian-jalali-hijri',
   templateUrl: './gregorian-jalali-hijri.html',
+  standalone: false,
 })
 export class AppComponent {
   localeEn = localeEn;

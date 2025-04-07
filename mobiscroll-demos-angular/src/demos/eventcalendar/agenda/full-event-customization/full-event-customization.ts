@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './full-event-customization.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './full-event-customization.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

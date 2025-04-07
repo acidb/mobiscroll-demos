@@ -23,6 +23,7 @@ setOptions({
   styleUrl: './searching-events-in-popup.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './searching-events-in-popup.html',
+  standalone: false,
 })
 export class AppComponent {
   constructor(private http: HttpClient) {}

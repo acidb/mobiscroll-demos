@@ -10,6 +10,7 @@ setOptions({
   selector: 'app-popup-showing-the-popover',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './showing-the-popover.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('popup', { static: false }) popup!: MbscPopup;

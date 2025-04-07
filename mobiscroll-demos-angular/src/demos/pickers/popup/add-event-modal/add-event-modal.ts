@@ -20,6 +20,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './add-event-modal.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

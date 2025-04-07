@@ -11,6 +11,7 @@ setOptions({
   styleUrl: './quarter-year-view.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './quarter-year-view.html',
+  standalone: false,
 })
 export class AppComponent {
   viewType = 'q4';

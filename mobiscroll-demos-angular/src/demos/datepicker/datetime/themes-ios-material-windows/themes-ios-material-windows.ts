@@ -4,6 +4,7 @@ import { MbscDatepickerOptions /* localeImport */ } from '@mobiscroll/angular';
 @Component({
   selector: 'app-datetime-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
+  standalone: false,
 })
 export class AppComponent {
   datetimeSettings: MbscDatepickerOptions = {

@@ -5,6 +5,7 @@ import { MbscCalendarEvent, MbscEventcalendarOptions /* localeImport */ } from '
 @Component({
   selector: 'app-eventcalendar-responsive-month-view',
   templateUrl: './responsive-month-view.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

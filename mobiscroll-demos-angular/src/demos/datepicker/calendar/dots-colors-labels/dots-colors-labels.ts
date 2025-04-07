@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-calendar-dots-colors-labels',
   templateUrl: './dots-colors-labels.html',
+  standalone: false,
 })
 export class AppComponent {
   markedDays: MbscCalendarMarked[] = [

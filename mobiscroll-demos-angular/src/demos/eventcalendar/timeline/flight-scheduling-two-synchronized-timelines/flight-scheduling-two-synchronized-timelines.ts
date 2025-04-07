@@ -20,6 +20,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './flight-scheduling-two-synchronized-timelines.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
@@ -526,12 +527,13 @@ export class AppComponent {
         }
       });
       this.jets.forEach((group) => {
-        group.children &&
+        if (group.children) {
           group.children.forEach((jet) => {
             if (unavailable[jet.id as number]) {
               (invalid.resource as number[]).push(jet.id as number);
             }
           });
+        }
       });
       this.invalid = [invalid];
     },

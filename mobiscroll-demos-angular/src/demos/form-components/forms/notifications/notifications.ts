@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-forms-notifications',
   templateUrl: './notifications.html',
+  standalone: false,
 })
 export class AppComponent {
   constructor(public notify: Notifications) {}

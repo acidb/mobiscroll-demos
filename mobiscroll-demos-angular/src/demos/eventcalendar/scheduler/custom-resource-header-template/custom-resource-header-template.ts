@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './custom-resource-header-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './custom-resource-header-template.html',
+  standalone: false,
 })
 export class AppComponent {
   view: MbscEventcalendarView = {

@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-popup-responsive',
   templateUrl: './responsive.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('popup', { static: false }) popup!: MbscPopup;

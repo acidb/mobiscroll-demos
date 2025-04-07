@@ -18,6 +18,7 @@ setOptions({
 @Component({
   selector: 'app-scheduler-gregorian-jalali-hijri',
   templateUrl: './gregorian-jalali-hijri.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

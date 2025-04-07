@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './event-hooks.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-hooks.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

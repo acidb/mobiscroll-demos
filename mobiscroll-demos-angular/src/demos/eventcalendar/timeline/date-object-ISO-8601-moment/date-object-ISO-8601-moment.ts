@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-date-object-iso-8601-moment',
   templateUrl: './date-object-ISO-8601-moment.html',
+  standalone: false,
 })
 export class AppComponent {
   view: MbscEventcalendarView = {

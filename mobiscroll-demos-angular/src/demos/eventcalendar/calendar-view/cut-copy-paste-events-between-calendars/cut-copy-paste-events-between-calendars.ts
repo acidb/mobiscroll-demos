@@ -33,6 +33,7 @@ const disabledMenu = [
   encapsulation: ViewEncapsulation.None,
   templateUrl: './cut-copy-paste-events-between-calendars.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

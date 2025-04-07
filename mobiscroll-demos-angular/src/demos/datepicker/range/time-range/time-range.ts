@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-range-time-range',
   templateUrl: './time-range.html',
+  standalone: false,
 })
 export class AppComponent {}

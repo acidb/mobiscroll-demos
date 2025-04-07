@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-range-min-max-restrictions',
   templateUrl: './min-max-restrictions.html',
+  standalone: false,
 })
 export class AppComponent {}

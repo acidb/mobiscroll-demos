@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-calendar-localization',
   templateUrl: './localization.html',
+  standalone: false,
 })
 export class AppComponent {
   myLocale = localeEs; // sets the language of the component

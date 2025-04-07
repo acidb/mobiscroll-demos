@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-forms-segmented',
   templateUrl: './segmented.html',
+  standalone: false,
 })
 export class AppComponent {
   multi = ['mon', 'thu'];

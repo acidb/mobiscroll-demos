@@ -11,6 +11,7 @@ const now = new Date();
 @Component({
   selector: 'app-datetime-formatting-return-values',
   templateUrl: './formatting-return-values.html',
+  standalone: false,
 })
 export class AppComponent {
   dateValue: any = now;

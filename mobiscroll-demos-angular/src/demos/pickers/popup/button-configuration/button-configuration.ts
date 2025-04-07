@@ -11,6 +11,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './button-configuration.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

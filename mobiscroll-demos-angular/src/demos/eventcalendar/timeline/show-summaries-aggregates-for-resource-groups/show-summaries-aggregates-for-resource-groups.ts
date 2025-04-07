@@ -24,6 +24,7 @@ setOptions({
   styleUrl: './show-summaries-aggregates-for-resource-groups.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-summaries-aggregates-for-resource-groups.html',
+  standalone: false,
 })
 export class AppComponent {
   calendarOptions: MbscEventcalendarOptions = {

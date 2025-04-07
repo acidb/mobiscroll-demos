@@ -20,6 +20,7 @@ setOptions({
   styleUrl: './searching-events-in-sidebar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './searching-events-in-sidebar.html',
+  standalone: false,
 })
 export class AppComponent {
   constructor(private http: HttpClient) {}

@@ -11,6 +11,7 @@ setOptions({
   selector: 'app-scheduler-drag-drop-between-calendar-instances',
   templateUrl: './drag-drop-between-calendar-instances.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

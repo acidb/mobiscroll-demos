@@ -11,6 +11,7 @@ setOptions({
   styleUrl: './image-text.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './image-text.html',
+  standalone: false,
 })
 export class AppComponent {
   selected: any = ['42976', '47883'];

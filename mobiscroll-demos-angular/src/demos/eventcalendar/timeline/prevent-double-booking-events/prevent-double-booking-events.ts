@@ -22,6 +22,7 @@ const d = now.getDate();
   selector: 'app-timeline-prevent-double-booking-events',
   templateUrl: './prevent-double-booking-events.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

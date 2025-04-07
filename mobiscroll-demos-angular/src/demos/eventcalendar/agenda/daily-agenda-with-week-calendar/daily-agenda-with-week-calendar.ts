@@ -16,6 +16,7 @@ setOptions({
 @Component({
   selector: 'app-agenda-daily-agenda-with-week-calendar',
   templateUrl: './daily-agenda-with-week-calendar.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

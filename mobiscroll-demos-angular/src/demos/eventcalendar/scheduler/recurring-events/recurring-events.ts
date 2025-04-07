@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-scheduler-recurring-events',
   templateUrl: './recurring-events.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

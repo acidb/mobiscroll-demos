@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Notifications } from '@mobiscroll/angular';
 import { AppModule, demoTitleMap } from './app.module';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [AppModule, CommonModule, RouterLink, RouterOutlet],
+  providers: [Notifications],
   templateUrl: './app.component.html',
+  standalone: true,
   styleUrl: './app.component.css',
 })
 export class AppComponent {

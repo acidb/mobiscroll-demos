@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './resource-data-structure.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-data-structure.html',
+  standalone: false,
 })
 export class AppComponent {
   myResources: MbscResource[] = [

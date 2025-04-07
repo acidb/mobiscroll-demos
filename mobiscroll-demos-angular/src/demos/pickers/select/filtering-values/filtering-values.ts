@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-select-filtering-values',
   templateUrl: './filtering-values.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   names = [

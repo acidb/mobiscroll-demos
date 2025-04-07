@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-month-view',
   templateUrl: './month-view.html',
+  standalone: false,
 })
 export class AppComponent {
   view: MbscEventcalendarView = {

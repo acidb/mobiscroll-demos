@@ -13,6 +13,7 @@ const monday = now.getDate() - day + (day == 0 ? -6 : 1);
 @Component({
   selector: 'app-agenda-custom-event-sort',
   templateUrl: './custom-event-sort.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-scheduler-show-hide-hours-days',
   templateUrl: './show-hide-hours-days.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

@@ -13,6 +13,7 @@ setOptions({
   styleUrl: './doctors-availability-calendar-planner.css',
   encapsulation: ViewEncapsulation.None,
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

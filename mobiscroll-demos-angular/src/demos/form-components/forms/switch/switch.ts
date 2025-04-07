@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-forms-switch',
   templateUrl: './switch.html',
+  standalone: false,
 })
 export class AppComponent {
   sw1 = false;

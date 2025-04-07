@@ -13,6 +13,7 @@ setOptions({
   styleUrl: './printing-the-view.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './printing-the-view.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

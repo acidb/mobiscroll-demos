@@ -39,6 +39,7 @@ interface MyResource extends MbscResource {
   styleUrl: './dynamic-calculation-resource-sort.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamic-calculation-resource-sort.html',
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

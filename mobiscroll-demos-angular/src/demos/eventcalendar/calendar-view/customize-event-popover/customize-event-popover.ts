@@ -8,6 +8,7 @@ import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications /* localeImp
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customize-event-popover.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

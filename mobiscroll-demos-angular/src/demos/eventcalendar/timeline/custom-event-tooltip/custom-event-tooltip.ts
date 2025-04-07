@@ -29,6 +29,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './custom-event-tooltip.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

@@ -20,6 +20,7 @@ setOptions({
 @Component({
   selector: 'app-scheduler-shared-events-across-resources',
   templateUrl: './shared-events-across-resources.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('popup', { static: false })

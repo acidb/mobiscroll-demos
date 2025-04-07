@@ -7,6 +7,7 @@ momentTimezone.moment = moment;
 @Component({
   selector: 'app-datetime-setting-the-picker-timezone',
   templateUrl: './setting-the-picker-timezone.html',
+  standalone: false,
 })
 export class AppComponent {
   options: MbscDatepickerOptions = {

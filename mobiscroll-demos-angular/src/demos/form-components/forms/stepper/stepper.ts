@@ -8,5 +8,6 @@ setOptions({
 @Component({
   selector: 'app-forms-stepper',
   templateUrl: './stepper.html',
+  standalone: false,
 })
 export class AppComponent {}

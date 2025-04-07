@@ -11,6 +11,7 @@ setOptions({
   selector: 'app-scheduler-time-off-blocked-ranges',
   templateUrl: './time-off-blocked-ranges.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

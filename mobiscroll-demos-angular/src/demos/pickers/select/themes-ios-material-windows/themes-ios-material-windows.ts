@@ -4,6 +4,7 @@ import { MbscSelectOptions /* localeImport */ } from '@mobiscroll/angular';
 @Component({
   selector: 'app-select-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
+  standalone: false,
 })
 export class AppComponent {
   myData = [

@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-range-adding-event-start-end',
   templateUrl: './adding-event-start-end.html',
+  standalone: false,
 })
 export class AppComponent {
   allDay = false;

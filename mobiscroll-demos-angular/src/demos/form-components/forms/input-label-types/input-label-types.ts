@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-forms-input-label-types',
   templateUrl: './input-label-types.html',
+  standalone: false,
 })
 export class AppComponent {}

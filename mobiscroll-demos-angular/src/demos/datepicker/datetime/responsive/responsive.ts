@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-datetime-responsive',
   templateUrl: './responsive.html',
+  standalone: false,
 })
 export class AppComponent {
   responsiveDrop: { [key: string]: MbscDatepickerOptions & { breakpoint?: number } } = {

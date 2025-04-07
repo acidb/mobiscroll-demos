@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-datetime-rtl-right-to-left',
   templateUrl: './rtl-right-to-left.html',
+  standalone: false,
 })
 export class AppComponent {}

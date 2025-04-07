@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-calendar-date-picker',
   templateUrl: './date-picker.html',
+  standalone: false,
 })
 export class AppComponent {}

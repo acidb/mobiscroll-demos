@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-scheduler-group-by-resource-by-day',
   templateUrl: './group-by-resource-by-day.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

@@ -11,6 +11,7 @@ setOptions({
   styleUrl: './customizing-header.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customizing-header.html',
+  standalone: false,
 })
 export class AppComponent {
   view = 'week';

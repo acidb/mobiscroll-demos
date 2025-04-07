@@ -79,6 +79,7 @@ function getWeekDayNum(date: Date): number {
   styleUrl: './recurring-event-add-edit-dialog.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './recurring-event-add-edit-dialog.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   @ViewChild('popup', { static: false })

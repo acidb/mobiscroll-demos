@@ -24,6 +24,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './work-order-scheduling.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

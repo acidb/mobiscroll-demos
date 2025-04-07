@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-select-multiple-select',
   templateUrl: './multiple-select.html',
+  standalone: false,
 })
 export class AppComponent {
   myData = [

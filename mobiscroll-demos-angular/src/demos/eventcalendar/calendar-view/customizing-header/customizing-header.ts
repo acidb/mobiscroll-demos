@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './customizing-header.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customizing-header.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

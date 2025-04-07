@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-range-customizing-labels-selection',
   templateUrl: './customizing-labels-selection.html',
+  standalone: false,
 })
 export class AppComponent {}
