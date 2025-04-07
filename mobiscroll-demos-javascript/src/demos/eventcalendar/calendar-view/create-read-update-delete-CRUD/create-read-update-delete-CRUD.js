@@ -83,13 +83,13 @@ export default {
     ];
 
     function createAddPopup(elm) {
-      // hide delete button inside add popup
+      // Hide delete button inside add popup
       deleteButton.style.display = 'none';
 
       deleteEvent = true;
       restoreEvent = false;
 
-      // set popup header text and buttons for adding
+      // Set popup header text and buttons for adding
       popup.setOptions({
         headerText: 'New event',
         buttons: [
@@ -108,7 +108,7 @@ export default {
                 end: tempEvent.end,
                 color: tempEvent.color,
               });
-              // navigate the calendar to the correct view
+              // Navigate the calendar to the correct view
               calendar.navigateToEvent(tempEvent);
               deleteEvent = false;
               popup.close();
@@ -118,7 +118,7 @@ export default {
         ],
       });
 
-      // fill popup with a new event data
+      // Fill popup with a new event data
       mobiscroll.getInst(titleInput).value = tempEvent.title;
       mobiscroll.getInst(descriptionTextarea).value = '';
       mobiscroll.getInst(allDaySwitch).checked = false;
@@ -128,7 +128,7 @@ export default {
       pickedColor.style.background = '';
       travelTime.value = 0;
 
-      // set anchor for the popup
+      // Set anchor for the popup
       popup.setOptions({ anchor: elm });
 
       popup.open();
@@ -137,13 +137,13 @@ export default {
     function createEditPopup(args) {
       var ev = args.event;
 
-      // show delete button inside edit popup
+      // Show delete button inside edit popup
       deleteButton.style.display = 'block';
 
       deleteEvent = false;
       restoreEvent = true;
 
-      // set popup header text and buttons for editing
+      // Set popup header text and buttons for editing
       popup.setOptions({
         headerText: 'Edit event',
         buttons: [
@@ -164,9 +164,9 @@ export default {
                 free: mobiscroll.getInst(freeSegmented).checked,
                 color: ev.color,
               };
-              // update event with the new properties on save button click
+              // Update event with the new properties on save button click
               calendar.updateEvent(eventToSave);
-              // navigate the calendar to the correct view
+              // Navigate the calendar to the correct view
               calendar.navigateToEvent(eventToSave);
               restoreEvent = false;
               popup.close();
@@ -176,7 +176,7 @@ export default {
         ],
       });
 
-      // fill popup with the selected event data
+      // Fill popup with the selected event data
       mobiscroll.getInst(titleInput).value = ev.title || '';
       mobiscroll.getInst(descriptionTextarea).value = ev.description || '';
       mobiscroll.getInst(allDaySwitch).checked = ev.allDay || false;
@@ -190,13 +190,13 @@ export default {
         mobiscroll.getInst(busySegmented).checked = true;
       }
 
-      // change range settings based on the allDay
+      // Change range settings based on the allDay
       range.setOptions({
         controls: ev.allDay ? ['date'] : ['datetime'],
         responsive: ev.allDay ? datePickerResponsive : datetimePickerResponsive,
       });
 
-      // set anchor for the popup
+      // Set anchor for the popup
       popup.setOptions({ anchor: args.domEvent.currentTarget });
       popup.open();
     }
@@ -220,7 +220,7 @@ export default {
       },
       onEventCreated: function (args) {
         popup.close();
-        // store temporary event
+        // Store temporary event
         tempEvent = args.event;
         createAddPopup(args.target);
       },
@@ -259,12 +259,12 @@ export default {
     });
 
     titleInput.addEventListener('input', function (ev) {
-      // update current event's title
+      // Update current event's title
       tempEvent.title = ev.target.value;
     });
 
     descriptionTextarea.addEventListener('change', function (ev) {
-      // update current event's title
+      // Update current event's title
       tempEvent.description = ev.target.value;
     });
 
@@ -279,13 +279,13 @@ export default {
         travelTimeGroup.style.display = 'flex';
       }
 
-      // change range settings based on the allDay
+      // Change range settings based on the allDay
       range.setOptions({
         controls: checked ? ['date'] : ['datetime'],
         responsive: checked ? datePickerResponsive : datetimePickerResponsive,
       });
 
-      // update current event's allDay property
+      // Update current event's allDay property
       tempEvent.allDay = checked;
     });
 
@@ -299,7 +299,7 @@ export default {
       responsive: datePickerResponsive,
       onChange: function (args) {
         var date = args.value;
-        // update event's start date
+        // Update event's start date
         tempEvent.start = date[0];
         tempEvent.end = date[1];
       },
@@ -307,16 +307,16 @@ export default {
 
     document.querySelectorAll('input[name=event-status]').forEach(function (elm) {
       elm.addEventListener('change', function () {
-        // update current event's free property
+        // Update current event's free property
         tempEvent.free = mobiscroll.getInst(freeSegmented).checked;
       });
     });
 
     deleteButton.addEventListener('click', function () {
-      // delete current event on button click
+      // Delete current event on button click
       calendar.removeEvent(tempEvent);
 
-      // save a local reference to the deleted event
+      // Save a local reference to the deleted event
       var deletedEvent = tempEvent;
 
       popup.close();

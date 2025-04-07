@@ -451,9 +451,6 @@ export class AppComponent {
         this.firstCalCont.addEventListener('scroll', this.handleFirstScroll);
       }
     },
-    // onEventDelete: (args) => {
-    //     this.reservations = this.reservations.filter((f) => { return f.id !== args.event.resource; });
-    // },
     onDestroy: () => {
       if (this.firstCalCont) {
         this.firstCalCont.removeEventListener('scroll', this.handleFirstScroll);

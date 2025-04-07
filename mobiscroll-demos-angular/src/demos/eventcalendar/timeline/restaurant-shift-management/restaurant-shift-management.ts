@@ -1956,7 +1956,7 @@ export class AppComponent {
   getShiftsNrs(date: any, slotId: number): any {
     const shiftList: any = [];
     for (const shift of this.shifts) {
-      // get slot id from resource id
+      // Get slot id from resource id
       const resourceNr = +shift.resource.toString().charAt(0);
       if (shift.slot === slotId && date === this.formatMyDate(shift.start)) {
         shiftList[resourceNr - 1] = (shiftList[resourceNr - 1] || 0) + 1;

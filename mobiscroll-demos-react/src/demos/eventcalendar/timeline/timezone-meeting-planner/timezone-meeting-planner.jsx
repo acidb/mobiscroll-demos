@@ -16,7 +16,7 @@ import './timezone-meeting-planner.css';
 // eslint-disable-next-line import/order
 import moment from 'moment-timezone';
 
-// setup Mobiscroll Timezone plugin with Moment
+// Setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
 setOptions({

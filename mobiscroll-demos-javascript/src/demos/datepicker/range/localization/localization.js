@@ -11,7 +11,7 @@ export default {
       controls: ['calendar'],
       select: 'range',
       display: 'inline',
-      locale: mobiscroll.localeEs, // sets the language of the component
+      locale: mobiscroll.localeEs, // Sets the language of the component
     });
   },
   // eslint-disable-next-line es5/no-template-literals

@@ -79,7 +79,6 @@ export default {
     ];
 
     mobiscroll.eventcalendar('#demo-event-tooltip-calendar', {
-      // context,
       view: {
         calendar: {
           type: 'month',

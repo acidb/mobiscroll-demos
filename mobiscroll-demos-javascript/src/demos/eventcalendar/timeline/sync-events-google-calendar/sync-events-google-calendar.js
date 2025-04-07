@@ -321,7 +321,7 @@ export default {
       display: 'anchored',
     });
 
-    // sign in
+    // Sign in
     calendarElm.addEventListener('click', function (ev) {
       if (ev.target.id === 'google-cal-sign-in') {
         if (!googleCalendarSync.isSignedIn()) {
@@ -334,14 +334,14 @@ export default {
       }
     });
 
-    // switch click
+    // Switch click
     popupElm.addEventListener('change', function (ev) {
       if (ev.target.classList.contains('google-calendar-switch')) {
         loadEvents(ev.target.checked, ev.target.value);
       }
     });
 
-    // edit click
+    // Edit click
     editButton.addEventListener('change', function (ev) {
       var isEditable = ev.target.checked;
       inst.setOptions({
@@ -352,14 +352,14 @@ export default {
       });
     });
 
-    // sign out
+    // Sign out
     popupElm.addEventListener('click', function (ev) {
       if (ev.target.id === 'google-cal-sign-in') {
         googleCalendarSync.signOut().catch(onError);
       }
     });
 
-    // init google client
+    // Init google client
     googleCalendarSync.init({
       apiKey: '<YOUR_GOOGLE_API_KEY>',
       clientId: '<YOUR_GOOGLE_CLIENT_ID>',

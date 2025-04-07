@@ -61,13 +61,13 @@ export default {
     ];
 
     function addMealPopup() {
-      // hide delete button inside add popup
+      // Hide delete button inside add popup
       deleteButton.style.display = 'none';
 
       deleteMeal = true;
       restoreMeal = false;
 
-      // set popup header text and buttons for adding
+      // Set popup header text and buttons for adding
       popup.setOptions({
         headerText: '<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start)) + '</div>',
         buttons: [
@@ -86,7 +86,7 @@ export default {
         ],
       });
 
-      // fill popup with a new event data
+      // Fill popup with a new event data
       mobiscroll.getInst(nameInput).value = tempMeal.title;
       mobiscroll.getInst(caloriesInput).value = '';
       mobiscroll.getInst(notesTextarea).value = '';
@@ -102,7 +102,7 @@ export default {
       var ev = args.event;
       var resource = args.resourceObj;
 
-      // show delete button inside edit popup
+      // Show delete button inside edit popup
       deleteButton.style.display = 'block';
 
       deleteMeal = false;
@@ -118,7 +118,7 @@ export default {
             text: 'Save',
             keyCode: 'enter',
             handler: function () {
-              // update event with the new properties on save button click
+              // Update event with the new properties on save button click
               calendar.updateEvent({
                 id: ev.id,
                 title: tempMeal.title,
@@ -137,7 +137,7 @@ export default {
         ],
       });
 
-      // fill popup with the selected event data
+      // Fill popup with the selected event data
       mobiscroll.getInst(nameInput).value = ev.title || '';
       mobiscroll.getInst(caloriesInput).value = ev.calories || '';
       mobiscroll.getInst(notesTextarea).value = ev.notes || '';
@@ -169,7 +169,7 @@ export default {
         };
       },
       onEventCreated: function (args) {
-        // store temporary event
+        // Store temporary event
         tempMeal = args.event;
         setTimeout(function () {
           addMealPopup();
@@ -283,11 +283,11 @@ export default {
     });
 
     deleteButton.addEventListener('click', function () {
-      // delete current event on button click
+      // Delete current event on button click
       calendar.removeEvent(tempMeal);
       popup.close();
 
-      // save a local reference to the deleted event
+      // Save a local reference to the deleted event
       var deletedMeal = tempMeal;
 
       mobiscroll.snackbar({

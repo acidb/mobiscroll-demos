@@ -49,5 +49,5 @@ export class AppComponent {
       value: 'sf',
     },
   ];
-  myLocale = localeEs; // sets the language of the component
+  myLocale = localeEs; // Sets the language of the component
 }

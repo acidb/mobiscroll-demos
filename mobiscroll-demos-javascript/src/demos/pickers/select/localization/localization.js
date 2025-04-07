@@ -10,7 +10,7 @@ export default {
     mobiscroll.select('#demo', {
       inputElement: document.getElementById('demo-input'),
       display: 'bottom',
-      locale: mobiscroll.localeEs, // sets the language of the component
+      locale: mobiscroll.localeEs, // Sets the language of the component
     });
   },
   // eslint-disable-next-line es5/no-template-literals

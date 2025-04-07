@@ -316,10 +316,10 @@ const App: FC = () => {
 
   useEffect(() => {
     for (const event of myEvents) {
-      // convert dates to date objects
+      // Convert dates to date objects
       event.start = event.start ? new Date(event.start as string) : event.start;
       event.end = event.end ? new Date(event.end as string) : event.end;
-      // mark past events as fixed by setting the event.editable property to false
+      // Mark past events as fixed by setting the event.editable property to false
       event.editable = !!(event.start && today < event.start);
     }
   }, [myEvents]);

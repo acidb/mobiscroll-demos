@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from 'react';
 import './event-hooks.css';
 
 setOptions({
-  // theme
-  // locale
+  // localeJs,
+  // themeJs
 });
 
 function App() {

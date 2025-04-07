@@ -26,7 +26,7 @@ export class AppComponent {
   }
 
   setMoment(): void {
-    // make sure that moment js is loaded
+    // Make sure that moment js is loaded
     this.momentJs = moment([2020, 2, 6, 15, 30]);
   }
 }

@@ -7,7 +7,7 @@ setOptions({
   // themeJs
 });
 
-// setup Mobiscroll Timezone plugin with Moment
+// Setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
 function App() {

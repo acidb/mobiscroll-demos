@@ -12,10 +12,10 @@ export default {
       var event = args.event;
       var resources = Array.isArray(event.resource) ? event.resource : [event.resource];
 
-      // store temporary event
+      // Store temporary event
       tempEvent = event;
 
-      // fill popup with the current event data
+      // Fill popup with the current event data
       mobiscroll.getInst(titleInput).value = event.title;
 
       for (var i = 0; i < nameSegmented.length; i++) {
@@ -25,7 +25,7 @@ export default {
         segmentedInst.checked = resources.indexOf(value) !== -1;
       }
 
-      // set anchor for the popup
+      // Set anchor for the popup
       popup.setOptions({ anchor: args.target ? args.target : args.domEvent.target });
       popup.open();
     }
@@ -157,7 +157,7 @@ export default {
 
             deleteEvent = false;
 
-            // update event with the new properties on OK button click
+            // Update event with the new properties on OK button click
             calendar.updateEvent(tempEvent);
             popup.close();
           },

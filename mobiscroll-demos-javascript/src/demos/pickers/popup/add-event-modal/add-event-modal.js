@@ -82,7 +82,6 @@ export default {
             calendar.addEvent(newEvent);
             calendar.navigateToEvent(newEvent);
             mobiscroll.toast({
-              // context,
               message: 'Event added',
             });
             popup.close();
@@ -122,7 +121,7 @@ export default {
 
     eventAllDay.addEventListener('change', function () {
       var checked = this.checked;
-      // change range settings based on the allDay
+      // Change range settings based on the allDay
       range.setOptions({
         controls: checked ? ['calendar'] : ['calendar', 'time'],
       });

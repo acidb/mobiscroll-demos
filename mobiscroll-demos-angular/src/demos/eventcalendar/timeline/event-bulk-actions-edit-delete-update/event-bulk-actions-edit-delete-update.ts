@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
 
         origEvent.recurringException = [...exc, event.start];
 
-        // update the event in the list
+        // Update the event in the list
         const index = eventsToUpdate.findIndex((x) => x.id === origEvent['id']);
         eventsToUpdate.splice(index, 1, origEvent);
       } else {
@@ -110,7 +110,7 @@ export class AppComponent implements OnInit {
               const exc = (origEvent.recurringException as string[]) || [];
               origEvent.recurringException = [...exc, event.start];
 
-              // update the event in the list
+              // Update the event in the list
               const index = eventsToUpdate.findIndex((x) => x.id === origEvent['id']);
               eventsToUpdate.splice(index, 1, origEvent);
             } else {
@@ -220,7 +220,7 @@ export class AppComponent implements OnInit {
     },
     onClose: () => {
       setTimeout(() => {
-        // clear selection
+        // Clear selection
         this.selectValue = null;
       });
     },

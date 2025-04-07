@@ -68,9 +68,6 @@ export default {
             // Prevent task overlap
             inst.removeEvent(event);
             mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               message: 'No space for task',
             });
           } else {
@@ -220,9 +217,6 @@ export default {
             inst.updateEvent(oldEvent);
 
             mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               message: 'No space for task',
             });
           }
@@ -242,9 +236,6 @@ export default {
 
         msg &&
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: msg,
           });
       },

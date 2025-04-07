@@ -79,11 +79,11 @@ export class AppComponent implements OnInit {
       this.endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1, 0);
 
       setTimeout(() => {
-        // set button text
+        // Set button text
         this.rangeText = this.getFormattedRange(this.startDate, this.endDate);
-        // set range value
+        // Set range value
         this.rangeValue = [this.startDate, this.endDate];
-        // navigate the calendar
+        // Navigate the calendar
         this.selectedDate = this.startDate;
       });
     },
@@ -92,11 +92,11 @@ export class AppComponent implements OnInit {
   onClose(): void {
     const date = this.rangeValue;
     if (date[0] && date[1]) {
-      // navigate the calendar
+      // Navigate the calendar
       this.selectedDate = date[0];
       this.startDate = date[0];
       this.endDate = date[1];
-      // set calendar view
+      // Set calendar view
       this.refDate = date[0];
       this.calView = {
         timeline: {
@@ -110,7 +110,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // returns the formatted date
+  // Returns the formatted date
   getFormattedRange(start: any, end: any): string {
     return (
       formatDate('MMM D, YYYY', new Date(start)) +
@@ -118,7 +118,7 @@ export class AppComponent implements OnInit {
     );
   }
 
-  // returns the number of days between two dates
+  // Returns the number of days between two dates
   getNrDays(start: any, end: any): number {
     return Math.round(Math.abs((end.setHours(0) - start.setHours(0)) / (24 * 60 * 60 * 1000))) + 1;
   }

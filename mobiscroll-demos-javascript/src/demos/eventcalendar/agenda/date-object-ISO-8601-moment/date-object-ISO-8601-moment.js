@@ -87,7 +87,7 @@ export default {
     document.getElementById('demo-add-moment').addEventListener(
       'click',
       function () {
-        // make sure that moment js is loaded
+        // Make sure that moment js is loaded
         dateMoment.addEvent({
           start: moment([2020, 4, 21, 11]),
           end: moment([2020, 4, 21, 14]),

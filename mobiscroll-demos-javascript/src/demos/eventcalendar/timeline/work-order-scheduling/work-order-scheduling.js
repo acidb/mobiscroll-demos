@@ -159,13 +159,13 @@ export default {
     ];
 
     function createAddPopup(elm) {
-      // hide delete button inside add popup
+      // Hide delete button inside add popup
       deleteButton.style.display = 'none';
 
       deleteEvent = true;
       restoreEvent = false;
 
-      // set popup header text and buttons for adding
+      // Set popup header text and buttons for adding
       popup.setOptions({
         headerText: 'New work order',
         buttons: [
@@ -177,7 +177,7 @@ export default {
               calendar.updateEvent(tempEvent);
               deleteEvent = false;
 
-              // navigate the calendar to the correct view
+              // Navigate the calendar to the correct view
               calendar.navigateToEvent(tempEvent);
 
               popup.close();
@@ -187,7 +187,7 @@ export default {
         ],
       });
 
-      // fill popup with a new event data
+      // Fill popup with a new event data
       mobiscroll.getInst(titleInput).value = tempEvent.title;
       mobiscroll.getInst(locationInput).value = tempEvent.location;
       mobiscroll.getInst(billInput).value = tempEvent.cost;
@@ -195,7 +195,7 @@ export default {
       range.setVal([tempEvent.start, tempEvent.end]);
       setCheckboxes(tempEvent.resource);
 
-      // set anchor for the popup
+      // Set anchor for the popup
       popup.setOptions({ anchor: elm });
 
       popup.open();
@@ -204,13 +204,13 @@ export default {
     function createEditPopup(args) {
       var ev = args.event;
 
-      // show delete button inside edit popup
+      // Show delete button inside edit popup
       deleteButton.style.display = 'block';
 
       deleteEvent = false;
       restoreEvent = true;
 
-      // set popup header text and buttons for editing
+      // Set popup header text and buttons for editing
       popup.setOptions({
         headerText: 'Edit event',
         buttons: [
@@ -231,10 +231,10 @@ export default {
                 color: ev.color,
                 resource: ev.resource,
               };
-              // update event with the new properties on save button click
+              // Update event with the new properties on save button click
               calendar.updateEvent(updatedEvent);
 
-              // navigate the calendar to the correct view
+              // Navigate the calendar to the correct view
               calendar.navigateToEvent(updatedEvent);
 
               restoreEvent = false;
@@ -245,7 +245,7 @@ export default {
         ],
       });
 
-      // fill popup with the selected event data
+      // Fill popup with the selected event data
       mobiscroll.getInst(titleInput).value = ev.title || '';
       mobiscroll.getInst(locationInput).value = ev.location || '';
       mobiscroll.getInst(billInput).value = ev.cost || 0;
@@ -253,7 +253,7 @@ export default {
       range.setVal([ev.start, ev.end]);
       setCheckboxes(ev.resource);
 
-      // set anchor for the popup
+      // Set anchor for the popup
       popup.setOptions({ anchor: args.domEvent.currentTarget });
       popup.open();
     }
@@ -381,7 +381,7 @@ export default {
       },
       onEventCreated: function (args) {
         popup.close();
-        // store temporary event
+        // Store temporary event
         tempEvent = args.event;
         createAddPopup(args.target);
       },
@@ -444,22 +444,22 @@ export default {
     });
 
     titleInput.addEventListener('input', function (ev) {
-      // update current event's title
+      // Update current event's title
       tempEvent.title = ev.target.value;
     });
 
     locationInput.addEventListener('input', function (ev) {
-      // update current event's location
+      // Update current event's location
       tempEvent.location = ev.target.value;
     });
 
     billInput.addEventListener('input', function (ev) {
-      // update current event's cost
+      // Update current event's cost
       tempEvent.cost = +ev.target.value || 0;
     });
 
     notesTextarea.addEventListener('change', function (ev) {
-      // update current event's description
+      // Update current event's description
       tempEvent.notes = ev.target.value;
     });
 
@@ -475,18 +475,18 @@ export default {
       maxTime: '22:00',
       onChange: function (args) {
         var date = args.value;
-        // update event's start date
+        // Update event's start date
         tempEvent.start = date[0];
         tempEvent.end = date[1];
       },
     });
 
     deleteButton.addEventListener('click', function () {
-      // delete current event on button click
+      // Delete current event on button click
       calendar.removeEvent(tempEvent);
       popup.close();
 
-      // save a local reference to the deleted event
+      // Save a local reference to the deleted event
       var deletedEvent = tempEvent;
 
       mobiscroll.snackbar({
