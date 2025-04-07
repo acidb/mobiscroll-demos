@@ -40,7 +40,7 @@ function Task(props: { data: MbscResource }) {
           <div className="mds-ext-res-name">{resource.name}</div>
           <div className="mds-ext-res-title">{resource.title}</div>
         </div>
-        <Draggable dragData={resource} element={draggable} type="resource" />
+        <Draggable dragData={resource} element={draggable} type="resource" theme="auto" />
       </div>
     </div>
   );

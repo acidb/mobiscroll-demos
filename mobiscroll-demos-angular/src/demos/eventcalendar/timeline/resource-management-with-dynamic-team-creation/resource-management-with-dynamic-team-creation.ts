@@ -537,9 +537,9 @@ export class AppComponent {
     });
   }
 
-  onItemDrop(args: MbscItemDragEvent<MbscResource>): void {
+  onItemDrop(args: MbscItemDragEvent): void {
     if (args.data) {
-      this.availableInstallers = [...this.availableInstallers, args.data];
+      this.availableInstallers = [...this.availableInstallers, args.data as MbscResource];
     }
   }
 }

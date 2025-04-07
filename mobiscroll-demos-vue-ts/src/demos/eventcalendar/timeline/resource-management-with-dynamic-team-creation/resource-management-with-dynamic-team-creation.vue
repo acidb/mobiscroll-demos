@@ -24,7 +24,7 @@ setOptions({
   // theme
 })
 
-const dropCont = useTemplateRef('dropCont')
+const dropCont = useTemplateRef<HTMLElement>('drop-cont')
 const timelineRef = ref()
 const myView: MbscEventcalendarView = {
   timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' }
@@ -559,7 +559,7 @@ function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
   <MbscPage cssClass="mds-ext-res-drop">
     <div class="mbsc-grid mbsc-no-padding">
       <div class="mbsc-row">
-        <div ref="dropCont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
+        <div ref="drop-cont" class="mbsc-col-sm-3 mbsc-flex-col mds-ext-res-drop-cont">
           <MbscDropcontainer :element="dropCont" @item-drop="handleItemDrop">
             <div class="mds-ext-res-header">Available technicians</div>
 
@@ -575,7 +575,12 @@ function handleResourceOrderUpdate(args: MbscResourceOrderEvent) {
                       <div class="mds-ext-res-title">{{ res.title }}</div>
                     </div>
                   </div>
-                  <MbscDraggable :element="dragElements[i]" :dragData="res" type="resource" />
+                  <MbscDraggable
+                    :element="dragElements[i]"
+                    :dragData="res"
+                    type="resource"
+                    theme="auto"
+                  />
                 </div>
               </div>
             </div>
