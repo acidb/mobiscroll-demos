@@ -1,0 +1,24 @@
+<mbsc-page class="mds-full-height">
+  <div class="mbsc-flex-col mds-full-height">
+    <mbsc-segmented-group class="mbsc-flex-none" [(ngModel)]="myWidth">
+      <mbsc-segmented value="small">50px</mbsc-segmented>
+      <mbsc-segmented value="medium">100px</mbsc-segmented>
+      <mbsc-segmented value="large">150px</mbsc-segmented>
+    </mbsc-segmented-group>
+
+    <mbsc-segmented-group class="mbsc-flex-none" [(ngModel)]="showResources">
+      <mbsc-segmented value="on">With resources</mbsc-segmented>
+      <mbsc-segmented value="off">Without resources</mbsc-segmented>
+    </mbsc-segmented-group>
+
+    <div class="mds-overflow-hidden mbsc-flex-1-1">
+      <mbsc-eventcalendar
+        [class]="'mds-col-width-' + myWidth"
+        [data]="showResources === 'on' ? myResEvents : myEvents"
+        [resources]="showResources === 'on' ? myResources : []"
+        [view]="myView"
+        groupBy="date"
+      ></mbsc-eventcalendar>
+    </div>
+  </div>
+</mbsc-page>

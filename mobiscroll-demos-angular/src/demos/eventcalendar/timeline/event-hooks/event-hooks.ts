@@ -142,6 +142,12 @@ export class AppComponent implements OnInit {
   onPageLoading(): void {
     // Use it to load data on demand
   }
+  onResourceClick(): void {
+    // Logic for resource click
+  }
+  onResourceDoubleClick(): void {
+    // Logic for resource double click
+  }
   onResourceDragEnd(): void {
     /* Logic for resource drag start */
   }
@@ -150,6 +156,9 @@ export class AppComponent implements OnInit {
   }
   onResourceOrderUpdate(): void {
     // Logic for resource update
+  }
+  onResourceRightClick(): void {
+    // Logic for resource right click
   }
   onSelectedDateChange(): void {
     // Use it to keep track of the selected date externally

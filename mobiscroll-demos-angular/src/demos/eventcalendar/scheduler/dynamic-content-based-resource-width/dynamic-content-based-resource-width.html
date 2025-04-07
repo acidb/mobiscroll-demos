@@ -1,0 +1,14 @@
+<mbsc-eventcalendar
+  [data]="myEvents"
+  groupBy="date"
+  [resources]="myResources"
+  [view]="myView"
+  [resourceTemplate]="resourceTemp"
+></mbsc-eventcalendar>
+
+<ng-template #resourceTemp let-resource>
+  <div class="mds-variable-res-col-name mbsc-flex mbsc-align-items-center mbsc-justify-content-center">{{ resource.name }}</div>
+  <div class="mds-variable-res-col-icons">
+    <div *ngFor="let icon of getIcons(resource)" [innerHTML]="icon.safeSvg" [title]="icon.title" class="mds-variable-res-col-icon"></div>
+  </div>
+</ng-template>

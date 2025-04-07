@@ -8,11 +8,30 @@ export default {
       // theme
     });
 
+    var myResources = [
+      {
+        id: 1,
+        name: 'Ryan',
+        color: '#f7c4b4',
+      },
+      {
+        id: 2,
+        name: 'Kate',
+        color: '#c6f1c9',
+      },
+      {
+        id: 3,
+        name: 'John',
+        color: '#e8d0ef',
+      },
+    ];
+
     var inst = mobiscroll.eventcalendar('#demo', {
       dragToCreate: true,
       dragToMove: true,
       dragToResize: true,
       externalDrop: true,
+      resources: myResources,
       view: {
         schedule: {
           type: 'day',
@@ -104,13 +123,22 @@ export default {
       onPageLoading: function () {
         // Use it to load data on demand
       },
+      onResourceClick: function () {
+        // Logic for resource click
+      },
+      onResourceDoubleClick: function () {
+        // Logic for resource double click
+      },
+      onResourceRightClick: function () {
+        // Logic for resource right click
+      },
       onSelectedDateChange: function () {
         // Use it to keep track of the selected date externally
       },
     });
 
     mobiscroll.getJson(
-      'https://trial.mobiscroll.com/events/?vers=5',
+      'https://trial.mobiscroll.com/resource-events/',
       function (events) {
         inst.setEvents(events);
       },

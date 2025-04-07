@@ -1,0 +1,30 @@
+<mbsc-eventcalendar
+  class="mds-healthcare"
+  [data]="myEvents"
+  [dragTimeStep]="20"
+  [eventOverlap]="false"
+  groupBy="date"
+  [invalid]="myInvalids"
+  [dragToCreate]="true"
+  [resources]="myResources"
+  [view]="myView"
+  [scheduleEventContentTemplate]="eventTemplate"
+  [resourceTemplate]="resourceTemplate"
+  (onEventCreated)="showToast('Appointment created')"
+  (onEventDeleted)="showToast('Appointment deleted')"
+  (onEventUpdated)="showToast('Appointment updated')"
+></mbsc-eventcalendar>
+
+<ng-template #resourceTemplate let-resource>
+  <div *ngIf="resource.cssClass === 'mds-healthcare-res-col'" class="mbsc-flex">
+    <img class="mds-healthcare-res-avatar mbsc-flex-none" [alt]="resource.name" [src]="resource.img" />
+    <div class="mds-healthcare-res-cont mbsc-flex-1-1">
+      <div class="mds-healthcare-res-name">{{ resource.name }}</div>
+      <div class="mds-healthcare-res-desc">{{ resource.description }}</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #eventTemplate let-event>
+  <ng-container *ngIf="!event.original!.type">Patient: {{ event.title === 'New event' ? 'John Doe' : event.title }}</ng-container>
+</ng-template>

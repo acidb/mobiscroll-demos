@@ -137,6 +137,12 @@ export default {
       onPageLoading: function () {
         // Use it to load data on demand
       },
+      onResourceClick: function () {
+        // Logic for resource click
+      },
+      onResourceDoubleClick: function () {
+        // Logic for resource double click
+      },
       onResourceDragEnd: function () {
         /* Logic for resource drag end */
       },
@@ -145,6 +151,9 @@ export default {
       },
       onResourceOrderUpdate: function () {
         // Logic for resource update
+      },
+      onResourceRightClick: function () {
+        // Logic for resource right click
       },
       onSelectedDateChange: function () {
         // Use it to keep track of the selected date externally
