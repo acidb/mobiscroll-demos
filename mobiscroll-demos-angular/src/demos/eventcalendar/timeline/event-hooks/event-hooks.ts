@@ -157,6 +157,24 @@ export class AppComponent implements OnInit {
   onResourceOrderUpdate(): void {
     // Logic for resource update
   }
+  onResourceCreate(): void {
+    // Logic for resource create
+  }
+  onResourceCreated(): void {
+    // Logic for resource created
+  }
+  onResourceDelete(): void {
+    // Logic for resource delete
+  }
+  onResourceDeleted(): void {
+    // Logic for resource deleted
+  }
+  onResourceDragEnter(): void {
+    // Logic for resource update
+  }
+  onResourceDragLeave(): void {
+    // Logic for resource update
+  }
   onResourceRightClick(): void {
     // Logic for resource right click
   }
@@ -172,6 +190,11 @@ export class AppComponent implements OnInit {
   dragData2 = {
     title: 'External drag 2',
     color: '#ddfcf7',
+  };
+
+  dragData3 = {
+    name: 'External resource',
+    color: '#d19494',
   };
 
   ngOnInit(): void {

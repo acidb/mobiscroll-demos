@@ -44,6 +44,11 @@ const dragData2 = {
   color: '#ddfcf7'
 }
 
+const dragData3 = {
+  name: 'External resource',
+  color: '#d19494'
+}
+
 function handleCellClick() {
   // Logic for event click
 }
@@ -134,6 +139,24 @@ function handleResourceDragStart() {
 function handleResourceOrderUpdate() {
   // Logic for resource update
 }
+function handleResourceCreate() {
+  // Logic for resource create
+}
+function handleResourceCreated() {
+  // Logic for resource created
+}
+function handleResourceDelete() {
+  // Logic for resource delete
+}
+function handleResourceDeleted() {
+  // Logic for resource deleted
+}
+function handleResourceDragEnter() {
+  // Logic for resource update
+}
+function handleResourceDragLeave() {
+  // Logic for resource update
+}
 function handleResourceRightClick() {
   // Logic for resource right click
 }
@@ -163,6 +186,11 @@ onMounted(() => {
     <div class="draggable-text">Drag me to calendar</div>
     <MbscDraggable :element="$refs.dragElm2" :dragData="dragData2" />
   </div>
+  <div ref="dragElm3" class="event-hooks-draggable" :style="{ background: '#d19494' }">
+    <div class="draggable-title">External resource</div>
+    <div class="draggable-text">Drag me to calendar</div>
+    <MbscDraggable :element="$refs.dragElm3" :dragData="dragData3" type="resource" />
+  </div>
   <MbscEventcalendar
     :view="myView"
     :data="myEvents"
@@ -172,6 +200,7 @@ onMounted(() => {
     :dragToMove="true"
     :dragToResize="true"
     :externalDrop="true"
+    :externalResourceDrop="true"
     @cell-click="handleCellClick"
     @cell-double-click="handleCellDoubleClick"
     @cell-right-click="handleCellRightClick"
@@ -202,6 +231,12 @@ onMounted(() => {
     @resource-drag-end="handleResourceDragEnd"
     @resource-drag-start="handleResourceDragStart"
     @resource-order-update="handleResourceOrderUpdate"
+    @resource-create="handleResourceCreate"
+    @resource-created="handleResourceCreated"
+    @resource-delete="handleResourceDelete"
+    @resource-deleted="handleResourceDeleted"
+    @resource-drag-enter="handleResourceDragEnter"
+    @resource-drag-leave="handleResourceDragLeave"
     @resource-right-click="handleResourceRightClick"
     @selected-date-change="handleSelectedDateChange"
   />

@@ -25,10 +25,16 @@ const dragData2 = {
   color: '#ddfcf7',
 };
 
+const dragData3 = {
+  name: 'External resource',
+  color: '#d19494',
+};
+
 const App: FC = () => {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
   const [draggable1, setDraggable1] = useState<HTMLElement | null>(null);
   const [draggable2, setDraggable2] = useState<HTMLElement | null>(null);
+  const [draggable3, setDraggable3] = useState<HTMLElement | null>(null);
 
   const myInvalid = [
     {
@@ -110,11 +116,18 @@ const App: FC = () => {
         <div className="draggable-text">Drag me to calendar</div>
         <Draggable dragData={dragData2} element={draggable2} theme="auto" />
       </div>
+      <div ref={setDraggable3} className="event-hooks-draggable" style={{ background: '#d19494' }}>
+        <div className="draggable-title">External resource</div>
+        <div className="draggable-text">Drag me to calendar</div>
+        <Draggable dragData={dragData3} element={draggable3} type="resource" />
+      </div>
       <Eventcalendar
         data={myEvents}
         dragToCreate={true}
         dragToMove={true}
         dragToResize={true}
+        externalDrop={true}
+        externalResourceDrop={true}
         view={myView}
         resources={myResources}
         invalid={myInvalid}
@@ -200,6 +213,24 @@ const App: FC = () => {
           /* Logic for resource drag start */
         }}
         onResourceOrderUpdate={() => {
+          // Logic for resource update
+        }}
+        onResourceCreate={() => {
+          // Logic for resource create
+        }}
+        onResourceCreated={() => {
+          // Logic for resource created
+        }}
+        onResourceDelete={() => {
+          // Logic for resource delete
+        }}
+        onResourceDeleted={() => {
+          // Logic for resource deleted
+        }}
+        onResourceDragEnter={() => {
+          // Logic for resource update
+        }}
+        onResourceDragLeave={() => {
           // Logic for resource update
         }}
         onResourceRightClick={() => {

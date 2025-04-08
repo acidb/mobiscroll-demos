@@ -13,6 +13,7 @@ export default {
       dragToMove: true,
       dragToResize: true,
       externalDrop: true,
+      externalResourceDrop: true,
       view: {
         timeline: {
           type: 'day',
@@ -152,6 +153,24 @@ export default {
       onResourceOrderUpdate: function () {
         // Logic for resource update
       },
+      onResourceCreate: function () {
+        // Logic for resource create
+      },
+      onResourceCreated: function () {
+        // Logic for resource created
+      },
+      onResourceDelete: function () {
+        // Logic for resource delete
+      },
+      onResourceDeleted: function () {
+        // Logic for resource deleted
+      },
+      onResourceDragEnter: function () {
+        // Logic for resource update
+      },
+      onResourceDragLeave: function () {
+        // Logic for resource update
+      },
       onResourceRightClick: function () {
         // Logic for resource right click
       },
@@ -176,6 +195,10 @@ export default {
 </div>
 <div mbsc-draggable data-drag-data='{"title": "External drag 2", "color": "#ddfcf7"}' class="event-hooks-draggable" style="background: #ddfcf7;">
     <div class="draggable-title">External drag 2</div>
+    <div class="draggable-text">Drag me to calendar</div>
+</div>
+<div mbsc-draggable data-drag-data='{"name": "External resource", "color": "#d19494"}' data-type="resource" class="event-hooks-draggable" style="background: #d19494;">
+    <div class="draggable-title">External resource drag</div>
     <div class="draggable-text">Drag me to calendar</div>
 </div>
 <div id="demo"></div>

@@ -8,6 +8,11 @@
   <div class="draggable-text">Drag me to calendar</div>
 </div>
 
+<div mbsc-draggable [dragData]="dragData3" class="event-hooks-draggable" [ngStyle]="{background: '#d19494'}" type="resource">
+  <div class="draggable-title">External resource</div>
+  <div class="draggable-text">Drag me to calendar</div>
+</div>
+
 <mbsc-eventcalendar
   [data]="myEvents"
   [view]="view"
@@ -17,6 +22,7 @@
   [dragToMove]="true"
   [dragToResize]="true"
   [externalDrop]="true"
+  [externalResourceDrop]="true"
   (onCellClick)="onCellClick()"
   (onCellDoubleClick)="onCellDoubleClick()"
   (onCellRightClick)="onCellRightClick()"
@@ -39,10 +45,16 @@
   (onPageLoaded)="onPageLoaded()"
   (onPageLoading)="onPageLoading()"
   (onResourceClick)="onResourceClick()"
+  (onResourceCreate)="onResourceCreate()"
+  (onResourceCreated)="onResourceCreated()"
+  (onResourceDelete)="onResourceDelete()"
+  (onResourceDelete)="onResourceDeleted()"
   (onResourceDoubleClick)="onResourceDoubleClick()"
   (onResourceDragStart)="onResourceDragStart()"
   (onResourceDragEnd)="onResourceDragEnd()"
   (onResourceOrderUpdate)="onResourceOrderUpdate()"
+  (onResourceDragEnter)="onResourceDragEnter()"
+  (onResourceDragLeave)="onResourceDragLeave()"
   (onResourceRightClick)="onResourceRightClick()"
   (onSelectedDateChange)="onSelectedDateChange()"
 ></mbsc-eventcalendar>
