@@ -71,6 +71,7 @@ const dragData2: MbscCalendarEvent = {
 }
 
 const dragData3: MbscResource = {
+  id: 'test-res',
   name: 'External resource',
   color: '#d19494'
 }
@@ -257,7 +258,7 @@ onMounted(() => {
   <div ref="dragElm3" class="event-hooks-draggable" :style="{ background: '#d19494' }">
     <div class="draggable-title">External resource</div>
     <div class="draggable-text">Drag me to calendar</div>
-    <MbscDraggable :element="$refs.dragElm3" :dragData="dragData3" type="resource" />
+    <MbscDraggable :element="dragElm3" :dragData="dragData3" type="resource" theme="auto" />
   </div>
   <MbscEventcalendar
     :view="myView"

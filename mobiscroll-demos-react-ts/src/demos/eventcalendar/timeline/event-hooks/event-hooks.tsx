@@ -119,7 +119,7 @@ const App: FC = () => {
       <div ref={setDraggable3} className="event-hooks-draggable" style={{ background: '#d19494' }}>
         <div className="draggable-title">External resource</div>
         <div className="draggable-text">Drag me to calendar</div>
-        <Draggable dragData={dragData3} element={draggable3} type="resource" />
+        <Draggable dragData={dragData3} element={draggable3} type="resource" theme="auto" />
       </div>
       <Eventcalendar
         data={myEvents}
