@@ -173,6 +173,7 @@ const myInvalid = ref([
 ])
 
 const dragElements = ref([])
+const dropCont = ref()
 const myColors = ref([])
 const contBg = ref('')
 const toastMessage = ref('')
@@ -309,7 +310,7 @@ onMounted(() => {
         :style="{ background: contBg }"
       >
         <MbscDropcontainer
-          :element="$refs.dropCont"
+          :element="dropCont"
           @item-drop="handleItemDrop"
           @item-drag-enter="handleItemDragEnter"
           @item-drag-leave="handleItemDragLeave"
