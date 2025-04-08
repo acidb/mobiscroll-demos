@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './activity-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './activity-calendar.html',
+  standalone: false,
 })
 export class AppComponent {
   activities = [

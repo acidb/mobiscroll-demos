@@ -21,6 +21,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './meal-planner.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(
@@ -102,7 +103,7 @@ export class AppComponent implements OnInit {
     fullScreen: true,
     onClose: () => {
       if (!this.isEdit) {
-        // refresh the list, if add popup was canceled, to remove the temporary event
+        // Refresh the list, if add popup was canceled, to remove the temporary event
         this.myMeals = [...this.myMeals];
       }
     },
@@ -136,14 +137,14 @@ export class AppComponent implements OnInit {
       const resource = args.resourceObj!;
       this.isEdit = true;
       this.tempMeal = event;
-      // fill popup form with event data
+      // Fill popup form with event data
       this.loadPopupForm(event);
-      // set popup options
+      // Set popup options
       this.popupButtons = this.popupEditButtons;
       this.popupHeader =
         '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>';
       this.type = +event.resource;
-      // open the popup
+      // Open the popup
       this.popup.open();
     },
     onEventCreated: (args: any) => {
@@ -151,14 +152,14 @@ export class AppComponent implements OnInit {
       setTimeout(() => {
         this.isEdit = false;
         this.tempMeal = event;
-        // fill popup form with event data
+        // Fill popup form with event data
         this.loadPopupForm(event);
-        // set popup options
+        // Set popup options
         this.popupButtons = this.popupAddButtons;
         this.popupHeader =
           '<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(this.tempMeal.start)) + '</div>';
         this.type = +event.resource;
-        // open the popup
+        // Open the popup
         this.popup.open();
       });
     },
@@ -186,13 +187,13 @@ export class AppComponent implements OnInit {
     this.tempMeal.allDay = true;
     this.tempMeal.resource = this.type;
     if (this.isEdit) {
-      // update the event in the list
+      // Update the event in the list
       this.myMeals = [...this.myMeals];
     } else {
-      // add the new event to the list
+      // Add the new event to the list
       this.myMeals = [...this.myMeals, this.tempMeal];
     }
-    // close the popup
+    // Close the popup
     this.popup.close();
   }
   deleteMeal(event: MbscCalendarEvent): void {

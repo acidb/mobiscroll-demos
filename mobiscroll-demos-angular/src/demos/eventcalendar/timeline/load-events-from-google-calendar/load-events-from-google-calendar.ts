@@ -18,6 +18,7 @@ setOptions({
   styleUrl: './load-events-from-google-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-from-google-calendar.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-forms-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
+  standalone: false,
 })
 export class AppComponent {
   sel = 'Opel';

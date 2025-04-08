@@ -11,6 +11,7 @@ setOptions({
   selector: 'app-scheduler-desktop-week-view',
   templateUrl: './desktop-week-view.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

@@ -2,7 +2,7 @@ import { Datepicker, MbscDatepickerChangeEvent, momentTimezone, setOptions /* lo
 import moment from 'moment-timezone';
 import { FC, useCallback, useState } from 'react';
 
-// setup Mobiscroll Timezone plugin with Moment
+// Setup Mobiscroll Timezone plugin with Moment
 momentTimezone.moment = moment;
 
 setOptions({

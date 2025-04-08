@@ -16,6 +16,7 @@ const maxDate = dyndatetime('y,m+6,d');
   styleUrl: './appointment-booking.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './appointment-booking.html',
+  standalone: false,
 })
 export class AppComponent {
   constructor(private http: HttpClient) {}

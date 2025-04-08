@@ -19,6 +19,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-setting-the-timezone',
   templateUrl: './setting-the-timezone.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

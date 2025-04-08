@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './timeline-time-grid.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-time-grid.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

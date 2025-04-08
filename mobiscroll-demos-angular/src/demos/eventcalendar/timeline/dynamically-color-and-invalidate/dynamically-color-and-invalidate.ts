@@ -54,6 +54,7 @@ const swColors: MbscCalendarColor[] = [
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamically-color-and-invalidate.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

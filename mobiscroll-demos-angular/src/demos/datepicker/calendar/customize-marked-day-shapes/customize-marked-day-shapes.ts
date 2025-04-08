@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './customize-marked-day-shapes.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customize-marked-day-shapes.html',
+  standalone: false,
 })
 export class AppComponent {
   marked = [

@@ -308,9 +308,6 @@ const App: FC = () => {
     },
     [isNewEvent, myEvents, tempEvent],
   );
-  // const onEventCreate = useCallback((args, inst) => {
-  //   args.event.resource = [1, 2, 3, 4, 5, 6];
-  // }, []);
 
   return (
     <>

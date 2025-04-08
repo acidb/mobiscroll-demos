@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-move-resize-drag-drop-to-create-events',
   templateUrl: './move-resize-drag-drop-to-create-events.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

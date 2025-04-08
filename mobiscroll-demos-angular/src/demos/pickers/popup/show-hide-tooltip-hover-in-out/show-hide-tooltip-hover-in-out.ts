@@ -19,6 +19,7 @@ setOptions({
   styleUrl: './show-hide-tooltip-hover-in-out.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-hide-tooltip-hover-in-out.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('popup', { static: false }) popup!: MbscPopup;

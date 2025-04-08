@@ -11,6 +11,7 @@ setOptions({
   styleUrl: './week-to-month.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './week-to-month.html',
+  standalone: false,
 })
 export class AppComponent {
   view = 'week';

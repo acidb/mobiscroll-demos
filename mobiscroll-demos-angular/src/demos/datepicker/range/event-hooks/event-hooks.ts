@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-range-event-hooks',
   templateUrl: './event-hooks.html',
+  standalone: false,
 })
 export class AppComponent {
   onActiveDateChange(): void {

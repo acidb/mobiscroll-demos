@@ -274,21 +274,21 @@ export default {
       },
     });
 
-    // sign in
+    // Sign in
     loginButton.addEventListener('click', function () {
       if (!outlookCalendarSync.isSignedIn()) {
         outlookCalendarSync.signIn().catch(onError);
       }
     });
 
-    // switch click
+    // Switch click
     loggedInCont.addEventListener('change', function (ev) {
       if (ev.target.classList.contains('outlook-calendar-switch')) {
         loadEvents(ev.target.checked, ev.target.value);
       }
     });
 
-    // edit click
+    // Edit click
     editButton.addEventListener('change', function (ev) {
       var isEditable = ev.target.checked;
       inst.setOptions({
@@ -299,12 +299,12 @@ export default {
       });
     });
 
-    // sign out
+    // Sign out
     logoutButton.addEventListener('click', function () {
       outlookCalendarSync.signOut().catch(onError);
     });
 
-    // init outlook client
+    // Init outlook client
     outlookCalendarSync.init({
       clientId: '<YOUR_OUTLOOK_CLIENT_ID>',
       redirectUri: '<YOUR_OUTLOOK_REDIRECT_URI>',

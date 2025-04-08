@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-range-mobile-desktop-display',
   templateUrl: './mobile-desktop-display.html',
+  standalone: false,
 })
 export class AppComponent {}

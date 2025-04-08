@@ -11,8 +11,8 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import './event-hooks.css';
 
 setOptions({
-  // theme
-  // locale
+  // localeJs,
+  // themeJs
 });
 
 const App: FC = () => {
@@ -104,8 +104,6 @@ const App: FC = () => {
         <Draggable dragData={dragData2} element={draggable2} theme="auto" />
       </div>
       <Eventcalendar
-        // theme
-        // locale
         data={myEvents}
         dragToCreate={true}
         dragToMove={true}

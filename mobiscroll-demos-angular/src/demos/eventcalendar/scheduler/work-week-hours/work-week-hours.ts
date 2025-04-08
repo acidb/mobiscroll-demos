@@ -13,6 +13,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './work-week-hours.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

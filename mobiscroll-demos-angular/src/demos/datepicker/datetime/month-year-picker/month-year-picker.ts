@@ -11,6 +11,7 @@ const now = new Date();
 @Component({
   selector: 'app-datetime-month-year-picker',
   templateUrl: './month-year-picker.html',
+  standalone: false,
 })
 export class AppComponent {
   today = new Date();

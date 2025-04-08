@@ -9,5 +9,6 @@ setOptions({
 @Component({
   selector: 'app-calendar-week-view',
   templateUrl: './week-view.html',
+  standalone: false,
 })
 export class AppComponent {}

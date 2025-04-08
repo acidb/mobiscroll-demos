@@ -106,6 +106,7 @@ const subdivisions: any = {
 @Component({
   selector: 'app-select-linked-hierarchical-pickers',
   templateUrl: './linked-hierarchical-pickers.html',
+  standalone: false,
 })
 export class AppComponent {
   divData = [];

@@ -24,6 +24,7 @@ for (let i = 1; i <= resourceNr; i++) {
   styleUrl: './loading-big-data-sets.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './loading-big-data-sets.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [];

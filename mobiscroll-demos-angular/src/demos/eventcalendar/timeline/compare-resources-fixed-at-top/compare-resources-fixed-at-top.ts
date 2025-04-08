@@ -13,6 +13,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './compare-resources-fixed-at-top.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

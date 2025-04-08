@@ -13,6 +13,7 @@ setOptions({
   styleUrl: './date-header-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './date-header-template.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

@@ -6,6 +6,7 @@ import { MbscCalendarEvent, MbscEventcalendarOptions, Notifications /* localeImp
   selector: 'app-eventcalendar-event-popover',
   templateUrl: './event-popover.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

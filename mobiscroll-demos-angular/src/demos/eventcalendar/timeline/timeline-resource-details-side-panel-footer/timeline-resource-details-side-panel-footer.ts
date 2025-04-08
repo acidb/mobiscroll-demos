@@ -26,6 +26,7 @@ interface MyResource extends MbscResource {
   styleUrl: './timeline-resource-details-side-panel-footer.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-resource-details-side-panel-footer.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

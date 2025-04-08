@@ -16,6 +16,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-assign-unassign-work-orders-fixed-top-row',
   templateUrl: './assign-unassign-work-orders-fixed-top-row.html',
+  standalone: false,
 })
 export class AppComponent {
   options: MbscEventcalendarOptions = {

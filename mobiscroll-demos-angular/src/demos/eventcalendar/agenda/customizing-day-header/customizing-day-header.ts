@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './customizing-day-header.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customizing-day-header.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

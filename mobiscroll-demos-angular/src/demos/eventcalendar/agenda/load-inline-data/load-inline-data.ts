@@ -14,6 +14,7 @@ const now = new Date();
   styleUrl: './load-inline-data.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-inline-data.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

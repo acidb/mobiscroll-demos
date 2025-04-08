@@ -12,9 +12,13 @@
     </div>
     <div class="mbsc-form-group">
       <mbsc-switch label="All-day" [(ngModel)]="popupEventAllDay"></mbsc-switch>
-      <mbsc-datepicker [(ngModel)]="popupEventDates" [options]="datePickerOptions"
-        [controls]="popupEventAllDay ? datePickerControls : datetimePickerControls" [startInput]="startInput"
-        [endInput]="endInput"></mbsc-datepicker>
+      <mbsc-datepicker
+        [(ngModel)]="popupEventDates"
+        [options]="datePickerOptions"
+        [controls]="popupEventAllDay ? datePickerControls : datetimePickerControls"
+        [startInput]="startInput"
+        [endInput]="endInput"
+      ></mbsc-datepicker>
       <mbsc-input #startInput label="Starts"></mbsc-input>
       <mbsc-input #endInput label="Ends"></mbsc-input>
     </div>

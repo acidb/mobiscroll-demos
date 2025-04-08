@@ -18,6 +18,7 @@ setOptions({
   styleUrl: './connecting-linking-events-arrows.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './connecting-linking-events-arrows.html',
+  standalone: false,
 })
 export class AppComponent {
   view: MbscEventcalendarView = {

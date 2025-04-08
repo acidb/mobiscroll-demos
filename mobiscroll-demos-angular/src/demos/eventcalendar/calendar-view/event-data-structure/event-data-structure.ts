@@ -20,6 +20,7 @@ const now = new Date();
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-data-structure.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
@@ -40,12 +41,12 @@ export class AppComponent {
 
   addEvent(): void {
     const newEvent: MbscCalendarEvent = {
-      // base properties
+      // Base properties
       title: 'Product planning',
       color: '#56ca70',
       start: new Date(2018, 11, 21, 13),
       end: new Date(2018, 11, 21, 14),
-      // add any property you'd like
+      // Add any property you'd like
       busy: true,
       description: 'Weekly meeting with team',
       location: 'Office',

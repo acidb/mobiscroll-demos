@@ -1,10 +1,13 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendar,
-  MbscEventcalendarOptions,
+  MbscEventcalendarView,
   MbscItemDragEvent,
   MbscResource,
+  MbscResourceCreateEvent,
+  MbscResourceDeleteEvent,
+  MbscResourceOrderEvent,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -21,12 +24,189 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-management-with-dynamic-team-creation.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
   @ViewChild('timeline', { static: true })
   timelineInst!: MbscEventcalendar;
+
+  @ViewChildren('draggables')
+  dragElements!: QueryList<ElementRef<HTMLDivElement>>;
+
+  installers: MbscResource[] = [
+    {
+      id: 'it-1',
+      name: 'Installer team 1',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 1,
+          name: 'Emily Carter',
+          color: '#007acc',
+          title: 'Electrician',
+        },
+        {
+          id: 2,
+          name: 'Michael Lawson',
+          color: '#008000',
+          title: 'Plumber',
+        },
+      ],
+    },
+    //<hide-comment>
+    {
+      id: 'it-2',
+      name: 'Installer team 2',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 3,
+          name: 'James Brown',
+          color: '#FF5733',
+          title: 'Carpenter',
+        },
+      ],
+    },
+    {
+      id: 'it-3',
+      name: 'Installer team 3',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 4,
+          name: 'Daniel Wilson',
+          color: '#900C3F',
+          title: 'Welder',
+        },
+      ],
+    },
+    {
+      id: 'it-4',
+      name: 'Installer team 4',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 5,
+          name: 'Benjamin Harris',
+          color: '#1ABC9C',
+          title: 'Heavy Equipment Operator',
+        },
+      ],
+    },
+    {
+      id: 'it-5',
+      name: 'Installer team 5',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 6,
+          name: 'William Anderson',
+          color: '#F39C12',
+          title: 'Concrete Finisher',
+        },
+        {
+          id: 7,
+          name: 'Emma Thompson',
+          color: '#D35400',
+          title: 'Steelworker',
+        },
+      ],
+    },
+    {
+      id: 'it-6',
+      name: 'Installer team 6',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 8,
+          name: 'Alexander Roberts',
+          color: '#8E44AD',
+          title: 'Painter',
+        },
+      ],
+    },
+    //</hide-comment>
+  ];
+
+  availableInstallers: MbscResource[] = [
+    {
+      id: 9,
+      name: 'Adam Miller',
+      color: '#C70039',
+      title: 'Mason',
+    },
+    {
+      id: 10,
+      name: 'Isabella Martinez',
+      color: '#2ECC71',
+      title: 'Surveyor',
+    },
+    {
+      id: 11,
+      name: 'Mark White',
+      color: '#34495E',
+      title: 'Glazier',
+    },
+    //<hide-comment>
+    {
+      id: 12,
+      name: 'Liam Foster',
+      color: '#1E90FF',
+      title: 'Concrete Finisher',
+    },
+    {
+      id: 13,
+      name: 'Sophia Adams',
+      color: '#FF4500',
+      title: 'Steelworker',
+    },
+    {
+      id: 14,
+      name: 'Ethan Murphy',
+      color: '#228B22',
+      title: 'Heavy Equipment Operator',
+    },
+    {
+      id: 15,
+      name: 'Ava Mitchell',
+      color: '#FFD700',
+      title: 'Surveyor',
+    },
+    {
+      id: 16,
+      name: 'Noah Carter',
+      color: '#8B4513',
+      title: 'Painter',
+    },
+    {
+      id: 17,
+      name: 'Emma Scott',
+      color: '#800080',
+      title: 'Roofer',
+    },
+    {
+      id: 18,
+      name: 'William Bennett',
+      color: '#DC143C',
+      title: 'Plasterer',
+    },
+    {
+      id: 19,
+      name: 'Olivia Parker',
+      color: '#4682B4',
+      title: 'Demolition Specialist',
+    },
+    //</hide-comment>
+  ];
+
   tasks: MbscCalendarEvent[] = [
     {
       id: 1,
@@ -247,7 +427,7 @@ export class AppComponent {
       resource: 16,
     },
     {
-      id: 31,
+      id: 32,
       start: dyndatetime('y,m,d,14'),
       end: dyndatetime('y,m,d,18'),
       title: 'Applying protective coatings',
@@ -298,221 +478,69 @@ export class AppComponent {
     //</hide-comment>
   ];
 
-  installers: MbscResource[] = [
-    {
-      id: 'it-1',
-      name: 'Installer team 1',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 1,
-          name: 'Emily Carter',
-          color: '#007acc',
-          title: 'Electrician',
-        },
-        {
-          id: 2,
-          name: 'Michael Lawson',
-          color: '#008000',
-          title: 'Plumber',
-        },
-      ],
-    },
-    //<hide-comment>
-    {
-      id: 'it-2',
-      name: 'Installer team 2',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 3,
-          name: 'James Brown',
-          color: '#FF5733',
-          title: 'Carpenter',
-        },
-      ],
-    },
-    {
-      id: 'it-3',
-      name: 'Installer team 3',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 4,
-          name: 'Daniel Wilson',
-          color: '#900C3F',
-          title: 'Welder',
-        },
-      ],
-    },
-    {
-      id: 'it-4',
-      name: 'Installer team 4',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 5,
-          name: 'Benjamin Harris',
-          color: '#1ABC9C',
-          title: 'Heavy Equipment Operator',
-        },
-      ],
-    },
-    {
-      id: 'it-5',
-      name: 'Installer team 5',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 6,
-          name: 'William Anderson',
-          color: '#F39C12',
-          title: 'Concrete Finisher',
-        },
-        {
-          id: 7,
-          name: 'Emma Thompson',
-          color: '#D35400',
-          title: 'Steelworker',
-        },
-      ],
-    },
-    {
-      id: 'it-6',
-      name: 'Installer team 6',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 8,
-          name: 'Alexander Roberts',
-          color: '#8E44AD',
-          title: 'Painter',
-        },
-      ],
-    },
-    //</hide-comment>
-  ];
-
-  availableInstallers: MbscResource[] = [
-    {
-      id: 9,
-      name: 'Adam Miller',
-      color: '#C70039',
-      title: 'Mason',
-    },
-    {
-      id: 10,
-      name: 'Isabella Martinez',
-      color: '#2ECC71',
-      title: 'Surveyor',
-    },
-    {
-      id: 11,
-      name: 'Mark White',
-      color: '#34495E',
-      title: 'Glazier',
-    },
-    //<hide-comment>
-    {
-      id: 12,
-      name: 'Liam Foster',
-      color: '#1E90FF',
-      title: 'Concrete Finisher',
-    },
-    {
-      id: 13,
-      name: 'Sophia Adams',
-      color: '#FF4500',
-      title: 'Steelworker',
-    },
-    {
-      id: 14,
-      name: 'Ethan Murphy',
-      color: '#228B22',
-      title: 'Heavy Equipment Operator',
-    },
-    {
-      id: 15,
-      name: 'Ava Mitchell',
-      color: '#FFD700',
-      title: 'Surveyor',
-    },
-    {
-      id: 16,
-      name: 'Noah Carter',
-      color: '#8B4513',
-      title: 'Painter',
-    },
-    {
-      id: 17,
-      name: 'Emma Scott',
-      color: '#800080',
-      title: 'Roofer',
-    },
-    {
-      id: 18,
-      name: 'William Bennett',
-      color: '#DC143C',
-      title: 'Plasterer',
-    },
-    {
-      id: 19,
-      name: 'Olivia Parker',
-      color: '#4682B4',
-      title: 'Demolition Specialist',
-    },
-    //</hide-comment>
-  ];
-
-  calendarOptions: MbscEventcalendarOptions = {
-    dragToMove: true,
-    dragToCreate: true,
-    externalResourceDrop: true,
-    externalResourceDrag: true,
-    externalDrag: true,
-    view: {
-      timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' },
-    },
-    onResourceCreate: (args) => {
-      this.availableInstallers = this.availableInstallers.filter((item) => item.id !== args.resource.id);
-      this.notify.toast({
-        message: args.resource.name + ' added to ' + args.parent?.name,
-      });
-    },
-    onResourceDelete: (args) => {
-      this.notify.toast({
-        message: args.resource.name + ' removed from ' + args.parent?.name,
-      });
-    },
-    onResourceOrderUpdate: (args) => {
-      const parent = args.parent;
-      const oldParent = args.oldParent!;
-
-      if (parent && parent.children) {
-        // remove placeholder resource
-        parent.children = parent.children.filter((child) => !child['placeholder']);
-      }
-      if (oldParent && oldParent.children && !oldParent.children.length) {
-        // add placeholder resource
-        oldParent.children.push({
-          id: 'ph-' + oldParent.id,
-          name: 'Drag Technicians here',
-          placeholder: true,
-          reorder: false,
-        });
-      }
-    },
+  myView: MbscEventcalendarView = {
+    timeline: { type: 'day', resourceReorder: true, startTime: '07:00', endTime: '18:00' },
   };
+
+  onResourceCreate(args: MbscResourceCreateEvent) {
+    this.availableInstallers = this.availableInstallers.filter((installer) => installer.id !== args.resource.id);
+    this.notify.toast({
+      message: args.resource.name + ' added to ' + args.parent?.name,
+    });
+  }
+
+  onResourceDelete(args: MbscResourceDeleteEvent) {
+    this.notify.toast({
+      message: args.resource.name + ' removed from ' + args.parent?.name,
+    });
+  }
+
+  onResourceOrderUpdate(args: MbscResourceOrderEvent) {
+    const parent = args.parent;
+    const oldParent = args.oldParent;
+
+    if (parent && oldParent) {
+      this.notify.toast({
+        message: args.resource.name + ' moved to ' + args.parent?.name,
+      });
+    }
+
+    if (parent && parent.children) {
+      // Remove placeholder resource
+      parent.children = parent.children.filter((child) => !child['placeholder']);
+    }
+
+    if (oldParent && oldParent.children && !oldParent.children.length) {
+      // Add placeholder resource
+      oldParent.children.push({
+        id: 'ph-' + oldParent.id,
+        name: 'Drag Technicians here',
+        placeholder: true,
+        reorder: false,
+      });
+    }
+  }
+
+  onItemDrop(args: MbscItemDragEvent): void {
+    if (args.data && args.dataType === 'resource') {
+      this.availableInstallers = [...this.availableInstallers, args.data as MbscResource];
+      setTimeout(() => {
+        const dragElms = this.dragElements;
+        const lastDragElm = dragElms.get(dragElms.length - 1);
+        if (lastDragElm) {
+          lastDragElm.nativeElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
+      });
+    }
+  }
 
   addNewTeam() {
     const teamLength = this.installers.length + 1;
     const resourceId = 'it-' + teamLength;
+
     this.installers = [
       ...this.installers,
       {
@@ -533,13 +561,7 @@ export class AppComponent {
 
     this.timelineInst.navigateToEvent({
       start: new Date(),
-      resource: 'it-' + teamLength,
+      resource: resourceId,
     });
-  }
-
-  onItemDrop(args: MbscItemDragEvent): void {
-    if (args.data) {
-      this.availableInstallers = [...this.availableInstallers, args.data as MbscResource];
-    }
   }
 }

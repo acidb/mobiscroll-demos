@@ -15,6 +15,7 @@ const now = new Date();
   styleUrl: './book-rental-months-ahead.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './book-rental-months-ahead.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

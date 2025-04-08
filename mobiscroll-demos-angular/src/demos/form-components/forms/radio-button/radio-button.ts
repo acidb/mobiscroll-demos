@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-forms-radio-button',
   templateUrl: './radio-button.html',
+  standalone: false,
 })
 export class AppComponent {
   group = 'opt1';

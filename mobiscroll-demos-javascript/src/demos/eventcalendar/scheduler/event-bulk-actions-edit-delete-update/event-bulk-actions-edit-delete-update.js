@@ -149,7 +149,7 @@ export default {
         }
       },
       onClose: function () {
-        // clear selection
+        // Clear selection
         menu.setVal();
       },
     });

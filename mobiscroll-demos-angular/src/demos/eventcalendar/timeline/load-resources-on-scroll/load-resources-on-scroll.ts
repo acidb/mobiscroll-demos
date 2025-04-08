@@ -19,6 +19,7 @@ setOptions({
   selector: 'app-timeline-load-resources-on-demand',
   templateUrl: './load-resources-on-scroll.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(

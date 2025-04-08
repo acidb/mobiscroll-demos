@@ -87,10 +87,6 @@ const App: FC = () => {
     [],
   );
 
-  // const setDropElm = useCallback((elm: any) => {
-  //   setDropCont(elm);
-  // }, []);
-
   const handleEventCreate = useCallback(
     (args: MbscEventCreateEvent) => {
       setTasks(myTasks.filter((item) => item.id !== args.event.id));

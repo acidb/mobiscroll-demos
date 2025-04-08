@@ -12,6 +12,7 @@ setOptions({
   selector: 'app-eventcalendar-blocked-days-ranges',
   templateUrl: './blocked-days-ranges.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

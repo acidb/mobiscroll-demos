@@ -11,6 +11,7 @@ setOptions({
   styleUrl: './localization.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './localization.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

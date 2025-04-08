@@ -18,6 +18,7 @@ setOptions({
   selector: 'app-timeline-load-events-on-scroll',
   templateUrl: './load-events-on-scroll.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(

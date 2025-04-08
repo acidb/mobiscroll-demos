@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './empty-state.css',
   templateUrl: './empty-state.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

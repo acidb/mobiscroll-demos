@@ -8,6 +8,7 @@ setOptions({
 @Component({
   selector: 'app-forms-inputs-text-areas-date-fields',
   templateUrl: './inputs-text-areas-date-fields.html',
+  standalone: false,
 })
 export class AppComponent {
   errorMessage = 'Error message!';

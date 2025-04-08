@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './colors-invalids-css-class.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './colors-invalids-css-class.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

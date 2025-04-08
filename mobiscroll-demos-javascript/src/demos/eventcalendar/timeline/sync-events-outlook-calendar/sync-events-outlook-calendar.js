@@ -323,7 +323,7 @@ export default {
       display: 'anchored',
     });
 
-    // sign in
+    // Sign in
     calendarElm.addEventListener('click', function (ev) {
       if (ev.target.id === 'outlook-cal-sign-in') {
         if (!outlookCalendarSync.isSignedIn()) {
@@ -336,14 +336,14 @@ export default {
       }
     });
 
-    // switch click
+    // Switch click
     popupElm.addEventListener('change', function (ev) {
       if (ev.target.classList.contains('outlook-calendar-switch')) {
         loadEvents(ev.target.checked, ev.target.value);
       }
     });
 
-    // edit click
+    // Edit click
     editButton.addEventListener('change', function (ev) {
       var isEditable = ev.target.checked;
       inst.setOptions({
@@ -354,14 +354,14 @@ export default {
       });
     });
 
-    // sign out
+    // Sign out
     popupElm.addEventListener('click', function (ev) {
       if (ev.target.id === 'outlook-cal-sign-out') {
         outlookCalendarSync.signOut().catch(onError);
       }
     });
 
-    // init outlook client
+    // Init outlook client
     outlookCalendarSync.init({
       clientId: '<YOUR_OUTLOOK_CLIENT_ID>',
       redirectUri: '<YOUR_OUTLOOK_REDIRECT_URI>',

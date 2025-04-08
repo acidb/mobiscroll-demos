@@ -15,6 +15,7 @@ momentTimezone.moment = moment;
   styleUrl: './multiple-timezone-support.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './multiple-timezone-support.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

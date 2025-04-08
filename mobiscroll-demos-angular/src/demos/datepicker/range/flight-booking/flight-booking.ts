@@ -11,6 +11,7 @@ const now = new Date();
 @Component({
   selector: 'app-range-flight-booking',
   templateUrl: './flight-booking.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('calInst')

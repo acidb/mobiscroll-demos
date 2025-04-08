@@ -195,7 +195,7 @@ export default {
       },
       onClose: function () {
         menuOpen = false;
-        // clear selection
+        // Clear selection
         menu.setVal();
       },
     });
@@ -252,7 +252,7 @@ export default {
 
     function detectAction(key) {
       switch (key) {
-        case 'delete': // delete
+        case 'delete': // Delete
           action = 'delete';
           originInst = activeInst;
           var selEvs = activeInst.getSelectedEvents();
@@ -273,7 +273,7 @@ export default {
             dummyElm.focus();
           }
           break;
-        case 'c': // copy
+        case 'c': // Copy
           if (activeInst.getSelectedEvents().length > 0) {
             action = 'copy';
             selectedEvents = activeInst.getSelectedEvents();
@@ -286,7 +286,7 @@ export default {
             }
           }
           break;
-        case 'x': // cut
+        case 'x': // Cut
           if (activeInst.getSelectedEvents().length > 0) {
             action = 'cut';
             selectedEvents = activeInst.getSelectedEvents();
@@ -300,7 +300,7 @@ export default {
             }
           }
           break;
-        case 'z': // undo
+        case 'z': // Undo
           if (action === 'delete') {
             originInst.addEvent(deletedEvents);
             deletedEvents = [];
@@ -311,7 +311,7 @@ export default {
             pastedEvents = [];
           }
           break;
-        case 'v': // paste
+        case 'v': // Paste
           pasteEvents();
           break;
       }

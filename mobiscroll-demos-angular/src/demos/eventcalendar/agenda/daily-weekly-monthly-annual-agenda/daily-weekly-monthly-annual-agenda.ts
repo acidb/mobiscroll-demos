@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-agenda-daily-weekly-monthly-annual-agenda',
   templateUrl: './daily-weekly-monthly-annual-agenda.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

@@ -29,6 +29,7 @@ const endDate = dyndatetime('y,m,d+6');
   styleUrl: './range-picker-popup-presets.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './range-picker-popup-presets.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('popup', { static: false })

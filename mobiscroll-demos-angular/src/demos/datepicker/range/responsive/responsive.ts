@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-range-responsive',
   templateUrl: './responsive.html',
+  standalone: false,
 })
 export class AppComponent {
   responsive: any = {

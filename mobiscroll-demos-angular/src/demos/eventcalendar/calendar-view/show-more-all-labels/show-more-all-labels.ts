@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-eventcalendar-show-more-all-labels',
   templateUrl: './show-more-all-labels.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

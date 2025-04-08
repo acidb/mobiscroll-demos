@@ -33,6 +33,7 @@ const disabledMenu = [
   encapsulation: ViewEncapsulation.None,
   templateUrl: './cut-copy-paste-events-between-calendars.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
@@ -417,19 +418,19 @@ export class AppComponent {
 
   detectAction(key: string) {
     switch (key) {
-      case 'delete': // delete
+      case 'delete': // Delete
         this.deleteEvents();
         break;
-      case 'c': // copy
+      case 'c': // Copy
         this.copyEvents();
         break;
-      case 'x': // cut
+      case 'x': // Cut
         this.cutEvents();
         break;
-      case 'z': // undo
+      case 'z': // Undo
         this.undoEvents();
         break;
-      case 'v': // paste
+      case 'v': // Paste
         this.pasteEvents();
         break;
     }
@@ -445,7 +446,7 @@ export class AppComponent {
     },
     onClose: () => {
       this.menuOpen = false;
-      // clear selection
+      // Clear selection
       setTimeout(() => {
         this.selectValue = null;
       });

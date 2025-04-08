@@ -12,6 +12,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './external-event-presets.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

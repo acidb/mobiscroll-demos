@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-event-buffer',
   templateUrl: './event-buffer.html',
+  standalone: false,
 })
 export class AppComponent {
   myEvents = [

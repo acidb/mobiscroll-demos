@@ -11,6 +11,7 @@ setOptions({
   styleUrl: './mobile-desktop-usage.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile-desktop-usage.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('picker', { static: false })

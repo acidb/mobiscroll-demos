@@ -78,6 +78,7 @@ function getWeekDayNum(date: Date): number {
   styleUrl: './recurring-event-add-edit-dialog.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './recurring-event-add-edit-dialog.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   @ViewChild('popup', { static: false })
@@ -272,31 +273,31 @@ export class AppComponent implements OnInit {
       this.isEdit = true;
       this.tempEvent = args.event;
 
-      // recurring event
+      // Recurring event
       if (event.recurring) {
         this.originalRecurringEvent = event['original'];
         this.eventOccurrence = { ...event };
 
-        // fill popup form with event data
+        // Fill popup form with event data
         this.loadPopupForm(event);
       } else {
         this.originalRecurringEvent = {};
-        // fill popup form with event data
+        // Fill popup form with event data
         this.loadPopupForm(event);
       }
 
-      // set popup options
+      // Set popup options
       this.popupHeaderText = 'Edit event';
       this.popupButtons = this.popupEditButtons;
       this.popupAnchor = args.domEvent.currentTarget;
-      // open the popup
+      // Open the popup
       this.popup.open();
     },
     onEventUpdate: (args: any) => {
       const event = args.event;
       if (event.recurring) {
         this.originalRecurringEvent = args.oldEvent;
-        // we need this on delete
+        // We need this on delete
         this.tempEvent = event;
         this.eventOccurrence = args.oldEventOccurrence;
         if (args.domEvent.keyCode === 46) {
@@ -326,14 +327,14 @@ export class AppComponent implements OnInit {
       setTimeout(() => {
         this.isEdit = false;
         this.tempEvent = args.event;
-        // fill popup form with event data
+        // Fill popup form with event data
         this.loadPopupForm(args.event);
-        // set popup options
+        // Set popup options
         this.popupHeaderText = 'New Event';
         this.popupButtons = this.popupAddButtons;
         this.popupAnchor = args.target;
         this.resetCustomValues();
-        // open the popup
+        // Open the popup
         this.popup.open();
       });
     },
@@ -343,7 +344,7 @@ export class AppComponent implements OnInit {
       });
     },
     onEventUpdated: () => {
-      // here you can update the event in your storage as well, after drag & drop or resize
+      // Here you can update the event in your storage as well, after drag & drop or resize
       // ...
     },
   };
@@ -388,7 +389,7 @@ export class AppComponent implements OnInit {
     onClose: () => {
       this.repeatData = this.repeatData.filter((item) => item.value !== 'custom-value');
       if (!this.isEdit) {
-        // refresh the list, if add popup was canceled, to remove the temporary event
+        // Refresh the list, if add popup was canceled, to remove the temporary event
         this.myEvents = [...this.myEvents];
       }
       this.editFromPopup = false;
@@ -433,12 +434,12 @@ export class AppComponent implements OnInit {
               this.recurringEditMode,
             );
 
-            // update event
+            // Update event
             let newEventList = [...this.myEvents];
             const index = newEventList.findIndex((x) => x.id === events.updatedEvent.id);
             newEventList[index] = events.updatedEvent;
 
-            // add new event
+            // Add new event
             if (events.newEvent) {
               newEventList = [...newEventList, events.newEvent];
             }
@@ -627,19 +628,19 @@ export class AppComponent implements OnInit {
     this.setTempEvent();
 
     if (this.isEdit) {
-      // update the event in the list
+      // Update the event in the list
       this.myEvents = [...this.myEvents];
-      // here you can update the event in your storage as well
+      // Here you can update the event in your storage as well
       // ...
     } else {
-      // add the new event to the list
+      // Add the new event to the list
       this.myEvents = [...this.myEvents, this.tempEvent];
-      // here you can add the event to your storage as well
+      // Here you can add the event to your storage as well
       // ...
     }
-    // navigate the calendar
+    // Navigate the calendar
     this.navigateTo();
-    // close the popup
+    // Close the popup
     this.popup.close();
   }
   deleteEvent(event: MbscCalendarEvent): void {
@@ -656,7 +657,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // set custom values to default
+  // Set custom values to default
   resetCustomValues(): void {
     this.repeatType = 'daily';
     this.repeatNr = 1;
@@ -678,7 +679,7 @@ export class AppComponent implements OnInit {
     const newData = [...this.repeatData];
     const weekNr = getWeekDayNum(d);
 
-    // update select texts by selected date
+    // Update select texts by selected date
     for (const item of newData) {
       switch (item.value) {
         case 'weekly':
@@ -708,7 +709,7 @@ export class AppComponent implements OnInit {
       this.repeatType = rec.repeat;
       this.weekDays = rec.repeat === 'weekly' ? rec.weekDays.split(',') : ['SU'];
       if (rec.interval) {
-        // set custom text
+        // Set custom text
         let customText = '';
 
         this.repeatNr = rec.interval;
@@ -746,9 +747,9 @@ export class AppComponent implements OnInit {
           this.condition = 'never';
         }
 
-        // add custom value
+        // Add custom value
         this.repeatData = [...this.repeatData, { value: 'custom-value', text: customText }];
-        // set custom value
+        // Set custom value
         this.selectedRepeat = 'custom-value';
       } else if (rec.weekDays === 'MO,TU,WE,TH,FR') {
         this.selectedRepeat = 'weekday';
@@ -761,7 +762,7 @@ export class AppComponent implements OnInit {
     this.showCustomRepeat = this.selectedRepeat === 'custom' || this.selectedRepeat === 'custom-value';
   }
 
-  // popuplate data for months
+  // Popuplate data for months
   populateMonthDays(month: number, type: string): void {
     const day30 = [2, 4, 6, 9, 11];
     const newValues = [];
@@ -792,7 +793,7 @@ export class AppComponent implements OnInit {
     const d = new Date(this.tempEvent.start);
     let nextYear = 0;
 
-    // navigate the calendar to the correct view
+    // Navigate the calendar to the correct view
     if (rec && rec.repeat === 'yearly') {
       if (d.getMonth() + 1 > +rec.month && d.getDay() > +rec.day) {
         nextYear = 1;

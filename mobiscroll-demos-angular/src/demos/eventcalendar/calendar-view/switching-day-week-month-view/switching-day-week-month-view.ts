@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './switching-day-week-month-view.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './switching-day-week-month-view.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

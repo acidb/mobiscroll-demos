@@ -19,6 +19,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './variable-event-height.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

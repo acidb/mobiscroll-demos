@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-select-group-options',
   templateUrl: './group-options.html',
+  standalone: false,
 })
 export class AppComponent {
   singleData = [

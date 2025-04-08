@@ -3,6 +3,7 @@ import {
   Draggable,
   Dropcontainer,
   Eventcalendar,
+  MbscCalendarEvent,
   MbscEventcalendarView,
   MbscItemDragEvent,
   MbscResource,
@@ -21,7 +22,7 @@ setOptions({
   // themeJs
 });
 
-function Task(props: { data: MbscResource }) {
+function Installer(props: { data: MbscResource }) {
   const [draggable, setDraggable] = useState<HTMLDivElement>();
 
   const setDragElm = useCallback((elm: HTMLDivElement) => {
@@ -31,7 +32,7 @@ function Task(props: { data: MbscResource }) {
   const resource = props.data;
 
   return (
-    <div id={'task-' + resource.id} className="mds-ext-res-item" ref={setDragElm}>
+    <div className="mds-ext-res-item mbsc-font" ref={setDragElm}>
       <div className="mbsc-flex">
         <div className="mds-ext-res-avatar" style={{ background: resource.color }}>
           {resource.name && resource.name[0]}
@@ -47,9 +48,187 @@ function Task(props: { data: MbscResource }) {
 }
 
 function App() {
+  const [dropCont, setDropCont] = useState<HTMLDivElement>();
+  const [shouldScroll, setShouldScroll] = useState(0);
+  const [toastMessage, setToastMessage] = useState('');
+  const [isToastOpen, setToastOpen] = useState(false);
+
   const timelineRef = useRef<Eventcalendar>(null);
   const installerRef = useRef<HTMLDivElement>(null);
-  const tasks = useMemo(
+
+  const [installers, setInstallers] = useState<MbscResource[]>([
+    {
+      id: 'it-1',
+      name: 'Installer team 1',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 1,
+          name: 'Emily Carter',
+          color: '#007acc',
+          title: 'Electrician',
+        },
+        {
+          id: 2,
+          name: 'Michael Lawson',
+          color: '#008000',
+          title: 'Plumber',
+        },
+      ],
+    },
+    //<hide-comment>
+    {
+      id: 'it-2',
+      name: 'Installer team 2',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 3,
+          name: 'James Brown',
+          color: '#FF5733',
+          title: 'Carpenter',
+        },
+      ],
+    },
+    {
+      id: 'it-3',
+      name: 'Installer team 3',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 4,
+          name: 'Daniel Wilson',
+          color: '#900C3F',
+          title: 'Welder',
+        },
+      ],
+    },
+    {
+      id: 'it-4',
+      name: 'Installer team 4',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 5,
+          name: 'Benjamin Harris',
+          color: '#1ABC9C',
+          title: 'Heavy Equipment Operator',
+        },
+      ],
+    },
+    {
+      id: 'it-5',
+      name: 'Installer team 5',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 6,
+          name: 'William Anderson',
+          color: '#F39C12',
+          title: 'Concrete Finisher',
+        },
+        {
+          id: 7,
+          name: 'Emma Thompson',
+          color: '#D35400',
+          title: 'Steelworker',
+        },
+      ],
+    },
+    {
+      id: 'it-6',
+      name: 'Installer team 6',
+      eventCreation: false,
+      reorder: false,
+      children: [
+        {
+          id: 8,
+          name: 'Alexander Roberts',
+          color: '#8E44AD',
+          title: 'Painter',
+        },
+      ],
+    },
+    //</hide-comment>
+  ]);
+
+  const [availableInstallers, setAvailableInstallers] = useState<MbscResource[]>([
+    {
+      id: 9,
+      name: 'Adam Miller',
+      color: '#C70039',
+      title: 'Mason',
+    },
+    {
+      id: 10,
+      name: 'Isabella Martinez',
+      color: '#2ECC71',
+      title: 'Surveyor',
+    },
+    {
+      id: 11,
+      name: 'Mark White',
+      color: '#34495E',
+      title: 'Glazier',
+    },
+    //<hide-comment>
+    {
+      id: 12,
+      name: 'Liam Foster',
+      color: '#1E90FF',
+      title: 'Concrete Finisher',
+    },
+    {
+      id: 13,
+      name: 'Sophia Adams',
+      color: '#FF4500',
+      title: 'Steelworker',
+    },
+    {
+      id: 14,
+      name: 'Ethan Murphy',
+      color: '#228B22',
+      title: 'Heavy Equipment Operator',
+    },
+    {
+      id: 15,
+      name: 'Ava Mitchell',
+      color: '#FFD700',
+      title: 'Surveyor',
+    },
+    {
+      id: 16,
+      name: 'Noah Carter',
+      color: '#8B4513',
+      title: 'Painter',
+    },
+    {
+      id: 17,
+      name: 'Emma Scott',
+      color: '#800080',
+      title: 'Roofer',
+    },
+    {
+      id: 18,
+      name: 'William Bennett',
+      color: '#DC143C',
+      title: 'Plasterer',
+    },
+    {
+      id: 19,
+      name: 'Olivia Parker',
+      color: '#4682B4',
+      title: 'Demolition Specialist',
+    },
+    //</hide-comment>
+  ]);
+
+  const tasks = useMemo<MbscCalendarEvent[]>(
     () => [
       {
         id: 1,
@@ -270,7 +449,7 @@ function App() {
         resource: 16,
       },
       {
-        id: 31,
+        id: 32,
         start: 'dyndatetime(y,m,d,14)',
         end: 'dyndatetime(y,m,d,18)',
         title: 'Applying protective coatings',
@@ -322,179 +501,6 @@ function App() {
     ],
     [],
   );
-  const [installers, setInstallers] = useState<MbscResource[]>([
-    {
-      id: 'it-1',
-      name: 'Installer team 1',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 1,
-          name: 'Emily Carter',
-          color: '#007acc',
-          title: 'Electrician',
-        },
-        {
-          id: 2,
-          name: 'Michael Lawson',
-          color: '#008000',
-          title: 'Plumber',
-        },
-      ],
-    },
-    //<hide-comment>
-    {
-      id: 'it-2',
-      name: 'Installer team 2',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 3,
-          name: 'James Brown',
-          color: '#FF5733',
-          title: 'Carpenter',
-        },
-      ],
-    },
-    {
-      id: 'it-3',
-      name: 'Installer team 3',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 4,
-          name: 'Daniel Wilson',
-          color: '#900C3F',
-          title: 'Welder',
-        },
-      ],
-    },
-    {
-      id: 'it-4',
-      name: 'Installer team 4',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 5,
-          name: 'Benjamin Harris',
-          color: '#1ABC9C',
-          title: 'Heavy Equipment Operator',
-        },
-      ],
-    },
-    {
-      id: 'it-5',
-      name: 'Installer team 5',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 6,
-          name: 'William Anderson',
-          color: '#F39C12',
-          title: 'Concrete Finisher',
-        },
-        {
-          id: 7,
-          name: 'Emma Thompson',
-          color: '#D35400',
-          title: 'Steelworker',
-        },
-      ],
-    },
-    {
-      id: 'it-6',
-      name: 'Installer team 6',
-      eventCreation: false,
-      reorder: false,
-      children: [
-        {
-          id: 8,
-          name: 'Alexander Roberts',
-          color: '#8E44AD',
-          title: 'Painter',
-        },
-      ],
-    },
-    //</hide-comment>
-  ]);
-  const [availableInstallers, setAvailableInstallers] = useState<MbscResource[]>([
-    {
-      id: 9,
-      name: 'Adam Miller',
-      color: '#C70039',
-      title: 'Mason',
-    },
-    {
-      id: 10,
-      name: 'Isabella Martinez',
-      color: '#2ECC71',
-      title: 'Surveyor',
-    },
-    {
-      id: 11,
-      name: 'Mark White',
-      color: '#34495E',
-      title: 'Glazier',
-    },
-    //<hide-comment>
-    {
-      id: 12,
-      name: 'Liam Foster',
-      color: '#1E90FF',
-      title: 'Concrete Finisher',
-    },
-    {
-      id: 13,
-      name: 'Sophia Adams',
-      color: '#FF4500',
-      title: 'Steelworker',
-    },
-    {
-      id: 14,
-      name: 'Ethan Murphy',
-      color: '#228B22',
-      title: 'Heavy Equipment Operator',
-    },
-    {
-      id: 15,
-      name: 'Ava Mitchell',
-      color: '#FFD700',
-      title: 'Surveyor',
-    },
-    {
-      id: 16,
-      name: 'Noah Carter',
-      color: '#8B4513',
-      title: 'Painter',
-    },
-    {
-      id: 17,
-      name: 'Emma Scott',
-      color: '#800080',
-      title: 'Roofer',
-    },
-    {
-      id: 18,
-      name: 'William Bennett',
-      color: '#DC143C',
-      title: 'Plasterer',
-    },
-    {
-      id: 19,
-      name: 'Olivia Parker',
-      color: '#4682B4',
-      title: 'Demolition Specialist',
-    },
-    //</hide-comment>
-  ]);
-  const [dropCont, setDropCont] = useState<HTMLDivElement | null>(null);
-  const [toastText, setToastText] = useState('');
-  const [isToastOpen, setIsToastOpen] = useState(false);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
@@ -509,37 +515,34 @@ function App() {
 
   const handleResourceCreate = useCallback(
     (args: MbscResourceCreateEvent) => {
-      setAvailableInstallers(availableInstallers.filter((item) => item.id !== args.resource.id));
-      setToastText(args.resource.name + ' added to ' + args.parent?.name);
-      setIsToastOpen(true);
+      setAvailableInstallers(availableInstallers.filter((installer) => installer.id !== args.resource.id));
+      setToastMessage(args.resource.name + ' added to ' + args.parent?.name);
+      setToastOpen(true);
     },
     [availableInstallers],
   );
 
   const handleResourceDelete = useCallback((args: MbscResourceDeleteEvent) => {
-    setToastText(args.resource.name + ' removed from ' + args.parent?.name);
-    setIsToastOpen(true);
+    setToastMessage(args.resource.name + ' removed from ' + args.parent?.name);
+    setToastOpen(true);
   }, []);
-
-  const handleItemDrop = useCallback(
-    (args: MbscItemDragEvent<MbscResource>) => {
-      if (args.data) {
-        setAvailableInstallers([...availableInstallers, args.data]);
-      }
-    },
-    [availableInstallers],
-  );
 
   const handleResourceOrderUpdate = useCallback((args: MbscResourceOrderEvent) => {
     const parent = args.parent;
     const oldParent = args.oldParent;
 
+    if (parent && oldParent) {
+      setToastMessage(args.resource.name + ' moved to ' + args.parent?.name);
+      setToastOpen(true);
+    }
+
     if (parent && parent.children) {
-      // remove placeholder resource
+      // Remove placeholder resource
       parent.children = parent.children.filter((child) => !child.placeholder);
     }
+
     if (oldParent && oldParent.children && !oldParent.children.length) {
-      // add placeholder resource
+      // Add placeholder resource
       oldParent.children.push({
         id: 'ph-' + oldParent.id,
         name: 'Drag Technicians here',
@@ -549,8 +552,18 @@ function App() {
     }
   }, []);
 
-  const handleCloseToast = useCallback(() => {
-    setIsToastOpen(false);
+  const handleItemDrop = useCallback(
+    (args: MbscItemDragEvent<MbscResource>) => {
+      if (args.data && args.dataType === 'resource') {
+        setAvailableInstallers([...availableInstallers, args.data]);
+        setShouldScroll((prevScroll) => prevScroll + 1);
+      }
+    },
+    [availableInstallers],
+  );
+
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
   }, []);
 
   const addNewTeam = useCallback(() => {
@@ -577,12 +590,12 @@ function App() {
     if (timelineRef && timelineRef.current) {
       timelineRef.current.navigateToEvent({
         start: new Date(),
-        resource: 'it-' + teamLength,
+        resource: resourceId,
       });
     }
   }, [installers]);
 
-  const resourceHeader = useCallback(
+  const customResourceHeader = useCallback(
     () => (
       <div className="mbsc-flex mbsc-align-items-center">
         <div className="mds-ext-res-header mbsc-flex-1-1">Set up teams</div>
@@ -594,10 +607,10 @@ function App() {
     [addNewTeam],
   );
 
-  const renderResource = useCallback(
+  const customResource = useCallback(
     (resource: MbscResource) =>
-      resource.children || resource.placeholder ? (
-        <div className={'mds-ext-res-dnd-name ' + (resource.placeholder ? ' mds-ext-res-name-ph' : '')}>{resource.name}</div>
+      resource.isParent || resource.placeholder ? (
+        <div className={'mds-ext-res-name' + (resource.placeholder ? ' mds-ext-res-name-ph' : '')}>{resource.name}</div>
       ) : (
         <div className="mbsc-flex">
           <div className="mds-ext-res-avatar" style={{ background: resource.color }}>
@@ -613,10 +626,10 @@ function App() {
   );
 
   useEffect(() => {
-    if (installerRef.current) {
+    if (shouldScroll && installerRef.current) {
       installerRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-  }, [installerRef, availableInstallers]);
+  }, [installerRef, shouldScroll]);
 
   return (
     <Page className="mds-ext-res-drop">
@@ -626,9 +639,9 @@ function App() {
             <Dropcontainer onItemDrop={handleItemDrop} element={dropCont}>
               <div className="mds-ext-res-header">Available technicians</div>
               <div className="mds-ext-res-list">
-                {availableInstallers.map((task) => (
-                  <div key={task.id} ref={installerRef}>
-                    <Task data={task} />
+                {availableInstallers.map((installer) => (
+                  <div key={installer.id} ref={installerRef}>
+                    <Installer data={installer} />
                   </div>
                 ))}
               </div>
@@ -636,21 +649,20 @@ function App() {
           </div>
           <div className="mbsc-col-sm-9 mds-ext-res-drop-calendar">
             <Eventcalendar
-              height={600}
               ref={timelineRef}
               data={tasks}
-              resources={installers}
-              view={myView}
               dragBetweenResources={false}
               externalResourceDrop={true}
               externalResourceDrag={true}
-              renderResourceHeader={resourceHeader}
-              renderResource={renderResource}
+              resources={installers}
+              view={myView}
+              renderResourceHeader={customResourceHeader}
+              renderResource={customResource}
               onResourceCreate={handleResourceCreate}
               onResourceDelete={handleResourceDelete}
               onResourceOrderUpdate={handleResourceOrderUpdate}
             />
-            <Toast message={toastText} isOpen={isToastOpen} onClose={handleCloseToast} />
+            <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleToastClose} />
           </div>
         </div>
       </div>

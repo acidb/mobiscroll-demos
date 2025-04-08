@@ -29,7 +29,9 @@
             "style": "kebab-case"
           }
         ],
+        "@angular-eslint/prefer-standalone": "off",
         "arrow-body-style": ["warn", "as-needed"],
+        "capitalized-comments": ["warn", "always", { "ignorePattern": "drag,?$|theme,?$|locale,?$|localeImport" }],
         "import/order": ["warn", { "alphabetize": { "order": "asc", "caseInsensitive": true } }],
         "no-var": "warn",
         "one-var": ["error", "never"],

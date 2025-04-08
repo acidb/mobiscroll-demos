@@ -59,6 +59,7 @@ const blockedOutTimes: MyBlockedTimes[] = [
   encapsulation: ViewEncapsulation.None,
   templateUrl: './tasks-subtasks-under-shifts.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

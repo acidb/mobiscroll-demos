@@ -14,6 +14,7 @@ const week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
   styleUrl: './mobile-desktop-usage.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile-desktop-usage.html',
+  standalone: false,
 })
 export class AppComponent {
   @ViewChild('picker', { static: false })

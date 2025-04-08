@@ -11,6 +11,7 @@ setOptions({
 @Component({
   selector: 'app-scheduler-printing-the-view',
   templateUrl: './printing-the-view.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

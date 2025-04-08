@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './hour-day-week-month-quarter-year-header-footer-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './hour-day-week-month-quarter-year-header-footer-template.html',
+  standalone: false,
 })
 export class AppComponent {
   hourView: MbscEventcalendarView = {

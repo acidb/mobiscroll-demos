@@ -10,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-calendar-date-object-iso-8601-moment',
   templateUrl: './date-object-ISO-8601-moment.html',
+  standalone: false,
 })
 export class AppComponent {
   date: Date | undefined;
@@ -25,7 +26,7 @@ export class AppComponent {
   }
 
   setMoment(): void {
-    // make sure that moment js is loaded
+    // Make sure that moment js is loaded
     this.momentJs = moment([2020, 2, 6, 15, 30]);
   }
 }

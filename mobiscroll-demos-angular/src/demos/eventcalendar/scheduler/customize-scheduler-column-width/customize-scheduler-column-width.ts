@@ -13,6 +13,7 @@ setOptions({
   templateUrl: './customize-scheduler-column-width.html',
   providers: [Notifications],
   encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class AppComponent {
   groupBy: 'date' | 'resource' = 'resource';

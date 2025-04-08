@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './timeline-resource-height.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-resource-height.html',
+  standalone: false,
 })
 export class AppComponent {
   view: MbscEventcalendarView = {

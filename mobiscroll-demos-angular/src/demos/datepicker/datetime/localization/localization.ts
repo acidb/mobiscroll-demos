@@ -8,7 +8,8 @@ setOptions({
 @Component({
   selector: 'app-datetime-localization',
   templateUrl: './localization.html',
+  standalone: false,
 })
 export class AppComponent {
-  myLocale = localeEs; // sets the language of the component
+  myLocale = localeEs; // Sets the language of the component
 }

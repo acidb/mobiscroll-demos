@@ -12,6 +12,7 @@ setOptions({
   styleUrl: './load-events-from-remote-api.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-from-remote-api.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

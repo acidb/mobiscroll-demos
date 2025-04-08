@@ -55,7 +55,7 @@ export default {
     document.getElementById('setMoment').addEventListener(
       'click',
       function () {
-        // make sure that moment js is loaded
+        // Make sure that moment js is loaded
         momentInstance.setVal([moment([2020, 2, 6]), moment([2020, 2, 12])], true);
         updateValue('returnMoment', momentInstance);
       },

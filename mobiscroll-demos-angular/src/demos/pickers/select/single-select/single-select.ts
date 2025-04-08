@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-select-single-select',
   templateUrl: './single-select.html',
+  standalone: false,
 })
 export class AppComponent {
   myData = [

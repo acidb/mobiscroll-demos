@@ -8,5 +8,6 @@ setOptions({
 @Component({
   selector: 'app-forms-mobile',
   templateUrl: './mobile.html',
+  standalone: false,
 })
 export class AppComponent {}

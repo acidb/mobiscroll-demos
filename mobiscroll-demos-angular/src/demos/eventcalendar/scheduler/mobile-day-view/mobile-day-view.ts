@@ -11,6 +11,7 @@ setOptions({
   selector: 'app-scheduler-mobile-day-view',
   templateUrl: './mobile-day-view.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

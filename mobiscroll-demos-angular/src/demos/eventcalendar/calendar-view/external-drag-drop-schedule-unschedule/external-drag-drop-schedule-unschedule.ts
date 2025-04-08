@@ -20,6 +20,7 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './external-drag-drop-schedule-unschedule.html',
   providers: [Notifications],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   constructor(

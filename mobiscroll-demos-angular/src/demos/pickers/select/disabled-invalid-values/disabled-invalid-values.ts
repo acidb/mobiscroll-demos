@@ -9,6 +9,7 @@ setOptions({
 @Component({
   selector: 'app-select-disabled-invalid-values',
   templateUrl: './disabled-invalid-values.html',
+  standalone: false,
 })
 export class AppComponent {
   myData = [
