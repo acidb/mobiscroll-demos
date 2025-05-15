@@ -26,7 +26,7 @@ const App: FC = () => {
     () => ({
       timeline: {
         type: 'month',
-        eventList: true,
+        eventDisplay: 'fill',
       },
     }),
     [],
@@ -45,11 +45,7 @@ const App: FC = () => {
     [],
   );
 
-  const calendarIds = useMemo(
-    () =>
-      calendars.map((cal) => cal.id),
-    [calendars],
-  );
+  const calendarIds = useMemo(() => calendars.map((cal) => cal.id), [calendars]);
 
   const onError = useCallback((resp: { error?: string; result: { error: { message: string } } }) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);

@@ -301,7 +301,7 @@ const myInvalids = [
 const myView: MbscEventcalendarView = {
   timeline: {
     type: 'week',
-    eventList: true,
+    eventDisplay: 'fill',
     startDay: 1,
     endDay: 5
   }

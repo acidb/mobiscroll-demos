@@ -158,7 +158,7 @@ export class AppComponent {
       maxEventStack: 2,
       type: 'week',
       resolutionHorizontal: 'day',
-      eventList: true,
+      eventDisplay: 'fill',
     },
   };
 }

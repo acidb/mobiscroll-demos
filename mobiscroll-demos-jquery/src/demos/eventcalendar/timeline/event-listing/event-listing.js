@@ -17,7 +17,7 @@ export default {
           view: {
             timeline: {
               type: 'month',
-              eventList: true,
+              eventDisplay: 'fill',
             },
           },
           dragToResize: false,
@@ -157,7 +157,7 @@ export default {
               view: {
                 timeline: {
                   type: 'week',
-                  eventList: true,
+                  eventDisplay: 'fill',
                   startDay: 1,
                   endDay: 5,
                 },
@@ -169,7 +169,7 @@ export default {
               view: {
                 timeline: {
                   type: 'week',
-                  eventList: true,
+                  eventDisplay: 'fill',
                 },
               },
             });
@@ -179,7 +179,7 @@ export default {
               view: {
                 timeline: {
                   type: 'month',
-                  eventList: true,
+                  eventDisplay: 'fill',
                 },
               },
             });

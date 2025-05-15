@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
     view: {
       timeline: {
         type: 'week',
-        eventList: true,
+        eventDisplay: 'fill',
       },
     },
     dragToCreate: false,

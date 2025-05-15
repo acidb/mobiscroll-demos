@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     timeline: {
       type: 'day',
       size: 14,
-      eventList: true,
+      eventDisplay: 'fill',
     },
   };
 
@@ -102,7 +102,7 @@ export class AppComponent implements OnInit {
         timeline: {
           type: 'day',
           size: this.getNrDays(date[0], date[1]),
-          eventList: true,
+          eventDisplay: 'fill',
         },
       };
     } else {

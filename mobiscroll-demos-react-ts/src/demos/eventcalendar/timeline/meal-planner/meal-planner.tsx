@@ -70,7 +70,7 @@ const types = [
 const viewSettings: MbscEventcalendarView = {
   timeline: {
     type: 'week',
-    eventList: true,
+    eventDisplay: 'fill',
   },
 };
 

@@ -744,7 +744,7 @@ const myEvents = ref([
 const myView = {
   timeline: {
     type: 'week',
-    eventList: true,
+    eventDisplay: 'fill',
     eventHeight: 'variable'
   }
 }

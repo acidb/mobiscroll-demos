@@ -1842,7 +1842,7 @@ export default {
           view: {
             timeline: {
               type: 'week',
-              eventList: true,
+              eventDisplay: 'fill',
               startDay: 1,
               endDay: 5,
             },
@@ -2017,7 +2017,7 @@ export default {
                 view: {
                   timeline: {
                     type: 'day',
-                    eventList: true,
+                    eventDisplay: 'fill',
                   },
                 },
               });
@@ -2026,7 +2026,7 @@ export default {
                 view: {
                   timeline: {
                     type: 'week',
-                    eventList: true,
+                    eventDisplay: 'fill',
                     startDay: 1,
                     endDay: 5,
                   },

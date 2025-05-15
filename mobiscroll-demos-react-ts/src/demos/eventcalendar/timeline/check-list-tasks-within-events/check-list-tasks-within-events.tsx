@@ -30,7 +30,7 @@ function App() {
       timeline: {
         type: 'week',
         eventHeight: 'variable',
-        eventList: true,
+        eventDisplay: 'fill',
       },
     }),
     [],

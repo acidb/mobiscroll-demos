@@ -28,7 +28,7 @@ export default {
         view: {
           timeline: {
             type: 'year',
-            eventList: true,
+            eventDisplay: 'fill',
           },
         },
         onPageLoading: function (args, inst) {

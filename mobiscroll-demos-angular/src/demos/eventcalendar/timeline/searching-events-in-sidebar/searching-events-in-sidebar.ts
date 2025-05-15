@@ -30,7 +30,7 @@ export class AppComponent {
   calendar!: MbscEventcalendar;
 
   calEvents: MbscCalendarEvent[] = [];
-  calView: MbscEventcalendarView = { timeline: { type: 'month', eventList: true } };
+  calView: MbscEventcalendarView = { timeline: { type: 'month', eventDisplay: 'fill' } };
   listEvents: MbscCalendarEvent[] = [];
   listView: MbscEventcalendarView = { agenda: { type: 'year', size: 5 } };
   timer?: ReturnType<typeof setTimeout>;

@@ -24,7 +24,7 @@ const myView: MbscEventcalendarView = {
   timeline: {
     type: 'week',
     eventHeight: 'variable',
-    eventList: true
+    eventDisplay: 'fill'
   }
 }
 

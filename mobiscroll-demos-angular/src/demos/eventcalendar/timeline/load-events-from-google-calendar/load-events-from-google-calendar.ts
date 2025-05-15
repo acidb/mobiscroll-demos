@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   calView: MbscEventcalendarView = {
     timeline: {
       type: 'month',
-      eventList: true,
+      eventDisplay: 'fill',
     },
   };
   calendars: any[] = [
@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
     view: {
       timeline: {
         type: 'month',
-        eventList: true,
+        eventDisplay: 'fill',
       },
     },
     onPageLoading: (args: any) => {

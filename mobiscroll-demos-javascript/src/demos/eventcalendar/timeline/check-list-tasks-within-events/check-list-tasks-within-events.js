@@ -13,7 +13,7 @@ export default {
         timeline: {
           type: 'week',
           eventHeight: 'variable',
-          eventList: true,
+          eventDisplay: 'fill',
         },
       },
       dragToCreate: true,

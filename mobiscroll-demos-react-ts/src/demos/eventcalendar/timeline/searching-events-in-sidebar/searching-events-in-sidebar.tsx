@@ -28,7 +28,7 @@ const App: FC = () => {
   const calInst = useRef<Eventcalendar | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
-  const calView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'month', eventList: true } }), []);
+  const calView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'month', eventDisplay: 'fill' } }), []);
   const listView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'year', size: 5 } }), []);
 
   const myResources: MbscResource[] = useMemo(

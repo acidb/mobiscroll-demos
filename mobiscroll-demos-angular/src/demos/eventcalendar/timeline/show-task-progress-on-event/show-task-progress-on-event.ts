@@ -162,7 +162,7 @@ export class AppComponent {
     dragToMove: true,
     dragToResize: true,
     view: {
-      timeline: { type: 'month', eventList: true },
+      timeline: { type: 'month', eventDisplay: 'fill' },
     },
     onEventClick: (args) => {
       if (this.isDraggingProgress) return;

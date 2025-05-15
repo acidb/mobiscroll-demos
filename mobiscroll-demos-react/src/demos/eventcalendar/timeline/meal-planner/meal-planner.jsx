@@ -60,7 +60,7 @@ const types = [
 const viewSettings = {
   timeline: {
     type: 'week',
-    eventList: true,
+    eventDisplay: 'fill',
   },
 };
 

@@ -68,7 +68,7 @@ const App: FC = () => {
     timeline: {
       type: 'day',
       size: 14,
-      eventList: true,
+      eventDisplay: 'fill',
     },
   });
 
@@ -108,7 +108,7 @@ const App: FC = () => {
         timeline: {
           type: 'day',
           size: getNrDays(startDate.current, endDate.current),
-          eventList: true,
+          eventDisplay: 'fill',
         },
       });
     }

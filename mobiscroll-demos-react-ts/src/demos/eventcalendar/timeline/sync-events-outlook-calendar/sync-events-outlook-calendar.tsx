@@ -58,7 +58,7 @@ const App: FC = () => {
     () => ({
       timeline: {
         type: 'week',
-        eventList: true,
+        eventDisplay: 'fill',
       },
     }),
     [],

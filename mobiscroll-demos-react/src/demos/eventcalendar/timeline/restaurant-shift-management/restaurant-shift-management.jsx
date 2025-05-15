@@ -1896,13 +1896,13 @@ function App() {
         ? {
             timeline: {
               type: 'day',
-              eventList: true,
+              eventDisplay: 'fill',
             },
           }
         : {
             timeline: {
               type: 'week',
-              eventList: true,
+              eventDisplay: 'fill',
               startDay: 1,
               endDay: 5,
             },

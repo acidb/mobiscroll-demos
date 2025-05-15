@@ -20,7 +20,7 @@ export class AppComponent {
   calView: MbscEventcalendarView = {
     timeline: {
       type: 'month',
-      eventList: true,
+      eventDisplay: 'fill',
     },
   };
 
@@ -145,7 +145,7 @@ export class AppComponent {
           this.calView = {
             timeline: {
               type: 'week',
-              eventList: true,
+              eventDisplay: 'fill',
               startDay: 1,
               endDay: 5,
             },
@@ -155,7 +155,7 @@ export class AppComponent {
           this.calView = {
             timeline: {
               type: 'week',
-              eventList: true,
+              eventDisplay: 'fill',
             },
           };
           break;
@@ -163,7 +163,7 @@ export class AppComponent {
           this.calView = {
             timeline: {
               type: 'month',
-              eventList: true,
+              eventDisplay: 'fill',
             },
           };
           break;

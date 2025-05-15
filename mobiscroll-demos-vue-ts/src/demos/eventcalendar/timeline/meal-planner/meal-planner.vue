@@ -67,7 +67,7 @@ const types: MbscResource[] = [
 const myView: MbscEventcalendarView = {
   timeline: {
     type: 'week',
-    eventList: true
+    eventDisplay: 'fill'
   }
 }
 

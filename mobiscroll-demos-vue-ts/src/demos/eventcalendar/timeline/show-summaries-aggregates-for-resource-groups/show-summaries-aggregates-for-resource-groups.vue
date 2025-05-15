@@ -754,7 +754,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
 const myView: MbscEventcalendarView = {
   timeline: {
     type: 'week',
-    eventList: true,
+    eventDisplay: 'fill',
     eventHeight: 'variable'
   }
 }

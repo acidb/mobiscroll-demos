@@ -138,7 +138,7 @@ const myResources = ref([
 const myView = {
   timeline: {
     type: 'month',
-    eventList: true
+    eventDisplay: 'fill'
   }
 }
 

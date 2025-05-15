@@ -149,7 +149,7 @@ const myResources = ref([
 const myView: MbscEventcalendarView = {
   timeline: {
     type: 'month',
-    eventList: true
+    eventDisplay: 'fill'
   }
 }
 

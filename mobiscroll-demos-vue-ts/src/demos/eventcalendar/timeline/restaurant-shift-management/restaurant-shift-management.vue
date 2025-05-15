@@ -1901,7 +1901,7 @@ const shiftTimes = ref([
 const myView = ref<MbscEventcalendarView>({
   timeline: {
     type: 'week',
-    eventList: true,
+    eventDisplay: 'fill',
     startDay: 1,
     endDay: 5
   }
@@ -2013,14 +2013,14 @@ function handleViewChange() {
     myView.value = {
       timeline: {
         type: 'day',
-        eventList: true
+        eventDisplay: 'fill'
       }
     }
   } else {
     myView.value = {
       timeline: {
         type: 'week',
-        eventList: true,
+        eventDisplay: 'fill',
         startDay: 1,
         endDay: 5
       }

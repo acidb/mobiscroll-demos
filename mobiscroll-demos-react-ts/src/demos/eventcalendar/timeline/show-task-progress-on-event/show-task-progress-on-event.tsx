@@ -160,7 +160,7 @@ function App() {
 
   const isDraggingProgress = useRef(false);
 
-  const myView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'month', eventList: true } }), []);
+  const myView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'month', eventDisplay: 'fill' } }), []);
 
   const loadPopupForm = useCallback((event: MbscCalendarEvent) => {
     setTitle(event.title);

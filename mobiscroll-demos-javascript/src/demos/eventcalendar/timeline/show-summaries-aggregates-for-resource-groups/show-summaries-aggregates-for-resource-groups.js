@@ -879,7 +879,7 @@ export default {
       view: {
         timeline: {
           type: 'week',
-          eventList: true,
+          eventDisplay: 'fill',
           eventHeight: 'variable',
         },
       },

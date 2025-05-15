@@ -18,7 +18,7 @@ const myView = {
   timeline: {
     type: 'week',
     eventHeight: 'variable',
-    eventList: true
+    eventDisplay: 'fill'
   }
 }
 

@@ -155,7 +155,7 @@ export default {
           view: {
             timeline: {
               type: 'week',
-              eventList: true,
+              eventDisplay: 'fill',
             },
           },
           resources: types,
