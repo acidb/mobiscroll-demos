@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   gregorianSettings: MbscEventcalendarOptions = {
     locale: localeEn,
     view: {
-      schedule: { type: 'day' },
+      scheduler: { type: 'day' },
     },
   };
 
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     calendarSystem: jalaliCalendar,
     locale: localeFa,
     view: {
-      schedule: { type: 'day' },
+      scheduler: { type: 'day' },
     },
   };
 
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     calendarSystem: hijriCalendar,
     locale: localeAr,
     view: {
-      schedule: { type: 'day' },
+      scheduler: { type: 'day' },
     },
   };
 

@@ -285,7 +285,7 @@ const myView = {
   calendar: {
     type: 'week'
   },
-  schedule: {
+  scheduler: {
     type: 'day'
   }
 }

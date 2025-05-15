@@ -48,7 +48,7 @@ function App() {
   const [isToastOpen, setIsToastOpen] = useState<boolean>(false);
   const [toastText, setToastText] = useState<string>('');
   const toastContext = useMemo(() => '.md-bulk-operations-border', []);
-  const myView = useMemo<MbscEventcalendarView>(() => ({ schedule: { type: 'week' } }), []);
+  const myView = useMemo<MbscEventcalendarView>(() => ({ scheduler: { type: 'week' } }), []);
   const calRef = useRef<Eventcalendar>(null);
 
   const getSelectedEventTitles = useCallback((events: MbscCalendarEvent[]) => {

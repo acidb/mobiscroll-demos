@@ -108,7 +108,7 @@ const myEvents: MbscCalendarEvent[] = [
 function App() {
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
-      schedule: {
+      scheduler: {
         type: 'week',
       },
     }),

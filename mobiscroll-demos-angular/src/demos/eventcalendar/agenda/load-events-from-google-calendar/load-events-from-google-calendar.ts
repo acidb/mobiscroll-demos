@@ -82,10 +82,10 @@ export class AppComponent implements OnInit {
           this.myView = { calendar: { labels: true } };
           break;
         case 'week':
-          this.myView = { schedule: { type: 'week' } };
+          this.myView = { scheduler: { type: 'week' } };
           break;
         case 'day':
-          this.myView = { schedule: { type: 'day' } };
+          this.myView = { scheduler: { type: 'day' } };
           break;
         case 'agenda':
         default:

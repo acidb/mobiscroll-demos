@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  myView: MbscEventcalendarView = { schedule: { type: 'week' } };
+  myView: MbscEventcalendarView = { scheduler: { type: 'week' } };
 
   filteredEvents: MbscCalendarEvent[] = [];
 

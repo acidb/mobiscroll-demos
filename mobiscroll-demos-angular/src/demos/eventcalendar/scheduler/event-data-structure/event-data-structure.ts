@@ -39,7 +39,7 @@ export class AppComponent {
     },
   ];
 
-  myView: MbscEventcalendarView = { schedule: { type: 'day' } };
+  myView: MbscEventcalendarView = { scheduler: { type: 'day' } };
 
   addEvent(): void {
     const newEvent: MbscCalendarEvent = {

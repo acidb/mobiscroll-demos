@@ -103,7 +103,7 @@ const App: FC = () => {
   const calInst = useRef<Eventcalendar>(null);
   const colorPicker = useRef<Popup>(null);
 
-  const myView = useMemo<MbscEventcalendarView>(() => ({ schedule: { type: 'week' } }), []);
+  const myView = useMemo<MbscEventcalendarView>(() => ({ scheduler: { type: 'week' } }), []);
 
   const colorButtons = useMemo<(string | MbscPopupButton)[]>(
     () => [

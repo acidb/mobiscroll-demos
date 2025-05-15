@@ -29,7 +29,7 @@ export class AppComponent {
   calendar!: MbscEventcalendar;
 
   calEvents: MbscCalendarEvent[] = [];
-  calView: MbscEventcalendarView = { schedule: { type: 'week' } };
+  calView: MbscEventcalendarView = { scheduler: { type: 'week' } };
   listEvents: MbscCalendarEvent[] = [];
   listView: MbscEventcalendarView = { agenda: { type: 'year', size: 5 } };
   timer?: ReturnType<typeof setTimeout>;

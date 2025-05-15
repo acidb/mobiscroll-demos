@@ -11,7 +11,7 @@ export default {
     mobiscroll.eventcalendar('#demo-custom-event-sort', {
       // drag,
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
         },
       },

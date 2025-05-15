@@ -17,7 +17,7 @@ export class AppComponent {
   constructor(private notify: Notifications) {}
 
   myView: MbscEventcalendarView = {
-    schedule: {
+    scheduler: {
       type: 'week',
     },
   };

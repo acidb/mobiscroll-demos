@@ -92,7 +92,7 @@ function App() {
   const calInst = useRef();
   const colorPicker = useRef();
 
-  const myView = useMemo(() => ({ schedule: { type: 'week' } }), []);
+  const myView = useMemo(() => ({ scheduler: { type: 'week' } }), []);
 
   const colorButtons = useMemo(
     () => [

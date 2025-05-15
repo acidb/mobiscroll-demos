@@ -18,7 +18,7 @@ export default {
         .eventcalendar({
           // locale,
           view: {
-            schedule: { type: 'day' },
+            scheduler: { type: 'day' },
           },
         })
         .mobiscroll('getInst');
@@ -29,7 +29,7 @@ export default {
           calendarSystem: mobiscroll.jalaliCalendar,
           locale: mobiscroll.locale.fa,
           view: {
-            schedule: { type: 'day' },
+            scheduler: { type: 'day' },
           },
         })
         .mobiscroll('getInst');
@@ -40,7 +40,7 @@ export default {
           calendarSystem: mobiscroll.hijriCalendar,
           locale: mobiscroll.locale.ar,
           view: {
-            schedule: { type: 'day' },
+            scheduler: { type: 'day' },
           },
         })
         .mobiscroll('getInst');

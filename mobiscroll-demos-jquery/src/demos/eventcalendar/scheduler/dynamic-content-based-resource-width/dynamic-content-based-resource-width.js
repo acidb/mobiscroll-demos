@@ -744,7 +744,7 @@ export default {
           groupBy: 'date',
           resources: myResources,
           view: {
-            schedule: { type: 'week', startDay: 1, endDay: 5, startTime: '08:00', endTime: '19:00', allDay: false },
+            scheduler: { type: 'week', startDay: 1, endDay: 5, startTime: '08:00', endTime: '19:00', allDay: false },
           },
           renderResource: function (resource) {
             var resourceIcons = [];

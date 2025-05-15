@@ -8,7 +8,7 @@ export default {
       // theme,
       // drag,
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       data: [
         {

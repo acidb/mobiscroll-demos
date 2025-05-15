@@ -18,14 +18,14 @@ export default {
           responsive: {
             xsmall: {
               view: {
-                schedule: {
+                scheduler: {
                   type: 'day',
                 },
               },
             },
             medium: {
               view: {
-                schedule: {
+                scheduler: {
                   type: 'week',
                 },
               },

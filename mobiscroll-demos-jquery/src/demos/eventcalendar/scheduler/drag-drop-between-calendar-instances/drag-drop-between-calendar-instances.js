@@ -14,7 +14,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           view: {
-            schedule: {
+            scheduler: {
               type: 'week',
             },
           },
@@ -113,7 +113,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           view: {
-            schedule: {
+            scheduler: {
               type: 'week',
             },
           },

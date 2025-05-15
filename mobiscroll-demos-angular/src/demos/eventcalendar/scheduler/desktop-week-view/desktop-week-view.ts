@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   eventSettings: MbscEventcalendarOptions = {
     // drag,
     view: {
-      schedule: { type: 'week' },
+      scheduler: { type: 'week' },
     },
     onEventClick: (args) => {
       this.notify.toast({

@@ -7,7 +7,7 @@ const myTheme = ref('material') // Can be 'ios', 'material', 'windows' or 'auto'
 const myThemeVariant = ref('dark') // Can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
 
 const myView = {
-  schedule: { type: 'week' }
+  scheduler: { type: 'week' }
 }
 
 onMounted(() => {

@@ -12,7 +12,7 @@ export default {
       dataTimezone: 'utc',
       displayTimezone: 'local',
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       dragToCreate: true,
       dragToMove: true,

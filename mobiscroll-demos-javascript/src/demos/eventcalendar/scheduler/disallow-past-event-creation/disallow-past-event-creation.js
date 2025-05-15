@@ -14,7 +14,7 @@ export default {
 
     var inst = mobiscroll.eventcalendar('#demo-disallow-past-event-creation', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
         },
       },

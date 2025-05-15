@@ -62,7 +62,7 @@ const myData = ref<MbscCalendarEvent[]>([
   }
 ])
 const myView: MbscEventcalendarView = {
-  schedule: { type: 'month' }
+  scheduler: { type: 'month' }
 }
 </script>
 

@@ -138,7 +138,7 @@ export default {
 
     var inst = mobiscroll.eventcalendar('#demo-outlook-calendar', {
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       extendDefaultEvent: function () {
         if (primaryCalendarId) {

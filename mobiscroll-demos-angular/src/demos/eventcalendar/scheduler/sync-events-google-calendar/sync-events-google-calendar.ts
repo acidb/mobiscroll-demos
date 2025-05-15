@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
 
   calendarOptions: MbscEventcalendarOptions = {
     view: {
-      schedule: { type: 'week' },
+      scheduler: { type: 'week' },
     },
     extendDefaultEvent: () => ({
       color: this.calendarData[this.primaryCalendarId].color,

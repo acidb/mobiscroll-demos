@@ -99,7 +99,7 @@ export class AppComponent {
     dragToMove: true,
     dragToResize: true,
     view: {
-      schedule: { type: 'week' },
+      scheduler: { type: 'week' },
     },
     onEventClick: (args) => {
       this.isEdit = true;

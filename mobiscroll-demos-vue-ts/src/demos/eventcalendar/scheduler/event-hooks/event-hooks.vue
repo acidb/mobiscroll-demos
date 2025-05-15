@@ -40,7 +40,7 @@ const myResources: MbscResource[] = [
   { id: 3, name: 'John', color: '#e8d0ef' }
 ]
 const myView: MbscEventcalendarView = {
-  schedule: {
+  scheduler: {
     type: 'day'
   }
 }

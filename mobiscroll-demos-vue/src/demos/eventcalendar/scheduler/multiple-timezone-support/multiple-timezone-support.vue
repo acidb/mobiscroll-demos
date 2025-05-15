@@ -104,7 +104,7 @@ const myEvents = [
 ]
 
 const myView = {
-  schedule: {
+  scheduler: {
     type: 'week'
   }
 }

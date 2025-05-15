@@ -15,7 +15,7 @@ export default {
         .eventcalendar({
           // context,
           view: {
-            schedule: { type: 'week' },
+            scheduler: { type: 'week' },
           },
           showEventBuffer: true,
           data: [

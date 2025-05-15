@@ -66,7 +66,7 @@ const myEvents = ref([
   }
 ])
 const myView = {
-  schedule: {
+  scheduler: {
     type: 'week'
   }
 }

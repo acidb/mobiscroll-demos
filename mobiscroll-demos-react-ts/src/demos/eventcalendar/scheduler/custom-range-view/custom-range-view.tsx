@@ -31,7 +31,7 @@ const App: FC = () => {
   const [rangeVal, setRangeVal] = useState<MbscDatepickerValue>([]);
   const [buttonText, setButtonText] = useState<string>();
   const [calView, setCalView] = useState<MbscEventcalendarView>({
-    schedule: {
+    scheduler: {
       type: 'day',
       size: 14,
     },
@@ -70,7 +70,7 @@ const App: FC = () => {
       // Set calendar view
       setRefDate(startDate.current);
       setCalView({
-        schedule: {
+        scheduler: {
           type: 'day',
           size: getNrDays(startDate.current, endDate.current),
         },

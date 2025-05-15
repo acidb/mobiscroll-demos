@@ -33,7 +33,7 @@ export class AppComponent {
   isNewEvent = false;
 
   view: MbscEventcalendarView = {
-    schedule: {
+    scheduler: {
       type: 'week',
       allDay: false,
       startDay: 1,

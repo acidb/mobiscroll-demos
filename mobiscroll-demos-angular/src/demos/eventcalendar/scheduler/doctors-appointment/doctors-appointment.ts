@@ -149,7 +149,7 @@ export class AppComponent implements OnInit {
 
   calendarOptions: MbscEventcalendarOptions = {
     view: {
-      schedule: {
+      scheduler: {
         type: 'day',
         startTime: '08:00',
         endTime: '20:00',

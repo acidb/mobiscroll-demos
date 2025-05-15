@@ -17,7 +17,7 @@ export default {
 
     var dayInst = mobiscroll.eventcalendar('#demo-day', {
       view: {
-        schedule: { type: 'day' },
+        scheduler: { type: 'day' },
       },
       onSelectedDateChange: function (args) {
         monthInst.setVal(args.date);

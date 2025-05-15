@@ -7,7 +7,7 @@ setOptions({
 });
 
 function App() {
-  const myView = useMemo(() => ({ schedule: { type: 'day' } }), []);
+  const myView = useMemo(() => ({ scheduler: { type: 'day' } }), []);
 
   const myEvents = useMemo(
     () => [

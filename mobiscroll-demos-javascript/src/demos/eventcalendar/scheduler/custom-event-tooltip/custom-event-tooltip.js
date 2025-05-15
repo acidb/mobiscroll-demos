@@ -64,7 +64,7 @@ export default {
 
     var calendar = mobiscroll.eventcalendar('#demo-tooltip-calendar', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           startDay: 1,
           endDay: 5,

@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
 
   eventSettings: MbscEventcalendarOptions = {
     view: {
-      schedule: { type: 'week' },
+      scheduler: { type: 'week' },
     },
     dragToCreate: true,
     dragToMove: true,

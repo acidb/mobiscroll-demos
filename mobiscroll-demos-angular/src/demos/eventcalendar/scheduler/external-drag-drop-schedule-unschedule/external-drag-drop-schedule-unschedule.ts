@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
     externalDrop: true,
     externalDrag: true,
     view: {
-      schedule: { type: 'week' },
+      scheduler: { type: 'week' },
     },
     onEventCreate: (args) => {
       this.myTasks = this.myTasks.filter((item) => item.id !== args.event.id);

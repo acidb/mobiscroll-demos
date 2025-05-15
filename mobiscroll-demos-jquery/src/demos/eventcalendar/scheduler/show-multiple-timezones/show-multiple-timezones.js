@@ -21,7 +21,7 @@ export default {
           dataTimezone: 'utc',
           displayTimezone: 'America/New_York',
           view: {
-            schedule: {
+            scheduler: {
               type: 'week',
               timezones: [
                 {

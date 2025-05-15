@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   calendarSettings: MbscEventcalendarOptions = {
     // drag,
     view: {
-      schedule: {
+      scheduler: {
         allDay: false,
         type: 'week',
         startDay: 1,

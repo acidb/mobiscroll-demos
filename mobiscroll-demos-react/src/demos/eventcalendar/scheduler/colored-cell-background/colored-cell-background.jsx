@@ -9,7 +9,7 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
 
-  const myView = useMemo(() => ({ schedule: { type: 'week' } }), []);
+  const myView = useMemo(() => ({ scheduler: { type: 'week' } }), []);
 
   useEffect(() => {
     getJson(

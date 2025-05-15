@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
   view = 'schedule';
   calView: MbscEventcalendarView = {
-    schedule: { type: 'week' },
+    scheduler: { type: 'week' },
   };
   currentDate: any = new Date();
 
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
           break;
         case 'schedule':
           this.calView = {
-            schedule: { type: 'week' },
+            scheduler: { type: 'week' },
           };
           break;
       }

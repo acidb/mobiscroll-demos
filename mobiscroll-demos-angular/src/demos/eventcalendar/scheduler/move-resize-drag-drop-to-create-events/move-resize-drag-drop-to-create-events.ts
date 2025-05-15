@@ -76,7 +76,7 @@ export class AppComponent {
 
   eventSettings: MbscEventcalendarOptions = {
     view: {
-      schedule: { type: 'week' },
+      scheduler: { type: 'week' },
     },
     dragToCreate: true,
     dragToMove: true,

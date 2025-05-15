@@ -10,7 +10,7 @@ export default {
 
     var inst = mobiscroll.eventcalendar('#demo-show-hide-hours-days', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           startDay: 1,
           endDay: 5,

@@ -28,7 +28,7 @@ const App: FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [view, setView] = useState<string>('week');
   const [calView, setCalView] = useState<MbscEventcalendarView>({
-    schedule: { type: 'week' },
+    scheduler: { type: 'week' },
   });
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -83,12 +83,12 @@ const App: FC = () => {
       case 'week':
       default:
         calView = {
-          schedule: { type: 'week' },
+          scheduler: { type: 'week' },
         };
         break;
       case 'day':
         calView = {
-          schedule: { type: 'day' },
+          scheduler: { type: 'day' },
         };
         break;
       case 'agenda':

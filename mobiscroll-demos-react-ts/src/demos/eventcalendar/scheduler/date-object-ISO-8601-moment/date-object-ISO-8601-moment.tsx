@@ -48,7 +48,7 @@ const App: FC = () => {
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
-      schedule: {
+      scheduler: {
         type: 'week',
       },
     }),

@@ -8,7 +8,7 @@ export default {
       // theme,
       // drag,
       view: {
-        schedule: { type: 'day' },
+        scheduler: { type: 'day' },
       },
       onEventClick: function (args) {
         mobiscroll.toast({

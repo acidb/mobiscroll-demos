@@ -774,7 +774,7 @@ export default {
       invalid: myInvalids,
       resources: myResources,
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           startDay: 1,
           endDay: 5,

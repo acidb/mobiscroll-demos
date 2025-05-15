@@ -68,7 +68,7 @@ function App() {
     setSelectedMoment(moment([2020, 4, 21]));
   }, []);
 
-  const myView = useMemo(() => ({ schedule: { type: 'week' } }), []);
+  const myView = useMemo(() => ({ scheduler: { type: 'week' } }), []);
 
   return (
     <Page>

@@ -104,7 +104,7 @@ export default {
         .eventcalendar({
           // context,
           view: {
-            schedule: {
+            scheduler: {
               type: 'day',
               startTime: '08:00',
               endTime: '20:00',

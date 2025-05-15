@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   themeVariant: any = 'dark'; // Can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
 
   view: MbscEventcalendarView = {
-    schedule: { type: 'week' },
+    scheduler: { type: 'week' },
   };
 
   ngOnInit(): void {

@@ -286,7 +286,7 @@ const myView: MbscEventcalendarView = {
   calendar: {
     type: 'week'
   },
-  schedule: {
+  scheduler: {
     type: 'day'
   }
 }

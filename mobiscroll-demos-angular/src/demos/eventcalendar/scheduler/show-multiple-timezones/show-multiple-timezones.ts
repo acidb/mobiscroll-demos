@@ -64,7 +64,7 @@ export class AppComponent {
   eventSettings: MbscEventcalendarOptions = {
     // drag,
     view: {
-      schedule: {
+      scheduler: {
         type: 'week',
         timezones: [
           {

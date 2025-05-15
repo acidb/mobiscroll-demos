@@ -24,7 +24,7 @@ export class AppComponent {
   eventSettings: MbscEventcalendarOptions = {
     // drag,
     view: {
-      schedule: { type: 'day' },
+      scheduler: { type: 'day' },
     },
     onPageLoading: (args) => {
       const year = args.firstDay.getFullYear();

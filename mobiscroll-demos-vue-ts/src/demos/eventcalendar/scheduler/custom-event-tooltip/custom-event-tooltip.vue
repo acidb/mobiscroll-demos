@@ -465,7 +465,7 @@ const tooltipColor = ref<string>()
 const timer = ref<ReturnType<typeof setTimeout>>()
 
 const myView = ref<MbscEventcalendarView>({
-  schedule: {
+  scheduler: {
     type: 'week',
     startDay: 1,
     endDay: 5,

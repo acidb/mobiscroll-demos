@@ -8,7 +8,7 @@ const myTheme = ref<string>('material') // Can be 'ios', 'material', 'windows' o
 const myThemeVariant = ref<'light' | 'dark' | 'auto'>('dark') // Can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
 
 const myView: MbscEventcalendarView = {
-  schedule: { type: 'week' }
+  scheduler: { type: 'week' }
 }
 
 onMounted(() => {

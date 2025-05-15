@@ -479,7 +479,7 @@ export class AppComponent {
   timer?: ReturnType<typeof setTimeout>;
 
   myView: MbscEventcalendarView = {
-    schedule: {
+    scheduler: {
       type: 'week',
       startDay: 1,
       endDay: 5,

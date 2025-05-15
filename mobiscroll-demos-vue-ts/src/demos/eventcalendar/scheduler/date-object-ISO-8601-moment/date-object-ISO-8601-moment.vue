@@ -15,7 +15,7 @@ setOptions({
 })
 
 const myView: MbscEventcalendarView = {
-  schedule: {
+  scheduler: {
     type: 'week'
   }
 }

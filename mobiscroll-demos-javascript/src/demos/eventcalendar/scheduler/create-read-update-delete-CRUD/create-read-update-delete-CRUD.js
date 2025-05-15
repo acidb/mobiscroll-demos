@@ -205,7 +205,7 @@ export default {
       dragToMove: true,
       dragToResize: true,
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       data: myData,
       onEventClick: function (args) {

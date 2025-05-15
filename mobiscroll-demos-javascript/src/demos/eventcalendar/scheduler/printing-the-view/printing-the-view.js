@@ -16,7 +16,7 @@ export default {
       // drag,
       modules: [mobiscroll.print],
       view: {
-        schedule: { type: 'day' },
+        scheduler: { type: 'day' },
       },
     });
 

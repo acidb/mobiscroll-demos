@@ -12,7 +12,7 @@ export default {
 
     var obj = mobiscroll.eventcalendar('#demo-date-type-obj', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
         },
       },
@@ -30,7 +30,7 @@ export default {
 
     var iso = mobiscroll.eventcalendar('#demo-date-type-iso', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
         },
       },
@@ -48,7 +48,7 @@ export default {
 
     var momentJs = mobiscroll.eventcalendar('#demo-date-type-moment', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
         },
       },

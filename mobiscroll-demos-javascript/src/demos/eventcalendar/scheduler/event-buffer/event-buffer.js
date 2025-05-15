@@ -10,7 +10,7 @@ export default {
 
     mobiscroll.eventcalendar('#demo-event-buffer', {
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       showEventBuffer: true,
       data: [

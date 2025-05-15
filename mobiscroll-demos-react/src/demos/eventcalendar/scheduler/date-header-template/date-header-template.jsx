@@ -30,7 +30,7 @@ function App() {
 
   const calView = useMemo(
     () => ({
-      schedule: {
+      scheduler: {
         type: 'week',
         allDay: false,
         startDay: 1,

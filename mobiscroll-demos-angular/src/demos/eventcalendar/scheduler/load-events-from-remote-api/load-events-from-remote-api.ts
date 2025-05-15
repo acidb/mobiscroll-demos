@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     // drag,
     view: {
       calendar: { type: 'week' },
-      schedule: { type: 'day' },
+      scheduler: { type: 'day' },
     },
   };
 

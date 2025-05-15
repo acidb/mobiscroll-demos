@@ -14,7 +14,7 @@ setOptions({
 })
 
 const myView = {
-  schedule: {
+  scheduler: {
     type: 'week'
   }
 }

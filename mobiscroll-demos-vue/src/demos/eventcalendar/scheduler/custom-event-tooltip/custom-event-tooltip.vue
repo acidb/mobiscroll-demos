@@ -459,7 +459,7 @@ const tooltipColor = ref()
 const timer = ref()
 
 const myView = ref({
-  schedule: {
+  scheduler: {
     type: 'week',
     startDay: 1,
     endDay: 5,

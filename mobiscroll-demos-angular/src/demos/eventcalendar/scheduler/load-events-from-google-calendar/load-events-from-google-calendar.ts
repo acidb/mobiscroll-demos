@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   lastDay!: Date;
   view = 'week';
   calView: MbscEventcalendarView = {
-    schedule: { type: 'week' },
+    scheduler: { type: 'week' },
   };
 
   calSettings: MbscEventcalendarOptions = {
@@ -97,12 +97,12 @@ export class AppComponent implements OnInit {
         case 'week':
         default:
           this.calView = {
-            schedule: { type: 'week' },
+            scheduler: { type: 'week' },
           };
           break;
         case 'day':
           this.calView = {
-            schedule: { type: 'day' },
+            scheduler: { type: 'day' },
           };
           break;
         case 'agenda':

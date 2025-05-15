@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     responsive: {
       xsmall: {
         view: {
-          schedule: {
+          scheduler: {
             type: 'day',
           },
         },
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
         // Custom breakpoint
         breakpoint: 600,
         view: {
-          schedule: {
+          scheduler: {
             type: 'week',
           },
         },

@@ -27,7 +27,7 @@ const App: FC = () => {
   const calInst = useRef<Eventcalendar | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
-  const calView = useMemo<MbscEventcalendarView>(() => ({ schedule: { type: 'week' } }), []);
+  const calView = useMemo<MbscEventcalendarView>(() => ({ scheduler: { type: 'week' } }), []);
   const listView = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'year', size: 5 } }), []);
 
   const handleInputChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {

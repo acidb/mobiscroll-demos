@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
       },
     ],
     view: {
-      schedule: {
+      scheduler: {
         type: 'week',
         startDay: 1,
         endDay: 5,

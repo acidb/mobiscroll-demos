@@ -58,6 +58,6 @@ export class AppComponent {
   ];
 
   view: MbscEventcalendarView = {
-    schedule: { type: 'week' },
+    scheduler: { type: 'week' },
   };
 }

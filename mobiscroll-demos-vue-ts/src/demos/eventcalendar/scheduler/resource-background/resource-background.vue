@@ -108,7 +108,7 @@ const myEvents: MbscCalendarEvent[] = [
 ]
 
 const myView: MbscEventcalendarView = {
-  schedule: { type: 'day' }
+  scheduler: { type: 'day' }
 }
 </script>
 

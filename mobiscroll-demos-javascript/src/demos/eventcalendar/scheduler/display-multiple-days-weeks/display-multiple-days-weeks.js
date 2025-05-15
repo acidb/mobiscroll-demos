@@ -11,7 +11,7 @@ export default {
     var calendar = mobiscroll.eventcalendar('#demo-display-multiple-days-weeks-months', {
       // drag,
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           size: 2,
         },

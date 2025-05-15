@@ -42,7 +42,7 @@ const App: FC = () => {
   const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
   const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
-  const myView = useMemo<MbscEventcalendarView>(() => ({ schedule: { type: 'week' } }), []);
+  const myView = useMemo<MbscEventcalendarView>(() => ({ scheduler: { type: 'week' } }), []);
 
   const debounce = useRef<ReturnType<typeof setTimeout>>();
   const startDate = useRef<Date>();

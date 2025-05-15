@@ -192,7 +192,7 @@ const toastMessage = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 
 const myView: MbscEventcalendarView = {
-  schedule: {
+  scheduler: {
     type: 'day',
     startTime: '08:00',
     endTime: '20:00',

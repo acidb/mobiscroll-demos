@@ -10,7 +10,7 @@ export default {
 
     var myCalendar = mobiscroll.eventcalendar('#external-drop-calendar', {
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       dragToMove: true,
       dragToCreate: true,

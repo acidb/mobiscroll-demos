@@ -29,7 +29,7 @@ export default {
     var calendar = mobiscroll.eventcalendar('#demo-date-header-template', {
       // drag,
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           allDay: false,
           startDay: 1,
