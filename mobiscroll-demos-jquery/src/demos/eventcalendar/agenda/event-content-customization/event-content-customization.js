@@ -24,7 +24,7 @@ export default {
             calendar: { type: 'week' },
             agenda: { type: 'day' },
           },
-          renderEventContent: function (data) {
+          renderAgendaEventContent: function (data) {
             var participant = participants[data.original.participant];
             return (
               '<div>' +

@@ -51,7 +51,7 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar :view="myView" :data="myEvents">
-    <template #eventContent="data: MbscCalendarEventData">
+    <template #agendaEventContent="data: MbscCalendarEventData">
       <div>{{ data.title }}</div>
       <div class="mds-agenda-event-content mbsc-flex mbsc-align-items-center">
         <img
