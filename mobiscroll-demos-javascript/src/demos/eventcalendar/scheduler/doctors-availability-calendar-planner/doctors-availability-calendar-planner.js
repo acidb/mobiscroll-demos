@@ -785,7 +785,7 @@ export default {
           allDay: false,
         },
       },
-      renderScheduleEventContent: function (event) {
+      renderSchedulerEventContent: function (event) {
         return !event.original.type ? 'Patient: ' + (event.title === 'New event' ? 'John Doe' : event.title) : '';
       },
       renderResource: function (resource) {

@@ -306,7 +306,7 @@ const App: FC = () => {
         onEventCreated={handleEventCreated}
         onEventDeleted={handleEventDeleted}
         renderResource={renderMyResource}
-        renderScheduleEventContent={myScheduleEvent}
+        renderTimelineEventContent={myScheduleEvent}
         cssClass="md-meal-planner-calendar"
       />
       <Popup

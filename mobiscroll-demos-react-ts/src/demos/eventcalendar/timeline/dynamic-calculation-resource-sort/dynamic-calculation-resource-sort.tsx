@@ -544,7 +544,7 @@ function App() {
         renderHeader={myCustomHeader}
         renderResourceHeader={myCustomResourceHeader}
         renderResource={myCustomResource}
-        renderScheduleEventContent={myScheduleEvent}
+        renderTimelineEventContent={myScheduleEvent}
         onPageLoading={handlePageLoading}
         onEventCreated={handleEventCreated}
         onEventDeleted={handleEventDeleted}

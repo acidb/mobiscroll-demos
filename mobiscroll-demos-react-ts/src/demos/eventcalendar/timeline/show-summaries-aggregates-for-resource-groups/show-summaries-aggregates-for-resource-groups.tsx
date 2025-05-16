@@ -1054,7 +1054,7 @@ function App() {
       onEventCreated={handleEventCreated}
       onEventDeleted={handleEventDeleted}
       renderResource={customResource}
-      renderScheduleEventContent={customScheduleEventContent}
+      renderTimelineEventContent={customScheduleEventContent}
     />
   );
 }

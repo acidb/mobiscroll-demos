@@ -110,7 +110,7 @@ const App: FC = () => {
       data={myEvents}
       resources={myResources}
       renderTimelineDay={myCustomDay}
-      renderScheduleEventContent={myCustomEvent}
+      renderTimelineEventContent={myCustomEvent}
       extendDefaultEvent={myDefaultEvent}
     />
   );

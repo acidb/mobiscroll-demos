@@ -100,7 +100,7 @@ function App() {
       data={myEvents}
       resources={myResources}
       renderTimelineDay={myCustomDay}
-      renderScheduleEventContent={myCustomEvent}
+      renderTimelineEventContent={myCustomEvent}
       extendDefaultEvent={myDefaultEvent}
     />
   );

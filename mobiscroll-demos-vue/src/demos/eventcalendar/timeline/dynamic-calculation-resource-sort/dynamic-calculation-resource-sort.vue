@@ -519,7 +519,7 @@ watch(snackbarKey, (newVal) => {
       </div>
     </template>
 
-    <template #scheduleEventContent="event">
+    <template #timelineEventContent="event">
       <div>
         <div>{{ event.title }}</div>
         <div class="mds-popup-sort-event-attr">

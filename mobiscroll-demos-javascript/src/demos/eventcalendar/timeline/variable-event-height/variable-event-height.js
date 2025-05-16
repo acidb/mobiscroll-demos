@@ -22,7 +22,7 @@ export default {
       dragToMove: true,
       dragToResize: true,
       dragInTime: true,
-      renderScheduleEventContent: function (event) {
+      renderTimelineEventContent: function (event) {
         return (
           '<div class="mds-variable-event-height-title">' +
           event.title +

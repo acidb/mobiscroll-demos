@@ -1893,7 +1893,7 @@ const App: FC = () => {
         onEventDragEnd={handelEventDragEnd}
         onEventUpdateFailed={handelEventUpdateFailed}
         resources={myResources}
-        renderScheduleEventContent={myEvent}
+        renderTimelineEventContent={myEvent}
       />
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
     </>

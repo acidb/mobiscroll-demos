@@ -84,7 +84,7 @@ onMounted(() => {
         <div>{{ formatDate('MM/DD/YYY', day.date) }}</div>
       </div>
     </template>
-    <template #scheduleEventContent="event">
+    <template #timelineEventContent="event">
       <div class="md-timetable-event-title">{{ event.title }}</div>
       <div class="md-timetable-event-prop">Prof. {{ event.original.prof }}</div>
       <div class="md-timetable-event-class">{{ event.original.class }} year</div>

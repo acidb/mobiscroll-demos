@@ -40,7 +40,7 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEventContent: function (event) {
+          renderTimelineEventContent: function (event) {
             return (
               '<div class="mds-tasks-event-title">' +
               event.title +

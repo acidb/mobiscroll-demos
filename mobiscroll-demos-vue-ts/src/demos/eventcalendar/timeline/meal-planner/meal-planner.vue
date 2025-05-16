@@ -248,7 +248,7 @@ onMounted(() => {
         <div class="md-meal-planner-kcal">{{ resource.kcal }}</div>
       </div>
     </template>
-    <template #scheduleEventContent="args">
+    <template #timelineEventContent="args">
       <div class="md-meal-planner-event">
         <div class="md-meal-planner-event-title">{{ args.original.title }}</div>
         <div v-if="args.original.calories" class="md-meal-planner-event-desc">

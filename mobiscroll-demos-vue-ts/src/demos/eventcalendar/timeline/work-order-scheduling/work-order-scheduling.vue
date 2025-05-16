@@ -483,7 +483,7 @@ function myDefaultEvent() {
       <div class="md-work-order-date">{{ formatDate('DD DDD MMM YYYY', day.date) }}</div>
       <div class="md-work-order-date-title">{{ getRevenue(day) }}</div>
     </template>
-    <template #scheduleEventContent="event">
+    <template #timelineEventContent="event">
       <div>
         {{ event.title }}
         <span class="md-work-order-price-tag">${{ getCostString(event.original.cost) }}</span>

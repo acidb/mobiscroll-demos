@@ -843,7 +843,7 @@ function App() {
         invalid={myInvalids}
         resources={myResources}
         view={myView}
-        renderScheduleEventContent={customScheduleEventContent}
+        renderSchedulerEventContent={customScheduleEventContent}
         renderResource={customResource}
         onEventCreated={handleEventCreated}
         onEventDeleted={handleEventDeleted}

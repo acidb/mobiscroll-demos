@@ -416,7 +416,7 @@ export default {
           '</div>'
         );
       },
-      renderScheduleEventContent: function (event) {
+      renderTimelineEventContent: function (event) {
         return '<div>' + event.title + '<span class="md-work-order-price-tag">$' + getCostString(event.original.cost) + '</span></div>';
       },
     });

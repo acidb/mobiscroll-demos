@@ -415,7 +415,7 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEventContent: function (event) {
+          renderTimelineEventContent: function (event) {
             return (
               '<div>' +
               event.title +

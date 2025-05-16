@@ -201,7 +201,7 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEventContent: function (args) {
+          renderTimelineEventContent: function (args) {
             var event = args.original;
             return (
               '<div class="md-meal-planner-event">' +

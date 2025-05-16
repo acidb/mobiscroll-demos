@@ -807,7 +807,7 @@ function showToast(message) {
         </div>
       </div>
     </template>
-    <template #scheduleEventContent="data">
+    <template #schedulerEventContent="data">
       <template v-if="!data.original.type">
         Patient: {{ data.title === 'New event' ? 'John Doe' : data.title }}
       </template>

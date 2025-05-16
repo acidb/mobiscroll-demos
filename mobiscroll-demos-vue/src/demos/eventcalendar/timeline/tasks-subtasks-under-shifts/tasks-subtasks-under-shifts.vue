@@ -1831,7 +1831,7 @@ const handelEventUpdateFailed = (args) => {
     @event-drag-end="handelEventDragEnd"
     @event-update-failed="handelEventUpdateFailed"
   >
-    <template #scheduleEventContent="args">
+    <template #timelineEventContent="args">
       {{ args.title }}
       <span className="mds-task-hours">
         -

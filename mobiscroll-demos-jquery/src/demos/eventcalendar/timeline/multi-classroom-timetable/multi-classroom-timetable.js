@@ -69,7 +69,7 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEventContent: function (args) {
+          renderTimelineEventContent: function (args) {
             return (
               '<div class="md-timetable-event-title">' +
               args.title +

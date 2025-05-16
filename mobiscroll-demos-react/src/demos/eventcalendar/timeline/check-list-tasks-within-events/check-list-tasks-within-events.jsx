@@ -156,7 +156,7 @@ function App() {
         resources={myResources}
         extendDefaultEvent={handleDefaultEvent}
         renderResource={customResource}
-        renderScheduleEventContent={customScheduleEventContent}
+        renderTimelineEventContent={customScheduleEventContent}
       />
       <Prompt title={promptTitle} isOpen={isPromptOpen} onClose={handleClosePrompt} />
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleCloseToast} duration={3000} />
