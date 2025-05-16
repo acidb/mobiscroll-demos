@@ -99,7 +99,7 @@ function App() {
       view={myView}
       data={myEvents}
       resources={myResources}
-      renderDay={myCustomDay}
+      renderTimelineDay={myCustomDay}
       renderScheduleEventContent={myCustomEvent}
       extendDefaultEvent={myDefaultEvent}
     />

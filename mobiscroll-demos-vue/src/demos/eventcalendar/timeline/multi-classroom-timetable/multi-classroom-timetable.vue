@@ -78,7 +78,7 @@ onMounted(() => {
     :resources="myResources"
     :extendDefaultEvent="myDefaultEvent"
   >
-    <template #day="day">
+    <template #timelineDay="day">
       <div class="md-timetable-day">
         <div class="md-timetable-day-name">{{ formatDate('DDDD', day.date) }}</div>
         <div>{{ formatDate('MM/DD/YYY', day.date) }}</div>

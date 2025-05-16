@@ -88,7 +88,7 @@ onMounted(() => {
     :data="myEvents"
     :resources="myResources"
   >
-    <template #day="day">
+    <template #schedulerDay="day">
       <div class="header-template-container">
         <div class="header-template-date">
           <div class="header-template-day-name">{{ formatDate('DDDD', day.date) }}</div>

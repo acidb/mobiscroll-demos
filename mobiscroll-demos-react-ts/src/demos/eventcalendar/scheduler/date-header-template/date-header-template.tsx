@@ -113,7 +113,7 @@ const App: FC = () => {
       data={myEvents}
       resources={myResources}
       groupBy="date"
-      renderDay={renderCustomDay}
+      renderSchedulerDay={renderCustomDay}
       renderResource={renderCustomResource}
     />
   );

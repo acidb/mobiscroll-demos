@@ -16,7 +16,7 @@ export default {
           showEmptyDays: true,
         },
       },
-      renderDay: function (day) {
+      renderAgendaDay: function (day) {
         return (
           '<div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">' +
           '<div class="mbsc-flex-1-1">' +

@@ -479,7 +479,7 @@ function myDefaultEvent() {
     @event-deleted="handleEventDeleted"
     @event-updated="handleEventUpdated"
   >
-    <template #day="day">
+    <template #timelineDay="day">
       <div class="md-work-order-date">{{ formatDate('DD DDD MMM YYYY', day.date) }}</div>
       <div class="md-work-order-date-title">{{ getRevenue(day) }}</div>
     </template>

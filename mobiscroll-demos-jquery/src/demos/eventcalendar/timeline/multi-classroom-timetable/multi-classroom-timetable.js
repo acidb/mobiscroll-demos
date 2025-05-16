@@ -56,7 +56,7 @@ export default {
               color: '#ff0000',
             };
           },
-          renderDay: function (day) {
+          renderTimelineDay: function (day) {
             var date = day.date;
             return (
               '<div class="md-timetable-day">' +

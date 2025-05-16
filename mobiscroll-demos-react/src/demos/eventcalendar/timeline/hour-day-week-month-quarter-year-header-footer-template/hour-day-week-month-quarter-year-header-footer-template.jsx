@@ -802,7 +802,7 @@ function App() {
           view={dayView}
           data={dailyEvents}
           resources={myResources}
-          renderDay={renderCustomDay}
+          renderTimelineDay={renderCustomDay}
           renderDayFooter={renderCustomDayFooter}
         />
       </div>

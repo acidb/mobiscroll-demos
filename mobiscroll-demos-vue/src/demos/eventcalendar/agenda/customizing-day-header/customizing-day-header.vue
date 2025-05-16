@@ -41,7 +41,7 @@ onMounted(() => {
 
 <template>
   <MbscEventcalendar cssClass="mds-custom-day-header" :data="myEvents" :view="myView">
-    <template #day="day">
+    <template #agendaDay="day">
       <div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
         <div class="mbsc-flex-1-1">
           <div>{{ formatDate('D MMM YYYY', day.date) }}</div>

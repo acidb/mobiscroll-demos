@@ -519,7 +519,7 @@ const App: FC = () => {
         onEventCreated={handleEventCreated}
         onEventDeleted={handleEventDeleted}
         extendDefaultEvent={extendDefaultEvent}
-        renderDay={renderCustomDay}
+        renderTimelineDay={renderCustomDay}
         renderScheduleEventContent={myScheduleEvent}
       />
       <Popup

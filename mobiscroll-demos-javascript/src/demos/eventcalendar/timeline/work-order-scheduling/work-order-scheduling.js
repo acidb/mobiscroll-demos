@@ -396,7 +396,7 @@ export default {
           message: 'Event deleted',
         });
       },
-      renderDay: function (args) {
+      renderTimelineDay: function (args) {
         var formatDate = mobiscroll.formatDate;
         var events = args.events;
         var costs = 0;

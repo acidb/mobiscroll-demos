@@ -44,7 +44,7 @@ export default {
           name: 'Yellow Hall',
         },
       ],
-      renderDay: function (day) {
+      renderTimelineDay: function (day) {
         var date = day.date;
         return (
           '<div class="md-timetable-day">' +
