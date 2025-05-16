@@ -93,7 +93,7 @@ export default {
       extendDefaultEvent: function () {
         return { resource: [1, 2, 3, 4, 5, 6] };
       },
-      renderScheduleEvent: function (data) {
+      renderTimelineEvent: function (data) {
         var start = data.startDate.clone();
         var end = data.endDate.clone();
 

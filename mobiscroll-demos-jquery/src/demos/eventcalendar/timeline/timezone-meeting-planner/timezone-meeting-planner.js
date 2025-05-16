@@ -92,7 +92,7 @@ export default {
           resources: myResources,
           colors: details.colors,
           invalid: details.invalid,
-          renderScheduleEvent: function (data) {
+          renderTimelineEvent: function (data) {
             var start = data.startDate.clone();
             var end = data.endDate.clone();
 

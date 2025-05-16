@@ -19,7 +19,7 @@ export default {
               type: 'day',
             },
           },
-          renderScheduleEvent: function (data) {
+          renderTimelineEvent: function (data) {
             var ev = data.original;
             var color = data.color;
 

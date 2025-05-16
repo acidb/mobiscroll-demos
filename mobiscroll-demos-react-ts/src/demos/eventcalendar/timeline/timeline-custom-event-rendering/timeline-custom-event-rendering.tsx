@@ -169,7 +169,7 @@ const App: FC = () => {
       view={myView}
       data={myEvents}
       resources={myResources}
-      renderScheduleEvent={myScheduleEvent}
+      renderTimelineEvent={myScheduleEvent}
       renderBufferBefore={myBeforeBuffer}
       renderBufferAfter={myAfterBuffer}
       extendDefaultEvent={myDefaultEvent}

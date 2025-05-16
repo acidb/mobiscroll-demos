@@ -327,7 +327,7 @@ const App: FC = () => {
         colors={details.colors}
         invalid={details.invalid}
         extendDefaultEvent={myDefaultEvent}
-        renderScheduleEvent={myScheduleEvent}
+        renderTimelineEvent={myScheduleEvent}
         renderHeader={myHeader}
         renderResource={myResource}
         onEventCreated={handleEventCreated}

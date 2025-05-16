@@ -340,7 +340,7 @@ const handleProgressArrowMouseDown = (e: MouseEvent) => {
       @event-created="handleEventCreated"
       @event-deleted="handleEventDeleted"
     >
-      <template #scheduleEvent="data">
+      <template #timelineEvent="data">
         <div class="mds-progress-event" :style="{ background: data.color }">
           <div class="mds-progress-bar" :style="{ width: (data.original.progress || 0) + '%' }">
             <div class="mds-progress-arrow" :data-event-id="data.id"></div>

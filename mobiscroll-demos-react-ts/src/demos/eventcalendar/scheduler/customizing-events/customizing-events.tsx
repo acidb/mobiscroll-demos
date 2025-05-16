@@ -199,7 +199,7 @@ const App: FC = () => {
     <div>
       <Eventcalendar
         // drag
-        renderScheduleEvent={customScheduleEvent}
+        renderSchedulerEvent={customScheduleEvent}
         renderBufferBefore={myBeforeBuffer}
         responsive={resp}
         data={myEvents}

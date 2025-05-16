@@ -26,7 +26,7 @@ export default {
           },
         },
       },
-      renderScheduleEvent: function (data) {
+      renderSchedulerEvent: function (data) {
         var cat = getCategory(data.original.category);
         if (data.allDay) {
           return '<div style="background:' + cat.color + '" class="md-custom-event-allday-title">' + data.title + '</div>';

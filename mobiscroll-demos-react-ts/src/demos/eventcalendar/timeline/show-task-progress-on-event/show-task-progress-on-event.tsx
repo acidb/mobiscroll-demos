@@ -393,7 +393,7 @@ function App() {
         onEventCreated={handleEventCreated}
         onEventUpdated={handleEventUpdated}
         renderResource={renderCustomResource}
-        renderScheduleEvent={renderCustomEvent}
+        renderTimelineEvent={renderCustomEvent}
       />
       <Popup
         display="bottom"
