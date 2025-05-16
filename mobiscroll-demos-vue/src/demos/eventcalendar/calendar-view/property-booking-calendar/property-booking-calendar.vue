@@ -151,7 +151,7 @@ function customDefaultEvent(args) {
     @event-create-failed="isToastOpen = true"
     @event-update-failed="isToastOpen = true"
   >
-    <template #labelContent="event">
+    <template #calendarEventContent="event">
       <div class="mbsc-flex mds-booking-item mbsc-align-items-center">
         <img
           v-if="event.original.icon"

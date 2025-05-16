@@ -1,4 +1,4 @@
-<mbsc-eventcalendar [labelTemplate]="labelTemplate" [data]="myEvents" [options]="eventSettings"></mbsc-eventcalendar>
+<mbsc-eventcalendar [calendarEventTemplate]="labelTemplate" [data]="myEvents" [options]="eventSettings"></mbsc-eventcalendar>
 
 <ng-template #labelTemplate let-data>
   <div *ngIf="data.isMultiDay" [ngStyle]="{background: data.original.color, color: '#000'}" class="multi-day-event">

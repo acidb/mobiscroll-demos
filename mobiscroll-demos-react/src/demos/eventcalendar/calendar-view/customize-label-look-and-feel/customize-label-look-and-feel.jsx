@@ -54,7 +54,7 @@ function App() {
     <>
       <Eventcalendar
         // drag
-        renderLabel={customLabel}
+        renderCalendarEvent={customLabel}
         data={myEvents}
         view={myView}
         onEventClick={handleEventClick}

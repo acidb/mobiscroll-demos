@@ -176,7 +176,7 @@ function App() {
         dragToResize={true}
         eventOverlap={false}
         extendDefaultEvent={customDefaultEvent}
-        renderLabelContent={customLabelContent}
+        renderCalendarEventContent={customLabelContent}
         onEventCreateFailed={handleOverlap}
         onEventUpdateFailed={handleOverlap}
       />

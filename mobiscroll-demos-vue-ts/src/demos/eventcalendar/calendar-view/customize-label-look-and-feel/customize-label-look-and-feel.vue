@@ -44,7 +44,7 @@ onMounted(() => {
 <template>
   <!-- dragOptions -->
   <MbscEventcalendar :view="myView" :data="myEvents" @event-click="handleEventClick">
-    <template #label="data">
+    <template #calendarEvent="data">
       <div
         v-if="data.isMultiDay"
         :style="{ background: data.original.color, color: '#000' }"
