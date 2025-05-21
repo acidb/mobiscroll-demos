@@ -191,7 +191,9 @@ export default {
               r.cssClass = '';
             });
             dateTime = null;
-            calendar.setOptions({ resources: myResources.slice() });
+            setTimeout(function () {
+              calendar.setOptions({ resources: myResources.slice() });
+            });
           },
           renderCell: function (args) {
             return dateTime && args.date.getTime() === dateTime.getTime() ? '<div class="mds-highlight-col-hover"></div>' : '';
