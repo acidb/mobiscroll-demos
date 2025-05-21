@@ -10,9 +10,8 @@ export default {
     });
 
     $(function () {
-      var dateTime = new Date();
+      var dateTime;
       var formatDate = mobiscroll.formatDate;
-      var timer;
 
       var myResources = [
         {
@@ -170,8 +169,6 @@ export default {
           data: myEvents,
           resources: myResources,
           onCellHoverIn: function (args) {
-            clearTimeout(timer);
-
             var res = myResources.filter(function (r) {
               return r.id === args.resource;
             })[0];
@@ -189,11 +186,12 @@ export default {
             calendar.setOptions({ resources: myResources.slice() });
           },
           onCellHoverOut: function () {
-            if (!timer) {
-              timer = setTimeout(function () {
-                tooltip.close();
-              }, 100);
-            }
+            tooltip.close();
+            myResources.forEach(function (r) {
+              r.cssClass = '';
+            });
+            dateTime = null;
+            calendar.setOptions({ resources: myResources.slice() });
           },
           renderCell: function (args) {
             return dateTime && args.date.getTime() === dateTime.getTime() ? '<div class="mds-highlight-col-hover"></div>' : '';
@@ -223,18 +221,6 @@ export default {
           focusOnClose: false,
         })
         .mobiscroll('getInst');
-
-      $tooltip.on('mouseenter', function () {
-        if (timer) {
-          clearTimeout(timer);
-          timer = null;
-        }
-      });
-      $tooltip.on('mouseleave', function () {
-        timer = setTimeout(function () {
-          tooltip.close();
-        }, 100);
-      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
