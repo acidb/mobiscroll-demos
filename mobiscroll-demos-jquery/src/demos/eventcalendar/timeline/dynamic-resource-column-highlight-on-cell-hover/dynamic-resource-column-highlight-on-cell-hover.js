@@ -191,13 +191,6 @@ export default {
             });
             calendar.setOptions({ resources: myResources.slice() });
           },
-          onEventHoverIn: function (args) {
-            calendar.settings.onCellHoverIn && calendar.settings.onCellHoverIn(args);
-          },
-
-          onEventHoverOut: function () {
-            calendar.settings.onCellHoverOut && calendar.settings.onCellHoverOut();
-          },
           onCellHoverOut: function () {
             if (!timer) {
               timer = setTimeout(function () {
