@@ -221,6 +221,7 @@ export default {
           showOverlay: false,
           scrollLock: false,
           focusOnClose: false,
+          closeOnScroll: true,
         })
         .mobiscroll('getInst');
     });
