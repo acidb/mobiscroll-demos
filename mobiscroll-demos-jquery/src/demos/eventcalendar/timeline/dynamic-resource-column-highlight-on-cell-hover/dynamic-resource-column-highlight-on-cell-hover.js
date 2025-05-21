@@ -179,11 +179,8 @@ export default {
             $('#demo-highlight-tooltip-res-name').text(res.name);
             $('#demo-highlight-tooltip-date').text(mobiscroll.formatDate('MMM DD, YYYY', args.date));
 
-            timer = setTimeout(function () {
-              tooltip.setOptions({ anchor: args.domEvent.target });
-              tooltip.open();
-              timer = null;
-            }, 200);
+            tooltip.setOptions({ anchor: args.domEvent.target });
+            tooltip.open();
 
             dateTime = args.date;
             myResources.forEach(function (r) {
@@ -222,6 +219,8 @@ export default {
         .popup({
           display: 'anchored',
           showOverlay: false,
+          scrollLock: false,
+          focusOnClose: false,
         })
         .mobiscroll('getInst');
 
