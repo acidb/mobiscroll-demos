@@ -18,7 +18,6 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // drag,
-          // need to remove
           // clickToCreate: true,
           extendDefaultEvent: function (args) {
             return {
@@ -40,7 +39,7 @@ export default {
               }, 0),
             );
             var classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
-            var colorClass = 'event-badge-' + (classMap[hrs] || 'default');
+            var colorClass = 'event-badge-text event-badge-' + (classMap[hrs] || 'default');
 
             return (
               '<div class="event-badge ' +
@@ -49,7 +48,7 @@ export default {
               hrs +
               'h/8h' +
               '</div>' +
-              '<button class="add-event-btn" mbsc-button data-icon="plus" data-variant="outline"></button>'
+              '<button class="add-event-btn"><span class="add-icon">+</span></button>'
             );
           },
 
@@ -202,41 +201,65 @@ export default {
 
 .event-badge {
   position: absolute;
-  top: 4px;
+  top: 6px;
   left: 4px;
   padding: 1px 4px;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 600;
   border-radius: 12px;
-  max-width: 50px;
+  max-width: 60px;
 }
 
 .event-badge-light {
-  background: linear-gradient(135deg, #e0f9e0, #b2f2b2);
-  color: #155724;
+  background: linear-gradient(135deg, #e6f9e6, #c9f7c9);
 }
+
 .event-badge-medium {
-  background: linear-gradient(135deg, #b2f2b2, #70db70);
+  background: linear-gradient(135deg, #c9f7c9, #9ee89e);
 }
+
 .event-badge-semi {
-  background: linear-gradient(135deg, #70db70, #43c743);
+  background: linear-gradient(135deg, #9ee89e, #6fda6f);
 }
+
 .event-badge-full {
-  background: linear-gradient(135deg, #43c743, #218838);
+  background: linear-gradient(135deg, #6fda6f, #45c645);
 }
+
 .event-badge-default {
-  background: linear-gradient(135deg, #e2e3e5, #c6c8ca);
-  color: #383d41;
+  background: linear-gradient(135deg, #f0f0f0, #d8d8d8);
+  color: #333;
+}
+
+.event-badge-text {
+  color: black;
 }
 
 .add-event-btn {
   position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 20px;
-  height: 20px;
+  top: 6px;
+  right: 4px;
+  width: 17px;
+  height: 17px;
+  background: linear-gradient(135deg, #007bff, #3399ff);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   opacity: 0;
-
+  font-size: 14px; /* set size here */
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
+
+.add-icon {
+  padding-bottom: 4px;
+  font-size: 22px;
+}
+
 .mbsc-timeline-column:hover .add-event-btn {
   opacity: 1;
   pointer-events: auto;
