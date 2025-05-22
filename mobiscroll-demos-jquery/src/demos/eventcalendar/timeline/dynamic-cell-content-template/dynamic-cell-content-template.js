@@ -19,6 +19,7 @@ export default {
         .eventcalendar({
           // drag,
           // clickToCreate: true,
+          height: 750,
           extendDefaultEvent: function (args) {
             return {
               end: new Date(args.start.getTime() + 2 * 3600000),
