@@ -159,7 +159,6 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // drag,
-          dragToMove: true,
           view: {
             timeline: {
               type: 'month',
@@ -245,15 +244,22 @@ export default {
 #demo-highlight-hover .mbsc-timeline-sidebar-resource-title {
   font-weight: 500;
 }
+
+#demo-highlight-hover .mbsc-eventcalendar-day-cont {
+  position: relative;
+}
+
 .mds-highlight-row-hover {
   background: rgba(128, 128, 128, 0.2) !important;
 }
 
 .mds-highlight-col-hover {
-  background: rgba(128, 128, 128, 0.2) !important;
-  height: 100%;
-  width: 100%;
-}
+  position: absolute;
+  inset: 0;                     /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(128,128,128,0.2) !important;
+  pointer-events: none;         /* so dragging still works */
+  box-sizing: border-box;
+}s
 
 .mds-highlight-day-content {
   font-size: 14px;
