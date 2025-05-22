@@ -255,11 +255,11 @@ export default {
 
 .mds-highlight-col-hover {
   position: absolute;
-  inset: 0;                     /* top:0; right:0; bottom:0; left:0; */
+  inset: 0;               
   background: rgba(128,128,128,0.2) !important;
-  pointer-events: none;         /* so dragging still works */
+  pointer-events: none;   
   box-sizing: border-box;
-}s
+}
 
 .mds-highlight-day-content {
   font-size: 14px;

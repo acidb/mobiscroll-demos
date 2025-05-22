@@ -345,6 +345,8 @@ import Demo276 from './demos/pickers/select/event-hooks/event-hooks';
 import Demo471 from './demos/pickers/select/localization/localization';
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
 import RowColHighlight from './demos/eventcalendar/timeline/dynamic-resource-column-highlight-on-cell-hover/dynamic-resource-column-highlight-on-cell-hover';
+import TimelineCellTemplate from './demos/eventcalendar/timeline/dynamic-cell-content-template/dynamic-cell-content-template';
+import SchedulerCellTemplate from './demos/eventcalendar/scheduler/cell-content-template/cell-content-template';
 
 export const demos = [
   {
@@ -850,6 +852,7 @@ export const demos = [
               { name: 'Date header template', unique: 'date-header-template', component: Demo619 },
               { name: 'Resource template', unique: 'custom-resource-header-template', component: Demo600 },
               { name: 'Customizing the header', unique: 'customizing-header', component: Demo513 },
+              { name: 'Cell customization', unique: 'cell-content-template', component: SchedulerCellTemplate },
             ],
           },
           {
@@ -1009,6 +1012,7 @@ export const demos = [
               { name: 'Resource header template', unique: 'resource-header-template', component: Demo639 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo656 },
               { name: 'Controlling the row height', unique: 'setting-row-height', component: Demo715 },
+              { name: 'Cell customization', unique: 'dynamic-cell-content-template', component: TimelineCellTemplate },
             ],
           },
           {
