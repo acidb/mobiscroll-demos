@@ -9,32 +9,67 @@ export default {
       // theme
     });
 
+    var hoveredDate;
+    var hoveredResource;
+    var hoveredCellEventCount;
+
     $(function () {
-      $('#demo-dynamic-cell-content')
+      var calendar = $('#demo-dynamic-cell-content')
         .mobiscroll()
         .eventcalendar({
           // drag,
-          /// clean
-          dragToCreate: true,
-          dragToMove: true,
-          clickToCreate: true,
+          // need to remove
+          // clickToCreate: true,
+          extendDefaultEvent: function (args) {
+            return {
+              end: new Date(args.start.getTime() + 2 * 3600000),
+            };
+          },
           view: {
             timeline: {
               type: 'month',
               resolutionHorizontal: 'day',
-              // eventList: true,
+              eventList: true,
             },
           },
           renderCell: function (args) {
-            var cnt = args.events?.length || 0;
-            if (args.events?.length) {
-              console.log(args.events, cnt);
-            }
-            if (!cnt) return '';
-            return '<div class="event-badge"><span class="event-count">' + cnt + '</span><span class="event-suffix">/8h</span></div>';
+            var evs = args.events || [];
+            var hrs = Math.round(
+              evs.reduce(function (s, ev) {
+                return s + (new Date(ev.end) - new Date(ev.start)) / 36e5;
+              }, 0),
+            );
+            var classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
+            var colorClass = 'event-badge-' + (classMap[hrs] || 'default');
+
+            return (
+              '<div class="event-badge ' +
+              colorClass +
+              '">' +
+              hrs +
+              'h/8h' +
+              '</div>' +
+              '<button class="add-event-btn" mbsc-button data-icon="plus" data-variant="outline"></button>'
+            );
           },
+
           onCellHoverIn: function (args) {
-            console.log('onCellHoverIn', args);
+            hoveredDate = args.date;
+            hoveredResource = args.resource;
+            hoveredCellEventCount = args.events?.length || 0;
+          },
+          onEventCreate: function () {
+            if (hoveredCellEventCount >= 4) {
+              mobiscroll.toast({ message: 'Max 4 events per cell' });
+              return false;
+            }
+          },
+          onInit: function () {
+            mobiscroll.setOptions({
+              dragToCreate: false,
+              dragToMove: false,
+              dragToResize: false,
+            });
           },
           data: [
             {
@@ -127,7 +162,28 @@ export default {
             //   color: '#4caf00',
             // },
           ],
+        })
+        .mobiscroll('getInst');
+
+      $(document).on('click', '.add-event-btn', function (e) {
+        e.stopPropagation();
+
+        if (!hoveredDate || !hoveredResource) return;
+
+        if (hoveredCellEventCount >= 4) {
+          mobiscroll.toast({ message: 'Max 4 events per cell' });
+          return;
+        }
+
+        calendar.addEvent({
+          start: hoveredDate,
+          end: new Date(hoveredDate.getTime() + 2 * 3600000),
+          resource: hoveredResource,
+          title: 'New Event',
         });
+
+        hoveredCellEventCount++;
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -136,28 +192,54 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mbsc-timeline-events {
-    top: 25px;
-  }
+.mbsc-timeline-events {
+  top: 25px;
+}
+.mbsc-timeline-column {
+  position: relative;
+  width: 100px;
+}
 
-  .event-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 6px;
-  border-radius: 12px;
-  background: rgba(0, 123, 255, 0.1);
+.event-badge {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  padding: 1px 4px;
   font-size: 12px;
-  font-weight: 500;
+  border-radius: 12px;
+  max-width: 50px;
 }
 
-.event-count {
-  margin-right: 2px;
-  color: #007bff;
+.event-badge-light {
+  background: linear-gradient(135deg, #e0f9e0, #b2f2b2);
+  color: #155724;
+}
+.event-badge-medium {
+  background: linear-gradient(135deg, #b2f2b2, #70db70);
+}
+.event-badge-semi {
+  background: linear-gradient(135deg, #70db70, #43c743);
+}
+.event-badge-full {
+  background: linear-gradient(135deg, #43c743, #218838);
+}
+.event-badge-default {
+  background: linear-gradient(135deg, #e2e3e5, #c6c8ca);
+  color: #383d41;
 }
 
-.event-suffix {
-  color: #555;
-}
+.add-event-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
 
+}
+.mbsc-timeline-column:hover .add-event-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
     `,
 };
