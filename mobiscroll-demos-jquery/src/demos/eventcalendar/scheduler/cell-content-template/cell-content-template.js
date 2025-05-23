@@ -114,14 +114,34 @@ export default {
 .mds-scheduler-cell-icons {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly; 
+  height: 100%;        
 }
 
 .mds-scheduler-cell-icon {
   font-size: 20px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  padding: 2px 4px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.mbsc-ios-dark .mds-scheduler-cell-icon, 
+.mbsc-material-dark .mds-scheduler-cell-icon, 
+.mbsc-windows-dark .mds-scheduler-cell-icon {
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 0 3px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .mbsc-schedule-events {
-  margin-right: 25px;
+  margin-right: 28px;
+}
+
+.mds-scheduler-cell-icon:hover {
+  transform: scale(1.2);
 }
   `,
 };
