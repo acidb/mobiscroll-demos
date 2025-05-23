@@ -93,7 +93,12 @@ export default {
           },
           onEventCreate: function () {
             if (hoveredCellEventCount >= 4) {
-              mobiscroll.toast({ message: 'Max 4 events per cell' });
+              mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
+                message: 'Limit reached.',
+              });
               return false;
             }
           },
