@@ -97,6 +97,14 @@ export default {
               return false;
             }
           },
+          // wihtout the // drag comment, the drag works on the site
+          onInit: function () {
+            mobiscroll.setOptions({
+              dragToCreate: false,
+              dragToMove: false,
+              dragToResize: false,
+            });
+          },
           data: [
             { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Review', resource: 1 },
             { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Demo', resource: 1 },
