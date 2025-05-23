@@ -49,6 +49,7 @@ export default {
         .eventcalendar({
           // context,
           // drag,
+          cssClass: 'mds-scheduler-cell-content-template',
           view: {
             schedule: { type: 'week', startTime: '08:00', endTime: '18:00' },
           },
@@ -59,22 +60,24 @@ export default {
 
             (d === 1 || d === 5) &&
               h === 9 &&
-              icons.push({ icon: '📅', title: d === 1 ? 'Launch Meeting' : 'Sprint Review' }, { icon: '☕', title: 'Coffee Break' });
-            h === 13 && icons.push({ icon: '🍽️', title: 'Lunch Time' });
-            d >= 1 && d <= 5 && h === 17 && icons.push({ icon: '🏃', title: 'Wrap Up' });
-            d === 2 && (h === 10 || h === 11) && icons.push({ icon: '📊', title: 'Dev Sync' });
-            h % 4 === 0 && icons.push({ icon: '🛠️', title: 'Health Check' });
-            h === 3 && icons.push({ icon: '🌐', title: 'Network Probe' });
-            h === 2 && icons.push({ icon: '💾', title: 'Nightly Backup' });
-            d === 5 && h === 2 && icons.push({ icon: '🔒', title: 'Security Patch' });
-            d === 3 && h === 14 && icons.push({ icon: '🚀', title: 'Deploy Window' });
-
+              icons.push(
+                { icon: 'fa-chess', title: d === 1 ? 'Launch Meeting' : 'Sprint Review' },
+                { icon: 'fa-coffee', title: 'Coffee Break' },
+              );
+            h === 13 && icons.push({ icon: 'fa-utensils', title: 'Lunch Time' });
+            d >= 1 && d <= 5 && h === 17 && icons.push({ icon: 'fa-running', title: 'Wrap Up' });
+            d === 2 && (h === 10 || h === 11) && icons.push({ icon: 'fa-chart-line', title: 'Dev Sync' });
+            h % 4 === 0 && icons.push({ icon: 'fa-tools', title: 'Health Check' });
+            h === 3 && icons.push({ icon: 'fa-wifi', title: 'Network Probe' });
+            h === 2 && icons.push({ icon: 'fa-database', title: 'Nightly Backup' });
+            d === 5 && h === 2 && icons.push({ icon: 'fa-lock', title: 'Security Patch' });
+            d === 3 && h === 14 && icons.push({ icon: 'fa-rocket', title: 'Deploy Window' });
             if (!icons.length) return '';
             return (
               '<div class="mds-scheduler-cell-icons-wrapper"><div class="mds-scheduler-cell-icons">' +
               icons
                 .map(function (i) {
-                  return '<div class="mds-scheduler-cell-icon" title="' + i.title + '">' + i.icon + '</div>';
+                  return '<div class="mds-scheduler-cell-icon" title="' + i.title + '"><i class="fas ' + i.icon + '"></i></div>';
                 })
                 .join('') +
               '</div></div>'
@@ -97,10 +100,15 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <div id="demo-cell-content-template"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+.mds-scheduler-cell-content-template .mbsc-schedule-item {
+  min-height: 70px;
+}
+
 .mds-scheduler-cell-icons-wrapper {
   position: absolute;
   top: 0;
@@ -119,7 +127,7 @@ export default {
 }
 
 .mds-scheduler-cell-icon {
-  font-size: 20px;
+  font-size: 14px;
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   border-radius: 8px;
@@ -127,16 +135,16 @@ export default {
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.mbsc-ios-dark .mds-scheduler-cell-icon, 
-.mbsc-material-dark .mds-scheduler-cell-icon, 
-.mbsc-windows-dark .mds-scheduler-cell-icon {
+.mds-scheduler-cell-content-template .mbsc-ios-dark .mds-scheduler-cell-icon, 
+.mds-scheduler-cell-content-template .mbsc-material-dark .mds-scheduler-cell-icon, 
+.mds-scheduler-cell-content-template .mbsc-windows-dark .mds-scheduler-cell-icon {
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
   box-shadow:
     0 0 3px rgba(255, 255, 255, 0.3),
     0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.mbsc-schedule-events {
+.mds-scheduler-cell-content-template .mbsc-schedule-events {
   margin-right: 28px;
 }
 
