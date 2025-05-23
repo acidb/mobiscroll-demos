@@ -57,13 +57,16 @@ export default {
             var colorClass = 'event-badge-text event-badge-' + (classMap[hrs] || 'default');
 
             var iconHtml = '';
+            var addedIcons = new Set();
+
             for (var i = 0; i < evs.length; i++) {
               var ev = evs[i];
-              for (var key in iconMap) {
-                if (ev.title.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
-                  iconHtml += '<i class="fas ' + iconMap[key] + ' mds-cell-icon" title="' + ev.title + '"></i>';
-                  break;
-                }
+              var matchedKey = Object.keys(iconMap).find(function (key) {
+                return ev.title.toLowerCase() === key.toLowerCase();
+              });
+              if (matchedKey && !addedIcons.has(matchedKey)) {
+                iconHtml += '<i class="fas ' + iconMap[matchedKey] + ' mds-cell-icon" title="' + ev.title + '"></i>';
+                addedIcons.add(matchedKey);
               }
             }
 
