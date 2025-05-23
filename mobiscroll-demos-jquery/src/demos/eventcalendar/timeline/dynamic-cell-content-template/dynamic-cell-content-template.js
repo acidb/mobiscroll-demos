@@ -32,13 +32,13 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // drag,
-          height: 850,
           extendDefaultEvent: function (args) {
             return {
               title: titles[Math.floor(Math.random() * titles.length)],
               end: new Date(args.start.getTime() + 2 * 3600000),
             };
           },
+          cssClass: 'mds-timeline-dynamic-cell-content',
           view: {
             timeline: {
               type: 'month',
@@ -79,7 +79,10 @@ export default {
               '</div>'
             );
           },
-
+          renderScheduleEventContent: function (event) {
+            var hours = Math.round((event.endDate - event.startDate) / 36e5);
+            return '<div class="mds-simple-event">' + event.title + ' - ' + hours + 'h</div>';
+          },
           onCellHoverIn: function (args) {
             hoveredDate = args.date;
             hoveredResource = args.resource;
@@ -200,12 +203,22 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mbsc-timeline-events {
+.mds-timeline-dynamic-cell-content .mbsc-timeline-events {
   top: 25px;
 }
-.mbsc-timeline-column {
+
+.mds-timeline-dynamic-cell-content .mbsc-timeline-column {
   position: relative;
-  width: 100px;
+  width: 110px;
+}
+
+.mds-timeline-dynamic-cell-content .mbsc-timeline-row {
+  min-height: 155px;
+}
+
+.mds-timeline-dynamic-cell-content .mbsc-timeline-column:hover .add-event-btn {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .event-badge {
@@ -270,11 +283,6 @@ export default {
 .add-icon {
   padding-bottom: 4px;
   font-size: 22px;
-}
-
-.mbsc-timeline-column:hover .add-event-btn {
-  opacity: 1;
-  pointer-events: auto;
 }
 
 .mds-cell-icon-wrapper {
