@@ -31,7 +31,7 @@ export default {
       var calendar = $('#demo-dynamic-cell-content')
         .mobiscroll()
         .eventcalendar({
-          // drag,
+          clickToCreate: true,
           extendDefaultEvent: function (args) {
             return {
               title: titles[Math.floor(Math.random() * titles.length)],
@@ -93,13 +93,6 @@ export default {
               mobiscroll.toast({ message: 'Max 4 events per cell' });
               return false;
             }
-          },
-          onInit: function () {
-            mobiscroll.setOptions({
-              dragToCreate: false,
-              dragToMove: false,
-              dragToResize: false,
-            });
           },
           data: [
             { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Review', resource: 1 },
@@ -212,8 +205,8 @@ export default {
   width: 110px;
 }
 
-.mds-timeline-dynamic-cell-content .mbsc-timeline-row {
-  min-height: 155px;
+.mds-timeline-dynamic-cell-content .mbsc-timeline-row-gutter {
+  height: 55px;
 }
 
 .mds-timeline-dynamic-cell-content .mbsc-timeline-column:hover .add-event-btn {
