@@ -88,7 +88,6 @@ export default {
               dragToMove: true,
               dragToResize: true,
               clickToCreate: true,
-              // themeVariant: 'light',
             });
           },
           data: myEvents,
