@@ -186,11 +186,16 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $(document).on('click', '.add-event-btn', function (e) {
+      $(document).on('click', '.add-event-btn', function () {
         if (!hoveredDate || !hoveredResource) return;
 
         if (hoveredCellEventCount >= 4) {
-          mobiscroll.toast({ message: 'Max 4 events per cell' });
+          mobiscroll.toast({
+            //<hidden>
+            // theme,//</hidden>
+            // context,
+            message: 'Limit reached.',
+          });
           return;
         }
 
