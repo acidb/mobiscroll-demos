@@ -13,15 +13,29 @@ export default {
     var hoveredResource;
     var hoveredCellEventCount;
 
+    var iconMap = {
+      Review: 'fa-clipboard-check',
+      Demo: 'fa-laptop-code',
+      Kickoff: 'fa-flag',
+      Strategy: 'fa-chess',
+      Collab: 'fa-handshake',
+      Update: 'fa-upload',
+      Discussion: 'fa-comment-dots',
+      Planning: 'fa-calendar-alt',
+      Retrospect: 'fa-history',
+      Onboard: 'fa-user-plus',
+    };
+    var titles = Object.keys(iconMap);
+
     $(function () {
       var calendar = $('#demo-dynamic-cell-content')
         .mobiscroll()
         .eventcalendar({
           // drag,
-          // clickToCreate: true,
-          height: 750,
+          height: 850,
           extendDefaultEvent: function (args) {
             return {
+              title: titles[Math.floor(Math.random() * titles.length)],
               end: new Date(args.start.getTime() + 2 * 3600000),
             };
           },
@@ -42,14 +56,27 @@ export default {
             var classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
             var colorClass = 'event-badge-text event-badge-' + (classMap[hrs] || 'default');
 
+            var iconHtml = '';
+            for (var i = 0; i < evs.length; i++) {
+              var ev = evs[i];
+              for (var key in iconMap) {
+                if (ev.title.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+                  iconHtml += '<i class="fas ' + iconMap[key] + ' mds-cell-icon" title="' + ev.title + '"></i>';
+                  break;
+                }
+              }
+            }
+
             return (
               '<div class="event-badge ' +
               colorClass +
               '">' +
               hrs +
-              'h/8h' +
-              '</div>' +
-              '<button class="add-event-btn"><span class="add-icon">+</span></button>'
+              'h/8h</div>' +
+              '<button class="add-event-btn"><span class="add-icon">+</span></button>' +
+              '<div class="mds-cell-icon-wrapper">' +
+              iconHtml +
+              '</div>'
             );
           },
 
@@ -72,18 +99,50 @@ export default {
             });
           },
           data: [
-            {
-              start: 'dyndatetime(y,m,d,2)',
-              end: 'dyndatetime(y,m,d,4)',
-              title: 'Event 1',
-              resource: 3,
-            },
-            {
-              start: 'dyndatetime(y,m,d,4)',
-              end: 'dyndatetime(y,m,d,6)',
-              title: 'Event 2',
-              resource: 3,
-            },
+            { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Review', resource: 1 },
+            { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Demo', resource: 1 },
+            { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Kickoff', resource: 1 },
+            { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Strategy', resource: 4 },
+            { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Collab', resource: 4 },
+            { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Update', resource: 4 },
+            { start: 'dyndatetime(y,m,d+7,0,0)', end: 'dyndatetime(y,m,d+7,2,0)', title: 'Discussion', resource: 2 },
+            { start: 'dyndatetime(y,m,d+6,0,0)', end: 'dyndatetime(y,m,d+6,2,0)', title: 'Planning', resource: 2 },
+            { start: 'dyndatetime(y,m,d+6,0,0)', end: 'dyndatetime(y,m,d+6,2,0)', title: 'Retrospect', resource: 2 },
+            { start: 'dyndatetime(y,m,d+6,0,0)', end: 'dyndatetime(y,m,d+6,2,0)', title: 'Demo', resource: 2 },
+            { start: 'dyndatetime(y,m,d+6,0,0)', end: 'dyndatetime(y,m,d+6,2,0)', title: 'Collab', resource: 3 },
+            { start: 'dyndatetime(y,m,d+6,0,0)', end: 'dyndatetime(y,m,d+6,2,0)', title: 'Strategy', resource: 3 },
+            { start: 'dyndatetime(y,m,d+6,0,0)', end: 'dyndatetime(y,m,d+6,2,0)', title: 'Update', resource: 3 },
+            { start: 'dyndatetime(y,m,d-1,0,0)', end: 'dyndatetime(y,m,d-1,2,0)', title: 'Demo', resource: 2 },
+            { start: 'dyndatetime(y,m,d-1,0,0)', end: 'dyndatetime(y,m,d-1,2,0)', title: 'Planning', resource: 2 },
+            { start: 'dyndatetime(y,m,d-1,0,0)', end: 'dyndatetime(y,m,d-1,2,0)', title: 'Discussion', resource: 3 },
+            { start: 'dyndatetime(y,m,d-1,0,0)', end: 'dyndatetime(y,m,d-1,2,0)', title: 'Retrospect', resource: 3 },
+            { start: 'dyndatetime(y,m,d-1,0,0)', end: 'dyndatetime(y,m,d-1,2,0)', title: 'Strategy', resource: 3 },
+            { start: 'dyndatetime(y,m,d-1,0,0)', end: 'dyndatetime(y,m,d-1,2,0)', title: 'Onboard', resource: 1 },
+            { start: 'dyndatetime(y,m,d-1,0,0)', end: 'dyndatetime(y,m,d-1,2,0)', title: 'Collab', resource: 1 },
+            { start: 'dyndatetime(y,m,d+0,0,0)', end: 'dyndatetime(y,m,d+0,2,0)', title: 'Demo', resource: 1 },
+            { start: 'dyndatetime(y,m,d+0,0,0)', end: 'dyndatetime(y,m,d+0,2,0)', title: 'Planning', resource: 1 },
+            { start: 'dyndatetime(y,m,d+0,0,0)', end: 'dyndatetime(y,m,d+0,2,0)', title: 'Update', resource: 1 },
+            { start: 'dyndatetime(y,m,d+1,0,0)', end: 'dyndatetime(y,m,d+1,2,0)', title: 'Collab', resource: 3 },
+            { start: 'dyndatetime(y,m,d+1,0,0)', end: 'dyndatetime(y,m,d+1,2,0)', title: 'Demo', resource: 3 },
+            { start: 'dyndatetime(y,m,d+1,0,0)', end: 'dyndatetime(y,m,d+1,2,0)', title: 'Strategy', resource: 3 },
+            { start: 'dyndatetime(y,m,d+1,0,0)', end: 'dyndatetime(y,m,d+1,2,0)', title: 'Demo', resource: 3 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Retrospect', resource: 4 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Demo', resource: 4 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Retrospect', resource: 4 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Onboard', resource: 4 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Discussion', resource: 1 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Planning', resource: 1 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Update', resource: 1 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Collab', resource: 3 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Update', resource: 3 },
+            { start: 'dyndatetime(y,m,d+3,0,0)', end: 'dyndatetime(y,m,d+3,2,0)', title: 'Planning', resource: 3 },
+            { start: 'dyndatetime(y,m,d+4,0,0)', end: 'dyndatetime(y,m,d+4,2,0)', title: 'Demo', resource: 2 },
+            { start: 'dyndatetime(y,m,d+4,0,0)', end: 'dyndatetime(y,m,d+4,2,0)', title: 'Strategy', resource: 2 },
+            { start: 'dyndatetime(y,m,d+4,0,0)', end: 'dyndatetime(y,m,d+4,2,0)', title: 'Demo', resource: 2 },
+            { start: 'dyndatetime(y,m,d+5,0,0)', end: 'dyndatetime(y,m,d+5,2,0)', title: 'Onboard', resource: 4 },
+            { start: 'dyndatetime(y,m,d+5,0,0)', end: 'dyndatetime(y,m,d+5,2,0)', title: 'Planning', resource: 4 },
+            { start: 'dyndatetime(y,m,d+5,0,0)', end: 'dyndatetime(y,m,d+5,2,0)', title: 'Retrospect', resource: 4 },
+            { start: 'dyndatetime(y,m,d+2,0,0)', end: 'dyndatetime(y,m,d+2,2,0)', title: 'Discussion', resource: 2 },
           ],
           resources: [
             {
@@ -111,63 +170,11 @@ export default {
               name: 'Resource E',
               color: '#1dab2f',
             },
-            // {
-            //   id: 6,
-            //   name: 'Resource F',
-            //   color: '#d6d145',
-            // },
-            // {
-            //   id: 7,
-            //   name: 'Resource G',
-            //   color: '#34c8e0',
-            // },
-            // {
-            //   id: 8,
-            //   name: 'Resource H',
-            //   color: '#9dde46',
-            // },
-            // {
-            //   id: 9,
-            //   name: 'Resource I',
-            //   color: '#166f6f',
-            // },
-            // {
-            //   id: 10,
-            //   name: 'Resource J',
-            //   color: '#f7961e',
-            // },
-            // {
-            //   id: 11,
-            //   name: 'Resource K',
-            //   color: '#34c8e0',
-            // },
-            // {
-            //   id: 12,
-            //   name: 'Resource L',
-            //   color: '#af0000',
-            // },
-            // {
-            //   id: 13,
-            //   name: 'Resource M',
-            //   color: '#446f1c',
-            // },
-            // {
-            //   id: 14,
-            //   name: 'Resource N',
-            //   color: '#073138',
-            // },
-            // {
-            //   id: 15,
-            //   name: 'Resource O',
-            //   color: '#4caf00',
-            // },
           ],
         })
         .mobiscroll('getInst');
 
       $(document).on('click', '.add-event-btn', function (e) {
-        e.stopPropagation();
-
         if (!hoveredDate || !hoveredResource) return;
 
         if (hoveredCellEventCount >= 4) {
@@ -179,7 +186,7 @@ export default {
           start: hoveredDate,
           end: new Date(hoveredDate.getTime() + 2 * 3600000),
           resource: hoveredResource,
-          title: 'New Event',
+          title: titles[Math.floor(Math.random() * titles.length)],
         });
 
         hoveredCellEventCount++;
@@ -188,6 +195,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <div id="demo-dynamic-cell-content"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
@@ -209,6 +217,9 @@ export default {
   font-weight: 600;
   border-radius: 12px;
   max-width: 60px;
+
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #f0f0f0, #d8d8d8); /* default fallback */
 }
 
 .event-badge-light {
@@ -242,7 +253,6 @@ export default {
   right: 4px;
   width: 17px;
   height: 17px;
-  background: linear-gradient(135deg, #007bff, #3399ff);
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -251,9 +261,10 @@ export default {
   justify-content: center;
   cursor: pointer;
   opacity: 0;
-  font-size: 14px; /* set size here */
-  font-weight: bold;
+  font-size: 14px;
+
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg,rgb(73, 73, 73),rgb(22, 21, 21));
 }
 
 .add-icon {
@@ -264,6 +275,34 @@ export default {
 .mbsc-timeline-column:hover .add-event-btn {
   opacity: 1;
   pointer-events: auto;
+}
+
+.mds-cell-icon-wrapper {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 4px;
+}
+
+.mds-cell-icon {
+  font-size: 14px;
+  padding: 2px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.mbsc-ios-dark .mds-cell-icon,
+.mbsc-material-dark .mds-cell-icon,
+.mbsc-windows-dark .mds-cell-icon {
+  background: rgba(20, 20, 20, 0.9);
+  color: #fff;
+  box-shadow: 
+    0 1px 3px rgba(150, 150, 150, 0.3), 
+    0 0 4px rgba(255, 255, 255, 0.2); 
 }
     `,
 };
