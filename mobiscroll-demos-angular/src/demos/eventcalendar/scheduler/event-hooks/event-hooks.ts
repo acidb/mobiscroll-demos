@@ -62,6 +62,12 @@ export class AppComponent implements OnInit {
   onCellRightClick(): void {
     /* Logic for cell right click */
   }
+  onCellHoverIn(): void {
+    /* Logic for cell hover in */
+  }
+  onCellHoverOut(): void {
+    /* Logic for cell hover out */
+  }
   onDestroy(): void {
     // Your custom event handler goes here
   }
@@ -136,6 +142,12 @@ export class AppComponent implements OnInit {
   }
   onResourceRightClick(): void {
     // Logic for resource right click
+  }
+  onResourceHoverIn(): void {
+    // Logic for resource hover in
+  }
+  onResourceHoverOut(): void {
+    // Logic for resource hover out
   }
   onSelectedDateChange(): void {
     // Use it to keep track of the selected date externally

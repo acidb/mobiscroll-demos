@@ -127,13 +127,19 @@ function App() {
         resources={myResources}
         invalid={myInvalid}
         onCellClick={() => {
-          /* Logic for cell click */
+          // Logic for cell click
         }}
         onCellDoubleClick={() => {
-          /* Logic for cell double click */
+          // Logic for cell double click
         }}
         onCellRightClick={() => {
-          /* Logic for cell right click */
+          // Logic for cell right click
+        }}
+        onCellHoverIn={() => {
+          // Logic for cell hover in
+        }}
+        onCellHoverOut={() => {
+          // Logic for cell hover out
         }}
         onDestroy={() => {
           // Your custom event handler goes here
@@ -230,6 +236,12 @@ function App() {
         }}
         onResourceRightClick={() => {
           // Logic for resource right click
+        }}
+        onResourceHoverIn={() => {
+          // Logic for resource hover in
+        }}
+        onResourceHoverOut={() => {
+          // Logic for resource hover out
         }}
         onSelectedDateChange={() => {
           // Use it to keep track of the selected date externally
