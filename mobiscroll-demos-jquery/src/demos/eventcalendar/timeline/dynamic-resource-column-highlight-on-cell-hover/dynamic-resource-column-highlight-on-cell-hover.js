@@ -172,8 +172,8 @@ export default {
               return r.id === args.resource;
             })[0];
             // use class
-            $('#demo-highlight-tooltip-res-name').text(res.name);
-            $('#demo-highlight-tooltip-date').text(mobiscroll.formatDate('MMM DD, YYYY', args.date));
+            $('.mds-highlight-tooltip-res-name').text(res.name);
+            $('.mds-highlight-tooltip-date').text(mobiscroll.formatDate('MMM DD, YYYY', args.date));
 
             tooltip.setOptions({ anchor: args.domEvent.target });
             tooltip.open();
@@ -229,8 +229,8 @@ export default {
   markup: `
 <div id="demo-highlight-hover"></div>
 <div id="demo-event-tooltip-popup" class="mds-highlight-tooltip" style="display: none;">
-  <div id="demo-highlight-tooltip-res-name" class="mds-highlight-tooltip-res-name"></div>
-  <div id="demo-highlight-tooltip-date" class="mds-highlight-tooltip-date"></div>
+  <div class="mds-highlight-tooltip-res-name"></div>
+  <div class="mds-highlight-tooltip-date"></div>
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
@@ -249,14 +249,14 @@ export default {
   position: relative;
 }
 
-.mds-highlight-row-hover {
-  background: rgba(128, 128, 128, 0.2) !important;
+.mds-highlight-row-hover, .mds-highlight-col-hover {
+  background: rgba(220,220,220,0.25) !important;
 }
 
 .mds-highlight-col-hover {
   position: absolute;
   inset: 0;               
-  background: rgba(128,128,128,0.2) !important;
+  background: transparent;
   pointer-events: none;   
   box-sizing: border-box;
 }
