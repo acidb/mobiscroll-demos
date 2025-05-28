@@ -51,7 +51,7 @@ export default {
           // drag,
           cssClass: 'mds-scheduler-cell-content-template',
           view: {
-            schedule: { type: 'week', startTime: '08:00', endTime: '18:00' },
+            schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
           },
           renderCell: function (args) {
             var h = args.date.getHours();
@@ -61,37 +61,28 @@ export default {
             (d === 1 || d === 5) &&
               h === 9 &&
               icons.push(
-                { icon: 'fa-chess', title: d === 1 ? 'Launch Meeting' : 'Sprint Review' },
+                { icon: 'fa-people-arrows', title: d === 1 ? 'Launch Meeting' : 'Sprint Review' },
                 { icon: 'fa-coffee', title: 'Coffee Break' },
               );
             h === 13 && icons.push({ icon: 'fa-utensils', title: 'Lunch Time' });
-            d >= 1 && d <= 5 && h === 17 && icons.push({ icon: 'fa-running', title: 'Wrap Up' });
-            d === 2 && (h === 10 || h === 11) && icons.push({ icon: 'fa-chart-line', title: 'Dev Sync' });
+            d >= 1 && d <= 5 && h === 17 && icons.push({ icon: 'fa-clock', title: 'Wrap Up' });
+            d === 2 && (h === 10 || h === 11) && icons.push({ icon: 'fa-sync-alt', title: 'Dev Sync' });
             h % 4 === 0 && icons.push({ icon: 'fa-tools', title: 'Health Check' });
             h === 3 && icons.push({ icon: 'fa-wifi', title: 'Network Probe' });
-            h === 2 && icons.push({ icon: 'fa-database', title: 'Nightly Backup' });
-            d === 5 && h === 2 && icons.push({ icon: 'fa-lock', title: 'Security Patch' });
+            h === 12 && icons.push({ icon: 'fa-database', title: 'Backup' });
+            h === 15 && icons.push({ icon: 'fa-lock', title: 'Security Patch' });
             d === 3 && h === 14 && icons.push({ icon: 'fa-rocket', title: 'Deploy Window' });
+
             if (!icons.length) return '';
             return (
-              '<div class="mds-scheduler-cell-icons-wrapper"><div class="mds-scheduler-cell-icons">' +
+              '<div class="mds-has-icons"><div class="mds-scheduler-cell-icons-wrapper"><div class="mds-scheduler-cell-icons">' +
               icons
                 .map(function (i) {
                   return '<div class="mds-scheduler-cell-icon" title="' + i.title + '"><i class="fas ' + i.icon + '"></i></div>';
                 })
                 .join('') +
-              '</div></div>'
+              '</div></div></div>'
             );
-          },
-
-          /// to delete
-          onInit: function () {
-            mobiscroll.setOptions({
-              dragToCreate: true,
-              dragToMove: true,
-              dragToResize: true,
-              clickToCreate: true,
-            });
           },
           data: myEvents,
         })
@@ -122,17 +113,21 @@ export default {
 .mds-scheduler-cell-icons {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly; 
+  align-items: flex-start;
   height: 100%;        
 }
 
 .mds-scheduler-cell-icon {
-  font-size: 14px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  border-radius: 8px;
-  padding: 2px 4px;
-  transition: transform 0.2s ease, background 0.2s ease;
+  font-size: 16px;
+  color: #444;
+  background: rgba(255, 255, 255, 0.8); 
+  border-radius: 6px;
+  padding: 4px 6px;
+  margin: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .mds-scheduler-cell-content-template .mbsc-ios-dark .mds-scheduler-cell-icon, 
@@ -148,8 +143,12 @@ export default {
   margin-right: 28px;
 }
 
-.mds-scheduler-cell-icon:hover {
-  transform: scale(1.2);
+.mds-has-icons {
+height: 100%;
+width: 100%;
+background: transparent;
+  background: rgba(150, 150, 150, 0.1);
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
 }
   `,
 };
