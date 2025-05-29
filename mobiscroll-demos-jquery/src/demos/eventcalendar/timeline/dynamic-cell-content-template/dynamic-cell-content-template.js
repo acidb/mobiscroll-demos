@@ -65,7 +65,14 @@ export default {
                 return ev.title.toLowerCase() === key.toLowerCase();
               });
               if (matchedKey && !addedIcons.has(matchedKey)) {
-                iconHtml += '<i class="fas ' + iconMap[matchedKey] + ' mds-cell-icon" title="' + ev.title + '"></i>';
+                iconHtml +=
+                  '<div class="mds-cell-icon-container">' +
+                  '<i class="fas ' +
+                  iconMap[matchedKey] +
+                  ' mds-cell-icon" title="' +
+                  ev.title +
+                  '"></i>' +
+                  '</div>';
                 addedIcons.add(matchedKey);
               }
             }
@@ -244,9 +251,8 @@ export default {
   font-weight: 600;
   border-radius: 12px;
   max-width: 60px;
-
-   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(135deg, #f0f0f0, #d8d8d8); /* default fallback */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #f0f0f0, #d8d8d8);
 }
 
 .event-badge-light {
@@ -289,9 +295,9 @@ export default {
   cursor: pointer;
   opacity: 0;
   font-size: 14px;
-
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   background: linear-gradient(135deg,rgb(73, 73, 73),rgb(22, 21, 21));
+  transition: transform 0.2s ease;
 }
 
 .add-icon {
@@ -299,22 +305,34 @@ export default {
   font-size: 22px;
 }
 
+.add-event-btn:hover {
+  transform: scale(1.10);
+}
+
+.mds-cell-icon-container {
+  width: 12px;
+  height: 12px;
+  display: flex;
+  padding: 4px 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: center;
+}
+
 .mds-cell-icon-wrapper {
   position: absolute;
   bottom: 4px;
   left: 4px;
-  right: 4px;
   display: flex;
-  justify-content: space-evenly;
-  gap: 4px;
+  justify-content: space-start;
+  gap: 7px;
 }
 
 .mds-cell-icon {
-  font-size: 14px;
+  font-size: 13px;
   padding: 2px;
-  background: rgba(255,255,255,0.7);
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .mbsc-ios-dark .mds-cell-icon,
