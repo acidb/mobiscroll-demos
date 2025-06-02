@@ -78,7 +78,13 @@ export default {
               '<div class="mds-has-icons"><div class="mds-scheduler-cell-icons-wrapper"><div class="mds-scheduler-cell-icons">' +
               icons
                 .map(function (i) {
-                  return '<div class="mds-scheduler-cell-icon" title="' + i.title + '"><i class="fas ' + i.icon + '"></i></div>';
+                  return (
+                    '<div class="mds-cell-icon-wrapper"><div class="mds-scheduler-cell-icon" title="' +
+                    i.title +
+                    '"><i class="fas ' +
+                    i.icon +
+                    '"></i></div></div>'
+                  );
                 })
                 .join('') +
               '</div></div></div>'
@@ -102,9 +108,8 @@ export default {
 
 .mds-scheduler-cell-icons-wrapper {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 5px;
+  top: 3px;
+  right: 3px;
   display: flex;
   align-items: center; 
   justify-content: center;
@@ -113,30 +118,32 @@ export default {
 .mds-scheduler-cell-icons {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  height: 100%;        
 }
 
 .mds-scheduler-cell-icon {
   font-size: 16px;
-  color: #444;
+  padding: 2px;
+}
+
+.mds-cell-icon-wrapper {
+  width: 13px;
+  height: 14px;
+  color: #000;
   background: rgba(255, 255, 255, 0.8); 
-  border-radius: 6px;
+  border-radius: 5px;
   padding: 4px 6px;
   margin: 4px 0;
   display: flex;
   align-items: center;
-  gap: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: center;
 }
 
 .mds-scheduler-cell-content-template .mbsc-ios-dark .mds-scheduler-cell-icon, 
 .mds-scheduler-cell-content-template .mbsc-material-dark .mds-scheduler-cell-icon, 
 .mds-scheduler-cell-content-template .mbsc-windows-dark .mds-scheduler-cell-icon {
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-  box-shadow:
-    0 0 3px rgba(255, 255, 255, 0.3),
-    0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .mds-scheduler-cell-content-template .mbsc-schedule-events {

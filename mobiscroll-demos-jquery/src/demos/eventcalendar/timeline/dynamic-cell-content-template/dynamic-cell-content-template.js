@@ -66,7 +66,7 @@ export default {
               });
               if (matchedKey && !addedIcons.has(matchedKey)) {
                 iconHtml +=
-                  '<div class="mds-cell-icon-container">' +
+                  '<div class="mds-cell-icons-container">' +
                   '<i class="fas ' +
                   iconMap[matchedKey] +
                   ' mds-cell-icon" title="' +
@@ -309,13 +309,14 @@ export default {
   transform: scale(1.10);
 }
 
-.mds-cell-icon-container {
-  width: 12px;
-  height: 12px;
+.mds-cell-icons-container {
+  width: 9px;
+  height: 9px;
   display: flex;
-  padding: 4px 4px;
+  padding: 4px 6px;
+  color: #000;
   background: rgba(255, 255, 255, 0.8);
-  border-radius: 6px;
+  border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   align-items: center;
   justify-content: center;
@@ -327,7 +328,7 @@ export default {
   left: 4px;
   display: flex;
   justify-content: space-start;
-  gap: 7px;
+  gap: 6px;
 }
 
 .mds-cell-icon {
@@ -338,11 +339,7 @@ export default {
 .mbsc-ios-dark .mds-cell-icon,
 .mbsc-material-dark .mds-cell-icon,
 .mbsc-windows-dark .mds-cell-icon {
-  background: rgba(20, 20, 20, 0.9);
-  color: #fff;
-  box-shadow: 
-    0 1px 3px rgba(150, 150, 150, 0.3), 
-    0 0 4px rgba(255, 255, 255, 0.2); 
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
     `,
 };
