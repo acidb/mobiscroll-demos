@@ -79,7 +79,7 @@ export default {
               icons
                 .map(function (i) {
                   return (
-                    '<div class="mds-cell-icon-wrapper"><div class="mds-scheduler-cell-icon" title="' +
+                    '<div class="mds-scheduler-cell-icon-wrapper"><div class="mds-scheduler-cell-icon" title="' +
                     i.title +
                     '"><i class="fas ' +
                     i.icon +
@@ -125,7 +125,7 @@ export default {
   padding: 2px;
 }
 
-.mds-cell-icon-wrapper {
+.mds-scheduler-cell-icon-wrapper {
   width: 13px;
   height: 14px;
   color: #000;

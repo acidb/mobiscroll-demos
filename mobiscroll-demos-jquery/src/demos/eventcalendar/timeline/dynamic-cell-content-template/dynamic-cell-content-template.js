@@ -66,7 +66,7 @@ export default {
               });
               if (matchedKey && !addedIcons.has(matchedKey)) {
                 iconHtml +=
-                  '<div class="mds-cell-icons-container">' +
+                  '<div class="mds-timeline-cell-icons-container">' +
                   '<i class="fas ' +
                   iconMap[matchedKey] +
                   ' mds-cell-icon" title="' +
@@ -309,7 +309,7 @@ export default {
   transform: scale(1.10);
 }
 
-.mds-cell-icons-container {
+.mds-timeline-cell-icons-container {
   width: 9px;
   height: 9px;
   display: flex;
