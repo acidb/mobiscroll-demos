@@ -11,37 +11,90 @@ export default {
 
     $(function () {
       var myEvents = [
-        { start: 'dyndatetime(y,m,d+1,9)', end: 'dyndatetime(y,m,d+1,11)', title: 'Review' },
-        { start: 'dyndatetime(y,m,d+2,10)', end: 'dyndatetime(y,m,d+2,12)', title: 'Demo' },
-        { start: 'dyndatetime(y,m,d+3,8)', end: 'dyndatetime(y,m,d+3,10)', title: 'Kickoff' },
-        { start: 'dyndatetime(y,m,d+3,14)', end: 'dyndatetime(y,m,d+3,16)', title: 'Strategy' },
-        { start: 'dyndatetime(y,m,d+4,9)', end: 'dyndatetime(y,m,d+4,11)', title: 'Stand-up' },
-        { start: 'dyndatetime(y,m,d+4,13)', end: 'dyndatetime(y,m,d+4,15)', title: 'Integration' },
-        { start: 'dyndatetime(y,m,d+5,10)', end: 'dyndatetime(y,m,d+5,12)', title: 'Review' },
-        { start: 'dyndatetime(y,m,d+6,12)', end: 'dyndatetime(y,m,d+6,14)', title: 'Planning' },
-        { start: 'dyndatetime(y,m,d+7,11)', end: 'dyndatetime(y,m,d+7,13)', title: 'Review' },
-        { start: 'dyndatetime(y,m,d+8,15)', end: 'dyndatetime(y,m,d+8,17)', title: 'Sync' },
-        { start: 'dyndatetime(y,m,d+8,10)', end: 'dyndatetime(y,m,d+8,12)', title: 'Retro' },
-        { start: 'dyndatetime(y,m,d+9,10)', end: 'dyndatetime(y,m,d+9,12)', title: 'Stand-up' },
-        { start: 'dyndatetime(y,m,d+10,14)', end: 'dyndatetime(y,m,d+10,16)', title: 'Collab' },
-        { start: 'dyndatetime(y,m,d+11,8)', end: 'dyndatetime(y,m,d+11,10)', title: 'Kickoff' },
-        { start: 'dyndatetime(y,m,d+12,9)', end: 'dyndatetime(y,m,d+12,11)', title: 'Meeting' },
-        { start: 'dyndatetime(y,m,d+13,10)', end: 'dyndatetime(y,m,d+13,12)', title: 'Retro' },
-        { start: 'dyndatetime(y,m,d+14,15)', end: 'dyndatetime(y,m,d+14,17)', title: 'Review' },
-        { start: 'dyndatetime(y,m,d-1,10)', end: 'dyndatetime(y,m,d-1,12)', title: 'Planning' },
-        { start: 'dyndatetime(y,m,d-2,15)', end: 'dyndatetime(y,m,d-2,17)', title: 'Talk' },
-        { start: 'dyndatetime(y,m,d-3,9)', end: 'dyndatetime(y,m,d-3,11)', title: 'Stand-up' },
-        { start: 'dyndatetime(y,m,d-4,14)', end: 'dyndatetime(y,m,d-4,16)', title: 'Retrospective' },
-        { start: 'dyndatetime(y,m,d-5,8)', end: 'dyndatetime(y,m,d-5,10)', title: 'Kickoff' },
-        { start: 'dyndatetime(y,m,d-6,15)', end: 'dyndatetime(y,m,d-6,17)', title: 'Review' },
-        { start: 'dyndatetime(y,m,d-7,13)', end: 'dyndatetime(y,m,d-7,15)', title: 'Collab' },
-        { start: 'dyndatetime(y,m,d-8,9)', end: 'dyndatetime(y,m,d-8,11)', title: 'Retro' },
-        { start: 'dyndatetime(y,m,d-9,16)', end: 'dyndatetime(y,m,d-9,18)', title: 'Discussion' },
-        { start: 'dyndatetime(y,m,d-10,14)', end: 'dyndatetime(y,m,d-10,16)', title: 'Update' },
-        { start: 'dyndatetime(y,m,d-11,10)', end: 'dyndatetime(y,m,d-11,12)', title: 'Sprint' },
-        { start: 'dyndatetime(y,m,d-12,13)', end: 'dyndatetime(y,m,d-12,15)', title: 'Onboarding' },
-        { start: 'dyndatetime(y,m,d-13,9)', end: 'dyndatetime(y,m,d-13,11)', title: 'Strategy' },
-        { start: 'dyndatetime(y,m,d-14,8)', end: 'dyndatetime(y,m,d-14,10)', title: 'Meeting' },
+        {
+          id: 1,
+          title: 'Team Sync Meeting',
+          start: 'dyndatetime(y, m, d - 1, 10, 15)',
+          end: 'dyndatetime(y, m, d - 1, 11, 30)',
+        },
+        {
+          id: 2,
+          title: 'Apply Security Update',
+          start: 'dyndatetime(y, m, d - 1, 15, 0)',
+          end: 'dyndatetime(y, m, d - 1, 16, 0)',
+        },
+        {
+          id: 3,
+          title: 'Database Backup',
+          start: 'dyndatetime(y, m, d - 2, 12, 0)',
+          end: 'dyndatetime(y, m, d - 2, 13, 0)',
+        },
+        {
+          id: 4,
+          title: 'Project Kickoff & Coffee',
+          start: 'dyndatetime(y, m, d - 2, 9, 0)',
+          end: 'dyndatetime(y, m, d - 2, 10, 0)',
+        },
+        {
+          id: 5,
+          title: 'System Health Review',
+          start: 'dyndatetime(y, m, d - 2, 8, 0)',
+          end: 'dyndatetime(y, m, d - 2, 8, 45)',
+        },
+        {
+          id: 6,
+          title: 'Quarterly Health Audit',
+          start: 'dyndatetime(y, m, d, 16, 0)',
+          end: 'dyndatetime(y, m, d, 17, 0)',
+        },
+        {
+          id: 7,
+          title: 'Deployment Window',
+          start: 'dyndatetime(y, m, d, 14, 0)',
+          end: 'dyndatetime(y, m, d, 15, 0)',
+        },
+        {
+          id: 8,
+          title: 'Nightly Backup Prep',
+          start: 'dyndatetime(y, m, d, 12, 0)',
+          end: 'dyndatetime(y, m, d, 13, 0)',
+        },
+        {
+          id: 9,
+          title: 'Morning System Scan',
+          start: 'dyndatetime(y, m, d, 8, 0)',
+          end: 'dyndatetime(y, m, d, 8, 45)',
+        },
+        {
+          id: 10,
+          title: 'Sprint Review & Coffee',
+          start: 'dyndatetime(y, m, d + 2, 9, 0)',
+          end: 'dyndatetime(y, m, d + 2, 9, 45)',
+        },
+        {
+          id: 11,
+          title: 'Final Health Check',
+          start: 'dyndatetime(y, m, d + 2, 16, 0)',
+          end: 'dyndatetime(y, m, d + 2, 16, 45)',
+        },
+        {
+          id: 12,
+          title: 'Weekly Backup',
+          start: 'dyndatetime(y, m, d + 2, 12, 0)',
+          end: 'dyndatetime(y, m, d + 2, 12, 45)',
+        },
+        {
+          id: 13,
+          title: 'Morning Health Scan',
+          start: 'dyndatetime(y, m, d + 1, 8, 15)',
+          end: 'dyndatetime(y, m, d + 1, 9, 0)',
+        },
+        {
+          id: 14,
+          title: 'Afternoon Backup',
+          start: 'dyndatetime(y, m, d + 1, 12, 15)',
+          end: 'dyndatetime(y, m, d + 1, 13, 0)',
+        },
       ];
 
       $('#demo-cell-content-template')
@@ -137,6 +190,7 @@ export default {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   align-items: center;
   justify-content: center;
+  pointer-events: auto;
 }
 
 .mds-scheduler-cell-content-template .mbsc-ios-dark .mds-scheduler-cell-icon, 
@@ -150,9 +204,10 @@ export default {
 }
 
 .mds-has-icons {
-height: 100%;
-width: 100%;
-background: transparent;
+  height: 100%; 
+  width: 100%;
+  pointer-events: none;
+  background: transparent;
   background: rgba(150, 150, 150, 0.1);
   box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
 }
