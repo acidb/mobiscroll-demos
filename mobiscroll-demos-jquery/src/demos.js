@@ -852,7 +852,7 @@ export const demos = [
               { name: 'Date header template', unique: 'date-header-template', component: Demo619 },
               { name: 'Resource template', unique: 'custom-resource-header-template', component: Demo600 },
               { name: 'Customizing the header', unique: 'customizing-header', component: Demo513 },
-              { name: 'Cell customization', unique: 'cell-content-template', component: SchedulerCellTemplate },
+              { name: '!Cell customization', unique: 'cell-content-template', component: SchedulerCellTemplate },
             ],
           },
           {
@@ -1012,7 +1012,7 @@ export const demos = [
               { name: 'Resource header template', unique: 'resource-header-template', component: Demo639 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo656 },
               { name: 'Controlling the row height', unique: 'setting-row-height', component: Demo715 },
-              { name: 'Cell customization', unique: 'dynamic-cell-content-template', component: TimelineCellTemplate },
+              { name: '!Cell customization', unique: 'dynamic-cell-content-template', component: TimelineCellTemplate },
             ],
           },
           {
@@ -1083,7 +1083,11 @@ export const demos = [
             unique: 5,
             items: [
               { name: 'CSS class for colors and invalids', unique: 'colors-invalids-css-class', component: Demo713 },
-              { name: 'Row and column highlight', unique: 'dynamic-resource-column-highlight-on-cell-hover', component: RowColHighlight },
+              {
+                name: '!Row and column highlight',
+                unique: 'dynamic-resource-column-highlight-on-cell-hover',
+                component: RowColHighlight,
+              },
               { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo672 },
               { name: 'Resource background and styling', unique: 'resource-background', component: Demo737 },
             ],

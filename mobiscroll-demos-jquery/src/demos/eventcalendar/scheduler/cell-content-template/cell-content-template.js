@@ -108,8 +108,8 @@ export default {
 
 .mds-scheduler-cell-icons-wrapper {
   position: absolute;
-  top: 3px;
-  right: 3px;
+  top: 2px;
+  right: 6px;
   display: flex;
   align-items: center; 
   justify-content: center;
@@ -126,12 +126,11 @@ export default {
 }
 
 .mds-scheduler-cell-icon-wrapper {
-  width: 13px;
-  height: 14px;
+  width: 25px;
+  height: 22px;
   color: #000;
   background: rgba(255, 255, 255, 0.8); 
   border-radius: 5px;
-  padding: 4px 6px;
   margin: 4px 0;
   display: flex;
   align-items: center;

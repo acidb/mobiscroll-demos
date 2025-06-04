@@ -171,7 +171,6 @@ export default {
             var res = myResources.filter(function (r) {
               return r.id === args.resource;
             })[0];
-            // use class
             $('.mds-highlight-tooltip-res-name').text(res.name);
             $('.mds-highlight-tooltip-date').text(mobiscroll.formatDate('MMM DD, YYYY', args.date));
 

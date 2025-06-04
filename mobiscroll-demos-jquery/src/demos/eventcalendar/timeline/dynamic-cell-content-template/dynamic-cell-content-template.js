@@ -310,8 +310,8 @@ export default {
 }
 
 .mds-timeline-cell-icons-container {
-  width: 9px;
-  height: 9px;
+  width: 21px;
+  height: 17px;
   display: flex;
   padding: 4px 6px;
   color: #000;
@@ -327,7 +327,6 @@ export default {
   bottom: 4px;
   left: 4px;
   display: flex;
-  justify-content: space-start;
   gap: 6px;
 }
 
