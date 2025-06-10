@@ -208,8 +208,8 @@ export default {
   width: 100%;
   pointer-events: none;
   background: transparent;
-  background: rgba(150, 150, 150, 0.1);
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+  background: rgba(170, 170, 170, 0.15);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.05);
 }
   `,
 };
