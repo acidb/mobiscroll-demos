@@ -109,7 +109,7 @@ export default {
               return false;
             }
           },
-          // wihtout the // drag comment, the drag works on the site
+          // Wihtout the // drag comment, the drag works on the site
           onInit: function () {
             mobiscroll.setOptions({
               dragToCreate: false,
@@ -177,7 +177,7 @@ export default {
             {
               id: 3,
               name: 'Resource C',
-              color: '#4981d6',
+              color: '#ff964f',
             },
             {
               id: 4,
