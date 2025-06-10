@@ -12,6 +12,7 @@ export default {
     $(function () {
       var dateTime;
       var formatDate = mobiscroll.formatDate;
+      var tooltipTimeout;
 
       var myResources = [
         {
@@ -174,8 +175,11 @@ export default {
             $('.mds-highlight-tooltip-res-name').text(res.name);
             $('.mds-highlight-tooltip-date').text(mobiscroll.formatDate('MMM DD, YYYY', args.date));
 
-            tooltip.setOptions({ anchor: args.domEvent.target });
-            tooltip.open();
+            clearTimeout(tooltipTimeout);
+            tooltipTimeout = setTimeout(function () {
+              tooltip.setOptions({ anchor: args.domEvent.target });
+              tooltip.open();
+            }, 200);
 
             dateTime = args.date;
             myResources.forEach(function (r) {
@@ -184,6 +188,7 @@ export default {
             calendar.setOptions({ resources: myResources.slice() });
           },
           onCellHoverOut: function () {
+            clearTimeout(tooltipTimeout);
             tooltip.close();
             myResources.forEach(function (r) {
               r.cssClass = '';
