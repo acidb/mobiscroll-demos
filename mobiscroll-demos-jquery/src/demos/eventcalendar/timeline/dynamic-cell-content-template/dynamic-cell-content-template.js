@@ -82,7 +82,7 @@ export default {
               colorClass +
               '">' +
               hrs +
-              'h/8h</div>' +
+              'h / 8h</div>' +
               '<button class="add-event-btn"><span class="add-icon">+</span></button>' +
               '<div class="mds-cell-icon-wrapper">' +
               iconHtml +
@@ -243,38 +243,44 @@ export default {
 }
 
 .event-badge {
-  position: absolute;
+  position: relative;
   top: 6px;
   left: 4px;
+  display: inline-block;
   padding: 1px 4px;
   font-size: 13px;
   font-weight: 600;
   border-radius: 12px;
-  max-width: 60px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(135deg, #f0f0f0, #d8d8d8);
+  max-width: 80px;
+  color: #000;
+  background: #f9f9f9;
+  overflow: hidden;
+  z-index: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.event-badge-light {
-  background: linear-gradient(135deg, #e6f9e6, #c9f7c9);
+.event-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: rgba(89, 162, 235, 0.3);
+  transform: skewX(-15deg); /* slight diagonal effect */
+  z-index: -1;
+  width: 0%;
 }
 
-.event-badge-medium {
-  background: linear-gradient(135deg, #c9f7c9, #9ee89e);
+.mbsc-ios-dark .event-badge::before,
+.mbsc-material-dark .event-badge::before,
+.mbsc-windows-dark .event-badge::before {
+    background: rgba(89, 162, 235, 0.6);
 }
 
-.event-badge-semi {
-  background: linear-gradient(135deg, #9ee89e, #6fda6f);
-}
-
-.event-badge-full {
-  background: linear-gradient(135deg, #6fda6f, #45c645);
-}
-
-.event-badge-default {
-  background: linear-gradient(135deg, #f0f0f0, #d8d8d8);
-  color: #333;
-}
+.event-badge-light::before { width: 25%; }
+.event-badge-medium::before { width: 50%; }
+.event-badge-semi::before { width: 75%; }
+.event-badge-full::before { width: 100%; }
 
 .event-badge-text {
   color: black;
