@@ -626,7 +626,7 @@ export default {
             });
           },
           data: myEvents,
-          resources: myResources
+          resources: myResources,
         })
         .mobiscroll('getInst');
 
@@ -708,22 +708,22 @@ export default {
 
 .event-badge-light::before {
   width: 25%;
-  background: #a3e4a1 
-}
-
+  background: #ff9c9c
+  }
+  
 .event-badge-medium::before {
   width: 50%;
-  background: #fff4a3 
-}
-
-.event-badge-semi::before {
-  width: 75%;
   background: #ffcf9f
 }
-
+    
+.event-badge-semi::before {
+  width: 75%;
+  background: #fff4a3 
+}
+      
 .event-badge-full::before {
   width: 100%;
-  background: #ff9c9c
+  background: #a3e4a1 
 }
 
 .event-badge-text {
