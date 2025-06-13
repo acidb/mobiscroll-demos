@@ -696,6 +696,15 @@ export default {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
+.event-badge-default {
+}
+
+.event-badge-default::before {
+  width: 5px;                  
+  background: #ff9c9c;      
+}
+
+
 .event-badge::before {
   content: '';
   position: absolute;
