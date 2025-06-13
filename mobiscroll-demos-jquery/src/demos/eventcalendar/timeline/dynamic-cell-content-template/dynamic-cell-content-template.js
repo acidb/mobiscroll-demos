@@ -167,27 +167,18 @@ export default {
             {
               id: 1,
               name: 'Resource A',
-              color: '#e20000',
             },
             {
               id: 2,
               name: 'Resource B',
-              color: '#76e083',
             },
             {
               id: 3,
               name: 'Resource C',
-              color: '#ff964f',
             },
             {
               id: 4,
               name: 'Resource D',
-              color: '#e25dd2',
-            },
-            {
-              id: 5,
-              name: 'Resource E',
-              color: '#1dab2f',
             },
           ],
         })
@@ -265,22 +256,29 @@ export default {
   top: 0;
   left: 0;
   height: 100%;
-  background: rgba(89, 162, 235, 0.3);
-  transform: skewX(-15deg); /* slight diagonal effect */
+  transform: skewX(-15deg);
   z-index: -1;
-  width: 0%;
 }
 
-.mbsc-ios-dark .event-badge::before,
-.mbsc-material-dark .event-badge::before,
-.mbsc-windows-dark .event-badge::before {
-    background: rgba(89, 162, 235, 0.6);
+.event-badge-light::before {
+  width: 25%;
+  background: #a3e4a1 
 }
 
-.event-badge-light::before { width: 25%; }
-.event-badge-medium::before { width: 50%; }
-.event-badge-semi::before { width: 75%; }
-.event-badge-full::before { width: 100%; }
+.event-badge-medium::before {
+  width: 50%;
+  background: #fff4a3 
+}
+
+.event-badge-semi::before {
+  width: 75%;
+  background: #ffcf9f
+}
+
+.event-badge-full::before {
+  width: 100%;
+  background: #ff9c9c
+}
 
 .event-badge-text {
   color: black;
@@ -288,8 +286,7 @@ export default {
 
 .add-event-btn {
   position: absolute;
-  top: 6px;
-  right: 4px;
+  inset: 6px 4px auto auto;
   width: 17px;
   height: 17px;
   color: #fff;
@@ -330,8 +327,7 @@ export default {
 
 .mds-cell-icon-wrapper {
   position: absolute;
-  bottom: 4px;
-  left: 4px;
+  inset: auto auto 4px 4px;
   display: flex;
   gap: 6px;
 }
