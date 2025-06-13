@@ -43,6 +43,8 @@ export default {
             timeline: {
               type: 'month',
               resolutionHorizontal: 'day',
+              startDay: 1,
+              endDay: 5,
               eventList: true,
             },
           },
@@ -316,7 +318,7 @@ export default {
   width: 21px;
   height: 17px;
   display: flex;
-  padding: 4px 6px;
+  // padding: 4px 6px;
   color: #000;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
