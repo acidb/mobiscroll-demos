@@ -538,7 +538,6 @@ export default {
       var calendar = $('#demo-dynamic-cell-content')
         .mobiscroll()
         .eventcalendar({
-          clickToCreate: true,
           extendDefaultEvent: function (args) {
             return {
               title: titles[Math.floor(Math.random() * titles.length)],

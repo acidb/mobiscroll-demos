@@ -156,10 +156,11 @@ export default {
       ];
 
       var $tooltip = $('#demo-event-tooltip-popup');
-      var calendar = $('#demo-highlight-hover')
+      var calendar = $('#demo-timeline-highlight-hover')
         .mobiscroll()
         .eventcalendar({
           // drag,
+          cssClass: 'mds-timeline-highlight-hover',
           view: {
             timeline: {
               type: 'month',
@@ -231,7 +232,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-highlight-hover"></div>
+<div id="demo-timeline-highlight-hover"></div>
 <div id="demo-event-tooltip-popup" class="mds-highlight-tooltip" style="display: none;">
   <div class="mds-highlight-tooltip-res-name"></div>
   <div class="mds-highlight-tooltip-date"></div>
@@ -239,17 +240,17 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-#demo-highlight-hover .mbsc-timeline-sidebar,
-#demo-highlight-hover .mbsc-timeline-sidebar-footer-cont,
-#demo-highlight-hover .mbsc-timeline-sidebar-header-cont {
+.mds-timeline-highlight-hover .mbsc-timeline-sidebar,
+.mds-timeline-highlight-hover .mbsc-timeline-sidebar-footer-cont,
+.mds-timeline-highlight-hover .mbsc-timeline-sidebar-header-cont {
   width: 170px;
 }
 
-#demo-highlight-hover .mbsc-timeline-sidebar-resource-title {
+.mds-timeline-highlight-hover .mbsc-timeline-sidebar-resource-title {
   font-weight: 500;
 }
 
-#demo-highlight-hover .mbsc-eventcalendar-day-cont {
+.mds-timeline-highlight-hover .mbsc-eventcalendar-day-cont {
   position: relative;
 }
 
