@@ -102,7 +102,7 @@ export default {
         .eventcalendar({
           // context,
           // drag,
-          cssClass: 'mds-scheduler-cell-content-template',
+          cssClass: 'mds-cell-template',
           view: {
             schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
           },
@@ -128,7 +128,7 @@ export default {
 
             if (!icons.length) return '';
             return (
-              '<div class="mds-has-icons"><div class="mds-scheduler-cell-icons-wrapper"><div class="mds-scheduler-cell-icons">' +
+              '<div class="mds-cell-icons"><div class="mds-cell-icons-wrapper">' +
               icons
                 .map(function (i) {
                   return (
@@ -140,7 +140,7 @@ export default {
                   );
                 })
                 .join('') +
-              '</div></div></div>'
+              '</div></div>'
             );
           },
           data: myEvents,
@@ -155,55 +155,37 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-scheduler-cell-content-template .mbsc-schedule-item {
-  min-height: 70px;
+.mbsc-schedule-time-wrapper,
+.mbsc-schedule-item {
+  height: 70px;
 }
 
-.mds-scheduler-cell-icons-wrapper {
+.mds-cell-template .mbsc-schedule-events {
+  margin-right: 28px;
+}
+
+.mds-cell-icons-wrapper {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 2px;
   right: 6px;
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-}
-
-.mds-scheduler-cell-icons {
-  display: flex;
-  flex-direction: column;
 }
 
 .mds-scheduler-cell-icon {
   font-size: 16px;
-  padding: 2px;
-}
-
-.mds-scheduler-cell-icon-wrapper {
   width: 25px;
   height: 22px;
+  line-height: 22px;
   color: #000;
   background: rgba(255, 255, 255, 0.8); 
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   margin: 4px 0;
-  display: flex;
-  align-items: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
+  text-align: center;
 }
 
-.mds-scheduler-cell-content-template .mbsc-ios-dark .mds-scheduler-cell-icon, 
-.mds-scheduler-cell-content-template .mbsc-material-dark .mds-scheduler-cell-icon, 
-.mds-scheduler-cell-content-template .mbsc-windows-dark .mds-scheduler-cell-icon {
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-}
-
-.mds-scheduler-cell-content-template .mbsc-schedule-events {
-  margin-right: 28px;
-}
-
-.mds-has-icons {
+.mds-cell-icons {
   height: 100%; 
   width: 100%;
   pointer-events: none;

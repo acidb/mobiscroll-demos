@@ -10,22 +10,10 @@ export default {
     });
 
     var myResources = [
-      {
-        id: 1,
-        name: 'Resource A',
-      },
-      {
-        id: 2,
-        name: 'Resource B',
-      },
-      {
-        id: 3,
-        name: 'Resource C',
-      },
-      {
-        id: 4,
-        name: 'Resource D',
-      },
+      { id: 1, name: 'Resource A' },
+      { id: 2, name: 'Resource B' },
+      { id: 3, name: 'Resource C' },
+      { id: 4, name: 'Resource D' },
     ];
 
     var myEvents = [
@@ -535,16 +523,19 @@ export default {
     var titles = Object.keys(iconMap);
 
     $(function () {
-      var calendar = $('#demo-dynamic-cell-content')
+      var calendar = $('#demo-cell-content')
         .mobiscroll()
         .eventcalendar({
+          dragToCreate: false,
+          dragToMove: false,
+          dragToResize: false,
           extendDefaultEvent: function (args) {
             return {
               title: titles[Math.floor(Math.random() * titles.length)],
               end: new Date(args.start.getTime() + 2 * 3600000),
             };
           },
-          cssClass: 'mds-timeline-dynamic-cell-content',
+          cssClass: 'mds-cell-content',
           view: {
             timeline: {
               type: 'month',
@@ -555,44 +546,40 @@ export default {
             },
           },
           renderCell: function (args) {
-            var evs = args.events || [];
-            var hrs = Math.round(
-              evs.reduce(function (s, ev) {
+            var events = args.events || [];
+            var hours = Math.round(
+              events.reduce(function (s, ev) {
                 return s + (new Date(ev.end) - new Date(ev.start)) / 36e5;
               }, 0),
             );
             var classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
-            var colorClass = 'event-badge-text event-badge-' + (classMap[hrs] || 'default');
+            var colorClass = 'mds-cell-content-badge-text mds-cell-content-badge-' + (classMap[hours] || 'default');
 
             var iconHtml = '';
             var addedIcons = new Set();
 
-            for (var i = 0; i < evs.length; i++) {
-              var ev = evs[i];
-              var matchedKey = Object.keys(iconMap).find(function (key) {
-                return ev.title.toLowerCase() === key.toLowerCase();
-              });
-              if (matchedKey && !addedIcons.has(matchedKey)) {
+            for (var i = 0; i < events.length; i++) {
+              var ev = events[i];
+              var iconClass = iconMap[ev.title];
+              if (iconClass && !addedIcons.has(ev.title)) {
                 iconHtml +=
-                  '<div class="mds-timeline-cell-icons-container">' +
                   '<i class="fas ' +
-                  iconMap[matchedKey] +
+                  iconClass +
                   ' mds-cell-icon" title="' +
                   ev.title +
-                  '"></i>' +
-                  '</div>';
-                addedIcons.add(matchedKey);
+                  '"></i>';
+                addedIcons.add(ev.title);
               }
             }
 
             return (
-              '<div class="event-badge ' +
+              '<div class="mds-cell-content-badge ' +
               colorClass +
               '">' +
-              hrs +
+              hours +
               'h / 8h</div>' +
-              '<button class="add-event-btn"><span class="add-icon">+</span></button>' +
-              '<div class="mds-cell-icon-wrapper">' +
+              '<button class="mds-cell-content-add">+</button>' +
+              '<div class="mds-cell-icons-wrapper">' +
               iconHtml +
               '</div>'
             );
@@ -617,20 +604,12 @@ export default {
               return false;
             }
           },
-          // Wihtout the // drag comment, the drag works on the site
-          onInit: function () {
-            mobiscroll.setOptions({
-              dragToCreate: false,
-              dragToMove: false,
-              dragToResize: false,
-            });
-          },
           data: myEvents,
           resources: myResources,
         })
         .mobiscroll('getInst');
 
-      $(document).on('click', '.add-event-btn', function () {
+      $(document).on('click', '.mds-cell-content-add', function () {
         if (!hoveredDate || !hoveredResource) return;
 
         if (hoveredCellEventCount >= 4) {
@@ -657,29 +636,28 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<div id="demo-dynamic-cell-content"></div>
+<div id="demo-cell-content"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-timeline-dynamic-cell-content .mbsc-timeline-events {
+.mds-cell-content .mbsc-timeline-events {
   top: 25px;
 }
 
-.mds-timeline-dynamic-cell-content .mbsc-timeline-column {
-  position: relative;
-  width: 110px;
-}
-
-.mds-timeline-dynamic-cell-content .mbsc-timeline-row-gutter {
+.mds-cell-content .mbsc-timeline-row-gutter {
   height: 55px;
 }
 
-.mds-timeline-dynamic-cell-content .mbsc-timeline-column:hover .add-event-btn {
+.mds-cell-content .mbsc-timeline-column {
+  width: 110px;
+}
+
+.mds-cell-content .mbsc-timeline-column:hover .mds-cell-content-add {
   opacity: 1;
   pointer-events: auto;
 }
 
-.event-badge {
+.mds-cell-content-badge {
   position: relative;
   top: 6px;
   left: 4px;
@@ -696,7 +674,7 @@ export default {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.event-badge::before {
+.mds-cell-content-badge::before {
   content: '';
   position: absolute;
   top: 0;
@@ -706,71 +684,52 @@ export default {
   z-index: -1;
 }
 
-.event-badge-light::before {
+.mds-cell-content-badge-light::before {
   width: 25%;
   background: #ff9c9c
   }
   
-.event-badge-medium::before {
+.mds-cell-content-badge-medium::before {
   width: 50%;
   background: #ffcf9f
 }
     
-.event-badge-semi::before {
+.mds-cell-content-badge-semi::before {
   width: 75%;
   background: #fff4a3 
 }
       
-.event-badge-full::before {
+.mds-cell-content-badge-full::before {
   width: 100%;
   background: #a3e4a1 
 }
 
-.event-badge-text {
+.mds-cell-content-badge-text {
   color: black;
 }
 
-.add-event-btn {
+.mds-cell-content-add {
   position: absolute;
   inset: 6px 4px auto auto;
   width: 17px;
   height: 17px;
+  line-height: 0;
+  padding: 0;
+  padding-bottom: 4px;
   color: #fff;
   border: none;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 22px;
   cursor: pointer;
-  opacity: 0;
-  font-size: 14px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   background: linear-gradient(135deg,rgb(73, 73, 73),rgb(22, 21, 21));
   transition: transform 0.2s ease;
 }
 
-.add-icon {
-  padding-bottom: 4px;
-  font-size: 22px;
-}
-
-.add-event-btn:hover {
+.mds-cell-content-add:hover {
   transform: scale(1.10);
 }
 
-.mds-timeline-cell-icons-container {
-  width: 21px;
-  height: 17px;
-  display: flex;
-  color: #000;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  align-items: center;
-  justify-content: center;
-}
-
-.mds-cell-icon-wrapper {
+.mds-cell-icons-wrapper {
   position: absolute;
   inset: auto auto 4px 4px;
   display: flex;
@@ -778,14 +737,15 @@ export default {
 }
 
 .mds-cell-icon {
+  text-align: center;
+  width: 21px;
+  height: 17px;
+  line-height: 17px !important;
+  color: #000;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   font-size: 13px;
-  padding: 2px;
-}
-
-.mbsc-ios-dark .mds-cell-icon,
-.mbsc-material-dark .mds-cell-icon,
-.mbsc-windows-dark .mds-cell-icon {
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
     `,
 };
