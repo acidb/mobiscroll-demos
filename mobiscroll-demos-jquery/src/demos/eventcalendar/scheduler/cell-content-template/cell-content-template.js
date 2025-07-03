@@ -128,11 +128,11 @@ export default {
 
             if (!icons.length) return '';
             return (
-              '<div class="mds-cell-icons"><div class="mds-cell-icons-wrapper">' +
+              '<div class="mds-cell-icons-background"><div class="mds-cell-icons-wrapper">' +
               icons
                 .map(function (i) {
                   return (
-                    '<div class="mds-scheduler-cell-icon-wrapper"><div class="mds-scheduler-cell-icon" title="' +
+                    '<div class="mds-cell-icon-wrapper"><div class="mds-cell-icon" title="' +
                     i.title +
                     '"><i class="fas ' +
                     i.icon +
@@ -164,6 +164,15 @@ export default {
   margin-right: 28px;
 }
 
+.mds-cell-icons-background {
+  height: 100%; 
+  width: 100%;
+  pointer-events: none;
+  background: transparent;
+  background: rgba(170, 170, 170, 0.15);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
 .mds-cell-icons-wrapper {
   display: flex;
   flex-direction: column;
@@ -172,7 +181,7 @@ export default {
   right: 6px;
 }
 
-.mds-scheduler-cell-icon {
+.mds-cell-icon {
   font-size: 16px;
   width: 25px;
   height: 22px;
@@ -185,13 +194,6 @@ export default {
   text-align: center;
 }
 
-.mds-cell-icons {
-  height: 100%; 
-  width: 100%;
-  pointer-events: none;
-  background: transparent;
-  background: rgba(170, 170, 170, 0.15);
-  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.05);
-}
+
   `,
 };
