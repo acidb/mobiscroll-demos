@@ -193,7 +193,5 @@ export default {
   margin: 4px 0;
   text-align: center;
 }
-
-
   `,
 };
