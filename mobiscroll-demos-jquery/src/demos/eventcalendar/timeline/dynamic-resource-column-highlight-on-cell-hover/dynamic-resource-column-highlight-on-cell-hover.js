@@ -95,7 +95,6 @@ export default {
         },
       ];
 
-      var $tooltip = $('#highlight-cell-popup');
       var calendar = $('#demo-highlight-hover')
         .mobiscroll()
         .eventcalendar({
@@ -149,17 +148,17 @@ export default {
           renderDay: function (args) {
             var isHover = hoverDateTime && args.date.getTime() === hoverDateTime.getTime();
             var hoverClass = isHover ? ' mds-highlight-col-hover' : '';
-            return '<div class="mds-highlight-day-content ' + hoverClass + '">' + formatDate('DD DDD', args.date) + '</div>';
+            return '<div class="mds-highlight-day-content ' + hoverClass + '">' + formatDate('D DDD', args.date) + '</div>';
           },
           renderDayFooter: function (args) {
             var isHover = hoverDateTime && args.date.getTime() === hoverDateTime.getTime();
             var hoverClass = isHover ? ' mds-highlight-col-hover' : '';
-            return '<div class="mds-highlight-day-content ' + hoverClass + '">' + formatDate('DD DDD', args.date) + '</div>';
+            return '<div class="mds-highlight-day-content ' + hoverClass + '">' + formatDate('D DDD', args.date) + '</div>';
           },
         })
         .mobiscroll('getInst');
 
-      var tooltip = $tooltip
+      var tooltip = $('#demo-highlight-cell-popup')
         .mobiscroll()
         .popup({
           display: 'anchored',
@@ -174,7 +173,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-highlight-hover"></div>
-<div id="highlight-cell-popup" class="mds-highlight-tooltip" style="display: none;">
+<div id="demo-highlight-cell-popup" class="mds-highlight-tooltip" style="display: none;">
   <div class="mds-highlight-tooltip-name"></div>
   <div class="mds-highlight-tooltip-date"></div>
 </div>
@@ -205,9 +204,8 @@ export default {
 .mds-highlight-day-content {
   font-size: 14px;
   height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
+  line-height: 30px;
   position: relative; 
 }
 

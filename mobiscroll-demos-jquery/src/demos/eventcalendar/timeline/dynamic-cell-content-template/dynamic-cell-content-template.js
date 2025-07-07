@@ -535,7 +535,7 @@ export default {
               end: new Date(args.start.getTime() + 2 * 3600000),
             };
           },
-          cssClass: 'mds-cell-content',
+          cssClass: 'mds-timeline-cell-content',
           view: {
             timeline: {
               type: 'month',
@@ -553,7 +553,7 @@ export default {
               }, 0),
             );
             var classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
-            var colorClass = 'mds-cell-content-badge-text mds-cell-content-badge-' + (classMap[hours] || 'default');
+            var colorClass = 'mds-timeline-cell-content-badge-' + (classMap[hours] || 'default');
 
             var iconHtml = '';
             var addedIcons = new Set();
@@ -562,36 +562,31 @@ export default {
               var ev = events[i];
               var iconClass = iconMap[ev.title];
               if (iconClass && !addedIcons.has(ev.title)) {
-                iconHtml +=
-                  '<i class="fas ' +
-                  iconClass +
-                  ' mds-cell-icon" title="' +
-                  ev.title +
-                  '"></i>';
+                iconHtml += '<i class="fas ' + iconClass + ' mds-timeline-cell-icon" title="' + ev.title + '"></i>';
                 addedIcons.add(ev.title);
               }
             }
 
             return (
-              '<div class="mds-cell-content-badge ' +
+              '<div class="mds-timeline-cell-content-badge ' +
               colorClass +
               '">' +
               hours +
               'h / 8h</div>' +
-              '<button class="mds-cell-content-add">+</button>' +
-              '<div class="mds-cell-icons-wrapper">' +
+              '<button class="mds-timeline-cell-content-add">+</button>' +
+              '<div class="mds-timeline-cell-icons">' +
               iconHtml +
               '</div>'
             );
           },
           renderScheduleEventContent: function (event) {
             var hours = Math.round((event.endDate - event.startDate) / 36e5);
-            return '<div class="mds-simple-event">' + event.title + ' - ' + hours + 'h</div>';
+            return '<div>' + event.title + ' - ' + hours + 'h</div>';
           },
           onCellHoverIn: function (args) {
             hoveredDate = args.date;
             hoveredResource = args.resource;
-            hoveredCellEventCount = args.events?.length || 0;
+            hoveredCellEventCount = args.events.length;
           },
           onEventCreate: function () {
             if (hoveredCellEventCount >= 4) {
@@ -609,7 +604,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $(document).on('click', '.mds-cell-content-add', function () {
+      $(document).on('click', '.mds-timeline-cell-content-add', function () {
         if (!hoveredDate || !hoveredResource) return;
 
         if (hoveredCellEventCount >= 4) {
@@ -640,24 +635,19 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-cell-content .mbsc-timeline-events {
+.mds-timeline-cell-content .mbsc-timeline-events {
   top: 25px;
 }
 
-.mds-cell-content .mbsc-timeline-row-gutter {
+.mds-timeline-cell-content .mbsc-timeline-row-gutter {
   height: 55px;
 }
 
-.mds-cell-content .mbsc-timeline-column {
+.mds-timeline-cell-content .mbsc-timeline-column {
   width: 110px;
 }
 
-.mds-cell-content .mbsc-timeline-column:hover .mds-cell-content-add {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.mds-cell-content-badge {
+.mds-timeline-cell-content-badge {
   position: relative;
   top: 6px;
   left: 4px;
@@ -667,14 +657,14 @@ export default {
   font-weight: 600;
   border-radius: 12px;
   max-width: 80px;
-  color: #000;
+  color: black;
   background: #f9f9f9;
   overflow: hidden;
   z-index: 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.mds-cell-content-badge::before {
+.mds-timeline-cell-content-badge::before {
   content: '';
   position: absolute;
   top: 0;
@@ -684,31 +674,27 @@ export default {
   z-index: -1;
 }
 
-.mds-cell-content-badge-light::before {
+.mds-timeline-cell-content-badge-light::before {
   width: 25%;
   background: #ff9c9c
   }
   
-.mds-cell-content-badge-medium::before {
+.mds-timeline-cell-content-badge-medium::before {
   width: 50%;
   background: #ffcf9f
 }
     
-.mds-cell-content-badge-semi::before {
+.mds-timeline-cell-content-badge-semi::before {
   width: 75%;
   background: #fff4a3 
 }
       
-.mds-cell-content-badge-full::before {
+.mds-timeline-cell-content-badge-full::before {
   width: 100%;
   background: #a3e4a1 
 }
 
-.mds-cell-content-badge-text {
-  color: black;
-}
-
-.mds-cell-content-add {
+.mds-timeline-cell-content-add {
   position: absolute;
   inset: 6px 4px auto auto;
   width: 17px;
@@ -725,21 +711,25 @@ export default {
   transition: transform 0.2s ease;
 }
 
-.mds-cell-content-add:hover {
+.mbsc-timeline-column:hover .mds-timeline-cell-content-add {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mds-timeline-cell-content-add:hover {
   transform: scale(1.10);
 }
 
-.mds-cell-icons-wrapper {
+.mds-timeline-cell-icons {
   position: absolute;
-  inset: auto auto 4px 4px;
-  display: flex;
-  gap: 6px;
+  inset: auto auto 4px auto;
 }
 
-.mds-cell-icon {
+.mds-timeline-cell-icon {
   text-align: center;
   width: 21px;
   height: 17px;
+  margin: 0 3px;
   line-height: 17px !important;
   color: #000;
   background: rgba(255, 255, 255, 0.8);

@@ -102,7 +102,8 @@ export default {
         .eventcalendar({
           // context,
           // drag,
-          cssClass: 'mds-cell-template',
+          cssClass: 'mds-schedule-cell-template',
+          data: myEvents,
           view: {
             schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
           },
@@ -128,22 +129,21 @@ export default {
 
             if (!icons.length) return '';
             return (
-              '<div class="mds-cell-icons-background"><div class="mds-cell-icons-wrapper">' +
+              '<div class="mds-schedule-cell-icons-background"><div class="mds-schedule-cell-icons">' +
               icons
                 .map(function (i) {
                   return (
-                    '<div class="mds-cell-icon-wrapper"><div class="mds-cell-icon" title="' +
+                    '<div class="mds-schedule-cell-icon" title="' +
                     i.title +
                     '"><i class="fas ' +
                     i.icon +
-                    '"></i></div></div>'
+                    '"></i></div>'
                   );
                 })
                 .join('') +
               '</div></div>'
             );
           },
-          data: myEvents,
         })
         .mobiscroll('getInst');
     });
@@ -160,11 +160,16 @@ export default {
   height: 70px;
 }
 
-.mds-cell-template .mbsc-schedule-events {
+.mds-schedule-cell-template .mbsc-schedule-events {
   margin-right: 28px;
 }
 
-.mds-cell-icons-background {
+.mbsc-rtl .mds-schedule-cell-template .mbsc-schedule-events {
+  margin-right: auto;
+  margin-left: 28px;
+}
+
+.mds-schedule-cell-icons-background {
   height: 100%; 
   width: 100%;
   pointer-events: none;
@@ -173,15 +178,18 @@ export default {
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
-.mds-cell-icons-wrapper {
-  display: flex;
-  flex-direction: column;
+.mds-schedule-cell-icons {
   position: absolute;
   top: 2px;
   right: 6px;
 }
 
-.mds-cell-icon {
+.mbsc-rtl .mds-schedule-cell-icons {
+  left: 6px;
+  right: auto;
+}
+
+.mds-schedule-cell-icon {
   font-size: 16px;
   width: 25px;
   height: 22px;
@@ -190,7 +198,7 @@ export default {
   background: rgba(255, 255, 255, 0.8); 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  margin: 4px 0;
+  margin: 7px 0;
   text-align: center;
 }
   `,
