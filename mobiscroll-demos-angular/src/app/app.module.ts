@@ -350,6 +350,9 @@ import { AppComponent as Demo387 } from '../demos/pickers/select/themes-ios-mate
 import { AppComponent as Demo276 } from '../demos/pickers/select/event-hooks/event-hooks';
 import { AppComponent as Demo471 } from '../demos/pickers/select/localization/localization';
 import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
+import { AppComponent as RowColHighlight } from '../demos/eventcalendar/timeline/dynamic-resource-column-highlight-on-cell-hover/dynamic-resource-column-highlight-on-cell-hover';
+import { AppComponent as TimelineCellTemplate } from '../demos/eventcalendar/timeline/dynamic-cell-content-template/dynamic-cell-content-template';
+import { AppComponent as SchedulerCellTemplate } from '../demos/eventcalendar/scheduler/cell-content-template/cell-content-template';
 
 export const demos: any[] = [
   {
@@ -855,6 +858,7 @@ export const demos: any[] = [
               { name: 'Date header template', unique: 'date-header-template', component: Demo619 },
               { name: 'Resource template', unique: 'custom-resource-header-template', component: Demo600 },
               { name: 'Customizing the header', unique: 'customizing-header', component: Demo513 },
+              { name: 'Cell customization', unique: 'cell-content-template', component: SchedulerCellTemplate },
             ],
           },
           {
@@ -1014,6 +1018,7 @@ export const demos: any[] = [
               { name: 'Resource header template', unique: 'resource-header-template', component: Demo639 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo656 },
               { name: 'Controlling the row height', unique: 'setting-row-height', component: Demo715 },
+              { name: 'Cell customization', unique: 'dynamic-cell-content-template', component: TimelineCellTemplate },
             ],
           },
           {
@@ -1084,6 +1089,7 @@ export const demos: any[] = [
             unique: 5,
             items: [
               { name: 'CSS class for colors and invalids', unique: 'colors-invalids-css-class', component: Demo713 },
+              { name: 'Row and column highlight', unique: 'dynamic-resource-column-highlight-on-cell-hover', component: RowColHighlight },
               { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo672 },
               { name: 'Resource background and styling', unique: 'resource-background', component: Demo737 },
             ],
@@ -1268,6 +1274,9 @@ export const demoTitleMap: { [key: string]: string } = {};
 
 @NgModule({
   declarations: [
+    RowColHighlight,
+    TimelineCellTemplate,
+    SchedulerCellTemplate,
     Demo439,
     Demo571,
     Demo529,
