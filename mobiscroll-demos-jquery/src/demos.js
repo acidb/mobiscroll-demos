@@ -6,6 +6,7 @@ import Demo529 from './demos/datepicker/calendar/responsive/responsive';
 import Demo530 from './demos/datepicker/calendar/mobile-desktop-display/mobile-desktop-display';
 import Demo579 from './demos/datepicker/calendar/appointment-booking/appointment-booking';
 import Demo623 from './demos/datepicker/calendar/activity-calendar/activity-calendar';
+import Demo775 from './demos/datepicker/calendar/cell-template-on-hover/cell-template-on-hover';
 import Demo531 from './demos/datepicker/calendar/date-picker/date-picker';
 import Demo92 from './demos/datepicker/calendar/date-time-picker/date-time-picker';
 import Demo312 from './demos/datepicker/calendar/week-view/week-view';
@@ -223,6 +224,7 @@ import Demo712 from './demos/eventcalendar/scheduler/colors-invalids-css-class/c
 import Demo511 from './demos/eventcalendar/scheduler/resource-filtering-in-header/resource-filtering-in-header';
 import Demo489 from './demos/eventcalendar/scheduler/themes-ios-material-windows/themes-ios-material-windows';
 import Demo736 from './demos/eventcalendar/scheduler/resource-background/resource-background';
+import Demo774 from './demos/eventcalendar/scheduler/show-cell-summary-on-hover/show-cell-summary-on-hover';
 import Demo486 from './demos/eventcalendar/scheduler/gregorian-jalali-hijri/gregorian-jalali-hijri';
 import Demo487 from './demos/eventcalendar/scheduler/event-hooks/event-hooks';
 import Demo488 from './demos/eventcalendar/scheduler/localization/localization';
@@ -276,6 +278,7 @@ import Demo747 from './demos/eventcalendar/timeline/show-summaries-aggregates-fo
 import Demo765 from './demos/eventcalendar/timeline/resource-drag-drop-reorder/resource-drag-drop-reorder';
 import Demo768 from './demos/eventcalendar/timeline/dynamic-calculation-resource-sort/dynamic-calculation-resource-sort';
 import Demo720 from './demos/eventcalendar/timeline/resource-data-structure/resource-data-structure';
+import Demo773 from './demos/eventcalendar/timeline/display-resource-information-on-hover/display-resource-information-on-hover';
 import Demo666 from './demos/eventcalendar/timeline/event-data-structure/event-data-structure';
 import Demo706 from './demos/eventcalendar/timeline/connecting-linking-events-arrows/connecting-linking-events-arrows';
 import Demo667 from './demos/eventcalendar/timeline/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
@@ -373,6 +376,7 @@ export const demos = [
             items: [
               { name: 'Appointment booking', unique: 'appointment-booking', component: Demo579 },
               { name: 'Activity calendar', unique: 'activity-calendar', component: Demo623 },
+              { name: 'Cell template', unique: 'cell-template-on-hover', component: Demo775 },
             ],
           },
           {
@@ -925,6 +929,7 @@ export const demos = [
               { name: 'Custom component in header', unique: 'resource-filtering-in-header', component: Demo511 },
               { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo489 },
               { name: 'Resource background and styling', unique: 'resource-background', component: Demo736 },
+              { name: 'Summarize cell information', unique: ' show-cell-summary-on-hover', component: Demo774 },
             ],
           },
           {
@@ -1035,6 +1040,7 @@ export const demos = [
               { name: 'Resource reorder with d&d', unique: 'resource-drag-drop-reorder', component: Demo765 },
               { name: 'Dynamic resource sort', unique: 'dynamic-calculation-resource-sort', component: Demo768 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
+              { name: 'Show details on hover', unique: 'display-resource-information-on-hover', component: Demo773 },
             ],
           },
           {
