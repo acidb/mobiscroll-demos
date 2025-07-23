@@ -10,13 +10,23 @@ export default {
     });
 
     $(function () {
+      var hoveredDate = new Date();
       $('#demo')
         .mobiscroll()
         .datepicker({
           controls: ['calendar'],
           display: 'inline',
-          calendarType: 'week',
-          calendarSize: 2,
+          calendarSize: 1,
+          onCellHoverIn: function (args, inst) {
+            hoveredDate = args.date;
+          },
+          onCellHoverOut: function (args, inst) {
+            hoveredDate = null;
+          },
+          renderDayContent: function () {
+            // console.log(hoveredDate)
+            return '<button class="add-btn" mbsc-button style="visibility:hidden;"> Add' + hoveredDate + '</button >';
+          },
         });
     });
   },
@@ -26,6 +36,8 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-
+.mbsc-calendar-cell:hover .add-btn {
+    visibility: visible !important;
+}
   `,
 };
