@@ -276,6 +276,7 @@ import Demo747 from './demos/eventcalendar/timeline/show-summaries-aggregates-fo
 import Demo765 from './demos/eventcalendar/timeline/resource-drag-drop-reorder/resource-drag-drop-reorder';
 import Demo768 from './demos/eventcalendar/timeline/dynamic-calculation-resource-sort/dynamic-calculation-resource-sort';
 import Demo720 from './demos/eventcalendar/timeline/resource-data-structure/resource-data-structure';
+import Demo773 from './demos/eventcalendar/timeline/display-resource-information-on-hover/display-resource-information-on-hover';
 import Demo666 from './demos/eventcalendar/timeline/event-data-structure/event-data-structure';
 import Demo706 from './demos/eventcalendar/timeline/connecting-linking-events-arrows/connecting-linking-events-arrows';
 import Demo667 from './demos/eventcalendar/timeline/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
@@ -1036,6 +1037,7 @@ export const demos = [
               { name: 'Resource reorder with d&d', unique: 'resource-drag-drop-reorder', component: Demo765 },
               { name: 'Dynamic resource sort', unique: 'dynamic-calculation-resource-sort', component: Demo768 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
+              { name: 'Show details on hover', unique: 'display-resource-information-on-hover', component: Demo773 },
             ],
           },
           {
