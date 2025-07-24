@@ -16,10 +16,11 @@ export default {
       var $resourceName = $('#demo-resource-info-name');
       var $resourceCost = $('#demo-resource-info-cost');
       var $resourceTotal = $('#demo-resource-info-total');
-      var $profileButton = $('#demo-resource-info-profile');
+      var $payButton = $('#demo-resource-info-pay');
       var $editButton = $('#demo-resource-info-edit');
       var openTimer = null;
       var closeTimer = null;
+      var currentResource = null;
 
       function openTooltipWithDelay(event) {
         if (closeTimer) clearTimeout(closeTimer);
@@ -30,10 +31,12 @@ export default {
           var events = calendar.getEvents();
           var totalHours = getTotalHoursForResource(events, event.resource.id);
 
+          currentResource = event.resource;
+
           $resourceAvatar.attr('src', event.resource.avatar);
           $resourceName.text(event.resource.name);
-          $resourceCost.text('$' + event.resource.cost + '/hour');
-          $resourceTotal.text('On this day: ' + totalHours + ' hours, $' + totalHours * event.resource.cost);
+          $resourceCost.text('Hourly pay: $' + event.resource.cost + '');
+          $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
           $(event.domEvent.target).addClass('md-resource-info-hover');
 
           tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
@@ -273,13 +276,13 @@ export default {
         closeTooltipWithDelay();
       });
 
-      $profileButton.on('click', function () {
+      $payButton.on('click', function () {
         tooltip.close();
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
           // context,
-          message: 'View profile',
+          message: currentResource.profession + ' payed',
         });
       });
 
@@ -289,7 +292,7 @@ export default {
           //<hidden>
           // theme,//</hidden>
           // context,
-          message: 'Edit resource',
+          message: "Edit " + currentResource.name + "'s profile",
         });
       });
     });
@@ -305,8 +308,8 @@ export default {
     <div id="demo-resource-info-cost"></div>
     <div id="demo-resource-info-total"></div>
   </div>
-  <button id="demo-resource-info-profile" mbsc-button data-color="success" class="md-resource-info-button">
-    Go to profile
+  <button id="demo-resource-info-pay" mbsc-button data-color="success" class="md-resource-info-button">
+    Pay upfront
   </button>
 </div>
 <div id="demo"></div>
