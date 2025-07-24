@@ -15,8 +15,57 @@ export default {
       var $resourceAvatar = $('#demo-resource-info-avatar');
       var $resourceName = $('#demo-resource-info-name');
       var $resourceCost = $('#demo-resource-info-cost');
+      var $resourceTotal = $('#demo-resource-info-total');
+      var $profileButton = $('#demo-resource-info-profile');
+      var $editButton = $('#demo-resource-info-edit');
+      var openTimer = null;
+      var closeTimer = null;
 
-      $('#demo')
+      function openTooltipWithDelay(event) {
+        if (closeTimer) clearTimeout(closeTimer);
+        if (openTimer) clearTimeout(openTimer);
+
+        // Delay opening the tooltip to avoid flickering
+        openTimer = setTimeout(function () {
+          var events = calendar.getEvents();
+          var totalHours = getTotalHoursForResource(events, event.resource.id);
+
+          $resourceAvatar.attr('src', event.resource.avatar);
+          $resourceName.text(event.resource.name);
+          $resourceCost.text('$' + event.resource.cost + '/hour');
+          $resourceTotal.text('On this day: ' + totalHours + ' hours, $' + totalHours * event.resource.cost);
+          $(event.domEvent.target).addClass('md-resource-info-hover');
+
+          tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
+          tooltip.open();
+          openTimer = null;
+        }, 100);
+      }
+
+      // Close the tooltip with a delay to allow for hover interactions
+      function closeTooltipWithDelay() {
+        if (openTimer) clearTimeout(openTimer);
+        if (closeTimer) clearTimeout(closeTimer);
+        closeTimer = setTimeout(function () {
+          tooltip.close();
+          closeTimer = null;
+        }, 200);
+      }
+
+      function getTotalHoursForResource(events, resourceId) {
+        return events
+          .filter(function (e) { return e.resource === resourceId; })
+          .reduce(function (sum, e) {
+            // Parse start and end as Date objects
+            var start = new Date(e.start);
+            var end = new Date(e.end);
+            // Calculate duration in hours
+            var hours = (end - start) / (1000 * 60 * 60);
+            return sum + hours;
+          }, 0);
+      }
+
+      var calendar = $('#demo')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -121,82 +170,92 @@ export default {
           resources: [
             {
               id: 'res1',
-              name: 'Mason',
+              name: 'Adam Miller',
               color: '#F39C12',
-              tooltip: 'Adam Miller',
+              profession: 'Mason',
               avatar: 'https://img.mobiscroll.com/demos/m1.png',
-              cost: '$15/hour',
+              cost: '15',
             },
             {
               id: 'res2',
-              name: 'Electrician',
+              name: 'Emily Carter',
               color: '#76e083',
-              tooltip: 'Emily Carter',
+              profession: 'Electrician',
               avatar: 'https://img.mobiscroll.com/demos/f1.png',
-              cost: '$20/hour',
+              cost: '20',
             },
             {
               id: 'res3',
-              name: 'Carpenter',
+              name: 'James Brown',
               color: '#b13f49',
-              tooltip: 'James Brown',
+              profession: 'Carpenter',
               avatar: 'https://img.mobiscroll.com/demos/m2.png',
-              cost: '$18/hour',
+              cost: '18',
             },
             {
               id: 'res4',
-              name: 'Welder',
+              name: 'Daniel Wilson',
               color: '#e25dd2',
-              tooltip: 'Daniel Wilson',
+              profession: 'Welder',
               avatar: 'https://img.mobiscroll.com/demos/m3.png',
-              cost: '$22/hour',
+              cost: '22',
             },
             {
               id: 'res5',
-              name: 'Heavy Equipment Operator',
+              name: 'Benjamin Harris',
               color: '#7056ff',
-              tooltip: 'Benjamin Harris',
+              profession: 'Plumber',
               avatar: 'https://img.mobiscroll.com/demos/m4.png',
-              cost: '$20/hour',
+              cost: '20',
             },
             {
               id: 'res6',
-              name: 'Concrete Finisher',
+              name: 'Olivia Anderson',
               color: '#56aaff',
-              tooltip: 'Olivia Anderson',
+              profession: 'Concrete Finisher',
               avatar: 'https://img.mobiscroll.com/demos/f2.png',
-              cost: '$15/hour',
+              cost: '15',
             },
             {
               id: 'res7',
-              name: 'Steelworker',
+              name: 'Emma Thompson',
               color: '#84852f',
-              tooltip: 'Emma Thompson',
+              profession: 'Steelworker',
               avatar: 'https://img.mobiscroll.com/demos/f3.png',
-              cost: '$18/hour',
+              cost: '18',
             },
             {
               id: 'res8',
-              name: 'Painter',
+              name: 'Natalie Roberts',
               color: '#ff6e56',
-              tooltip: 'Natalie Roberts',
+              profession: 'Painter',
               avatar: 'https://img.mobiscroll.com/demos/f4.png',
-              cost: '$25/hour',
+              cost: '25',
             },
           ],
+          renderResource: function (resource) {
+            return (
+              '<div class="mbsc-flex">' +
+              '<img class="md-res-info-avatar" src="' + resource.avatar + '"/>' +
+              '<div class="md-res-info-cont">' +
+              '<div class="md-res-info-name">' +
+              resource.name +
+              '</div>' +
+              '<div class="md-res-info-prof">' +
+              resource.profession +
+              '</div>' +
+              '</div>' +
+              '</div>'
+            );
+          },
           onResourceHoverIn: function (event) {
-            $resourceAvatar.attr('src', event.resource.avatar);
-            $resourceName.text(event.resource.tooltip);
-            $resourceCost.text(event.resource.cost);
-            tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
-            $(event.domEvent.target).addClass('md-resource-info-hover');
-            tooltip.open();
+            openTooltipWithDelay(event);
           },
           onResourceHoverOut: function (event) {
             $(event.domEvent.target).removeClass('md-resource-info-hover');
-            tooltip.close();
+            closeTooltipWithDelay();
           },
-        });
+        }).mobiscroll('getInst');
 
       var tooltip = $tooltip
         .mobiscroll()
@@ -204,24 +263,51 @@ export default {
           display: 'anchored',
           showOverlay: false,
           touchUi: false,
-        })
-        .mobiscroll('getInst');
+        }).mobiscroll('getInst');
+
+      $tooltip.on('mouseenter', function () {
+        if (closeTimer) clearTimeout(closeTimer);
+      });
+
+      $tooltip.on('mouseleave', function () {
+        closeTooltipWithDelay();
+      });
+
+      $profileButton.on('click', function () {
+        tooltip.close();
+        mobiscroll.toast({
+          //<hidden>
+          // theme,//</hidden>
+          // context,
+          message: 'View profile',
+        });
+      });
+
+      $editButton.on('click', function () {
+        tooltip.close();
+        mobiscroll.toast({
+          //<hidden>
+          // theme,//</hidden>
+          // context,
+          message: 'Edit resource',
+        });
+      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-resource-info-popup">
-  <div class="mbsc-flex">
-    <img id="demo-resource-info-avatar" />
-    <div class="mbsc-padding">
-      <div>
-        Name: <span id="demo-resource-info-name"></span>
-      </div>
-      <div class="md-resource-info-detail">
-        Cost: <span id="demo-resource-info-cost"></span>
-      </div>
-    </div>
+  <div class="md-resource-info-header mbsc-flex">
+    <div id="demo-resource-info-name"></div>
+    <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="md-resource-info-button mbsc-pull-right"></button>
   </div>
+  <div class="md-resource-info-detail">
+    <div id="demo-resource-info-cost"></div>
+    <div id="demo-resource-info-total"></div>
+  </div>
+  <button id="demo-resource-info-profile" mbsc-button data-color="success" class="md-resource-info-button">
+    Go to profile
+  </button>
 </div>
 <div id="demo"></div>
   `,
@@ -232,8 +318,32 @@ export default {
 }
 .md-resource-info-detail {
   font-size: 12px;
-  margin-top: 5px;
   opacity: 0.5;
+  padding-bottom: 10px;
+  line-height: 20px;
+}
+.md-res-info-avatar {
+  width: 40px;
+  height: 40px;
+}
+.md-res-info-cont {
+  margin-left: 10px;
+}
+.md-res-info-prof {
+  font-size: 12px;
+  color: #666;
+  line-height: 20px
+}
+.md-resource-info-button.mbsc-button {
+  font-size: 12px;
+  margin-left: 0;
+  margin-right: 0;
+}
+.md-resource-info-header {
+  align-items: center;
+}
+.md-resource-info-header .md-resource-info-button {
+  margin-left: auto;
 }
 `,
 };
