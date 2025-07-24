@@ -17,14 +17,13 @@ export default {
           controls: ['calendar'],
           display: 'inline',
           calendarSize: 1,
-          onCellHoverIn: function (args, inst) {
-            hoveredDate = args.date;
+          onCellHoverIn: function () {
+            // hoveredDate = args.date;
           },
-          onCellHoverOut: function (args, inst) {
-            hoveredDate = null;
+          onCellHoverOut: function () {
+            // hoveredDate = null;
           },
           renderDayContent: function () {
-            // console.log(hoveredDate)
             return '<button class="add-btn" mbsc-button style="visibility:hidden;"> Add' + hoveredDate + '</button >';
           },
         });

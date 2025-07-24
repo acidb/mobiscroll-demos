@@ -230,10 +230,10 @@ export default {
 .md-resource-info-hover.mbsc-timeline-resource {
   background: rgba(128, 128, 128, 0.6);
 }
-  .md-resource-info-detail {
-    font-size: 12px;
-    margin-top: 5px;
-    opacity: 0.5;
-  }
+.md-resource-info-detail {
+  font-size: 12px;
+  margin-top: 5px;
+  opacity: 0.5;
+}
 `,
 };
