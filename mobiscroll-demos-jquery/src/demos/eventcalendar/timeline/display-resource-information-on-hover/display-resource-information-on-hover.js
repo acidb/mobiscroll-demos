@@ -22,52 +22,46 @@ export default {
       var closeTimer = null;
       var currentResource = null;
 
-      function openTooltipWithDelay(event) {
-        // eslint-disable-next-line no-debugger
-        debugger;
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-        }
-        if (openTimer) {
-          clearTimeout(openTimer);
-        }
+      // function openTooltipWithDelay(event) {
+      //   if (closeTimer) {
+      //     clearTimeout(closeTimer);
+      //   }
+      //   if (openTimer) {
+      //     clearTimeout(openTimer);
+      //   }
 
-        // Delay opening the tooltip to avoid flickering
-        openTimer = setTimeout(function () {
-          var events = calendar.getEvents();
-          var totalHours = getTotalHoursForResource(events, event.resource.id);
+      //   // Delay opening the tooltip to avoid flickering
+      //   openTimer = setTimeout(function () {
+      //     var events = calendar.getEvents();
+      //     var totalHours = getTotalHoursForResource(events, event.resource.id);
 
-          currentResource = event.resource;
+      //     currentResource = event.resource;
 
-          $resourceAvatar.attr('src', event.resource.avatar);
-          $resourceName.text(event.resource.name);
-          $resourceCost.text('Hourly pay: $' + event.resource.cost + '');
-          $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
-          $(event.domEvent.target).addClass('md-resource-info-hover');
+      //     $resourceAvatar.attr('src', event.resource.avatar);
+      //     $resourceName.text(event.resource.name);
+      //     $resourceCost.text('Hourly pay: $' + event.resource.cost + '');
+      //     $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
+      //     $(event.domEvent.target).addClass('md-resource-info-hover');
 
-          // eslint-disable-next-line no-debugger
-          debugger;
-          tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
-          tooltip.open();
-          openTimer = null;
-        }, 100);
-      }
+      //     tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
+      //     tooltip.open();
+      //     openTimer = null;
+      //   }, 100);
+      // }
 
-      // Close the tooltip with a delay to allow for hover interactions
-      function closeTooltipWithDelay() {
-        // eslint-disable-next-line no-debugger
-        debugger;
-        if (openTimer) {
-          clearTimeout(openTimer);
-        }
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-        }
-        closeTimer = setTimeout(function () {
-          // tooltip.close();
-          closeTimer = null;
-        }, 200);
-      }
+      // // Close the tooltip with a delay to allow for hover interactions
+      // function closeTooltipWithDelay() {
+      //   if (openTimer) {
+      //     clearTimeout(openTimer);
+      //   }
+      //   if (closeTimer) {
+      //     clearTimeout(closeTimer);
+      //   }
+      //   closeTimer = setTimeout(function () {
+      //     tooltip.close();
+      //     closeTimer = null;
+      //   }, 200);
+      // }
 
       function getTotalHoursForResource(events, resourceId) {
         return events
@@ -266,13 +260,26 @@ export default {
             );
           },
           onResourceHoverIn: function (event) {
-            console.log('resource hover in');
-            openTooltipWithDelay(event);
+            // openTooltipWithDelay(event);
+            var events = calendar.getEvents();
+            var totalHours = getTotalHoursForResource(events, event.resource.id);
+
+            currentResource = event.resource;
+
+            $resourceAvatar.attr('src', event.resource.avatar);
+            $resourceName.text(event.resource.name);
+            $resourceCost.text('Hourly pay: $' + event.resource.cost + '');
+            $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
+            $(event.domEvent.target).addClass('md-resource-info-hover');
+
+            tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
+            tooltip.open();
+            tooltip.open();
           },
           onResourceHoverOut: function (event) {
-            console.log('resource hover out');
             $(event.domEvent.target).removeClass('md-resource-info-hover');
-            closeTooltipWithDelay();
+            tooltip.close();
+            // closeTooltipWithDelay();
           },
         }).mobiscroll('getInst');
 
@@ -282,18 +289,17 @@ export default {
           display: 'anchored',
           showOverlay: false,
           touchUi: false,
-          class: 'md-resource-info-popup',
         }).mobiscroll('getInst');
 
-      $tooltip.on('mouseenter', function () {
-        if (closeTimer) {
-          clearTimeout(closeTimer)
-        };
-      });
+      // $tooltip.on('mouseenter', function () {
+      //   if (closeTimer) {
+      //     clearTimeout(closeTimer)
+      //   };
+      // });
 
-      $tooltip.on('mouseleave', function () {
-        closeTooltipWithDelay();
-      });
+      // $tooltip.on('mouseleave', function () {
+      //   closeTooltipWithDelay();
+      // });
 
       $payButton.on('click', function () {
         tooltip.close();
