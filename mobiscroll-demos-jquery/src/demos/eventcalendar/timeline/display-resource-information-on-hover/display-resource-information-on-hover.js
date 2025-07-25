@@ -284,10 +284,12 @@ export default {
       var tooltip = $tooltip
         .mobiscroll()
         .popup({
-          display: 'anchored',
+          display: 'center',
           showOverlay: false,
           touchUi: false,
         }).mobiscroll('getInst');
+
+      tooltip.open();
 
       // $tooltip.on('mouseenter', function () {
       //   if (closeTimer) {
