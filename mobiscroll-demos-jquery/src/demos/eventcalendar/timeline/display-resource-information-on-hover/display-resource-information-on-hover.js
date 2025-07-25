@@ -311,9 +311,6 @@ export default {
     <div id="demo-resource-info-cost"></div>
     <div id="demo-resource-info-total"></div>
   </div>
-  <button id="demo-resource-info-profile" mbsc-button data-color="success" class="md-resource-info-button">
-    Go to profile
-  </button>
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
