@@ -6,21 +6,10 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'material',
-      themeVariant: 'dark',
+      // theme
     });
 
     $(function () {
-      var $tooltip = $('#demo-resource-info-popup');
-      var $resourceAvatar = $('#demo-resource-info-avatar');
-      var $resourceName = $('#demo-resource-info-name');
-      var $resourceCost = $('#demo-resource-info-cost');
-      var $resourceTotal = $('#demo-resource-info-total');
-      var $payButton = $('#demo-resource-info-pay');
-      var $editButton = $('#demo-resource-info-edit');
-      var openTimer = null;
-      var closeTimer = null;
-      var currentResource = null;
 
       function openTooltipWithDelay(event) {
         if (closeTimer) {
@@ -29,38 +18,31 @@ export default {
         if (openTimer) {
           clearTimeout(openTimer);
         }
-
         // Delay opening the tooltip to avoid flickering
         openTimer = setTimeout(function () {
           var events = calendar.getEvents();
           var totalHours = getTotalHoursForResource(events, event.resource.id);
 
-          currentResource = event.resource;
-
           $resourceAvatar.attr('src', event.resource.avatar);
           $resourceName.text(event.resource.name);
-          $resourceCost.text('Hourly pay: $' + event.resource.cost + '');
-          $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
+          $resourceCost.text('$' + event.resource.cost + '/hour');
+          $resourceTotal.text(totalHours + ' hours, $' + totalHours * event.resource.cost + '/day');
           $(event.domEvent.target).addClass('md-resource-info-hover');
 
           tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
           tooltip.open();
           openTimer = null;
-        }, 100);
+        }, 100); // 100ms delay before opening
       }
 
       // Close the tooltip with a delay to allow for hover interactions
       function closeTooltipWithDelay() {
-        if (openTimer) {
-          clearTimeout(openTimer);
-        }
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-        }
+        if (openTimer) clearTimeout(openTimer);
+        if (closeTimer) clearTimeout(closeTimer);
         closeTimer = setTimeout(function () {
           tooltip.close();
           closeTimer = null;
-        }, 200);
+        }, 200); // 200ms delay before closing
       }
 
       function getTotalHoursForResource(events, resourceId) {
@@ -76,7 +58,17 @@ export default {
           }, 0);
       }
 
-      var calendar = $('#demo')
+      var $tooltip = $('#demo-resource-info-popup');
+      var $resourceAvatar = $('#demo-resource-info-avatar');
+      var $resourceName = $('#demo-resource-info-name');
+      var $resourceCost = $('#demo-resource-info-cost');
+      var $resourceTotal = $('#demo-resource-info-total');
+      var $profileButton = $('#demo-resource-info-profile');
+      var $editButton = $('#demo-resource-info-edit');
+      var openTimer = null;
+      var closeTimer = null;
+
+      var calendar = $('#demo-resource-hover-info')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -278,21 +270,21 @@ export default {
 
       $tooltip.on('mouseenter', function () {
         if (closeTimer) {
-          clearTimeout(closeTimer)
-        };
+          clearTimeout(closeTimer);
+        }
       });
 
       $tooltip.on('mouseleave', function () {
         closeTooltipWithDelay();
       });
 
-      $payButton.on('click', function () {
+      $profileButton.on('click', function () {
         tooltip.close();
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
           // context,
-          message: currentResource.profession + ' payed',
+          message: 'View profile',
         });
       });
 
@@ -302,13 +294,14 @@ export default {
           //<hidden>
           // theme,//</hidden>
           // context,
-          message: "Edit " + currentResource.name + "'s profile",
+          message: 'Edit resource',
         });
       });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
+<div id="demo-resource-hover-info"></div>
 <div id="demo-resource-info-popup">
   <div class="md-resource-info-header mbsc-flex">
     <div id="demo-resource-info-name"></div>
@@ -318,11 +311,10 @@ export default {
     <div id="demo-resource-info-cost"></div>
     <div id="demo-resource-info-total"></div>
   </div>
-  <button id="demo-resource-info-pay" mbsc-button data-color="success" class="md-resource-info-button">
-    Pay upfront
+  <button id="demo-resource-info-profile" mbsc-button data-color="success" class="md-resource-info-button">
+    Go to profile
   </button>
 </div>
-<div id="demo"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
