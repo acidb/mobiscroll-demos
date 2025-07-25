@@ -282,6 +282,7 @@ export default {
           display: 'anchored',
           showOverlay: false,
           touchUi: false,
+          class: 'md-resource-info-popup',
         }).mobiscroll('getInst');
 
       $tooltip.on('mouseenter', function () {
