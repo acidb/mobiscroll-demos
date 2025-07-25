@@ -20,7 +20,9 @@ export default {
         var events = calendar.getEvents();
         var totalHours = getTotalHoursForResource(events, event.resource.id);
 
-        resourceName.textContent = event.resource.tooltip;
+        currentResource = event.resource;
+
+        resourceName.textContent = event.resource.name;
         resourceCost.textContent = '$' + event.resource.cost + '/hour';
         resourceTotal.textContent = totalHours + ' hours, $' + totalHours * event.resource.cost + '/day';
         event.domEvent.target.classList.add('md-resource-info-hover');
@@ -57,8 +59,10 @@ export default {
     var resourceName = document.getElementById('demo-resource-info-name');
     var resourceCost = document.getElementById('demo-resource-info-cost');
     var resourceTotal = document.getElementById('demo-resource-info-total');
+    var tooltipElm = document.getElementById('demo-resource-info-popup');
     var openTimer = null;
     var closeTimer = null;
+    var currentResource = null;
 
     var calendar = mobiscroll.eventcalendar('#demo-resource-hover-info', {
       view: {
@@ -255,10 +259,33 @@ export default {
       showOverlay: false,
       touchUi: false,
     });
+
+    tooltipElm.addEventListener('mouseenter', function () {
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+      }
+    });
+
+    tooltipElm.addEventListener('mouseleave', function () {
+      closeTooltipWithDelay();
+    });
+
+    document.getElementById('demo-resource-info-pay').addEventListener('click', function () {
+      tooltip.close();
+      mobiscroll.toast({
+        message: currentResource.profession + ' payed',
+      });
+    });
+
+    document.getElementById('demo-resource-info-edit').addEventListener('click', function () {
+      tooltip.close();
+      mobiscroll.toast({
+        message: "Edit " + currentResource.name + "'s profile",
+      });
+    });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-hover-info"></div>
 <div id="demo-resource-info-popup">
   <div class="md-resource-info-header mbsc-flex">
     <div id="demo-resource-info-name"></div>
@@ -268,10 +295,11 @@ export default {
     <div id="demo-resource-info-cost"></div>
     <div id="demo-resource-info-total"></div>
   </div>
-  <button id="demo-resource-info-profile" mbsc-button data-color="success" class="md-resource-info-button">
-    Go to profile
+  <button id="demo-resource-info-pay"  data-color="success" class="md-resource-info-button">
+    Pay upfront
   </button>
 </div>
+<div id="demo-resource-hover-info"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
