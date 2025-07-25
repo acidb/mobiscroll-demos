@@ -10,72 +10,68 @@ export default {
     });
 
     $(function () {
+
+      function openTooltipWithDelay(event) {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+        }
+        if (openTimer) {
+          clearTimeout(openTimer);
+        }
+        // Delay opening the tooltip to avoid flickering
+        openTimer = setTimeout(function () {
+          var events = calendar.getEvents();
+          var totalHours = getTotalHoursForResource(events, event.resource.id);
+
+          $resourceAvatar.attr('src', event.resource.avatar);
+          $resourceName.text(event.resource.name);
+          $resourceCost.text('$' + event.resource.cost + '/hour');
+          $resourceTotal.text(totalHours + ' hours, $' + totalHours * event.resource.cost + '/day');
+          $(event.domEvent.target).addClass('md-resource-info-hover');
+
+          // eslint-disable-next-line no-debugger
+          debugger;
+
+          tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
+          tooltip.open();
+          openTimer = null;
+        }, 100); // 100ms delay before opening
+      }
+
+      // Close the tooltip with a delay to allow for hover interactions
+      function closeTooltipWithDelay() {
+        if (openTimer) clearTimeout(openTimer);
+        if (closeTimer) clearTimeout(closeTimer);
+        closeTimer = setTimeout(function () {
+          tooltip.close();
+          closeTimer = null;
+        }, 200); // 200ms delay before closing
+      }
+
+      function getTotalHoursForResource(events, resourceId) {
+        return events
+          .filter(function (e) { return e.resource === resourceId; })
+          .reduce(function (sum, e) {
+            // Parse start and end as Date objects
+            var start = new Date(e.start);
+            var end = new Date(e.end);
+            // Calculate duration in hours
+            var hours = (end - start) / (1000 * 60 * 60);
+            return sum + hours;
+          }, 0);
+      }
+
       var $tooltip = $('#demo-resource-info-popup');
       var $resourceAvatar = $('#demo-resource-info-avatar');
       var $resourceName = $('#demo-resource-info-name');
       var $resourceCost = $('#demo-resource-info-cost');
-      // var $resourceTotal = $('#demo-resource-info-total');
-      var $payButton = $('#demo-resource-info-pay');
+      var $resourceTotal = $('#demo-resource-info-total');
+      var $profileButton = $('#demo-resource-info-profile');
       var $editButton = $('#demo-resource-info-edit');
-      // var openTimer = null;
-      // var closeTimer = null;
-      var currentResource = null;
+      var openTimer = null;
+      var closeTimer = null;
 
-      // function openTooltipWithDelay(event) {
-      //   if (closeTimer) {
-      //     clearTimeout(closeTimer);
-      //   }
-      //   if (openTimer) {
-      //     clearTimeout(openTimer);
-      //   }
-
-      //   // Delay opening the tooltip to avoid flickering
-      //   openTimer = setTimeout(function () {
-      //     var events = calendar.getEvents();
-      //     var totalHours = getTotalHoursForResource(events, event.resource.id);
-
-      //     currentResource = event.resource;
-
-      //     $resourceAvatar.attr('src', event.resource.avatar);
-      //     $resourceName.text(event.resource.name);
-      //     $resourceCost.text('Hourly pay: $' + event.resource.cost + '');
-      //     $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
-      //     $(event.domEvent.target).addClass('md-resource-info-hover');
-
-      //     tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
-      //     tooltip.open();
-      //     openTimer = null;
-      //   }, 100);
-      // }
-
-      // // Close the tooltip with a delay to allow for hover interactions
-      // function closeTooltipWithDelay() {
-      //   if (openTimer) {
-      //     clearTimeout(openTimer);
-      //   }
-      //   if (closeTimer) {
-      //     clearTimeout(closeTimer);
-      //   }
-      //   closeTimer = setTimeout(function () {
-      //     tooltip.close();
-      //     closeTimer = null;
-      //   }, 200);
-      // }
-
-      // function getTotalHoursForResource(events, resourceId) {
-      //   return events
-      //     .filter(function (e) { return e.resource === resourceId; })
-      //     .reduce(function (sum, e) {
-      //       // Parse start and end as Date objects
-      //       var start = new Date(e.start);
-      //       var end = new Date(e.end);
-      //       // Calculate duration in hours
-      //       var hours = (end - start) / (1000 * 60 * 60);
-      //       return sum + hours;
-      //     }, 0);
-      // }
-
-      var calendar = $('#demo')
+      var calendar = $('#demo-resource-hover-info')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -259,55 +255,39 @@ export default {
             );
           },
           onResourceHoverIn: function (event) {
-            // openTooltipWithDelay(event);
-            // var events = calendar.getEvents();
-            // var totalHours = getTotalHoursForResource(events, event.resource.id);
-
-            currentResource = event.resource;
-
-            $resourceAvatar.attr('src', event.resource.avatar);
-            $resourceName.text(event.resource.name);
-            $resourceCost.text('Hourly pay: $' + event.resource.cost + '');
-            // $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
-            $(event.domEvent.target).addClass('md-resource-info-hover');
-
-            tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
-            tooltip.open();
+            openTooltipWithDelay(event);
           },
           onResourceHoverOut: function (event) {
             $(event.domEvent.target).removeClass('md-resource-info-hover');
-            tooltip.close();
-            // closeTooltipWithDelay();
+            closeTooltipWithDelay();
           },
         }).mobiscroll('getInst');
 
       var tooltip = $tooltip
         .mobiscroll()
         .popup({
-          display: 'center',
+          display: 'anchored',
           showOverlay: false,
           touchUi: false,
         }).mobiscroll('getInst');
 
-      tooltip.open();
+      $tooltip.on('mouseenter', function () {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+        }
+      });
 
-      // $tooltip.on('mouseenter', function () {
-      //   if (closeTimer) {
-      //     clearTimeout(closeTimer)
-      //   };
-      // });
+      $tooltip.on('mouseleave', function () {
+        closeTooltipWithDelay();
+      });
 
-      // $tooltip.on('mouseleave', function () {
-      //   closeTooltipWithDelay();
-      // });
-
-      $payButton.on('click', function () {
+      $profileButton.on('click', function () {
         tooltip.close();
         mobiscroll.toast({
           //<hidden>
           // theme,//</hidden>
           // context,
-          message: currentResource.profession + ' payed',
+          message: 'View profile',
         });
       });
 
@@ -317,13 +297,14 @@ export default {
           //<hidden>
           // theme,//</hidden>
           // context,
-          message: "Edit " + currentResource.name + "'s profile",
+          message: 'Edit resource',
         });
       });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
+<div id="demo-resource-hover-info"></div>
 <div id="demo-resource-info-popup">
   <div class="md-resource-info-header mbsc-flex">
     <div id="demo-resource-info-name"></div>
@@ -333,11 +314,10 @@ export default {
     <div id="demo-resource-info-cost"></div>
     <div id="demo-resource-info-total"></div>
   </div>
-  <button id="demo-resource-info-pay" mbsc-button data-color="success" class="md-resource-info-button">
-    Pay upfront
+  <button id="demo-resource-info-profile" mbsc-button data-color="success" class="md-resource-info-button">
+    Go to profile
   </button>
 </div>
-<div id="demo"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
