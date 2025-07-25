@@ -22,10 +22,9 @@ export default {
       var closeTimer = null;
       var currentResource = null;
 
-      // eslint-disable-next-line no-debugger
-      debugger;
-
       function openTooltipWithDelay(event) {
+        // eslint-disable-next-line no-debugger
+        debugger;
         if (closeTimer) {
           clearTimeout(closeTimer);
         }
@@ -54,6 +53,8 @@ export default {
 
       // Close the tooltip with a delay to allow for hover interactions
       function closeTooltipWithDelay() {
+        // eslint-disable-next-line no-debugger
+        debugger;
         if (openTimer) {
           clearTimeout(openTimer);
         }
