@@ -45,6 +45,8 @@ export default {
           $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
           $(event.domEvent.target).addClass('md-resource-info-hover');
 
+          // eslint-disable-next-line no-debugger
+          debugger;
           tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
           tooltip.open();
           openTimer = null;
