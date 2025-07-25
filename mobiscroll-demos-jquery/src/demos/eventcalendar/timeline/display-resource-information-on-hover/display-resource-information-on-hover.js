@@ -23,8 +23,12 @@ export default {
       var currentResource = null;
 
       function openTooltipWithDelay(event) {
-        if (closeTimer) clearTimeout(closeTimer);
-        if (openTimer) clearTimeout(openTimer);
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+        }
+        if (openTimer) {
+          clearTimeout(openTimer);
+        }
 
         // Delay opening the tooltip to avoid flickering
         openTimer = setTimeout(function () {
@@ -47,8 +51,12 @@ export default {
 
       // Close the tooltip with a delay to allow for hover interactions
       function closeTooltipWithDelay() {
-        if (openTimer) clearTimeout(openTimer);
-        if (closeTimer) clearTimeout(closeTimer);
+        if (openTimer) {
+          clearTimeout(openTimer);
+        }
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+        }
         closeTimer = setTimeout(function () {
           tooltip.close();
           closeTimer = null;
@@ -269,7 +277,9 @@ export default {
         }).mobiscroll('getInst');
 
       $tooltip.on('mouseenter', function () {
-        if (closeTimer) clearTimeout(closeTimer);
+        if (closeTimer) {
+          clearTimeout(closeTimer)
+        };
       });
 
       $tooltip.on('mouseleave', function () {
