@@ -6,8 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'material',
-      themeVariant: 'dark',
+      // theme
     });
 
     $(function () {
@@ -15,11 +14,11 @@ export default {
       var $resourceAvatar = $('#demo-resource-info-avatar');
       var $resourceName = $('#demo-resource-info-name');
       var $resourceCost = $('#demo-resource-info-cost');
-      var $resourceTotal = $('#demo-resource-info-total');
+      // var $resourceTotal = $('#demo-resource-info-total');
       var $payButton = $('#demo-resource-info-pay');
       var $editButton = $('#demo-resource-info-edit');
-      var openTimer = null;
-      var closeTimer = null;
+      // var openTimer = null;
+      // var closeTimer = null;
       var currentResource = null;
 
       // function openTooltipWithDelay(event) {
@@ -63,18 +62,18 @@ export default {
       //   }, 200);
       // }
 
-      function getTotalHoursForResource(events, resourceId) {
-        return events
-          .filter(function (e) { return e.resource === resourceId; })
-          .reduce(function (sum, e) {
-            // Parse start and end as Date objects
-            var start = new Date(e.start);
-            var end = new Date(e.end);
-            // Calculate duration in hours
-            var hours = (end - start) / (1000 * 60 * 60);
-            return sum + hours;
-          }, 0);
-      }
+      // function getTotalHoursForResource(events, resourceId) {
+      //   return events
+      //     .filter(function (e) { return e.resource === resourceId; })
+      //     .reduce(function (sum, e) {
+      //       // Parse start and end as Date objects
+      //       var start = new Date(e.start);
+      //       var end = new Date(e.end);
+      //       // Calculate duration in hours
+      //       var hours = (end - start) / (1000 * 60 * 60);
+      //       return sum + hours;
+      //     }, 0);
+      // }
 
       var calendar = $('#demo')
         .mobiscroll()
@@ -261,19 +260,18 @@ export default {
           },
           onResourceHoverIn: function (event) {
             // openTooltipWithDelay(event);
-            var events = calendar.getEvents();
-            var totalHours = getTotalHoursForResource(events, event.resource.id);
+            // var events = calendar.getEvents();
+            // var totalHours = getTotalHoursForResource(events, event.resource.id);
 
             currentResource = event.resource;
 
             $resourceAvatar.attr('src', event.resource.avatar);
             $resourceName.text(event.resource.name);
             $resourceCost.text('Hourly pay: $' + event.resource.cost + '');
-            $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
+            // $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
             $(event.domEvent.target).addClass('md-resource-info-hover');
 
             tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
-            tooltip.open();
             tooltip.open();
           },
           onResourceHoverOut: function (event) {
