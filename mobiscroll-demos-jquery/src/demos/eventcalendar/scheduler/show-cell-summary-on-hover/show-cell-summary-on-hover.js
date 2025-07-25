@@ -145,7 +145,7 @@ export default {
             },
             {
               start: 'dyndatetime(y,m,d,13)',
-              end: 'dyndatetime(y,m,d,14)',
+              end: 'dyndatetime(y,m,d,15)',
             },
             {
               start: 'dyndatetime(y,m,d+1,15)',
@@ -176,6 +176,16 @@ export default {
               background: '#a4bd60',
             },
             {
+              start: 'dyndatetime(y,m,d-2,8)',
+              end: 'dyndatetime(y,m,d-2,11)',
+              background: '#a4bd60',
+            },
+            {
+              start: 'dyndatetime(y,m,d-2,14)',
+              end: 'dyndatetime(y,m,d-2,17)',
+              background: '#a4bd60',
+            },
+            {
               start: '08:00',
               end: '09:00',
               background: '#5ba190',
@@ -195,7 +205,6 @@ export default {
             }
           ],
           onCellHoverIn: function (event) {
-            console.log(event)
             $cellEventNr.text(event.events ? event.events.length : 0);
             $cellInvalidNr.text(event.invalids ? event.invalids.length : 0);
             $cellColorNr.text(event.colors ? event.colors.length : 0);
