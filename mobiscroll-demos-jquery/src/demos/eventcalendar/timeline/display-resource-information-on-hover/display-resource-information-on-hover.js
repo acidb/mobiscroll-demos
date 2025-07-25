@@ -23,7 +23,6 @@ export default {
           var events = calendar.getEvents();
           var totalHours = getTotalHoursForResource(events, event.resource.id);
 
-          $resourceAvatar.attr('src', event.resource.avatar);
           $resourceName.text(event.resource.name);
           $resourceCost.text('$' + event.resource.cost + '/hour');
           $resourceTotal.text(totalHours + ' hours, $' + totalHours * event.resource.cost + '/day');
@@ -59,7 +58,6 @@ export default {
       }
 
       var $tooltip = $('#demo-resource-info-popup');
-      var $resourceAvatar = $('#demo-resource-info-avatar');
       var $resourceName = $('#demo-resource-info-name');
       var $resourceCost = $('#demo-resource-info-cost');
       var $resourceTotal = $('#demo-resource-info-total');
