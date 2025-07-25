@@ -22,6 +22,9 @@ export default {
       var closeTimer = null;
       var currentResource = null;
 
+      // eslint-disable-next-line no-debugger
+      debugger;
+
       function openTooltipWithDelay(event) {
         if (closeTimer) {
           clearTimeout(closeTimer);
@@ -260,9 +263,11 @@ export default {
             );
           },
           onResourceHoverIn: function (event) {
+            console.log('resource hover in');
             openTooltipWithDelay(event);
           },
           onResourceHoverOut: function (event) {
+            console.log('resource hover out');
             $(event.domEvent.target).removeClass('md-resource-info-hover');
             closeTooltipWithDelay();
           },
