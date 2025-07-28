@@ -211,7 +211,7 @@ export default {
             tooltip.open();
           },
           onCellHoverOut: function () {
-            // tooltip.close();
+            tooltip.close();
           },
         });
 
