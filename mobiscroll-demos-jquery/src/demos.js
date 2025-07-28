@@ -6,7 +6,6 @@ import Demo529 from './demos/datepicker/calendar/responsive/responsive';
 import Demo530 from './demos/datepicker/calendar/mobile-desktop-display/mobile-desktop-display';
 import Demo579 from './demos/datepicker/calendar/appointment-booking/appointment-booking';
 import Demo623 from './demos/datepicker/calendar/activity-calendar/activity-calendar';
-import Demo775 from './demos/datepicker/calendar/cell-template-on-hover/cell-template-on-hover';
 import Demo531 from './demos/datepicker/calendar/date-picker/date-picker';
 import Demo92 from './demos/datepicker/calendar/date-time-picker/date-time-picker';
 import Demo312 from './demos/datepicker/calendar/week-view/week-view';
@@ -139,6 +138,7 @@ import Demo505 from './demos/eventcalendar/calendar-view/customize-label-look-an
 import Demo504 from './demos/eventcalendar/calendar-view/customize-event-popover/customize-event-popover';
 import Demo509 from './demos/eventcalendar/calendar-view/customizing-header/customizing-header';
 import Demo658 from './demos/eventcalendar/calendar-view/custom-event-tooltip/custom-event-tooltip';
+import Demo775 from './demos/eventcalendar/calendar-view/cell-template-on-hover/cell-template-on-hover';
 import Demo561 from './demos/eventcalendar/calendar-view/move-resize-drag-drop-to-create-events/move-resize-drag-drop-to-create-events';
 import Demo724 from './demos/eventcalendar/calendar-view/conditional-move-resize/conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource';
 import Demo727 from './demos/eventcalendar/calendar-view/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
@@ -376,7 +376,6 @@ export const demos = [
             items: [
               { name: 'Appointment booking', unique: 'appointment-booking', component: Demo579 },
               { name: 'Activity calendar', unique: 'activity-calendar', component: Demo623 },
-              { name: 'Cell template', unique: 'cell-template-on-hover', component: Demo775 },
             ],
           },
           {
@@ -727,6 +726,7 @@ export const demos = [
               { name: 'Custom events in popover', unique: 'customize-event-popover', component: Demo504 },
               { name: 'Customizing the header', unique: 'customizing-header', component: Demo509 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo658 },
+              { name: 'Cell template', unique: 'cell-template-on-hover', component: Demo775 },
             ],
           },
           {
