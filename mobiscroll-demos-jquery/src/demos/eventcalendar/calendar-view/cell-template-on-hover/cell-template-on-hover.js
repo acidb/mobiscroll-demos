@@ -53,6 +53,10 @@ export default {
             hoveredDate = null;
             updateRenderDayContent();
           },
+          onCellClick: function (args) {
+            hoveredDate = args.date;
+            updateRenderDayContent();
+          }
         })
         .mobiscroll('getInst');
     });
