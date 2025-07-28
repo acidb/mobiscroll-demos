@@ -6,8 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'material',
-      themeVariant: 'dark',
+      // theme
     });
 
     $(function () {
@@ -212,7 +211,7 @@ export default {
             tooltip.open();
           },
           onCellHoverOut: function () {
-            tooltip.close();
+            // tooltip.close();
           },
         });
 
@@ -229,22 +228,36 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-resource-info-popup" class="md-cell-summary-popup">
-  <div>
-    Events: <span id="demo-resource-info-events"></span>
+  <div class="md-cell-summary-row mbsc-flex">
+    <span class="md-cell-summary-label">Events:</span>
+    <span id="demo-resource-info-events"></span>
   </div>
-  <div>
-    Invalid: <span id="demo-resource-info-invalid"></span>
+  <div class="md-cell-summary-row mbsc-flex">
+    <span class="md-cell-summary-label">Invalid:</span>
+    <span id="demo-resource-info-invalid"></span>
   </div>
-  <div>
-    Colors: <span id="demo-resource-info-colors"></span>
+  <div class="md-cell-summary-row mbsc-flex">
+    <span class="md-cell-summary-label">Colors:</span>
+    <span id="demo-resource-info-colors"></span>
   </div>
 </div>
 <div id="demo"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-cell-summary-popup {
-  text-align: center;
+.md-cell-summary-row {
+  font-weight: 600;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 14px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+.md-cell-summary-label {
+  font-weight: 600;
+}
+.md-cell-summary-popup .mbsc-popup {
+  min-width: 150px;
 }
 `,
 };
