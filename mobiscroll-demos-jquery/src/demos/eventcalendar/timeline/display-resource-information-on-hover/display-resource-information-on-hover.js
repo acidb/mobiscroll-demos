@@ -10,16 +10,6 @@ export default {
     });
 
     $(function () {
-      var $tooltip = $('#demo-resource-info-popup');
-      var $resourceName = $('#demo-resource-info-name');
-      var $resourceCost = $('#demo-resource-info-cost');
-      var $resourceTotal = $('#demo-resource-info-total');
-      var $payButton = $('#demo-resource-info-pay');
-      var $editButton = $('#demo-resource-info-edit');
-      var openTimer = null;
-      var closeTimer = null;
-      var currentResource = null;
-
       function openTooltipWithDelay(event) {
         if (closeTimer) {
           clearTimeout(closeTimer);
@@ -31,16 +21,20 @@ export default {
         // Delay opening the tooltip to avoid flickering
         openTimer = setTimeout(function () {
           var events = calendar.getEvents();
-          var totalHours = getTotalHoursForResource(events, event.resource.id);
+          var res = event.resource;
+          var totalHours = getTotalHoursForResource(events, res.id);
 
-          currentResource = event.resource;
+          currentResource = res;
 
-          $resourceName.text(event.resource.name);
-          $resourceCost.text('Hourly pay: $' + event.resource.cost + '');
-          $resourceTotal.text('On this day: $' + totalHours * event.resource.cost + ' (' + totalHours + 'h)');
-          $(event.domEvent.target).addClass('md-resource-info-hover');
+          $resourceName.text(res.name);
+          $resourceCost.text('$' + res.cost + '');
+          $resourceTotal.text('$' + totalHours * res.cost + ' (' + totalHours + 'h)');
+          $(event.domEvent.target).addClass('mds-resource-info-hover');
 
-          tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
+          tooltip.setOptions({
+            anchor: event.domEvent.target.closest('.mbsc-timeline-resource')
+          });
+
           tooltip.open();
           openTimer = null;
         }, 100);
@@ -73,7 +67,17 @@ export default {
           }, 0);
       }
 
-      var calendar = $('#demo')
+      var $tooltip = $('#demo-resource-info-popup');
+      var $resourceName = $('#demo-resource-info-name');
+      var $resourceCost = $('#demo-resource-info-cost');
+      var $resourceTotal = $('#demo-resource-info-total');
+      var $payButton = $('#demo-resource-info-pay');
+      var $editButton = $('#demo-resource-info-edit');
+      var openTimer = null;
+      var closeTimer = null;
+      var currentResource = null;
+
+      var calendar = $('#demo-display-resource-information-on-hover')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -87,91 +91,91 @@ export default {
             {
               start: 'dyndatetime(y,m,d,8)',
               end: 'dyndatetime(y,m,d,11)',
-              title: 'Task 1',
+              title: 'Block Wall Construction',
               resource: 'res1',
             },
             {
               start: 'dyndatetime(y,m,d,14)',
               end: 'dyndatetime(y,m,d,16)',
               title: 'Task 2',
-              resource: 'res1',
+              resource: 'Paver Installation',
             },
             {
               start: 'dyndatetime(y,m,d,12)',
               end: 'dyndatetime(y,m,d,17)',
-              title: 'Task 3',
+              title: 'Install ceiling fan',
               resource: 'res2',
             },
             {
               start: 'dyndatetime(y,m,d,10)',
               end: 'dyndatetime(y,m,d,14)',
-              title: 'Task 4',
+              title: 'Roof Beam Replacement',
               resource: 'res3',
             },
             {
               start: 'dyndatetime(y,m,d,7)',
               end: 'dyndatetime(y,m,d,12)',
-              title: 'Task 5',
+              title: 'Custom Metalworks Creation',
               resource: 'res4',
             },
             {
               start: 'dyndatetime(y,m,d,14)',
               end: 'dyndatetime(y,m,d,17)',
-              title: 'Task 6',
+              title: 'Pipe Welding',
               resource: 'res4',
             },
             {
               start: 'dyndatetime(y,m,10,8)',
               end: 'dyndatetime(y,m,11,20)',
-              title: 'Task 7',
+              title: 'Leak Detection & Repair',
               resource: 'res5',
             },
             {
               start: 'dyndatetime(y,m,d,13)',
               end: 'dyndatetime(y,m,d,17)',
-              title: 'Task 8',
+              title: 'Faucet & Sink Fitting',
               resource: 'res5',
             },
             {
               start: 'dyndatetime(y,m,d,18)',
               end: 'dyndatetime(y,m,d,20)',
-              title: 'Task 9',
+              title: 'Drainage System Setup',
               resource: 'res5',
             },
             {
               start: 'dyndatetime(y,m,d,9)',
               end: 'dyndatetime(y,m,d,13)',
-              title: 'Task 10',
+              title: 'Surface Polishing',
               resource: 'res6',
             },
             {
               start: 'dyndatetime(y,m,d,8)',
               end: 'dyndatetime(y,m,d,10)',
-              title: 'Task 11',
+              title: 'Structural Steel Inspections',
               resource: 'res7',
             },
             {
               start: 'dyndatetime(y,m,d,13)',
               end: 'dyndatetime(y,m,d,16)',
-              title: 'Task 12',
+              title: 'Metal Structure Assembly',
               resource: 'res7',
             },
             {
               start: 'dyndatetime(y,m,d,17)',
               end: 'dyndatetime(y,m,d,19)',
-              title: 'Task 13',
+              title: 'Heavy Steel Beam Placement',
               resource: 'res7',
             },
             {
               start: 'dyndatetime(y,m,d,9)',
               end: 'dyndatetime(y,m,d,12)',
-              title: 'Task 14',
+              title: 'Exterior House Painting',
               resource: 'res8',
             },
             {
               start: 'dyndatetime(y,m,d,15)',
               end: 'dyndatetime(y,m,d,18)',
-              title: 'Task 15',
+              title: 'Deck Staining & Sealing',
               resource: 'res8',
             },
           ],
@@ -244,12 +248,12 @@ export default {
           renderResource: function (resource) {
             return (
               '<div class="mbsc-flex">' +
-              '<img class="md-res-info-avatar" src="' + resource.avatar + '"/>' +
-              '<div class="md-res-info-cont">' +
-              '<div class="md-res-info-name">' +
+              '<img class="mds-res-info-avatar" src="' + resource.avatar + '"/>' +
+              '<div class="mds-res-info-cont">' +
+              '<div class="mds-res-info-name">' +
               resource.name +
               '</div>' +
-              '<div class="md-res-info-prof">' +
+              '<div class="mds-res-info-prof">' +
               resource.profession +
               '</div>' +
               '</div>' +
@@ -260,7 +264,7 @@ export default {
             openTooltipWithDelay(event);
           },
           onResourceHoverOut: function (event) {
-            $(event.domEvent.target).removeClass('md-resource-info-hover');
+            $(event.domEvent.target).removeClass('mds-resource-info-hover');
             closeTooltipWithDelay();
           },
         }).mobiscroll('getInst');
@@ -306,54 +310,63 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-info-popup">
-  <div class="md-resource-info-header mbsc-flex">
-    <div id="demo-resource-info-name"></div>
-    <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="md-resource-info-button mbsc-pull-right"></button>
+<div id="demo-resource-info-popup" style="display:none">
+  <div class="mds-resource-info-header mbsc-flex">
+    <div id="demo-resource-info-name" class="mds-resource-info-name"></div>
+    <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="mds-resource-info-edit-btn mbsc-pull-right"></button>
   </div>
-  <div class="md-resource-info-detail">
-    <div id="demo-resource-info-cost"></div>
-    <div id="demo-resource-info-total"></div>
+  <div class="mds-resource-info-cont">
+    <div>Rate: <span id="demo-resource-info-cost" class="mds-resource-info-detail"></span></div>
+    <div>Today: <span id="demo-resource-info-total" class="mds-resource-info-detail"></span></div>
   </div>
-  <button id="demo-resource-info-pay" data-color="success" class="md-resource-info-button">
-    Pay upfront
-  </button>
+  <div class="mds-resource-info-btn-cont">
+    <button id="demo-resource-info-pay" mbsc-button data-color="success" class="mds-resource-info-pay-btn">
+      Pay now
+    </button>
+  </div>
 </div>
-<div id="demo"></div>
+<div id="demo-display-resource-information-on-hover"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-resource-info-hover.mbsc-timeline-resource {
+.mds-resource-info-hover.mbsc-timeline-resource {
   background: rgba(128, 128, 128, 0.6);
 }
-.md-resource-info-detail {
+.mds-res-info-avatar {
+  width: 40px;
+  height: 40px;
+}
+.mds-res-info-cont {
+  margin-left: 10px;
+}
+.mds-res-info-prof {
+  font-size: 12px;
+  color: #666;
+  line-height: 20px
+}
+
+.mds-resource-info-header {
+  align-items: center;
+}
+.mds-resource-info-btn-cont {
+  text-align: center;
+}
+.mds-resource-info-edit-btn.mbsc-button {
+  font-size: 12px;
+  margin: 0 0 0 auto;
+}
+.mds-resource-info-pay-btn.mbsc-button {
+  font-size: 12px;
+  margin: 0;
+}
+.mds-resource-info-cont {
   font-size: 12px;
   opacity: 0.5;
   padding-bottom: 10px;
   line-height: 20px;
 }
-.md-res-info-avatar {
-  width: 40px;
-  height: 40px;
-}
-.md-res-info-cont {
-  margin-left: 10px;
-}
-.md-res-info-prof {
-  font-size: 12px;
-  color: #666;
-  line-height: 20px
-}
-.md-resource-info-button.mbsc-button {
-  font-size: 12px;
-  margin-left: 0;
-  margin-right: 0;
-}
-.md-resource-info-header {
-  align-items: center;
-}
-.md-resource-info-header .md-resource-info-button {
-  margin-left: auto;
+.mds-resource-info-detail {
+  font-weight: bold;
 }
 `,
 };

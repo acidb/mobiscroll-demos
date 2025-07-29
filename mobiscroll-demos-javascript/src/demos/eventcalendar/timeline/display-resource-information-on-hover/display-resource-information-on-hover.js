@@ -25,7 +25,7 @@ export default {
         resourceName.textContent = event.resource.name;
         resourceCost.textContent = '$' + event.resource.cost + '/hour';
         resourceTotal.textContent = totalHours + ' hours, $' + totalHours * event.resource.cost + '/day';
-        event.domEvent.target.classList.add('md-resource-info-hover');
+        event.domEvent.target.classList.add('mds-resource-info-hover');
 
         tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
         tooltip.open();
@@ -59,12 +59,13 @@ export default {
     var resourceName = document.getElementById('demo-resource-info-name');
     var resourceCost = document.getElementById('demo-resource-info-cost');
     var resourceTotal = document.getElementById('demo-resource-info-total');
+    var payButtonElm = document.getElementById('demo-resource-info-pay');
     var tooltipElm = document.getElementById('demo-resource-info-popup');
     var openTimer = null;
     var closeTimer = null;
     var currentResource = null;
 
-    var calendar = mobiscroll.eventcalendar('#demo-resource-hover-info', {
+    var calendar = mobiscroll.eventcalendar('#demo-display-resource-information-on-hover', {
       view: {
         timeline: {
           type: 'day',
@@ -233,12 +234,12 @@ export default {
       renderResource: function (resource) {
         return (
           '<div class="mbsc-flex">' +
-          '<img class="md-res-info-avatar" src="' + resource.avatar + '"/>' +
-          '<div class="md-res-info-cont">' +
-          '<div class="md-res-info-name">' +
+          '<img class="mds-res-info-avatar" src="' + resource.avatar + '"/>' +
+          '<div class="mds-res-info-cont">' +
+          '<div class="mds-res-info-name">' +
           resource.name +
           '</div>' +
-          '<div class="md-res-info-prof">' +
+          '<div class="mds-res-info-prof">' +
           resource.profession +
           '</div>' +
           '</div>' +
@@ -249,7 +250,7 @@ export default {
         openTooltipWithDelay(event);
       },
       onResourceHoverOut: function (event) {
-        event.domEvent.target.classList.remove('md-resource-info-hover');
+        event.domEvent.target.classList.remove('mds-resource-info-hover');
         closeTooltipWithDelay();
       },
     });
@@ -270,7 +271,7 @@ export default {
       closeTooltipWithDelay();
     });
 
-    document.getElementById('demo-resource-info-pay').addEventListener('click', function () {
+    payButtonElm.addEventListener('click', function () {
       tooltip.close();
       mobiscroll.toast({
         message: currentResource.profession + ' payed',
@@ -286,54 +287,63 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-info-popup">
-  <div class="md-resource-info-header mbsc-flex">
-    <div id="demo-resource-info-name"></div>
-    <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="md-resource-info-button mbsc-pull-right"></button>
+<div id="demo-resource-info-popup" style="display:none">
+  <div class="mds-resource-info-header mbsc-flex">
+    <div id="demo-resource-info-name" class="mds-resource-info-name"></div>
+    <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="mds-resource-info-edit-btn mbsc-pull-right"></button>
   </div>
-  <div class="md-resource-info-detail">
-    <div id="demo-resource-info-cost"></div>
-    <div id="demo-resource-info-total"></div>
+  <div class="mds-resource-info-cont">
+    <div>Rate: <span id="demo-resource-info-cost" class="mds-resource-info-detail"></span></div>
+    <div>Today: <span id="demo-resource-info-total" class="mds-resource-info-detail"></span></div>
   </div>
-  <button id="demo-resource-info-pay"  data-color="success" class="md-resource-info-button">
-    Pay upfront
-  </button>
+  <div class="mds-resource-info-btn-cont">
+    <button id="demo-resource-info-pay" mbsc-button data-color="success" class="mds-resource-info-pay-btn">
+      Pay now
+    </button>
+  </div>
 </div>
-<div id="demo-resource-hover-info"></div>
+<div id="demo-display-resource-information-on-hover"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-resource-info-hover.mbsc-timeline-resource {
+.mds-resource-info-hover.mbsc-timeline-resource {
   background: rgba(128, 128, 128, 0.6);
 }
-.md-resource-info-detail {
+.mds-res-info-avatar {
+  width: 40px;
+  height: 40px;
+}
+.mds-res-info-cont {
+  margin-left: 10px;
+}
+.mds-res-info-prof {
+  font-size: 12px;
+  color: #666;
+  line-height: 20px
+}
+
+.mds-resource-info-header {
+  align-items: center;
+}
+.mds-resource-info-btn-cont {
+  text-align: center;
+}
+.mds-resource-info-edit-btn.mbsc-button {
+  font-size: 12px;
+  margin: 0 0 0 auto;
+}
+.mds-resource-info-pay-btn.mbsc-button {
+  font-size: 12px;
+  margin: 0;
+}
+.mds-resource-info-cont {
   font-size: 12px;
   opacity: 0.5;
   padding-bottom: 10px;
   line-height: 20px;
 }
-.md-res-info-avatar {
-  width: 40px;
-  height: 40px;
-}
-.md-res-info-cont {
-  margin-left: 10px;
-}
-.md-res-info-prof {
-  font-size: 12px;
-  color: #666;
-  line-height: 20px
-}
-.md-resource-info-button.mbsc-button {
-  font-size: 12px;
-  margin-left: 0;
-  margin-right: 0;
-}
-.md-resource-info-header {
-  align-items: center;
-}
-.md-resource-info-header .md-resource-info-button {
-  margin-left: auto;
+.mds-resource-info-detail {
+  font-weight: bold;
 }
 `,
 };
