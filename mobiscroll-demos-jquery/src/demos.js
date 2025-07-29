@@ -933,7 +933,7 @@ export const demos = [
               { name: 'Custom component in header', unique: 'resource-filtering-in-header', component: Demo511 },
               { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo489 },
               { name: 'Resource background and styling', unique: 'resource-background', component: Demo736 },
-              { name: 'Summarize cell information', unique: ' show-cell-summary-on-hover', component: Demo774 },
+              { name: 'Summarize cell information', unique: 'show-cell-summary-on-hover', component: Demo774 },
             ],
           },
           {
