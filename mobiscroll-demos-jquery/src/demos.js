@@ -121,6 +121,7 @@ import Demo346 from './demos/eventcalendar/calendar-view/desktop-month-view/desk
 import Demo442 from './demos/eventcalendar/calendar-view/responsive-month-view/responsive-month-view';
 import Demo661 from './demos/eventcalendar/calendar-view/printing-the-view/printing-the-view';
 import Demo752 from './demos/eventcalendar/calendar-view/property-booking-calendar/property-booking-calendar';
+import Demo776 from './demos/eventcalendar/calendar-view/display-cell-template/display-cell-template';
 import Demo447 from './demos/eventcalendar/calendar-view/event-labels/event-labels';
 import Demo443 from './demos/eventcalendar/calendar-view/event-popover/event-popover';
 import Demo595 from './demos/eventcalendar/calendar-view/custom-event-sort/custom-event-sort';
@@ -691,7 +692,10 @@ export const demos = [
           {
             name: 'Common use cases',
             unique: 20,
-            items: [{ name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 }],
+            items: [
+              { name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 },
+              { name: 'Showing daily aggregates', unique: 'display-cell-template', component: Demo776 }
+            ],
           },
           {
             name: 'Displaying events',
