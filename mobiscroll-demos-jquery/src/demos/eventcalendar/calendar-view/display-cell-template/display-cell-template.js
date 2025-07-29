@@ -264,7 +264,6 @@ export default {
             weekDays: 'FR',
           },
         },
-
       ]
 
       function getWeatherIcon(date) {
@@ -284,13 +283,13 @@ export default {
         }
         else if (nrEvents < 3) {
           emoji = '😃';
-          color = '#28A745 ';
+          color = '#28A745';
         } else if (nrEvents < 5) {
           emoji = '😐';
-          color = '#FD7E14 ';
+          color = '#FD7E14';
         } else {
           emoji = '😫';
-          color = '#DC3545 ';
+          color = '#DC3545';
         }
         return { emoji: emoji, color: color };
       }
@@ -320,8 +319,10 @@ export default {
             var date = args.date;
             var nrEvents = getNrEvents(args.events);
             var nrAllEvents = args.events.length;
-            return '<div class="md-cell-template" style="background:' + getStressLevel(nrAllEvents).color + ';">' +
-              '<div class="md-cell-template-day">' + mobiscroll.formatDate('DDD DD', date) + ' ' + getStressLevel(nrAllEvents).emoji + '</div>' +
+            var stressLevel = getStressLevel(nrAllEvents);
+
+            return '<div class="md-cell-template-cont" ' + (stressLevel.color ? ('style="background:' + stressLevel.color) : '') + '">' +
+              '<div class="md-cell-template-day">' + mobiscroll.formatDate('DDD DD', date) + ' ' + stressLevel.emoji + '</div>' +
               '<div>' + getWeatherIcon(date) + '</div>' +
               '<div class="md-cell-template-info">Meetings: ' + nrEvents.meetings + '</div>' +
               '<div class="md-cell-template-info">Clients: ' + nrEvents.appointments + '</div>' +
@@ -404,8 +405,6 @@ export default {
             break;
         }
       });
-
-
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -414,9 +413,9 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-cell-template {
-  padding:10px;
-  text-align:left;
+.md-cell-template-cont {
+  padding: 10px;
+  text-align: left;
   line-height: 25px;
 }
 .md-cell-template-day {
