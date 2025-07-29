@@ -32,8 +32,8 @@ export default {
               title: 'Recurring task 1',
               color: '#643a48',
               recurring: {
-                repeat: 'daily',
-                weekDays: 'MO,TU,WE,TH,FR,SA,SU',
+                repeat: 'weekly',
+                weekDays: 'MO,TU,WE,TH',
               }
             },
             {
@@ -42,8 +42,8 @@ export default {
               title: 'Recurring task 2',
               color: '#669c5b',
               recurring: {
-                repeat: 'daily',
-                weekDays: 'MO,TU,WE,TH,FR,SA,SU',
+                repeat: 'weekly',
+                weekDays: 'MO,WE,TH,SA',
               }
             },
             {
@@ -172,35 +172,53 @@ export default {
             {
               start: 'dyndatetime(y,m,d,13)',
               end: 'dyndatetime(y,m,d,16)',
-              background: '#a4bd60',
+              cssClass: 'mds-purple-bg-color',
             },
             {
-              start: 'dyndatetime(y,m,d-2,8)',
-              end: 'dyndatetime(y,m,d-2,11)',
-              background: '#a4bd60',
+              start: 'dyndatetime(y,m,d+1,8)',
+              end: 'dyndatetime(y,m,d+1,11)',
+              cssClass: 'mds-yellow-bg-color',
             },
             {
-              start: 'dyndatetime(y,m,d-2,14)',
-              end: 'dyndatetime(y,m,d-2,17)',
-              background: '#a4bd60',
+              start: 'dyndatetime(y,m,d+2,14)',
+              end: 'dyndatetime(y,m,d+2,17)',
+              cssClass: 'mds-green-bg-color',
             },
             {
               start: '08:00',
               end: '09:00',
-              background: '#5ba190',
+              cssClass: 'mds-purple-bg-color',
               recurring: {
                 repeat: 'weekly',
-                weekDays: 'MO,WE,FR',
+                weekDays: 'MO,FR',
               }
             },
             {
-              start: '13:00',
-              end: '14:00',
-              background: '#b393d8',
+              start: '15:00',
+              end: '18:00',
+              cssClass: 'mds-blue-bg-color',
               recurring: {
                 repeat: 'weekly',
-                weekDays: 'TU,TH,SA',
+                weekDays: 'TU,TH',
               }
+            },
+            {
+              start: '09:00',
+              end: '12:00',
+              recurring: {
+                repeat: 'weekly',
+                weekDays: 'FR',
+              },
+              cssClass: 'mds-green-bg-color',
+            },
+            {
+              start: '16:00',
+              end: '17:00',
+              recurring: {
+                repeat: 'weekly',
+                weekDays: 'SU,SA',
+              },
+              cssClass: 'mds-purple-bg-color',
             }
           ],
           onCellHoverIn: function (event) {
@@ -227,17 +245,17 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-info-popup" class="md-cell-summary-popup">
-  <div class="md-cell-summary-row mbsc-flex">
-    <span class="md-cell-summary-label">Events:</span>
+<div id="demo-resource-info-popup" class="mds-cell-summary-popup">
+  <div class="mds-cell-summary-row mbsc-flex">
+    <span class="mds-cell-summary-label">Events:</span>
     <span id="demo-resource-info-events"></span>
   </div>
-  <div class="md-cell-summary-row mbsc-flex">
-    <span class="md-cell-summary-label">Invalid:</span>
+  <div class="mds-cell-summary-row mbsc-flex">
+    <span class="mds-cell-summary-label">Invalid:</span>
     <span id="demo-resource-info-invalid"></span>
   </div>
-  <div class="md-cell-summary-row mbsc-flex">
-    <span class="md-cell-summary-label">Colors:</span>
+  <div class="mds-cell-summary-row mbsc-flex">
+    <span class="mds-cell-summary-label">Colors:</span>
     <span id="demo-resource-info-colors"></span>
   </div>
 </div>
@@ -245,7 +263,7 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-cell-summary-row {
+.mds-cell-summary-row {
   font-weight: 600;
   justify-content: space-between;
   margin-bottom: 5px;
@@ -253,11 +271,23 @@ export default {
   padding: 5px 0;
   border-bottom: 1px solid #ddd;
 }
-.md-cell-summary-label {
+.mds-cell-summary-label {
   font-weight: 600;
 }
-.md-cell-summary-popup .mbsc-popup {
+.mds-cell-summary-popup .mbsc-popup {
   min-width: 150px;
+}
+.mds-green-bg-color {
+    background: repeating-linear-gradient(-45deg, #fcfffc, #fcfffc 10px, #eefbec 10px, #eefbec 20px);
+}
+.mds-yellow-bg-color {
+    background: repeating-linear-gradient(-45deg, #f8fcf0, #f8fcf0 10px, #f1fada 10px, #f1fada 20px);
+}
+.mds-purple-bg-color {
+    background: repeating-linear-gradient(-45deg, #faf4ff, #faf4ff 10px, #eddffa 10px, #eddffa 20px);
+}
+.mds-blue-bg-color {
+    background: repeating-linear-gradient(-45deg, #e9fffa, #e9fffa 10px, #dbfdf5 10px, #dbfdf5 20px);
 }
 `,
 };
