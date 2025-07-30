@@ -329,7 +329,7 @@ export default {
           display: 'anchored',
           showOverlay: false,
           touchUi: false,
-          width: 200,
+          width: 220,
           onPosition: function (args) {
             var popup = $(args.target).children('.mbsc-popup');
             if (popup.length) {
@@ -374,9 +374,9 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-resource-info-popup" style="display:none">
-  <div>
+  <div class="mbsc-flex mds-resource-info-header">
     <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="mds-resource-info-edit-btn"></button>
-    <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay-btn mbsc-pull-right">
+    <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay-btn">
       Pay now
     </button>
   </div>
@@ -414,17 +414,26 @@ export default {
 .mds-resource-info-hover.mbsc-timeline-resource {
   text-decoration: underline;
 }
+.mds-resource-info-header {
+  align-items: center;
+  justify-content: space-between;
+  height: 35px;
+}
 .mds-resource-info-edit-btn.mbsc-button {
+  position: absolute;
+  left: 16px;
   font-size: 13px;
   margin: 0 0 0 auto;
 }
 .mds-resource-info-pay-btn.mbsc-button {
+  position: absolute;
+  right: 16px;
   font-size: 14px;
   margin: 0;
-  padding: 0 10px;
+  width: 100px;
 }
 .mds-resource-info-name {
-  padding: 10px 0;
+  padding: 15px 0;
 }
 .mds-resource-info-cont {
   font-size: 14px;
