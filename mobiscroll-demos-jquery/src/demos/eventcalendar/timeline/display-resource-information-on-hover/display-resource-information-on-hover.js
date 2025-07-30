@@ -408,7 +408,7 @@ export default {
 }
 .mds-res-info-prof {
   font-size: 12px;
-  color: #666;
+  opacity: .5;
   line-height: 18px
 }
 .mds-resource-info-hover.mbsc-timeline-resource {
