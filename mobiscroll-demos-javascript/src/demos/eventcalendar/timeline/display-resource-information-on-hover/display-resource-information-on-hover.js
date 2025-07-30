@@ -8,7 +8,7 @@ export default {
       // theme
     });
 
-    function openTooltipWithDelay(event) {
+    function openTooltipWithDelay(args) {
       if (closeTimer) {
         clearTimeout(closeTimer);
       }
@@ -18,39 +18,45 @@ export default {
       // Delay opening the tooltip to avoid flickering
       openTimer = setTimeout(function () {
         var events = calendar.getEvents();
-        var totalHours = getTotalHoursForResource(events, event.resource.id);
+        var res = args.resource;
+        var totalHours = getTotalHoursForResource(events, res.id);
 
-        currentResource = event.resource;
+        currentResource = res;
 
-        resourceName.textContent = event.resource.name;
-        resourceCost.textContent = '$' + event.resource.cost + '/hour';
-        resourceTotal.textContent = totalHours + ' hours, $' + totalHours * event.resource.cost + '/day';
-        event.domEvent.target.classList.add('mds-resource-info-hover');
+        resourceName.textContent = res.name;
+        resourceCost.textContent = '$' + res.cost + '/hour';
+        resourceTotal.textContent = '$' + totalHours * res.cost + ' (' + totalHours + 'h)';
+        args.domEvent.target.classList.add('mds-resource-info-hover');
 
-        tooltip.setOptions({ anchor: event.domEvent.target.closest('.mbsc-timeline-resource') });
+        tooltip.setOptions({
+          anchor: args.domEvent.target.closest('.mbsc-timeline-resource')
+        });
+
         tooltip.open();
         openTimer = null;
-      }, 100); // 100ms delay before opening
+      }, 100);
     }
 
     // Close the tooltip with a delay to allow for hover interactions
     function closeTooltipWithDelay() {
-      if (openTimer) clearTimeout(openTimer);
-      if (closeTimer) clearTimeout(closeTimer);
+      if (openTimer) {
+        clearTimeout(openTimer);
+      }
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+      }
       closeTimer = setTimeout(function () {
         tooltip.close();
         closeTimer = null;
-      }, 200); // 200ms delay before closing
+      }, 200);
     }
 
     function getTotalHoursForResource(events, resourceId) {
       return events
         .filter(function (e) { return e.resource === resourceId; })
         .reduce(function (sum, e) {
-          // Parse start and end as Date objects
           var start = new Date(e.start);
           var end = new Date(e.end);
-          // Calculate duration in hours
           var hours = (end - start) / (1000 * 60 * 60);
           return sum + hours;
         }, 0);
@@ -75,94 +81,148 @@ export default {
       },
       data: [
         {
+          start: 'dyndatetime(y,m,d-1,12)',
+          end: 'dyndatetime(y,m,d-1,15)',
+          title: 'Repoint Brick Facade',
+          resource: 'res1',
+        },
+        {
+          start: 'dyndatetime(y,m,d-1,9)',
+          end: 'dyndatetime(y,m,d-1,12)',
+          title: 'Install Custom Wood Trim',
+          resource: 'res3',
+        },
+        {
+          start: 'dyndatetime(y,m,d-1,14)',
+          end: 'dyndatetime(y,m,d-1,18)',
+          title: 'Repair Steel Stair Treads',
+          resource: 'res4',
+        },
+        {
+          start: 'dyndatetime(y,m,d-1,10)',
+          end: 'dyndatetime(y,m,d-1,13)',
+          title: 'Pour and Finish Driveway Slab',
+          resource: 'res6',
+        },
+        {
+          start: 'dyndatetime(y,m,d-1,11)',
+          end: 'dyndatetime(y,m,d-1,16)',
+          title: 'Paint Interior Drywall',
+          resource: 'res8',
+        },
+        {
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,11)',
-          title: 'Task 1',
+          title: 'Block Wall Construction',
           resource: 'res1',
         },
         {
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,16)',
           title: 'Task 2',
-          resource: 'res1',
+          resource: 'Paver Installation',
         },
         {
           start: 'dyndatetime(y,m,d,12)',
           end: 'dyndatetime(y,m,d,17)',
-          title: 'Task 3',
+          title: 'Install ceiling fan',
           resource: 'res2',
         },
         {
           start: 'dyndatetime(y,m,d,10)',
           end: 'dyndatetime(y,m,d,14)',
-          title: 'Task 4',
+          title: 'Roof Beam Replacement',
           resource: 'res3',
         },
         {
           start: 'dyndatetime(y,m,d,7)',
           end: 'dyndatetime(y,m,d,12)',
-          title: 'Task 5',
+          title: 'Custom Metalworks Creation',
           resource: 'res4',
         },
         {
           start: 'dyndatetime(y,m,d,14)',
           end: 'dyndatetime(y,m,d,17)',
-          title: 'Task 6',
+          title: 'Pipe Welding',
           resource: 'res4',
         },
         {
           start: 'dyndatetime(y,m,10,8)',
           end: 'dyndatetime(y,m,11,20)',
-          title: 'Task 7',
+          title: 'Leak Detection & Repair',
           resource: 'res5',
         },
         {
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,17)',
-          title: 'Task 8',
+          title: 'Faucet & Sink Fitting',
           resource: 'res5',
         },
         {
           start: 'dyndatetime(y,m,d,18)',
           end: 'dyndatetime(y,m,d,20)',
-          title: 'Task 9',
+          title: 'Drainage System Setup',
           resource: 'res5',
         },
         {
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,13)',
-          title: 'Task 10',
+          title: 'Surface Polishing',
           resource: 'res6',
         },
         {
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,10)',
-          title: 'Task 11',
+          title: 'Structural Steel Inspections',
           resource: 'res7',
         },
         {
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d,16)',
-          title: 'Task 12',
+          title: 'Metal Structure Assembly',
           resource: 'res7',
         },
         {
           start: 'dyndatetime(y,m,d,17)',
           end: 'dyndatetime(y,m,d,19)',
-          title: 'Task 13',
+          title: 'Heavy Steel Beam Placement',
           resource: 'res7',
         },
         {
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d,12)',
-          title: 'Task 14',
+          title: 'Exterior House Painting',
           resource: 'res8',
         },
         {
           start: 'dyndatetime(y,m,d,15)',
           end: 'dyndatetime(y,m,d,18)',
-          title: 'Task 15',
+          title: 'Deck Staining & Sealing',
           resource: 'res8',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,12)',
+          end: 'dyndatetime(y,m,d+1,15)',
+          title: 'Troubleshoot Faulty Breaker',
+          resource: 'res2',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,10)',
+          end: 'dyndatetime(y,m,d+1,13)',
+          title: 'Frame Interior Partitions',
+          resource: 'res3',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,16)',
+          end: 'dyndatetime(y,m,d+1,20)',
+          title: 'Weld Structural Beam Connections',
+          resource: 'res4',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,12)',
+          end: 'dyndatetime(y,m,d+1,16)',
+          title: 'Apply Smooth Trowel Finish to Basement Floor',
+          resource: 'res6',
         },
       ],
       resources: [
@@ -231,26 +291,26 @@ export default {
           cost: '25',
         },
       ],
-      renderResource: function (resource) {
+      renderResource: function (res) {
         return (
           '<div class="mbsc-flex">' +
-          '<img class="mds-res-info-avatar" src="' + resource.avatar + '"/>' +
+          '<img class="mds-res-info-avatar" src="' + res.avatar + '"/>' +
           '<div class="mds-res-info-cont">' +
           '<div class="mds-res-info-name">' +
-          resource.name +
+          res.name +
           '</div>' +
           '<div class="mds-res-info-prof">' +
-          resource.profession +
+          res.profession +
           '</div>' +
           '</div>' +
           '</div>'
         );
       },
-      onResourceHoverIn: function (event) {
-        openTooltipWithDelay(event);
+      onResourceHoverIn: function (args) {
+        openTooltipWithDelay(args);
       },
-      onResourceHoverOut: function (event) {
-        event.domEvent.target.classList.remove('mds-resource-info-hover');
+      onResourceHoverOut: function (args) {
+        args.domEvent.target.classList.remove('mds-resource-info-hover');
         closeTooltipWithDelay();
       },
     });
@@ -302,7 +362,7 @@ export default {
     </button>
   </div>
 </div>
-<div id="demo-display-resource-information-on-hover"></div>
+<div id="demo-display-resource-information-on-hover"></div>>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
