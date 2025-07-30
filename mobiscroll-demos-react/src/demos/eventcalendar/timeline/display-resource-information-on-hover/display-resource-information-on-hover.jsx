@@ -1,620 +1,391 @@
-import { Button, Eventcalendar, formatDate, Popup, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, Popup, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import './custom-event-tooltip.css';
+import './display-resource-information-on-hover.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const doctors = [
-  { id: 1, name: 'Dr. Breanne Lorinda', color: '#b33d3d' },
-  { id: 2, name: 'Dr. Ryan Melicent', color: '#309346' },
-  { id: 3, name: 'Dr. Meredith Chantelle', color: '#c77c0a' },
+const myEvents = [
+  {
+    start: 'dyndatetime(y,m,d-1,12)',
+    end: 'dyndatetime(y,m,d-1,15)',
+    title: 'Repoint Brick Facade',
+    resource: 'res1',
+  },
+  {
+    start: 'dyndatetime(y,m,d-1,9)',
+    end: 'dyndatetime(y,m,d-1,12)',
+    title: 'Install Custom Wood Trim',
+    resource: 'res3',
+  },
+  {
+    start: 'dyndatetime(y,m,d-1,14)',
+    end: 'dyndatetime(y,m,d-1,18)',
+    title: 'Repair Steel Stair Treads',
+    resource: 'res4',
+  },
+  {
+    start: 'dyndatetime(y,m,d-1,10)',
+    end: 'dyndatetime(y,m,d-1,13)',
+    title: 'Pour and Finish Driveway Slab',
+    resource: 'res6',
+  },
+  {
+    start: 'dyndatetime(y,m,d-1,11)',
+    end: 'dyndatetime(y,m,d-1,16)',
+    title: 'Paint Interior Drywall',
+    resource: 'res8',
+  },
+  {
+    start: 'dyndatetime(y,m,d,8)',
+    end: 'dyndatetime(y,m,d,11)',
+    title: 'Block Wall Construction',
+    resource: 'res1',
+  },
+  {
+    start: 'dyndatetime(y,m,d,14)',
+    end: 'dyndatetime(y,m,d,16)',
+    title: 'Task 2',
+    resource: 'Paver Installation',
+  },
+  {
+    start: 'dyndatetime(y,m,d,12)',
+    end: 'dyndatetime(y,m,d,17)',
+    title: 'Install ceiling fan',
+    resource: 'res2',
+  },
+  {
+    start: 'dyndatetime(y,m,d,10)',
+    end: 'dyndatetime(y,m,d,14)',
+    title: 'Roof Beam Replacement',
+    resource: 'res3',
+  },
+  {
+    start: 'dyndatetime(y,m,d,7)',
+    end: 'dyndatetime(y,m,d,12)',
+    title: 'Custom Metalworks Creation',
+    resource: 'res4',
+  },
+  {
+    start: 'dyndatetime(y,m,d,14)',
+    end: 'dyndatetime(y,m,d,17)',
+    title: 'Pipe Welding',
+    resource: 'res4',
+  },
+  {
+    start: 'dyndatetime(y,m,10,8)',
+    end: 'dyndatetime(y,m,11,20)',
+    title: 'Leak Detection & Repair',
+    resource: 'res5',
+  },
+  {
+    start: 'dyndatetime(y,m,d,13)',
+    end: 'dyndatetime(y,m,d,17)',
+    title: 'Faucet & Sink Fitting',
+    resource: 'res5',
+  },
+  {
+    start: 'dyndatetime(y,m,d,18)',
+    end: 'dyndatetime(y,m,d,20)',
+    title: 'Drainage System Setup',
+    resource: 'res5',
+  },
+  {
+    start: 'dyndatetime(y,m,d,9)',
+    end: 'dyndatetime(y,m,d,13)',
+    title: 'Surface Polishing',
+    resource: 'res6',
+  },
+  {
+    start: 'dyndatetime(y,m,d,8)',
+    end: 'dyndatetime(y,m,d,10)',
+    title: 'Structural Steel Inspections',
+    resource: 'res7',
+  },
+  {
+    start: 'dyndatetime(y,m,d,13)',
+    end: 'dyndatetime(y,m,d,16)',
+    title: 'Metal Structure Assembly',
+    resource: 'res7',
+  },
+  {
+    start: 'dyndatetime(y,m,d,17)',
+    end: 'dyndatetime(y,m,d,19)',
+    title: 'Heavy Steel Beam Placement',
+    resource: 'res7',
+  },
+  {
+    start: 'dyndatetime(y,m,d,9)',
+    end: 'dyndatetime(y,m,d,12)',
+    title: 'Exterior House Painting',
+    resource: 'res8',
+  },
+  {
+    start: 'dyndatetime(y,m,d,15)',
+    end: 'dyndatetime(y,m,d,18)',
+    title: 'Deck Staining & Sealing',
+    resource: 'res8',
+  },
+  {
+    start: 'dyndatetime(y,m,d+1,12)',
+    end: 'dyndatetime(y,m,d+1,15)',
+    title: 'Troubleshoot Faulty Breaker',
+    resource: 'res2',
+  },
+  {
+    start: 'dyndatetime(y,m,d+1,10)',
+    end: 'dyndatetime(y,m,d+1,13)',
+    title: 'Frame Interior Partitions',
+    resource: 'res3',
+  },
+  {
+    start: 'dyndatetime(y,m,d+1,16)',
+    end: 'dyndatetime(y,m,d+1,20)',
+    title: 'Weld Structural Beam Connections',
+    resource: 'res4',
+  },
+  {
+    start: 'dyndatetime(y,m,d+1,12)',
+    end: 'dyndatetime(y,m,d+1,16)',
+    title: 'Apply Smooth Trowel Finish to Basement Floor',
+    resource: 'res6',
+  },
 ];
 
-const defaultAppointments = [
+const myResources = [
   {
-    title: 'Jude Chester',
-    age: 69,
-    start: 'dyndatetime(y,m,d,8)',
-    end: 'dyndatetime(y,m,d,8,45)',
-    confirmed: false,
-    reason: 'Headaches morning & afternoon',
-    location: 'Topmed, Building A, Room 203',
-    resource: 1,
+    id: 'res1',
+    name: 'Adam Miller',
+    color: '#F39C12',
+    profession: 'Mason',
+    avatar: 'https://img.mobiscroll.com/demos/m1.png',
+    cost: '15',
   },
   {
-    title: 'Leon Porter',
-    age: 44,
-    start: 'dyndatetime(y,m,d,9)',
-    end: 'dyndatetime(y,m,d,9,45)',
-    confirmed: false,
-    reason: 'Left abdominal pain',
-    location: 'Topmed, Building D, Room 360',
-    resource: 1,
+    id: 'res2',
+    name: 'Emily Carter',
+    color: '#76e083',
+    profession: 'Electrician',
+    avatar: 'https://img.mobiscroll.com/demos/f1.png',
+    cost: '20',
   },
   {
-    title: 'Merv Kenny',
-    age: 56,
-    start: 'dyndatetime(y,m,d,10)',
-    end: 'dyndatetime(y,m,d,10,45)',
-    confirmed: true,
-    reason: 'Itchy, red rashes',
-    location: 'Topmed, Building D, Room 360',
-    resource: 1,
+    id: 'res3',
+    name: 'James Brown',
+    color: '#b13f49',
+    profession: 'Carpenter',
+    avatar: 'https://img.mobiscroll.com/demos/m2.png',
+    cost: '18',
   },
   {
-    title: 'Derek Austyn',
-    age: 72,
-    start: 'dyndatetime(y,m,d,13)',
-    end: 'dyndatetime(y,m,d,13,45)',
-    confirmed: false,
-    reason: 'Nausea & weakness',
-    location: 'Rose Medical Center, Room 18',
-    resource: 1,
+    id: 'res4',
+    name: 'Daniel Wilson',
+    color: '#e25dd2',
+    profession: 'Welder',
+    avatar: 'https://img.mobiscroll.com/demos/m3.png',
+    cost: '22',
   },
   {
-    title: 'Jenifer Kalyn',
-    age: 65,
-    start: 'dyndatetime(y,m,d,14)',
-    end: 'dyndatetime(y,m,d,14,45)',
-    confirmed: true,
-    reason: 'Cough & fever',
-    location: 'Rose Medical Center, Room 18',
-    resource: 1,
+    id: 'res5',
+    name: 'Benjamin Harris',
+    color: '#7056ff',
+    profession: 'Plumber',
+    avatar: 'https://img.mobiscroll.com/demos/m4.png',
+    cost: '20',
   },
   {
-    title: 'Lily Racquel',
-    age: 54,
-    start: 'dyndatetime(y,m,d,10)',
-    end: 'dyndatetime(y,m,d,10,45)',
-    confirmed: true,
-    reason: 'Dry, persistent cough & headache',
-    location: 'Procare, Building C, Room 12',
-    resource: 2,
+    id: 'res6',
+    name: 'Olivia Anderson',
+    color: '#56aaff',
+    profession: 'Concrete Finisher',
+    avatar: 'https://img.mobiscroll.com/demos/f2.png',
+    cost: '15',
   },
   {
-    title: 'Mia Sawyer',
-    age: 59,
-    start: 'dyndatetime(y,m,d,11)',
-    end: 'dyndatetime(y,m,d,11,45)',
-    confirmed: true,
-    reason: 'Difficulty sleeping & loss of appetite',
-    location: 'Procare, Building C, Room 12',
-    resource: 2,
+    id: 'res7',
+    name: 'Emma Thompson',
+    color: '#84852f',
+    profession: 'Steelworker',
+    avatar: 'https://img.mobiscroll.com/demos/f3.png',
+    cost: '18',
   },
   {
-    title: 'Fred Valdez',
-    age: 62,
-    start: 'dyndatetime(y,m,d,15)',
-    end: 'dyndatetime(y,m,d,15,45)',
-    confirmed: false,
-    reason: 'High blood pressure',
-    location: 'Procare, Building C, Room 40',
-    resource: 2,
-  },
-  {
-    title: 'Sylvia Cale',
-    age: 41,
-    start: 'dyndatetime(y,m,d,8)',
-    end: 'dyndatetime(y,m,d,8,45)',
-    confirmed: false,
-    reason: 'Fever & sore throat',
-    location: 'MedStar, Building A, Room 1',
-    resource: 3,
-  },
-  {
-    title: 'Isadora Lyric',
-    age: 30,
-    start: 'dyndatetime(y,m,d,9)',
-    end: 'dyndatetime(y,m,d,9,45)',
-    confirmed: false,
-    reason: 'Constant tiredness & weakness',
-    location: 'MedStar, Building A, Room 1',
-    resource: 3,
-  },
-  {
-    title: 'Jon Candace',
-    age: 63,
-    start: 'dyndatetime(y,m,d,12)',
-    end: 'dyndatetime(y,m,d,12,45)',
-    confirmed: true,
-    reason: 'Nausea & weakness',
-    location: 'MedStar, Building A, Room 1',
-    resource: 3,
-  },
-  {
-    title: 'Layton Drake',
-    age: 57,
-    start: 'dyndatetime(y,m,d,13)',
-    end: 'dyndatetime(y,m,d,13,45)',
-    confirmed: true,
-    reason: 'Headaches & loss of appetite',
-    location: 'Vitalife, Room 160',
-    resource: 3,
-  },
-  {
-    title: 'Florence Amy',
-    age: 73,
-    start: 'dyndatetime(y,m,d,14)',
-    end: 'dyndatetime(y,m,d,14,45)',
-    confirmed: false,
-    reason: 'Dry, persistent cough & headache',
-    location: 'Vitalife, Room 160',
-    resource: 3,
-  },
-  {
-    title: 'Willis Kane',
-    age: 44,
-    start: 'dyndatetime(y,m,d+1,8)',
-    end: 'dyndatetime(y,m,d+1,8,45)',
-    confirmed: true,
-    reason: 'Back pain',
-    location: 'Care Cente, Room 320r',
-    resource: 1,
-  },
-  {
-    title: 'Theo Calanthia',
-    age: 60,
-    start: 'dyndatetime(y,m,d+1,9)',
-    end: 'dyndatetime(y,m,d+1,9,45)',
-    confirmed: true,
-    reason: 'Anxiousness & sleeping disorder',
-    location: 'Care Center, Room 320',
-    resource: 1,
-  },
-  {
-    title: 'Ford Kaiden',
-    age: 53,
-    start: 'dyndatetime(y,m,d+1,14)',
-    end: 'dyndatetime(y,m,d+1,14,45)',
-    confirmed: true,
-    reason: 'Nausea & vomiting',
-    location: 'Care Center, Room 206',
-    resource: 1,
-  },
-  {
-    title: 'Jewell Ryder',
-    age: 75,
-    start: 'dyndatetime(y,m,d+1,15)',
-    end: 'dyndatetime(y,m,d+1,15,45)',
-    confirmed: false,
-    reason: 'High blood pressure',
-    location: 'Care Center, Room 206',
-    resource: 1,
-  },
-  {
-    title: 'Antonia Cindra',
-    age: 48,
-    start: 'dyndatetime(y,m,d+1,12)',
-    end: 'dyndatetime(y,m,d+1,12,45)',
-    confirmed: true,
-    reason: 'Dry, persistent cough',
-    location: 'Medica Zone, Building C, Room 2',
-    resource: 3,
-  },
-  {
-    title: 'Gerry Irma',
-    age: 50,
-    start: 'dyndatetime(y,m,d+1,13)',
-    end: 'dyndatetime(y,m,d+1,13,45)',
-    confirmed: false,
-    reason: 'Fever & sore throat',
-    location: 'Medica Zone, Building C, Room 2',
-    resource: 3,
-  },
-  {
-    title: 'Carlyn Dorothy',
-    age: 36,
-    start: 'dyndatetime(y,m,d+1,14)',
-    end: 'dyndatetime(y,m,d+1,14,45)',
-    confirmed: true,
-    reason: 'Tiredness & muscle pain',
-    location: 'Medica Zone, Building C, Room 2',
-    resource: 3,
-  },
-  {
-    title: 'Alma Potter',
-    age: 74,
-    start: 'dyndatetime(y,m,d-1,10)',
-    end: 'dyndatetime(y,m,d-1,10,45)',
-    confirmed: true,
-    reason: 'High blood pressure',
-    location: 'Vitacure, Building D, Room 2',
-    resource: 1,
-  },
-  {
-    title: 'Debra Aguilar',
-    age: 47,
-    start: 'dyndatetime(y,m,d-1,11)',
-    end: 'dyndatetime(y,m,d-1,11,45)',
-    confirmed: false,
-    reason: 'Fever & sore throat',
-    location: 'Vitacure, Building D, Room 2',
-    resource: 1,
-  },
-  {
-    title: 'Tommie Love',
-    age: 42,
-    start: 'dyndatetime(y,m,d-1,12)',
-    end: 'dyndatetime(y,m,d-1,12,45)',
-    confirmed: false,
-    reason: 'Dry, persistent cough & headache',
-    location: 'Vitacure, Building D, Room 2',
-    resource: 1,
-  },
-  {
-    title: 'Marjorie White',
-    age: 55,
-    start: 'dyndatetime(y,m,d-1,13)',
-    end: 'dyndatetime(y,m,d-1,13,45)',
-    confirmed: true,
-    reason: 'Back pain',
-    location: 'Vitacure, Building D, Room 2',
-    resource: 1,
-  },
-  {
-    title: 'Brandon Perkins',
-    age: 68,
-    start: 'dyndatetime(y,m,d-1,14)',
-    end: 'dyndatetime(y,m,d-1,14,45)',
-    confirmed: true,
-    reason: 'Swollen ankles',
-    location: 'Vitacure, Building D, Room 2',
-    resource: 1,
-  },
-  {
-    title: 'Lora Wilson',
-    age: 66,
-    start: 'dyndatetime(y,m,d-1,15)',
-    end: 'dyndatetime(y,m,d-1,15,45)',
-    confirmed: false,
-    reason: 'Fever & headache',
-    location: 'Vitacure, Building D, Room 2',
-    resource: 1,
-  },
-  {
-    title: 'Ismael Bates',
-    age: 58,
-    start: 'dyndatetime(y,m,d-1,8)',
-    end: 'dyndatetime(y,m,d-1,8,45)',
-    confirmed: false,
-    reason: 'Tiredness & muscle pain',
-    location: 'Care Center, Room 300',
-    resource: 2,
-  },
-  {
-    title: 'Archie Wilkins',
-    age: 69,
-    start: 'dyndatetime(y,m,d-1,9)',
-    end: 'dyndatetime(y,m,d-1,9,45)',
-    confirmed: true,
-    reason: 'Fever & headache',
-    location: 'Care Center, Room 300',
-    resource: 2,
-  },
-  {
-    title: 'Christie Baker',
-    age: 71,
-    start: 'dyndatetime(y,m,d-1,10)',
-    end: 'dyndatetime(y,m,d-1,10,45)',
-    confirmed: true,
-    reason: 'Headaches morning & afternoon',
-    location: 'Care Center, Room 300',
-    resource: 2,
-  },
-  {
-    title: 'Laura Shelton',
-    age: 45,
-    start: 'dyndatetime(y,m,d-1,12)',
-    end: 'dyndatetime(y,m,d-1,12,45)',
-    confirmed: false,
-    reason: 'Dry, persistent cough',
-    location: 'Care Center, Room 300',
-    resource: 2,
-  },
-  {
-    title: 'Mary Hudson',
-    age: 77,
-    start: 'dyndatetime(y,m,d-1,9)',
-    end: 'dyndatetime(y,m,d-1,9,45)',
-    confirmed: true,
-    reason: 'Fever & sore throat',
-    location: 'Medica Zone, Room 45',
-    resource: 3,
-  },
-  {
-    title: 'Ralph Rice',
-    age: 64,
-    start: 'dyndatetime(y,m,d-1,10)',
-    end: 'dyndatetime(y,m,d-1,10,45)',
-    confirmed: true,
-    reason: 'Left abdominal pain',
-    location: 'Medica Zone, Room 45',
-    resource: 3,
-  },
-  {
-    title: 'Marc Hoffman',
-    age: 53,
-    start: 'dyndatetime(y,m,d-1,12)',
-    end: 'dyndatetime(y,m,d-1,12,45)',
-    confirmed: true,
-    reason: 'Dry, persistent cough & headache',
-    location: 'Medica Zone, Room 45',
-    resource: 3,
-  },
-  {
-    title: 'Arlene Lyons',
-    age: 41,
-    start: 'dyndatetime(y,m,d-1,14)',
-    end: 'dyndatetime(y,m,d-1,14,45)',
-    confirmed: true,
-    reason: 'Nausea & weakness',
-    location: 'Care Center, Room 202',
-    resource: 3,
-  },
-  {
-    title: 'Thelma Shaw',
-    age: 26,
-    start: 'dyndatetime(y,m,d-1,15)',
-    end: 'dyndatetime(y,m,d-1,15,45)',
-    confirmed: true,
-    reason: 'Anxiousness & sleeping disorder',
-    location: 'Care Center, Room 202',
-    resource: 3,
-  },
-  {
-    title: 'Dory Edie',
-    age: 45,
-    start: 'dyndatetime(y,m,d-2,9)',
-    end: 'dyndatetime(y,m,d-2,9,45)',
-    confirmed: true,
-    reason: 'Right abdominal pain',
-    location: 'Vitacure, Building A, Room 203',
-    resource: 2,
-  },
-  {
-    title: 'Kaylin Toni',
-    age: 68,
-    start: 'dyndatetime(y,m,d-2,10)',
-    end: 'dyndatetime(y,m,d-2,10,45)',
-    confirmed: true,
-    reason: 'Itchy, red rashes',
-    location: 'Vitacure, Building A, Room 203',
-    resource: 2,
-  },
-  {
-    title: 'Gray Kestrel',
-    age: 60,
-    start: 'dyndatetime(y,m,d-2,12)',
-    end: 'dyndatetime(y,m,d-2,12,45)',
-    confirmed: true,
-    reason: 'Cough & fever',
-    location: 'Vitacure, Building A, Room 203',
-    resource: 2,
-  },
-  {
-    title: 'Reg Izabelle',
-    age: 41,
-    start: 'dyndatetime(y,m,d-2,14)',
-    end: 'dyndatetime(y,m,d-2,14,45)',
-    confirmed: true,
-    reason: 'Fever & headache',
-    location: 'Medica Zone, Room 13',
-    resource: 2,
-  },
-  {
-    title: 'Lou Andie',
-    age: 76,
-    start: 'dyndatetime(y,m,d-2,15)',
-    end: 'dyndatetime(y,m,d-2,15,45)',
-    confirmed: true,
-    reason: 'High blood pressure',
-    location: 'Medica Zone, Room 13',
-    resource: 2,
-  },
-  {
-    title: 'Yancy Dustin',
-    age: 52,
-    start: 'dyndatetime(y,m,d-2,10)',
-    end: 'dyndatetime(y,m,d-2,10,45)',
-    confirmed: true,
-    reason: 'Fever & headache',
-    location: 'Vitacure, Building E, Room 50',
-    resource: 3,
-  },
-  {
-    title: 'Terry Clark',
-    age: 78,
-    start: 'dyndatetime(y,m,d-2,11)',
-    end: 'dyndatetime(y,m,d-2,11,45)',
-    confirmed: true,
-    reason: 'Swollen ankles',
-    location: 'Vitacure, Building E, Room 50',
-    resource: 3,
+    id: 'res8',
+    name: 'Natalie Roberts',
+    color: '#ff6e56',
+    profession: 'Painter',
+    avatar: 'https://img.mobiscroll.com/demos/f4.png',
+    cost: '25',
   },
 ];
+
+function getTotalHoursForResource(resourceId) {
+  return myEvents
+    .filter((e) => e.resource === resourceId)
+    .reduce((sum, e) => {
+      const start = new Date(e.start);
+      const end = new Date(e.end);
+      const hours = (end - start) / (1000 * 60 * 60);
+      return sum + hours;
+    }, 0);
+}
 
 function App() {
-  const [appointments, setAppointments] = useState(defaultAppointments);
-  const [appointment, setAppointment] = useState();
-  const [appointmentInfo, setAppointmentInfo] = useState('');
-  const [appointmentLocation, setAppointmentLocation] = useState('');
-  const [appointmentReason, setAppointmentReason] = useState('');
-  const [appointmentStatus, setAppointmentStatus] = useState('');
-  const [appointmentTime, setAppointmentTime] = useState('');
-  const [buttonText, setButtonText] = useState('');
-  const [buttonType, setButtonType] = useState('');
-  const [isTooltipOpen, setTooltipOpen] = useState(false);
-  const [isToastOpen, setToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [tooltipAnchor, setTooltipAnchor] = useState(null);
-  const [tooltipColor, setTooltipColor] = useState('');
-
-  const timer = useRef(null);
-
   const myView = useMemo(
     () => ({
       timeline: {
         type: 'day',
-        startDay: 1,
-        endDay: 5,
-        startTime: '08:00',
-        endTime: '16:00',
+        startTime: '07:00',
+        endTime: '22:00',
       },
     }),
     [],
   );
 
-  const openTooltip = useCallback((args) => {
-    const event = args.event;
-    const doctor = args.resourceObj;
-    const time = formatDate('hh:mm A', new Date(event.start)) + ' - ' + formatDate('hh:mm A', new Date(event.end));
+  const [isTooltipOpen, setTooltipOpen] = useState(false);
+  const [tooltipAnchor, setTooltipAnchor] = useState(null);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [currentResource, setCurrentResource] = useState(null);
+  const [resourceName, setResourceName] = useState('');
+  const [resourceCost, setResourceCost] = useState('');
+  const [resourceTotal, setResourceTotal] = useState('');
 
-    if (timer.current) {
-      clearTimeout(timer.current);
+  const openTimer = useRef(null);
+  const closeTimer = useRef(null);
+
+  // Handles both Mobiscroll hover and native mouse events
+  const openTooltipWithDelay = useCallback((args, anchorTarget) => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
     }
-
-    if (event.confirmed) {
-      setAppointmentStatus('Confirmed');
-      setButtonText('Cancel appointment');
-      setButtonType('warning');
-    } else {
-      setAppointmentStatus('Canceled');
-      setButtonText('Confirm appointment');
-      setButtonType('success');
+    if (openTimer.current) {
+      clearTimeout(openTimer.current);
     }
-
-    setAppointment(event);
-    setAppointmentInfo(event.title + ', Age: ' + event.age);
-    setAppointmentLocation(event.location);
-    setAppointmentTime(time);
-    setAppointmentReason(event.reason);
-    setTooltipColor(doctor.color);
-    setTooltipAnchor(args.domEvent.target.closest('.mbsc-timeline-event'));
-    setTooltipOpen(true);
+    openTimer.current = setTimeout(() => {
+      const res = args.resource;
+      setCurrentResource(res);
+      setResourceName(res.name);
+      setResourceCost(`$${res.cost}/hour`);
+      setResourceTotal(`$${getTotalHoursForResource(res.id) * res.cost} (${getTotalHoursForResource(res.id)}h)`);
+      setTooltipAnchor(anchorTarget || args.domEvent.target.closest('.mbsc-timeline-resource'));
+      setTooltipOpen(true);
+      openTimer.current = null;
+    }, 100);
   }, []);
 
-  const handleEventClick = useCallback(
-    (args) => {
-      openTooltip(args);
-    },
-    [openTooltip],
-  );
-
-  const handleEventDragStart = useCallback(() => {
-    setTooltipOpen(false);
-  }, []);
-
-  const handleEventHoverIn = useCallback(
-    (args) => {
-      openTooltip(args);
-    },
-    [openTooltip],
-  );
-
-  const handleEventHoverOut = useCallback(() => {
-    if (!timer.current) {
-      timer.current = setTimeout(() => {
-        setTooltipOpen(false);
-      }, 200);
+  const closeTooltipWithDelay = useCallback(() => {
+    if (openTimer.current) {
+      clearTimeout(openTimer.current);
     }
-  }, []);
-
-  const handleMouseEnter = useCallback(() => {
-    if (timer.current) {
-      clearTimeout(timer.current);
-      timer.current = null;
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
     }
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    timer.current = setTimeout(() => {
+    closeTimer.current = setTimeout(() => {
       setTooltipOpen(false);
+      closeTimer.current = null;
     }, 200);
+  }, []);
+
+  // Mobiscroll resource hover events
+  const handleResourceHoverIn = (args) => {
+    openTooltipWithDelay(args);
+  };
+
+  const handleResourceHoverOut = (args) => {
+    args.domEvent.target.classList.remove('mds-resource-info-hover');
+    closeTooltipWithDelay();
+  };
+
+  // Native mouse events for the popup
+  const handlePopupMouseEnter = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+    }
+  };
+
+  const handlePopupMouseLeave = () => {
+    closeTooltipWithDelay();
+  };
+
+  const renderMyResource = useCallback(
+    (res) => (
+      <div className="mbsc-flex">
+        <img className="mds-res-info-avatar" src={res.avatar} alt="Avatar" />
+        <div className="mds-res-info-cont">
+          <div className="mds-res-info-name">{res.name}</div>
+          <div className="mds-res-info-prof">{res.profession}</div>
+        </div>
+      </div>
+    ),
+    [],
+  );
+
+  const handlePay = () => {
+    setTooltipOpen(false);
+    setToastMessage(`${currentResource.profession} payed`);
+    setToastOpen(true);
+  };
+
+  const handleEdit = () => {
+    setTooltipOpen(false);
+    setToastMessage(`Edit ${currentResource.name}'s profile`);
+    setToastOpen(true);
+  };
+
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
   }, []);
 
   const handleTooltipClose = useCallback(() => {
     setTooltipOpen(false);
   }, []);
 
-  const handleToastClose = useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
-  const updateAppointmentStatus = useCallback(() => {
-    appointment.confirmed = !appointment.confirmed;
-    setTooltipOpen(false);
-    setToastMessage('Appointment ' + (appointment.confirmed ? 'confirmed' : 'canceled'));
-    setToastOpen(true);
-  }, [appointment]);
-
-  const viewAppointmentFile = useCallback(() => {
-    setTooltipOpen(false);
-    setToastMessage('View file');
-    setToastOpen(true);
-  }, []);
-
-  const deleteAppointment = useCallback(() => {
-    setAppointments(appointments.filter((item) => item.id !== appointment.id));
-    setTooltipOpen(false);
-    setToastMessage('Appointment deleted');
-    setToastOpen(true);
-  }, [appointments, appointment]);
-
   return (
     <>
       <Eventcalendar
-        clickToCreate={false}
-        dragToCreate={false}
-        dragToMove={true}
-        dragToResize={false}
-        data={appointments}
-        resources={doctors}
-        showEventTooltip={false}
+        data={myEvents}
+        resources={myResources}
         view={myView}
-        onEventClick={handleEventClick}
-        onEventDragStart={handleEventDragStart}
-        onEventHoverIn={handleEventHoverIn}
-        onEventHoverOut={handleEventHoverOut}
+        onResourceHoverIn={handleResourceHoverIn}
+        onResourceHoverOut={handleResourceHoverOut}
+        renderResource={renderMyResource}
       />
       <Popup
         anchor={tooltipAnchor}
-        contentPadding={false}
         display="anchored"
         isOpen={isTooltipOpen}
-        scrollLock={false}
         showOverlay={false}
         touchUi={false}
-        width={350}
         onClose={handleTooltipClose}
+        // Mouse events for tooltip hover
+        onMouseEnter={handlePopupMouseEnter}
+        onMouseLeave={handlePopupMouseLeave}
       >
-        <div className="mds-tooltip" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          <div className="mds-tooltip-header" style={{ backgroundColor: tooltipColor }}>
-            <span>{appointmentInfo}</span>
-            <span className="mbsc-pull-right">{appointmentTime}</span>
+        <div className="mds-resource-info-header mbsc-flex">
+          <div className="mds-resource-info-name">{resourceName}</div>
+          <Button
+            icon="pencil"
+            color="secondary"
+            variant="outline"
+            className="mds-resource-info-edit-btn mbsc-pull-right"
+            onClick={handleEdit}
+          />
+        </div>
+        <div className="mds-resource-info-cont">
+          <div>
+            Rate: <span className="mds-resource-info-detail">{resourceCost}</span>
           </div>
-          <div className="mbsc-padding">
-            <div className="mds-tooltip-label mbsc-margin">
-              Status: <span className="mbsc-light">{appointmentStatus}</span>
-              <Button color={buttonType} variant="outline" className="mds-tooltip-button mbsc-pull-right" onClick={updateAppointmentStatus}>
-                {buttonText}
-              </Button>
-            </div>
-            <div className="mds-tooltip-label mbsc-margin">
-              Reason for visit: <span className="mbsc-light">{appointmentReason}</span>
-            </div>
-            <div className="mds-tooltip-label mbsc-margin">
-              Location: <span className="mbsc-light">{appointmentLocation}</span>
-            </div>
-            <Button color="secondary" className="mds-tooltip-button" onClick={viewAppointmentFile}>
-              View patient file
-            </Button>
-            <Button color="danger" variant="outline" className="mds-tooltip-button mbsc-pull-right" onClick={deleteAppointment}>
-              Delete appointment
-            </Button>
+          <div>
+            Today: <span className="mds-resource-info-detail">{resourceTotal}</span>
           </div>
+        </div>
+        <div className="mds-resource-info-btn-cont">
+          <Button color="success" className="mds-resource-info-pay-btn" onClick={handlePay}>
+            Pay now
+          </Button>
         </div>
       </Popup>
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />

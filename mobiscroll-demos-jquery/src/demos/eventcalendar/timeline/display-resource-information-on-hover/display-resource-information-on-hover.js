@@ -10,7 +10,7 @@ export default {
     });
 
     $(function () {
-      function openTooltipWithDelay(event) {
+      function openTooltipWithDelay(args) {
         if (closeTimer) {
           clearTimeout(closeTimer);
         }
@@ -21,18 +21,19 @@ export default {
         // Delay opening the tooltip to avoid flickering
         openTimer = setTimeout(function () {
           var events = calendar.getEvents();
-          var res = event.resource;
+          var res = args.resource;
           var totalHours = getTotalHoursForResource(events, res.id);
 
           currentResource = res;
+          hoveredResourceElm = args.domEvent.target.closest('.mbsc-timeline-resource');
 
           $resourceName.text(res.name);
-          $resourceCost.text('$' + res.cost + '');
+          $resourceCost.text('$' + res.cost);
           $resourceTotal.text('$' + totalHours * res.cost + ' (' + totalHours + 'h)');
-          $(event.domEvent.target).addClass('mds-resource-info-hover');
+          $(args.domEvent.target).addClass('mds-resource-info-hover');
 
           tooltip.setOptions({
-            anchor: event.domEvent.target.closest('.mbsc-timeline-resource')
+            anchor: args.domEvent.target.closest('.mbsc-timeline-resource')
           });
 
           tooltip.open();
@@ -74,6 +75,7 @@ export default {
       var openTimer = null;
       var closeTimer = null;
       var currentResource = null;
+      var hoveredResourceElm = null;
 
       var calendar = $('#demo-display-resource-information-on-hover')
         .mobiscroll()
@@ -297,26 +299,26 @@ export default {
               cost: '25',
             },
           ],
-          renderResource: function (resource) {
+          renderResource: function (res) {
             return (
               '<div class="mbsc-flex">' +
-              '<img class="mds-res-info-avatar" src="' + resource.avatar + '"/>' +
+              '<img class="mds-res-info-avatar" src="' + res.avatar + '"/>' +
               '<div class="mds-res-info-cont">' +
               '<div class="mds-res-info-name">' +
-              resource.name +
+              res.name +
               '</div>' +
               '<div class="mds-res-info-prof">' +
-              resource.profession +
+              res.profession +
               '</div>' +
               '</div>' +
               '</div>'
             );
           },
-          onResourceHoverIn: function (event) {
-            openTooltipWithDelay(event);
+          onResourceHoverIn: function (args) {
+            openTooltipWithDelay(args);
           },
-          onResourceHoverOut: function (event) {
-            $(event.domEvent.target).removeClass('mds-resource-info-hover');
+          onResourceHoverOut: function (args) {
+            $(args.domEvent.target).removeClass('mds-resource-info-hover');
             closeTooltipWithDelay();
           },
         }).mobiscroll('getInst');
@@ -327,6 +329,15 @@ export default {
           display: 'anchored',
           showOverlay: false,
           touchUi: false,
+          width: 200,
+          onPosition: function (args) {
+            var popup = $(args.target).children('.mbsc-popup');
+            if (popup.length) {
+              popup[0].style.top = hoveredResourceElm.getBoundingClientRect().top + 'px';
+              popup[0].style.left = hoveredResourceElm.getBoundingClientRect().right + 'px';
+            }
+            return false; // Prevent default positioning
+          }
         }).mobiscroll('getInst');
 
       $tooltip.on('mouseenter', function () {
@@ -345,7 +356,7 @@ export default {
           //<hidden>
           // theme,//</hidden>
           // context,
-          message: currentResource.profession + ' payed',
+          message: currentResource.name + ' paid',
         });
       });
 
@@ -363,27 +374,28 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-resource-info-popup" style="display:none">
-  <div class="mds-resource-info-header mbsc-flex">
-    <div id="demo-resource-info-name" class="mds-resource-info-name"></div>
-    <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="mds-resource-info-edit-btn mbsc-pull-right"></button>
-  </div>
-  <div class="mds-resource-info-cont">
-    <div>Rate: <span id="demo-resource-info-cost" class="mds-resource-info-detail"></span></div>
-    <div>Today: <span id="demo-resource-info-total" class="mds-resource-info-detail"></span></div>
-  </div>
-  <div class="mds-resource-info-btn-cont">
-    <button id="demo-resource-info-pay" mbsc-button data-color="success" class="mds-resource-info-pay-btn">
+  <div>
+    <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="mds-resource-info-edit-btn"></button>
+    <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay-btn mbsc-pull-right">
       Pay now
     </button>
+  </div>
+  <div id="demo-resource-info-name" class="mds-resource-info-name"></div>
+  <div class="mds-resource-info-cont">
+    <div>
+      <span class="mds-resource-info-label">Rate </span>
+      <span id="demo-resource-info-cost" class="mds-resource-info-detail"></span>
+    </div>
+    <div>
+      <span class="mds-resource-info-label">On this day </span>
+      <span id="demo-resource-info-total" class="mds-resource-info-detail"></span>
+    </div>
   </div>
 </div>
 <div id="demo-display-resource-information-on-hover"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-resource-info-hover.mbsc-timeline-resource {
-  background: rgba(128, 128, 128, 0.6);
-}
 .mds-res-info-avatar {
   width: 40px;
   height: 40px;
@@ -391,34 +403,38 @@ export default {
 .mds-res-info-cont {
   margin-left: 10px;
 }
+.mds-res-info-name {
+  line-height: 24px;
+}
 .mds-res-info-prof {
   font-size: 12px;
   color: #666;
-  line-height: 20px
+  line-height: 18px
 }
-
-.mds-resource-info-header {
-  align-items: center;
-}
-.mds-resource-info-btn-cont {
-  text-align: center;
+.mds-resource-info-hover.mbsc-timeline-resource {
+  text-decoration: underline;
 }
 .mds-resource-info-edit-btn.mbsc-button {
-  font-size: 12px;
+  font-size: 13px;
   margin: 0 0 0 auto;
 }
 .mds-resource-info-pay-btn.mbsc-button {
-  font-size: 12px;
+  font-size: 14px;
   margin: 0;
+  padding: 0 10px;
+}
+.mds-resource-info-name {
+  padding: 10px 0;
 }
 .mds-resource-info-cont {
-  font-size: 12px;
-  opacity: 0.5;
-  padding-bottom: 10px;
+  font-size: 14px;
   line-height: 20px;
 }
+.mds-resource-info-label {
+  opacity: .6;
+}
 .mds-resource-info-detail {
-  font-weight: bold;
+  float: right;
 }
 `,
 };

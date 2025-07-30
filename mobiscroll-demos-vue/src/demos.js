@@ -275,6 +275,7 @@ import Demo747 from './demos/eventcalendar/timeline/show-summaries-aggregates-fo
 import Demo765 from './demos/eventcalendar/timeline/resource-drag-drop-reorder/resource-drag-drop-reorder.vue'
 import Demo768 from './demos/eventcalendar/timeline/dynamic-calculation-resource-sort/dynamic-calculation-resource-sort.vue'
 import Demo720 from './demos/eventcalendar/timeline/resource-data-structure/resource-data-structure.vue'
+import Demo773 from './demos/eventcalendar/timeline/display-resource-information-on-hover/display-resource-information-on-hover.vue';
 import Demo666 from './demos/eventcalendar/timeline/event-data-structure/event-data-structure.vue'
 import Demo706 from './demos/eventcalendar/timeline/connecting-linking-events-arrows/connecting-linking-events-arrows.vue'
 import Demo667 from './demos/eventcalendar/timeline/date-object-ISO-8601-moment/date-object-ISO-8601-moment.vue'
@@ -1607,7 +1608,16 @@ export const demos = [
                 unique: 'dynamic-calculation-resource-sort',
                 component: Demo768
               },
-              { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 }
+              {
+                name: 'Resource properties',
+                unique: 'resource-data-structure',
+                component: Demo720
+              },
+              {
+                name: 'Show details on hover',
+                unique: 'display-resource-information-on-hover',
+                component: Demo773
+              },
             ]
           },
           {

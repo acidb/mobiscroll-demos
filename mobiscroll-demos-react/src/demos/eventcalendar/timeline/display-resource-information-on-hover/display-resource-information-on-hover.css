@@ -1,22 +1,39 @@
-.mds-tooltip {
-  font-size: 15px;
-  font-weight: 600;
+.mds-resource-info-hover.mbsc-timeline-resource {
+  background: rgba(128, 128, 128, 0.6);
+}
+.mds-res-info-avatar {
+  width: 40px;
+  height: 40px;
+}
+.mds-res-info-cont {
+  margin-left: 10px;
+}
+.mds-res-info-prof {
+  font-size: 12px;
+  color: #666;
+  line-height: 20px;
 }
 
-.mds-tooltip-header {
-  padding: 12px 16px;
-  color: #eee;
+.mds-resource-info-header {
+  align-items: center;
 }
-
-.mds-tooltip-label {
-  line-height: 32px;
+.mds-resource-info-btn-cont {
+  text-align: center;
 }
-
-.mds-tooltip-button.mbsc-button {
-  font-size: 14px;
+.mds-resource-info-edit-btn.mbsc-button {
+  font-size: 12px;
+  margin: 0 0 0 auto;
+}
+.mds-resource-info-pay-btn.mbsc-button {
+  font-size: 12px;
   margin: 0;
 }
-
-.mds-tooltip-button.mbsc-material {
+.mds-resource-info-cont {
   font-size: 12px;
+  opacity: 0.5;
+  padding-bottom: 10px;
+  line-height: 20px;
+}
+.mds-resource-info-detail {
+  font-weight: bold;
 }
