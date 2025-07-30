@@ -19,9 +19,7 @@ export default {
             renderDayContent: function (args) {
               // Only render the button if hoveredDate and args.date are equal
               if (hoveredDate && hoveredDate.getTime() === args.date.getTime()) {
-                return '<div class="mbsc-flex md-cell-summary-btn-cont">' +
-                  '<button class="md-cell-summary-btn" mbsc-button data-icon="plus" />' +
-                  '</div>';
+                return '<button class="md-cell-summary-btn" mbsc-button data-icon="plus" />';
               }
               return '';
             }
@@ -119,19 +117,15 @@ export default {
 .md-cell-summary .mbsc-calendar-cell {
   min-height: 110px;
 }
-.md-cell-summary-btn-cont {
-  justify-content: center;
-}
-.md-cell-summary-btn {
+.md-cell-summary-btn.mbsc-button {
   position: absolute;
-  right: auto;
-  left: auto;
+  right: 2px;
   bottom: 0;
+  font-size: 10px;
   z-index: 3;
-  transform: scale(0.9);
 }
 .md-cell-summary-btn.mbsc-hover {
-  transform: scale(1);
+  transform: scale(1.2);
 }
   `,
 };
