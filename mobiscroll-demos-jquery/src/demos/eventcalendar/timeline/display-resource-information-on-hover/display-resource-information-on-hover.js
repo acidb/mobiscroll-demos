@@ -40,7 +40,7 @@ export default {
         }, 100);
       }
 
-      // Close the tooltip with a delay to allow for hover interactions
+      // Close the tooltip with a delay to allow hover interactions
       function closeTooltipWithDelay() {
         if (openTimer) {
           clearTimeout(openTimer);
@@ -58,10 +58,8 @@ export default {
         return events
           .filter(function (e) { return e.resource === resourceId; })
           .reduce(function (sum, e) {
-            // Parse start and end as Date objects
             var start = new Date(e.start);
             var end = new Date(e.end);
-            // Calculate duration in hours
             var hours = (end - start) / (1000 * 60 * 60);
             return sum + hours;
           }, 0);
@@ -88,6 +86,36 @@ export default {
             },
           },
           data: [
+            {
+              start: 'dyndatetime(y,m,d-1,12)',
+              end: 'dyndatetime(y,m,d-1,15)',
+              title: 'Repoint Brick Facade',
+              resource: 'res1',
+            },
+            {
+              start: 'dyndatetime(y,m,d-1,9)',
+              end: 'dyndatetime(y,m,d-1,12)',
+              title: 'Install Custom Wood Trim',
+              resource: 'res3',
+            },
+            {
+              start: 'dyndatetime(y,m,d-1,14)',
+              end: 'dyndatetime(y,m,d-1,18)',
+              title: 'Repair Steel Stair Treads',
+              resource: 'res4',
+            },
+            {
+              start: 'dyndatetime(y,m,d-1,10)',
+              end: 'dyndatetime(y,m,d-1,13)',
+              title: 'Pour and Finish Driveway Slab',
+              resource: 'res6',
+            },
+            {
+              start: 'dyndatetime(y,m,d-1,11)',
+              end: 'dyndatetime(y,m,d-1,16)',
+              title: 'Paint Interior Drywall',
+              resource: 'res8',
+            },
             {
               start: 'dyndatetime(y,m,d,8)',
               end: 'dyndatetime(y,m,d,11)',
@@ -177,6 +205,30 @@ export default {
               end: 'dyndatetime(y,m,d,18)',
               title: 'Deck Staining & Sealing',
               resource: 'res8',
+            },
+            {
+              start: 'dyndatetime(y,m,d+1,12)',
+              end: 'dyndatetime(y,m,d+1,15)',
+              title: 'Troubleshoot Faulty Breaker',
+              resource: 'res2',
+            },
+            {
+              start: 'dyndatetime(y,m,d+1,10)',
+              end: 'dyndatetime(y,m,d+1,13)',
+              title: 'Frame Interior Partitions',
+              resource: 'res3',
+            },
+            {
+              start: 'dyndatetime(y,m,d+1,16)',
+              end: 'dyndatetime(y,m,d+1,20)',
+              title: 'Weld Structural Beam Connections',
+              resource: 'res4',
+            },
+            {
+              start: 'dyndatetime(y,m,d+1,12)',
+              end: 'dyndatetime(y,m,d+1,16)',
+              title: 'Apply Smooth Trowel Finish to Basement Floor',
+              resource: 'res6',
             },
           ],
           resources: [
