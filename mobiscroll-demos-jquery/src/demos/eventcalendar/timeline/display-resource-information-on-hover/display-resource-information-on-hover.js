@@ -25,7 +25,7 @@ export default {
           var totalHours = getTotalHoursForResource(events, res.id);
 
           currentResource = res;
-          hoveredResourceElm = args.domEvent.target.closest('.mbsc-timeline-resource');
+          $hoveredResourceElm = args.domEvent.target.closest('.mbsc-timeline-resource');
 
           $resourceName.text(res.name);
           $resourceCost.text('$' + res.cost);
@@ -75,7 +75,7 @@ export default {
       var openTimer = null;
       var closeTimer = null;
       var currentResource = null;
-      var hoveredResourceElm = null;
+      var $hoveredResourceElm = null;
 
       var calendar = $('#demo-display-resource-information-on-hover')
         .mobiscroll()
@@ -333,8 +333,8 @@ export default {
           onPosition: function (args) {
             var popup = $(args.target).children('.mbsc-popup');
             if (popup.length) {
-              popup[0].style.top = hoveredResourceElm.getBoundingClientRect().top + 'px';
-              popup[0].style.left = hoveredResourceElm.getBoundingClientRect().right + 'px';
+              popup[0].style.top = $hoveredResourceElm.getBoundingClientRect().top + 'px';
+              popup[0].style.left = $hoveredResourceElm.getBoundingClientRect().right + 'px';
             }
             return false; // Prevent default positioning
           }
