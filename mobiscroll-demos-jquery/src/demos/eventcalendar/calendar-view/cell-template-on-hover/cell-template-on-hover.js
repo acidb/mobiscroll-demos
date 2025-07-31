@@ -133,7 +133,7 @@ export default {
   cursor: pointer;
 }
 /* This should be set from the demo page */
-.mbsc-page .mbsc-eventcalendar.mds-cell-summary {
+.demo-wrapper .mbsc-eventcalendar.mds-cell-summary {
   max-height: none;
 }
   `,
