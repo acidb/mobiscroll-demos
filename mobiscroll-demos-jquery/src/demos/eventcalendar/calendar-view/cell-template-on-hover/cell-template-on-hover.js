@@ -19,7 +19,7 @@ export default {
             renderDayContent: function (args) {
               // Only render the button if hoveredDate and args.date are equal
               if (hoveredDate && hoveredDate.getTime() === args.date.getTime()) {
-                return '<button class="mds-cell-summary-btn" mbsc-button data-variant="outline" data-start-icon="plus">Add event</button>';
+                return '<button class="mds-cell-summary-btn">Add event</button>';
               }
               return '';
             }
@@ -118,12 +118,19 @@ export default {
 .mds-cell-summary .mbsc-calendar-cell {
   min-height: 150px;
 }
-.mds-cell-summary-btn.mbsc-button {
+.mds-cell-summary-btn {
   position: absolute;
   left: 10px;
   right: 10px;
-  bottom: 0;
+  bottom: 8px;
   z-index: 3;
+  padding: 10px;
+  background: transparent;
+  border-radius: 4px;
+  border: 1px solid #5584b5;
+  color: #5584b5;
+  text-transform: uppercase;
+  cursor: pointer;
 }
   `,
 };
