@@ -115,7 +115,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-cell-summary .mbsc-calendar-cell {
-  min-height: 150px;
+  min-height: 145px;
 }
 .mds-cell-summary-btn {
   position: absolute;
@@ -123,7 +123,8 @@ export default {
   right: 10px;
   bottom: 8px;
   z-index: 3;
-  padding: 10px;
+  font-size: 12px;
+  padding: 8px;
   background: transparent;
   border-radius: 4px;
   border: 1px solid #5584b5;
