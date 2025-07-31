@@ -19,7 +19,7 @@ export default {
             renderDayContent: function (args) {
               // Only render the button if hoveredDate and args.date are equal
               if (hoveredDate && hoveredDate.getTime() === args.date.getTime()) {
-                return '<button class="md-cell-summary-btn" mbsc-button data-icon="plus" />';
+                return '<button class="mds-cell-summary-btn" mbsc-button data-variant="outline" data-start-icon="plus">Add event</button>';
               }
               return '';
             }
@@ -29,8 +29,8 @@ export default {
 
       // Event delegation for dynamic button
       $('#demo-show-cell-summary-on-hover')
-        .off('click', '.md-cell-summary-btn')
-        .on('click', '.md-cell-summary-btn', function () {
+        .off('click', '.mds-cell-summary-btn')
+        .on('click', '.mds-cell-summary-btn', function () {
           if (hoveredDate) {
             instance.addEvent({
               date: hoveredDate,
@@ -48,6 +48,11 @@ export default {
       instance = $('#demo-show-cell-summary-on-hover')
         .mobiscroll()
         .eventcalendar({
+          view: {
+            calendar: {
+              labels: 2
+            }
+          },
           data: [
             {
               start: 'dyndatetime(y,m,2,12)',
@@ -100,32 +105,25 @@ export default {
             hoveredDate = null;
             updateRenderDayContent();
           },
-          onCellClick: function (args) {
-            hoveredDate = args.date;
-            updateRenderDayContent();
-          }
         })
         .mobiscroll('getInst');
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-show-cell-summary-on-hover" class="md-cell-summary"></div>
+<div id="demo-show-cell-summary-on-hover" class="mds-cell-summary"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-cell-summary .mbsc-calendar-cell {
-  min-height: 110px;
+.mds-cell-summary .mbsc-calendar-cell {
+  min-height: 150px;
 }
-.md-cell-summary-btn.mbsc-button {
+.mds-cell-summary-btn.mbsc-button {
   position: absolute;
-  right: 2px;
+  left: 10px;
+  right: 10px;
   bottom: 0;
-  font-size: 10px;
   z-index: 3;
-}
-.md-cell-summary-btn.mbsc-hover {
-  transform: scale(1.2);
 }
   `,
 };
