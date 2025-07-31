@@ -11,11 +11,10 @@ export default {
 
     $(function () {
       var hoveredDate;
-      var instance;
 
       function updateRenderDayContent() {
-        if (instance) {
-          instance.setOptions({
+        if (calendar) {
+          calendar.setOptions({
             renderDayContent: function (args) {
               // Only render the button if hoveredDate and args.date are equal
               if (hoveredDate && hoveredDate.getTime() === args.date.getTime()) {
@@ -32,7 +31,7 @@ export default {
         .off('click', '.mds-cell-summary-btn')
         .on('click', '.mds-cell-summary-btn', function () {
           if (hoveredDate) {
-            instance.addEvent({
+            calendar.addEvent({
               date: hoveredDate,
               title: 'New Event'
             });
@@ -40,12 +39,12 @@ export default {
               //<hidden>
               // theme,//</hidden>
               // context,
-              message: 'Event added for ' + mobiscroll.formatDate('YYYY-MM-DD', hoveredDate)
+              message: 'Event added on ' + mobiscroll.formatDate('YYYY-MM-DD', hoveredDate)
             });
           }
         });
 
-      instance = $('#demo-show-cell-summary-on-hover')
+      var calendar = $('#demo-show-cell-summary-on-hover')
         .mobiscroll()
         .eventcalendar({
           view: {
