@@ -132,5 +132,9 @@ export default {
   text-transform: uppercase;
   cursor: pointer;
 }
+/* This should be set from the demo page */
+.mbsc-page .mbsc-eventcalendar.mds-cell-summary {
+  max-height: none;
+}
   `,
 };
