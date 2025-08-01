@@ -373,7 +373,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-info-popup" style="display:none">
+<div id="demo-resource-info-popup">
   <div class="mbsc-flex mds-resource-info-header">
     <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="mds-resource-info-edit-btn"></button>
     <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay-btn">
