@@ -52,7 +52,7 @@ export default {
           clearTimeout(closeTimer);
         }
         closeTimer = setTimeout(function () {
-          // tooltip.close();
+          tooltip.close();
           closeTimer = null;
         }, 200);
       }
@@ -306,12 +306,12 @@ export default {
           renderResource: function (res) {
             return (
               '<div class="mbsc-flex">' +
-              '<img class="mds-res-info-avatar" src="' + res.avatar + '"/>' +
-              '<div class="mds-res-info-cont">' +
-              '<div class="mds-res-info-name">' +
+              '<img class="mds-resource-info-picture" src="' + res.avatar + '"/>' +
+              '<div class="mds-resource-info-details">' +
+              '<div class="mds-resource-info-title">' +
               res.name +
               '</div>' +
-              '<div class="mds-res-info-prof">' +
+              '<div class="mds-resource-info-profession">' +
               res.profession +
               '</div>' +
               '</div>' +
@@ -373,11 +373,11 @@ export default {
 <div id="demo-resource-info-popup" style="display: none;">
   <div class="mbsc-flex mds-resource-info-header">
     <img id="demo-resource-info-avatar" class="mds-resource-info-avatar" />
+    <div id="demo-resource-info-name" class="mds-resource-info-name"></div>
     <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay-btn mbsc-button-xs">
-      Pay now
+      Pay
     </button>
   </div>
-  <div id="demo-resource-info-name" class="mds-resource-info-name"></div>
   <div class="mds-resource-info-cont">
     <div>
       <span class="mds-resource-info-label">Hourly rate </span>
@@ -393,48 +393,48 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-res-info-avatar {
+.mds-resource-info-picture {
   width: 40px;
   height: 40px;
 }
-.mds-res-info-cont {
+.mds-resource-info-details {
   margin-left: 10px;
 }
-.mds-res-info-name {
+.mds-resource-info-title {
   line-height: 24px;
 }
-.mds-res-info-prof {
+.mds-resource-info-profession {
   font-size: 12px;
   opacity: .5;
-  line-height: 18px
+  line-height: 18px;
 }
 .mds-resource-info-hover.mbsc-timeline-resource {
   text-decoration: underline;
 }
 .mds-resource-info-header {
   align-items: center;
-  justify-content: space-between;
   height: 35px;
 }
 .mds-resource-info-avatar {
   width: 40px;
   height: 40px;
 }
+.mds-resource-info-name {
+  font-size: 18px;
+  padding: 16px 10px;
+}
 .mds-resource-info-pay-btn.mbsc-button {
   position: absolute;
   right: 16px;
   font-size: 12px;
-  width: 80px;
+  width: 40px;
   height: 22px;
   margin: 0;
 }
-.mds-resource-info-name {
-  font-size: 18px;
-  padding: 15px 0;
-}
 .mds-resource-info-cont {
-  font-size: 16px;
-  line-height: 26px;
+  font-size: 14px;
+  line-height: 22px;
+  padding-top: 23px;
 }
 .mds-resource-info-label {
   opacity: .6;
