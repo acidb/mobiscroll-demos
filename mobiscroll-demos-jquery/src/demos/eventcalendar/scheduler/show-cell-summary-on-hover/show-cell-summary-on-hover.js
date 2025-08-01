@@ -28,24 +28,6 @@ export default {
           },
           data: [
             {
-              start: '09:00',
-              end: '11:00',
-              title: 'Recurring task 1',
-              recurring: {
-                repeat: 'weekly',
-                weekDays: 'MO,TU,WE,TH',
-              }
-            },
-            {
-              start: '14:00',
-              end: '16:00',
-              title: 'Recurring task 2',
-              recurring: {
-                repeat: 'weekly',
-                weekDays: 'MO,WE,TH,SA',
-              }
-            },
-            {
               start: 'dyndatetime(y,m,d-3,8)',
               end: 'dyndatetime(y,m,d-3,11)',
               title: 'Task 1',
@@ -250,12 +232,20 @@ export default {
   markup: `
 <div id="demo-cell-summary-popup" style="display: none;">
   <div id="demo-cell-summary-date" class="mds-cell-summary-title"></div>
-  <div class="mds-cell-summary-label">Events</div>
-  <div id="demo-cell-summary-events" class="mds-cell-summary-content"></div>
-  <div class="mds-cell-summary-label">Invalid</div>
-  <div id="demo-cell-summary-invalid" class="mds-cell-summary-content"></div>
-  <div class="mds-cell-summary-label">Colors</div>
-  <div id="demo-cell-summary-colors" class="mds-cell-summary-content"></div>
+  <div class="mds-cell-summary-container">
+    <div class="mds-cell-summary-item">
+      <div class="mds-cell-summary-label">Events</div>
+      <div id="demo-cell-summary-events" class="mds-cell-summary-content"></div>
+    </div>
+    <div class="mds-cell-summary-item">
+      <div class="mds-cell-summary-label">Invalid</div>
+      <div id="demo-cell-summary-invalid" class="mds-cell-summary-content"></div>
+    </div>
+    <div class="mds-cell-summary-item">
+      <div class="mds-cell-summary-label">Colors</div>
+      <div id="demo-cell-summary-colors" class="mds-cell-summary-content"></div>
+    </div>
+  </div>
 </div>
 <div id="demo" class="mds-cell-summary-on-hover"></div>
   `,
@@ -265,17 +255,23 @@ export default {
   font-weight: 600;
   margin-bottom: 10px;
 }
+.mds-cell-summary-container {
+  display: flex;
+  gap: 20px;
+}
+.mds-cell-summary-item {
+  flex: 1;
+}
 .mds-cell-summary-label {
-  font-size: 14px;
   opacity: 0.6;
+  margin-bottom: 5px;
 }
 .mds-cell-summary-content {
   font-weight: 500;
-  margin-bottom: 10px;
   opacity: 0.8;
 }
 .mds-green-bg-color {
-    background: repeating-linear-gradient(-45deg, #fcfffc, #fcfffc 10px, #eefbec 10px, #eefbec 20px);
+    background: repeating-linear-gradient(-45deg, #cce9d3, #cce9d3 10px, #c5dfc1 10px, #c5dfc1 20px);
 }
 .mds-cell-summary-on-hover .mbsc-schedule-events.mbsc-ltr {
   right: 20px;
@@ -284,7 +280,7 @@ export default {
   left: 20px;
 }
 .mds-cell-summary-on-hover .mbsc-schedule-item:hover {
-  border: 1px solid #ababab;
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.2), 0px 1px 5px 2px rgba(255, 255, 255, 0.2);
 }
 `,
 };
