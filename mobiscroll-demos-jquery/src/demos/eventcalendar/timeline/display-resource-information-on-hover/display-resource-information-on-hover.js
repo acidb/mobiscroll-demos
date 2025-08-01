@@ -27,9 +27,11 @@ export default {
           currentResource = res;
           $hoveredResourceElm = args.domEvent.target.closest('.mbsc-timeline-resource');
 
+          $resourceAvatar.attr('src', res.avatar);
           $resourceName.text(res.name);
           $resourceCost.text('$' + res.cost);
-          $resourceTotal.text('$' + totalHours * res.cost + ' (' + totalHours + 'h)');
+          $resourceDate.text(mobiscroll.formatDate('D DDD MMM YYYY', selectedDate));
+          $resourceTotal.text(totalHours + 'h, $' + totalHours * res.cost);
           $(args.domEvent.target).addClass('mds-resource-info-hover');
 
           tooltip.setOptions({
@@ -67,11 +69,13 @@ export default {
       }
 
       var $tooltip = $('#demo-resource-info-popup');
+      var $resourceAvatar = $('#demo-resource-info-avatar');
       var $resourceName = $('#demo-resource-info-name');
       var $resourceCost = $('#demo-resource-info-cost');
+      var $resourceDate = $('#demo-resource-info-date');
       var $resourceTotal = $('#demo-resource-info-total');
       var $payButton = $('#demo-resource-info-pay');
-      var $editButton = $('#demo-resource-info-edit');
+      var selectedDate = new Date();
       var openTimer = null;
       var closeTimer = null;
       var currentResource = null;
@@ -321,6 +325,9 @@ export default {
             $(args.domEvent.target).removeClass('mds-resource-info-hover');
             closeTooltipWithDelay();
           },
+          onPageChange: function (args) {
+            selectedDate = args.firstDay;
+          }
         }).mobiscroll('getInst');
 
       var tooltip = $tooltip
@@ -329,12 +336,12 @@ export default {
           display: 'anchored',
           showOverlay: false,
           touchUi: false,
-          width: 220,
+          width: 280,
           onPosition: function (args) {
             var $popupElm = $(args.target).children('.mbsc-popup');
             if ($popupElm.length && $hoveredResourceElm) {
-              $popupElm[0].style.top = $hoveredResourceElm.getBoundingClientRect().top + 'px';
-              $popupElm[0].style.left = $hoveredResourceElm.getBoundingClientRect().right + 'px';
+              $popupElm[0].style.top = $hoveredResourceElm.getBoundingClientRect().top - 10 + 'px';
+              $popupElm[0].style.left = $hoveredResourceElm.getBoundingClientRect().right + 10 + 'px';
             }
             return false; // Prevent default positioning
           }
@@ -359,35 +366,25 @@ export default {
           message: currentResource.name + ' paid',
         });
       });
-
-      $editButton.on('click', function () {
-        tooltip.close();
-        mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
-          message: "Edit " + currentResource.name + "'s profile",
-        });
-      });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-info-popup">
+<div id="demo-resource-info-popup" style="display: none;">
   <div class="mbsc-flex mds-resource-info-header">
-    <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="mds-resource-info-edit-btn"></button>
-    <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay-btn">
+    <img id="demo-resource-info-avatar" class="mds-resource-info-avatar" />
+    <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay-btn mbsc-button-xs">
       Pay now
     </button>
   </div>
   <div id="demo-resource-info-name" class="mds-resource-info-name"></div>
   <div class="mds-resource-info-cont">
     <div>
-      <span class="mds-resource-info-label">Rate </span>
+      <span class="mds-resource-info-label">Hourly rate </span>
       <span id="demo-resource-info-cost" class="mds-resource-info-detail"></span>
     </div>
     <div>
-      <span class="mds-resource-info-label">On this day </span>
+      <span id="demo-resource-info-date" class="mds-resource-info-label"></span>
       <span id="demo-resource-info-total" class="mds-resource-info-detail"></span>
     </div>
   </div>
@@ -419,25 +416,25 @@ export default {
   justify-content: space-between;
   height: 35px;
 }
-.mds-resource-info-edit-btn.mbsc-button {
-  position: absolute;
-  left: 16px;
-  font-size: 13px;
-  margin: 0 0 0 auto;
+.mds-resource-info-avatar {
+  width: 40px;
+  height: 40px;
 }
 .mds-resource-info-pay-btn.mbsc-button {
   position: absolute;
   right: 16px;
-  font-size: 14px;
+  font-size: 12px;
+  width: 80px;
+  height: 22px;
   margin: 0;
-  width: 100px;
 }
 .mds-resource-info-name {
+  font-size: 18px;
   padding: 15px 0;
 }
 .mds-resource-info-cont {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 26px;
 }
 .mds-resource-info-label {
   opacity: .6;
