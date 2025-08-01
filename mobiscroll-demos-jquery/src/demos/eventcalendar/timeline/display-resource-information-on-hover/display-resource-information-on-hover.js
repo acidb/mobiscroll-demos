@@ -52,7 +52,7 @@ export default {
           clearTimeout(closeTimer);
         }
         closeTimer = setTimeout(function () {
-          tooltip.close();
+          // tooltip.close();
           closeTimer = null;
         }, 200);
       }
