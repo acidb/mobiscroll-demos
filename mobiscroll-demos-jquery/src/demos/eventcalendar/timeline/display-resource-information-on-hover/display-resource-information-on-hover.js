@@ -331,10 +331,10 @@ export default {
           touchUi: false,
           width: 220,
           onPosition: function (args) {
-            var popup = $(args.target).children('.mbsc-popup');
-            if (popup.length) {
-              popup[0].style.top = $hoveredResourceElm.getBoundingClientRect().top + 'px';
-              popup[0].style.left = $hoveredResourceElm.getBoundingClientRect().right + 'px';
+            var $popupElm = $(args.target).children('.mbsc-popup');
+            if ($popupElm.length && $hoveredResourceElm) {
+              $popupElm[0].style.top = $hoveredResourceElm.getBoundingClientRect().top + 'px';
+              $popupElm[0].style.left = $hoveredResourceElm.getBoundingClientRect().right + 'px';
             }
             return false; // Prevent default positioning
           }
