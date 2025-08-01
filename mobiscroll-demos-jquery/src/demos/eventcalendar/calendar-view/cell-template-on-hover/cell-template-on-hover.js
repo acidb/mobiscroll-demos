@@ -6,8 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light'
+      // theme
     });
 
     $(function () {
@@ -18,10 +17,10 @@ export default {
           calendar.setOptions({
             renderDayContent: function (args) {
               // Only render the button if hoveredDate and args.date are equal
-              // if (hoveredDate && hoveredDate.getTime() === args.date.getTime()) {
-              return '<button class="mds-cell-summary-btn">Add event</button>';
-              // }
-              // return '';
+              if (hoveredDate && hoveredDate.getTime() === args.date.getTime()) {
+                return '<button class="mds-cell-summary-btn">Add event</button>';
+              }
+              return '';
             }
           });
         }
