@@ -6,7 +6,8 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      theme: 'ios',
+      themeVariant: 'light'
     });
 
     $(function () {
@@ -17,10 +18,10 @@ export default {
           calendar.setOptions({
             renderDayContent: function (args) {
               // Only render the button if hoveredDate and args.date are equal
-              if (hoveredDate && hoveredDate.getTime() === args.date.getTime()) {
-                return '<button class="mds-cell-summary-btn">Add event</button>';
-              }
-              return '';
+              // if (hoveredDate && hoveredDate.getTime() === args.date.getTime()) {
+              return '<button class="mds-cell-summary-btn">Add event</button>';
+              // }
+              // return '';
             }
           });
         }
@@ -123,7 +124,7 @@ export default {
   right: 10px;
   bottom: 8px;
   z-index: 3;
-  font-size: 12px;
+  font-size: 10px;
   padding: 8px;
   background: transparent;
   border-radius: 4px;
@@ -131,6 +132,15 @@ export default {
   color: #5584b5;
   text-transform: uppercase;
   cursor: pointer;
+  transition: background-color .1s ease-out;
+}
+.mds-cell-summary-btn:hover {
+  background: #5584b5;
+  color: white;
+  box-shadow: 0 2px 8px rgba(85, 132, 181, 0.3);
+}
+.mds-cell-summary-btn:active {
+  box-shadow: 0 1px 4px rgba(85, 132, 181, 0.3);
 }
 /* This should be set from the demo page */
 .demo-wrapper .mbsc-eventcalendar.mds-cell-summary {
