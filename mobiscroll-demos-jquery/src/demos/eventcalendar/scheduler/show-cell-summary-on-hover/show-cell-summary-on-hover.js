@@ -6,7 +6,8 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      theme: 'windows',
+      themeVariant: 'light'
     });
 
     $(function () {
@@ -24,6 +25,7 @@ export default {
               type: 'week',
               startTime: '08:00',
               endTime: '18:00',
+              timeCellStep: 30
             },
           },
           data: [
@@ -252,6 +254,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-cell-summary-title {
+  font-size: 15px;
   font-weight: 600;
   margin-bottom: 10px;
 }
@@ -260,6 +263,7 @@ export default {
   gap: 20px;
 }
 .mds-cell-summary-item {
+  font-size: 14px;
   flex: 1;
 }
 .mds-cell-summary-label {
@@ -270,8 +274,9 @@ export default {
   font-weight: 500;
   opacity: 0.8;
 }
-.mds-green-bg-color {
-    background: repeating-linear-gradient(-45deg, #cce9d3, #cce9d3 10px, #c5dfc1 10px, #c5dfc1 20px);
+.mds-green-bg-color {    
+  background: repeating-linear-gradient(-45deg, #cce9d3, #cce9d3 10px, #c5dfc1 10px, #c5dfc1 20px);
+  opacity: 0.5;
 }
 .mds-cell-summary-on-hover .mbsc-schedule-events.mbsc-ltr {
   right: 20px;
@@ -280,7 +285,7 @@ export default {
   left: 20px;
 }
 .mds-cell-summary-on-hover .mbsc-schedule-item:hover {
-  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.2), 0px 1px 5px 2px rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 1px 6px 3px rgba(0, 0, 0, 0.2), 0px 1px 6px 3px rgba(255, 255, 255, 0.2);
 }
 `,
 };
