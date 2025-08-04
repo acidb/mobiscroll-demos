@@ -10,9 +10,11 @@ export default {
     });
 
     $(function () {
+      var $calendarElm = $('#demo-display-cell-template');
       var weatherCache = {};
       var selectedDate = new Date();
       var selectedView = 'month';
+      var previousView = 'month';
       var formatDate = mobiscroll.formatDate;
       var myEvents = [
         {
@@ -235,75 +237,35 @@ export default {
         return { meetings: nrMeetings, appointments: nrAppointments }
       }
 
-      var calendar = $('#demo-display-cell-template')
-        .mobiscroll()
-        .eventcalendar({
-          data: myEvents,
-          clickToCreate: true,
-          dragToCreate: true,
-          dragToMove: true,
-          dragToResize: true,
-          eventDelete: true,
-          extendDefaultEvent: function () {
-            return {
-              title: 'New appointment',
-              type: 'appointment',
-              color: '#656d49'
-            }
-          },
-          renderLabel: function () {
-            return ''
-          },
-          renderDay: function (args) {
-            var date = args.date;
-            var nrEvents = getNrEvents(args.events);
-            var nrAllEvents = args.events.length;
-            var stressLevel = getStressLevel(nrAllEvents);
-            var weather = getWeatherForDate(date);
+      function showHideDayElements() {
+        if (selectedView === 'day') {
+          $('.mds-cell-template-cont').not('.mds-cell-template-selected-day').hide();
+        } else {
+          $('.mds-cell-template-cont').show();
+        }
 
-            return selectedView !== 'day' || (selectedView === 'day' && date.getTime() === selectedDate.getTime()) ?
-              ('<div class="mds-cell-template-cont" ' + (stressLevel.color && selectedView !== 'day' ? ('style="background:' + stressLevel.color) : '') + '">' +
-                '<div class="mds-cell-template-day">' + formatDate('DDD DD, MMM', date) + ' ' + stressLevel.emoji + '</div>' +
-                '<div>' + weather.emoji + ' ' + weather.degree + '°C</div>' +
-                '<div class="mds-cell-template-info" style="color:#634b67">Internal meetings: ' + nrEvents.meetings + '</div>' +
-                '<div class="mds-cell-template-info" style="color:#656d49">Client meetings: ' + nrEvents.appointments + '</div>' +
-                (selectedView === 'month' ? ('<button data-date="' + formatDate('YYYY-MM-DD', date) + '" class="mds-add-appointment-btn" mbsc-button data-icon="plus"></button>') : '') +
-                '</div>') : '';
-          },
-          renderHeader: function () {
-            return ('<div mbsc-calendar-nav class="mds-cell-template-nav"></div>' +
-              '<div class="mds-cell-template-view-switch">' +
-              (selectedView === 'day' ? ('<button mbsc-button data-color="secondary" data-start-icon="close" class="mds-cell-template-back-btn">Back to calendar</button>') :
-                ('<label>Calendar<input mbsc-segmented type="radio" name="mds-cell-tpl-view" value="month" class="mds-cell-template-view-change" checked></label>' +
-                  '<label>Week view<input mbsc-segmented type="radio" name="mds-cell-tpl-view" value="week" class="mds-cell-template-view-change"></label>')) +
-              '</div>' +
-              '<div mbsc-calendar-prev></div>' +
-              '<div mbsc-calendar-today></div>' +
-              '<div mbsc-calendar-next></div>')
-          },
-          onCellClick: function (args) {
-            selectedDate = args.date;
+        if (selectedView === 'month') {
+          $('.mds-add-appointment-btn').show();
+        } else {
+          $('.mds-add-appointment-btn').hide();
+        }
+      }
 
-            if (!args.domEvent.target.classList.contains('mbsc-button-icon')) {
-              selectedView = 'day';
-              calendar.setOptions({
-                view: {
-                  schedule: {
-                    type: 'day',
-                    startTime: '08:00',
-                    endTime: '17:00',
-                  },
-                }
-              });
-            }
-          }
-        })
-        .mobiscroll('getInst');
+      function showHideHeaderElements() {
+        if (selectedView === 'day') {
+          $('.mds-cell-template-back-btn').show();
+          $('.mds-cell-template-view-change').hide();
+        } else {
+          $('.mds-cell-template-back-btn').hide();
+          $('.mds-cell-template-view-change').show();
+        }
+      }
 
-      $('.mds-cell-template-view-change').change(function (ev) {
-        selectedView = ev.target.value;
+      function setSelectedView(view) {
+        previousView = selectedView;
+        selectedView = view;
 
-        switch (ev.target.value) {
+        switch (view) {
           case 'month':
             calendar.setOptions({
               view: {
@@ -322,11 +284,91 @@ export default {
               },
             });
             break;
+          case 'day':
+            calendar.setOptions({
+              view: {
+                schedule: {
+                  type: 'day',
+                  startTime: '08:00',
+                  endTime: '17:00',
+                },
+              },
+            });
+            break;
         }
-      });
+        setTimeout(function () {
+          showHideDayElements();
+          showHideHeaderElements();
+
+          $calendarElm.removeClass('mds-cell-template-' + previousView + '-view');
+          $calendarElm.addClass('mds-cell-template-' + selectedView + '-view');
+        });
+      }
+      var calendar = $calendarElm
+        .mobiscroll()
+        .eventcalendar({
+          data: myEvents,
+          clickToCreate: true,
+          dragToCreate: true,
+          dragToMove: true,
+          dragToResize: true,
+          eventDelete: true,
+          extendDefaultEvent: function () {
+            return {
+              title: 'New appointment',
+              type: 'appointment',
+              color: '#656d49'
+            }
+          },
+          onSelectedDateChange: function (args) {
+            selectedDate = args.date;
+          },
+          renderLabel: function () {
+            return ''
+          },
+          renderDay: function (args) {
+            var date = args.date;
+            var nrEvents = getNrEvents(args.events);
+            var nrAllEvents = args.events.length;
+            var stressLevel = getStressLevel(nrAllEvents);
+            var weather = getWeatherForDate(date);
+
+            return '<div class="mds-cell-template-cont ' +
+              (selectedView === 'day' && date.getTime() === selectedDate.getTime() ? 'mds-cell-template-selected-day' : '') +
+              '" ' + (selectedView === 'week' ? 'data-date="' + date.getTime() + '"' : '')
+              + (stressLevel.color && selectedView !== 'day' ? ('style="background:' + stressLevel.color) : '') + '">' +
+              '<div class="mds-cell-template-day">' + formatDate('DDD DD, MMM', date) + ' ' + stressLevel.emoji + '</div>' +
+              '<div>' + weather.emoji + ' ' + weather.degree + '°C</div>' +
+              '<div class="mds-cell-template-info" style="color:#634b67">Internal meetings: ' + nrEvents.meetings + '</div>' +
+              '<div class="mds-cell-template-info" style="color:#656d49">Client meetings: ' + nrEvents.appointments + '</div>' +
+              '<button data-date="' + formatDate('YYYY-MM-DD', date) + '" class="mds-add-appointment-btn" mbsc-button data-icon="plus"></button>' +
+              '</div>';
+          },
+          renderHeader: function () {
+            return '<div mbsc-calendar-nav class="mds-cell-template-nav"></div>' +
+              '<div class="mds-cell-template-view-switch">' +
+              '<button mbsc-button data-color="secondary" data-start-icon="close" class="mds-cell-template-back-btn">Back to calendar</button>' +
+              '<div class="mds-cell-template-view-change">' +
+              '<label>Calendar<input mbsc-segmented type="radio" name="mds-cell-tpl-view" value="month" class="mds-cell-template-view-change"' + (selectedView === 'month' ? ' checked' : '') + '></label>' +
+              '<label>Week view<input mbsc-segmented type="radio" name="mds-cell-tpl-view" value="week" class="mds-cell-template-view-change"' + (selectedView === 'week' ? ' checked' : '') + '></label>' +
+              '</div></div>' +
+              '<button mbsc-calendar-prev></button>' +
+              '<button mbsc-calendar-today></button>' +
+              '<button mbsc-calendar-next></button>'
+          },
+          onCellClick: function (args) {
+            selectedDate = args.date;
+
+            if (!args.domEvent.target.classList.contains('mbsc-button-icon')) {
+              setSelectedView('day');
+            }
+          }
+        })
+        .mobiscroll('getInst');
+
 
       // Event delegation for dynamic button
-      $('#demo-display-cell-template')
+      $calendarElm
         .off('click', '.mds-add-appointment-btn')
         .on('click', '.mds-add-appointment-btn', function () {
           var d = new Date($(this).data('date'));
@@ -352,28 +394,22 @@ export default {
         })
         .off('click', '.mds-cell-template-back-btn')
         .on('click', '.mds-cell-template-back-btn', function () {
-          calendar.setOptions({
-            view: {
-              calendar: { type: 'month' },
-            },
-          });
-          selectedView = 'month';
+          setSelectedView(previousView);
         })
         .off('click', '.mds-cell-template-cont')
-        .on('click', '.mds-cell-template-cont', function () {
+        .on('click', '.mds-cell-template-cont', function (ev) {
           if (selectedView === 'week') {
-            selectedView = 'day';
-            calendar.setOptions({
-              view: {
-                schedule: {
-                  type: 'day',
-                  startTime: '08:00',
-                  endTime: '17:00',
-                },
-              }
-            });
+            selectedDate = new Date($(ev.currentTarget).data('date'));
+            setSelectedView('day');
+            calendar.setOptions({ selectedDate: selectedDate });
           }
+        })
+        .on('change', '.mds-cell-template-view-change', function (ev) {
+          setSelectedView(ev.target.value);
         });
+
+      // Set initial view
+      setSelectedView('month');
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -433,6 +469,12 @@ export default {
 }
 .mds-cell-template .mbsc-calendar-day-outer {
   opacity: .7;
+}
+.mds-cell-template-day-view .mbsc-schedule-header-item:not(.mbsc-selected) {
+  display: none;
+}
+.mds-cell-template-day-view .mds-cell-template-selected-day {
+  text-align: center;
 }
   `,
 };
