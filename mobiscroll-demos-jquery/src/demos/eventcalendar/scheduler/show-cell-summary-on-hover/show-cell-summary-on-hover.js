@@ -6,8 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'windows',
-      themeVariant: 'light'
+      // theme
     });
 
     $(function () {
@@ -17,7 +16,7 @@ export default {
       var $cellInvalidNr = $('#demo-cell-summary-invalid');
       var $cellColorNr = $('#demo-cell-summary-colors');
 
-      $('#demo')
+      $('#demo-show-cell-summary-on-hover')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -250,7 +249,7 @@ export default {
     </div>
   </div>
 </div>
-<div id="demo" class="mds-cell-summary-on-hover"></div>
+<div id="demo-show-cell-summary-on-hover" class="mds-cell-summary-on-hover"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `

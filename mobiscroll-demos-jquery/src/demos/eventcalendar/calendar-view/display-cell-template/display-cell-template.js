@@ -10,70 +10,6 @@ export default {
     });
 
     $(function () {
-
-      function getWeatherForDate(date) {
-        var key = formatDate('YYYY-MM-DD', date);
-        if (!weatherCache[key]) {
-          weatherCache[key] = generateRandomWeather(date);
-        }
-        return weatherCache[key];
-      }
-
-      function generateRandomWeather(date) {
-        var weatherTypes = [
-          { emoji: '☀️', min: 24, max: 30 },
-          { emoji: '🌤️', min: 20, max: 25 },
-          { emoji: '☁️', min: 17, max: 22 },
-          { emoji: '🌧️', min: 15, max: 20 }
-        ];
-        var type = weatherTypes[Math.floor(Math.random() * weatherTypes.length)];
-        var degree = Math.floor(Math.random() * (type.max - type.min + 1)) + type.min;
-
-        return {
-          date: date,
-          degree: degree,
-          emoji: type.emoji
-        };
-      }
-
-      function getStressLevel(nrEvents) {
-        var emoji;
-        var color;
-
-        if (nrEvents < 1) {
-          emoji = '';
-          color = '';
-        }
-        else if (nrEvents < 3) {
-          emoji = '😃';
-          color = '#6ece86ff';
-        } else if (nrEvents < 5) {
-          emoji = '😐';
-          color = '#d89c6aff';
-        } else {
-          emoji = '😫';
-          color = '#d6727aff';
-        }
-        return { emoji: emoji, color: color };
-      }
-
-      function getNrEvents(events) {
-        var nrMeetings = 0;
-        var nrAppointments = 0;
-
-        for (var i = 0; i < events.length; i++) {
-          var event = events[i];
-
-          if (event.type === 'meeting') {
-            nrMeetings++;
-          } else {
-            nrAppointments++;
-          }
-        }
-
-        return { meetings: nrMeetings, appointments: nrAppointments }
-      }
-
       var weatherCache = {};
       var selectedDate = new Date();
       var selectedView = 'month';
@@ -235,6 +171,69 @@ export default {
           },
         },
       ]
+
+      function getWeatherForDate(date) {
+        var key = formatDate('YYYY-MM-DD', date);
+        if (!weatherCache[key]) {
+          weatherCache[key] = generateRandomWeather(date);
+        }
+        return weatherCache[key];
+      }
+
+      function generateRandomWeather(date) {
+        var weatherTypes = [
+          { emoji: '☀️', min: 24, max: 30 },
+          { emoji: '🌤️', min: 20, max: 25 },
+          { emoji: '☁️', min: 17, max: 22 },
+          { emoji: '🌧️', min: 15, max: 20 }
+        ];
+        var type = weatherTypes[Math.floor(Math.random() * weatherTypes.length)];
+        var degree = Math.floor(Math.random() * (type.max - type.min + 1)) + type.min;
+
+        return {
+          date: date,
+          degree: degree,
+          emoji: type.emoji
+        };
+      }
+
+      function getStressLevel(nrEvents) {
+        var emoji;
+        var color;
+
+        if (nrEvents < 1) {
+          emoji = '';
+          color = '';
+        }
+        else if (nrEvents < 3) {
+          emoji = '😃';
+          color = '#6ece86ff';
+        } else if (nrEvents < 5) {
+          emoji = '😐';
+          color = '#d89c6aff';
+        } else {
+          emoji = '😫';
+          color = '#d6727aff';
+        }
+        return { emoji: emoji, color: color };
+      }
+
+      function getNrEvents(events) {
+        var nrMeetings = 0;
+        var nrAppointments = 0;
+
+        for (var i = 0; i < events.length; i++) {
+          var event = events[i];
+
+          if (event.type === 'meeting') {
+            nrMeetings++;
+          } else {
+            nrAppointments++;
+          }
+        }
+
+        return { meetings: nrMeetings, appointments: nrAppointments }
+      }
 
       var calendar = $('#demo-display-cell-template')
         .mobiscroll()
@@ -406,16 +405,16 @@ export default {
   display: none;
 }
 .mds-cell-template .mbsc-calendar-cell-inner:after {
-    bottom: 0;
-    content: "";
-    left: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
+  bottom: 0;
+  content: "";
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 .mds-cell-template .mbsc-hover .mbsc-calendar-cell-inner:after {
-    background: rgba(51, 51, 51, .2);
+  background: rgba(51, 51, 51, .2);
 }
 .mbsc-calendar .mds-cell-template-view-switch .mbsc-segmented,
 .mds-cell-template-back-btn.mbsc-button {
@@ -435,6 +434,5 @@ export default {
 .mds-cell-template .mbsc-calendar-day-outer {
   opacity: .7;
 }
-
   `,
 };

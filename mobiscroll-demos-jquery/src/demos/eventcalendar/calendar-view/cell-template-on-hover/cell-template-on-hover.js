@@ -16,7 +16,7 @@ export default {
         if (calendar) {
           calendar.setOptions({
             renderDayContent: function (args) {
-              // Only render the button if hoveredDate and args.date are equal
+              // Only render the button on the hovered day
               if (hoveredDate && hoveredDate.getTime() === args.date.getTime()) {
                 return '<button class="mds-cell-summary-btn">Add event</button>';
               }
@@ -32,7 +32,7 @@ export default {
         .on('click', '.mds-cell-summary-btn', function () {
           if (hoveredDate) {
             calendar.addEvent({
-              date: hoveredDate,
+              start: hoveredDate,
               title: 'New Event'
             });
             mobiscroll.toast({
