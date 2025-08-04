@@ -226,6 +226,7 @@ export default {
           display: 'anchored',
           showOverlay: false,
           touchUi: false,
+          scrollLock: false,
         })
         .mobiscroll('getInst');
     });
