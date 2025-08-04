@@ -10,6 +10,31 @@ export default {
     });
 
     $(function () {
+      var $tooltip = $('#demo-resource-info-popup');
+      var $resourceAvatar = $('#demo-resource-info-avatar');
+      var $resourceName = $('#demo-resource-info-name');
+      var $resourceCost = $('#demo-resource-info-cost');
+      var $resourceDate = $('#demo-resource-info-date');
+      var $resourceTotal = $('#demo-resource-info-total');
+      var $payButton = $('#demo-resource-info-pay');
+
+      var $hoveredResourceElm = null;
+      var currentResource = null;
+      var selectedDate = new Date();
+      var openTimer = null;
+      var closeTimer = null;
+
+      function getTotalHoursForResource(events, resourceId) {
+        return events
+          .filter(function (e) { return e.resource === resourceId; })
+          .reduce(function (sum, e) {
+            var start = new Date(e.start);
+            var end = new Date(e.end);
+            var hours = (end - start) / (1000 * 60 * 60);
+            return sum + hours;
+          }, 0);
+      }
+
       function openTooltipWithDelay(args) {
         if (closeTimer) {
           clearTimeout(closeTimer);
@@ -27,6 +52,7 @@ export default {
           currentResource = res;
           $hoveredResourceElm = args.domEvent.target.closest('.mbsc-timeline-resource');
 
+          // Update popup content
           $resourceAvatar.attr('src', res.avatar);
           $resourceName.text(res.name);
           $resourceCost.text('$' + res.cost);
@@ -56,30 +82,6 @@ export default {
           closeTimer = null;
         }, 200);
       }
-
-      function getTotalHoursForResource(events, resourceId) {
-        return events
-          .filter(function (e) { return e.resource === resourceId; })
-          .reduce(function (sum, e) {
-            var start = new Date(e.start);
-            var end = new Date(e.end);
-            var hours = (end - start) / (1000 * 60 * 60);
-            return sum + hours;
-          }, 0);
-      }
-
-      var $tooltip = $('#demo-resource-info-popup');
-      var $resourceAvatar = $('#demo-resource-info-avatar');
-      var $resourceName = $('#demo-resource-info-name');
-      var $resourceCost = $('#demo-resource-info-cost');
-      var $resourceDate = $('#demo-resource-info-date');
-      var $resourceTotal = $('#demo-resource-info-total');
-      var $payButton = $('#demo-resource-info-pay');
-      var selectedDate = new Date();
-      var openTimer = null;
-      var closeTimer = null;
-      var currentResource = null;
-      var $hoveredResourceElm = null;
 
       var calendar = $('#demo-display-resource-information-on-hover')
         .mobiscroll()
@@ -340,22 +342,23 @@ export default {
           onPosition: function (args) {
             var $popupElm = $(args.target).children('.mbsc-popup');
             if ($popupElm.length && $hoveredResourceElm) {
-              $popupElm[0].style.top = $hoveredResourceElm.getBoundingClientRect().top - 10 + 'px';
-              $popupElm[0].style.left = $hoveredResourceElm.getBoundingClientRect().right + 10 + 'px';
+              var rect = $hoveredResourceElm.getBoundingClientRect();
+              $popupElm[0].style.top = (rect.top - 10) + 'px';
+              $popupElm[0].style.left = (rect.right + 10) + 'px';
             }
             return false; // Prevent default positioning
           }
         }).mobiscroll('getInst');
 
-      $tooltip.on('mouseenter', function () {
-        if (closeTimer) {
-          clearTimeout(closeTimer)
-        };
-      });
-
-      $tooltip.on('mouseleave', function () {
-        closeTooltipWithDelay();
-      });
+      $tooltip
+        .on('mouseenter', function () {
+          if (closeTimer) {
+            clearTimeout(closeTimer)
+          };
+        })
+        .on('mouseleave', function () {
+          closeTooltipWithDelay();
+        });
 
       $payButton.on('click', function () {
         tooltip.close();
