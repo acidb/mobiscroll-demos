@@ -57,11 +57,9 @@ export default {
           $resourceTotal.text(totalHours + 'h, $' + totalHours * resource.cost);
           $(target).addClass('mds-resource-info-hover');
 
-          tooltip.setOptions({
-            anchor: $hoveredResourceElm,
-          });
-
+          tooltip.position();
           tooltip.open();
+
           openTimer = null;
         }, 100);
       }
