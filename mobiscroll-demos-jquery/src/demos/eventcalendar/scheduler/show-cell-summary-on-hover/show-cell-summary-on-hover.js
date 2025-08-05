@@ -24,7 +24,7 @@ export default {
               type: 'week',
               startTime: '08:00',
               endTime: '18:00',
-              timeCellStep: 30
+              timeCellStep: 30,
             },
           },
           data: [
@@ -168,7 +168,7 @@ export default {
               recurring: {
                 repeat: 'weekly',
                 weekDays: 'MO,FR',
-              }
+              },
             },
             {
               start: '14:00',
@@ -177,7 +177,7 @@ export default {
               recurring: {
                 repeat: 'weekly',
                 weekDays: 'TU,TH',
-              }
+              },
             },
             {
               start: '10:00',
@@ -196,7 +196,7 @@ export default {
                 weekDays: 'SU,SA',
               },
               cssClass: 'mds-green-bg-color',
-            }
+            },
           ],
           onCellHoverIn: function (args) {
             var endDate = new Date(args.date);
@@ -210,7 +210,7 @@ export default {
             $cellColorNr.text(args.colors ? args.colors.length : 0);
 
             tooltip.setOptions({
-              anchor: args.domEvent.target.closest('.mbsc-schedule-item')
+              anchor: args.target,
             });
             tooltip.open();
           },
@@ -234,7 +234,7 @@ export default {
   markup: `
 <div id="demo-cell-summary-popup" style="display: none;">
   <div id="demo-cell-summary-date" class="mds-cell-summary-title"></div>
-  <div class="mds-cell-summary-container">
+  <div class="mbsc-flex">
     <div class="mds-cell-summary-item">
       <div class="mds-cell-summary-label">Events</div>
       <div id="demo-cell-summary-events" class="mds-cell-summary-content"></div>
@@ -257,10 +257,6 @@ export default {
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 10px;
-}
-.mds-cell-summary-container {
-  display: flex;
-  gap: 20px;
 }
 .mds-cell-summary-item {
   font-size: 14px;

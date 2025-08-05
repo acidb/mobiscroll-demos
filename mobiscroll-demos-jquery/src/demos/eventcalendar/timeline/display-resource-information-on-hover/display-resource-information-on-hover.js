@@ -21,8 +21,8 @@ export default {
       var $hoveredResourceElm = null;
       var currentResource = null;
       var selectedDate = new Date();
-      var openTimer = null;
-      var closeTimer = null;
+      var openTimer;
+      var closeTimer;
 
       function getTotalHoursForResource(events, resourceId) {
         return events
@@ -47,7 +47,7 @@ export default {
           var totalHours = getTotalHoursForResource(events, resource.id);
 
           currentResource = resource;
-          $hoveredResourceElm = target.closest('.mbsc-timeline-resource');
+          $hoveredResourceElm = target;
 
           // Update popup content
           $resourceAvatar.attr('src', resource.avatar);
@@ -314,10 +314,10 @@ export default {
             );
           },
           onResourceHoverIn: function (args) {
-            openTooltip(args.resource, args.domEvent.target);
+            openTooltip(args.resource, args.target);
           },
           onResourceHoverOut: function (resource) {
-            $(resource.domEvent.target).removeClass('mds-resource-info-hover');
+            $(resource.target).removeClass('mds-resource-info-hover');
             closeTooltip();
           },
           onPageChange: function (args) {
@@ -398,7 +398,7 @@ export default {
   height: 40px;
 }
 .mds-resource-info-details {
-  margin: 0 10px;
+  margin: 0 8px;
 }
 .mds-resource-info-title {
   line-height: 24px;
@@ -418,7 +418,7 @@ export default {
   font-size: 18px;
   padding: 16px 10px;
 }
-.mds-resource-info-pay.mbsc-button {
+.mds-resource-info-pay {
   font-size: 12px;
   width: 40px;
   height: 22px;
