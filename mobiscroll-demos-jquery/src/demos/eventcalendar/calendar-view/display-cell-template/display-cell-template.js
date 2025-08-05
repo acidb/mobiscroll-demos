@@ -6,8 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light',
+      // theme
     });
 
     $(function () {
@@ -409,11 +408,12 @@ export default {
   padding: 10px;
   text-align: left;
   line-height: 25px;
-}
-.mds-cell-template-month-view .mds-cell-template-cont {
   position: absolute;
   inset: -1px;
   overflow: hidden;
+}
+.mds-cell-template .mbsc-schedule-header-item {
+  min-height: 120px;
 }
 .mds-cell-template-day {
   font-weight: 600;
@@ -443,7 +443,7 @@ export default {
   display: none;
 }
 .mds-cell-template .mbsc-calendar-cell-inner:after,
-.mds-cell-template.mds-cell-template-week-view .mbsc-schedule-header-item:after {
+.mds-cell-template-week-view .mds-cell-template-cont:after {
   bottom: 0;
   content: "";
   left: 0;
@@ -455,7 +455,7 @@ export default {
   transition: background 0.15s ease-in-out;
 }
 .mds-cell-template .mbsc-hover .mbsc-calendar-cell-inner:after,
-.mds-cell-template .mbsc-schedule-header-item:hover:after {
+.mds-cell-template-week-view .mds-cell-template-cont:hover:after {
   background: rgba(51, 51, 51, .2);
 }
 .mds-cell-template .mbsc-calendar-day-outer {
