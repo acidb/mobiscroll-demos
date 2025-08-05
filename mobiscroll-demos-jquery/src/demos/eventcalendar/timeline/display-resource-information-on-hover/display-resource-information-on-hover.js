@@ -6,7 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      // theme,
     });
 
     $(function () {
@@ -26,7 +26,9 @@ export default {
 
       function getTotalHoursForResource(events, resourceId) {
         return events
-          .filter(function (e) { return e.resource === resourceId; })
+          .filter(function (e) {
+            return e.resource === resourceId;
+          })
           .reduce(function (sum, e) {
             var start = new Date(e.start);
             var end = new Date(e.end);
@@ -35,33 +37,28 @@ export default {
           }, 0);
       }
 
-      function openTooltipWithDelay(args) {
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-        }
-        if (openTimer) {
-          clearTimeout(openTimer);
-        }
+      function openTooltip(resource, target) {
+        clearTimeout(closeTimer);
+        clearTimeout(openTimer);
 
         // Delay opening the tooltip to avoid flickering
         openTimer = setTimeout(function () {
           var events = calendar.getEvents();
-          var res = args.resource;
-          var totalHours = getTotalHoursForResource(events, res.id);
+          var totalHours = getTotalHoursForResource(events, resource.id);
 
-          currentResource = res;
-          $hoveredResourceElm = args.domEvent.target.closest('.mbsc-timeline-resource');
+          currentResource = resource;
+          $hoveredResourceElm = target.closest('.mbsc-timeline-resource');
 
           // Update popup content
-          $resourceAvatar.attr('src', res.avatar);
-          $resourceName.text(res.name);
-          $resourceCost.text('$' + res.cost);
+          $resourceAvatar.attr('src', resource.avatar);
+          $resourceName.text(resource.name);
+          $resourceCost.text('$' + resource.cost);
           $resourceDate.text(mobiscroll.formatDate('D DDD MMM YYYY', selectedDate));
-          $resourceTotal.text(totalHours + 'h, $' + totalHours * res.cost);
-          $(args.domEvent.target).addClass('mds-resource-info-hover');
+          $resourceTotal.text(totalHours + 'h, $' + totalHours * resource.cost);
+          $(target).addClass('mds-resource-info-hover');
 
           tooltip.setOptions({
-            anchor: args.domEvent.target.closest('.mbsc-timeline-resource')
+            anchor: $hoveredResourceElm,
           });
 
           tooltip.open();
@@ -70,13 +67,9 @@ export default {
       }
 
       // Close the tooltip with a delay to allow hover interactions
-      function closeTooltipWithDelay() {
-        if (openTimer) {
-          clearTimeout(openTimer);
-        }
-        if (closeTimer) {
-          clearTimeout(closeTimer);
-        }
+      function closeTooltip() {
+        clearTimeout(openTimer);
+        clearTimeout(closeTimer);
         closeTimer = setTimeout(function () {
           tooltip.close();
           closeTimer = null;
@@ -308,7 +301,9 @@ export default {
           renderResource: function (res) {
             return (
               '<div class="mbsc-flex">' +
-              '<img class="mds-resource-info-picture" src="' + res.avatar + '"/>' +
+              '<img class="mds-resource-info-avatar" src="' +
+              res.avatar +
+              '"/>' +
               '<div class="mds-resource-info-details">' +
               '<div class="mds-resource-info-title">' +
               res.name +
@@ -321,16 +316,17 @@ export default {
             );
           },
           onResourceHoverIn: function (args) {
-            openTooltipWithDelay(args);
+            openTooltip(args.resource, args.domEvent.target);
           },
-          onResourceHoverOut: function (args) {
-            $(args.domEvent.target).removeClass('mds-resource-info-hover');
-            closeTooltipWithDelay();
+          onResourceHoverOut: function (resource) {
+            $(resource.domEvent.target).removeClass('mds-resource-info-hover');
+            closeTooltip();
           },
           onPageChange: function (args) {
             selectedDate = args.firstDay;
-          }
-        }).mobiscroll('getInst');
+          },
+        })
+        .mobiscroll('getInst');
 
       var tooltip = $tooltip
         .mobiscroll()
@@ -339,25 +335,28 @@ export default {
           showOverlay: false,
           touchUi: false,
           width: 280,
-          onPosition: function (args) {
+          onPosition: function (args, inst) {
             var $popupElm = $(args.target).children('.mbsc-popup');
-            if ($popupElm.length && $hoveredResourceElm) {
-              var rect = $hoveredResourceElm.getBoundingClientRect();
-              $popupElm[0].style.top = (rect.top - 10) + 'px';
-              $popupElm[0].style.left = (rect.right + 10) + 'px';
+            var rect = $hoveredResourceElm.getBoundingClientRect();
+
+            $popupElm[0].style.top = rect.top - 10 + 'px';
+
+            if (inst.s.rtl) {
+              $popupElm[0].style.right = window.innerWidth - rect.left + 10 + 'px';
+            } else {
+              $popupElm[0].style.left = rect.right + 10 + 'px';
             }
             return false; // Prevent default positioning
-          }
-        }).mobiscroll('getInst');
+          },
+        })
+        .mobiscroll('getInst');
 
       $tooltip
         .on('mouseenter', function () {
-          if (closeTimer) {
-            clearTimeout(closeTimer)
-          };
+          clearTimeout(closeTimer);
         })
         .on('mouseleave', function () {
-          closeTooltipWithDelay();
+          closeTooltip();
         });
 
       $payButton.on('click', function () {
@@ -374,20 +373,20 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-resource-info-popup" style="display: none;">
-  <div class="mbsc-flex mds-resource-info-header">
+  <div class="mbsc-flex mbsc-align-items-center mds-resource-info-header">
     <img id="demo-resource-info-avatar" class="mds-resource-info-avatar" />
-    <div id="demo-resource-info-name" class="mds-resource-info-name"></div>
-    <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay-btn mbsc-button-xs">
+    <div id="demo-resource-info-name" class="mds-resource-info-name mbsc-flex-1-0"></div>
+    <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay mbsc-button-xs">
       Pay
     </button>
   </div>
   <div class="mds-resource-info-cont">
     <div>
-      <span class="mds-resource-info-label">Hourly rate </span>
+      <span class="mbsc-txt-muted">Hourly rate </span>
       <span id="demo-resource-info-cost" class="mds-resource-info-detail"></span>
     </div>
     <div>
-      <span id="demo-resource-info-date" class="mds-resource-info-label"></span>
+      <span id="demo-resource-info-date" class="mbsc-txt-muted"></span>
       <span id="demo-resource-info-total" class="mds-resource-info-detail"></span>
     </div>
   </div>
@@ -396,12 +395,12 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-resource-info-picture {
+.mds-resource-info-avatar {
   width: 40px;
   height: 40px;
 }
 .mds-resource-info-details {
-  margin-left: 10px;
+  margin: 0 10px;
 }
 .mds-resource-info-title {
   line-height: 24px;
@@ -415,20 +414,13 @@ export default {
   text-decoration: underline;
 }
 .mds-resource-info-header {
-  align-items: center;
   height: 35px;
-}
-.mds-resource-info-avatar {
-  width: 40px;
-  height: 40px;
 }
 .mds-resource-info-name {
   font-size: 18px;
   padding: 16px 10px;
 }
-.mds-resource-info-pay-btn.mbsc-button {
-  position: absolute;
-  right: 16px;
+.mds-resource-info-pay.mbsc-button {
   font-size: 12px;
   width: 40px;
   height: 22px;
@@ -439,11 +431,11 @@ export default {
   line-height: 22px;
   padding-top: 23px;
 }
-.mds-resource-info-label {
-  opacity: .6;
-}
-.mds-resource-info-detail {
+.mbsc-ltr .mds-resource-info-detail {
   float: right;
+}
+.mbsc-rtl .mds-resource-info-detail {
+  float: left;
 }
 `,
 };

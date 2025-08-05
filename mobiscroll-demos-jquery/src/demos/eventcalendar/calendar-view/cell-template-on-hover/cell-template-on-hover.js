@@ -21,36 +21,34 @@ export default {
                 return '<button class="mds-cell-summary-btn">Add event</button>';
               }
               return '';
-            }
+            },
           });
         }
       }
 
       // Event delegation for dynamic button
-      $('#demo-show-cell-summary-on-hover')
-        .off('click', '.mds-cell-summary-btn')
-        .on('click', '.mds-cell-summary-btn', function () {
-          if (hoveredDate) {
-            calendar.addEvent({
-              start: hoveredDate,
-              title: 'New Event'
-            });
-            mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
-              message: 'Event added on ' + mobiscroll.formatDate('YYYY-MM-DD', hoveredDate)
-            });
-          }
-        });
+      $('#demo-show-cell-summary-on-hover').on('click', '.mds-cell-summary-btn', function () {
+        if (hoveredDate) {
+          calendar.addEvent({
+            start: hoveredDate,
+            title: 'New Event',
+          });
+          mobiscroll.toast({
+            //<hidden>
+            // theme,//</hidden>
+            // context,
+            message: 'Event added on ' + mobiscroll.formatDate('YYYY-MM-DD', hoveredDate),
+          });
+        }
+      });
 
       var calendar = $('#demo-show-cell-summary-on-hover')
         .mobiscroll()
         .eventcalendar({
           view: {
             calendar: {
-              labels: 2
-            }
+              labels: 2,
+            },
           },
           data: [
             {
@@ -94,7 +92,7 @@ export default {
               end: 'dyndatetime(y,m,29,17)',
               title: 'Marketing Team Conference',
               color: '#ffeeb6',
-            }
+            },
           ],
           onCellHoverIn: function (args) {
             hoveredDate = args.date;
