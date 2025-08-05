@@ -435,8 +435,8 @@ export default {
 }
 .mds-add-appointment-btn.mbsc-button {
   position: absolute;
-  bottom: 37px;
-  right: 8px;
+  bottom: 5px;
+  right: 5px;
   font-size: 10px;
 }
 .mds-cell-template .mbsc-calendar-cell {
@@ -470,7 +470,7 @@ export default {
   margin: 0 auto;
   display: flex;
 }
-.mbsc-calendar .mds-cell-template-view-switch .mbsc-segmented.mbsc-material
+.mbsc-calendar .mds-cell-template-view-switch .mbsc-segmented.mbsc-material,
 .mbsc-calendar .mds-cell-template-view-switch .mbsc-segmented.mbsc-windows {
   padding: 0;
 }
