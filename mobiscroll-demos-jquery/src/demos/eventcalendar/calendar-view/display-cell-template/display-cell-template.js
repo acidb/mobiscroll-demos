@@ -6,7 +6,8 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -324,10 +325,10 @@ export default {
               ' ' +
               weather.degree +
               '°C</div>' +
-              '<div class="mds-cell-template-info" style="color:#634b67">Internal meetings: ' +
+              '<div class="mds-cell-template-info" style="color:#634b67">Internal mtgs: ' +
               nrEvents.meetings +
               '</div>' +
-              '<div class="mds-cell-template-info" style="color:#656d49">Client meetings: ' +
+              '<div class="mds-cell-template-info" style="color:#656d49">Client mtgs: ' +
               nrEvents.appointments +
               '</div>' +
               '<button class="mds-add-appointment-btn" mbsc-button data-icon="plus"></button>' +
@@ -409,6 +410,11 @@ export default {
   text-align: left;
   line-height: 25px;
 }
+.mds-cell-template-month-view .mds-cell-template-cont {
+  position: absolute;
+  inset: -1px;
+  overflow: hidden;
+}
 .mds-cell-template-day {
   font-weight: 600;
 }
@@ -417,44 +423,52 @@ export default {
   font-size: 15px;
   color: #555;
 }
+.mbsc-calendar-width-sm .mds-cell-template-cont {
+  font-size: 14px;
+}
+.mbsc-calendar-width-sm .mds-cell-template-info {
+  font-size: 12px;
+}
 .mds-add-appointment-btn.mbsc-button {
   position: absolute;
   bottom: 37px;
   right: 8px;
   font-size: 10px;
 }
-.mds-cell-template {
-  .mbsc-calendar-week-days,
-  .mbsc-schedule-all-day-cont {
-    display: none;
-  }
-  .mbsc-calendar-cell-inner:after,
-  &.mds-cell-template-week-view .mbsc-schedule-header-item:after {
-    bottom: 0;
-    content: "";
-    left: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .mbsc-hover .mbsc-calendar-cell-inner:after,
-  .mbsc-schedule-header-item:hover:after {
-    background: rgba(51, 51, 51, .2);
-  }
-  .mbsc-calendar-day-outer {
-    opacity: .7;
-  }
+.mds-cell-template .mbsc-calendar-cell {
+  min-height: 120px;
+}
+.mds-cell-template .mbsc-calendar-week-days,
+.mds-cell-template .mbsc-schedule-all-day-cont {
+  display: none;
+}
+.mds-cell-template .mbsc-calendar-cell-inner:after,
+.mds-cell-template.mds-cell-template-week-view .mbsc-schedule-header-item:after {
+  bottom: 0;
+  content: "";
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  inset: -1px;
+  transition: background 0.15s ease-in-out;
+}
+.mds-cell-template .mbsc-hover .mbsc-calendar-cell-inner:after,
+.mds-cell-template .mbsc-schedule-header-item:hover:after {
+  background: rgba(51, 51, 51, .2);
+}
+.mds-cell-template .mbsc-calendar-day-outer {
+  opacity: .7;
 }
 .mbsc-calendar .mds-cell-template-view-switch .mbsc-segmented {
   max-width: 350px;
   margin: 0 auto;
   display: flex;
-
-  &.mbsc-material,
-  &.mbsc-windows {
-    padding: 0;
-  }
+}
+.mbsc-calendar .mds-cell-template-view-switch .mbsc-segmented.mbsc-material
+.mbsc-calendar .mds-cell-template-view-switch .mbsc-segmented.mbsc-windows {
+  padding: 0;
 }
 .mds-cell-template-back-btn.mbsc-button {
   width: 100%;
@@ -472,29 +486,17 @@ export default {
 .mds-cell-template-view-switch {
   flex: 1 0 auto;
 }
-
-.mds-cell-template-month-view {
-  .mds-cell-template-back-btn {
-    display: none;
-  }
+.mds-cell-template-month-view .mds-cell-template-back-btn,
+.mds-cell-template-week-view .mds-cell-template-back-btn,
+.mds-cell-template-week-view .mds-add-appointment-btn,
+.mds-cell-template-day-view .mds-add-appointment-btn,
+.mds-cell-template-day-view .mbsc-schedule-header-item:not(.mbsc-selected),
+.mds-cell-template-day-view .mds-cell-template-view-change,
+.mds-cell-template .mbsc-calendar-labels {
+  display: none;
 }
-.mds-cell-template-week-view {
-  .mds-cell-template-back-btn,
-  .mds-add-appointment-btn {
-    display: none;
-  }
-}
-.mds-cell-template-day-view {
-  .mds-add-appointment-btn {
-    display: none;
-  }
-  .mbsc-schedule-header-item:not(.mbsc-selected),
-  .mds-cell-template-view-change {
-    display: none;
-  }
-  .mds-cell-template-selected-day {
-    text-align: center;
-  }  
+.mds-cell-template-day-view .mds-cell-template-selected-day {
+  text-align: center; 
 }
   `,
 };
