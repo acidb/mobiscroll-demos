@@ -412,7 +412,7 @@ export default {
   inset: -1px;
   overflow: hidden;
 }
-.mbsc-windows .mds-cell-template-month-view .mds-cell-template-cont {
+.mbsc-windows.mds-cell-template-month-view .mds-cell-template-cont {
   inset: -2px -1px;
 }
 .mds-cell-template .mbsc-schedule-header-item {
