@@ -412,8 +412,12 @@ export default {
   inset: -1px;
   overflow: hidden;
 }
+.mbsc-windows .mds-cell-template-month-view .mds-cell-template-cont {
+  inset: -2px -1px;
+}
 .mds-cell-template .mbsc-schedule-header-item {
   min-height: 120px;
+  white-space: nowrap;
 }
 .mds-cell-template-day {
   font-weight: 600;
