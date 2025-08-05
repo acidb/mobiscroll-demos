@@ -22,26 +22,24 @@ export default {
                 return '<button id="add-btn" class="add-btn" mbsc-button data-icon="plus" />';
               }
               return '';
-            }
+            },
           });
         }
       }
 
       // Event delegation for dynamic button
-      $('#demo-show-cell-summary-on-hover')
-        .off('click', '#add-btn')
-        .on('click', '#add-btn', function () {
-          if (hoveredDate) {
-            instance.addEvent({
-              start: hoveredDate,
-              end: new Date(hoveredDate.getTime() + 60 * 60 * 1000), // 1 hour later
-              title: 'New Event'
-            });
-            mobiscroll.toast({
-              message: 'Add event for ' + hoveredDate.toLocaleDateString()
-            });
-          }
-        });
+      $('#demo-show-cell-summary-on-hover').on('click', '#add-btn', function () {
+        if (hoveredDate) {
+          instance.addEvent({
+            start: hoveredDate,
+            end: new Date(hoveredDate.getTime() + 60 * 60 * 1000), // 1 hour later
+            title: 'New Event',
+          });
+          mobiscroll.toast({
+            message: 'Add event for ' + hoveredDate.toLocaleDateString(),
+          });
+        }
+      });
 
       instance = $('#demo-show-cell-summary-on-hover')
         .mobiscroll()
