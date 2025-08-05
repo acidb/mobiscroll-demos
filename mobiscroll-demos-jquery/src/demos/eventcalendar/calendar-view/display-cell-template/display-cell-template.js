@@ -502,5 +502,9 @@ export default {
 .mds-cell-template-day-view .mds-cell-template-selected-day {
   text-align: center; 
 }
+/* This should be set from the demo page */
+.demo-placeholder .mbsc-eventcalendar.mds-cell-template {
+  max-height: 800px;
+}
   `,
 };
