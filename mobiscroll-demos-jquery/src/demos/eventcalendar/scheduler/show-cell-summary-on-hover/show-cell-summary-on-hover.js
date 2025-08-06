@@ -144,27 +144,27 @@ export default {
             {
               start: 'dyndatetime(y,m,d-1,12)',
               end: 'dyndatetime(y,m,d-1,14)',
-              cssClass: 'mds-green-bg-color',
+              cssClass: 'mds-cell-summary-color',
             },
             {
               start: 'dyndatetime(y,m,d,10)',
               end: 'dyndatetime(y,m,d,12)',
-              cssClass: 'mds-green-bg-color',
+              cssClass: 'mds-cell-summary-color',
             },
             {
               start: 'dyndatetime(y,m,d+1,8)',
               end: 'dyndatetime(y,m,d+1,11)',
-              cssClass: 'mds-green-bg-color',
+              cssClass: 'mds-cell-summary-color',
             },
             {
               start: 'dyndatetime(y,m,d+2,14)',
               end: 'dyndatetime(y,m,d+2,17)',
-              cssClass: 'mds-green-bg-color',
+              cssClass: 'mds-cell-summary-color',
             },
             {
               start: '08:00',
               end: '09:00',
-              cssClass: 'mds-green-bg-color',
+              cssClass: 'mds-cell-summary-color',
               recurring: {
                 repeat: 'weekly',
                 weekDays: 'MO,FR',
@@ -173,7 +173,7 @@ export default {
             {
               start: '14:00',
               end: '16:00',
-              cssClass: 'mds-green-bg-color',
+              cssClass: 'mds-cell-summary-color',
               recurring: {
                 repeat: 'weekly',
                 weekDays: 'TU,TH',
@@ -186,7 +186,7 @@ export default {
                 repeat: 'weekly',
                 weekDays: 'FR',
               },
-              cssClass: 'mds-green-bg-color',
+              cssClass: 'mds-cell-summary-color',
             },
             {
               start: '16:00',
@@ -195,7 +195,7 @@ export default {
                 repeat: 'weekly',
                 weekDays: 'SU,SA',
               },
-              cssClass: 'mds-green-bg-color',
+              cssClass: 'mds-cell-summary-color',
             },
           ],
           onCellHoverIn: function (args) {
@@ -235,16 +235,16 @@ export default {
 <div id="demo-cell-summary-popup" style="display: none;">
   <div id="demo-cell-summary-date" class="mds-cell-summary-title"></div>
   <div class="mbsc-flex">
-    <div class="mds-cell-summary-item">
-      <div class="mds-cell-summary-label">Events</div>
+    <div class="mbsc-flex-1-0 mds-cell-summary-item">
+      <div class="mbsc-txt-muted">Events</div>
       <div id="demo-cell-summary-events" class="mds-cell-summary-content"></div>
     </div>
-    <div class="mds-cell-summary-item">
-      <div class="mds-cell-summary-label">Invalid</div>
+    <div class="mbsc-flex-1-0 mds-cell-summary-item">
+      <div class="mbsc-txt-muted">Invalid</div>
       <div id="demo-cell-summary-invalid" class="mds-cell-summary-content"></div>
     </div>
-    <div class="mds-cell-summary-item">
-      <div class="mds-cell-summary-label">Colors</div>
+    <div class="mbsc-flex-1-0 mds-cell-summary-item">
+      <div class="mbsc-txt-muted">Colors</div>
       <div id="demo-cell-summary-colors" class="mds-cell-summary-content"></div>
     </div>
   </div>
@@ -253,27 +253,6 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-cell-summary-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-.mds-cell-summary-item {
-  font-size: 14px;
-  flex: 1;
-}
-.mds-cell-summary-label {
-  opacity: 0.6;
-  margin-bottom: 5px;
-}
-.mds-cell-summary-content {
-  font-weight: 500;
-  opacity: 0.8;
-}
-.mds-green-bg-color {    
-  background: repeating-linear-gradient(-45deg, #cce9d3, #cce9d3 10px, #c5dfc1 10px, #c5dfc1 20px);
-  opacity: 0.5;
-}
 .mds-cell-summary-on-hover .mbsc-schedule-events.mbsc-ltr {
   right: 20px;
 }
@@ -282,6 +261,23 @@ export default {
 }
 .mds-cell-summary-on-hover .mbsc-schedule-item:hover {
   box-shadow: 0px 1px 6px 3px rgba(0, 0, 0, 0.2), 0px 1px 6px 3px rgba(255, 255, 255, 0.2);
+}
+.mds-cell-summary-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.mds-cell-summary-item {
+  flex: 1;
+}
+.mds-cell-summary-content {
+  font-weight: 500;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+.mds-cell-summary-color {    
+  background: repeating-linear-gradient(-45deg, #cce9d3, #cce9d3 10px, #c5dfc1 10px, #c5dfc1 20px);
+  opacity: 0.5;
 }
 `,
 };
