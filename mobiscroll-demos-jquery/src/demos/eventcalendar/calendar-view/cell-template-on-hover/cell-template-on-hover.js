@@ -139,9 +139,6 @@ export default {
 .mds-cell-summary-btn:active {
   box-shadow: 0 1px 4px rgba(85, 132, 181, 0.3);
 }
-/* This should be set from the demo page */
-.demo-wrapper .mbsc-eventcalendar.mds-cell-summary {
-  max-height: none;
-}
+
   `,
 };
