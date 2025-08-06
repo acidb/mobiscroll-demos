@@ -531,10 +531,5 @@ export default {
   border: 0;
 }
 
-
-/* This should be set from the demo page */
-.demo-placeholder .mbsc-eventcalendar.mds-cell-template {
-  max-height: 800px;
-}
   `,
 };
