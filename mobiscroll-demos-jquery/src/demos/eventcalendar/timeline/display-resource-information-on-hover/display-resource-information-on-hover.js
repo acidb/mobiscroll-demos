@@ -418,7 +418,7 @@ export default {
   font-size: 18px;
   padding: 16px 10px;
 }
-.mds-resource-info-pay {
+.mds-resource-info-pay.mbsc-button {
   font-size: 12px;
   width: 40px;
   height: 22px;
