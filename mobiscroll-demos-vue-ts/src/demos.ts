@@ -205,7 +205,6 @@ import Demo593 from './demos/eventcalendar/scheduler/shared-events-across-resour
 import Demo594 from './demos/eventcalendar/scheduler/dynamic-add-remove-resources-filter/dynamic-add-remove-resources-filter.vue'
 import Demo771 from './demos/eventcalendar/scheduler/dynamic-content-based-resource-width/dynamic-content-based-resource-width.vue'
 import Demo719 from './demos/eventcalendar/scheduler/resource-data-structure/resource-data-structure.vue'
-import Demo773 from './demos/eventcalendar/timeline/display-resource-information-on-hover/display-resource-information-on-hover.vue';
 import Demo481 from './demos/eventcalendar/scheduler/event-data-structure/event-data-structure.vue'
 import Demo503 from './demos/eventcalendar/scheduler/date-object-ISO-8601-moment/date-object-ISO-8601-moment.vue'
 import Demo490 from './demos/eventcalendar/scheduler/recurring-events/recurring-events.vue'
@@ -276,6 +275,7 @@ import Demo747 from './demos/eventcalendar/timeline/show-summaries-aggregates-fo
 import Demo765 from './demos/eventcalendar/timeline/resource-drag-drop-reorder/resource-drag-drop-reorder.vue'
 import Demo768 from './demos/eventcalendar/timeline/dynamic-calculation-resource-sort/dynamic-calculation-resource-sort.vue'
 import Demo720 from './demos/eventcalendar/timeline/resource-data-structure/resource-data-structure.vue'
+import Demo773 from './demos/eventcalendar/timeline/display-resource-information-on-hover/display-resource-information-on-hover.vue';
 import Demo666 from './demos/eventcalendar/timeline/event-data-structure/event-data-structure.vue'
 import Demo706 from './demos/eventcalendar/timeline/connecting-linking-events-arrows/connecting-linking-events-arrows.vue'
 import Demo667 from './demos/eventcalendar/timeline/date-object-ISO-8601-moment/date-object-ISO-8601-moment.vue'

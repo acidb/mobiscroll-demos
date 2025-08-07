@@ -212,6 +212,7 @@ export default {
             tooltip.setOptions({
               anchor: args.target,
             });
+
             tooltip.open();
           },
           onCellHoverOut: function () {

@@ -222,6 +222,7 @@ import Demo712 from './demos/eventcalendar/scheduler/colors-invalids-css-class/c
 import Demo511 from './demos/eventcalendar/scheduler/resource-filtering-in-header/resource-filtering-in-header';
 import Demo489 from './demos/eventcalendar/scheduler/themes-ios-material-windows/themes-ios-material-windows';
 import Demo736 from './demos/eventcalendar/scheduler/resource-background/resource-background';
+import Demo774 from './demos/eventcalendar/scheduler/show-cell-summary-on-hover/show-cell-summary-on-hover';
 import Demo486 from './demos/eventcalendar/scheduler/gregorian-jalali-hijri/gregorian-jalali-hijri';
 import Demo487 from './demos/eventcalendar/scheduler/event-hooks/event-hooks';
 import Demo488 from './demos/eventcalendar/scheduler/localization/localization';
@@ -925,6 +926,7 @@ export const demos = [
               { name: 'Custom component in header', unique: 'resource-filtering-in-header', component: Demo511 },
               { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo489 },
               { name: 'Resource background and styling', unique: 'resource-background', component: Demo736 },
+              { name: 'Summarize cell information', unique: 'show-cell-summary-on-hover', component: Demo774 },
             ],
           },
           {

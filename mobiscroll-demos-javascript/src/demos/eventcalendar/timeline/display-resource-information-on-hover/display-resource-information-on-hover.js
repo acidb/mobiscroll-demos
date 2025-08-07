@@ -8,52 +8,25 @@ export default {
       // theme
     });
 
-    function openTooltipWithDelay(args) {
-      if (closeTimer) {
-        clearTimeout(closeTimer);
-      }
-      if (openTimer) {
-        clearTimeout(openTimer);
-      }
-      // Delay opening the tooltip to avoid flickering
-      openTimer = setTimeout(function () {
-        var events = calendar.getEvents();
-        var res = args.resource;
-        var totalHours = getTotalHoursForResource(events, res.id);
+    var tooltipElm = document.getElementById('demo-resource-info-popup');
+    var resourceAvatar = document.getElementById('demo-resource-info-avatar');
+    var resourceName = document.getElementById('demo-resource-info-name');
+    var resourceCost = document.getElementById('demo-resource-info-cost');
+    var resourceDate = document.getElementById('demo-resource-info-date');
+    var resourceTotal = document.getElementById('demo-resource-info-total');
+    var payButtonElm = document.getElementById('demo-resource-info-pay');
 
-        currentResource = res;
-
-        resourceName.textContent = res.name;
-        resourceCost.textContent = '$' + res.cost + '/hour';
-        resourceTotal.textContent = '$' + totalHours * res.cost + ' (' + totalHours + 'h)';
-        args.domEvent.target.classList.add('mds-resource-info-hover');
-
-        tooltip.setOptions({
-          anchor: args.domEvent.target.closest('.mbsc-timeline-resource')
-        });
-
-        tooltip.open();
-        openTimer = null;
-      }, 100);
-    }
-
-    // Close the tooltip with a delay to allow for hover interactions
-    function closeTooltipWithDelay() {
-      if (openTimer) {
-        clearTimeout(openTimer);
-      }
-      if (closeTimer) {
-        clearTimeout(closeTimer);
-      }
-      closeTimer = setTimeout(function () {
-        tooltip.close();
-        closeTimer = null;
-      }, 200);
-    }
+    var hoveredResourceElm = null;
+    var currentResource = null;
+    var selectedDate = new Date();
+    var openTimer;
+    var closeTimer;
 
     function getTotalHoursForResource(events, resourceId) {
       return events
-        .filter(function (e) { return e.resource === resourceId; })
+        .filter(function (e) {
+          return e.resource === resourceId;
+        })
         .reduce(function (sum, e) {
           var start = new Date(e.start);
           var end = new Date(e.end);
@@ -62,14 +35,41 @@ export default {
         }, 0);
     }
 
-    var resourceName = document.getElementById('demo-resource-info-name');
-    var resourceCost = document.getElementById('demo-resource-info-cost');
-    var resourceTotal = document.getElementById('demo-resource-info-total');
-    var payButtonElm = document.getElementById('demo-resource-info-pay');
-    var tooltipElm = document.getElementById('demo-resource-info-popup');
-    var openTimer = null;
-    var closeTimer = null;
-    var currentResource = null;
+    function openTooltip(resource, target) {
+      clearTimeout(closeTimer);
+      clearTimeout(openTimer);
+
+      // Delay opening the tooltip to avoid flickering
+      openTimer = setTimeout(function () {
+        var events = calendar.getEvents();
+        var totalHours = getTotalHoursForResource(events, resource.id);
+
+        currentResource = resource;
+        hoveredResourceElm = target;
+
+        resourceAvatar.src = resource.avatar;
+        resourceName.textContent = resource.name;
+        resourceCost.textContent = '$' + resource.cost;
+        resourceDate.textContent = mobiscroll.formatDate('D DDD MMM YYYY', selectedDate);
+        resourceTotal.textContent = totalHours + 'h, $' + totalHours * resource.cost;
+        target.classList.add('mds-resource-info-hover');
+
+        tooltip.position();
+        tooltip.open();
+
+        openTimer = null;
+      }, 100);
+    }
+
+    // Close the tooltip with a delay to allow for hover interactions
+    function closeTooltip() {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(function () {
+        tooltip.close();
+        closeTimer = null;
+      }, 200);
+    }
 
     var calendar = mobiscroll.eventcalendar('#demo-display-resource-information-on-hover', {
       view: {
@@ -294,12 +294,14 @@ export default {
       renderResource: function (res) {
         return (
           '<div class="mbsc-flex">' +
-          '<img class="mds-res-info-avatar" src="' + res.avatar + '"/>' +
-          '<div class="mds-res-info-cont">' +
-          '<div class="mds-res-info-name">' +
+          '<img class="mds-resource-info-avatar" src="' +
+          res.avatar +
+          '"/>' +
+          '<div class="mds-resource-info-details">' +
+          '<div class="mds-resource-info-title">' +
           res.name +
           '</div>' +
-          '<div class="mds-res-info-prof">' +
+          '<div class="mds-resource-info-profession">' +
           res.profession +
           '</div>' +
           '</div>' +
@@ -307,11 +309,14 @@ export default {
         );
       },
       onResourceHoverIn: function (args) {
-        openTooltipWithDelay(args);
+        openTooltip(args.resource, args.target);
       },
-      onResourceHoverOut: function (args) {
-        args.domEvent.target.classList.remove('mds-resource-info-hover');
-        closeTooltipWithDelay();
+      onResourceHoverOut: function (resource) {
+        resource.target.classList.remove('mds-resource-info-hover');
+        closeTooltip();
+      },
+      onPageChange: function (args) {
+        selectedDate = args.firstDay;
       },
     });
 
@@ -319,91 +324,103 @@ export default {
       display: 'anchored',
       showOverlay: false,
       touchUi: false,
+      width: 280,
+      onPosition: function (args, inst) {
+        var popupElm = args.target.querySelector('.mbsc-popup');
+        var rect = hoveredResourceElm.getBoundingClientRect();
+
+        popupElm.style.top = rect.top - 10 + 'px';
+
+        if (inst.s.rtl) {
+          popupElm.style.right = window.innerWidth - rect.left + 10 + 'px';
+        } else {
+          popupElm.style.left = rect.right + 10 + 'px';
+        }
+        return false; // Prevent default positioning
+      },
     });
 
     tooltipElm.addEventListener('mouseenter', function () {
-      if (closeTimer) {
-        clearTimeout(closeTimer);
-      }
+      clearTimeout(closeTimer);
     });
 
     tooltipElm.addEventListener('mouseleave', function () {
-      closeTooltipWithDelay();
+      closeTooltip();
     });
 
     payButtonElm.addEventListener('click', function () {
       tooltip.close();
       mobiscroll.toast({
-        message: currentResource.profession + ' payed',
-      });
-    });
-
-    document.getElementById('demo-resource-info-edit').addEventListener('click', function () {
-      tooltip.close();
-      mobiscroll.toast({
-        message: "Edit " + currentResource.name + "'s profile",
+        message: currentResource.name + ' paid',
       });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-resource-info-popup" style="display:none">
-  <div class="mds-resource-info-header mbsc-flex">
-    <div id="demo-resource-info-name" class="mds-resource-info-name"></div>
-    <button id="demo-resource-info-edit" mbsc-button data-icon="pencil" data-color="secondary" data-variant="outline" class="mds-resource-info-edit-btn mbsc-pull-right"></button>
-  </div>
-  <div class="mds-resource-info-cont">
-    <div>Rate: <span id="demo-resource-info-cost" class="mds-resource-info-detail"></span></div>
-    <div>Today: <span id="demo-resource-info-total" class="mds-resource-info-detail"></span></div>
-  </div>
-  <div class="mds-resource-info-btn-cont">
-    <button id="demo-resource-info-pay" mbsc-button data-color="success" class="mds-resource-info-pay-btn">
-      Pay now
+<div id="demo-resource-info-popup" style="display: none;">
+  <div class="mbsc-flex mbsc-align-items-center mds-resource-info-header">
+    <img id="demo-resource-info-avatar" class="mds-resource-info-avatar" />
+    <div id="demo-resource-info-name" class="mds-resource-info-name mbsc-flex-1-0"></div>
+    <button id="demo-resource-info-pay" mbsc-button data-color="success" data-variant="outline" class="mds-resource-info-pay mbsc-button-xs">
+      Pay
     </button>
   </div>
+  <div class="mds-resource-info-cont">
+    <div>
+      <span class="mbsc-txt-muted">Hourly rate </span>
+      <span id="demo-resource-info-cost" class="mds-resource-info-detail"></span>
+    </div>
+    <div>
+      <span id="demo-resource-info-date" class="mbsc-txt-muted"></span>
+      <span id="demo-resource-info-total" class="mds-resource-info-detail"></span>
+    </div>
+  </div>
 </div>
-<div id="demo-display-resource-information-on-hover"></div>>
+<div id="demo-display-resource-information-on-hover"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-resource-info-hover.mbsc-timeline-resource {
-  background: rgba(128, 128, 128, 0.6);
-}
-.mds-res-info-avatar {
+.mds-resource-info-avatar {
   width: 40px;
   height: 40px;
 }
-.mds-res-info-cont {
-  margin-left: 10px;
+.mds-resource-info-details {
+  margin: 0 8px;
 }
-.mds-res-info-prof {
+.mds-resource-info-title {
+  line-height: 24px;
+}
+.mds-resource-info-profession {
   font-size: 12px;
-  color: #666;
-  line-height: 20px
+  opacity: .5;
+  line-height: 18px;
 }
-
+.mds-resource-info-hover.mbsc-timeline-resource {
+  text-decoration: underline;
+}
 .mds-resource-info-header {
-  align-items: center;
+  height: 35px;
 }
-.mds-resource-info-btn-cont {
-  text-align: center;
+.mds-resource-info-name {
+  font-size: 18px;
+  padding: 16px 10px;
 }
-.mds-resource-info-edit-btn.mbsc-button {
+.mds-resource-info-pay.mbsc-button {
   font-size: 12px;
-  margin: 0 0 0 auto;
-}
-.mds-resource-info-pay-btn.mbsc-button {
-  font-size: 12px;
+  width: 40px;
+  height: 22px;
   margin: 0;
 }
 .mds-resource-info-cont {
-  font-size: 12px;
-  opacity: 0.5;
-  padding-bottom: 10px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 22px;
+  padding-top: 23px;
 }
-.mds-resource-info-detail {
-  font-weight: bold;
+.mbsc-ltr .mds-resource-info-detail {
+  float: right;
+}
+.mbsc-rtl .mds-resource-info-detail {
+  float: left;
 }
 `,
 };

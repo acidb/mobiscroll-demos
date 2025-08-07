@@ -1,4 +1,4 @@
-import { Button, Eventcalendar, Popup, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { Button, Eventcalendar, formatDate, Popup, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import './display-resource-information-on-hover.css';
 
@@ -6,6 +6,73 @@ setOptions({
   // localeJs,
   // themeJs
 });
+
+const myResources = [
+  {
+    id: 'res1',
+    name: 'Adam Miller',
+    color: '#F39C12',
+    profession: 'Mason',
+    avatar: 'https://img.mobiscroll.com/demos/m1.png',
+    cost: '15',
+  },
+  {
+    id: 'res2',
+    name: 'Emily Carter',
+    color: '#76e083',
+    profession: 'Electrician',
+    avatar: 'https://img.mobiscroll.com/demos/f1.png',
+    cost: '20',
+  },
+  {
+    id: 'res3',
+    name: 'James Brown',
+    color: '#b13f49',
+    profession: 'Carpenter',
+    avatar: 'https://img.mobiscroll.com/demos/m2.png',
+    cost: '18',
+  },
+  {
+    id: 'res4',
+    name: 'Daniel Wilson',
+    color: '#e25dd2',
+    profession: 'Welder',
+    avatar: 'https://img.mobiscroll.com/demos/m3.png',
+    cost: '22',
+  },
+  {
+    id: 'res5',
+    name: 'Benjamin Harris',
+    color: '#7056ff',
+    profession: 'Plumber',
+    avatar: 'https://img.mobiscroll.com/demos/m4.png',
+    cost: '20',
+  },
+  {
+    id: 'res6',
+    name: 'Olivia Anderson',
+    color: '#56aaff',
+    profession: 'Concrete Finisher',
+    avatar: 'https://img.mobiscroll.com/demos/f2.png',
+    cost: '15',
+  },
+  {
+    id: 'res7',
+    name: 'Emma Thompson',
+    color: '#84852f',
+    profession: 'Steelworker',
+    avatar: 'https://img.mobiscroll.com/demos/f3.png',
+    cost: '18',
+  },
+  {
+    id: 'res8',
+    name: 'Natalie Roberts',
+    color: '#ff6e56',
+    profession: 'Painter',
+    avatar: 'https://img.mobiscroll.com/demos/f4.png',
+    cost: '25',
+  },
+];
 
 const myEvents = [
   {
@@ -154,84 +221,6 @@ const myEvents = [
   },
 ];
 
-const myResources = [
-  {
-    id: 'res1',
-    name: 'Adam Miller',
-    color: '#F39C12',
-    profession: 'Mason',
-    avatar: 'https://img.mobiscroll.com/demos/m1.png',
-    cost: '15',
-  },
-  {
-    id: 'res2',
-    name: 'Emily Carter',
-    color: '#76e083',
-    profession: 'Electrician',
-    avatar: 'https://img.mobiscroll.com/demos/f1.png',
-    cost: '20',
-  },
-  {
-    id: 'res3',
-    name: 'James Brown',
-    color: '#b13f49',
-    profession: 'Carpenter',
-    avatar: 'https://img.mobiscroll.com/demos/m2.png',
-    cost: '18',
-  },
-  {
-    id: 'res4',
-    name: 'Daniel Wilson',
-    color: '#e25dd2',
-    profession: 'Welder',
-    avatar: 'https://img.mobiscroll.com/demos/m3.png',
-    cost: '22',
-  },
-  {
-    id: 'res5',
-    name: 'Benjamin Harris',
-    color: '#7056ff',
-    profession: 'Plumber',
-    avatar: 'https://img.mobiscroll.com/demos/m4.png',
-    cost: '20',
-  },
-  {
-    id: 'res6',
-    name: 'Olivia Anderson',
-    color: '#56aaff',
-    profession: 'Concrete Finisher',
-    avatar: 'https://img.mobiscroll.com/demos/f2.png',
-    cost: '15',
-  },
-  {
-    id: 'res7',
-    name: 'Emma Thompson',
-    color: '#84852f',
-    profession: 'Steelworker',
-    avatar: 'https://img.mobiscroll.com/demos/f3.png',
-    cost: '18',
-  },
-  {
-    id: 'res8',
-    name: 'Natalie Roberts',
-    color: '#ff6e56',
-    profession: 'Painter',
-    avatar: 'https://img.mobiscroll.com/demos/f4.png',
-    cost: '25',
-  },
-];
-
-function getTotalHoursForResource(resourceId) {
-  return myEvents
-    .filter((e) => e.resource === resourceId)
-    .reduce((sum, e) => {
-      const start = new Date(e.start);
-      const end = new Date(e.end);
-      const hours = (end - start) / (1000 * 60 * 60);
-      return sum + hours;
-    }, 0);
-}
-
 function App() {
   const myView = useMemo(
     () => ({
@@ -244,45 +233,68 @@ function App() {
     [],
   );
 
-  const [isTooltipOpen, setTooltipOpen] = useState(false);
-  const [tooltipAnchor, setTooltipAnchor] = useState(null);
-  const [isToastOpen, setToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [currentResource, setCurrentResource] = useState(null);
+  const [resourceAvatar, setResourceAvatar] = useState('');
   const [resourceName, setResourceName] = useState('');
   const [resourceCost, setResourceCost] = useState('');
+  const [resourceDate, setResourceDate] = useState('');
   const [resourceTotal, setResourceTotal] = useState('');
+  const [currentResource, setCurrentResource] = useState(null);
+  const [isTooltipOpen, setTooltipOpen] = useState(false);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
+  const hoveredResourceElmRef = useRef(null);
+  const mySelectedDate = useRef(new Date());
+  const calRef = useRef(null);
+  const popupRef = useRef(null);
   const openTimer = useRef(null);
   const closeTimer = useRef(null);
 
-  // Handles both Mobiscroll hover and native mouse events
-  const openTooltipWithDelay = useCallback((args, anchorTarget) => {
-    if (closeTimer.current) {
-      clearTimeout(closeTimer.current);
-    }
-    if (openTimer.current) {
-      clearTimeout(openTimer.current);
-    }
-    openTimer.current = setTimeout(() => {
-      const res = args.resource;
-      setCurrentResource(res);
-      setResourceName(res.name);
-      setResourceCost(`$${res.cost}/hour`);
-      setResourceTotal(`$${getTotalHoursForResource(res.id) * res.cost} (${getTotalHoursForResource(res.id)}h)`);
-      setTooltipAnchor(anchorTarget || args.domEvent.target.closest('.mbsc-timeline-resource'));
-      setTooltipOpen(true);
-      openTimer.current = null;
-    }, 100);
-  }, []);
+  const getTotalHoursForResource = useCallback(
+    (resourceId) =>
+      calRef.current
+        .getEvents()
+        .filter((e) => e.resource === resourceId)
+        .reduce((sum, e) => {
+          const start = new Date(e.start);
+          const end = new Date(e.end);
+          const hours = (end - start) / (1000 * 60 * 60);
+          return sum + hours;
+        }, 0),
+    [],
+  );
 
-  const closeTooltipWithDelay = useCallback(() => {
-    if (openTimer.current) {
-      clearTimeout(openTimer.current);
-    }
-    if (closeTimer.current) {
+  // Handles both Mobiscroll hover and native mouse events
+  const openTooltip = useCallback(
+    (resource, target) => {
       clearTimeout(closeTimer.current);
-    }
+      clearTimeout(openTimer.current);
+
+      openTimer.current = setTimeout(() => {
+        const totalHours = getTotalHoursForResource(resource.id);
+
+        setCurrentResource(resource);
+        hoveredResourceElmRef.current = target;
+
+        setResourceAvatar(resource.avatar);
+        setResourceName(resource.name);
+        setResourceCost('$' + resource.cost);
+        setResourceDate(formatDate('D DDD MMM YYYY', mySelectedDate.current));
+        setResourceTotal(totalHours + 'h, $' + totalHours * resource.cost);
+
+        popupRef.current.position();
+        setTooltipOpen(true);
+
+        openTimer.current = null;
+      }, 100);
+    },
+    [mySelectedDate, getTotalHoursForResource],
+  );
+
+  const closeTooltip = useCallback(() => {
+    clearTimeout(openTimer.current);
+    clearTimeout(closeTimer.current);
+
     closeTimer.current = setTimeout(() => {
       setTooltipOpen(false);
       closeTimer.current = null;
@@ -291,32 +303,48 @@ function App() {
 
   // Mobiscroll resource hover events
   const handleResourceHoverIn = (args) => {
-    openTooltipWithDelay(args);
+    openTooltip(args.resource, args.target);
   };
 
-  const handleResourceHoverOut = (args) => {
-    args.domEvent.target.classList.remove('mds-resource-info-hover');
-    closeTooltipWithDelay();
+  const handleResourceHoverOut = (resource) => {
+    resource.target.classList.remove('mds-resource-info-hover');
+    closeTooltip();
   };
+
+  const handlePageChange = (args) => {
+    mySelectedDate.current = args.firstDay;
+  };
+
+  const handleTooltipPosition = useCallback((args, inst) => {
+    const popupElm = args.target.querySelector('.mbsc-popup');
+    const rect = hoveredResourceElmRef.current.getBoundingClientRect();
+
+    popupElm.style.top = rect.top - 10 + 'px';
+
+    if (inst.s.rtl) {
+      popupElm.style.right = window.innerWidth - rect.left + 10 + 'px';
+    } else {
+      popupElm.style.left = rect.right + 10 + 'px';
+    }
+    return false; // Prevent default positioning
+  }, []);
 
   // Native mouse events for the popup
   const handlePopupMouseEnter = () => {
-    if (closeTimer.current) {
-      clearTimeout(closeTimer.current);
-    }
+    clearTimeout(closeTimer.current);
   };
 
   const handlePopupMouseLeave = () => {
-    closeTooltipWithDelay();
+    closeTooltip();
   };
 
   const renderMyResource = useCallback(
     (res) => (
       <div className="mbsc-flex">
-        <img className="mds-res-info-avatar" src={res.avatar} alt="Avatar" />
-        <div className="mds-res-info-cont">
-          <div className="mds-res-info-name">{res.name}</div>
-          <div className="mds-res-info-prof">{res.profession}</div>
+        <img className="mds-resource-info-avatar" src={res.avatar} alt="Avatar" />
+        <div className="mds-resource-info-details">
+          <div className="mds-resource-info-title">{res.name}</div>
+          <div className="mds-resource-info-profession">{res.profession}</div>
         </div>
       </div>
     ),
@@ -325,13 +353,7 @@ function App() {
 
   const handlePay = () => {
     setTooltipOpen(false);
-    setToastMessage(`${currentResource.profession} payed`);
-    setToastOpen(true);
-  };
-
-  const handleEdit = () => {
-    setTooltipOpen(false);
-    setToastMessage(`Edit ${currentResource.name}'s profile`);
+    setToastMessage(currentResource.name + ' paid');
     setToastOpen(true);
   };
 
@@ -346,46 +368,43 @@ function App() {
   return (
     <>
       <Eventcalendar
+        ref={calRef}
         data={myEvents}
         resources={myResources}
         view={myView}
+        renderResource={renderMyResource}
         onResourceHoverIn={handleResourceHoverIn}
         onResourceHoverOut={handleResourceHoverOut}
-        renderResource={renderMyResource}
+        onPageChange={handlePageChange}
       />
       <Popup
-        anchor={tooltipAnchor}
+        ref={popupRef}
         display="anchored"
-        isOpen={isTooltipOpen}
         showOverlay={false}
         touchUi={false}
+        width={280}
+        isOpen={isTooltipOpen}
+        onPosition={handleTooltipPosition}
         onClose={handleTooltipClose}
-        // Mouse events for tooltip hover
-        onMouseEnter={handlePopupMouseEnter}
-        onMouseLeave={handlePopupMouseLeave}
       >
-        <div className="mds-resource-info-header mbsc-flex">
-          <div className="mds-resource-info-name">{resourceName}</div>
-          <Button
-            icon="pencil"
-            color="secondary"
-            variant="outline"
-            className="mds-resource-info-edit-btn mbsc-pull-right"
-            onClick={handleEdit}
-          />
-        </div>
-        <div className="mds-resource-info-cont">
-          <div>
-            Rate: <span className="mds-resource-info-detail">{resourceCost}</span>
+        <div onMouseEnter={handlePopupMouseEnter} onMouseLeave={handlePopupMouseLeave}>
+          <div className="mbsc-flex mbsc-align-items-center mds-resource-info-header">
+            <img className="mds-resource-info-avatar" src={resourceAvatar} alt="Avatar" />
+            <div className="mds-resource-info-name mbsc-flex-1-0">{resourceName}</div>
+            <Button color="success" variant="outline" className="mds-resource-info-pay mbsc-button-xs" onClick={handlePay}>
+              Pay
+            </Button>
           </div>
-          <div>
-            Today: <span className="mds-resource-info-detail">{resourceTotal}</span>
+          <div className="mds-resource-info-cont">
+            <div>
+              <span className="mbsc-txt-muted">Hourly rate </span>
+              <span className="mds-resource-info-detail">{resourceCost}</span>
+            </div>
+            <div>
+              <span className="mbsc-txt-muted">{resourceDate}</span>
+              <span className="mds-resource-info-detail">{resourceTotal}</span>
+            </div>
           </div>
-        </div>
-        <div className="mds-resource-info-btn-cont">
-          <Button color="success" className="mds-resource-info-pay-btn" onClick={handlePay}>
-            Pay now
-          </Button>
         </div>
       </Popup>
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
