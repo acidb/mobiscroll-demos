@@ -1,0 +1,12 @@
+<mbsc-eventcalendar
+  #calendar
+  class="mds-cell-summary"
+  [data]="myEvents"
+  [view]="calView"
+  [dayContentTemplate]="customDayTemplate"
+  [options]="calendarOptions"
+>
+  <ng-template #customDayTemplate let-data>
+    <button (click)="addEvent()" *ngIf="isHovered(data.date)" class="mds-cell-summary-btn">Add event</button>
+  </ng-template>
+</mbsc-eventcalendar>

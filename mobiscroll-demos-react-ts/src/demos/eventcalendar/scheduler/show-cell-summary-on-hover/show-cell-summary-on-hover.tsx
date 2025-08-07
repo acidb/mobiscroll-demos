@@ -215,8 +215,6 @@ const App: FC = () => {
     const date = formatDate('DDDD MMM DD, YYYY, HA - ', args.date);
     const time = formatDate('HA', endDate);
 
-    console.log(args);
-
     setCellDate(date + time);
     setCellEventNr(args.events ? args.events.length : 0);
     setCellInvalidNr(args.invalids ? args.invalids.length : 0);

@@ -222,17 +222,6 @@ const myEvents = [
 ];
 
 function App() {
-  const myView = useMemo(
-    () => ({
-      timeline: {
-        type: 'day',
-        startTime: '07:00',
-        endTime: '22:00',
-      },
-    }),
-    [],
-  );
-
   const [resourceAvatar, setResourceAvatar] = useState('');
   const [resourceName, setResourceName] = useState('');
   const [resourceCost, setResourceCost] = useState('');
@@ -249,6 +238,17 @@ function App() {
   const popupRef = useRef(null);
   const openTimer = useRef(null);
   const closeTimer = useRef(null);
+
+  const myView = useMemo(
+    () => ({
+      timeline: {
+        type: 'day',
+        startTime: '07:00',
+        endTime: '22:00',
+      },
+    }),
+    [],
+  );
 
   const getTotalHoursForResource = useCallback(
     (resourceId) =>
@@ -338,7 +338,7 @@ function App() {
     closeTooltip();
   };
 
-  const renderMyResource = useCallback(
+  const customResource = useCallback(
     (res) => (
       <div className="mbsc-flex">
         <img className="mds-resource-info-avatar" src={res.avatar} alt="Avatar" />
@@ -372,7 +372,7 @@ function App() {
         data={myEvents}
         resources={myResources}
         view={myView}
-        renderResource={renderMyResource}
+        renderResource={customResource}
         onResourceHoverIn={handleResourceHoverIn}
         onResourceHoverOut={handleResourceHoverOut}
         onPageChange={handlePageChange}
