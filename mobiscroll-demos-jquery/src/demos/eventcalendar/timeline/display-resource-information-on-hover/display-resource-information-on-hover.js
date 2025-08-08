@@ -77,6 +77,7 @@ export default {
       var calendar = $('#demo-display-resource-information-on-hover')
         .mobiscroll()
         .eventcalendar({
+          // drag
           view: {
             timeline: {
               type: 'day',

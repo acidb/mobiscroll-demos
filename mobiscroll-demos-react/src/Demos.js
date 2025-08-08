@@ -137,6 +137,7 @@ import Demo505 from './demos/eventcalendar/calendar-view/customize-label-look-an
 import Demo504 from './demos/eventcalendar/calendar-view/customize-event-popover/customize-event-popover';
 import Demo509 from './demos/eventcalendar/calendar-view/customizing-header/customizing-header';
 import Demo658 from './demos/eventcalendar/calendar-view/custom-event-tooltip/custom-event-tooltip';
+import Demo775 from './demos/eventcalendar/calendar-view/cell-template-on-hover/cell-template-on-hover';
 import Demo561 from './demos/eventcalendar/calendar-view/move-resize-drag-drop-to-create-events/move-resize-drag-drop-to-create-events';
 import Demo724 from './demos/eventcalendar/calendar-view/conditional-move-resize/conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource';
 import Demo727 from './demos/eventcalendar/calendar-view/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
@@ -724,6 +725,7 @@ export const demos = [
               { name: 'Custom events in popover', unique: 'customize-event-popover', component: Demo504 },
               { name: 'Customizing the header', unique: 'customizing-header', component: Demo509 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo658 },
+              { name: 'Cell template', unique: 'cell-template-on-hover', component: Demo775 },
             ],
           },
           {

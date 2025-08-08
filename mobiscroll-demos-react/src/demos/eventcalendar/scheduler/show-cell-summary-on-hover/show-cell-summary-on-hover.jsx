@@ -227,6 +227,7 @@ function App() {
   return (
     <>
       <Eventcalendar
+        className="mds-cell-summary-on-hover"
         data={myEvents}
         view={myView}
         invalid={myInvalid}

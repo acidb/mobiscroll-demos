@@ -137,6 +137,7 @@ import Demo505 from './demos/eventcalendar/calendar-view/customize-label-look-an
 import Demo504 from './demos/eventcalendar/calendar-view/customize-event-popover/customize-event-popover.vue'
 import Demo509 from './demos/eventcalendar/calendar-view/customizing-header/customizing-header.vue'
 import Demo658 from './demos/eventcalendar/calendar-view/custom-event-tooltip/custom-event-tooltip.vue'
+import Demo775 from './demos/eventcalendar/calendar-view/cell-template-on-hover/cell-template-on-hover.vue'
 import Demo561 from './demos/eventcalendar/calendar-view/move-resize-drag-drop-to-create-events/move-resize-drag-drop-to-create-events.vue'
 import Demo724 from './demos/eventcalendar/calendar-view/conditional-move-resize/conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource.vue'
 import Demo727 from './demos/eventcalendar/calendar-view/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances.vue'
@@ -222,6 +223,7 @@ import Demo712 from './demos/eventcalendar/scheduler/colors-invalids-css-class/c
 import Demo511 from './demos/eventcalendar/scheduler/resource-filtering-in-header/resource-filtering-in-header.vue'
 import Demo489 from './demos/eventcalendar/scheduler/themes-ios-material-windows/themes-ios-material-windows.vue'
 import Demo736 from './demos/eventcalendar/scheduler/resource-background/resource-background.vue'
+import Demo774 from './demos/eventcalendar/scheduler/show-cell-summary-on-hover/show-cell-summary-on-hover.vue'
 import Demo486 from './demos/eventcalendar/scheduler/gregorian-jalali-hijri/gregorian-jalali-hijri.vue'
 import Demo487 from './demos/eventcalendar/scheduler/event-hooks/event-hooks.vue'
 import Demo488 from './demos/eventcalendar/scheduler/localization/localization.vue'
@@ -923,8 +925,21 @@ export const demos = [
                 unique: 'customize-event-popover',
                 component: Demo504
               },
-              { name: 'Customizing the header', unique: 'customizing-header', component: Demo509 },
-              { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo658 }
+              {
+                name: 'Customizing the header',
+                unique: 'customizing-header',
+                component: Demo509
+              },
+              {
+                name: 'Custom event tooltip',
+                unique: 'custom-event-tooltip',
+                component: Demo658
+              },
+              {
+                name: 'Cell template',
+                unique: 'cell-template-on-hover',
+                component: Demo775
+              }
             ]
           },
           {
@@ -1354,6 +1369,11 @@ export const demos = [
                 name: 'Resource background and styling',
                 unique: 'resource-background',
                 component: Demo736
+              },
+              {
+                name: 'Summarize cell information',
+                unique: 'show-cell-summary-on-hover',
+                component: Demo774
               }
             ]
           },
