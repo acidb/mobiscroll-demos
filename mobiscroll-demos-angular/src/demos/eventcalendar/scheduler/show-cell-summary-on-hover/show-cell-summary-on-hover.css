@@ -1,27 +1,28 @@
-.mds-cell-summary .mbsc-calendar-cell {
-  min-height: 145px;
+.mds-cell-summary-on-hover .mbsc-schedule-events.mbsc-ltr {
+  right: 20px;
 }
-.mds-cell-summary-btn {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 8px;
-  z-index: 3;
-  font-size: 10px;
-  padding: 8px;
-  background: transparent;
-  border-radius: 4px;
-  border: 1px solid #5584b5;
-  color: #5584b5;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color 0.1s ease-out;
+.mds-cell-summary-on-hover .mbsc-schedule-events.mbsc-rtl {
+  left: 20px;
 }
-.mds-cell-summary-btn:hover {
-  background: #5584b5;
-  color: white;
-  box-shadow: 0 2px 8px rgba(85, 132, 181, 0.3);
+.mds-cell-summary-on-hover .mbsc-schedule-item:hover {
+  box-shadow:
+    0px 1px 6px 3px rgba(0, 0, 0, 0.2),
+    0px 1px 6px 3px rgba(255, 255, 255, 0.2);
 }
-.mds-cell-summary-btn:active {
-  box-shadow: 0 1px 4px rgba(85, 132, 181, 0.3);
+.mds-cell-summary-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.mds-cell-summary-item {
+  flex: 1;
+}
+.mds-cell-summary-content {
+  font-weight: 500;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+.mds-cell-summary-color {
+  background: repeating-linear-gradient(-45deg, #cce9d3, #cce9d3 10px, #c5dfc1 10px, #c5dfc1 20px);
+  opacity: 0.5;
 }

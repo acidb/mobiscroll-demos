@@ -3,8 +3,8 @@
   [resources]="myResources"
   [view]="calView"
   [resourceTemplate]="customResourceTemplate"
-  (onResourceHoverIn)="onResourceHoverIn($event)"
-  (onResourceHoverOut)="onResourceHoverOut($event)"
+  (onResourceHoverIn)="handleResourceHoverIn($event)"
+  (onResourceHoverOut)="handleResourceHoverOut($event)"
 >
   <ng-template #customResourceTemplate let-res>
     <div class="mbsc-flex">

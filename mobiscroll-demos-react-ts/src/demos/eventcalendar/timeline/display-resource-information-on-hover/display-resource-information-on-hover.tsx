@@ -264,7 +264,7 @@ const App: FC = () => {
   );
 
   const getTotalHoursForResource = useCallback(
-    (resourceId: string) =>
+    (resourceId: string | number) =>
       calInst
         .current!.getEvents()
         .filter((e: MbscCalendarEvent) => e.resource === resourceId)
@@ -284,7 +284,7 @@ const App: FC = () => {
       clearTimeout(openTimer.current!);
 
       openTimer.current = setTimeout(() => {
-        const totalHours = getTotalHoursForResource(resource.id as string);
+        const totalHours = getTotalHoursForResource(resource.id);
 
         setCurrentResource(resource);
         hoveredResourceElmRef.current = target;
@@ -381,6 +381,7 @@ const App: FC = () => {
   return (
     <>
       <Eventcalendar
+        // drag
         ref={calInst}
         data={myEvents}
         resources={myResources}

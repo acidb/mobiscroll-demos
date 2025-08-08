@@ -72,6 +72,7 @@ export default {
     }
 
     var calendar = mobiscroll.eventcalendar('#demo-display-resource-information-on-hover', {
+      // drag
       view: {
         timeline: {
           type: 'day',

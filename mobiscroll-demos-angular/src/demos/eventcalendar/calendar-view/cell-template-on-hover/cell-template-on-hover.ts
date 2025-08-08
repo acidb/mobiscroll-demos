@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
@@ -17,6 +17,7 @@ setOptions({
 @Component({
   selector: 'app-eventcalendar-cell-template-on-hover',
   styleUrl: './cell-template-on-hover.css',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './cell-template-on-hover.html',
   standalone: false,
 })

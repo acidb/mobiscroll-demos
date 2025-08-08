@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
@@ -7,7 +7,7 @@ import {
   MbscPopupOptions,
   MbscPopupPositionEvent,
   MbscResource,
-  // MbscResourceHoverEvent,
+  /*MbscResourceHoverEvent,*/
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -21,6 +21,7 @@ setOptions({
 @Component({
   selector: 'app-timeline-display-resource-information-on-hover',
   styleUrl: './display-resource-information-on-hover.css',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './display-resource-information-on-hover.html',
   standalone: false,
 })
@@ -311,8 +312,9 @@ export class AppComponent {
       this.resourceCost = '$' + resource['cost'];
       this.resourceDate = formatDate('D DDD MMM YYYY', this.mySelectedDate);
       this.resourceTotal = totalHours + 'h, $' + totalHours * resource['cost'];
+      target.classList.add('mds-resource-info-hover');
 
-      // popupRef.position();
+      this.popup.position();
       this.popup.open();
 
       this.openTimer = undefined;
@@ -329,13 +331,11 @@ export class AppComponent {
     }, 200);
   }
 
-  onResourceHoverIn(args: any): void {
-    console.log('hover in')
+  handleResourceHoverIn(args: /*MbscResourceHoverEvent*/ any): void {
     this.openTooltip(args.resource, args.target);
   }
 
-  onResourceHoverOut(resource: any): void {
-    console.log('hover out')
+  handleResourceHoverOut(resource: /*MbscResourceHoverEvent*/ any): void {
     resource.target.classList.remove('mds-resource-info-hover');
     this.closeTooltip();
   }

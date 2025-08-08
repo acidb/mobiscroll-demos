@@ -281,6 +281,7 @@ function App() {
         setResourceCost('$' + resource.cost);
         setResourceDate(formatDate('D DDD MMM YYYY', mySelectedDate.current));
         setResourceTotal(totalHours + 'h, $' + totalHours * resource.cost);
+        target.classList.add('mds-resource-info-hover');
 
         popupRef.current.position();
         setTooltipOpen(true);
@@ -368,6 +369,7 @@ function App() {
   return (
     <>
       <Eventcalendar
+        // drag
         ref={calRef}
         data={myEvents}
         resources={myResources}

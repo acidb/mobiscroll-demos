@@ -73,7 +73,10 @@ function App() {
       start: hoveredDate,
       title: 'New Event',
     };
+
     setEvents((myEvents) => [...myEvents, newEvent]);
+    setToastMessage('Event added on ' + formatDate('YYYY-MM-DD', hoveredDate));
+    setToastOpen(true);
   }, [hoveredDate]);
 
   const customDayContent = useCallback(
@@ -99,10 +102,9 @@ function App() {
     setHoveredDate(null);
   }, []);
 
-  const handleToastClose = useCallback(() => {
-    setToastMessage('Event added on ' + formatDate('YYYY-MM-DD', hoveredDate));
+  const handleToastClose = () => {
     setToastOpen(false);
-  }, [hoveredDate]);
+  };
 
   return (
     <>
