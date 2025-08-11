@@ -59,7 +59,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const hoveredDate = ref<Date | null>(null)
+const hoveredDate = ref<Date | undefined>(undefined)
 const isToastOpen = ref<boolean>(false)
 const toastMessage = ref<string>('')
 
@@ -71,11 +71,11 @@ const myView: MbscEventcalendarView = {
 
 function addEvent() {
   const newEvent: MbscCalendarEvent = {
-    start: hoveredDate.value,
+    start: hoveredDate.value!,
     title: 'New Event'
   }
   myEvents.value = [...myEvents.value, newEvent]
-  toastMessage.value = 'Event added on ' + formatDate('YYYY-MM-DD', hoveredDate.value)
+  toastMessage.value = 'Event added on ' + formatDate('YYYY-MM-DD', hoveredDate.value!)
   isToastOpen.value = true
 }
 
@@ -85,7 +85,7 @@ function handleCellHoverIn(args: MbscCellHoverEvent) {
 }
 
 function handleCellHoverOut() {
-  hoveredDate.value = null
+  hoveredDate.value = undefined
 }
 
 function handleToastClose() {

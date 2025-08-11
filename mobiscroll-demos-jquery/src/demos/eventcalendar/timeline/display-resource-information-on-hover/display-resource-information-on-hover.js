@@ -317,8 +317,8 @@ export default {
           onResourceHoverIn: function (args) {
             openTooltip(args.resource, args.target);
           },
-          onResourceHoverOut: function (resource) {
-            $(resource.target).removeClass('mds-resource-info-hover');
+          onResourceHoverOut: function (args) {
+            $(args.target).removeClass('mds-resource-info-hover');
             closeTooltip();
           },
           onPageChange: function (args) {

@@ -10,7 +10,6 @@ export default {
     });
 
     $(function () {
-      var $tooltip = $('#demo-cell-summary-popup');
       var $cellDate = $('#demo-cell-summary-date');
       var $cellEventNr = $('#demo-cell-summary-events');
       var $cellInvalidNr = $('#demo-cell-summary-invalid');
@@ -201,7 +200,7 @@ export default {
           onCellHoverIn: function (args) {
             var endDate = new Date(args.date);
             endDate.setHours(endDate.getHours() + 1);
-            var date = mobiscroll.formatDate('DDDD MMM DD, YYYY, HA - ', args.date);
+            var date = mobiscroll.formatDate('DDDD MMM D, YYYY, HA - ', args.date);
             var time = mobiscroll.formatDate('HA', endDate);
 
             $cellDate.text(date + time);
@@ -220,7 +219,7 @@ export default {
           },
         });
 
-      var tooltip = $tooltip
+      var tooltip = $('#demo-cell-summary-popup')
         .mobiscroll()
         .popup({
           display: 'anchored',

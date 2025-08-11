@@ -128,6 +128,7 @@ import { AppComponent as Demo346 } from '../demos/eventcalendar/calendar-view/de
 import { AppComponent as Demo442 } from '../demos/eventcalendar/calendar-view/responsive-month-view/responsive-month-view';
 import { AppComponent as Demo661 } from '../demos/eventcalendar/calendar-view/printing-the-view/printing-the-view';
 import { AppComponent as Demo752 } from '../demos/eventcalendar/calendar-view/property-booking-calendar/property-booking-calendar';
+import { AppComponent as Demo776 } from '../demos/eventcalendar/calendar-view/display-cell-template/display-cell-template';
 import { AppComponent as Demo447 } from '../demos/eventcalendar/calendar-view/event-labels/event-labels';
 import { AppComponent as Demo443 } from '../demos/eventcalendar/calendar-view/event-popover/event-popover';
 import { AppComponent as Demo595 } from '../demos/eventcalendar/calendar-view/custom-event-sort/custom-event-sort';
@@ -698,7 +699,10 @@ export const demos: any[] = [
           {
             name: 'Common use cases',
             unique: 20,
-            items: [{ name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 }],
+            items: [
+              { name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 },
+              { name: 'Showing daily aggregates', unique: 'display-cell-template', component: Demo776 },
+            ],
           },
           {
             name: 'Displaying events',
@@ -1405,6 +1409,7 @@ export const demoTitleMap: { [key: string]: string } = {};
     Demo442,
     Demo661,
     Demo752,
+    Demo776,
     Demo447,
     Demo443,
     Demo595,
@@ -1635,4 +1640,4 @@ export const demoTitleMap: { [key: string]: string } = {};
   ],
   imports: [CommonModule, FormsModule, MbscModule, RouterLink],
 })
-export class AppModule {}
+export class AppModule { }
