@@ -7,6 +7,7 @@ export default {
       // locale,
       // theme
     });
+
     var hoveredDate;
 
     function updateRenderDayContent() {
