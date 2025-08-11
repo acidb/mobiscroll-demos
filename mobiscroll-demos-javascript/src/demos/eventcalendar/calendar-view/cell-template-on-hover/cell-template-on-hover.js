@@ -25,7 +25,7 @@ export default {
 
     // Event delegation for dynamic button
     document.getElementById('demo-show-cell-summary-on-hover').addEventListener('click', function (event) {
-      if (event.target.classList.contains('mds-cell-summary-btn') && hoveredDate) {
+      if (event.target.closest('.mds-cell-summary-btn') && hoveredDate) {
         calendar.addEvent({
           start: hoveredDate,
           title: 'New Event',
