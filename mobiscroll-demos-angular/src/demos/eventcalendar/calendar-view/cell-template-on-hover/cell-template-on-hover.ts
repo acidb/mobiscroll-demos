@@ -24,7 +24,7 @@ setOptions({
 export class AppComponent {
   constructor(private notify: Notifications) { }
 
-  hoveredDate: Date | undefined = undefined;
+  hoveredDate: Date | undefined;
 
   myEvents: MbscCalendarEvent[] = [
     {
@@ -71,7 +71,7 @@ export class AppComponent {
     },
   ];
 
-  calView: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     calendar: {
       labels: 2
     },

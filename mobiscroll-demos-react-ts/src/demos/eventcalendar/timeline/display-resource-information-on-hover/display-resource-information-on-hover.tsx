@@ -20,220 +20,6 @@ setOptions({
   // themeJs
 });
 
-const myResources: MbscResource[] = [
-  {
-    id: 'res1',
-    name: 'Adam Miller',
-    color: '#F39C12',
-    profession: 'Mason',
-    avatar: 'https://img.mobiscroll.com/demos/m1.png',
-    cost: '15',
-  },
-  {
-    id: 'res2',
-    name: 'Emily Carter',
-    color: '#76e083',
-    profession: 'Electrician',
-    avatar: 'https://img.mobiscroll.com/demos/f1.png',
-    cost: '20',
-  },
-  {
-    id: 'res3',
-    name: 'James Brown',
-    color: '#b13f49',
-    profession: 'Carpenter',
-    avatar: 'https://img.mobiscroll.com/demos/m2.png',
-    cost: '18',
-  },
-  {
-    id: 'res4',
-    name: 'Daniel Wilson',
-    color: '#e25dd2',
-    profession: 'Welder',
-    avatar: 'https://img.mobiscroll.com/demos/m3.png',
-    cost: '22',
-  },
-  {
-    id: 'res5',
-    name: 'Benjamin Harris',
-    color: '#7056ff',
-    profession: 'Plumber',
-    avatar: 'https://img.mobiscroll.com/demos/m4.png',
-    cost: '20',
-  },
-  {
-    id: 'res6',
-    name: 'Olivia Anderson',
-    color: '#56aaff',
-    profession: 'Concrete Finisher',
-    avatar: 'https://img.mobiscroll.com/demos/f2.png',
-    cost: '15',
-  },
-  {
-    id: 'res7',
-    name: 'Emma Thompson',
-    color: '#84852f',
-    profession: 'Steelworker',
-    avatar: 'https://img.mobiscroll.com/demos/f3.png',
-    cost: '18',
-  },
-  {
-    id: 'res8',
-    name: 'Natalie Roberts',
-    color: '#ff6e56',
-    profession: 'Painter',
-    avatar: 'https://img.mobiscroll.com/demos/f4.png',
-    cost: '25',
-  },
-];
-
-const myEvents: MbscCalendarEvent[] = [
-  {
-    start: 'dyndatetime(y,m,d-1,12)',
-    end: 'dyndatetime(y,m,d-1,15)',
-    title: 'Repoint Brick Facade',
-    resource: 'res1',
-  },
-  {
-    start: 'dyndatetime(y,m,d-1,9)',
-    end: 'dyndatetime(y,m,d-1,12)',
-    title: 'Install Custom Wood Trim',
-    resource: 'res3',
-  },
-  {
-    start: 'dyndatetime(y,m,d-1,14)',
-    end: 'dyndatetime(y,m,d-1,18)',
-    title: 'Repair Steel Stair Treads',
-    resource: 'res4',
-  },
-  {
-    start: 'dyndatetime(y,m,d-1,10)',
-    end: 'dyndatetime(y,m,d-1,13)',
-    title: 'Pour and Finish Driveway Slab',
-    resource: 'res6',
-  },
-  {
-    start: 'dyndatetime(y,m,d-1,11)',
-    end: 'dyndatetime(y,m,d-1,16)',
-    title: 'Paint Interior Drywall',
-    resource: 'res8',
-  },
-  {
-    start: 'dyndatetime(y,m,d,8)',
-    end: 'dyndatetime(y,m,d,11)',
-    title: 'Block Wall Construction',
-    resource: 'res1',
-  },
-  {
-    start: 'dyndatetime(y,m,d,14)',
-    end: 'dyndatetime(y,m,d,16)',
-    title: 'Task 2',
-    resource: 'Paver Installation',
-  },
-  {
-    start: 'dyndatetime(y,m,d,12)',
-    end: 'dyndatetime(y,m,d,17)',
-    title: 'Install ceiling fan',
-    resource: 'res2',
-  },
-  {
-    start: 'dyndatetime(y,m,d,10)',
-    end: 'dyndatetime(y,m,d,14)',
-    title: 'Roof Beam Replacement',
-    resource: 'res3',
-  },
-  {
-    start: 'dyndatetime(y,m,d,7)',
-    end: 'dyndatetime(y,m,d,12)',
-    title: 'Custom Metalworks Creation',
-    resource: 'res4',
-  },
-  {
-    start: 'dyndatetime(y,m,d,14)',
-    end: 'dyndatetime(y,m,d,17)',
-    title: 'Pipe Welding',
-    resource: 'res4',
-  },
-  {
-    start: 'dyndatetime(y,m,10,8)',
-    end: 'dyndatetime(y,m,11,20)',
-    title: 'Leak Detection & Repair',
-    resource: 'res5',
-  },
-  {
-    start: 'dyndatetime(y,m,d,13)',
-    end: 'dyndatetime(y,m,d,17)',
-    title: 'Faucet & Sink Fitting',
-    resource: 'res5',
-  },
-  {
-    start: 'dyndatetime(y,m,d,18)',
-    end: 'dyndatetime(y,m,d,20)',
-    title: 'Drainage System Setup',
-    resource: 'res5',
-  },
-  {
-    start: 'dyndatetime(y,m,d,9)',
-    end: 'dyndatetime(y,m,d,13)',
-    title: 'Surface Polishing',
-    resource: 'res6',
-  },
-  {
-    start: 'dyndatetime(y,m,d,8)',
-    end: 'dyndatetime(y,m,d,10)',
-    title: 'Structural Steel Inspections',
-    resource: 'res7',
-  },
-  {
-    start: 'dyndatetime(y,m,d,13)',
-    end: 'dyndatetime(y,m,d,16)',
-    title: 'Metal Structure Assembly',
-    resource: 'res7',
-  },
-  {
-    start: 'dyndatetime(y,m,d,17)',
-    end: 'dyndatetime(y,m,d,19)',
-    title: 'Heavy Steel Beam Placement',
-    resource: 'res7',
-  },
-  {
-    start: 'dyndatetime(y,m,d,9)',
-    end: 'dyndatetime(y,m,d,12)',
-    title: 'Exterior House Painting',
-    resource: 'res8',
-  },
-  {
-    start: 'dyndatetime(y,m,d,15)',
-    end: 'dyndatetime(y,m,d,18)',
-    title: 'Deck Staining & Sealing',
-    resource: 'res8',
-  },
-  {
-    start: 'dyndatetime(y,m,d+1,12)',
-    end: 'dyndatetime(y,m,d+1,15)',
-    title: 'Troubleshoot Faulty Breaker',
-    resource: 'res2',
-  },
-  {
-    start: 'dyndatetime(y,m,d+1,10)',
-    end: 'dyndatetime(y,m,d+1,13)',
-    title: 'Frame Interior Partitions',
-    resource: 'res3',
-  },
-  {
-    start: 'dyndatetime(y,m,d+1,16)',
-    end: 'dyndatetime(y,m,d+1,20)',
-    title: 'Weld Structural Beam Connections',
-    resource: 'res4',
-  },
-  {
-    start: 'dyndatetime(y,m,d+1,12)',
-    end: 'dyndatetime(y,m,d+1,16)',
-    title: 'Apply Smooth Trowel Finish to Basement Floor',
-    resource: 'res6',
-  },
-];
-
 const App: FC = () => {
   const [resourceAvatar, setResourceAvatar] = useState<string>('');
   const [resourceName, setResourceName] = useState<string>('');
@@ -251,6 +37,226 @@ const App: FC = () => {
   const popupInst = useRef<Popup>(null);
   const openTimer = useRef<ReturnType<typeof setTimeout>>();
   const closeTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  const myResources = useMemo<MbscResource[]>(
+    () => [
+      {
+        id: 'res1',
+        name: 'Adam Miller',
+        color: '#F39C12',
+        profession: 'Mason',
+        avatar: 'https://img.mobiscroll.com/demos/m1.png',
+        cost: '15',
+      },
+      {
+        id: 'res2',
+        name: 'Emily Carter',
+        color: '#76e083',
+        profession: 'Electrician',
+        avatar: 'https://img.mobiscroll.com/demos/f1.png',
+        cost: '20',
+      },
+      {
+        id: 'res3',
+        name: 'James Brown',
+        color: '#b13f49',
+        profession: 'Carpenter',
+        avatar: 'https://img.mobiscroll.com/demos/m2.png',
+        cost: '18',
+      },
+      {
+        id: 'res4',
+        name: 'Daniel Wilson',
+        color: '#e25dd2',
+        profession: 'Welder',
+        avatar: 'https://img.mobiscroll.com/demos/m3.png',
+        cost: '22',
+      },
+      {
+        id: 'res5',
+        name: 'Benjamin Harris',
+        color: '#7056ff',
+        profession: 'Plumber',
+        avatar: 'https://img.mobiscroll.com/demos/m4.png',
+        cost: '20',
+      },
+      {
+        id: 'res6',
+        name: 'Olivia Anderson',
+        color: '#56aaff',
+        profession: 'Concrete Finisher',
+        avatar: 'https://img.mobiscroll.com/demos/f2.png',
+        cost: '15',
+      },
+      {
+        id: 'res7',
+        name: 'Emma Thompson',
+        color: '#84852f',
+        profession: 'Steelworker',
+        avatar: 'https://img.mobiscroll.com/demos/f3.png',
+        cost: '18',
+      },
+      {
+        id: 'res8',
+        name: 'Natalie Roberts',
+        color: '#ff6e56',
+        profession: 'Painter',
+        avatar: 'https://img.mobiscroll.com/demos/f4.png',
+        cost: '25',
+      },
+    ],
+    [],
+  );
+
+  const myEvents = useMemo<MbscCalendarEvent[]>(
+    () => [
+      {
+        start: 'dyndatetime(y,m,d-1,12)',
+        end: 'dyndatetime(y,m,d-1,15)',
+        title: 'Repoint Brick Facade',
+        resource: 'res1',
+      },
+      {
+        start: 'dyndatetime(y,m,d-1,9)',
+        end: 'dyndatetime(y,m,d-1,12)',
+        title: 'Install Custom Wood Trim',
+        resource: 'res3',
+      },
+      {
+        start: 'dyndatetime(y,m,d-1,14)',
+        end: 'dyndatetime(y,m,d-1,18)',
+        title: 'Repair Steel Stair Treads',
+        resource: 'res4',
+      },
+      {
+        start: 'dyndatetime(y,m,d-1,10)',
+        end: 'dyndatetime(y,m,d-1,13)',
+        title: 'Pour and Finish Driveway Slab',
+        resource: 'res6',
+      },
+      {
+        start: 'dyndatetime(y,m,d-1,11)',
+        end: 'dyndatetime(y,m,d-1,16)',
+        title: 'Paint Interior Drywall',
+        resource: 'res8',
+      },
+      {
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,11)',
+        title: 'Block Wall Construction',
+        resource: 'res1',
+      },
+      {
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,16)',
+        title: 'Task 2',
+        resource: 'Paver Installation',
+      },
+      {
+        start: 'dyndatetime(y,m,d,12)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Install ceiling fan',
+        resource: 'res2',
+      },
+      {
+        start: 'dyndatetime(y,m,d,10)',
+        end: 'dyndatetime(y,m,d,14)',
+        title: 'Roof Beam Replacement',
+        resource: 'res3',
+      },
+      {
+        start: 'dyndatetime(y,m,d,7)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Custom Metalworks Creation',
+        resource: 'res4',
+      },
+      {
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Pipe Welding',
+        resource: 'res4',
+      },
+      {
+        start: 'dyndatetime(y,m,10,8)',
+        end: 'dyndatetime(y,m,11,20)',
+        title: 'Leak Detection & Repair',
+        resource: 'res5',
+      },
+      {
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,17)',
+        title: 'Faucet & Sink Fitting',
+        resource: 'res5',
+      },
+      {
+        start: 'dyndatetime(y,m,d,18)',
+        end: 'dyndatetime(y,m,d,20)',
+        title: 'Drainage System Setup',
+        resource: 'res5',
+      },
+      {
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,13)',
+        title: 'Surface Polishing',
+        resource: 'res6',
+      },
+      {
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,10)',
+        title: 'Structural Steel Inspections',
+        resource: 'res7',
+      },
+      {
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,16)',
+        title: 'Metal Structure Assembly',
+        resource: 'res7',
+      },
+      {
+        start: 'dyndatetime(y,m,d,17)',
+        end: 'dyndatetime(y,m,d,19)',
+        title: 'Heavy Steel Beam Placement',
+        resource: 'res7',
+      },
+      {
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,12)',
+        title: 'Exterior House Painting',
+        resource: 'res8',
+      },
+      {
+        start: 'dyndatetime(y,m,d,15)',
+        end: 'dyndatetime(y,m,d,18)',
+        title: 'Deck Staining & Sealing',
+        resource: 'res8',
+      },
+      {
+        start: 'dyndatetime(y,m,d+1,12)',
+        end: 'dyndatetime(y,m,d+1,15)',
+        title: 'Troubleshoot Faulty Breaker',
+        resource: 'res2',
+      },
+      {
+        start: 'dyndatetime(y,m,d+1,10)',
+        end: 'dyndatetime(y,m,d+1,13)',
+        title: 'Frame Interior Partitions',
+        resource: 'res3',
+      },
+      {
+        start: 'dyndatetime(y,m,d+1,16)',
+        end: 'dyndatetime(y,m,d+1,20)',
+        title: 'Weld Structural Beam Connections',
+        resource: 'res4',
+      },
+      {
+        start: 'dyndatetime(y,m,d+1,12)',
+        end: 'dyndatetime(y,m,d+1,16)',
+        title: 'Apply Smooth Trowel Finish to Basement Floor',
+        resource: 'res6',
+      },
+    ],
+    [],
+  );
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
@@ -315,41 +321,47 @@ const App: FC = () => {
   }, []);
 
   // Mobiscroll resource hover events
-  const handleResourceHoverIn = (args: MbscResourceHoverEvent) => {
-    openTooltip(args.resource, args.target);
-  };
+  const handleResourceHoverIn = useCallback(
+    (args: MbscResourceHoverEvent) => {
+      openTooltip(args.resource, args.target);
+    },
+    [openTooltip],
+  );
 
-  const handleResourceHoverOut = (resource: MbscResourceHoverEvent) => {
-    resource.target.classList.remove('mds-resource-info-hover');
-    closeTooltip();
-  };
+  const handleResourceHoverOut = useCallback(
+    (args: MbscResourceHoverEvent) => {
+      args.target.classList.remove('mds-resource-info-hover');
+      closeTooltip();
+    },
+    [closeTooltip],
+  );
 
-  const handlePageChange = (args: MbscPageChangeEvent) => {
+  const handlePageChange = useCallback((args: MbscPageChangeEvent) => {
     mySelectedDate.current = args.firstDay;
-  };
+  }, []);
 
   const handleTooltipPosition = useCallback((args: MbscPopupPositionEvent, inst: Popup) => {
-    const popupElm: HTMLElement | null = args.target.querySelector('.mbsc-popup');
-    const rect: DOMRect = hoveredResourceElmRef.current!.getBoundingClientRect();
+    const popupElm = args.target.querySelector('.mbsc-popup')!;
+    const rect = hoveredResourceElmRef.current!.getBoundingClientRect();
 
-    popupElm!.style.top = rect.top - 10 + 'px';
+    popupElm.style.top = rect.top - 10 + 'px';
 
     if (inst.s.rtl) {
-      popupElm!.style.right = window.innerWidth - rect.left + 10 + 'px';
+      popupElm.style.right = window.innerWidth - rect.left + 10 + 'px';
     } else {
-      popupElm!.style.left = rect.right + 10 + 'px';
+      popupElm.style.left = rect.right + 10 + 'px';
     }
     return false; // Prevent default positioning
   }, []);
 
   // Native mouse events for the popup
-  const handlePopupMouseEnter = () => {
+  const handlePopupMouseEnter = useCallback(() => {
     clearTimeout(closeTimer.current);
-  };
+  }, []);
 
-  const handlePopupMouseLeave = () => {
+  const handlePopupMouseLeave = useCallback(() => {
     closeTooltip();
-  };
+  }, [closeTooltip]);
 
   const customResource = useCallback(
     (res: MbscResource) => (

@@ -4,10 +4,9 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscPopup,
-  MbscPopupOptions,
   MbscPopupPositionEvent,
   MbscResource,
-  /*MbscResourceHoverEvent,*/
+  MbscResourceHoverEvent,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -17,6 +16,12 @@ setOptions({
   // locale,
   // theme
 });
+
+interface MyResource extends MbscResource {
+  profession: string;
+  avatar: string;
+  cost: string;
+}
 
 @Component({
   selector: 'app-timeline-display-resource-information-on-hover',
@@ -31,7 +36,7 @@ export class AppComponent {
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
 
-  myResources: MbscResource[] = [
+  myResources: MyResource[] = [
     {
       id: 'res1',
       name: 'Adam Miller',
@@ -258,33 +263,13 @@ export class AppComponent {
   openTimer?: ReturnType<typeof setTimeout>;
   closeTimer?: ReturnType<typeof setTimeout>;
 
-  calView: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     timeline: {
       type: 'day',
       startTime: '07:00',
       endTime: '22:00',
     },
   };
-
-  popupOptions: MbscPopupOptions = {
-    display: 'anchored',
-    showOverlay: false,
-    touchUi: false,
-    width: 280,
-    onPosition: (args: MbscPopupPositionEvent, inst: any) => {
-      const popupElm: HTMLElement | null = args.target.querySelector('.mbsc-popup');
-      const rect: DOMRect = this.hoveredResourceElm!.getBoundingClientRect();
-
-      popupElm!.style.top = rect.top - 10 + 'px';
-
-      if (inst.s.rtl) {
-        popupElm!.style.right = window.innerWidth - rect.left + 10 + 'px';
-      } else {
-        popupElm!.style.left = rect.right + 10 + 'px';
-      }
-      return false; // Prevent default positioning
-    }
-  }
 
   getTotalHoursForResource(resourceId: string | number): number {
     return this.myEvents.filter((e: MbscCalendarEvent) => e.resource === resourceId)
@@ -299,7 +284,7 @@ export class AppComponent {
   openTooltip(resource: MbscResource, target: HTMLElement) {
 
     clearTimeout(this.closeTimer);
-    clearTimeout(this.openTimer);
+
 
     this.openTimer = setTimeout(() => {
       const totalHours = this.getTotalHoursForResource(resource.id);
@@ -331,12 +316,27 @@ export class AppComponent {
     }, 200);
   }
 
-  handleResourceHoverIn(args: /*MbscResourceHoverEvent*/ any): void {
+  handlePopupPosition(args: MbscPopupPositionEvent): boolean {
+    const popupElm: HTMLElement | null = args.target.querySelector('.mbsc-popup')!;
+    const rect: DOMRect = this.hoveredResourceElm!.getBoundingClientRect();
+
+    popupElm.style.top = rect.top - 10 + 'px';
+
+    if (args.inst!.s.rtl) {
+      popupElm.style.right = window.innerWidth - rect.left + 10 + 'px';
+    } else {
+      popupElm.style.left = rect.right + 10 + 'px';
+    }
+
+    return false; // Prevent default positioning
+  }
+
+  handleResourceHoverIn(args: MbscResourceHoverEvent): void {
     this.openTooltip(args.resource, args.target);
   }
 
-  handleResourceHoverOut(resource: /*MbscResourceHoverEvent*/ any): void {
-    resource.target.classList.remove('mds-resource-info-hover');
+  handleResourceHoverOut(args: MbscResourceHoverEvent): void {
+    args.target.classList.remove('mds-resource-info-hover');
     this.closeTooltip();
   }
 

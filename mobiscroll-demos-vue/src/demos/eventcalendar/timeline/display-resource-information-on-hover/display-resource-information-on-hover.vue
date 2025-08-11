@@ -14,7 +14,7 @@ setOptions({
   // theme
 })
 
-const myResources = ref([
+const myResources = [
   {
     id: 'res1',
     name: 'Adam Miller',
@@ -79,9 +79,9 @@ const myResources = ref([
     avatar: 'https://img.mobiscroll.com/demos/f4.png',
     cost: '25'
   }
-])
+]
 
-const myEvents = ref([
+const myEvents = [
   {
     start: 'dyndatetime(y,m,d-1,12)',
     end: 'dyndatetime(y,m,d-1,15)',
@@ -226,7 +226,7 @@ const myEvents = ref([
     title: 'Apply Smooth Trowel Finish to Basement Floor',
     resource: 'res6'
   }
-])
+]
 
 const resourceAvatar = ref('')
 const resourceName = ref('')
@@ -305,8 +305,8 @@ function handleResourceHoverIn(args) {
   openTooltip(args.resource, args.target)
 }
 
-function handleResourceHoverOut(resource) {
-  resource.target.classList.remove('mds-resource-info-hover')
+function handleResourceHoverOut(args) {
+  args.target.classList.remove('mds-resource-info-hover')
   closeTooltip()
 }
 
@@ -343,14 +343,6 @@ function handlePay() {
   toastMessage.value = currentResource.value.name + ' paid'
   isToastOpen.value = true
 }
-
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
-function handleTooltipClose() {
-  isTooltipOpen.value = false
-}
 </script>
 
 <template>
@@ -381,7 +373,7 @@ function handleTooltipClose() {
     :touchUi="false"
     :width="280"
     :isOpen="isTooltipOpen"
-    @position="handleTooltipPosition"
+    @onPosition="handleTooltipPosition"
     @close="handleTooltipClose"
   >
     <div @mouseenter="handlePopupMouseEnter" @mouseleave="handlePopupMouseLeave">
@@ -409,7 +401,7 @@ function handleTooltipClose() {
       </div>
     </div>
   </MbscPopup>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+  <MbscToast :message="toastMessage" @close="isToastOpen = false" />
 </template>
 
 <style>

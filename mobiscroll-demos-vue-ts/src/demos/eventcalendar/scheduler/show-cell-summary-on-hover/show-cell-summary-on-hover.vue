@@ -192,7 +192,7 @@ const cellEventNr = ref<number>(0)
 const cellInvalidNr = ref<number>(0)
 const cellColorNr = ref<number>(0)
 const isTooltipOpen = ref<boolean>(false)
-const tooltipAnchor = ref<HTMLElement | null>(null)
+const tooltipAnchor = ref<HTMLElement | undefined>(undefined)
 
 const myView: MbscEventcalendarView = {
   schedule: {
@@ -207,7 +207,7 @@ const myView: MbscEventcalendarView = {
 function handleCellHoverIn(args: MbscCellHoverEvent) {
   const endDate = new Date(args.date)
   endDate.setHours(endDate.getHours() + 1)
-  const date = formatDate('DDDD MMM DD, YYYY, HA - ', args.date)
+  const date = formatDate('DDDD MMM D, YYYY, HA - ', args.date)
   const time = formatDate('HA', endDate)
 
   cellDate.value = date + time

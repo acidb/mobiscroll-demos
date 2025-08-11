@@ -107,9 +107,9 @@ const App: FC = () => {
     setHoveredDate(null);
   }, []);
 
-  const handleToastClose = () => {
+  const handleToastClose = useCallback(() => {
     setToastOpen(false);
-  };
+  }, []);
 
   return (
     <>
