@@ -31,7 +31,7 @@ interface MyResource extends MbscResource {
   standalone: false,
 })
 export class AppComponent {
-  constructor(private notify: Notifications) { }
+  constructor(private notify: Notifications) {}
 
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
@@ -272,7 +272,8 @@ export class AppComponent {
   };
 
   getTotalHoursForResource(resourceId: string | number): number {
-    return this.myEvents.filter((e: MbscCalendarEvent) => e.resource === resourceId)
+    return this.myEvents
+      .filter((e: MbscCalendarEvent) => e.resource === resourceId)
       .reduce((sum: number, e: MbscCalendarEvent) => {
         const start: Date = new Date(e.start as Date);
         const end: Date = new Date(e.end as Date);
@@ -282,7 +283,6 @@ export class AppComponent {
   }
 
   openTooltip(resource: MbscResource, target: HTMLElement) {
-
     clearTimeout(this.closeTimer);
 
 
@@ -343,6 +343,7 @@ export class AppComponent {
   handlePopupMouseEnter(): void {
     clearTimeout(this.closeTimer);
   }
+
   handlePopupMouseLeave(): void {
     this.closeTooltip();
   }
@@ -350,8 +351,7 @@ export class AppComponent {
   handlePay(): void {
     this.popup.close();
     this.notify.toast({
-      message: this.currentResource!.name + ' paid'
+      message: this.currentResource!.name + ' paid',
     });
   }
-
 }
