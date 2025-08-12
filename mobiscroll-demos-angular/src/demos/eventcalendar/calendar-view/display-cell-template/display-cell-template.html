@@ -14,25 +14,29 @@
   (onCellClick)="handleCellClick($event)"
 >
   <ng-template #customDayTemplate let-data>
-    @let dayData = getDayTemplate(data);
-    <div
-      class="mds-cell-template-cont"
-      [attr.data-date]="data.date.getTime()"
-      [ngStyle]="{'background': dayData.stressLevelColor ? dayData.stressLevelColor : ''}"
-    >
-      <div class="mds-cell-template-day">{{dayData.dayContent}}</div>
-      <div>{{dayData.weather}}</div>
-      <div class="mds-cell-template-info" style="color: #634b67">Internal mtgs: {{dayData.nrMeetings}}</div>
-      <div class="mds-cell-template-info" style="color: #656d49">Client mtgs: {{dayData.nrAppointments}}</div>
-      <mbsc-button class="mds-cell-template-add" icon="plus"></mbsc-button>
+    <div *ngIf="getDayTemplate(data) as dayData">
+      <div
+        class="mds-cell-template-cont"
+        [ngStyle]="{'background': dayData.stressLevelColor && selectedView !== 'day' ? dayData.stressLevelColor : ''}"
+        (click)="selectedView === 'week' ? setSelectedView('day', data.date) : null"
+      >
+        <div class="mds-cell-template-day">{{dayData.dayContent}}</div>
+        <div>{{dayData.weather}}</div>
+        <div class="mds-cell-template-info" style="color: #634b67">Internal mtgs: {{dayData.nrMeetings}}</div>
+        <div class="mds-cell-template-info" style="color: #656d49">Client mtgs: {{dayData.nrAppointments}}</div>
+        <mbsc-button class="mds-cell-template-add" icon="plus"></mbsc-button>
+      </div>
     </div>
   </ng-template>
+
   <ng-template #customHeaderTemplate>
     <mbsc-calendar-nav class="mds-cell-template-nav"></mbsc-calendar-nav>
     <div class="mds-cell-template-view-controls mbsc-flex-1-0">
-      <mbsc-button color="secondary" start-icon="close" class="mds-cell-template-back">Back to calendar</mbsc-button>
+      <mbsc-button color="secondary" startIcon="close" class="mds-cell-template-back" (click)="setSelectedView(previousView, undefined)"
+        >Back to calendar</mbsc-button
+      >
       <div class="mds-cell-template-view-switch">
-        <mbsc-segmented-group [(ngModel)]="selectedView" (change)="setSelectedView(selectedView, undefined)">
+        <mbsc-segmented-group [(ngModel)]="selectedView" (change)="setSelectedView($event.value, undefined)">
           <mbsc-segmented value="month" icon="material-date-range" class="mds-cell-template-view">Calendar</mbsc-segmented>
           <mbsc-segmented value="week" icon="material-event-note" class="mds-cell-template-view">Week view</mbsc-segmented>
         </mbsc-segmented-group>

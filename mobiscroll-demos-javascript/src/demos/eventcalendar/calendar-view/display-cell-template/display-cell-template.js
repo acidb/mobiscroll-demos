@@ -367,7 +367,7 @@ export default {
           mobiscroll.toast({
             message: 'Appointment added to ' + formatDate('DDD D, MMM', date),
           });
-        } else {
+        } else if (this.selectedView === 'month') {
           setSelectedView('day', date);
         }
       },

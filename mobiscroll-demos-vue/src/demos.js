@@ -120,7 +120,7 @@ import Demo346 from './demos/eventcalendar/calendar-view/desktop-month-view/desk
 import Demo442 from './demos/eventcalendar/calendar-view/responsive-month-view/responsive-month-view.vue'
 import Demo661 from './demos/eventcalendar/calendar-view/printing-the-view/printing-the-view.vue'
 import Demo752 from './demos/eventcalendar/calendar-view/property-booking-calendar/property-booking-calendar.vue'
-import Demo776 from './demos/eventcalendar/calendar-view/display-cell-template/display-cell-template'
+import Demo776 from './demos/eventcalendar/calendar-view/display-cell-template/display-cell-template.vue'
 import Demo447 from './demos/eventcalendar/calendar-view/event-labels/event-labels.vue'
 import Demo443 from './demos/eventcalendar/calendar-view/event-popover/event-popover.vue'
 import Demo595 from './demos/eventcalendar/calendar-view/custom-event-sort/custom-event-sort.vue'

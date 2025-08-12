@@ -15,7 +15,7 @@ setOptions({
   // theme
 });
 
-interface Weather {
+interface WeatherData {
   date: Date;
   degree: number;
   emoji: string;
@@ -30,6 +30,12 @@ interface Weather {
 })
 export class AppComponent {
   constructor(private notify: Notifications) { }
+
+  myCssClass: string = 'mds-cell-template mds-cell-template-month-view';
+  weatherCache: { [key: string]: { date: Date; degree: number; emoji: string } } = {};
+  selectedView: string = 'month';
+  previousView: string = 'month';
+  currentDate: MbscDateType = new Date();
 
   myEvents: MbscCalendarEvent[] = [{
     start: dyndatetime('y,m,d-1,15'),
@@ -187,16 +193,11 @@ export class AppComponent {
     },
   }];
 
-  myCssClass: string = 'mds-cell-template mds-cell-template-month-view';
   myView: MbscEventcalendarView = {
     calendar: {
       type: 'month'
     }
   }
-  weatherCache: { [key: string]: { date: Date; degree: number; emoji: string } } = {};
-  selectedView: string = 'month';
-  previousView: string = 'month';
-  currentDate: MbscDateType = new Date();
 
   myDefaultEvent(): MbscCalendarEvent {
     return {
@@ -206,7 +207,7 @@ export class AppComponent {
     };
   }
 
-  getWeatherForDate(date: Date): Weather {
+  getWeatherForDate(date: Date): WeatherData {
     const key = date.getTime();
     if (!this.weatherCache[key]) {
       this.weatherCache[key] = this.generateRandomWeather(date);
@@ -214,7 +215,7 @@ export class AppComponent {
     return this.weatherCache[key];
   }
 
-  generateRandomWeather(date: Date): Weather {
+  generateRandomWeather(date: Date): WeatherData {
     const weatherTypes = [
       { emoji: '☀️', min: 24, max: 30 },
       { emoji: '🌤️', min: 20, max: 25 },
@@ -255,9 +256,7 @@ export class AppComponent {
     let nrMeetings = 0;
     let nrAppointments = 0;
 
-    for (let i = 0; i < events.length; i++) {
-      const event = events[i];
-
+    for (const event of events) {
       if (event['type'] === 'meeting') {
         nrMeetings++;
       } else {
@@ -313,9 +312,11 @@ export class AppComponent {
 
   handleCellClick(args: MbscCellClickEvent) {
     const date = args.date;
-    const target = args.target;
+    const target = args.domEvent.target as HTMLElement;
 
-    if (target && target.closest('.mds-cell-template-add')) {
+    console.log('Cell clicked');
+
+    if (target.closest('.mds-cell-template-add')) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -333,12 +334,12 @@ export class AppComponent {
         message: 'Appointment added to ' + formatDate('DDD D, MMM', date)
       });
 
-    } else {
+    } else if (this.selectedView === 'month') {
       this.setSelectedView('day', date);
     }
   }
 
-  getDayTemplate(args: any) {
+  getDayTemplate(args: { date: Date; events: MbscCalendarEvent[] }) {
     const date = args.date;
     const nrEvents = this.getNrEvents(args.events);
     const nrAllEvents = args.events.length;
