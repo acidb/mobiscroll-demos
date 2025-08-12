@@ -266,7 +266,7 @@ function App() {
   }, []);
 
   const setCalendarView = useCallback(
-    (view, date) => {
+    (view, date = undefined) => {
       if (view === 'day') {
         setPreviousView(selectedView);
       }
@@ -303,7 +303,7 @@ function App() {
           });
           break;
       }
-
+      console.log(date);
       if (date) {
         setCurrentDate(date);
       }
@@ -311,73 +311,68 @@ function App() {
     [selectedView],
   );
 
-  const getDayTemplateData = useCallback(
-    (date, events) => {
-      const nrEvents = getNrEvents(events);
-      const nrAllEvents = events.length;
-      const stressLevel = getStressLevel(nrAllEvents);
-      const weather = getWeatherForDate(date);
-
-      return {
-        nrEvents,
-        stressLevel,
-        weather,
-        dayContent: formatDate('DDD D, MMM', date) + ' ' + stressLevel.emoji + ' ',
-        weatherContent: weather.emoji + ' ' + weather.degree + '°C',
-      };
+  const handleViewChange = useCallback(
+    (ev) => {
+      setCalendarView(ev.target.value);
     },
-    [getNrEvents, getStressLevel, getWeatherForDate],
+    [setCalendarView],
+  );
+
+  const handleBackToView = useCallback(() => {
+    setCalendarView(previousView);
+  }, [setCalendarView, previousView]);
+
+  const handleDayClick = useCallback(
+    (date) => {
+      if (selectedView === 'week') {
+        setCalendarView('day', date);
+      }
+    },
+    [setCalendarView, selectedView],
   );
 
   const customDay = useCallback(
     (args) => {
       const date = args.date;
-      const templateData = getDayTemplateData(date, args.events);
+      const events = args.events;
+      const nrEvents = getNrEvents(events);
+      const nrAllEvents = events.length;
+      const stressLevel = getStressLevel(nrAllEvents);
+      const weather = getWeatherForDate(date);
 
       return (
         <div
           className="mds-cell-template-cont"
           style={{
-            background: templateData.stressLevel.color && selectedView !== 'day' ? templateData.stressLevel.color : '',
+            background: stressLevel.color && selectedView !== 'day' ? stressLevel.color : '',
           }}
-          onClick={() => (selectedView === 'week' ? setCalendarView('day', date) : null)}
+          onClick={() => handleDayClick(date)}
         >
-          <div className="mds-cell-template-day">{templateData.dayContent}</div>
-          <div>{templateData.weatherContent}</div>
+          <div className="mds-cell-template-day">{formatDate('DDD D, MMM', date) + ' ' + stressLevel.emoji + ' '}</div>
+          <div>{weather.emoji + ' ' + weather.degree + '°C'}</div>
           <div className="mds-cell-template-info" style={{ color: '#634b67' }}>
-            Internal mtgs: {templateData.nrEvents.meetings}
+            Internal mtgs: {nrEvents.meetings}
           </div>
           <div className="mds-cell-template-info" style={{ color: '#656d49' }}>
-            Client mtgs: {templateData.nrEvents.appointments}
+            Client mtgs: {nrEvents.appointments}
           </div>
           <Button className="mds-cell-template-add" icon="plus"></Button>
         </div>
       );
     },
-    [selectedView, setCalendarView, getDayTemplateData],
+    [selectedView, getNrEvents, getWeatherForDate, getStressLevel, handleDayClick],
   );
 
   const customHeader = useCallback(
     () => (
       <>
-        <CalendarNav className="mds-cell-template-nav"></CalendarNav>
+        <CalendarNav className="mds-cell-template-nav" />
         <div className="mds-cell-template-view-controls mbsc-flex-1-0">
-          <Button
-            color="secondary"
-            startIcon="close"
-            className="mds-cell-template-back"
-            onClick={() => setCalendarView(previousView, undefined)}
-          >
+          <Button color="secondary" startIcon="close" className="mds-cell-template-back" onClick={handleBackToView}>
             Back to calendar
           </Button>
           <div className="mds-cell-template-view-switch">
-            <SegmentedGroup
-              value={selectedView}
-              onChange={(ev) => {
-                setSelectedView(ev.target.value);
-                setCalendarView(ev.target.value, undefined);
-              }}
-            >
+            <SegmentedGroup value={selectedView} onChange={handleViewChange}>
               <Segmented value="month" icon="material-date-range" className="mds-cell-template-view">
                 Calendar
               </Segmented>
@@ -387,12 +382,12 @@ function App() {
             </SegmentedGroup>
           </div>
         </div>
-        <CalendarPrev></CalendarPrev>
-        <CalendarToday></CalendarToday>
-        <CalendarNext></CalendarNext>
+        <CalendarPrev />
+        <CalendarToday />
+        <CalendarNext />
       </>
     ),
-    [previousView, selectedView, setCalendarView],
+    [selectedView, handleViewChange, handleBackToView],
   );
 
   const onCellClick = useCallback(
@@ -423,12 +418,12 @@ function App() {
     [selectedView, setCalendarView],
   );
 
-  const handleToastClose = useCallback(() => {
-    setToastOpen(false);
-  }, []);
-
   const handleSelectedDateChange = useCallback((args) => {
     setCurrentDate(args.date);
+  }, []);
+
+  const handleToastClose = useCallback(() => {
+    setToastOpen(false);
   }, []);
 
   return (
@@ -442,11 +437,11 @@ function App() {
         dragToMove={true}
         dragToResize={true}
         eventDelete={true}
+        selectedDate={currentDate}
         extendDefaultEvent={myDefaultEvent}
         renderDay={customDay}
         renderHeader={customHeader}
         onCellClick={onCellClick}
-        selectedDate={currentDate}
         onSelectedDateChange={handleSelectedDateChange}
       />
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />

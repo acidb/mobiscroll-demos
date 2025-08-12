@@ -259,7 +259,7 @@ function getNrEvents(events) {
   return { meetings: nrMeetings, appointments: nrAppointments }
 }
 
-function setSelectedView(view, date) {
+function setSelectedView(view, date = undefined) {
   if (view === 'day') {
     previousView.value = selectedView.value
   }
@@ -334,7 +334,7 @@ function getDayTemplate(args) {
   const stressLevel = getStressLevel(nrAllEvents)
   const weather = getWeatherForDate(date)
 
-  console.log(args.events)
+  console.log(args.date, args.events)
 
   return {
     dayContent: formatDate('DDD D, MMM', date) + ' ' + stressLevel.emoji,
@@ -366,47 +366,49 @@ function handleSelectedDateChange(args) {
     @cell-click="handleCellClick"
   >
     <template #day="data">
+      {{ void (dayData = getDayTemplate(data)) }}
       <div
         class="mds-cell-template-cont"
         :style="{
           background:
-            getDayTemplate(data).stressLevelColor && selectedView !== 'day'
-              ? getDayTemplate(data).stressLevelColor
-              : ''
+            dayData.stressLevelColor && selectedView !== 'day' ? dayData.stressLevelColor : ''
         }"
         @click="selectedView === 'week' ? setSelectedView('day', data.date) : null"
       >
-        <div class="mds-cell-template-day">{{ getDayTemplate(data).dayContent }}</div>
-        <div>{{ getDayTemplate(data).weather }}</div>
+        <div class="mds-cell-template-day">{{ dayData.dayContent }}</div>
+        <div>{{ dayData.weather }}</div>
         <div class="mds-cell-template-info" style="color: #634b67">
-          Internal mtgs: {{ getDayTemplate(data).nrMeetings }}
+          Internal mtgs: {{ dayData.nrMeetings }}
         </div>
         <div class="mds-cell-template-info" style="color: #656d49">
-          Client mtgs: {{ getDayTemplate(data).nrAppointments }}
+          Client mtgs: {{ dayData.nrAppointments }}
         </div>
-        <MbscButton className="mds-cell-template-add" icon="plus"></MbscButton>
+        <MbscButton cssClass="mds-cell-template-add" icon="plus"></MbscButton>
       </div>
     </template>
 
     <template #header>
-      <MbscCalendarNav className="mds-cell-template-nav"></MbscCalendarNav>
+      <MbscCalendarNav cssClass="mds-cell-template-nav"></MbscCalendarNav>
       <div class="mds-cell-template-view-controls mbsc-flex-1-0">
         <MbscButton
           color="secondary"
           startIcon="close"
-          className="mds-cell-template-back"
-          @click="setSelectedView(previousView, undefined)"
+          cssClass="mds-cell-template-back"
+          @click="setSelectedView(previousView)"
           >Back to calendar</MbscButton
         >
         <div class="mds-cell-template-view-switch">
           <MbscSegmentedGroup
             v-model="selectedView"
-            @change="(event) => setSelectedView(event.value, undefined)"
+            @change="(ev) => setSelectedView(ev.target.value)"
           >
-            <MbscSegmented value="month" icon="material-date-range" class="mds-cell-template-view"
+            <MbscSegmented
+              value="month"
+              icon="material-date-range"
+              cssClass="mds-cell-template-view"
               >Calendar</MbscSegmented
             >
-            <MbscSegmented value="week" icon="material-event-note" class="mds-cell-template-view"
+            <MbscSegmented value="week" icon="material-event-note" cssClass="mds-cell-template-view"
               >Week view</MbscSegmented
             >
           </MbscSegmentedGroup>

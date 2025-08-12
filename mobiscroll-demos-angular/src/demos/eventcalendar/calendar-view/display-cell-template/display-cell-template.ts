@@ -267,7 +267,7 @@ export class AppComponent {
     return { meetings: nrMeetings, appointments: nrAppointments };
   }
 
-  setSelectedView(view: string, date: Date | undefined) {
+  setSelectedView(view: string, date?: Date) {
     if (view === 'day') {
       this.previousView = this.selectedView;
     }

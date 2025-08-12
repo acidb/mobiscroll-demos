@@ -32,11 +32,11 @@
   <ng-template #customHeaderTemplate>
     <mbsc-calendar-nav class="mds-cell-template-nav"></mbsc-calendar-nav>
     <div class="mds-cell-template-view-controls mbsc-flex-1-0">
-      <mbsc-button color="secondary" startIcon="close" class="mds-cell-template-back" (click)="setSelectedView(previousView, undefined)"
+      <mbsc-button color="secondary" startIcon="close" class="mds-cell-template-back" (click)="setSelectedView(previousView)"
         >Back to calendar</mbsc-button
       >
       <div class="mds-cell-template-view-switch">
-        <mbsc-segmented-group [(ngModel)]="selectedView" (change)="setSelectedView(selectedView, undefined)">
+        <mbsc-segmented-group [(ngModel)]="selectedView" (change)="setSelectedView(selectedView)">
           <mbsc-segmented value="month" icon="material-date-range" class="mds-cell-template-view">Calendar</mbsc-segmented>
           <mbsc-segmented value="week" icon="material-event-note" class="mds-cell-template-view">Week view</mbsc-segmented>
         </mbsc-segmented-group>
