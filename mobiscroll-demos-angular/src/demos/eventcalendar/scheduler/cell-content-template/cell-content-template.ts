@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
@@ -9,154 +9,122 @@ setOptions({
 
 @Component({
   selector: 'app-timeline-cell-content-template',
+  styleUrls: ['./cell-content-template.css'],
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './cell-content-template.html',
   standalone: false,
 })
 export class AppComponent {
-  view: MbscEventcalendarView = {
-    timeline: {
-      type: 'month',
-    },
-  };
-
   myEvents: MbscCalendarEvent[] = [
     {
-      start: dyndatetime('y,m,2'),
-      end: dyndatetime('y,m,5'),
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      start: dyndatetime('y,m,10,9'),
-      end: dyndatetime('y,m,15,15'),
-      title: 'Event 2',
-      resource: 3,
-    },
-    {
-      start: dyndatetime('y,m,12'),
-      end: dyndatetime('y,m,14'),
-      title: 'Event 3',
-      resource: 4,
-    },
-    {
-      start: dyndatetime('y,m,15,7'),
-      end: dyndatetime('y,m,20,12'),
-      title: 'Event 4',
-      resource: 5,
-    },
-    {
-      start: dyndatetime('y,m,3'),
-      end: dyndatetime('y,m,10'),
-      title: 'Event 5',
-      resource: 6,
-    },
-    {
-      start: dyndatetime('y,m,10,8'),
-      end: dyndatetime('y,m,11,20'),
-      title: 'Event 6',
-      resource: 7,
-    },
-    {
-      start: dyndatetime('y,m,22'),
-      end: dyndatetime('y,m,28'),
-      title: 'Event 7',
-      resource: 7,
-    },
-    {
-      start: dyndatetime('y,m,8'),
-      end: dyndatetime('y,m,13'),
-      title: 'Event 8',
-      resource: 15,
-    },
-    {
-      start: dyndatetime('y,m,25'),
-      end: dyndatetime('y,m,27'),
-      title: 'Event 9',
-      resource: 10,
-    },
-    {
-      start: dyndatetime('y,m,20'),
-      end: dyndatetime('y,m,23'),
-      title: 'Event 10',
-      resource: 12,
-    },
-  ];
-
-  myResources = [
-    {
       id: 1,
-      name: 'Resource A',
-      color: '#e20000',
+      title: 'Team Sync Meeting',
+      start: dyndatetime('y, m, d - 1, 10, 15'),
+      end: dyndatetime('y, m, d - 1, 11, 30'),
     },
     {
       id: 2,
-      name: 'Resource B',
-      color: '#76e083',
+      title: 'Apply Security Update',
+      start: dyndatetime('y, m, d - 1, 15, 0'),
+      end: dyndatetime('y, m, d - 1, 16, 0'),
     },
     {
       id: 3,
-      name: 'Resource C',
-      color: '#4981d6',
+      title: 'Database Backup',
+      start: dyndatetime('y, m, d - 2, 12, 0'),
+      end: dyndatetime('y, m, d - 2, 13, 0'),
     },
     {
       id: 4,
-      name: 'Resource D',
-      color: '#e25dd2',
+      title: 'Project Kickoff & Coffee',
+      start: dyndatetime('y, m, d - 2, 9, 0'),
+      end: dyndatetime('y, m, d - 2, 10, 0'),
     },
     {
       id: 5,
-      name: 'Resource E',
-      color: '#1dab2f',
+      title: 'System Health Review',
+      start: dyndatetime('y, m, d - 2, 8, 0'),
+      end: dyndatetime('y, m, d - 2, 8, 45'),
     },
     {
       id: 6,
-      name: 'Resource F',
-      color: '#d6d145',
+      title: 'Quarterly Health Audit',
+      start: dyndatetime('y, m, d, 16, 0'),
+      end: dyndatetime('y, m, d, 17, 0'),
     },
     {
       id: 7,
-      name: 'Resource G',
-      color: '#34c8e0',
+      title: 'Deployment Window',
+      start: dyndatetime('y, m, d, 14, 0'),
+      end: dyndatetime('y, m, d, 15, 0'),
     },
     {
       id: 8,
-      name: 'Resource H',
-      color: '#9dde46',
+      title: 'Nightly Backup Prep',
+      start: dyndatetime('y, m, d, 12, 0'),
+      end: dyndatetime('y, m, d, 13, 0'),
     },
     {
       id: 9,
-      name: 'Resource I',
-      color: '#166f6f',
+      title: 'Morning System Scan',
+      start: dyndatetime('y, m, d, 8, 0'),
+      end: dyndatetime('y, m, d, 8, 45'),
     },
     {
       id: 10,
-      name: 'Resource J',
-      color: '#f7961e',
+      title: 'Sprint Review & Coffee',
+      start: dyndatetime('y, m, d + 2, 9, 0'),
+      end: dyndatetime('y, m, d + 2, 9, 45'),
     },
     {
       id: 11,
-      name: 'Resource K',
-      color: '#34c8e0',
+      title: 'Final Health Check',
+      start: dyndatetime('y, m, d + 2, 16, 0'),
+      end: dyndatetime('y, m, d + 2, 16, 45'),
     },
     {
       id: 12,
-      name: 'Resource L',
-      color: '#af0000',
+      title: 'Weekly Backup',
+      start: dyndatetime('y, m, d + 2, 12, 0'),
+      end: dyndatetime('y, m, d + 2, 12, 45'),
     },
     {
       id: 13,
-      name: 'Resource M',
-      color: '#446f1c',
+      title: 'Morning Health Scan',
+      start: dyndatetime('y, m, d + 1, 8, 15'),
+      end: dyndatetime('y, m, d + 1, 9, 0'),
     },
     {
       id: 14,
-      name: 'Resource N',
-      color: '#073138',
-    },
-    {
-      id: 15,
-      name: 'Resource O',
-      color: '#4caf00',
+      title: 'Afternoon Backup',
+      start: dyndatetime('y, m, d + 1, 12, 15'),
+      end: dyndatetime('y, m, d + 1, 13, 0'),
     },
   ];
+
+  view: MbscEventcalendarView = {
+    schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
+  };
+
+  getIcons(args: any) {
+    const h = args.date.getHours();
+    const d = args.date.getDay();
+    const icons: { icon: string; title: string }[] = [];
+
+    if ((d === 1 || d === 5) && h === 9) {
+      icons.push(
+        { icon: 'material-people', title: d === 1 ? 'Launch Meeting' : 'Sprint Review' },
+        { icon: 'material-message', title: 'Coffee Break' },
+      );
+    }
+    if (h === 13) icons.push({ icon: 'bubbles', title: 'Lunch Time' });
+    if (d >= 1 && d <= 5 && h === 17) icons.push({ icon: 'clock', title: 'Wrap Up' });
+    if (d === 2 && (h === 10 || h === 11)) icons.push({ icon: 'loop2', title: 'Dev Sync' });
+    if (h % 4 === 0) icons.push({ icon: 'cogs', title: 'Health Check' });
+    if (h === 3) icons.push({ icon: 'connection', title: 'Network Probe' });
+    if (h === 12) icons.push({ icon: 'upload', title: 'Backup' });
+    if (d === 3 && h === 14) icons.push({ icon: 'line-paperplane', title: 'Deploy Window' });
+
+    return icons;
+  }
 }

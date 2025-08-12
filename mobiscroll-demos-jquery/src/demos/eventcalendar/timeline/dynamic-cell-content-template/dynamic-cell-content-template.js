@@ -9,13 +9,6 @@ export default {
       // theme
     });
 
-    var myResources = [
-      { id: 1, name: 'Resource A' },
-      { id: 2, name: 'Resource B' },
-      { id: 3, name: 'Resource C' },
-      { id: 4, name: 'Resource D' },
-    ];
-
     var myEvents = [
       {
         id: 1,
@@ -504,21 +497,28 @@ export default {
       //</hidden>
     ];
 
+    var myResources = [
+      { id: 1, name: 'Resource A' },
+      { id: 2, name: 'Resource B' },
+      { id: 3, name: 'Resource C' },
+      { id: 4, name: 'Resource D' },
+    ];
+
     var hoveredDate;
     var hoveredResource;
     var hoveredCellEventCount;
 
     var iconMap = {
-      Review: 'fa-clipboard-check',
-      Demo: 'fa-laptop-code',
-      Kickoff: 'fa-flag',
-      Strategy: 'fa-chess',
-      Collab: 'fa-handshake',
-      Update: 'fa-upload',
-      Discussion: 'fa-comment-dots',
-      Planning: 'fa-calendar-alt',
-      Retrospect: 'fa-history',
-      Onboard: 'fa-user-plus',
+      Review: 'calendar',
+      Demo: 'play',
+      Kickoff: 'flag',
+      Strategy: 'map',
+      Collab: 'bubbles',
+      Update: 'upload',
+      Discussion: 'bubble',
+      Planning: 'pencil',
+      Retrospect: 'history',
+      Onboard: 'user4',
     };
     var titles = Object.keys(iconMap);
 
@@ -538,19 +538,19 @@ export default {
           cssClass: 'mds-timeline-cell-content',
           view: {
             timeline: {
+              endDay: 5,
+              eventList: true,
               type: 'month',
               resolutionHorizontal: 'day',
               startDay: 1,
-              endDay: 5,
-              eventList: true,
             },
           },
-          renderCell: function (args) {
+        renderCell: function (args) {
             var events = args.events || [];
             var hours = Math.round(
               events.reduce(function (s, ev) {
                 return s + (new Date(ev.end) - new Date(ev.start)) / 36e5;
-              }, 0),
+              }, 0)
             );
             var classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
             var colorClass = 'mds-timeline-cell-content-badge-' + (classMap[hours] || 'default');
@@ -560,9 +560,14 @@ export default {
 
             for (var i = 0; i < events.length; i++) {
               var ev = events[i];
-              var iconClass = iconMap[ev.title];
-              if (iconClass && !addedIcons.has(ev.title)) {
-                iconHtml += '<i class="fas ' + iconClass + ' mds-timeline-cell-icon" title="' + ev.title + '"></i>';
+              var iconName = iconMap[ev.title];
+              if (iconName && !addedIcons.has(ev.title)) {
+                iconHtml +=
+                  '<i class="mbsc-font-icon mbsc-icon-' +
+                  iconName +
+                  ' mds-timeline-cell-icon" title="' +
+                  ev.title +
+                  '"></i>';
                 addedIcons.add(ev.title);
               }
             }
@@ -585,10 +590,11 @@ export default {
           },
           onCellHoverIn: function (args) {
             hoveredDate = args.date;
-            hoveredResource = args.resource;
-            hoveredCellEventCount = args.events.length;
+            hoveredResource = args.resource.id;
+            hoveredCellEventCount = args.events?.length || 0;
           },
           onEventCreate: function () {
+            console.log(hoveredCellEventCount);
             if (hoveredCellEventCount >= 4) {
               mobiscroll.toast({
                 //<hidden>
@@ -630,7 +636,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <div id="demo-cell-content"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
@@ -727,8 +732,7 @@ export default {
 
 .mds-timeline-cell-icon {
   text-align: center;
-  width: 21px;
-  height: 17px;
+  padding: 2px 4px;
   margin: 0 3px;
   line-height: 17px !important;
   color: #000;
@@ -737,5 +741,5 @@ export default {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   font-size: 13px;
 }
-    `,
+`,
 };
