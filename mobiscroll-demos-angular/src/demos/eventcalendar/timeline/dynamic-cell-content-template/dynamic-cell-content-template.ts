@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -9,154 +9,602 @@ setOptions({
 
 @Component({
   selector: 'app-timeline-dynamic-cell-content-template',
+  styleUrl: './dynamic-cell-content-template.css',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamic-cell-content-template.html',
   standalone: false,
+  providers: [Notifications],
 })
 export class AppComponent {
+  constructor(private notify: Notifications) {}
+  Math = Math;
+
+  iconMap: Record<string, string> = {
+    Review: 'calendar',
+    Demo: 'play',
+    Kickoff: 'flag',
+    Strategy: 'map',
+    Collab: 'bubbles',
+    Update: 'upload',
+    Discussion: 'bubble',
+    Planning: 'pencil',
+    Retrospect: 'history',
+    Onboard: 'user4',
+  };
+  titles = Object.keys(this.iconMap);
+
+  isToastOpen = false;
+  toastMessage = '';
+
+  hovered = { date: null as Date | null, resource: null as number | null, count: 0 };
+
   view: MbscEventcalendarView = {
     timeline: {
       type: 'month',
+      resolutionHorizontal: 'day',
+      startDay: 1,
+      endDay: 5,
+      eventList: true,
     },
   };
 
-  myEvents: MbscCalendarEvent[] = [
-    {
-      start: dyndatetime('y,m,2'),
-      end: dyndatetime('y,m,5'),
-      title: 'Event 1',
-      resource: 1,
-    },
-    {
-      start: dyndatetime('y,m,10,9'),
-      end: dyndatetime('y,m,15,15'),
-      title: 'Event 2',
-      resource: 3,
-    },
-    {
-      start: dyndatetime('y,m,12'),
-      end: dyndatetime('y,m,14'),
-      title: 'Event 3',
-      resource: 4,
-    },
-    {
-      start: dyndatetime('y,m,15,7'),
-      end: dyndatetime('y,m,20,12'),
-      title: 'Event 4',
-      resource: 5,
-    },
-    {
-      start: dyndatetime('y,m,3'),
-      end: dyndatetime('y,m,10'),
-      title: 'Event 5',
-      resource: 6,
-    },
-    {
-      start: dyndatetime('y,m,10,8'),
-      end: dyndatetime('y,m,11,20'),
-      title: 'Event 6',
-      resource: 7,
-    },
-    {
-      start: dyndatetime('y,m,22'),
-      end: dyndatetime('y,m,28'),
-      title: 'Event 7',
-      resource: 7,
-    },
-    {
-      start: dyndatetime('y,m,8'),
-      end: dyndatetime('y,m,13'),
-      title: 'Event 8',
-      resource: 15,
-    },
-    {
-      start: dyndatetime('y,m,25'),
-      end: dyndatetime('y,m,27'),
-      title: 'Event 9',
-      resource: 10,
-    },
-    {
-      start: dyndatetime('y,m,20'),
-      end: dyndatetime('y,m,23'),
-      title: 'Event 10',
-      resource: 12,
-    },
+  myResources = [
+    { id: 1, name: 'Resource A' },
+    { id: 2, name: 'Resource B' },
+    { id: 3, name: 'Resource C' },
+    { id: 4, name: 'Resource D' },
   ];
 
-  myResources = [
+  myEvents: MbscCalendarEvent[] = [
     {
       id: 1,
-      name: 'Resource A',
-      color: '#e20000',
+      resource: 1,
+      title: 'Review',
+      start: dyndatetime('y, m, d + 7, 0, 0'),
+      end: dyndatetime('y, m, d + 7, 2, 0'),
     },
     {
       id: 2,
-      name: 'Resource B',
-      color: '#76e083',
+      resource: 1,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 7, 0, 0'),
+      end: dyndatetime('y, m, d + 7, 2, 0'),
     },
     {
       id: 3,
-      name: 'Resource C',
-      color: '#4981d6',
+      resource: 1,
+      title: 'Kickoff',
+      start: dyndatetime('y, m, d + 7, 0, 0'),
+      end: dyndatetime('y, m, d + 7, 2, 0'),
     },
     {
       id: 4,
-      name: 'Resource D',
-      color: '#e25dd2',
+      resource: 4,
+      title: 'Strategy',
+      start: dyndatetime('y, m, d + 7, 0, 0'),
+      end: dyndatetime('y, m, d + 7, 2, 0'),
     },
     {
       id: 5,
-      name: 'Resource E',
-      color: '#1dab2f',
+      resource: 4,
+      title: 'Collab',
+      start: dyndatetime('y, m, d + 7, 0, 0'),
+      end: dyndatetime('y, m, d + 7, 2, 0'),
     },
     {
       id: 6,
-      name: 'Resource F',
-      color: '#d6d145',
+      resource: 4,
+      title: 'Update',
+      start: dyndatetime('y, m, d + 7, 0, 0'),
+      end: dyndatetime('y, m, d + 7, 2, 0'),
     },
     {
       id: 7,
-      name: 'Resource G',
-      color: '#34c8e0',
+      resource: 2,
+      title: 'Discussion',
+      start: dyndatetime('y, m, d + 7, 0, 0'),
+      end: dyndatetime('y, m, d + 7, 2, 0'),
     },
     {
       id: 8,
-      name: 'Resource H',
-      color: '#9dde46',
+      resource: 2,
+      title: 'Planning',
+      start: dyndatetime('y, m, d + 6, 0, 0'),
+      end: dyndatetime('y, m, d + 6, 2, 0'),
     },
     {
       id: 9,
-      name: 'Resource I',
-      color: '#166f6f',
+      resource: 2,
+      title: 'Retrospect',
+      start: dyndatetime('y, m, d + 6, 0, 0'),
+      end: dyndatetime('y, m, d + 6, 2, 0'),
     },
     {
       id: 10,
-      name: 'Resource J',
-      color: '#f7961e',
+      resource: 2,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 6, 0, 0'),
+      end: dyndatetime('y, m, d + 6, 2, 0'),
     },
     {
       id: 11,
-      name: 'Resource K',
-      color: '#34c8e0',
+      resource: 3,
+      title: 'Collab',
+      start: dyndatetime('y, m, d + 6, 0, 0'),
+      end: dyndatetime('y, m, d + 6, 2, 0'),
     },
     {
       id: 12,
-      name: 'Resource L',
-      color: '#af0000',
+      resource: 3,
+      title: 'Strategy',
+      start: dyndatetime('y, m, d + 6, 0, 0'),
+      end: dyndatetime('y, m, d + 6, 2, 0'),
     },
     {
       id: 13,
-      name: 'Resource M',
-      color: '#446f1c',
+      resource: 3,
+      title: 'Update',
+      start: dyndatetime('y, m, d + 6, 0, 0'),
+      end: dyndatetime('y, m, d + 6, 2, 0'),
     },
     {
       id: 14,
-      name: 'Resource N',
-      color: '#073138',
+      resource: 4,
+      title: 'Kickoff',
+      start: dyndatetime('y, m, d + 6, 0, 0'),
+      end: dyndatetime('y, m, d + 6, 2, 0'),
     },
     {
       id: 15,
-      name: 'Resource O',
-      color: '#4caf00',
+      resource: 2,
+      title: 'Demo',
+      start: dyndatetime('y, m, d - 1, 0, 0'),
+      end: dyndatetime('y, m, d - 1, 2, 0'),
+    },
+    {
+      id: 16,
+      resource: 2,
+      title: 'Planning',
+      start: dyndatetime('y, m, d - 1, 0, 0'),
+      end: dyndatetime('y, m, d - 1, 2, 0'),
+    },
+    {
+      id: 17,
+      resource: 3,
+      title: 'Discussion',
+      start: dyndatetime('y, m, d - 1, 0, 0'),
+      end: dyndatetime('y, m, d - 1, 2, 0'),
+    },
+    {
+      id: 18,
+      resource: 3,
+      title: 'Retrospect',
+      start: dyndatetime('y, m, d - 1, 0, 0'),
+      end: dyndatetime('y, m, d - 1, 2, 0'),
+    },
+    {
+      id: 19,
+      resource: 3,
+      title: 'Strategy',
+      start: dyndatetime('y, m, d - 1, 0, 0'),
+      end: dyndatetime('y, m, d - 1, 2, 0'),
+    },
+    {
+      id: 20,
+      resource: 1,
+      title: 'Onboard',
+      start: dyndatetime('y, m, d - 1, 0, 0'),
+      end: dyndatetime('y, m, d - 1, 2, 0'),
+    },
+    {
+      id: 21,
+      resource: 1,
+      title: 'Collab',
+      start: dyndatetime('y, m, d - 1, 0, 0'),
+      end: dyndatetime('y, m, d - 1, 2, 0'),
+    },
+    {
+      id: 22,
+      resource: 1,
+      title: 'Demo',
+      start: dyndatetime('y, m, d, 0, 0'),
+      end: dyndatetime('y, m, d, 2, 0'),
+    },
+    {
+      id: 23,
+      resource: 1,
+      title: 'Planning',
+      start: dyndatetime('y, m, d, 0, 0'),
+      end: dyndatetime('y, m, d, 2, 0'),
+    },
+    {
+      id: 24,
+      resource: 1,
+      title: 'Update',
+      start: dyndatetime('y, m, d, 0, 0'),
+      end: dyndatetime('y, m, d, 2, 0'),
+    },
+    {
+      id: 25,
+      resource: 2,
+      title: 'Strategy',
+      start: dyndatetime('y, m, d, 0, 0'),
+      end: dyndatetime('y, m, d, 2, 0'),
+    },
+    {
+      id: 26,
+      resource: 2,
+      title: 'Demo',
+      start: dyndatetime('y, m, d, 0, 0'),
+      end: dyndatetime('y, m, d, 2, 0'),
+    },
+    {
+      id: 27,
+      resource: 3,
+      title: 'Kickoff',
+      start: dyndatetime('y, m, d, 0, 0'),
+      end: dyndatetime('y, m, d, 2, 0'),
+    },
+    {
+      id: 28,
+      resource: 3,
+      title: 'Collab',
+      start: dyndatetime('y, m, d + 1, 0, 0'),
+      end: dyndatetime('y, m, d + 1, 2, 0'),
+    },
+    {
+      id: 29,
+      resource: 3,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 1, 0, 0'),
+      end: dyndatetime('y, m, d + 1, 2, 0'),
+    },
+    {
+      id: 30,
+      resource: 3,
+      title: 'Strategy',
+      start: dyndatetime('y, m, d + 1, 0, 0'),
+      end: dyndatetime('y, m, d + 1, 2, 0'),
+    },
+    {
+      id: 31,
+      resource: 3,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 1, 0, 0'),
+      end: dyndatetime('y, m, d + 1, 2, 0'),
+    },
+    {
+      id: 32,
+      resource: 4,
+      title: 'Retrospect',
+      start: dyndatetime('y, m, d + 3, 0, 0'),
+      end: dyndatetime('y, m, d + 3, 2, 0'),
+    },
+    {
+      id: 33,
+      resource: 4,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 3, 0, 0'),
+      end: dyndatetime('y, m, d + 3, 2, 0'),
+    },
+    {
+      id: 34,
+      resource: 4,
+      title: 'Retrospect',
+      start: dyndatetime('y, m, d + 3, 0, 0'),
+      end: dyndatetime('y, m, d + 3, 2, 0'),
+    },
+    {
+      id: 35,
+      resource: 4,
+      title: 'Onboard',
+      start: dyndatetime('y, m, d + 3, 0, 0'),
+      end: dyndatetime('y, m, d + 3, 2, 0'),
+    },
+    {
+      id: 36,
+      resource: 1,
+      title: 'Discussion',
+      start: dyndatetime('y, m, d + 3, 0, 0'),
+      end: dyndatetime('y, m, d + 3, 2, 0'),
+    },
+    {
+      id: 37,
+      resource: 3,
+      title: 'Collab',
+      start: dyndatetime('y, m, d + 3, 0, 0'),
+      end: dyndatetime('y, m, d + 3, 2, 0'),
+    },
+    {
+      id: 38,
+      resource: 3,
+      title: 'Update',
+      start: dyndatetime('y, m, d + 3, 0, 0'),
+      end: dyndatetime('y, m, d + 3, 2, 0'),
+    },
+    {
+      id: 39,
+      resource: 3,
+      title: 'Planning',
+      start: dyndatetime('y, m, d + 3, 0, 0'),
+      end: dyndatetime('y, m, d + 3, 2, 0'),
+    },
+    {
+      id: 40,
+      resource: 1,
+      title: 'Planning',
+      start: dyndatetime('y, m, d + 5, 0, 0'),
+      end: dyndatetime('y, m, d + 5, 2, 0'),
+    },
+    {
+      id: 41,
+      resource: 1,
+      title: 'Update',
+      start: dyndatetime('y, m, d + 5, 0, 0'),
+      end: dyndatetime('y, m, d + 5, 2, 0'),
+    },
+    {
+      id: 42,
+      resource: 2,
+      title: 'Strategy',
+      start: dyndatetime('y, m, d + 5, 0, 0'),
+      end: dyndatetime('y, m, d + 5, 2, 0'),
+    },
+    {
+      id: 43,
+      resource: 4,
+      title: 'Onboard',
+      start: dyndatetime('y, m, d + 5, 0, 0'),
+      end: dyndatetime('y, m, d + 5, 2, 0'),
+    },
+    {
+      id: 44,
+      resource: 4,
+      title: 'Planning',
+      start: dyndatetime('y, m, d + 5, 0, 0'),
+      end: dyndatetime('y, m, d + 5, 2, 0'),
+    },
+    {
+      id: 45,
+      resource: 4,
+      title: 'Retrospect',
+      start: dyndatetime('y, m, d + 5, 0, 0'),
+      end: dyndatetime('y, m, d + 5, 2, 0'),
+    },
+    {
+      id: 46,
+      resource: 3,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 5, 0, 0'),
+      end: dyndatetime('y, m, d + 5, 2, 0'),
+    },
+    {
+      id: 47,
+      resource: 3,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 5, 0, 0'),
+      end: dyndatetime('y, m, d + 5, 2, 0'),
+    },
+    {
+      id: 48,
+      resource: 2,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 4, 0, 0'),
+      end: dyndatetime('y, m, d + 4, 2, 0'),
+    },
+    {
+      id: 49,
+      resource: 2,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 4, 0, 0'),
+      end: dyndatetime('y, m, d + 4, 2, 0'),
+    },
+    {
+      id: 50,
+      resource: 1,
+      title: 'Discussion',
+      start: dyndatetime('y, m, d + 4, 0, 0'),
+      end: dyndatetime('y, m, d + 4, 2, 0'),
+    },
+    {
+      id: 51,
+      resource: 2,
+      title: 'Discussion',
+      start: dyndatetime('y, m, d + 2, 0, 0'),
+      end: dyndatetime('y, m, d + 2, 2, 0'),
+    },
+    {
+      id: 52,
+      resource: 3,
+      title: 'Retrospect',
+      start: dyndatetime('y, m, d + 10, 0, 0'),
+      end: dyndatetime('y, m, d + 10, 2, 0'),
+    },
+    {
+      id: 53,
+      resource: 1,
+      title: 'Retrospect',
+      start: dyndatetime('y, m, d + 10, 0, 0'),
+      end: dyndatetime('y, m, d + 10, 2, 0'),
+    },
+    {
+      id: 54,
+      resource: 3,
+      title: 'Retrospect',
+      start: dyndatetime('y, m, d + 10, 0, 0'),
+      end: dyndatetime('y, m, d + 10, 2, 0'),
+    },
+    {
+      id: 55,
+      resource: 3,
+      title: 'Strategy',
+      start: dyndatetime('y, m, d + 11, 0, 0'),
+      end: dyndatetime('y, m, d + 11, 2, 0'),
+    },
+    {
+      id: 56,
+      resource: 2,
+      title: 'Kickoff',
+      start: dyndatetime('y, m, d + 11, 0, 0'),
+      end: dyndatetime('y, m, d + 11, 2, 0'),
+    },
+    {
+      id: 57,
+      resource: 2,
+      title: 'Kickoff',
+      start: dyndatetime('y, m, d + 11, 0, 0'),
+      end: dyndatetime('y, m, d + 11, 2, 0'),
+    },
+    {
+      id: 58,
+      resource: 2,
+      title: 'Update',
+      start: dyndatetime('y, m, d + 11, 0, 0'),
+      end: dyndatetime('y, m, d + 11, 2, 0'),
+    },
+    {
+      id: 59,
+      resource: 4,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 11, 0, 0'),
+      end: dyndatetime('y, m, d + 11, 2, 0'),
+    },
+    {
+      id: 60,
+      resource: 4,
+      title: 'Collab',
+      start: dyndatetime('y, m, d + 11, 0, 0'),
+      end: dyndatetime('y, m, d + 11, 2, 0'),
+    },
+    {
+      id: 61,
+      resource: 4,
+      title: 'Collab',
+      start: dyndatetime('y, m, d + 11, 0, 0'),
+      end: dyndatetime('y, m, d + 11, 2, 0'),
+    },
+    {
+      id: 62,
+      resource: 4,
+      title: 'Discussion',
+      start: dyndatetime('y, m, d + 11, 0, 0'),
+      end: dyndatetime('y, m, d + 11, 2, 0'),
+    },
+    {
+      id: 63,
+      resource: 1,
+      title: 'Planning',
+      start: dyndatetime('y, m, d + 12, 0, 0'),
+      end: dyndatetime('y, m, d + 12, 2, 0'),
+    },
+    {
+      id: 64,
+      resource: 1,
+      title: 'Retrospect',
+      start: dyndatetime('y, m, d + 12, 0, 0'),
+      end: dyndatetime('y, m, d + 12, 2, 0'),
+    },
+    {
+      id: 65,
+      resource: 1,
+      title: 'Review',
+      start: dyndatetime('y, m, d + 12, 0, 0'),
+      end: dyndatetime('y, m, d + 12, 2, 0'),
+    },
+    {
+      id: 66,
+      resource: 3,
+      title: 'Collab',
+      start: dyndatetime('y, m, d + 12, 0, 0'),
+      end: dyndatetime('y, m, d + 12, 2, 0'),
+    },
+    {
+      id: 67,
+      resource: 3,
+      title: 'Demo',
+      start: dyndatetime('y, m, d + 12, 0, 0'),
+      end: dyndatetime('y, m, d + 12, 2, 0'),
+    },
+    {
+      id: 68,
+      resource: 3,
+      title: 'Collab',
+      start: dyndatetime('y, m, d + 12, 0, 0'),
+      end: dyndatetime('y, m, d + 12, 2, 0'),
+    },
+    {
+      id: 69,
+      resource: 2,
+      title: 'Strategy',
+      start: dyndatetime('y, m, d + 12, 0, 0'),
+      end: dyndatetime('y, m, d + 12, 2, 0'),
     },
   ];
+
+  onCellHoverIn(args: any) {
+    this.hovered.date = args.date;
+    this.hovered.resource = typeof args.resource === 'object' ? args.resource?.id : args.resource;
+    this.hovered.count = args.events?.length ?? 0;
+  }
+
+  onEventCreate(args: any) {
+    console.log('onEventCreate', args);
+  }
+
+  onAddClick(ev: MouseEvent, cell: any) {
+    ev.stopPropagation();
+    const count = cell?.events?.length ?? 0;
+
+    if (count >= 4) {
+      this.notify.toast({ message: 'Limit reached.' });
+      return;
+    }
+    const title = this.titles[Math.floor(Math.random() * this.titles.length)];
+    const start: Date = cell.date;
+    const end = new Date(start.getTime() + 2 * 3600000);
+    const resource = typeof cell.resource === 'object' ? cell.resource?.id : cell.resource;
+    this.myEvents = [...this.myEvents, { title, start, end, resource }];
+  }
+
+  getEventHours(event: any): number {
+    const start = new Date(event.start ?? event.startDate).getTime();
+    const end = new Date(event.end ?? event.endDate).getTime();
+    return Math.round((end - start) / 36e5);
+  }
+
+  getHours(events: any[] = []): number {
+    const total = events.reduce((s, ev) => {
+      const st = new Date(ev.start).getTime();
+      const en = new Date(ev.end).getTime();
+      return s + (en - st) / 36e5;
+    }, 0);
+    return Math.round(total);
+  }
+
+  getBadgeClass(events: any[] = []): string {
+    const hours = this.getHours(events);
+    const classMap: any = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
+    return 'mds-timeline-cell-content-badge-' + (classMap[hours] || 'default');
+  }
+
+  getIcons(events: any[] = []): string[] {
+    const titles = new Set();
+    return events.reduce((icons, ev) => {
+      const name = this.iconMap[ev.title];
+      if (name && !titles.has(ev.title)) {
+        titles.add(ev.title);
+        icons.push(name);
+      }
+      return icons;
+    }, []);
+  }
+
+  extendDefaultEvent = (args: any) => {
+    const start: Date = args.start;
+    const title = this.titles[Math.floor(Math.random() * this.titles.length)];
+    return {
+      title,
+      end: new Date(start.getTime() + 2 * 3600000),
+    };
+  };
 }

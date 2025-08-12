@@ -11,72 +11,21 @@ setOptions({
 function App() {
   const iconMap = useMemo(() => ({
     Review: 'calendar',
-    Demo: 'tv',
+    Demo: 'play',
     Kickoff: 'flag',
-    Strategy: 'cogs',
-    Collab: 'handshake',
+    Strategy: 'map',
+    Collab: 'bubbles',
     Update: 'upload',
     Discussion: 'bubble',
-    Planning: 'calendar-alt',
+    Planning: 'pencil',
     Retrospect: 'history',
     Onboard: 'user4',
   }), []);
 
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState();
-
   const titles = Object.keys(iconMap);
-
   const hovered = useRef({ date: null, resource: null, count: 0 });
-
-  const myView = useMemo(
-    () => ({
-      timeline: {
-        type: 'month',
-        resolutionHorizontal: 'day',
-        startDay: 1,
-        endDay: 5,
-        eventList: true,
-      },
-    }),
-    [],
-  );
-
-  const handleClick = useCallback(
-    (e) => {
-      if (!e.target.classList.contains('mds-timeline-cell-content-add')) return;
-
-      if (hovered.current.count >= 4) {
-         setToastOpen(true);
-         setToastMessage("Limit reached.");
-        return;
-      }
-
-      const title = titles[Math.floor(Math.random() * titles.length)];
-      setEvents((prev) => [
-        ...prev,
-        {
-          start: hovered.current.date,
-          end: new Date(hovered.current.date.getTime() + 2 * 3600000),
-          resource: hovered.current.resource,
-          title,
-        },
-      ]);
-      hovered.current.count++;
-    },
-    [titles],
-  );
-
-  const myResources = useMemo(
-    () => [
-      { id: 1, name: 'Resource A' },
-      { id: 2, name: 'Resource B' },
-      { id: 3, name: 'Resource C' },
-      { id: 4, name: 'Resource D' },
-    ],
-    [],
-  );
-
   const [myEvents, setEvents] = useState(
     () => [
       {
@@ -566,6 +515,62 @@ function App() {
     [],
   );
 
+  const myResources = useMemo(
+    () => [
+      { id: 1, name: 'Resource A' },
+      { id: 2, name: 'Resource B' },
+      { id: 3, name: 'Resource C' },
+      { id: 4, name: 'Resource D' },
+    ],
+    [],
+  );
+
+  const myView = useMemo(
+    () => ({
+      timeline: {
+        endDay: 5,
+        eventList: true,
+        type: 'month',
+        resolutionHorizontal: 'day',
+        startDay: 1,
+      },
+    }),
+    [],
+  );
+
+  const customDefaultEvent = useCallback(
+    (args) => ({
+      title: titles[Math.floor(Math.random() * titles.length)],
+      end: new Date(args.start.getTime() + 2 * 3600000),
+    }),
+    [titles],
+  );
+
+  const handleClick = useCallback(
+    (e) => {
+      if (!e.target.classList.contains('mds-timeline-cell-content-add')) return;
+
+      if (hovered.current.count >= 4) {
+        setToastOpen(true);
+        setToastMessage("Limit reached.");
+        return;
+      }
+
+      const title = titles[Math.floor(Math.random() * titles.length)];
+      setEvents((prev) => [
+        ...prev,
+        {
+          start: hovered.current.date,
+          end: new Date(hovered.current.date.getTime() + 2 * 3600000),
+          resource: hovered.current.resource,
+          title,
+        },
+      ]);
+      hovered.current.count++;
+    },
+    [titles],
+  );
+
   const renderCell = useCallback((args) => {
     const events = args.events || [];
     const hours = Math.round(
@@ -573,7 +578,7 @@ function App() {
     );
 
     const classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
-    const colorClass = `mds-timeline-cell-content-badge-${classMap[hours] || 'default'}`;
+    const colorClass = 'mds-timeline-cell-content-badge-' + (classMap[hours] || 'default');
 
     const addedIcons = new Set();
     const iconHtml = events.map((ev) => {
@@ -583,7 +588,7 @@ function App() {
         return (
           <i
             key={ev.title}
-            className={`mbsc-font-icon mbsc-icon-${iconName} mds-timeline-cell-icon`}
+            className={"mbsc-font-icon mbsc-icon-" + iconName + " mds-timeline-cell-icon"}
             title={ev.title}
           ></i>
         );
@@ -593,7 +598,7 @@ function App() {
 
     return (
       <>
-        <div className={`mds-timeline-cell-content-badge ${colorClass}`}>
+        <div className={"mds-timeline-cell-content-badge " + colorClass}>
           {hours}h / 8h
         </div>
         <button onClick={handleClick} className="mds-timeline-cell-content-add">+</button>
@@ -602,13 +607,10 @@ function App() {
     );
   }, [handleClick, iconMap]);
 
-
-
   const renderScheduleEventContent = useCallback((event) => {
     const hours = Math.round((event.endDate - event.startDate) / 36e5);
     return <div>{event.title} - {hours}h</div>;
   }, []);
-
 
   const onCellHoverIn = useCallback((args) => {
     hovered.current = {
@@ -625,32 +627,24 @@ function App() {
     console.log(args);
   }, []);
 
-  const customDefaultEvent = useCallback(
-    (args) => ({
-      title: titles[Math.floor(Math.random() * titles.length)],
-      end: new Date(args.start.getTime() + 2 * 3600000),
-    }),
-    [titles],
-  );
-
   return (
-    <><Eventcalendar
-      dragToCreate={false}
-      dragToMove={false}
-      dragToResize={false}
-      cssClass="mds-timeline-cell-content"
-      view={myView}
-      data={myEvents}
-      resources={myResources}
-      extendDefaultEvent={customDefaultEvent}
-      renderCell={renderCell}
-      renderScheduleEventContent={renderScheduleEventContent}
-      onCellHoverIn={onCellHoverIn}
-      onEventCreate={onEventCreate}
-    />
-      <Toast message={toastMessage} isOpen={isToastOpen} onClose={()=> setToastOpen(false)} />
+    <>
+      <Eventcalendar
+        cssClass="mds-timeline-cell-content"
+        data={myEvents}
+        dragToCreate={false}
+        dragToMove={false}
+        dragToResize={false}
+        extendDefaultEvent={customDefaultEvent}
+        onCellHoverIn={onCellHoverIn}
+        onEventCreate={onEventCreate}
+        resources={myResources}
+        renderCell={renderCell}
+        renderScheduleEventContent={renderScheduleEventContent}
+        view={myView}
+      />
+      <Toast isOpen={isToastOpen} message={toastMessage} onClose={() => setToastOpen(false)} />
     </>
-
   );
 }
 

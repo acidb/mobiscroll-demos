@@ -1,1 +1,39 @@
-<mbsc-eventcalendar [view]="view" [data]="myEvents" [resources]="myResources"></mbsc-eventcalendar>
+<mbsc-eventcalendar
+  class="mds-timeline-cell-content"
+  [view]="view"
+  [data]="myEvents"
+  [resources]="myResources"
+  [cellTemplate]="cellTpl"
+  [scheduleEventContentTemplate]="eventContentTpl"
+  [extendDefaultEvent]="extendDefaultEvent"
+  [dragToCreate]="false"
+  [dragToMove]="false"
+  [dragToResize]="false"
+  (onCellHoverIn)="onCellHoverIn($event)"
+  (onEventCreate)="onEventCreate($event)"
+>
+  <ng-template #cellTpl let-cell>
+<div class="mds-timeline-cell-content-badge {{ getBadgeClass(cell?.events ?? []) }}">
+  {{ getHours(cell?.events ?? []) }}h / 8h
+</div>
+
+    <button
+      class="mds-timeline-cell-content-add"
+      (click)="onAddClick($event, cell)"
+    >+</button>
+
+<div class="mds-timeline-cell-icons">
+  <ng-container *ngFor="let icon of getIcons(cell?.events ?? [])">
+    <i class="mbsc-font-icon mds-timeline-cell-icon" [ngClass]="'mbsc-icon-' + icon"></i>
+  </ng-container>
+</div>
+  </ng-template>
+
+  <ng-template #eventContentTpl let-event>
+  <div>
+    {{ event.title }} - {{ Math.round((event.endDate - event.startDate) / 36e5) }}h
+  </div>
+</ng-template>
+
+</mbsc-eventcalendar>
+

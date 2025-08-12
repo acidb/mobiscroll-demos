@@ -104,9 +104,6 @@ export default {
           // drag,
           cssClass: 'mds-schedule-cell-template',
           data: myEvents,
-          view: {
-            schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
-          },
           renderCell: function (args) {
             var h = args.date.getHours();
             var d = args.date.getDay();
@@ -115,34 +112,40 @@ export default {
             (d === 1 || d === 5) &&
               h === 9 &&
               icons.push(
-                { icon: 'fa-people-arrows', title: d === 1 ? 'Launch Meeting' : 'Sprint Review' },
-                { icon: 'fa-coffee', title: 'Coffee Break' },
+                { icon: 'material-people', title: d === 1 ? 'Launch Meeting' : 'Sprint Review' },
+                { icon: 'material-message', title: 'Coffee Break' },
               );
-            h === 13 && icons.push({ icon: 'fa-utensils', title: 'Lunch Time' });
-            d >= 1 && d <= 5 && h === 17 && icons.push({ icon: 'fa-clock', title: 'Wrap Up' });
-            d === 2 && (h === 10 || h === 11) && icons.push({ icon: 'fa-sync-alt', title: 'Dev Sync' });
-            h % 4 === 0 && icons.push({ icon: 'fa-tools', title: 'Health Check' });
-            h === 3 && icons.push({ icon: 'fa-wifi', title: 'Network Probe' });
-            h === 12 && icons.push({ icon: 'fa-database', title: 'Backup' });
-            h === 15 && icons.push({ icon: 'fa-lock', title: 'Security Patch' });
-            d === 3 && h === 14 && icons.push({ icon: 'fa-rocket', title: 'Deploy Window' });
+            h === 13 && icons.push({ icon: 'bubbles', title: 'Lunch Time' });
+            d >= 1 && d <= 5 && h === 17 && icons.push({ icon: 'clock', title: 'Wrap Up' });
+            d === 2 && (h === 10 || h === 11) && icons.push({ icon: 'loop2', title: 'Dev Sync' });
+            h % 4 === 0 && icons.push({ icon: 'cogs', title: 'Health Check' });
+            h === 3 && icons.push({ icon: 'connection', title: 'Network Probe' });
+            h === 12 && icons.push({ icon: 'upload', title: 'Backup' });
+            h === 15 && icons.push({ icon: 'lock', title: 'Security Patch' });
+            d === 3 && h === 14 && icons.push({ icon: 'line-paperplane', title: 'Deploy Window' });
 
             if (!icons.length) return '';
+
             return (
               '<div class="mds-schedule-cell-icons-background"><div class="mds-schedule-cell-icons">' +
               icons
-                .map(function (i) {
+                .map(function (icon) {
                   return (
                     '<div class="mds-schedule-cell-icon" title="' +
-                    i.title +
-                    '"><i class="fas ' +
-                    i.icon +
-                    '"></i></div>'
+                    icon.title +
+                    '">' +
+                    '<div class="mbsc-font-icon mbsc-icon-' +
+                    icon.icon +
+                    '"></div>' +
+                    '</div>'
                   );
                 })
                 .join('') +
               '</div></div>'
             );
+          },
+          view: {
+            schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
           },
         })
         .mobiscroll('getInst');
@@ -150,7 +153,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <div id="demo-cell-content-template"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals

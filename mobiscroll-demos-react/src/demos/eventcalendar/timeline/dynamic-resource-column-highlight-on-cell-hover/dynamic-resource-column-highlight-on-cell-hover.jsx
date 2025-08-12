@@ -29,25 +29,6 @@ function App() {
     [],
   );
 
-const [myResources, setResources] = useState([
-  { id: 1, name: 'Resource A', color: '#e20000' },
-  { id: 2, name: 'Resource B', color: '#76e083' },
-  { id: 3, name: 'Resource C', color: '#4981d6' },
-  { id: 4, name: 'Resource D', color: '#e25dd2' },
-  { id: 5, name: 'Resource E', color: '#1dab2f' },
-  { id: 6, name: 'Resource F', color: '#d6d145' },
-  { id: 7, name: 'Resource G', color: '#34c8e0' },
-  { id: 8, name: 'Resource H', color: '#9dde46' },
-  { id: 9, name: 'Resource I', color: '#166f6f' },
-  { id: 10, name: 'Resource J', color: '#f7961e' },
-  { id: 11, name: 'Resource K', color: '#34c8e0' },
-  { id: 12, name: 'Resource L', color: '#af0000' },
-  { id: 13, name: 'Resource M', color: '#446f1c' },
-  { id: 14, name: 'Resource N', color: '#073138' },
-  { id: 15, name: 'Resource O', color: '#4caf00' },
-]);
-
-
   const myEvents = useMemo(
     () => [
       { start: 'dyndatetime(y,m,2)', end: 'dyndatetime(y,m,5)', title: 'Event 1', resource: 1 },
@@ -63,6 +44,24 @@ const [myResources, setResources] = useState([
     ],
     [],
   );
+
+  const [myResources, setResources] = useState([
+    { id: 1, name: 'Resource A', color: '#e20000' },
+    { id: 2, name: 'Resource B', color: '#76e083' },
+    { id: 3, name: 'Resource C', color: '#4981d6' },
+    { id: 4, name: 'Resource D', color: '#e25dd2' },
+    { id: 5, name: 'Resource E', color: '#1dab2f' },
+    { id: 6, name: 'Resource F', color: '#d6d145' },
+    { id: 7, name: 'Resource G', color: '#34c8e0' },
+    { id: 8, name: 'Resource H', color: '#9dde46' },
+    { id: 9, name: 'Resource I', color: '#166f6f' },
+    { id: 10, name: 'Resource J', color: '#f7961e' },
+    { id: 11, name: 'Resource K', color: '#34c8e0' },
+    { id: 12, name: 'Resource L', color: '#af0000' },
+    { id: 13, name: 'Resource M', color: '#446f1c' },
+    { id: 14, name: 'Resource N', color: '#073138' },
+    { id: 15, name: 'Resource O', color: '#4caf00' },
+  ]);
 
   const renderCell = useCallback(
     (args) => {
@@ -82,7 +81,7 @@ const [myResources, setResources] = useState([
       const isHover = hoverDate && args.date.getTime() === hoverDate.getTime();
       const hoverClass = isHover ? ' mds-highlight-col-hover' : '';
       return (
-        <div className={`mds-highlight-day-content${hoverClass}`}>
+        <div className={"mds-highlight-day-content" + hoverClass}>
           {formatDate('D DDD', args.date)}
         </div>
       );
@@ -95,7 +94,7 @@ const [myResources, setResources] = useState([
       const isHover = hoverDate && args.date.getTime() === hoverDate.getTime();
       const hoverClass = isHover ? ' mds-highlight-col-hover' : '';
       return (
-        <div className={`mds-highlight-day-content${hoverClass}`}>
+        <div className={"mds-highlight-day-content" + hoverClass}>
           {formatDate('D DDD', args.date)}
         </div>
       );
@@ -103,41 +102,34 @@ const [myResources, setResources] = useState([
     [hoverDate],
   );
 
-const handleHoverIn = useCallback((args) => {
-  const updated = myResources.map((r) => ({
-    ...r,
-    cssClass: r.id === args.resource ? 'mds-highlight-row-hover' : '',
-  }));
+  const handleHoverIn = useCallback((args) => {
+    const updated = myResources.map((r) => ({
+      ...r,
+      cssClass: r.id === args.resource ? 'mds-highlight-row-hover' : '',
+    }));
+    setResources(updated);
+    setHoverDate(args.date);
+    setHoverResource(updated.find((r) => r.id === args.resource));
+    setAnchor(args.domEvent.target);
 
-  setResources(updated);
-  setHoverDate(args.date);
-  setHoverResource(updated.find((r) => r.id === args.resource));
-  setAnchor(args.domEvent.target);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      setPopupOpen(true);
+    }, 300);
+  }, [myResources]);
 
-  if (timerRef.current) clearTimeout(timerRef.current);
-  timerRef.current = setTimeout(() => {
-    setPopupOpen(true);
-  }, 200);
-}, [myResources]);
-
-const handleHoverOut = useCallback(() => {
-  if (timerRef.current) clearTimeout(timerRef.current);
-
-  setHoverDate(null);
-  setHoverResource(null);
-  setResources((prev) => prev.map((r) => ({ ...r, cssClass: '' })));
-
-  timerRef.current = setTimeout(() => {
+  const handleHoverOut = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setHoverDate(null);
+    setHoverResource(null);
+    setResources((prev) => prev.map((r) => ({ ...r, cssClass: '' })));
     setPopupOpen(false);
-  }, 100);
-}, []);
-
+  }, []);
 
   return (
     <>
       <Eventcalendar
         cssClass="mds-highlight-hover"
-        view={myView}
         data={myEvents}
         resources={myResources}
         renderCell={renderCell}
@@ -146,16 +138,16 @@ const handleHoverOut = useCallback(() => {
         renderDayFooter={renderDayFooter}
         onCellHoverIn={handleHoverIn}
         onCellHoverOut={handleHoverOut}
+        view={myView}
       />
-
       <Popup
-        display="anchored"
         anchor={anchor}
-        showOverlay={false}
-        scrollLock={false}
-        focusOnClose={false}
         closeOnScroll={true}
+        display="anchored"
+        focusOnClose={false}
         isOpen={isPopupOpen}
+        scrollLock={false}
+        showOverlay={false}
       >
         {hoverResource && hoverDate && (
           <div className="mds-highlight-tooltip" onMouseEnter={() => clearTimeout(timerRef.current)} onMouseLeave={handleHoverOut}>

@@ -90,8 +90,7 @@
 
 .mds-timeline-cell-icon {
   text-align: center;
-  width: 21px;
-  height: 17px;
+  padding: 2px 4px;
   margin: 0 3px;
   line-height: 17px !important;
   color: #000;
