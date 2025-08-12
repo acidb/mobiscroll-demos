@@ -388,7 +388,7 @@ function handleTooltipClose() {
     :touchUi="false"
     :width="280"
     :isOpen="isTooltipOpen"
-    @position="handleTooltipPosition"
+    :onPosition="handleTooltipPosition"
     @close="handleTooltipClose"
   >
     <div @mouseenter="handlePopupMouseEnter" @mouseleave="handlePopupMouseLeave">

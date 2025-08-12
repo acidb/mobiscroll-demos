@@ -373,8 +373,8 @@ function handlePay() {
     :touchUi="false"
     :width="280"
     :isOpen="isTooltipOpen"
-    @onPosition="handleTooltipPosition"
-    @close="handleTooltipClose"
+    :onPosition="handleTooltipPosition"
+    @close="isTooltipOpen = false"
   >
     <div @mouseenter="handlePopupMouseEnter" @mouseleave="handlePopupMouseLeave">
       <div class="mbsc-flex mbsc-align-items-center mds-resource-info-header">

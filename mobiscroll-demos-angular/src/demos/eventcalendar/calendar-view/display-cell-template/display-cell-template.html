@@ -36,7 +36,7 @@
         >Back to calendar</mbsc-button
       >
       <div class="mds-cell-template-view-switch">
-        <mbsc-segmented-group [(ngModel)]="selectedView" (change)="setSelectedView($event.value, undefined)">
+        <mbsc-segmented-group [(ngModel)]="selectedView" (change)="setSelectedView(selectedView, undefined)">
           <mbsc-segmented value="month" icon="material-date-range" class="mds-cell-template-view">Calendar</mbsc-segmented>
           <mbsc-segmented value="week" icon="material-event-note" class="mds-cell-template-view">Week view</mbsc-segmented>
         </mbsc-segmented-group>
