@@ -1,1 +1,51 @@
-<mbsc-eventcalendar [view]="view" [data]="myEvents" [resources]="myResources"></mbsc-eventcalendar>
+<mbsc-eventcalendar
+  class="mds-highlight-hover"
+  [view]="view"
+  [data]="myEvents"
+  [resources]="myResources"
+  [cellTemplate]="cellTemplate"
+  [sidebarTemplate]="sidebarTemplate"
+  [dayTemplate]="dayTemplate"
+  [dayFooterTemplate]="dayFooterTemplate"
+  (onCellHoverIn)="handleHoverIn($event)"
+  (onCellHoverOut)="handleHoverOut()"
+>
+  <ng-template #cellTemplate let-cell>
+    <div *ngIf="hoverDate && cell.date?.getTime() === hoverDate?.getTime()" class="mds-highlight-col-hover"></div>
+  </ng-template>
+
+  <ng-template #sidebarTemplate let-sidebar>
+    <div>{{ sidebar.name }} Sidebar</div>
+  </ng-template>
+
+  <ng-template #dayTemplate let-day>
+    <div
+      class="mds-highlight-day-content"
+      [ngClass]="{ 'mds-highlight-col-hover': hoverDate && day.date.getTime() === hoverDate.getTime() }"
+    >
+      {{ formatDate('D DDD', day.date) }}
+    </div>
+  </ng-template>
+
+  <ng-template #dayFooterTemplate let-footer>
+    <div
+      class="mds-highlight-day-content"
+      [ngClass]="{ 'mds-highlight-col-hover': hoverDate && footer.date.getTime() === hoverDate.getTime() }"
+    >
+      {{ formatDate('D DDD', footer.date) }}
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>
+
+<mbsc-popup
+  #popup
+  [anchor]="popupAnchor"
+  [options]="popupOptions"
+>
+  <div>
+    <div class="mds-highlight-tooltip" *ngIf="hoverResource && hoverDate">
+      <div class="mds-highlight-tooltip-name">{{ hoverResource.name }}</div>
+      <div class="mds-highlight-tooltip-date">{{ formatDate('MMM DD, YYYY', hoverDate) }}</div>
+    </div>
+  </div>
+</mbsc-popup>

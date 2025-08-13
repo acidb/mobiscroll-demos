@@ -2,7 +2,7 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
-  /*MbscCellHoverEvent,*/
+  MbscCellHoverEvent,
   MbscEventcalendarView,
   MbscPopup,
   setOptions /* localeImport */,
@@ -199,7 +199,7 @@ export class AppComponent {
     },
   ];
 
-  calView: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     schedule: {
       type: 'week',
       startTime: '08:00',
@@ -214,13 +214,11 @@ export class AppComponent {
   cellColorNr: number | null = null;
   tooltipAnchor: HTMLElement | null = null;
 
-  handleCellHoverIn(args: /*MbscCellHoverEvent*/ any) {
+  handleCellHoverIn(args: MbscCellHoverEvent) {
     const endDate = new Date(args.date);
     endDate.setHours(endDate.getHours() + 1);
-    const date = formatDate('DDDD MMM DD, YYYY, HA - ', args.date);
+    const date = formatDate('DDDD MMM D, YYYY, HA - ', args.date);
     const time = formatDate('HA', endDate);
-
-    console.log('hover')
 
     this.cellDate = date + time;
     this.cellEventNr = args.events ? args.events.length : 0;

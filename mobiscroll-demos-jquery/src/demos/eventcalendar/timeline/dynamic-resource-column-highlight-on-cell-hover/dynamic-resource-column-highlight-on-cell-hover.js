@@ -10,28 +10,6 @@ export default {
     });
 
     $(function () {
-      var hoverDateTime;
-      var formatDate = mobiscroll.formatDate;
-      var tooltipTimeout;
-
-      var myResources = [
-        { id: 1, name: 'Resource A', color: '#e20000' },
-        { id: 2, name: 'Resource B', color: '#76e083' },
-        { id: 3, name: 'Resource C', color: '#4981d6' },
-        { id: 4, name: 'Resource D', color: '#e25dd2' },
-        { id: 5, name: 'Resource E', color: '#1dab2f' },
-        { id: 6, name: 'Resource F', color: '#d6d145' },
-        { id: 7, name: 'Resource G', color: '#34c8e0' },
-        { id: 8, name: 'Resource H', color: '#9dde46' },
-        { id: 9, name: 'Resource I', color: '#166f6f' },
-        { id: 10, name: 'Resource J', color: '#f7961e' },
-        { id: 11, name: 'Resource K', color: '#34c8e0' },
-        { id: 12, name: 'Resource L', color: '#af0000' },
-        { id: 13, name: 'Resource M', color: '#446f1c' },
-        { id: 14, name: 'Resource N', color: '#073138' },
-        { id: 15, name: 'Resource O', color: '#4caf00' },
-      ];
-
       var myEvents = [
         {
           start: 'dyndatetime(y,m,2)',
@@ -95,24 +73,43 @@ export default {
         },
       ];
 
+      var formatDate = mobiscroll.formatDate;
+      var hoverDateTime;
+      var tooltipTimeout;
+
+      var myResources = [
+        { id: 1, name: 'Resource A', color: '#e20000' },
+        { id: 2, name: 'Resource B', color: '#76e083' },
+        { id: 3, name: 'Resource C', color: '#4981d6' },
+        { id: 4, name: 'Resource D', color: '#e25dd2' },
+        { id: 5, name: 'Resource E', color: '#1dab2f' },
+        { id: 6, name: 'Resource F', color: '#d6d145' },
+        { id: 7, name: 'Resource G', color: '#34c8e0' },
+        { id: 8, name: 'Resource H', color: '#9dde46' },
+        { id: 9, name: 'Resource I', color: '#166f6f' },
+        { id: 10, name: 'Resource J', color: '#f7961e' },
+        { id: 11, name: 'Resource K', color: '#34c8e0' },
+        { id: 12, name: 'Resource L', color: '#af0000' },
+        { id: 13, name: 'Resource M', color: '#446f1c' },
+        { id: 14, name: 'Resource N', color: '#073138' },
+        { id: 15, name: 'Resource O', color: '#4caf00' },
+      ];
+
       var calendar = $('#demo-highlight-hover')
         .mobiscroll()
         .eventcalendar({
           // drag,
           cssClass: 'mds-highlight-hover',
+          data: myEvents,
+          resources: myResources,
           view: {
             timeline: {
               type: 'month',
               resolutionHorizontal: 'day',
             },
           },
-          data: myEvents,
-          resources: myResources,
           onCellHoverIn: function (args) {
-            var res = myResources.filter(function (r) {
-              return r.id === args.resource;
-            })[0];
-            $('.mds-highlight-tooltip-name').text(res.name);
+            $('.mds-highlight-tooltip-name').text(args.resource.name);
             $('.mds-highlight-tooltip-date').text(formatDate('MMM DD, YYYY', args.date));
 
             clearTimeout(tooltipTimeout);
@@ -122,12 +119,13 @@ export default {
             }, 200);
 
             hoverDateTime = args.date;
-            // Todo: pass the resource object as well
+
             myResources.forEach(function (r) {
-              r.cssClass = r.id === args.resource ? 'mds-highlight-row-hover' : '';
+              r.cssClass = r.id === args.resource.id ? 'mds-highlight-row-hover' : '';
             });
             calendar.setOptions({ resources: myResources.slice() });
           },
+
           onCellHoverOut: function () {
             clearTimeout(tooltipTimeout);
             tooltip.close();
@@ -142,9 +140,6 @@ export default {
           renderCell: function (args) {
             return hoverDateTime && args.date.getTime() === hoverDateTime.getTime() ? '<div class="mds-highlight-col-hover"></div>' : '';
           },
-          renderSidebar: function (resource) {
-            return '<div>' + resource.name + ' Sidebar</div>';
-          },
           renderDay: function (args) {
             var isHover = hoverDateTime && args.date.getTime() === hoverDateTime.getTime();
             var hoverClass = isHover ? ' mds-highlight-col-hover' : '';
@@ -154,6 +149,9 @@ export default {
             var isHover = hoverDateTime && args.date.getTime() === hoverDateTime.getTime();
             var hoverClass = isHover ? ' mds-highlight-col-hover' : '';
             return '<div class="mds-highlight-day-content ' + hoverClass + '">' + formatDate('D DDD', args.date) + '</div>';
+          },
+          renderSidebar: function (resource) {
+            return '<div>' + resource.name + ' Sidebar</div>';
           },
         })
         .mobiscroll('getInst');

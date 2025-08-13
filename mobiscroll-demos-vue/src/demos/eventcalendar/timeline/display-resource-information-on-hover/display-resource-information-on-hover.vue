@@ -14,7 +14,7 @@ setOptions({
   // theme
 })
 
-const myResources = ref([
+const myResources = [
   {
     id: 'res1',
     name: 'Adam Miller',
@@ -79,9 +79,9 @@ const myResources = ref([
     avatar: 'https://img.mobiscroll.com/demos/f4.png',
     cost: '25'
   }
-])
+]
 
-const myEvents = ref([
+const myEvents = [
   {
     start: 'dyndatetime(y,m,d-1,12)',
     end: 'dyndatetime(y,m,d-1,15)',
@@ -226,7 +226,7 @@ const myEvents = ref([
     title: 'Apply Smooth Trowel Finish to Basement Floor',
     resource: 'res6'
   }
-])
+]
 
 const resourceAvatar = ref('')
 const resourceName = ref('')
@@ -234,6 +234,7 @@ const resourceCost = ref('')
 const resourceDate = ref('')
 const resourceTotal = ref('')
 const currentResource = ref(null)
+const tooltipAnchor = ref(null)
 const isTooltipOpen = ref(false)
 const isToastOpen = ref(false)
 const toastMessage = ref('')
@@ -283,7 +284,7 @@ function openTooltip(resource, target) {
     resourceTotal.value = totalHours + 'h, $' + totalHours * resource.cost
     target.classList.add('mds-resource-info-hover')
 
-    tooltipRef.value.instance.position()
+    tooltipAnchor.value = target
     isTooltipOpen.value = true
 
     openTimer.value = null
@@ -305,28 +306,13 @@ function handleResourceHoverIn(args) {
   openTooltip(args.resource, args.target)
 }
 
-function handleResourceHoverOut(resource) {
-  resource.target.classList.remove('mds-resource-info-hover')
+function handleResourceHoverOut(args) {
+  args.target.classList.remove('mds-resource-info-hover')
   closeTooltip()
 }
 
 function handlePageChange(args) {
   mySelectedDate.value = args.firstDay
-}
-
-function handleTooltipPosition(args, inst) {
-  const popupElm = args.target.querySelector('.mbsc-popup')
-  const rect = hoveredResourceElmRef.value.getBoundingClientRect()
-
-  popupElm.style.top = rect.top - 10 + 'px'
-
-  if (inst.s.rtl) {
-    popupElm.style.right = window.innerWidth - rect.left + 10 + 'px'
-  } else {
-    popupElm.style.left = rect.right + 10 + 'px'
-  }
-
-  return false // Prevent default positioning
 }
 
 // Native mouse events for the popup
@@ -342,14 +328,6 @@ function handlePay() {
   isTooltipOpen.value = false
   toastMessage.value = currentResource.value.name + ' paid'
   isToastOpen.value = true
-}
-
-function handleToastClose() {
-  isToastOpen.value = false
-}
-
-function handleTooltipClose() {
-  isTooltipOpen.value = false
 }
 </script>
 
@@ -377,12 +355,12 @@ function handleTooltipClose() {
   <MbscPopup
     ref="tooltipRef"
     display="anchored"
+    :anchor="tooltipAnchor"
     :showOverlay="false"
     :touchUi="false"
     :width="280"
     :isOpen="isTooltipOpen"
-    @position="handleTooltipPosition"
-    @close="handleTooltipClose"
+    @close="isTooltipOpen = false"
   >
     <div @mouseenter="handlePopupMouseEnter" @mouseleave="handlePopupMouseLeave">
       <div class="mbsc-flex mbsc-align-items-center mds-resource-info-header">
@@ -409,7 +387,7 @@ function handleTooltipClose() {
       </div>
     </div>
   </MbscPopup>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+  <MbscToast :message="toastMessage" @close="isToastOpen = false" />
 </template>
 
 <style>

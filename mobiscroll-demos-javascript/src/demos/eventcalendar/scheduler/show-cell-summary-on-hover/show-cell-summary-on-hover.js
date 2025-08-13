@@ -196,7 +196,7 @@ export default {
       onCellHoverIn: function (args) {
         var endDate = new Date(args.date);
         endDate.setHours(endDate.getHours() + 1);
-        var date = mobiscroll.formatDate('DDDD MMM DD, YYYY, HA - ', args.date);
+        var date = mobiscroll.formatDate('DDDD MMM D, YYYY, HA - ', args.date);
         var time = mobiscroll.formatDate('HA', endDate);
 
         cellDate.textContent = date + time;

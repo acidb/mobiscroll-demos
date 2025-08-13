@@ -11,7 +11,6 @@ import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscPageChangeEvent,
-  MbscPopupPositionEvent,
   MbscResource,
   MbscResourceHoverEvent
 } from '@mobiscroll/vue'
@@ -237,21 +236,22 @@ const myEvents = ref<MbscCalendarEvent[]>([
 ])
 
 const resourceAvatar = ref<string>('')
-const resourceName = ref<string>('')
+const resourceName = ref<string | undefined>('')
 const resourceCost = ref<string>('')
 const resourceDate = ref<string>('')
 const resourceTotal = ref<string>('')
 const currentResource = ref<MbscResource | null>(null)
+const tooltipAnchor = ref<HTMLElement | null>(null)
 const isTooltipOpen = ref<boolean>(false)
 const isToastOpen = ref<boolean>(false)
 const toastMessage = ref<string>('')
 
-const tooltipRef = ref<typeof MbscPopup>(null)
-const calRef = ref<typeof MbscEventcalendar>(null)
-const hoveredResourceElmRef = ref<HTMLElement>(null)
+const tooltipRef = ref<typeof MbscPopup>()
+const calRef = ref<typeof MbscEventcalendar>()
+const hoveredResourceElmRef = ref<HTMLElement>()
 const mySelectedDate = ref<Date>(new Date())
-const openTimer = ref<ReturnType<typeof setTimeout> | null>(null)
-const closeTimer = ref<ReturnType<typeof setTimeout> | null>(null)
+const openTimer = ref<ReturnType<typeof setTimeout>>()
+const closeTimer = ref<ReturnType<typeof setTimeout>>()
 
 const myView: MbscEventcalendarView = {
   timeline: {
@@ -261,9 +261,9 @@ const myView: MbscEventcalendarView = {
   }
 }
 
-function getTotalHoursForResource(resourceId) {
-  return calRef.value.instance
-    .getEvents()
+function getTotalHoursForResource(resourceId: string | number) {
+  return calRef
+    .value!.instance.getEvents()
     .filter((e: MbscCalendarEvent) => e.resource === resourceId)
     .reduce((sum: number, e: MbscCalendarEvent) => {
       const start = new Date(e.start as Date)
@@ -290,10 +290,10 @@ function openTooltip(resource: MbscResource, target: HTMLElement) {
     resourceTotal.value = totalHours + 'h, $' + totalHours * resource.cost
     target.classList.add('mds-resource-info-hover')
 
-    tooltipRef.value.instance.position()
+    tooltipAnchor.value = target
     isTooltipOpen.value = true
 
-    openTimer.value = null
+    openTimer.value = undefined
   }, 100)
 }
 
@@ -303,7 +303,7 @@ function closeTooltip() {
 
   closeTimer.value = setTimeout(() => {
     isTooltipOpen.value = false
-    closeTimer.value = null
+    closeTimer.value = undefined
   }, 200)
 }
 
@@ -321,21 +321,6 @@ function handlePageChange(args: MbscPageChangeEvent) {
   mySelectedDate.value = args.firstDay
 }
 
-function handleTooltipPosition(args: MbscPopupPositionEvent, inst: any) {
-  const popupElm: HTMLElement = args.target.querySelector('.mbsc-popup')
-  const rect = hoveredResourceElmRef.value.getBoundingClientRect()
-
-  popupElm.style.top = rect.top - 10 + 'px'
-
-  if (inst.s.rtl) {
-    popupElm.style.right = window.innerWidth - rect.left + 10 + 'px'
-  } else {
-    popupElm.style.left = rect.right + 10 + 'px'
-  }
-
-  return false // Prevent default positioning
-}
-
 // Native mouse events for the popup
 function handlePopupMouseEnter() {
   clearTimeout(closeTimer.value)
@@ -347,12 +332,8 @@ function handlePopupMouseLeave() {
 
 function handlePay() {
   isTooltipOpen.value = false
-  toastMessage.value = currentResource.value.name + ' paid'
+  toastMessage.value = currentResource.value!.name + ' paid'
   isToastOpen.value = true
-}
-
-function handleToastClose() {
-  isToastOpen.value = false
 }
 
 function handleTooltipClose() {
@@ -384,11 +365,11 @@ function handleTooltipClose() {
   <MbscPopup
     ref="tooltipRef"
     display="anchored"
+    :anchor="tooltipAnchor"
     :showOverlay="false"
     :touchUi="false"
     :width="280"
     :isOpen="isTooltipOpen"
-    @position="handleTooltipPosition"
     @close="handleTooltipClose"
   >
     <div @mouseenter="handlePopupMouseEnter" @mouseleave="handlePopupMouseLeave">
@@ -416,7 +397,7 @@ function handleTooltipClose() {
       </div>
     </div>
   </MbscPopup>
-  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="handleToastClose" />
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
 
 <style>

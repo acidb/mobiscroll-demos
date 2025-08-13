@@ -206,7 +206,7 @@ const myView = {
 function handleCellHoverIn(args) {
   const endDate = new Date(args.date)
   endDate.setHours(endDate.getHours() + 1)
-  const date = formatDate('DDDD MMM DD, YYYY, HA - ', args.date)
+  const date = formatDate('DDDD MMM D, YYYY, HA - ', args.date)
   const time = formatDate('HA', endDate)
 
   cellDate.value = date + time
