@@ -375,7 +375,7 @@ export default {
                 // context,
                 message: 'Appointment added to ' + formatDate('DDD D, MMM', date),
               });
-            } else if (this.selectedView === 'month') {
+            } else if (selectedView === 'month') {
               setSelectedView('day', date);
             }
           },
