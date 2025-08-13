@@ -234,6 +234,7 @@ const resourceCost = ref('')
 const resourceDate = ref('')
 const resourceTotal = ref('')
 const currentResource = ref(null)
+const tooltipAnchor = ref(null)
 const isTooltipOpen = ref(false)
 const isToastOpen = ref(false)
 const toastMessage = ref('')
@@ -283,7 +284,7 @@ function openTooltip(resource, target) {
     resourceTotal.value = totalHours + 'h, $' + totalHours * resource.cost
     target.classList.add('mds-resource-info-hover')
 
-    tooltipRef.value.instance.position()
+    tooltipAnchor.value = target
     isTooltipOpen.value = true
 
     openTimer.value = null
@@ -312,21 +313,6 @@ function handleResourceHoverOut(args) {
 
 function handlePageChange(args) {
   mySelectedDate.value = args.firstDay
-}
-
-function handleTooltipPosition(args, inst) {
-  const popupElm = args.target.querySelector('.mbsc-popup')
-  const rect = hoveredResourceElmRef.value.getBoundingClientRect()
-
-  popupElm.style.top = rect.top - 10 + 'px'
-
-  if (inst.s.rtl) {
-    popupElm.style.right = window.innerWidth - rect.left + 10 + 'px'
-  } else {
-    popupElm.style.left = rect.right + 10 + 'px'
-  }
-
-  return false // Prevent default positioning
 }
 
 // Native mouse events for the popup
@@ -369,11 +355,11 @@ function handlePay() {
   <MbscPopup
     ref="tooltipRef"
     display="anchored"
+    :anchor="tooltipAnchor"
     :showOverlay="false"
     :touchUi="false"
     :width="280"
     :isOpen="isTooltipOpen"
-    :onPosition="handleTooltipPosition"
     @close="isTooltipOpen = false"
   >
     <div @mouseenter="handlePopupMouseEnter" @mouseleave="handlePopupMouseLeave">

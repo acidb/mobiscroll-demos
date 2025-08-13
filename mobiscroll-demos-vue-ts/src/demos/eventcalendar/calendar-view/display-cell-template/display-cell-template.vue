@@ -478,8 +478,14 @@ function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
 .mds-cell-template-back.mbsc-button {
   width: 100%;
   height: 32px;
-  font-size: 13px;
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 0;
   display: none;
+}
+
+.mds-cell-template-back .mbsc-icon {
+  line-height: 18px;
 }
 
 /* Cell template */
