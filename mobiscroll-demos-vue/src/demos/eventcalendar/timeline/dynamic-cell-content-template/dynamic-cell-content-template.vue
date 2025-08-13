@@ -538,7 +538,7 @@ function getHours(events = []) {
 function getBadgeClass(events = []) {
   const hours = getHours(events)
   const map = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' }
-  return `mds-timeline-cell-content-badge-${map[hours] || 'default'}`
+  return "mds-timeline-cell-content-badge-" + (map[hours] || "default");
 }
 
 function getIcons(events = []) {

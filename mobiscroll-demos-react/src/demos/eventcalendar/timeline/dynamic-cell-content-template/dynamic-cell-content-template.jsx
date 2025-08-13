@@ -1,7 +1,6 @@
 import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import './dynamic-cell-content-template.css';
-import { useRef } from 'react';
 
 setOptions({
   // localeJs,
@@ -512,7 +511,6 @@ function App() {
         end: 'dyndatetime(y, m, d + 12, 2, 0)',
       },
     ],
-    [],
   );
 
   const myResources = useMemo(
