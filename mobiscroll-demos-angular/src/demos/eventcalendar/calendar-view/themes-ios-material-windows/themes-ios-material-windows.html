@@ -1,1 +1,26 @@
-<mbsc-eventcalendar [data]="myEvents" [view]="view" [theme]="theme" [themeVariant]="themeVariant"></mbsc-eventcalendar>
+<mbsc-page class="mds-full-height">
+  <div class="mds-full-height mbsc-flex-col">
+    <div class="mbsc-grid">
+      <div class="mbsc-row">
+        <div class="mbsc-col-sm-6">
+          <mbsc-dropdown [(ngModel)]="theme" inputStyle="box" label="Theme" labelStyle="stacked">
+            <option value="auto">Auto</option>
+            <option value="ios">iOS</option>
+            <option value="material">Material</option>
+            <option value="windows">Windows</option>
+          </mbsc-dropdown>
+        </div>
+        <div class="mbsc-col-sm-6">
+          <mbsc-dropdown [(ngModel)]="themeVariant" inputStyle="box" label="Theme variant" labelStyle="stacked">
+            <option value="auto">Auto</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </mbsc-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="mds-overflow-hidden mbsc-flex-1-1">
+      <mbsc-eventcalendar [data]="myEvents" [view]="myView" [theme]="theme" [themeVariant]="themeVariant"></mbsc-eventcalendar>
+    </div>
+  </div>
+</mbsc-page>

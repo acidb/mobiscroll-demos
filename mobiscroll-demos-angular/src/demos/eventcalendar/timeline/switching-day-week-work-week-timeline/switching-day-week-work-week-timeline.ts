@@ -19,14 +19,14 @@ export class AppComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private notify: Notifications,
-  ) {}
+  ) { }
 
   myEvents: MbscCalendarEvent[] = [];
   view = 'week';
   calView: MbscEventcalendarView = {
     timeline: {
       type: 'week',
-    },
+    }
   };
 
   myResources = [
