@@ -40,7 +40,6 @@ onMounted(() => {
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Gregorian calendar</div>
-            <!-- dragOptions -->
             <MbscEventcalendar :data="myEvents" :view="myView" />
           </div>
         </div>
@@ -49,9 +48,9 @@ onMounted(() => {
             <div class="mbsc-form-group-title">Jalali calendar</div>
             <MbscEventcalendar
               :data="myEvents"
-              :view="myView"
               :calendarSystem="jalaliCalendar"
               :locale="localeFa"
+              :view="myView"
             />
           </div>
         </div>
@@ -60,9 +59,9 @@ onMounted(() => {
             <div class="mbsc-form-group-title">Hijri calendar</div>
             <MbscEventcalendar
               :data="myEvents"
-              :view="myView"
               :calendarSystem="hijriCalendar"
               :locale="localeAr"
+              :view="myView"
             />
           </div>
         </div>

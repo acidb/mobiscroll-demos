@@ -6,11 +6,10 @@ import {
   localeAr,
   localeFa,
   MbscCalendarEvent,
-  MbscEventcalendarView,
   Page,
-  setOptions,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 setOptions({
   // themeJs
@@ -18,13 +17,6 @@ setOptions({
 
 const App: FC = () => {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);
-
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      calendar: { labels: true },
-    }),
-    [],
-  );
 
   useEffect(() => {
     getJson(
@@ -43,19 +35,19 @@ const App: FC = () => {
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Gregorian calendar</div>
-              <Eventcalendar data={myEvents} view={myView} />
+              <Eventcalendar data={myEvents} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Jalali calendar</div>
-              <Eventcalendar data={myEvents} calendarSystem={jalaliCalendar} locale={localeFa} view={myView} />
+              <Eventcalendar data={myEvents} calendarSystem={jalaliCalendar} locale={localeFa} />
             </div>
           </div>
           <div className="mbsc-col-sm-12 mbsc-col-md-4">
             <div className="mbsc-form-group">
               <div className="mbsc-form-group-title">Hijri calendar</div>
-              <Eventcalendar data={myEvents} calendarSystem={hijriCalendar} locale={localeAr} view={myView} />
+              <Eventcalendar data={myEvents} calendarSystem={hijriCalendar} locale={localeAr} />
             </div>
           </div>
         </div>

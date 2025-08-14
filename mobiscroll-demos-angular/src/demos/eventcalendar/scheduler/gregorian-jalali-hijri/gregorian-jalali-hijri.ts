@@ -16,23 +16,23 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-scheduler-gregorian-jalali-hijri',
+  selector: 'app-timeline-gregorian-jalali-hijri',
   templateUrl: './gregorian-jalali-hijri.html',
   standalone: false,
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   myEvents: MbscCalendarEvent[] = [];
 
-  gregorianSettings: MbscEventcalendarOptions = {
+  gregorianOptions: MbscEventcalendarOptions = {
     locale: localeEn,
     view: {
       schedule: { type: 'day' },
     },
   };
 
-  jalaliSettings: MbscEventcalendarOptions = {
+  jalaliOptions: MbscEventcalendarOptions = {
     calendarSystem: jalaliCalendar,
     locale: localeFa,
     view: {
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     },
   };
 
-  hijriSettings: MbscEventcalendarOptions = {
+  hijriOptions: MbscEventcalendarOptions = {
     calendarSystem: hijriCalendar,
     locale: localeAr,
     view: {

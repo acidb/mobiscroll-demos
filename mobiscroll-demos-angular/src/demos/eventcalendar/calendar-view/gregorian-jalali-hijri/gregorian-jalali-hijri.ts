@@ -21,20 +21,20 @@ setOptions({
   standalone: false,
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   myEvents: MbscCalendarEvent[] = [];
 
-  gregorianSettings: MbscEventcalendarOptions = {
+  gregorianOptions: MbscEventcalendarOptions = {
     locale: localeEn,
   };
 
-  jalaliSettings: MbscEventcalendarOptions = {
+  jalaliOptions: MbscEventcalendarOptions = {
     calendarSystem: jalaliCalendar,
     locale: localeFa,
   };
 
-  hijriSettings: MbscEventcalendarOptions = {
+  hijriOptions: MbscEventcalendarOptions = {
     calendarSystem: hijriCalendar,
     locale: localeAr,
   };

@@ -8,6 +8,7 @@ import {
   localeFa,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscResource,
   setOptions,
 } from '@mobiscroll/angular';
 
@@ -16,15 +17,15 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-timeline-gregorian-jalali-hijri',
+  selector: 'app-agenda-gregorian-jalali-hijri',
   templateUrl: './gregorian-jalali-hijri.html',
   standalone: false,
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   myEvents: MbscCalendarEvent[] = [];
-  myResources = [
+  myResources: MbscResource[] = [
     {
       id: 1,
       name: 'Ryan',
@@ -57,14 +58,14 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  gregorianSettings: MbscEventcalendarOptions = {
+  gregorianOptions: MbscEventcalendarOptions = {
     locale: localeEn,
     view: {
       timeline: { type: 'day' },
     },
   };
 
-  jalaliSettings: MbscEventcalendarOptions = {
+  jalaliOptions: MbscEventcalendarOptions = {
     calendarSystem: jalaliCalendar,
     locale: localeFa,
     view: {
@@ -72,7 +73,7 @@ export class AppComponent implements OnInit {
     },
   };
 
-  hijriSettings: MbscEventcalendarOptions = {
+  hijriOptions: MbscEventcalendarOptions = {
     calendarSystem: hijriCalendar,
     locale: localeAr,
     view: {
