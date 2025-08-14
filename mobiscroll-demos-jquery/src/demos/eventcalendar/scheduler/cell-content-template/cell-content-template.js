@@ -157,8 +157,8 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mbsc-schedule-time-wrapper,
-.mbsc-schedule-item {
+.mds-schedule-cell-template .mbsc-schedule-time-wrapper,
+.mds-schedule-cell-template .mbsc-schedule-item {
   height: 70px;
 }
 
