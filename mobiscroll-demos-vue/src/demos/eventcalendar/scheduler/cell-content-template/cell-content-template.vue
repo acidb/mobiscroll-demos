@@ -144,8 +144,8 @@ const getIcons = (date) => {
 </template>
 
 <style>
-.mbsc-schedule-time-wrapper,
-.mbsc-schedule-item {
+.mds-schedule-cell-template .mbsc-schedule-time-wrapper,
+.mds-schedule-cell-template .mbsc-schedule-item {
   height: 70px;
 }
 
