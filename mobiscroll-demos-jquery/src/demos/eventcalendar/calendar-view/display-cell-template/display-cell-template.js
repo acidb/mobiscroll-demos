@@ -315,7 +315,7 @@ export default {
             return (
               '<div class="mds-cell-template-cont" ' +
               (selectedView === 'week' ? 'data-date="' + date.getTime() + '"' : '') +
-              (stressLevel.color && selectedView !== 'day' ? 'style="background:' + stressLevel.color : '') +
+              (stressLevel.color ? 'style="background:' + stressLevel.color : '') +
               '">' +
               '<div class="mds-cell-template-day">' +
               formatDate('DDD D, MMM', date) +
@@ -531,6 +531,8 @@ export default {
 
 .mds-cell-template-day-view .mds-cell-template-cont {
   text-align: center; 
+  max-width: 155px;
+  margin: 0 auto;
 }
 
 .mds-cell-template-day-view .mbsc-schedule-header-item.mbsc-selected {
