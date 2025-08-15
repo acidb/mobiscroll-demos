@@ -349,15 +349,11 @@ function handleSelectedDateChange(args) {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     :cssClass="myCssClass"
     :view="myView"
     :data="myEvents"
-    :clickToCreate="true"
-    :dragToCreate="true"
-    :dragToMove="true"
-    :dragToResize="true"
-    :eventDelete="true"
     :extendDefaultEvent="myDefaultEvent"
     :selectedDate="currentDate"
     @selected-date-change="handleSelectedDateChange"

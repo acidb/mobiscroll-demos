@@ -283,13 +283,9 @@ export default {
     }
 
     var calendar = mobiscroll.eventcalendar('#demo-display-cell-template', {
+      // drag,
       cssClass: 'mds-cell-template mds-cell-template-month-view',
       data: myEvents,
-      clickToCreate: true,
-      dragToCreate: true,
-      dragToMove: true,
-      dragToResize: true,
-      eventDelete: true,
       view: {
         calendar: { type: 'month' },
       },

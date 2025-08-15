@@ -429,14 +429,10 @@ function App() {
   return (
     <>
       <Eventcalendar
+        // drag
         cssClass={myCssClass}
         data={myEvents}
         view={myView}
-        clickToCreate={true}
-        dragToCreate={true}
-        dragToMove={true}
-        dragToResize={true}
-        eventDelete={true}
         selectedDate={currentDate}
         extendDefaultEvent={myDefaultEvent}
         renderDay={customDay}
