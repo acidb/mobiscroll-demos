@@ -57,13 +57,7 @@ function App() {
 
   const myView = useMemo(() => ({ calendar: { labels: true } }), []);
 
-  return (
-    <Eventcalendar
-      // drag
-      data={myEvents}
-      view={myView}
-    />
-  );
+  return <Eventcalendar data={myEvents} view={myView} />;
 }
 
 export default App;

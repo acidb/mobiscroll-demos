@@ -10,7 +10,7 @@ export default {
       // theme
     });
 
-    var obj = mobiscroll.eventcalendar('#demo-date-type-obj', {
+    var dateObj = mobiscroll.eventcalendar('#demo-date-type-obj', {
       view: {
         calendar: {
           type: 'month',
@@ -28,9 +28,9 @@ export default {
       ],
     });
 
-    obj.navigate(new Date(2020, 4, 19));
+    dateObj.navigate(new Date(2020, 4, 19));
 
-    var iso = mobiscroll.eventcalendar('#demo-date-type-iso', {
+    var dateISO = mobiscroll.eventcalendar('#demo-date-type-iso', {
       view: {
         calendar: {
           type: 'month',
@@ -48,9 +48,9 @@ export default {
       ],
     });
 
-    iso.navigate('2020-05-20');
+    dateISO.navigate('2020-05-20');
 
-    var momentJs = mobiscroll.eventcalendar('#demo-date-type-moment', {
+    var dateMoment = mobiscroll.eventcalendar('#demo-date-type-moment', {
       view: {
         calendar: {
           type: 'month',
@@ -68,80 +68,91 @@ export default {
       ],
     });
 
-    momentJs.navigate(moment([2020, 4, 21]));
+    dateMoment.navigate(moment([2020, 4, 21]));
 
-    document.getElementById('addDate').addEventListener(
+    document.getElementById('demo-add-date-obj').addEventListener(
       'click',
       function () {
-        obj.addEvent({
+        dateObj.addEvent({
           start: new Date(2020, 4, 19, 10, 45),
           end: new Date(2020, 4, 19, 11, 45),
           text: 'New Event',
         });
-        obj.navigate(new Date(2020, 4, 19));
+        dateObj.navigate(new Date(2020, 4, 19));
       },
       false,
     );
 
-    document.getElementById('addISO').addEventListener(
+    document.getElementById('demo-add-iso').addEventListener(
       'click',
       function () {
-        iso.addEvent({
+        dateISO.addEvent({
           start: '2020-05-20T12:30:00',
           end: '2020-05-20T13:00:00',
           text: 'New Event',
         });
-        iso.navigate('2020-05-20');
+        dateISO.navigate('2020-05-20');
       },
       false,
     );
 
-    document.getElementById('addMoment').addEventListener(
+    document.getElementById('demo-add-moment').addEventListener(
       'click',
       function () {
         // Make sure that moment js is loaded
-        momentJs.addEvent({
+        dateMoment.addEvent({
           start: moment([2020, 4, 21, 11]),
           end: moment([2020, 4, 21, 14]),
           text: 'New Event',
         });
-        momentJs.navigate(moment([2020, 4, 21]));
+        dateMoment.navigate(moment([2020, 4, 21]));
       },
       false,
     );
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mbsc-grid">
+<div mbsc-page>
+  <div class="mbsc-grid">
     <div class="mbsc-row">
-        <div class="mbsc-col-sm-12 mbsc-col-md-4">
-            <div class="mbsc-form-group">
-                <div class="mbsc-form-group-title">Date object</div>
-                <div class="mbsc-button-group-block">
-                    <button mbsc-button id="addDate">start: new Date(2020, 4, 19, 10, 45) <br /> end: new Date(2020, 4, 19, 11, 45)</button>
-                </div>
-                <div id="demo-date-type-obj"></div>
-            </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Date object</div>
+          <div class="mbsc-button-group-block">
+            <button mbsc-button id="demo-add-date-obj">
+              start: new Date(2020, 4, 19, 10, 45)<br /> 
+              end: new Date(2020, 4, 19, 11, 45)
+            </button>
+          </div>
+          <div id="demo-date-type-obj"></div>
         </div>
-        <div class="mbsc-col-sm-12 mbsc-col-md-4">
-            <div class="mbsc-form-group">
-                <div class="mbsc-form-group-title">ISO string</div>
-                <div class="mbsc-button-group-block">
-                    <button mbsc-button id="addISO">start: 2020-05-20T12:30:00 <br /> end: 2020-05-20T13:00:00</button>
-                </div>
-                <div id="demo-date-type-iso"></div>
-            </div>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">ISO 8601 date string</div>
+          <div class="mbsc-button-group-block">
+            <button mbsc-button id="demo-add-iso">
+              start: '2020-05-20T12:30:00'<br /> 
+              end: '2020-05-20T13:00:00'
+            </button>
+          </div>
+          <div id="demo-date-type-iso"></div>
         </div>
-        <div class="mbsc-col-sm-12 mbsc-col-md-4">
-            <div class="mbsc-form-group">
-                <div class="mbsc-form-group-title">Moment js</div>
-                <div class="mbsc-button-group-block">
-                    <button mbsc-button id="addMoment">start: moment([2020, 4, 21, 11]) <br /> end: moment([2020, 4, 21, 14])</button>
-                </div>
-                <div id="demo-date-type-moment"></div>
-            </div>
+      </div>
+      <div class="mbsc-col-sm-12 mbsc-col-md-4">
+        <div class="mbsc-form-group">
+          <div class="mbsc-form-group-title">Moment.js object</div>
+          <div class="mbsc-button-group-block">
+            <button mbsc-button id="demo-add-moment">
+              start: moment([2020, 4, 21, 11])<br />
+              end: moment([2020, 4, 21, 14])
+            </button>
+          </div>
+          <div id="demo-date-type-moment"></div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
   `,
 };

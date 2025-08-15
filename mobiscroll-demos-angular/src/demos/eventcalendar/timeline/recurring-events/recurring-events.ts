@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -57,7 +57,7 @@ export class AppComponent {
     },
   ];
 
-  myResources = [
+  myResources: MbscResource[] = [
     {
       id: 1,
       name: 'Resource A',
@@ -85,7 +85,8 @@ export class AppComponent {
     },
   ];
 
-  view: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     timeline: { type: 'week' },
   };
 }
+

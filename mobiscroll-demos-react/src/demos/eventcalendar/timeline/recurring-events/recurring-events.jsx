@@ -86,21 +86,9 @@ function App() {
     [],
   );
 
-  const myView = useMemo(
-    () => ({
-      timeline: { type: 'week' },
-    }),
-    [],
-  );
+  const myView = useMemo(() => ({ timeline: { type: 'week' } }), []);
 
-  return (
-    <Eventcalendar
-      // drag
-      data={myEvents}
-      view={myView}
-      resources={myResources}
-    />
-  );
+  return <Eventcalendar data={myEvents} resources={myResources} view={myView} />;
 }
 
 export default App;

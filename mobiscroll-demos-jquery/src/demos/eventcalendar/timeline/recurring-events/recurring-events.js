@@ -10,11 +10,10 @@ export default {
     });
 
     $(function () {
-      $('#demo')
+      $('#demo-recurring-events')
         .mobiscroll()
         .eventcalendar({
           // context,
-          // drag,
           view: {
             timeline: { type: 'week' },
           },
@@ -94,6 +93,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo"></div>
+<div id="demo-recurring-events"></div>
   `,
 };
