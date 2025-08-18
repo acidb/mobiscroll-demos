@@ -358,7 +358,7 @@ const App: FC = () => {
         <div
           className="mds-cell-template-cont"
           style={{
-            background: stressLevel.color && selectedView !== 'day' ? stressLevel.color : '',
+            background: stressLevel.color ? stressLevel.color : '',
           }}
           onClick={() => handleDayClick(date)}
         >
@@ -374,7 +374,7 @@ const App: FC = () => {
         </div>
       );
     },
-    [selectedView, getNrEvents, getWeatherForDate, getStressLevel, handleDayClick],
+    [getNrEvents, getWeatherForDate, getStressLevel, handleDayClick],
   );
 
   const customHeader = useCallback(

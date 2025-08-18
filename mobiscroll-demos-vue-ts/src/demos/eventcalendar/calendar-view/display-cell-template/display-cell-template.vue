@@ -377,8 +377,7 @@ function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
       <div
         class="mds-cell-template-cont"
         :style="{
-          background:
-            dayData.stressLevelColor && selectedView !== 'day' ? dayData.stressLevelColor : ''
+          background: dayData.stressLevelColor ? dayData.stressLevelColor : ''
         }"
         @click="selectedView === 'week' ? setSelectedView('day', data.date) : null"
       >
@@ -558,6 +557,8 @@ function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
 
 .mds-cell-template-day-view .mds-cell-template-cont {
   text-align: center;
+  max-width: 155px;
+  margin: 0 auto;
 }
 
 .mds-cell-template-day-view .mbsc-schedule-header-item.mbsc-selected {
