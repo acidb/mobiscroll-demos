@@ -288,13 +288,9 @@ export default {
       var calendar = $calendarElm
         .mobiscroll()
         .eventcalendar({
+          // drag,
           cssClass: 'mds-cell-template mds-cell-template-month-view',
           data: myEvents,
-          clickToCreate: true,
-          dragToCreate: true,
-          dragToMove: true,
-          dragToResize: true,
-          eventDelete: true,
           view: {
             calendar: { type: 'month' },
           },

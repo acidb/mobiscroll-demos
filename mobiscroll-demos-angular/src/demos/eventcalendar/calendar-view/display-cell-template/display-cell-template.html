@@ -17,7 +17,7 @@
     <div *ngIf="getDayTemplate(data) as dayData">
       <div
         class="mds-cell-template-cont"
-        [ngStyle]="{'background': dayData.stressLevelColor && selectedView !== 'day' ? dayData.stressLevelColor : ''}"
+        [ngStyle]="{'background': dayData.stressLevelColor ? dayData.stressLevelColor : ''}"
         (click)="selectedView === 'week' ? setSelectedView('day', data.date) : null"
       >
         <div class="mds-cell-template-day">{{dayData.dayContent}}</div>

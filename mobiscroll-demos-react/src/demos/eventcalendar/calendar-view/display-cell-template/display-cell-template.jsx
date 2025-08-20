@@ -344,7 +344,7 @@ function App() {
         <div
           className="mds-cell-template-cont"
           style={{
-            background: stressLevel.color && selectedView !== 'day' ? stressLevel.color : '',
+            background: stressLevel.color ? stressLevel.color : '',
           }}
           onClick={() => handleDayClick(date)}
         >
@@ -360,7 +360,7 @@ function App() {
         </div>
       );
     },
-    [selectedView, getNrEvents, getWeatherForDate, getStressLevel, handleDayClick],
+    [getNrEvents, getWeatherForDate, getStressLevel, handleDayClick],
   );
 
   const customHeader = useCallback(
@@ -429,14 +429,10 @@ function App() {
   return (
     <>
       <Eventcalendar
+        // drag
         cssClass={myCssClass}
         data={myEvents}
         view={myView}
-        clickToCreate={true}
-        dragToCreate={true}
-        dragToMove={true}
-        dragToResize={true}
-        eventDelete={true}
         selectedDate={currentDate}
         extendDefaultEvent={myDefaultEvent}
         renderDay={customDay}

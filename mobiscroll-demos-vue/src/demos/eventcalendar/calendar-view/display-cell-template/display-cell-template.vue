@@ -349,15 +349,11 @@ function handleSelectedDateChange(args) {
 </script>
 
 <template>
+  <!-- dragOptions -->
   <MbscEventcalendar
     :cssClass="myCssClass"
     :view="myView"
     :data="myEvents"
-    :clickToCreate="true"
-    :dragToCreate="true"
-    :dragToMove="true"
-    :dragToResize="true"
-    :eventDelete="true"
     :extendDefaultEvent="myDefaultEvent"
     :selectedDate="currentDate"
     @selected-date-change="handleSelectedDateChange"
@@ -368,8 +364,7 @@ function handleSelectedDateChange(args) {
       <div
         class="mds-cell-template-cont"
         :style="{
-          background:
-            dayData.stressLevelColor && selectedView !== 'day' ? dayData.stressLevelColor : ''
+          background: dayData.stressLevelColor ? dayData.stressLevelColor : ''
         }"
         @click="selectedView === 'week' ? setSelectedView('day', data.date) : null"
       >
@@ -549,6 +544,8 @@ function handleSelectedDateChange(args) {
 
 .mds-cell-template-day-view .mds-cell-template-cont {
   text-align: center;
+  max-width: 155px;
+  margin: 0 auto;
 }
 
 .mds-cell-template-day-view .mbsc-schedule-header-item.mbsc-selected {
