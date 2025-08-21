@@ -577,15 +577,15 @@ const App: FC = () => {
         ...prev,
         {
           start: hovered.current.date,
-        end: new Date(hovered.current.date!.getTime() + 2 * 3600000),
-        resource: hovered.current.resource,
-        title,
-      } as MbscCalendarEvent,
-    ]);
-    hovered.current.count++;
-  },
-  [titles],
-);
+          end: new Date(hovered.current.date!.getTime() + 2 * 3600000),
+          resource: hovered.current.resource,
+          title,
+        } as MbscCalendarEvent,
+      ]);
+      hovered.current.count++;
+    },
+    [titles],
+  );
 
   const renderCell = useCallback(
     (args: MbscCalendarCellData) => {

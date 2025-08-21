@@ -1,9 +1,4 @@
-import {
-  Eventcalendar,
-  formatDate,
-  Popup,
-  setOptions,
-} from '@mobiscroll/react';
+import { Eventcalendar, formatDate, Popup, setOptions } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import './dynamic-resource-column-highlight-on-cell-hover.css';
 
@@ -71,20 +66,13 @@ function App() {
     [hoverDate],
   );
 
-  const renderSidebar = useCallback(
-    (resource) => <div>{resource.name} Sidebar</div>,
-    [],
-  );
+  const renderSidebar = useCallback((resource) => <div>{resource.name} Sidebar</div>, []);
 
   const renderDay = useCallback(
     (args) => {
       const isHover = hoverDate && args.date.getTime() === hoverDate.getTime();
       const hoverClass = isHover ? ' mds-highlight-col-hover' : '';
-      return (
-        <div className={"mds-highlight-day-content" + hoverClass}>
-          {formatDate('D DDD', args.date)}
-        </div>
-      );
+      return <div className={'mds-highlight-day-content' + hoverClass}>{formatDate('D DDD', args.date)}</div>;
     },
     [hoverDate],
   );
@@ -93,30 +81,29 @@ function App() {
     (args) => {
       const isHover = hoverDate && args.date.getTime() === hoverDate.getTime();
       const hoverClass = isHover ? ' mds-highlight-col-hover' : '';
-      return (
-        <div className={"mds-highlight-day-content" + hoverClass}>
-          {formatDate('D DDD', args.date)}
-        </div>
-      );
+      return <div className={'mds-highlight-day-content' + hoverClass}>{formatDate('D DDD', args.date)}</div>;
     },
     [hoverDate],
   );
 
-  const handleHoverIn = useCallback((args) => {
-    const updated = myResources.map((r) => ({
-      ...r,
-      cssClass: r.id === args.resource ? 'mds-highlight-row-hover' : '',
-    }));
-    setResources(updated);
-    setHoverDate(args.date);
-    setHoverResource(updated.find((r) => r.id === args.resource));
-    setAnchor(args.domEvent.target);
+  const handleHoverIn = useCallback(
+    (args) => {
+      const updated = myResources.map((r) => ({
+        ...r,
+        cssClass: r.id === args.resource ? 'mds-highlight-row-hover' : '',
+      }));
+      setResources(updated);
+      setHoverDate(args.date);
+      setHoverResource(updated.find((r) => r.id === args.resource));
+      setAnchor(args.domEvent.target);
 
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setPopupOpen(true);
-    }, 300);
-  }, [myResources]);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
+        setPopupOpen(true);
+      }, 300);
+    },
+    [myResources],
+  );
 
   const handleHoverOut = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);

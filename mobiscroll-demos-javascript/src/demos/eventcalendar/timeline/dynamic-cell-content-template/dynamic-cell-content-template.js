@@ -519,86 +519,87 @@ export default {
     };
     var titles = Object.keys(iconMap);
 
-    var calendar = mobiscroll
-      .eventcalendar('#demo-cell-content', {
-        dragToCreate: false,
-        dragToMove: false,
-        dragToResize: false,
-        extendDefaultEvent: function (args) {
-          return {
-            title: titles[Math.floor(Math.random() * titles.length)],
-            end: new Date(args.start.getTime() + 2 * 3600000),
-          };
+    var calendar = mobiscroll.eventcalendar('#demo-cell-content', {
+      dragToCreate: false,
+      dragToMove: false,
+      dragToResize: false,
+      extendDefaultEvent: function (args) {
+        return {
+          title: titles[Math.floor(Math.random() * titles.length)],
+          end: new Date(args.start.getTime() + 2 * 3600000),
+        };
+      },
+      cssClass: 'mds-timeline-cell-content',
+      view: {
+        timeline: {
+          endDay: 5,
+          eventList: true,
+          type: 'month',
+          resolutionHorizontal: 'day',
+          startDay: 1,
         },
-        cssClass: 'mds-timeline-cell-content',
-        view: {
-          timeline: {
-            endDay: 5,
-            eventList: true,
-            type: 'month',
-            resolutionHorizontal: 'day',
-            startDay: 1,
-          },
-        },
-        renderCell: function (args) {
-          var events = args.events || [];
-          var hours = Math.round(
-            events.reduce(function (s, ev) {
-              return s + (new Date(ev.end) - new Date(ev.start)) / 36e5;
-            }, 0),
-          );
-          var classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
-          var colorClass = 'mds-timeline-cell-content-badge-' + (classMap[hours] || 'default');
+      },
+      renderCell: function (args) {
+        var events = args.events || [];
+        var hours = Math.round(
+          events.reduce(function (s, ev) {
+            return s + (new Date(ev.end) - new Date(ev.start)) / 36e5;
+          }, 0),
+        );
+        var classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
+        var colorClass = 'mds-timeline-cell-content-badge-' + (classMap[hours] || 'default');
 
-          var iconHtml = '';
-          var addedIcons = new Set();
+        var iconHtml = '';
+        var addedIcons = new Set();
 
-          for (var i = 0; i < events.length; i++) {
-            var ev = events[i];
-            var iconName = iconMap[ev.title];
-            if (iconName && !addedIcons.has(ev.title)) {
-              iconHtml += '<i class="mbsc-font-icon mbsc-icon-' + iconName + ' mds-timeline-cell-icon" title="' + ev.title + '"></i>';
-              addedIcons.add(ev.title);
-            }
+        for (var i = 0; i < events.length; i++) {
+          var ev = events[i];
+          var iconName = iconMap[ev.title];
+          if (iconName && !addedIcons.has(ev.title)) {
+            iconHtml += '<i class="mbsc-font-icon mbsc-icon-' + iconName + ' mds-timeline-cell-icon" title="' + ev.title + '"></i>';
+            addedIcons.add(ev.title);
           }
+        }
 
-          return (
-            '<div class="mds-timeline-cell-content-badge ' +
-            colorClass +
-            '">' +
-            hours +
-            'h / 8h</div>' +
-            '<button class="mds-timeline-cell-content-add">+</button>' +
-            '<div class="mds-timeline-cell-icons">' +
-            iconHtml +
-            '</div>'
-          );
-        },
-        renderScheduleEventContent: function (event) {
-          var hours = Math.round((event.endDate - event.startDate) / 36e5);
-          return '<div>' + event.title + ' - ' + hours + 'h</div>';
-        },
-        onCellHoverIn: function (args) {
-          hoveredDate = args.date;
-          hoveredResource = args.resource.id;
-          hoveredCellEventCount = args.events?.length || 0;
-        },
-        onEventCreate: function () {
-          console.log(hoveredCellEventCount);
-          if (hoveredCellEventCount >= 4) {
-            mobiscroll.toast({
-              message: 'Limit reached.',
-            });
-            return false;
-          }
-        },
-        data: myEvents,
-        resources: myResources,
-      });
+        return (
+          '<div class="mds-timeline-cell-content-badge ' +
+          colorClass +
+          '">' +
+          hours +
+          'h / 8h</div>' +
+          '<button class="mds-timeline-cell-content-add">+</button>' +
+          '<div class="mds-timeline-cell-icons">' +
+          iconHtml +
+          '</div>'
+        );
+      },
+      renderScheduleEventContent: function (event) {
+        var hours = Math.round((event.endDate - event.startDate) / 36e5);
+        return '<div>' + event.title + ' - ' + hours + 'h</div>';
+      },
+      onCellHoverIn: function (args) {
+        hoveredDate = args.date;
+        hoveredResource = args.resource.id;
+        hoveredCellEventCount = args.events?.length || 0;
+      },
+      onEventCreate: function () {
+        console.log(hoveredCellEventCount);
+        if (hoveredCellEventCount >= 4) {
+          mobiscroll.toast({
+            message: 'Limit reached.',
+          });
+          return false;
+        }
+      },
+      data: myEvents,
+      resources: myResources,
+    });
 
     document.addEventListener('click', function (e) {
       if (e.target.closest('.mds-timeline-cell-content-add')) {
-        if (!hoveredDate || !hoveredResource) return;
+        if (!hoveredDate || !hoveredResource) {
+          return;
+        }
 
         if (hoveredCellEventCount >= 4) {
           mobiscroll.toast({
@@ -606,12 +607,14 @@ export default {
           });
           return;
         }
+
         calendar.addEvent({
           start: hoveredDate,
           end: new Date(hoveredDate.getTime() + 2 * 3600000),
           resource: hoveredResource,
           title: titles[Math.floor(Math.random() * titles.length)],
         });
+
         hoveredCellEventCount++;
       }
     });

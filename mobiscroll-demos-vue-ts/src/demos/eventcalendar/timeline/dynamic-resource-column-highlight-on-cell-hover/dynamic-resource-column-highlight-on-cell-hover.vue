@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatDate, MbscEventcalendar, MbscPopup, setOptions} from '@mobiscroll/vue'
+import { formatDate, MbscEventcalendar, MbscPopup, setOptions } from '@mobiscroll/vue'
 import type {
   MbscCalendarEvent,
   MbscCellHoverEvent,
@@ -17,7 +17,7 @@ const anchor = ref<HTMLElement>()
 const hoverDate = ref<Date | null>(null)
 const hoverResource = ref<MbscResource | null>(null)
 const isPopupOpen = ref<boolean>(false)
-let timerRef: ReturnType<typeof setTimeout>;
+let timerRef: ReturnType<typeof setTimeout>
 
 const myView: MbscEventcalendarView = {
   timeline: {

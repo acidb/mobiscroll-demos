@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { MbscEventcalendar, MbscToast, setOptions,  } from '@mobiscroll/vue'
-import type { MbscCalendarEvent,  MbscEventcalendarView,  MbscNewEventData, MbscResource } from '@mobiscroll/vue';
+import { MbscEventcalendar, MbscToast, setOptions } from '@mobiscroll/vue'
+import type {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscNewEventData,
+  MbscResource
+} from '@mobiscroll/vue'
 import { ref } from 'vue'
 
 setOptions({
@@ -529,36 +534,34 @@ const myView: MbscEventcalendarView = {
 
 function getHours(events: { start: string | Date; end: string | Date }[] = []) {
   const total = events.reduce((s, ev) => {
-    const st = new Date(ev.start).getTime();
-    const en = new Date(ev.end).getTime();
-    return s + (en - st) / 36e5;
-  }, 0);
-  return Math.round(total);
+    const st = new Date(ev.start).getTime()
+    const en = new Date(ev.end).getTime()
+    return s + (en - st) / 36e5
+  }, 0)
+  return Math.round(total)
 }
-
 
 function getBadgeClass(events: any[] = []) {
-  const hours = getHours(events);
-  const map: Record<number, string> = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
-  return "mds-timeline-cell-content-badge-" + (map[hours] || "default");
+  const hours = getHours(events)
+  const map: Record<number, string> = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' }
+  return 'mds-timeline-cell-content-badge-' + (map[hours] || 'default')
 }
 
-
 function getIcons(events: Array<{ title?: string }> = []) {
-  const seen = new Set<string>();
-  const icons: string[] = [];
+  const seen = new Set<string>()
+  const icons: string[] = []
 
   for (const ev of events) {
-    const t = ev.title;
-    if (!t) continue;
+    const t = ev.title
+    if (!t) continue
 
-    const name = iconMap[t];
+    const name = iconMap[t]
     if (name && !seen.has(t)) {
-      seen.add(t);
-      icons.push(name);
+      seen.add(t)
+      icons.push(name)
     }
   }
-  return icons;
+  return icons
 }
 
 function addEvent(cell: any) {

@@ -545,12 +545,12 @@ export default {
               startDay: 1,
             },
           },
-        renderCell: function (args) {
+          renderCell: function (args) {
             var events = args.events || [];
             var hours = Math.round(
               events.reduce(function (s, ev) {
                 return s + (new Date(ev.end) - new Date(ev.start)) / 36e5;
-              }, 0)
+              }, 0),
             );
             var classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
             var colorClass = 'mds-timeline-cell-content-badge-' + (classMap[hours] || 'default');
@@ -562,12 +562,7 @@ export default {
               var ev = events[i];
               var iconName = iconMap[ev.title];
               if (iconName && !addedIcons.has(ev.title)) {
-                iconHtml +=
-                  '<i class="mbsc-font-icon mbsc-icon-' +
-                  iconName +
-                  ' mds-timeline-cell-icon" title="' +
-                  ev.title +
-                  '"></i>';
+                iconHtml += '<i class="mbsc-font-icon mbsc-icon-' + iconName + ' mds-timeline-cell-icon" title="' + ev.title + '"></i>';
                 addedIcons.add(ev.title);
               }
             }
@@ -611,7 +606,9 @@ export default {
         .mobiscroll('getInst');
 
       $(document).on('click', '.mds-timeline-cell-content-add', function () {
-        if (!hoveredDate || !hoveredResource) return;
+        if (!hoveredDate || !hoveredResource) {
+          return;
+        }
 
         if (hoveredCellEventCount >= 4) {
           mobiscroll.toast({

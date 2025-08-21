@@ -121,11 +121,7 @@ const getIcons = (date) => {
 </script>
 
 <template>
-  <MbscEventcalendar
-    cssClass="mds-schedule-cell-template"
-    :data="myEvents"
-    :view="myView"
-  >
+  <MbscEventcalendar cssClass="mds-schedule-cell-template" :data="myEvents" :view="myView">
     <template #cell="{ date }">
       <div v-if="getIcons(date).length" class="mds-schedule-cell-icons-background">
         <div class="mds-schedule-cell-icons">
