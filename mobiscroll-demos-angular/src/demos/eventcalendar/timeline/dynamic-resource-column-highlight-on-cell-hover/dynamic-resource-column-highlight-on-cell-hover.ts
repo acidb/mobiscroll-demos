@@ -1,5 +1,5 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { formatDate, MbscCalendarEvent, MbscEventcalendarView, MbscPopup, MbscPopupOptions, MbscResource } from '@mobiscroll/angular';
+import { formatDate, MbscCalendarEvent, MbscCellHoverEvent, MbscEventcalendarView, MbscPopup, MbscResource } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 @Component({
@@ -15,16 +15,8 @@ export class AppComponent {
   formatDate = formatDate;
   hoverDate: Date | null = null;
   hoverResource: MbscResource | null = null;
-  isPopupOpen = false;
-  timeout: any = null;
+  timeout?: ReturnType<typeof setTimeout>;
   popupAnchor?: HTMLElement;
-
-  popupOptions: MbscPopupOptions = {
-    closeOnScroll: true,
-    display: 'anchored',
-    touchUi: false,
-    showOverlay: false,
-  };
 
   myEvents: MbscCalendarEvent[] = [
     { start: dyndatetime('y,m,2'), end: dyndatetime('y,m,5'), title: 'Event 1', resource: 1 },
@@ -57,12 +49,12 @@ export class AppComponent {
     { id: 15, name: 'Resource O', color: '#4caf00' },
   ];
 
-  view: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     timeline: { type: 'month', resolutionHorizontal: 'day' },
   };
 
-  handleHoverIn(args: any) {
-    const resId = typeof args.resource === 'object' ? args.resource.id : args.resource;
+  handleCellHoverIn(args: MbscCellHoverEvent) {
+    const resId = args.resource.id;
     this.myResources = this.myResources.map((r) => ({
       ...r,
       cssClass: r.id === resId ? 'mds-highlight-row-hover' : '',
@@ -70,12 +62,12 @@ export class AppComponent {
 
     this.hoverDate = args.date;
     this.hoverResource = this.myResources.find((r) => r.id === resId) || null;
-    this.popupAnchor = args.domEvent?.target as HTMLElement;
+    this.popupAnchor = args.domEvent.target as HTMLElement;
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => this.popup.open(), 300);
   }
 
-  handleHoverOut() {
+  handleCellHoverOut() {
     clearTimeout(this.timeout);
     this.hoverDate = null;
     this.hoverResource = null;

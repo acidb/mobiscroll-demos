@@ -3,14 +3,12 @@ import {
   MbscCalendarCellData,
   MbscCalendarEvent,
   MbscCalendarEventData,
-  MbscCellHoverEvent,
   MbscEventcalendarView,
-  MbscEventCreateEvent,
   MbscNewEventData,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import './dynamic-cell-content-template.css';
 
 setOptions({
@@ -19,31 +17,8 @@ setOptions({
 });
 
 const App: FC = () => {
-  const iconMap = useMemo(
-    () => ({
-      Review: 'calendar',
-      Demo: 'play',
-      Kickoff: 'flag',
-      Strategy: 'map',
-      Collab: 'bubbles',
-      Update: 'upload',
-      Discussion: 'bubble',
-      Planning: 'pencil',
-      Retrospect: 'history',
-      Onboard: 'user4',
-    }),
-    [],
-  );
-
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>();
-  const titles = Object.keys(iconMap);
-  const hovered = useRef<{ date: Date | null; resource: string | number; count: number }>({
-    date: null,
-    resource: '',
-    count: 0,
-  });
-
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>(() => [
     {
       id: 1,
@@ -530,6 +505,23 @@ const App: FC = () => {
     },
   ]);
 
+  const iconMap = useMemo(
+    () => ({
+      Review: 'calendar',
+      Demo: 'play',
+      Kickoff: 'flag',
+      Strategy: 'map',
+      Collab: 'bubbles',
+      Update: 'upload',
+      Discussion: 'bubble',
+      Planning: 'pencil',
+      Retrospect: 'history',
+      Onboard: 'user4',
+    }),
+    [],
+  );
+  const titles = useMemo(() => Object.keys(iconMap), [iconMap]);
+
   const myResources = useMemo(
     () => [
       { id: 1, name: 'Resource A' },
@@ -561,37 +553,32 @@ const App: FC = () => {
     [titles],
   );
 
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!e.currentTarget.classList.contains('mds-timeline-cell-content-add')) return;
-      if (!hovered.current.date) return;
-
-      if (hovered.current.count >= 4) {
+  const handleAddClick = useCallback(
+    (cell: MbscCalendarCellData) => {
+      if (cell.events.length >= 4) {
         setToastOpen(true);
         setToastMessage('Limit reached.');
         return;
       }
 
-      const title = titles[Math.floor(Math.random() * titles.length)];
-      setEvents((prev) => [
-        ...prev,
+      setEvents((prevEvents) => [
+        ...prevEvents,
         {
-          start: hovered.current.date,
-          end: new Date(hovered.current.date!.getTime() + 2 * 3600000),
-          resource: hovered.current.resource,
-          title,
+          start: cell.date,
+          end: new Date(cell.date.getTime() + 2 * 3600000),
+          resource: cell.resource.id,
+          title: titles[Math.floor(Math.random() * titles.length)],
         } as MbscCalendarEvent,
       ]);
-      hovered.current.count++;
     },
     [titles],
   );
 
   const renderCell = useCallback(
-    (args: MbscCalendarCellData) => {
-      const events = args.events || [];
+    (cell: MbscCalendarCellData) => {
+      const events = cell.events || [];
       const hours = Math.round(
-        (args.events || []).reduce(
+        (cell.events || []).reduce(
           (sum, ev) =>
             ev.start && ev.end ? sum + (new Date(ev.end as Date).getTime() - new Date(ev.start as Date).getTime()) / 36e5 : sum,
           0,
@@ -614,14 +601,14 @@ const App: FC = () => {
       return (
         <>
           <div className={'mds-timeline-cell-content-badge ' + colorClass}>{hours}h / 8h</div>
-          <button onClick={handleClick} className="mds-timeline-cell-content-add">
+          <button onClick={() => handleAddClick(cell)} className="mds-timeline-cell-content-add">
             +
           </button>
           <div className="mds-timeline-cell-icons">{iconHtml}</div>
         </>
       );
     },
-    [handleClick, iconMap],
+    [handleAddClick, iconMap],
   );
 
   const renderScheduleEventContent = useCallback((event: MbscCalendarEventData) => {
@@ -633,19 +620,6 @@ const App: FC = () => {
     );
   }, []);
 
-  const onCellHoverIn = useCallback((args: MbscCellHoverEvent) => {
-    hovered.current = {
-      date: args.date,
-      resource: args.resource.id,
-      count: args.events?.length || 0,
-    };
-    console.log(hovered.current);
-  }, []);
-
-  const onEventCreate = useCallback((args: MbscEventCreateEvent) => {
-    console.log(args);
-  }, []);
-
   return (
     <>
       <Eventcalendar
@@ -655,8 +629,6 @@ const App: FC = () => {
         dragToMove={false}
         dragToResize={false}
         extendDefaultEvent={customDefaultEvent}
-        onCellHoverIn={onCellHoverIn}
-        onEventCreate={onEventCreate}
         resources={myResources}
         renderCell={renderCell}
         renderScheduleEventContent={renderScheduleEventContent}

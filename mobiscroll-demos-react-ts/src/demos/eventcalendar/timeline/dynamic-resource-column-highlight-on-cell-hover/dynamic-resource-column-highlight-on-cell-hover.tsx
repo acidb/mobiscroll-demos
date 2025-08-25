@@ -69,6 +69,33 @@ const App: FC = () => {
     { id: 15, name: 'Resource O', color: '#4caf00' },
   ]);
 
+  const handleCellHoverIn = useCallback((args: MbscCellHoverEvent) => {
+    setResources((prevResources) => {
+      const updated = prevResources.map((r) => ({
+        ...r,
+        cssClass: r.id === args.resource.id ? 'mds-highlight-row-hover' : '',
+      }));
+      setHoverResource(updated.find((r) => r.id === args.resource.id) || null);
+      return updated;
+    });
+
+    setHoverDate(args.date);
+    setAnchor(args.domEvent.target as HTMLElement);
+
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      setPopupOpen(true);
+    }, 300);
+  }, []);
+
+  const handleCellHoverOut = useCallback(() => {
+    clearTimeout(timerRef.current);
+    setHoverDate(null);
+    setHoverResource(null);
+    setResources((prevResources) => prevResources.map((r) => ({ ...r, cssClass: '' })));
+    setPopupOpen(false);
+  }, []);
+
   const renderCell = useCallback(
     (args: MbscCalendarCellData) => {
       const isHover = hoverDate && args.date.getTime() === hoverDate.getTime();
@@ -80,49 +107,22 @@ const App: FC = () => {
   const renderSidebar = useCallback((resource: MbscResource) => <div>{resource.name} Sidebar</div>, []);
 
   const renderDay = useCallback(
-    (args: MbscCalendarDayData) => {
-      const isHover = hoverDate && args.date.getTime() === hoverDate.getTime();
+    (day: MbscCalendarDayData) => {
+      const isHover = hoverDate && day.date.getTime() === hoverDate.getTime();
       const hoverClass = isHover ? ' mds-highlight-col-hover' : '';
-      return <div className={'mds-highlight-day-content' + hoverClass}>{formatDate('D DDD', args.date)}</div>;
+      return <div className={'mds-highlight-day-content' + hoverClass}>{formatDate('D DDD', day.date)}</div>;
     },
     [hoverDate],
   );
 
   const renderDayFooter = useCallback(
-    (args: MbscCalendarDayData) => {
-      const isHover = hoverDate && args.date.getTime() === hoverDate.getTime();
+    (day: MbscCalendarDayData) => {
+      const isHover = hoverDate && day.date.getTime() === hoverDate.getTime();
       const hoverClass = isHover ? ' mds-highlight-col-hover' : '';
-      return <div className={'mds-highlight-day-content' + hoverClass}>{formatDate('D DDD', args.date)}</div>;
+      return <div className={'mds-highlight-day-content' + hoverClass}>{formatDate('D DDD', day.date)}</div>;
     },
     [hoverDate],
   );
-
-  const handleHoverIn = useCallback(
-    (args: MbscCellHoverEvent) => {
-      const updated = myResources.map((r) => ({
-        ...r,
-        cssClass: r.id === args.resource.id ? 'mds-highlight-row-hover' : '',
-      }));
-      setResources(updated);
-      setHoverDate(args.date);
-      setHoverResource(updated.find((r) => r.id === args.resource.id) || null);
-      setAnchor(args.domEvent.target as HTMLElement);
-
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => {
-        setPopupOpen(true);
-      }, 300);
-    },
-    [myResources],
-  );
-
-  const handleHoverOut = useCallback(() => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    setHoverDate(null);
-    setHoverResource(null);
-    setResources((prev) => prev.map((r) => ({ ...r, cssClass: '' })));
-    setPopupOpen(false);
-  }, []);
 
   return (
     <>
@@ -134,8 +134,8 @@ const App: FC = () => {
         renderSidebar={renderSidebar}
         renderDay={renderDay}
         renderDayFooter={renderDayFooter}
-        onCellHoverIn={handleHoverIn}
-        onCellHoverOut={handleHoverOut}
+        onCellHoverIn={handleCellHoverIn}
+        onCellHoverOut={handleCellHoverOut}
         view={myView}
       />
       <Popup
@@ -148,7 +148,7 @@ const App: FC = () => {
         showOverlay={false}
       >
         {hoverResource && hoverDate && (
-          <div className="mds-highlight-tooltip" onMouseEnter={() => clearTimeout(timerRef.current)} onMouseLeave={handleHoverOut}>
+          <div className="mds-highlight-tooltip">
             <div className="mds-highlight-tooltip-name">{hoverResource.name}</div>
             <div className="mds-highlight-tooltip-date">{formatDate('MMM DD, YYYY', hoverDate)}</div>
           </div>

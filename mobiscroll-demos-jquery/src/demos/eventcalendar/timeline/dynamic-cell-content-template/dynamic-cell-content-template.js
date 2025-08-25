@@ -546,7 +546,7 @@ export default {
             },
           },
           renderCell: function (args) {
-            var events = args.events || [];
+            var events = args.events;
             var hours = Math.round(
               events.reduce(function (s, ev) {
                 return s + (new Date(ev.end) - new Date(ev.start)) / 36e5;
@@ -586,10 +586,9 @@ export default {
           onCellHoverIn: function (args) {
             hoveredDate = args.date;
             hoveredResource = args.resource.id;
-            hoveredCellEventCount = args.events?.length || 0;
+            hoveredCellEventCount = args.events.length;
           },
           onEventCreate: function () {
-            console.log(hoveredCellEventCount);
             if (hoveredCellEventCount >= 4) {
               mobiscroll.toast({
                 //<hidden>

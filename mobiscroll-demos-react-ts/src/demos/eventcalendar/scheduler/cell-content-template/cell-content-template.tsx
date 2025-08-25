@@ -1,5 +1,5 @@
-import { Eventcalendar, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { FC, useCallback } from 'react';
+import { Eventcalendar, MbscCalendarCellData, MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/react';
+import { FC, useCallback, useMemo } from 'react';
 import './cell-content-template.css';
 
 setOptions({
@@ -8,7 +8,7 @@ setOptions({
 });
 
 const App: FC = () => {
-  const myEvents: MbscCalendarEvent[] = [
+  const myEvents: MbscCalendarEvent[] = useMemo(() => [
     {
       id: 1,
       title: 'Team Sync Meeting',
@@ -93,15 +93,15 @@ const App: FC = () => {
       start: 'dyndatetime(y, m, d + 1, 12, 15)',
       end: 'dyndatetime(y, m, d + 1, 13, 0)',
     },
-  ];
+  ], []);
 
-  const myView: MbscEventcalendarView = {
+  const myView: MbscEventcalendarView = useMemo(() => ({
     schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
-  };
+  }), []);
 
-  const renderCell = useCallback((args: any) => {
-    const h = args.date.getHours();
-    const d = args.date.getDay();
+  const renderCell = useCallback((cell: MbscCalendarCellData) => {
+    const h = cell.date.getHours();
+    const d = cell.date.getDay();
     const icons = [];
 
     (d === 1 || d === 5) &&
@@ -110,7 +110,6 @@ const App: FC = () => {
         { icon: 'material-people', title: d === 1 ? 'Launch Meeting' : 'Sprint Review' },
         { icon: 'material-message', title: 'Coffee Break' },
       );
-
     h === 13 && icons.push({ icon: 'bubbles', title: 'Lunch Time' });
     d >= 1 && d <= 5 && h === 17 && icons.push({ icon: 'clock', title: 'Wrap Up' });
     d === 2 && (h === 10 || h === 11) && icons.push({ icon: 'loop2', title: 'Dev Sync' });

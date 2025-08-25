@@ -1,5 +1,5 @@
 import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './dynamic-cell-content-template.css';
 
 setOptions({
@@ -8,26 +8,8 @@ setOptions({
 });
 
 function App() {
-  const iconMap = useMemo(
-    () => ({
-      Review: 'calendar',
-      Demo: 'play',
-      Kickoff: 'flag',
-      Strategy: 'map',
-      Collab: 'bubbles',
-      Update: 'upload',
-      Discussion: 'bubble',
-      Planning: 'pencil',
-      Retrospect: 'history',
-      Onboard: 'user4',
-    }),
-    [],
-  );
-
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState();
-  const titles = Object.keys(iconMap);
-  const hovered = useRef({ date: null, resource: null, count: 0 });
   const [myEvents, setEvents] = useState(() => [
     {
       id: 1,
@@ -514,6 +496,23 @@ function App() {
     },
   ]);
 
+  const iconMap = useMemo(
+    () => ({
+      Review: 'calendar',
+      Demo: 'play',
+      Kickoff: 'flag',
+      Strategy: 'map',
+      Collab: 'bubbles',
+      Update: 'upload',
+      Discussion: 'bubble',
+      Planning: 'pencil',
+      Retrospect: 'history',
+      Onboard: 'user4',
+    }),
+    [],
+  );
+  const titles = useMemo(() => Object.keys(iconMap), [iconMap]);
+
   const myResources = useMemo(
     () => [
       { id: 1, name: 'Resource A' },
@@ -545,34 +544,29 @@ function App() {
     [titles],
   );
 
-  const handleClick = useCallback(
-    (e) => {
-      if (!e.target.classList.contains('mds-timeline-cell-content-add')) return;
-
-      if (hovered.current.count >= 4) {
+  const handleAddClick = useCallback(
+    (cell) => {
+      if (cell.events.length >= 4) {
         setToastOpen(true);
         setToastMessage('Limit reached.');
         return;
       }
-
-      const title = titles[Math.floor(Math.random() * titles.length)];
-      setEvents((prev) => [
-        ...prev,
+      setEvents((prevEvents) => [
+        ...prevEvents,
         {
-          start: hovered.current.date,
-          end: new Date(hovered.current.date.getTime() + 2 * 3600000),
-          resource: hovered.current.resource,
-          title,
+          start: cell.date,
+          end: new Date(cell.date.getTime() + 2 * 3600000),
+          resource: cell.resource.id,
+          title: titles[Math.floor(Math.random() * titles.length)],
         },
       ]);
-      hovered.current.count++;
     },
     [titles],
   );
 
   const renderCell = useCallback(
-    (args) => {
-      const events = args.events || [];
+    (cell) => {
+      const events = cell.events || [];
       const hours = Math.round(events.reduce((s, ev) => s + (new Date(ev.end) - new Date(ev.start)) / 36e5, 0));
 
       const classMap = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
@@ -591,14 +585,14 @@ function App() {
       return (
         <>
           <div className={'mds-timeline-cell-content-badge ' + colorClass}>{hours}h / 8h</div>
-          <button onClick={handleClick} className="mds-timeline-cell-content-add">
+          <button onClick={() => handleAddClick(cell)} className="mds-timeline-cell-content-add">
             +
           </button>
           <div className="mds-timeline-cell-icons">{iconHtml}</div>
         </>
       );
     },
-    [handleClick, iconMap],
+    [handleAddClick, iconMap],
   );
 
   const renderScheduleEventContent = useCallback((event) => {
@@ -610,20 +604,6 @@ function App() {
     );
   }, []);
 
-  const onCellHoverIn = useCallback((args) => {
-    hovered.current = {
-      date: args.date,
-      resource: args.resource,
-      count: args.events?.length || 0,
-    };
-    console.log('onCellHoverIn', args);
-    console.log(hovered.current);
-  }, []);
-
-  const onEventCreate = useCallback((args) => {
-    console.log(args);
-  }, []);
-
   return (
     <>
       <Eventcalendar
@@ -633,8 +613,6 @@ function App() {
         dragToMove={false}
         dragToResize={false}
         extendDefaultEvent={customDefaultEvent}
-        onCellHoverIn={onCellHoverIn}
-        onEventCreate={onEventCreate}
         resources={myResources}
         renderCell={renderCell}
         renderScheduleEventContent={renderScheduleEventContent}

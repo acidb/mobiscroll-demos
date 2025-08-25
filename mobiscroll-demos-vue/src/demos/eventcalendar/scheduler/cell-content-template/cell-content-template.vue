@@ -126,8 +126,8 @@ const getIcons = (date) => {
       <div v-if="getIcons(date).length" class="mds-schedule-cell-icons-background">
         <div class="mds-schedule-cell-icons">
           <div
-            v-for="(icon, idx) in getIcons(date)"
-            :key="idx"
+            v-for="(icon) in getIcons(date)"
+            :key="icon.icon"
             class="mds-schedule-cell-icon"
             :title="icon.title"
           >

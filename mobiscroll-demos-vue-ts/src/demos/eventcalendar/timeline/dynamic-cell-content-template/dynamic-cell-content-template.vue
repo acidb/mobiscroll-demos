@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { MbscEventcalendar, MbscToast, setOptions } from '@mobiscroll/vue'
 import type {
+  MbscCalendarCellData,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscNewEventData,
@@ -532,16 +533,16 @@ const myView: MbscEventcalendarView = {
   }
 }
 
-function getHours(events: { start: string | Date; end: string | Date }[] = []) {
+function getHours(events: MbscCalendarEvent[] = []) {
   const total = events.reduce((s, ev) => {
-    const st = new Date(ev.start).getTime()
-    const en = new Date(ev.end).getTime()
+    const st = new Date(ev.start as Date).getTime()
+    const en = new Date(ev.end as Date).getTime()
     return s + (en - st) / 36e5
   }, 0)
   return Math.round(total)
 }
 
-function getBadgeClass(events: any[] = []) {
+function getBadgeClass(events: MbscCalendarEvent[] = []) {
   const hours = getHours(events)
   const map: Record<number, string> = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' }
   return 'mds-timeline-cell-content-badge-' + (map[hours] || 'default')
@@ -564,24 +565,29 @@ function getIcons(events: Array<{ title?: string }> = []) {
   return icons
 }
 
-function addEvent(cell: any) {
-  const count = cell?.events?.length ?? 0
-  if (count >= 4) {
+function handleAddClick(cell: MbscCalendarCellData) {
+  if (cell.events.length >= 4) {
     toastMessage.value = 'Limit reached.'
     isToastOpen.value = true
     return
   }
-  const title = titles[Math.floor(Math.random() * titles.length)]
-  const start = cell.date
-  const end = new Date(start.getTime() + 2 * 3600000)
-  const resource = typeof cell.resource === 'object' ? cell.resource?.id : cell.resource
-  myEvents.value = [...myEvents.value, { title, start, end, resource }]
+
+  myEvents.value = [
+    ...myEvents.value,
+    {
+      title: titles[Math.floor(Math.random() * titles.length)],
+      start: cell.date,
+      end: new Date(cell.date.getTime() + 2 * 3600000),
+      resource: cell.resource.id
+    }
+  ]
 }
 
 function extendDefaultEvent(args: MbscNewEventData) {
-  const start = args.start
-  const title = titles[Math.floor(Math.random() * titles.length)]
-  return { title, end: new Date(start.getTime() + 2 * 3600000) }
+  return {
+    title: titles[Math.floor(Math.random() * titles.length)],
+    end: new Date(args.start.getTime() + 2 * 3600000)
+  }
 }
 </script>
 
@@ -597,18 +603,17 @@ function extendDefaultEvent(args: MbscNewEventData) {
     :view="myView"
   >
     <template #cell="cell">
-      <div class="mds-timeline-cell-content-badge" :class="getBadgeClass(cell.events ?? [])">
-        {{ getHours(cell.events ?? []) }}h / 8h
+      <div :class="['mds-timeline-cell-content-badge', getBadgeClass(cell.events)]">
+        {{ getHours(cell.events) }}h / 8h
       </div>
 
-      <button class="mds-timeline-cell-content-add" @click.stop="addEvent(cell)">+</button>
+      <button class="mds-timeline-cell-content-add" @click.stop="handleAddClick(cell)">+</button>
 
       <div class="mds-timeline-cell-icons">
         <i
-          v-for="icon in getIcons(cell.events ?? [])"
+          v-for="icon in getIcons(cell.events)"
           :key="icon"
-          class="mbsc-font-icon mds-timeline-cell-icon"
-          :class="'mbsc-icon-' + icon"
+          :class="['mbsc-font-icon', 'mds-timeline-cell-icon', 'mbsc-icon-' + icon]"
         />
       </div>
     </template>
