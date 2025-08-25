@@ -113,10 +113,10 @@ export default {
             $('.mds-highlight-tooltip-date').text(formatDate('MMM DD, YYYY', args.date));
 
             clearTimeout(tooltipTimeout);
-            tooltipTimeout = setTimeout(function () {
+            // tooltipTimeout = setTimeout(function () {
               tooltip.setOptions({ anchor: args.domEvent.target });
               tooltip.open();
-            }, 200);
+            // }, 200);
 
             hoverDateTime = args.date;
 

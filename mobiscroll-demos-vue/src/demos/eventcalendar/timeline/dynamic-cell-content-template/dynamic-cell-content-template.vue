@@ -675,6 +675,7 @@ function extendDefaultEvent(args) {
 }
 
 .mds-timeline-cell-content-add {
+  opacity: 0;
   position: absolute;
   inset: 6px 4px auto auto;
   width: 17px;
