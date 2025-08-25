@@ -183,6 +183,7 @@ export default {
 }
 
 .mds-schedule-cell-icons {
+  pointer-events: auto; 
   position: absolute;
   top: 2px;
   right: 6px;
@@ -191,6 +192,7 @@ export default {
 .mbsc-rtl .mds-schedule-cell-icons {
   left: 6px;
   right: auto;
+  pointer-events: cursor;
 }
 
 .mds-schedule-cell-icon {

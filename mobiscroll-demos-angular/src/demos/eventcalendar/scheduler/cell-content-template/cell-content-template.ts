@@ -9,7 +9,7 @@ setOptions({
 
 @Component({
   selector: 'app-timeline-cell-content-template',
-  styleUrls: ['./cell-content-template.css'],
+  styleUrl: './cell-content-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './cell-content-template.html',
   standalone: false,

@@ -164,6 +164,7 @@ const getIcons = (date) => {
 }
 
 .mds-schedule-cell-icons {
+  pointer-events: auto; 
   position: absolute;
   top: 2px;
   right: 6px;
