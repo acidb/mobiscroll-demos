@@ -583,7 +583,7 @@ export class AppComponent {
   }
 
   extendDefaultEvent = (args: any) => ({
-      title: this.titles[Math.floor(Math.random() * this.titles.length)],
-      end: new Date(args.start.getTime() + 2 * 3600000),
-    });
+    title: this.titles[Math.floor(Math.random() * this.titles.length)],
+    end: new Date(args.start.getTime() + 2 * 3600000),
+  });
 }

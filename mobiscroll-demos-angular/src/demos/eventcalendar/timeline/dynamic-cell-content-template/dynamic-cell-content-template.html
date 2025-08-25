@@ -11,27 +11,18 @@
   [dragToResize]="false"
 >
   <ng-template #cellTpl let-cell>
-<div class="mds-timeline-cell-content-badge {{ getBadgeClass(cell.events) }}">
-  {{ getHours(cell.events) }}h / 8h
-</div>
+    <div class="mds-timeline-cell-content-badge {{ getBadgeClass(cell.events) }}">{{ getHours(cell.events) }}h / 8h</div>
 
-    <button
-      class="mds-timeline-cell-content-add"
-      (click)="handleAddClick($event, cell)"
-    >+</button>
+    <button class="mds-timeline-cell-content-add" (click)="handleAddClick($event, cell)">+</button>
 
-<div class="mds-timeline-cell-icons">
-  <ng-container *ngFor="let icon of getIcons(cell.events)">
-    <i class="mbsc-font-icon mds-timeline-cell-icon mbsc-icon-{{ icon }}"></i>
-  </ng-container>
-</div>
+    <div class="mds-timeline-cell-icons">
+      <ng-container *ngFor="let icon of getIcons(cell.events)">
+        <i class="mbsc-font-icon mds-timeline-cell-icon mbsc-icon-{{ icon }}"></i>
+      </ng-container>
+    </div>
   </ng-template>
 
   <ng-template #eventContentTpl let-event>
-  <div>
-    {{ event.title }} - {{ Math.round((event.endDate - event.startDate) / 36e5) }}h
-  </div>
-</ng-template>
-
+    <div>{{ event.title }} - {{ Math.round((event.endDate - event.startDate) / 36e5) }}h</div>
+  </ng-template>
 </mbsc-eventcalendar>
-
