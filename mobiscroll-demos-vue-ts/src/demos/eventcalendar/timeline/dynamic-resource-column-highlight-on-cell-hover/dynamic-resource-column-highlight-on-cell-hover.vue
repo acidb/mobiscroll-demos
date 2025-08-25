@@ -138,12 +138,6 @@ function handleCellHoverOut() {
     <div
       v-if="hoverResource && hoverDate"
       class="mds-highlight-tooltip"
-      @mouseenter="
-        () => {
-          clearTimeout(timerRef)
-        }
-      "
-      @mouseleave="handleCellHoverOut"
     >
       <div class="mds-highlight-tooltip-name">{{ hoverResource.name }}</div>
       <div class="mds-highlight-tooltip-date">{{ formatDate('MMM DD, YYYY', hoverDate) }}</div>
