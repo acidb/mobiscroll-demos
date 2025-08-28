@@ -6,50 +6,36 @@ import {
   CalendarToday,
   Eventcalendar,
   formatDate,
-  MbscCalendarEvent,
-  MbscCellClickEvent,
-  MbscEventcalendarView,
-  MbscSelectedDateChangeEvent,
   Segmented,
   SegmentedGroup,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useCallback, useRef, useState } from 'react';
-import './display-cell-template.css';
+import { useCallback, useRef, useState } from 'react';
+import './day-cell-aggregate-information.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-interface WeatherData {
-  date: Date;
-  degree: number;
-  emoji: string;
-}
+function App() {
+  const [myCssClass, setCssClass] = useState('mds-cell-template mds-cell-template-month-view');
+  const [selectedView, setSelectedView] = useState('month');
+  const [previousView, setPreviousView] = useState('month');
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
-interface WeatherCache {
-  [key: number]: WeatherData;
-}
+  const weatherCacheRef = useRef({});
 
-const App: FC = () => {
-  const [myCssClass, setCssClass] = useState<string>('mds-cell-template mds-cell-template-month-view');
-  const [selectedView, setSelectedView] = useState<string>('month');
-  const [previousView, setPreviousView] = useState<string>('month');
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [isToastOpen, setToastOpen] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useState<string>('');
-
-  const weatherCacheRef = useRef<WeatherCache>({});
-
-  const [myView, setView] = useState<MbscEventcalendarView>({
+  const [myView, setView] = useState({
     calendar: {
       type: 'month',
     },
   });
 
-  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>(() => [
+  const [myEvents, setEvents] = useState(() => [
     {
       start: 'dyndatetime(y,m,d-1,15)',
       end: 'dyndatetime(y,m,d-1,17)',
@@ -216,7 +202,7 @@ const App: FC = () => {
     [],
   );
 
-  const generateRandomWeather = useCallback((date: Date): WeatherData => {
+  const generateRandomWeather = useCallback((date) => {
     const weatherTypes = [
       { emoji: '☀️', min: 24, max: 30 },
       { emoji: '🌤️', min: 20, max: 25 },
@@ -234,7 +220,7 @@ const App: FC = () => {
   }, []);
 
   const getWeatherForDate = useCallback(
-    (date: Date): WeatherData => {
+    (date) => {
       const key = date.getTime();
       if (!weatherCacheRef.current[key]) {
         weatherCacheRef.current[key] = generateRandomWeather(date);
@@ -244,7 +230,7 @@ const App: FC = () => {
     [generateRandomWeather],
   );
 
-  const getStressLevel = useCallback((nrEvents: number) => {
+  const getStressLevel = useCallback((nrEvents) => {
     let emoji = '';
     let color = '';
 
@@ -264,7 +250,7 @@ const App: FC = () => {
     return { emoji: emoji, color: color };
   }, []);
 
-  const getNrEvents = useCallback((events: MbscCalendarEvent[]) => {
+  const getNrEvents = useCallback((events) => {
     let nrMeetings = 0;
     let nrAppointments = 0;
 
@@ -280,7 +266,7 @@ const App: FC = () => {
   }, []);
 
   const setCalendarView = useCallback(
-    (view: string, date?: Date) => {
+    (view, date = undefined) => {
       if (view === 'day') {
         setPreviousView(selectedView);
       }
@@ -317,7 +303,7 @@ const App: FC = () => {
           });
           break;
       }
-
+      console.log(date);
       if (date) {
         setCurrentDate(date);
       }
@@ -326,7 +312,7 @@ const App: FC = () => {
   );
 
   const handleViewChange = useCallback(
-    (ev: React.ChangeEvent<HTMLInputElement>) => {
+    (ev) => {
       setCalendarView(ev.target.value);
     },
     [setCalendarView],
@@ -337,7 +323,7 @@ const App: FC = () => {
   }, [setCalendarView, previousView]);
 
   const handleDayClick = useCallback(
-    (date: Date) => {
+    (date) => {
       if (selectedView === 'week') {
         setCalendarView('day', date);
       }
@@ -346,7 +332,7 @@ const App: FC = () => {
   );
 
   const customDay = useCallback(
-    (args: { date: Date; events: MbscCalendarEvent[] }) => {
+    (args) => {
       const date = args.date;
       const events = args.events;
       const nrEvents = getNrEvents(events);
@@ -358,7 +344,7 @@ const App: FC = () => {
         <div
           className="mds-cell-template-cont"
           style={{
-            background: stressLevel.color ? stressLevel.color : '',
+            background: stressLevel.color && selectedView !== 'day' ? stressLevel.color : '',
           }}
           onClick={() => handleDayClick(date)}
         >
@@ -374,7 +360,7 @@ const App: FC = () => {
         </div>
       );
     },
-    [getNrEvents, getWeatherForDate, getStressLevel, handleDayClick],
+    [selectedView, getNrEvents, getWeatherForDate, getStressLevel, handleDayClick],
   );
 
   const customHeader = useCallback(
@@ -405,9 +391,9 @@ const App: FC = () => {
   );
 
   const onCellClick = useCallback(
-    (args: MbscCellClickEvent) => {
+    (args) => {
       const date = args.date;
-      const target = args.domEvent.target as HTMLElement;
+      const target = args.domEvent.target;
 
       if (target.closest('.mds-cell-template-add')) {
         const year = date.getFullYear();
@@ -432,8 +418,8 @@ const App: FC = () => {
     [selectedView, setCalendarView],
   );
 
-  const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
-    setCurrentDate(args.date as Date);
+  const handleSelectedDateChange = useCallback((args) => {
+    setCurrentDate(args.date);
   }, []);
 
   const handleToastClose = useCallback(() => {
@@ -443,7 +429,11 @@ const App: FC = () => {
   return (
     <>
       <Eventcalendar
-        // drag
+        clickToCreate={true}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
+        eventDelete={true}
         cssClass={myCssClass}
         data={myEvents}
         view={myView}
@@ -457,5 +447,6 @@ const App: FC = () => {
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
     </>
   );
-};
+}
+
 export default App;

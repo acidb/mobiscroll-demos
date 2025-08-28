@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import {
   formatDate,
   MbscButton,
@@ -9,15 +9,8 @@ import {
   MbscEventcalendar,
   MbscSegmented,
   MbscSegmentedGroup,
-  MbscSelectedDateChangeEvent,
   MbscToast,
   setOptions /* localeImport */
-} from '@mobiscroll/vue'
-import type {
-  MbscCalendarEvent,
-  MbscCellClickEvent,
-  MbscDateType,
-  MbscEventcalendarView
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
 
@@ -26,21 +19,15 @@ setOptions({
   // theme
 })
 
-interface WeatherData {
-  date: Date
-  degree: number
-  emoji: string
-}
+const myCssClass = ref('mds-cell-template mds-cell-template-month-view')
+const weatherCache = ref({})
+const selectedView = ref('month')
+const previousView = ref('month')
+const currentDate = ref(new Date())
+const isToastOpen = ref(false)
+const toastMessage = ref('')
 
-const myCssClass = ref<string>('mds-cell-template mds-cell-template-month-view')
-const weatherCache = ref<Record<number, WeatherData>>({})
-const selectedView = ref<string>('month')
-const previousView = ref<string>('month')
-const currentDate = ref<MbscDateType>(new Date())
-const isToastOpen = ref<boolean>(false)
-const toastMessage = ref<string>('')
-
-const myEvents = ref<MbscCalendarEvent[]>([
+const myEvents = ref([
   {
     start: 'dyndatetime(y,m,d-1,15)',
     end: 'dyndatetime(y,m,d-1,17)',
@@ -198,13 +185,13 @@ const myEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const myView = ref<MbscEventcalendarView>({
+const myView = ref({
   calendar: {
     type: 'month'
   }
 })
 
-function myDefaultEvent(): MbscCalendarEvent {
+function myDefaultEvent() {
   return {
     title: 'New appointment',
     type: 'appointment',
@@ -212,7 +199,7 @@ function myDefaultEvent(): MbscCalendarEvent {
   }
 }
 
-function getWeatherForDate(date: Date): WeatherData {
+function getWeatherForDate(date) {
   const key = date.getTime()
   if (!weatherCache.value[key]) {
     weatherCache.value[key] = generateRandomWeather(date)
@@ -220,7 +207,7 @@ function getWeatherForDate(date: Date): WeatherData {
   return weatherCache.value[key]
 }
 
-function generateRandomWeather(date: Date): WeatherData {
+function generateRandomWeather(date) {
   const weatherTypes = [
     { emoji: '☀️', min: 24, max: 30 },
     { emoji: '🌤️', min: 20, max: 25 },
@@ -237,9 +224,9 @@ function generateRandomWeather(date: Date): WeatherData {
   }
 }
 
-function getStressLevel(nrEvents: number) {
-  let emoji: string
-  let color: string
+function getStressLevel(nrEvents) {
+  let emoji
+  let color
 
   if (nrEvents < 1) {
     emoji = ''
@@ -257,7 +244,7 @@ function getStressLevel(nrEvents: number) {
   return { emoji: emoji, color: color }
 }
 
-function getNrEvents(events: MbscCalendarEvent[]) {
+function getNrEvents(events) {
   let nrMeetings = 0
   let nrAppointments = 0
 
@@ -272,7 +259,7 @@ function getNrEvents(events: MbscCalendarEvent[]) {
   return { meetings: nrMeetings, appointments: nrAppointments }
 }
 
-function setSelectedView(view: string, date?: Date) {
+function setSelectedView(view, date = undefined) {
   if (view === 'day') {
     previousView.value = selectedView.value
   }
@@ -315,9 +302,9 @@ function setSelectedView(view: string, date?: Date) {
   }
 }
 
-function handleCellClick(args: MbscCellClickEvent) {
+function handleCellClick(args) {
   const date = args.date
-  const target = args.domEvent.target as HTMLElement
+  const target = args.domEvent.target
 
   if (target.closest('.mds-cell-template-add')) {
     const year = date.getFullYear()
@@ -340,7 +327,7 @@ function handleCellClick(args: MbscCellClickEvent) {
   }
 }
 
-function getDayTemplate(args: { date: Date; events: MbscCalendarEvent[] }) {
+function getDayTemplate(args) {
   const date = args.date
   const nrEvents = getNrEvents(args.events)
   const nrAllEvents = args.events.length
@@ -356,14 +343,18 @@ function getDayTemplate(args: { date: Date; events: MbscCalendarEvent[] }) {
   }
 }
 
-function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
+function handleSelectedDateChange(args) {
   currentDate.value = args.date
 }
 </script>
 
 <template>
-  <!-- dragOptions -->
   <MbscEventcalendar
+    :clickToCreate="true"
+    :dragToCreate="true"
+    :dragToMove="true"
+    :dragToResize="true"
+    :eventDelete="true"
     :cssClass="myCssClass"
     :view="myView"
     :data="myEvents"
@@ -377,7 +368,8 @@ function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
       <div
         class="mds-cell-template-cont"
         :style="{
-          background: dayData.stressLevelColor ? dayData.stressLevelColor : ''
+          background:
+            dayData.stressLevelColor && selectedView !== 'day' ? dayData.stressLevelColor : ''
         }"
         @click="selectedView === 'week' ? setSelectedView('day', data.date) : null"
       >
@@ -557,8 +549,6 @@ function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
 
 .mds-cell-template-day-view .mds-cell-template-cont {
   text-align: center;
-  max-width: 155px;
-  margin: 0 auto;
 }
 
 .mds-cell-template-day-view .mbsc-schedule-header-item.mbsc-selected {

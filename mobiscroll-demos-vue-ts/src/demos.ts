@@ -120,7 +120,7 @@ import Demo346 from './demos/eventcalendar/calendar-view/desktop-month-view/desk
 import Demo442 from './demos/eventcalendar/calendar-view/responsive-month-view/responsive-month-view.vue'
 import Demo661 from './demos/eventcalendar/calendar-view/printing-the-view/printing-the-view.vue'
 import Demo752 from './demos/eventcalendar/calendar-view/property-booking-calendar/property-booking-calendar.vue'
-import Demo776 from './demos/eventcalendar/calendar-view/display-cell-template/display-cell-template.vue';
+import Demo776 from './demos/eventcalendar/calendar-view/day-cell-aggregate-information/day-cell-aggregate-information.vue';
 import Demo447 from './demos/eventcalendar/calendar-view/event-labels/event-labels.vue'
 import Demo443 from './demos/eventcalendar/calendar-view/event-popover/event-popover.vue'
 import Demo595 from './demos/eventcalendar/calendar-view/custom-event-sort/custom-event-sort.vue'
@@ -863,7 +863,7 @@ export const demos = [
               },
               {
                 name: 'Showing daily aggregates',
-                unique: 'display-cell-template',
+                unique: 'day-cell-aggregate-information',
                 component: Demo776
               }
             ]
@@ -1640,7 +1640,7 @@ export const demos = [
                 component: Demo720
               },
               {
-                name: 'Show details on hover',
+                name: 'Show details on resource hover',
                 unique: 'display-resource-information-on-hover',
                 component: Demo773
               },
