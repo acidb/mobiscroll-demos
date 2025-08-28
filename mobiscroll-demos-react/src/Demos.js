@@ -120,7 +120,7 @@ import Demo346 from './demos/eventcalendar/calendar-view/desktop-month-view/desk
 import Demo442 from './demos/eventcalendar/calendar-view/responsive-month-view/responsive-month-view';
 import Demo661 from './demos/eventcalendar/calendar-view/printing-the-view/printing-the-view';
 import Demo752 from './demos/eventcalendar/calendar-view/property-booking-calendar/property-booking-calendar';
-import Demo776 from './demos/eventcalendar/calendar-view/display-cell-template/display-cell-template';
+import Demo776 from './demos/eventcalendar/calendar-view/day-cell-aggregate-information/day-cell-aggregate-information';
 import Demo447 from './demos/eventcalendar/calendar-view/event-labels/event-labels';
 import Demo443 from './demos/eventcalendar/calendar-view/event-popover/event-popover';
 import Demo595 from './demos/eventcalendar/calendar-view/custom-event-sort/custom-event-sort';
@@ -693,7 +693,7 @@ export const demos = [
             unique: 20,
             items: [
               { name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 },
-              { name: 'Showing daily aggregates', unique: 'display-cell-template', component: Demo776 },
+              { name: 'Showing daily aggregates', unique: 'day-cell-aggregate-information', component: Demo776 },
             ],
           },
           {
@@ -1043,7 +1043,7 @@ export const demos = [
               { name: 'Resource reorder with d&d', unique: 'resource-drag-drop-reorder', component: Demo765 },
               { name: 'Dynamic resource sort', unique: 'dynamic-calculation-resource-sort', component: Demo768 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo720 },
-              { name: 'Show details on hover', unique: 'display-resource-information-on-hover', component: Demo773 },
+              { name: 'Show details on resource hover', unique: 'display-resource-information-on-hover', component: Demo773 },
             ],
           },
           {

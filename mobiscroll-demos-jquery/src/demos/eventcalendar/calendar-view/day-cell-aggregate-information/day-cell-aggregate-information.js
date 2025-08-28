@@ -10,7 +10,7 @@ export default {
     });
 
     $(function () {
-      var $calendarElm = $('#demo-display-cell-template');
+      var $calendarElm = $('#demo-day-cell-aggregate-information');
       var weatherCache = {};
       var selectedView = 'month';
       var previousView = 'month';
@@ -288,7 +288,11 @@ export default {
       var calendar = $calendarElm
         .mobiscroll()
         .eventcalendar({
-          // drag,
+          clickToCreate: true,
+          dragToCreate: true,
+          dragToMove: true,
+          dragToResize: true,
+          eventDelete: true,
           cssClass: 'mds-cell-template mds-cell-template-month-view',
           data: myEvents,
           view: {
@@ -311,7 +315,7 @@ export default {
             return (
               '<div class="mds-cell-template-cont" ' +
               (selectedView === 'week' ? 'data-date="' + date.getTime() + '"' : '') +
-              (stressLevel.color ? 'style="background:' + stressLevel.color : '') +
+              (stressLevel.color && selectedView !== 'day' ? 'style="background:' + stressLevel.color : '') +
               '">' +
               '<div class="mds-cell-template-day">' +
               formatDate('DDD D, MMM', date) +
@@ -395,7 +399,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-display-cell-template"></div>
+<div id="demo-day-cell-aggregate-information"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
@@ -527,8 +531,6 @@ export default {
 
 .mds-cell-template-day-view .mds-cell-template-cont {
   text-align: center; 
-  max-width: 155px;
-  margin: 0 auto;
 }
 
 .mds-cell-template-day-view .mbsc-schedule-header-item.mbsc-selected {

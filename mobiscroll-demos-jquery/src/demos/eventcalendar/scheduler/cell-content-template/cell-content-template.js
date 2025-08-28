@@ -124,7 +124,9 @@ export default {
             h === 15 && icons.push({ icon: 'lock', title: 'Security Patch' });
             d === 3 && h === 14 && icons.push({ icon: 'line-paperplane', title: 'Deploy Window' });
 
-            if (!icons.length) return '';
+            if (!icons.length) {
+              return '';
+            }
 
             return (
               '<div class="mds-schedule-cell-icons-background"><div class="mds-schedule-cell-icons">' +
@@ -181,6 +183,7 @@ export default {
 }
 
 .mds-schedule-cell-icons {
+  pointer-events: auto; 
   position: absolute;
   top: 2px;
   right: 6px;
@@ -189,6 +192,7 @@ export default {
 .mbsc-rtl .mds-schedule-cell-icons {
   left: 6px;
   right: auto;
+  pointer-events: cursor;
 }
 
 .mds-schedule-cell-icon {

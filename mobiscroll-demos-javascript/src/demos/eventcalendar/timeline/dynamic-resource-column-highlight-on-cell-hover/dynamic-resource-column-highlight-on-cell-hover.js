@@ -71,10 +71,6 @@ export default {
       },
     ];
 
-    var formatDate = mobiscroll.formatDate;
-    var hoverDateTime;
-    var tooltipTimeout;
-
     var myResources = [
       { id: 1, name: 'Resource A', color: '#e20000' },
       { id: 2, name: 'Resource B', color: '#76e083' },
@@ -93,64 +89,66 @@ export default {
       { id: 15, name: 'Resource O', color: '#4caf00' },
     ];
 
-    var calendar = mobiscroll
-      .eventcalendar('#demo-highlight-hover', {
-        cssClass: 'mds-highlight-hover',
-        data: myEvents,
-        resources: myResources,
-        view: {
-          timeline: {
-            type: 'month',
-            resolutionHorizontal: 'day',
-          },
+    var formatDate = mobiscroll.formatDate;
+    var hoverDateTime;
+    var tooltipTimeout;
+
+    var calendar = mobiscroll.eventcalendar('#demo-highlight-hover', {
+      cssClass: 'mds-highlight-hover',
+      data: myEvents,
+      resources: myResources,
+      view: {
+        timeline: {
+          type: 'month',
+          resolutionHorizontal: 'day',
         },
-        onCellHoverIn: function (args) {
-          document.querySelector('.mds-highlight-tooltip-name').textContent = args.resource.name;
-          document.querySelector('.mds-highlight-tooltip-date').textContent = formatDate('MMM DD, YYYY', args.date);
+      },
+      onCellHoverIn: function (args) {
+        document.querySelector('.mds-highlight-tooltip-name').textContent = args.resource.name;
+        document.querySelector('.mds-highlight-tooltip-date').textContent = formatDate('MMM DD, YYYY', args.date);
 
-          clearTimeout(tooltipTimeout);
-          tooltipTimeout = setTimeout(function () {
-            tooltip.setOptions({ anchor: args.domEvent.target });
-            tooltip.open();
-          }, 200);
+        clearTimeout(tooltipTimeout);
+        tooltipTimeout = setTimeout(function () {
+          tooltip.setOptions({ anchor: args.domEvent.target });
+          tooltip.open();
+        }, 200);
 
-          hoverDateTime = args.date;
+        hoverDateTime = args.date;
 
-          myResources.forEach(function (r) {
-            r.cssClass = r.id === args.resource.id ? 'mds-highlight-row-hover' : '';
-          });
+        myResources.forEach(function (r) {
+          r.cssClass = r.id === args.resource.id ? 'mds-highlight-row-hover' : '';
+        });
+        calendar.setOptions({ resources: myResources.slice() });
+      },
+
+      onCellHoverOut: function () {
+        clearTimeout(tooltipTimeout);
+        tooltip.close();
+        myResources.forEach(function (r) {
+          r.cssClass = '';
+        });
+        hoverDateTime = null;
+        setTimeout(function () {
           calendar.setOptions({ resources: myResources.slice() });
-        },
-
-        onCellHoverOut: function () {
-          clearTimeout(tooltipTimeout);
-          tooltip.close();
-          myResources.forEach(function (r) {
-            r.cssClass = '';
-          });
-          hoverDateTime = null;
-          setTimeout(function () {
-            calendar.setOptions({ resources: myResources.slice() });
-          });
-        },
-        renderCell: function (args) {
-          return hoverDateTime && args.date.getTime() === hoverDateTime.getTime() ? '<div class="mds-highlight-col-hover"></div>' : '';
-        },
-        renderDay: function (args) {
-          var isHover = hoverDateTime && args.date.getTime() === hoverDateTime.getTime();
-          var hoverClass = isHover ? ' mds-highlight-col-hover' : '';
-          return '<div class="mds-highlight-day-content ' + hoverClass + '">' + formatDate('D DDD', args.date) + '</div>';
-        },
-        renderDayFooter: function (args) {
-          var isHover = hoverDateTime && args.date.getTime() === hoverDateTime.getTime();
-          var hoverClass = isHover ? ' mds-highlight-col-hover' : '';
-          return '<div class="mds-highlight-day-content ' + hoverClass + '">' + formatDate('D DDD', args.date) + '</div>';
-        },
-        renderSidebar: function (resource) {
-          return '<div>' + resource.name + ' Sidebar</div>';
-        },
-      })
-      ;
+        });
+      },
+      renderCell: function (args) {
+        return hoverDateTime && args.date.getTime() === hoverDateTime.getTime() ? '<div class="mds-highlight-col-hover"></div>' : '';
+      },
+      renderDay: function (args) {
+        var isHover = hoverDateTime && args.date.getTime() === hoverDateTime.getTime();
+        var hoverClass = isHover ? ' mds-highlight-col-hover' : '';
+        return '<div class="mds-highlight-day-content ' + hoverClass + '">' + formatDate('D DDD', args.date) + '</div>';
+      },
+      renderDayFooter: function (args) {
+        var isHover = hoverDateTime && args.date.getTime() === hoverDateTime.getTime();
+        var hoverClass = isHover ? ' mds-highlight-col-hover' : '';
+        return '<div class="mds-highlight-day-content ' + hoverClass + '">' + formatDate('D DDD', args.date) + '</div>';
+      },
+      renderSidebar: function (resource) {
+        return '<div>' + resource.name + ' Sidebar</div>';
+      },
+    });
 
     var tooltip = mobiscroll.popup('#demo-highlight-cell-popup', {
       display: 'anchored',
@@ -170,7 +168,7 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .mds-highlight-hover .mbsc-timeline-sidebar-col {
+.mds-highlight-hover .mbsc-timeline-sidebar-col {
   width: 170px;
 }
 
@@ -178,16 +176,16 @@ export default {
   font-weight: 500;
 }
 
-.mds-highlight-hover .mds-highlight-row-hover, 
+.mds-highlight-hover .mds-highlight-row-hover,
 .mds-highlight-hover .mds-highlight-col-hover {
   background: rgba(220,220,220,0.25);
 }
 
 .mds-highlight-col-hover {
   position: absolute;
-  inset: 0;               
+  inset: 0;
   background: transparent;
-  pointer-events: none;   
+  pointer-events: none;
   box-sizing: border-box;
 }
 
@@ -196,7 +194,7 @@ export default {
   height: 30px;
   text-align: center;
   line-height: 30px;
-  position: relative; 
+  position: relative;
 }
 
 .mds-highlight-tooltip {

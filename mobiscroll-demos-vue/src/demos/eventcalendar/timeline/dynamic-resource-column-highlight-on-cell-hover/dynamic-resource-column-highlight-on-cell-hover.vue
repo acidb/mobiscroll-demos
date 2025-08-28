@@ -51,8 +51,8 @@ const myResources = ref([
   { id: 15, name: 'Resource O', color: '#4caf00', cssClass: '' }
 ])
 
-function handleHoverIn(args) {
-  const resId = typeof args.resource === 'object' ? args.resource.id : args.resource
+function handleCellHoverIn(args) {
+  const resId = args.resource.id
   myResources.value = myResources.value.map((r) => ({
     ...r,
     cssClass: r.id === resId ? 'mds-highlight-row-hover' : ''
@@ -60,16 +60,16 @@ function handleHoverIn(args) {
 
   hoverDate.value = args.date
   hoverResource.value = myResources.value.find((r) => r.id === resId) || null
-  anchor.value = args.domEvent?.target || null
+  anchor.value = args.domEvent.target || null
 
-  if (timerRef) clearTimeout(timerRef)
+  clearTimeout(timerRef)
   timerRef = setTimeout(() => {
     isPopupOpen.value = true
   }, 300)
 }
 
-function handleHoverOut() {
-  if (timerRef) clearTimeout(timerRef)
+function handleCellHoverOut() {
+  clearTimeout(timerRef)
   hoverDate.value = null
   hoverResource.value = null
   myResources.value = myResources.value.map((r) => ({ ...r, cssClass: '' }))
@@ -83,12 +83,12 @@ function handleHoverOut() {
     :view="myView"
     :data="myEvents"
     :resources="myResources"
-    @cell-hover-in="handleHoverIn"
-    @cell-hover-out="handleHoverOut"
+    @cell-hover-in="handleCellHoverIn"
+    @cell-hover-out="handleCellHoverOut"
   >
     <template #cell="{ date }">
       <div
-        v-if="hoverDate && date?.getTime?.() === hoverDate?.getTime?.()"
+        v-if="hoverDate && date.getTime() === hoverDate.getTime()"
         class="mds-highlight-col-hover"
       />
     </template>
@@ -99,10 +99,10 @@ function handleHoverOut() {
 
     <template #day="{ date }">
       <div
-        class="mds-highlight-day-content"
-        :class="{
-          'mds-highlight-col-hover': hoverDate && date?.getTime?.() === hoverDate?.getTime?.()
-        }"
+        :class="[
+          'mds-highlight-day-content',
+          hoverDate && date.getTime() === hoverDate.getTime() && 'mds-highlight-col-hover'
+        ]"
       >
         {{ formatDate('D DDD', date) }}
       </div>
@@ -110,10 +110,10 @@ function handleHoverOut() {
 
     <template #dayFooter="{ date }">
       <div
-        class="mds-highlight-day-content"
-        :class="{
-          'mds-highlight-col-hover': hoverDate && date?.getTime?.() === hoverDate?.getTime?.()
-        }"
+        :class="[
+          'mds-highlight-day-content',
+          hoverDate && date.getTime() === hoverDate.getTime() && 'mds-highlight-col-hover'
+        ]"
       >
         {{ formatDate('D DDD', date) }}
       </div>
@@ -132,12 +132,6 @@ function handleHoverOut() {
     <div
       v-if="hoverResource && hoverDate"
       class="mds-highlight-tooltip"
-      @mouseenter="
-        () => {
-          if (timerRef) clearTimeout(timerRef)
-        }
-      "
-      @mouseleave="handleHoverOut"
     >
       <div class="mds-highlight-tooltip-name">{{ hoverResource.name }}</div>
       <div class="mds-highlight-tooltip-date">{{ formatDate('MMM DD, YYYY', hoverDate) }}</div>

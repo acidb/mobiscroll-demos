@@ -73,10 +73,6 @@ export default {
         },
       ];
 
-      var formatDate = mobiscroll.formatDate;
-      var hoverDateTime;
-      var tooltipTimeout;
-
       var myResources = [
         { id: 1, name: 'Resource A', color: '#e20000' },
         { id: 2, name: 'Resource B', color: '#76e083' },
@@ -94,6 +90,10 @@ export default {
         { id: 14, name: 'Resource N', color: '#073138' },
         { id: 15, name: 'Resource O', color: '#4caf00' },
       ];
+
+      var formatDate = mobiscroll.formatDate;
+      var hoverDateTime;
+      var tooltipTimeout;
 
       var calendar = $('#demo-highlight-hover')
         .mobiscroll()
@@ -113,10 +113,10 @@ export default {
             $('.mds-highlight-tooltip-date').text(formatDate('MMM DD, YYYY', args.date));
 
             clearTimeout(tooltipTimeout);
-            tooltipTimeout = setTimeout(function () {
+            // tooltipTimeout = setTimeout(function () {
               tooltip.setOptions({ anchor: args.domEvent.target });
               tooltip.open();
-            }, 200);
+            // }, 200);
 
             hoverDateTime = args.date;
 
@@ -125,7 +125,6 @@ export default {
             });
             calendar.setOptions({ resources: myResources.slice() });
           },
-
           onCellHoverOut: function () {
             clearTimeout(tooltipTimeout);
             tooltip.close();
@@ -186,16 +185,16 @@ export default {
   font-weight: 500;
 }
 
-.mds-highlight-hover .mds-highlight-row-hover, 
+.mds-highlight-hover .mds-highlight-row-hover,
 .mds-highlight-hover .mds-highlight-col-hover {
   background: rgba(220,220,220,0.25);
 }
 
 .mds-highlight-col-hover {
   position: absolute;
-  inset: 0;               
+  inset: 0;
   background: transparent;
-  pointer-events: none;   
+  pointer-events: none;
   box-sizing: border-box;
 }
 
@@ -204,7 +203,7 @@ export default {
   height: 30px;
   text-align: center;
   line-height: 30px;
-  position: relative; 
+  position: relative;
 }
 
 .mds-highlight-tooltip {

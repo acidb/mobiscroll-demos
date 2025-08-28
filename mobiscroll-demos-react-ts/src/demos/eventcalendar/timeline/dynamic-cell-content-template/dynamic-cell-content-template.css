@@ -39,25 +39,26 @@
 
 .mds-timeline-cell-content-badge-light::before {
   width: 25%;
-  background: #ff9c9c
-  }
-  
+  background: #ff9c9c;
+}
+
 .mds-timeline-cell-content-badge-medium::before {
   width: 50%;
-  background: #ffcf9f
+  background: #ffcf9f;
 }
-    
+
 .mds-timeline-cell-content-badge-semi::before {
   width: 75%;
-  background: #fff4a3 
+  background: #fff4a3;
 }
-      
+
 .mds-timeline-cell-content-badge-full::before {
   width: 100%;
-  background: #a3e4a1 
+  background: #a3e4a1;
 }
 
 .mds-timeline-cell-content-add {
+  opacity: 0;
   position: absolute;
   inset: 6px 4px auto auto;
   width: 17px;
@@ -70,7 +71,7 @@
   border-radius: 50%;
   font-size: 22px;
   cursor: pointer;
-  background: linear-gradient(135deg,rgb(73, 73, 73),rgb(22, 21, 21));
+  background: linear-gradient(135deg, rgb(73, 73, 73), rgb(22, 21, 21));
   transition: transform 0.2s ease;
 }
 
@@ -80,7 +81,7 @@
 }
 
 .mds-timeline-cell-content-add:hover {
-  transform: scale(1.10);
+  transform: scale(1.1);
 }
 
 .mds-timeline-cell-icons {

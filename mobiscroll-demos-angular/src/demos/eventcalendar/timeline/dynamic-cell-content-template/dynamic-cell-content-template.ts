@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions } from '@mobiscroll/angular';
+import { MbscCalendarCellData, MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -33,12 +33,7 @@ export class AppComponent {
   };
   titles = Object.keys(this.iconMap);
 
-  isToastOpen = false;
-  toastMessage = '';
-
-  hovered = { date: null as Date | null, resource: null as number | null, count: 0 };
-
-  view: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     timeline: {
       type: 'month',
       resolutionHorizontal: 'day',
@@ -541,56 +536,44 @@ export class AppComponent {
     },
   ];
 
-  onCellHoverIn(args: any) {
-    this.hovered.date = args.date;
-    this.hovered.resource = typeof args.resource === 'object' ? args.resource?.id : args.resource;
-    this.hovered.count = args.events?.length ?? 0;
-  }
-
-  onEventCreate(args: any) {
-    console.log('onEventCreate', args);
-  }
-
-  onAddClick(ev: MouseEvent, cell: any) {
+  handleAddClick(ev: MouseEvent, cell: MbscCalendarCellData) {
     ev.stopPropagation();
-    const count = cell?.events?.length ?? 0;
+    const count = cell.events.length;
 
     if (count >= 4) {
       this.notify.toast({ message: 'Limit reached.' });
       return;
     }
-    const title = this.titles[Math.floor(Math.random() * this.titles.length)];
-    const start: Date = cell.date;
-    const end = new Date(start.getTime() + 2 * 3600000);
-    const resource = typeof cell.resource === 'object' ? cell.resource?.id : cell.resource;
-    this.myEvents = [...this.myEvents, { title, start, end, resource }];
+    this.myEvents = [
+      ...this.myEvents,
+      {
+        title: this.titles[Math.floor(Math.random() * this.titles.length)],
+        start: cell.date,
+        end: new Date(cell.date.getTime() + 2 * 3600000),
+        resource: cell.resource.id,
+      },
+    ];
   }
 
-  getEventHours(event: any): number {
-    const start = new Date(event.start ?? event.startDate).getTime();
-    const end = new Date(event.end ?? event.endDate).getTime();
-    return Math.round((end - start) / 36e5);
-  }
-
-  getHours(events: any[] = []): number {
+  getHours(events: MbscCalendarEvent[] = []): number {
     const total = events.reduce((s, ev) => {
-      const st = new Date(ev.start).getTime();
-      const en = new Date(ev.end).getTime();
+      const st = new Date(ev.start as Date).getTime();
+      const en = new Date(ev.end as Date).getTime();
       return s + (en - st) / 36e5;
     }, 0);
     return Math.round(total);
   }
 
-  getBadgeClass(events: any[] = []): string {
+  getBadgeClass(events: MbscCalendarEvent[] = []): string {
     const hours = this.getHours(events);
-    const classMap: any = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
+    const classMap: { [key: number]: string } = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
     return 'mds-timeline-cell-content-badge-' + (classMap[hours] || 'default');
   }
 
-  getIcons(events: any[] = []): string[] {
+  getIcons(events: MbscCalendarEvent[] = []): string[] {
     const titles = new Set();
-    return events.reduce((icons, ev) => {
-      const name = this.iconMap[ev.title];
+    return events.reduce<string[]>((icons, ev) => {
+      const name = this.iconMap[ev.title!];
       if (name && !titles.has(ev.title)) {
         titles.add(ev.title);
         icons.push(name);
@@ -599,12 +582,8 @@ export class AppComponent {
     }, []);
   }
 
-  extendDefaultEvent = (args: any) => {
-    const start: Date = args.start;
-    const title = this.titles[Math.floor(Math.random() * this.titles.length)];
-    return {
-      title,
-      end: new Date(start.getTime() + 2 * 3600000),
-    };
-  };
+  extendDefaultEvent = (args: any) => ({
+    title: this.titles[Math.floor(Math.random() * this.titles.length)],
+    end: new Date(args.start.getTime() + 2 * 3600000),
+  });
 }

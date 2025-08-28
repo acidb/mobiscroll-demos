@@ -9,7 +9,7 @@ setOptions({
 
 @Component({
   selector: 'app-timeline-cell-content-template',
-  styleUrls: ['./cell-content-template.css'],
+  styleUrl: './cell-content-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './cell-content-template.html',
   standalone: false,
@@ -102,7 +102,7 @@ export class AppComponent {
     },
   ];
 
-  view: MbscEventcalendarView = {
+  myView: MbscEventcalendarView = {
     schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
   };
 

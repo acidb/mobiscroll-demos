@@ -22,10 +22,10 @@ interface WeatherData {
 }
 
 @Component({
-  selector: 'app-eventcalendar-display-cell-template',
-  styleUrl: './display-cell-template.css',
+  selector: 'app-eventcalendar-day-cell-aggregate-information',
+  styleUrl: './day-cell-aggregate-information.css',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './display-cell-template.html',
+  templateUrl: './day-cell-aggregate-information.html',
   standalone: false,
 })
 export class AppComponent {

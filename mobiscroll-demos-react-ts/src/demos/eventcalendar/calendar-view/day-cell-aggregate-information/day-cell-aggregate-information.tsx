@@ -6,36 +6,50 @@ import {
   CalendarToday,
   Eventcalendar,
   formatDate,
+  MbscCalendarEvent,
+  MbscCellClickEvent,
+  MbscEventcalendarView,
+  MbscSelectedDateChangeEvent,
   Segmented,
   SegmentedGroup,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { useCallback, useRef, useState } from 'react';
-import './display-cell-template.css';
+import { FC, useCallback, useRef, useState } from 'react';
+import './day-cell-aggregate-information.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-function App() {
-  const [myCssClass, setCssClass] = useState('mds-cell-template mds-cell-template-month-view');
-  const [selectedView, setSelectedView] = useState('month');
-  const [previousView, setPreviousView] = useState('month');
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [isToastOpen, setToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+interface WeatherData {
+  date: Date;
+  degree: number;
+  emoji: string;
+}
 
-  const weatherCacheRef = useRef({});
+interface WeatherCache {
+  [key: number]: WeatherData;
+}
 
-  const [myView, setView] = useState({
+const App: FC = () => {
+  const [myCssClass, setCssClass] = useState<string>('mds-cell-template mds-cell-template-month-view');
+  const [selectedView, setSelectedView] = useState<string>('month');
+  const [previousView, setPreviousView] = useState<string>('month');
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
+
+  const weatherCacheRef = useRef<WeatherCache>({});
+
+  const [myView, setView] = useState<MbscEventcalendarView>({
     calendar: {
       type: 'month',
     },
   });
 
-  const [myEvents, setEvents] = useState(() => [
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>(() => [
     {
       start: 'dyndatetime(y,m,d-1,15)',
       end: 'dyndatetime(y,m,d-1,17)',
@@ -202,7 +216,7 @@ function App() {
     [],
   );
 
-  const generateRandomWeather = useCallback((date) => {
+  const generateRandomWeather = useCallback((date: Date): WeatherData => {
     const weatherTypes = [
       { emoji: '☀️', min: 24, max: 30 },
       { emoji: '🌤️', min: 20, max: 25 },
@@ -220,7 +234,7 @@ function App() {
   }, []);
 
   const getWeatherForDate = useCallback(
-    (date) => {
+    (date: Date): WeatherData => {
       const key = date.getTime();
       if (!weatherCacheRef.current[key]) {
         weatherCacheRef.current[key] = generateRandomWeather(date);
@@ -230,7 +244,7 @@ function App() {
     [generateRandomWeather],
   );
 
-  const getStressLevel = useCallback((nrEvents) => {
+  const getStressLevel = useCallback((nrEvents: number) => {
     let emoji = '';
     let color = '';
 
@@ -250,7 +264,7 @@ function App() {
     return { emoji: emoji, color: color };
   }, []);
 
-  const getNrEvents = useCallback((events) => {
+  const getNrEvents = useCallback((events: MbscCalendarEvent[]) => {
     let nrMeetings = 0;
     let nrAppointments = 0;
 
@@ -266,7 +280,7 @@ function App() {
   }, []);
 
   const setCalendarView = useCallback(
-    (view, date = undefined) => {
+    (view: string, date?: Date) => {
       if (view === 'day') {
         setPreviousView(selectedView);
       }
@@ -303,7 +317,7 @@ function App() {
           });
           break;
       }
-      console.log(date);
+
       if (date) {
         setCurrentDate(date);
       }
@@ -312,7 +326,7 @@ function App() {
   );
 
   const handleViewChange = useCallback(
-    (ev) => {
+    (ev: React.ChangeEvent<HTMLInputElement>) => {
       setCalendarView(ev.target.value);
     },
     [setCalendarView],
@@ -323,7 +337,7 @@ function App() {
   }, [setCalendarView, previousView]);
 
   const handleDayClick = useCallback(
-    (date) => {
+    (date: Date) => {
       if (selectedView === 'week') {
         setCalendarView('day', date);
       }
@@ -332,7 +346,7 @@ function App() {
   );
 
   const customDay = useCallback(
-    (args) => {
+    (args: { date: Date; events: MbscCalendarEvent[] }) => {
       const date = args.date;
       const events = args.events;
       const nrEvents = getNrEvents(events);
@@ -344,7 +358,7 @@ function App() {
         <div
           className="mds-cell-template-cont"
           style={{
-            background: stressLevel.color ? stressLevel.color : '',
+            background: stressLevel.color && selectedView !== 'day' ? stressLevel.color : '',
           }}
           onClick={() => handleDayClick(date)}
         >
@@ -360,7 +374,7 @@ function App() {
         </div>
       );
     },
-    [getNrEvents, getWeatherForDate, getStressLevel, handleDayClick],
+    [selectedView, getNrEvents, getWeatherForDate, getStressLevel, handleDayClick],
   );
 
   const customHeader = useCallback(
@@ -391,9 +405,9 @@ function App() {
   );
 
   const onCellClick = useCallback(
-    (args) => {
+    (args: MbscCellClickEvent) => {
       const date = args.date;
-      const target = args.domEvent.target;
+      const target = args.domEvent.target as HTMLElement;
 
       if (target.closest('.mds-cell-template-add')) {
         const year = date.getFullYear();
@@ -418,8 +432,8 @@ function App() {
     [selectedView, setCalendarView],
   );
 
-  const handleSelectedDateChange = useCallback((args) => {
-    setCurrentDate(args.date);
+  const handleSelectedDateChange = useCallback((args: MbscSelectedDateChangeEvent) => {
+    setCurrentDate(args.date as Date);
   }, []);
 
   const handleToastClose = useCallback(() => {
@@ -429,7 +443,11 @@ function App() {
   return (
     <>
       <Eventcalendar
-        // drag
+        clickToCreate={true}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
+        eventDelete={true}
         cssClass={myCssClass}
         data={myEvents}
         view={myView}
@@ -443,6 +461,5 @@ function App() {
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={handleToastClose} />
     </>
   );
-}
-
+};
 export default App;

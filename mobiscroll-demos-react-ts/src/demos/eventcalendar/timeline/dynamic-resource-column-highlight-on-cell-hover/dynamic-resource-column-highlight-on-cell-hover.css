@@ -6,16 +6,16 @@
   font-weight: 500;
 }
 
-.mds-highlight-hover .mds-highlight-row-hover, 
+.mds-highlight-hover .mds-highlight-row-hover,
 .mds-highlight-hover .mds-highlight-col-hover {
-  background: rgba(220,220,220,0.25);
+  background: rgba(220, 220, 220, 0.25);
 }
 
 .mds-highlight-col-hover {
   position: absolute;
-  inset: 0;               
+  inset: 0;
   background: transparent;
-  pointer-events: none;   
+  pointer-events: none;
   box-sizing: border-box;
 }
 
@@ -24,7 +24,7 @@
   height: 30px;
   text-align: center;
   line-height: 30px;
-  position: relative; 
+  position: relative;
 }
 
 .mds-highlight-tooltip {
