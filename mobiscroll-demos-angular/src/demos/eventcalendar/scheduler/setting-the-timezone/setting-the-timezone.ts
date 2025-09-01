@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/angular';
-import moment from 'moment-timezone';
+import { dayjsTimezone, MbscCalendarEvent, MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { dyndatetime } from '../../../../app/app.util';
 
-momentTimezone.moment = moment;
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
 
 setOptions({
   // locale,
@@ -68,7 +72,7 @@ export class AppComponent {
     dragToCreate: true,
     dragToMove: true,
     dragToResize: true,
-    timezonePlugin: momentTimezone,
+    timezonePlugin: dayjsTimezone,
     dataTimezone: 'utc',
     displayTimezone: 'local',
   };

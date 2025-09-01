@@ -1,17 +1,21 @@
-import * as mobiscroll from '@mobiscroll/jquery';
+import { dayjsTimezone } from '@mobiscroll/jquery';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import $ from 'jquery';
-import * as moment from 'moment-timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     $(function () {
-      mobiscroll.momentTimezone.moment = moment;
-
       $('#demo')
         .mobiscroll()
         .datepicker({
-          timezonePlugin: mobiscroll.momentTimezone,
+          timezonePlugin: dayjsTimezone,
           dataTimezone: 'utc',
           displayTimezone: 'local',
           controls: ['datetime'],

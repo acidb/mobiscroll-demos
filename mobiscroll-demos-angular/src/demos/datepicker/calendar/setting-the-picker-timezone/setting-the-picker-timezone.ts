@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import { MbscDatepickerOptions, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
-import moment from 'moment-timezone';
+import { dayjsTimezone, MbscDatepickerOptions /* localeImport */ } from '@mobiscroll/angular';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 
-momentTimezone.moment = moment;
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
 
 @Component({
   selector: 'app-calendar-setting-the-picker-timezone',
@@ -13,7 +17,7 @@ export class AppComponent {
   options: MbscDatepickerOptions = {
     // locale,
     // theme,
-    timezonePlugin: momentTimezone,
+    timezonePlugin: dayjsTimezone,
     dataTimezone: 'utc',
     displayTimezone: 'local',
     controls: ['calendar', 'time'],

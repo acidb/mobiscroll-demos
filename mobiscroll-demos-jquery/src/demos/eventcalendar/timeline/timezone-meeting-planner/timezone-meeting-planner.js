@@ -1,6 +1,13 @@
 import * as mobiscroll from '@mobiscroll/jquery';
+import { dayjsTimezone } from '@mobiscroll/jquery';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import $ from 'jquery';
-import * as moment from 'moment-timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -11,8 +18,6 @@ export default {
     });
 
     $(function () {
-      mobiscroll.momentTimezone.moment = moment;
-
       var formatDate = mobiscroll.formatDate;
 
       var myResources = [
@@ -66,7 +71,7 @@ export default {
       var calendar = $('#demo-timezone-meeting-planner')
         .mobiscroll()
         .eventcalendar({
-          timezonePlugin: mobiscroll.momentTimezone,
+          timezonePlugin: dayjsTimezone,
           dataTimezone: 'utc',
           displayTimezone: 'utc',
           clickToCreate: true,
