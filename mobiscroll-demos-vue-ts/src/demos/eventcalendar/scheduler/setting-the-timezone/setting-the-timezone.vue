@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { MbscEventcalendar, momentTimezone /* localeImport */ } from '@mobiscroll/vue'
+import { dayjsTimezone, MbscEventcalendar /* localeImport */ } from '@mobiscroll/vue'
 import type { MbscCalendarEvent, MbscEventcalendarView } from '@mobiscroll/vue'
-import * as moment from 'moment-timezone'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 
-momentTimezone.moment = moment
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjsTimezone.dayjs = dayjs
 
 const myEvents: MbscCalendarEvent[] = [
   {
@@ -60,7 +64,7 @@ const myView: MbscEventcalendarView = {
   <MbscEventcalendar
     :view="myView"
     :data="myEvents"
-    :timezonePlugin="momentTimezone"
+    :timezonePlugin="dayjsTimezone"
     dataTimezone="utc"
     displayTimezone="local"
   />

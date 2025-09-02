@@ -8,7 +8,6 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjsTimezone.dayjs = dayjs;
 
-
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
