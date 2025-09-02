@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -106,7 +107,8 @@ const subdivisions: any = {
 @Component({
   selector: 'app-select-linked-hierarchical-pickers',
   templateUrl: './linked-hierarchical-pickers.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   divData = [];

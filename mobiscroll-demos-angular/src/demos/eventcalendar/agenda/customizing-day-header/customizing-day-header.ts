@@ -1,6 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { formatDate, MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  formatDate,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -12,7 +20,8 @@ setOptions({
   styleUrl: './customizing-day-header.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './customizing-day-header.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(

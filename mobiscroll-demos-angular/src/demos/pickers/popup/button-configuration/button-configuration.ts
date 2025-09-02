@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MbscPopup, MbscPopupOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscModule, MbscPopup, MbscPopupOptions, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -11,7 +12,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './button-configuration.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

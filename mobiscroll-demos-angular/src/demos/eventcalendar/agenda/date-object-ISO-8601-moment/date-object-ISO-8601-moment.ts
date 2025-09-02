@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import moment from 'moment';
 
 setOptions({
@@ -10,7 +11,8 @@ setOptions({
 @Component({
   selector: 'app-agenda-date-object-iso-8601-moment',
   templateUrl: './date-object-ISO-8601-moment.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myView: MbscEventcalendarView = { agenda: { type: 'month' } };

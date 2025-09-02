@@ -1,5 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarOptions,
+  MbscModule,
+  momentTimezone,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 import moment from 'moment-timezone';
 import { dyndatetime } from '../../../../app/app.util';
 
@@ -15,7 +23,8 @@ momentTimezone.moment = moment;
   styleUrl: './multiple-timezone-support.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './multiple-timezone-support.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscDatepickerOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscDatepickerOptions, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -16,7 +17,8 @@ const maxDate = dyndatetime('y,m+6,d');
   styleUrl: './appointment-booking.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './appointment-booking.html',
-  standalone: false,
+  standalone: true,
+  imports: [MbscModule, CommonModule],
 })
 export class AppComponent {
   constructor(private http: HttpClient) {}

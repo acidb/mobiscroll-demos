@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscDatepickerOptions,
   MbscEventcalendar,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscPopup,
   MbscPopupOptions,
   Notifications,
@@ -22,7 +25,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './create-read-update-delete-CRUD.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -10,7 +11,8 @@ setOptions({
 @Component({
   selector: 'app-timeline-multiple-days-weeks-months-quarters-years-variable-resolution',
   templateUrl: './multiple-days-weeks-months-quarters-years-variable-resolution.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

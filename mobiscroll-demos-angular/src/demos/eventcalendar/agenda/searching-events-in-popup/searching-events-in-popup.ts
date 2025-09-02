@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
@@ -7,6 +8,7 @@ import {
   MbscEventcalendarView,
   MbscEventClickEvent,
   MbscInput,
+  MbscModule,
   MbscPageLoadingEvent,
   MbscPopup,
   MbscPopupOptions,
@@ -23,7 +25,8 @@ setOptions({
   styleUrl: './searching-events-in-popup.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './searching-events-in-popup.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private http: HttpClient) {}

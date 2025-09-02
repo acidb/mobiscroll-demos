@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   momentTimezone,
   Notifications,
   setOptions /* localeImport */,
@@ -23,7 +25,8 @@ momentTimezone.moment = moment;
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timezone-meeting-planner.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

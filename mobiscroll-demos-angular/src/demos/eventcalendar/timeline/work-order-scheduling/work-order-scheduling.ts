@@ -1,10 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscDatepickerOptions,
   MbscEventcalendar,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscPopup,
   MbscPopupOptions,
   MbscResource,
@@ -24,7 +27,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './work-order-scheduling.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

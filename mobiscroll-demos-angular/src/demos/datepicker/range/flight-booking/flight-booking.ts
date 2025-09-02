@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import { MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -11,7 +13,8 @@ const now = new Date();
 @Component({
   selector: 'app-range-flight-booking',
   templateUrl: './flight-booking.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('calInst')

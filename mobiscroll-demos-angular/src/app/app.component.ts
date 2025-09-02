@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Notifications } from '@mobiscroll/angular';
-import { AppModule, demoTitleMap } from './app.module';
+import { demoTitleMap } from './demos';
 
 @Component({
   selector: 'app-root',
-  imports: [AppModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [CommonModule, RouterLink, RouterOutlet],
   providers: [Notifications],
   templateUrl: './app.component.html',
   standalone: true,
@@ -23,4 +23,5 @@ export class AppComponent {
 
   demoTitleMap = demoTitleMap;
   path = '/';
+  title = 'mobiscroll-demos-angular';
 }

@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscModule,
   MbscNewEventData,
   Notifications,
   setOptions /* localeImport */,
@@ -23,7 +25,8 @@ const makeMyTrip = 'https://img.mobiscroll.com/demos/make-my-trip-icon.png';
   encapsulation: ViewEncapsulation.None,
   templateUrl: './property-booking-calendar.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

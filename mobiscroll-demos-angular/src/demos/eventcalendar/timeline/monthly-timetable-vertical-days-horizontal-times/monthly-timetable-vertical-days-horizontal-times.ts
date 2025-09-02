@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -12,7 +13,8 @@ setOptions({
   styleUrl: './monthly-timetable-vertical-days-horizontal-times.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './monthly-timetable-vertical-days-horizontal-times.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

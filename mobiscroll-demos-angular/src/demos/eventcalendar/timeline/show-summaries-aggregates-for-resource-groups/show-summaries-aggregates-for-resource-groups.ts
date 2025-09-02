@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
@@ -7,6 +8,7 @@ import {
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscEventUpdatedEvent,
+  MbscModule,
   MbscNewEventData,
   MbscPageLoadingEvent,
   MbscResource,
@@ -24,7 +26,8 @@ setOptions({
   styleUrl: './show-summaries-aggregates-for-resource-groups.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-summaries-aggregates-for-resource-groups.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   calendarOptions: MbscEventcalendarOptions = {

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { demos, demoTitleMap } from './app.module';
 import { HomeComponent } from './components/home/home.component';
+import { demos, demoTitleMap } from './demos';
 
 const routes: Routes = [{ path: '', component: HomeComponent }];
 

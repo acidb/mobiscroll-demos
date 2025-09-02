@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscSelectOptions,
   Notifications,
   setOptions /* localeImport */,
@@ -33,7 +36,8 @@ const disabledMenu = [
   encapsulation: ViewEncapsulation.None,
   templateUrl: './cut-copy-paste-events-between-calendars.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

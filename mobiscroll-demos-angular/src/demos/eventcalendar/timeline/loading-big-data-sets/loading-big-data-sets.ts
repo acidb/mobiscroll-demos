@@ -1,5 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscPageLoadingEvent, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscPageLoadingEvent,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -24,7 +31,8 @@ for (let i = 1; i <= resourceNr; i++) {
   styleUrl: './loading-big-data-sets.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './loading-big-data-sets.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [];

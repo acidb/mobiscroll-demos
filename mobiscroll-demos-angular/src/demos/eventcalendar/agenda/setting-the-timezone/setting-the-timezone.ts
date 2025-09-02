@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
 import moment from 'moment-timezone';
 import { dyndatetime } from '../../../../app/app.util';
 
@@ -8,7 +9,8 @@ momentTimezone.moment = moment;
 @Component({
   selector: 'app-agenda-setting-the-timezone',
   templateUrl: './setting-the-timezone.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

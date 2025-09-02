@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { formatDate, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { formatDate, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -15,7 +16,8 @@ const now = new Date();
   styleUrl: './book-rental-months-ahead.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './book-rental-months-ahead.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

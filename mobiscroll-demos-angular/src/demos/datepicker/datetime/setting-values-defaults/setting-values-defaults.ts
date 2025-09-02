@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { MbscDatepicker, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import { MbscDatepicker, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -9,7 +11,8 @@ setOptions({
 @Component({
   selector: 'app-datetime-setting-values-defaults',
   templateUrl: './setting-values-defaults.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('nowInst')

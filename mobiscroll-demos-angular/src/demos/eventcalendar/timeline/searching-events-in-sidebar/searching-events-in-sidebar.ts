@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
@@ -6,6 +7,7 @@ import {
   MbscEventcalendar,
   MbscEventcalendarView,
   MbscEventClickEvent,
+  MbscModule,
   MbscPageLoadingEvent,
   MbscResource,
   setOptions /* localeImport */,
@@ -21,7 +23,8 @@ setOptions({
   styleUrl: './searching-events-in-sidebar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './searching-events-in-sidebar.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private http: HttpClient) {}
