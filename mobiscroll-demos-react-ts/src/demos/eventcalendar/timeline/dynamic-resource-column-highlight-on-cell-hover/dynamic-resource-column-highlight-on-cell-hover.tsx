@@ -10,7 +10,7 @@ import {
   Popup,
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import './dynamic-resource-column-highlight-on-cell-hover.css';
 
 setOptions({
@@ -23,7 +23,6 @@ const App: FC = () => {
   const [hoverResource, setHoverResource] = useState<MbscResource | null>(null);
   const [anchor, setAnchor] = useState<HTMLElement>();
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
@@ -81,15 +80,10 @@ const App: FC = () => {
 
     setHoverDate(args.date);
     setAnchor(args.domEvent.target as HTMLElement);
-
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setPopupOpen(true);
-    }, 300);
+    setPopupOpen(true);
   }, []);
 
   const handleCellHoverOut = useCallback(() => {
-    clearTimeout(timerRef.current);
     setHoverDate(null);
     setHoverResource(null);
     setResources((prevResources) => prevResources.map((r) => ({ ...r, cssClass: '' })));

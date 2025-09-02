@@ -573,7 +573,7 @@ export default {
               '">' +
               hours +
               'h / 8h</div>' +
-              '<button class="mds-timeline-cell-content-add">+</button>' +
+              '<button class="mds-timeline-cell-content-add"><span>+</span></button>' +
               '<div class="mds-timeline-cell-icons">' +
               iconHtml +
               '</div>'
@@ -719,7 +719,7 @@ export default {
 }
 
 .mds-timeline-cell-content-add:hover {
-  transform: scale(1.10);
+  outline: 3px solid rgba(140, 140, 140, 0.5);
 }
 
 .mds-timeline-cell-icons {

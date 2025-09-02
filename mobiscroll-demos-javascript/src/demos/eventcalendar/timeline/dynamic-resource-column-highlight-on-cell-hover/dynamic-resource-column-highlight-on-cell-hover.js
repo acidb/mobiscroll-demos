@@ -91,7 +91,6 @@ export default {
 
     var formatDate = mobiscroll.formatDate;
     var hoverDateTime;
-    var tooltipTimeout;
 
     var calendar = mobiscroll.eventcalendar('#demo-highlight-hover', {
       cssClass: 'mds-highlight-hover',
@@ -107,11 +106,8 @@ export default {
         document.querySelector('.mds-highlight-tooltip-name').textContent = args.resource.name;
         document.querySelector('.mds-highlight-tooltip-date').textContent = formatDate('MMM DD, YYYY', args.date);
 
-        clearTimeout(tooltipTimeout);
-        tooltipTimeout = setTimeout(function () {
-          tooltip.setOptions({ anchor: args.domEvent.target });
-          tooltip.open();
-        }, 200);
+        tooltip.setOptions({ anchor: args.domEvent.target });
+        tooltip.open();
 
         hoverDateTime = args.date;
 
@@ -122,7 +118,6 @@ export default {
       },
 
       onCellHoverOut: function () {
-        clearTimeout(tooltipTimeout);
         tooltip.close();
         myResources.forEach(function (r) {
           r.cssClass = '';

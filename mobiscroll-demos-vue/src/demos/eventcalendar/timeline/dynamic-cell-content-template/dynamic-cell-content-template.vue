@@ -698,7 +698,7 @@ function extendDefaultEvent(args) {
 }
 
 .mds-timeline-cell-content-add:hover {
-  transform: scale(1.1);
+  outline: 3px solid rgba(140, 140, 140, 0.5);
 }
 
 .mds-timeline-cell-icons {
