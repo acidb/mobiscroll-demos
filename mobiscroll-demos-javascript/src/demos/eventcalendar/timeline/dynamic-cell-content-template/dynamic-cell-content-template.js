@@ -520,6 +520,7 @@ export default {
     var titles = Object.keys(iconMap);
 
     var calendar = mobiscroll.eventcalendar('#demo-cell-content', {
+      clickToCreate: false,
       dragToCreate: false,
       dragToMove: false,
       dragToResize: false,
@@ -585,7 +586,7 @@ export default {
       onEventCreate: function () {
         if (hoveredCellEventCount >= 4) {
           mobiscroll.toast({
-            message: 'Limit reached.',
+            message: 'Task limit reached',
           });
           return false;
         }
@@ -602,7 +603,7 @@ export default {
 
         if (hoveredCellEventCount >= 4) {
           mobiscroll.toast({
-            message: 'Limit reached.',
+            message: 'Task limit reached',
           });
           return;
         }

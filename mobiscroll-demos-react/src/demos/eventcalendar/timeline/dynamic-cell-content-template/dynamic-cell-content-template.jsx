@@ -548,7 +548,7 @@ function App() {
     (cell) => {
       if (cell.events.length >= 4) {
         setToastOpen(true);
-        setToastMessage('Limit reached.');
+        setToastMessage('Task limit reached');
         return;
       }
       setEvents((prevEvents) => [
@@ -608,6 +608,7 @@ function App() {
     <>
       <Eventcalendar
         cssClass="mds-timeline-cell-content"
+        clickToCreate={false}
         data={myEvents}
         dragToCreate={false}
         dragToMove={false}

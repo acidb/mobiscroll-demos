@@ -541,7 +541,7 @@ export class AppComponent {
     const count = cell.events.length;
 
     if (count >= 4) {
-      this.notify.toast({ message: 'Limit reached.' });
+      this.notify.toast({ message: 'Task limit reached' });
       return;
     }
     this.myEvents = [

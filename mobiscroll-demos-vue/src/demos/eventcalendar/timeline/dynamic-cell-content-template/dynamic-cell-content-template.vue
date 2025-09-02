@@ -556,7 +556,7 @@ function getIcons(events = []) {
 
 function handleAddClick(cell) {
   if (cell.events.length >= 4) {
-    toastMessage.value = 'Limit reached.'
+    toastMessage.value = 'Task limit reached'
     isToastOpen.value = true
     return
   }
@@ -583,6 +583,7 @@ function extendDefaultEvent(args) {
 <template>
   <MbscEventcalendar
     cssClass="mds-timeline-cell-content"
+    :clickToCreate="false"
     :data="myEvents"
     :dragToCreate="false"
     :dragToMove="false"

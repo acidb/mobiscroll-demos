@@ -557,7 +557,7 @@ const App: FC = () => {
     (cell: MbscCalendarCellData) => {
       if (cell.events.length >= 4) {
         setToastOpen(true);
-        setToastMessage('Limit reached.');
+        setToastMessage('Task limit reached');
         return;
       }
 
@@ -624,6 +624,7 @@ const App: FC = () => {
     <>
       <Eventcalendar
         cssClass="mds-timeline-cell-content"
+        clickToCreate={false}
         data={myEvents}
         dragToCreate={false}
         dragToMove={false}

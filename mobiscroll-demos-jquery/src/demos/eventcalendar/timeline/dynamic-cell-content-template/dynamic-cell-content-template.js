@@ -526,6 +526,7 @@ export default {
       var calendar = $('#demo-cell-content')
         .mobiscroll()
         .eventcalendar({
+          clickToCreate: false,
           dragToCreate: false,
           dragToMove: false,
           dragToResize: false,
@@ -594,7 +595,7 @@ export default {
                 //<hidden>
                 // theme,//</hidden>
                 // context,
-                message: 'Limit reached.',
+                message: 'Task limit reached',
               });
               return false;
             }
@@ -614,7 +615,7 @@ export default {
             //<hidden>
             // theme,//</hidden>
             // context,
-            message: 'Limit reached.',
+            message: 'Task limit reached',
           });
           return;
         }
