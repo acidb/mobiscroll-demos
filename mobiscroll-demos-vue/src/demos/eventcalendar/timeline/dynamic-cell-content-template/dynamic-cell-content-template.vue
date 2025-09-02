@@ -681,7 +681,7 @@ function extendDefaultEvent(args) {
   inset: 6px 4px auto auto;
   width: 17px;
   height: 17px;
-  line-height: 0;
+  line-height: 13px;
   padding: 0;
   padding-bottom: 4px;
   color: #fff;
