@@ -556,7 +556,7 @@ function getIcons(events = []) {
 
 function handleAddClick(cell) {
   if (cell.events.length >= 4) {
-    toastMessage.value = 'Limit reached.'
+    toastMessage.value = 'Task limit reached'
     isToastOpen.value = true
     return
   }
@@ -583,6 +583,7 @@ function extendDefaultEvent(args) {
 <template>
   <MbscEventcalendar
     cssClass="mds-timeline-cell-content"
+    :clickToCreate="false"
     :data="myEvents"
     :dragToCreate="false"
     :dragToMove="false"
@@ -680,7 +681,7 @@ function extendDefaultEvent(args) {
   inset: 6px 4px auto auto;
   width: 17px;
   height: 17px;
-  line-height: 0;
+  line-height: 13px;
   padding: 0;
   padding-bottom: 4px;
   color: #fff;
@@ -698,7 +699,7 @@ function extendDefaultEvent(args) {
 }
 
 .mds-timeline-cell-content-add:hover {
-  transform: scale(1.1);
+  outline: 3px solid rgba(140, 140, 140, 0.5);
 }
 
 .mds-timeline-cell-icons {

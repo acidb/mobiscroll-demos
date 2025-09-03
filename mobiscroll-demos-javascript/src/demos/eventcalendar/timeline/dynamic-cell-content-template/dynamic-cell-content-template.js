@@ -520,6 +520,7 @@ export default {
     var titles = Object.keys(iconMap);
 
     var calendar = mobiscroll.eventcalendar('#demo-cell-content', {
+      clickToCreate: false,
       dragToCreate: false,
       dragToMove: false,
       dragToResize: false,
@@ -585,7 +586,7 @@ export default {
       onEventCreate: function () {
         if (hoveredCellEventCount >= 4) {
           mobiscroll.toast({
-            message: 'Limit reached.',
+            message: 'Task limit reached',
           });
           return false;
         }
@@ -602,7 +603,7 @@ export default {
 
         if (hoveredCellEventCount >= 4) {
           mobiscroll.toast({
-            message: 'Limit reached.',
+            message: 'Task limit reached',
           });
           return;
         }
@@ -689,7 +690,7 @@ export default {
   inset: 6px 4px auto auto;
   width: 17px;
   height: 17px;
-  line-height: 0;
+  line-height: 13px;
   padding: 0;
   padding-bottom: 4px;
   color: #fff;
@@ -707,7 +708,7 @@ export default {
 }
 
 .mds-timeline-cell-content-add:hover {
-  transform: scale(1.10);
+  outline: 3px solid rgba(140, 140, 140, 0.5);
 }
 
 .mds-timeline-cell-icons {

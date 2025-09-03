@@ -15,7 +15,6 @@ export class AppComponent {
   formatDate = formatDate;
   hoverDate: Date | null = null;
   hoverResource: MbscResource | null = null;
-  timeout?: ReturnType<typeof setTimeout>;
   popupAnchor?: HTMLElement;
 
   myEvents: MbscCalendarEvent[] = [
@@ -63,12 +62,10 @@ export class AppComponent {
     this.hoverDate = args.date;
     this.hoverResource = this.myResources.find((r) => r.id === resId) || null;
     this.popupAnchor = args.domEvent.target as HTMLElement;
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => this.popup.open(), 300);
+    this.popup.open();
   }
 
   handleCellHoverOut() {
-    clearTimeout(this.timeout);
     this.hoverDate = null;
     this.hoverResource = null;
     this.myResources = this.myResources.map((r) => ({ ...r, cssClass: '' }));

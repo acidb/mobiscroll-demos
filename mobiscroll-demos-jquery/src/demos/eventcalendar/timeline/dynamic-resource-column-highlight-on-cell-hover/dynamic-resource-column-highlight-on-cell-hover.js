@@ -93,7 +93,6 @@ export default {
 
       var formatDate = mobiscroll.formatDate;
       var hoverDateTime;
-      var tooltipTimeout;
 
       var calendar = $('#demo-highlight-hover')
         .mobiscroll()
@@ -112,11 +111,8 @@ export default {
             $('.mds-highlight-tooltip-name').text(args.resource.name);
             $('.mds-highlight-tooltip-date').text(formatDate('MMM DD, YYYY', args.date));
 
-            clearTimeout(tooltipTimeout);
-            // tooltipTimeout = setTimeout(function () {
-              tooltip.setOptions({ anchor: args.domEvent.target });
-              tooltip.open();
-            // }, 200);
+            tooltip.setOptions({ anchor: args.domEvent.target });
+            tooltip.open();
 
             hoverDateTime = args.date;
 
@@ -126,7 +122,6 @@ export default {
             calendar.setOptions({ resources: myResources.slice() });
           },
           onCellHoverOut: function () {
-            clearTimeout(tooltipTimeout);
             tooltip.close();
             myResources.forEach(function (r) {
               r.cssClass = '';

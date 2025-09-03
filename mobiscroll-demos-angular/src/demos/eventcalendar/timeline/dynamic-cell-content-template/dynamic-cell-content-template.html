@@ -1,14 +1,15 @@
 <mbsc-eventcalendar
   class="mds-timeline-cell-content"
-  [view]="myView"
-  [data]="myEvents"
-  [resources]="myResources"
   [cellTemplate]="cellTpl"
-  [scheduleEventContentTemplate]="eventContentTpl"
-  [extendDefaultEvent]="extendDefaultEvent"
+  [clickToCreate]="false"
+  [data]="myEvents"
   [dragToCreate]="false"
   [dragToMove]="false"
   [dragToResize]="false"
+  [extendDefaultEvent]="extendDefaultEvent"
+  [resources]="myResources"
+  [scheduleEventContentTemplate]="eventContentTpl"
+  [view]="myView"
 >
   <ng-template #cellTpl let-cell>
     <div class="mds-timeline-cell-content-badge {{ getBadgeClass(cell.events) }}">{{ getHours(cell.events) }}h / 8h</div>

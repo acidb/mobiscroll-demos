@@ -526,6 +526,7 @@ export default {
       var calendar = $('#demo-cell-content')
         .mobiscroll()
         .eventcalendar({
+          clickToCreate: false,
           dragToCreate: false,
           dragToMove: false,
           dragToResize: false,
@@ -573,7 +574,7 @@ export default {
               '">' +
               hours +
               'h / 8h</div>' +
-              '<button class="mds-timeline-cell-content-add">+</button>' +
+              '<button class="mds-timeline-cell-content-add"><span>+</span></button>' +
               '<div class="mds-timeline-cell-icons">' +
               iconHtml +
               '</div>'
@@ -594,7 +595,7 @@ export default {
                 //<hidden>
                 // theme,//</hidden>
                 // context,
-                message: 'Limit reached.',
+                message: 'Task limit reached',
               });
               return false;
             }
@@ -614,7 +615,7 @@ export default {
             //<hidden>
             // theme,//</hidden>
             // context,
-            message: 'Limit reached.',
+            message: 'Task limit reached',
           });
           return;
         }
@@ -701,7 +702,7 @@ export default {
   inset: 6px 4px auto auto;
   width: 17px;
   height: 17px;
-  line-height: 0;
+  line-height: 13px;
   padding: 0;
   padding-bottom: 4px;
   color: #fff;
@@ -719,7 +720,7 @@ export default {
 }
 
 .mds-timeline-cell-content-add:hover {
-  transform: scale(1.10);
+  outline: 3px solid rgba(140, 140, 140, 0.5);
 }
 
 .mds-timeline-cell-icons {

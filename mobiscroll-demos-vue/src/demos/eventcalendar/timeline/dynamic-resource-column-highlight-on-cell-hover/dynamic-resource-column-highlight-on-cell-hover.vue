@@ -11,7 +11,6 @@ const anchor = ref(null)
 const hoverDate = ref(null)
 const hoverResource = ref(null)
 const isPopupOpen = ref(false)
-let timerRef = null
 
 const myView = {
   timeline: {
@@ -61,15 +60,10 @@ function handleCellHoverIn(args) {
   hoverDate.value = args.date
   hoverResource.value = myResources.value.find((r) => r.id === resId) || null
   anchor.value = args.domEvent.target || null
-
-  clearTimeout(timerRef)
-  timerRef = setTimeout(() => {
-    isPopupOpen.value = true
-  }, 300)
+  isPopupOpen.value = true
 }
 
 function handleCellHoverOut() {
-  clearTimeout(timerRef)
   hoverDate.value = null
   hoverResource.value = null
   myResources.value = myResources.value.map((r) => ({ ...r, cssClass: '' }))

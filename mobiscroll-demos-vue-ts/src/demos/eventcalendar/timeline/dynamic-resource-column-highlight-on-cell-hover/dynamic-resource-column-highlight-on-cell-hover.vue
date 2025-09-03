@@ -17,7 +17,6 @@ const anchor = ref<HTMLElement>()
 const hoverDate = ref<Date | null>(null)
 const hoverResource = ref<MbscResource | null>(null)
 const isPopupOpen = ref<boolean>(false)
-let timerRef: ReturnType<typeof setTimeout>
 
 const myView: MbscEventcalendarView = {
   timeline: {
@@ -67,15 +66,10 @@ function handleCellHoverIn(args: MbscCellHoverEvent) {
   hoverDate.value = args.date
   hoverResource.value = myResources.value.find((r) => r.id === resId) || null
   anchor.value = args.domEvent.target as HTMLElement
-
-  clearTimeout(timerRef)
-  timerRef = setTimeout(() => {
-    isPopupOpen.value = true
-  }, 300)
+  isPopupOpen.value = true
 }
 
 function handleCellHoverOut() {
-  clearTimeout(timerRef)
   hoverDate.value = null
   hoverResource.value = null
   myResources.value = myResources.value.map((r) => ({ ...r, cssClass: '' }))
