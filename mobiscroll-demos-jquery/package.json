@@ -22,6 +22,7 @@
     "@mobiscroll/calendar-integration": "file:src/addons/calendar-integration",
     "@mobiscroll/jquery": "^5.34.1",
     "@mobiscroll/print": "file:src/addons/print",
+    "dayjs": "^1.11.18",
     "html5-history-router": "^1.1.0",
     "jquery": "^3.7.1",
     "moment-timezone": "^0.5.43"
