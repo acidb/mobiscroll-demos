@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { dayjsTimezone, MbscCalendarEvent, MbscEventcalendarView /* localeImport */ } from '@mobiscroll/angular';
+import { dayjsTimezone, MbscCalendarEvent, MbscEventcalendarView, MbscTimezonePlugin /* localeImport */ } from '@mobiscroll/angular';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
@@ -61,5 +61,5 @@ export class AppComponent {
   ];
 
   myView: MbscEventcalendarView = { agenda: { type: 'week' } };
-  myTimezonePlugin = dayjsTimezone;
+  myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;
 }

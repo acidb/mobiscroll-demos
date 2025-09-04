@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import {
   dayjsTimezone,
   MbscCalendarEvent,
-  MbscEventcalendarOptions,
+  MbscEventcalendarView,
   MbscResource,
-  setOptions /* localeImport */,
+  MbscTimezonePlugin /* localeImport */,
 } from '@mobiscroll/angular';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
@@ -14,11 +14,6 @@ import { dyndatetime } from '../../../../app/app.util';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjsTimezone.dayjs = dayjs;
-
-setOptions({
-  // locale,
-  // theme,
-});
 
 @Component({
   selector: 'app-timeline-setting-the-timezone',
@@ -99,15 +94,6 @@ export class AppComponent {
     },
   ];
 
-  eventSettings: MbscEventcalendarOptions = {
-    view: {
-      timeline: { type: 'week' },
-    },
-    dragToCreate: true,
-    dragToMove: true,
-    dragToResize: true,
-    timezonePlugin: dayjsTimezone,
-    dataTimezone: 'utc',
-    displayTimezone: 'local',
-  };
+  myView: MbscEventcalendarView = { timeline: { type: 'week' } };
+  myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;
 }
