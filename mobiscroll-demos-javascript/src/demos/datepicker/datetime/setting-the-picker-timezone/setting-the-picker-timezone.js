@@ -11,6 +11,11 @@ dayjsTimezone.dayjs = dayjs;
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
+    mobiscroll.setOptions({
+      // locale,
+      // theme
+    });
+
     mobiscroll.datepicker('#demo', {
       timezonePlugin: dayjsTimezone,
       dataTimezone: 'utc',

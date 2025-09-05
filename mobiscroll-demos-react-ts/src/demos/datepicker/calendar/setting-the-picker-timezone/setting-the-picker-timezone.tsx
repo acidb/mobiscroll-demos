@@ -1,4 +1,4 @@
-import { Datepicker, dayjsTimezone, MbscDatepickerChangeEvent } from '@mobiscroll/react';
+import { Datepicker, dayjsTimezone, MbscDatepickerChangeEvent, setOptions } from '@mobiscroll/react';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
@@ -7,6 +7,11 @@ import { FC, useCallback, useState } from 'react';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjsTimezone.dayjs = dayjs;
+
+setOptions({
+  // localeJs,
+  // themeJs
+});
 
 const App: FC = () => {
   const [selected, setSelected] = useState<string | null>(null);

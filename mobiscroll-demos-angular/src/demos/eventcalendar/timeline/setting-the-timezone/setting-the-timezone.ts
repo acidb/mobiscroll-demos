@@ -4,7 +4,8 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscResource,
-  MbscTimezonePlugin /* localeImport */,
+  MbscTimezonePlugin,
+  setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
@@ -14,6 +15,11 @@ import { dyndatetime } from '../../../../app/app.util';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjsTimezone.dayjs = dayjs;
+
+setOptions({
+  // locale,
+  // theme
+});
 
 @Component({
   selector: 'app-timeline-setting-the-timezone',

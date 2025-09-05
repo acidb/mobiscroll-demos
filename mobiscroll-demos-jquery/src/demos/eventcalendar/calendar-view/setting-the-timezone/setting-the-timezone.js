@@ -1,3 +1,4 @@
+import * as mobiscroll from '@mobiscroll/jquery';
 import { dayjsTimezone } from '@mobiscroll/jquery';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
@@ -11,6 +12,11 @@ dayjsTimezone.dayjs = dayjs;
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
+    mobiscroll.setOptions({
+      // locale,
+      // theme
+    });
+
     $(function () {
       $('#demo-showing-events-timezone')
         .mobiscroll()

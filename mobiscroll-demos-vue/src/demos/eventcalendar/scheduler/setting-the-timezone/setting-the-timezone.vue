@@ -1,5 +1,5 @@
 <script setup>
-import { dayjsTimezone, MbscEventcalendar /* localeImport */ } from '@mobiscroll/vue'
+import { dayjsTimezone, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
@@ -7,6 +7,11 @@ import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjsTimezone.dayjs = dayjs
+
+setOptions({
+  // locale,
+  // theme
+})
 
 const myEvents = [
   {
