@@ -1,28 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
-  // theme,
+  // theme
 });
 
 @Component({
   selector: 'app-scheduler-load-events-from-remote-api',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-from-remote-api.html',
   standalone: false,
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   myEvents: MbscCalendarEvent[] = [];
-
-  eventSettings: MbscEventcalendarOptions = {
-    // drag,
-    view: {
-      calendar: { type: 'week' },
-      schedule: { type: 'day' },
-    },
+  myView: MbscEventcalendarView = {
+    calendar: { type: 'week' },
+    schedule: { type: 'day' },
   };
 
   ngOnInit(): void {

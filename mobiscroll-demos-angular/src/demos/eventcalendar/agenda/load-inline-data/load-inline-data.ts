@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
@@ -11,8 +11,6 @@ const now = new Date();
 
 @Component({
   selector: 'app-agenda-load-inline-data',
-  styleUrl: './load-inline-data.css',
-  encapsulation: ViewEncapsulation.None,
   templateUrl: './load-inline-data.html',
   standalone: false,
 })

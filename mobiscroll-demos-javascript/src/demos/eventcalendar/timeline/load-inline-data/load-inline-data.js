@@ -10,8 +10,7 @@ export default {
 
     var now = new Date();
 
-    mobiscroll.eventcalendar('#demo-loading-inline-data', {
-      // drag,
+    mobiscroll.eventcalendar('#demo-inline-data', {
       view: {
         timeline: { type: 'day' },
       },
@@ -317,6 +316,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-loading-inline-data"></div>
+<div id="demo-inline-data"></div>
   `,
 };

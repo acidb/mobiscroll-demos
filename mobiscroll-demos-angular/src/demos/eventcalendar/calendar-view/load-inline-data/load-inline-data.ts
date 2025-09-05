@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
+
+setOptions({
+  // locale,
+  // theme
+});
 
 const now = new Date();
 
@@ -10,8 +15,6 @@ const now = new Date();
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
-
   myEvents: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d,9'),
@@ -284,14 +287,5 @@ export class AppComponent {
     },
   ];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
-    // drag,
-    view: {
-      calendar: {
-        labels: true,
-      },
-    },
-  };
+  myView: MbscEventcalendarView = { calendar: { labels: true } };
 }

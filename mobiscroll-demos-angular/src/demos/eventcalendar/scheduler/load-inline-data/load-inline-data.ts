@@ -1,22 +1,21 @@
-import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
-  // theme,
+  // theme
 });
 
 const now = new Date();
 
 @Component({
   selector: 'app-scheduler-load-inline-data',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './load-inline-data.html',
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
-
   myEvents: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d,9'),
@@ -289,11 +288,5 @@ export class AppComponent {
     },
   ];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // drag,
-    view: {
-      calendar: { type: 'week' },
-      schedule: { type: 'day' },
-    },
-  };
+  myView: MbscEventcalendarView = { calendar: { type: 'week' }, schedule: { type: 'day' } };
 }

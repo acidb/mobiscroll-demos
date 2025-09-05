@@ -3,12 +3,14 @@ import * as mobiscroll from '@mobiscroll/javascript';
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
+    mobiscroll.setOptions({
+      // locale,
+      // theme
+    });
+
     var now = new Date();
 
-    mobiscroll.eventcalendar('#demo-loading-inline-data', {
-      // locale,
-      // theme,
-      // drag,
+    mobiscroll.eventcalendar('#demo-inline-data', {
       view: {
         calendar: { type: 'week' },
         schedule: { type: 'day' },
@@ -288,6 +290,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-loading-inline-data"></div>
+<div id="demo-inline-data"></div>
   `,
 };

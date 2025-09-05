@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
@@ -9,13 +9,11 @@ setOptions({
 
 @Component({
   selector: 'app-agenda-load-events-from-remote-api',
-  styleUrl: './load-events-from-remote-api.css',
-  encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-from-remote-api.html',
   standalone: false,
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   myEvents: MbscCalendarEvent[] = [];
   myView: MbscEventcalendarView = { agenda: { type: 'month' } };

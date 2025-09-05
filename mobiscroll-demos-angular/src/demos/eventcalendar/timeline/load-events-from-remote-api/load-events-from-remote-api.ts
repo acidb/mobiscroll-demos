@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -13,10 +13,10 @@ setOptions({
   standalone: false,
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   myEvents: MbscCalendarEvent[] = [];
-  myResources = [
+  myResources: MbscResource[] = [
     {
       id: 1,
       name: 'Ryan',
@@ -49,12 +49,7 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // drag,
-    view: {
-      timeline: { type: 'day' },
-    },
-  };
+  myView: MbscEventcalendarView = { timeline: { type: 'day' } };
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/timeline-events/', 'callback').subscribe((resp) => {
