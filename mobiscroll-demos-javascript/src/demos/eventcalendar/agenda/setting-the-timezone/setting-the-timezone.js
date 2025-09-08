@@ -1,16 +1,18 @@
 import * as mobiscroll from '@mobiscroll/javascript';
-import { dayjsTimezone } from '@mobiscroll/javascript';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjsTimezone.dayjs = dayjs;
+window.dayjs_plugin_utc = utc;
+window.dayjs_plugin_timezone = timezone;
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
+    dayjs.extend(window.dayjs_plugin_utc);
+    dayjs.extend(window.dayjs_plugin_timezone);
+    mobiscroll.dayjsTimezone.dayjs = dayjs;
+
     mobiscroll.setOptions({
       // locale,
       // theme
@@ -19,7 +21,7 @@ export default {
     mobiscroll.eventcalendar('#demo-set-timezone', {
       dataTimezone: 'utc',
       displayTimezone: 'local',
-      timezonePlugin: dayjsTimezone,
+      timezonePlugin: mobiscroll.dayjsTimezone,
       view: {
         agenda: { type: 'week' },
       },
