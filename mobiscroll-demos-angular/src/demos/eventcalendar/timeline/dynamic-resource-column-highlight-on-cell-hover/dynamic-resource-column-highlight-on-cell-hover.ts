@@ -1,5 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { formatDate, MbscCalendarEvent, MbscCellHoverEvent, MbscEventcalendarView, MbscPopup, MbscResource } from '@mobiscroll/angular';
+import {
+  formatDate,
+  MbscCalendarEvent,
+  MbscCellHoverEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscPopup,
+  MbscResource,
+} from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 @Component({
@@ -7,7 +16,8 @@ import { dyndatetime } from '../../../../app/app.util';
   styleUrl: './dynamic-resource-column-highlight-on-cell-hover.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamic-resource-column-highlight-on-cell-hover.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('popup', { static: false }) popup!: MbscPopup;

@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import { MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import moment from 'moment';
 
 setOptions({
@@ -10,7 +12,8 @@ setOptions({
 @Component({
   selector: 'app-calendar-date-object-iso-8601-moment',
   templateUrl: './date-object-ISO-8601-moment.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   date: Date | undefined;

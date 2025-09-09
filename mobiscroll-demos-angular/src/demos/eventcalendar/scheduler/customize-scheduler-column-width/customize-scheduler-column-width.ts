@@ -1,5 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscResource,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -13,7 +22,8 @@ setOptions({
   templateUrl: './customize-scheduler-column-width.html',
   providers: [Notifications],
   encapsulation: ViewEncapsulation.None,
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   groupBy: 'date' | 'resource' = 'resource';

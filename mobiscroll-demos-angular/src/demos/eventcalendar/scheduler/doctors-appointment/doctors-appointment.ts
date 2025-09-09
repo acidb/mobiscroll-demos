@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarColor,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -25,7 +27,8 @@ const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
   encapsulation: ViewEncapsulation.None,
   templateUrl: './doctors-appointment.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private notify: Notifications) {}

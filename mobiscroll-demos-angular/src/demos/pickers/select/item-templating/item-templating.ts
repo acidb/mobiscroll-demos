@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -11,7 +12,8 @@ setOptions({
   styleUrl: './item-templating.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './item-templating.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myData = [

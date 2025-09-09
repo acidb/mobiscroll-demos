@@ -1,9 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscCellHoverEvent,
   MbscEventcalendarView,
+  MbscModule,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -19,10 +21,11 @@ setOptions({
   styleUrl: './cell-template-on-hover.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './cell-template-on-hover.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) { }
+  constructor(private notify: Notifications) {}
 
   hoveredDate: Date | undefined;
 
@@ -73,7 +76,7 @@ export class AppComponent {
 
   myView: MbscEventcalendarView = {
     calendar: {
-      labels: 2
+      labels: 2,
     },
   };
 
@@ -94,7 +97,7 @@ export class AppComponent {
     this.myEvents = [...this.myEvents, newEvent];
 
     this.notify.toast({
-      message: 'Event added on ' + formatDate('YYYY-MM-DD', this.hoveredDate!)
+      message: 'Event added on ' + formatDate('YYYY-MM-DD', this.hoveredDate!),
     });
   }
 

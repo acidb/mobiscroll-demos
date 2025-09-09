@@ -1,8 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   dayjsTimezone,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscResource,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -25,7 +28,8 @@ setOptions({
   styleUrl: './multiple-timezone-support.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './multiple-timezone-support.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

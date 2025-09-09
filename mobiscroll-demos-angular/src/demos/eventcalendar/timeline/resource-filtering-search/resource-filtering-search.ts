@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscPopup,
   MbscPopupButton,
   MbscPopupOptions,
@@ -22,7 +25,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-filtering-search.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {

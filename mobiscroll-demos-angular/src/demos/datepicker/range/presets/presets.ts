@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import { MbscModule, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -20,7 +22,8 @@ const endMonth = new Date(curr.getFullYear(), curr.getMonth(), 0);
   encapsulation: ViewEncapsulation.None,
   templateUrl: './presets.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -10,7 +11,8 @@ setOptions({
 @Component({
   selector: 'app-timeline-conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource',
   templateUrl: './conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myView: MbscEventcalendarView = {

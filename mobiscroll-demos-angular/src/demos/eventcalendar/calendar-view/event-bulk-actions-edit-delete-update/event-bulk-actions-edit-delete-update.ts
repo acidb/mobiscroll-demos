@@ -1,10 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendar,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscSelect,
   MbscSelectOptions,
   Notifications,
@@ -22,7 +25,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-bulk-actions-edit-delete-update.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(

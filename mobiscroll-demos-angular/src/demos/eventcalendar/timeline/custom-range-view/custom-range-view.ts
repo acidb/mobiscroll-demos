@@ -1,11 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscDateType,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
+  MbscModule,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
 
@@ -19,7 +22,8 @@ setOptions({
   styleUrl: './custom-range-view.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './custom-range-view.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

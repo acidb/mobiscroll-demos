@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarColor,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscResource,
   Notifications,
   setOptions /* localeImport */,
@@ -54,7 +56,8 @@ const swColors: MbscCalendarColor[] = [
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamically-color-and-invalidate.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

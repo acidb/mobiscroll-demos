@@ -1,6 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendar, MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendar,
+  MbscEventcalendarView,
+  MbscModule,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 import { print } from '@mobiscroll/print';
 
 setOptions({
@@ -11,7 +18,8 @@ setOptions({
 @Component({
   selector: 'app-scheduler-printing-the-view',
   templateUrl: './printing-the-view.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

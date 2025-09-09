@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscDatepickerOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscDatepickerOptions, MbscModule /* localeImport */ } from '@mobiscroll/angular';
 
 @Component({
   selector: 'app-range-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   rangeSettings: MbscDatepickerOptions = {

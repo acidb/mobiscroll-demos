@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -9,6 +10,7 @@ setOptions({
 @Component({
   selector: 'app-range-usage-on-input-or-inline',
   templateUrl: './usage-on-input-or-inline.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {}

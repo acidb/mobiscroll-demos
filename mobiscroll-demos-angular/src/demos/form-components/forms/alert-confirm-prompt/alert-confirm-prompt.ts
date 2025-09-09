@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Notifications, setOptions } from '@mobiscroll/angular';
+import { MbscModule, Notifications, setOptions } from '@mobiscroll/angular';
 
 setOptions({
   // theme,
@@ -8,7 +9,8 @@ setOptions({
 @Component({
   selector: 'app-forms-alert-confirm-prompt',
   templateUrl: './alert-confirm-prompt.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(public notify: Notifications) {}

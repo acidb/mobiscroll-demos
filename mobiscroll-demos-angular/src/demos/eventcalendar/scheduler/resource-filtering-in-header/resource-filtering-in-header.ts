@@ -1,6 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscResource,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -13,7 +22,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-filtering-in-header.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(

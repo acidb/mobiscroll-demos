@@ -1,5 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { formatDate, MbscCalendarEvent, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  formatDate,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscResource,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -12,7 +20,8 @@ setOptions({
   styleUrl: './hour-day-week-month-quarter-year-header-footer-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './hour-day-week-month-quarter-year-header-footer-template.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   hourView: MbscEventcalendarView = {

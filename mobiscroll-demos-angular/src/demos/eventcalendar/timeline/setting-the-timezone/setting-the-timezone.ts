@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   dayjsTimezone,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscModule,
   MbscResource,
   MbscTimezonePlugin,
   setOptions /* localeImport */,
@@ -24,7 +26,8 @@ setOptions({
 @Component({
   selector: 'app-timeline-setting-the-timezone',
   templateUrl: './setting-the-timezone.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [

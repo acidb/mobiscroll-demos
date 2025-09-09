@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { dayjsTimezone, MbscTimezonePlugin, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import { dayjsTimezone, MbscModule, MbscTimezonePlugin, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
@@ -16,7 +18,8 @@ setOptions({
 @Component({
   selector: 'app-range-setting-the-picker-timezone',
   templateUrl: './setting-the-picker-timezone.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;

@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -12,7 +13,8 @@ setOptions({
   styleUrl: './activity-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './activity-calendar.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   activities = [

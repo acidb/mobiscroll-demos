@@ -1,5 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscResource,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -11,7 +19,8 @@ setOptions({
   selector: 'app-timeline-drag-drop-between-calendar-instances',
   templateUrl: './drag-drop-between-calendar-instances.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

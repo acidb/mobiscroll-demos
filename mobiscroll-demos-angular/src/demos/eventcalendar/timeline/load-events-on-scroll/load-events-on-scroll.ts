@@ -1,13 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscVirtualLoadEvent,
   Notifications,
-  setOptions,
-} from /* localeImport */ '@mobiscroll/angular';
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -18,7 +20,8 @@ setOptions({
   selector: 'app-timeline-load-events-on-scroll',
   templateUrl: './load-events-on-scroll.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(
