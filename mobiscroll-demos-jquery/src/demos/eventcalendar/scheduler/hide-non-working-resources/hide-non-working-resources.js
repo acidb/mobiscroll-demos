@@ -21,7 +21,6 @@ export default {
               endDay: 5,
               startTime: '08:00',
               endTime: '20:00',
-              hideEmptyColumns: true,
               hideInvalidColumns: true,
             },
           },
@@ -55,38 +54,32 @@ export default {
               resource: 1,
             },
             {
-              start: 'dyndatetime(y,m,d-4,14)',
-              end: 'dyndatetime(y,m,d-4,16)',
-              title: 'Project Planning - Team Delta',
-              resource: 1,
-            },
-            {
-              start: 'dyndatetime(y,m,d,9)',
-              end: 'dyndatetime(y,m,d,11)',
-              title: 'Kickoff with Client A',
-              resource: 1,
-            },
-            {
-              start: 'dyndatetime(y,m,d,14)',
-              end: 'dyndatetime(y,m,d,16)',
+              start: 'dyndatetime(y,m,d-5,14)',
+              end: 'dyndatetime(y,m,d-5,16)',
               title: 'Project Planning - Team Alpha',
               resource: 1,
             },
             {
-              start: 'dyndatetime(y,m,d+2,13)',
-              end: 'dyndatetime(y,m,d+2,15)',
+              start: 'dyndatetime(y,m,d-1,9)',
+              end: 'dyndatetime(y,m,d-1,11)',
+              title: 'Kickoff with Client A',
+              resource: 1,
+            },
+            {
+              start: 'dyndatetime(y,m,d+1,13)',
+              end: 'dyndatetime(y,m,d+1,15)',
               title: 'Budget Review',
               resource: 1,
             },
             {
-              start: 'dyndatetime(y,m,d+3,14)',
-              end: 'dyndatetime(y,m,d+3,16)',
+              start: 'dyndatetime(y,m,d+2,14)',
+              end: 'dyndatetime(y,m,d+2,16)',
               title: 'Design Review with Charlie',
               resource: 1,
             },
             {
-              start: 'dyndatetime(y,m,d+3,16,30)',
-              end: 'dyndatetime(y,m,d+3,18,30)',
+              start: 'dyndatetime(y,m,d+2,16,30)',
+              end: 'dyndatetime(y,m,d+2,18,30)',
               title: 'Client B Progress Update',
               resource: 1,
             },
@@ -109,21 +102,21 @@ export default {
               resource: 2,
             },
             {
-              start: 'dyndatetime(y,m,d+1,9)',
-              end: 'dyndatetime(y,m,d+1,12)',
+              start: 'dyndatetime(y,m,d,9)',
+              end: 'dyndatetime(y,m,d,12)',
               title: 'Code Review - Feature X',
+              resource: 2,
+            },
+            {
+              start: 'dyndatetime(y,m,d+1,8)',
+              end: 'dyndatetime(y,m,d+1,10)',
+              title: 'Pair Programming with Diana',
               resource: 2,
             },
             {
               start: 'dyndatetime(y,m,d+2,11)',
               end: 'dyndatetime(y,m,d+2,14)',
               title: 'Database Optimization',
-              resource: 2,
-            },
-            {
-              start: 'dyndatetime(y,m,d+3,8)',
-              end: 'dyndatetime(y,m,d+3,10)',
-              title: 'Pair Programming with Diana',
               resource: 2,
             },
             {
@@ -157,8 +150,8 @@ export default {
               resource: 3,
             },
             {
-              start: 'dyndatetime(y,m,d+2,8)',
-              end: 'dyndatetime(y,m,d+2,12)',
+              start: 'dyndatetime(y,m,d+1,9)',
+              end: 'dyndatetime(y,m,d+1,13)',
               title: 'UX Workshop',
               resource: 3,
             },
@@ -181,8 +174,8 @@ export default {
               resource: 3,
             },
             {
-              start: 'dyndatetime(y,m,d-7,8)',
-              end: 'dyndatetime(y,m,d-7,10)',
+              start: 'dyndatetime(y,m,d-8,8)',
+              end: 'dyndatetime(y,m,d-8,10)',
               title: 'Creative Brainstorm',
               resource: 3,
             },
@@ -198,7 +191,12 @@ export default {
               title: 'UX Report Prep',
               resource: 3,
             },
-
+            {
+              start: 'dyndatetime(y,m,d-6,10)',
+              end: 'dyndatetime(y,m,d-6,11,30)',
+              title: 'One-on-One with Alice',
+              resource: 4,
+            },
             {
               start: 'dyndatetime(y,m,d-7,11,30)',
               end: 'dyndatetime(y,m,d-7,13)',
@@ -206,8 +204,14 @@ export default {
               resource: 4,
             },
             {
-              start: 'dyndatetime(y,m,d,9,30)',
-              end: 'dyndatetime(y,m,d,11,30)',
+              start: 'dyndatetime(y,m,d-1,10)',
+              end: 'dyndatetime(y,m,d-1,13)',
+              title: 'Automation Setup',
+              resource: 4,
+            },
+            {
+              start: 'dyndatetime(y,m,d,11,30)',
+              end: 'dyndatetime(y,m,d,14)',
               title: 'Test Case Writing',
               resource: 4,
             },
@@ -218,14 +222,8 @@ export default {
               resource: 4,
             },
             {
-              start: 'dyndatetime(y,m,d+2,8)',
-              end: 'dyndatetime(y,m,d+2,12)',
-              title: 'Automation Setup',
-              resource: 4,
-            },
-            {
-              start: 'dyndatetime(y,m,d+3,8)',
-              end: 'dyndatetime(y,m,d+3,10)',
+              start: 'dyndatetime(y,m,d+1,8)',
+              end: 'dyndatetime(y,m,d+1,10)',
               title: 'Pair Programming with Bob',
               resource: 4,
             },
@@ -300,7 +298,6 @@ export default {
               title: 'Diana OFF',
             },
           ],
-          height: 750,
         })
         .mobiscroll('getInst');
     });
