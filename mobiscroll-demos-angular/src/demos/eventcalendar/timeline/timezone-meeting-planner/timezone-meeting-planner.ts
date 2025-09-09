@@ -1,21 +1,25 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
+  dayjsTimezone,
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
-  momentTimezone,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { dyndatetime } from '../../../../app/app.util';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
 
 setOptions({
   // locale,
   // theme
 });
-
-momentTimezone.moment = moment;
 
 @Component({
   selector: 'app-timeline-timezone-meeting-planner',
@@ -26,7 +30,7 @@ momentTimezone.moment = moment;
   standalone: false,
 })
 export class AppComponent {
-  constructor(private notify: Notifications) {}
+  constructor(private notify: Notifications) { }
   myEvents: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d,13'),
@@ -85,7 +89,7 @@ export class AppComponent {
   details = this.getDetails();
 
   calendarOptions: MbscEventcalendarOptions = {
-    timezonePlugin: momentTimezone,
+    timezonePlugin: dayjsTimezone,
     dataTimezone: 'utc',
     displayTimezone: 'utc',
     clickToCreate: true,

@@ -1,1 +1,11 @@
-<mbsc-eventcalendar [options]="eventSettings" [data]="myEvents" [resources]="myResources"></mbsc-eventcalendar>
+<mbsc-eventcalendar
+  dataTimezone="utc"
+  displayTimezone="local"
+  [data]="myEvents"
+  [timezonePlugin]="myTimezonePlugin"
+  [view]="myView"
+  [dragToCreate]="true"
+  [dragToMove]="true"
+  [dragToResize]="true"
+>
+</mbsc-eventcalendar>

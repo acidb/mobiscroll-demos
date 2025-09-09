@@ -1,13 +1,16 @@
 <mbsc-datepicker
-  [options]="options"
+  dataTimezone="utc"
+  displayTimezone="local"
   inputStyle="outline"
   labelStyle="stacked"
   label="Select Date &amp; Time in Display Timezone"
-  [(ngModel)]="selected"
+  [(ngModel)]="mySelected"
+  [timezonePlugin]="myTimezonePlugin"
+  [controls]="['calendar', 'time']"
 ></mbsc-datepicker>
 <div class="mbsc-padding">
-  <p *ngIf="selected">
+  <p *ngIf="mySelected">
     Selected date is returned in Data Timezone<br />
-    <code>{{selected}}</code>
+    <code>{{mySelected}}</code>
   </p>
 </div>

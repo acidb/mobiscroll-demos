@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, momentTimezone, setOptions /* localeImport */ } from '@mobiscroll/angular';
-import moment from 'moment-timezone';
+import { dayjsTimezone, MbscCalendarEvent, MbscEventcalendarView, MbscTimezonePlugin, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { dyndatetime } from '../../../../app/app.util';
 
-momentTimezone.moment = moment;
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
 
 setOptions({
   // locale,
-  // theme,
+  // theme
 });
 
 @Component({
@@ -61,16 +65,6 @@ export class AppComponent {
     },
   ];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // drag,
-    view: {
-      calendar: {
-        popover: true,
-        type: 'month',
-      },
-    },
-    timezonePlugin: momentTimezone,
-    dataTimezone: 'utc',
-    displayTimezone: 'local',
-  };
+  myView: MbscEventcalendarView = { calendar: { popover: true, type: 'month' } };
+  myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;
 }
