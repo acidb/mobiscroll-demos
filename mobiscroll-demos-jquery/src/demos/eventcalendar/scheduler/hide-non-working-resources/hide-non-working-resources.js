@@ -300,6 +300,7 @@ export default {
               title: 'Diana OFF',
             },
           ],
+          height: 750,
         })
         .mobiscroll('getInst');
     });
