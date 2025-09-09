@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "allowedCommonJsDependencies": ["moment", "moment-timezone"],
+            "allowedCommonJsDependencies": ["dayjs", "moment", "moment-timezone"],
             "outputPath": "dist/mobiscroll-demos-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
