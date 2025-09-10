@@ -66,6 +66,12 @@ export default {
               resource: 1,
             },
             {
+              start: 'dyndatetime(y,m,d,16)',
+              end: 'dyndatetime(y,m,d,20)',
+              title: 'Risk Assessment Workshop',
+              resource: 1,
+            },
+            {
               start: 'dyndatetime(y,m,d+1,13)',
               end: 'dyndatetime(y,m,d+1,15)',
               title: 'Budget Review',
@@ -84,8 +90,8 @@ export default {
               resource: 1,
             },
             {
-              start: 'dyndatetime(y,m,d+7,10)',
-              end: 'dyndatetime(y,m,d+7,11,30)',
+              start: 'dyndatetime(y,m,d+7,11)',
+              end: 'dyndatetime(y,m,d+7,12,30)',
               title: 'Stakeholder Check-in',
               resource: 1,
             },
@@ -96,20 +102,26 @@ export default {
               resource: 1,
             },
             {
+              start: 'dyndatetime(y,m,d-5,10,30)',
+              end: 'dyndatetime(y,m,d-5,13)',
+              title: 'Code Review - Feature X',
+              resource: 2,
+            },
+            {
               start: 'dyndatetime(y,m,d-4,12)',
               end: 'dyndatetime(y,m,d-4,15)',
               title: 'Debugging Session',
               resource: 2,
             },
             {
-              start: 'dyndatetime(y,m,d,9)',
-              end: 'dyndatetime(y,m,d,12)',
-              title: 'Code Review - Feature X',
+              start: 'dyndatetime(y,m,d,15)',
+              end: 'dyndatetime(y,m,d,17)',
+              title: 'API Integration Task',
               resource: 2,
             },
             {
-              start: 'dyndatetime(y,m,d+1,8)',
-              end: 'dyndatetime(y,m,d+1,10)',
+              start: 'dyndatetime(y,m,d+1,13)',
+              end: 'dyndatetime(y,m,d+1,15)',
               title: 'Pair Programming with Diana',
               resource: 2,
             },
@@ -144,6 +156,12 @@ export default {
               resource: 2,
             },
             {
+              start: 'dyndatetime(y,m,d-8,8)',
+              end: 'dyndatetime(y,m,d-8,10)',
+              title: 'Creative Brainstorm',
+              resource: 3,
+            },
+            {
               start: 'dyndatetime(y,m,d,11)',
               end: 'dyndatetime(y,m,d,13)',
               title: 'UI Mockups - Mobile App',
@@ -153,6 +171,12 @@ export default {
               start: 'dyndatetime(y,m,d+1,9)',
               end: 'dyndatetime(y,m,d+1,13)',
               title: 'UX Workshop',
+              resource: 3,
+            },
+            {
+              start: 'dyndatetime(y,m,d+2,14)',
+              end: 'dyndatetime(y,m,d+2,16)',
+              title: 'Code Refactoring',
               resource: 3,
             },
             {
@@ -174,14 +198,8 @@ export default {
               resource: 3,
             },
             {
-              start: 'dyndatetime(y,m,d-8,8)',
-              end: 'dyndatetime(y,m,d-8,10)',
-              title: 'Creative Brainstorm',
-              resource: 3,
-            },
-            {
-              start: 'dyndatetime(y,m,d+7,8)',
-              end: 'dyndatetime(y,m,d+7,10)',
+              start: 'dyndatetime(y,m,d+5,12)',
+              end: 'dyndatetime(y,m,d+5,14)',
               title: 'UI Color Review',
               resource: 3,
             },
@@ -222,8 +240,8 @@ export default {
               resource: 4,
             },
             {
-              start: 'dyndatetime(y,m,d+1,8)',
-              end: 'dyndatetime(y,m,d+1,10)',
+              start: 'dyndatetime(y,m,d+1,13)',
+              end: 'dyndatetime(y,m,d+1,15)',
               title: 'Pair Programming with Bob',
               resource: 4,
             },
@@ -250,6 +268,13 @@ export default {
               end: 'dyndatetime(y,m,d+9,20)',
               title: 'Evening Regression Run',
               resource: 4,
+            },
+            {
+              start: 'dyndatetime(y,m,d,8,30)',
+              end: 'dyndatetime(y,m,d,10)',
+              title: 'Weekly Team Meeting',
+              recurring: { repeat: 'weekly', weekDays: 'WE' },
+              resource: [1, 2, 3, 4],
             },
           ],
           invalid: [
