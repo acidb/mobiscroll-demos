@@ -199,7 +199,7 @@ import Demo570 from './demos/eventcalendar/scheduler/time-off-blocked-ranges/tim
 import Demo568 from './demos/eventcalendar/scheduler/prevent-double-booking-events/prevent-double-booking-events';
 import Demo584 from './demos/eventcalendar/scheduler/external-drag-drop-schedule-unschedule/external-drag-drop-schedule-unschedule';
 import Demo585 from './demos/eventcalendar/scheduler/external-event-presets/external-event-presets';
-import Demo6666 from './demos/eventcalendar/scheduler/external-drap-drop-sortable-dragula/external-drap-drop-sortable-dragula';
+import Demo6666 from './demos/eventcalendar/scheduler/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import Demo591 from './demos/eventcalendar/scheduler/resource-view/resource-view';
 import Demo592 from './demos/eventcalendar/scheduler/group-by-resource-by-day/group-by-resource-by-day';
 import Demo593 from './demos/eventcalendar/scheduler/shared-events-across-resources/shared-events-across-resources';

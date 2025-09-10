@@ -87,7 +87,6 @@ export default {
         type: 'resource',
       });
       $.getJSON('https://trial.mobiscroll.com/multiday-events/?callback=?', function (events) {
-        console.log(events);
         myCalendar.setEvents(events);
       });
     });
@@ -232,9 +231,9 @@ export default {
     </div>
   </div>
 </div>
-`,
+  `,
   // eslint-disable-next-line es5/no-template-literals
-  css: `
+  css: `   
 .mds-external-drap-drop-sortable-dragula .mbsc-timeline-resource-col { width: 100px; }
 
 .mds-external-third-party-drop-calendar {
@@ -265,5 +264,5 @@ export default {
   padding-top: 4px;
   font-size: 10px; 
 }
-`,
+  `,
 };

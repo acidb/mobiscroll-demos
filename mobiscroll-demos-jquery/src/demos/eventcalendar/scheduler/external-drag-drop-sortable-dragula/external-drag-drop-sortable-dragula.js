@@ -98,24 +98,25 @@ export default {
     </div>
   </div>
 </div>
-`,
+  `,
   // eslint-disable-next-line es5/no-template-literals
-  css: `
+  css: `   
 .mds-external-third-party-drop-calendar {
     border-right: 1px solid #ccc;
 }
 
 .mds-external-third-party-drag-container {
-  margin: 10px;
+    margin: 10px;
 }
 
 .mds-external-third-party-task {
-  margin: 10px;
-  padding: 10px;
-  touch-action: none;
-  color: #fff;
-  border-radius: 8px;
-  font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+    margin: 10px;
+    padding: 10px;
+    touch-action: none;
+    color: #fff;
+    border-radius: 8px;
+    font-family: -apple-system, Segoe UI, Roboto, sans-serif;
 }
-`,
+
+  `,
 };
