@@ -1,5 +1,6 @@
 import * as mobiscroll from '@mobiscroll/jquery';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import $ from 'jquery';
@@ -12,12 +13,12 @@ export default {
   init() {
     dayjs.extend(window.dayjs_plugin_utc);
     dayjs.extend(window.dayjs_plugin_timezone);
+    dayjs.extend(customParseFormat);
     mobiscroll.dayjsTimezone.dayjs = dayjs;
 
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light',
+      // theme
     });
 
     $(function () {
@@ -266,8 +267,8 @@ export default {
 
           for (var i = 0; i < 24; ++i) {
             if (getHourProps(i, resource).invalid) {
-              var startTime = (i < 10 ? '0' : '') + i + ':00';
-              var endTime = (i < 9 ? '0' : '') + (i + 1) + ':00';
+              var startTime = (i < 10 ? '0' : '') + i + ':00:00';
+              var endTime = (i < 9 ? '0' : '') + (i + 1) + ':00:00';
 
               invalid.push({
                 start: startTime,
@@ -290,17 +291,6 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-timezone-meeting-planner .mbsc-schedule-color-text {
-    padding: 16px 0;
-    text-align: center;
-}
-
-.mds-timezone-meeting-planner.mbsc-ios-dark .mbsc-timeline-color,
-.mds-timezone-meeting-planner.mbsc-material-dark .mbsc-timeline-color,
-.mds-timezone-meeting-planner.mbsc-windows-dark .mbsc-timeline-color {
-    color: #fff !important;
-}
-
 .mds-meeting-planner-cont {
     font-size: 12px;
     font-weight: 600;
