@@ -385,6 +385,7 @@ export default {
   opacity: 0.7;
   line-height: 50px;
   height: 100%;
+  pointer-events: none;
 }
   `,
 };
