@@ -1,20 +1,17 @@
 import * as mobiscroll from '@mobiscroll/jquery';
 import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import $ from 'jquery';
 
 window.dayjs_plugin_utc = utc;
 window.dayjs_plugin_timezone = timezone;
-window.dayjs_plugin_customParseFormat = customParseFormat;
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
     dayjs.extend(window.dayjs_plugin_utc);
     dayjs.extend(window.dayjs_plugin_timezone);
-    dayjs.extend(window.dayjs_plugin_customParseFormat);
     mobiscroll.dayjsTimezone.dayjs = dayjs;
 
     mobiscroll.setOptions({
