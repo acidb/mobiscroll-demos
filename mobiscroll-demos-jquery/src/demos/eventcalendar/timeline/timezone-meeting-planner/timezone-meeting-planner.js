@@ -233,21 +233,20 @@ export default {
         }
       }
 
-      function getHourProps(i, timezone) {
-        var hour = i + getUtcOffset(timezone);
-        var isAM = i < 12 ? hour >= 0 && hour < 12 : !(hour >= 12 && hour < 24);
-        var title = hour % 12 == 0 ? 12 : hour < 0 ? 12 + hour : hour <= 12 ? hour : hour % 12;
-        var hForProps = title + ((title == 12 && !isAM) || (title != 12 && isAM) ? 0 : 12);
-        var color;
-        var invalid;
+      function getHourProps(h, timezone) {
+        var offset = getUtcOffset(timezone);
+        var hour = h + offset;
+        var isAM = hour % 24 < 12;
+        var title = ((hour % 12) + 12) % 12 || 12;
+        var hForProps = title + ((title === 12 && !isAM) || (title !== 12 && isAM) ? 0 : 12);
+        var color = '#f7f7bb4d';
+        var invalid = false;
 
         if (hForProps < 6 || hForProps >= 22) {
           color = '#ffbaba4d';
           invalid = true;
         } else if (hForProps < 8 || (hForProps >= 18 && hForProps < 22)) {
           color = '#a5ceff4d';
-        } else {
-          color = '#f7f7bb4d';
         }
 
         return {
