@@ -1,0 +1,15 @@
+<mbsc-eventcalendar [cellTemplate]="cellTemplate" class="mds-schedule-cell-template" [data]="myEvents" [view]="myView">
+  <ng-template #cellTemplate let-cell>
+    <ng-container *ngIf="getIcons(cell) as icons">
+      <div *ngIf="icons.length" class="mds-schedule-cell-icons-background">
+        <div class="mds-schedule-cell-icons">
+          <ng-container *ngFor="let icon of icons;">
+            <div class="mds-schedule-cell-icon" [title]="icon.title" [attr.aria-label]="icon.title">
+              <div class="mbsc-font-icon" [ngClass]="'mbsc-icon-' + icon.icon"></div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+</mbsc-eventcalendar>

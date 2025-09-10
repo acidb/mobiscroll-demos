@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendar,
   MbscEventcalendarView,
+  MbscModule,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -20,7 +22,8 @@ const now = new Date();
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-data-structure.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

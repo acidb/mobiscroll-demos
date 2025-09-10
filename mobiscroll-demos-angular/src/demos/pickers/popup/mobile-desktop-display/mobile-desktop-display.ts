@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MbscPopup, MbscPopupOptions, setOptions } from '@mobiscroll/angular';
+import { MbscModule, MbscPopup, MbscPopupOptions, setOptions } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -10,7 +11,8 @@ setOptions({
   selector: 'app-popup-mobile-desktop-display',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile-desktop-display.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('popupAnchored', { static: false }) popupAnchored!: MbscPopup;

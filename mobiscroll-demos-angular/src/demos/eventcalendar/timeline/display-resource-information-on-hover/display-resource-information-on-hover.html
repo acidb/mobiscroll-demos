@@ -1,0 +1,38 @@
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [resources]="myResources"
+  [view]="myView"
+  [resourceTemplate]="customResourceTemplate"
+  (onResourceHoverIn)="handleResourceHoverIn($event)"
+  (onResourceHoverOut)="handleResourceHoverOut($event)"
+>
+  <ng-template #customResourceTemplate let-res>
+    <div class="mbsc-flex">
+      <img class="mds-resource-info-avatar" src="{{res.avatar}}" alt="Avatar" />
+      <div class="mds-resource-info-details">
+        <div class="mds-resource-info-title">{{res.name}}</div>
+        <div class="mds-resource-info-profession">{{res.profession}}</div>
+      </div>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>
+
+<mbsc-popup #popup display="anchored" [showOverlay]="false" [touchUi]="false" [width]="280" (onPosition)="handlePopupPosition($event)">
+  <div (mouseenter)="handlePopupMouseEnter()" (mouseleave)="handlePopupMouseLeave()">
+    <div class="mbsc-flex mbsc-align-items-center mds-resource-info-header">
+      <img class="mds-resource-info-avatar" src="{{resourceAvatar}}" alt="Avatar" />
+      <div class="mds-resource-info-name mbsc-flex-1-0">{{resourceName}}</div>
+      <mbsc-button color="success" variant="outline" class="mds-resource-info-pay mbsc-button-xs" (click)="handlePay()"> Pay </mbsc-button>
+    </div>
+    <div class="mds-resource-info-cont">
+      <div>
+        <span class="mbsc-txt-muted">Hourly rate </span>
+        <span class="mds-resource-info-detail">{{resourceCost}}</span>
+      </div>
+      <div>
+        <span class="mbsc-txt-muted">{{resourceDate}}</span>
+        <span class="mds-resource-info-detail">{{resourceTotal}}</span>
+      </div>
+    </div>
+  </div>
+</mbsc-popup>

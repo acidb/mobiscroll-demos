@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscDatepickerOptions,
   MbscDateType,
   MbscInput,
+  MbscModule,
   MbscPopup,
   MbscPopupOptions,
   MbscSelectData,
@@ -29,7 +32,8 @@ const endDate = dyndatetime('y,m,d+6');
   styleUrl: './range-picker-popup-presets.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './range-picker-popup-presets.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('popup', { static: false })

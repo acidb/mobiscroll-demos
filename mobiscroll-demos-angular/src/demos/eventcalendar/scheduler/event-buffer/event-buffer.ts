@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscEventcalendarView, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -10,7 +11,8 @@ setOptions({
 @Component({
   selector: 'app-timeline-event-buffer',
   templateUrl: './event-buffer.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myEvents = [

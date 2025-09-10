@@ -72,6 +72,12 @@ export default {
       onCellRightClick: function () {
         /* Logic for cell right click */
       },
+      onCellHoverIn: function () {
+        // Logic for cell hover in
+      },
+      onCellHoverOut: function () {
+        // Logic for cell hover out
+      },
       onDestroy: function () {
         // Logic for destroying the event calendar
       },
@@ -173,6 +179,12 @@ export default {
       },
       onResourceRightClick: function () {
         // Logic for resource right click
+      },
+      onResourceHoverIn: function () {
+        // Logic for resource hover in
+      },
+      onResourceHoverOut: function () {
+        // Logic for resource hover out
       },
       onSelectedDateChange: function () {
         // Use it to keep track of the selected date externally

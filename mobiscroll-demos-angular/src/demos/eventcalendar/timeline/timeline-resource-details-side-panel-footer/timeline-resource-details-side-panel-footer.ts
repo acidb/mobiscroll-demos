@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
@@ -5,6 +6,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendar,
   MbscEventcalendarView,
+  MbscModule,
   MbscResource,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -26,7 +28,8 @@ interface MyResource extends MbscResource {
   styleUrl: './timeline-resource-details-side-panel-footer.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-resource-details-side-panel-footer.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscModule,
   MbscPopup,
   MbscPopupOptions,
   setOptions /* localeImport */,
@@ -19,7 +21,8 @@ setOptions({
   styleUrl: './show-hide-tooltip-hover-in-out.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-hide-tooltip-hover-in-out.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('popup', { static: false }) popup!: MbscPopup;

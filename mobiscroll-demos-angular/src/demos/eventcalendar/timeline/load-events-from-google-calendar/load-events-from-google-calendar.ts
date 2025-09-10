@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
+  MbscModule,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -18,7 +20,8 @@ setOptions({
   styleUrl: './load-events-from-google-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-from-google-calendar.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(

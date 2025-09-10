@@ -1,6 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscDateType, MbscEventcalendarView, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import {
+  MbscCalendarEvent,
+  MbscDateType,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscResource,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -12,7 +21,8 @@ setOptions({
   styleUrl: './navigate-view-from-external-calendar.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './navigate-view-from-external-calendar.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

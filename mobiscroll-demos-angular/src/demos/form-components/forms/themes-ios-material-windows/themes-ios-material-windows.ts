@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // theme
@@ -8,7 +9,8 @@ setOptions({
 @Component({
   selector: 'app-forms-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   sel = 'Opel';

@@ -1,9 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
+  MbscModule,
   MbscPageChangeEvent,
   MbscPageLoadedEvent,
   MbscPageLoadingEvent,
@@ -19,7 +21,8 @@ setOptions({
 @Component({
   selector: 'app-agenda-event-hooks',
   templateUrl: './event-hooks.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
