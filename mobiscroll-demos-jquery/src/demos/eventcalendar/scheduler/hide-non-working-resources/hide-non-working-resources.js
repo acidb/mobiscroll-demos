@@ -270,8 +270,8 @@ export default {
               resource: 4,
             },
             {
-              start: 'dyndatetime(y,m,d,8,30)',
-              end: 'dyndatetime(y,m,d,10)',
+              start: '08:30',
+              end: '10:00',
               title: 'Weekly Meeting',
               recurring: { repeat: 'weekly', weekDays: 'WE' },
               resource: [1, 2, 3, 4],
