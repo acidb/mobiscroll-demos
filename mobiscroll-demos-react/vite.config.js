@@ -5,4 +5,7 @@ import dyndateplugin from './dyndateplugin';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), dyndateplugin()],
+  define: {
+    global: 'window',
+  },
 });
