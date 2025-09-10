@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscSelectOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscModule, MbscSelectOptions /* localeImport */ } from '@mobiscroll/angular';
 
 @Component({
   selector: 'app-select-themes-ios-material-windows',
   templateUrl: './themes-ios-material-windows.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myData = [

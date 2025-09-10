@@ -1,9 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscCellHoverEvent,
   MbscEventcalendarView,
+  MbscModule,
   MbscPopup,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -19,7 +21,8 @@ setOptions({
   styleUrl: './show-cell-summary-on-hover.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-cell-summary-on-hover.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('tooltip', { static: false })

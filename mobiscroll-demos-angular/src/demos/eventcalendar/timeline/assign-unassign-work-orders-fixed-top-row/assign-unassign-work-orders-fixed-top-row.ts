@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
+  MbscModule,
   MbscResource,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -16,7 +18,8 @@ setOptions({
 @Component({
   selector: 'app-timeline-assign-unassign-work-orders-fixed-top-row',
   templateUrl: './assign-unassign-work-orders-fixed-top-row.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   options: MbscEventcalendarOptions = {

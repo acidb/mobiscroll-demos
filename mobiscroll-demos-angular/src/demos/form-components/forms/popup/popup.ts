@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { MbscPopup, MbscPopupOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscModule, MbscPopup, MbscPopupOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // theme,
@@ -8,7 +9,8 @@ setOptions({
 @Component({
   selector: 'app-forms-popup',
   templateUrl: './popup.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('popup', {

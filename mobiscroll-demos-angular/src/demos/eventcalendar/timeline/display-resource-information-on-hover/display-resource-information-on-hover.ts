@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscModule,
   MbscPopup,
   MbscPopupPositionEvent,
   MbscResource,
@@ -28,7 +30,8 @@ interface MyResource extends MbscResource {
   styleUrl: './display-resource-information-on-hover.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './display-resource-information-on-hover.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
@@ -284,7 +287,6 @@ export class AppComponent {
 
   openTooltip(resource: MbscResource, target: HTMLElement) {
     clearTimeout(this.closeTimer);
-
 
     this.openTimer = setTimeout(() => {
       const totalHours = this.getTotalHoursForResource(resource.id);

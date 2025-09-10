@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscEventcalendar,
@@ -6,6 +8,7 @@ import {
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscEventUpdatedEvent,
+  MbscModule,
   MbscPageLoadingEvent,
   MbscPopup,
   MbscPopupButton,
@@ -39,7 +42,8 @@ interface MyResource extends MbscResource {
   styleUrl: './dynamic-calculation-resource-sort.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamic-calculation-resource-sort.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

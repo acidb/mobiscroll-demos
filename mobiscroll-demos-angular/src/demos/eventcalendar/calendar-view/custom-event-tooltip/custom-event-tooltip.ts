@@ -1,9 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
+  MbscModule,
   MbscPopup,
   Notifications,
   setOptions /* localeImport */,
@@ -28,7 +30,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './custom-event-tooltip.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

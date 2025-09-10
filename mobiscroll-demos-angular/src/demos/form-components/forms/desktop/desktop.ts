@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // theme
@@ -10,6 +11,7 @@ setOptions({
   styleUrl: './desktop.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './desktop.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {}

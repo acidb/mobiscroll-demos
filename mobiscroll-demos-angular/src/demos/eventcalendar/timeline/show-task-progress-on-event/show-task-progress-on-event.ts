@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscDatepickerOptions,
   MbscDateType,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscPopup,
   MbscPopupButton,
   MbscPopupOptions,
@@ -21,7 +24,8 @@ setOptions({
   styleUrl: './show-task-progress-on-event.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-task-progress-on-event.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('popup', { static: false })

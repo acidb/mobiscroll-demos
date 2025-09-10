@@ -1,27 +1,35 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
+  dayjsTimezone,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscResource,
-  momentTimezone,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { dyndatetime } from '../../../../app/app.util';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
 
 setOptions({
   // locale,
   // theme
 });
 
-momentTimezone.moment = moment;
-
 @Component({
   selector: 'app-timeline-multiple-timezone-support',
   styleUrl: './multiple-timezone-support.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './multiple-timezone-support.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [
@@ -144,7 +152,7 @@ export class AppComponent {
     dragToCreate: true,
     dragToMove: true,
     dragToResize: true,
-    timezonePlugin: momentTimezone,
+    timezonePlugin: dayjsTimezone,
     dataTimezone: 'utc',
   };
 

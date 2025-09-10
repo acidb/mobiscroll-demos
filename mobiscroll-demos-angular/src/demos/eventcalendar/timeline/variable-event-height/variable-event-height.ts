@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscResource,
   Notifications,
   setOptions /* localeImport */,
@@ -19,7 +21,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './variable-event-height.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(

@@ -1,22 +1,27 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscDatepickerOptions, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
-import moment from 'moment-timezone';
+import { FormsModule } from '@angular/forms';
+import { dayjsTimezone, MbscModule, MbscTimezonePlugin, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 
-momentTimezone.moment = moment;
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
+
+setOptions({
+  // locale,
+  // theme
+});
 
 @Component({
   selector: 'app-datetime-setting-the-picker-timezone',
   templateUrl: './setting-the-picker-timezone.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
-  options: MbscDatepickerOptions = {
-    // locale,
-    // theme,
-    timezonePlugin: momentTimezone,
-    dataTimezone: 'utc',
-    displayTimezone: 'local',
-    controls: ['datetime'],
-  };
-  selected = null;
+  myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;
+  mySelected = null;
 }

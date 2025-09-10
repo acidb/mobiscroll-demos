@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { hijriCalendar, jalaliCalendar, localeAr, localeEn, localeFa, setOptions } from '@mobiscroll/angular';
+import { hijriCalendar, jalaliCalendar, localeAr, localeEn, localeFa, MbscModule, setOptions } from '@mobiscroll/angular';
 
 setOptions({
   // theme
@@ -8,7 +9,8 @@ setOptions({
 @Component({
   selector: 'app-calendar-gregorian-jalali-hijri',
   templateUrl: './gregorian-jalali-hijri.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   localeEn = localeEn;

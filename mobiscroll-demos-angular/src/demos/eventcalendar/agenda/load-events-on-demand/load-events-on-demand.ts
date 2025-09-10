@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscModule,
   MbscPageLoadingEvent,
   Notifications,
   setOptions /* localeImport */,
@@ -19,7 +21,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-on-demand.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(

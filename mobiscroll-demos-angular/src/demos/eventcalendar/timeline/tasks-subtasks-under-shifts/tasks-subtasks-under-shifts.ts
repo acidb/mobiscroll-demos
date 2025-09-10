@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
@@ -9,6 +10,7 @@ import {
   MbscEventDragEvent,
   MbscEventUpdateEvent,
   MbscEventUpdateFailedEvent,
+  MbscModule,
   MbscNewEventData,
   MbscResource,
   Notifications,
@@ -59,7 +61,8 @@ const blockedOutTimes: MyBlockedTimes[] = [
   encapsulation: ViewEncapsulation.None,
   templateUrl: './tasks-subtasks-under-shifts.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

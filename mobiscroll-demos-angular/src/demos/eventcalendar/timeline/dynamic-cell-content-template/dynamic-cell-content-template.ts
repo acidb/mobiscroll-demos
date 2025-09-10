@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarCellData, MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions } from '@mobiscroll/angular';
+import { MbscCalendarCellData, MbscCalendarEvent, MbscEventcalendarView, MbscModule, Notifications, setOptions } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -12,7 +13,8 @@ setOptions({
   styleUrl: './dynamic-cell-content-template.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamic-cell-content-template.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
   providers: [Notifications],
 })
 export class AppComponent {

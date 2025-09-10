@@ -1,10 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscCellClickEvent,
   MbscDateType,
   MbscEventcalendarView,
+  MbscModule,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -26,10 +29,11 @@ interface WeatherData {
   styleUrl: './day-cell-aggregate-information.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './day-cell-aggregate-information.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) { }
+  constructor(private notify: Notifications) {}
 
   myCssClass: string = 'mds-cell-template mds-cell-template-month-view';
   weatherCache: { [key: string]: { date: Date; degree: number; emoji: string } } = {};
@@ -37,167 +41,169 @@ export class AppComponent {
   previousView: string = 'month';
   currentDate: MbscDateType = new Date();
 
-  myEvents: MbscCalendarEvent[] = [{
-    start: dyndatetime('y,m,d-1,15'),
-    end: dyndatetime('y,m,d-1,17'),
-    title: 'Operations Huddle',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    start: dyndatetime('y,m,d-1,12'),
-    end: dyndatetime('y,m,d-1,13'),
-    title: 'HR Policy Update',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    start: dyndatetime('y,m,d,8'),
-    end: dyndatetime('y,m,d,10'),
-    title: 'Team Retrospective',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    start: dyndatetime('y,m,d,10'),
-    end: dyndatetime('y,m,d,11,30'),
-    title: 'Proposal Review Meeting',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    start: dyndatetime('y,m,d,12'),
-    end: dyndatetime('y,m,d,13'),
-    title: 'Solutions Presentation',
-    type: 'appointment',
-    color: '#656d49',
-  },
-  {
-    start: dyndatetime('y,m,d,14'),
-    end: dyndatetime('y,m,d,15'),
-    title: 'Follow-up Discussion',
-    type: 'appointment',
-    color: '#656d49',
-  },
-  {
-    start: dyndatetime('y,m,d,15'),
-    end: dyndatetime('y,m,d,16'),
-    title: 'Performance Review',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    start: dyndatetime('y,m,d+1,10'),
-    end: dyndatetime('y,m,d+1,13'),
-    title: 'Client Onboarding',
-    type: 'appointment',
-    color: '#656d49',
-  },
-  {
-    start: dyndatetime('y,m,d+1,15'),
-    end: dyndatetime('y,m,d+1,16'),
-    title: 'Marketing Campaign Brainstorm',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    start: dyndatetime('y,m,2,10'),
-    end: dyndatetime('y,m,2,12'),
-    title: 'Innovation Brainstorm',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    start: dyndatetime('y,m,2,13'),
-    end: dyndatetime('y,m,2,15,30'),
-    title: 'Onboarding Session',
-    type: 'appointment',
-    color: '#656d49',
-  },
-  {
-    start: dyndatetime('y,m,2,16'),
-    end: dyndatetime('y,m,2,17'),
-    title: 'Discovery Call',
-    type: 'appointment',
-    color: '#656d49',
-  },
-  {
-    start: dyndatetime('y,m,9,9'),
-    end: dyndatetime('y,m,9,10'),
-    title: 'Partnership Exploration',
-    type: 'appointment',
-    color: '#656d49',
-  },
-  {
-    start: dyndatetime('y,m,9,11'),
-    end: dyndatetime('y,m,9,13'),
-    title: 'Service Implementation',
-    type: 'appointment',
-    color: '#656d49',
-  },
-  {
-    start: dyndatetime('y,m,9,14'),
-    end: dyndatetime('y,m,9,15'),
-    title: 'Future Planning Summit',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    start: dyndatetime('y,m,15,10'),
-    end: dyndatetime('y,m,15,12'),
-    title: 'Strategy Alignment',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    start: dyndatetime('y,m,18,12'),
-    end: dyndatetime('y,m,18,14'),
-    title: 'Project Kick-off',
-    type: 'appointment',
-    color: '#656d49',
-  },
-  {
-    start: dyndatetime('y,m,18,15'),
-    end: dyndatetime('y,m,18,16'),
-    title: 'Account Review',
-    type: 'appointment',
-    color: '#656d49',
-  },
-  {
-    start: dyndatetime('y,m,22,12'),
-    end: dyndatetime('y,m,22,14'),
-    title: 'Deep Dive Session',
-    type: 'meeting',
-    color: '#634b67',
-  },
-  {
-    title: 'Fresh start meeting',
-    start: '09:00',
-    end: '10:00',
-    type: 'meeting',
-    color: '#634b67',
-    recurring: {
-      repeat: 'weekly',
-      weekDays: 'MO',
+  myEvents: MbscCalendarEvent[] = [
+    {
+      start: dyndatetime('y,m,d-1,15'),
+      end: dyndatetime('y,m,d-1,17'),
+      title: 'Operations Huddle',
+      type: 'meeting',
+      color: '#634b67',
     },
-  },
-  {
-    title: 'Weekly wrapup',
-    start: '16:00',
-    end: '16:30',
-    type: 'meeting',
-    color: '#634b67',
-    recurring: {
-      repeat: 'weekly',
-      weekDays: 'FR',
+    {
+      start: dyndatetime('y,m,d-1,12'),
+      end: dyndatetime('y,m,d-1,13'),
+      title: 'HR Policy Update',
+      type: 'meeting',
+      color: '#634b67',
     },
-  }];
+    {
+      start: dyndatetime('y,m,d,8'),
+      end: dyndatetime('y,m,d,10'),
+      title: 'Team Retrospective',
+      type: 'meeting',
+      color: '#634b67',
+    },
+    {
+      start: dyndatetime('y,m,d,10'),
+      end: dyndatetime('y,m,d,11,30'),
+      title: 'Proposal Review Meeting',
+      type: 'meeting',
+      color: '#634b67',
+    },
+    {
+      start: dyndatetime('y,m,d,12'),
+      end: dyndatetime('y,m,d,13'),
+      title: 'Solutions Presentation',
+      type: 'appointment',
+      color: '#656d49',
+    },
+    {
+      start: dyndatetime('y,m,d,14'),
+      end: dyndatetime('y,m,d,15'),
+      title: 'Follow-up Discussion',
+      type: 'appointment',
+      color: '#656d49',
+    },
+    {
+      start: dyndatetime('y,m,d,15'),
+      end: dyndatetime('y,m,d,16'),
+      title: 'Performance Review',
+      type: 'meeting',
+      color: '#634b67',
+    },
+    {
+      start: dyndatetime('y,m,d+1,10'),
+      end: dyndatetime('y,m,d+1,13'),
+      title: 'Client Onboarding',
+      type: 'appointment',
+      color: '#656d49',
+    },
+    {
+      start: dyndatetime('y,m,d+1,15'),
+      end: dyndatetime('y,m,d+1,16'),
+      title: 'Marketing Campaign Brainstorm',
+      type: 'meeting',
+      color: '#634b67',
+    },
+    {
+      start: dyndatetime('y,m,2,10'),
+      end: dyndatetime('y,m,2,12'),
+      title: 'Innovation Brainstorm',
+      type: 'meeting',
+      color: '#634b67',
+    },
+    {
+      start: dyndatetime('y,m,2,13'),
+      end: dyndatetime('y,m,2,15,30'),
+      title: 'Onboarding Session',
+      type: 'appointment',
+      color: '#656d49',
+    },
+    {
+      start: dyndatetime('y,m,2,16'),
+      end: dyndatetime('y,m,2,17'),
+      title: 'Discovery Call',
+      type: 'appointment',
+      color: '#656d49',
+    },
+    {
+      start: dyndatetime('y,m,9,9'),
+      end: dyndatetime('y,m,9,10'),
+      title: 'Partnership Exploration',
+      type: 'appointment',
+      color: '#656d49',
+    },
+    {
+      start: dyndatetime('y,m,9,11'),
+      end: dyndatetime('y,m,9,13'),
+      title: 'Service Implementation',
+      type: 'appointment',
+      color: '#656d49',
+    },
+    {
+      start: dyndatetime('y,m,9,14'),
+      end: dyndatetime('y,m,9,15'),
+      title: 'Future Planning Summit',
+      type: 'meeting',
+      color: '#634b67',
+    },
+    {
+      start: dyndatetime('y,m,15,10'),
+      end: dyndatetime('y,m,15,12'),
+      title: 'Strategy Alignment',
+      type: 'meeting',
+      color: '#634b67',
+    },
+    {
+      start: dyndatetime('y,m,18,12'),
+      end: dyndatetime('y,m,18,14'),
+      title: 'Project Kick-off',
+      type: 'appointment',
+      color: '#656d49',
+    },
+    {
+      start: dyndatetime('y,m,18,15'),
+      end: dyndatetime('y,m,18,16'),
+      title: 'Account Review',
+      type: 'appointment',
+      color: '#656d49',
+    },
+    {
+      start: dyndatetime('y,m,22,12'),
+      end: dyndatetime('y,m,22,14'),
+      title: 'Deep Dive Session',
+      type: 'meeting',
+      color: '#634b67',
+    },
+    {
+      title: 'Fresh start meeting',
+      start: '09:00',
+      end: '10:00',
+      type: 'meeting',
+      color: '#634b67',
+      recurring: {
+        repeat: 'weekly',
+        weekDays: 'MO',
+      },
+    },
+    {
+      title: 'Weekly wrapup',
+      start: '16:00',
+      end: '16:30',
+      type: 'meeting',
+      color: '#634b67',
+      recurring: {
+        repeat: 'weekly',
+        weekDays: 'FR',
+      },
+    },
+  ];
 
   myView: MbscEventcalendarView = {
     calendar: {
-      type: 'month'
-    }
-  }
+      type: 'month',
+    },
+  };
 
   myDefaultEvent(): MbscCalendarEvent {
     return {
@@ -279,7 +285,7 @@ export class AppComponent {
         this.myCssClass = 'mds-cell-template mds-cell-template-month-view';
         this.myView = {
           calendar: { type: 'month' },
-        }
+        };
         break;
       case 'week':
         this.myCssClass = 'mds-cell-template mds-cell-template-week-view';
@@ -328,12 +334,11 @@ export class AppComponent {
         color: '#ecee8d',
       };
 
-      this.myEvents = [...this.myEvents, newEvent]
+      this.myEvents = [...this.myEvents, newEvent];
 
       this.notify.toast({
-        message: 'Appointment added to ' + formatDate('DDD D, MMM', date)
+        message: 'Appointment added to ' + formatDate('DDD D, MMM', date),
       });
-
     } else if (this.selectedView === 'month') {
       this.setSelectedView('day', date);
     }
@@ -351,7 +356,7 @@ export class AppComponent {
       weather: weather.emoji + ' ' + weather.degree + '°C',
       stressLevelColor: stressLevel.color,
       nrMeetings: nrEvents.meetings,
-      nrAppointments: nrEvents.appointments
-    }
+      nrAppointments: nrEvents.appointments,
+    };
   }
 }

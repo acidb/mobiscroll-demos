@@ -4,6 +4,7 @@ import {
   CalendarPrev,
   CalendarToday,
   Confirm,
+  dayjsTimezone,
   Eventcalendar,
   formatDate,
   MbscCalendarColor,
@@ -16,15 +17,18 @@ import {
   MbscEventUpdatedEvent,
   MbscEventUpdateFailedEvent,
   MbscResource,
-  momentTimezone,
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { FC, useCallback, useMemo, useState } from 'react';
 import './timezone-meeting-planner.css';
 
-momentTimezone.moment = moment;
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
 
 setOptions({
   // localeJs,
@@ -312,7 +316,7 @@ const App: FC = () => {
   return (
     <>
       <Eventcalendar
-        timezonePlugin={momentTimezone}
+        timezonePlugin={dayjsTimezone}
         dataTimezone="utc"
         displayTimezone="utc"
         clickToCreate={true}
