@@ -173,7 +173,7 @@ export default {
             );
           },
           renderCell: function (args) {
-            var hProps = getHourProps(args.date.getHours(), args.resource);
+            var hProps = getHourProps(args.date.getHours(), args.resource.timezone);
             return (
               '<div class="mds-meeting-planner-time-slot mbsc-flex mbsc-justify-content-center" style="background:' +
               hProps.color +
@@ -233,8 +233,8 @@ export default {
         }
       }
 
-      function getHourProps(i, resource) {
-        var hour = i + getUtcOffset(resource.timezone);
+      function getHourProps(i, timezone) {
+        var hour = i + getUtcOffset(timezone);
         var isAM = i < 12 ? hour >= 0 && hour < 12 : !(hour >= 12 && hour < 24);
         var title = hour % 12 == 0 ? 12 : hour < 0 ? 12 + hour : hour <= 12 ? hour : hour % 12;
         var hForProps = title + ((title == 12 && !isAM) || (title != 12 && isAM) ? 0 : 12);
@@ -266,7 +266,7 @@ export default {
           var resource = myResources[j];
 
           for (var i = 0; i < 24; ++i) {
-            if (getHourProps(i, resource).invalid) {
+            if (getHourProps(i, resource.timezone).invalid) {
               var startTime = (i < 10 ? '0' : '') + i + ':00:00';
               var endTime = (i < 9 ? '0' : '') + (i + 1) + ':00:00';
 
