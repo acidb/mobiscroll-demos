@@ -9,7 +9,6 @@ import {
   MbscEventcalendar,
   MbscSegmented,
   MbscSegmentedGroup,
-  MbscSelectedDateChangeEvent,
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
@@ -17,7 +16,8 @@ import type {
   MbscCalendarEvent,
   MbscCellClickEvent,
   MbscDateType,
-  MbscEventcalendarView
+  MbscEventcalendarView,
+  MbscSelectedDateChangeEvent
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
 
@@ -203,6 +203,14 @@ const myView = ref<MbscEventcalendarView>({
     type: 'month'
   }
 })
+
+let dayData: {
+  dayContent: string
+  weather: string
+  stressLevelColor: string
+  nrMeetings: number
+  nrAppointments: number
+}
 
 function myDefaultEvent(): MbscCalendarEvent {
   return {
@@ -411,7 +419,7 @@ function handleSelectedDateChange(args: MbscSelectedDateChangeEvent) {
         <div class="mds-cell-template-view-switch">
           <MbscSegmentedGroup
             v-model="selectedView"
-            @change="(ev) => setSelectedView(ev.target.value)"
+            @change="(ev: Event) => setSelectedView((ev.target as HTMLInputElement).value)"
           >
             <MbscSegmented
               value="month"

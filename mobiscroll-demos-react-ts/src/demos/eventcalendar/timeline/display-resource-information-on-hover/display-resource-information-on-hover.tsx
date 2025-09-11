@@ -341,7 +341,7 @@ const App: FC = () => {
   }, []);
 
   const handleTooltipPosition = useCallback((args: MbscPopupPositionEvent, inst: Popup) => {
-    const popupElm = args.target.querySelector('.mbsc-popup')!;
+    const popupElm = args.target.querySelector('.mbsc-popup') as HTMLElement;
     const rect = hoveredResourceElmRef.current!.getBoundingClientRect();
 
     popupElm.style.top = rect.top - 10 + 'px';
