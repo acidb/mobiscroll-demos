@@ -230,16 +230,15 @@ export default {
       </div>
     </div>
   </div>
-</div>
-  `, 
-  // eslint-disable-next-line es5/no-template-literals 
+</div>`,
+  // eslint-disable-next-line es5/no-template-literals
   css: ` 
-.mds-external-drap-drop-sortable-dragula .mbsc-timeline-resource-col { 
-    width: 100px; 
-}
-
 .mds-external-third-party-drop-calendar {
     border-right: 1px solid #ccc;
+}
+
+.mds-external-drap-drop-sortable-dragula .mbsc-timeline-resource-col { 
+    width: 100px; 
 }
 
 .mds-external-third-party-drag-container {
