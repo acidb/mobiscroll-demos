@@ -232,7 +232,7 @@ export default {
   </div>
 </div>`,
   // eslint-disable-next-line es5/no-template-literals
-  css: ` 
+  css: `
 .mds-external-third-party-drop-calendar {
     border-right: 1px solid #ccc;
 }
