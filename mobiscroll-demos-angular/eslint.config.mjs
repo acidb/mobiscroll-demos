@@ -17,7 +17,7 @@ export default tseslint.config(
     processor: angular.processInlineTemplates,
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
-      '@angular-eslint/prefer-inject': 'off', // check
+      '@angular-eslint/prefer-inject': 'off',
       '@angular-eslint/directive-selector': [
         'error',
         {
@@ -36,7 +36,7 @@ export default tseslint.config(
       ],
       'arrow-body-style': ['warn', 'as-needed'],
       'capitalized-comments': ['warn', 'always', { ignorePattern: 'drag,?$|theme,?$|locale,?$|localeImport' }],
-      'import/no-unresolved': 'off', // check
+      'import/no-unresolved': 'off',
       'import/order': ['warn', { alphabetize: { order: 'asc', caseInsensitive: true } }],
       'no-var': 'warn',
       'one-var': ['error', 'never'],
@@ -48,8 +48,8 @@ export default tseslint.config(
     files: ['**/*.html'],
     extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
     rules: {
-      '@angular-eslint/template/click-events-have-key-events': 'off', // check
-      '@angular-eslint/template/interactive-supports-focus': 'off', // check
+      '@angular-eslint/template/click-events-have-key-events': 'off',
+      '@angular-eslint/template/interactive-supports-focus': 'off',
     },
   },
 );
