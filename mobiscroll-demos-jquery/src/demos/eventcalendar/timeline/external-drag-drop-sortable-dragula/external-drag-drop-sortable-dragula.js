@@ -231,38 +231,40 @@ export default {
     </div>
   </div>
 </div>
-  `,
-  // eslint-disable-next-line es5/no-template-literals
+  `, 
+  // eslint-disable-next-line es5/no-template-literals 
   css: ` 
-.mds-external-drap-drop-sortable-dragula .mbsc-timeline-resource-col { width: 100px; }
+.mds-external-drap-drop-sortable-dragula .mbsc-timeline-resource-col { 
+    width: 100px; 
+}
 
 .mds-external-third-party-drop-calendar {
     border-right: 1px solid #ccc;
 }
 
 .mds-external-third-party-drag-container {
-  margin: 5px;
+    margin: 5px;
 }
 
 .mds-external-third-party-task {
-  padding: 8px 12px 8px 12px;
-  margin-top: 5px;
-  align-content: center;
-  touch-action: none;
-  color: #fff;
-  border-radius: 4px;
-  flex-grow: 1;
-  font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-  font-size: 12px; 
+    padding: 8px 12px 8px 12px;
+    margin-top: 5px;
+    align-content: center;
+    touch-action: none;
+    color: #fff;
+    border-radius: 4px;
+    flex-grow: 1;
+    font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+    font-size: 12px; 
 }
 
 .mds-third-party-title {
-  text-align: center;
+    text-align: center;
 }
 
 .mds-external-third-party-duration {
-  padding-top: 4px;
-  font-size: 10px; 
+    padding-top: 4px;
+    font-size: 10px; 
 }
   `,
 };
