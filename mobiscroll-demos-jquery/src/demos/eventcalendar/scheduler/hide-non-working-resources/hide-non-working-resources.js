@@ -26,11 +26,11 @@ export default {
           },
           groupBy: 'date',
           resources: [
-            { id: 1, name: 'Dr. Alice Johnson', color: '#fcb39dff' },
-            { id: 2, name: 'Dr. Brian Smith', color: '#85b9e0ff' },
-            { id: 3, name: 'Dr. Catherine Lee', color: '#79c57eff' },
-            { id: 4, name: 'Dr. Daniel Kim', color: '#e1a6f3ff' },
-            { id: 5, name: 'Dr. Eva Martinez', color: '#ebec8cff' },
+            { id: 1, name: 'Dr. Alice Johnson', color: '#ffc5b3ff' },
+            { id: 2, name: 'Dr. Brian Smith', color: '#a2cff1ff' },
+            { id: 3, name: 'Dr. Catherine Lee', color: '#aaeeaeff' },
+            { id: 4, name: 'Dr. Daniel Kim', color: '#e8bdf5ff' },
+            { id: 5, name: 'Dr. Eva Martinez', color: '#f9fab9ff' },
           ],
           data: [
             // Dr. Alice Johnson
