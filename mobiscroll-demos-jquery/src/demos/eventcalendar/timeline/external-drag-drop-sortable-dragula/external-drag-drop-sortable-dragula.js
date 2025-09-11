@@ -233,7 +233,7 @@ export default {
 </div>
   `,
   // eslint-disable-next-line es5/no-template-literals
-  css: `   
+  css: `  
 .mds-external-drap-drop-sortable-dragula .mbsc-timeline-resource-col { width: 100px; }
 
 .mds-external-third-party-drop-calendar {
