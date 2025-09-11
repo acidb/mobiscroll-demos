@@ -1288,4 +1288,4 @@ export const demos: any[] = [
   },
 ];
 
-export const demoTitleMap: { [key: string]: string } = {};
+export const demoTitleMap: Record<string, string> = {};

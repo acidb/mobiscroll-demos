@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
   firstDay!: Date;
   lastDay!: Date;
   menuAnchor!: HTMLElement;
-  confirmOpen: boolean = false;
+  confirmOpen = false;
 
   getSelectedEventTitles(events: MbscCalendarEvent[]) {
     let titles: string[] = [];

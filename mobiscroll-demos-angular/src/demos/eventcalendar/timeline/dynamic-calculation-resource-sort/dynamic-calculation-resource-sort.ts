@@ -287,7 +287,7 @@ export class AppComponent {
   popupAnchor!: HTMLButtonElement;
   sortColumn: 'standby' | 'payload' | 'deadhead' | 'name' = 'standby';
   sortDirection: 'asc' | 'desc' = 'asc';
-  sortRequests: number = 0;
+  sortRequests = 0;
   sortedResources: MyResource[] = this.myResources;
   tempEvent!: MyEvent;
   tempSortColumn: 'standby' | 'payload' | 'deadhead' | 'name' = 'standby';
@@ -302,13 +302,13 @@ export class AppComponent {
     },
   };
 
-  sortColumnLabels: { [key: string]: string } = {
+  sortColumnLabels: Record<string, string> = {
     standby: 'Standby Time',
     payload: 'Payload Efficiency',
     deadhead: 'Deadhead Time',
   };
 
-  popupButtons: Array<MbscPopupButton | 'cancel'> = [
+  popupButtons: (MbscPopupButton | 'cancel')[] = [
     'cancel',
     {
       text: 'Apply',

@@ -40,10 +40,10 @@ export class AppComponent implements OnInit {
   formatDate = formatDate;
   myEvents: MbscCalendarEvent[] = [];
   loadedEvents: MbscCalendarEvent[] = [];
-  sortColumn: string = '';
-  sortDirection: string = 'asc';
+  sortColumn = '';
+  sortDirection = 'asc';
   sortDay: number | undefined;
-  totalRevenue: number = 0;
+  totalRevenue = 0;
 
   myResources: MyResource[] = [
     { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },

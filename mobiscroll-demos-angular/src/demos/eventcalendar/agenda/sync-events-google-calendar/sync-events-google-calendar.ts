@@ -38,14 +38,14 @@ export class AppComponent implements OnInit {
 
   @ViewChild('calButton') anchorElm!: ElementRef;
 
-  calendarData: { [key: string]: { checked: boolean } } = {};
+  calendarData: Record<string, { checked: boolean }> = {};
   calendarIds: string[] = [];
   isLoggedIn = false;
   isLoading = false;
   startDate!: Date;
   endDate!: Date;
   myAnchor!: HTMLButtonElement;
-  myCalendars: Array<{ summary: string; id: string }> = [];
+  myCalendars: { summary: string; id: string }[] = [];
   myEvents: MbscCalendarEvent[] = [];
   myView: MbscEventcalendarView = { agenda: { type: 'month' } };
   selectedDate: MbscDateType = new Date();

@@ -35,10 +35,10 @@ interface WeatherData {
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
-  myCssClass: string = 'mds-cell-template mds-cell-template-month-view';
-  weatherCache: { [key: string]: { date: Date; degree: number; emoji: string } } = {};
-  selectedView: string = 'month';
-  previousView: string = 'month';
+  myCssClass = 'mds-cell-template mds-cell-template-month-view';
+  weatherCache: Record<string, { date: Date; degree: number; emoji: string }> = {};
+  selectedView = 'month';
+  previousView = 'month';
   currentDate: MbscDateType = new Date();
 
   myEvents: MbscCalendarEvent[] = [

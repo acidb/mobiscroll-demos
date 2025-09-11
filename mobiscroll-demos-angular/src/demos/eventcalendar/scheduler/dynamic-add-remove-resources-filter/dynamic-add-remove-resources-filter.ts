@@ -38,7 +38,7 @@ const resources = [
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
-  participants: { [key: number]: boolean } = {
+  participants: Record<number, boolean> = {
     1: true,
     2: true,
     3: true,

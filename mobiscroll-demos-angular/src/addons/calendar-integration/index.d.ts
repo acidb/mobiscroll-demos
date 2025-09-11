@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface MbscCalendarSyncConfig {
   clientId?: string;
   timezone?: string;

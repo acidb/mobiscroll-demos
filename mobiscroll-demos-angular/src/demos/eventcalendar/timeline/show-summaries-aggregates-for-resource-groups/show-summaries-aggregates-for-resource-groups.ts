@@ -893,7 +893,7 @@ export class AppComponent {
   lastViewDay: Date = new Date();
 
   getAggregateEvents(dayEvents: MbscCalendarEvent[]): MbscCalendarEvent[] {
-    const aggregateEvents: { [key: string]: MbscCalendarEvent } = {};
+    const aggregateEvents: Record<string, MbscCalendarEvent> = {};
     this.myResources.forEach((resource) => {
       for (let date = new Date(this.firstViewDay); date <= this.lastViewDay; date.setDate(date.getDate() + 1)) {
         aggregateEvents[(resource.id as string) + +date] = {

@@ -48,7 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   selectedDate: MbscDateType[] = [startDate, endDate];
   disableInput = false;
 
-  respPopup: { [key: string]: MbscPopupOptions & { breakpoint?: number } } = {
+  respPopup: Record<string, MbscPopupOptions & { breakpoint?: number }> = {
     xsmall: {
       display: 'bottom',
       touchUi: true,

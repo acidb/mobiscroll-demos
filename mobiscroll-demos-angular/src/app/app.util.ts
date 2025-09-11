@@ -13,7 +13,7 @@ export function dyndatetime(s: string): string {
   s = s.replace(/h/, now.getHours().toString());
   s = s.replace(/i/, now.getMinutes().toString());
   s = s.replace(/(.*)/, (date) => {
-    const dateDict: { [index: string]: number } = {
+    const dateDict: Record<string, number> = {
       0: 0,
       1: 0,
       2: 0,

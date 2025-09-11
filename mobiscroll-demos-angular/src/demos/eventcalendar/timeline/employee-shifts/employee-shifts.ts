@@ -50,9 +50,9 @@ export class AppComponent {
   shiftNotes?: string;
 
   popupHeader = '';
-  popupButtons: Array<MbscPopupButton | 'cancel'> = [];
+  popupButtons: (MbscPopupButton | 'cancel')[] = [];
 
-  popupResponsive: { [key: string]: MbscPopupOptions } = {
+  popupResponsive: Record<string, MbscPopupOptions> = {
     medium: {
       display: 'center',
       fullScreen: false,

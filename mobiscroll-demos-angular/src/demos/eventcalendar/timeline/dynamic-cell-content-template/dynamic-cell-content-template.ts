@@ -568,7 +568,7 @@ export class AppComponent {
 
   getBadgeClass(events: MbscCalendarEvent[] = []): string {
     const hours = this.getHours(events);
-    const classMap: { [key: number]: string } = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
+    const classMap: Record<number, string> = { 2: 'light', 4: 'medium', 6: 'semi', 8: 'full' };
     return 'mds-timeline-cell-content-badge-' + (classMap[hours] || 'default');
   }
 

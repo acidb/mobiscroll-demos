@@ -14,7 +14,7 @@ setOptions({
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
-  responsiveDrop: { [key: string]: MbscDatepickerOptions & { breakpoint?: number } } = {
+  responsiveDrop: Record<string, MbscDatepickerOptions & { breakpoint?: number }> = {
     xsmall: {
       display: 'bottom',
     },
@@ -29,7 +29,7 @@ export class AppComponent {
     },
   };
 
-  responsiveCal: { [key: string]: MbscDatepickerOptions & { breakpoint?: number } } = {
+  responsiveCal: Record<string, MbscDatepickerOptions & { breakpoint?: number }> = {
     xsmall: {
       controls: ['date'],
       display: 'bottom',

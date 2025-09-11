@@ -417,7 +417,7 @@ export class AppComponent {
   ];
   resources: MbscResource[] = this.myResources;
   fixedResources: MbscResource[] = [];
-  fixedNr: number = 0;
+  fixedNr = 0;
   toggleComparison = (resource: MbscResource) => {
     const origResource = this.myResources.find((r) => r.id === resource.id);
     if (!resource.fixed) {

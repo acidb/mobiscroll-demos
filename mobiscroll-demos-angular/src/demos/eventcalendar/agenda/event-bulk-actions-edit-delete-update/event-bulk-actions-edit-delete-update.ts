@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   @ViewChild('menu', { static: false })
   menu!: MbscSelect;
 
-  confirmOpen: boolean = false;
+  confirmOpen = false;
   myEvents: MbscCalendarEvent[] = [];
   selectedEvent?: MbscCalendarEvent;
   selectedEvents: MbscCalendarEvent[] = [];

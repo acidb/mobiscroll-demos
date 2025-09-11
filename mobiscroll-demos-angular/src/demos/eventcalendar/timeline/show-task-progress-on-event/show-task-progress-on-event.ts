@@ -34,9 +34,9 @@ export class AppComponent {
   popupEventTitle: string | undefined;
   popupEventProgress = 0;
   popupEventResource: string | undefined;
-  popupEventDates: Array<MbscDateType | undefined> = [];
+  popupEventDates: (MbscDateType | undefined)[] = [];
 
-  isDraggingProgress: boolean = false;
+  isDraggingProgress = false;
 
   myEvents: MbscCalendarEvent[] = [
     {
@@ -199,7 +199,7 @@ export class AppComponent {
 
   popupHeaderText!: string;
   popupAnchor: HTMLElement | undefined;
-  popupAddButtons: Array<MbscPopupButton | 'cancel'> = [
+  popupAddButtons: (MbscPopupButton | 'cancel')[] = [
     'cancel',
     {
       handler: () => {
@@ -210,7 +210,7 @@ export class AppComponent {
       cssClass: 'mbsc-popup-button-primary',
     },
   ];
-  popupEditButtons: Array<MbscPopupButton | 'cancel'> = [
+  popupEditButtons: (MbscPopupButton | 'cancel')[] = [
     'cancel',
     {
       handler: () => {
@@ -221,7 +221,7 @@ export class AppComponent {
       cssClass: 'mbsc-popup-button-primary',
     },
   ];
-  popupButtons: Array<MbscPopupButton | 'cancel'> = [];
+  popupButtons: (MbscPopupButton | 'cancel')[] = [];
   popupOptions: MbscPopupOptions = {
     display: 'bottom',
     contentPadding: false,
@@ -242,7 +242,7 @@ export class AppComponent {
     },
   };
 
-  datePickerResponsive: { [key: string]: MbscDatepickerOptions } = {
+  datePickerResponsive: Record<string, MbscDatepickerOptions> = {
     medium: {
       controls: ['calendar'],
       touchUi: false,

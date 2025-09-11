@@ -20,7 +20,7 @@ import { dyndatetime } from '../../../../app/app.util';
 
 interface MyEvent extends MbscCalendarEvent {
   shift?: number | string;
-  tasks?: Array<string | number>;
+  tasks?: (string | number)[];
 }
 
 interface MyBlockedTimes extends MbscCalendarEvent {

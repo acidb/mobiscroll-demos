@@ -24,8 +24,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.http.get('https://trial.mobiscroll.com/content/countries.json').subscribe((resp: any) => {
       const countries = [];
-      for (let i = 0; i < resp.length; ++i) {
-        const country = resp[i];
+      for (const country of resp) {
         countries.push({ text: country.text, value: country.value });
       }
       this.myData = countries;

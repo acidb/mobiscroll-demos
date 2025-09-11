@@ -17,8 +17,6 @@ const now = new Date();
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
-  constructor() {}
-
   myEvents: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d,9'),

@@ -253,11 +253,11 @@ export class AppComponent {
     },
   ];
 
-  resourceAvatar: string = '';
+  resourceAvatar = '';
   resourceName: string | undefined = '';
-  resourceCost: string = '';
-  resourceDate: string = '';
-  resourceTotal: string = '';
+  resourceCost = '';
+  resourceDate = '';
+  resourceTotal = '';
 
   currentResource: MbscResource | undefined;
   hoveredResourceElm: HTMLElement | null = null;

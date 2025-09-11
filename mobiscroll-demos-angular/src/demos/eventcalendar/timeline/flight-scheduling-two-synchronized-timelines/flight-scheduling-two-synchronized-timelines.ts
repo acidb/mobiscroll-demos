@@ -503,9 +503,7 @@ export class AppComponent {
       });
     },
     onEventDragStart: (args) => {
-      const unavailable: {
-        [key: number]: boolean;
-      } = {};
+      const unavailable: Record<number, boolean> = {};
       const invalid: MbscCalendarColor = {
         cssClass: 'md-drag-drop-invalid',
         recurring: { repeat: 'daily' },
