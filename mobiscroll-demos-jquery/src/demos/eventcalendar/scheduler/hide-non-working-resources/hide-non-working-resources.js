@@ -25,13 +25,6 @@ export default {
             },
           },
           groupBy: 'date',
-          resources: [
-            { id: 1, name: 'Dr. Alice Johnson', color: '#ffc5b3ff' },
-            { id: 2, name: 'Dr. Brian Smith', color: '#a2cff1ff' },
-            { id: 3, name: 'Dr. Catherine Lee', color: '#aaeeaeff' },
-            { id: 4, name: 'Dr. Daniel Kim', color: '#e8bdf5ff' },
-            { id: 5, name: 'Dr. Eva Martinez', color: '#f9fab9ff' },
-          ],
           data: [
             // Dr. Alice Johnson
             { start: 'dyndatetime(y,m,d-7,10)', end: 'dyndatetime(y,m,d-7,12)', title: 'Consultation - John Doe', resource: 1 },
@@ -118,6 +111,13 @@ export default {
             { start: 'dyndatetime(y,m,d+4,15)', end: 'dyndatetime(y,m,d+4,16,30)', title: 'Checkup - Wyatt James', resource: 5 },
             { start: 'dyndatetime(y,m,d+5,10)', end: 'dyndatetime(y,m,d+5,11)', title: 'Vaccination - Emily Ward', resource: 5 },
           ],
+          resources: [
+            { id: 1, name: 'Dr. Alice Johnson', color: '#ffc5b3ff' },
+            { id: 2, name: 'Dr. Brian Smith', color: '#a2cff1ff' },
+            { id: 3, name: 'Dr. Catherine Lee', color: '#aaeeaeff' },
+            { id: 4, name: 'Dr. Daniel Kim', color: '#e8bdf5ff' },
+            { id: 5, name: 'Dr. Eva Martinez', color: '#f9fab9ff' },
+          ],
           invalid: [
             {
               recurring: { repeat: 'weekly', weekDays: 'FR' },
@@ -136,36 +136,46 @@ export default {
               resource: 4,
             },
             {
+              recurring: { repeat: 'weekly', weekDays: 'WE' },
+              resource: 5,
+            },
+            {
               start: 'dyndatetime(y,m,d+1)',
               end: 'dyndatetime(y,m,d+1)',
               allDay: true,
               resource: 1,
-              title: 'Alice OFF',
+              title: 'Dr. Alice Johnson OFF',
             },
             {
               start: 'dyndatetime(y,m,d-2)',
               end: 'dyndatetime(y,m,d-2)',
               allDay: true,
               resource: 2,
-              title: 'Bob OFF',
+              title: 'Dr. Brian Smith OFF',
             },
             {
               start: 'dyndatetime(y,m,d-3)',
               end: 'dyndatetime(y,m,d-3)',
               allDay: true,
               resource: 3,
-              title: 'Charlie OFF',
+              title: 'Dr. Catherine Lee OFF',
+            },
+            {
+              start: 'dyndatetime(y,m,d+2)',
+              end: 'dyndatetime(y,m,d+2)',
+              allDay: true,
+              resource: 4,
+              title: 'Dr. Daniel Kim OFF',
             },
             {
               start: 'dyndatetime(y,m,d+5)',
               end: 'dyndatetime(y,m,d+5)',
               allDay: true,
-              resource: 4,
-              title: 'Diana OFF',
+              resource: 5,
+              title: 'Dr. Eva Martinez OFF',
             },
           ],
-        })
-        .mobiscroll('getInst');
+        });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
