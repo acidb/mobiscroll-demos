@@ -96,10 +96,10 @@ export default {
 <div mbsc-page class="mds-external-drap-drop-sortable-dragula">
   <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
-      <div class="mbsc-col-sm-9 mds-external-third-party-drop-calendar">
+      <div class="mbsc-col-sm-8 mds-external-third-party-drop-calendar">
         <div id="demo-external-drap-drop-sortable-dragula"></div>
       </div>
-      <div class="mbsc-col-sm-3">
+      <div class="mbsc-col-sm-4">
         <div class="mbsc-form-group-title mds-third-party-title">Mobiscroll draggable</div>
         <div class="mbsc-flex">
           <div class="mbsc-col-sm-6 mbsc-flex-col" >
