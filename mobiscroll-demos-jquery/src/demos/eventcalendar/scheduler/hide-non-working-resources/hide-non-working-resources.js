@@ -233,7 +233,7 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  /* Column width */
+/* Column width */
 
 .mds-hide-non-working-resources .mbsc-schedule-col-width {
   width: 200px;
