@@ -96,6 +96,27 @@ export default {
           ],
           resources: myResources,
           invalid: getInvalids(),
+          extendDefaultEvent: function () {
+            return { resource: [1, 2, 3, 4, 5, 6] };
+          },
+          onEventCreated: function () {
+            mobiscroll.toast({
+              // context,
+              message: 'Event created',
+            });
+          },
+          onEventUpdated: function () {
+            mobiscroll.toast({
+              // context,
+              message: 'Event updated',
+            });
+          },
+          onEventCreateFailed: function (args) {
+            createUpdateEvent(args.event, true);
+          },
+          onEventUpdateFailed: function (args) {
+            createUpdateEvent(args.event);
+          },
           renderScheduleEvent: function (data) {
             var start = data.startDate.clone();
             var end = data.endDate.clone();
@@ -118,27 +139,6 @@ export default {
               '</div>' +
               '</div></div>'
             );
-          },
-          extendDefaultEvent: function () {
-            return { resource: [1, 2, 3, 4, 5, 6] };
-          },
-          onEventCreated: function () {
-            mobiscroll.toast({
-              // context,
-              message: 'Event created',
-            });
-          },
-          onEventUpdated: function () {
-            mobiscroll.toast({
-              // context,
-              message: 'Event updated',
-            });
-          },
-          onEventCreateFailed: function (args) {
-            createUpdateEvent(args.event, true);
-          },
-          onEventUpdateFailed: function (args) {
-            createUpdateEvent(args.event);
           },
           renderHeader: function () {
             return (
@@ -171,6 +171,7 @@ export default {
             );
           },
           renderCell: function (args) {
+            console.log(args.date.getHours(), args.resource.timezone);
             var hProps = getHourProps(args.date.getHours(), args.resource.timezone);
             return (
               '<div class="mds-meeting-planner-time-slot mbsc-flex mbsc-justify-content-center" style="background:' +
@@ -284,7 +285,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-timezone-meeting-planner" class="mds-timezone-meeting-planner"></div>
+<div id="demo-timezone-meeting-planner"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
