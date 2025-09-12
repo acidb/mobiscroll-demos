@@ -229,27 +229,23 @@ export default {
 }
 
 .mds-external-third-party-task {
-    // padding: 8px 12px 8px 12px;
     margin-top: 5px;
-    //  margin: 10px;
-    padding: 10px;
+    padding: 10px 12px 10px 12px;
     align-content: center;
     touch-action: none;
     color: #fff;
     border-radius: 8px;
     flex-grow: 1;
     font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-    // font-size: 12px; 
 }
 
 .mds-third-party-title {
     text-align: center;
 }
 
-// .mds-external-third-party-duration {
-//     padding-top: 4px;
-//     font-size: 10px; 
-// }
+.mds-external-third-party-duration {
+    font-size: 12px; 
+}
 
 .demo-external-drag-drop-sortable-dragula.demo-wrapper,
 .demo-external-drag-drop-sortable-dragula .mbsc-grid,
