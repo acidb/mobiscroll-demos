@@ -14,7 +14,7 @@ export default {
     });
 
     $(function () {
-      var myCalendar = $('#demo-external-drap-drop-sortable-dragula')
+      var myCalendar = $('#demo-external-drag-drop-sortable-dragula')
         .mobiscroll()
         .eventcalendar({
           externalDrop: true,
@@ -55,7 +55,7 @@ export default {
 <div class="mbsc-grid mbsc-no-padding">
   <div class="mbsc-row">
     <div class="mbsc-col-sm-9 mds-external-third-party-drop-calendar">
-      <div id="demo-external-drap-drop-sortable-dragula"></div>
+      <div id="demo-external-drag-drop-sortable-dragula"></div>
     </div>
     <div class="mbsc-col-sm-3 mds-third-party-drag-container-wrapper">
       <div class="mbsc-form-group-title mds-third-party-title">SortableJS tasks</div>

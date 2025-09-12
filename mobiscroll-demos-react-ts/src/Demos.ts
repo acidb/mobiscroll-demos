@@ -144,6 +144,7 @@ import Demo729 from './demos/eventcalendar/calendar-view/prevent-double-booking-
 import Demo569 from './demos/eventcalendar/calendar-view/blocked-days-ranges/blocked-days-ranges';
 import Demo586 from './demos/eventcalendar/calendar-view/external-drag-drop-schedule-unschedule/external-drag-drop-schedule-unschedule';
 import Demo587 from './demos/eventcalendar/calendar-view/external-event-presets/external-event-presets';
+import Demo6667 from './demos/eventcalendar/calendar-view/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import Demo510 from './demos/eventcalendar/calendar-view/resource-filtering-in-header/resource-filtering-in-header';
 import Demo450 from './demos/eventcalendar/calendar-view/event-data-structure/event-data-structure';
 import Demo373 from './demos/eventcalendar/calendar-view/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
@@ -199,6 +200,7 @@ import Demo570 from './demos/eventcalendar/scheduler/time-off-blocked-ranges/tim
 import Demo568 from './demos/eventcalendar/scheduler/prevent-double-booking-events/prevent-double-booking-events';
 import Demo584 from './demos/eventcalendar/scheduler/external-drag-drop-schedule-unschedule/external-drag-drop-schedule-unschedule';
 import Demo585 from './demos/eventcalendar/scheduler/external-event-presets/external-event-presets';
+import Demo6666 from './demos/eventcalendar/scheduler/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import Demo591 from './demos/eventcalendar/scheduler/resource-view/resource-view';
 import Demo592 from './demos/eventcalendar/scheduler/group-by-resource-by-day/group-by-resource-by-day';
 import Demo593 from './demos/eventcalendar/scheduler/shared-events-across-resources/shared-events-across-resources';
@@ -269,6 +271,7 @@ import Demo665 from './demos/eventcalendar/timeline/move-resize-drag-drop-to-cre
 import Demo723 from './demos/eventcalendar/timeline/conditional-move-resize/conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource';
 import Demo726 from './demos/eventcalendar/timeline/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import Demo728 from './demos/eventcalendar/timeline/prevent-double-booking-events/prevent-double-booking-events';
+import Demo6668 from './demos/eventcalendar/timeline/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import Demo607 from './demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import Demo625 from './demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy';
 import Demo747 from './demos/eventcalendar/timeline/show-summaries-aggregates-for-resource-groups/show-summaries-aggregates-for-resource-groups';
@@ -742,6 +745,7 @@ export const demos = [
               { name: 'Manage blocked out dates', unique: 'blocked-days-ranges', component: Demo569 },
               { name: 'External drag and drop', unique: 'external-drag-drop-schedule-unschedule', component: Demo586 },
               { name: 'External d&d presets', unique: 'external-event-presets', component: Demo587 },
+              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6667 },
             ],
           },
           {
@@ -875,6 +879,7 @@ export const demos = [
               { name: 'Prevent event overlap', unique: 'prevent-double-booking-events', component: Demo568 },
               { name: 'External drag and drop', unique: 'external-drag-drop-schedule-unschedule', component: Demo584 },
               { name: 'External d&d presets', unique: 'external-event-presets', component: Demo585 },
+              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6666 },
             ],
           },
           {
@@ -1023,6 +1028,7 @@ export const demos = [
               { name: 'Conditional move & resize per event, resource or globally', unique: 'conditional-move-resize', component: Demo723 },
               { name: 'Drag & drop between timelines', unique: 'drag-drop-between-calendar-instances', component: Demo726 },
               { name: 'Prevent event overlap', unique: 'prevent-double-booking-events', component: Demo728 },
+              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6668 },
             ],
           },
           {

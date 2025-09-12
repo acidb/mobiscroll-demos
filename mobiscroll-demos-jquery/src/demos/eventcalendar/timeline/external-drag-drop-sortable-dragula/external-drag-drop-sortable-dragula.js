@@ -14,7 +14,7 @@ export default {
     });
 
     $(function () {
-      var myCalendar = $('#demo-external-drap-drop-sortable-dragula')
+      var myCalendar = $('#demo-external-drag-drop-sortable-dragula')
         .mobiscroll()
         .eventcalendar({
           eventDelete: true,
@@ -83,10 +83,10 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mbsc-grid mbsc-no-padding mds-external-drap-drop-sortable-dragula">
+<div class="mbsc-grid mbsc-no-padding mds-external-drag-drop-sortable-dragula">
   <div class="mbsc-row">
     <div class="mbsc-col-sm-8 mds-external-third-party-drop-calendar">
-      <div id="demo-external-drap-drop-sortable-dragula"></div>
+      <div id="demo-external-drag-drop-sortable-dragula"></div>
     </div>
     <div class="mbsc-col-sm-4 mds-third-party-drag-container-wrapper">
       <div class="mbsc-form-group-title mds-third-party-title">Mobiscroll draggable</div>
@@ -215,7 +215,7 @@ export default {
     border-right: 1px solid #ccc;
 }
 
-.mds-external-drap-drop-sortable-dragula .mbsc-timeline-resource-col { 
+.mds-external-drag-drop-sortable-dragula .mbsc-timeline-resource-col { 
     width: 100px; 
 }
 

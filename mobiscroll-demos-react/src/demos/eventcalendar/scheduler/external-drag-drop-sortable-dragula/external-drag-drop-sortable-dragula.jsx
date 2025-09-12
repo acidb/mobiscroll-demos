@@ -12,7 +12,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Sortable from 'sortablejs';
 
 import 'dragula/dist/dragula.css';
-import './external-drap-drop-sortable-dragula.css';
+import './external-drag-drop-sortable-dragula.css';
 
 setOptions({
   // localeJs,

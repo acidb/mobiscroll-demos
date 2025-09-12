@@ -3,4 +3,7 @@ import dyndateplugin from './dyndateplugin';
 
 export default defineConfig({
   plugins: [dyndateplugin()],
+  define: {
+    global: 'window',
+  },
 });

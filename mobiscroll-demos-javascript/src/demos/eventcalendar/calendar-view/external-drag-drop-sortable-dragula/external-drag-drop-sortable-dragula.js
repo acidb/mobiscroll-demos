@@ -8,19 +8,18 @@ export default {
       // theme
     });
 
-    mobiscroll.eventcalendar('#demo-external-drap-drop-sortable-dragula', {
+    mobiscroll.eventcalendar('#demo-external-drag-drop-sortable-dragula', {
       view: {
         timeline: {
           type: 'week',
         },
       },
-
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-external-drap-drop-sortable-dragula"></div>
+<div id="demo-external-drag-drop-sortable-dragula"></div>
 `,
   // eslint-disable-next-line es5/no-template-literals
-  css: ``, 
+  css: ``,
 };

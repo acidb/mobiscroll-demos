@@ -746,7 +746,7 @@ export const demos = [
               { name: 'Manage blocked out dates', unique: 'blocked-days-ranges', component: Demo569 },
               { name: 'External drag and drop', unique: 'external-drag-drop-schedule-unschedule', component: Demo586 },
               { name: 'External d&d presets', unique: 'external-event-presets', component: Demo587 },
-              { name: 'Drag & drop with external library', unique: 'external-drap-drop-sortable-dragula', component: Demo6667 },
+              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6667 },
             ],
           },
           {
@@ -880,7 +880,7 @@ export const demos = [
               { name: 'Prevent event overlap', unique: 'prevent-double-booking-events', component: Demo568 },
               { name: 'External drag and drop', unique: 'external-drag-drop-schedule-unschedule', component: Demo584 },
               { name: 'External d&d presets', unique: 'external-event-presets', component: Demo585 },
-              { name: 'Drag & drop with external library', unique: 'external-drap-drop-sortable-dragula', component: Demo6666 },
+              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6666 },
             ],
           },
           {
@@ -1029,7 +1029,7 @@ export const demos = [
               { name: 'Conditional move & resize per event, resource or globally', unique: 'conditional-move-resize', component: Demo723 },
               { name: 'Drag & drop between timelines', unique: 'drag-drop-between-calendar-instances', component: Demo726 },
               { name: 'Prevent event overlap', unique: 'prevent-double-booking-events', component: Demo728 },
-              { name: 'Drag & drop with external library', unique: 'external-drap-drop-sortable-dragula', component: Demo6668 },
+              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6668 },
             ],
           },
           {
