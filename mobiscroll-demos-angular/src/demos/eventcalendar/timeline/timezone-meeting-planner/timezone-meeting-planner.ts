@@ -105,7 +105,6 @@ export class AppComponent {
   myInvalid: MbscCalendarEvent[] = this.setInvalids();
 
   getHourProps(h: number, timezone: string) {
-    console.log(h, timezone);
     const offset = this.getUtcOffset(timezone);
     const hour = h + offset;
     const isAM = hour % 24 < 12;

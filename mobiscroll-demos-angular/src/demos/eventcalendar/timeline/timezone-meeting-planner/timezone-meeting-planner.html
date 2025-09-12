@@ -52,10 +52,12 @@
     </div>
   </ng-template>
   <ng-template #myCellTemplate let-args>
-    <div *ngIf="getHourProps(args.date.getHours(), args.resource.timezone) as hProps">
-      <div class="mds-meeting-planner-time-slot mbsc-flex mbsc-justify-content-center" [ngStyle]="{'background-color': hProps.color}">
-        {{hProps.title}} {{hProps.isAM ? ' AM' : ' PM'}}
-      </div>
+    <div
+      class="mds-meeting-planner-time-slot mbsc-flex mbsc-justify-content-center"
+      [ngStyle]="{'background-color': hProps.color}"
+      *ngIf="getHourProps(args.date.getHours(), args.resource.timezone) as hProps"
+    >
+      {{hProps.title}} {{hProps.isAM ? ' AM' : ' PM'}}
     </div>
   </ng-template>
 </mbsc-eventcalendar>
