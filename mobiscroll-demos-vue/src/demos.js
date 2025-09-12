@@ -207,7 +207,7 @@ import Demo593 from './demos/eventcalendar/scheduler/shared-events-across-resour
 import Demo594 from './demos/eventcalendar/scheduler/dynamic-add-remove-resources-filter/dynamic-add-remove-resources-filter.vue'
 import Demo771 from './demos/eventcalendar/scheduler/dynamic-content-based-resource-width/dynamic-content-based-resource-width.vue'
 import Demo719 from './demos/eventcalendar/scheduler/resource-data-structure/resource-data-structure.vue'
-import Demo777 from './demos/eventcalendar/scheduler/hide-non-working-resources/hide-non-working-resources.vue';
+import Demo777 from './demos/eventcalendar/scheduler/hide-non-working-resources/hide-non-working-resources.vue'
 import Demo481 from './demos/eventcalendar/scheduler/event-data-structure/event-data-structure.vue'
 import Demo503 from './demos/eventcalendar/scheduler/date-object-ISO-8601-moment/date-object-ISO-8601-moment.vue'
 import Demo490 from './demos/eventcalendar/scheduler/recurring-events/recurring-events.vue'
@@ -1273,8 +1273,16 @@ export const demos = [
                 unique: 'dynamic-content-based-resource-width',
                 component: Demo771
               },
-              { name: 'Resource properties', unique: 'resource-data-structure', component: Demo719 }
-              { name: 'Hide unavailable resources', unique: 'hide-non-working-resources', component: Demo777 },
+              {
+                name: 'Resource properties',
+                unique: 'resource-data-structure',
+                component: Demo719
+              },
+              {
+                name: 'Hide unavailable resources',
+                unique: 'hide-non-working-resources',
+                component: Demo777
+              }
             ]
           },
           {
