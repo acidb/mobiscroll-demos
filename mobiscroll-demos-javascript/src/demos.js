@@ -209,6 +209,7 @@ import Demo593 from './demos/eventcalendar/scheduler/shared-events-across-resour
 import Demo594 from './demos/eventcalendar/scheduler/dynamic-add-remove-resources-filter/dynamic-add-remove-resources-filter';
 import Demo771 from './demos/eventcalendar/scheduler/dynamic-content-based-resource-width/dynamic-content-based-resource-width';
 import Demo719 from './demos/eventcalendar/scheduler/resource-data-structure/resource-data-structure';
+import Demo777 from './demos/eventcalendar/scheduler/hide-non-working-resources/hide-non-working-resources';
 import Demo481 from './demos/eventcalendar/scheduler/event-data-structure/event-data-structure';
 import Demo503 from './demos/eventcalendar/scheduler/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
 import Demo490 from './demos/eventcalendar/scheduler/recurring-events/recurring-events';
@@ -898,6 +899,7 @@ export const demos = [
               { name: 'Show/hide resources', unique: 'dynamic-add-remove-resources-filter', component: Demo594 },
               { name: 'Variable resource width', unique: 'dynamic-content-based-resource-width', component: Demo771 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo719 },
+              { name: 'Hide unavailable resources', unique: 'hide-non-working-resources', component: Demo777 },
             ],
           },
           {

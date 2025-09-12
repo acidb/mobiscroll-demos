@@ -209,6 +209,7 @@ import { AppComponent as Demo594 } from '../demos/eventcalendar/scheduler/dynami
 import { AppComponent as Demo771 } from '../demos/eventcalendar/scheduler/dynamic-content-based-resource-width/dynamic-content-based-resource-width';
 import { AppComponent as Demo719 } from '../demos/eventcalendar/scheduler/resource-data-structure/resource-data-structure';
 import { AppComponent as Demo481 } from '../demos/eventcalendar/scheduler/event-data-structure/event-data-structure';
+import { AppComponent as Demo777 } from '../demos/eventcalendar/scheduler/hide-non-working-resources/hide-non-working-resources';
 import { AppComponent as Demo503 } from '../demos/eventcalendar/scheduler/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
 import { AppComponent as Demo490 } from '../demos/eventcalendar/scheduler/recurring-events/recurring-events';
 import { AppComponent as Demo517 } from '../demos/eventcalendar/scheduler/load-inline-data/load-inline-data';
@@ -898,6 +899,7 @@ export const demos: any[] = [
               { name: 'Show/hide resources', unique: 'dynamic-add-remove-resources-filter', component: Demo594 },
               { name: 'Variable resource width', unique: 'dynamic-content-based-resource-width', component: Demo771 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo719 },
+              { name: 'Hide unavailable resources', unique: 'hide-non-working-resources', component: Demo777 },
             ],
           },
           {
