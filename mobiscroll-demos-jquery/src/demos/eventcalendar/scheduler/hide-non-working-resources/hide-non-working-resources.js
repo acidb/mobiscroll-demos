@@ -24,6 +24,7 @@ export default {
               hideInvalidColumns: true,
             },
           },
+          dragToCreate: true,
           groupBy: 'date',
           data: [
             // Dr. Alice Johnson – Neurology
@@ -116,36 +117,88 @@ export default {
               id: 1,
               name: 'Dr. Alice Johnson',
               specialty: 'Neurology',
-              color: '#ffc5b3ff',
+              bgColor: '#d392e780',
+              textColor: '#1b012280',
               img: 'https://img.mobiscroll.com/demos/f1.png',
             },
             {
               id: 2,
               name: 'Dr. Brian Smith',
               specialty: 'Pediatrics',
-              color: '#a2cff1ff',
+              bgColor: '#69a9ff80',
+              textColor: '#01285c80',
               img: 'https://img.mobiscroll.com/demos/m1.png',
             },
             {
               id: 3,
               name: 'Dr. Catherine Lee',
               specialty: 'Dermatology',
-              color: '#aaeeaeff',
+              bgColor: '#71c17680',
+              textColor: '#02250580',
               img: 'https://img.mobiscroll.com/demos/f2.png',
             },
             {
               id: 4,
               name: 'Dr. Daniel Kim',
               specialty: 'Cardiology',
-              color: '#e8bdf5ff',
+              bgColor: '#bf4d4d80',
+              textColor: '#15010180',
               img: 'https://img.mobiscroll.com/demos/m2.png',
             },
             {
               id: 5,
               name: 'Dr. Eva Martinez',
               specialty: 'Orthopedics',
-              color: '#f9fab9ff',
+              bgColor: '#f0eb8980',
+              textColor: '#1c1b0180',
               img: 'https://img.mobiscroll.com/demos/f1.png',
+            },
+          ],
+          colors: [
+            {
+              resource: 1,
+              start: '08:00',
+              end: '20:00',
+              recurring: {
+                repeat: 'daily',
+              },
+              background: '#fbe4ff4d',
+            },
+            {
+              resource: 2,
+              start: '08:00',
+              end: '20:00',
+              recurring: {
+                repeat: 'daily',
+              },
+              background: '#bfdeff4d',
+            },
+            {
+              resource: 3,
+              start: '08:00',
+              end: '20:00',
+              recurring: {
+                repeat: 'daily',
+              },
+              background: '#e1ffd64d',
+            },
+            {
+              resource: 4,
+              start: '08:00',
+              end: '20:00',
+              recurring: {
+                repeat: 'daily',
+              },
+              background: '#ffdccf4d',
+            },
+            {
+              resource: 5,
+              start: '08:00',
+              end: '20:00',
+              recurring: {
+                repeat: 'daily',
+              },
+              background: '#ffffd04d',
             },
           ],
           invalid: [
@@ -207,7 +260,9 @@ export default {
           ],
           renderResource: function (resource) {
             return (
-              '<div class="mbsc-flex">' +
+              '<div class="mbsc-flex mds-hide-non-working-resources-bg" style="background-color: ' +
+              resource.bgColor +
+              '">' +
               '<img class="mds-hide-non-working-resources-img mbsc-flex-none" alt="' +
               resource.name +
               '" src="' +
@@ -217,7 +272,9 @@ export default {
               '<div class="mds-hide-non-working-resources-name">' +
               resource.name +
               '</div>' +
-              '<div class="mds-hide-non-working-resources-spec">' +
+              '<div class="mds-hide-non-working-resources-spec" style="color:' +
+              resource.textColor +
+              '">' +
               resource.specialty +
               '</div>' +
               '</div>' +
@@ -233,13 +290,24 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  /* Column width */
+/* Column width */
 
 .mds-hide-non-working-resources .mbsc-schedule-col-width {
   width: 200px;
 }
 
 /* Resource header */
+
+.mds-hide-non-working-resources-bg {
+  margin: -10px;
+  padding: 10px;
+}
+
+.mds-hide-non-working-resources-img {
+  height: 40px;
+  width: 40px;
+  margin: 10px 0;
+}
 
 .mds-hide-non-working-resources-cont {
   padding: 10px;
@@ -248,21 +316,16 @@ export default {
 }
 
 .mds-hide-non-working-resources-name {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 20px;
 }
 
 .mds-hide-non-working-resources-spec {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 600;
   line-height: 14px;
   margin-top: 4px;
-}
-
-.mds-hide-non-working-resources-img {
-  height: 40px;
-  width: 40px;
-  margin: 10px 0;
 }
   `,
 };

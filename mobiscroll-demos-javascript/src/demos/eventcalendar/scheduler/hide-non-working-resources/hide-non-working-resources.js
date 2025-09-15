@@ -108,11 +108,41 @@ export default {
         { start: 'dyndatetime(y,m,d+5,10)', end: 'dyndatetime(y,m,d+5,11)', title: 'Vaccination - Emily Ward', resource: 5 },
       ],
       resources: [
-        { id: 1, name: 'Dr. Alice Johnson', color: '#ffc5b3ff' },
-        { id: 2, name: 'Dr. Brian Smith', color: '#a2cff1ff' },
-        { id: 3, name: 'Dr. Catherine Lee', color: '#aaeeaeff' },
-        { id: 4, name: 'Dr. Daniel Kim', color: '#e8bdf5ff' },
-        { id: 5, name: 'Dr. Eva Martinez', color: '#f9fab9ff' },
+        {
+          id: 1,
+          name: 'Dr. Alice Johnson',
+          specialty: 'Neurology',
+          color: '#ffc5b3ff',
+          img: 'https://img.mobiscroll.com/demos/f1.png',
+        },
+        {
+          id: 2,
+          name: 'Dr. Brian Smith',
+          specialty: 'Pediatrics',
+          color: '#a2cff1ff',
+          img: 'https://img.mobiscroll.com/demos/m1.png',
+        },
+        {
+          id: 3,
+          name: 'Dr. Catherine Lee',
+          specialty: 'Dermatology',
+          color: '#aaeeaeff',
+          img: 'https://img.mobiscroll.com/demos/f2.png',
+        },
+        {
+          id: 4,
+          name: 'Dr. Daniel Kim',
+          specialty: 'Cardiology',
+          color: '#e8bdf5ff',
+          img: 'https://img.mobiscroll.com/demos/m2.png',
+        },
+        {
+          id: 5,
+          name: 'Dr. Eva Martinez',
+          specialty: 'Orthopedics',
+          color: '#f9fab9ff',
+          img: 'https://img.mobiscroll.com/demos/f1.png',
+        },
       ],
       invalid: [
         {

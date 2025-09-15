@@ -102,7 +102,7 @@ export class AppComponent {
 
   myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;
   myDefaultEvent(): MbscCalendarEvent { return { resource: [1, 2, 3, 4, 5, 6] }; }
-  myInvalid: MbscCalendarEvent[] = this.setInvalids();
+  myInvalid: MbscCalendarEvent[] = this.getInvalids();
 
   getHourProps(h: number, timezone: string) {
     const offset = this.getUtcOffset(timezone);
@@ -129,7 +129,7 @@ export class AppComponent {
     };
   }
 
-  setInvalids(): MbscCalendarEvent[] {
+  getInvalids(): MbscCalendarEvent[] {
     const invalid: MbscCalendarEvent[] = [];
 
     for (const resource of this.myResources) {
