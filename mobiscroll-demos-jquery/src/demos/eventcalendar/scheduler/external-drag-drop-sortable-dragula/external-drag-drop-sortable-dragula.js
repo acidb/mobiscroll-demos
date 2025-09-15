@@ -13,6 +13,8 @@ export default {
       // theme
     });
 
+    var onCalendar = false;
+
     $(function () {
       var myCalendar = $('#demo-external-drag-drop-sortable-dragula')
         .mobiscroll()
@@ -23,6 +25,12 @@ export default {
               // context,
               message: args.event.title + ' added',
             });
+          },
+          onEventDragEnter: function () {
+            onCalendar = true;
+          },
+          onEventDragLeave: function () {
+            onCalendar = false;
           },
           view: {
             schedule: {
@@ -36,6 +44,14 @@ export default {
       var sortableInstance = new Sortable(sortableList, {
         animation: 150,
         forceFallback: true,
+        onStart: function () {
+          onCalendar = false;
+        },
+        onEnd: function (e) {
+          if (onCalendar) {
+            e.item.remove();
+          }
+        },
       });
       mobiscroll.sortableJsDraggable.init(sortableInstance, {
         cloneSelector: '.sortable-drag',
@@ -44,6 +60,20 @@ export default {
       var dragulaList = $('#dragula-list')[0];
       var drake = dragula([dragulaList]);
       mobiscroll.dragulaDraggable.init(drake);
+
+      drake.on('drop', function (e) {
+        if (onCalendar) {
+          e.remove();
+        }
+      });
+      drake.on('cancel', function (e) {
+        if (onCalendar) {
+          e.remove();
+        }
+      });
+      drake.on('drag', function () {
+        onCalendar = false;
+      });
 
       $.getJSON('https://trial.mobiscroll.com/drag-drop-events/?callback=?', function (events) {
         myCalendar.setEvents(events);
