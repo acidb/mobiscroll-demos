@@ -24,6 +24,7 @@ export default {
               hideInvalidColumns: true,
             },
           },
+          dragToCreate: true,
           groupBy: 'date',
           data: [
             // Dr. Alice Johnson – Neurology
@@ -116,40 +117,40 @@ export default {
               id: 1,
               name: 'Dr. Alice Johnson',
               specialty: 'Neurology',
-              bgColor: '#c9a396ff',
-              textColor: '#9e472a',
+              bgColor: '#d392e780',
+              textColor: '#1b012280',
               img: 'https://img.mobiscroll.com/demos/f1.png',
             },
             {
               id: 2,
               name: 'Dr. Brian Smith',
               specialty: 'Pediatrics',
-              bgColor: '#748cbe',
-              textColor: '#2b457cff',
+              bgColor: '#69a9ff80',
+              textColor: '#01285c80',
               img: 'https://img.mobiscroll.com/demos/m1.png',
             },
             {
               id: 3,
               name: 'Dr. Catherine Lee',
               specialty: 'Dermatology',
-              bgColor: '#92b394ff',
-              textColor: '#27572aff',
+              bgColor: '#71c17680',
+              textColor: '#02250580',
               img: 'https://img.mobiscroll.com/demos/f2.png',
             },
             {
               id: 4,
               name: 'Dr. Daniel Kim',
               specialty: 'Cardiology',
-              bgColor: '#ae87ba',
-              textColor: '#5a236bff',
+              bgColor: '#bf4d4d80',
+              textColor: '#15010180',
               img: 'https://img.mobiscroll.com/demos/m2.png',
             },
             {
               id: 5,
               name: 'Dr. Eva Martinez',
               specialty: 'Orthopedics',
-              bgColor: '#cbce8eff',
-              textColor: '#7a7c30',
+              bgColor: '#f0eb8980',
+              textColor: '#1c1b0180',
               img: 'https://img.mobiscroll.com/demos/f1.png',
             },
           ],
@@ -161,7 +162,7 @@ export default {
               recurring: {
                 repeat: 'daily',
               },
-              background: '#f0e0daff',
+              background: '#fbe4ff4d',
             },
             {
               resource: 2,
@@ -170,7 +171,7 @@ export default {
               recurring: {
                 repeat: 'daily',
               },
-              background: '#d6def0ff',
+              background: '#bfdeff4d',
             },
             {
               resource: 3,
@@ -179,7 +180,7 @@ export default {
               recurring: {
                 repeat: 'daily',
               },
-              background: '#e2f3ddff',
+              background: '#e1ffd64d',
             },
             {
               resource: 4,
@@ -188,7 +189,7 @@ export default {
               recurring: {
                 repeat: 'daily',
               },
-              background: '#e9d5eeff',
+              background: '#ffdccf4d',
             },
             {
               resource: 5,
@@ -197,7 +198,7 @@ export default {
               recurring: {
                 repeat: 'daily',
               },
-              background: '#eaeed0ff',
+              background: '#ffffd04d',
             },
           ],
           invalid: [

@@ -1273,7 +1273,7 @@ export const demos = [
                 unique: 'dynamic-content-based-resource-width',
                 component: Demo771
               },
-              { name: 'Resource properties', unique: 'resource-data-structure', component: Demo719 }
+              { name: 'Resource properties', unique: 'resource-data-structure', component: Demo719 },
               { name: 'Hide unavailable resources', unique: 'hide-non-working-resources', component: Demo777 },
             ]
           },
