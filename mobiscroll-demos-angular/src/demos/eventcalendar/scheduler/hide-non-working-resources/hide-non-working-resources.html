@@ -2,7 +2,19 @@
   [view]="myView"
   [data]="myEvents"
   [resources]="myResources"
+  [colors]="myColors"
   [invalid]="myInvalid"
+  [resourceTemplate]="resourceTemp"
   groupBy="date"
   class="mds-hide-non-working-resources"
-></mbsc-eventcalendar>
+>
+  <ng-template #resourceTemp let-resource>
+    <div class="mbsc-flex mds-hide-non-working-resources-bg" [style.background-color]="resource.bgColor">
+      <img class="mds-hide-non-working-resources-img mbsc-flex-none" [attr.alt]="resource.name" [src]="resource.img" />
+      <div class="mds-hide-non-working-resources-cont mbsc-flex-1-1">
+        <div class="mds-hide-non-working-resources-name">{{resource.name}}</div>
+        <div class="mds-hide-non-working-resources-spec" [style.color]="resource.textColor">{{resource.specialty}}</div>
+      </div>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>
