@@ -162,7 +162,7 @@ export default {
               recurring: {
                 repeat: 'daily',
               },
-              background: '#fbe4ff4d',
+              background: '#fadaff4d',
             },
             {
               resource: 2,
@@ -189,7 +189,7 @@ export default {
               recurring: {
                 repeat: 'daily',
               },
-              background: '#ffdccf4d',
+              background: '#fac4c44d',
             },
             {
               resource: 5,
