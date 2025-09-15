@@ -311,19 +311,17 @@ export default {
 
 .mds-hide-non-working-resources-cont {
   padding: 10px;
-  font-weight: 500;
+  font-weight: bold;
   text-align: start;
 }
 
 .mds-hide-non-working-resources-name {
   font-size: 14px;
-  font-weight: 600;
   line-height: 20px;
 }
 
 .mds-hide-non-working-resources-spec {
   font-size: 14px;
-  font-weight: 600;
   line-height: 14px;
   margin-top: 4px;
 }
