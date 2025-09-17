@@ -7,15 +7,14 @@ import {
   setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import { FC, useEffect, useMemo, useState } from 'react';
-import './colors-invalids-css-class.css';
+import './external-drag-drop-sortable-dragula.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const myResources: MbscResource[] = [
-];
+const myResources: MbscResource[] = [];
 
 const App: FC = () => {
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([]);

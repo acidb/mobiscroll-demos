@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
-import type {
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-  MbscResource
-} from '@mobiscroll/vue'
+import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
+import dragula from 'dragula'
+import Sortable from 'sortablejs'
 import { onMounted, ref } from 'vue'
 
 setOptions({

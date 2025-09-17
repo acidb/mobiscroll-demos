@@ -1,6 +1,6 @@
 import { Eventcalendar, getJson, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { useEffect, useMemo, useState } from 'react';
-import './external-drap-drop-sortable-dragula.css';
+import './external-drag-drop-sortable-dragula.css';
 
 setOptions({
   // localeJs,

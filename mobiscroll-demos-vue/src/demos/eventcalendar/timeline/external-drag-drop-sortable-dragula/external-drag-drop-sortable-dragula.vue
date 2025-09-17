@@ -1,6 +1,7 @@
-
 <script setup>
 import { getJson, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import dragula from 'dragula'
+import Sortable from 'sortablejs'
 import { onMounted, ref } from 'vue'
 
 setOptions({
@@ -10,8 +11,7 @@ setOptions({
 
 const myEvents = ref([])
 
-const myResources = [
-]
+const myResources = []
 
 const myView = {
   timeline: {
@@ -37,13 +37,7 @@ onMounted(() => {
 
 <template>
   <!-- dragOptions -->
-  <MbscEventcalendar
-    :view="myView"
-    :data="myEvents"
-    :resources="myResources"
-  />
+  <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources" />
 </template>
 
-<style>
-
-</style>
+<style></style>

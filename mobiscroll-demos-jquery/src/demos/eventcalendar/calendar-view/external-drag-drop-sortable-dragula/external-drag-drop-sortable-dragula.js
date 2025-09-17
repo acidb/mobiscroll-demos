@@ -13,8 +13,10 @@ export default {
       // theme
     });
 
+    var onCalendar = false;
+
     $(function () {
-      var myCalendar = $('#demo-external-drap-drop-sortable-dragula')
+      var myCalendar = $('#demo-external-drag-drop-sortable-dragula')
         .mobiscroll()
         .eventcalendar({
           externalDrop: true,
@@ -24,6 +26,12 @@ export default {
               message: args.event.title + ' added',
             });
           },
+          onEventDragEnter: function () {
+            onCalendar = true;
+          },
+          onEventDragLeave: function () {
+            onCalendar = false;
+          },
         })
         .mobiscroll('getInst');
 
@@ -31,6 +39,14 @@ export default {
       var sortableInstance = new Sortable(sortableList, {
         animation: 150,
         forceFallback: true,
+        onStart: function () {
+          onCalendar = false;
+        },
+        onEnd: function (e) {
+          if (onCalendar) {
+            e.item.remove();
+          }
+        },
       });
       mobiscroll.sortableJsDraggable.init(sortableInstance, {
         cloneSelector: '.sortable-drag',
@@ -39,6 +55,20 @@ export default {
       var dragulaList = $('#dragula-list')[0];
       var drake = dragula([dragulaList]);
       mobiscroll.dragulaDraggable.init(drake);
+
+      drake.on('drop', function (e) {
+        if (onCalendar) {
+          e.remove();
+        }
+      });
+      drake.on('cancel', function (e) {
+        if (onCalendar) {
+          e.remove();
+        }
+      });
+      drake.on('drag', function () {
+        onCalendar = false;
+      });
 
       $.getJSON('https://trial.mobiscroll.com/drag-drop-events/?callback=?', function (events) {
         myCalendar.setEvents(events);
@@ -50,7 +80,7 @@ export default {
 <div class="mbsc-grid mbsc-no-padding">
   <div class="mbsc-row"">
     <div class="mbsc-col-sm-9 mds-external-third-party-drop-calendar">
-      <div id="demo-external-drap-drop-sortable-dragula"></div>
+      <div id="demo-external-drag-drop-sortable-dragula"></div>
     </div>
     <div class="mbsc-col-sm-3  mds-third-party-drag-container-wrapper">
       <div class="mbsc-form-group-title  mds-third-party-title">SortableJS tasks</div>

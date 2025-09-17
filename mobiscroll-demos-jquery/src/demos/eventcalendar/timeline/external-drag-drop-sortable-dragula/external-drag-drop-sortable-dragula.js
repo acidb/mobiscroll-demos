@@ -13,8 +13,10 @@ export default {
       // theme
     });
 
+    var onCalendar = false;
+
     $(function () {
-      var myCalendar = $('#demo-external-drap-drop-sortable-dragula')
+      var myCalendar = $('#demo-external-drag-drop-sortable-dragula')
         .mobiscroll()
         .eventcalendar({
           eventDelete: true,
@@ -25,19 +27,33 @@ export default {
               // context,
               message: args.event.title + ' added',
             });
+            $('#mds-event-' + args.event.id).remove();
+          },
+          onEventDragEnter: function () {
+            onCalendar = true;
+          },
+          onEventDragLeave: function () {
+            onCalendar = false;
           },
           onResourceCreated: function (args) {
             mobiscroll.toast({
               // context,
               message: args.resource.name + ' added',
             });
+            $('#mds-resource-' + args.resource.id).remove();
+          },
+          onResourceDragEnter: function () {
+            onCalendar = true;
+          },
+          onResourceDragLeave: function () {
+            onCalendar = false;
           },
           resources: [
-            { name: 'Resource A', id: 1 },
-            { name: 'Resource B', id: 2 },
-            { name: 'Resource C', id: 3 },
-            { name: 'Resource D', id: 4 },
-            { name: 'Resource E', id: 5 },
+            { name: 'Resource A', id: 'res-1' },
+            { name: 'Resource B', id: 'res-2' },
+            { name: 'Resource C', id: 'res-3' },
+            { name: 'Resource D', id: 'res-4' },
+            { name: 'Resource E', id: 'res-5' },
           ],
           view: {
             timeline: {
@@ -51,6 +67,14 @@ export default {
       var sortableTaskInstance = new Sortable(sortableTaskList, {
         animation: 150,
         forceFallback: true,
+        onStart: function () {
+          onCalendar = false;
+        },
+        onEnd: function (e) {
+          if (onCalendar) {
+            e.item.remove();
+          }
+        },
       });
       mobiscroll.sortableJsDraggable.init(sortableTaskInstance, {
         cloneSelector: '.sortable-drag',
@@ -60,6 +84,14 @@ export default {
       var sortableResourceInstance = new Sortable(sortableResourceList, {
         animation: 150,
         forceFallback: true,
+        onStart: function () {
+          onCalendar = false;
+        },
+        onEnd: function (e) {
+          if (onCalendar) {
+            e.item.remove();
+          }
+        },
       });
       mobiscroll.sortableJsDraggable.init(sortableResourceInstance, {
         cloneSelector: '.sortable-drag',
@@ -70,10 +102,38 @@ export default {
       var drake1 = dragula([dragulaTaskList]);
       mobiscroll.dragulaDraggable.init(drake1);
 
+      drake1.on('drop', function (e) {
+        if (onCalendar) {
+          e.remove();
+        }
+      });
+      drake1.on('cancel', function (e) {
+        if (onCalendar) {
+          e.remove();
+        }
+      });
+      drake1.on('drag', function () {
+        onCalendar = false;
+      });
+
       var dragulaResourceList = $('#dragula-resource-list')[0];
       var drake2 = dragula([dragulaResourceList]);
       mobiscroll.dragulaDraggable.init(drake2, {
         type: 'resource',
+      });
+
+      drake2.on('drop', function (e) {
+        if (onCalendar) {
+          e.remove();
+        }
+      });
+      drake2.on('cancel', function (e) {
+        if (onCalendar) {
+          e.remove();
+        }
+      });
+      drake2.on('drag', function () {
+        onCalendar = false;
       });
 
       $.getJSON('https://trial.mobiscroll.com/multiday-events/?callback=?', function (events) {
@@ -83,46 +143,46 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mbsc-grid mbsc-no-padding mds-external-drap-drop-sortable-dragula">
+<div class="mbsc-grid mbsc-no-padding mds-external-drag-drop-sortable-dragula">
   <div class="mbsc-row">
     <div class="mbsc-col-sm-8 mds-external-third-party-drop-calendar">
-      <div id="demo-external-drap-drop-sortable-dragula"></div>
+      <div id="demo-external-drag-drop-sortable-dragula"></div>
     </div>
     <div class="mbsc-col-sm-4 mds-third-party-drag-container-wrapper">
       <div class="mbsc-form-group-title mds-third-party-title">Mobiscroll draggable</div>
       <div class="mbsc-flex">
         <div class="mbsc-col-sm-6 mbsc-flex-col" >
-          <div id="md-task-cont" class="mds-external-third-party-drag-container mbsc-flex-col mbsc-flex-1-0">
-            <div class="mds-external-third-party-task" mbsc-draggable data-drag-data='{"title": "Task 1", "start": "08:00", "end": "09:30", "color": "#cf4343"}' style="background: #cf4343;">
+          <div class="mds-external-third-party-drag-container mbsc-flex-col mbsc-flex-1-0">
+            <div id="mds-event-1" class="mds-external-third-party-task" mbsc-draggable data-drag-data='{"id": "1", "title": "Task 1", "start": "08:00", "end": "09:30", "color": "#cf4343"}' style="background: #cf4343;">
                 <div>Task 1</div>
                 <div class="mds-external-third-party-duration">1.5 hours</div>
             </div>
-            <div class="mds-external-third-party-task" mbsc-draggable data-drag-data='{"title": "Task 2", "start": "08:00", "end": "10:00", "color": "#e49516"}' style="background: #e49516;">
+            <div id="mds-event-2" class="mds-external-third-party-task" mbsc-draggable data-drag-data='{"id": "2", "title": "Task 2", "start": "08:00", "end": "10:00", "color": "#e49516"}' style="background: #e49516;">
                 <div>Task 2</div>
                 <div class="mds-external-third-party-duration">2 hours</div>
             </div>
-            <div class="mds-external-third-party-task" mbsc-draggable data-drag-data='{"title": "Task 3", "start": "10:00", "end": "14:00", "color": "#8c429f"}' style="background: #8c429f;">
+            <div id="mds-event-3" class="mds-external-third-party-task" mbsc-draggable data-drag-data='{"id": "3", "title": "Task 3", "start": "10:00", "end": "14:00", "color": "#8c429f"}' style="background: #8c429f;">
                 <div>Task 3</div>
                 <div class="mds-external-third-party-duration">4 hours</div>
             </div>
-            <div class="mds-external-third-party-task" mbsc-draggable data-drag-data='{"title": "Task 4", "start": "12:00", "end": "18:00", "color": "#63b548"}' style="background: #63b548;">
+            <div id="mds-event-4" class="mds-external-third-party-task" mbsc-draggable data-drag-data='{"id": "4", "title": "Task 4", "start": "12:00", "end": "18:00", "color": "#63b548"}' style="background: #63b548;">
                 <div>Task 4</div>
                 <div class="mds-external-third-party-duration">6 hours</div>
             </div>
           </div>
         </div>
         <div class="mbsc-col-sm-6 mbsc-flex-col">
-          <div id="md-task-cont" class="mds-external-third-party-drag-container mbsc-flex-col mbsc-flex-1-0">
-            <div class="mds-external-third-party-task" mbsc-draggable data-type="resource" data-drag-data='{"name": "Resource 1"}' style="background: #cf4343;">
+          <div class="mds-external-third-party-drag-container mbsc-flex-col mbsc-flex-1-0">
+            <div id="mds-resource-1" class="mds-external-third-party-task" mbsc-draggable data-type="resource" data-drag-data='{"id": "1", "name": "Resource 1"}' style="background: #cf4343;">
               <div>Resource 1</div>
             </div>
-            <div class="mds-external-third-party-task" mbsc-draggable data-type="resource" data-drag-data='{"name": "Resource 2"}' style="background: #e49516;">
+            <div id="mds-resource-2" class="mds-external-third-party-task" mbsc-draggable data-type="resource" data-drag-data='{"id": "2", "name": "Resource 2"}' style="background: #e49516;">
               <div>Resource 2</div>
             </div>
-            <div class="mds-external-third-party-task" mbsc-draggable data-type="resource" data-drag-data='{"name": "Resource 3"}' style="background: #8c429f;">
+            <div id="mds-resource-3" class="mds-external-third-party-task" mbsc-draggable data-type="resource" data-drag-data='{"id": "3", "name": "Resource 3"}' style="background: #8c429f;">
               <div>Resource 3</div>
             </div>
-            <div class="mds-external-third-party-task" mbsc-draggable data-type="resource" data-drag-data='{"name": "Resource 4"}' style="background: #63b548;">
+            <div id="mds-resource-4" class="mds-external-third-party-task" mbsc-draggable data-type="resource" data-drag-data='{"id": "4", "name": "Resource 4"}' style="background: #63b548;">
               <div>Resource 4</div>
             </div>
           </div>
@@ -215,7 +275,7 @@ export default {
     border-right: 1px solid #ccc;
 }
 
-.mds-external-drap-drop-sortable-dragula .mbsc-timeline-resource-col { 
+.mds-external-drag-drop-sortable-dragula .mbsc-timeline-resource-col { 
     width: 100px; 
 }
 
@@ -235,7 +295,7 @@ export default {
     touch-action: none;
     color: #fff;
     border-radius: 8px;
-    flex-grow: 1;
+    flex: 0 0 3.6em;
     font-family: -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
