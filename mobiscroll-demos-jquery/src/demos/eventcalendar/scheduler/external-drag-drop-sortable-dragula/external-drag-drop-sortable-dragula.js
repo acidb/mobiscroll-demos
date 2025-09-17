@@ -88,40 +88,40 @@ export default {
       <div id="demo-external-drag-drop-sortable-dragula"></div>
     </div>
     <div class="mbsc-col-sm-3 mds-third-party-drag-container-wrapper">
-      <div class="mbsc-form-group-title mds-third-party-title">SortableJS tasks</div>
+      <div class="mbsc-form-group-title mds-third-party-title">SortableJS list</div>
       <div class="mds-external-third-party-drag-container" id="sortable-list">
-        <div class="mds-external-third-party-task" style="background: #d1891f;" data-drag-data='{ "title": "Task 1", "start": "08:00", "end": "09:30"}'>
+        <div class="mds-external-third-party-task" style="background: #cb3939;" data-drag-data='{ "title": "Task 1", "start": "08:00", "end": "09:30", "color": "#cb3939"}'>
           <div>Task 1</div>
           <div>1.5 hours</div>
         </div>
-        <div class="mds-external-third-party-task" style="background: #1ca11a;" data-drag-data='{ "title": "Task 2", "start": "12:00", "end": "15:00"}'>
+        <div class="mds-external-third-party-task" style="background: #cb3939;" data-drag-data='{ "title": "Task 2", "start": "12:00", "end": "15:00", "color": "#cb3939"}'>
           <div>Task 2</div>
           <div>3 hours</div>
         </div>
-        <div class="mds-external-third-party-task" style="background: #cb3939;" data-drag-data='{ "title": "Task 3", "start": "08:30", "end": "11:00"}'>
+        <div class="mds-external-third-party-task" style="background: #cb3939;" data-drag-data='{ "title": "Task 3", "start": "08:30", "end": "11:00", "color": "#cb3939"}'>
           <div>Task 3</div>
           <div>2.5 hours</div>
         </div>
-        <div class="mds-external-third-party-task" style="background: #a446b5;" data-drag-data='{ "title": "Task 4", "start": "16:00", "end": "17:00"}'>
+        <div class="mds-external-third-party-task" style="background: #cb3939;" data-drag-data='{ "title": "Task 4", "start": "16:00", "end": "17:00", "color": "#cb3939"}'>
           <div>Task 4</div>
           <div>1 hours</div>
         </div>
       </div>
-      <div class="mbsc-form-group-title mds-third-party-title">Dragula tasks</div>
+      <div class="mbsc-form-group-title mds-third-party-title">Dragula list</div>
       <div class="mds-external-third-party-drag-container" id="dragula-list">
-          <div class="mds-external-third-party-task" style="background: #d1891f;"  data-drag-data='{ "title": "Task 5", "start": "08:00", "end": "09:30"}'>
+          <div class="mds-external-third-party-task" style="background: #1ca11a;"  data-drag-data='{ "title": "Task 5", "start": "08:00", "end": "09:30", "color": "#1ca11a"}'>
           <div>Task 5</div>
           <div>1.5 hours</div>
         </div>
-        <div class="mds-external-third-party-task" style="background: #1ca11a;" data-drag-data='{ "title": "Task 6", "start": "12:00", "end": "15:00"}'>
+        <div class="mds-external-third-party-task" style="background: #1ca11a;" data-drag-data='{ "title": "Task 6", "start": "12:00", "end": "15:00", "color": "#1ca11a"}'>
           <div>Task 6</div>
           <div>3 hours</div>
         </div>
-        <div class="mds-external-third-party-task" style="background: #cb3939;" data-drag-data='{ "title": "Task 7", "start": "08:30", "end": "11:00"}'>
+        <div class="mds-external-third-party-task" style="background: #1ca11a;" data-drag-data='{ "title": "Task 7", "start": "08:30", "end": "11:00", "color": "#1ca11a"}'>
           <div>Task 7</div>
           <div>2.5 hours</div>
         </div>
-        <div class="mds-external-third-party-task" style="background: #a446b5;" data-drag-data='{ "title": "Task 8", "start": "16:00", "end": "17:00"}'>
+        <div class="mds-external-third-party-task" style="background: #1ca11a;" data-drag-data='{ "title": "Task 8", "start": "16:00", "end": "17:00", "color": "#1ca11a"}'>
           <div>Task 8</div>
           <div>1 hours</div>
         </div>
