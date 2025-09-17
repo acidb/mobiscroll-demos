@@ -309,6 +309,7 @@ export default {
 
 .mds-third-party-list-title {
     font-weight: 600;
+    padding-left: 12px !important;
     font-size: 16px !important; 
 }
 
