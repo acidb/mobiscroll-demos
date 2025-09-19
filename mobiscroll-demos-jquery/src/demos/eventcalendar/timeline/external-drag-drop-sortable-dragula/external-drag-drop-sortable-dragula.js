@@ -140,7 +140,7 @@ export default {
   markup: `
 <div class="mbsc-grid mbsc-no-padding mds-external-drag-drop-sortable-dragula">
   <div class="mbsc-row">
-    <div class="mbsc-col-sm-4 mds-third-party-drag-container-wrapper">
+    <div class="mbsc-col-sm-3 mds-third-party-drag-container-wrapper">
       <div class="mbsc-form-group-title mds-third-party-title">Mobiscroll draggable</div>
       <div class="mbsc-flex">
         <div class="mbsc-col-sm-6 mbsc-flex-col" >
@@ -265,7 +265,7 @@ export default {
         </div>
       </div>
     </div>
-    <div class="mbsc-col-sm-8 mds-external-third-party-drop-calendar">
+    <div class="mbsc-col-sm-9 mds-external-third-party-drop-calendar">
       <div id="demo-external-drag-drop-sortable-dragula"></div>
     </div>
   </div>
@@ -296,25 +296,28 @@ export default {
     touch-action: none;
     color: #fff;
     border-radius: 8px;
-    flex: 0 0 3.6em;
+    flex: 0 0 4.2em;
     font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+    font-size: 12px; 
 }
 
 .mds-third-party-title  {
-    margin-top: 16px;
-    font-size: 20px !important; 
+    margin-top: 12px;
+    padding: 0 10px !important;
+    font-size: 16px !important; 
     font-weight: 600;
-    text-align: center;
+    text-transform: none !important;
 }
 
 .mds-third-party-list-title {
     font-weight: 600;
-    padding-left: 12px !important;
-    font-size: 16px !important; 
+    padding: 0 10px !important;
+    font-size: 12px !important; 
+    text-transform: none !important;
 }
 
 .mds-external-third-party-duration {
-    font-size: 12px; 
+    font-size: 10px; 
 }
 
 .demo-external-drag-drop-sortable-dragula.demo-wrapper,
