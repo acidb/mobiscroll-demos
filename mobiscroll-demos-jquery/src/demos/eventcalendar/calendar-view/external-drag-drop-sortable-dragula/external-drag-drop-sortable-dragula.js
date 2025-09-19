@@ -141,7 +141,11 @@ export default {
 }
 
 .mds-third-party-title {
-    text-align: center;
+    margin-top: 12px;
+    padding: 0 20px !important;
+    font-size: 16px !important; 
+    font-weight: 600;
+    text-transform: none !important;
 }
 
 .mds-external-third-party-task {
