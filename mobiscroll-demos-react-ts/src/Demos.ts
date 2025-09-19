@@ -248,6 +248,7 @@ import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/
 import Demo750 from './demos/eventcalendar/timeline/tasks-subtasks-under-shifts/tasks-subtasks-under-shifts';
 import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search';
 import Demo772 from './demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation';
+import Demo780 from './demos/eventcalendar/timeline/role-based-timeline/role-based-timeline';
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
 import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
@@ -991,6 +992,7 @@ export const demos = [
               { name: 'Managing tasks within shifts', unique: 'tasks-subtasks-under-shifts', component: Demo750 },
               { name: 'Resource filtering', unique: 'resource-filtering-search', component: Demo751 },
               { name: 'Set up custom teams', unique: 'resource-management-with-dynamic-team-creation', component: Demo772 },
+              { name: 'Role-based timeline', unique: 'role-based-timeline', component: Demo780 },
             ],
           },
           {
