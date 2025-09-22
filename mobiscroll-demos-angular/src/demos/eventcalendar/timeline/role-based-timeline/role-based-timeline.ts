@@ -144,33 +144,31 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  myResources: MbscResource[] = [
-    {
-      id: 1,
-      name: 'Jude Chester',
-      color: '#af2ec3',
-    },
-    {
-      id: 2,
-      name: 'Willis Cane',
-      color: '#cccc39',
-    },
-    {
-      id: 3,
-      name: 'Derek Austyn',
-      color: '#56ca2c',
-    },
-    {
-      id: 4,
-      name: 'Merv Kenny',
-      color: '#af2424',
-    },
-    {
-      id: 5,
-      name: 'Fred Waldez',
-      color: '#256ebc',
-    },
-  ];
+  myResources: MbscResource[] = [{
+    id: 1,
+    name: 'Jude Chester',
+    color: '#af2ec3',
+  },
+  {
+    id: 2,
+    name: 'Willis Cane',
+    color: '#cccc39',
+  },
+  {
+    id: 3,
+    name: 'Derek Austyn',
+    color: '#56ca2c',
+  },
+  {
+    id: 4,
+    name: 'Merv Kenny',
+    color: '#af2424',
+  },
+  {
+    id: 5,
+    name: 'Fred Waldez',
+    color: '#256ebc',
+  }];
 
   // Simulate login
   login(): void {

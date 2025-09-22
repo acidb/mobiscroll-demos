@@ -176,7 +176,6 @@ function App() {
       }
 
       setToastMessage('Client with read-only access logged in');
-      setToastOpen(true);
     } else if (user.role === 'limited') {
       for (const task of newTasks) {
         if (task.resource !== user.id) {
@@ -194,15 +193,14 @@ function App() {
       }
 
       setToastMessage('User ' + user.name + ' with limited access logged in');
-      setToastOpen(true);
     } else {
       setToastMessage('User with full access logged in');
-      setToastOpen(true);
     }
 
     setEvents(newTasks);
     setResources(newResources);
     setEditEvents(user.role !== 'readonly');
+    setToastOpen(true);
   }, [user]);
 
   return (
