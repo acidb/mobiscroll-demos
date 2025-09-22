@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, MbscResource, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
@@ -16,12 +16,8 @@ setOptions({
   standalone: true,
   imports: [CommonModule, MbscModule],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(private notify: Notifications) { }
-
-  ngOnInit(): void {
-    this.login();
-  }
 
   // Simulated logged in user
   user = {
@@ -226,4 +222,9 @@ export class AppComponent {
       };
     }
   }
+
+  ngOnInit(): void {
+    this.login();
+  }
+
 }
