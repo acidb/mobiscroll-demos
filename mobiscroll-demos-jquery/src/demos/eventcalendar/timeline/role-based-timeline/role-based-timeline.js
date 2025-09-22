@@ -16,6 +16,16 @@ export default {
         role: 'limited',
       };
 
+      // Other user examples
+      // user = {
+      //   name: 'Client',
+      //   role: 'readonly',
+      // };
+      // user = {
+      //   name: 'Project Manager',
+      //   role: 'full',
+      // };
+
       var myEvents = [
         {
           start: 'dyndatetime(y,m,d-1,11)',
@@ -113,31 +123,27 @@ export default {
         {
           id: 1,
           name: 'Jude Chester',
-          color: '#fadaff',
-          eventCreation: false,
+          color: '#af2ec3',
         },
         {
           id: 2,
           name: 'Willis Cane',
-          color: '#ffffd0',
+          color: '#cccc39',
         },
         {
           id: 3,
           name: 'Derek Austyn',
-          color: '#e1ffd6',
-          eventCreation: false,
+          color: '#56ca2c',
         },
         {
           id: 4,
           name: 'Merv Kenny',
-          color: '#fac4c4',
-          eventCreation: false,
+          color: '#af2424',
         },
         {
           id: 5,
           name: 'Fred Waldez',
-          color: '#bfdeff',
-          eventCreation: false,
+          color: '#256ebc',
         },
       ];
 
@@ -161,12 +167,11 @@ export default {
         var newTasks = $.extend(true, [], myEvents);
         var newResources = $.extend(true, [], myResources);
         var editable = user.role != 'readonly';
+        var defaultColor = '';
         var task;
         var i;
 
         if (user.role === 'readonly') {
-          user.name = 'Client';
-
           for (i = 0; i < newTasks.length; i++) {
             task = newTasks[i];
 
@@ -175,11 +180,13 @@ export default {
           }
 
           mobiscroll.toast({
+            //<hidden>
+            // theme,//</hidden>
+            // context,
             message: 'Client with read-only access logged in',
-            context: '#demo-static-roles',
-            display: 'bottom',
           });
         } else if (user.role === 'limited') {
+          defaultColor = '#af2424';
           for (i = 0; i < newTasks.length; i++) {
             task = newTasks[i];
 
@@ -200,17 +207,17 @@ export default {
           }
 
           mobiscroll.toast({
+            //<hidden>
+            // theme,//</hidden>
+            // context,
             message: 'User ' + user.name + ' with limited access logged in',
-            context: '#demo-static-roles',
-            display: 'bottom',
           });
         } else {
-          user.name = 'Project Manager';
-
           mobiscroll.toast({
+            //<hidden>
+            // theme,//</hidden>
+            // context,
             message: 'User with full access logged in',
-            context: '#demo-static-roles',
-            display: 'bottom',
           });
         }
 
@@ -223,6 +230,11 @@ export default {
           dragToMove: editable,
           dragToResize: editable,
           eventDelete: editable,
+          extendDefaultEvent: function () {
+            return {
+              color: defaultColor,
+            };
+          },
         });
       }
 

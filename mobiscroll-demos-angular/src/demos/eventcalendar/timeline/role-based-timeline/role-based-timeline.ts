@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, MbscResource, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -17,162 +17,213 @@ setOptions({
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
+  constructor(private notify: Notifications) { }
+
+  ngOnInit(): void {
+    this.login();
+  }
+
+  // Simulated logged in user
+  user = {
+    id: 2,
+    name: 'Willis Cane',
+    role: 'limited',
+  };
+
+  // Other user examples
+  // user = {
+  //   id: 'client',
+  //   name: 'Client',
+  //   role: 'readonly',
+  // };
+  // user = {
+  //   id: 'manager',
+  //   name: 'Project Manager',
+  //   role: 'full',
+  // };
+
+  editEvents = false;
+  myDefaultEvent(): MbscCalendarEvent {
+    return {};
+  }
+
   myView: MbscEventcalendarView = {
     timeline: {
       type: 'week',
-      startDay: 1,
-      endDay: 5,
       startTime: '08:00',
       endTime: '20:00',
     },
   };
 
-  myEvents: MbscCalendarEvent[] = [{
-    start: dyndatetime('y,m,d-1,11'),
-    end: dyndatetime('y,m,d-1,15'),
-    title: 'Task 1',
-    resource: 1,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d-1,14'),
-    end: dyndatetime('y,m,d-1,17'),
-    title: 'Task 2',
-    resource: 3,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d-1,12'),
-    end: dyndatetime('y,m,d-1,14'),
-    title: 'Task 3',
-    resource: 4,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d,10'),
-    end: dyndatetime('y,m,d,15'),
-    title: 'Task 4',
-    resource: 1,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d,11'),
-    end: dyndatetime('y,m,d,13'),
-    title: 'Task 5',
-    resource: 2,
-  },
-  {
-    start: dyndatetime('y,m,d,14'),
-    end: dyndatetime('y,m,d,17'),
-    title: 'Task 6',
-    resource: 2,
-  },
-  {
-    start: dyndatetime('y,m,d,12'),
-    end: dyndatetime('y,m,d,15'),
-    title: 'Task 7',
-    resource: 3,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d,17'),
-    end: dyndatetime('y,m,d,20'),
-    title: 'Task 8',
-    resource: 3,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d,8'),
-    end: dyndatetime('y,m,d,11,30'),
-    title: 'Task 9',
-    resource: 4,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d,12'),
-    end: dyndatetime('y,m,d,14'),
-    title: 'Task 10',
-    resource: 4,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d,10'),
-    end: dyndatetime('y,m,d,13'),
-    title: 'Task 11',
-    resource: 5,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d,14'),
-    end: dyndatetime('y,m,d,16'),
-    title: 'Task 12',
-    resource: 5,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d,16,30'),
-    end: dyndatetime('y,m,d,19'),
-    title: 'Task 13',
-    resource: 5,
-    editable: false,
-    color: '#6a6a6a',
-  },
-  {
-    start: dyndatetime('y,m,d+1,11'),
-    end: dyndatetime('y,m,d+1,14'),
-    title: 'Task 14',
-    resource: 2,
-  },
-  {
-    start: dyndatetime('y,m,d+1,16'),
-    end: dyndatetime('y,m,d+1,20'),
-    title: 'Task 15',
-    resource: 5,
-    editable: false,
-    color: '#6a6a6a',
-  },
+  myEvents: MbscCalendarEvent[] = [
+    {
+      start: dyndatetime('y,m,d-1,11'),
+      end: dyndatetime('y,m,d-1,15'),
+      title: 'Task 1',
+      resource: 1,
+    },
+    {
+      start: dyndatetime('y,m,d-1,14'),
+      end: dyndatetime('y,m,d-1,17'),
+      title: 'Task 2',
+      resource: 3,
+    },
+    {
+      start: dyndatetime('y,m,d-1,12'),
+      end: dyndatetime('y,m,d-1,14'),
+      title: 'Task 3',
+      resource: 4,
+    },
+    {
+      start: dyndatetime('y,m,d,10'),
+      end: dyndatetime('y,m,d,15'),
+      title: 'Task 4',
+      resource: 1,
+    },
+    {
+      start: dyndatetime('y,m,d,11'),
+      end: dyndatetime('y,m,d,13'),
+      title: 'Task 5',
+      resource: 2,
+    },
+    {
+      start: dyndatetime('y,m,d,14'),
+      end: dyndatetime('y,m,d,17'),
+      title: 'Task 6',
+      resource: 2,
+    },
+    {
+      start: dyndatetime('y,m,d,12'),
+      end: dyndatetime('y,m,d,15'),
+      title: 'Task 7',
+      resource: 3,
+    },
+    {
+      start: dyndatetime('y,m,d,17'),
+      end: dyndatetime('y,m,d,20'),
+      title: 'Task 8',
+      resource: 3,
+    },
+    {
+      start: dyndatetime('y,m,d,8'),
+      end: dyndatetime('y,m,d,11,30'),
+      title: 'Task 9',
+      resource: 4,
+    },
+    {
+      start: dyndatetime('y,m,d,12'),
+      end: dyndatetime('y,m,d,14'),
+      title: 'Task 10',
+      resource: 4,
+    },
+    {
+      start: dyndatetime('y,m,d,10'),
+      end: dyndatetime('y,m,d,13'),
+      title: 'Task 11',
+      resource: 5,
+    },
+    {
+      start: dyndatetime('y,m,d,14'),
+      end: dyndatetime('y,m,d,16'),
+      title: 'Task 12',
+      resource: 5,
+    },
+    {
+      start: dyndatetime('y,m,d,16,30'),
+      end: dyndatetime('y,m,d,19'),
+      title: 'Task 13',
+      resource: 5,
+    },
+    {
+      start: dyndatetime('y,m,d+1,11'),
+      end: dyndatetime('y,m,d+1,14'),
+      title: 'Task 14',
+      resource: 2,
+    },
+    {
+      start: dyndatetime('y,m,d+1,16'),
+      end: dyndatetime('y,m,d+1,20'),
+      title: 'Task 15',
+      resource: 5,
+    },
   ];
 
   myResources: MbscResource[] = [
     {
       id: 1,
       name: 'Jude Chester',
-      color: '#fadaff',
-      eventCreation: false,
+      color: '#af2ec3',
     },
     {
       id: 2,
       name: 'Willis Cane',
-      color: '#ffffd0',
+      color: '#cccc39',
     },
     {
       id: 3,
       name: 'Derek Austyn',
-      color: '#e1ffd6',
-      eventCreation: false,
+      color: '#56ca2c',
     },
     {
       id: 4,
       name: 'Merv Kenny',
-      color: '#fac4c4',
-      eventCreation: false,
+      color: '#af2424',
     },
     {
       id: 5,
       name: 'Fred Waldez',
-      color: '#bfdeff',
-      eventCreation: false,
-    }
+      color: '#256ebc',
+    },
   ];
 
+  // Simulate login
+  login(): void {
+    const newTasks = [...this.myEvents];
+    const newResources = [...this.myResources];
+    let defaultColor = '';
+
+    if (this.user.role === 'readonly') {
+      for (const task of newTasks) {
+        task.editable = false;
+        task.color = '#af2ec3';
+      }
+
+      this.notify.toast({
+        message: 'Client with read-only access logged in',
+      });
+    } else if (this.user.role === 'limited') {
+      defaultColor = '#af2424';
+      for (const task of newTasks) {
+        if (task.resource !== this.user.id) {
+          task.editable = false;
+          task.color = '#6a6a6a';
+        } else {
+          task.color = '#af2424';
+        }
+      }
+
+      for (const res of newResources) {
+        if (res.id !== this.user.id) {
+          res.eventCreation = false;
+        }
+      }
+
+      this.notify.toast({
+        message: 'User ' + this.user.name + ' with limited access logged in',
+      });
+    } else {
+      this.notify.toast({
+        message: 'User with full access logged in',
+      });
+    }
+
+    this.myEvents = newTasks;
+    this.myResources = newResources;
+    this.editEvents = this.user.role != 'readonly';
+    this.myDefaultEvent = function (): MbscCalendarEvent {
+      return {
+        color: defaultColor
+      };
+    }
+  }
 }

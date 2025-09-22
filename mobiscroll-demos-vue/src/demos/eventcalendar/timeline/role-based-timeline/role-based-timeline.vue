@@ -1,5 +1,5 @@
 <script setup>
-import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { MbscEventcalendar, MbscToast, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import { ref } from 'vue'
 
 setOptions({
@@ -7,110 +7,231 @@ setOptions({
   // theme
 })
 
+const user = {
+  id: 2,
+  name: 'Willis Cane',
+  role: 'limited'
+}
+
+// Other user examples
+// const user = {
+//   name: 'Client',
+//   role: 'readonly'
+// }
+// const user = {
+//   name: 'Project Manager',
+//   role: 'full'
+// }
+
+const editEvents = ref(false)
+const myDefaultEvent = ref(null)
+const isToastOpen = ref(false)
+const toastMessage = ref('')
+
 const myView = {
-  timeline: { type: 'day' }
+  timeline: {
+    type: 'week',
+    startTime: '08:00',
+    endTime: '20:00'
+  }
 }
 
 const myEvents = ref([
   {
-    color: 'cyan',
-    end: 'dyndatetime(y,m,d,14)',
-    resize: false,
-    resource: 1,
-    start: 'dyndatetime(y,m,d,9)',
-    title: 'Event 1 (cannot be resized)'
+    start: 'dyndatetime(y,m,d-1,11)',
+    end: 'dyndatetime(y,m,d-1,15)',
+    title: 'Task 1',
+    resource: 1
   },
   {
-    color: 'green',
-    dragBetweenResources: false,
-    end: 'dyndatetime(y,m,d,16)',
-    resource: 2,
+    start: 'dyndatetime(y,m,d-1,14)',
+    end: 'dyndatetime(y,m,d-1,17)',
+    title: 'Task 2',
+    resource: 3
+  },
+  {
+    start: 'dyndatetime(y,m,d-1,12)',
+    end: 'dyndatetime(y,m,d-1,14)',
+    title: 'Task 3',
+    resource: 4
+  },
+  {
     start: 'dyndatetime(y,m,d,10)',
-    title: 'Event 3 (cannot be moved between resources)'
-  },
-  {
-    color: 'blue',
-    dragInTime: false,
     end: 'dyndatetime(y,m,d,15)',
-    resource: 3,
+    title: 'Task 4',
+    resource: 1
+  },
+  {
     start: 'dyndatetime(y,m,d,11)',
-    title: 'Event 5 (cannot be moved in time)'
-  },
-  {
-    color: 'pink',
-    resource: 1,
-    end: 'dyndatetime(y,m,d,19)',
-    start: 'dyndatetime(y,m,d,16)',
-    title: 'Event 2'
-  },
-  {
-    color: 'yellow',
-    end: 'dyndatetime(y,m,d,20)',
-    resource: 2,
-    start: 'dyndatetime(y,m,d,17)',
-    title: 'Event 4'
-  },
-  {
-    color: 'gray',
-    end: 'dyndatetime(y,m,d,18)',
-    resource: 3,
-    start: 'dyndatetime(y,m,d,16)',
-    title: 'Event 6'
-  },
-  {
-    color: 'red',
-    resource: 4,
     end: 'dyndatetime(y,m,d,13)',
-    start: 'dyndatetime(y,m,d,9)',
-    title: 'Event 7'
+    title: 'Task 5',
+    resource: 2
   },
   {
-    color: 'brown',
+    start: 'dyndatetime(y,m,d,14)',
+    end: 'dyndatetime(y,m,d,17)',
+    title: 'Task 6',
+    resource: 2
+  },
+  {
+    start: 'dyndatetime(y,m,d,12)',
     end: 'dyndatetime(y,m,d,15)',
-    resource: 5,
-    start: 'dyndatetime(y,m,d,11)',
-    title: 'Event 8'
+    title: 'Task 7',
+    resource: 3
   },
   {
-    color: 'teal',
-    end: 'dyndatetime(y,m,d,18)',
-    resource: 6,
-    start: 'dyndatetime(y,m,d,13)',
-    title: 'Event 9'
+    start: 'dyndatetime(y,m,d,17)',
+    end: 'dyndatetime(y,m,d,20)',
+    title: 'Task 8',
+    resource: 3
+  },
+  {
+    start: 'dyndatetime(y,m,d,8)',
+    end: 'dyndatetime(y,m,d,11,30)',
+    title: 'Task 9',
+    resource: 4
+  },
+  {
+    start: 'dyndatetime(y,m,d,12)',
+    end: 'dyndatetime(y,m,d,14)',
+    title: 'Task 10',
+    resource: 4
+  },
+  {
+    start: 'dyndatetime(y,m,d,10)',
+    end: 'dyndatetime(y,m,d,13)',
+    title: 'Task 11',
+    resource: 5
+  },
+  {
+    start: 'dyndatetime(y,m,d,14)',
+    end: 'dyndatetime(y,m,d,16)',
+    title: 'Task 12',
+    resource: 5
+  },
+  {
+    start: 'dyndatetime(y,m,d,16,30)',
+    end: 'dyndatetime(y,m,d,19)',
+    title: 'Task 13',
+    resource: 5
+  },
+  {
+    start: 'dyndatetime(y,m,d+1,11)',
+    end: 'dyndatetime(y,m,d+1,14)',
+    title: 'Task 14',
+    resource: 2
+  },
+  {
+    start: 'dyndatetime(y,m,d+1,16)',
+    end: 'dyndatetime(y,m,d+1,20)',
+    title: 'Task 15',
+    resource: 5
   }
 ])
 
 const myResources = ref([
   {
     id: 1,
-    name: 'Resource A'
+    name: 'Jude Chester',
+    color: '#af2ec3'
   },
   {
     id: 2,
-    name: 'Resource B'
+    name: 'Willis Cane',
+    color: '#cccc39'
   },
   {
     id: 3,
-    name: 'Resource C'
+    name: 'Derek Austyn',
+    color: '#56ca2c'
   },
   {
     id: 4,
-    name: 'Resource D (Events cannot be moved in time)',
-    eventDragInTime: false
+    name: 'Merv Kenny',
+    color: '#af2424'
   },
   {
     id: 5,
-    name: 'Resource E (Events cannot be moved between resources)',
-    eventDragBetweenResources: false
-  },
-  {
-    id: 6,
-    name: 'Resource F (Events cannot be resized)',
-    eventResize: false
+    name: 'Fred Waldez',
+    color: '#256ebc'
   }
 ])
+
+// Simulate login
+function login() {
+  const newTasks = [...myEvents.value]
+  const newResources = [...myResources.value]
+  let defaultColor = ''
+
+  if (user.role === 'readonly') {
+    for (const task of newTasks) {
+      task.editable = false
+      task.color = '#af2ec3'
+    }
+
+    toastMessage.value = 'Client with read-only access logged in'
+  } else if (user.role === 'limited') {
+    defaultColor = '#af2424'
+    for (const task of newTasks) {
+      if (task.resource !== user.id) {
+        task.editable = false
+        task.color = '#6a6a6a'
+      } else {
+        task.color = '#af2424'
+      }
+    }
+
+    for (const res of newResources) {
+      if (res.id !== user.id) {
+        res.eventCreation = false
+      }
+    }
+    toastMessage.value = 'User ' + user.name + ' with limited access logged in'
+  } else {
+    toastMessage.value = 'User with full access logged in'
+  }
+
+  myEvents.value = newTasks
+  myResources.value = newResources
+  editEvents.value = user.role != 'readonly'
+  isToastOpen.value = true
+  myDefaultEvent.value = function () {
+    return {
+      color: defaultColor
+    }
+  }
+}
+
+login()
 </script>
 
 <template>
-  <MbscEventcalendar :view="myView" :data="myEvents" :resources="myResources" :dragToMove="true" />
+  <MbscEventcalendar
+    cssClass="mds-role-based-timeline"
+    :view="myView"
+    :data="myEvents"
+    :resources="myResources"
+    :clickToCreate="editEvents"
+    :dragToCreate="editEvents"
+    :dragToMove="editEvents"
+    :dragToResize="editEvents"
+    :eventDelete="editEvents"
+    :extendDefaultEvent="myDefaultEvent"
+  />
+  <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
 </template>
+
+<style>
+.mds-role-based-timeline
+  .mbsc-schedule-event:not(.mbsc-readonly-event)
+  .mbsc-schedule-event-background {
+  border: 2px solid currentColor;
+}
+
+.mds-role-based-timeline .mbsc-schedule-event .mbsc-schedule-event-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.6);
+}
+</style>
