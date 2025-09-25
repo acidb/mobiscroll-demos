@@ -1,42 +1,32 @@
-<script setup lang="ts">
+<script setup>
 import { MbscEventcalendar, MbscToast, setOptions /* localeImport */ } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
 import { ref } from 'vue'
+
 setOptions({
   // locale,
   // theme
 })
 
-const user = {
-  id: 2,
-  name: 'Willis Cane',
-  role: 'limited'
-}
+const user = { id: 2, name: 'Willis Cane', role: 'limited' }
 
-// Other user examples
-// const user = {
-//   name: 'Client',
-//   role: 'readonly'
-// }
-// const user = {
-//   name: 'Project Manager',
-//   role: 'full'
-// }
+/* Other user examples
+const user = { name: 'Client',  role: 'readonly' }
+const user = { name: 'Project Manager', role: 'full' } */
 
-const editEvents = ref<boolean>(false)
-const myDefaultEvent = ref<() => { color: string } | null>(null)
-const isToastOpen = ref<boolean>(false)
-const toastMessage = ref<string>('')
+const editEvents = ref(false)
+const isToastOpen = ref(false)
+const toastMessage = ref('')
+const defaultColor = ref('')
 
-const myView = ref<MbscEventcalendarView>({
+const myView = {
   timeline: {
     type: 'week',
     startTime: '08:00',
     endTime: '20:00'
   }
-})
+}
 
-const myEvents = ref<MbscCalendarEvent[]>([
+const myEvents = ref([
   {
     start: 'dyndatetime(y,m,d-1,11)',
     end: 'dyndatetime(y,m,d-1,15)',
@@ -129,41 +119,27 @@ const myEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-const myResources = ref<MbscResource[]>([
-  {
-    id: 1,
-    name: 'Jude Chester',
-    color: '#af2ec3'
-  },
-  {
-    id: 2,
-    name: 'Willis Cane',
-    color: '#cccc39'
-  },
-  {
-    id: 3,
-    name: 'Derek Austyn',
-    color: '#56ca2c'
-  },
-  {
-    id: 4,
-    name: 'Merv Kenny',
-    color: '#af2424'
-  },
-  {
-    id: 5,
-    name: 'Fred Waldez',
-    color: '#256ebc'
-  }
+const myResources = ref([
+  { id: 1, name: 'Jude Chester', color: '#af2ec3' },
+  { id: 2, name: 'Willis Cane', color: '#cccc39' },
+  { id: 3, name: 'Derek Austyn', color: '#56ca2c' },
+  { id: 4, name: 'Merv Kenny', color: '#af2424' },
+  { id: 5, name: 'Fred Waldez', color: '#256ebc' }
 ])
+
+function myDefaultEvent() {
+  return {
+    color: defaultColor.value
+  }
+}
 
 // Simulate login
 function login() {
   const newTasks = [...myEvents.value]
   const newResources = [...myResources.value]
-  let defaultColor = ''
 
   if (user.role === 'readonly') {
+    defaultColor.value = ''
     for (const task of newTasks) {
       task.editable = false
       task.color = '#af2ec3'
@@ -171,7 +147,7 @@ function login() {
 
     toastMessage.value = 'Client with read-only access logged in'
   } else if (user.role === 'limited') {
-    defaultColor = '#af2424'
+    defaultColor.value = '#af2424'
     for (const task of newTasks) {
       if (task.resource !== user.id) {
         task.editable = false
@@ -188,6 +164,7 @@ function login() {
     }
     toastMessage.value = 'User ' + user.name + ' with limited access logged in'
   } else {
+    defaultColor.value = ''
     toastMessage.value = 'User with full access logged in'
   }
 
@@ -195,11 +172,6 @@ function login() {
   myResources.value = newResources
   editEvents.value = user.role != 'readonly'
   isToastOpen.value = true
-  myDefaultEvent.value = function () {
-    return {
-      color: defaultColor
-    }
-  }
 }
 
 login()
@@ -207,7 +179,7 @@ login()
 
 <template>
   <MbscEventcalendar
-    cssClass="mds-role-based-timeline"
+    cssClass="mds-role-based-views-with-different-permission"
     :view="myView"
     :data="myEvents"
     :resources="myResources"
@@ -222,13 +194,15 @@ login()
 </template>
 
 <style>
-.mds-role-based-timeline
+.mds-role-based-views-with-different-permission
   .mbsc-schedule-event:not(.mbsc-readonly-event)
   .mbsc-schedule-event-background {
   border: 2px solid currentColor;
 }
 
-.mds-role-based-timeline .mbsc-schedule-event .mbsc-schedule-event-background::after {
+.mds-role-based-views-with-different-permission
+  .mbsc-schedule-event
+  .mbsc-schedule-event-background::after {
   content: '';
   position: absolute;
   inset: 0;

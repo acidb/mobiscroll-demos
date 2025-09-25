@@ -9,39 +9,24 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-role-based-timeline',
-  styleUrl: './role-based-timeline.css',
+  selector: 'app-role-based-views-with-different-permission',
+  styleUrl: './role-based-views-with-different-permission.css',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './role-based-timeline.html',
+  templateUrl: './role-based-views-with-different-permission.html',
   standalone: true,
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private notify: Notifications) { }
 
-  // Simulated logged in user
-  user = {
-    id: 2,
-    name: 'Willis Cane',
-    role: 'limited',
-  };
+  user = { id: 2, name: 'Willis Cane', role: 'limited' };
 
-  // Other user examples
-  // user = {
-  //   id: 'client',
-  //   name: 'Client',
-  //   role: 'readonly',
-  // };
-  // user = {
-  //   id: 'manager',
-  //   name: 'Project Manager',
-  //   role: 'full',
-  // };
+  /* Other user examples
+  user = { id: 'client', name: 'Client', role: 'readonly' };
+  user = { id: 'manager', name: 'Project Manager', role: 'full' }; */
 
   editEvents = false;
-  myDefaultEvent(): MbscCalendarEvent {
-    return {};
-  }
+  defaultColor = '';
 
   myView: MbscEventcalendarView = {
     timeline: {
@@ -144,39 +129,25 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  myResources: MbscResource[] = [{
-    id: 1,
-    name: 'Jude Chester',
-    color: '#af2ec3',
-  },
-  {
-    id: 2,
-    name: 'Willis Cane',
-    color: '#cccc39',
-  },
-  {
-    id: 3,
-    name: 'Derek Austyn',
-    color: '#56ca2c',
-  },
-  {
-    id: 4,
-    name: 'Merv Kenny',
-    color: '#af2424',
-  },
-  {
-    id: 5,
-    name: 'Fred Waldez',
-    color: '#256ebc',
-  }];
+  myResources: MbscResource[] = [
+    { id: 1, name: 'Jude Chester', color: '#af2ec3' },
+    { id: 2, name: 'Willis Cane', color: '#cccc39' },
+    { id: 3, name: 'Derek Austyn', color: '#56ca2c' },
+    { id: 4, name: 'Merv Kenny', color: '#af2424' },
+    { id: 5, name: 'Fred Waldez', color: '#256ebc' }
+  ];
+
+  myDefaultEvent = (): MbscCalendarEvent => ({
+    color: this.defaultColor
+  })
 
   // Simulate login
   login(): void {
     const newTasks = [...this.myEvents];
     const newResources = [...this.myResources];
-    let defaultColor = '';
 
     if (this.user.role === 'readonly') {
+      this.defaultColor = '';
       for (const task of newTasks) {
         task.editable = false;
         task.color = '#af2ec3';
@@ -186,7 +157,7 @@ export class AppComponent implements OnInit {
         message: 'Client with read-only access logged in',
       });
     } else if (this.user.role === 'limited') {
-      defaultColor = '#af2424';
+      this.defaultColor = '#af2424';
       for (const task of newTasks) {
         if (task.resource !== this.user.id) {
           task.editable = false;
@@ -206,6 +177,7 @@ export class AppComponent implements OnInit {
         message: 'User ' + this.user.name + ' with limited access logged in',
       });
     } else {
+      this.defaultColor = '';
       this.notify.toast({
         message: 'User with full access logged in',
       });
@@ -214,11 +186,6 @@ export class AppComponent implements OnInit {
     this.myEvents = newTasks;
     this.myResources = newResources;
     this.editEvents = this.user.role != 'readonly';
-    this.myDefaultEvent = function (): MbscCalendarEvent {
-      return {
-        color: defaultColor
-      };
-    }
   }
 
   ngOnInit(): void {

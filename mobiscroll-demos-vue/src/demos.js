@@ -248,7 +248,7 @@ import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/
 import Demo750 from './demos/eventcalendar/timeline/tasks-subtasks-under-shifts/tasks-subtasks-under-shifts.vue'
 import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search.vue'
 import Demo772 from './demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation.vue'
-import Demo780 from './demos/eventcalendar/timeline/role-based-timeline/role-based-timeline.vue'
+import Demo780 from './demos/eventcalendar/timeline/role-based-views-with-different-permission/role-based-views-with-different-permission.vue'
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline.vue'
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution.vue'
 import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom.vue'
@@ -1474,7 +1474,7 @@ export const demos = [
               },
               {
                 name: 'Role-based timeline',
-                unique: 'role-based-timeline',
+                unique: 'role-based-views-with-different-permission',
                 component: Demo780
               }
             ]

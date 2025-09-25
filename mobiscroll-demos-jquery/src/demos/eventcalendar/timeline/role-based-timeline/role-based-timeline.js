@@ -10,21 +10,11 @@ export default {
     });
 
     $(function () {
-      var user = {
-        id: 2,
-        name: 'Willis Cane',
-        role: 'limited',
-      };
+      var user = { id: 2, name: 'Willis Cane', role: 'limited' };
 
-      // Other user examples
-      // user = {
-      //   name: 'Client',
-      //   role: 'readonly',
-      // };
-      // user = {
-      //   name: 'Project Manager',
-      //   role: 'full',
-      // };
+      /* Other user examples
+      var user = { name: 'Client', role: 'readonly' };
+      var user = { name: 'Project Manager', role: 'full' }; */
 
       var myEvents = [
         {
@@ -120,34 +110,14 @@ export default {
       ];
 
       var myResources = [
-        {
-          id: 1,
-          name: 'Jude Chester',
-          color: '#af2ec3',
-        },
-        {
-          id: 2,
-          name: 'Willis Cane',
-          color: '#cccc39',
-        },
-        {
-          id: 3,
-          name: 'Derek Austyn',
-          color: '#56ca2c',
-        },
-        {
-          id: 4,
-          name: 'Merv Kenny',
-          color: '#af2424',
-        },
-        {
-          id: 5,
-          name: 'Fred Waldez',
-          color: '#256ebc',
-        },
+        { id: 1, name: 'Jude Chester', color: '#af2ec3' },
+        { id: 2, name: 'Willis Cane', color: '#cccc39' },
+        { id: 3, name: 'Derek Austyn', color: '#56ca2c' },
+        { id: 4, name: 'Merv Kenny', color: '#af2424' },
+        { id: 5, name: 'Fred Waldez', color: '#256ebc' },
       ];
 
-      var myCalendar = $('#demo-role-based-timeline')
+      var myCalendar = $('#demo-role-based-views-with-different-permission')
         .mobiscroll()
         .eventcalendar({
           view: {
@@ -221,9 +191,8 @@ export default {
           });
         }
 
-        myCalendar.setEvents(newTasks);
-
         myCalendar.setOptions({
+          data: newTasks,
           resources: newResources,
           clickToCreate: editable,
           dragToCreate: editable,
@@ -243,15 +212,15 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-role-based-timeline" class="mds-role-based-timeline"></div>
+<div id="demo-role-based-views-with-different-permission" class="mds-role-based-views-with-different-permission"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-role-based-timeline .mbsc-schedule-event:not(.mbsc-readonly-event) .mbsc-schedule-event-background {
+.mds-role-based-views-with-different-permission .mbsc-schedule-event:not(.mbsc-readonly-event) .mbsc-schedule-event-background {
   border: 2px solid currentColor;
 }
 
-.mds-role-based-timeline .mbsc-schedule-event .mbsc-schedule-event-background::after {
+.mds-role-based-views-with-different-permission .mbsc-schedule-event .mbsc-schedule-event-background::after {
   content: "";
   position: absolute;
   inset: 0;

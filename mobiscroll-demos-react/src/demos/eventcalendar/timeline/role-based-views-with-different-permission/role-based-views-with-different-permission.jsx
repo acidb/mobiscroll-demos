@@ -1,20 +1,13 @@
-import {
-  Eventcalendar,
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-  MbscResource,
-  setOptions,
-  Toast /* localeImport */,
-} from '@mobiscroll/react';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import './role-based-timeline.css';
+import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import './role-based-views-with-different-permission.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const initialEvents: MbscCalendarEvent[] = [
+const initialEvents = [
   {
     start: 'dyndatetime(y,m,d-1,11)',
     end: 'dyndatetime(y,m,d-1,15)',
@@ -107,46 +100,26 @@ const initialEvents: MbscCalendarEvent[] = [
   },
 ];
 
-const initialResources: MbscResource[] = [
-  {
-    id: 1,
-    name: 'Jude Chester',
-    color: '#af2ec3',
-  },
-  {
-    id: 2,
-    name: 'Willis Cane',
-    color: '#cccc39',
-  },
-  {
-    id: 3,
-    name: 'Derek Austyn',
-    color: '#56ca2c',
-  },
-  {
-    id: 4,
-    name: 'Merv Kenny',
-    color: '#af2424',
-  },
-  {
-    id: 5,
-    name: 'Fred Waldez',
-    color: '#256ebc',
-  },
+const initialResources = [
+  { id: 1, name: 'Jude Chester', color: '#af2ec3' },
+  { id: 2, name: 'Willis Cane', color: '#cccc39' },
+  { id: 3, name: 'Derek Austyn', color: '#56ca2c' },
+  { id: 4, name: 'Merv Kenny', color: '#af2424' },
+  { id: 5, name: 'Fred Waldez', color: '#256ebc' },
 ];
 
-const App: FC = () => {
+function App() {
   const user = useMemo(() => ({ id: 2, name: 'Willis Cane', role: 'limited' }), []);
 
-  // Other user examples
-  // const user = useMemo(() => ({ name: 'Client', role: 'readonly' }), []);
-  // const user = useMemo(() => ({ name: 'Project Manager', role: 'full' }), []);
+  /* Other user examples
+  const user = useMemo(() => ({ name: 'Client', role: 'readonly' }), []);
+  const user = useMemo(() => ({ name: 'Project Manager', role: 'full' }), []); */
 
-  const [editEvents, setEditEvents] = useState<boolean>(false);
-  const [isToastOpen, setToastOpen] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useState<string>('');
+  const [editEvents, setEditEvents] = useState(false);
+  const [isToastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
-  const myView = useMemo<MbscEventcalendarView>(
+  const myView = useMemo(
     () => ({
       timeline: {
         type: 'week',
@@ -157,9 +130,8 @@ const App: FC = () => {
     [],
   );
 
-  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>(initialEvents);
-
-  const [myResources, setResources] = useState<MbscResource[]>(initialResources);
+  const [myEvents, setEvents] = useState(initialEvents);
+  const [myResources, setResources] = useState(initialResources);
 
   const getDefaultEvent = useCallback(
     () => ({
@@ -214,7 +186,7 @@ const App: FC = () => {
   return (
     <>
       <Eventcalendar
-        className="mds-role-based-timeline"
+        className="mds-role-based-views-with-different-permission"
         view={myView}
         data={myEvents}
         resources={myResources}
@@ -228,5 +200,6 @@ const App: FC = () => {
       <Toast message={toastMessage} isOpen={isToastOpen} onClose={handleCloseToast} />
     </>
   );
-};
+}
+
 export default App;
