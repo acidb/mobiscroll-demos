@@ -186,7 +186,7 @@ function App() {
   return (
     <>
       <Eventcalendar
-        className="mds-role-based-views-with-different-permission"
+        className="mds-role-based-timeline"
         view={myView}
         data={myEvents}
         resources={myResources}

@@ -179,7 +179,7 @@ login()
 
 <template>
   <MbscEventcalendar
-    cssClass="mds-role-based-views-with-different-permission"
+    cssClass="mds-role-based-timeline"
     :view="myView"
     :data="myEvents"
     :resources="myResources"
@@ -194,15 +194,13 @@ login()
 </template>
 
 <style>
-.mds-role-based-views-with-different-permission
+.mds-role-based-timeline
   .mbsc-schedule-event:not(.mbsc-readonly-event)
   .mbsc-schedule-event-background {
   border: 2px solid currentColor;
 }
 
-.mds-role-based-views-with-different-permission
-  .mbsc-schedule-event
-  .mbsc-schedule-event-background::after {
+.mds-role-based-timeline .mbsc-schedule-event .mbsc-schedule-event-background::after {
   content: '';
   position: absolute;
   inset: 0;

@@ -197,15 +197,15 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-role-based-views-with-different-permission" class="mds-role-based-views-with-different-permission"></div>
+<div id="demo-role-based-views-with-different-permission" class="mds-role-based-timeline"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-role-based-views-with-different-permission .mbsc-schedule-event:not(.mbsc-readonly-event) .mbsc-schedule-event-background {
+.mds-role-based-timeline .mbsc-schedule-event:not(.mbsc-readonly-event) .mbsc-schedule-event-background {
   border: 2px solid currentColor;
 }
 
-.mds-role-based-views-with-different-permission .mbsc-schedule-event .mbsc-schedule-event-background::after {
+.mds-role-based-timeline .mbsc-schedule-event .mbsc-schedule-event-background::after {
   content: "";
   position: absolute;
   inset: 0;

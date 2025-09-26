@@ -1,8 +1,8 @@
-.mds-role-based-views-with-different-permission .mbsc-schedule-event:not(.mbsc-readonly-event) .mbsc-schedule-event-background {
+.mds-role-based-timeline .mbsc-schedule-event:not(.mbsc-readonly-event) .mbsc-schedule-event-background {
   border: 2px solid currentColor;
 }
 
-.mds-role-based-views-with-different-permission .mbsc-schedule-event .mbsc-schedule-event-background::after {
+.mds-role-based-timeline .mbsc-schedule-event .mbsc-schedule-event-background::after {
   content: '';
   position: absolute;
   inset: 0;
