@@ -146,6 +146,7 @@ import { AppComponent as Demo729 } from '../demos/eventcalendar/calendar-view/pr
 import { AppComponent as Demo569 } from '../demos/eventcalendar/calendar-view/blocked-days-ranges/blocked-days-ranges';
 import { AppComponent as Demo586 } from '../demos/eventcalendar/calendar-view/external-drag-drop-schedule-unschedule/external-drag-drop-schedule-unschedule';
 import { AppComponent as Demo587 } from '../demos/eventcalendar/calendar-view/external-event-presets/external-event-presets';
+import { AppComponent as Demo6667 } from '../demos/eventcalendar/calendar-view/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import { AppComponent as Demo510 } from '../demos/eventcalendar/calendar-view/resource-filtering-in-header/resource-filtering-in-header';
 import { AppComponent as Demo450 } from '../demos/eventcalendar/calendar-view/event-data-structure/event-data-structure';
 import { AppComponent as Demo373 } from '../demos/eventcalendar/calendar-view/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
@@ -202,6 +203,7 @@ import { AppComponent as Demo570 } from '../demos/eventcalendar/scheduler/time-o
 import { AppComponent as Demo568 } from '../demos/eventcalendar/scheduler/prevent-double-booking-events/prevent-double-booking-events';
 import { AppComponent as Demo584 } from '../demos/eventcalendar/scheduler/external-drag-drop-schedule-unschedule/external-drag-drop-schedule-unschedule';
 import { AppComponent as Demo585 } from '../demos/eventcalendar/scheduler/external-event-presets/external-event-presets';
+import { AppComponent as Demo6666 } from '../demos/eventcalendar/scheduler/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import { AppComponent as Demo591 } from '../demos/eventcalendar/scheduler/resource-view/resource-view';
 import { AppComponent as Demo592 } from '../demos/eventcalendar/scheduler/group-by-resource-by-day/group-by-resource-by-day';
 import { AppComponent as Demo593 } from '../demos/eventcalendar/scheduler/shared-events-across-resources/shared-events-across-resources';
@@ -209,6 +211,7 @@ import { AppComponent as Demo594 } from '../demos/eventcalendar/scheduler/dynami
 import { AppComponent as Demo771 } from '../demos/eventcalendar/scheduler/dynamic-content-based-resource-width/dynamic-content-based-resource-width';
 import { AppComponent as Demo719 } from '../demos/eventcalendar/scheduler/resource-data-structure/resource-data-structure';
 import { AppComponent as Demo481 } from '../demos/eventcalendar/scheduler/event-data-structure/event-data-structure';
+import { AppComponent as Demo777 } from '../demos/eventcalendar/scheduler/hide-non-working-resources/hide-non-working-resources';
 import { AppComponent as Demo503 } from '../demos/eventcalendar/scheduler/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
 import { AppComponent as Demo490 } from '../demos/eventcalendar/scheduler/recurring-events/recurring-events';
 import { AppComponent as Demo517 } from '../demos/eventcalendar/scheduler/load-inline-data/load-inline-data';
@@ -274,6 +277,7 @@ import { AppComponent as Demo665 } from '../demos/eventcalendar/timeline/move-re
 import { AppComponent as Demo723 } from '../demos/eventcalendar/timeline/conditional-move-resize/conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource';
 import { AppComponent as Demo726 } from '../demos/eventcalendar/timeline/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import { AppComponent as Demo728 } from '../demos/eventcalendar/timeline/prevent-double-booking-events/prevent-double-booking-events';
+import { AppComponent as Demo6668 } from '../demos/eventcalendar/timeline/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import { AppComponent as Demo607 } from '../demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import { AppComponent as Demo625 } from '../demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy';
 import { AppComponent as Demo747 } from '../demos/eventcalendar/timeline/show-summaries-aggregates-for-resource-groups/show-summaries-aggregates-for-resource-groups';
@@ -350,7 +354,6 @@ import { AppComponent as Demo387 } from '../demos/pickers/select/themes-ios-mate
 import { AppComponent as Demo276 } from '../demos/pickers/select/event-hooks/event-hooks';
 import { AppComponent as Demo471 } from '../demos/pickers/select/localization/localization';
 import { AppComponent as Demo601 } from '../demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
-
 
 export const demos: any[] = [
   {
@@ -487,9 +490,7 @@ export const demos: any[] = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [
-              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo375 },
-            ],
+            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo375 }],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -627,9 +628,7 @@ export const demos: any[] = [
           {
             name: 'Resources',
             unique: 17,
-            items: [
-              { name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo512 },
-            ],
+            items: [{ name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo512 }],
           },
           {
             name: 'Event data structure',
@@ -661,16 +660,12 @@ export const demos: any[] = [
           {
             name: 'CRUD operations',
             unique: 4,
-            items: [
-              { name: 'Multiple select & bulk operations', unique: 'event-bulk-actions-edit-delete-update', component: Demo703 },
-            ],
+            items: [{ name: 'Multiple select & bulk operations', unique: 'event-bulk-actions-edit-delete-update', component: Demo703 }],
           },
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [
-              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo521 },
-            ],
+            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo521 }],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -752,14 +747,13 @@ export const demos: any[] = [
               { name: 'Manage blocked out dates', unique: 'blocked-days-ranges', component: Demo569 },
               { name: 'External drag and drop', unique: 'external-drag-drop-schedule-unschedule', component: Demo586 },
               { name: 'External d&d presets', unique: 'external-event-presets', component: Demo587 },
+              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6667 },
             ],
           },
           {
             name: 'Resources',
             unique: 17,
-            items: [
-              { name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo510 },
-            ],
+            items: [{ name: 'In-header filtering', unique: 'resource-filtering-in-header', component: Demo510 }],
           },
           {
             name: 'Event data structure',
@@ -802,9 +796,7 @@ export const demos: any[] = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [
-              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo455 },
-            ],
+            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo455 }],
           },
           {
             name: 'Localization & tapping into the lifecycle',
@@ -886,6 +878,7 @@ export const demos: any[] = [
               { name: 'Prevent event overlap', unique: 'prevent-double-booking-events', component: Demo568 },
               { name: 'External drag and drop', unique: 'external-drag-drop-schedule-unschedule', component: Demo584 },
               { name: 'External d&d presets', unique: 'external-event-presets', component: Demo585 },
+              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6666 },
             ],
           },
           {
@@ -898,6 +891,7 @@ export const demos: any[] = [
               { name: 'Show/hide resources', unique: 'dynamic-add-remove-resources-filter', component: Demo594 },
               { name: 'Variable resource width', unique: 'dynamic-content-based-resource-width', component: Demo771 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo719 },
+              { name: 'Hide unavailable resources', unique: 'hide-non-working-resources', component: Demo777 },
             ],
           },
           {
@@ -999,7 +993,11 @@ export const demos: any[] = [
             unique: 13,
             items: [
               { name: 'Configure the timeline', unique: 'daily-weekly-monthly-yearly-timeline', component: Demo605 },
-              { name: 'Configure the page, size, resolution', unique: 'multiple-days-weeks-months-quarters-years-variable-resolution', component: Demo663 },
+              {
+                name: 'Configure the page, size, resolution',
+                unique: 'multiple-days-weeks-months-quarters-years-variable-resolution',
+                component: Demo663,
+              },
               { name: 'Dynamically zoom in/out', unique: 'calendar-zoom', component: Demo764 },
               { name: 'Set event stack size', unique: 'control-number-of-concurrently-shown-events', component: Demo734 },
               { name: 'Event buffer', unique: 'event-buffer', component: Demo739 },
@@ -1021,7 +1019,11 @@ export const demos: any[] = [
             items: [
               { name: 'Timeline event template', unique: 'timeline-custom-event-rendering', component: Demo609 },
               { name: 'Cell customization', unique: 'dynamic-cell-content-template', component: Demo774 },
-              { name: 'Hour, day, week, month, year header and footer template', unique: 'hour-day-week-month-quarter-year-header-footer-template', component: Demo714 },
+              {
+                name: 'Hour, day, week, month, year header and footer template',
+                unique: 'hour-day-week-month-quarter-year-header-footer-template',
+                component: Demo714,
+              },
               { name: 'Time slot template', unique: 'shift-template', component: Demo633 },
               { name: 'Resource header template', unique: 'resource-header-template', component: Demo639 },
               { name: 'Custom event tooltip', unique: 'custom-event-tooltip', component: Demo656 },
@@ -1036,6 +1038,7 @@ export const demos: any[] = [
               { name: 'Conditional move & resize per event, resource or globally', unique: 'conditional-move-resize', component: Demo723 },
               { name: 'Drag & drop between timelines', unique: 'drag-drop-between-calendar-instances', component: Demo726 },
               { name: 'Prevent event overlap', unique: 'prevent-double-booking-events', component: Demo728 },
+              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6668 },
             ],
           },
           {
@@ -1172,9 +1175,7 @@ export const demos: any[] = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [
-              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo466 },
-            ],
+            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo466 }],
           },
         ],
       },
@@ -1210,16 +1211,12 @@ export const demos: any[] = [
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [
-              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo762 },
-            ],
+            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo762 }],
           },
           {
             name: 'Lifecycle events',
             unique: 29,
-            items: [
-              { name: 'Lifecycle events', unique: 'event-hooks', component: Demo763 },
-            ],
+            items: [{ name: 'Lifecycle events', unique: 'event-hooks', component: Demo763 }],
           },
         ],
       },
@@ -1262,16 +1259,12 @@ export const demos: any[] = [
           {
             name: 'Validation & restricting selection',
             unique: 11,
-            items: [
-              { name: 'Disabled values', unique: 'disabled-invalid-values', component: Demo603 },
-            ],
+            items: [{ name: 'Disabled values', unique: 'disabled-invalid-values', component: Demo603 }],
           },
           {
             name: 'Customizing the look & feel',
             unique: 5,
-            items: [
-              { name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo387 },
-            ],
+            items: [{ name: 'Theming capabilities', unique: 'themes-ios-material-windows', component: Demo387 }],
           },
           {
             name: 'Localization & tapping into the lifecycle',

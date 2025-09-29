@@ -1,38 +1,63 @@
 <mbsc-eventcalendar
+  [view]="myView"
   [data]="myEvents"
   [resources]="myResources"
-  [options]="calendarOptions"
+  [invalid]="myInvalid"
+  [timezonePlugin]="myTimezonePlugin"
+  [dataTimezone]="'utc'"
+  [displayTimezone]="'utc'"
+  [clickToCreate]="true"
+  [dragToCreate]="true"
+  [dragToMove]="true"
+  [dragToResize]="true"
+  [dragTimeStep]="60"
+  (onEventCreated)="onEventCreated($event)"
+  (onEventUpdated)="onEventUpdated($event)"
+  (onEventDeleted)="onEventDeleted($event)"
+  (onEventCreateFailed)="createUpdateEvent($event.event, true)"
+  (onEventUpdateFailed)="createUpdateEvent($event.event, false)"
+  [extendDefaultEvent]="myDefaultEvent"
   [scheduleEventTemplate]="myEventTemplate"
   [headerTemplate]="myHeaderTemplate"
   [resourceTemplate]="myResourceTemplate"
+  [cellTemplate]="myCellTemplate"
 >
   <ng-template #myEventTemplate let-data>
-    <div class="md-meeting-planner-cont" [ngStyle]="{background: data.color}">
-      <div class="md-meeting-planner-wrapper">
-        <div class="md-meeting-planner-title">{{data.title}}</div>
-        <div class="md-meeting-planner-time">{{getTitleTime(data)}}</div>
+    <div class="mds-meeting-planner-cont" [ngStyle]="{background: data.color}">
+      <div class="mds-meeting-planner-wrapper">
+        <div class="mds-meeting-planner-title">{{data.title}}</div>
+        <div class="mds-meeting-planner-time">{{getTitleTime(data)}}</div>
       </div>
     </div>
   </ng-template>
   <ng-template #myHeaderTemplate>
-    <mbsc-calendar-nav class="md-timezone-nav"></mbsc-calendar-nav>
-    <div class="md-meeting-planner-header">
-      <div class="md-meeting-planner-zone md-meeting-planner-work">working hours</div>
-      <div class="md-meeting-planner-zone md-meeting-planner-flex">flex hours</div>
-      <div class="md-meeting-planner-zone md-meeting-planner-off">time off</div>
-      <mbsc-calendar-prev class="md-work-week-prev"></mbsc-calendar-prev>
-      <mbsc-calendar-today class="md-work-week-today"></mbsc-calendar-today>
-      <mbsc-calendar-next class="md-work-week-next"></mbsc-calendar-next>
+    <mbsc-calendar-nav class="mds-timezone-nav"></mbsc-calendar-nav>
+    <div class="mds-meeting-planner-header">
+      <div class="mds-meeting-planner-zone mds-meeting-planner-work">working hours</div>
+      <div class="mds-meeting-planner-zone mds-meeting-planner-flex">flex hours</div>
+      <div class="mds-meeting-planner-zone mds-meeting-planner-off">time off</div>
+      <mbsc-calendar-prev class="mds-work-week-prev"></mbsc-calendar-prev>
+      <mbsc-calendar-today class="mds-work-week-today"></mbsc-calendar-today>
+      <mbsc-calendar-next class="mds-work-week-next"></mbsc-calendar-next>
     </div>
   </ng-template>
   <ng-template #myResourceTemplate let-resource>
-    <div class="md-meeting-participant-cont">
-      <div class="md-meeting-participant-name">{{resource.name}}</div>
+    <div class="mds-meeting-participant-cont">
+      <div class="mds-meeting-participant-name">{{resource.name}}</div>
       <div>
         <span *ngIf="resource.organizer">Organizer </span>
-        <span class="md-meeting-participant-offset">{{resource.utcOffset}}</span>
+        <span class="mds-meeting-participant-offset">{{resource.utcOffset}}</span>
       </div>
-      <img class="md-meeting-participant-avatar" [attr.alt]="resource.name" [src]="resource.img" />
+      <img class="mds-meeting-participant-avatar" [attr.alt]="resource.name" [src]="resource.img" />
+    </div>
+  </ng-template>
+  <ng-template #myCellTemplate let-args>
+    <div
+      class="mds-meeting-planner-time-slot mbsc-flex mbsc-justify-content-center"
+      [ngStyle]="{'background-color': hProps.color}"
+      *ngIf="getHourProps(args.date.getHours(), args.resource.timezone) as hProps"
+    >
+      {{hProps.title}} {{hProps.isAM ? ' AM' : ' PM'}}
     </div>
   </ng-template>
 </mbsc-eventcalendar>
