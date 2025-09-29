@@ -1,31 +1,35 @@
-.external-drop-calendar {
+.mds-full-height {
+  height: 100%;
+}
+
+.mds-drag-drop-sort-calendar {
   border-right: 1px solid #ccc;
 }
 
-.external-drop-cont {
-  height: 100%;
+.mds-drag-drop-sort-container {
+  margin: 10px;
+}
+
+.mds-drag-drop-sort-container-wrapper {
   overflow: auto;
 }
 
-.external-drop-task {
-  color: #fff;
+.mds-third-party-title {
+  margin-top: 12px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.mds-drag-drop-sort-task {
+  margin: 10px;
   padding: 10px;
-  margin: 20px;
+  touch-action: none;
+  color: #fff;
   border-radius: 8px;
   font-family:
     -apple-system,
     Segoe UI,
     Roboto,
     sans-serif;
-}
-
-.external-drop-task {
-  background: #999;
-}
-
-.demo-external-drag-drop-schedule-unschedule.demo-wrapper,
-.demo-external-drag-drop-schedule-unschedule .mbsc-grid,
-.demo-external-drag-drop-schedule-unschedule .mbsc-row,
-.demo-external-drag-drop-schedule-unschedule .external-drop-calendar {
-  height: 100%;
 }
