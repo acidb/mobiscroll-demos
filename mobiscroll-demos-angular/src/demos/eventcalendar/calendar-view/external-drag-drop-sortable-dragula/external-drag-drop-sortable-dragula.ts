@@ -4,6 +4,7 @@ import {
   dragulaDraggable,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscItemDragEvent,
   Notifications,
   setOptions /* localeImport */,
   sortableJsDraggable,
@@ -40,32 +41,63 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
+  myDraggableTasks: MbscCalendarEvent[] = [
+    {
+      id: 1,
+      title: 'Task 1',
+      color: '#cf4343',
+      start: dyndatetime('y,m,d,8'),
+      end: dyndatetime('y,m,d,9,30'),
+    },
+    {
+      id: 2,
+      title: 'Task 2',
+      color: '#cf4343',
+      start: dyndatetime('y,m,d,8'),
+      end: dyndatetime('y,m,d,10'),
+    },
+    {
+      id: 3,
+      title: 'Task 3',
+      color: '#cf4343',
+      start: dyndatetime('y,m,d,10'),
+      end: dyndatetime('y,m,d,14'),
+    },
+    {
+      id: 4,
+      title: 'Task 4',
+      color: '#cf4343',
+      start: dyndatetime('y,m,d,12'),
+      end: dyndatetime('y,m,d,18'),
+    },
+  ];
+
   mySortableTasks: MbscCalendarEvent[] = [
     {
       id: 'sortable-1',
-      title: 'Task 1',
-      color: '#cb3939',
+      title: 'Task 5',
+      color: '#e49516',
       start: dyndatetime('y,m,d,8'),
       end: dyndatetime('y,m,d,9,30'),
     },
     {
       id: 'sortable-2',
-      title: 'Task 2',
-      color: '#cb3939',
+      title: 'Task 6',
+      color: '#e49516',
       start: dyndatetime('y,m,d,12'),
       end: dyndatetime('y,m,d,15'),
     },
     {
       id: 'sortable-3',
-      title: 'Task 3',
-      color: '#cb3939',
+      title: 'Task 7',
+      color: '#e49516',
       start: dyndatetime('y,m,d,8,30'),
       end: dyndatetime('y,m,d,11'),
     },
     {
       id: 'sortable-4',
-      title: 'Task 4',
-      color: '#cb3939',
+      title: 'Task 8',
+      color: '#e49516',
       start: dyndatetime('y,m,d,16'),
       end: dyndatetime('y,m,d,17'),
     },
@@ -74,28 +106,28 @@ export class AppComponent implements OnInit, AfterViewInit {
   myDragulaTasks: MbscCalendarEvent[] = [
     {
       id: 'dragula-1',
-      title: 'Task 5',
+      title: 'Task 9',
       color: '#1ca11a',
       start: dyndatetime('y,m,d,8'),
       end: dyndatetime('y,m,d,9,30'),
     },
     {
       id: 'dragula-2',
-      title: 'Task 6',
+      title: 'Task 10',
       color: '#1ca11a',
       start: dyndatetime('y,m,d,12'),
       end: dyndatetime('y,m,d,15'),
     },
     {
       id: 'dragula-3',
-      title: 'Task 7',
+      title: 'Task 11',
       color: '#1ca11a',
       start: dyndatetime('y,m,d,8,30'),
       end: dyndatetime('y,m,d,11'),
     },
     {
       id: 'dragula-4',
-      title: 'Task 8',
+      title: 'Task 12',
       color: '#1ca11a',
       start: dyndatetime('y,m,d,16'),
       end: dyndatetime('y,m,d,17'),
@@ -103,16 +135,28 @@ export class AppComponent implements OnInit, AfterViewInit {
   ];
 
   calendarOptions: MbscEventcalendarOptions = {
+    dragToMove: true,
+    dragToCreate: true,
     externalDrop: true,
+    externalDrag: true,
+    view: {
+      calendar: { labels: true },
+    },
     onEventCreated: (args) => {
       if (args.action === 'externalDrop') {
         setTimeout(() => {
+          this.myDraggableTasks = this.myDraggableTasks.filter((item) => item.id !== args.event.id);
           this.mySortableTasks = this.mySortableTasks.filter((item) => item.id !== args.event.id);
           this.myDragulaTasks = this.myDragulaTasks.filter((item) => item.id !== args.event.id);
         });
       }
       this.notify.toast({
         message: args.event.title + ' added',
+      });
+    },
+    onEventDeleted: (args) => {
+      this.notify.toast({
+        message: args.event.title + ' unscheduled',
       });
     },
   };
@@ -122,15 +166,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     return eventLength + ' hour' + (eventLength > 1 ? 's' : '');
   }
 
-  getDragData(task: any): string {
-    const data = {
-      id: task.id,
-      title: task.title,
-      start: task.start,
-      end: task.end,
-      color: task.color,
-    };
+  getDragData(data: MbscCalendarEvent): string {
     return JSON.stringify(data);
+  }
+
+  onItemDrop(args: MbscItemDragEvent): void {
+    if (args.data) {
+      this.myDraggableTasks = [...this.myDraggableTasks, args.data];
+    }
   }
 
   ngOnInit(): void {

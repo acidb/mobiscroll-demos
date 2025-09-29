@@ -4,7 +4,22 @@
       <mbsc-eventcalendar [data]="myEvents " [options]="calendarOptions"></mbsc-eventcalendar>
     </div>
     <div class="mbsc-col-sm-3 mds-drag-drop-sort-container-wrapper mds-full-height">
-      <div class="mbsc-txt-muted mds-third-party-title">SortableJS list</div>
+      <div class="mbsc-txt-muted mds-third-party-title">Mobiscroll draggable</div>
+      <div class="mds-drag-drop-sort-container">
+        <mbsc-dropcontainer (onItemDrop)="onItemDrop($event)">
+          <div
+            mbsc-draggable
+            *ngFor="let task of myDraggableTasks; "
+            [dragData]="task "
+            class="mds-drag-drop-sort-task"
+            [ngStyle]="{background: task.color}"
+          >
+            <div>{{task.title}}</div>
+            <div>{{getHours(task)}}</div>
+          </div>
+        </mbsc-dropcontainer>
+      </div>
+      <div class="mbsc-txt-muted mds-third-party-title">SortableJS list (externally sortable)</div>
       <div class="mds-drag-drop-sort-container" #demoSortableList>
         <div
           *ngFor="let task of mySortableTasks"
@@ -16,7 +31,7 @@
           <div>{{getHours(task)}}</div>
         </div>
       </div>
-      <div class="mbsc-txt-muted mds-third-party-title">Dragula list</div>
+      <div class="mbsc-txt-muted mds-third-party-title">Dragula list (externally sortable)</div>
       <div class="mds-drag-drop-sort-container" #demoDragulaList>
         <div
           *ngFor="let task of myDragulaTasks"

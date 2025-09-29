@@ -2,6 +2,8 @@
 import {
   dragulaDraggable,
   getJson,
+  MbscDraggable,
+  MbscDropcontainer,
   MbscEventcalendar,
   MbscToast,
   setOptions,
@@ -17,38 +19,71 @@ setOptions({
   // theme
 })
 
+const dragElements = ref([])
+const dropCont = ref()
 const sortableCont = ref([])
 const dragulaCont = ref()
 const myEvents = ref([])
 const toastMessage = ref(null)
 const isToastOpen = ref(false)
 
+const myDraggableTasks = ref([
+  {
+    id: 1,
+    title: 'Task 1',
+    color: '#cf4343',
+    start: 'dyndatetime(y,m,d,8)',
+    end: 'dyndatetime(y,m,d,9,30)'
+  },
+  {
+    id: 2,
+    title: 'Task 2',
+    color: '#cf4343',
+    start: 'dyndatetime(y,m,d,8)',
+    end: 'dyndatetime(y,m,d,10)'
+  },
+  {
+    id: 3,
+    title: 'Task 3',
+    color: '#cf4343',
+    start: 'dyndatetime(y,m,d,10)',
+    end: 'dyndatetime(y,m,d,14)'
+  },
+  {
+    id: 4,
+    title: 'Task 4',
+    color: '#cf4343',
+    start: 'dyndatetime(y,m,d,12)',
+    end: 'dyndatetime(y,m,d,18)'
+  }
+])
+
 const mySortableTasks = ref([
   {
     id: 'sortable-1',
-    title: 'Task 1',
-    color: '#cb3939',
+    title: 'Task 5',
+    color: '#e49516',
     start: 'dyndatetime(y,m,d,8)',
     end: 'dyndatetime(y,m,d,9,30)'
   },
   {
     id: 'sortable-2',
-    title: 'Task 2',
-    color: '#cb3939',
+    title: 'Task 6',
+    color: '#e49516',
     start: 'dyndatetime(y,m,d,12)',
     end: 'dyndatetime(y,m,d,15)'
   },
   {
     id: 'sortable-3',
-    title: 'Task 3',
-    color: '#cb3939',
+    title: 'Task 7',
+    color: '#e49516',
     start: 'dyndatetime(y,m,d,8,30)',
     end: 'dyndatetime(y,m,d,11)'
   },
   {
     id: 'sortable-4',
-    title: 'Task 4',
-    color: '#cb3939',
+    title: 'Task 8',
+    color: '#e49516',
     start: 'dyndatetime(y,m,d,16)',
     end: 'dyndatetime(y,m,d,17)'
   }
@@ -57,40 +92,56 @@ const mySortableTasks = ref([
 const myDragulaTasks = ref([
   {
     id: 'dragula-1',
-    title: 'Task 5',
+    title: 'Task 9',
     color: '#1ca11a',
     start: 'dyndatetime(y,m,d,8)',
     end: 'dyndatetime(y,m,d,9,30)'
   },
   {
     id: 'dragula-2',
-    title: 'Task 6',
+    title: 'Task 10',
     color: '#1ca11a',
     start: 'dyndatetime(y,m,d,12)',
     end: 'dyndatetime(y,m,d,15)'
   },
   {
     id: 'dragula-3',
-    title: 'Task 7',
+    title: 'Task 11',
     color: '#1ca11a',
     start: 'dyndatetime(y,m,d,8,30)',
     end: 'dyndatetime(y,m,d,11)'
   },
   {
     id: 'dragula-4',
-    title: 'Task 8',
+    title: 'Task 12',
     color: '#1ca11a',
     start: 'dyndatetime(y,m,d,16)',
     end: 'dyndatetime(y,m,d,17)'
   }
 ])
 
+const myView = {
+  schedule: { type: 'week' }
+}
+
 function handleEventCreated(args) {
   if (args.action === 'externalDrop') {
+    myDraggableTasks.value = myDraggableTasks.value.filter((item) => item.id !== args.event.id)
     mySortableTasks.value = mySortableTasks.value.filter((item) => item.id !== args.event.id)
     myDragulaTasks.value = myDragulaTasks.value.filter((item) => item.id !== args.event.id)
     toastMessage.value = args.event.title + ' added'
     isToastOpen.value = true
+  }
+}
+
+function handleEventDeleted(args) {
+  toastMessage.value = args.event.title + ' unscheduled'
+  isToastOpen.value = true
+}
+
+function handleItemDrop(args) {
+  if (args.data) {
+    myDraggableTasks.value = [...myDraggableTasks.value, args.data]
   }
 }
 
@@ -103,10 +154,6 @@ function getHours(event) {
 
 function handleToastClose() {
   isToastOpen.value = false
-}
-
-const myView = {
-  schedule: { type: 'week' }
 }
 
 onMounted(() => {
@@ -140,14 +187,36 @@ onMounted(() => {
     <div class="mbsc-row mds-full-height">
       <div class="mbsc-col-sm-9 mds-drag-drop-sort-calendar mds-full-height">
         <MbscEventcalendar
-          :data="myEvents"
-          :externalDrop="true"
           :view="myView"
-          @event-created="handleEventCreated"
+          :data="myEvents"
+          :dragToMove="true"
+          :dragToCreate="true"
+          :externalDrop="true"
+          :externalDrag="true"
+          @event-create="handleEventCreated"
+          @event-delete="handleEventDeleted"
         />
       </div>
       <div class="mbsc-col-sm-3 mds-drag-drop-sort-container-wrapper mds-full-height">
-        <div class="mbsc-txt-muted mds-third-party-title">SortableJS list</div>
+        <div class="mbsc-txt-muted mds-third-party-title">Mobiscroll draggable</div>
+        <div ref="dropCont" class="mds-drag-drop-sort-container">
+          <MbscDropcontainer :element="dropCont" @item-drop="handleItemDrop($event)">
+            <div v-for="(task, i) in myDraggableTasks" :key="task.id">
+              <div
+                ref="dragElements"
+                class="mds-drag-drop-sort-task"
+                :style="{ background: task.color }"
+              >
+                <div>{{ task.title }}</div>
+                <div>{{ getHours(task) }}</div>
+                <MbscDraggable :element="dragElements[i]" :dragData="task" />
+              </div>
+            </div>
+          </MbscDropcontainer>
+        </div>
+        <div class="mbsc-txt-muted mds-third-party-title">
+          SortableJS list (externally draggable)
+        </div>
         <div class="mds-drag-drop-sort-container" ref="sortableCont">
           <div
             v-for="task in mySortableTasks"
@@ -160,7 +229,7 @@ onMounted(() => {
             <div>{{ getHours(task) }}</div>
           </div>
         </div>
-        <div class="mbsc-txt-muted mds-third-party-title">Dragula list</div>
+        <div class="mbsc-txt-muted mds-third-party-title">Dragula list (externally draggable)</div>
         <div class="mds-drag-drop-sort-container" ref="dragulaCont">
           <div
             v-for="task in myDragulaTasks"
