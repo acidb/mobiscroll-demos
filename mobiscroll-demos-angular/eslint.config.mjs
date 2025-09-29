@@ -36,6 +36,7 @@ export default tseslint.config(
       ],
       'arrow-body-style': ['warn', 'as-needed'],
       'capitalized-comments': ['warn', 'always', { ignorePattern: 'drag,?$|theme,?$|locale,?$|localeImport' }],
+      'import/no-named-as-default': 'off',
       'import/no-unresolved': 'off',
       'import/order': ['warn', { alphabetize: { order: 'asc', caseInsensitive: true } }],
       'no-var': 'warn',

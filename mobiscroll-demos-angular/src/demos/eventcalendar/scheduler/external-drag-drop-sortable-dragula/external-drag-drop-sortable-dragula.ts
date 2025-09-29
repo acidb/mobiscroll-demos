@@ -22,7 +22,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-eventcalendar-external-drag-drop-sortable-dragula',
+  selector: 'app-scheduler-external-drag-drop-sortable-dragula',
   styleUrl: './external-drag-drop-sortable-dragula.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './external-drag-drop-sortable-dragula.html',
