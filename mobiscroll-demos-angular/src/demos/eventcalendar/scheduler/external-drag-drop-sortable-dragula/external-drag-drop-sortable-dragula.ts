@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
@@ -5,6 +6,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscItemDragEvent,
+  MbscModule,
   Notifications,
   setOptions /* localeImport */,
   sortableJsDraggable,
@@ -25,7 +27,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './external-drag-drop-sortable-dragula.html',
   providers: [Notifications],
-  standalone: false,
+  imports: [CommonModule, MbscModule],
+  standalone: true,
 })
 export class AppComponent implements OnInit, AfterViewInit {
   constructor(

@@ -35,6 +35,8 @@ setOptions({
   // theme
 })
 
+let hProps: { hour: number; isAM: boolean; title: number; color: string; invalid: boolean }
+
 const myEvents = ref<MbscCalendarEvent[]>([
   {
     start: 'dyndatetime(y,m,d,13)',

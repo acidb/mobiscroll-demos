@@ -144,9 +144,7 @@ import { AppComponent as Demo724 } from '../demos/eventcalendar/calendar-view/co
 import { AppComponent as Demo727 } from '../demos/eventcalendar/calendar-view/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import { AppComponent as Demo729 } from '../demos/eventcalendar/calendar-view/prevent-double-booking-events/prevent-double-booking-events';
 import { AppComponent as Demo569 } from '../demos/eventcalendar/calendar-view/blocked-days-ranges/blocked-days-ranges';
-import { AppComponent as Demo586 } from '../demos/eventcalendar/calendar-view/external-drag-drop-schedule-unschedule/external-drag-drop-schedule-unschedule';
-import { AppComponent as Demo587 } from '../demos/eventcalendar/calendar-view/external-event-presets/external-event-presets';
-import { AppComponent as Demo6667 } from '../demos/eventcalendar/calendar-view/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
+import { AppComponent as Demo782 } from '../demos/eventcalendar/calendar-view/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import { AppComponent as Demo510 } from '../demos/eventcalendar/calendar-view/resource-filtering-in-header/resource-filtering-in-header';
 import { AppComponent as Demo450 } from '../demos/eventcalendar/calendar-view/event-data-structure/event-data-structure';
 import { AppComponent as Demo373 } from '../demos/eventcalendar/calendar-view/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
@@ -201,17 +199,15 @@ import { AppComponent as Demo722 } from '../demos/eventcalendar/scheduler/condit
 import { AppComponent as Demo725 } from '../demos/eventcalendar/scheduler/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import { AppComponent as Demo570 } from '../demos/eventcalendar/scheduler/time-off-blocked-ranges/time-off-blocked-ranges';
 import { AppComponent as Demo568 } from '../demos/eventcalendar/scheduler/prevent-double-booking-events/prevent-double-booking-events';
-import { AppComponent as Demo584 } from '../demos/eventcalendar/scheduler/external-drag-drop-schedule-unschedule/external-drag-drop-schedule-unschedule';
-import { AppComponent as Demo585 } from '../demos/eventcalendar/scheduler/external-event-presets/external-event-presets';
-import { AppComponent as Demo6666 } from '../demos/eventcalendar/scheduler/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
+import { AppComponent as Demo783 } from '../demos/eventcalendar/scheduler/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import { AppComponent as Demo591 } from '../demos/eventcalendar/scheduler/resource-view/resource-view';
 import { AppComponent as Demo592 } from '../demos/eventcalendar/scheduler/group-by-resource-by-day/group-by-resource-by-day';
 import { AppComponent as Demo593 } from '../demos/eventcalendar/scheduler/shared-events-across-resources/shared-events-across-resources';
 import { AppComponent as Demo594 } from '../demos/eventcalendar/scheduler/dynamic-add-remove-resources-filter/dynamic-add-remove-resources-filter';
 import { AppComponent as Demo771 } from '../demos/eventcalendar/scheduler/dynamic-content-based-resource-width/dynamic-content-based-resource-width';
+import { AppComponent as Demo780 } from '../demos/eventcalendar/scheduler/hide-non-working-resources/hide-non-working-resources';
 import { AppComponent as Demo719 } from '../demos/eventcalendar/scheduler/resource-data-structure/resource-data-structure';
 import { AppComponent as Demo481 } from '../demos/eventcalendar/scheduler/event-data-structure/event-data-structure';
-import { AppComponent as Demo777 } from '../demos/eventcalendar/scheduler/hide-non-working-resources/hide-non-working-resources';
 import { AppComponent as Demo503 } from '../demos/eventcalendar/scheduler/date-object-ISO-8601-moment/date-object-ISO-8601-moment';
 import { AppComponent as Demo490 } from '../demos/eventcalendar/scheduler/recurring-events/recurring-events';
 import { AppComponent as Demo517 } from '../demos/eventcalendar/scheduler/load-inline-data/load-inline-data';
@@ -251,7 +247,6 @@ import { AppComponent as Demo746 } from '../demos/eventcalendar/timeline/show-ta
 import { AppComponent as Demo750 } from '../demos/eventcalendar/timeline/tasks-subtasks-under-shifts/tasks-subtasks-under-shifts';
 import { AppComponent as Demo751 } from '../demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search';
 import { AppComponent as Demo772 } from '../demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation';
-import { AppComponent as Demo780 } from '../demos/eventcalendar/timeline/role-based-views-with-different-permission/role-based-views-with-different-permission';
 import { AppComponent as Demo605 } from '../demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import { AppComponent as Demo663 } from '../demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
 import { AppComponent as Demo764 } from '../demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
@@ -267,6 +262,7 @@ import { AppComponent as Demo653 } from '../demos/eventcalendar/timeline/setting
 import { AppComponent as Demo654 } from '../demos/eventcalendar/timeline/multiple-timezone-support/multiple-timezone-support';
 import { AppComponent as Demo710 } from '../demos/eventcalendar/timeline/searching-events-in-sidebar/searching-events-in-sidebar';
 import { AppComponent as Demo743 } from '../demos/eventcalendar/timeline/navigate-view-from-external-calendar/navigate-view-from-external-calendar';
+import { AppComponent as Demo781 } from '../demos/eventcalendar/timeline/role-based-views-with-different-permission/role-based-views-with-different-permission';
 import { AppComponent as Demo609 } from '../demos/eventcalendar/timeline/timeline-custom-event-rendering/timeline-custom-event-rendering';
 import { AppComponent as Demo774 } from '../demos/eventcalendar/timeline/dynamic-cell-content-template/dynamic-cell-content-template';
 import { AppComponent as Demo714 } from '../demos/eventcalendar/timeline/hour-day-week-month-quarter-year-header-footer-template/hour-day-week-month-quarter-year-header-footer-template';
@@ -278,7 +274,7 @@ import { AppComponent as Demo665 } from '../demos/eventcalendar/timeline/move-re
 import { AppComponent as Demo723 } from '../demos/eventcalendar/timeline/conditional-move-resize/conditional-move-resize-drag-drop-fixed-event-length-fixed-to-resource';
 import { AppComponent as Demo726 } from '../demos/eventcalendar/timeline/drag-drop-between-calendar-instances/drag-drop-between-calendar-instances';
 import { AppComponent as Demo728 } from '../demos/eventcalendar/timeline/prevent-double-booking-events/prevent-double-booking-events';
-import { AppComponent as Demo6668 } from '../demos/eventcalendar/timeline/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
+import { AppComponent as Demo784 } from '../demos/eventcalendar/timeline/external-drag-drop-sortable-dragula/external-drag-drop-sortable-dragula';
 import { AppComponent as Demo607 } from '../demos/eventcalendar/timeline/timeline-resource-details-side-panel-footer/timeline-resource-details-side-panel-footer';
 import { AppComponent as Demo625 } from '../demos/eventcalendar/timeline/resource-grouping-hierarchy/resource-grouping-hierarchy';
 import { AppComponent as Demo747 } from '../demos/eventcalendar/timeline/show-summaries-aggregates-for-resource-groups/show-summaries-aggregates-for-resource-groups';
@@ -698,7 +694,7 @@ export const demos: any[] = [
             unique: 20,
             items: [
               { name: 'Reservation calendar', unique: 'property-booking-calendar', component: Demo752 },
-              { name: 'Showing daily aggregates', unique: 'day-cell-aggregate-information', component: Demo779 },
+              { name: 'Showing daily summaries', unique: 'day-cell-aggregate-information', component: Demo779 },
             ],
           },
           {
@@ -746,9 +742,7 @@ export const demos: any[] = [
               { name: 'Drag & drop between calendars', unique: 'drag-drop-between-calendar-instances', component: Demo727 },
               { name: 'Prevent event overlap', unique: 'prevent-double-booking-events', component: Demo729 },
               { name: 'Manage blocked out dates', unique: 'blocked-days-ranges', component: Demo569 },
-              { name: 'External drag and drop', unique: 'external-drag-drop-schedule-unschedule', component: Demo586 },
-              { name: 'External d&d presets', unique: 'external-event-presets', component: Demo587 },
-              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6667 },
+              { name: 'External drag & drop', unique: 'external-drag-drop-sortable-dragula', component: Demo782 },
             ],
           },
           {
@@ -877,9 +871,7 @@ export const demos: any[] = [
               { name: 'Drag & drop between schedulers', unique: 'drag-drop-between-calendar-instances', component: Demo725 },
               { name: 'Blocked out times', unique: 'time-off-blocked-ranges', component: Demo570 },
               { name: 'Prevent event overlap', unique: 'prevent-double-booking-events', component: Demo568 },
-              { name: 'External drag and drop', unique: 'external-drag-drop-schedule-unschedule', component: Demo584 },
-              { name: 'External d&d presets', unique: 'external-event-presets', component: Demo585 },
-              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6666 },
+              { name: 'External drag & drop', unique: 'external-drag-drop-sortable-dragula', component: Demo783 },
             ],
           },
           {
@@ -891,8 +883,8 @@ export const demos: any[] = [
               { name: 'Shared events', unique: 'shared-events-across-resources', component: Demo593 },
               { name: 'Show/hide resources', unique: 'dynamic-add-remove-resources-filter', component: Demo594 },
               { name: 'Variable resource width', unique: 'dynamic-content-based-resource-width', component: Demo771 },
+              { name: 'Hide unavailable resources', unique: 'hide-non-working-resources', component: Demo780 },
               { name: 'Resource properties', unique: 'resource-data-structure', component: Demo719 },
-              { name: 'Hide unavailable resources', unique: 'hide-non-working-resources', component: Demo777 },
             ],
           },
           {
@@ -987,7 +979,6 @@ export const demos: any[] = [
               { name: 'Managing tasks within shifts', unique: 'tasks-subtasks-under-shifts', component: Demo750 },
               { name: 'Resource filtering', unique: 'resource-filtering-search', component: Demo751 },
               { name: 'Set up custom teams', unique: 'resource-management-with-dynamic-team-creation', component: Demo772 },
-              { name: 'Implementing roles and permissions', unique: 'role-based-views-with-different-permission', component: Demo780 },
             ],
           },
           {
@@ -1013,6 +1004,7 @@ export const demos: any[] = [
               { name: 'Switching timezones', unique: 'multiple-timezone-support', component: Demo654 },
               { name: 'Event search with sidebar', unique: 'searching-events-in-sidebar', component: Demo710 },
               { name: 'External navigation', unique: 'navigate-view-from-external-calendar', component: Demo743 },
+              { name: 'Implementing roles and permissions', unique: 'role-based-views-with-different-permission', component: Demo781 },
             ],
           },
           {
@@ -1040,7 +1032,7 @@ export const demos: any[] = [
               { name: 'Conditional move & resize per event, resource or globally', unique: 'conditional-move-resize', component: Demo723 },
               { name: 'Drag & drop between timelines', unique: 'drag-drop-between-calendar-instances', component: Demo726 },
               { name: 'Prevent event overlap', unique: 'prevent-double-booking-events', component: Demo728 },
-              { name: 'Drag & drop with external library', unique: 'external-drag-drop-sortable-dragula', component: Demo6668 },
+              { name: 'External drag & drop', unique: 'external-drag-drop-sortable-dragula', component: Demo784 },
             ],
           },
           {
