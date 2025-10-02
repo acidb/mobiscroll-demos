@@ -4,6 +4,7 @@ import {
   dragulaDraggable,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscItemDragEvent,
   MbscResource,
   Notifications,
   setOptions /* localeImport */,
@@ -198,7 +199,10 @@ export class AppComponent implements AfterViewInit {
   ];
 
   calendarOptions: MbscEventcalendarOptions = {
+    dragToMove: true,
+    dragToCreate: true,
     externalDrop: true,
+    externalDrag: true,
     externalResourceDrop: true,
     onEventCreated: (args) => {
       if (args.action === 'externalDrop') {
@@ -210,6 +214,11 @@ export class AppComponent implements AfterViewInit {
       }
       this.notify.toast({
         message: args.event.title + ' added',
+      });
+    },
+    onEventDeleted: (args) => {
+      this.notify.toast({
+        message: args.event.title + ' unscheduled',
       });
     },
     onResourceCreated: (args) => {
@@ -234,28 +243,23 @@ export class AppComponent implements AfterViewInit {
     view: { timeline: { type: 'day' } },
   };
 
+  onItemDrop(args: MbscItemDragEvent): void {
+    if (args.data) {
+      this.myDraggableTasks = [...this.myDraggableTasks, args.data];
+    }
+  }
+
   getHours(event: MbscCalendarEvent) {
     const eventLength = Math.round(Math.abs(+new Date(event.end as string) - +new Date(event.start as string)) / (60 * 60 * 1000));
     return eventLength + ' hour' + (eventLength > 1 ? 's' : '');
   }
 
-  getTaskDragData(task: any): string {
-    const data = {
-      id: task.id,
-      title: task.title,
-      start: task.start,
-      end: task.end,
-      color: task.color,
-    };
-    return JSON.stringify(data);
+  getTaskDragData(task: MbscCalendarEvent): string {
+    return JSON.stringify(task);
   }
 
   getResourceDragData(resource: MbscResource): string {
-    const data = {
-      id: resource.id,
-      name: resource.name,
-    };
-    return JSON.stringify(data);
+    return JSON.stringify(resource);
   }
 
   ngAfterViewInit(): void {

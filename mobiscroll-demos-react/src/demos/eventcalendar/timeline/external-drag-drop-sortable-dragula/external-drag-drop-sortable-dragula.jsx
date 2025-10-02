@@ -1,4 +1,12 @@
-import { Draggable, dragulaDraggable, Eventcalendar, setOptions, sortableJsDraggable, Toast /* localeImport */ } from '@mobiscroll/react';
+import {
+  Draggable,
+  dragulaDraggable,
+  Dropcontainer,
+  Eventcalendar,
+  setOptions,
+  sortableJsDraggable,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
 import dragula from 'dragula';
 import PropTypes from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
@@ -65,6 +73,7 @@ Resource.propTypes = {
 };
 
 function App() {
+  const [dropCont, setDropCont] = useState();
   const [sortableTaskCont, setSortableTaskCont] = useState();
   const [dragulaTaskCont, setDragulaTaskCont] = useState();
   const [sortableResourceCont, setSortableResourceCont] = useState();
@@ -250,6 +259,11 @@ function App() {
     }
   }, []);
 
+  const handleEventDeleted = useCallback((args) => {
+    setToastMessage(args.event.title + ' unscheduled');
+    setToastOpen(true);
+  }, []);
+
   const handleResourceCreated = useCallback((args) => {
     if (args.type === 'onResourceCreated') {
       setDraggableResources((resources) => resources.filter((item) => item.id !== args.resource.id));
@@ -257,6 +271,12 @@ function App() {
       setDragulaResources((resources) => resources.filter((item) => item.id !== args.resource.id));
       setToastMessage(args.resource.name + ' added');
       setToastOpen(true);
+    }
+  }, []);
+
+  const handleItemDrop = useCallback((args) => {
+    if (args.data) {
+      setDraggableTasks((tasks) => [...tasks, args.data]);
     }
   }, []);
 
@@ -308,11 +328,13 @@ function App() {
           <div className="mbsc-txt-muted mds-third-party-title">Mobiscroll draggable</div>
           <div className="mbsc-flex">
             <div className="mbsc-col-sm-6 mbsc-flex-col">
-              <div className="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
+              <div className="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0" ref={setDropCont}>
                 <div className="mbsc-txt-muted mds-third-party-list-title">Event list</div>
-                {myDraggableTasks.map((task) => (
-                  <Task key={task.id} data={task} isDraggable />
-                ))}
+                <Dropcontainer onItemDrop={handleItemDrop} element={dropCont}>
+                  {myDraggableTasks.map((task) => (
+                    <Task key={task.id} data={task} isDraggable />
+                  ))}
+                </Dropcontainer>
               </div>
             </div>
             <div className="mbsc-col-sm-6 mbsc-flex-col">
@@ -374,12 +396,16 @@ function App() {
         <div className="mbsc-col-sm-9 mds-drag-drop-sort-calendar mds-full-height">
           <Eventcalendar
             // drag
+            view={myView}
+            resources={myResources}
+            dragToMove={true}
+            dragToCreate={true}
             externalDrop={true}
+            externalDrag={true}
             externalResourceDrop={true}
             onEventCreated={handleEventCreated}
             onResourceCreated={handleResourceCreated}
-            resources={myResources}
-            view={myView}
+            onEventDelete={handleEventDeleted}
           />
         </div>
       </div>

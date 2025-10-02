@@ -1,10 +1,13 @@
 import {
   Draggable,
   dragulaDraggable,
+  Dropcontainer,
   Eventcalendar,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventCreatedEvent,
+  MbscEventDeletedEvent,
+  MbscItemDragEvent,
   MbscResource,
   MbscResourceCreatedEvent,
   setOptions,
@@ -74,6 +77,7 @@ const Resource = (props: { data: MbscResource; isDraggable?: boolean }) => {
 };
 
 const App: FC = () => {
+  const [dropCont, setDropCont] = useState<HTMLDivElement | null>();
   const [sortableTaskCont, setSortableTaskCont] = useState<HTMLDivElement | null>();
   const [dragulaTaskCont, setDragulaTaskCont] = useState<HTMLDivElement | null>();
   const [sortableResourceCont, setSortableResourceCont] = useState<HTMLDivElement | null>();
@@ -259,6 +263,11 @@ const App: FC = () => {
     }
   }, []);
 
+  const handleEventDeleted = useCallback((args: MbscEventDeletedEvent) => {
+    setToastMessage(args.event.title + ' unscheduled');
+    setToastOpen(true);
+  }, []);
+
   const handleResourceCreated = useCallback((args: MbscResourceCreatedEvent) => {
     if (args.type === 'onResourceCreated') {
       setDraggableResources((resources) => resources.filter((item) => item.id !== args.resource.id));
@@ -266,6 +275,12 @@ const App: FC = () => {
       setDragulaResources((resources) => resources.filter((item) => item.id !== args.resource.id));
       setToastMessage(args.resource.name + ' added');
       setToastOpen(true);
+    }
+  }, []);
+
+  const handleItemDrop = useCallback((args: MbscItemDragEvent) => {
+    if (args.data) {
+      setDraggableTasks((tasks) => [...tasks, args.data]);
     }
   }, []);
 
@@ -317,11 +332,13 @@ const App: FC = () => {
           <div className="mbsc-txt-muted mds-third-party-title">Mobiscroll draggable</div>
           <div className="mbsc-flex">
             <div className="mbsc-col-sm-6 mbsc-flex-col">
-              <div className="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
+              <div className="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0" ref={setDropCont}>
                 <div className="mbsc-txt-muted mds-third-party-list-title">Event list</div>
-                {myDraggableTasks.map((task) => (
-                  <Task key={task.id} data={task} isDraggable />
-                ))}
+                <Dropcontainer onItemDrop={handleItemDrop} element={dropCont}>
+                  {myDraggableTasks.map((task) => (
+                    <Task key={task.id} data={task} isDraggable />
+                  ))}
+                </Dropcontainer>
               </div>
             </div>
             <div className="mbsc-col-sm-6 mbsc-flex-col">
@@ -383,12 +400,16 @@ const App: FC = () => {
         <div className="mbsc-col-sm-9 mds-drag-drop-sort-calendar mds-full-height">
           <Eventcalendar
             // drag
+            view={myView}
             externalDrop={true}
             externalResourceDrop={true}
+            dragToMove={true}
+            dragToCreate={true}
+            externalDrag={true}
             onEventCreated={handleEventCreated}
             onResourceCreated={handleResourceCreated}
+            onEventDeleted={handleEventDeleted}
             resources={myResources}
-            view={myView}
           />
         </div>
       </div>

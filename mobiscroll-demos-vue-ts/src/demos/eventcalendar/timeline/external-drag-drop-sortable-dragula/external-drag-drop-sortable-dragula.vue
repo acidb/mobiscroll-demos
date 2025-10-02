@@ -2,6 +2,7 @@
 import {
   dragulaDraggable,
   MbscDraggable,
+  MbscDropcontainer,
   MbscEventcalendar,
   MbscToast,
   setOptions,
@@ -11,6 +12,8 @@ import type {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventCreatedEvent,
+  MbscEventDeletedEvent,
+  MbscItemDragEvent,
   MbscResource,
   MbscResourceDeletedEvent
 } from '@mobiscroll/vue'
@@ -24,6 +27,7 @@ setOptions({
   // theme
 })
 
+const dropCont = ref<HTMLDivElement>()
 const dragTaskElements = ref([])
 const dragResourceElements = ref([])
 const sortableTaskCont = ref<HTMLDivElement>()
@@ -205,6 +209,11 @@ function handleEventCreated(args: MbscEventCreatedEvent) {
   }
 }
 
+function handleEventDeleted(args: MbscEventDeletedEvent) {
+  toastMessage.value = args.event.title + ' unscheduled'
+  isToastOpen.value = true
+}
+
 function handleResourceCreated(args: MbscResourceDeletedEvent) {
   if (args.type === 'onResourceCreated') {
     myDraggableResources.value = myDraggableResources.value.filter(
@@ -218,6 +227,12 @@ function handleResourceCreated(args: MbscResourceDeletedEvent) {
     )
     toastMessage.value = args.resource.name + ' added'
     isToastOpen.value = true
+  }
+}
+
+function handleItemDrop(args: MbscItemDragEvent) {
+  if (args.data) {
+    myDraggableTasks.value = [...myDraggableTasks.value, args.data]
   }
 }
 
@@ -277,19 +292,21 @@ onMounted(() => {
         <div class="mbsc-txt-muted mds-third-party-title">Mobiscroll draggable</div>
         <div class="mbsc-flex">
           <div class="mbsc-col-sm-6 mbsc-flex-col">
-            <div class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
+            <div ref="dropCont" class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
               <div class="mbsc-txt-muted mds-third-party-list-title">Event list</div>
-              <div v-for="(task, i) in myDraggableTasks" :key="task.id">
-                <div
-                  ref="dragTaskElements"
-                  class="mds-drag-drop-sort-task"
-                  :style="{ background: task.color }"
-                >
-                  <div>{{ task.title }}</div>
-                  <div>{{ getHours(task) }}</div>
-                  <MbscDraggable :element="dragTaskElements[i]" :dragData="task" />
+              <MbscDropcontainer :element="dropCont" @item-drop="handleItemDrop($event)">
+                <div v-for="(task, i) in myDraggableTasks" :key="task.id">
+                  <div
+                    ref="dragTaskElements"
+                    class="mds-drag-drop-sort-task"
+                    :style="{ background: task.color }"
+                  >
+                    <div>{{ task.title }}</div>
+                    <div>{{ getHours(task) }}</div>
+                    <MbscDraggable :element="dragTaskElements[i]" :dragData="task" />
+                  </div>
                 </div>
-              </div>
+              </MbscDropcontainer>
             </div>
           </div>
           <div class="mbsc-col-sm-6 mbsc-flex-col">
@@ -387,12 +404,16 @@ onMounted(() => {
       </div>
       <div class="mbsc-col-sm-9 mds-drag-drop-sort-calendar mds-full-height">
         <MbscEventcalendar
+          :view="myView"
+          :dragToMove="true"
+          :dragToCreate="true"
           :externalDrop="true"
+          :externalDrag="true"
           :externalResourceDrop="true"
           :resources="myResources"
-          :view="myView"
           @event-created="handleEventCreated"
           @resource-created="handleResourceCreated"
+          @event-deleted="handleEventDeleted"
         />
       </div>
     </div>
