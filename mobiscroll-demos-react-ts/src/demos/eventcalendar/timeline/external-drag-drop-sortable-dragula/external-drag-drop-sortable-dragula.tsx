@@ -7,6 +7,7 @@ import {
   MbscEventcalendarView,
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
+  MbscExternalDropEvent,
   MbscItemDragEvent,
   MbscResource,
   MbscResourceCreatedEvent,
@@ -14,7 +15,7 @@ import {
   sortableJsDraggable,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import dragula from 'dragula';
+import dragula, { Drake } from 'dragula';
 import { FC, useEffect, useMemo, useState } from 'react';
 import './external-drag-drop-sortable-dragula.css';
 import { useCallback } from 'react';
@@ -119,28 +120,28 @@ const App: FC = () => {
   const [mySortableTasks, setSortableTasks] = useState<MbscCalendarEvent[]>([
     {
       id: 'sortable-1',
-      title: 'Task 1',
+      title: 'Task 5',
       color: '#d1891f',
       start: 'dyndatetime(y,m,d,8)',
       end: 'dyndatetime(y,m,d,9,30)',
     },
     {
       id: 'sortable-2',
-      title: 'Task 2',
+      title: 'Task 6',
       color: '#d1891f',
       start: 'dyndatetime(y,m,d,12)',
       end: 'dyndatetime(y,m,d,15)',
     },
     {
       id: 'sortable-3',
-      title: 'Task 3',
+      title: 'Task 7',
       color: '#d1891f',
       start: 'dyndatetime(y,m,d,8,30)',
       end: 'dyndatetime(y,m,d,11)',
     },
     {
       id: 'sortable-4',
-      title: 'Task 4',
+      title: 'Task 8',
       color: '#d1891f',
       start: 'dyndatetime(y,m,d,16)',
       end: 'dyndatetime(y,m,d,21)',
@@ -150,28 +151,28 @@ const App: FC = () => {
   const [myDragulaTasks, setDragulaTasks] = useState<MbscCalendarEvent[]>([
     {
       id: 'dragula-1',
-      title: 'Task 5',
+      title: 'Task 9',
       color: '#1ca11a',
       start: 'dyndatetime(y,m,d,8)',
       end: 'dyndatetime(y,m,d,9,30)',
     },
     {
       id: 'dragula-2',
-      title: 'Task 6',
+      title: 'Task 10',
       color: '#1ca11a',
       start: 'dyndatetime(y,m,d,12)',
       end: 'dyndatetime(y,m,d,15)',
     },
     {
       id: 'dragula-3',
-      title: 'Task 7',
+      title: 'Task 11',
       color: '#1ca11a',
       start: 'dyndatetime(y,m,d,8,30)',
       end: 'dyndatetime(y,m,d,11)',
     },
     {
       id: 'dragula-4',
-      title: 'Task 8',
+      title: 'Task 12',
       color: '#1ca11a',
       start: 'dyndatetime(y,m,d,16)',
       end: 'dyndatetime(y,m,d,20,30)',
@@ -289,19 +290,30 @@ const App: FC = () => {
   }, []);
 
   useEffect(() => {
+    let sortableTaskInstance: Sortable;
     if (sortableTaskCont) {
-      const sortableTaskInstance = new Sortable(sortableTaskCont, {
+      sortableTaskInstance = new Sortable(sortableTaskCont, {
         animation: 150,
         forceFallback: true,
       });
 
       sortableJsDraggable.init(sortableTaskInstance, {
         cloneSelector: '.sortable-drag',
+        externalDrop: true,
+        onExternalDrop: (a: MbscExternalDropEvent) => {
+          const dragData = a.dragData;
+          setSortableTasks((prev) => {
+            const newTasks = [...prev];
+            newTasks.splice(a.position, 0, dragData);
+            return newTasks;
+          });
+        },
       });
     }
 
+    let sortableResourceInstance: Sortable;
     if (sortableResourceCont) {
-      const sortableResourceInstance = new Sortable(sortableResourceCont, {
+      sortableResourceInstance = new Sortable(sortableResourceCont, {
         animation: 150,
         forceFallback: true,
       });
@@ -312,17 +324,44 @@ const App: FC = () => {
       });
     }
 
+    let drake1: Drake;
     if (dragulaTaskCont) {
-      const drake1 = dragula([dragulaTaskCont]);
-      dragulaDraggable.init(drake1);
+      drake1 = dragula([dragulaTaskCont]);
+      dragulaDraggable.init(drake1, {
+        externalDrop: true,
+        onExternalDrop: (a: MbscExternalDropEvent) => {
+          const dragData = a.dragData;
+          setDragulaTasks((prev) => {
+            const newTasks = [...prev];
+            newTasks.splice(a.position, 0, dragData);
+            return newTasks;
+          });
+        },
+      });
     }
 
+    let drake2: Drake;
     if (dragulaResourceCont) {
-      const drake2 = dragula([dragulaResourceCont]);
+      drake2 = dragula([dragulaResourceCont]);
       dragulaDraggable.init(drake2, {
         type: 'resource',
       });
     }
+
+    return () => {
+      if (sortableTaskInstance) {
+        sortableTaskInstance.destroy();
+      }
+      if (sortableResourceInstance) {
+        sortableResourceInstance.destroy();
+      }
+      if (drake1) {
+        drake1.destroy();
+      }
+      if (drake2) {
+        drake2.destroy();
+      }
+    };
   }, [dragulaTaskCont, dragulaResourceCont, sortableTaskCont, sortableResourceCont]);
 
   return (

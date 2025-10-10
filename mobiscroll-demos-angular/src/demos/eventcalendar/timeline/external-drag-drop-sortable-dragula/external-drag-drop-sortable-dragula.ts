@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   dragulaDraggable,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscExternalDropEvent,
   MbscItemDragEvent,
   MbscResource,
   Notifications,
-  setOptions /* localeImport */,
-  sortableJsDraggable,
+  setOptions,
+  sortableJsDraggable /* localeImport */,
 } from '@mobiscroll/angular';
-import dragula from 'dragula';
+import dragula, { Drake } from 'dragula';
 import Sortable from 'sortablejs';
 import { dyndatetime } from '../../../../app/app.util';
 import 'dragula/dist/dragula.css';
@@ -28,7 +29,7 @@ setOptions({
   providers: [Notifications],
   standalone: false,
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnDestroy, AfterViewInit {
   constructor(
     private http: HttpClient,
     private notify: Notifications,
@@ -45,8 +46,6 @@ export class AppComponent implements AfterViewInit {
 
   @ViewChild('demoDragulaResourceList')
   demoDragulaResourceList!: ElementRef;
-
-  myEvents: MbscCalendarEvent[] = [];
 
   myDraggableTasks: MbscCalendarEvent[] = [
     {
@@ -82,28 +81,28 @@ export class AppComponent implements AfterViewInit {
   mySortableTasks: MbscCalendarEvent[] = [
     {
       id: 'sortable-1',
-      title: 'Task 1',
+      title: 'Task 5',
       color: '#d1891f',
       start: dyndatetime('y,m,d,8'),
       end: dyndatetime('y,m,d,9,30'),
     },
     {
       id: 'sortable-2',
-      title: 'Task 2',
+      title: 'Task 6',
       color: '#d1891f',
       start: dyndatetime('y,m,d,12'),
       end: dyndatetime('y,m,d,15'),
     },
     {
       id: 'sortable-3',
-      title: 'Task 3',
+      title: 'Task 7',
       color: '#d1891f',
       start: dyndatetime('y,m,d,8,30'),
       end: dyndatetime('y,m,d,11'),
     },
     {
       id: 'sortable-4',
-      title: 'Task 4',
+      title: 'Task 8',
       color: '#d1891f',
       start: dyndatetime('y,m,d,16'),
       end: dyndatetime('y,m,d,21'),
@@ -113,28 +112,28 @@ export class AppComponent implements AfterViewInit {
   myDragulaTasks: MbscCalendarEvent[] = [
     {
       id: 'dragula-1',
-      title: 'Task 5',
+      title: 'Task 9',
       color: '#1ca11a',
       start: dyndatetime('y,m,d,8'),
       end: dyndatetime('y,m,d,9,30'),
     },
     {
       id: 'dragula-2',
-      title: 'Task 6',
+      title: 'Task 10',
       color: '#1ca11a',
       start: dyndatetime('y,m,d,12'),
       end: dyndatetime('y,m,d,15'),
     },
     {
       id: 'dragula-3',
-      title: 'Task 7',
+      title: 'Task 11',
       color: '#1ca11a',
       start: dyndatetime('y,m,d,8,30'),
       end: dyndatetime('y,m,d,11'),
     },
     {
       id: 'dragula-4',
-      title: 'Task 8',
+      title: 'Task 12',
       color: '#1ca11a',
       start: dyndatetime('y,m,d,16'),
       end: dyndatetime('y,m,d,20,30'),
@@ -243,6 +242,11 @@ export class AppComponent implements AfterViewInit {
     view: { timeline: { type: 'day' } },
   };
 
+  sortableTaskInstance: Sortable | undefined;
+  sortableResourceInstance: Sortable | undefined;
+  drake1: Drake | undefined;
+  drake2: Drake | undefined;
+
   onItemDrop(args: MbscItemDragEvent): void {
     if (args.data) {
       this.myDraggableTasks = [...this.myDraggableTasks, args.data];
@@ -263,33 +267,63 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const sortableTaskInstance = new Sortable(this.demoSortableTaskList.nativeElement, {
+    this.sortableTaskInstance = new Sortable(this.demoSortableTaskList.nativeElement, {
       animation: 150,
       forceFallback: true,
     });
 
-    sortableJsDraggable.init(sortableTaskInstance, {
+    sortableJsDraggable.init(this.sortableTaskInstance, {
       cloneSelector: '.sortable-drag',
+      externalDrop: true,
+      onExternalDrop: (a: MbscExternalDropEvent) => {
+        const dragData = a.dragData;
+        const newTasks = [...this.mySortableTasks];
+        newTasks.splice(a.position, 0, dragData);
+        this.mySortableTasks = newTasks;
+      },
     });
 
-    const sortableResourceInstance = new Sortable(this.demoSortableResourceList.nativeElement, {
+    this.sortableResourceInstance = new Sortable(this.demoSortableResourceList.nativeElement, {
       animation: 150,
       forceFallback: true,
     });
 
-    sortableJsDraggable.init(sortableResourceInstance, {
+    sortableJsDraggable.init(this.sortableResourceInstance, {
       cloneSelector: '.sortable-drag',
       type: 'resource',
     });
 
-    const drake1 = dragula([this.demoDragulaTaskList.nativeElement]);
+    this.drake1 = dragula([this.demoDragulaTaskList.nativeElement]);
 
-    dragulaDraggable.init(drake1);
+    dragulaDraggable.init(this.drake1, {
+      externalDrop: true,
+      onExternalDrop: (a: MbscExternalDropEvent) => {
+        const dragData = a.dragData;
+        const newTasks = [...this.myDragulaTasks];
+        newTasks.splice(a.position, 0, dragData);
+        this.myDragulaTasks = newTasks;
+      },
+    });
 
-    const drake2 = dragula([this.demoDragulaResourceList.nativeElement]);
+    this.drake2 = dragula([this.demoDragulaResourceList.nativeElement]);
 
-    dragulaDraggable.init(drake2, {
+    dragulaDraggable.init(this.drake2, {
       type: 'resource',
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.sortableTaskInstance) {
+      this.sortableTaskInstance.destroy();
+    }
+    if (this.sortableResourceInstance) {
+      this.sortableResourceInstance.destroy();
+    }
+    if (this.drake1) {
+      this.drake1.destroy();
+    }
+    if (this.drake2) {
+      this.drake2.destroy();
+    }
   }
 }

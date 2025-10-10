@@ -13,6 +13,28 @@ export default {
     var draggedTask;
     var draggedResource;
 
+    function addToExternalList(args) {
+      var afterElement = args.afterElement;
+      var dragData = args.dragData;
+      var eventLength = Math.abs(Math.abs(new Date(dragData.end).getTime() - new Date(dragData.start).getTime()) / (60 * 60 * 1000));
+      var newItem = document.createElement('div');
+      newItem.className = 'mds-drag-drop-sort-task';
+      newItem.style.background = dragData.color || '';
+      newItem.setAttribute(
+        'data-drag-data',
+        '{ "title": "' + dragData.title + '", "start": "' + dragData.start + '", "end": "' + dragData.end + '" }',
+      );
+      newItem.innerHTML =
+        '<div>' +
+        dragData.title +
+        '</div><div class="mds-drag-drop-sort-duration">' +
+        eventLength +
+        ' hour' +
+        (eventLength > 1 ? 's' : '') +
+        '</div>';
+      args.container.insertBefore(newItem, afterElement);
+    }
+
     mobiscroll.eventcalendar('#demo-drag-drop-sortable-dragula', {
       dragToMove: true,
       dragToCreate: true,
@@ -72,7 +94,14 @@ export default {
           elm.setAttribute('id', 'mds-event-' + event.id);
           elm.classList.add('mds-drag-drop-sort-task');
           elm.style.background = event.color;
-          elm.innerHTML = '<div>' + event.title + '</div><div>' + eventLength + ' hour' + (eventLength > 1 ? 's' : '') + '</div>';
+          elm.innerHTML =
+            '<div>' +
+            event.title +
+            '</div><div class="mds-drag-drop-sort-duration">' +
+            eventLength +
+            ' hour' +
+            (eventLength > 1 ? 's' : '') +
+            '</div>';
 
           document.getElementById('mds-event').appendChild(elm);
 
@@ -98,6 +127,10 @@ export default {
 
     mobiscroll.sortableJsDraggable.init(sortableTaskInstance, {
       cloneSelector: '.sortable-drag',
+      externalDrop: true,
+      onExternalDrop: function (args) {
+        addToExternalList(args);
+      },
     });
 
     var sortableResourceInstance = new Sortable(document.getElementById('demo-sortable-resource-list'), {
@@ -134,7 +167,12 @@ export default {
       });
     });
 
-    mobiscroll.dragulaDraggable.init(drake1);
+    mobiscroll.dragulaDraggable.init(drake1, {
+      externalDrop: true,
+      onExternalDrop: function (args) {
+        addToExternalList(args);
+      },
+    });
 
     var drake2 = dragula([document.getElementById('demo-dragula-resource-list')]);
 
@@ -167,7 +205,7 @@ export default {
         <div class="mbsc-col-sm-6 mbsc-flex-col" >
           <div class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
             <div class="mbsc-txt-muted mds-third-party-list-title">Event list</div>
-            <div id="external-drop-cont" class="mds-drag-drop-sort-container">
+            <div id="external-drop-cont">
               <div id="mds-event">
                 <div id="mds-event-1" class="mds-drag-drop-sort-task" mbsc-draggable data-drag-data='{"id": "1", "title": "Task 1", "start": "08:00", "end": "09:30", "color": "#cf4343"}' style="background: #cf4343;">
                   <div>Task 1</div>

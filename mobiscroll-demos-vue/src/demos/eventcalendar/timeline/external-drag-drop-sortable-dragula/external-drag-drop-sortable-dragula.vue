@@ -10,7 +10,7 @@ import {
 } from '@mobiscroll/vue'
 import dragula from 'dragula'
 import Sortable from 'sortablejs'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import 'dragula/dist/dragula.css'
 
 setOptions({
@@ -22,9 +22,13 @@ const dropCont = ref()
 const dragTaskElements = ref([])
 const dragResourceElements = ref([])
 const sortableTaskCont = ref([])
+const sortableTaskInstance = ref()
 const dragulaTaskCont = ref([])
+const drake1 = ref()
 const sortableResourceCont = ref([])
+const sortableResourceInstance = ref()
 const dragulaResourceCont = ref()
+const drake2 = ref()
 const toastMessage = ref(null)
 const isToastOpen = ref(false)
 
@@ -62,28 +66,28 @@ const myDraggableTasks = ref([
 const mySortableTasks = ref([
   {
     id: 'sortable-1',
-    title: 'Task 1',
+    title: 'Task 5',
     color: '#d1891f',
     start: 'dyndatetime(y,m,d,8)',
     end: 'dyndatetime(y,m,d,9,30)'
   },
   {
     id: 'sortable-2',
-    title: 'Task 2',
+    title: 'Task 6',
     color: '#d1891f',
     start: 'dyndatetime(y,m,d,12)',
     end: 'dyndatetime(y,m,d,15)'
   },
   {
     id: 'sortable-3',
-    title: 'Task 3',
+    title: 'Task 7',
     color: '#d1891f',
     start: 'dyndatetime(y,m,d,8,30)',
     end: 'dyndatetime(y,m,d,11)'
   },
   {
     id: 'sortable-4',
-    title: 'Task 4',
+    title: 'Task 8',
     color: '#d1891f',
     start: 'dyndatetime(y,m,d,16)',
     end: 'dyndatetime(y,m,d,21)'
@@ -93,28 +97,28 @@ const mySortableTasks = ref([
 const myDragulaTasks = ref([
   {
     id: 'dragula-1',
-    title: 'Task 5',
+    title: 'Task 9',
     color: '#1ca11a',
     start: 'dyndatetime(y,m,d,8)',
     end: 'dyndatetime(y,m,d,9,30)'
   },
   {
     id: 'dragula-2',
-    title: 'Task 6',
+    title: 'Task 10',
     color: '#1ca11a',
     start: 'dyndatetime(y,m,d,12)',
     end: 'dyndatetime(y,m,d,15)'
   },
   {
     id: 'dragula-3',
-    title: 'Task 7',
+    title: 'Task 11',
     color: '#1ca11a',
     start: 'dyndatetime(y,m,d,8,30)',
     end: 'dyndatetime(y,m,d,11)'
   },
   {
     id: 'dragula-4',
-    title: 'Task 8',
+    title: 'Task 12',
     color: '#1ca11a',
     start: 'dyndatetime(y,m,d,16)',
     end: 'dyndatetime(y,m,d,20,30)'
@@ -240,38 +244,68 @@ function handleToastClose() {
 
 onMounted(() => {
   if (sortableTaskCont.value) {
-    const sortableTaskInstance = new Sortable(sortableTaskCont.value, {
+    sortableTaskInstance.value = new Sortable(sortableTaskCont.value, {
       animation: 150,
       forceFallback: true
     })
 
-    sortableJsDraggable.init(sortableTaskInstance, {
-      cloneSelector: '.sortable-drag'
+    sortableJsDraggable.init(sortableTaskInstance.value, {
+      cloneSelector: '.sortable-drag',
+      externalDrop: true,
+      onExternalDrop: (a) => {
+        const dragData = a.dragData
+        const newTasks = [...mySortableTasks.value]
+        newTasks.splice(a.position, 0, dragData)
+        mySortableTasks.value = newTasks
+      }
     })
   }
 
   if (sortableResourceCont.value) {
-    const sortableResourceInstance = new Sortable(sortableResourceCont.value, {
+    sortableResourceInstance.value = new Sortable(sortableResourceCont.value, {
       animation: 150,
       forceFallback: true
     })
 
-    sortableJsDraggable.init(sortableResourceInstance, {
+    sortableJsDraggable.init(sortableResourceInstance.value, {
       cloneSelector: '.sortable-drag',
       type: 'resource'
     })
   }
 
   if (dragulaTaskCont.value) {
-    const drake1 = dragula([dragulaTaskCont.value])
-    dragulaDraggable.init(drake1)
+    drake1.value = dragula([dragulaTaskCont.value])
+    dragulaDraggable.init(drake1.value, {
+      externalDrop: true,
+      onExternalDrop: (a) => {
+        const dragData = a.dragData
+        const newTasks = [...myDraggableTasks.value]
+        newTasks.splice(a.position, 0, dragData)
+        myDraggableTasks.value = newTasks
+      }
+    })
   }
 
   if (dragulaResourceCont.value) {
-    const drake2 = dragula([dragulaResourceCont.value])
-    dragulaDraggable.init(drake2, {
+    drake2.value = dragula([dragulaResourceCont.value])
+    dragulaDraggable.init(drake2.value, {
       type: 'resource'
     })
+  }
+})
+
+onUnmounted(() => {
+  if (sortableTaskInstance.value) {
+    sortableTaskInstance.value.destroy()
+  }
+  if (sortableResourceInstance.value) {
+    sortableResourceInstance.value.destroy()
+  }
+  if (drake1.value) {
+    drake1.value.destroy()
+  }
+  if (drake2.value) {
+    drake2.value.destroy()
   }
 })
 </script>
