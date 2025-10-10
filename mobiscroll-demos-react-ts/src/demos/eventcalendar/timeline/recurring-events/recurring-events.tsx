@@ -88,6 +88,13 @@ const App: FC = () => {
 
   const myView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'week' } }), []);
 
-  return <Eventcalendar data={myEvents} view={myView} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      resources={myResources}
+      view={myView}
+    />
+  );
 };
 export default App;

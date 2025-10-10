@@ -57,7 +57,7 @@ export default {
 
     var dateISO = mobiscroll.eventcalendar('#demo-date-type-iso', {
       view: {
-        schedule: { type: 'week' },
+        timeline: { type: 'day' },
       },
       resources: myResources,
       data: [

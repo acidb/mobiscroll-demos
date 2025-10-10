@@ -57,7 +57,13 @@ const App: FC = () => {
 
   const myView = useMemo<MbscEventcalendarView>(() => ({ calendar: { labels: true } }), []);
 
-  return <Eventcalendar data={myEvents} view={myView} />;
+  return (
+    <Eventcalendar
+      // drag
+      data={myEvents}
+      view={myView}
+    />
+  );
 };
 
 export default App;

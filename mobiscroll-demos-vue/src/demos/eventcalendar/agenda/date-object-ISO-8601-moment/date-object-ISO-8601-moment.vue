@@ -44,13 +44,7 @@ const dateMomentEvents = ref([
   }
 ])
 
-const myView = {
-  calendar: {
-    type: 'month',
-    popover: true,
-    count: true
-  }
-}
+const myView = { agenda: { type: 'month' } }
 
 function addDateObjEvent() {
   const newEvent = {

@@ -10,7 +10,7 @@ import { onMounted, ref } from 'vue'
 const myEvents = ref([])
 const myTheme = ref('material')
 const myThemeVariant = ref('dark')
-const myView = { scheduler: { type: 'week' } }
+const myView = { schedule: { type: 'week' } }
 
 onMounted(() => {
   getJson(

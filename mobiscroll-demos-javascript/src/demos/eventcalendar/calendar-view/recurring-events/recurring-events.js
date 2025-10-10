@@ -9,6 +9,7 @@ export default {
     });
 
     mobiscroll.eventcalendar('#demo-recurring-events', {
+      // drag,
       view: {
         calendar: { labels: true },
       },

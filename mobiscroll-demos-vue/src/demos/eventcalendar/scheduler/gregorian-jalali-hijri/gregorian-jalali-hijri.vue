@@ -18,7 +18,7 @@ setOptions({
 const myEvents = ref([])
 
 const myView = {
-  scheduler: { type: 'day' }
+  schedule: { type: 'day' }
 }
 
 onMounted(() => {
