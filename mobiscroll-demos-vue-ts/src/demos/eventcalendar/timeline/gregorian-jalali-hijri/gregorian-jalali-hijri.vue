@@ -73,6 +73,7 @@ onMounted(() => {
         <div class="mbsc-col-sm-12 mbsc-col-md-4">
           <div class="mbsc-form-group">
             <div class="mbsc-form-group-title">Gregorian calendar</div>
+            <!-- dragOptions -->
             <MbscEventcalendar :data="myEvents" :view="myView" :resources="myResources" />
           </div>
         </div>

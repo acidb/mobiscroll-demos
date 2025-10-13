@@ -12,6 +12,7 @@ export default {
       var gregorian = $('#demo-gregorian')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           locale: mobiscroll.localeEn,
           view: {
             schedule: { type: 'day' },
@@ -22,6 +23,7 @@ export default {
       var jalali = $('#demo-jalali')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           calendarSystem: mobiscroll.jalaliCalendar,
           locale: mobiscroll.locale.fa,
           view: {
@@ -33,6 +35,7 @@ export default {
       var hijri = $('#demo-hijri')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           calendarSystem: mobiscroll.hijriCalendar,
           locale: mobiscroll.locale.ar,
           view: {

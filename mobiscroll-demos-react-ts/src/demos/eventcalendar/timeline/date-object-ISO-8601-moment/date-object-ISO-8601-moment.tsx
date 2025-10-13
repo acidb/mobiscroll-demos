@@ -142,6 +142,7 @@ const App: FC = () => {
                 </Button>
               </div>
               <Eventcalendar
+                // drag
                 data={dateObjEvents}
                 view={myView}
                 resources={myResources}
@@ -161,6 +162,7 @@ const App: FC = () => {
                 </Button>
               </div>
               <Eventcalendar
+                // drag
                 data={dateISOEvents}
                 view={myView}
                 resources={myResources}
@@ -180,6 +182,7 @@ const App: FC = () => {
                 </Button>
               </div>
               <Eventcalendar
+                // drag
                 data={dateMomentEvents}
                 view={myView}
                 resources={myResources}

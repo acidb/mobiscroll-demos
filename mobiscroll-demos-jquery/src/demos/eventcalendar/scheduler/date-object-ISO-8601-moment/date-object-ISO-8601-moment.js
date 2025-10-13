@@ -14,6 +14,7 @@ export default {
       var dateObj = $('#demo-date-type-obj')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             schedule: { type: 'week' },
           },
@@ -33,6 +34,7 @@ export default {
       var dateISO = $('#demo-date-type-iso')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             schedule: { type: 'week' },
           },
@@ -52,6 +54,7 @@ export default {
       var dateMoment = $('#demo-date-type-moment')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             schedule: { type: 'week' },
           },

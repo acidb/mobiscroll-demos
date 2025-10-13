@@ -42,6 +42,7 @@ export default {
       var dateObj = $('#demo-date-type-obj')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: { type: 'day' },
           },
@@ -62,6 +63,7 @@ export default {
       var dateISO = $('#demo-date-type-iso')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: { type: 'day' },
           },
@@ -82,6 +84,7 @@ export default {
       var dateMoment = $('#demo-date-type-moment')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: { type: 'day' },
           },

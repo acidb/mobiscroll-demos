@@ -12,6 +12,7 @@ export default {
       var gregorian = $('#demo-gregorian')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           locale: mobiscroll.localeEn,
         })
         .mobiscroll('getInst');
@@ -19,6 +20,7 @@ export default {
       var jalali = $('#demo-jalali')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           calendarSystem: mobiscroll.jalaliCalendar,
           locale: mobiscroll.locale.fa,
         })
@@ -27,6 +29,7 @@ export default {
       var hijri = $('#demo-hijri')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           calendarSystem: mobiscroll.hijriCalendar,
           locale: mobiscroll.locale.ar,
         })

@@ -98,6 +98,7 @@ function App() {
                 </Button>
               </div>
               <Eventcalendar
+                // drag
                 data={dateObjEvents}
                 view={myView}
                 selectedDate={selectedDateObj}
@@ -116,6 +117,7 @@ function App() {
                 </Button>
               </div>
               <Eventcalendar
+                // drag
                 data={dateISOEvents}
                 view={myView}
                 selectedDate={selectedDateISO}
@@ -134,6 +136,7 @@ function App() {
                 </Button>
               </div>
               <Eventcalendar
+                // drag
                 data={dateMomentEvents}
                 view={myView}
                 selectedDate={selectedDateMoment}

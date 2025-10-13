@@ -39,6 +39,7 @@ export default {
     ];
 
     var dateObj = mobiscroll.eventcalendar('#demo-date-type-obj', {
+      // drag,
       view: {
         schedule: { type: 'week' },
       },
@@ -56,6 +57,7 @@ export default {
     dateObj.navigate(new Date(2020, 4, 19));
 
     var dateISO = mobiscroll.eventcalendar('#demo-date-type-iso', {
+      // drag,
       view: {
         timeline: { type: 'day' },
       },
@@ -73,6 +75,7 @@ export default {
     dateISO.navigate('2020-05-20');
 
     var dateMoment = mobiscroll.eventcalendar('#demo-date-type-moment', {
+      // drag,
       view: {
         schedule: { type: 'week' },
       },
