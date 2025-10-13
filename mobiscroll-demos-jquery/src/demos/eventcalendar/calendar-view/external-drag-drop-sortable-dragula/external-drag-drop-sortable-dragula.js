@@ -23,10 +23,7 @@ export default {
       var newItem = document.createElement('div');
       newItem.className = 'mds-drag-drop-sort-task';
       newItem.style.background = dragData.color || '';
-      newItem.setAttribute(
-        'data-drag-data',
-        '{ "title": "' + dragData.title + '", "start": "' + dragData.start + '", "end": "' + dragData.end + '" }',
-      );
+      newItem.setAttribute('data-drag-data', JSON.stringify(dragData));
       newItem.innerHTML = '<div>' + dragData.title + '</div><div>' + eventLength + ' hour' + (eventLength > 1 ? 's' : '') + '</div>';
       args.container.insertBefore(newItem, afterElement || null);
     }
