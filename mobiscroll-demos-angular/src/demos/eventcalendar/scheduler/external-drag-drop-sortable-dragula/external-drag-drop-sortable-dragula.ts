@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   dragulaDraggable,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscExternalDropEvent,
   MbscItemDragEvent,
   MbscModule,
   Notifications,
-  setOptions /* localeImport */,
-  sortableJsDraggable,
+  setOptions,
+  sortableJsDraggable /* localeImport */,
 } from '@mobiscroll/angular';
-import dragula from 'dragula';
+import dragula, { Drake } from 'dragula';
 import Sortable from 'sortablejs';
 import { dyndatetime } from '../../../../app/app.util';
 import 'dragula/dist/dragula.css';
@@ -30,7 +31,7 @@ setOptions({
   imports: [CommonModule, MbscModule],
   standalone: true,
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private http: HttpClient,
     private notify: Notifications,
@@ -164,6 +165,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     },
   };
 
+  sortableInstance: Sortable | undefined;
+
+  drake: Drake | undefined;
+
   getHours(event: MbscCalendarEvent) {
     const eventLength = Math.round(Math.abs(+new Date(event.end as string) - +new Date(event.start as string)) / (60 * 60 * 1000));
     return eventLength + ' hour' + (eventLength > 1 ? 's' : '');
@@ -186,17 +191,41 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const sortableInstance = new Sortable(this.demoSortableList.nativeElement, {
+    this.sortableInstance = new Sortable(this.demoSortableList.nativeElement, {
       animation: 150,
       forceFallback: true,
     });
 
-    sortableJsDraggable.init(sortableInstance, {
+    sortableJsDraggable.init(this.sortableInstance, {
       cloneSelector: '.sortable-drag',
+      externalDrop: true,
+      onExternalDrop: (a: MbscExternalDropEvent) => {
+        const dragData = a.dragData;
+        const newTasks = [...this.mySortableTasks];
+        newTasks.splice(a.position, 0, dragData);
+        this.mySortableTasks = newTasks;
+      },
     });
 
-    const drake = dragula([this.demoDragulaList.nativeElement]);
+    this.drake = dragula([this.demoDragulaList.nativeElement]);
 
-    dragulaDraggable.init(drake);
+    dragulaDraggable.init(this.drake, {
+      externalDrop: true,
+      onExternalDrop: (a: MbscExternalDropEvent) => {
+        const dragData = a.dragData;
+        const newTasks = [...this.myDragulaTasks];
+        newTasks.splice(a.position, 0, dragData);
+        this.myDragulaTasks = newTasks;
+      },
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.sortableInstance) {
+      this.sortableInstance.destroy();
+    }
+    if (this.drake) {
+      this.drake.destroy();
+    }
   }
 }

@@ -6,16 +6,18 @@
         <div class="mbsc-col-sm-6 mbsc-flex-col">
           <div class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
             <div class="mbsc-txt-muted mds-third-party-list-title">Event list</div>
-            <div
-              mbsc-draggable
-              *ngFor="let task of myDraggableTasks"
-              class="mds-drag-drop-sort-task"
-              [style.background]="task.color"
-              [dragData]="task"
-            >
-              <div>{{task.title}}</div>
-              <div>{{getHours(task)}}</div>
-            </div>
+            <mbsc-dropcontainer (onItemDrop)="onItemDrop($event)">
+              <div
+                mbsc-draggable
+                *ngFor="let task of myDraggableTasks"
+                class="mds-drag-drop-sort-task"
+                [style.background]="task.color"
+                [dragData]="task"
+              >
+                <div>{{task.title}}</div>
+                <div>{{getHours(task)}}</div>
+              </div>
+            </mbsc-dropcontainer>
           </div>
         </div>
         <div class="mbsc-col-sm-6 mbsc-flex-col">
@@ -106,7 +108,7 @@
       </div>
     </div>
     <div class="mbsc-col-sm-9 mds-drag-drop-sort-calendar mds-full-height">
-      <mbsc-eventcalendar [data]="myEvents" [options]="calendarOptions"></mbsc-eventcalendar>
+      <mbsc-eventcalendar [options]="calendarOptions"></mbsc-eventcalendar>
     </div>
   </div>
 </div>
