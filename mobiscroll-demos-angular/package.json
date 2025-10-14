@@ -22,7 +22,7 @@
     "@angular/platform-server": "^20.3.0",
     "@angular/router": "^20.3.0",
     "@angular/ssr": "^20.3.0",
-    "@mobiscroll/angular": "npm:@mobiscroll/angular-ivy@^5.35.0",
+    "@mobiscroll/angular": "npm:@mobiscroll/angular-ivy@^5.35.1",
     "@mobiscroll/calendar-integration": "file:src/addons/calendar-integration",
     "@mobiscroll/print": "file:src/addons/print",
     "dayjs": "^1.11.18",
