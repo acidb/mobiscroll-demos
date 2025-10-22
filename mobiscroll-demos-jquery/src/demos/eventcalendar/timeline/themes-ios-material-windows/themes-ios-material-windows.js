@@ -12,6 +12,7 @@ export default {
       var inst = $('#demo-theme')
         .mobiscroll()
         .eventcalendar({
+          // drag,
           view: {
             timeline: { type: 'day' },
           },

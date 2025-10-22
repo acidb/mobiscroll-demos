@@ -9,7 +9,6 @@ setOptions({
 
 @Component({
   selector: 'app-scheduler-load-events-from-remote-api',
-  encapsulation: ViewEncapsulation.None,
   templateUrl: './load-events-from-remote-api.html',
   standalone: false,
 })

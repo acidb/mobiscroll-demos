@@ -7,7 +7,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-agenda-themes-ios-material-windows',
+  selector: 'app-timeline-themes-ios-material-windows',
   styleUrl: './themes-ios-material-windows.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './themes-ios-material-windows.html',
