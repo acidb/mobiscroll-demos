@@ -48,7 +48,7 @@ export default {
         $eventDescription.mobiscroll('getInst').value = eventDescription;
         $eventAllDay.mobiscroll('getInst').checked = eventAllDay;
         eventStartEndPicker.setVal([eventStart, eventEnd]);
-        $travelTime.val(eventBuffer);
+        $eventBuffer.val(eventBuffer);
         highlightColor(eventColor);
         updateColorPreview(eventColor);
         if (eventStatus) {
@@ -172,7 +172,7 @@ export default {
       var $eventTitle = $('#crud-popup-event-title');
       var $eventDescription = $('#crud-popup-event-desc');
       var $eventAllDay = $('#crud-popup-event-all-day');
-      var $travelTime = $('#crud-popup-event-buffer');
+      var $eventBuffer = $('#crud-popup-event-buffer');
       var $eventColor = $('#crud-popup-event-color');
       var $colorPreview = $('#crud-popup-event-color-preview');
       var $eventStatusBusy = $('#crud-popup-event-status-busy');
@@ -341,7 +341,7 @@ export default {
         toggleDatetimePicker(eventAllDay);
       });
 
-      $travelTime.on('change', function () {
+      $eventBuffer.on('change', function () {
         eventBuffer = +this.value;
       });
 
