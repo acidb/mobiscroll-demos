@@ -146,7 +146,7 @@ export default {
       }
 
       function updateColorPreview(color) {
-        $color.css('background', color || '');
+        $colorPreview.css('background', color || '');
       }
 
       function applySelectedColor(color) {
@@ -172,12 +172,12 @@ export default {
       var $eventTitle = $('#crud-popup-event-title');
       var $eventDescription = $('#crud-popup-event-desc');
       var $eventAllDay = $('#crud-popup-event-all-day');
+      var $travelTime = $('#crud-popup-event-buffer');
+      var $eventColor = $('#crud-popup-event-color');
+      var $colorPreview = $('#crud-popup-event-color-preview');
       var $eventStatusBusy = $('#crud-popup-event-status-busy');
       var $eventStatusFree = $('#crud-popup-event-status-free');
       var $eventDeleteButton = $('#crud-popup-event-delete');
-      var $color = $('#crud-popup-event-color');
-      var $travelTime = $('#crud-popup-event-buffer');
-      var $eventColor = $('#crud-popup-event-color-cont');
 
       var myEvents = [
         {
@@ -301,7 +301,7 @@ export default {
           responsive: {
             medium: {
               display: 'anchored',
-              anchor: $('#crud-popup-event-color-cont')[0],
+              anchor: $('#crud-popup-event-color')[0],
               buttons: {},
             },
           },
@@ -426,8 +426,8 @@ export default {
             <div id="crud-popup-event-dates"></div>
             <div id="crud-event-color-picker" class="mbsc-flex mds-crud-event-color-cont">
                 <div class="mbsc-flex-1-0">Color</div>
-                <div id="crud-popup-event-color-cont">
-                    <div id="crud-popup-event-color" class="mds-crud-selected-event-color"></div>
+                <div id="crud-popup-event-color">
+                    <div id="crud-popup-event-color-preview" class="mds-crud-selected-event-color"></div>
                 </div>
             </div>
             <label>
