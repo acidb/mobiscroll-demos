@@ -8,35 +8,176 @@ export default {
       // theme
     });
 
-    var oldEvent;
-    var tempEvent = {};
-    var deleteEvent;
-    var restoreEvent;
-    var colorPicker;
-    var tempColor;
-    var titleInput = document.getElementById('event-title');
-    var descriptionTextarea = document.getElementById('event-desc');
-    var allDaySwitch = document.getElementById('event-all-day');
-    var freeSegmented = document.getElementById('event-status-free');
-    var busySegmented = document.getElementById('event-status-busy');
-    var deleteButton = document.getElementById('event-delete');
-    var colorSelect = document.getElementById('event-color-picker');
-    var pickedColor = document.getElementById('event-color');
-    var colorElms = document.querySelectorAll('.crud-color-c');
-    var travelTime = document.getElementById('travel-time-selection');
-    var datePickerResponsive = {
-      medium: {
-        controls: ['calendar'],
-        touchUi: false,
-      },
-    };
-    var datetimePickerResponsive = {
-      medium: {
-        controls: ['calendar', 'time'],
-        touchUi: false,
-      },
-    };
-    var myData = [
+    function toggleDatetimePicker(allDay) {
+      // Toggle between date and datetime picker
+      eventStartEndPicker.setOptions({
+        controls: allDay ? ['date'] : ['datetime'],
+        responsive: allDay
+          ? { medium: { controls: ['calendar'], touchUi: false } }
+          : { medium: { controls: ['calendar', 'time'], touchUi: false } },
+      });
+    }
+
+    function navigateToEvent(event) {
+      var d = new Date(event.start);
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      var hours = d.getHours();
+
+      calendar.navigate(new Date(year, month, day, hours));
+    }
+
+    // Fills the popup with the event's data
+    function fillPopup(event) {
+      // Load event properties
+      eventId = event.id;
+      eventTitle = event.title || '';
+      eventDescription = event.description || '';
+      eventAllDay = event.allDay;
+      eventStart = event.start;
+      eventEnd = event.end;
+      eventBuffer = event.bufferBefore || 0;
+      eventColor = event.color || '';
+      eventStatus = event.free;
+
+      // Set event fields
+      mobiscroll.getInst(eventTitleElm).value = eventTitle;
+      mobiscroll.getInst(eventDescriptionElm).value = eventDescription;
+      mobiscroll.getInst(eventAllDayElm).value = eventAllDay;
+      mobiscroll.getInst(eventBufferElm).value = eventBuffer;
+      highlightColor(eventColor);
+      updateColorPreview(eventColor);
+      if (eventStatus) {
+        mobiscroll.getInst(eventStatusFreeElm).checked = true;
+      } else {
+        mobiscroll.getInst(eventStatusBusyElm).checked = true;
+      }
+      toggleDatetimePicker(eventAllDay);
+    }
+
+    function getEventData() {
+      return {
+        id: eventId,
+        title: eventTitle,
+        description: eventDescription,
+        allDay: eventAllDay,
+        start: eventStart,
+        end: eventEnd,
+        bufferBefore: eventBuffer,
+        color: eventColor,
+        free: eventStatus,
+      };
+    }
+
+    function createAddPopup(event, target) {
+      var success = false;
+
+      // Hide delete button inside add popup
+      eventDeleteButtonElm.parentElement.classList.add('mds-hide-elm');
+
+      // Set popup header text and buttons for adding
+      addEditPopup.setOptions({
+        anchor: target,
+        headerText: 'New event',
+        buttons: [
+          'cancel',
+          {
+            text: 'Add',
+            keyCode: 'enter',
+            handler: function () {
+              var newEvent = getEventData();
+              calendar.updateEvent(newEvent);
+              navigateToEvent(newEvent);
+              success = true;
+              addEditPopup.close();
+            },
+            cssClass: 'mbsc-popup-button-primary',
+          },
+        ],
+        onClose: function () {
+          // Remove event if popup is cancelled
+          if (!success) {
+            calendar.removeEvent(event);
+          }
+        },
+      });
+
+      fillPopup(event);
+      addEditPopup.open();
+    }
+
+    function createEditPopup(event, target) {
+      // Show delete button inside edit popup
+      eventDeleteButtonElm.parentElement.classList.remove('mds-hide-elm');
+
+      editedEvent = event;
+
+      // Set popup header text and buttons
+      addEditPopup.setOptions({
+        headerText: 'Edit event',
+        anchor: target,
+        buttons: [
+          'cancel',
+          {
+            text: 'Save',
+            keyCode: 'enter',
+            handler: function () {
+              var updatedEvent = getEventData();
+              calendar.updateEvent(updatedEvent);
+              navigateToEvent(updatedEvent);
+              addEditPopup.close();
+            },
+            cssClass: 'mbsc-popup-button-primary',
+          },
+        ],
+      });
+
+      fillPopup(event);
+      addEditPopup.open();
+    }
+
+    function highlightColor(color) {
+      document.querySelector('.mds-crud-color-value').classList.remove('selected');
+      document.querySelector('.mds-crud-color-value[data-value="' + color + '"]').classList.add('selected');
+    }
+
+    function updateColorPreview(color) {
+      colorPreviewElm.style.background = color || '';
+    }
+
+    function applySelectedColor(color) {
+      eventColor = color;
+      updateColorPreview(color);
+      eventColorPicker.close();
+    }
+
+    var editedEvent;
+
+    var eventId;
+    var eventTitle;
+    var eventDescription;
+    var eventAllDay;
+    var eventStart;
+    var eventEnd;
+    var eventBuffer;
+    var eventColor;
+    var eventStatus;
+
+    var selectedColor;
+
+    var eventTitleElm = document.getElementById('crud-popup-event-title');
+    var eventDescriptionElm = document.getElementById('crud-popup-event-desc');
+    var eventAllDayElm = document.getElementById('crud-popup-event-all-day');
+    var eventBufferElm = document.getElementById('crud-popup-event-buffer');
+    var eventColorElm = document.getElementById('crud-popup-event-color');
+    var colorPreviewElm = document.getElementById('crud-popup-event-color-preview');
+    var colorValueElms = document.querySelectorAll('.mds-crud-color-value');
+    var eventStatusBusyElm = document.getElementById('crud-popup-event-status-busy');
+    var eventStatusFreeElm = document.getElementById('crud-popup-event-status-free');
+    var eventDeleteButtonElm = document.getElementById('crud-popup-event-delete');
+
+    var myEvents = [
       {
         id: 1,
         start: 'dyndatetime(y,m,8,13)',
@@ -82,126 +223,8 @@ export default {
       },
     ];
 
-    function createAddPopup(elm) {
-      // Hide delete button inside add popup
-      deleteButton.style.display = 'none';
-
-      deleteEvent = true;
-      restoreEvent = false;
-
-      // Set popup header text and buttons for adding
-      popup.setOptions({
-        headerText: 'New event',
-        buttons: [
-          'cancel',
-          {
-            text: 'Add',
-            keyCode: 'enter',
-            handler: function () {
-              calendar.updateEvent({
-                id: tempEvent.id,
-                title: tempEvent.title,
-                description: tempEvent.description,
-                allDay: tempEvent.allDay,
-                bufferBefore: travelTime.value,
-                start: tempEvent.start,
-                end: tempEvent.end,
-                color: tempEvent.color,
-              });
-              // Navigate the calendar to the correct view
-              calendar.navigateToEvent(tempEvent);
-              deleteEvent = false;
-              popup.close();
-            },
-            cssClass: 'mbsc-popup-button-primary',
-          },
-        ],
-      });
-
-      // Fill popup with a new event data
-      mobiscroll.getInst(titleInput).value = tempEvent.title;
-      mobiscroll.getInst(descriptionTextarea).value = '';
-      mobiscroll.getInst(allDaySwitch).checked = false;
-      range.setVal([tempEvent.start, tempEvent.end]);
-      mobiscroll.getInst(busySegmented).checked = true;
-      range.setOptions({ controls: ['date'], responsive: datePickerResponsive });
-      pickedColor.style.background = '';
-      travelTime.value = 0;
-
-      // Set anchor for the popup
-      popup.setOptions({ anchor: elm });
-
-      popup.open();
-    }
-
-    function createEditPopup(args) {
-      var ev = args.event;
-
-      // Show delete button inside edit popup
-      deleteButton.style.display = 'block';
-
-      deleteEvent = false;
-      restoreEvent = true;
-
-      // Set popup header text and buttons for editing
-      popup.setOptions({
-        headerText: 'Edit event',
-        buttons: [
-          'cancel',
-          {
-            text: 'Save',
-            keyCode: 'enter',
-            handler: function () {
-              var date = range.getVal();
-              var eventToSave = {
-                id: ev.id,
-                title: titleInput.value,
-                description: descriptionTextarea.value,
-                allDay: mobiscroll.getInst(allDaySwitch).checked,
-                bufferBefore: travelTime.value,
-                start: date[0],
-                end: date[1],
-                free: mobiscroll.getInst(freeSegmented).checked,
-                color: ev.color,
-              };
-              // Update event with the new properties on save button click
-              calendar.updateEvent(eventToSave);
-              // Navigate the calendar to the correct view
-              calendar.navigateToEvent(eventToSave);
-              restoreEvent = false;
-              popup.close();
-            },
-            cssClass: 'mbsc-popup-button-primary',
-          },
-        ],
-      });
-
-      // Fill popup with the selected event data
-      mobiscroll.getInst(titleInput).value = ev.title || '';
-      mobiscroll.getInst(descriptionTextarea).value = ev.description || '';
-      mobiscroll.getInst(allDaySwitch).checked = ev.allDay || false;
-      range.setVal([ev.start, ev.end]);
-      pickedColor.style.background = ev.color || '';
-      travelTime.value = ev.bufferBefore !== undefined ? ev.bufferBefore : 0;
-
-      if (ev.free) {
-        mobiscroll.getInst(freeSegmented).checked = true;
-      } else {
-        mobiscroll.getInst(busySegmented).checked = true;
-      }
-
-      // Change range settings based on the allDay
-      range.setOptions({
-        controls: ev.allDay ? ['date'] : ['datetime'],
-        responsive: ev.allDay ? datePickerResponsive : datetimePickerResponsive,
-      });
-
-      // Set anchor for the popup
-      popup.setOptions({ anchor: args.domEvent.currentTarget });
-      popup.open();
-    }
-
-    var calendar = mobiscroll.eventcalendar('#demo-add-delete-event', {
+    // Init the event calendar
+    var calendar = mobiscroll.eventcalendar('#demo-crud-event-calendar', {
       clickToCreate: 'double',
       dragToCreate: true,
       dragToMove: true,
@@ -209,20 +232,12 @@ export default {
       view: {
         calendar: { labels: true },
       },
-      data: myData,
+      data: myEvents,
       onEventClick: function (args) {
-        oldEvent = Object.assign({}, args.event);
-        tempEvent = args.event;
-
-        if (!popup.isVisible()) {
-          createEditPopup(args);
-        }
+        createEditPopup(args.event, args.domEvent.currentTarget);
       },
       onEventCreated: function (args) {
-        popup.close();
-        // Store temporary event
-        tempEvent = args.event;
-        createAddPopup(args.target);
+        createAddPopup(args.event, args.target);
       },
       onEventDeleted: function (args) {
         mobiscroll.snackbar({
@@ -237,102 +252,24 @@ export default {
       },
     });
 
-    var popup = mobiscroll.popup('#demo-add-popup', {
-      display: 'bottom',
-      contentPadding: false,
-      fullScreen: true,
-      onClose: function () {
-        if (deleteEvent) {
-          calendar.removeEvent(tempEvent);
-        } else if (restoreEvent) {
-          calendar.updateEvent(oldEvent);
-        }
-      },
-      responsive: {
-        medium: {
-          display: 'anchored',
-          width: 400,
-          fullScreen: false,
-          touchUi: false,
-        },
-      },
-    });
-
-    titleInput.addEventListener('input', function (ev) {
-      // Update current event's title
-      tempEvent.title = ev.target.value;
-    });
-
-    descriptionTextarea.addEventListener('change', function (ev) {
-      // Update current event's title
-      tempEvent.description = ev.target.value;
-    });
-
-    allDaySwitch.addEventListener('change', function () {
-      var checked = this.checked;
-
-      var travelTimeGroup = document.querySelector('#travel-time-group');
-      if (checked) {
-        travelTimeGroup.style.display = 'none';
-        travelTime.value = 0;
-      } else {
-        travelTimeGroup.style.display = 'flex';
-      }
-
-      // Change range settings based on the allDay
-      range.setOptions({
-        controls: checked ? ['date'] : ['datetime'],
-        responsive: checked ? datePickerResponsive : datetimePickerResponsive,
-      });
-
-      // Update current event's allDay property
-      tempEvent.allDay = checked;
-    });
-
-    var range = mobiscroll.datepicker('#event-date', {
+    // Init event start/end date picker
+    var eventStartEndPicker = mobiscroll.datepicker('#crud-popup-event-dates', {
       controls: ['date'],
       select: 'range',
-      startInput: '#start-input',
-      endInput: '#end-input',
+      startInput: '#crud-popup-event-start',
+      endInput: '#crud-popup-event-end',
       showRangeLabels: false,
       touchUi: true,
-      responsive: datePickerResponsive,
+      responsive: { medium: { touchUi: false } },
       onChange: function (args) {
-        var date = args.value;
-        // Update event's start date
-        tempEvent.start = date[0];
-        tempEvent.end = date[1];
+        var dates = args.value;
+        eventStart = dates[0];
+        eventEnd = dates[1];
       },
     });
 
-    document.querySelectorAll('input[name=event-status]').forEach(function (elm) {
-      elm.addEventListener('change', function () {
-        // Update current event's free property
-        tempEvent.free = mobiscroll.getInst(freeSegmented).checked;
-      });
-    });
-
-    deleteButton.addEventListener('click', function () {
-      // Delete current event on button click
-      calendar.removeEvent(tempEvent);
-
-      // Save a local reference to the deleted event
-      var deletedEvent = tempEvent;
-
-      popup.close();
-
-      mobiscroll.snackbar({
-        button: {
-          action: function () {
-            calendar.addEvent(deletedEvent);
-          },
-          text: 'Undo',
-        },
-        message: 'Event deleted',
-      });
-    });
-
-    colorPicker = mobiscroll.popup('#demo-event-color', {
+    // Init event color picker
+    var eventColorPicker = mobiscroll.popup('#crud-color-picker-popup', {
       display: 'bottom',
       contentPadding: false,
       showArrow: false,
@@ -343,7 +280,7 @@ export default {
           text: 'Set',
           keyCode: 'enter',
           handler: function () {
-            setSelectedColor();
+            applySelectedColor(selectedColor);
           },
           cssClass: 'mbsc-popup-button-primary',
         },
@@ -351,80 +288,114 @@ export default {
       responsive: {
         medium: {
           display: 'anchored',
-          anchor: document.getElementById('event-color-cont'),
+          anchor: document.getElementById('crud-popup-event-color'),
           buttons: {},
         },
       },
     });
 
-    function selectColor(color, setColor) {
-      var selectedElm = document.querySelector('.crud-color-c.selected');
-      var newSelected = document.querySelector('.crud-color-c[data-value="' + color + '"]');
-
-      if (selectedElm) {
-        selectedElm.classList.remove('selected');
-      }
-      if (newSelected) {
-        newSelected.classList.add('selected');
-      }
-      if (setColor) {
-        pickedColor.style.background = color || '';
-      }
-    }
-
-    function setSelectedColor() {
-      tempEvent.color = tempColor;
-      pickedColor.style.background = tempColor;
-      colorPicker.close();
-    }
-
-    colorSelect.addEventListener('click', function () {
-      selectColor(tempEvent.color || '');
-      colorPicker.open();
+    var addEditPopup = mobiscroll.popup('#crud-add-edit-popup', {
+      display: 'bottom',
+      contentPadding: false,
+      fullScreen: true,
+      scrollLock: false,
+      responsive: {
+        medium: {
+          display: 'anchored',
+          width: 400,
+          fullScreen: false,
+          touchUi: false,
+        },
+      },
     });
 
-    colorElms.forEach(function (elm) {
-      elm.addEventListener('click', function () {
-        tempColor = elm.getAttribute('data-value');
-        selectColor(tempColor);
+    eventTitleElm.addEventListener('input', function (ev) {
+      eventTitle = ev.target.value;
+    });
 
-        if (!colorPicker.s.buttons.length) {
-          setSelectedColor();
+    eventDescriptionElm.addEventListener('change', function (ev) {
+      eventDescription = ev.target.value;
+    });
+
+    eventAllDayElm.addEventListener('change', function (ev) {
+      eventAllDay = ev.target.checked;
+      toggleDatetimePicker(eventAllDay);
+    });
+
+    eventBufferElm.addEventListener('change', function (ev) {
+      eventAllDay = ev.target.checked;
+      toggleDatetimePicker(eventAllDay);
+    });
+
+    document.querySelectorAll('input[name=event-status]').forEach(function (elm) {
+      elm.addEventListener('change', function (ev) {
+        eventStatus = ev.target.value === 'free';
+      });
+    });
+
+    eventDeleteButtonElm.addEventListener('click', function () {
+      calendar.removeEvent(editedEvent);
+      addEditPopup.close();
+
+      mobiscroll.snackbar({
+        button: {
+          action: function () {
+            calendar.addEvent(editedEvent);
+          },
+          text: 'Undo',
+        },
+        message: 'Event deleted',
+      });
+    });
+
+    eventColorElm.addEventListener('click', function () {
+      highlightColor(eventColor || '');
+      eventColorPicker.open();
+    });
+
+    colorValueElms.forEach(function (elm) {
+      elm.addEventListener('click', function () {
+        var color = elm.getAttribute('data-value');
+        selectedColor = color;
+        highlightColor(color);
+
+        if (!eventColorPicker.s.buttons.length) {
+          applySelectedColor(color);
         }
       });
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-add-delete-event"></div>
+<div id="demo-crud-event-calendar"></div>
 
 <div style="display: none">
-    <div id="demo-add-popup">
+    <div id="crud-add-edit-popup">
         <div class="mbsc-form-group">
             <label>
             Title
-            <input mbsc-input id="event-title">
+            <input mbsc-input id="crud-popup-event-title">
         </label>
             <label>
             Description
-            <textarea mbsc-textarea id="event-desc"></textarea>
+            <textarea mbsc-textarea id="crud-popup-event-desc"></textarea>
         </label>
         </div>
         <div class="mbsc-form-group">
             <label>
             All-day
-            <input mbsc-switch id="event-all-day" type="checkbox" />
+            <input mbsc-switch id="crud-popup-event-all-day" type="checkbox" />
         </label>
             <label>
             Starts
-            <input mbsc-input id="start-input" />
+            <input mbsc-input id="crud-popup-event-start" />
         </label>
             <label>
             Ends
-            <input mbsc-input id="end-input" />
+            <input mbsc-input id="crud-popup-event-end" />
         </label>
         <label id="travel-time-group">
-            <select data-label="Travel time" mbsc-dropdown id="travel-time-selection">
+            <select data-label="Travel time" mbsc-dropdown id="crud-popup-event-buffer">
                 <option value="0">None</option>
                 <option value="5">5 minutes</option>
                 <option value="15">15 minutes</option>
@@ -434,60 +405,60 @@ export default {
                 <option value="120">2 hours</option>
             </select>
         </label>
-            <div id="event-date"></div>
-            <div id="event-color-picker" class="event-color-c">
-                <div class="event-color-label">Color</div>
-                <div id="event-color-cont">
-                    <div id="event-color" class="event-color"></div>
+            <div id="crud-popup-event-dates"></div>
+            <div id="crud-event-color-picker" class="mbsc-flex mds-crud-event-color-cont">
+                <div class="mbsc-flex-1-0">Color</div>
+                <div id="crud-popup-event-color">
+                    <div id="crud-popup-event-color-preview" class="mds-crud-selected-event-color"></div>
                 </div>
             </div>
             <label>
             Show as busy
-            <input id="event-status-busy" mbsc-segmented type="radio" name="event-status" value="busy">
+            <input id="crud-popup-event-status-busy" mbsc-segmented type="radio" name="event-status" value="busy">
         </label>
             <label>
             Show as free
-            <input id="event-status-free" mbsc-segmented type="radio" name="event-status" value="free">
+            <input id="crud-popup-event-status-free" mbsc-segmented type="radio" name="event-status" value="free">
         </label>
             <div class="mbsc-button-group">
-                <button class="mbsc-button-block" id="event-delete" mbsc-button data-color="danger" data-variant="outline">Delete event</button>
+                <button class="mbsc-button-block" id="crud-popup-event-delete" mbsc-button data-color="danger" data-variant="outline">Delete event</button>
             </div>
         </div>
     </div>
 
-    <div id="demo-event-color">
-        <div class="crud-color-row">
-            <div class="crud-color-c" data-value="#ffeb3c">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#ffeb3c"></div>
+    <div id="crud-color-picker-popup">
+        <div class="mbsc-flex mds-crud-color-row">
+            <div class="mds-crud-color-value" data-value="#ffeb3c">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#ffeb3c"></div>
             </div>
-            <div class="crud-color-c" data-value="#ff9900">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#ff9900"></div>
+            <div class="mds-crud-color-value" data-value="#ff9900">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#ff9900"></div>
             </div>
-            <div class="crud-color-c" data-value="#f44437">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#f44437"></div>
+            <div class="mds-crud-color-value" data-value="#f44437">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#f44437"></div>
             </div>
-            <div class="crud-color-c" data-value="#ea1e63">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#ea1e63"></div>
+            <div class="mds-crud-color-value" data-value="#ea1e63">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#ea1e63"></div>
             </div>
-            <div class="crud-color-c" data-value="#9c26b0">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#9c26b0"></div>
+            <div class="mds-crud-color-value" data-value="#9c26b0">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#9c26b0"></div>
             </div>
         </div>
-        <div class="crud-color-row">
-            <div class="crud-color-c" data-value="#3f51b5">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#3f51b5"></div>
+        <div class="mbsc-flex mds-crud-color-row">
+            <div class="mds-crud-color-value" data-value="#3f51b5">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#3f51b5"></div>
             </div>
-            <div class="crud-color-c" data-value="">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check"></div>
+            <div class="mds-crud-color-value" data-value="">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check"></div>
             </div>
-            <div class="crud-color-c" data-value="#009788">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#009788"></div>
+            <div class="mds-crud-color-value" data-value="#009788">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#009788"></div>
             </div>
-            <div class="crud-color-c" data-value="#4baf4f">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#4baf4f"></div>
+            <div class="mds-crud-color-value" data-value="#4baf4f">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#4baf4f"></div>
             </div>
-            <div class="crud-color-c" data-value="#7e5d4e">
-                <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#7e5d4e"></div>
+            <div class="mds-crud-color-value" data-value="#7e5d4e">
+                <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style="background:#7e5d4e"></div>
             </div>
         </div>
     </div>
@@ -495,18 +466,13 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.event-color-c {
-    display: flex;
+.mds-crud-event-color-cont {
     margin: 16px;
     align-items: center;
     cursor: pointer;
 }
 
-.event-color-label {
-    flex: 1 0 auto;
-}
-
-.event-color {
+.mds-crud-selected-event-color {
     width: 30px;
     height: 30px;
     border-radius: 15px;
@@ -515,18 +481,12 @@ export default {
     background: #5ac8fa;
 }
 
-.crud-color-row {
-    display: flex;
+.mds-crud-color-row {
     justify-content: center;
     margin: 5px;
 }
 
-.crud-color-c {
-    padding: 3px;
-    margin: 2px;
-}
-
-.crud-color {
+.mds-crud-color {
     position: relative;
     min-width: 46px;
     min-height: 46px;
@@ -536,13 +496,7 @@ export default {
     background: #5ac8fa;
 }
 
-.crud-color-c.selected,
-.crud-color-c:hover {
-    box-shadow: inset 0 0 0 3px #007bff;
-    border-radius: 48px;
-}
-
-.crud-color:before {
+.mds-crud-color:before {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -554,8 +508,23 @@ export default {
     display: none;
 }
 
-.crud-color-c.selected .crud-color:before {
+.mds-crud-color-value {
+    padding: 3px;
+    margin: 2px;
+}
+
+.mds-crud-color-value.selected,
+.mds-crud-color-value:hover {
+    box-shadow: inset 0 0 0 3px #007bff;
+    border-radius: 48px;
+}
+
+.mds-crud-color-value.selected .mds-crud-color:before {
     display: block;
+}
+
+.mds-hide-elm {
+    display: none;
 }
   `,
 };
