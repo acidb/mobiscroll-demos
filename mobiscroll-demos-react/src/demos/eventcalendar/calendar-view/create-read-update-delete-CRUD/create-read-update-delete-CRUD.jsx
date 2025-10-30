@@ -17,7 +17,7 @@ import './create-read-update-delete-CRUD.css';
 
 setOptions({
   // localeJs,
-  // themeJs,
+  // themeJs
 });
 
 const defaultEvents = [
