@@ -20,16 +20,6 @@ export default {
         });
       }
 
-      function navigateToEvent(event) {
-        var d = new Date(event.start);
-        var year = d.getFullYear();
-        var month = d.getMonth();
-        var day = d.getDate();
-        var hours = d.getHours();
-
-        calendar.navigate(new Date(year, month, day, hours));
-      }
-
       // Fills the popup with the event's data
       function fillPopup(event) {
         // Load event properties
@@ -91,7 +81,7 @@ export default {
               handler: function () {
                 var newEvent = getEventData();
                 calendar.updateEvent(newEvent);
-                navigateToEvent(newEvent);
+                calendar.navigateToEvent(newEvent);
                 success = true;
                 addEditPopup.close();
               },
@@ -128,7 +118,7 @@ export default {
               handler: function () {
                 var updatedEvent = getEventData();
                 calendar.updateEvent(updatedEvent);
-                navigateToEvent(updatedEvent);
+                calendar.navigateToEvent(updatedEvent);
                 addEditPopup.close();
               },
               cssClass: 'mbsc-popup-button-primary',
