@@ -132,11 +132,11 @@ const App: FC = () => {
     () => ({
       medium: {
         display: 'anchored',
-        touchUi: false,
+        anchor: colorPickerAnchor,
         buttons: [],
       },
     }),
-    [],
+    [colorPickerAnchor],
   );
 
   const datepickerControls = useMemo(() => (eventAllDay ? ['date'] : ['datetime']) as MbscDatepickerControl[], [eventAllDay]);

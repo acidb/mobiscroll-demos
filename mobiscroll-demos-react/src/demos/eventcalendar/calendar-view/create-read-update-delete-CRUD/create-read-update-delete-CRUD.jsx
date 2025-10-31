@@ -121,11 +121,11 @@ function App() {
     () => ({
       medium: {
         display: 'anchored',
-        touchUi: false,
+        anchor: colorPickerAnchor,
         buttons: [],
       },
     }),
-    [],
+    [colorPickerAnchor],
   );
 
   const datepickerControls = useMemo(() => (eventAllDay ? ['date'] : ['datetime']), [eventAllDay]);

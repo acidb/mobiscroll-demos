@@ -292,7 +292,7 @@ export default {
             medium: {
               display: 'anchored',
               anchor: $('#crud-popup-event-color')[0],
-              buttons: {},
+              buttons: [],
             },
           },
         })

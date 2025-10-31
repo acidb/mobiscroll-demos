@@ -279,7 +279,7 @@ export default {
         medium: {
           display: 'anchored',
           anchor: document.getElementById('crud-popup-event-color'),
-          buttons: {},
+          buttons: [],
         },
       },
     });
