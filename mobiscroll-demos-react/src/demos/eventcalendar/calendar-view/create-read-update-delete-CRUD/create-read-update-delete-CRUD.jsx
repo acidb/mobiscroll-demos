@@ -330,10 +330,10 @@ function App() {
   return (
     <>
       <Eventcalendar
-        clickToCreate
-        dragToCreate
-        dragToMove
-        dragToResize
+        clickToCreate={true}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
         data={myEvents}
         ref={calInst}
         view={myView}
@@ -345,7 +345,7 @@ function App() {
       <Popup
         display="bottom"
         contentPadding={false}
-        fullScreen
+        fullScreen={true}
         scrollLock={false}
         headerText={addEditPopupHeaderText}
         anchor={addEditPopupAnchor}
@@ -368,7 +368,7 @@ function App() {
             select="range"
             display="anchored"
             controls={datepickerControls}
-            touchUi
+            touchUi={true}
             startInput={dateStart}
             endInput={dateEnd}
             showRangeLabels={false}
