@@ -267,7 +267,6 @@ function handleDeleteButtonClick() {
   const filteredEvents = myEvents.value.filter((e) => e.id !== editedEvent.value.id)
   myEvents.value = filteredEvents
   isAddEditPopupOpen.value = false
-  console.log('Event deleted')
   isSnackbarOpen.value = true
 }
 
