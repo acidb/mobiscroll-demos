@@ -184,7 +184,7 @@ export class AppComponent {
       end: this.eventDates[1],
       bufferBefore: this.eventBuffer,
       color: this.eventColor,
-      free: this.eventStatus,
+      free: this.statusValue === 'free',
     }
   }
 
