@@ -3,7 +3,6 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
-  MbscDatepickerOptions,
   MbscDateType,
   MbscEventcalendar,
   MbscEventcalendarView,
@@ -21,8 +20,7 @@ import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
-  theme: 'ios',
-  themeVariant: 'light',
+  // theme
 });
 
 @Component({
@@ -48,20 +46,20 @@ export class AppComponent {
 
   eventId: string | number | undefined;
   eventTitle: string | undefined;
-  eventDescription: string = '';
+  eventDescription = '';
   eventAllDay = false;
   eventDates: MbscDateType[] = [];
-  eventBuffer: number = 0;
-  eventColor: string = '';
-  eventStatus: boolean = false;
+  eventBuffer = 0;
+  eventColor = '';
+  eventStatus = false;
 
-  statusValue: string = 'busy';
+  statusValue = 'busy';
   editedEvent: MbscCalendarEvent | null = null;
   addEditPopupAnchor: HTMLElement | undefined;
   colorPickerAnchor: HTMLElement | undefined;
-  colorPreview: string = '';
-  isEdit: boolean = false;
-  isSuccess: boolean = false;
+  colorPreview = '';
+  isEdit = false;
+  isSuccess = false;
 
   myView: MbscEventcalendarView = { calendar: { type: 'month', labels: true } };
 
@@ -117,7 +115,6 @@ export class AppComponent {
     this.eventColor = color;
     this.colorPreview = color;
     this.colorPicker.close();
-    console.log('close')
   }
 
   addEditPopupResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
@@ -287,10 +284,6 @@ export class AppComponent {
     if (!this.colorPicker.s.buttons!.length) {
       this.applySelectedColor(color);
     }
-  }
-
-  handleStatusChange() {
-    this.eventStatus = this.statusValue === 'free';
   }
 
 }
