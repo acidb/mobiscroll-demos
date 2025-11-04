@@ -20,8 +20,7 @@ import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
-  theme: 'ios',
-  themeVariant: 'light',
+  // theme
 });
 
 @Component({
@@ -62,7 +61,7 @@ export class AppComponent {
   isEdit = false;
   isSuccess = false;
 
-  myView: MbscEventcalendarView = { calendar: { type: 'month', labels: true } };
+  myView: MbscEventcalendarView = { calendar: { labels: true } };
 
   colors: string[] = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '', '#009788', '#4baf4f', '#7e5d4e'];
 
@@ -234,7 +233,9 @@ export class AppComponent {
   }
 
   handleEventCreated(args: MbscEventCreatedEvent): void {
-    this.createAddPopup(args.event, args.target!);
+    setTimeout(() => {
+      this.createAddPopup(args.event, args.target!);
+    });
   }
 
   handleEventDeleted() {

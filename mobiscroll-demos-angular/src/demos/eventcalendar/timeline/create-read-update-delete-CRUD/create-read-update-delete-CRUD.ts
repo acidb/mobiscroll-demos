@@ -3,12 +3,17 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
-  MbscDatepickerOptions,
+  MbscDateType,
   MbscEventcalendar,
-  MbscEventcalendarOptions,
+  MbscEventcalendarView,
+  MbscEventClickEvent,
+  MbscEventCreatedEvent,
   MbscModule,
   MbscPopup,
+  MbscPopupButton,
   MbscPopupOptions,
+  MbscResource,
+  MbscResponsiveOptions,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -20,7 +25,7 @@ setOptions({
 });
 
 @Component({
-  selector: 'app-timeline-create-read-update-delete-crud',
+  selector: 'app-eventcalendar-create-read-update-delete-crud',
   styleUrl: './create-read-update-delete-CRUD.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './create-read-update-delete-CRUD.html',
@@ -29,28 +34,40 @@ setOptions({
   imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) {}
+  constructor(private notify: Notifications) { }
 
   @ViewChild('calendar', { static: false })
   calendar!: MbscEventcalendar;
 
-  @ViewChild('popup', { static: false })
-  popup!: MbscPopup;
+  @ViewChild('addEditPopup', { static: false })
+  addEditPopup!: MbscPopup;
 
   @ViewChild('colorPicker', { static: false })
-  colorPicker: any;
+  colorPicker!: MbscPopup;
 
-  popupEventTitle: string | undefined;
-  popupEventDescription = '';
-  popupEventAllDay = true;
-  popupTravelTime = 0;
-  popupEventDates: any;
-  popupEventStatus = 'busy';
-  switchLabel: any = 'All-day';
-  tempColor = '';
+  eventId: string | number | undefined;
+  eventTitle: string | undefined;
+  eventDescription = '';
+  eventAllDay = false;
+  eventDates: MbscDateType[] = [];
+  eventBuffer = 0;
+  eventColor: string | undefined;
+  eventStatus = false;
+  eventResource: number | string | (string | number)[] | undefined;
+
+  resourceColor: string | undefined;
   selectedColor = '';
-  colorAnchor: HTMLElement | undefined;
-  colors = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '#5ac8fa', '#009788', '#4baf4f', '#7e5d4e'];
+  statusValue = 'busy';
+  editedEvent: MbscCalendarEvent | null = null;
+  addEditPopupAnchor: HTMLElement | undefined;
+  colorPickerAnchor: HTMLElement | undefined;
+  isEdit = false;
+  isSuccess = false;
+
+  myView: MbscEventcalendarView = { timeline: { type: 'day' } };
+
+  colors: string[] = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '', '#009788', '#4baf4f', '#7e5d4e'];
+
   myEvents: MbscCalendarEvent[] = [
     {
       id: 1,
@@ -96,7 +113,8 @@ export class AppComponent {
       resource: 1,
     },
   ];
-  myResources = [
+
+  myResources: MbscResource[] = [
     {
       id: 1,
       name: 'Resource A',
@@ -122,211 +140,183 @@ export class AppComponent {
       name: 'Resource E',
       color: '#ff9900',
     },
-  ];
-  tempEvent!: MbscCalendarEvent;
-  calendarOptions: MbscEventcalendarOptions = {
-    clickToCreate: 'double',
-    dragToCreate: true,
-    dragToMove: true,
-    dragToResize: true,
-    view: {
-      timeline: { type: 'day' },
-    },
-    onEventClick: (args) => {
-      this.isEdit = true;
-      this.tempEvent = args.event;
-      // Fill popup form with event data
-      this.loadPopupForm(args.event);
-      this.selectedColor = args.event.color || args.resourceObj!.color || '';
-      // Set popup options
-      this.popupHeaderText = 'Edit event';
-      this.popupButtons = this.popupEditButtons;
-      this.popupAnchor = args.domEvent.currentTarget;
-      // Open the popup
-      this.popup.open();
-    },
-    onEventCreated: (args) => {
-      setTimeout(() => {
-        this.isEdit = false;
-        this.tempEvent = args.event;
-        // Fill popup form with event data
-        this.loadPopupForm(args.event);
-        this.selectedColor = args.resourceObj!.color || '';
-        // Set popup options
-        this.popupHeaderText = 'New Event';
-        this.popupButtons = this.popupAddButtons;
-        this.popupAnchor = args.target;
-        // Open the popup
-        this.popup.open();
-      });
-    },
-    onEventDeleted: (args) => {
-      setTimeout(() => {
-        this.deleteEvent(args.event);
-      });
-    },
-    onEventUpdated: () => {
-      // Here you can update the event in your storage as well, after drag & drop or resize
-      // ...
-    },
-  };
-  popupHeaderText!: string;
-  popupAnchor: HTMLElement | undefined;
-  popupAddButtons = [
+  ]
+
+  editButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
     'cancel',
     {
-      handler: () => {
-        this.saveEvent();
-      },
-      keyCode: 'enter',
-      text: 'Add',
-      cssClass: 'mbsc-popup-button-primary',
-    },
-  ];
-  popupEditButtons = [
-    'cancel',
-    {
-      handler: () => {
-        this.saveEvent();
-      },
-      keyCode: 'enter',
       text: 'Save',
+      keyCode: 'enter',
+      cssClass: 'mbsc-popup-button-primary',
+      handler: () => {
+        const updatedEvent: MbscCalendarEvent = this.getEventData();
+        const index = this.myEvents.findIndex((x) => x.id === updatedEvent.id);
+        const newEventList = [...this.myEvents];
+
+        // Update event in the list
+        newEventList.splice(index, 1, updatedEvent);
+        this.myEvents = newEventList;
+
+        this.calendar.navigateToEvent(updatedEvent);
+        this.addEditPopup.close();
+      },
+    },
+  ];
+
+  addButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
+    'cancel',
+    {
+      text: 'Add',
+      keyCode: 'enter',
+      cssClass: 'mbsc-popup-button-primary',
+      handler: () => {
+        const newEvent: MbscCalendarEvent = this.getEventData();
+
+        // Add new event to the list
+        this.myEvents = [...this.myEvents, newEvent];
+
+        this.isSuccess = true;
+        this.calendar.navigateToEvent(newEvent);
+        this.addEditPopup.close();
+      },
+    },
+  ]
+
+  addEditPopupResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
+    medium: {
+      display: 'anchored',
+      width: 400,
+      fullScreen: false,
+      touchUi: false,
+    }
+  }
+
+  colorPickerButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
+    'cancel',
+    {
+      text: 'Set',
+      keyCode: 'enter',
+      handler: () => this.applySelectedColor(this.selectedColor),
       cssClass: 'mbsc-popup-button-primary',
     },
   ];
-  popupButtons: any = [];
-  popupOptions: MbscPopupOptions = {
-    display: 'bottom',
-    contentPadding: false,
-    fullScreen: true,
-    onClose: () => {
-      if (!this.isEdit) {
-        // Refresh the list, if add popup was canceled, to remove the temporary event
-        this.myEvents = [...this.myEvents];
-      }
-    },
-    responsive: {
-      medium: {
-        display: 'anchored',
-        width: 400,
-        fullScreen: false,
-        touchUi: false,
-      },
-    },
-  };
-  datePickerControls = ['date'];
-  datePickerResponsive: any = {
+
+  colorPickerResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
     medium: {
-      controls: ['calendar'],
+      display: 'anchored',
+      buttons: [],
       touchUi: false,
     },
   };
-  datetimePickerControls = ['datetime'];
-  datetimePickerResponsive = {
-    medium: {
-      controls: ['calendar', 'time'],
-      touchUi: false,
-    },
-  };
-  datePickerOptions: MbscDatepickerOptions = {
-    select: 'range',
-    showRangeLabels: false,
-    touchUi: true,
-  };
-  isEdit = false;
-  colorOptions: MbscPopupOptions = {
-    display: 'bottom',
-    contentPadding: false,
-    showArrow: false,
-    showOverlay: false,
-    buttons: [
-      'cancel',
-      {
-        text: 'Set',
-        keyCode: 'enter',
-        handler: () => {
-          this.selectedColor = this.tempColor;
-          this.colorPicker.close();
-        },
-        cssClass: 'mbsc-popup-button-primary',
-      },
-    ],
-    responsive: {
-      medium: {
-        display: 'anchored',
-        buttons: [],
-      },
-    },
-  };
-  loadPopupForm(event: MbscCalendarEvent): void {
-    this.popupEventTitle = event.title;
-    this.popupEventDescription = event['description'];
-    this.popupEventDates = [event.start, event.end];
-    this.popupEventAllDay = event.allDay || false;
-    this.popupTravelTime = event.bufferBefore || 0;
-    this.popupEventStatus = event['status'] || 'busy';
+
+  fillPopup(event: MbscCalendarEvent): void {
+    this.eventId = event.id;
+    this.eventTitle = event.title || '';
+    this.eventDescription = event['description'] || '';
+    this.eventAllDay = event.allDay!;
+    this.eventDates = [event.start!, event.end!];
+    this.eventBuffer = event.bufferBefore || 0;
+    this.eventColor = event.color || this.resourceColor;
+    this.eventStatus = event['free'] || false;
+    this.statusValue = event['free'] ? 'free' : 'busy';
+    this.eventResource = event.resource;
   }
-  saveEvent(): void {
-    this.tempEvent.title = this.popupEventTitle;
-    this.tempEvent['description'] = this.popupEventDescription;
-    this.tempEvent.start = this.popupEventDates[0];
-    this.tempEvent.end = this.popupEventDates[1];
-    this.tempEvent.allDay = this.popupEventAllDay;
-    this.tempEvent.bufferBefore = this.popupTravelTime;
-    this.tempEvent['status'] = this.popupEventStatus;
-    this.tempEvent.color = this.selectedColor;
-    if (this.isEdit) {
-      // Update the event in the list
-      this.myEvents = [...this.myEvents];
-      // Here you can update the event in your storage as well
-      // ...
-    } else {
-      // Add the new event to the list
-      this.myEvents = [...this.myEvents, this.tempEvent];
-      // Here you can add the event to your storage as well
-      // ...
+
+  createEditPopup(event: MbscCalendarEvent, target: HTMLElement): void {
+    this.isEdit = true;
+    this.editedEvent = event;
+    this.addEditPopupAnchor = target;
+    this.fillPopup(event);
+    this.addEditPopup.open();
+  }
+
+  createAddPopup(event: MbscCalendarEvent, target: HTMLElement): void {
+    this.isSuccess = false;
+    this.isEdit = false;
+    this.editedEvent = event;
+    this.addEditPopupAnchor = target;
+    this.fillPopup(event);
+    this.addEditPopup.open();
+  }
+
+  getEventData(): (MbscCalendarEvent) {
+    return {
+      id: this.eventId,
+      title: this.eventTitle,
+      description: this.eventDescription,
+      allDay: this.eventAllDay,
+      start: this.eventDates[0],
+      end: this.eventDates[1],
+      bufferBefore: this.eventBuffer,
+      color: this.eventColor,
+      free: this.statusValue === 'free',
+      resource: this.eventResource,
     }
-    // Navigate the calendar
-    this.calendar.navigateToEvent(this.tempEvent);
-    // Close the popup
-    this.popup.close();
   }
-  deleteEvent(event: MbscCalendarEvent): void {
-    this.myEvents = this.myEvents.filter((item) => item.id !== event.id);
+
+  handleAddEditPopupClose(): void {
+    if (!this.isEdit && !this.isSuccess) {
+      // Refresh the list, if add popup was canceled, to remove the temporary event
+      this.myEvents = [...this.myEvents];
+    }
+  }
+
+  handleEventClick(args: MbscEventClickEvent): void {
+    this.resourceColor = args.resourceObj.color;
+    this.createEditPopup(args.event, args.domEvent.currentTarget);
+  }
+
+  handleEventCreated(args: MbscEventCreatedEvent): void {
+    this.resourceColor = args.resourceObj!.color;
+    setTimeout(() => {
+      this.createAddPopup(args.event, args.target!);
+    });
+  }
+
+  handleEventDeleted() {
     this.notify.snackbar({
       button: {
         action: () => {
-          this.myEvents = [...this.myEvents, event];
+          this.myEvents = [...this.myEvents, this.editedEvent!];
         },
         text: 'Undo',
       },
       message: 'Event deleted',
     });
-    // Here you can delete the event from your storage as well
-    // ...
-  }
-  onDeleteClick(): void {
-    this.deleteEvent(this.tempEvent);
-    this.popup.close();
   }
 
-  selectColor(color: string): void {
-    this.tempColor = color;
+  handleDeleteButtonClick() {
+    const filteredEvents = this.myEvents.filter((e) => e.id !== this.editedEvent!.id);
+    this.myEvents = filteredEvents;
+    this.addEditPopup.close();
+    this.notify.snackbar({
+      button: {
+        action: () => {
+          this.myEvents = [...this.myEvents, this.editedEvent!];
+        },
+        text: 'Undo',
+      },
+      message: 'Event deleted',
+    });
   }
 
-  openColorPicker(ev: any): void {
-    this.selectColor(this.selectedColor);
-    this.colorAnchor = ev.currentTarget;
+  handleEventColorClick(ev: MouseEvent): void {
+    this.colorPickerAnchor = ev.currentTarget as HTMLElement;
     this.colorPicker.open();
   }
 
-  changeColor(ev: any): void {
-    const color = ev.currentTarget.getAttribute('data-value');
-    this.selectColor(color);
-
-    if (!this.colorPicker.s.buttons.length) {
-      this.selectedColor = color;
-      this.colorPicker.close();
+  handleColorChange(ev: MouseEvent): void {
+    const color = (ev.currentTarget as HTMLDivElement).getAttribute('data-value') || '';
+    this.eventColor = color;
+    this.selectedColor = color;
+    if (!this.colorPicker.s.buttons!.length) {
+      this.applySelectedColor(color);
     }
   }
+
+  applySelectedColor(color: string): void {
+    this.eventColor = color;
+    this.colorPicker.close();
+  }
+
 }
