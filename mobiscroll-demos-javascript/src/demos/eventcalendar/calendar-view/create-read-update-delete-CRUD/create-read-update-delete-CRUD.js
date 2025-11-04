@@ -5,8 +5,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light',
+      // theme
     });
 
     function toggleDatetimePicker(allDay) {
