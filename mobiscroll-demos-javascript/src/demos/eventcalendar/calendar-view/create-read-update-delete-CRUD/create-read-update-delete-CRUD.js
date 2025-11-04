@@ -5,7 +5,8 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     function toggleDatetimePicker(allDay) {
@@ -20,9 +21,9 @@ export default {
 
     function toggleTravelTime(allDay) {
       if (allDay) {
-        timeGroupElm.style.display = 'none';
+        timeGroupElm.remove();
       } else {
-        timeGroupElm.style.display = 'flex';
+        timeGroupParent.appendChild(timeGroupElm);
       }
     }
 
@@ -42,7 +43,7 @@ export default {
       // Set event fields
       mobiscroll.getInst(eventTitleElm).value = eventTitle;
       mobiscroll.getInst(eventDescriptionElm).value = eventDescription;
-      mobiscroll.getInst(eventAllDayElm).value = eventAllDay;
+      mobiscroll.getInst(eventAllDayElm).checked = eventAllDay;
       eventStartEndPicker.setVal([eventStart, eventEnd]);
       mobiscroll.getInst(eventBufferElm).value = eventBuffer;
       highlightColor(eventColor);
@@ -176,6 +177,7 @@ export default {
     var eventStatusFreeElm = document.getElementById('crud-popup-event-status-free');
     var eventDeleteButtonElm = document.getElementById('crud-popup-event-delete');
     var timeGroupElm = document.getElementById('crud-popup-time-group');
+    var timeGroupParent = timeGroupElm.parentNode;
 
     var myEvents = [
       {

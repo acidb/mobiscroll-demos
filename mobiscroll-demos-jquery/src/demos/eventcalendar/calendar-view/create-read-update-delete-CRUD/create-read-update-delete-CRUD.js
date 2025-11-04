@@ -22,9 +22,9 @@ export default {
 
       function toggleTravelTime(allDay) {
         if (allDay) {
-          $timeGroup.hide();
+          $timeGroup.remove();
         } else {
-          $timeGroup.show();
+          $timeGroupParent.append($timeGroup);
         }
       }
 
@@ -177,6 +177,7 @@ export default {
       var $eventStatusFree = $('#crud-popup-event-status-free');
       var $eventDeleteButton = $('#crud-popup-event-delete');
       var $timeGroup = $('#crud-popup-time-group');
+      var $timeGroupParent = $timeGroup.parent();
 
       var myEvents = [
         {
