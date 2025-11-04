@@ -6,7 +6,8 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -18,6 +19,14 @@ export default {
             ? { medium: { controls: ['calendar'], touchUi: false } }
             : { medium: { controls: ['calendar', 'time'], touchUi: false } },
         });
+      }
+
+      function toggleTravelTime(allDay) {
+        if (allDay) {
+          $timeGroup.hide();
+        } else {
+          $timeGroup.show();
+        }
       }
 
       // Fills the popup with the event's data
@@ -47,6 +56,7 @@ export default {
           $eventStatusBusy.mobiscroll('getInst').checked = true;
         }
         toggleDatetimePicker(eventAllDay);
+        toggleTravelTime(eventAllDay);
       }
 
       function getEventData() {
@@ -131,8 +141,8 @@ export default {
       }
 
       function highlightColor(color) {
-        $('.mds-crud-color-value').removeClass('selected');
-        $('.mds-crud-color-value[data-value="' + color + '"]').addClass('selected');
+        $('.mds-crud-color-value').removeClass('mds-crud-color-value-selected');
+        $('.mds-crud-color-value[data-value="' + color + '"]').addClass('mds-crud-color-value-selected');
       }
 
       function updateColorPreview(color) {
@@ -146,6 +156,7 @@ export default {
       }
 
       var editedEvent;
+      var selectedColor;
 
       var eventId;
       var eventTitle;
@@ -157,8 +168,6 @@ export default {
       var eventColor;
       var eventStatus;
 
-      var selectedColor;
-
       var $eventTitle = $('#crud-popup-event-title');
       var $eventDescription = $('#crud-popup-event-desc');
       var $eventAllDay = $('#crud-popup-event-all-day');
@@ -168,6 +177,7 @@ export default {
       var $eventStatusBusy = $('#crud-popup-event-status-busy');
       var $eventStatusFree = $('#crud-popup-event-status-free');
       var $eventDeleteButton = $('#crud-popup-event-delete');
+      var $timeGroup = $('#crud-popup-time-group');
 
       var myEvents = [
         {
@@ -291,7 +301,7 @@ export default {
           responsive: {
             medium: {
               display: 'anchored',
-              anchor: $('#crud-popup-event-color')[0],
+              anchor: $eventColor[0],
               buttons: [],
             },
           },
@@ -329,13 +339,14 @@ export default {
       $eventAllDay.on('change', function () {
         eventAllDay = this.checked;
         toggleDatetimePicker(eventAllDay);
+        toggleTravelTime(eventAllDay);
       });
 
       $eventBuffer.on('change', function () {
         eventBuffer = +this.value;
       });
 
-      $('input[name=event-status]').on('change', function () {
+      $('.mds-crud-popup-event-status').on('change', function () {
         eventStatus = this.value === 'free';
       });
 
@@ -390,30 +401,32 @@ export default {
       </label>
     </div>
     <div class="mbsc-form-group">
-      <label>
-        All-day
-        <input mbsc-switch id="crud-popup-event-all-day" type="checkbox" />
-      </label>
-      <label>
-        Starts
-        <input mbsc-input id="crud-popup-event-start" />
-      </label>
-      <label>
-        Ends
-        <input mbsc-input id="crud-popup-event-end" />
-      </label>
-      <label id="travel-time-group">
-        <select data-label="Travel time" mbsc-dropdown id="crud-popup-event-buffer">
-          <option value="0">None</option>
-          <option value="5">5 minutes</option>
-          <option value="15">15 minutes</option>
-          <option value="30">30 minutes</option>
-          <option value="60">1 hour</option>
-          <option value="90">1.5 hours</option>
-          <option value="120">2 hours</option>
-        </select>
-      </label>
-      <div id="crud-popup-event-dates"></div>
+      <div>
+        <label>
+          All-day
+          <input mbsc-switch id="crud-popup-event-all-day" type="checkbox" />
+        </label>
+        <div id="crud-popup-event-dates"></div>
+        <label>
+          Starts
+          <input mbsc-input id="crud-popup-event-start" />
+        </label>
+        <label>
+          Ends
+          <input mbsc-input id="crud-popup-event-end" />
+        </label>
+        <label id="crud-popup-time-group">
+          <select data-label="Travel time" mbsc-dropdown id="crud-popup-event-buffer">
+            <option value="0">None</option>
+            <option value="5">5 minutes</option>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">1 hour</option>
+            <option value="90">1.5 hours</option>
+            <option value="120">2 hours</option>
+          </select>
+        </label>
+      </div>
       <div id="crud-event-color-picker" class="mbsc-flex mds-crud-event-color-cont">
         <div class="mbsc-flex-1-0">Color</div>
         <div id="crud-popup-event-color">
@@ -422,11 +435,11 @@ export default {
       </div>
       <label>
         Show as busy
-        <input id="crud-popup-event-status-busy" mbsc-segmented type="radio" name="event-status" value="busy" />
+        <input id="crud-popup-event-status-busy" class="mds-crud-popup-event-status" mbsc-segmented type="radio" name="event-status" value="busy" />
       </label>
       <label>
         Show as free
-        <input id="crud-popup-event-status-free" mbsc-segmented type="radio" name="event-status" value="free" />
+        <input id="crud-popup-event-status-free" class="mds-crud-popup-event-status" mbsc-segmented type="radio" name="event-status" value="free" />
       </label>
       <div class="mbsc-button-group">
         <button class="mbsc-button-block" id="crud-popup-event-delete" mbsc-button data-color="danger" data-variant="outline">
@@ -523,13 +536,13 @@ export default {
   margin: 2px;
 }
 
-.mds-crud-color-value.selected,
+.mds-crud-color-value.mds-crud-color-value-selected,
 .mds-crud-color-value:hover {
   box-shadow: inset 0 0 0 3px #007bff;
   border-radius: 48px;
 }
 
-.mds-crud-color-value.selected .mds-crud-color:before {
+.mds-crud-color-value.mds-crud-color-value-selected .mds-crud-color:before {
   display: block;
 }
   `,

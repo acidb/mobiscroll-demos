@@ -88,7 +88,7 @@ function App() {
   const [addEditPopupOpen, setAddEditPopupOpen] = useState(false);
   const [colorPickerAnchor, setColorPickerAnchor] = useState(null);
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
-  const [colorPreview, setColorPreview] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
   const [isEdit, setEdit] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -98,7 +98,6 @@ function App() {
 
   const applySelectedColor = useCallback((color) => {
     setEventColor(color);
-    setColorPreview(color);
     setColorPickerOpen(false);
   }, []);
 
@@ -110,11 +109,11 @@ function App() {
       {
         text: 'Set',
         keyCode: 'enter',
-        handler: () => applySelectedColor(eventColor),
+        handler: () => applySelectedColor(selectedColor),
         cssClass: 'mbsc-popup-button-primary',
       },
     ],
-    [applySelectedColor, eventColor],
+    [applySelectedColor, selectedColor],
   );
 
   const colorPickerResponsive = useMemo(
@@ -154,6 +153,77 @@ function App() {
     [editedEvent],
   );
 
+  const eventData = useMemo(
+    () => ({
+      id: eventId,
+      title: eventTitle,
+      description: eventDescription,
+      allDay: eventAllDay,
+      start: eventStart,
+      end: eventEnd,
+      bufferBefore: eventBuffer,
+      color: eventColor,
+      free: eventStatus,
+    }),
+    [eventId, eventTitle, eventDescription, eventAllDay, eventStart, eventEnd, eventBuffer, eventColor, eventStatus],
+  );
+
+  const addEditPopupButtons = useMemo(() => {
+    if (isEdit) {
+      return [
+        'cancel',
+        {
+          text: 'Save',
+          keyCode: 'enter',
+          cssClass: 'mbsc-popup-button-primary',
+          handler: () => {
+            const updatedEvent = eventData;
+            const index = myEvents.findIndex((x) => x.id === updatedEvent.id);
+            const newEventList = [...myEvents];
+
+            // Update event in the list
+            newEventList.splice(index, 1, updatedEvent);
+            setMyEvents(newEventList);
+
+            calInst.current.navigateToEvent(updatedEvent);
+            setAddEditPopupOpen(false);
+          },
+        },
+      ];
+    } else {
+      return [
+        'cancel',
+        {
+          text: 'Add',
+          keyCode: 'enter',
+          cssClass: 'mbsc-popup-button-primary',
+          handler: () => {
+            const newEvent = eventData;
+
+            // Add new event to the list
+            setMyEvents([...myEvents, newEvent]);
+
+            setSuccess(true);
+            calInst.current.navigateToEvent(newEvent);
+            setAddEditPopupOpen(false);
+          },
+        },
+      ];
+    }
+  }, [isEdit, eventData, myEvents]);
+
+  const addEditPopupResponsive = useMemo(
+    () => ({
+      medium: {
+        display: 'anchored',
+        width: 400,
+        fullScreen: false,
+        touchUi: false,
+      },
+    }),
+    [],
+  );
+
   const handleTitleChange = useCallback((ev) => {
     setEventTitle(ev.target.value);
   }, []);
@@ -188,7 +258,6 @@ function App() {
     setEventEnd(event.end);
     setEventBuffer(event.bufferBefore || 0);
     setEventColor(event.color || '');
-    setColorPreview(event.color || '');
     setEventStatus(event.free);
   }, []);
 
@@ -233,65 +302,6 @@ function App() {
     setSnackbarOpen(true);
   }, []);
 
-  const getEventData = useCallback(
-    () => ({
-      id: eventId,
-      title: eventTitle,
-      description: eventDescription,
-      allDay: eventAllDay,
-      start: eventStart,
-      end: eventEnd,
-      bufferBefore: eventBuffer,
-      color: eventColor,
-      free: eventStatus,
-    }),
-    [eventId, eventTitle, eventDescription, eventAllDay, eventStart, eventEnd, eventBuffer, eventColor, eventStatus],
-  );
-
-  const addEditPopupButtons = useMemo(() => {
-    if (isEdit) {
-      return [
-        'cancel',
-        {
-          text: 'Save',
-          keyCode: 'enter',
-          cssClass: 'mbsc-popup-button-primary',
-          handler: () => {
-            const updatedEvent = getEventData();
-            const index = myEvents.findIndex((x) => x.id === updatedEvent.id);
-            const newEventList = [...myEvents];
-
-            // Update event in the list
-            newEventList.splice(index, 1, updatedEvent);
-            setMyEvents(newEventList);
-
-            calInst.current.navigateToEvent(updatedEvent);
-            setAddEditPopupOpen(false);
-          },
-        },
-      ];
-    } else {
-      return [
-        'cancel',
-        {
-          text: 'Add',
-          keyCode: 'enter',
-          cssClass: 'mbsc-popup-button-primary',
-          handler: () => {
-            const newEvent = getEventData();
-
-            // Add new event to the list
-            setMyEvents([...myEvents, newEvent]);
-
-            setSuccess(true);
-            calInst.current.navigateToEvent(newEvent);
-            setAddEditPopupOpen(false);
-          },
-        },
-      ];
-    }
-  }, [isEdit, getEventData, myEvents]);
-
   const handleAddEditPopupClose = useCallback(() => {
     if (!isEdit && !isSuccess) {
       // Refresh the list, if add popup was canceled, to remove the temporary event
@@ -311,7 +321,7 @@ function App() {
     setSnackbarOpen(false);
   }, []);
 
-  const handleOpenColorPicker = useCallback((args) => {
+  const handleEventColorClick = useCallback((args) => {
     setColorPickerAnchor(args.currentTarget);
     setColorPickerOpen(true);
   }, []);
@@ -320,12 +330,17 @@ function App() {
     (args) => {
       const color = args.currentTarget.getAttribute('data-value');
       setEventColor(color);
+      setSelectedColor(color);
       if (!colorPickerRef.current.s.buttons.length) {
         applySelectedColor(color);
       }
     },
     [applySelectedColor],
   );
+
+  const handleColorPickerClose = useCallback(() => {
+    setColorPickerOpen(false);
+  }, []);
 
   return (
     <>
@@ -350,6 +365,7 @@ function App() {
         headerText={addEditPopupHeaderText}
         anchor={addEditPopupAnchor}
         buttons={addEditPopupButtons}
+        responsive={addEditPopupResponsive}
         isOpen={addEditPopupOpen}
         onClose={handleAddEditPopupClose}
       >
@@ -359,39 +375,41 @@ function App() {
         </div>
 
         <div className="mbsc-form-group">
-          <Switch label="All-day" checked={eventAllDay} onChange={handleAllDayChange} />
+          <div>
+            <Switch label="All-day" checked={eventAllDay} onChange={handleAllDayChange} />
 
-          <Input ref={startRef} label="Starts" />
-          <Input ref={endRef} label="Ends" />
+            <Datepicker
+              select="range"
+              display="anchored"
+              controls={datepickerControls}
+              touchUi={true}
+              startInput={dateStart}
+              endInput={dateEnd}
+              showRangeLabels={false}
+              responsive={datepickerResponsive}
+              onChange={handleDateChange}
+              value={[eventStart, eventEnd]}
+            />
 
-          <Datepicker
-            select="range"
-            display="anchored"
-            controls={datepickerControls}
-            touchUi={true}
-            startInput={dateStart}
-            endInput={dateEnd}
-            showRangeLabels={false}
-            responsive={datepickerResponsive}
-            onChange={handleDateChange}
-            value={[eventStart, eventEnd]}
-          />
+            <Input ref={startRef} label="Starts" />
+            <Input ref={endRef} label="Ends" />
 
-          {!eventAllDay && (
-            <Dropdown label="Travel time" value={eventBuffer} onChange={handleBufferChange}>
-              <option value="0">None</option>
-              <option value="5">5 minutes</option>
-              <option value="15">15 minutes</option>
-              <option value="30">30 minutes</option>
-              <option value="60">1 hour</option>
-              <option value="90">1.5 hours</option>
-              <option value="120">2 hours</option>
-            </Dropdown>
-          )}
+            {!eventAllDay && (
+              <Dropdown label="Travel time" value={eventBuffer} onChange={handleBufferChange}>
+                <option value="0">None</option>
+                <option value="5">5 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="90">1.5 hours</option>
+                <option value="120">2 hours</option>
+              </Dropdown>
+            )}
+          </div>
 
-          <div onClick={handleOpenColorPicker} className="mbsc-flex mds-crud-event-color-cont">
+          <div onClick={handleEventColorClick} className="mbsc-flex mds-crud-event-color-cont">
             <div className="mbsc-flex-1-0">Color</div>
-            <div className="mds-crud-selected-event-color" style={{ background: colorPreview }} />
+            <div className="mds-crud-selected-event-color" style={{ background: eventColor }} />
           </div>
 
           <SegmentedGroup onChange={handleStatusChange}>
@@ -423,13 +441,14 @@ function App() {
         isOpen={colorPickerOpen}
         buttons={colorPickerButtons}
         responsive={colorPickerResponsive}
+        onClose={handleColorPickerClose}
       >
         <div className="mbsc-flex mds-crud-color-row">
-          {colors.slice(0, 5).map((color, index) => (
+          {colors.slice(0, 5).map((color) => (
             <div
-              key={index}
+              key={color}
               onClick={handleColorChange}
-              className={`mds-crud-color-value ${eventColor === color ? 'selected' : ''}`}
+              className={`mds-crud-color-value ${eventColor === color ? 'mds-crud-color-value-selected' : ''}`}
               data-value={color}
             >
               <div className="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style={{ background: color }} />
@@ -438,11 +457,11 @@ function App() {
         </div>
 
         <div className="mbsc-flex mds-crud-color-row">
-          {colors.slice(5).map((color, index) => (
+          {colors.slice(5).map((color) => (
             <div
-              key={index + 5}
+              key={color}
               onClick={handleColorChange}
-              className={`mds-crud-color-value ${eventColor === color ? 'selected' : ''}`}
+              className={`mds-crud-color-value ${eventColor === color ? 'mds-crud-color-value-selected' : ''}`}
               data-value={color}
             >
               <div className="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style={{ background: color }} />

@@ -29,25 +29,25 @@
   </div>
 
   <div class="mbsc-form-group">
-    <mbsc-switch label="All-day" [(ngModel)]="eventAllDay"></mbsc-switch>
+    <div>
+      <mbsc-switch label="All-day" [(ngModel)]="eventAllDay"></mbsc-switch>
 
-    <mbsc-input #startInput label="Starts"></mbsc-input>
-    <mbsc-input #endInput label="Ends"></mbsc-input>
+      <mbsc-datepicker
+        [(ngModel)]="eventDates"
+        select="range"
+        display="anchored"
+        [touchUi]="true"
+        [showRangeLabels]="false"
+        [controls]="eventAllDay ? ['date'] : ['datetime']"
+        [responsive]="eventAllDay ? { medium: { controls: ['calendar'], touchUi: false } } : { medium: { controls: ['calendar', 'time'], touchUi: false } }"
+        [startInput]="startInput"
+        [endInput]="endInput"
+      ></mbsc-datepicker>
 
-    <mbsc-datepicker
-      [(ngModel)]="eventDates"
-      select="range"
-      display="anchored"
-      [touchUi]="true"
-      [showRangeLabels]="false"
-      [controls]="eventAllDay ? ['date'] : ['datetime']"
-      [responsive]="eventAllDay ? { medium: { controls: ['calendar'], touchUi: false } } : { medium: { controls: ['calendar', 'time'], touchUi: false } }"
-      [startInput]="startInput"
-      [endInput]="endInput"
-    ></mbsc-datepicker>
+      <mbsc-input #startInput label="Starts"></mbsc-input>
+      <mbsc-input #endInput label="Ends"></mbsc-input>
 
-    <div *ngIf="!eventAllDay">
-      <mbsc-dropdown [(ngModel)]="eventBuffer" label="Travel time">
+      <mbsc-dropdown [(ngModel)]="eventBuffer" label="Travel time" *ngIf="!eventAllDay">
         <option value="0">None</option>
         <option value="5">5 minutes</option>
         <option value="15">15 minutes</option>
@@ -58,9 +58,9 @@
       </mbsc-dropdown>
     </div>
 
-    <div class="mbsc-flex mds-crud-event-color-cont" (click)="handleOpenColorPicker($event)">
+    <div class="mbsc-flex mds-crud-event-color-cont" (click)="handleEventColorClick($event)">
       <div class="mbsc-flex-1-0">Color</div>
-      <div class="mds-crud-selected-event-color" [ngStyle]="{background: colorPreview}"></div>
+      <div class="mds-crud-selected-event-color" [ngStyle]="{background: eventColor}"></div>
     </div>
 
     <mbsc-segmented-group [(ngModel)]="statusValue">
@@ -90,8 +90,7 @@
     <div *ngFor="let color of colors;let i=index">
       <div
         *ngIf="i<5"
-        class="mds-crud-color-value"
-        [ngClass]="{'selected': eventColor === color}"
+        [class]="'mds-crud-color-value' + (eventColor === color ? ' mds-crud-color-value-selected' : '')"
         [attr.data-value]="color"
         (click)="handleColorChange($event)"
       >
@@ -103,8 +102,7 @@
     <div *ngFor="let color of colors;let i=index">
       <div
         *ngIf="i>=5"
-        class="mds-crud-color-value"
-        [ngClass]="{'selected': eventColor === color}"
+        [class]="'mds-crud-color-value' + (eventColor === color ? ' mds-crud-color-value-selected' : '')"
         [attr.data-value]="color"
         (click)="handleColorChange($event)"
       >

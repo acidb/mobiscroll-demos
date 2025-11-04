@@ -20,7 +20,8 @@ import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
-  // theme
+  theme: 'ios',
+  themeVariant: 'light',
 });
 
 @Component({
@@ -53,11 +54,11 @@ export class AppComponent {
   eventColor = '';
   eventStatus = false;
 
+  selectedColor = '';
   statusValue = 'busy';
   editedEvent: MbscCalendarEvent | null = null;
   addEditPopupAnchor: HTMLElement | undefined;
   colorPickerAnchor: HTMLElement | undefined;
-  colorPreview = '';
   isEdit = false;
   isSuccess = false;
 
@@ -111,83 +112,6 @@ export class AppComponent {
     },
   ];
 
-  applySelectedColor(color: string): void {
-    this.eventColor = color;
-    this.colorPreview = color;
-    this.colorPicker.close();
-  }
-
-  addEditPopupResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
-    medium: {
-      display: 'anchored',
-      width: 400,
-      fullScreen: false,
-      touchUi: false,
-    }
-  }
-
-  colorPickerButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
-    'cancel',
-    {
-      text: 'Set',
-      keyCode: 'enter',
-      handler: () => this.applySelectedColor(this.eventColor),
-      cssClass: 'mbsc-popup-button-primary',
-    },
-  ];
-
-  colorPickerResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
-    medium: {
-      display: 'anchored',
-      buttons: [],
-      touchUi: false,
-    },
-  };
-
-  fillPopup(event: MbscCalendarEvent): void {
-    this.eventId = event.id;
-    this.eventTitle = event.title || '';
-    this.eventDescription = event['description'] || '';
-    this.eventAllDay = event.allDay!;
-    this.eventDates = [event.start!, event.end!];
-    this.eventBuffer = event.bufferBefore || 0;
-    this.eventColor = event.color || '';
-    this.colorPreview = event.color || '';
-    this.eventStatus = event['free'] || false;
-    this.statusValue = event['free'] ? 'free' : 'busy';
-  }
-
-  createEditPopup(event: MbscCalendarEvent, target: HTMLElement): void {
-    this.isEdit = true;
-    this.editedEvent = event;
-    this.addEditPopupAnchor = target;
-    this.fillPopup(event);
-    this.addEditPopup.open();
-  }
-
-  createAddPopup(event: MbscCalendarEvent, target: HTMLElement): void {
-    this.isSuccess = false;
-    this.isEdit = false;
-    this.editedEvent = event;
-    this.addEditPopupAnchor = target;
-    this.fillPopup(event);
-    this.addEditPopup.open();
-  }
-
-  getEventData(): (MbscCalendarEvent) {
-    return {
-      id: this.eventId,
-      title: this.eventTitle,
-      description: this.eventDescription,
-      allDay: this.eventAllDay,
-      start: this.eventDates[0],
-      end: this.eventDates[1],
-      bufferBefore: this.eventBuffer,
-      color: this.eventColor,
-      free: this.statusValue === 'free',
-    }
-  }
-
   editButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
     'cancel',
     {
@@ -228,6 +152,75 @@ export class AppComponent {
     },
   ]
 
+  addEditPopupResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
+    medium: {
+      display: 'anchored',
+      width: 400,
+      fullScreen: false,
+      touchUi: false,
+    }
+  }
+
+  colorPickerButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
+    'cancel',
+    {
+      text: 'Set',
+      keyCode: 'enter',
+      handler: () => this.applySelectedColor(this.selectedColor),
+      cssClass: 'mbsc-popup-button-primary',
+    },
+  ];
+
+  colorPickerResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
+    medium: {
+      display: 'anchored',
+      buttons: [],
+      touchUi: false,
+    },
+  };
+
+  fillPopup(event: MbscCalendarEvent): void {
+    this.eventId = event.id;
+    this.eventTitle = event.title || '';
+    this.eventDescription = event['description'] || '';
+    this.eventAllDay = event.allDay!;
+    this.eventDates = [event.start!, event.end!];
+    this.eventBuffer = event.bufferBefore || 0;
+    this.eventColor = event.color || '';
+    this.eventStatus = event['free'] || false;
+    this.statusValue = event['free'] ? 'free' : 'busy';
+  }
+
+  createEditPopup(event: MbscCalendarEvent, target: HTMLElement): void {
+    this.isEdit = true;
+    this.editedEvent = event;
+    this.addEditPopupAnchor = target;
+    this.fillPopup(event);
+    this.addEditPopup.open();
+  }
+
+  createAddPopup(event: MbscCalendarEvent, target: HTMLElement): void {
+    this.isSuccess = false;
+    this.isEdit = false;
+    this.editedEvent = event;
+    this.addEditPopupAnchor = target;
+    this.fillPopup(event);
+    this.addEditPopup.open();
+  }
+
+  getEventData(): (MbscCalendarEvent) {
+    return {
+      id: this.eventId,
+      title: this.eventTitle,
+      description: this.eventDescription,
+      allDay: this.eventAllDay,
+      start: this.eventDates[0],
+      end: this.eventDates[1],
+      bufferBefore: this.eventBuffer,
+      color: this.eventColor,
+      free: this.statusValue === 'free',
+    }
+  }
 
   handleAddEditPopupClose(): void {
     if (!this.isEdit && !this.isSuccess) {
@@ -241,9 +234,7 @@ export class AppComponent {
   }
 
   handleEventCreated(args: MbscEventCreatedEvent): void {
-    setTimeout(() => {
-      this.createAddPopup(args.event, args.target!);
-    });
+    this.createAddPopup(args.event, args.target!);
   }
 
   handleEventDeleted() {
@@ -273,7 +264,7 @@ export class AppComponent {
     });
   }
 
-  handleOpenColorPicker(ev: MouseEvent): void {
+  handleEventColorClick(ev: MouseEvent): void {
     this.colorPickerAnchor = ev.currentTarget as HTMLElement;
     this.colorPicker.open();
   }
@@ -281,9 +272,15 @@ export class AppComponent {
   handleColorChange(ev: MouseEvent): void {
     const color = (ev.currentTarget as HTMLDivElement).getAttribute('data-value') || '';
     this.eventColor = color;
+    this.selectedColor = color;
     if (!this.colorPicker.s.buttons!.length) {
       this.applySelectedColor(color);
     }
+  }
+
+  applySelectedColor(color: string): void {
+    this.eventColor = color;
+    this.colorPicker.close();
   }
 
 }

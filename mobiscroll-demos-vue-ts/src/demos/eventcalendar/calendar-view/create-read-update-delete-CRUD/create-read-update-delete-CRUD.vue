@@ -30,27 +30,27 @@ setOptions({
   // theme
 })
 
-const calendar = ref<any>(null)
-const colorPicker = ref<any>(null)
+const calendar = ref<typeof MbscEventcalendar>()
+const colorPicker = ref<typeof MbscPopup>()
 
-const eventId = ref<string | number>(null)
+const eventId = ref<string | number | undefined>()
 const eventTitle = ref<string>('')
 const eventDescription = ref<string>('')
 const eventAllDay = ref<boolean>(false)
 const eventDates = ref<MbscDateType[]>([])
-const startInput = ref<any>(null)
-const endInput = ref<any>(null)
+const startInput = ref<typeof MbscInput>()
+const endInput = ref<typeof MbscInput>()
 const eventBuffer = ref<number>(0)
 const eventColor = ref<string>('')
 const eventStatus = ref<boolean>(false)
 
+const selectedColor = ref<string>('')
 const statusValue = ref<string>('busy')
 const editedEvent = ref<MbscCalendarEvent | null>(null)
 const isAddEditPopupOpen = ref<boolean>(false)
-const addEditPopupAnchor = ref<any>(null)
+const addEditPopupAnchor = ref<HTMLElement | undefined>()
 const isColorPickerOpen = ref<boolean>(false)
-const colorPickerAnchor = ref<any>(null)
-const colorPreview = ref<string>('')
+const colorPickerAnchor = ref<HTMLElement | undefined>()
 const isEdit = ref<boolean>(false)
 const isSuccess = ref<boolean>(false)
 
@@ -58,7 +58,7 @@ const isSnackbarOpen = ref<boolean>(false)
 
 const snackbarButton = {
   action: () => {
-    myEvents.value = [...myEvents.value, editedEvent.value]
+    myEvents.value = [...myEvents.value, editedEvent.value!]
   },
   text: 'Undo'
 }
@@ -124,11 +124,45 @@ const myEvents = ref<MbscCalendarEvent[]>([
   }
 ])
 
-function applySelectedColor(color: string) {
-  eventColor.value = color
-  colorPreview.value = color
-  isColorPickerOpen.value = false
-}
+const editButtons: (MbscPopupButton | string)[] = [
+  'cancel',
+  {
+    text: 'Save',
+    keyCode: 'enter',
+    cssClass: 'mbsc-popup-button-primary',
+    handler: () => {
+      const updatedEvent = getEventData()
+      const index = myEvents.value.findIndex((x) => x.id === updatedEvent.id)
+      const newEventList = [...myEvents.value]
+
+      // Update event in the list
+      newEventList.splice(index, 1, updatedEvent)
+      myEvents.value = newEventList
+
+      calendar.value?.instance.navigateToEvent(updatedEvent)
+      isAddEditPopupOpen.value = false
+    }
+  }
+]
+
+const addButtons: (MbscPopupButton | string)[] = [
+  'cancel',
+  {
+    text: 'Add',
+    keyCode: 'enter',
+    cssClass: 'mbsc-popup-button-primary',
+    handler: () => {
+      const newEvent = getEventData()
+
+      // Add new event to the list
+      myEvents.value = [...myEvents.value, newEvent]
+
+      isSuccess.value = true
+      calendar.value?.instance.navigateToEvent(newEvent)
+      isAddEditPopupOpen.value = false
+    }
+  }
+]
 
 const addEditPopupResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
   medium: {
@@ -144,7 +178,7 @@ const colorPickerButtons: (MbscPopupButton | string)[] = [
   {
     text: 'Set',
     keyCode: 'enter',
-    handler: () => applySelectedColor(eventColor.value),
+    handler: () => applySelectedColor(selectedColor.value),
     cssClass: 'mbsc-popup-button-primary'
   }
 ]
@@ -161,11 +195,10 @@ function fillPopup(event: MbscCalendarEvent) {
   eventId.value = event.id
   eventTitle.value = event.title || ''
   eventDescription.value = event.description || ''
-  eventAllDay.value = event.allDay
-  eventDates.value = [event.start, event.end]
+  eventAllDay.value = event.allDay!
+  eventDates.value = [event.start!, event.end!]
   eventBuffer.value = event.bufferBefore || 0
   eventColor.value = event.color || ''
-  colorPreview.value = event.color || ''
   eventStatus.value = event.free || false
   statusValue.value = event.free ? 'free' : 'busy'
 }
@@ -201,46 +234,6 @@ function getEventData() {
   }
 }
 
-const editButtons: (MbscPopupButton | string)[] = [
-  'cancel',
-  {
-    text: 'Save',
-    keyCode: 'enter',
-    cssClass: 'mbsc-popup-button-primary',
-    handler: () => {
-      const updatedEvent = getEventData()
-      const index = myEvents.value.findIndex((x) => x.id === updatedEvent.id)
-      const newEventList = [...myEvents.value]
-
-      // Update event in the list
-      newEventList.splice(index, 1, updatedEvent)
-      myEvents.value = newEventList
-
-      calendar.value.instance.navigateToEvent(updatedEvent)
-      isAddEditPopupOpen.value = false
-    }
-  }
-]
-
-const addButtons: (MbscPopupButton | string)[] = [
-  'cancel',
-  {
-    text: 'Add',
-    keyCode: 'enter',
-    cssClass: 'mbsc-popup-button-primary',
-    handler: () => {
-      const newEvent = getEventData()
-
-      // Add new event to the list
-      myEvents.value = [...myEvents.value, newEvent]
-
-      isSuccess.value = true
-      calendar.value.instance.navigateToEvent(newEvent)
-      isAddEditPopupOpen.value = false
-    }
-  }
-]
-
 function handleAddEditPopupClose() {
   if (!isEdit.value && !isSuccess.value) {
     // Refresh the list, if add popup was canceled, to remove the temporary event
@@ -254,9 +247,7 @@ function handleEventClick(args: MbscEventClickEvent) {
 }
 
 function handleEventCreated(args: MbscEventCreatedEvent) {
-  setTimeout(() => {
-    createAddPopup(args.event, args.target)
-  })
+  createAddPopup(args.event, args.target!)
 }
 
 function handleEventDeleted() {
@@ -264,23 +255,29 @@ function handleEventDeleted() {
 }
 
 function handleDeleteButtonClick() {
-  const filteredEvents = myEvents.value.filter((e) => e.id !== editedEvent.value.id)
+  const filteredEvents = myEvents.value.filter((e) => e.id !== editedEvent.value!.id)
   myEvents.value = filteredEvents
   isAddEditPopupOpen.value = false
   isSnackbarOpen.value = true
 }
 
-function handleOpenColorPicker(ev: MouseEvent) {
-  colorPickerAnchor.value = ev.currentTarget
+function handleEventColorClick(ev: MouseEvent) {
+  colorPickerAnchor.value = ev.currentTarget as HTMLElement
   isColorPickerOpen.value = true
 }
 
 function handleColorChange(ev: MouseEvent) {
-  const color = (ev.currentTarget as HTMLDivElement).getAttribute('data-value')
+  const color: string = (ev.currentTarget as HTMLDivElement).getAttribute('data-value') || ''
   eventColor.value = color
-  if (!colorPicker.value.instance.s.buttons.length) {
+  selectedColor.value = color
+  if (!colorPicker.value?.instance.s.buttons!.length) {
     applySelectedColor(color)
   }
+}
+
+function applySelectedColor(color: string) {
+  eventColor.value = color
+  isColorPickerOpen.value = false
 }
 
 function handleSnackbarClose() {
@@ -318,26 +315,26 @@ function handleSnackbarClose() {
       <MbscTextarea label="Description" v-model="eventDescription" />
     </div>
     <div class="mbsc-form-group">
-      <MbscSwitch label="All-day" v-model="eventAllDay" />
+      <div>
+        <MbscSwitch label="All-day" v-model="eventAllDay" />
 
-      <MbscInput ref="startInput" label="Starts" />
-      <MbscInput ref="endInput" label="Ends" />
+        <MbscDatepicker
+          v-model="eventDates"
+          select="range"
+          :controls="eventAllDay ? ['date'] : ['datetime']"
+          :responsive="
+            eventAllDay
+              ? { medium: { controls: ['calendar'], touchUi: false } }
+              : { medium: { controls: ['calendar', 'time'], touchUi: false } }
+          "
+          :startInput="startInput"
+          :endInput="endInput"
+        />
 
-      <MbscDatepicker
-        v-model="eventDates"
-        select="range"
-        :controls="eventAllDay ? ['date'] : ['datetime']"
-        :responsive="
-          eventAllDay
-            ? { medium: { controls: ['calendar'], touchUi: false } }
-            : { medium: { controls: ['calendar', 'time'], touchUi: false } }
-        "
-        :startInput="startInput"
-        :endInput="endInput"
-      />
+        <MbscInput ref="startInput" label="Starts" />
+        <MbscInput ref="endInput" label="Ends" />
 
-      <template v-if="!eventAllDay">
-        <MbscDropdown v-model="eventBuffer" label="Travel time">
+        <MbscDropdown v-if="!eventAllDay" v-model="eventBuffer" label="Travel time">
           <option value="0">None</option>
           <option value="5">5 minutes</option>
           <option value="15">15 minutes</option>
@@ -346,11 +343,11 @@ function handleSnackbarClose() {
           <option value="90">1.5 hours</option>
           <option value="120">2 hours</option>
         </MbscDropdown>
-      </template>
+      </div>
 
-      <div class="mbsc-flex mds-crud-event-color-cont" @click="handleOpenColorPicker($event)">
+      <div class="mbsc-flex mds-crud-event-color-cont" @click="handleEventColorClick($event)">
         <div class="mbsc-flex-1-0">Color</div>
-        <div class="mds-crud-selected-event-color" :style="{ background: colorPreview }"></div>
+        <div class="mds-crud-selected-event-color" :style="{ background: selectedColor }"></div>
       </div>
 
       <MbscSegmentedGroup v-model="statusValue">
@@ -393,7 +390,7 @@ function handleSnackbarClose() {
         <div
           v-if="i < 5"
           class="mds-crud-color-value"
-          :class="{ selected: eventColor === color }"
+          :class="{ 'mds-crud-color-value-selected': eventColor === color }"
           :data-value="color"
           @click="handleColorChange($event)"
         >
@@ -409,7 +406,7 @@ function handleSnackbarClose() {
         <div
           v-if="i >= 5"
           class="mds-crud-color-value"
-          :class="{ selected: eventColor === color }"
+          :class="{ 'mds-crud-color-value-selected': eventColor === color }"
           :data-value="color"
           @click="handleColorChange($event)"
         >
@@ -471,13 +468,13 @@ function handleSnackbarClose() {
   margin: 2px;
 }
 
-.mds-crud-color-value.selected,
+.mds-crud-color-value.mds-crud-color-value-selected,
 .mds-crud-color-value:hover {
   box-shadow: inset 0 0 0 3px #007bff;
   border-radius: 48px;
 }
 
-.mds-crud-color-value.selected .mds-crud-color:before {
+.mds-crud-color-value.mds-crud-color-value-selected .mds-crud-color:before {
   display: block;
 }
 </style>

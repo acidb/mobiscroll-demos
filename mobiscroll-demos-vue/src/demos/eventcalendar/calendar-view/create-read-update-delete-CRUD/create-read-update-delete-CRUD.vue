@@ -35,13 +35,13 @@ const eventBuffer = ref(0)
 const eventColor = ref('')
 const eventStatus = ref(false)
 
+const selectedColor = ref('')
 const statusValue = ref('busy')
 const editedEvent = ref(null)
 const isAddEditPopupOpen = ref(false)
 const addEditPopupAnchor = ref(null)
 const isColorPickerOpen = ref(false)
 const colorPickerAnchor = ref(null)
-const colorPreview = ref('')
 const isEdit = ref(false)
 const isSuccess = ref(false)
 
@@ -114,83 +114,6 @@ const myEvents = ref([
   }
 ])
 
-function applySelectedColor(color) {
-  eventColor.value = color
-  colorPreview.value = color
-  isColorPickerOpen.value = false
-}
-
-const addEditPopupResponsive = {
-  medium: {
-    display: 'anchored',
-    width: 400,
-    fullScreen: false,
-    touchUi: false
-  }
-}
-
-const colorPickerButtons = [
-  'cancel',
-  {
-    text: 'Set',
-    keyCode: 'enter',
-    handler: () => applySelectedColor(eventColor.value),
-    cssClass: 'mbsc-popup-button-primary'
-  }
-]
-
-const colorPickerResponsive = {
-  medium: {
-    display: 'anchored',
-    buttons: [],
-    touchUi: false
-  }
-}
-
-function fillPopup(event) {
-  eventId.value = event.id
-  eventTitle.value = event.title || ''
-  eventDescription.value = event.description || ''
-  eventAllDay.value = event.allDay
-  eventDates.value = [event.start, event.end]
-  eventBuffer.value = event.bufferBefore || 0
-  eventColor.value = event.color || ''
-  colorPreview.value = event.color || ''
-  eventStatus.value = event.free || false
-  statusValue.value = event.free ? 'free' : 'busy'
-}
-
-function createEditPopup(event, target) {
-  isEdit.value = true
-  editedEvent.value = event
-  addEditPopupAnchor.value = target
-  fillPopup(event)
-  isAddEditPopupOpen.value = true
-}
-
-function createAddPopup(event, target) {
-  isSuccess.value = false
-  isEdit.value = false
-  editedEvent.value = event
-  addEditPopupAnchor.value = target
-  fillPopup(event)
-  isAddEditPopupOpen.value = true
-}
-
-function getEventData() {
-  return {
-    id: eventId.value,
-    title: eventTitle.value,
-    description: eventDescription.value,
-    allDay: eventAllDay.value,
-    start: eventDates.value[0],
-    end: eventDates.value[1],
-    bufferBefore: eventBuffer.value,
-    color: eventColor.value,
-    free: statusValue.value === 'free'
-  }
-}
-
 const editButtons = [
   'cancel',
   {
@@ -231,6 +154,76 @@ const addButtons = [
   }
 ]
 
+const addEditPopupResponsive = {
+  medium: {
+    display: 'anchored',
+    width: 400,
+    fullScreen: false,
+    touchUi: false
+  }
+}
+
+const colorPickerButtons = [
+  'cancel',
+  {
+    text: 'Set',
+    keyCode: 'enter',
+    handler: () => applySelectedColor(selectedColor.value),
+    cssClass: 'mbsc-popup-button-primary'
+  }
+]
+
+const colorPickerResponsive = {
+  medium: {
+    display: 'anchored',
+    buttons: [],
+    touchUi: false
+  }
+}
+
+function fillPopup(event) {
+  eventId.value = event.id
+  eventTitle.value = event.title || ''
+  eventDescription.value = event.description || ''
+  eventAllDay.value = event.allDay
+  eventDates.value = [event.start, event.end]
+  eventBuffer.value = event.bufferBefore || 0
+  eventColor.value = event.color || ''
+  eventStatus.value = event.free || false
+  statusValue.value = event.free ? 'free' : 'busy'
+}
+
+function createEditPopup(event, target) {
+  isEdit.value = true
+  editedEvent.value = event
+  addEditPopupAnchor.value = target
+  fillPopup(event)
+  isAddEditPopupOpen.value = true
+}
+
+function createAddPopup(event, target) {
+  isSuccess.value = false
+  isEdit.value = false
+  editedEvent.value = event
+  addEditPopupAnchor.value = target
+  fillPopup(event)
+  isAddEditPopupOpen.value = true
+}
+
+function getEventData() {
+  return {
+    id: eventId.value,
+    title: eventTitle.value,
+    description: eventDescription.value,
+    allDay: eventAllDay.value,
+    start: eventDates.value[0],
+    end: eventDates.value[1],
+    bufferBefore: eventBuffer.value,
+    color: eventColor.value,
+    free: statusValue.value === 'free'
+  }
+}
+
 function handleAddEditPopupClose() {
   if (!isEdit.value && !isSuccess.value) {
     // Refresh the list, if add popup was canceled, to remove the temporary event
@@ -260,7 +253,7 @@ function handleDeleteButtonClick() {
   isSnackbarOpen.value = true
 }
 
-function handleOpenColorPicker(ev) {
+function handleEventColorClick(ev) {
   colorPickerAnchor.value = ev.currentTarget
   isColorPickerOpen.value = true
 }
@@ -268,9 +261,15 @@ function handleOpenColorPicker(ev) {
 function handleColorChange(ev) {
   const color = ev.currentTarget.getAttribute('data-value')
   eventColor.value = color
+  selectedColor.value = color
   if (!colorPicker.value.instance.s.buttons.length) {
     applySelectedColor(color)
   }
+}
+
+function applySelectedColor(color) {
+  eventColor.value = color
+  isColorPickerOpen.value = false
 }
 
 function handleSnackbarClose() {
@@ -309,26 +308,26 @@ function handleSnackbarClose() {
       <MbscTextarea label="Description" v-model="eventDescription" />
     </div>
     <div class="mbsc-form-group">
-      <MbscSwitch label="All-day" v-model="eventAllDay" />
+      <div>
+        <MbscSwitch label="All-day" v-model="eventAllDay" />
 
-      <MbscInput ref="startInput" label="Starts" />
-      <MbscInput ref="endInput" label="Ends" />
+        <MbscDatepicker
+          v-model="eventDates"
+          select="range"
+          :controls="eventAllDay ? ['date'] : ['datetime']"
+          :responsive="
+            eventAllDay
+              ? { medium: { controls: ['calendar'], touchUi: false } }
+              : { medium: { controls: ['calendar', 'time'], touchUi: false } }
+          "
+          :startInput="startInput"
+          :endInput="endInput"
+        />
 
-      <MbscDatepicker
-        v-model="eventDates"
-        select="range"
-        :controls="eventAllDay ? ['date'] : ['datetime']"
-        :responsive="
-          eventAllDay
-            ? { medium: { controls: ['calendar'], touchUi: false } }
-            : { medium: { controls: ['calendar', 'time'], touchUi: false } }
-        "
-        :startInput="startInput"
-        :endInput="endInput"
-      />
+        <MbscInput ref="startInput" label="Starts" />
+        <MbscInput ref="endInput" label="Ends" />
 
-      <template v-if="!eventAllDay">
-        <MbscDropdown v-model="eventBuffer" label="Travel time">
+        <MbscDropdown v-if="!eventAllDay" v-model="eventBuffer" label="Travel time">
           <option value="0">None</option>
           <option value="5">5 minutes</option>
           <option value="15">15 minutes</option>
@@ -337,11 +336,11 @@ function handleSnackbarClose() {
           <option value="90">1.5 hours</option>
           <option value="120">2 hours</option>
         </MbscDropdown>
-      </template>
+      </div>
 
-      <div class="mbsc-flex mds-crud-event-color-cont" @click="handleOpenColorPicker($event)">
+      <div class="mbsc-flex mds-crud-event-color-cont" @click="handleEventColorClick($event)">
         <div class="mbsc-flex-1-0">Color</div>
-        <div class="mds-crud-selected-event-color" :style="{ background: colorPreview }"></div>
+        <div class="mds-crud-selected-event-color" :style="{ background: eventColor }"></div>
       </div>
 
       <MbscSegmentedGroup v-model="statusValue">
@@ -384,7 +383,7 @@ function handleSnackbarClose() {
         <div
           v-if="i < 5"
           class="mds-crud-color-value"
-          :class="{ selected: eventColor === color }"
+          :class="{ 'mds-crud-color-value-selected': eventColor === color }"
           :data-value="color"
           @click="handleColorChange($event)"
         >
@@ -400,7 +399,7 @@ function handleSnackbarClose() {
         <div
           v-if="i >= 5"
           class="mds-crud-color-value"
-          :class="{ selected: eventColor === color }"
+          :class="{ 'mds-crud-color-value-selected': eventColor === color }"
           :data-value="color"
           @click="handleColorChange($event)"
         >
@@ -462,13 +461,13 @@ function handleSnackbarClose() {
   margin: 2px;
 }
 
-.mds-crud-color-value.selected,
+.mds-crud-color-value.mds-crud-color-value-selected,
 .mds-crud-color-value:hover {
   box-shadow: inset 0 0 0 3px #007bff;
   border-radius: 48px;
 }
 
-.mds-crud-color-value.selected .mds-crud-color:before {
+.mds-crud-color-value.mds-crud-color-value-selected .mds-crud-color:before {
   display: block;
 }
 </style>

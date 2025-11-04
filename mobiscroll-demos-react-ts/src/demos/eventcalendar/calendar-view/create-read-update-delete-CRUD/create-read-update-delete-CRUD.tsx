@@ -99,7 +99,7 @@ const App: FC = () => {
   const [addEditPopupOpen, setAddEditPopupOpen] = useState<boolean>(false);
   const [colorPickerAnchor, setColorPickerAnchor] = useState<HTMLElement>();
   const [colorPickerOpen, setColorPickerOpen] = useState<boolean>(false);
-  const [colorPreview, setColorPreview] = useState<string>('');
+  const [selectedColor, setSelectedColor] = useState<string>('');
   const [isEdit, setEdit] = useState<boolean>(false);
   const [isSuccess, setSuccess] = useState<boolean>(false);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
@@ -109,7 +109,6 @@ const App: FC = () => {
 
   const applySelectedColor = useCallback((color: string) => {
     setEventColor(color);
-    setColorPreview(color);
     setColorPickerOpen(false);
   }, []);
 
@@ -121,11 +120,11 @@ const App: FC = () => {
       {
         text: 'Set',
         keyCode: 'enter',
-        handler: () => applySelectedColor(eventColor),
+        handler: () => applySelectedColor(selectedColor),
         cssClass: 'mbsc-popup-button-primary',
       },
     ],
-    [applySelectedColor, eventColor],
+    [applySelectedColor, selectedColor],
   );
 
   const colorPickerResponsive: MbscResponsiveOptions<MbscPopupOptions> = useMemo(
@@ -165,6 +164,77 @@ const App: FC = () => {
     [editedEvent],
   );
 
+  const eventData = useMemo<MbscCalendarEvent>(
+    () => ({
+      id: eventId!,
+      title: eventTitle,
+      description: eventDescription,
+      allDay: eventAllDay,
+      start: eventStart!,
+      end: eventEnd!,
+      bufferBefore: eventBuffer,
+      color: eventColor,
+      free: eventStatus,
+    }),
+    [eventId, eventTitle, eventDescription, eventAllDay, eventStart, eventEnd, eventBuffer, eventColor, eventStatus],
+  );
+
+  const addEditPopupButtons = useMemo<(string | MbscPopupButton)[]>(() => {
+    if (isEdit) {
+      return [
+        'cancel',
+        {
+          text: 'Save',
+          keyCode: 'enter',
+          cssClass: 'mbsc-popup-button-primary',
+          handler: () => {
+            const updatedEvent: MbscCalendarEvent = eventData;
+            const index = myEvents.findIndex((x) => x.id === updatedEvent.id);
+            const newEventList = [...myEvents];
+
+            // Update event in the list
+            newEventList.splice(index, 1, updatedEvent);
+            setMyEvents(newEventList);
+
+            calInst.current!.navigateToEvent(updatedEvent);
+            setAddEditPopupOpen(false);
+          },
+        },
+      ];
+    } else {
+      return [
+        'cancel',
+        {
+          text: 'Add',
+          keyCode: 'enter',
+          cssClass: 'mbsc-popup-button-primary',
+          handler: () => {
+            const newEvent: MbscCalendarEvent = eventData;
+
+            // Add new event to the list
+            setMyEvents([...myEvents, newEvent]);
+
+            setSuccess(true);
+            calInst.current!.navigateToEvent(newEvent);
+            setAddEditPopupOpen(false);
+          },
+        },
+      ];
+    }
+  }, [isEdit, eventData, myEvents]);
+
+  const addEditPopupResponsive = useMemo<MbscResponsiveOptions<MbscPopupOptions>>(
+    () => ({
+      medium: {
+        display: 'anchored',
+        width: 400,
+        fullScreen: false,
+        touchUi: false,
+      },
+    }),
+    [],
+  );
+
   const handleTitleChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     setEventTitle(ev.target.value);
   }, []);
@@ -200,7 +270,6 @@ const App: FC = () => {
     setEventEnd(event.end!);
     setEventBuffer(event.bufferBefore || 0);
     setEventColor(event.color || '');
-    setColorPreview(event.color || '');
     setEventStatus(event.free);
   }, []);
 
@@ -245,65 +314,6 @@ const App: FC = () => {
     setSnackbarOpen(true);
   }, []);
 
-  const getEventData = useCallback<() => MbscCalendarEvent>(
-    () => ({
-      id: eventId!,
-      title: eventTitle,
-      description: eventDescription,
-      allDay: eventAllDay,
-      start: eventStart!,
-      end: eventEnd!,
-      bufferBefore: eventBuffer,
-      color: eventColor,
-      free: eventStatus,
-    }),
-    [eventId, eventTitle, eventDescription, eventAllDay, eventStart, eventEnd, eventBuffer, eventColor, eventStatus],
-  );
-
-  const addEditPopupButtons = useMemo<(string | MbscPopupButton)[]>(() => {
-    if (isEdit) {
-      return [
-        'cancel',
-        {
-          text: 'Save',
-          keyCode: 'enter',
-          cssClass: 'mbsc-popup-button-primary',
-          handler: () => {
-            const updatedEvent: MbscCalendarEvent = getEventData();
-            const index = myEvents.findIndex((x) => x.id === updatedEvent.id);
-            const newEventList = [...myEvents];
-
-            // Update event in the list
-            newEventList.splice(index, 1, updatedEvent);
-            setMyEvents(newEventList);
-
-            calInst.current!.navigateToEvent(updatedEvent);
-            setAddEditPopupOpen(false);
-          },
-        },
-      ];
-    } else {
-      return [
-        'cancel',
-        {
-          text: 'Add',
-          keyCode: 'enter',
-          cssClass: 'mbsc-popup-button-primary',
-          handler: () => {
-            const newEvent: MbscCalendarEvent = getEventData();
-
-            // Add new event to the list
-            setMyEvents([...myEvents, newEvent]);
-
-            setSuccess(true);
-            calInst.current!.navigateToEvent(newEvent);
-            setAddEditPopupOpen(false);
-          },
-        },
-      ];
-    }
-  }, [isEdit, getEventData, myEvents]);
-
   const handleAddEditPopupClose = useCallback(() => {
     if (!isEdit && !isSuccess) {
       // Refresh the list, if add popup was canceled, to remove the temporary event
@@ -323,7 +333,7 @@ const App: FC = () => {
     setSnackbarOpen(false);
   }, []);
 
-  const handleOpenColorPicker = useCallback((ev: MouseEvent<HTMLDivElement>) => {
+  const handleEventColorClick = useCallback((ev: MouseEvent<HTMLDivElement>) => {
     setColorPickerAnchor(ev.currentTarget);
     setColorPickerOpen(true);
   }, []);
@@ -332,12 +342,17 @@ const App: FC = () => {
     (ev: MouseEvent<HTMLDivElement>) => {
       const color = ev.currentTarget.getAttribute('data-value') || '';
       setEventColor(color);
+      setSelectedColor(color);
       if (!colorPickerRef.current!.s.buttons!.length) {
         applySelectedColor(color);
       }
     },
     [applySelectedColor],
   );
+
+  const handleColorPickerClose = useCallback(() => {
+    setColorPickerOpen(false);
+  }, []);
 
   return (
     <>
@@ -362,6 +377,7 @@ const App: FC = () => {
         headerText={addEditPopupHeaderText}
         anchor={addEditPopupAnchor}
         buttons={addEditPopupButtons}
+        responsive={addEditPopupResponsive}
         isOpen={addEditPopupOpen}
         onClose={handleAddEditPopupClose}
       >
@@ -371,39 +387,41 @@ const App: FC = () => {
         </div>
 
         <div className="mbsc-form-group">
-          <Switch label="All-day" checked={eventAllDay} onChange={handleAllDayChange} />
+          <div>
+            <Switch label="All-day" checked={eventAllDay} onChange={handleAllDayChange} />
 
-          <Input ref={startRef} label="Starts" />
-          <Input ref={endRef} label="Ends" />
+            <Datepicker
+              select="range"
+              display="anchored"
+              controls={datepickerControls}
+              touchUi={true}
+              startInput={dateStart}
+              endInput={dateEnd}
+              showRangeLabels={false}
+              responsive={datepickerResponsive}
+              onChange={handleDateChange}
+              value={[eventStart, eventEnd]}
+            />
 
-          <Datepicker
-            select="range"
-            display="anchored"
-            controls={datepickerControls}
-            touchUi={true}
-            startInput={dateStart}
-            endInput={dateEnd}
-            showRangeLabels={false}
-            responsive={datepickerResponsive}
-            onChange={handleDateChange}
-            value={[eventStart, eventEnd]}
-          />
+            <Input ref={startRef} label="Starts" />
+            <Input ref={endRef} label="Ends" />
 
-          {!eventAllDay && (
-            <Dropdown label="Travel time" value={String(eventBuffer)} onChange={handleBufferChange}>
-              <option value="0">None</option>
-              <option value="5">5 minutes</option>
-              <option value="15">15 minutes</option>
-              <option value="30">30 minutes</option>
-              <option value="60">1 hour</option>
-              <option value="90">1.5 hours</option>
-              <option value="120">2 hours</option>
-            </Dropdown>
-          )}
+            {!eventAllDay && (
+              <Dropdown label="Travel time" value={String(eventBuffer)} onChange={handleBufferChange}>
+                <option value="0">None</option>
+                <option value="5">5 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="90">1.5 hours</option>
+                <option value="120">2 hours</option>
+              </Dropdown>
+            )}
+          </div>
 
-          <div onClick={handleOpenColorPicker} className="mbsc-flex mds-crud-event-color-cont">
+          <div onClick={handleEventColorClick} className="mbsc-flex mds-crud-event-color-cont">
             <div className="mbsc-flex-1-0">Color</div>
-            <div className="mds-crud-selected-event-color" style={{ background: colorPreview }} />
+            <div className="mds-crud-selected-event-color" style={{ background: eventColor }} />
           </div>
 
           <SegmentedGroup onChange={handleStatusChange}>
@@ -435,13 +453,14 @@ const App: FC = () => {
         isOpen={colorPickerOpen}
         buttons={colorPickerButtons}
         responsive={colorPickerResponsive}
+        onClose={handleColorPickerClose}
       >
         <div className="mbsc-flex mds-crud-color-row">
-          {colors.slice(0, 5).map((color, index) => (
+          {colors.slice(0, 5).map((color) => (
             <div
-              key={index}
+              key={color}
               onClick={handleColorChange}
-              className={`mds-crud-color-value ${eventColor === color ? 'selected' : ''}`}
+              className={`mds-crud-color-value ${eventColor === color ? 'mds-crud-color-value-selected' : ''}`}
               data-value={color}
             >
               <div className="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style={{ background: color }} />
@@ -450,11 +469,11 @@ const App: FC = () => {
         </div>
 
         <div className="mbsc-flex mds-crud-color-row">
-          {colors.slice(5).map((color, index) => (
+          {colors.slice(5).map((color) => (
             <div
-              key={index + 5}
+              key={color}
               onClick={handleColorChange}
-              className={`mds-crud-color-value ${eventColor === color ? 'selected' : ''}`}
+              className={`mds-crud-color-value ${eventColor === color ? 'mds-crud-color-value-selected' : ''}`}
               data-value={color}
             >
               <div className="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" style={{ background: color }} />

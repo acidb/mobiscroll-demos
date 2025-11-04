@@ -5,7 +5,8 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     function toggleDatetimePicker(allDay) {
@@ -16,6 +17,14 @@ export default {
           ? { medium: { controls: ['calendar'], touchUi: false } }
           : { medium: { controls: ['calendar', 'time'], touchUi: false } },
       });
+    }
+
+    function toggleTravelTime(allDay) {
+      if (allDay) {
+        timeGroupElm.style.display = 'none';
+      } else {
+        timeGroupElm.style.display = 'flex';
+      }
     }
 
     // Fills the popup with the event's data
@@ -35,6 +44,7 @@ export default {
       mobiscroll.getInst(eventTitleElm).value = eventTitle;
       mobiscroll.getInst(eventDescriptionElm).value = eventDescription;
       mobiscroll.getInst(eventAllDayElm).value = eventAllDay;
+      eventStartEndPicker.setVal([eventStart, eventEnd]);
       mobiscroll.getInst(eventBufferElm).value = eventBuffer;
       highlightColor(eventColor);
       updateColorPreview(eventColor);
@@ -44,6 +54,7 @@ export default {
         mobiscroll.getInst(eventStatusBusyElm).checked = true;
       }
       toggleDatetimePicker(eventAllDay);
+      toggleTravelTime(eventAllDay);
     }
 
     function getEventData() {
@@ -64,7 +75,7 @@ export default {
       var success = false;
 
       // Hide delete button inside add popup
-      eventDeleteButtonElm.parentElement.classList.add('mds-hide-elm');
+      eventDeleteButtonElm.parentElement.style.display = 'none';
 
       // Set popup header text and buttons for adding
       addEditPopup.setOptions({
@@ -99,7 +110,7 @@ export default {
 
     function createEditPopup(event, target) {
       // Show delete button inside edit popup
-      eventDeleteButtonElm.parentElement.classList.remove('mds-hide-elm');
+      eventDeleteButtonElm.parentElement.style.display = 'block';
 
       editedEvent = event;
 
@@ -128,8 +139,8 @@ export default {
     }
 
     function highlightColor(color) {
-      document.querySelector('.mds-crud-color-value').classList.remove('selected');
-      document.querySelector('.mds-crud-color-value[data-value="' + color + '"]').classList.add('selected');
+      document.querySelector('.mds-crud-color-value').classList.remove('mds-crud-color-value-selected');
+      document.querySelector('.mds-crud-color-value[data-value="' + color + '"]').classList.add('mds-crud-color-value-selected');
     }
 
     function updateColorPreview(color) {
@@ -143,6 +154,7 @@ export default {
     }
 
     var editedEvent;
+    var selectedColor;
 
     var eventId;
     var eventTitle;
@@ -154,8 +166,6 @@ export default {
     var eventColor;
     var eventStatus;
 
-    var selectedColor;
-
     var eventTitleElm = document.getElementById('crud-popup-event-title');
     var eventDescriptionElm = document.getElementById('crud-popup-event-desc');
     var eventAllDayElm = document.getElementById('crud-popup-event-all-day');
@@ -166,6 +176,7 @@ export default {
     var eventStatusBusyElm = document.getElementById('crud-popup-event-status-busy');
     var eventStatusFreeElm = document.getElementById('crud-popup-event-status-free');
     var eventDeleteButtonElm = document.getElementById('crud-popup-event-delete');
+    var timeGroupElm = document.getElementById('crud-popup-time-group');
 
     var myEvents = [
       {
@@ -278,7 +289,7 @@ export default {
       responsive: {
         medium: {
           display: 'anchored',
-          anchor: document.getElementById('crud-popup-event-color'),
+          anchor: eventColorElm,
           buttons: [],
         },
       },
@@ -310,14 +321,14 @@ export default {
     eventAllDayElm.addEventListener('change', function (ev) {
       eventAllDay = ev.target.checked;
       toggleDatetimePicker(eventAllDay);
+      toggleTravelTime(eventAllDay);
     });
 
     eventBufferElm.addEventListener('change', function (ev) {
-      eventAllDay = ev.target.checked;
-      toggleDatetimePicker(eventAllDay);
+      eventBuffer = +ev.target.value;
     });
 
-    document.querySelectorAll('input[name=event-status]').forEach(function (elm) {
+    document.querySelectorAll('.mds-crud-popup-event-status').forEach(function (elm) {
       elm.addEventListener('change', function (ev) {
         eventStatus = ev.target.value === 'free';
       });
@@ -372,29 +383,31 @@ export default {
       </label>
     </div>
     <div class="mbsc-form-group">
-      <label>
-        All-day
-        <input mbsc-switch id="crud-popup-event-all-day" type="checkbox" />
-      </label>
-      <label>
-        Starts
-        <input mbsc-input id="crud-popup-event-start" />
-      </label>
-      <label>
-        Ends
-        <input mbsc-input id="crud-popup-event-end" />
-      </label>
-      <label id="travel-time-group">
-        <select data-label="Travel time" mbsc-dropdown id="crud-popup-event-buffer">
-          <option value="0">None</option>
-          <option value="5">5 minutes</option>
-          <option value="15">15 minutes</option>
-          <option value="30">30 minutes</option>
-          <option value="60">1 hour</option>
-          <option value="90">1.5 hours</option>
-          <option value="120">2 hours</option>
-        </select>
-      </label>
+      <div>
+        <label>
+          All-day
+          <input mbsc-switch id="crud-popup-event-all-day" type="checkbox" />
+        </label>
+        <label>
+          Starts
+          <input mbsc-input id="crud-popup-event-start" />
+        </label>
+        <label>
+          Ends
+          <input mbsc-input id="crud-popup-event-end" />
+        </label>
+        <label id="crud-popup-time-group">
+          <select data-label="Travel time" mbsc-dropdown id="crud-popup-event-buffer">
+            <option value="0">None</option>
+            <option value="5">5 minutes</option>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">1 hour</option>
+            <option value="90">1.5 hours</option>
+            <option value="120">2 hours</option>
+          </select>
+        </label>
+      </div>
       <div id="crud-popup-event-dates"></div>
       <div id="crud-event-color-picker" class="mbsc-flex mds-crud-event-color-cont">
         <div class="mbsc-flex-1-0">Color</div>
@@ -404,11 +417,11 @@ export default {
       </div>
       <label>
         Show as busy
-        <input id="crud-popup-event-status-busy" mbsc-segmented type="radio" name="event-status" value="busy" />
+        <input id="crud-popup-event-status-busy" class="mds-crud-popup-event-status" mbsc-segmented type="radio" name="event-status" value="busy" />
       </label>
       <label>
         Show as free
-        <input id="crud-popup-event-status-free" mbsc-segmented type="radio" name="event-status" value="free" />
+        <input id="crud-popup-event-status-free" class="mds-crud-popup-event-status" mbsc-segmented type="radio" name="event-status" value="free" />
       </label>
       <div class="mbsc-button-group">
         <button class="mbsc-button-block" id="crud-popup-event-delete" mbsc-button data-color="danger" data-variant="outline">
@@ -505,19 +518,14 @@ export default {
   margin: 2px;
 }
 
-.mds-crud-color-value.selected,
+.mds-crud-color-value.mds-crud-color-value-selected,
 .mds-crud-color-value:hover {
   box-shadow: inset 0 0 0 3px #007bff;
   border-radius: 48px;
 }
 
-.mds-crud-color-value.selected .mds-crud-color:before {
+.mds-crud-color-value.mds-crud-color-value-selected .mds-crud-color:before {
   display: block;
-}
-
-
-.mds-hide-elm {
-    display: none;
 }
   `,
 };
