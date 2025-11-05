@@ -55,7 +55,6 @@ export class AppComponent {
   eventStatus = false;
   eventResource: number | string | (string | number)[] | undefined;
 
-  resourceColor: string | undefined;
   selectedColor = '';
   statusValue = 'busy';
   editedEvent: MbscCalendarEvent | null = null;
@@ -209,33 +208,33 @@ export class AppComponent {
     },
   };
 
-  fillPopup(event: MbscCalendarEvent): void {
+  fillPopup(event: MbscCalendarEvent, resourceColor: string | undefined): void {
     this.eventId = event.id;
     this.eventTitle = event.title || '';
     this.eventDescription = event['description'] || '';
     this.eventAllDay = event.allDay!;
     this.eventDates = [event.start!, event.end!];
     this.eventBuffer = event.bufferBefore || 0;
-    this.eventColor = event.color || this.resourceColor;
+    this.eventColor = event.color || resourceColor;
     this.eventStatus = event['free'] || false;
     this.statusValue = event['free'] ? 'free' : 'busy';
     this.eventResource = event.resource;
   }
 
-  createEditPopup(event: MbscCalendarEvent, target: HTMLElement): void {
+  createEditPopup(event: MbscCalendarEvent, target: HTMLElement, color: string | undefined): void {
     this.isEdit = true;
     this.editedEvent = event;
     this.addEditPopupAnchor = target;
-    this.fillPopup(event);
+    this.fillPopup(event, color);
     this.addEditPopup.open();
   }
 
-  createAddPopup(event: MbscCalendarEvent, target: HTMLElement): void {
+  createAddPopup(event: MbscCalendarEvent, target: HTMLElement, color: string | undefined): void {
     this.isSuccess = false;
     this.isEdit = false;
     this.editedEvent = event;
     this.addEditPopupAnchor = target;
-    this.fillPopup(event);
+    this.fillPopup(event, color);
     this.addEditPopup.open();
   }
 
@@ -262,14 +261,12 @@ export class AppComponent {
   }
 
   handleEventClick(args: MbscEventClickEvent): void {
-    this.resourceColor = args.resourceObj.color;
-    this.createEditPopup(args.event, args.domEvent.currentTarget);
+    this.createEditPopup(args.event, args.domEvent.currentTarget, args.resourceObj.color);
   }
 
   handleEventCreated(args: MbscEventCreatedEvent): void {
-    this.resourceColor = args.resourceObj!.color;
     setTimeout(() => {
-      this.createAddPopup(args.event, args.target!);
+      this.createAddPopup(args.event, args.target!, args.resourceObj!.color);
     });
   }
 

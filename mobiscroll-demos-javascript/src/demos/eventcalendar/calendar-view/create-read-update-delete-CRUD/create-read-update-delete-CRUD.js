@@ -5,8 +5,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light',
+      // theme
     });
 
     function toggleDatetimePicker(allDay) {
@@ -139,7 +138,9 @@ export default {
     }
 
     function highlightColor(color) {
-      document.querySelector('.mds-crud-color-value').classList.remove('mds-crud-color-value-selected');
+      document.querySelectorAll('.mds-crud-color-value').forEach(function (elm) {
+        elm.classList.remove('mds-crud-color-value-selected');
+      });
       document.querySelector('.mds-crud-color-value[data-value="' + color + '"]').classList.add('mds-crud-color-value-selected');
     }
 

@@ -5,8 +5,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light',
+      // theme
     });
 
     function toggleDatetimePicker(allDay) {
@@ -28,7 +27,7 @@ export default {
     }
 
     // Fills the popup with the event's data
-    function fillPopup(event) {
+    function fillPopup(event, resourceColor) {
       // Load event properties
       eventId = event.id;
       eventTitle = event.title || '';
@@ -73,7 +72,7 @@ export default {
       };
     }
 
-    function createAddPopup(event, target) {
+    function createAddPopup(event, target, color) {
       var success = false;
 
       // Hide delete button inside add popup
@@ -106,11 +105,11 @@ export default {
         },
       });
 
-      fillPopup(event);
+      fillPopup(event, color);
       addEditPopup.open();
     }
 
-    function createEditPopup(event, target) {
+    function createEditPopup(event, target, color) {
       // Show delete button inside edit popup
       eventDeleteButtonElm.parentElement.style.display = 'block';
 
@@ -136,12 +135,14 @@ export default {
         ],
       });
 
-      fillPopup(event);
+      fillPopup(event, color);
       addEditPopup.open();
     }
 
     function highlightColor(color) {
-      document.querySelector('.mds-crud-color-value').classList.remove('mds-crud-color-value-selected');
+      document.querySelectorAll('.mds-crud-color-value').forEach(function (elm) {
+        elm.classList.remove('mds-crud-color-value-selected');
+      });
       document.querySelector('.mds-crud-color-value[data-value="' + color + '"]').classList.add('mds-crud-color-value-selected');
     }
 
@@ -157,7 +158,6 @@ export default {
 
     var editedEvent;
     var selectedColor;
-    var resourceColor;
 
     var eventId;
     var eventTitle;
@@ -269,12 +269,10 @@ export default {
       data: myEvents,
       resources: myResources,
       onEventClick: function (args) {
-        resourceColor = args.resourceObj.color;
-        createEditPopup(args.event, args.domEvent.currentTarget);
+        createEditPopup(args.event, args.domEvent.currentTarget, args.resourceObj.color);
       },
       onEventCreated: function (args) {
-        resourceColor = args.resourceObj.color;
-        createAddPopup(args.event, args.target);
+        createAddPopup(args.event, args.target, args.resourceObj.color);
       },
       onEventDeleted: function (args) {
         mobiscroll.snackbar({

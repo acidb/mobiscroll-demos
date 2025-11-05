@@ -53,7 +53,7 @@ const snackbarButton = {
   text: 'Undo'
 }
 
-const myView = { calendar: { type: 'month', labels: true } }
+const myView = { calendar: { labels: true } }
 
 const colors = [
   '#ffeb3c',
@@ -272,6 +272,10 @@ function applySelectedColor(color) {
   isColorPickerOpen.value = false
 }
 
+function handleColorPickerClose() {
+  isColorPickerOpen.value = false
+}
+
 function handleSnackbarClose() {
   isSnackbarOpen.value = false
 }
@@ -377,6 +381,7 @@ function handleSnackbarClose() {
     :buttons="colorPickerButtons"
     :responsive="colorPickerResponsive"
     :isOpen="isColorPickerOpen"
+    @close="handleColorPickerClose"
   >
     <div class="mbsc-flex mds-crud-color-row">
       <div v-for="(color, i) in colors" :key="color">

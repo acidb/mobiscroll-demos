@@ -29,7 +29,7 @@ export default {
       }
 
       // Fills the popup with the event's data
-      function fillPopup(event) {
+      function fillPopup(event, resourceColor) {
         // Load event properties
         eventId = event.id;
         eventTitle = event.title || '';
@@ -74,7 +74,7 @@ export default {
         };
       }
 
-      function createAddPopup(event, target) {
+      function createAddPopup(event, target, color) {
         var success = false;
 
         // Hide delete button inside add popup
@@ -107,11 +107,11 @@ export default {
           },
         });
 
-        fillPopup(event);
+        fillPopup(event, color);
         addEditPopup.open();
       }
 
-      function createEditPopup(event, target) {
+      function createEditPopup(event, target, color) {
         // Show delete button inside edit popup
         $eventDeleteButton.parent().show();
 
@@ -137,7 +137,7 @@ export default {
           ],
         });
 
-        fillPopup(event);
+        fillPopup(event, color);
         addEditPopup.open();
       }
 
@@ -169,7 +169,6 @@ export default {
       var eventColor;
       var eventStatus;
       var eventResource;
-      var resourceColor;
 
       var $eventTitle = $('#crud-popup-event-title');
       var $eventDescription = $('#crud-popup-event-desc');
@@ -271,12 +270,10 @@ export default {
           data: myEvents,
           resources: myResources,
           onEventClick: function (args) {
-            resourceColor = args.resourceObj.color;
-            createEditPopup(args.event, args.domEvent.currentTarget);
+            createEditPopup(args.event, args.domEvent.currentTarget, args.resourceObj.color);
           },
           onEventCreated: function (args) {
-            resourceColor = args.resourceObj.color;
-            createAddPopup(args.event, args.target);
+            createAddPopup(args.event, args.target, args.resourceObj.color);
           },
           onEventDeleted: function (args) {
             mobiscroll.snackbar({

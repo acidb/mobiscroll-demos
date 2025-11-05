@@ -10,7 +10,7 @@ import {
   setOptions,
   Snackbar,
   Switch,
-  Textarea,
+  Textarea /* localeImport */,
 } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import './create-read-update-delete-CRUD.css';

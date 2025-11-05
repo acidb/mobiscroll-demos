@@ -20,8 +20,7 @@ import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
   // locale,
-  theme: 'ios',
-  themeVariant: 'light',
+  // theme
 });
 
 @Component({

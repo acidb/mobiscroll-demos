@@ -63,7 +63,7 @@ const snackbarButton = {
   text: 'Undo'
 }
 
-const myView: MbscEventcalendarView = { calendar: { type: 'month', labels: true } }
+const myView: MbscEventcalendarView = { calendar: { labels: true } }
 
 const colors: string[] = [
   '#ffeb3c',
@@ -283,6 +283,10 @@ function applySelectedColor(color: string) {
 function handleSnackbarClose() {
   isSnackbarOpen.value = false
 }
+
+function handleColorPickerClose() {
+  isColorPickerOpen.value = false
+}
 </script>
 
 <template>
@@ -347,7 +351,7 @@ function handleSnackbarClose() {
 
       <div class="mbsc-flex mds-crud-event-color-cont" @click="handleEventColorClick($event)">
         <div class="mbsc-flex-1-0">Color</div>
-        <div class="mds-crud-selected-event-color" :style="{ background: selectedColor }"></div>
+        <div class="mds-crud-selected-event-color" :style="{ background: eventColor }"></div>
       </div>
 
       <MbscSegmentedGroup v-model="statusValue">
@@ -384,6 +388,7 @@ function handleSnackbarClose() {
     :buttons="colorPickerButtons"
     :responsive="colorPickerResponsive"
     :isOpen="isColorPickerOpen"
+    @close="handleColorPickerClose"
   >
     <div class="mbsc-flex mds-crud-color-row">
       <div v-for="(color, i) in colors" :key="color">
