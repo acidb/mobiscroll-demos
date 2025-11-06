@@ -105,8 +105,6 @@ export class AppComponent {
   };
 
   handleEventHoverIn(args: any): void {
-    console.log(args.event.title);
-
     this.eventTitle = args.event.title;
     this.eventStart = formatDate('hh:mm A', new Date(args.event.start));
     this.eventEnd = formatDate('hh:mm A', new Date(args.event.end));

@@ -320,8 +320,6 @@ export class AppComponent {
     const date = args.date;
     const target = args.domEvent.target as HTMLElement;
 
-    console.log('Cell clicked');
-
     if (target.closest('.mds-cell-template-add')) {
       const year = date.getFullYear();
       const month = date.getMonth();
