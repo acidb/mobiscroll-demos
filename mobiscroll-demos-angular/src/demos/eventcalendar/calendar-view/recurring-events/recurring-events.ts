@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -59,7 +59,7 @@ export class AppComponent {
     },
   ];
 
-  view = {
+  myView: MbscEventcalendarView = {
     calendar: { labels: true },
   };
 }

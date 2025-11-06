@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
-  // theme,
+  // theme
 });
 
 @Component({
@@ -15,16 +15,12 @@ setOptions({
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   myEvents: MbscCalendarEvent[] = [];
-
-  eventSettings: MbscEventcalendarOptions = {
-    // drag,
-    view: {
-      calendar: { type: 'week' },
-      schedule: { type: 'day' },
-    },
+  myView: MbscEventcalendarView = {
+    calendar: { type: 'week' },
+    schedule: { type: 'day' },
   };
 
   ngOnInit(): void {

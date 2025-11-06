@@ -1,23 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
-  // locale,
+  // locale
 });
 
 @Component({
   selector: 'app-timeline-themes-ios-material-windows',
+  styleUrl: './themes-ios-material-windows.css',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './themes-ios-material-windows.html',
   standalone: true,
-  imports: [CommonModule, MbscModule],
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   myEvents: MbscCalendarEvent[] = [];
-  myResources = [
+  myResources: MbscResource[] = [
     {
       id: 1,
       name: 'Ryan',
@@ -49,13 +52,10 @@ export class AppComponent implements OnInit {
       color: '#01adff',
     },
   ];
+  myView: MbscEventcalendarView = { agenda: { type: 'month' } };
 
-  theme = 'material'; // Can be 'ios', 'material', 'windows' or 'auto' - in case of 'auto', it will automatically be set based on the platform
-  themeVariant: any = 'dark'; // Can be 'light', 'dark' or 'auto' - in case of 'auto' it is set based in the active system theme
-
-  view: MbscEventcalendarView = {
-    timeline: { type: 'day' },
-  };
+  theme = 'auto';
+  themeVariant: 'auto' | 'light' | 'dark' = 'auto';
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/timeline-events/', 'callback').subscribe((resp) => {

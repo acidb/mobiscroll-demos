@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, MbscModule /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
+
+setOptions({
+  // locale,
+  // theme
+});
 
 const now = new Date();
 
@@ -284,14 +289,5 @@ export class AppComponent {
     },
   ];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
-    // drag,
-    view: {
-      calendar: {
-        labels: true,
-      },
-    },
-  };
+  myView: MbscEventcalendarView = { calendar: { labels: true } };
 }

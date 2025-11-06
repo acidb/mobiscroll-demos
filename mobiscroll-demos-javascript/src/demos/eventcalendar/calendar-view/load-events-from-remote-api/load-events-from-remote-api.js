@@ -3,14 +3,14 @@ import * as mobiscroll from '@mobiscroll/javascript';
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    var inst = mobiscroll.eventcalendar('#demo-remote-api', {
+    mobiscroll.setOptions({
       // locale,
-      // theme,
-      // drag,
+      // theme
+    });
+
+    var inst = mobiscroll.eventcalendar('#demo-remote-api', {
       view: {
-        calendar: {
-          labels: true,
-        },
+        calendar: { labels: true },
       },
     });
 

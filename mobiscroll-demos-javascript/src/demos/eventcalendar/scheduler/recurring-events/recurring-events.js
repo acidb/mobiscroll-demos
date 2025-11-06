@@ -3,9 +3,12 @@ import * as mobiscroll from '@mobiscroll/javascript';
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
-    mobiscroll.eventcalendar('#demo', {
+    mobiscroll.setOptions({
       // locale,
       // theme,
+    });
+
+    mobiscroll.eventcalendar('#demo-recurring-events', {
       // drag,
       view: {
         schedule: { type: 'week' },
@@ -58,6 +61,6 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo"></div>
+<div id="demo-recurring-events"></div>
   `,
 };

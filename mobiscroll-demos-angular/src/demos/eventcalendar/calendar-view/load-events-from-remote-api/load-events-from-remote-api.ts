@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarOptions, MbscModule /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
+
+setOptions({
+  // locale,
+  // theme
+});
 
 @Component({
   selector: 'app-eventcalendar-load-events-from-remote-api',
@@ -10,20 +15,10 @@ import { MbscCalendarEvent, MbscEventcalendarOptions, MbscModule /* localeImport
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   myEvents: MbscCalendarEvent[] = [];
-
-  eventSettings: MbscEventcalendarOptions = {
-    // locale,
-    // theme,
-    // drag,
-    view: {
-      calendar: {
-        labels: true,
-      },
-    },
-  };
+  myView: MbscEventcalendarView = { calendar: { labels: true } };
 
   ngOnInit(): void {
     this.http.jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/events/?vers=5', 'callback').subscribe((resp) => {
