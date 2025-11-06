@@ -6,7 +6,6 @@ import {
   MbscEventcalendar,
   MbscInput,
   MbscPopup,
-  MbscResource,
   MbscSegmented,
   MbscSegmentedGroup,
   MbscSnackbar,
@@ -22,6 +21,7 @@ import type {
   MbscEventCreatedEvent,
   MbscPopupButton,
   MbscPopupOptions,
+  MbscResource,
   MbscResponsiveOptions
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
@@ -280,7 +280,7 @@ function handleEventClick(args: MbscEventClickEvent) {
 }
 
 function handleEventCreated(args: MbscEventCreatedEvent) {
-  createAddPopup(args.event, args.target!, args.resourceObj.color)
+  createAddPopup(args.event, args.target!, args.resourceObj!.color)
 }
 
 function handleEventDeleted() {
