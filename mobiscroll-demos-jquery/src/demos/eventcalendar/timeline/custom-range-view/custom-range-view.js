@@ -72,7 +72,7 @@ export default {
                 // Navigate the calendar
                 setTimeout(function () {
                   myCalendar.navigate(date[0]);
-                });
+                }, 10);
               }
               startDate = date[0];
               endDate = date[1];
