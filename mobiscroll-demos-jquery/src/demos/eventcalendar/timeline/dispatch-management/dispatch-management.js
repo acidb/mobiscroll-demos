@@ -97,16 +97,6 @@ export default {
           status: 'scheduled',
         },
         {
-          resource: 71,
-          from: '233 S Wacker Dr, Chicago, IL',
-          to: '10 Public Square, Cleveland, OH',
-          size: 11,
-          start: 'dyndatetime(y,m,d,9,30)',
-          end: 'dyndatetime(y,m,d,17,30)',
-          status: 'actual',
-          cssClass: 'mds-actual-event',
-        },
-        {
           resource: 8,
           from: '180 S High St, Columbus, OH',
           to: '75 E Main St, Lexington, KY',
@@ -142,16 +132,6 @@ export default {
           pickup: ['dyndatetime(y,m,d,10)', 'dyndatetime(y,m,d,13)'],
           drop: ['dyndatetime(y,m,d,18)', 'dyndatetime(y,m,d,21)'],
           status: 'started',
-        },
-        {
-          resource: 101,
-          from: '50 N 1st Ave, Phoenix, AZ',
-          to: '200 Broadway Ave, Albuquerque, NM',
-          size: 20,
-          start: 'dyndatetime(y,m,d,11)',
-          end: 'dyndatetime(y,m,d,20)',
-          status: 'actual',
-          cssClass: 'mds-actual-event',
         },
         {
           resource: 11,
@@ -252,6 +232,16 @@ export default {
               plate: 'AB14 KTP',
             },
             {
+              id: '1-actual',
+              color: '#7a8df5',
+              name: '',
+              capacity: 3.5,
+              status: 'operational',
+              plate: 'AB14 KTP',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
+            },
+            {
               id: 2,
               color: '#5cb87a',
               name: 'Mercedes-Benz Sprinter 3500',
@@ -260,12 +250,32 @@ export default {
               plate: 'FR19 XDL',
             },
             {
+              id: '2-actual',
+              color: '#5cb87a',
+              name: '',
+              capacity: 3.5,
+              status: 'operational',
+              plate: 'FR19 XDL',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
+            },
+            {
               id: 3,
               color: '#c46c5a',
               name: 'Ford Transit 350',
               capacity: 3.5,
               status: 'maintenance',
               plate: 'QN62 RPV',
+            },
+            {
+              id: '3-actual',
+              color: '#c46c5a',
+              name: '',
+              capacity: 3.5,
+              status: 'maintenance',
+              plate: 'QN62 RPV',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
             },
           ],
         },
@@ -283,6 +293,16 @@ export default {
               plate: 'GR12 PEV',
             },
             {
+              id: '4-actual',
+              color: '#c54242',
+              name: '',
+              capacity: 7,
+              status: 'operational',
+              plate: 'GR12 PEV',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
+            },
+            {
               id: 5,
               color: '#7c4fcf',
               name: 'Isuzu F-Series FTR',
@@ -291,12 +311,32 @@ export default {
               plate: 'MB27 FTK',
             },
             {
+              id: '5-actual',
+              color: '#7c4fcf',
+              name: '',
+              capacity: 7,
+              status: 'operational',
+              plate: 'MB27 FTK',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
+            },
+            {
               id: 6,
-              color: '#52a8d8',
+              color: '#a5d852',
               name: 'Hino 300 Series 716',
               capacity: 7,
               status: 'maintenance',
               plate: 'KT73 ZLD',
+            },
+            {
+              id: '6-actual',
+              color: '#a5d852',
+              name: '',
+              capacity: 7,
+              status: 'maintenance',
+              plate: 'KT73 ZLD',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
             },
           ],
         },
@@ -314,13 +354,14 @@ export default {
               plate: 'EP17 GMF',
             },
             {
-              id: 71,
+              id: '7-actual',
               color: '#439ad1',
               name: '',
               capacity: 12,
-              status: 'operational',
+              status: 'maintenance',
               plate: 'EP17 GMF',
               eventCreation: false,
+              cssClass: 'mds-actual-resource',
             },
             {
               id: 8,
@@ -331,12 +372,32 @@ export default {
               plate: 'DS41 CXP',
             },
             {
+              id: '8-actual',
+              color: '#af5b1a',
+              name: '',
+              capacity: 12,
+              status: 'maintenance',
+              plate: 'DS41 CXP',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
+            },
+            {
               id: 9,
               color: '#6e6e6e',
               name: 'Mercedes-Benz Atego 1218',
               capacity: 12,
               status: 'maintenance',
               plate: 'NH65 QWD',
+            },
+            {
+              id: '9-actual',
+              color: '#6e6e6e',
+              name: '',
+              capacity: 12,
+              status: 'maintenance',
+              plate: 'NH65 QWD',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
             },
           ],
         },
@@ -354,13 +415,14 @@ export default {
               plate: 'KT19 LNV',
             },
             {
-              id: 101,
+              id: '10-actual',
               color: '#62a83d',
               name: '',
               capacity: 20,
               status: 'maintenance',
               plate: 'KT19 LNV',
               eventCreation: false,
+              cssClass: 'mds-actual-resource',
             },
             {
               id: 11,
@@ -371,12 +433,32 @@ export default {
               plate: 'WP64 GBX',
             },
             {
+              id: '11-actual',
+              color: '#2d9b92',
+              name: '',
+              capacity: 20,
+              status: 'operational',
+              plate: 'WP64 GBX',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
+            },
+            {
               id: 12,
               color: '#b82f5e',
               name: 'Renault T High 520',
               capacity: 20,
               status: 'operational',
               plate: 'CD70 UJE',
+            },
+            {
+              id: '12-actual',
+              color: '#b82f5e',
+              name: '',
+              capacity: 20,
+              status: 'operational',
+              plate: 'CD70 UJE',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
             },
           ],
         },
@@ -394,6 +476,16 @@ export default {
               plate: 'BD67 HTA',
             },
             {
+              id: '13-actual',
+              color: '#3a6cc5',
+              name: '',
+              capacity: 24,
+              status: 'operational',
+              plate: 'BD67 HTA',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
+            },
+            {
               id: 14,
               color: '#d94c1a',
               name: 'Freightliner Cascadia',
@@ -402,12 +494,32 @@ export default {
               plate: 'VA18 RQW',
             },
             {
+              id: '14-actual',
+              color: '#d94c1a',
+              name: '',
+              capacity: 24,
+              status: 'maintenance',
+              plate: 'VA18 RQW',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
+            },
+            {
               id: 15,
               color: '#8e3d2f',
               name: 'Kenworth T680',
               capacity: 24,
               status: 'operational',
               plate: 'HY22 BPL',
+            },
+            {
+              id: '15-actual',
+              color: '#8e3d2f',
+              name: '',
+              capacity: 24,
+              status: 'operational',
+              plate: 'HY22 BPL',
+              eventCreation: false,
+              cssClass: 'mds-actual-resource',
             },
           ],
         },
@@ -422,6 +534,71 @@ export default {
       var searchTimeout;
       var searchQuery;
       var zoomLevel = 5;
+
+      function getActualDates(start, end) {
+        var duration = end.getTime() - start.getTime(); // Get duration in milliseconds
+
+        // Define possible offset intervals in minutes
+        var possibleOffsets = [15, 30, 60, 90, 120]; // 15min, 30min, 1h, 1.5h, 2h
+
+        // Randomly select an offset
+        var randomOffsetMinutes = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)];
+        var offsetMs = randomOffsetMinutes * 60 * 1000;
+
+        // Randomly choose positive or negative offset
+        var offset = Math.random() > 0.5 ? offsetMs : -offsetMs;
+
+        // Create new start and end time
+        var actualStart = new Date(start.getTime() + offset);
+        var actualEnd = new Date(actualStart.getTime() + duration);
+
+        return [actualStart, actualEnd];
+      }
+
+      function refresh() {
+        var events = calendar.getEvents();
+        var now = new Date();
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+
+        for (var i = 0; i < events.length; ++i) {
+          var event = events[i];
+          // Convert dates to date objects
+          event.start = event.start ? new Date(event.start) : event.start;
+          event.end = event.end ? new Date(event.end) : event.end;
+          // Mark past events
+          event.editable = event.start && new Date() < event.start;
+          // Add actual events for ongoing jobs
+          if (event.start < now && event.end > now && event.status !== 'actual' && !event.actual) {
+            var actualDates = getActualDates(event.start, event.end);
+            var newEvent = {
+              resource: event.resource + '-actual',
+              size: event.size,
+              start: actualDates[0],
+              end: actualDates[1],
+              status: 'actual',
+              cssClass: 'mds-actual-event',
+            };
+
+            event.actual = true;
+            events.push(newEvent);
+          }
+        }
+        calendar.setOptions({
+          min: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)), // This is not working
+          invalid: [
+            {
+              recurring: {
+                repeat: 'daily',
+                until: yesterday,
+              },
+              start: today,
+              end: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)),
+            },
+          ],
+          data: events,
+        });
+      }
 
       function setEventData() {
         var newEvents = myEvents.map(function (event) {
@@ -462,7 +639,7 @@ export default {
         zoomLevel = zoom;
 
         $('#demo-dispatch-management-zoom-level-slider').val(zoomLevel);
-        $('#demo-dispatch-management-zoom-level-in').prop('disabled', zoomLevel === 18);
+        $('#demo-dispatch-management-zoom-level-in').prop('disabled', zoomLevel === 8);
         $('#demo-dispatch-management-zoom-level-out').prop('disabled', zoomLevel === 1);
 
         calendar.setOptions({
@@ -470,23 +647,9 @@ export default {
         });
       }
 
-      function invalidateEvents() {
-        var events = calendar.getEvents();
-        for (var i = 0; i < events.length; ++i) {
-          var event = events[i];
-          // Convert dates to date objects
-          event.start = event.start ? new Date(event.start) : event.start;
-          event.end = event.end ? new Date(event.end) : event.end;
-          // Mark past events as fixed by setting the event.editable property to false
-          event.editable = event.start && new Date() < event.start;
-        }
-        calendar.setEvents(events);
-      }
-
       function invalidateResources(size) {
         var now = new Date();
         var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
         // Filter resources to show only those with capacity >= size
         var validResources = myResources
           .map(function (resourceGroup) {
@@ -508,7 +671,6 @@ export default {
         calendar.setOptions({
           resources: validResources,
           invalid: [
-            { recurring: { repeat: 'daily', until: yesterday } },
             { start: today, end: now },
             {
               recurring: {
@@ -695,6 +857,7 @@ export default {
               size: 7,
               timeCellStep: 180,
               timeLabelStep: 180,
+              eventHeight: 'variable',
               zoomLevels: {
                 1: { type: 'day', size: 7, columnWidth: 'xxsmall' },
                 2: { type: 'day', size: 7, columnWidth: 'xsmall' },
@@ -764,7 +927,7 @@ export default {
           },
           renderScheduleEventContent: function (data) {
             var job = data.original;
-            return '<div>' + job.from + ' → ' + job.to + '</div>';
+            return job.status === 'actual' ? '' : '<div>' + job.from + ' → ' + job.to + '</div>';
           },
           onEventCreated: function (args) {
             if (args.action === 'externalDrop') {
@@ -816,8 +979,10 @@ export default {
         handleZoom(zoomLevel - 1);
       });
 
-      invalidateEvents();
       setEventData();
+
+      refresh();
+      setInterval(refresh, 60000);
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -956,8 +1121,12 @@ export default {
   box-sizing: border-box;
 }
 
-.mds-dispatch-management-calendar .mbsc-timeline-row {
+.mds-dispatch-management-calendar .mbsc-timeline-row:not(.mds-actual-resource) {
   height: 58px;
+}
+  
+.mds-dispatch-management-calendar .mds-actual-resource {
+  height: 18px;
 }
 
 .mds-dispatch-management-calendar .mbsc-timeline-parent {
@@ -1042,9 +1211,14 @@ export default {
   height: 100%;
   text-align: center;
 }
-.mds-actual-event .mbsc-schedule-event-inner {
-  border: 3px solid #488dc5;
-  border-radius: 4px;
+
+.mds-actual-event .mbsc-schedule-event-range {
+  display: none;
 }
+
+.mds-actual-event {
+  height: 20px;
+}
+
 `,
 };
