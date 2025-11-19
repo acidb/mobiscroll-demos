@@ -982,7 +982,10 @@ export default {
 
       setEventData();
 
-      // refresh();
+      setTimeout(function () {
+        refresh();
+      });
+
       setInterval(refresh, 60000);
     });
   },
