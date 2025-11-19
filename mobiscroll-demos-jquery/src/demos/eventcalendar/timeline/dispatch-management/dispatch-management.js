@@ -557,6 +557,7 @@ export default {
 
       function refresh() {
         var events = calendar.getEvents();
+        console.log(events);
         var now = new Date();
         var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
