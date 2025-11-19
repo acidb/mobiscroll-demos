@@ -318,6 +318,7 @@ export default {
               color: '#439ad1',
               name: '',
               capacity: 12,
+              status: 'operational',
               plate: 'EP17 GMF',
               eventCreation: false,
             },
@@ -357,6 +358,7 @@ export default {
               color: '#62a83d',
               name: '',
               capacity: 20,
+              status: 'maintenance',
               plate: 'KT19 LNV',
               eventCreation: false,
             },
@@ -429,22 +431,22 @@ export default {
             title: event.from + ' → ' + event.to,
           });
         });
-        console.log(newEvents);
         calendar.setEvents(newEvents);
       }
 
       function filterResources() {
         filteredResources = myResources
-          .map(function (res) {
+          .map(function (category) {
             return {
-              id: res.id,
-              name: res.name,
-              eventCreation: res.eventCreation,
-              children: res.children.filter(function (ch) {
+              id: category.id,
+              name: category.name,
+              eventCreation: category.eventCreation,
+              children: category.children.filter(function (resource) {
                 return (
-                  !searchQuery ||
-                  ch.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                  ch.plate.toLowerCase().includes(searchQuery.toLowerCase())
+                  filters[resource.status] &&
+                  (!searchQuery ||
+                    resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    resource.plate.toLowerCase().includes(searchQuery.toLowerCase()))
                 );
               }),
             };
@@ -519,7 +521,9 @@ export default {
       }
 
       function isSameDay(date1, date2) {
-        return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
+        var d1 = new Date(date1);
+        var d2 = new Date(date2);
+        return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
       }
 
       function findFirstAvailableSlot(resource, date, duration) {
@@ -563,14 +567,18 @@ export default {
         }
       }
 
-      function moveToFirstAvailableSlot(draggedEvent) {
+      function moveToFirstAvailableSlot(draggedEvent, isEdit) {
         var duration = draggedEvent.end - draggedEvent.start;
         var slot = findFirstAvailableSlot(draggedEvent.resource, draggedEvent.start, duration);
 
         draggedEvent.start = slot.start;
         draggedEvent.end = slot.end;
 
-        calendar.updateEvent(draggedEvent);
+        if (isEdit) {
+          calendar.updateEvent(draggedEvent);
+        } else {
+          calendar.addEvent(draggedEvent);
+        }
       }
 
       var popup = $popupElm
@@ -660,10 +668,11 @@ export default {
 
       // Set initial filters
       filters['operational'] = true;
-      filters['in maintenance'] = true;
-      myResources.forEach(function (site) {
-        filters[site.id] = true;
-        site.children.forEach(function (resource) {
+      filters['maintenance'] = true;
+
+      myResources.forEach(function (category) {
+        filters[category.id] = true;
+        category.children.forEach(function (resource) {
           filters[resource.id] = true;
         });
       });
@@ -720,7 +729,7 @@ export default {
               resource.name +
               (resource.name && resource.plate ? '<span class="mds-dispatch-management-plate">' + resource.plate + '</span>' : '') +
               '</div>' +
-              (resource.status
+              (resource.eventCreation !== false
                 ? '<div class="mds-dispatch-management-status">' +
                   '<span class="mds-dispatch-management-status-dot" style="background-color:' +
                   (resource.status === 'operational' ? 'green' : 'orange') +
@@ -768,7 +777,7 @@ export default {
           },
           onEventCreateFailed: function (args) {
             var draggedEvent = args.event;
-            moveToFirstAvailableSlot(draggedEvent);
+            moveToFirstAvailableSlot(draggedEvent, false);
             mobiscroll.toast({
               // context,
               message: draggedEvent.from + ' → ' + draggedEvent.to + ' added to first available slot',
@@ -776,7 +785,7 @@ export default {
           },
           onEventUpdateFailed: function (args) {
             var draggedEvent = args.event;
-            moveToFirstAvailableSlot(draggedEvent);
+            moveToFirstAvailableSlot(draggedEvent, true);
             mobiscroll.toast({
               // context,
               message: draggedEvent.from + ' → ' + draggedEvent.to + ' moved to first available slot',
@@ -890,7 +899,7 @@ export default {
           mbsc-checkbox
           data-label="In maintenance"
           class="mds-dispatch-management-checkbox"
-          value="in maintenance"
+          value="maintenance"
           checked
         />
       </label>
