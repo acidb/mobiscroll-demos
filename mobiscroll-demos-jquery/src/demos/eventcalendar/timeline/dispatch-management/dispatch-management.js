@@ -422,13 +422,15 @@ export default {
       var zoomLevel = 5;
 
       function setEventData() {
-        return myEvents.map(function (event) {
+        var newEvents = myEvents.map(function (event) {
           return $.extend({}, event, {
             start: event.start ? event.start : event.pickup[0],
             end: event.end ? event.end : event.drop[0],
             title: event.from + ' → ' + event.to,
           });
         });
+        console.log(newEvents);
+        calendar.setEvents(newEvents);
       }
 
       function filterResources() {
@@ -696,7 +698,6 @@ export default {
               },
             },
           },
-          data: setEventData(),
           resources: filteredResources,
           renderHeader: function () {
             return (
@@ -807,6 +808,7 @@ export default {
       });
 
       invalidateEvents();
+      setEventData();
     });
   },
   // eslint-disable-next-line es5/no-template-literals
