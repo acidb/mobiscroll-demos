@@ -421,8 +421,8 @@ export default {
       var searchQuery;
       var zoomLevel = 5;
 
-      function generateEventData(events) {
-        return events.map(function (event) {
+      function setEventData() {
+        return myEvents.map(function (event) {
           return $.extend({}, event, {
             start: event.start ? event.start : event.pickup[0],
             end: event.end ? event.end : event.drop[0],
@@ -670,10 +670,10 @@ export default {
         .mobiscroll()
         .eventcalendar({
           // context,
-          clickToCreate: true,
-          dragToCreate: true,
+          clickToCreate: false,
+          dragToCreate: false,
+          dragToResize: false,
           dragToMove: true,
-          dragToResize: true,
           externalDrop: true,
           eventOverlap: false,
           cssClass: 'mds-dispatch-management-calendar',
@@ -696,7 +696,7 @@ export default {
               },
             },
           },
-          data: generateEventData(myEvents),
+          data: setEventData(),
           resources: filteredResources,
           renderHeader: function () {
             return (
