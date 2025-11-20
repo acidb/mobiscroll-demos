@@ -528,82 +528,82 @@ export default {
         {
           id: 1,
           from: '1500 Market St, Philadelphia, PA',
-          to: '500 Wood St, Pittsburgh, PA',
+          to: '600 Liberty St, Pittsburgh, PA',
           size: 11,
           pickup: ['dyndatetime(y,m,d,7)', 'dyndatetime(y,m,d,9)'],
-          drop: ['dyndatetime(y,m,d,13)', 'dyndatetime(y,m,d,15)'],
+          drop: ['dyndatetime(y,m,d,10)', 'dyndatetime(y,m,d,14)'],
         },
         {
           id: 2,
           from: '200 Peachtree St NW, Atlanta, GA',
-          to: '1 Music Sq E, Nashville, TN',
+          to: '50 Music Sq E, Nashville, TN',
           size: 18,
-          pickup: ['dyndatetime(y,m,d,8)', 'dyndatetime(y,m,d,10)'],
-          drop: ['dyndatetime(y,m,d,14)', 'dyndatetime(y,m,d,16)'],
+          pickup: ['dyndatetime(y,m,d+1,8)', 'dyndatetime(y,m,d+1,10)'],
+          drop: ['dyndatetime(y,m,d+1,12)', 'dyndatetime(y,m,d+1,16)'],
         },
         {
           id: 3,
           from: '400 S 4th St, Louisville, KY',
-          to: '1200 Main St, Cincinnati, OH',
+          to: '1400 Main St, Cincinnati, OH',
           size: 7,
-          pickup: ['dyndatetime(y,m,d,6)', 'dyndatetime(y,m,d,8)'],
-          drop: ['dyndatetime(y,m,d,12)', 'dyndatetime(y,m,d,14)'],
+          pickup: ['dyndatetime(y,m,d+2,6)', 'dyndatetime(y,m,d+2,8)'],
+          drop: ['dyndatetime(y,m,d+2,9)', 'dyndatetime(y,m,d+2,12)'],
         },
         {
           id: 4,
           from: '999 3rd Ave, Seattle, WA',
-          to: '400 W 8th St, Vancouver, WA',
+          to: '500 W 8th St, Vancouver, WA',
           size: 3,
-          pickup: ['dyndatetime(y,m,d,9)', 'dyndatetime(y,m,d,11)'],
-          drop: ['dyndatetime(y,m,d,16)', 'dyndatetime(y,m,d,18)'],
+          pickup: ['dyndatetime(y,m,d+3,9)', 'dyndatetime(y,m,d+3,11)'],
+          drop: ['dyndatetime(y,m,d+3,12)', 'dyndatetime(y,m,d+3,17)'],
         },
         {
           id: 5,
           from: '100 State St, Madison, WI',
-          to: '233 S Wacker Dr, Chicago, IL',
+          to: '300 S Wacker Dr, Chicago, IL',
           size: 22,
           pickup: ['dyndatetime(y,m,d,5)', 'dyndatetime(y,m,d,7)'],
-          drop: ['dyndatetime(y,m,d,13)', 'dyndatetime(y,m,d,15)'],
+          drop: ['dyndatetime(y,m,d,8)', 'dyndatetime(y,m,d,13)'],
         },
         {
           id: 6,
           from: '1100 Congress Ave, Austin, TX',
-          to: '300 E Main St, Dallas, TX',
+          to: '500 E Main St, Dallas, TX',
           size: 20,
-          pickup: ['dyndatetime(y,m,d,7)', 'dyndatetime(y,m,d,9)'],
-          drop: ['dyndatetime(y,m,d,15)', 'dyndatetime(y,m,d,17)'],
+          pickup: ['dyndatetime(y,m,d+1,7)', 'dyndatetime(y,m,d+1,9)'],
+          drop: ['dyndatetime(y,m,d+1,10)', 'dyndatetime(y,m,d+1,15)'],
         },
         {
           id: 7,
           from: '1 E 1st St, Tulsa, OK',
-          to: '200 W Capitol Ave, Little Rock, AR',
+          to: '250 W Capitol Ave, Little Rock, AR',
           size: 11.5,
-          pickup: ['dyndatetime(y,m,d,6,30)', 'dyndatetime(y,m,d,8,30)'],
-          drop: ['dyndatetime(y,m,d,13,30)', 'dyndatetime(y,m,d,15,30)'],
+          pickup: ['dyndatetime(y,m,d+2,6,30)', 'dyndatetime(y,m,d+2,8,30)'],
+          drop: ['dyndatetime(y,m,d+2,10,30)', 'dyndatetime(y,m,d+2,15,30)'],
         },
         {
           id: 8,
           from: '50 S Main St, Salt Lake City, UT',
-          to: '200 N Broadway, Denver, CO',
+          to: '300 N Broadway, Denver, CO',
           size: 5,
-          pickup: ['dyndatetime(y,m,d,10)', 'dyndatetime(y,m,d,12)'],
-          drop: ['dyndatetime(y,m,d,17)', 'dyndatetime(y,m,d,19)'],
+          pickup: ['dyndatetime(y,m,d+3,10)', 'dyndatetime(y,m,d+3,12)'],
+          drop: ['dyndatetime(y,m,d+3,13)', 'dyndatetime(y,m,d+3,18)'],
         },
         {
           id: 9,
           from: '2000 Q St, Sacramento, CA',
-          to: '400 Poydras St, New Orleans, LA',
+          to: '500 Poydras St, New Orleans, LA',
           size: 22.5,
           pickup: ['dyndatetime(y,m,d,9)', 'dyndatetime(y,m,d,11)'],
-          drop: ['dyndatetime(y,m,d,16)', 'dyndatetime(y,m,d,18)'],
+          drop: ['dyndatetime(y,m,d,12)', 'dyndatetime(y,m,d,17)'],
         },
         {
           id: 10,
           from: '500 Boylston St, Boston, MA',
-          to: '100 State St, Portland, ME',
+          to: '200 State St, Portland, ME',
           size: 3.5,
-          pickup: ['dyndatetime(y,m,d,8,30)', 'dyndatetime(y,m,d,10,30)'],
-          drop: ['dyndatetime(y,m,d,15,30)', 'dyndatetime(y,m,d,17,30)'],
+          pickup: ['dyndatetime(y,m,d+1,8,30)', 'dyndatetime(y,m,d+1,10,30)'],
+          drop: ['dyndatetime(y,m,d+1,12,30)', 'dyndatetime(y,m,d+1,18,30)'],
         },
       ];
 
@@ -698,20 +698,22 @@ export default {
       function setupDispatchJobs() {
         var container = $('#dispatch-management-events');
 
-        // Render and init in one pass
         for (var i = 0; i < externalEvents.length; i++) {
           var job = externalEvents[i];
 
-          // Create a plain div for the job
           var $jobEl = $('<div></div>')
             .attr('id', 'mds-dispatch-management-event-' + (i + 1))
-            .addClass('mds-dispatch-management-jobs')
-            .text(job.from + ' → ' + job.to);
+            .addClass('mds-dispatch-management-jobs');
 
-          // Append to container
+          var $fromEl = $('<div></div>').html('<span style="font-weight:bold">From:</span> ' + job.from);
+          var $toEl = $('<div></div>').html('<span style="font-weight:bold">To:</span> ' + job.to);
+          var $sizeEl = $('<div></div>').html('<span style="font-weight:bold">Size:</span> ' + job.size + ' tons');
+
+          // Append inner divs to job element
+          $jobEl.append($fromEl, $toEl, $sizeEl);
           container.append($jobEl);
 
-          // Initialize mobiscroll draggable on this element
+          // Initialize mobiscroll draggable
           $jobEl.mobiscroll().draggable({
             dragData: job,
           });
@@ -755,30 +757,63 @@ export default {
       }
 
       function invalidateResources(event) {
-        now = new Date();
-        today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var now = new Date();
+        var twoHoursFromNow = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+        var sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         var invalidIds = [];
+
+        // Calculate event window
+        var eventStart = new Date(event.pickup[0]);
+        var eventEnd = new Date(event.drop[1]);
 
         for (var i = 0; i < myResources.length; i++) {
           var res = myResources[i];
           for (var j = 0; j < res.children.length; j++) {
             var truck = res.children[j];
+
+            // Capacity check
             if (truck.capacity < event.size) {
+              truck.eventCreation = false;
+              invalidIds.push(truck.id);
+            }
+
+            // Overlap check
+            var truckEvents = calendar.getEvents().filter(function (ev) {
+              return ev.resource === truck.id;
+            });
+
+            var overlappingEvent = truckEvents.find(function (ev) {
+              var evStart = new Date(ev.start);
+              var evEnd = new Date(ev.end);
+              return evEnd > eventStart && evStart < eventEnd;
+            });
+
+            if (overlappingEvent) {
               truck.eventCreation = false;
               invalidIds.push(truck.id);
             }
           }
         }
 
+        console.log('Start date: ' + eventStart);
+        console.log('End date: ' + eventEnd);
+
         calendar.setOptions({
           invalid: [
             {
-              recurring: {
-                repeat: 'daily',
-                from: today,
-              },
+              start: today,
+              end: eventStart < twoHoursFromNow ? twoHoursFromNow : eventStart,
+            },
+            {
+              start: today,
+              end: sevenDaysFromNow,
               resource: invalidIds,
               cssClass: 'mds-dispatch-management-disabled-row mbsc-flex',
+            },
+            {
+              start: eventEnd,
+              end: sevenDaysFromNow,
             },
           ],
         });
