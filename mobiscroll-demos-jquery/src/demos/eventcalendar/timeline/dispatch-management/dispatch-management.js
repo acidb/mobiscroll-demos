@@ -1127,49 +1127,50 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mbsc-grid mbsc-no-padding mds-full-height">
-  <div class="mbsc-row mds-full-height">
-    <div class="mbsc-col-sm-3 mds-full-height">
-      <div class="mbsc-form-group-title">Transport jobs</div>
-      <div id="dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
+<div class="mbsc-page">
+  <div class="mbsc-grid mbsc-no-padding mds-full-height">
+    <div class="mbsc-row mds-full-height">
+      <div class="mbsc-col-sm-3 mds-full-height">
+        <div class="mbsc-form-group-title">Transport jobs</div>
+        <div id="dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
+      </div>
+      <div class="mbsc-col-sm-9 mds-dispatch-management-calendar mds-full-height">
+        <div id="demo-dispatch-management"></div>
+      </div>
     </div>
-    <div class="mbsc-col-sm-9 mds-dispatch-management-calendar mds-full-height">
-      <div id="demo-dispatch-management"></div>
+  </div>
+  <div style="display:none">
+    <div id="demo-dispatch-management-filtering-popup">
+      <div class="mbsc-form-group">
+        <div class="mbsc-form-group-title">Capacity</div>
+        <div id="demo-dispatch-management-resource-list"></div>
+      </div>
+      <div class="mbsc-form-group">
+        <div class="mbsc-form-group-title">Operational Status</div>
+        <label>
+          <input
+            type="checkbox"
+            mbsc-checkbox
+            data-label="In maintenance"
+            class="mds-dispatch-management-checkbox"
+            value="maintenance"
+            checked
+          />
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            mbsc-checkbox
+            data-label="Operational"
+            class="mds-dispatch-management-checkbox"
+            value="operational"
+            checked
+          />
+        </label>
+      </div>
     </div>
   </div>
 </div>
-<div style="display:none">
-  <div id="demo-dispatch-management-filtering-popup">
-    <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Capacity</div>
-      <div id="demo-dispatch-management-resource-list"></div>
-    </div>
-    <div class="mbsc-form-group">
-      <div class="mbsc-form-group-title">Operational Status</div>
-      <label>
-        <input
-          type="checkbox"
-          mbsc-checkbox
-          data-label="In maintenance"
-          class="mds-dispatch-management-checkbox"
-          value="maintenance"
-          checked
-        />
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          mbsc-checkbox
-          data-label="Operational"
-          class="mds-dispatch-management-checkbox"
-          value="operational"
-          checked
-        />
-      </label>
-    </div>
-  </div>
-</div>
-
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
