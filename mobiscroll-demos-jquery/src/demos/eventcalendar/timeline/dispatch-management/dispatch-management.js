@@ -685,16 +685,14 @@ export default {
         });
       }
 
-      function setEventData() {
-        var newEvents = myEvents.map(function (event) {
+      function getEventData() {
+        return myEvents.map(function (event) {
           return $.extend({}, event, {
             start: event.start ? event.start : event.pickup[0],
             end: event.end ? event.end : event.drop[0],
             title: event.from + ' → ' + event.to,
           });
         });
-        console.log(newEvents);
-        calendar.setEvents(newEvents);
       }
 
       function setupDispatchJobs() {
@@ -1008,6 +1006,7 @@ export default {
               },
             },
           },
+          data: getEventData(),
           resources: filteredResources,
           renderHeader: function () {
             return (
@@ -1119,7 +1118,6 @@ export default {
         handleZoom(zoomLevel - 1);
       });
 
-      setEventData();
       setupDispatchJobs();
       refresh();
       setInterval(refresh, 60000);
