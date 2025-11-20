@@ -578,8 +578,8 @@ export default {
           from: '1 E 1st St, Tulsa, OK',
           to: '200 W Capitol Ave, Little Rock, AR',
           size: 11.5,
-          pickup: ['dyndatetime(y,m,d,6.5)', 'dyndatetime(y,m,d,8.5)'],
-          drop: ['dyndatetime(y,m,d,13.5)', 'dyndatetime(y,m,d,15.5)'],
+          pickup: ['dyndatetime(y,m,d,6,30)', 'dyndatetime(y,m,d,8,30)'],
+          drop: ['dyndatetime(y,m,d,13,30)', 'dyndatetime(y,m,d,15,30)'],
         },
         {
           id: 8,
@@ -602,8 +602,8 @@ export default {
           from: '500 Boylston St, Boston, MA',
           to: '100 State St, Portland, ME',
           size: 3.5,
-          pickup: ['dyndatetime(y,m,d,8.5)', 'dyndatetime(y,m,d,10.5)'],
-          drop: ['dyndatetime(y,m,d,15.5)', 'dyndatetime(y,m,d,17.5)'],
+          pickup: ['dyndatetime(y,m,d,8,30)', 'dyndatetime(y,m,d,10,30)'],
+          drop: ['dyndatetime(y,m,d,15,30)', 'dyndatetime(y,m,d,17,30)'],
         },
       ];
 
@@ -616,6 +616,8 @@ export default {
       var searchTimeout;
       var searchQuery;
       var zoomLevel = 5;
+      var now = new Date();
+      var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
       function getActualDates(start, end) {
         var duration = end.getTime() - start.getTime(); // Get duration in milliseconds
@@ -639,9 +641,8 @@ export default {
 
       function refresh() {
         var events = calendar.getEvents();
-        console.log(events);
-        var now = new Date();
-        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        now = new Date();
+        today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
         for (var i = 0; i < events.length; ++i) {
@@ -691,7 +692,6 @@ export default {
             title: event.from + ' → ' + event.to,
           });
         });
-        console.log(newEvents);
         calendar.setEvents(newEvents);
       }
 
@@ -755,8 +755,8 @@ export default {
       }
 
       function invalidateResources(event) {
-        var now = new Date();
-        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        now = new Date();
+        today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         var invalidIds = [];
 
         for (var i = 0; i < myResources.length; i++) {
@@ -784,14 +784,9 @@ export default {
         });
       }
 
-      function isSameDay(date1, date2) {
-        var d1 = new Date(date1);
-        var d2 = new Date(date2);
-        return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
-      }
-
       function findFirstAvailableSlot(resource, date, duration) {
-        var now = new Date();
+        now = new Date();
+        today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         var pointer = new Date(date);
 
         // Ensure pointer is at least 2 hours from now
@@ -801,8 +796,8 @@ export default {
         }
 
         // Filter events for this resource on this day
-        var dayEvents = calendar.getEvents().filter(function (ev) {
-          return ev.resource === resource && (isSameDay(ev.start, pointer) || isSameDay(ev.end, pointer));
+        var dayEvents = calendar.getEvents(today).filter(function (ev) {
+          return ev.resource === resource;
         });
 
         // If no events, whole day from pointer is free
@@ -1047,6 +1042,9 @@ export default {
           onEventCreateFailed: function (args) {
             var draggedEvent = args.event;
             moveToFirstAvailableSlot(draggedEvent, false);
+            if (args.action === 'externalDrop') {
+              $('#mds-dispatch-management-event-' + args.event.id).remove();
+            }
             mobiscroll.toast({
               // context,
               message: draggedEvent.from + ' → ' + draggedEvent.to + ' added to first available slot',
