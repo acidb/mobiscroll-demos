@@ -1181,7 +1181,7 @@ export default {
 
 .mds-dispatch-management-jobs {
   margin: 5px 0;
-  padding: 10px 12px 10px 12px;
+  padding: 10px 12px;
   align-content: center;
   touch-action: none;
   color: #fff;
@@ -1189,7 +1189,7 @@ export default {
   border-radius: 8px;
   flex: 0 0 4.2em;
   font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-  font-size: 14px; 
+  font-size: 12x; 
 }
   
 .mds-dispatch-management-calendar .mbsc-timeline-resource-header {
