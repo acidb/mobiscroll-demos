@@ -1314,5 +1314,10 @@ export default {
 .mds-dispatch-management-disabled-row.mbsc-schedule-invalid {
     background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
 }
+
+// move this to website css with updated unique name
+.demo-dispatch-management {
+  height: 100%;
+}
 `,
 };
