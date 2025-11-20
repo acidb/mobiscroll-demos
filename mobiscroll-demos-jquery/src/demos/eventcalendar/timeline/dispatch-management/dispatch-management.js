@@ -618,6 +618,7 @@ export default {
       var zoomLevel = 5;
       var now = new Date();
       var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      var success;
 
       function getActualDates(start, end) {
         var duration = end.getTime() - start.getTime(); // Get duration in milliseconds
@@ -646,8 +647,6 @@ export default {
         now = new Date();
         today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-        console.log(events);
-
         for (var i = 0; i < events.length; ++i) {
           var event = events[i];
           // Convert dates to date objects
@@ -671,8 +670,6 @@ export default {
             events.push(newEvent);
           }
         }
-
-        console.log(events);
 
         setTimeout(function () {
           calendar.setOptions({
@@ -795,15 +792,12 @@ export default {
               return evEnd > eventStart && evStart < eventEnd;
             });
 
-            if (overlappingEvent) {
+            if (overlappingEvent && event.resource !== truck.id) {
               truck.eventCreation = false;
               invalidIds.push(truck.id);
             }
           }
         }
-
-        console.log('Start date: ' + eventStart);
-        console.log('End date: ' + eventEnd);
 
         calendar.setOptions({
           invalid: [
@@ -825,63 +819,104 @@ export default {
         });
       }
 
-      function findFirstAvailableSlot(resource, date, duration) {
-        now = new Date();
-        today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        var pointer = new Date(date);
+      // Check if two time ranges overlap
+      function overlaps(start, end, evStart, evEnd) {
+        return end > evStart && start < evEnd;
+      }
 
-        // Ensure pointer is at least 2 hours from now
-        var minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000);
-        if (pointer < minStart) {
-          pointer = minStart;
-        }
+      // Find first free slot for the event
+      function firstAvailableSlot(resource, desiredStart, duration, invalidRange) {
+        var now = new Date();
+        var minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
+        var pointer = new Date(desiredStart);
+        if (pointer < minStart) pointer = minStart;
 
-        // Filter events for this resource on this day
-        var dayEvents = calendar.getEvents(today).filter(function (ev) {
+        // Convert invalid range to dates
+        var invalidStart = invalidRange ? new Date(invalidRange.start) : null;
+        var invalidEnd = invalidRange ? new Date(invalidRange.end) : null;
+
+        // Get all events for the resource
+        var allEvents = calendar.getEvents().filter(function (ev) {
           return ev.resource === resource;
         });
 
-        // If no events, whole day from pointer is free
-        if (dayEvents.length === 0) {
-          return { start: new Date(pointer), end: new Date(pointer.getTime() + duration) };
-        }
+        for (var i = 0; i <= allEvents.length; i++) {
+          var gapStart = new Date(pointer);
+          var gapEnd = i < allEvents.length ? new Date(allEvents[i].start) : null;
 
-        // Check gaps including before the first event
-        for (var i = 0; i <= dayEvents.length; i++) {
-          var gapStart = pointer;
-          var gapEnd = i < dayEvents.length ? dayEvents[i].start : null;
+          // Candidate times
+          var candidateStart = new Date(gapStart);
+          var candidateEnd = new Date(candidateStart.getTime() + duration);
+          var fits = !gapEnd || candidateEnd <= gapEnd;
 
-          if (gapEnd) {
-            // If the gap from pointer to event start is enough
-            if (gapEnd - gapStart >= duration) {
-              return { start: new Date(gapStart), end: new Date(gapStart.getTime() + duration) };
+          // Snap around invalid range if overlapping
+          if (fits && invalidStart && invalidEnd && overlaps(candidateStart, candidateEnd, invalidStart, invalidEnd)) {
+            if (candidateStart >= invalidEnd) {
+              // Dropped after invalid -> snap before
+              candidateEnd = new Date(invalidStart);
+              candidateStart = new Date(candidateEnd.getTime() - duration);
+            } else if (candidateEnd <= invalidStart) {
+              // Dropped before invalid -> snap after
+              candidateStart = new Date(invalidEnd);
+              candidateEnd = new Date(candidateStart.getTime() + duration);
+            } else {
+              // Dropped inside invalid -> snap to nearest side
+              var distBefore = candidateStart - invalidStart;
+              var distAfter = invalidEnd - candidateEnd;
+              if (distAfter < distBefore) {
+                candidateStart = new Date(invalidEnd);
+                candidateEnd = new Date(candidateStart.getTime() + duration);
+              } else {
+                candidateEnd = new Date(invalidStart);
+                candidateStart = new Date(candidateEnd.getTime() - duration);
+              }
             }
 
-            // Move pointer to the later of current pointer or event end
-            pointer = dayEvents[i].end > pointer ? dayEvents[i].end : pointer;
-
-            // Also enforce 2-hour minimum from now
-            if (pointer < minStart) {
-              pointer = minStart;
+            // Ensure snapped event fits in the gap
+            if (gapEnd && (candidateStart < gapStart || candidateEnd > gapEnd)) {
+              fits = false;
             }
-          } else {
-            // After the last event
-            return { start: new Date(pointer), end: new Date(pointer.getTime() + duration) };
+          }
+
+          // Ensure candidate does not overlap other events
+          if (fits) {
+            for (var j = 0; j < allEvents.length; j++) {
+              if (overlaps(candidateStart, candidateEnd, new Date(allEvents[j].start), new Date(allEvents[j].end))) {
+                fits = false;
+              }
+            }
+          }
+
+          if (fits) {
+            return { start: candidateStart, end: candidateEnd };
+          }
+
+          // Move pointer past this event
+          if (i < allEvents.length) {
+            pointer = new Date(allEvents[i].end);
+            if (pointer < minStart) pointer = minStart;
           }
         }
+
+        return null;
       }
 
-      function moveToFirstAvailableSlot(draggedEvent, isEdit) {
+      function moveToFirstAvailableSlot(draggedEvent, invalid, isEdit) {
         var duration = draggedEvent.end - draggedEvent.start;
-        var slot = findFirstAvailableSlot(draggedEvent.resource, draggedEvent.start, duration);
+        var slot = firstAvailableSlot(draggedEvent.resource, draggedEvent.start, duration, invalid);
 
-        draggedEvent.start = slot.start;
-        draggedEvent.end = slot.end;
+        if (slot) {
+          draggedEvent.start = slot.start;
+          draggedEvent.end = slot.end;
 
-        if (isEdit) {
-          calendar.updateEvent(draggedEvent);
+          if (isEdit) {
+            calendar.updateEvent(draggedEvent);
+          } else {
+            calendar.addEvent(draggedEvent);
+          }
+          success = true;
         } else {
-          calendar.addEvent(draggedEvent);
+          success = false;
         }
       }
 
@@ -1085,24 +1120,44 @@ export default {
           },
           onEventCreateFailed: function (args) {
             var draggedEvent = args.event;
-            moveToFirstAvailableSlot(draggedEvent, false);
-            if (args.action === 'externalDrop') {
-              $('#mds-dispatch-management-event-' + args.event.id).remove();
+            moveToFirstAvailableSlot(draggedEvent, args.invalid, false);
+            if (success) {
+              if (args.action === 'externalDrop') {
+                $('#mds-dispatch-management-event-' + args.event.id).remove();
+              }
+              mobiscroll.toast({
+                // context,
+                message: draggedEvent.from + ' → ' + draggedEvent.to + ' added to first available slot',
+              });
+            } else {
+              mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
+                message: 'No available slot found for ' + args.event.from + ' → ' + args.event.to,
+              });
             }
-            mobiscroll.toast({
-              // context,
-              message: draggedEvent.from + ' → ' + draggedEvent.to + ' added to first available slot',
-            });
           },
           onEventUpdateFailed: function (args) {
             var draggedEvent = args.event;
-            moveToFirstAvailableSlot(draggedEvent, true);
-            mobiscroll.toast({
-              // context,
-              message: draggedEvent.from + ' → ' + draggedEvent.to + ' moved to first available slot',
-            });
+            moveToFirstAvailableSlot(draggedEvent, args.invalid, true);
+            if (success) {
+              mobiscroll.toast({
+                // context,
+                message: draggedEvent.from + ' → ' + draggedEvent.to + ' moved to first available slot',
+              });
+            } else {
+              mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
+                message: 'No available slot found for ' + args.event.from + ' → ' + args.event.to,
+              });
+            }
           },
           onEventDragStart: function (args) {
+            console.log(args.event.end);
+            calendar.navigate(args.event.end);
             invalidateResources(args.event);
           },
           onEventDragEnd: function () {
