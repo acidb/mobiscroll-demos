@@ -696,7 +696,7 @@ export default {
       }
 
       function setupDispatchJobs() {
-        var container = $('#demo-dispatch-management-events');
+        var container = $('#dispatch-management-events');
 
         // Render and init in one pass
         for (var i = 0; i < externalEvents.length; i++) {
@@ -1096,7 +1096,7 @@ export default {
   <div class="mbsc-row mds-full-height">
     <div class="mbsc-col-sm-3 mds-full-height">
       <div class="mbsc-form-group-title">Transport jobs</div>
-      <div id="demo-dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
+      <div id="dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
     </div>
     <div class="mbsc-col-sm-9 mds-dispatch-management-calendar mds-full-height">
       <div id="demo-dispatch-management"></div>
