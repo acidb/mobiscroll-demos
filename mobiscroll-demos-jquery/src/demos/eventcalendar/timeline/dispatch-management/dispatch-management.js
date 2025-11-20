@@ -546,8 +546,8 @@ export default {
           from: '1500 Market St, Philadelphia, PA',
           to: '600 Liberty St, Pittsburgh, PA',
           size: 13,
-          pickup: ['dyndatetime(y,m,d,10)', 'dyndatetime(y,m,d,12)'],
-          drop: ['dyndatetime(y,m,d,13)', 'dyndatetime(y,m,d,17)'],
+          pickup: ['dyndatetime(y,m,d,13)', 'dyndatetime(y,m,d,17)'],
+          drop: ['dyndatetime(y,m,d,18)', 'dyndatetime(y,m,d,22)'],
         },
         {
           id: 4,
@@ -689,9 +689,9 @@ export default {
         });
       }
 
-      function setEventData() {
-        for (var i = 0; i < myEvents.length; i++) {
-          var event = myEvents[i];
+      function setEventData(events) {
+        for (var i = 0; i < events.length; i++) {
+          var event = events[i];
           event.start = event.start ? event.start : event.pickup[0];
           event.end = event.end ? event.end : event.drop[0];
           event.title = event.from + ' → ' + event.to;
@@ -700,6 +700,7 @@ export default {
 
       function setupDispatchJobs() {
         var container = $('#dispatch-management-events');
+        setEventData(externalEvents);
 
         for (var i = 0; i < externalEvents.length; i++) {
           var job = externalEvents[i];
@@ -824,43 +825,49 @@ export default {
         return end > evStart && start < evEnd;
       }
 
-      // Find first free slot for the event
-      function firstAvailableSlot(resource, desiredStart, duration, invalidRange) {
+      // Find the first available time slot for a dragged event
+      function firstAvailableSlot(draggedEvent, duration, invalidRange) {
         var now = new Date();
-        var minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
-        var pointer = new Date(desiredStart);
+        var minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000); // Minimum start time: 2 hours from now
+        var pointer = new Date(draggedEvent.start); // Start scanning from event start
+        var resource = draggedEvent.resource;
+        var draggedEventId = draggedEvent.id;
+
+        // Ensure pointer is not earlier than minimum start time
         if (pointer < minStart) pointer = minStart;
 
-        // Convert invalid range to dates
+        // Parse invalid range if provided
         var invalidStart = invalidRange ? new Date(invalidRange.start) : null;
         var invalidEnd = invalidRange ? new Date(invalidRange.end) : null;
 
-        // Get all events for the resource
+        // Get all events for this resource
         var allEvents = calendar.getEvents().filter(function (ev) {
           return ev.resource === resource;
         });
 
+        // Loop through each gap between events (and after the last event)
         for (var i = 0; i <= allEvents.length; i++) {
-          var gapStart = new Date(pointer);
-          var gapEnd = i < allEvents.length ? new Date(allEvents[i].start) : null;
+          var gapStart = new Date(pointer); // Start of the current gap
+          var gapEnd = i < allEvents.length ? new Date(allEvents[i].start) : null; // End of gap (next event start)
 
-          // Candidate times
-          var candidateStart = new Date(gapStart);
-          var candidateEnd = new Date(candidateStart.getTime() + duration);
-          var fits = !gapEnd || candidateEnd <= gapEnd;
+          var candidateStart = new Date(gapStart); // Tentative start for the dragged event
+          var candidateEnd = new Date(candidateStart.getTime() + duration); // Tentative end
+          var fits = !gapEnd || candidateEnd <= gapEnd; // Does it fit in the current gap?
 
-          // Snap around invalid range if overlapping
+          // --- Snap around invalid range if overlapping ---
           if (fits && invalidStart && invalidEnd && overlaps(candidateStart, candidateEnd, invalidStart, invalidEnd)) {
+            // If candidate is after the invalid, try to place it before
             if (candidateStart >= invalidEnd) {
-              // Dropped after invalid -> snap before
               candidateEnd = new Date(invalidStart);
               candidateStart = new Date(candidateEnd.getTime() - duration);
-            } else if (candidateEnd <= invalidStart) {
-              // Dropped before invalid -> snap after
+            }
+            // If candidate is before the invalid, try to place it after
+            else if (candidateEnd <= invalidStart) {
               candidateStart = new Date(invalidEnd);
               candidateEnd = new Date(candidateStart.getTime() + duration);
-            } else {
-              // Dropped inside invalid -> snap to nearest side
+            }
+            // Candidate overlaps invalid: choose nearest valid side
+            else {
               var distBefore = candidateStart - invalidStart;
               var distAfter = invalidEnd - candidateEnd;
               if (distAfter < distBefore) {
@@ -872,38 +879,52 @@ export default {
               }
             }
 
-            // Ensure snapped event fits in the gap
+            // Ensure snapped candidate still fits within the gap
             if (gapEnd && (candidateStart < gapStart || candidateEnd > gapEnd)) {
               fits = false;
             }
           }
 
-          // Ensure candidate does not overlap other events
+          // --- Check overlaps with other events ---
           if (fits) {
+            var overlapsOther = false;
+
             for (var j = 0; j < allEvents.length; j++) {
-              if (overlaps(candidateStart, candidateEnd, new Date(allEvents[j].start), new Date(allEvents[j].end))) {
-                fits = false;
+              // Skip the dragged event itself by ID
+              if (!(draggedEventId != null && allEvents[j].id === draggedEventId)) {
+                var evStart = new Date(allEvents[j].start);
+                var evEnd = new Date(allEvents[j].end);
+                if (overlaps(candidateStart, candidateEnd, evStart, evEnd)) {
+                  overlapsOther = true;
+                  break;
+                }
               }
+            }
+
+            if (overlapsOther) {
+              fits = false;
             }
           }
 
+          // If candidate fits all constraints, return it
           if (fits) {
             return { start: candidateStart, end: candidateEnd };
           }
 
-          // Move pointer past this event
+          // Move pointer to end of current event to check next gap
           if (i < allEvents.length) {
             pointer = new Date(allEvents[i].end);
             if (pointer < minStart) pointer = minStart;
           }
         }
 
+        // No suitable slot found
         return null;
       }
 
       function moveToFirstAvailableSlot(draggedEvent, invalid, isEdit) {
         var duration = draggedEvent.end - draggedEvent.start;
-        var slot = firstAvailableSlot(draggedEvent.resource, draggedEvent.start, duration, invalid);
+        var slot = firstAvailableSlot(draggedEvent, duration, invalid);
 
         if (slot) {
           draggedEvent.start = slot.start;
@@ -1016,7 +1037,7 @@ export default {
         });
       });
 
-      setEventData();
+      setEventData(myEvents);
 
       var calendar = $calendarElm
         .mobiscroll()
@@ -1156,8 +1177,7 @@ export default {
             }
           },
           onEventDragStart: function (args) {
-            console.log(args.event.end);
-            calendar.navigate(args.event.end);
+            calendar.navigate(args.event.start);
             invalidateResources(args.event);
           },
           onEventDragEnd: function () {
