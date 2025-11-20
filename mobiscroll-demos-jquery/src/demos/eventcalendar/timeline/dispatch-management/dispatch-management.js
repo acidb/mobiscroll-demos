@@ -534,7 +534,7 @@ export default {
           drop: ['dyndatetime(y,m,d,12)', 'dyndatetime(y,m,d,17)'],
         },
         {
-          id: 1,
+          id: 2,
           from: '100 State St, Madison, WI',
           to: '300 S Wacker Dr, Chicago, IL',
           size: 22,
@@ -646,6 +646,8 @@ export default {
         now = new Date();
         today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
+        console.log(events);
+
         for (var i = 0; i < events.length; ++i) {
           var event = events[i];
           // Convert dates to date objects
@@ -669,6 +671,9 @@ export default {
             events.push(newEvent);
           }
         }
+
+        console.log(events);
+
         calendar.setOptions({
           min: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)), // This is not working
           invalid: [
@@ -1217,7 +1222,19 @@ export default {
 }
   
 .mds-dispatch-management-calendar .mds-actual-resource {
-  height: 18px;
+  height: 8px;
+}
+
+.mbsc-timeline-row:has(+ .mds-actual-resource) {
+  border-bottom: none;
+}
+
+.mds-actual-resource .mbsc-timeline-event {
+  height: 10px;
+}
+
+.mds-actual-resource .mbsc-timeline-event-background {
+  margin: 0;
 }
 
 .mds-dispatch-management-calendar .mbsc-timeline-parent {
