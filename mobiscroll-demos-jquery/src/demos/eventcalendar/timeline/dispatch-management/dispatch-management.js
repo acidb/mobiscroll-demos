@@ -1082,7 +1082,7 @@ export default {
       });
 
       setEventData();
-      setupDispatchJobs();
+      // setupDispatchJobs();
       refresh();
       setInterval(refresh, 60000);
     });
