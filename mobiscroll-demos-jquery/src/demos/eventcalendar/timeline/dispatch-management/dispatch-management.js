@@ -1081,10 +1081,10 @@ export default {
         handleZoom(zoomLevel - 1);
       });
 
-      setEventData();
+      // setEventData();
       // setupDispatchJobs();
-      refresh();
-      setInterval(refresh, 60000);
+      // refresh();
+      // setInterval(refresh, 60000);
     });
   },
   // eslint-disable-next-line es5/no-template-literals
