@@ -641,6 +641,7 @@ export default {
 
       function refresh() {
         var events = calendar.getEvents();
+        console.log(calendar, calendar.getEvents());
         now = new Date();
         today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
@@ -692,6 +693,7 @@ export default {
             title: event.from + ' → ' + event.to,
           });
         });
+        console.log(newEvents);
         calendar.setEvents(newEvents);
       }
 
