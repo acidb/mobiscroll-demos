@@ -674,19 +674,21 @@ export default {
 
         console.log(events);
 
-        calendar.setOptions({
-          min: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)), // This is not working
-          invalid: [
-            {
-              recurring: {
-                repeat: 'daily',
-                until: yesterday,
+        setTimeout(function () {
+          calendar.setOptions({
+            min: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)), // This is not working
+            invalid: [
+              {
+                recurring: {
+                  repeat: 'daily',
+                  until: yesterday,
+                },
+                start: today,
+                end: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)),
               },
-              start: today,
-              end: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)),
-            },
-          ],
-          data: events,
+            ],
+            data: events,
+          });
         });
       }
 
