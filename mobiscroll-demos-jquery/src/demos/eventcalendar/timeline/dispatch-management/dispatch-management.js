@@ -1128,7 +1128,7 @@ export default {
   markup: `
 <div class="mbsc-grid mbsc-no-padding mds-full-height">
   <div class="mbsc-row mds-full-height">
-    <div class="mbsc-col-sm-3 mds-full-height">
+    <div class="mbsc-col-sm-3 mds-full-height mds-dispatch-management-wrapper">
       <div class="mbsc-form-group-title">Transport jobs</div>
       <div id="dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
     </div>
@@ -1178,6 +1178,10 @@ export default {
 
 .mds-dispatch-management-calendar {
   border-left: 1px solid #ccc;
+}
+
+.mds-dispatch-management-wrapper {
+  overflow: auto;
 }
 
 .mds-dispatch-management-jobs {
