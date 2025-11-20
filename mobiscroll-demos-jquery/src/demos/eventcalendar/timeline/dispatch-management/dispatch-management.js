@@ -1189,7 +1189,7 @@ export default {
   border-radius: 8px;
   flex: 0 0 4.2em;
   font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-  font-size: 12x; 
+  font-size: 12px; 
 }
   
 .mds-dispatch-management-calendar .mbsc-timeline-resource-header {
