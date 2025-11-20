@@ -525,6 +525,89 @@ export default {
         },
       ];
 
+      var externalEvents = [
+        {
+          id: 1,
+          from: '1500 Market St, Philadelphia, PA',
+          to: '500 Wood St, Pittsburgh, PA',
+          size: 11,
+          pickup: ['dyndatetime(y,m,d,7)', 'dyndatetime(y,m,d,9)'],
+          drop: ['dyndatetime(y,m,d,13)', 'dyndatetime(y,m,d,15)'],
+        },
+        {
+          id: 2,
+          from: '200 Peachtree St NW, Atlanta, GA',
+          to: '1 Music Sq E, Nashville, TN',
+          size: 18,
+          pickup: ['dyndatetime(y,m,d,8)', 'dyndatetime(y,m,d,10)'],
+          drop: ['dyndatetime(y,m,d,14)', 'dyndatetime(y,m,d,16)'],
+        },
+        {
+          id: 3,
+          from: '400 S 4th St, Louisville, KY',
+          to: '1200 Main St, Cincinnati, OH',
+          size: 7,
+          pickup: ['dyndatetime(y,m,d,6)', 'dyndatetime(y,m,d,8)'],
+          drop: ['dyndatetime(y,m,d,12)', 'dyndatetime(y,m,d,14)'],
+        },
+        {
+          id: 4,
+          from: '999 3rd Ave, Seattle, WA',
+          to: '400 W 8th St, Vancouver, WA',
+          size: 3,
+          pickup: ['dyndatetime(y,m,d,9)', 'dyndatetime(y,m,d,11)'],
+          drop: ['dyndatetime(y,m,d,16)', 'dyndatetime(y,m,d,18)'],
+        },
+        {
+          id: 5,
+          from: '100 State St, Madison, WI',
+          to: '233 S Wacker Dr, Chicago, IL',
+          size: 22,
+          pickup: ['dyndatetime(y,m,d,5)', 'dyndatetime(y,m,d,7)'],
+          drop: ['dyndatetime(y,m,d,13)', 'dyndatetime(y,m,d,15)'],
+        },
+        {
+          id: 6,
+          from: '1100 Congress Ave, Austin, TX',
+          to: '300 E Main St, Dallas, TX',
+          size: 20,
+          pickup: ['dyndatetime(y,m,d,7)', 'dyndatetime(y,m,d,9)'],
+          drop: ['dyndatetime(y,m,d,15)', 'dyndatetime(y,m,d,17)'],
+        },
+        {
+          id: 7,
+          from: '1 E 1st St, Tulsa, OK',
+          to: '200 W Capitol Ave, Little Rock, AR',
+          size: 11.5,
+          pickup: ['dyndatetime(y,m,d,6.5)', 'dyndatetime(y,m,d,8.5)'],
+          drop: ['dyndatetime(y,m,d,13.5)', 'dyndatetime(y,m,d,15.5)'],
+        },
+        {
+          id: 8,
+          from: '50 S Main St, Salt Lake City, UT',
+          to: '200 N Broadway, Denver, CO',
+          size: 5,
+          pickup: ['dyndatetime(y,m,d,10)', 'dyndatetime(y,m,d,12)'],
+          drop: ['dyndatetime(y,m,d,17)', 'dyndatetime(y,m,d,19)'],
+        },
+        {
+          id: 9,
+          from: '2000 Q St, Sacramento, CA',
+          to: '400 Poydras St, New Orleans, LA',
+          size: 22.5,
+          pickup: ['dyndatetime(y,m,d,9)', 'dyndatetime(y,m,d,11)'],
+          drop: ['dyndatetime(y,m,d,16)', 'dyndatetime(y,m,d,18)'],
+        },
+        {
+          id: 10,
+          from: '500 Boylston St, Boston, MA',
+          to: '100 State St, Portland, ME',
+          size: 3.5,
+          pickup: ['dyndatetime(y,m,d,8.5)', 'dyndatetime(y,m,d,10.5)'],
+          drop: ['dyndatetime(y,m,d,15.5)', 'dyndatetime(y,m,d,17.5)'],
+        },
+      ];
+
       var $calendarElm = $('#demo-dispatch-management');
       var $popupElm = $('#demo-dispatch-management-filtering-popup');
       var $resourceList = $('#demo-dispatch-management-resource-list');
@@ -556,7 +639,7 @@ export default {
       }
 
       function refresh() {
-        var events = calendar.getEvents();
+        var events = calendar.getEvents().length > 0 ? calendar.getEvents() : myEvents;
         console.log(events);
         var now = new Date();
         var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -609,7 +692,31 @@ export default {
             title: event.from + ' → ' + event.to,
           });
         });
+        console.log(newEvents);
         calendar.setEvents(newEvents);
+      }
+
+      function setupDispatchJobs() {
+        var container = $('#demo-dispatch-management-events');
+
+        // Render and init in one pass
+        for (var i = 0; i < externalEvents.length; i++) {
+          var job = externalEvents[i];
+
+          // Create a plain div for the job
+          var $jobEl = $('<div></div>')
+            .attr('id', 'mds-dispatch-management-event-' + (i + 1))
+            .addClass('mds-dispatch-management-jobs')
+            .text(job.from + ' → ' + job.to);
+
+          // Append to container
+          container.append($jobEl);
+
+          // Initialize mobiscroll draggable on this element
+          $jobEl.mobiscroll().draggable({
+            dragData: job,
+          });
+        }
       }
 
       function filterResources() {
@@ -648,36 +755,31 @@ export default {
         });
       }
 
-      function invalidateResources(size) {
+      function invalidateResources(event) {
         var now = new Date();
         var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        // Filter resources to show only those with capacity >= size
-        var validResources = myResources
-          .map(function (resourceGroup) {
-            return {
-              id: resourceGroup.id,
-              name: resourceGroup.name,
-              eventCreation: resourceGroup.eventCreation,
-              children: resourceGroup.children.filter(function (resource) {
-                return resource.capacity >= size;
-              }),
-            };
-          })
-          .filter(function (resourceGroup) {
-            // Only keep groups that have valid children
-            return resourceGroup.children.length > 0;
-          });
+        var invalidIds = [];
 
-        // Update the calendar with filtered resources
+        for (var i = 0; i < myResources.length; i++) {
+          var res = myResources[i];
+          for (var j = 0; j < res.children.length; j++) {
+            var truck = res.children[j];
+            if (truck.capacity < event.size) {
+              truck.eventCreation = false;
+              invalidIds.push(truck.id);
+            }
+          }
+        }
+
         calendar.setOptions({
-          resources: validResources,
           invalid: [
-            { start: today, end: now },
             {
               recurring: {
                 repeat: 'daily',
+                from: today,
               },
-              resource: [71, 101],
+              resource: invalidIds,
+              cssClass: 'mds-dispatch-management-disabled-row mbsc-flex',
             },
           ],
         });
@@ -893,7 +995,7 @@ export default {
               resource.name +
               (resource.name && resource.plate ? '<span class="mds-dispatch-management-plate">' + resource.plate + '</span>' : '') +
               '</div>' +
-              (resource.eventCreation !== false
+              (!resource.isParent && resource.name
                 ? '<div class="mds-dispatch-management-status">' +
                   '<span class="mds-dispatch-management-status-dot" style="background-color:' +
                   (resource.status === 'operational' ? 'green' : 'orange') +
@@ -956,8 +1058,7 @@ export default {
             });
           },
           onEventDragStart: function (args) {
-            var size = args.event.size;
-            invalidateResources(size);
+            invalidateResources(args.event);
           },
           onEventDragEnd: function () {
             calendar.setOptions({
@@ -981,11 +1082,8 @@ export default {
       });
 
       setEventData();
-
-      setTimeout(function () {
-        refresh();
-      });
-
+      setupDispatchJobs();
+      refresh();
       setInterval(refresh, 60000);
     });
   },
@@ -995,59 +1093,7 @@ export default {
   <div class="mbsc-row mds-full-height">
     <div class="mbsc-col-sm-3 mds-full-height">
       <div class="mbsc-form-group-title">Transport jobs</div>
-      <div id="mds-event" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"> 
-
-        <div id="mds-dispatch-management-event-1" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":1,"start":"07:00","end":"15:00","from":"1500 Market St, Philadelphia, PA","to":"500 Wood St, Pittsburgh, PA","size":11}'>
-          <div>1500 Market St, Philadelphia, PA → 500 Wood St, Pittsburgh, PA</div>
-        </div>
-
-        <div id="mds-dispatch-management-event-2" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":2,"start":"08:00","end":"16:00","from":"200 Peachtree St NW, Atlanta, GA","to":"1 Music Sq E, Nashville, TN","size":18}'>
-          <div>200 Peachtree St NW, Atlanta, GA → 1 Music Sq E, Nashville, TN</div>
-        </div>
-
-        <div id="mds-dispatch-management-event-3" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":3,"start":"06:00","end":"14:00","from":"400 S 4th St, Louisville, KY","to":"1200 Main St, Cincinnati, OH","size":7}'>
-          <div>400 S 4th St, Louisville, KY → 1200 Main St, Cincinnati, OH</div>
-        </div>
-
-        <div id="mds-dispatch-management-event-4" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":4,"start":"09:00","end":"18:00","from":"999 3rd Ave, Seattle, WA","to":"400 W 8th St, Vancouver, WA","size":3}'>
-          <div>999 3rd Ave, Seattle, WA → 400 W 8th St, Vancouver, WA</div>
-        </div>
-
-        <div id="mds-dispatch-management-event-5" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":5,"start":"05:00","end":"15:00","from":"100 State St, Madison, WI","to":"233 S Wacker Dr, Chicago, IL","size":22}'>
-          <div>100 State St, Madison, WI → 233 S Wacker Dr, Chicago, IL</div>
-        </div>
-
-        <div id="mds-dispatch-management-event-6" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":6,"start":"07:00","end":"17:00","from":"1100 Congress Ave, Austin, TX","to":"300 E Main St, Dallas, TX","size":20}'>
-          <div>1100 Congress Ave, Austin, TX → 300 E Main St, Dallas, TX</div>
-        </div>
-
-        <div id="mds-dispatch-management-event-7" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":7,"start":"06:30","end":"15:30","from":"1 E 1st St, Tulsa, OK","to":"200 W Capitol Ave, Little Rock, AR","size":11.5}'>
-          <div>1 E 1st St, Tulsa, OK → 200 W Capitol Ave, Little Rock, AR</div>
-        </div>
-
-        <div id="mds-dispatch-management-event-8" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":8,"start":"10:00","end":"19:00","from":"50 S Main St, Salt Lake City, UT","to":"200 N Broadway, Denver, CO","size":5}'>
-          <div>50 S Main St, Salt Lake City, UT → 200 N Broadway, Denver, CO</div>
-        </div>
-
-        <div id="mds-dispatch-management-event-9" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":9,"start":"09:00","end":"18:00","from":"2000 Q St, Sacramento, CA","to":"400 Poydras St, New Orleans, LA","size":22.5}'>
-          <div>2000 Q St, Sacramento, CA → 400 Poydras St, New Orleans, LA</div>
-        </div>
-
-        <div id="mds-dispatch-management-event-10" class="mds-dispatch-management-jobs" mbsc-draggable
-          data-drag-data='{"id":10,"start":"08:30","end":"17:30","from":"500 Boylston St, Boston, MA","to":"100 State St, Portland, ME","size":3.5}'>
-          <div>500 Boylston St, Boston, MA → 100 State St, Portland, ME</div>
-        </div>
-
-      </div>
+      <div id="demo-dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
     </div>
     <div class="mbsc-col-sm-9 mds-dispatch-management-calendar mds-full-height">
       <div id="demo-dispatch-management"></div>
@@ -1222,6 +1268,10 @@ export default {
 
 .mds-actual-event {
   height: 20px;
+}
+
+.mds-dispatch-management-disabled-row.mbsc-schedule-invalid {
+    background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
 }
 
 `,
