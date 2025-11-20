@@ -640,11 +640,11 @@ export default {
       }
 
       function refresh() {
-        var events = calendar.getEvents();
-        console.log(calendar, calendar.getEvents());
+        var events = calendar.getEvents().length > 0 ? calendar.getEvents() : myEvents;
+        var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+
         now = new Date();
         today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
         for (var i = 0; i < events.length; ++i) {
           var event = events[i];
