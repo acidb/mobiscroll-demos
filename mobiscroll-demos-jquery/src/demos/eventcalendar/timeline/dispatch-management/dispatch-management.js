@@ -685,14 +685,13 @@ export default {
         });
       }
 
-      function getEventData() {
-        return myEvents.map(function (event) {
-          return $.extend({}, event, {
-            start: event.start ? event.start : event.pickup[0],
-            end: event.end ? event.end : event.drop[0],
-            title: event.from + ' → ' + event.to,
-          });
-        });
+      function setEventData() {
+        for (var i = 0; i < myEvents.length; i++) {
+          var event = myEvents[i];
+          event.start = event.start ? event.start : event.pickup[0];
+          event.end = event.end ? event.end : event.drop[0];
+          event.title = event.from + ' → ' + event.to;
+        }
       }
 
       function setupDispatchJobs() {
@@ -975,6 +974,8 @@ export default {
         });
       });
 
+      setEventData();
+
       var calendar = $calendarElm
         .mobiscroll()
         .eventcalendar({
@@ -1006,7 +1007,7 @@ export default {
               },
             },
           },
-          data: getEventData(),
+          data: myEvents,
           resources: filteredResources,
           renderHeader: function () {
             return (
