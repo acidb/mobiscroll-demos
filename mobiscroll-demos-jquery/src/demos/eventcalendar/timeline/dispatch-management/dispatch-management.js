@@ -527,46 +527,30 @@ export default {
       var externalEvents = [
         {
           id: 1,
-          from: '1500 Market St, Philadelphia, PA',
-          to: '600 Liberty St, Pittsburgh, PA',
-          size: 11,
-          pickup: ['dyndatetime(y,m,d,7)', 'dyndatetime(y,m,d,9)'],
-          drop: ['dyndatetime(y,m,d,10)', 'dyndatetime(y,m,d,14)'],
+          from: '2000 Q St, Sacramento, CA',
+          to: '500 Poydras St, New Orleans, LA',
+          size: 9,
+          pickup: ['dyndatetime(y,m,d,9)', 'dyndatetime(y,m,d,11)'],
+          drop: ['dyndatetime(y,m,d,12)', 'dyndatetime(y,m,d,17)'],
         },
         {
-          id: 2,
-          from: '200 Peachtree St NW, Atlanta, GA',
-          to: '50 Music Sq E, Nashville, TN',
-          size: 18,
-          pickup: ['dyndatetime(y,m,d+1,8)', 'dyndatetime(y,m,d+1,10)'],
-          drop: ['dyndatetime(y,m,d+1,12)', 'dyndatetime(y,m,d+1,16)'],
-        },
-        {
-          id: 3,
-          from: '400 S 4th St, Louisville, KY',
-          to: '1400 Main St, Cincinnati, OH',
-          size: 7,
-          pickup: ['dyndatetime(y,m,d+2,6)', 'dyndatetime(y,m,d+2,8)'],
-          drop: ['dyndatetime(y,m,d+2,9)', 'dyndatetime(y,m,d+2,12)'],
-        },
-        {
-          id: 4,
-          from: '999 3rd Ave, Seattle, WA',
-          to: '500 W 8th St, Vancouver, WA',
-          size: 3,
-          pickup: ['dyndatetime(y,m,d+3,9)', 'dyndatetime(y,m,d+3,11)'],
-          drop: ['dyndatetime(y,m,d+3,12)', 'dyndatetime(y,m,d+3,17)'],
-        },
-        {
-          id: 5,
+          id: 1,
           from: '100 State St, Madison, WI',
           to: '300 S Wacker Dr, Chicago, IL',
           size: 22,
-          pickup: ['dyndatetime(y,m,d,5)', 'dyndatetime(y,m,d,7)'],
-          drop: ['dyndatetime(y,m,d,8)', 'dyndatetime(y,m,d,13)'],
+          pickup: ['dyndatetime(y,m,d,13)', 'dyndatetime(y,m,d,15)'],
+          drop: ['dyndatetime(y,m,d,16)', 'dyndatetime(y,m,d,21)'],
         },
         {
-          id: 6,
+          id: 3,
+          from: '1500 Market St, Philadelphia, PA',
+          to: '600 Liberty St, Pittsburgh, PA',
+          size: 13,
+          pickup: ['dyndatetime(y,m,d,10)', 'dyndatetime(y,m,d,12)'],
+          drop: ['dyndatetime(y,m,d,13)', 'dyndatetime(y,m,d,17)'],
+        },
+        {
+          id: 4,
           from: '1100 Congress Ave, Austin, TX',
           to: '500 E Main St, Dallas, TX',
           size: 20,
@@ -574,7 +558,31 @@ export default {
           drop: ['dyndatetime(y,m,d+1,10)', 'dyndatetime(y,m,d+1,15)'],
         },
         {
+          id: 5,
+          from: '200 Peachtree St NW, Atlanta, GA',
+          to: '50 Music Sq E, Nashville, TN',
+          size: 8,
+          pickup: ['dyndatetime(y,m,d+1,8)', 'dyndatetime(y,m,d+1,10)'],
+          drop: ['dyndatetime(y,m,d+1,12)', 'dyndatetime(y,m,d+1,16)'],
+        },
+        {
+          id: 6,
+          from: '500 Boylston St, Boston, MA',
+          to: '200 State St, Portland, ME',
+          size: 3.5,
+          pickup: ['dyndatetime(y,m,d+1,8,30)', 'dyndatetime(y,m,d+1,10,30)'],
+          drop: ['dyndatetime(y,m,d+1,12,30)', 'dyndatetime(y,m,d+1,18,30)'],
+        },
+        {
           id: 7,
+          from: '400 S 4th St, Louisville, KY',
+          to: '1400 Main St, Cincinnati, OH',
+          size: 7,
+          pickup: ['dyndatetime(y,m,d+2,6)', 'dyndatetime(y,m,d+2,8)'],
+          drop: ['dyndatetime(y,m,d+2,9)', 'dyndatetime(y,m,d+2,12)'],
+        },
+        {
+          id: 8,
           from: '1 E 1st St, Tulsa, OK',
           to: '250 W Capitol Ave, Little Rock, AR',
           size: 11.5,
@@ -582,28 +590,20 @@ export default {
           drop: ['dyndatetime(y,m,d+2,10,30)', 'dyndatetime(y,m,d+2,15,30)'],
         },
         {
-          id: 8,
+          id: 9,
+          from: '999 3rd Ave, Seattle, WA',
+          to: '500 W 8th St, Vancouver, WA',
+          size: 3,
+          pickup: ['dyndatetime(y,m,d+3,9)', 'dyndatetime(y,m,d+3,11)'],
+          drop: ['dyndatetime(y,m,d+3,12)', 'dyndatetime(y,m,d+3,17)'],
+        },
+        {
+          id: 10,
           from: '50 S Main St, Salt Lake City, UT',
           to: '300 N Broadway, Denver, CO',
           size: 5,
           pickup: ['dyndatetime(y,m,d+3,10)', 'dyndatetime(y,m,d+3,12)'],
           drop: ['dyndatetime(y,m,d+3,13)', 'dyndatetime(y,m,d+3,18)'],
-        },
-        {
-          id: 9,
-          from: '2000 Q St, Sacramento, CA',
-          to: '500 Poydras St, New Orleans, LA',
-          size: 22.5,
-          pickup: ['dyndatetime(y,m,d,9)', 'dyndatetime(y,m,d,11)'],
-          drop: ['dyndatetime(y,m,d,12)', 'dyndatetime(y,m,d,17)'],
-        },
-        {
-          id: 10,
-          from: '500 Boylston St, Boston, MA',
-          to: '200 State St, Portland, ME',
-          size: 3.5,
-          pickup: ['dyndatetime(y,m,d+1,8,30)', 'dyndatetime(y,m,d+1,10,30)'],
-          drop: ['dyndatetime(y,m,d+1,12,30)', 'dyndatetime(y,m,d+1,18,30)'],
         },
       ];
 
@@ -1204,7 +1204,7 @@ export default {
 }
 
 .mds-dispatch-management-calendar .mbsc-timeline-resource-col {
-  width: 350px;
+  width: 300px;
 }
 
 .mds-dispatch-management-calendar .mbsc-timeline-resource-title {
