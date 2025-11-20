@@ -6,8 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light',
+      // theme
     });
 
     $(function () {
@@ -792,20 +791,19 @@ export default {
       }
 
       function findFirstAvailableSlot(resource, date, duration) {
-        // Filter events for this resource on this day
-        var dayEvents = calendar.getEvents().filter(function (ev) {
-          return ev.resource === resource && (isSameDay(ev.start, date) || isSameDay(ev.end, date));
-        });
-
         var now = new Date();
         var pointer = new Date(date);
 
-        // Set pointer: current time if today, else start of day
-        if (isSameDay(pointer, now)) {
-          pointer.setHours(now.getHours(), now.getMinutes(), 0, 0);
-        } else {
-          pointer.setHours(0, 0, 0, 0);
+        // Ensure pointer is at least 2 hours from now
+        var minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+        if (pointer < minStart) {
+          pointer = minStart;
         }
+
+        // Filter events for this resource on this day
+        var dayEvents = calendar.getEvents().filter(function (ev) {
+          return ev.resource === resource && (isSameDay(ev.start, pointer) || isSameDay(ev.end, pointer));
+        });
 
         // If no events, whole day from pointer is free
         if (dayEvents.length === 0) {
@@ -825,6 +823,11 @@ export default {
 
             // Move pointer to the later of current pointer or event end
             pointer = dayEvents[i].end > pointer ? dayEvents[i].end : pointer;
+
+            // Also enforce 2-hour minimum from now
+            if (pointer < minStart) {
+              pointer = minStart;
+            }
           } else {
             // After the last event
             return { start: new Date(pointer), end: new Date(pointer.getTime() + duration) };
@@ -1081,10 +1084,10 @@ export default {
         handleZoom(zoomLevel - 1);
       });
 
-      // setEventData();
-      // setupDispatchJobs();
-      // refresh();
-      // setInterval(refresh, 60000);
+      setEventData();
+      setupDispatchJobs();
+      refresh();
+      setInterval(refresh, 60000);
     });
   },
   // eslint-disable-next-line es5/no-template-literals
@@ -1273,6 +1276,5 @@ export default {
 .mds-dispatch-management-disabled-row.mbsc-schedule-invalid {
     background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
 }
-
 `,
 };
