@@ -81,8 +81,8 @@ export default {
           from: '250 King St, Greensboro, NC',
           to: '200 Hay St, Fayetteville, NC',
           size: 6.5,
-          pickup: ['dyndatetime(y,m,d+5,8)', 'dyndatetime(y,m,d+5,10)'],
-          drop: ['dyndatetime(y,m,d+5,13)', 'dyndatetime(y,m,d+5,15)'],
+          pickup: ['dyndatetime(y,m,d,13)', 'dyndatetime(y,m,d,15)'],
+          drop: ['dyndatetime(y,m,d,18)', 'dyndatetime(y,m,d,20)'],
           status: 'scheduled',
         },
         // Resource 7–9 (size <=12)
@@ -174,8 +174,8 @@ export default {
           from: '300 Main St, Houston, TX',
           to: '120 W Capitol Ave, Little Rock, AR',
           size: 24,
-          pickup: ['dyndatetime(y,m,d+2,6)', 'dyndatetime(y,m,d+2,9)'],
-          drop: ['dyndatetime(y,m,d+2,14)', 'dyndatetime(y,m,d+2,18)'],
+          pickup: ['dyndatetime(y,m,d+2,10)', 'dyndatetime(y,m,d+2,13)'],
+          drop: ['dyndatetime(y,m,d+2,18)', 'dyndatetime(y,m,d+2,22)'],
           status: 'scheduled',
         },
         {
@@ -201,8 +201,8 @@ export default {
           from: '200 Market St, Philadelphia, PA',
           to: '400 Washington Ave, Minneapolis, MN',
           size: 23,
-          pickup: ['dyndatetime(y,m,d+3,7)', 'dyndatetime(y,m,d+3,10)'],
-          drop: ['dyndatetime(y,m,d+3,14)', 'dyndatetime(y,m,d+3,17)'],
+          pickup: ['dyndatetime(y,m,d+3,13)', 'dyndatetime(y,m,d+3,16)'],
+          drop: ['dyndatetime(y,m,d+3,20)', 'dyndatetime(y,m,d+3,23)'],
           status: 'scheduled',
         },
         {
