@@ -7,6 +7,8 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -647,7 +649,6 @@ export default {
         var minTime = new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000));
 
         now = new Date();
-        today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
         for (var i = 0; i < events.length; ++i) {
           var event = events[i];
@@ -766,10 +767,9 @@ export default {
       }
 
       function invalidateResources(event) {
-        var now = new Date();
+        now = new Date();
         var minTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
         var sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
         var invalidIds = [];
 
@@ -844,7 +844,7 @@ export default {
       }
 
       function findFirstSlot(draggedEvent) {
-        var now = new Date();
+        now = new Date();
         var minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000);
         var windowStart = new Date(draggedEvent.pickup[0]);
         var windowEnd = new Date(draggedEvent.drop[1]);
@@ -887,12 +887,13 @@ export default {
           draggedEvent.start = slot.start;
           draggedEvent.end = slot.end;
 
+          success = true;
+
           if (isEdit) {
             calendar.updateEvent(draggedEvent);
           } else {
             calendar.addEvent(draggedEvent);
           }
-          success = true;
         } else {
           success = false;
         }
@@ -1121,6 +1122,7 @@ export default {
           onEventUpdateFailed: function (args) {
             var draggedEvent = args.event;
             moveToFirstAvailableSlot(draggedEvent, true);
+            calendar.navigate(draggedEvent.start);
             if (success) {
               mobiscroll.toast({
                 //<hidden>
@@ -1144,15 +1146,27 @@ export default {
             }
             invalidateResources(args.event);
           },
-          onEventDragEnd: function (args) {
+          onEventDragEnd: function () {
+            console.log('success:', success);
             resetEventCreationFlags();
-            myInvalids = [];
+            now = new Date();
+            var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+            var minTime = new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000));
+            console.log(minTime);
             calendar.setOptions({
               resources: myResources,
-              invalid: myInvalids,
-              min: null,
+              invalid: [
+                {
+                  recurring: {
+                    repeat: 'daily',
+                    until: yesterday,
+                  },
+                  start: today,
+                  end: minTime,
+                },
+              ],
+              min: minTime,
             });
-            calendar.navigate(args.event.start);
           },
         })
         .mobiscroll('getInst');
@@ -1287,6 +1301,14 @@ export default {
   background: #8eb4d4;
 }
 
+.mds-dispatch-management-calendar .mbsc-timeline-parent .mbsc-timeline-invalid {
+  display: none;
+}
+
+.mds-dispatch-management-calendar .mbsc-timeline-parent .mbsc-timeline-column {
+  border: 0;
+}
+
 .mds-dispatch-management-calendar .mbsc-timeline-row-gutter {
   height: 6px;
 }
@@ -1379,19 +1401,19 @@ export default {
 }
 
 .mds-pulse:not(.mbsc-schedule-event-hover) .mbsc-schedule-event-inner {
-  transform: scale(1);
+  box-shadow: 0 0 0 rgba(108, 130, 145, 0.4);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
   0% {
-    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(108, 130, 145, 0.4);
   }
   70% {
-    transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(204,169,44, 0);
   }
   100% {
-    transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
   }
 }
 
