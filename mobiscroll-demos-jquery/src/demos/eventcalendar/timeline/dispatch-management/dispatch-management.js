@@ -664,16 +664,17 @@ export default {
               size: event.size,
               start: actualDates[0],
               end: actualDates[1],
+              title: event.from + ' → ' + event.to,
               status: 'actual',
               cssClass: 'mds-actual-event',
+              editable: false,
             };
 
             event.actual = true;
+            event.cssClass = 'mds-pulse';
             events.push(newEvent);
           }
         }
-
-        console.log('refresh');
 
         setTimeout(function () {
           calendar.setOptions({
@@ -783,6 +784,7 @@ export default {
 
             // Capacity check
             if (truck.capacity < event.size) {
+              console.log('setting invalid due to capacity', truck.name);
               truck.eventCreation = false;
               invalidIds.push(truck.id);
             }
@@ -798,11 +800,12 @@ export default {
 
             // If truck has an overlap and the event is not already assigned to this truck
             if (overlappingEvent && event.resource !== truck.id) {
+              console.log('setting invalid due to overlap', truck.name);
               truck.eventCreation = false;
               invalidIds.push(truck.id);
+              invalidIds.push(truck.id + '-actual');
             }
           }
-          // invalidIds.push(group.id);
         }
 
         myInvalids = [
@@ -814,7 +817,7 @@ export default {
             start: today,
             end: sevenDaysFromNow,
             resource: invalidIds,
-            cssClass: 'mds-dispatch-management-disabled-row mbsc-flex',
+            // cssClass: 'mds-dispatch-management-disabled-row mbsc-flex',
           },
           {
             start: windowEnd,
@@ -1135,16 +1138,21 @@ export default {
             }
           },
           onEventDragStart: function (args) {
-            calendar.navigate(args.event.start);
+            // Only navitate if drag is from external list
+            if (!args.event.resource) {
+              calendar.navigate(args.event.start);
+            }
             invalidateResources(args.event);
           },
-          onEventDragEnd: function () {
+          onEventDragEnd: function (args) {
             resetEventCreationFlags();
             myInvalids = [];
             calendar.setOptions({
               resources: myResources,
               invalid: myInvalids,
+              min: null,
             });
+            calendar.navigate(args.event.start);
           },
         })
         .mobiscroll('getInst');
@@ -1368,6 +1376,23 @@ export default {
 
 .mds-dispatch-management-disabled-row.mbsc-schedule-invalid {
   background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
+}
+
+.mds-pulse:not(.mbsc-schedule-event-hover) .mbsc-schedule-event-inner {
+  transform: scale(1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+  }
+  70% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.95);
+  }
 }
 
 /* move this to website css with updated unique name */
