@@ -619,6 +619,7 @@ export default {
       var now = new Date();
       var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       var success;
+      var myInvalids = [];
 
       function getActualDates(start, end) {
         var duration = end.getTime() - start.getTime(); // Get duration in milliseconds
@@ -643,6 +644,7 @@ export default {
       function refresh() {
         var events = calendar.getEvents().length > 0 ? calendar.getEvents() : myEvents;
         var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+        var minTime = new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000));
 
         now = new Date();
         today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -671,19 +673,21 @@ export default {
           }
         }
 
+        console.log('refresh');
+
         setTimeout(function () {
           calendar.setOptions({
-            min: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)), // This is not working
-            invalid: [
+            min: minTime, // Dynamic min is not working
+            invalid: $.merge(myInvalids, [
               {
                 recurring: {
                   repeat: 'daily',
                   until: yesterday,
                 },
                 start: today,
-                end: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)),
+                end: minTime,
               },
-            ],
+            ]),
             data: events,
           });
         });
@@ -762,19 +766,20 @@ export default {
 
       function invalidateResources(event) {
         var now = new Date();
-        var twoHoursFromNow = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+        var minTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
         var sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
         var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
         var invalidIds = [];
 
-        // Calculate event window
-        var eventStart = new Date(event.pickup[0]);
-        var eventEnd = new Date(event.drop[1]);
+        var windowStart = new Date(event.pickup[0]);
+        var windowEnd = new Date(event.drop[1]);
 
         for (var i = 0; i < myResources.length; i++) {
-          var res = myResources[i];
-          for (var j = 0; j < res.children.length; j++) {
-            var truck = res.children[j];
+          var group = myResources[i];
+
+          for (var j = 0; j < group.children.length; j++) {
+            var truck = group.children[j];
 
             // Capacity check
             if (truck.capacity < event.size) {
@@ -782,150 +787,99 @@ export default {
               invalidIds.push(truck.id);
             }
 
-            // Overlap check
             var truckEvents = calendar.getEvents().filter(function (ev) {
               return ev.resource === truck.id;
             });
 
+            // Overlap check
             var overlappingEvent = truckEvents.find(function (ev) {
-              var evStart = new Date(ev.start);
-              var evEnd = new Date(ev.end);
-              return evEnd > eventStart && evStart < eventEnd;
+              return ev.end > windowStart && ev.start < windowEnd;
             });
 
+            // If truck has an overlap and the event is not already assigned to this truck
             if (overlappingEvent && event.resource !== truck.id) {
               truck.eventCreation = false;
               invalidIds.push(truck.id);
             }
           }
+          // invalidIds.push(group.id);
         }
+
+        myInvalids = [
+          {
+            start: today,
+            end: windowStart < minTime ? minTime : windowStart,
+          },
+          {
+            start: today,
+            end: sevenDaysFromNow,
+            resource: invalidIds,
+            cssClass: 'mds-dispatch-management-disabled-row mbsc-flex',
+          },
+          {
+            start: windowEnd,
+            end: sevenDaysFromNow,
+          },
+        ];
 
         calendar.setOptions({
-          invalid: [
-            {
-              start: today,
-              end: eventStart < twoHoursFromNow ? twoHoursFromNow : eventStart,
-            },
-            {
-              start: today,
-              end: sevenDaysFromNow,
-              resource: invalidIds,
-              cssClass: 'mds-dispatch-management-disabled-row mbsc-flex',
-            },
-            {
-              start: eventEnd,
-              end: sevenDaysFromNow,
-            },
-          ],
+          invalid: myInvalids,
         });
       }
 
-      // Check if two time ranges overlap
-      function overlaps(start, end, evStart, evEnd) {
-        return end > evStart && start < evEnd;
-      }
+      function resetEventCreationFlags() {
+        for (var i = 0; i < myResources.length; i++) {
+          var group = myResources[i];
 
-      // Find the first available time slot for a dragged event
-      function firstAvailableSlot(draggedEvent, duration, invalidRange) {
-        var now = new Date();
-        var minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000); // Minimum start time: 2 hours from now
-        var pointer = new Date(draggedEvent.start); // Start scanning from event start
-        var resource = draggedEvent.resource;
-        var draggedEventId = draggedEvent.id;
-
-        // Ensure pointer is not earlier than minimum start time
-        if (pointer < minStart) pointer = minStart;
-
-        // Parse invalid range if provided
-        var invalidStart = invalidRange ? new Date(invalidRange.start) : null;
-        var invalidEnd = invalidRange ? new Date(invalidRange.end) : null;
-
-        // Get all events for this resource
-        var allEvents = calendar.getEvents().filter(function (ev) {
-          return ev.resource === resource;
-        });
-
-        // Loop through each gap between events (and after the last event)
-        for (var i = 0; i <= allEvents.length; i++) {
-          var gapStart = new Date(pointer); // Start of the current gap
-          var gapEnd = i < allEvents.length ? new Date(allEvents[i].start) : null; // End of gap (next event start)
-
-          var candidateStart = new Date(gapStart); // Tentative start for the dragged event
-          var candidateEnd = new Date(candidateStart.getTime() + duration); // Tentative end
-          var fits = !gapEnd || candidateEnd <= gapEnd; // Does it fit in the current gap?
-
-          // --- Snap around invalid range if overlapping ---
-          if (fits && invalidStart && invalidEnd && overlaps(candidateStart, candidateEnd, invalidStart, invalidEnd)) {
-            // If candidate is after the invalid, try to place it before
-            if (candidateStart >= invalidEnd) {
-              candidateEnd = new Date(invalidStart);
-              candidateStart = new Date(candidateEnd.getTime() - duration);
+          for (var j = 0; j < group.children.length; j++) {
+            var truck = group.children[j];
+            if (!String(truck.id).includes('actual')) {
+              truck.eventCreation = true;
             }
-            // If candidate is before the invalid, try to place it after
-            else if (candidateEnd <= invalidStart) {
-              candidateStart = new Date(invalidEnd);
-              candidateEnd = new Date(candidateStart.getTime() + duration);
-            }
-            // Candidate overlaps invalid: choose nearest valid side
-            else {
-              var distBefore = candidateStart - invalidStart;
-              var distAfter = invalidEnd - candidateEnd;
-              if (distAfter < distBefore) {
-                candidateStart = new Date(invalidEnd);
-                candidateEnd = new Date(candidateStart.getTime() + duration);
-              } else {
-                candidateEnd = new Date(invalidStart);
-                candidateStart = new Date(candidateEnd.getTime() - duration);
-              }
-            }
-
-            // Ensure snapped candidate still fits within the gap
-            if (gapEnd && (candidateStart < gapStart || candidateEnd > gapEnd)) {
-              fits = false;
-            }
-          }
-
-          // --- Check overlaps with other events ---
-          if (fits) {
-            var overlapsOther = false;
-
-            for (var j = 0; j < allEvents.length; j++) {
-              // Skip the dragged event itself by ID
-              if (!(draggedEventId != null && allEvents[j].id === draggedEventId)) {
-                var evStart = new Date(allEvents[j].start);
-                var evEnd = new Date(allEvents[j].end);
-                if (overlaps(candidateStart, candidateEnd, evStart, evEnd)) {
-                  overlapsOther = true;
-                  break;
-                }
-              }
-            }
-
-            if (overlapsOther) {
-              fits = false;
-            }
-          }
-
-          // If candidate fits all constraints, return it
-          if (fits) {
-            return { start: candidateStart, end: candidateEnd };
-          }
-
-          // Move pointer to end of current event to check next gap
-          if (i < allEvents.length) {
-            pointer = new Date(allEvents[i].end);
-            if (pointer < minStart) pointer = minStart;
           }
         }
-
-        // No suitable slot found
-        return null;
       }
 
-      function moveToFirstAvailableSlot(draggedEvent, invalid, isEdit) {
-        var duration = draggedEvent.end - draggedEvent.start;
-        var slot = firstAvailableSlot(draggedEvent, duration, invalid);
+      function findFirstSlot(draggedEvent) {
+        var now = new Date();
+        var minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+        var windowStart = new Date(draggedEvent.pickup[0]);
+        var windowEnd = new Date(draggedEvent.drop[1]);
+        var eventStart = new Date(draggedEvent.start);
+        var eventEnd = new Date(draggedEvent.end);
 
+        // Window start cannot be earlier than two hours from now
+        var effectiveWindowStart = windowStart < minStart ? minStart : windowStart;
+
+        var eventDuration = eventEnd - eventStart;
+        var windowSize = windowEnd - effectiveWindowStart;
+
+        // Event is bigger than window -> cannot place
+        if (eventDuration > windowSize) {
+          return null;
+        }
+
+        // Event starts before window -> push forward
+        if (eventStart < effectiveWindowStart) {
+          eventStart = new Date(effectiveWindowStart);
+          eventEnd = new Date(effectiveWindowStart.getTime() + eventDuration);
+        }
+
+        // Event ends after window -> push backward
+        if (eventEnd > windowEnd) {
+          eventEnd = new Date(windowEnd);
+          eventStart = new Date(windowEnd.getTime() - eventDuration);
+        }
+
+        // Return first available slot
+        return {
+          start: eventStart,
+          end: eventEnd,
+        };
+      }
+
+      function moveToFirstAvailableSlot(draggedEvent, isEdit) {
+        var slot = findFirstSlot(draggedEvent);
         if (slot) {
           draggedEvent.start = slot.start;
           draggedEvent.end = slot.end;
@@ -1141,12 +1095,14 @@ export default {
           },
           onEventCreateFailed: function (args) {
             var draggedEvent = args.event;
-            moveToFirstAvailableSlot(draggedEvent, args.invalid, false);
+            moveToFirstAvailableSlot(draggedEvent, false);
             if (success) {
               if (args.action === 'externalDrop') {
                 $('#mds-dispatch-management-event-' + args.event.id).remove();
               }
               mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
                 // context,
                 message: draggedEvent.from + ' → ' + draggedEvent.to + ' added to first available slot',
               });
@@ -1161,9 +1117,11 @@ export default {
           },
           onEventUpdateFailed: function (args) {
             var draggedEvent = args.event;
-            moveToFirstAvailableSlot(draggedEvent, args.invalid, true);
+            moveToFirstAvailableSlot(draggedEvent, true);
             if (success) {
               mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
                 // context,
                 message: draggedEvent.from + ' → ' + draggedEvent.to + ' moved to first available slot',
               });
@@ -1181,9 +1139,11 @@ export default {
             invalidateResources(args.event);
           },
           onEventDragEnd: function () {
+            resetEventCreationFlags();
+            myInvalids = [];
             calendar.setOptions({
               resources: myResources,
-              invalid: [],
+              invalid: myInvalids,
             });
           },
         })
@@ -1294,7 +1254,7 @@ export default {
   box-sizing: border-box;
 }
 
-.mds-dispatch-management-calendar .mbsc-timeline-row:not(.mds-actual-resource) {
+.mds-dispatch-management-calendar .mbsc-timeline-row:not(.mds-actual-resource):not(.mbsc-timeline-parent) {
   height: 58px;
 }
   
@@ -1316,6 +1276,7 @@ export default {
 
 .mds-dispatch-management-calendar .mbsc-timeline-parent {
   height: 34px;
+  background: #8eb4d4;
 }
 
 .mds-dispatch-management-calendar .mbsc-timeline-row-gutter {
@@ -1406,7 +1367,7 @@ export default {
 }
 
 .mds-dispatch-management-disabled-row.mbsc-schedule-invalid {
-    background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
+  background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
 }
 
 /* move this to website css with updated unique name */
