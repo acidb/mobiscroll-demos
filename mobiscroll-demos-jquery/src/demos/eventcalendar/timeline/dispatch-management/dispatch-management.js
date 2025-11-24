@@ -1403,6 +1403,10 @@ export default {
   animation: pulse 2s infinite;
 }
 
+.mds-dispatch-management-calendar .mbsc-schedule-event-inner {
+  margin: 0;
+}
+
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(108, 130, 145, 0.4);
