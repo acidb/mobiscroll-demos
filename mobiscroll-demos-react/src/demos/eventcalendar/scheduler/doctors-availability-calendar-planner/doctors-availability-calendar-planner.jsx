@@ -776,10 +776,9 @@ function App() {
         type: 'week',
         startDay: 1,
         endDay: 5,
-        startTime: '08:00',
-        endTime: '18:00',
-        timeCellStep: 20,
-        timeLabelStep: 20,
+        startTime: '01:00',
+        endTime: '24:00',
+        // timeCellStep: 20,
         allDay: false,
       },
     }),
@@ -837,12 +836,15 @@ function App() {
         // drag
         cssClass="mds-healthcare"
         data={myEvents}
-        dragTimeStep={20}
+        dragTimeStep={480}
         eventOverlap={false}
         groupBy="date"
-        invalid={myInvalids}
+        // invalid={myInvalids}
         resources={myResources}
         view={myView}
+        dragToCreate={true}
+        dragToMove={true}
+        dragToResize={true}
         renderScheduleEventContent={customScheduleEventContent}
         renderResource={customResource}
         onEventCreated={handleEventCreated}
