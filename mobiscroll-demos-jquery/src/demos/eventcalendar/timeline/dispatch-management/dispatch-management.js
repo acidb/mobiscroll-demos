@@ -641,13 +641,7 @@ export default {
         return [actualStart, actualEnd];
       }
 
-      function refresh() {
-        var events = calendar.getEvents().length > 0 ? calendar.getEvents() : myEvents;
-        var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
-        var minTime = new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000));
-
-        now = new Date();
-
+      function addActualEvents(events) {
         for (var i = 0; i < events.length; ++i) {
           var event = events[i];
           // Convert dates to date objects
@@ -674,20 +668,19 @@ export default {
             events.push(newEvent);
           }
         }
+      }
 
+      function refresh() {
+        var events = calendar.getEvents();
+        var minTime = new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000));
+
+        now = new Date();
+
+        addActualEvents(events);
         setTimeout(function () {
           calendar.setOptions({
-            min: minTime, // Dynamic min is not working
-            invalid: $.merge(myInvalids, [
-              {
-                recurring: {
-                  repeat: 'daily',
-                  until: yesterday,
-                },
-                start: today,
-                end: minTime,
-              },
-            ]),
+            min: minTime, // Dynamic min is not working, only if invalids changed as well
+            invalid: $.merge([], myInvalids),
             data: events,
           });
         });
@@ -994,6 +987,7 @@ export default {
       });
 
       setEventData(myEvents);
+      addActualEvents(myEvents);
 
       var calendar = $calendarElm
         .mobiscroll()
@@ -1007,6 +1001,7 @@ export default {
           eventOverlap: false,
           cssClass: 'mds-dispatch-management-calendar',
           zoomLevel: zoomLevel,
+          min: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)),
           view: {
             timeline: {
               type: 'day',
@@ -1148,21 +1143,12 @@ export default {
             console.log('success:', success);
             resetEventCreationFlags();
             now = new Date();
-            var yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
             var minTime = new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000));
             console.log(minTime);
+            myInvalids = [];
             calendar.setOptions({
               resources: myResources,
-              invalid: [
-                {
-                  recurring: {
-                    repeat: 'daily',
-                    until: yesterday,
-                  },
-                  start: today,
-                  end: minTime,
-                },
-              ],
+              invalid: myInvalids,
               min: minTime,
             });
           },
@@ -1182,7 +1168,6 @@ export default {
       });
 
       setupDispatchJobs();
-      refresh();
       setInterval(refresh, 60000);
     });
   },
