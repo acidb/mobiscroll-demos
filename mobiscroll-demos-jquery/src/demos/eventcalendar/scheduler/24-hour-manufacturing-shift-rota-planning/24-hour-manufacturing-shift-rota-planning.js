@@ -13,6 +13,7 @@ export default {
       $('#demo-24-hour-manufacturing-shift-rota-planning')
         .mobiscroll()
         .eventcalendar({
+          cssClass: 'mds-24-hour-manufacturing-calendar',
           data: [
             { resource: 'A', title: 'Shift 1', start: 'dyndatetime(y,m,d-6,6)', end: 'dyndatetime(y,m,d-6,14)' },
             { resource: 'B', title: 'Shift 2', start: 'dyndatetime(y,m,d-6,14)', end: 'dyndatetime(y,m,d-6,22)' },
@@ -88,11 +89,11 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-24-hour-manufacturing-shift-rota-planning" class="md-24-hour-manufacturing-shift-rota-planning"></div>
+<div id="demo-24-hour-manufacturing-shift-rota-planning"></div>
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-24-hour-manufacturing-shift-rota-planning .mbsc-schedule-day-limit {
+.mds-24-hour-manufacturing-calendar .mbsc-schedule-day-limit {
   border-top-color: #d38231;
   border-top-style: dashed;
 }

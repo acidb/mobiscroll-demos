@@ -51,6 +51,7 @@ export default {
       $('#demo-36-hour-rolling-window-aircraft-view')
         .mobiscroll()
         .eventcalendar({
+          cssClass: 'mds-36-hour-rolling-calendar',
           data: [
             {
               resource: '1-1',
@@ -900,15 +901,15 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-36-hour-rolling-window-aircraft-view"  class="md-36-hour-rolling-window-aircraft-view"></div>
+<div id="demo-36-hour-rolling-window-aircraft-view"  class="mds-36-hour-rolling-window-aircraft-view"></div>
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-36-hour-rolling-window-aircraft-view .mbsc-timeline-parent { 
+.mds-36-hour-rolling-window-aircraft-view .mbsc-timeline-parent { 
   height: 32px; 
 }
 
-.md-36-hour-rolling-window-aircraft-view .mbsc-timeline-day-limit {
+.mds-36-hour-rolling-calendar .mbsc-timeline-day-limit {
   border-left-color: #d38231;
   border-left-style: dashed;
   border-left-width: 1px;
