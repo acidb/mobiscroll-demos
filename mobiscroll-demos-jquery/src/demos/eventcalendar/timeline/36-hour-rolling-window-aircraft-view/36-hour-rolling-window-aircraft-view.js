@@ -904,8 +904,14 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-  .md-36-hour-rolling-window-aircraft-view .mbsc-timeline-parent { 
-    height: 32px; 
-  }
+.md-36-hour-rolling-window-aircraft-view .mbsc-timeline-parent { 
+  height: 32px; 
+}
+
+.md-36-hour-rolling-window-aircraft-view .mbsc-timeline-day-limit {
+  border-left-color: #d38231;
+  border-left-style: dashed;
+  border-left-width: 1px;
+}
   `,
 };

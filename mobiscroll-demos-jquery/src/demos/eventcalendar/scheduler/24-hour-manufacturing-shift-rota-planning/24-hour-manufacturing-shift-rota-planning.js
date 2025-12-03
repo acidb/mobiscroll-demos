@@ -20,6 +20,7 @@ export default {
             { resource: 'A', title: 'Shift 4', start: 'dyndatetime(y,m,d-5,6)', end: 'dyndatetime(y,m,d-5,14)' },
             { resource: 'B', title: 'Shift 5', start: 'dyndatetime(y,m,d-5,14)', end: 'dyndatetime(y,m,d-5,22)' },
             { resource: 'C', title: 'Shift 6', start: 'dyndatetime(y,m,d-5,22)', end: 'dyndatetime(y,m,d-4,6)' },
+            //<hide-comment>
             { resource: 'A', title: 'Shift 7', start: 'dyndatetime(y,m,d-4,6)', end: 'dyndatetime(y,m,d-4,14)' },
             { resource: 'B', title: 'Shift 8', start: 'dyndatetime(y,m,d-4,14)', end: 'dyndatetime(y,m,d-4,22)' },
             { resource: 'C', title: 'Shift 9', start: 'dyndatetime(y,m,d-4,22)', end: 'dyndatetime(y,m,d-3,6)' },
@@ -63,6 +64,7 @@ export default {
             { resource: 'C', title: 'Shift 40', start: 'dyndatetime(y,m,d+12,6)', end: 'dyndatetime(y,m,d+12,14)' },
             { resource: 'B', title: 'Shift 41', start: 'dyndatetime(y,m,d+12,14)', end: 'dyndatetime(y,m,d+12,22)' },
             { resource: 'A', title: 'Shift 42', start: 'dyndatetime(y,m,d+12,22)', end: 'dyndatetime(y,m,d+13,6)' },
+            //</hide-comment>
           ],
           dragToMove: true,
           dragToCreate: true,
@@ -86,8 +88,13 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-24-hour-manufacturing-shift-rota-planning"></div>
+<div id="demo-24-hour-manufacturing-shift-rota-planning" class="md-24-hour-manufacturing-shift-rota-planning"></div>
 `,
   // eslint-disable-next-line es5/no-template-literals
-  css: ``,
+  css: `
+.md-24-hour-manufacturing-shift-rota-planning .mbsc-schedule-day-limit {
+  border-top-color: #d38231;
+  border-top-style: dashed;
+}
+  `,
 };
