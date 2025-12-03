@@ -96,6 +96,7 @@ export default {
 .mds-24-hour-manufacturing-calendar .mbsc-schedule-day-limit {
   border-top-color: #d38231;
   border-top-style: dashed;
+  border-top-width: 1px;
 }
   `,
 };
