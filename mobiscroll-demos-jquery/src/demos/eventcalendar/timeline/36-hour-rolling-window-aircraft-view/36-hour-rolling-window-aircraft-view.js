@@ -45,6 +45,11 @@ export default {
       return newTimeStr + '+' + suffix;
     }
 
+    function getSystemTimezone() {
+      // Uses the Internationalization API (Intl) which is supported by all modern browsers.
+      return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    }
+
     $(function () {
       var startTime = getStartTime();
       var endTime = getEndTime(startTime);
@@ -91,21 +96,21 @@ export default {
             //<hide-comment>
             {
               resource: '1-2',
-              title: 'AMS → CPH 1h 30m',
+              title: 'AMS → CPH',
               start: 'dyndatetime(y,m,d+1,12)',
               end: 'dyndatetime(y,m,d+1,13,30)',
               color: '#3b82f6',
             },
             {
               resource: '1-2',
-              title: 'CPH → KEF 	2h 30m',
+              title: 'CPH → KEF',
               start: 'dyndatetime(y,m,d+1,20)',
               end: 'dyndatetime(y,m,d+1,22,30)',
               color: '#3b82f6',
             },
             {
               resource: '1-2',
-              title: 'KEF → BOS 	1h 0m',
+              title: 'KEF → BOS',
               start: 'dyndatetime(y,m,d+2,2)',
               end: 'dyndatetime(y,m,d+2,4)',
               color: '#3b82f6',
@@ -119,21 +124,21 @@ export default {
             },
             {
               resource: '1-3',
-              title: 'SFO → DEN 2h 45m ',
+              title: 'SFO → DEN',
               start: 'dyndatetime(y,m,d+1,13)',
               end: 'dyndatetime(y,m,d+1,15,45)',
               color: '#f97316',
             },
             {
               resource: '1-3',
-              title: 'DEN → MEX 	4h 30m',
+              title: 'DEN → MEX',
               start: 'dyndatetime(y,m,d+1,22)',
               end: 'dyndatetime(y,m,d+2,2,30)',
               color: '#f97316',
             },
             {
               resource: '1-3',
-              title: 'MEX → HAV 	2h 0m',
+              title: 'MEX → HAV',
               start: 'dyndatetime(y,m,d+2,6)',
               end: 'dyndatetime(y,m,d+2,8)',
               color: '#f97316',
@@ -147,21 +152,21 @@ export default {
             },
             {
               resource: '2-1',
-              title: 'PER → AKL 6h 15m',
+              title: 'PER → AKL',
               start: 'dyndatetime(y,m,d+1,14)',
               end: 'dyndatetime(y,m,d+1,20,15)',
               color: '#dc2626',
             },
             {
               resource: '2-1',
-              title: 'AKL → PPT 	5h 45m',
+              title: 'AKL → PPT',
               start: 'dyndatetime(y,m,d+2,2)',
               end: 'dyndatetime(y,m,d+2,7,45)',
               color: '#dc2626',
             },
             {
               resource: '2-1',
-              title: 'PPT → IPC	7h 0m',
+              title: 'PPT → IPC',
               start: 'dyndatetime(y,m,d+2,16)',
               end: 'dyndatetime(y,m,d+2,23)',
               color: '#dc2626',
@@ -175,21 +180,21 @@ export default {
             },
             {
               resource: '2-2',
-              title: 'PVG → PUS 2h 0m',
+              title: 'PVG → PUS',
               start: 'dyndatetime(y,m,d,20)',
               end: 'dyndatetime(y,m,d,22)',
               color: '#9333ea',
             },
             {
               resource: '2-2',
-              title: 'PUS → GUM 	5h 0m',
+              title: 'PUS → GUM',
               start: 'dyndatetime(y,m,d+1,6)',
               end: 'dyndatetime(y,m,d+1,11)',
               color: '#9333ea',
             },
             {
               resource: '2-2',
-              title: 'GUM → AKL 	7h 30m',
+              title: 'GUM → AKL',
               start: 'dyndatetime(y,m,d+1,17)',
               end: 'dyndatetime(y,m,d+2,0,30)',
               color: '#9333ea',
@@ -203,21 +208,21 @@ export default {
             },
             {
               resource: '2-3',
-              title: 'FRA → JED 5h 30m',
+              title: 'FRA → JED',
               start: 'dyndatetime(y,m,d+1,15)',
               end: 'dyndatetime(y,m,d+1,20,30)',
               color: '#14b8a6',
             },
             {
               resource: '2-3',
-              title: 'JED → ADD	3h 45m',
+              title: 'JED → ADD',
               start: 'dyndatetime(y,m,d+2,4)',
               end: 'dyndatetime(y,m,d+2,7,45)',
               color: '#14b8a6',
             },
             {
               resource: '2-3',
-              title: 'ADD → CPT 	7h 30m',
+              title: 'ADD → CPT',
               start: 'dyndatetime(y,m,d+2,12,30)',
               end: 'dyndatetime(y,m,d+2,20)',
               color: '#14b8a6',
@@ -231,21 +236,21 @@ export default {
             },
             {
               resource: '3-1',
-              title: 'CDG → MRS	1h 30m',
+              title: 'CDG → MRS',
               start: 'dyndatetime(y,m,d,20)',
               end: 'dyndatetime(y,m,d,21,30)',
               color: '#facc15',
             },
             {
               resource: '3-1',
-              title: 'MRS → TUN	1h 45m',
+              title: 'MRS → TUN',
               start: 'dyndatetime(y,m,d+1,3)',
               end: 'dyndatetime(y,m,d+1,4,45)',
               color: '#facc15',
             },
             {
               resource: '3-1',
-              title: 'TUN → DAK 	5h 0m',
+              title: 'TUN → DAK',
               start: 'dyndatetime(y,m,d+1,12)',
               end: 'dyndatetime(y,m,d+1,17)',
               color: '#facc15',
@@ -259,21 +264,21 @@ export default {
             },
             {
               resource: '3-2',
-              title: 'LHR → TLV 	3h 30m',
+              title: 'LHR → TLV',
               start: 'dyndatetime(y,m,d,17)',
               end: 'dyndatetime(y,m,d,20,30)',
               color: '#0ea5e9',
             },
             {
               resource: '3-2',
-              title: 'TLV → BOM 7h 0m',
+              title: 'TLV → BOM',
               start: 'dyndatetime(y,m,d+1,3,30)',
               end: 'dyndatetime(y,m,d+1,10,30)',
               color: '#0ea5e9',
             },
             {
               resource: '3-2',
-              title: 'BOM → DPS 	5h 0m',
+              title: 'BOM → DPS',
               start: 'dyndatetime(y,m,d+1,22)',
               end: 'dyndatetime(y,m,d+2,3)',
               color: '#0ea5e9',
@@ -287,21 +292,21 @@ export default {
             },
             {
               resource: '3-3',
-              title: 'MEL → KUL 	8h 30m',
+              title: 'MEL → KUL',
               start: 'dyndatetime(y,m,d+1,22)',
               end: 'dyndatetime(y,m,d+2,6,30)',
               color: '#4f46e5',
             },
             {
               resource: '3-3',
-              title: 'KUL → DOH 	7h 30m',
+              title: 'KUL → DOH',
               start: 'dyndatetime(y,m,d+2,13,30)',
               end: 'dyndatetime(y,m,d+2,21)',
               color: '#4f46e5',
             },
             {
               resource: '3-3',
-              title: 'DOH → ATL 	15h 0m',
+              title: 'DOH → ATL',
               start: 'dyndatetime(y,m,d+3,6)',
               end: 'dyndatetime(y,m,d+3,21)',
               color: '#4f46e5',
@@ -315,21 +320,21 @@ export default {
             },
             {
               resource: '4-1',
-              title: 'EZE → JNB 	11h 30m',
+              title: 'EZE → JNB',
               start: 'dyndatetime(y,m,d+1,14)',
               end: 'dyndatetime(y,m,d+2,1,30)',
               color: '#f97316',
             },
             {
               resource: '4-1',
-              title: 'JNB → DAR 	3h 45m',
+              title: 'JNB → DAR',
               start: 'dyndatetime(y,m,d+2,7)',
               end: 'dyndatetime(y,m,d+2,10,45)',
               color: '#f97316',
             },
             {
               resource: '4-1',
-              title: 'DAR → AUH 	6h 30m',
+              title: 'DAR → AUH',
               start: 'dyndatetime(y,m,d+2,15,30)',
               end: 'dyndatetime(y,m,d+2,22)',
               color: '#f97316',
@@ -343,21 +348,21 @@ export default {
             },
             {
               resource: '4-2',
-              title: 'HNL → GUM 11h 30m ',
+              title: 'HNL → GUM',
               start: 'dyndatetime(y,m,d,18)',
               end: 'dyndatetime(y,m,d+1,5,30)',
               color: '#06b6d4',
             },
             {
               resource: '4-2',
-              title: 'GUM → MNL 	4h 0m',
+              title: 'GUM → MNL',
               start: 'dyndatetime(y,m,d+1,12)',
               end: 'dyndatetime(y,m,d+1,16)',
               color: '#06b6d4',
             },
             {
               resource: '4-2',
-              title: 'MNL → HKG 	2h 0m',
+              title: 'MNL → HKG',
               start: 'dyndatetime(y,m,d+1,23)',
               end: 'dyndatetime(y,m,d+2,1)',
               color: '#06b6d4',
@@ -371,21 +376,21 @@ export default {
             },
             {
               resource: '4-3',
-              title: 'NRT → TPE	3h 45m',
+              title: 'NRT → TPE',
               start: 'dyndatetime(y,m,d+1,13)',
               end: 'dyndatetime(y,m,d+1,16,45)',
               color: '#7f1d1d',
             },
             {
               resource: '4-3',
-              title: 'TPE → CEB 3h 0m',
+              title: 'TPE → CEB',
               start: 'dyndatetime(y,m,d+1,23)',
               end: 'dyndatetime(y,m,d+2,2)',
               color: '#7f1d1d',
             },
             {
               resource: '4-3',
-              title: 'CEB → ZQN 	5h 0m',
+              title: 'CEB → ZQN',
               start: 'dyndatetime(y,m,d+2,10)',
               end: 'dyndatetime(y,m,d+2,15)',
               color: '#7f1d1d',
@@ -399,21 +404,21 @@ export default {
             },
             {
               resource: '5-1',
-              title: 'LIM → SCL 	3h 45m',
+              title: 'LIM → SCL',
               start: 'dyndatetime(y,m,d+1,7)',
               end: 'dyndatetime(y,m,d+1,10,30)',
               color: '#1e40af',
             },
             {
               resource: '5-1',
-              title: 'SCL → EZE 	2h 0m',
+              title: 'SCL → EZE',
               start: 'dyndatetime(y,m,d+1,18)',
               end: 'dyndatetime(y,m,d+1,20)',
               color: '#1e40af',
             },
             {
               resource: '5-1',
-              title: 'EZE → BOG 	5h 30m',
+              title: 'EZE → BOG',
               start: 'dyndatetime(y,m,d+2,4)',
               end: 'dyndatetime(y,m,d+2,9,30)',
               color: '#1e40af',
@@ -427,21 +432,21 @@ export default {
             },
             {
               resource: '5-2',
-              title: 'LIS → MAD 1h 30m',
+              title: 'LIS → MAD',
               start: 'dyndatetime(y,m,d+1,12)',
               end: 'dyndatetime(y,m,d+1,13,30)',
               color: '#1d4ed8',
             },
             {
               resource: '5-2',
-              title: 'MAD → CMN 	1h 30m',
+              title: 'MAD → CMN',
               start: 'dyndatetime(y,m,d+1,19,30)',
               end: 'dyndatetime(y,m,d+1,21)',
               color: '#1d4ed8',
             },
             {
               resource: '5-2',
-              title: 'CMN → ABJ 5h 0m',
+              title: 'CMN → ABJ',
               start: 'dyndatetime(y,m,d+2,3)',
               end: 'dyndatetime(y,m,d+2,8)',
               color: '#1d4ed8',
@@ -455,21 +460,21 @@ export default {
             },
             {
               resource: '5-3',
-              title: 'SYD → ICN 	9h 30m',
+              title: 'SYD → ICN',
               start: 'dyndatetime(y,m,d+1,17)',
               end: 'dyndatetime(y,m,d+2,3,30)',
               color: '#3b82f6',
             },
             {
               resource: '5-3',
-              title: 'ICN → DXB 10h 0m',
+              title: 'ICN → DXB',
               start: 'dyndatetime(y,m,d+2,14)',
               end: 'dyndatetime(y,m,d+2,23,30)',
               color: '#3b82f6',
             },
             {
               resource: '5-3',
-              title: 'DXB → JNB	6h 30m',
+              title: 'DXB → JNB',
               start: 'dyndatetime(y,m,d+3,7)',
               end: 'dyndatetime(y,m,d+3,13,30)',
               color: '#3b82f6',
@@ -483,21 +488,21 @@ export default {
             },
             {
               resource: '6-1',
-              title: 'DFW → PHX 	2h 0m',
+              title: 'DFW → PHX',
               start: 'dyndatetime(y,m,d,16)',
               end: 'dyndatetime(y,m,d,20)',
               color: '#60a5fa',
             },
             {
               resource: '6-1',
-              title: 'PHX → MEX 	3h 0m',
+              title: 'PHX → MEX',
               start: 'dyndatetime(y,m,d+1,4)',
               end: 'dyndatetime(y,m,d+1,7)',
               color: '#60a5fa',
             },
             {
               resource: '6-1',
-              title: 'MEX → GYE 	5h 0m',
+              title: 'MEX → GYE',
               start: 'dyndatetime(y,m,d+1,13)',
               end: 'dyndatetime(y,m,d+1,18)',
               color: '#60a5fa',
@@ -511,21 +516,21 @@ export default {
             },
             {
               resource: '6-2',
-              title: 'LHR → PRG 	2h 0m',
+              title: 'LHR → PRG',
               start: 'dyndatetime(y,m,d+2,1)',
               end: 'dyndatetime(y,m,d+2,3)',
               color: '#9333ea',
             },
             {
               resource: '6-2',
-              title: 'PRG → TLL 	3h 15m',
+              title: 'PRG → TLL',
               start: 'dyndatetime(y,m,d+2,10)',
               end: 'dyndatetime(y,m,d+2,13,30)',
               color: '#9333ea',
             },
             {
               resource: '6-2',
-              title: 'TLL → HEL 0h 30m',
+              title: 'TLL → HEL',
               start: 'dyndatetime(y,m,d+2,20)',
               end: 'dyndatetime(y,m,d+2,21)',
               color: '#9333ea',
@@ -539,21 +544,21 @@ export default {
             },
             {
               resource: '6-3',
-              title: 'DUB → MXP	2h 15m',
+              title: 'DUB → MXP',
               start: 'dyndatetime(y,m,d+1,11)',
               end: 'dyndatetime(y,m,d+1,13,15)',
               color: '#b91c1c',
             },
             {
               resource: '6-3',
-              title: 'MXP → ATH 3h 0m',
+              title: 'MXP → ATH',
               start: 'dyndatetime(y,m,d+1,18,30)',
               end: 'dyndatetime(y,m,d+1,21,30)',
               color: '#b91c1c',
             },
             {
               resource: '6-3',
-              title: 'ATH → CAI 1h 30m',
+              title: 'ATH → CAI',
               start: 'dyndatetime(y,m,d+2,3,30)',
               end: 'dyndatetime(y,m,d+2,5)',
               color: '#b91c1c',
@@ -568,21 +573,21 @@ export default {
             },
             {
               resource: '7-1',
-              title: 'NRT → PTY 	12h 0m',
+              title: 'NRT → PTY',
               start: 'dyndatetime(y,m,d+1,21)',
               end: 'dyndatetime(y,m,d+2,9)',
               color: '#dc2626',
             },
             {
               resource: '7-1',
-              title: 'PTY → SJO 	1h 0m',
+              title: 'PTY → SJO',
               start: 'dyndatetime(y,m,d+2,16)',
               end: 'dyndatetime(y,m,d+2,17)',
               color: '#dc2626',
             },
             {
               resource: '7-1',
-              title: 'SJO → JFK 	5h 30m',
+              title: 'SJO → JFK',
               start: 'dyndatetime(y,m,d+2,23)',
               end: 'dyndatetime(y,m,d+3,4,30)',
               color: '#dc2626',
@@ -597,21 +602,21 @@ export default {
             },
             {
               resource: '7-2',
-              title: 'DEL → AUH 	4h 30m',
+              title: 'DEL → AUH',
               start: 'dyndatetime(y,m,d+1,19,30)',
               end: 'dyndatetime(y,m,d+2,2)',
               color: '#ef4444',
             },
             {
               resource: '7-2',
-              title: 'AUH → MRU 	6h 0m',
+              title: 'AUH → MRU',
               start: 'dyndatetime(y,m,d+2,10)',
               end: 'dyndatetime(y,m,d+2,16)',
               color: '#ef4444',
             },
             {
               resource: '7-2',
-              title: 'MRU → PER 	7h 30m',
+              title: 'MRU → PER',
               start: 'dyndatetime(y,m,d+2,23, 30)',
               end: 'dyndatetime(y,m,d+3,7)',
               color: '#ef4444',
@@ -626,21 +631,21 @@ export default {
             },
             {
               resource: '7-3',
-              title: 'GRU → MAD 	10h 0m',
+              title: 'GRU → MAD',
               start: 'dyndatetime(y,m,d+1,23)',
               end: 'dyndatetime(y,m,d+2,9)',
               color: '#f87171',
             },
             {
               resource: '7-3',
-              title: 'MAD → MXP 	2h 0m',
+              title: 'MAD → MXP',
               start: 'dyndatetime(y,m,d+2,14)',
               end: 'dyndatetime(y,m,d+2,15)',
               color: '#f87171',
             },
             {
               resource: '7-3',
-              title: 'MXP → VIE 	1h 30m',
+              title: 'MXP → VIE',
               start: 'dyndatetime(y,m,d+2,23)',
               end: 'dyndatetime(y,m,d+3,0,30)',
               color: '#f87171',
@@ -655,21 +660,21 @@ export default {
             },
             {
               resource: '8-1',
-              title: 'YUL → YVR 4h 30m',
+              title: 'YUL → YVR',
               start: 'dyndatetime(y,m,d,16)',
               end: 'dyndatetime(y,m,d,20,30)',
               color: '#fca5a5',
             },
             {
               resource: '8-1',
-              title: 'YVR → ANC	4h 30m',
+              title: 'YVR → ANC',
               start: 'dyndatetime(y,m,d+2,3)',
               end: 'dyndatetime(y,m,d+2,7,30)',
               color: '#fca5a5',
             },
             {
               resource: '8-1',
-              title: 'ANC → PUS	10h 30m',
+              title: 'ANC → PUS',
               start: 'dyndatetime(y,m,d+2,14)',
               end: 'dyndatetime(y,m,d+3,0,30)',
               color: '#fca5a5',
@@ -684,21 +689,21 @@ export default {
             },
             {
               resource: '8-2',
-              title: 'DXB → JNB 7h 30m',
+              title: 'DXB → JNB',
               start: 'dyndatetime(y,m,d+2,3)',
               end: 'dyndatetime(y,m,d+2,10,30)',
               color: '#fecaca',
             },
             {
               resource: '8-2',
-              title: 'JNB → MRU 4h 30m',
+              title: 'JNB → MRU',
               start: 'dyndatetime(y,m,d+2,16)',
               end: 'dyndatetime(y,m,d+2,20,30)',
               color: '#fecaca',
             },
             {
               resource: '8-2',
-              title: 'MRU → TNR 1h 0m',
+              title: 'MRU → TNR',
               start: 'dyndatetime(y,m,d+3,4)',
               end: 'dyndatetime(y,m,d+3,5,30)',
               color: '#fecaca',
@@ -712,21 +717,21 @@ export default {
             },
             {
               resource: '8-3',
-              title: 'LHR → CDG 1h 15m',
+              title: 'LHR → CDG',
               start: 'dyndatetime(y,m,d,12)',
               end: 'dyndatetime(y,m,d,13,15)',
               color: '#4c0519',
             },
             {
               resource: '8-3',
-              title: 'CDG → GVA 1h 15m',
+              title: 'CDG → GVA',
               start: 'dyndatetime(y,m,d,17)',
               end: 'dyndatetime(y,m,d,18,15)',
               color: '#4c0519',
             },
             {
               resource: '8-3',
-              title: 'GVA → ZRH 	1h 0m',
+              title: 'GVA → ZRH',
               start: 'dyndatetime(y,m,d+1,6)',
               end: 'dyndatetime(y,m,d+1,7)',
               color: '#4c0519',
@@ -896,6 +901,20 @@ export default {
             },
             //</hide-comment>
           ],
+          showControls: false,
+          renderResourceHeader: function () {
+            return '<div class="mds-36-hour-resource-header">LOCAL TIMEZONE: ' + getSystemTimezone() + '</div>';
+          },
+          renderHour: function (args) {
+            var d = args.date;
+            return (
+              '<span class="mds-36-hour-date">' +
+              mobiscroll.formatDate('D/M : ', d) +
+              '</span><span class="mds-36-hour-time">' +
+              mobiscroll.formatDate('h A', d) +
+              '</span>'
+            );
+          },
         });
     });
   },
@@ -913,6 +932,20 @@ export default {
   border-left-color: #d38231;
   border-left-style: dashed;
   border-left-width: 1px;
+  transform: translateX(-1px);
+}
+
+.mds-36-hour-rolling-calendar .mds-36-hour-resource-header {
+  font-size: bold;
+}
+
+.mds-36-hour-rolling-calendar .mds-36-hour-date {
+  color: #877d7dff
+}
+
+.mds-36-hour-rolling-calendar .mds-36-hour-time {
+  font-size: bold;
+  color: #e74949ff
 }
   `,
 };
