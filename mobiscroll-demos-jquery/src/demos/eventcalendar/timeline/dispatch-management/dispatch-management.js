@@ -763,6 +763,7 @@ export default {
         var sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
         var invalidIds = [];
+        var validIds = [];
 
         var windowStart = new Date(event.pickup[0]);
         var windowEnd = new Date(event.drop[1]);
@@ -772,12 +773,14 @@ export default {
 
           for (var j = 0; j < group.children.length; j++) {
             var truck = group.children[j];
+            var isValid = true;
 
             // Capacity check
             if (truck.capacity < event.size) {
               console.log('setting invalid due to capacity', truck.name);
               truck.eventCreation = false;
               invalidIds.push(truck.id);
+              isValid = false;
             }
 
             var truckEvents = calendar.getEvents().filter(function (ev) {
@@ -795,6 +798,12 @@ export default {
               truck.eventCreation = false;
               invalidIds.push(truck.id);
               invalidIds.push(truck.id + '-actual');
+              isValid = false;
+            }
+
+            // Add to valid list if no issues found and not an actual resource
+            if (isValid && !String(truck.id).includes('actual')) {
+              validIds.push(truck.id);
             }
           }
         }
@@ -819,6 +828,8 @@ export default {
         calendar.setOptions({
           invalid: myInvalids,
         });
+
+        return validIds.length > 0 ? validIds[0] : null;
       }
 
       function resetEventCreationFlags() {
@@ -1115,7 +1126,7 @@ export default {
           onEventUpdateFailed: function (args) {
             var draggedEvent = args.event;
             moveToFirstAvailableSlot(draggedEvent, true);
-            calendar.navigate(draggedEvent.start);
+            calendar.navigateToEvent({ start: draggedEvent.start });
             if (success) {
               mobiscroll.toast({
                 //<hidden>
@@ -1133,11 +1144,11 @@ export default {
             }
           },
           onEventDragStart: function (args) {
+            var resourceToNavigate = invalidateResources(args.event);
             // Only navitate if drag is from external list
             if (!args.event.resource) {
-              calendar.navigate(args.event.start);
+              calendar.navigateToEvent({ start: args.event.start, resource: resourceToNavigate });
             }
-            invalidateResources(args.event);
           },
           onEventDragEnd: function () {
             console.log('success:', success);
