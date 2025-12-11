@@ -1,9 +1,19 @@
 import * as mobiscroll from '@mobiscroll/jquery';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import $ from 'jquery';
+
+window.dayjs_plugin_utc = utc;
+window.dayjs_plugin_timezone = timezone;
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
+    dayjs.extend(window.dayjs_plugin_utc);
+    dayjs.extend(window.dayjs_plugin_timezone);
+    mobiscroll.dayjsTimezone.dayjs = dayjs;
+
     mobiscroll.setOptions({
       // locale,
       // theme
@@ -45,10 +55,10 @@ export default {
       return newTimeStr + '+' + suffix;
     }
 
-    function getSystemTimezone() {
-      // Uses the Internationalization API (Intl) which is supported by all modern browsers.
-      return Intl.DateTimeFormat().resolvedOptions().timeZone;
-    }
+    // function getSystemTimezone() {
+    //   // Uses the Internationalization API (Intl) which is supported by all modern browsers.
+    //   return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // }
 
     $(function () {
       var startTime = getStartTime();
@@ -67,21 +77,21 @@ export default {
             },
             {
               resource: '1-1',
-              title: 'BKK → SIN 2.30',
+              title: 'BKK → SIN',
               start: 'dyndatetime(y,m,d,20,30)',
               end: 'dyndatetime(y,m,d,23,00)',
               color: '#22c55e',
             },
             {
               resource: '1-1',
-              title: 'SIN → CDG 12.30',
+              title: 'SIN → CDG',
               start: 'dyndatetime(y,m,d+1,4,30)',
               end: 'dyndatetime(y,m,d+1,15,00)',
               color: '#22c55e',
             },
             {
               resource: '1-1',
-              title: 'CDG → GVA 1.15',
+              title: 'CDG → GVA',
               start: 'dyndatetime(y,m,d+1,21,30)',
               end: 'dyndatetime(y,m,d+1,22,45)',
               color: '#22c55e',
@@ -738,6 +748,8 @@ export default {
             },
             //</hide-comment>
           ],
+          dataTimezone: 'utc',
+          displayTimezone: 'utc',
           view: {
             timeline: {
               type: 'day',
@@ -903,18 +915,20 @@ export default {
           ],
           showControls: false,
           renderResourceHeader: function () {
-            return '<div class="mds-36-hour-resource-header">LOCAL TIMEZONE: ' + getSystemTimezone() + '</div>';
+            return '<div class="mds-36-hour-resource-header">TIMES SHOWN IN <span class="mds-36-hour-resource-header-utc">UTC</span></div>';
           },
           renderHour: function (args) {
             var d = args.date;
             return (
-              '<span class="mds-36-hour-date">' +
-              mobiscroll.formatDate('D/M : ', d) +
-              '</span><span class="mds-36-hour-time">' +
+              '<span class="mds-36-hour-time">' +
               mobiscroll.formatDate('h A', d) +
+              '</span>' +
+              '<span class="mds-36-hour-date">' +
+              mobiscroll.formatDate(' / D', d) +
               '</span>'
             );
           },
+          timezonePlugin: mobiscroll.dayjsTimezone,
         });
     });
   },
@@ -924,8 +938,8 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-36-hour-rolling-window-aircraft-view .mbsc-timeline-parent { 
-  height: 32px; 
+.mds-36-hour-rolling-calendar .mbsc-timeline-parent {
+    height: 32px;
 }
 
 .mds-36-hour-rolling-calendar .mbsc-timeline-day-limit {
@@ -936,7 +950,11 @@ export default {
 }
 
 .mds-36-hour-rolling-calendar .mds-36-hour-resource-header {
-  font-size: bold;
+  font-weight: 100;
+}
+
+.mds-36-hour-rolling-calendar .mds-36-hour-resource-header-utc {
+  font-weight: bold;
 }
 
 .mds-36-hour-rolling-calendar .mds-36-hour-date {
