@@ -1,59 +1,6 @@
 import * as mobiscroll from '@mobiscroll/jquery';
 import $ from 'jquery';
 
-function calculateStart(start) {
-  var newStart = new Date(start);
-  var hours = start.getHours();
-  if (hours >= 6 && hours < 14) {
-    newStart.setHours(6, 0, 0, 0);
-  }
-  if (hours >= 14 && hours < 22) {
-    newStart.setHours(14, 0, 0, 0);
-  }
-  if (hours >= 22 && hours < 24) {
-    newStart.setHours(22, 0, 0, 0);
-  }
-  if (hours >= 0 && hours < 6) {
-    var date = newStart.getDate();
-    newStart.setDate(date - 1);
-    newStart.setHours(22, 0, 0, 0);
-  }
-  return newStart;
-}
-
-function calculateEnd(start) {
-  var newEnd = new Date(start);
-  var hours = start.getHours();
-  if (hours >= 6 && hours < 14) {
-    newEnd.setHours(14, 0, 0, 0);
-  }
-  if (hours >= 14 && hours < 22) {
-    newEnd.setHours(22, 0, 0, 0);
-  }
-  if (hours >= 22 && hours < 24) {
-    var date = newEnd.getDate();
-    newEnd.setDate(date + 1);
-    newEnd.setHours(6, 0, 0, 0);
-  }
-  if (hours >= 0 && hours < 6) {
-    newEnd.setHours(6, 0, 0, 0);
-  }
-  return newEnd;
-}
-
-function getTitle(startHours) {
-  switch (startHours) {
-    case 6:
-      return 'Morning Shift';
-    case 14:
-      return 'Afternoon Shift';
-    case 22:
-      return 'Night Shift';
-    default:
-      return 'Afternoon Shift';
-  }
-}
-
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
@@ -61,6 +8,59 @@ export default {
       // locale,
       // theme
     });
+
+    function calculateStart(start) {
+      var newStart = new Date(start);
+      var hours = start.getHours();
+      if (hours >= 6 && hours < 14) {
+        newStart.setHours(6, 0, 0, 0);
+      }
+      if (hours >= 14 && hours < 22) {
+        newStart.setHours(14, 0, 0, 0);
+      }
+      if (hours >= 22 && hours < 24) {
+        newStart.setHours(22, 0, 0, 0);
+      }
+      if (hours >= 0 && hours < 6) {
+        var date = newStart.getDate();
+        newStart.setDate(date - 1);
+        newStart.setHours(22, 0, 0, 0);
+      }
+      return newStart;
+    }
+
+    function calculateEnd(start) {
+      var newEnd = new Date(start);
+      var hours = start.getHours();
+      if (hours >= 6 && hours < 14) {
+        newEnd.setHours(14, 0, 0, 0);
+      }
+      if (hours >= 14 && hours < 22) {
+        newEnd.setHours(22, 0, 0, 0);
+      }
+      if (hours >= 22 && hours < 24) {
+        var date = newEnd.getDate();
+        newEnd.setDate(date + 1);
+        newEnd.setHours(6, 0, 0, 0);
+      }
+      if (hours >= 0 && hours < 6) {
+        newEnd.setHours(6, 0, 0, 0);
+      }
+      return newEnd;
+    }
+
+    function getTitle(startHours) {
+      switch (startHours) {
+        case 6:
+          return 'Morning Shift';
+        case 14:
+          return 'Afternoon Shift';
+        case 22:
+          return 'Night Shift';
+        default:
+          return 'Afternoon Shift';
+      }
+    }
 
     $(function () {
       var draggedEventStart;

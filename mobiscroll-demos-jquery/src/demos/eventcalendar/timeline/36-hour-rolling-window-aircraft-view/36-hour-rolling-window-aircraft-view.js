@@ -55,11 +55,6 @@ export default {
       return newTimeStr + '+' + suffix;
     }
 
-    // function getSystemTimezone() {
-    //   // Uses the Internationalization API (Intl) which is supported by all modern browsers.
-    //   return Intl.DateTimeFormat().resolvedOptions().timeZone;
-    // }
-
     $(function () {
       var startTime = getStartTime();
       var endTime = getEndTime(startTime);
