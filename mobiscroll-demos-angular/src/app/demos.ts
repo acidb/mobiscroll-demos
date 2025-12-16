@@ -228,7 +228,7 @@ import { AppComponent as Demo777 } from '../demos/eventcalendar/scheduler/show-c
 import { AppComponent as Demo486 } from '../demos/eventcalendar/scheduler/gregorian-jalali-hijri/gregorian-jalali-hijri';
 import { AppComponent as Demo487 } from '../demos/eventcalendar/scheduler/event-hooks/event-hooks';
 import { AppComponent as Demo488 } from '../demos/eventcalendar/scheduler/localization/localization';
-import { AppComponent as Demo617 } from '../demos/eventcalendar/timeline/month-view/month-view';
+import { AppComponent as Demo617 } from '../demos/eventcalendar/timeline/calendar-timeline/calendar-timeline';
 import { AppComponent as Demo604 } from '../demos/eventcalendar/timeline/timeline-time-grid/timeline-time-grid';
 import { AppComponent as Demo660 } from '../demos/eventcalendar/timeline/printing-the-view/printing-the-view';
 import { AppComponent as Demo621 } from '../demos/eventcalendar/timeline/employee-shifts/employee-shifts';
