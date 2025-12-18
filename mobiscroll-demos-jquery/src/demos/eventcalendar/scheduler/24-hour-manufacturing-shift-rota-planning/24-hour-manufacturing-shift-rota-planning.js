@@ -66,6 +66,8 @@ export default {
       var draggedEventStart;
       var draggedEventEnd;
       var draggedEventResource;
+      var availableSlotsOnHover = [];
+      var redResources = {};
       $('#demo-24-hour-manufacturing-shift-rota-planning')
         .mobiscroll()
         .eventcalendar({
@@ -124,7 +126,7 @@ export default {
             //</hide-comment>
           ],
           dragToMove: true,
-          dragToCreate: true,
+          dragToCreate: false,
           clickToCreate: true,
           dragToResize: false,
           dragTimeStep: 480,
@@ -141,6 +143,68 @@ export default {
               start: newStart,
               end: newEnd,
             };
+          },
+          onCellHoverIn: function (args, inst) {
+            var colDate = new Date(args.date);
+            colDate.setHours(6, 0, 0, 0);
+            var colEndDate = new Date(args.date);
+            var endDate = colEndDate.getDate();
+            colEndDate.setDate(endDate + 1);
+            colEndDate.setHours(6, 0, 0, 0);
+            var dayEvents = inst.getEvents(colDate, colEndDate);
+            var availableSlots = { morning: true, day: true, night: true };
+            dayEvents.forEach(function (e) {
+              if (e.resource === args.resource.id) {
+                availableSlots.morning = false;
+                availableSlots.day = false;
+                availableSlots.night = false;
+              } else {
+                var start = new Date(e.start);
+                var startHours = start.getHours();
+                if (startHours === 6) {
+                  availableSlots.morning = false;
+                } else if (startHours === 14) {
+                  availableSlots.day = false;
+                } else if (startHours === 22) {
+                  availableSlots.night = false;
+                }
+              }
+            });
+            Object.keys(availableSlots).forEach(function (sl) {
+              if (availableSlots[sl]) {
+                var startHours;
+                if (sl === 'morning') {
+                  startHours = 6;
+                } else if (sl === 'day') {
+                  startHours = 14;
+                } else if (sl === 'night') {
+                  startHours = 22;
+                }
+                var startTime = colDate.setHours(startHours, 0, 0, 0);
+                var endTime = new Date(+startTime + 3600000 * 8);
+                availableSlotsOnHover.push({
+                  title: 'AVAILABLE',
+                  background: '#e0fff0',
+                  start: startTime,
+                  end: endTime,
+                  resource: args.resource.id,
+                });
+              }
+            });
+            inst.setOptions({ colors: (inst.props.colors || []).concat(availableSlotsOnHover) });
+          },
+          onCellHoverOut: function (args, inst) {
+            var oldColors = (inst.props.colors || []).filter(function (c) {
+              var shouldDelete = false;
+              availableSlotsOnHover.forEach(function (s) {
+                if (s === c) {
+                  shouldDelete = true;
+                }
+              });
+              return !shouldDelete;
+            });
+            inst.setOptions({ colors: oldColors });
+            availableSlotsOnHover = [];
           },
           onEventCreate: function (args, inst) {
             var event = args.event;
@@ -162,6 +226,9 @@ export default {
                 colors = colors.filter(function (c) {
                   return !(c.resource === args.event.resource && +c.start === +date);
                 });
+                var day = new Date(args.event.start);
+                day.setHours(0, 0, 0, 0);
+                redResources[args.event.resource + day.toISOString()] = false;
                 inst.setOptions({
                   colors: colors,
                 });
@@ -179,10 +246,14 @@ export default {
             colorEnd.setHours(6, 0, 0, 0);
 
             if (colors) {
-              colors.push({ start: colorStart, end: colorEnd, background: '#f2dfe2', resource: args.event.resource });
+              colors.push({ start: colorStart, end: colorEnd, background: '#fff0ed', resource: args.event.resource });
             } else {
-              colors = [{ start: colorStart, end: colorEnd, background: '#f2dfe2', resource: args.event.resource }];
+              colors = [{ start: colorStart, end: colorEnd, background: '#fff0ed', resource: args.event.resource }];
             }
+            var resource = args.event.resource;
+            var day = new Date(args.event.start);
+            day.setHours(0, 0, 0, 0);
+            redResources[resource + day.toISOString()] = true;
             inst.setOptions({
               colors: colors,
             });
@@ -237,8 +308,12 @@ export default {
               colors = colors.filter(function (c) {
                 return !(c.resource === args.event.resource && +c.start === +date);
               });
+              var day = new Date(args.event.start);
+              day.setHours(0, 0, 0, 0);
+              redResources[args.event.resource + day.toISOString()] = false;
               if (!collideShifts.length && args.event.resource !== draggedEventResource) {
-                colors.push({ start: date, resource: args.oldEvent.resource, background: '#f2dfe2', end: colorEnd });
+                colors.push({ start: date, resource: args.oldEvent.resource, background: '#fff0ed', end: colorEnd });
+                redResources[args.oldEvent.resource + day.toISOString()] = true;
               }
               inst.setOptions({
                 colors: colors,
@@ -250,10 +325,14 @@ export default {
           },
           groupBy: 'date',
           resources: [
-            { id: 'A', name: 'Crew A', color: '#f7c4b4' },
-            { id: 'B', name: 'Crew B', color: '#c6f1c9' },
-            { id: 'C', name: 'Crew C', color: '#e8d0ef' },
+            { id: 'A', name: 'Crew A', color: '#f5baa6' },
+            { id: 'B', name: 'Crew B', color: '#9ee3a1' },
+            { id: 'C', name: 'Crew C', color: '#9cb5e3' },
           ],
+          renderResource: function (res, day) {
+            var style = redResources[res.id + day.toISOString()] ? ' style="color: #a65037; background: #fff0ed;"' : '';
+            return '<div' + style + '>' + res.name + '</div>';
+          },
           view: {
             schedule: {
               type: 'week',
@@ -274,9 +353,16 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 .mds-24-hour-manufacturing-calendar .mbsc-schedule-day-limit {
-  border-top-color: #d38231;
-  border-top-style: dashed;
-  border-top-width: 1px;
+  border-top-width: 2px;
+}
+
+.mds-24-hour-manufacturing-calendar .mbsc-schedule-events {
+  left: 0;
+  right: 0;
+}
+
+.mds-24-hour-manufacturing-calendar .mbsc-schedule-resource-title {
+  padding: 0;
 }
 
 .mds-24-hour-manufacturing-calendar .mbsc-schedule-time-wrapper {

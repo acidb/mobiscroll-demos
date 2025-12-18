@@ -938,10 +938,8 @@ export default {
 }
 
 .mds-36-hour-rolling-calendar .mbsc-timeline-day-limit {
-  border-left-color: #d38231;
-  border-left-style: dashed;
+  border-left-style: solid;
   border-left-width: 1px;
-  transform: translateX(-1px);
 }
 
 .mds-36-hour-rolling-calendar .mds-36-hour-resource-header {
