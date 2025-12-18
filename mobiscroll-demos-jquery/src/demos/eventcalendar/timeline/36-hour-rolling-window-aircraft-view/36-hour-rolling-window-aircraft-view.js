@@ -939,7 +939,7 @@ export default {
 
 .mds-36-hour-rolling-calendar .mbsc-timeline-day-limit {
   border-left-style: solid;
-  border-left-width: 1px;
+  border-left-width: 2px;
 }
 
 .mds-36-hour-rolling-calendar .mds-36-hour-resource-header {
