@@ -62,72 +62,180 @@ export default {
       }
     }
 
+    var morningColor = '#4a8c4d';
+    var afternoonColor = '#f87c6b';
+    var nightColor = '#8567AD';
+
+    function getColor(startHours) {
+      switch (startHours) {
+        case 6:
+          return morningColor;
+        case 14:
+          return afternoonColor;
+        case 22:
+          return nightColor;
+        default:
+          return afternoonColor;
+      }
+    }
+
     $(function () {
       var draggedEventStart;
       var draggedEventEnd;
       var draggedEventResource;
-      var availableSlotsOnHover = [];
+      var availableSlotOnHover;
+      var availableCellOnHover;
       var redResources = {};
       $('#demo-24-hour-manufacturing-shift-rota-planning')
         .mobiscroll()
         .eventcalendar({
           cssClass: 'mds-24-hour-manufacturing-calendar',
           data: [
-            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d-6,6)', end: 'dyndatetime(y,m,d-6,14)' },
-            { resource: 'B', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d-6,14)', end: 'dyndatetime(y,m,d-6,22)' },
-            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d-6,22)', end: 'dyndatetime(y,m,d-5,6)' },
-            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d-5,6)', end: 'dyndatetime(y,m,d-5,14)' },
-            { resource: 'B', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d-5,14)', end: 'dyndatetime(y,m,d-5,22)' },
-            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d-5,22)', end: 'dyndatetime(y,m,d-4,6)' },
+            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d-6,6)', end: 'dyndatetime(y,m,d-6,14)', color: morningColor },
+            {
+              resource: 'B',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d-6,14)',
+              end: 'dyndatetime(y,m,d-6,22)',
+              color: afternoonColor,
+            },
+            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d-6,22)', end: 'dyndatetime(y,m,d-5,6)', color: nightColor },
+            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d-5,6)', end: 'dyndatetime(y,m,d-5,14)', color: morningColor },
+            {
+              resource: 'B',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d-5,14)',
+              end: 'dyndatetime(y,m,d-5,22)',
+              color: afternoonColor,
+            },
+            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d-5,22)', end: 'dyndatetime(y,m,d-4,6)', color: nightColor },
             //<hide-comment>
-            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d-4,6)', end: 'dyndatetime(y,m,d-4,14)' },
-            { resource: 'B', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d-4,14)', end: 'dyndatetime(y,m,d-4,22)' },
-            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d-4,22)', end: 'dyndatetime(y,m,d-3,6)' },
+            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d-4,6)', end: 'dyndatetime(y,m,d-4,14)', color: morningColor },
+            {
+              resource: 'B',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d-4,14)',
+              end: 'dyndatetime(y,m,d-4,22)',
+              color: afternoonColor,
+            },
+            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d-4,22)', end: 'dyndatetime(y,m,d-3,6)', color: nightColor },
 
-            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d-3,6)', end: 'dyndatetime(y,m,d-3,14)' },
-            { resource: 'A', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d-3,14)', end: 'dyndatetime(y,m,d-3,22)' },
-            { resource: 'B', title: 'Night Shift', start: 'dyndatetime(y,m,d-3,22)', end: 'dyndatetime(y,m,d-2,6)' },
-            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d-2,6)', end: 'dyndatetime(y,m,d-2,14)' },
-            { resource: 'A', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d-2,14)', end: 'dyndatetime(y,m,d-2,22)' },
-            { resource: 'B', title: 'Night Shift', start: 'dyndatetime(y,m,d-2,22)', end: 'dyndatetime(y,m,d-1,6)' },
-            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d-1,6)', end: 'dyndatetime(y,m,d-1,14)' },
-            { resource: 'A', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d-1,14)', end: 'dyndatetime(y,m,d-1,22)' },
-            { resource: 'B', title: 'Night Shift', start: 'dyndatetime(y,m,d-1,22)', end: 'dyndatetime(y,m,d,6)' },
+            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d-3,6)', end: 'dyndatetime(y,m,d-3,14)', color: morningColor },
+            {
+              resource: 'A',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d-3,14)',
+              end: 'dyndatetime(y,m,d-3,22)',
+              color: afternoonColor,
+            },
+            { resource: 'B', title: 'Night Shift', start: 'dyndatetime(y,m,d-3,22)', end: 'dyndatetime(y,m,d-2,6)', color: nightColor },
+            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d-2,6)', end: 'dyndatetime(y,m,d-2,14)', color: morningColor },
+            {
+              resource: 'A',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d-2,14)',
+              end: 'dyndatetime(y,m,d-2,22)',
+              color: afternoonColor,
+            },
+            { resource: 'B', title: 'Night Shift', start: 'dyndatetime(y,m,d-2,22)', end: 'dyndatetime(y,m,d-1,6)', color: nightColor },
+            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d-1,6)', end: 'dyndatetime(y,m,d-1,14)', color: morningColor },
+            {
+              resource: 'A',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d-1,14)',
+              end: 'dyndatetime(y,m,d-1,22)',
+              color: afternoonColor,
+            },
+            { resource: 'B', title: 'Night Shift', start: 'dyndatetime(y,m,d-1,22)', end: 'dyndatetime(y,m,d,6)', color: nightColor },
 
-            { resource: 'B', title: 'Morning Shift', start: 'dyndatetime(y,m,d,6)', end: 'dyndatetime(y,m,d,14)' },
-            { resource: 'C', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d,14)', end: 'dyndatetime(y,m,d,22)' },
-            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d,22)', end: 'dyndatetime(y,m,d+1,6)' },
-            { resource: 'B', title: 'Morning Shift', start: 'dyndatetime(y,m,d+1,6)', end: 'dyndatetime(y,m,d+1,14)' },
-            { resource: 'C', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d+1,14)', end: 'dyndatetime(y,m,d+1,22)' },
-            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+1,22)', end: 'dyndatetime(y,m,d+2,6)' },
-            { resource: 'B', title: 'Morning Shift', start: 'dyndatetime(y,m,d+2,6)', end: 'dyndatetime(y,m,d+2,14)' },
-            { resource: 'C', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d+2,14)', end: 'dyndatetime(y,m,d+2,22)' },
-            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+2,22)', end: 'dyndatetime(y,m,d+3,6)' },
+            { resource: 'B', title: 'Morning Shift', start: 'dyndatetime(y,m,d,6)', end: 'dyndatetime(y,m,d,14)', color: morningColor },
+            {
+              resource: 'C',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d,14)',
+              end: 'dyndatetime(y,m,d,22)',
+              color: afternoonColor,
+            },
+            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d,22)', end: 'dyndatetime(y,m,d+1,6)', color: nightColor },
+            { resource: 'B', title: 'Morning Shift', start: 'dyndatetime(y,m,d+1,6)', end: 'dyndatetime(y,m,d+1,14)', color: morningColor },
+            {
+              resource: 'C',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d+1,14)',
+              end: 'dyndatetime(y,m,d+1,22)',
+              color: afternoonColor,
+            },
+            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+1,22)', end: 'dyndatetime(y,m,d+2,6)', color: nightColor },
+            { resource: 'B', title: 'Morning Shift', start: 'dyndatetime(y,m,d+2,6)', end: 'dyndatetime(y,m,d+2,14)', color: morningColor },
+            {
+              resource: 'C',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d+2,14)',
+              end: 'dyndatetime(y,m,d+2,22)',
+              color: afternoonColor,
+            },
+            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+2,22)', end: 'dyndatetime(y,m,d+3,6)', color: nightColor },
 
-            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d+3,6)', end: 'dyndatetime(y,m,d+3,14)' },
-            { resource: 'B', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d+3,14)', end: 'dyndatetime(y,m,d+3,22)' },
-            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d+3,22)', end: 'dyndatetime(y,m,d+4,6)' },
-            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d+4,6)', end: 'dyndatetime(y,m,d+4,14)' },
-            { resource: 'B', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d+4,14)', end: 'dyndatetime(y,m,d+4,22)' },
-            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d+4,22)', end: 'dyndatetime(y,m,d+5,6)' },
-            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d+5,6)', end: 'dyndatetime(y,m,d+5,14)' },
-            { resource: 'B', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d+5,14)', end: 'dyndatetime(y,m,d+5,22)' },
-            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d+5,22)', end: 'dyndatetime(y,m,d+6,6)' },
+            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d+3,6)', end: 'dyndatetime(y,m,d+3,14)', color: morningColor },
+            {
+              resource: 'B',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d+3,14)',
+              end: 'dyndatetime(y,m,d+3,22)',
+              color: afternoonColor,
+            },
+            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d+3,22)', end: 'dyndatetime(y,m,d+4,6)', color: nightColor },
+            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d+4,6)', end: 'dyndatetime(y,m,d+4,14)', color: morningColor },
+            {
+              resource: 'B',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d+4,14)',
+              end: 'dyndatetime(y,m,d+4,22)',
+              color: afternoonColor,
+            },
+            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d+4,22)', end: 'dyndatetime(y,m,d+5,6)', color: nightColor },
+            { resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d+5,6)', end: 'dyndatetime(y,m,d+5,14)', color: morningColor },
+            {
+              resource: 'B',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d+5,14)',
+              end: 'dyndatetime(y,m,d+5,22)',
+              color: afternoonColor,
+            },
+            { resource: 'C', title: 'Night Shift', start: 'dyndatetime(y,m,d+5,22)', end: 'dyndatetime(y,m,d+6,6)', color: nightColor },
 
-            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d+6,6)', end: 'dyndatetime(y,m,d+6,14)' },
-            { resource: 'B', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d+6,14)', end: 'dyndatetime(y,m,d+6,22)' },
-            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+6,22)', end: 'dyndatetime(y,m,d+7,6)' },
-            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d+7,6)', end: 'dyndatetime(y,m,d+7,14)' },
-            { resource: 'B', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d+7,14)', end: 'dyndatetime(y,m,d+7,22)' },
-            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+7,22)', end: 'dyndatetime(y,m,d+8,6)' },
-            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d+8,6)', end: 'dyndatetime(y,m,d+8,14)' },
-            { resource: 'B', title: 'Afternoon Shift', start: 'dyndatetime(y,m,d+8,14)', end: 'dyndatetime(y,m,d+8,22)' },
-            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+8,22)', end: 'dyndatetime(y,m,d+9,6)' },
+            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d+6,6)', end: 'dyndatetime(y,m,d+6,14)', color: morningColor },
+            {
+              resource: 'B',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d+6,14)',
+              end: 'dyndatetime(y,m,d+6,22)',
+              color: afternoonColor,
+            },
+            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+6,22)', end: 'dyndatetime(y,m,d+7,6)', color: nightColor },
+            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d+7,6)', end: 'dyndatetime(y,m,d+7,14)', color: morningColor },
+            {
+              resource: 'B',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d+7,14)',
+              end: 'dyndatetime(y,m,d+7,22)',
+              color: afternoonColor,
+            },
+            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+7,22)', end: 'dyndatetime(y,m,d+8,6)', color: nightColor },
+            { resource: 'C', title: 'Morning Shift', start: 'dyndatetime(y,m,d+8,6)', end: 'dyndatetime(y,m,d+8,14)', color: morningColor },
+            {
+              resource: 'B',
+              title: 'Afternoon Shift',
+              start: 'dyndatetime(y,m,d+8,14)',
+              end: 'dyndatetime(y,m,d+8,22)',
+              color: afternoonColor,
+            },
+            { resource: 'A', title: 'Night Shift', start: 'dyndatetime(y,m,d+8,22)', end: 'dyndatetime(y,m,d+9,6)', color: nightColor },
             //</hide-comment>
           ],
           dragToMove: true,
           dragToCreate: false,
-          clickToCreate: true,
+          clickToCreate: 'single',
           dragToResize: false,
           dragTimeStep: 480,
           dragTimeStepBase: 'viewStart',
@@ -138,14 +246,17 @@ export default {
             var newStart = calculateStart(start);
             var newEnd = calculateEnd(start);
             var title = getTitle(newStart.getHours());
+            var color = getColor(newStart.getHours());
             return {
               title: title,
               start: newStart,
               end: newEnd,
+              color: color,
             };
           },
           onCellHoverIn: function (args, inst) {
             var colDate = new Date(args.date);
+            var hoveredHour = calculateStart(colDate);
             colDate.setHours(6, 0, 0, 0);
             var colEndDate = new Date(args.date);
             var endDate = colEndDate.getDate();
@@ -173,38 +284,37 @@ export default {
             Object.keys(availableSlots).forEach(function (sl) {
               if (availableSlots[sl]) {
                 var startHours;
-                if (sl === 'morning') {
+                if (sl === 'morning' && hoveredHour.getHours() === 6) {
                   startHours = 6;
-                } else if (sl === 'day') {
+                } else if (sl === 'day' && hoveredHour.getHours() === 14) {
                   startHours = 14;
-                } else if (sl === 'night') {
+                } else if (sl === 'night' && hoveredHour.getHours() === 22) {
                   startHours = 22;
                 }
-                var startTime = colDate.setHours(startHours, 0, 0, 0);
-                var endTime = new Date(+startTime + 3600000 * 8);
-                availableSlotsOnHover.push({
-                  title: 'AVAILABLE',
-                  background: '#e0fff0',
-                  start: startTime,
-                  end: endTime,
-                  resource: args.resource.id,
-                });
+                var startTime = startHours && colDate.setHours(startHours, 0, 0, 0);
+                var endTime = startTime && new Date(+startTime + 3600000 * 8 - 1);
+                if (startTime) {
+                  availableCellOnHover = args.resource.id + colDate.toISOString();
+                  availableSlotOnHover = {
+                    background: '#e0fff0',
+                    start: +startTime + 1,
+                    end: endTime,
+                    resource: args.resource.id,
+                  };
+                }
               }
             });
-            inst.setOptions({ colors: (inst.props.colors || []).concat(availableSlotsOnHover) });
+            if (availableSlotOnHover) {
+              inst.setOptions({ colors: (inst.props.colors || []).concat([availableSlotOnHover]) });
+            }
           },
           onCellHoverOut: function (args, inst) {
             var oldColors = (inst.props.colors || []).filter(function (c) {
-              var shouldDelete = false;
-              availableSlotsOnHover.forEach(function (s) {
-                if (s === c) {
-                  shouldDelete = true;
-                }
-              });
-              return !shouldDelete;
+              return availableSlotOnHover !== c;
             });
             inst.setOptions({ colors: oldColors });
-            availableSlotsOnHover = [];
+            availableSlotOnHover = null;
+            availableCellOnHover = null;
           },
           onEventCreate: function (args, inst) {
             var event = args.event;
@@ -217,6 +327,10 @@ export default {
               return ev.resource === event.resource || +new Date(ev.start) === +new Date(event.start);
             });
             if (collideShift) {
+              mobiscroll.toast({
+                // context,
+                message: 'Unavailable timeslot!',
+              });
               return false;
             } else {
               var colors = inst.props.colors;
@@ -236,6 +350,12 @@ export default {
             }
             inst.updateEvent(event);
           },
+          onEventClick: function () {
+            mobiscroll.toast({
+              // context,
+              message: 'Unavailable timeslot!',
+            });
+          },
           onEventDelete: function (args, inst) {
             var colors = inst.props.colors;
             var colorStart = new Date(args.event.start);
@@ -246,9 +366,9 @@ export default {
             colorEnd.setHours(6, 0, 0, 0);
 
             if (colors) {
-              colors.push({ start: colorStart, end: colorEnd, background: '#fff0ed', resource: args.event.resource });
+              colors.push({ start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource });
             } else {
-              colors = [{ start: colorStart, end: colorEnd, background: '#fff0ed', resource: args.event.resource }];
+              colors = [{ start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource }];
             }
             var resource = args.event.resource;
             var day = new Date(args.event.start);
@@ -257,11 +377,21 @@ export default {
             inst.setOptions({
               colors: colors,
             });
+            mobiscroll.toast({
+              // context,
+              message: args.event.title + ' deleted!',
+            });
           },
           onEventDragStart: function (args) {
             draggedEventStart = args.event.start;
             draggedEventEnd = args.event.end;
             draggedEventResource = args.event.resource;
+          },
+          onEventUpdateFailed: function () {
+            mobiscroll.toast({
+              // context,
+              message: 'Unavailable timeslot!',
+            });
           },
           onEventUpdate: function (args, inst) {
             var event = args.event;
@@ -278,10 +408,15 @@ export default {
             });
             var evStart = new Date(event.start);
             event.title = getTitle(evStart.getHours());
+            event.color = getColor(evStart.getHours());
 
             if (collideShifts.length) {
+              var shouldReturn = false;
               collideShifts.forEach(function (sh, i) {
                 if (sh.resource === event.resource) {
+                  if (+event.start === +new Date(sh.start)) {
+                    shouldReturn = true;
+                  }
                   sh.resource = draggedEventResource;
                   collideShifts[i] = sh;
                 } else {
@@ -289,9 +424,13 @@ export default {
                   sh.end = draggedEventEnd;
                   var start = new Date(draggedEventStart);
                   sh.title = getTitle(start.getHours());
+                  sh.color = getColor(start.getHours());
                   collideShifts[i] = sh;
                 }
               });
+              if (shouldReturn) {
+                return false;
+              }
               inst.updateEvent([].concat(collideShifts, [event]));
             } else {
               inst.updateEvent([event]);
@@ -312,7 +451,7 @@ export default {
               day.setHours(0, 0, 0, 0);
               redResources[args.event.resource + day.toISOString()] = false;
               if (!collideShifts.length && args.event.resource !== draggedEventResource) {
-                colors.push({ start: date, resource: args.oldEvent.resource, background: '#fff0ed', end: colorEnd });
+                colors.push({ start: date, resource: args.oldEvent.resource, background: '#fff8f6', end: colorEnd });
                 redResources[args.oldEvent.resource + day.toISOString()] = true;
               }
               inst.setOptions({
@@ -325,12 +464,18 @@ export default {
           },
           groupBy: 'date',
           resources: [
-            { id: 'A', name: 'Crew A', color: '#f5baa6' },
-            { id: 'B', name: 'Crew B', color: '#9ee3a1' },
-            { id: 'C', name: 'Crew C', color: '#9cb5e3' },
+            { id: 'A', name: 'Crew A' },
+            { id: 'B', name: 'Crew B' },
+            { id: 'C', name: 'Crew C' },
           ],
+          renderCell: function (args) {
+            var isAvailable = args.resource.id + args.date.toISOString() === availableCellOnHover;
+            return isAvailable ? '<div class="mds-24-hour-manufacturing-cell-content-add"><span>+</span></div>' : '';
+          },
           renderResource: function (res, day) {
-            var style = redResources[res.id + day.toISOString()] ? ' style="color: #a65037; background: #fff0ed;"' : '';
+            var style = redResources[res.id + day.toISOString()]
+              ? ' style="color: #a65037; background: #fff8f6; margin: -0.5em; padding: 0.5em"'
+              : '';
             return '<div' + style + '>' + res.name + '</div>';
           },
           view: {
@@ -361,16 +506,25 @@ export default {
   right: 0;
 }
 
-.mds-24-hour-manufacturing-calendar .mbsc-schedule-resource-title {
-  padding: 0;
-}
-
 .mds-24-hour-manufacturing-calendar .mbsc-schedule-time-wrapper {
   height: 2.5em;
 }
 
 .mds-24-hour-manufacturing-calendar .mbsc-schedule-item {
   height: 2.5em;
+}
+
+.mds-24-hour-manufacturing-cell-content-add {
+  position: absolute;
+  inset: 6px 4px auto auto;
+  width: 17px;
+  height: 17px;
+  line-height: 13px;
+  text-align: center;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg,rgba(130, 130, 130, 1),rgba(70, 70, 70, 1));
 }
   `,
 };

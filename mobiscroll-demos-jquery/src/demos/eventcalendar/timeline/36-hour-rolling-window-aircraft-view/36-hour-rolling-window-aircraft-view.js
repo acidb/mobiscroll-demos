@@ -56,6 +56,8 @@ export default {
     }
 
     $(function () {
+      var currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
       var startTime = getStartTime();
       var endTime = getEndTime(startTime);
       $('#demo-36-hour-rolling-window-aircraft-view')
@@ -914,13 +916,18 @@ export default {
           },
           renderHour: function (args) {
             var d = args.date;
+            var dayDiff = Math.floor((d - currentDate) / (24 * 60 * 60 * 1000));
             return (
-              '<span class="mds-36-hour-time">' +
+              '<div>' +
+              mobiscroll.formatDate('DD DDD', d) +
+              '<span class="mds-36-hour-date">' +
+              (dayDiff > 0 ? ' +' + dayDiff + 'D' : '') +
+              '</span>' +
+              '</div>' +
+              '<div><span class="mds-36-hour-time">' +
               mobiscroll.formatDate('h A', d) +
               '</span>' +
-              '<span class="mds-36-hour-date">' +
-              mobiscroll.formatDate(' / D', d) +
-              '</span>'
+              '</div>'
             );
           },
           timezonePlugin: mobiscroll.dayjsTimezone,
@@ -951,12 +958,12 @@ export default {
 }
 
 .mds-36-hour-rolling-calendar .mds-36-hour-date {
-  color: #877d7dff
+  font-size: bold;
+  color: #e74949ff;
 }
 
 .mds-36-hour-rolling-calendar .mds-36-hour-time {
-  font-size: bold;
-  color: #e74949ff
+    color: #877d7dff;
 }
   `,
 };
