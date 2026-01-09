@@ -329,7 +329,7 @@ export default {
             if (collideShift) {
               mobiscroll.toast({
                 // context,
-                message: 'Unavailable timeslot!',
+                message: 'Already assigned',
               });
               return false;
             } else {
@@ -353,7 +353,7 @@ export default {
           onEventClick: function () {
             mobiscroll.toast({
               // context,
-              message: 'Unavailable timeslot!',
+              message: 'Already assigned',
             });
           },
           onEventDelete: function (args, inst) {
@@ -379,7 +379,7 @@ export default {
             });
             mobiscroll.toast({
               // context,
-              message: args.event.title + ' deleted!',
+              message: args.event.title + ' deleted',
             });
           },
           onEventDragStart: function (args) {
@@ -390,7 +390,7 @@ export default {
           onEventUpdateFailed: function () {
             mobiscroll.toast({
               // context,
-              message: 'Unavailable timeslot!',
+              message: 'Already assigned',
             });
           },
           onEventUpdate: function (args, inst) {
@@ -516,15 +516,18 @@ export default {
 
 .mds-24-hour-manufacturing-cell-content-add {
   position: absolute;
-  inset: 6px 4px auto auto;
-  width: 17px;
-  height: 17px;
-  line-height: 13px;
+  z-index: 0;
+  inset: 2.5em 0 0 0;
+  margin: auto;
+  width: 25px;
+  height: 25px;
+  line-height: 20px;
+  font-size: 24px;
   text-align: center;
-  color: #fff;
+  color: #e0fff0;
   border: none;
   border-radius: 50%;
-  background: linear-gradient(135deg,rgba(130, 130, 130, 1),rgba(70, 70, 70, 1));
+  background: linear-gradient(135deg,rgba(160, 160, 160, 0.6),rgba(93, 93, 93, 0.6));
 }
   `,
 };
