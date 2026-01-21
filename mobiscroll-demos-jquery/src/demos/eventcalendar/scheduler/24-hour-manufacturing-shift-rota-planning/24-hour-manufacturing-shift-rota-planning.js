@@ -86,6 +86,7 @@ export default {
       var availableSlotOnHover;
       var availableCellOnHover;
       var redResources = {};
+      var currentColors = [];
       $('#demo-24-hour-manufacturing-shift-rota-planning')
         .mobiscroll()
         .eventcalendar({
@@ -305,14 +306,15 @@ export default {
               }
             });
             if (availableSlotOnHover) {
-              inst.setOptions({ colors: (inst.props.colors || []).concat([availableSlotOnHover]) });
+              currentColors = currentColors.concat([availableSlotOnHover]);
+              inst.setOptions({ colors: currentColors });
             }
           },
           onCellHoverOut: function (args, inst) {
-            var oldColors = (inst.props.colors || []).filter(function (c) {
+            currentColors = currentColors.filter(function (c) {
               return availableSlotOnHover !== c;
             });
-            inst.setOptions({ colors: oldColors });
+            inst.setOptions({ colors: currentColors });
             availableSlotOnHover = null;
             availableCellOnHover = null;
           },
@@ -333,18 +335,17 @@ export default {
               });
               return false;
             } else {
-              var colors = inst.props.colors;
               var date = new Date(args.event.start);
               date.setHours(6, 0, 0, 0);
-              if (colors) {
-                colors = colors.filter(function (c) {
+              if (currentColors.length) {
+                currentColors = currentColors.filter(function (c) {
                   return !(c.resource === args.event.resource && +c.start === +date);
                 });
                 var day = new Date(args.event.start);
                 day.setHours(0, 0, 0, 0);
                 redResources[args.event.resource + day.toISOString()] = false;
                 inst.setOptions({
-                  colors: colors,
+                  colors: currentColors,
                 });
               }
             }
@@ -359,7 +360,6 @@ export default {
             });
           },
           onEventDelete: function (args, inst) {
-            var colors = inst.props.colors;
             var colorStart = new Date(args.event.start);
             colorStart.setHours(6, 0, 0, 0);
             var colorEnd = new Date(args.event.start);
@@ -367,17 +367,17 @@ export default {
             colorEnd.setDate(colorEndDate + 1);
             colorEnd.setHours(6, 0, 0, 0);
 
-            if (colors) {
-              colors.push({ start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource });
+            if (currentColors.length) {
+              currentColors.push({ start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource });
             } else {
-              colors = [{ start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource }];
+              currentColors = [{ start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource }];
             }
             var resource = args.event.resource;
             var day = new Date(args.event.start);
             day.setHours(0, 0, 0, 0);
             redResources[resource + day.toISOString()] = true;
             inst.setOptions({
-              colors: colors,
+              colors: currentColors,
             });
             mobiscroll.toast({
               // context,
@@ -438,31 +438,31 @@ export default {
               inst.updateEvent([event]);
             }
 
-            var colors = inst.props.colors;
             var date = new Date(args.event.start);
             date.setHours(6, 0, 0, 0);
             var colorEnd = new Date(args.event.start);
             var colorEndDate = colorEnd.getDate();
             colorEnd.setDate(colorEndDate + 1);
             colorEnd.setHours(6, 0, 0, 0);
-            if (colors) {
-              colors = colors.filter(function (c) {
+            if (currentColors.length) {
+              currentColors = currentColors.filter(function (c) {
                 return !(c.resource === args.event.resource && +c.start === +date);
               });
               var day = new Date(args.event.start);
               day.setHours(0, 0, 0, 0);
               redResources[args.event.resource + day.toISOString()] = false;
               if (!collideShifts.length && args.event.resource !== draggedEventResource) {
-                colors.push({ start: date, resource: args.oldEvent.resource, background: '#fff8f6', end: colorEnd });
+                currentColors.push({ start: date, resource: args.oldEvent.resource, background: '#fff8f6', end: colorEnd });
                 redResources[args.oldEvent.resource + day.toISOString()] = true;
               }
               inst.setOptions({
-                colors: colors,
+                colors: currentColors,
               });
             }
             draggedEventStart = null;
             draggedEventEnd = null;
             draggedEventResource = null;
+            currentColors = [];
           },
           groupBy: 'date',
           resources: [
