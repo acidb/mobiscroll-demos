@@ -348,6 +348,8 @@ export default {
                 });
               }
             }
+            availableCellOnHover = null;
+            availableSlotOnHover = null;
             inst.updateEvent(event);
           },
           onEventClick: function () {
@@ -516,8 +518,9 @@ export default {
 
 .mds-24-hour-manufacturing-cell-content-add {
   position: absolute;
-  z-index: 0;
-  inset: 2.5em 0 0 0;
+  z-index: 1;
+  pointer-events: none;
+  inset: 3.3em 0 0 0;
   margin: auto;
   width: 25px;
   height: 25px;
