@@ -38,7 +38,7 @@ export default {
       var durationMs = hoursToAdd * 60 * 60 * 1000;
       var endDate = new Date(+startDate + durationMs);
 
-      var dayOffset = Math.round((+endDate - +startDate) / (24 * 60 * 60 * 1000));
+      var dayOffset = Math.floor((+endDate - +startDate) / (24 * 60 * 60 * 1000));
 
       var newHours = endDate.getHours();
 
