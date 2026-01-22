@@ -19,47 +19,22 @@ export default {
       // theme
     });
 
-    function pad(n) {
-      return n < 10 ? '0' + n : n;
-    }
-
     function getStartTime() {
-      var date = new Date();
-      return pad(date.getHours()) + ':00';
+      return dayjs.utc().format('HH:00');
     }
 
-    function getEndTime(startTimeStr) {
-      var hoursToAdd = 36;
-      var startDate = new Date();
-
-      var hours = startTimeStr.split(':')[0];
-      startDate.setHours(hours);
-
-      var durationMs = hoursToAdd * 60 * 60 * 1000;
-      var endDate = new Date(+startDate + durationMs);
-
-      var dayOffset = Math.floor((+endDate - +startDate) / (24 * 60 * 60 * 1000));
-
-      var newHours = endDate.getHours();
-
-      var newTime = pad(newHours);
-      var newTimeStr = newTime + ':00';
-
-      var suffix = '';
-      if (dayOffset === 1) {
-        suffix = 1;
-      } else if (dayOffset > 1) {
-        suffix = dayOffset;
-      }
-
-      return newTimeStr + '+' + suffix;
+    function getEndTime() {
+      var start = dayjs.utc().startOf('hour');
+      var end = start.add(36, 'hours');
+      var dayOffset = end.diff(start, 'days');
+      var suffix = dayOffset > 0 ? '+' + dayOffset : '';
+      return end.format('HH:00') + suffix;
     }
 
     $(function () {
-      var currentDate = new Date();
-      currentDate.setHours(0, 0, 0, 0);
+      var currentDate = dayjs().startOf('day');
       var startTime = getStartTime();
-      var endTime = getEndTime(startTime);
+      var endTime = getEndTime();
       $('#demo-36-hour-rolling-window-aircraft-view')
         .mobiscroll()
         .eventcalendar({
@@ -916,7 +891,7 @@ export default {
           },
           renderHour: function (args) {
             var d = args.date;
-            var dayDiff = Math.floor((d - currentDate) / (24 * 60 * 60 * 1000));
+            var dayDiff = dayjs.utc(d).diff(currentDate, 'days');
             return (
               '<div>' +
               mobiscroll.formatDate('DD DDD', d) +
