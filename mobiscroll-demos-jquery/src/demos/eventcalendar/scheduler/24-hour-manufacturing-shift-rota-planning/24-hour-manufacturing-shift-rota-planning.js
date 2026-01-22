@@ -84,7 +84,6 @@ export default {
       var draggedEventEnd;
       var draggedEventResource;
       var availableSlotOnHover;
-      var availableCellOnHover;
       var redResources = {};
       var currentColors = [];
       $('#demo-24-hour-manufacturing-shift-rota-planning')
@@ -295,9 +294,10 @@ export default {
                 var startTime = startHours && colDate.setHours(startHours, 0, 0, 0);
                 var endTime = startTime && new Date(+startTime + 3600000 * 8 - 1);
                 if (startTime) {
-                  availableCellOnHover = args.resource.id + colDate.toISOString();
                   availableSlotOnHover = {
                     background: '#e0fff0',
+                    cssClass: 'available-slot',
+                    title: '+',
                     start: +startTime + 1,
                     end: endTime,
                     resource: args.resource.id,
@@ -316,7 +316,6 @@ export default {
             });
             inst.setOptions({ colors: currentColors });
             availableSlotOnHover = null;
-            availableCellOnHover = null;
           },
           onEventCreate: function (args, inst) {
             var event = args.event;
@@ -337,19 +336,17 @@ export default {
             } else {
               var date = new Date(args.event.start);
               date.setHours(6, 0, 0, 0);
-              if (currentColors.length) {
-                currentColors = currentColors.filter(function (c) {
-                  return !(c.resource === args.event.resource && +c.start === +date);
-                });
-                var day = new Date(args.event.start);
-                day.setHours(0, 0, 0, 0);
-                redResources[args.event.resource + day.toISOString()] = false;
-                inst.setOptions({
-                  colors: currentColors,
-                });
-              }
+              currentColors = currentColors.filter(function (c) {
+                var cs = +new Date(c.start);
+                return !((c.resource === args.event.resource && (cs === +date || cs === +date + 1)) || availableSlotOnHover === c);
+              });
+              var day = new Date(args.event.start);
+              day.setHours(0, 0, 0, 0);
+              redResources[args.event.resource + day.toISOString()] = false;
+              inst.setOptions({
+                colors: currentColors,
+              });
             }
-            availableCellOnHover = null;
             availableSlotOnHover = null;
             inst.updateEvent(event);
           },
@@ -444,25 +441,23 @@ export default {
             var colorEndDate = colorEnd.getDate();
             colorEnd.setDate(colorEndDate + 1);
             colorEnd.setHours(6, 0, 0, 0);
-            if (currentColors.length) {
-              currentColors = currentColors.filter(function (c) {
-                return !(c.resource === args.event.resource && +c.start === +date);
-              });
-              var day = new Date(args.event.start);
-              day.setHours(0, 0, 0, 0);
-              redResources[args.event.resource + day.toISOString()] = false;
-              if (!collideShifts.length && args.event.resource !== draggedEventResource) {
-                currentColors.push({ start: date, resource: args.oldEvent.resource, background: '#fff8f6', end: colorEnd });
-                redResources[args.oldEvent.resource + day.toISOString()] = true;
-              }
-              inst.setOptions({
-                colors: currentColors,
-              });
+            currentColors = currentColors.filter(function (c) {
+              var cs = +new Date(c.start);
+              return !(c.resource === args.event.resource && (cs === +date || cs === +date + 1));
+            });
+            var day = new Date(args.event.start);
+            day.setHours(0, 0, 0, 0);
+            redResources[args.event.resource + day.toISOString()] = false;
+            if (!collideShifts.length && args.event.resource !== draggedEventResource) {
+              currentColors.push({ start: date, resource: args.oldEvent.resource, background: '#fff8f6', end: colorEnd });
+              redResources[args.oldEvent.resource + day.toISOString()] = true;
             }
+            inst.setOptions({
+              colors: currentColors,
+            });
             draggedEventStart = null;
             draggedEventEnd = null;
             draggedEventResource = null;
-            currentColors = [];
           },
           groupBy: 'date',
           resources: [
@@ -470,10 +465,6 @@ export default {
             { id: 'B', name: 'Crew B' },
             { id: 'C', name: 'Crew C' },
           ],
-          renderCell: function (args) {
-            var isAvailable = args.resource.id + args.date.toISOString() === availableCellOnHover;
-            return isAvailable ? '<div class="mds-24-hour-manufacturing-cell-content-add"><span>+</span></div>' : '';
-          },
           renderResource: function (res, day) {
             var style = redResources[res.id + day.toISOString()]
               ? ' style="color: #a65037; background: #fff8f6; margin: -0.5em; padding: 0.5em"'
@@ -516,12 +507,17 @@ export default {
   height: 2.5em;
 }
 
-.mds-24-hour-manufacturing-cell-content-add {
+.mds-24-hour-manufacturing-calendar .mbsc-schedule-color.available-slot {
+  z-index: auto;
+}
+
+.mds-24-hour-manufacturing-calendar .mbsc-schedule-color.available-slot .mbsc-schedule-color-text {
   position: absolute;
   z-index: 1;
   pointer-events: none;
-  inset: 3.3em 0 0 0;
-  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 25px;
   height: 25px;
   line-height: 20px;
@@ -530,7 +526,7 @@ export default {
   color: #e0fff0;
   border: none;
   border-radius: 50%;
-  background: linear-gradient(135deg,rgba(160, 160, 160, 0.6),rgba(93, 93, 93, 0.6));
+  background: linear-gradient(135deg,rgba(160, 160, 160),rgba(93, 93, 93));
 }
   `,
 };
