@@ -9,75 +9,58 @@ export default {
       // theme
     });
 
+    var shifts = {
+      morning: { startHour: 6, endHour: 14, title: 'Morning Shift', color: '#4a8c4d' },
+      afternoon: { startHour: 14, endHour: 22, title: 'Afternoon Shift', color: '#f87c6b' },
+      night: { startHour: 22, endHour: 6, nextDay: true, title: 'Night Shift', color: '#8567AD' },
+    };
+
+    function getShiftByHour(hour) {
+      if (hour >= 6 && hour < 14) {
+        return shifts.morning;
+      }
+      if (hour >= 14 && hour < 22) {
+        return shifts.afternoon;
+      }
+      if (hour >= 22 || hour < 6) {
+        return shifts.night;
+      }
+      return shifts.afternoon;
+    }
+
     function calculateStart(start) {
-      var newStart = new Date(start);
-      var hours = start.getHours();
-      if (hours >= 6 && hours < 14) {
-        newStart.setHours(6, 0, 0, 0);
+      var d = new Date(start);
+      var originalHour = d.getHours();
+      var shift = getShiftByHour(originalHour);
+      d.setHours(shift.startHour, 0, 0, 0);
+      if (shift.startHour === 22 && originalHour < 6) {
+        d.setDate(d.getDate() - 1);
       }
-      if (hours >= 14 && hours < 22) {
-        newStart.setHours(14, 0, 0, 0);
-      }
-      if (hours >= 22 && hours < 24) {
-        newStart.setHours(22, 0, 0, 0);
-      }
-      if (hours >= 0 && hours < 6) {
-        var date = newStart.getDate();
-        newStart.setDate(date - 1);
-        newStart.setHours(22, 0, 0, 0);
-      }
-      return newStart;
+      return d;
     }
 
     function calculateEnd(start) {
-      var newEnd = new Date(start);
-      var hours = start.getHours();
-      if (hours >= 6 && hours < 14) {
-        newEnd.setHours(14, 0, 0, 0);
+      var d = new Date(start);
+      var startHour = d.getHours();
+      var shift = getShiftByHour(d.getHours());
+      d.setHours(shift.endHour, 0, 0, 0);
+      if (shift.nextDay && startHour === 22) {
+        d.setDate(d.getDate() + 1);
       }
-      if (hours >= 14 && hours < 22) {
-        newEnd.setHours(22, 0, 0, 0);
-      }
-      if (hours >= 22 && hours < 24) {
-        var date = newEnd.getDate();
-        newEnd.setDate(date + 1);
-        newEnd.setHours(6, 0, 0, 0);
-      }
-      if (hours >= 0 && hours < 6) {
-        newEnd.setHours(6, 0, 0, 0);
-      }
-      return newEnd;
+      return d;
     }
 
     function getTitle(startHours) {
-      switch (startHours) {
-        case 6:
-          return 'Morning Shift';
-        case 14:
-          return 'Afternoon Shift';
-        case 22:
-          return 'Night Shift';
-        default:
-          return 'Afternoon Shift';
-      }
+      return getShiftByHour(startHours).title;
+    }
+
+    function getColor(startHours) {
+      return getShiftByHour(startHours).color;
     }
 
     var morningColor = '#4a8c4d';
     var afternoonColor = '#f87c6b';
     var nightColor = '#8567AD';
-
-    function getColor(startHours) {
-      switch (startHours) {
-        case 6:
-          return morningColor;
-        case 14:
-          return afternoonColor;
-        case 22:
-          return nightColor;
-        default:
-          return afternoonColor;
-      }
-    }
 
     $(function () {
       var draggedEventStart;
@@ -86,6 +69,48 @@ export default {
       var availableSlotOnHover;
       var redResources = {};
       var currentColors = [];
+
+      function getAvailableSlots(inst, resourceId, dayStart) {
+        var dayEnd = new Date(dayStart);
+        dayEnd.setDate(dayEnd.getDate() + 1);
+        dayEnd.setHours(6, 0, 0, 0);
+        var dayEvents = inst.getEvents(dayStart, dayEnd);
+        var slots = { morning: true, afternoon: true, night: true };
+        dayEvents.forEach(function (e) {
+          if (e.resource === resourceId) {
+            slots.morning = slots.afternoon = slots.night = false;
+          } else {
+            var startHour = new Date(e.start).getHours();
+            if (startHour === 6) {
+              slots.morning = false;
+            } else if (startHour === 14) {
+              slots.afternoon = false;
+            } else if (startHour === 22) {
+              slots.night = false;
+            }
+          }
+        });
+        return slots;
+      }
+
+      function clearColorsForResource(currentColors, resourceId, date) {
+        var base = new Date(date);
+        base.setHours(0, 0, 0, 0);
+        var baseTime = +base;
+        return currentColors.filter(function (c) {
+          if (c.resource === resourceId) {
+            var cDate = new Date(c.start);
+            cDate.setHours(0, 0, 0, 0);
+            if (+cDate === baseTime) {
+              var hour = new Date(c.start).getHours();
+              if (hour === 6 || hour === 14 || hour === 22) {
+                return false;
+              }
+            }
+          }
+          return true;
+        });
+      }
       $('#demo-24-hour-manufacturing-shift-rota-planning')
         .mobiscroll()
         .eventcalendar({
@@ -255,58 +280,31 @@ export default {
             };
           },
           onCellHoverIn: function (args, inst) {
-            var colDate = new Date(args.date);
-            var hoveredHour = calculateStart(colDate);
-            colDate.setHours(6, 0, 0, 0);
-            var colEndDate = new Date(args.date);
-            var endDate = colEndDate.getDate();
-            colEndDate.setDate(endDate + 1);
-            colEndDate.setHours(6, 0, 0, 0);
-            var dayEvents = inst.getEvents(colDate, colEndDate);
-            var availableSlots = { morning: true, day: true, night: true };
-            dayEvents.forEach(function (e) {
-              if (e.resource === args.resource.id) {
-                availableSlots.morning = false;
-                availableSlots.day = false;
-                availableSlots.night = false;
-              } else {
-                var start = new Date(e.start);
-                var startHours = start.getHours();
-                if (startHours === 6) {
-                  availableSlots.morning = false;
-                } else if (startHours === 14) {
-                  availableSlots.day = false;
-                } else if (startHours === 22) {
-                  availableSlots.night = false;
-                }
-              }
+            var hoveredDate = new Date(args.date);
+            var shift = getShiftByHour(hoveredDate.getHours());
+            if (!shift) {
+              return;
+            }
+
+            var dayStart = new Date(args.date);
+            dayStart.setHours(6, 0, 0, 0);
+            var availableSlots = getAvailableSlots(inst, args.resource.id, dayStart);
+            var slotKey = Object.keys(availableSlots).find(function (key) {
+              return availableSlots[key] && shifts[key].startHour === shift.startHour;
             });
-            Object.keys(availableSlots).forEach(function (sl) {
-              if (availableSlots[sl]) {
-                var startHours;
-                if (sl === 'morning' && hoveredHour.getHours() === 6) {
-                  startHours = 6;
-                } else if (sl === 'day' && hoveredHour.getHours() === 14) {
-                  startHours = 14;
-                } else if (sl === 'night' && hoveredHour.getHours() === 22) {
-                  startHours = 22;
-                }
-                var startTime = startHours && colDate.setHours(startHours, 0, 0, 0);
-                var endTime = startTime && new Date(+startTime + 3600000 * 8 - 1);
-                if (startTime) {
-                  availableSlotOnHover = {
-                    background: '#e0fff0',
-                    cssClass: 'available-slot',
-                    title: '+',
-                    start: +startTime + 1,
-                    end: endTime,
-                    resource: args.resource.id,
-                  };
-                }
-              }
-            });
-            if (availableSlotOnHover) {
-              currentColors = currentColors.concat([availableSlotOnHover]);
+            if (slotKey) {
+              var startTime = new Date(dayStart);
+              startTime.setHours(shifts[slotKey].startHour, 0, 0, 0);
+              var endTime = new Date(+startTime + 8 * 60 * 60 * 1000 - 1);
+              availableSlotOnHover = {
+                background: '#e0fff0',
+                cssClass: 'available-slot',
+                title: '+',
+                start: +startTime + 1,
+                end: endTime,
+                resource: args.resource.id,
+              };
+              currentColors = [].concat(currentColors, [availableSlotOnHover]);
               inst.setOptions({ colors: currentColors });
             }
           },
@@ -319,36 +317,25 @@ export default {
           },
           onEventCreate: function (args, inst) {
             var event = args.event;
-            var eventEnd = calculateEnd(event.start);
-            event.end = eventEnd;
             var dayStart = new Date(event.start);
             dayStart.setHours(6, 0, 0, 0);
-            var dayEvents = inst.getEvents(dayStart);
-            var collideShift = dayEvents.find(function (ev) {
+            var dayEnd = new Date(dayStart);
+            dayEnd.setDate(dayEnd.getDate() + 1);
+            dayEnd.setHours(6, 0, 0, 0);
+            var dayEvents = inst.getEvents(dayStart, dayEnd);
+            var conflict = dayEvents.find(function (ev) {
               return ev.resource === event.resource || +new Date(ev.start) === +new Date(event.start);
             });
-            if (collideShift) {
-              mobiscroll.toast({
-                // context,
-                message: 'Already assigned',
-              });
+            if (conflict) {
+              mobiscroll.toast({ message: 'Already assigned' });
               return false;
-            } else {
-              var date = new Date(args.event.start);
-              date.setHours(6, 0, 0, 0);
-              currentColors = currentColors.filter(function (c) {
-                var cs = +new Date(c.start);
-                return !((c.resource === args.event.resource && (cs === +date || cs === +date + 1)) || availableSlotOnHover === c);
-              });
-              var day = new Date(args.event.start);
-              day.setHours(0, 0, 0, 0);
-              redResources[args.event.resource + day.toISOString()] = false;
-              inst.setOptions({
-                colors: currentColors,
-              });
             }
+            currentColors = clearColorsForResource(currentColors, event.resource, event.start);
+            var day = new Date(event.start);
+            day.setHours(0, 0, 0, 0);
+            redResources[event.resource + day.toISOString()] = false;
+            inst.setOptions({ colors: currentColors });
             availableSlotOnHover = null;
-            inst.updateEvent(event);
           },
           onEventClick: function () {
             mobiscroll.toast({
@@ -401,60 +388,59 @@ export default {
             if (+dayStart !== +dragStartDay) {
               return false;
             }
+
             var dayEvents = inst.getEvents(dayStart);
-            var collideShifts = dayEvents.filter(function (ev) {
+            var conflicts = dayEvents.filter(function (ev) {
               return ev.id !== event.id && (ev.resource === event.resource || +new Date(ev.start) === +new Date(event.start));
             });
             var evStart = new Date(event.start);
             event.title = getTitle(evStart.getHours());
             event.color = getColor(evStart.getHours());
 
-            if (collideShifts.length) {
+            if (conflicts.length) {
               var shouldReturn = false;
-              collideShifts.forEach(function (sh, i) {
+              conflicts.forEach(function (sh, i) {
                 if (sh.resource === event.resource) {
                   if (+event.start === +new Date(sh.start)) {
                     shouldReturn = true;
                   }
                   sh.resource = draggedEventResource;
-                  collideShifts[i] = sh;
+                  conflicts[i] = sh;
                 } else {
                   sh.start = draggedEventStart;
                   sh.end = draggedEventEnd;
                   var start = new Date(draggedEventStart);
                   sh.title = getTitle(start.getHours());
                   sh.color = getColor(start.getHours());
-                  collideShifts[i] = sh;
+                  conflicts[i] = sh;
                 }
               });
               if (shouldReturn) {
                 return false;
               }
-              inst.updateEvent([].concat(collideShifts, [event]));
+              inst.updateEvent([].concat(conflicts, [event]));
             } else {
-              inst.updateEvent([event]);
+              if (
+                dayEvents.some(function (ev) {
+                  return ev.id === event.id;
+                })
+              ) {
+                inst.updateEvent([event]);
+              }
             }
 
-            var date = new Date(args.event.start);
-            date.setHours(6, 0, 0, 0);
-            var colorEnd = new Date(args.event.start);
-            var colorEndDate = colorEnd.getDate();
-            colorEnd.setDate(colorEndDate + 1);
-            colorEnd.setHours(6, 0, 0, 0);
-            currentColors = currentColors.filter(function (c) {
-              var cs = +new Date(c.start);
-              return !(c.resource === args.event.resource && (cs === +date || cs === +date + 1));
-            });
-            var day = new Date(args.event.start);
+            currentColors = clearColorsForResource(currentColors, event.resource, event.start);
+            var day = new Date(event.start);
             day.setHours(0, 0, 0, 0);
-            redResources[args.event.resource + day.toISOString()] = false;
-            if (!collideShifts.length && args.event.resource !== draggedEventResource) {
-              currentColors.push({ start: date, resource: args.oldEvent.resource, background: '#fff8f6', end: colorEnd });
+            redResources[event.resource + day.toISOString()] = false;
+            if (!conflicts.length && event.resource !== draggedEventResource) {
+              var colorEnd = new Date(dayStart);
+              colorEnd.setDate(colorEnd.getDate() + 1);
+              colorEnd.setHours(6, 0, 0, 0);
+              currentColors.push({ start: dayStart, resource: args.oldEvent.resource, background: '#fff8f6', end: colorEnd });
               redResources[args.oldEvent.resource + day.toISOString()] = true;
             }
-            inst.setOptions({
-              colors: currentColors,
-            });
+            inst.setOptions({ colors: currentColors });
             draggedEventStart = null;
             draggedEventEnd = null;
             draggedEventResource = null;
