@@ -26,7 +26,8 @@ export default {
     function getEndTime() {
       var start = dayjs.utc().startOf('hour');
       var end = start.add(36, 'hours');
-      var dayOffset = end.diff(start, 'days');
+      var dayStart = dayjs.utc().startOf('day');
+      var dayOffset = Math.ceil(end.diff(dayStart, 'days'));
       var suffix = dayOffset > 0 ? '+' + dayOffset : '';
       return end.format('HH:00') + suffix;
     }
