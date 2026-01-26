@@ -188,6 +188,7 @@ import Demo613 from './demos/eventcalendar/scheduler/multiple-timezone-support/m
 import Demo699 from './demos/eventcalendar/scheduler/show-multiple-timezones/show-multiple-timezones.vue';
 import Demo709 from './demos/eventcalendar/scheduler/searching-events-in-sidebar/searching-events-in-sidebar.vue';
 import Demo741 from './demos/eventcalendar/scheduler/navigate-view-from-external-calendar/navigate-view-from-external-calendar.vue';
+import Demo2222 from './demos/eventcalendar/scheduler/24-hour-manufacturing-shift-rota-planning/24-hour-manufacturing-shift-rota-planning.vue';
 import Demo655 from './demos/eventcalendar/scheduler/custom-event-tooltip/custom-event-tooltip.vue';
 import Demo507 from './demos/eventcalendar/scheduler/customizing-events/customizing-events.vue';
 import Demo619 from './demos/eventcalendar/scheduler/date-header-template/date-header-template.vue';
@@ -247,6 +248,7 @@ import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/
 import Demo750 from './demos/eventcalendar/timeline/tasks-subtasks-under-shifts/tasks-subtasks-under-shifts.vue';
 import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search.vue';
 import Demo772 from './demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation.vue';
+import Demo111111 from './demos/eventcalendar/timeline/36-hour-rolling-window-aircraft-view/36-hour-rolling-window-aircraft-view.vue';
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline.vue';
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution.vue';
 import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom.vue';
@@ -840,6 +842,7 @@ export const demos = [
               { name: 'Work calendar', unique: 'work-week-hours', component: Demo581 },
               { name: 'Doctor’s appointment', unique: 'doctors-appointment', component: Demo721 },
               { name: 'Availability planner & appointment manager', unique: 'doctors-availability-calendar-planner', component: Demo769 },
+              { name: 'Continuous shift planning', unique: '24-hour-manufacturing-shift-rota-planning', component: Demo2222 },
             ],
           },
           {
@@ -991,6 +994,7 @@ export const demos = [
               { name: 'Managing tasks within shifts', unique: 'tasks-subtasks-under-shifts', component: Demo750 },
               { name: 'Resource filtering', unique: 'resource-filtering-search', component: Demo751 },
               { name: 'Set up custom teams', unique: 'resource-management-with-dynamic-team-creation', component: Demo772 },
+              { name: '36 hour rolling view', unique: '36-hour-rolling-window-aircraft-view', component: Demo111111 },
             ],
           },
           {
