@@ -52,13 +52,9 @@ const calculateEnd = (start) => {
   return d;
 };
 
-const getTitle = (startHours) => {
-  return getShiftByHour(startHours).title;
-};
+const getTitle = (startHours) => getShiftByHour(startHours).title;
 
-const getColor = (startHours) => {
-  return getShiftByHour(startHours).color;
-};
+const getColor = (startHours) => getShiftByHour(startHours).color;
 
 const initialEvents = [
   { id: 1, resource: 'A', title: 'Morning Shift', start: 'dyndatetime(y,m,d-6,6)', end: 'dyndatetime(y,m,d-6,14)', color: morningColor },
