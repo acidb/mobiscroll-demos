@@ -5,7 +5,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscResource,
-  setOptions,
+  setOptions /* localeImport */,
 } from '@mobiscroll/react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';

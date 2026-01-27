@@ -11,14 +11,14 @@ import {
   MbscEventUpdateEvent,
   MbscResource,
   setOptions,
-  Toast,
+  Toast /* localeImport */,
 } from '@mobiscroll/react';
 import { FC, useCallback, useState } from 'react';
 import './24-hour-manufacturing-shift-rota-planning.css';
 
 setOptions({
-  // locale,
-  // theme
+  // localeJs,
+  // themeJs
 });
 
 interface Shift {

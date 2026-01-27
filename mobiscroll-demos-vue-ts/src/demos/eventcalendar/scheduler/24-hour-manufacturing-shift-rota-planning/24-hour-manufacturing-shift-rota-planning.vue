@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { MbscEventcalendar, MbscToast, setOptions } from '@mobiscroll/vue'
+import { MbscEventcalendar, MbscToast, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import type {
   MbscCalendarColor,
   MbscCalendarEvent,
   MbscCellHoverEvent,
-  MbscDateType,
   MbscEventcalendarView,
   MbscEventCreateEvent,
   MbscEventDeleteEvent,
@@ -19,6 +18,16 @@ setOptions({
   // locale,
   // theme
 })
+
+const myEvents = ref<MbscCalendarEvent[]>(initialEvents)
+const colors = ref<MbscCalendarColor[]>([])
+const redResources = ref<Record<string, boolean>>({})
+const draggedEventStart = ref<Date | null | undefined>(null)
+const draggedEventEnd = ref<Date | null | undefined>(null)
+const draggedEventResource = ref<string | number | (string | number)[] | null | undefined>(null)
+const availableSlotOnHover = ref<MbscCalendarColor | null>(null)
+const isToastOpen = ref<boolean>(false)
+const toastMessage = ref<string>('')
 
 const morningColor = '#4a8c4d'
 const afternoonColor = '#f87c6b'
@@ -441,16 +450,6 @@ const initialEvents: MbscCalendarEvent[] = [
   }
   //</hide-comment>
 ]
-
-const myEvents = ref<MbscCalendarEvent[]>(initialEvents)
-const colors = ref<MbscCalendarColor[]>([])
-const redResources = ref<Record<string, boolean>>({})
-const draggedEventStart = ref<Date | null | undefined>(null)
-const draggedEventEnd = ref<Date | null | undefined>(null)
-const draggedEventResource = ref<string | number | (string | number)[] | null | undefined>(null)
-const availableSlotOnHover = ref<MbscCalendarColor | null>(null)
-const isToastOpen = ref<boolean>(false)
-const toastMessage = ref<string>('')
 
 const resources: MbscResource[] = [
   { id: 'A', name: 'Crew A' },

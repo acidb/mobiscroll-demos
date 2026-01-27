@@ -1,11 +1,21 @@
 <script setup>
-import { MbscEventcalendar, MbscToast, setOptions } from '@mobiscroll/vue'
+import { MbscEventcalendar, MbscToast, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import { ref } from 'vue'
 
 setOptions({
   // locale,
   // theme
 })
+
+const myEvents = ref(initialEvents)
+const colors = ref([])
+const redResources = ref({})
+const draggedEventStart = ref(null)
+const draggedEventEnd = ref(null)
+const draggedEventResource = ref(null)
+const availableSlotOnHover = ref(null)
+const isToastOpen = ref(false)
+const toastMessage = ref('')
 
 const morningColor = '#4a8c4d'
 const afternoonColor = '#f87c6b'
@@ -421,15 +431,15 @@ const initialEvents = [
   //</hide-comment>
 ]
 
-const myEvents = ref(initialEvents)
-const colors = ref([])
-const redResources = ref({})
-const draggedEventStart = ref(null)
-const draggedEventEnd = ref(null)
-const draggedEventResource = ref(null)
-const availableSlotOnHover = ref(null)
-const isToastOpen = ref(false)
-const toastMessage = ref('')
+// const myEvents = ref(initialEvents)
+// const colors = ref([])
+// const redResources = ref({})
+// const draggedEventStart = ref(null)
+// const draggedEventEnd = ref(null)
+// const draggedEventResource = ref(null)
+// const availableSlotOnHover = ref(null)
+// const isToastOpen = ref(false)
+// const toastMessage = ref('')
 
 const resources = [
   { id: 'A', name: 'Crew A' },

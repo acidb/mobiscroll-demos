@@ -1,10 +1,10 @@
-import { Eventcalendar, setOptions, Toast } from '@mobiscroll/react';
+import { Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import { useCallback, useState } from 'react';
 import './24-hour-manufacturing-shift-rota-planning.css';
 
 setOptions({
-  // locale,
-  // theme
+  // localeJs,
+  // themeJs
 });
 
 const morningColor = '#4a8c4d';

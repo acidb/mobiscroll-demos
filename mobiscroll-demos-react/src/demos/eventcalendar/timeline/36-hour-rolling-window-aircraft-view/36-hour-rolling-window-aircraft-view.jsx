@@ -1,4 +1,4 @@
-import { Eventcalendar, formatDate, setOptions } from '@mobiscroll/react';
+import { Eventcalendar, formatDate, setOptions /* localeImport */ } from '@mobiscroll/react';
 import { dayjsTimezone } from '@mobiscroll/react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';

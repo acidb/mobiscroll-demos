@@ -1,11 +1,7 @@
 <script setup>
 import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
-
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-
-dayjs.extend(utc)
-
 import { computed } from 'vue'
 
 setOptions({
@@ -13,16 +9,7 @@ setOptions({
   // theme
 })
 
-const startTime = computed(() => dayjs.utc().format('HH:00'))
-
-const endTime = computed(() => {
-  const start = dayjs.utc().startOf('hour')
-  const end = start.add(36, 'hours')
-  const dayStart = dayjs.utc().startOf('day')
-  const dayOffset = Math.ceil(end.diff(dayStart, 'days'))
-  const suffix = dayOffset > 0 ? '+' + dayOffset : ''
-  return end.format('HH:00') + suffix
-})
+dayjs.extend(utc)
 
 const myEvents = [
   {
@@ -858,6 +845,8 @@ const myResources = [
   //</hide-comment>
 ]
 
+const dayDiff = (d) => dayjs.utc(d).diff(dayjs().startOf('day'), 'days')
+
 const myView = computed(() => ({
   timeline: {
     type: 'day',
@@ -866,7 +855,16 @@ const myView = computed(() => ({
   }
 }))
 
-const dayDiff = (d) => dayjs.utc(d).diff(dayjs().startOf('day'), 'days')
+const startTime = computed(() => dayjs.utc().format('HH:00'))
+
+const endTime = computed(() => {
+  const start = dayjs.utc().startOf('hour')
+  const end = start.add(36, 'hours')
+  const dayStart = dayjs.utc().startOf('day')
+  const dayOffset = Math.ceil(end.diff(dayStart, 'days'))
+  const suffix = dayOffset > 0 ? '+' + dayOffset : ''
+  return end.format('HH:00') + suffix
+})
 </script>
 
 <template>
