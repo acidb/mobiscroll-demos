@@ -920,11 +920,6 @@ export default {
     height: 32px;
 }
 
-.mds-36-hour-rolling-calendar .mbsc-timeline-day-limit {
-  border-left-style: solid;
-  border-left-width: 1px;
-}
-
 .mds-36-hour-rolling-calendar .mds-36-hour-resource-header {
   font-weight: 100;
 }

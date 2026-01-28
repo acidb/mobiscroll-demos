@@ -469,10 +469,6 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-24-hour-manufacturing-calendar .mbsc-schedule-day-limit {
-  border-top-width: 2px;
-}
-
 .mds-24-hour-manufacturing-calendar .mbsc-schedule-events {
   left: 0;
   right: 0;
