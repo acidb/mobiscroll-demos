@@ -229,7 +229,7 @@ import Demo777 from './demos/eventcalendar/scheduler/show-cell-summary-on-hover/
 import Demo486 from './demos/eventcalendar/scheduler/gregorian-jalali-hijri/gregorian-jalali-hijri';
 import Demo487 from './demos/eventcalendar/scheduler/event-hooks/event-hooks';
 import Demo488 from './demos/eventcalendar/scheduler/localization/localization';
-import Demo617 from './demos/eventcalendar/timeline/month-view/month-view';
+import Demo617 from './demos/eventcalendar/timeline/calendar-timeline/calendar-timeline';
 import Demo604 from './demos/eventcalendar/timeline/timeline-time-grid/timeline-time-grid';
 import Demo660 from './demos/eventcalendar/timeline/printing-the-view/printing-the-view';
 import Demo621 from './demos/eventcalendar/timeline/employee-shifts/employee-shifts';

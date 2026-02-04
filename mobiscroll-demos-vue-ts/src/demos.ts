@@ -228,7 +228,7 @@ import Demo777 from './demos/eventcalendar/scheduler/show-cell-summary-on-hover/
 import Demo486 from './demos/eventcalendar/scheduler/gregorian-jalali-hijri/gregorian-jalali-hijri.vue'
 import Demo487 from './demos/eventcalendar/scheduler/event-hooks/event-hooks.vue'
 import Demo488 from './demos/eventcalendar/scheduler/localization/localization.vue'
-import Demo617 from './demos/eventcalendar/timeline/month-view/month-view.vue'
+import Demo617 from './demos/eventcalendar/timeline/calendar-timeline/calendar-timeline.vue'
 import Demo604 from './demos/eventcalendar/timeline/timeline-time-grid/timeline-time-grid.vue'
 import Demo660 from './demos/eventcalendar/timeline/printing-the-view/printing-the-view.vue'
 import Demo621 from './demos/eventcalendar/timeline/employee-shifts/employee-shifts.vue'
@@ -1406,6 +1406,26 @@ export const demos = [
             name: 'Common use cases',
             unique: 20,
             items: [
+              {
+                name: 'Employee shift/rota planning',
+                unique: 'employee-shifts',
+                component: Demo621
+              },
+              {
+                name: 'Work order scheduling',
+                unique: 'work-order-scheduling',
+                component: Demo626
+              },
+              {
+                name: 'Meeting planner across timezones',
+                unique: 'timezone-meeting-planner',
+                component: Demo627
+              },
+              {
+                name: 'Restaurant shift management',
+                unique: 'restaurant-shift-management',
+                component: Demo634
+              },
               {
                 name: 'Employee shift/rota planning',
                 unique: 'employee-shifts',
