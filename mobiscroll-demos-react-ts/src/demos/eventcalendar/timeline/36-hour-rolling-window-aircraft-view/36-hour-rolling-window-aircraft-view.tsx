@@ -25,8 +25,7 @@ const App: FC = () => {
   const endTime = useMemo(() => {
     const start = dayjs.utc().startOf('hour');
     const end = start.add(36, 'hours');
-    const dayStart = dayjs.utc().startOf('day');
-    const dayOffset = Math.ceil(end.diff(dayStart, 'days'));
+    const dayOffset = end.startOf('day').diff(start.startOf('day'), 'days');
     const suffix = dayOffset > 0 ? '+' + dayOffset : '';
     return end.format('HH:00') + suffix;
   }, []);
