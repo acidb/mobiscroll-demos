@@ -520,8 +520,7 @@ const handleCellHoverIn = (args) => {
     const endTime = new Date(+startTime + 8 * 60 * 60 * 1000 - 1)
     const slot = {
       background: '#e0fff0',
-      cssClass: 'available-slot',
-      title: '+',
+      cssClass: 'available-slot mbsc-font-icon mbsc-icon-plus',
       start: +startTime + 1,
       end: endTime,
       resource: args.resource.id
@@ -766,14 +765,23 @@ const handleToastClose = () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 25px;
-  height: 25px;
-  line-height: 20px;
-  font-size: 24px;
-  text-align: center;
-  color: #e0fff0;
+  width: 35px;
+  height: 35px;
   border: none;
   border-radius: 50%;
   background: linear-gradient(135deg, rgba(160, 160, 160), rgba(93, 93, 93));
+  box-sizing: border-box;
+}
+
+.mds-24-hour-manufacturing-calendar .mbsc-schedule-color.available-slot.mbsc-font-icon:before {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  color: #e0fff0;
+  font-size: 12px;
+  opacity: 0.8;
+  transform: translate(-50%, -50%);
 }
 </style>

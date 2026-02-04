@@ -323,8 +323,7 @@ export class AppComponent {
         const endTime = new Date(+startTime + 8 * 60 * 60 * 1000 - 1);
         this.availableSlotOnHover = {
           background: '#e0fff0',
-          cssClass: 'available-slot',
-          title: '+',
+          cssClass: 'available-slot mbsc-font-icon mbsc-icon-plus',
           start: (+startTime + 1) as any,
           end: endTime,
           resource: String(args.resource.id),

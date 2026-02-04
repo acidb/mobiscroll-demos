@@ -318,8 +318,7 @@ const App: FC = () => {
         const endTime = new Date(+startTime + 8 * 60 * 60 * 1000 - 1);
         const slot: MbscCalendarColor = {
           background: '#e0fff0',
-          cssClass: 'available-slot',
-          title: '+',
+          cssClass: 'available-slot mbsc-font-icon mbsc-icon-plus',
           start: startTime as MbscDateType,
           end: endTime,
           resource: String(args.resource.id),
