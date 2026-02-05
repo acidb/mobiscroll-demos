@@ -431,16 +431,6 @@ const initialEvents = [
   //</hide-comment>
 ]
 
-// const myEvents = ref(initialEvents)
-// const colors = ref([])
-// const redResources = ref({})
-// const draggedEventStart = ref(null)
-// const draggedEventEnd = ref(null)
-// const draggedEventResource = ref(null)
-// const availableSlotOnHover = ref(null)
-// const isToastOpen = ref(false)
-// const toastMessage = ref('')
-
 const resources = [
   { id: 'A', name: 'Crew A' },
   { id: 'B', name: 'Crew B' },
