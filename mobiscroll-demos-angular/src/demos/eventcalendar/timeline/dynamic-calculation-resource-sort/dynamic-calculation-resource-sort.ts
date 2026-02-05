@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscEventcalendar,
@@ -6,6 +8,7 @@ import {
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscEventUpdatedEvent,
+  MbscModule,
   MbscPageLoadingEvent,
   MbscPopup,
   MbscPopupButton,
@@ -39,7 +42,8 @@ interface MyResource extends MbscResource {
   styleUrl: './dynamic-calculation-resource-sort.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './dynamic-calculation-resource-sort.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
@@ -283,7 +287,7 @@ export class AppComponent {
   popupAnchor!: HTMLButtonElement;
   sortColumn: 'standby' | 'payload' | 'deadhead' | 'name' = 'standby';
   sortDirection: 'asc' | 'desc' = 'asc';
-  sortRequests: number = 0;
+  sortRequests = 0;
   sortedResources: MyResource[] = this.myResources;
   tempEvent!: MyEvent;
   tempSortColumn: 'standby' | 'payload' | 'deadhead' | 'name' = 'standby';
@@ -298,13 +302,13 @@ export class AppComponent {
     },
   };
 
-  sortColumnLabels: { [key: string]: string } = {
+  sortColumnLabels: Record<string, string> = {
     standby: 'Standby Time',
     payload: 'Payload Efficiency',
     deadhead: 'Deadhead Time',
   };
 
-  popupButtons: Array<MbscPopupButton | 'cancel'> = [
+  popupButtons: (MbscPopupButton | 'cancel')[] = [
     'cancel',
     {
       text: 'Apply',

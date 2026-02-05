@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscPopup,
   MbscPopupOptions,
   Notifications,
@@ -21,7 +24,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './meal-planner.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(

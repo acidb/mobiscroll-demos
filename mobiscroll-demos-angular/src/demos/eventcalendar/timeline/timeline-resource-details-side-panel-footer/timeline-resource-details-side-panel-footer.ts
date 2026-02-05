@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
@@ -5,6 +6,7 @@ import {
   MbscCalendarEvent,
   MbscEventcalendar,
   MbscEventcalendarView,
+  MbscModule,
   MbscResource,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -26,7 +28,8 @@ interface MyResource extends MbscResource {
   styleUrl: './timeline-resource-details-side-panel-footer.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timeline-resource-details-side-panel-footer.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
@@ -37,10 +40,10 @@ export class AppComponent implements OnInit {
   formatDate = formatDate;
   myEvents: MbscCalendarEvent[] = [];
   loadedEvents: MbscCalendarEvent[] = [];
-  sortColumn: string = '';
-  sortDirection: string = 'asc';
+  sortColumn = '';
+  sortDirection = 'asc';
   sortDay: number | undefined;
-  totalRevenue: number = 0;
+  totalRevenue = 0;
 
   myResources: MyResource[] = [
     { id: 1, name: 'Horizon', seats: 1200, color: '#4a4a4a', price: 1000 },

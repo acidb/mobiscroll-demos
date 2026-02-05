@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -9,7 +10,8 @@ setOptions({
 @Component({
   selector: 'app-eventcalendar-recurring-events',
   templateUrl: './recurring-events.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [
@@ -57,7 +59,7 @@ export class AppComponent {
     },
   ];
 
-  view = {
+  myView: MbscEventcalendarView = {
     calendar: { labels: true },
   };
 }

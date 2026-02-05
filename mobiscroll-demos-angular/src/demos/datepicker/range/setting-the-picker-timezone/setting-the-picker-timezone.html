@@ -1,14 +1,18 @@
-<mbsc-datepicker
-  [options]="options"
-  [(ngModel)]="selected"
-  inputStyle="outline"
-  labelStyle="stacked"
-  label="Pick Date &amp; Time in Display Timezone"
-></mbsc-datepicker>
-<div class="mbsc-padding">
-  <p *ngIf="selected">
-    Selected<br />
-    <code>From: {{selected[0]}}</code><br />
-    <code>To: {{selected[1]}}</code>
-  </p>
-</div>
+<mbsc-page>
+  <mbsc-datepicker
+    inputStyle="outline"
+    labelStyle="stacked"
+    label="Pick Date &amp; Time in Display Timezone"
+    select="range"
+    [(ngModel)]="mySelected"
+    [timezonePlugin]="myTimezonePlugin"
+    [controls]="['calendar', 'time']"
+  ></mbsc-datepicker>
+  <div class="mbsc-padding">
+    <p *ngIf="mySelected">
+      Selected<br />
+      <code>From: {{mySelected[0]}}</code><br />
+      <code>To: {{mySelected[1]}}</code>
+    </p>
+  </div>
+</mbsc-page>

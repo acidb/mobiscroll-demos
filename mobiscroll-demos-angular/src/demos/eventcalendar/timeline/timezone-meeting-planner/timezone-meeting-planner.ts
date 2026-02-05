@@ -1,21 +1,31 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
+  dayjsTimezone,
   formatDate,
   MbscCalendarEvent,
-  MbscEventcalendarOptions,
-  momentTimezone,
+  MbscEventcalendarView,
+  MbscEventCreatedEvent,
+  MbscEventDeletedEvent,
+  MbscEventUpdatedEvent,
+  MbscModule,
+  MbscTimezonePlugin,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { dyndatetime } from '../../../../app/app.util';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
 
 setOptions({
   // locale,
   // theme
 });
-
-momentTimezone.moment = moment;
 
 @Component({
   selector: 'app-timeline-timezone-meeting-planner',
@@ -23,10 +33,11 @@ momentTimezone.moment = moment;
   encapsulation: ViewEncapsulation.None,
   templateUrl: './timezone-meeting-planner.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) {}
+  constructor(private notify: Notifications) { }
   myEvents: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d,13'),
@@ -82,61 +93,92 @@ export class AppComponent {
     },
   ];
 
-  details = this.getDetails();
-
-  calendarOptions: MbscEventcalendarOptions = {
-    timezonePlugin: momentTimezone,
-    dataTimezone: 'utc',
-    displayTimezone: 'utc',
-    clickToCreate: true,
-    dragToCreate: true,
-    dragToMove: true,
-    dragToResize: true,
-    dragTimeStep: 60,
-    height: 400,
-    view: {
-      timeline: {
-        type: 'week',
-        timeLabelStep: 1440,
-      },
-    },
-    colors: this.details.colors,
-    invalid: this.details.invalid,
-    extendDefaultEvent: function () {
-      return { resource: [1, 2, 3, 4, 5, 6] };
-    },
-    onEventCreated: (args) => {
-      setTimeout(() => {
-        this.myEvents = [...this.myEvents, args.event];
-        this.notify.toast({
-          message: 'Event created',
-        });
-      });
-    },
-    onEventUpdated: (args) => {
-      setTimeout(() => {
-        const index = this.myEvents.findIndex((x) => x.id === args.event.id);
-        const newEventList = [...this.myEvents];
-
-        newEventList.splice(index, 1, args.event);
-        this.myEvents = newEventList;
-        this.notify.toast({
-          message: 'Event updated',
-        });
-      });
-    },
-    onEventDeleted: (args) => {
-      setTimeout(() => {
-        this.myEvents = this.myEvents.filter((item) => item.id !== args.event.id);
-      });
-    },
-    onEventCreateFailed: (args) => {
-      this.createUpdateEvent(args.event, true);
-    },
-    onEventUpdateFailed: (args) => {
-      this.createUpdateEvent(args.event, false);
+  myView: MbscEventcalendarView = {
+    timeline: {
+      type: 'week',
+      timeLabelStep: 1440,
     },
   };
+
+  myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;
+  myDefaultEvent(): MbscCalendarEvent { return { resource: [1, 2, 3, 4, 5, 6] }; }
+  myInvalid: MbscCalendarEvent[] = this.getInvalids();
+
+  getHourProps(h: number, timezone: string) {
+    const offset = this.getUtcOffset(timezone);
+    const hour = h + offset;
+    const isAM = hour % 24 < 12;
+    const title = ((hour % 12) + 12) % 12 || 12;
+    const hForProps = title + ((title === 12 && !isAM) || (title !== 12 && isAM) ? 0 : 12);
+    let color = '#f7f7bb4d';
+    let invalid = false;
+
+    if (hForProps < 6 || hForProps >= 22) {
+      color = '#ffbaba4d';
+      invalid = true;
+    } else if (hForProps < 8 || (hForProps >= 18 && hForProps < 22)) {
+      color = '#a5ceff4d';
+    }
+
+    return {
+      hour: hour,
+      isAM: isAM,
+      title: title,
+      color: color,
+      invalid: invalid,
+    };
+  }
+
+  getInvalids(): MbscCalendarEvent[] {
+    const invalid: MbscCalendarEvent[] = [];
+
+    for (const resource of this.myResources) {
+      for (let i = 0; i < 24; ++i) {
+        if (this.getHourProps(i, resource.timezone).invalid) {
+          const startTime = (i < 10 ? '0' : '') + i + ':00:00';
+          const endTime = (i < 9 ? '0' : '') + (i + 1) + ':00:00';
+
+          invalid.push({
+            start: startTime,
+            end: endTime,
+            resource: resource.id,
+            recurring: {
+              repeat: 'daily',
+            },
+          });
+        }
+      }
+    }
+    return invalid;
+  }
+
+  onEventCreated(args: MbscEventCreatedEvent): void {
+    setTimeout(() => {
+      this.myEvents = [...this.myEvents, args.event];
+      this.notify.toast({
+        message: 'Event created',
+      });
+    });
+  }
+
+  onEventUpdated(args: MbscEventUpdatedEvent): void {
+    setTimeout(() => {
+      const index = this.myEvents.findIndex((x) => x.id === args.event.id);
+      const newEventList = [...this.myEvents];
+
+      newEventList.splice(index, 1, args.event);
+      this.myEvents = newEventList;
+      this.notify.toast({
+        message: 'Event updated',
+      });
+    });
+  }
+
+  onEventDeleted(args: MbscEventDeletedEvent): void {
+    setTimeout(() => {
+      this.myEvents = this.myEvents.filter((item) => item.id !== args.event.id);
+    });
+  }
 
   createUpdateEvent(event: any, isNew: boolean): void {
     this.notify.confirm({
@@ -185,59 +227,6 @@ export class AppComponent {
       default:
         return 0;
     }
-  }
-
-  getProps(h: number): object {
-    if (h < 6) {
-      return { color: '#ffbaba4d', invalid: true };
-    } else if (h < 8) {
-      return { color: '#a5ceff4d' };
-    } else if (h < 18) {
-      return { color: '#f7f7bb4d' };
-    } else if (h < 22) {
-      return { color: '#a5ceff4d' };
-    } else {
-      return { color: '#ffbaba4d', invalid: true };
-    }
-  }
-
-  getDetails(): any {
-    const colors = [];
-    const invalid = [];
-
-    for (const resource of this.myResources) {
-      for (let i = 0; i < 24; ++i) {
-        const hour = i + this.getUtcOffset(resource.timezone);
-        const isAM = i < 12 ? hour >= 0 && hour < 12 : !(hour >= 12 && hour < 24);
-        const startTime = (i < 10 ? '0' : '') + i + ':00';
-        const endTime = (i < 9 ? '0' : '') + (i + 1) + ':00';
-        const title = hour % 12 === 0 ? 12 : hour < 0 ? 12 + hour : hour <= 12 ? hour : hour % 12;
-        const props: any = this.getProps(title + ((title === 12 && !isAM) || (title !== 12 && isAM) ? 0 : 12));
-
-        colors.push({
-          start: startTime,
-          end: endTime,
-          title: title + (isAM ? ' AM' : ' PM'),
-          background: props.color,
-          recurring: {
-            repeat: 'daily',
-          },
-          resource: resource.id,
-        });
-
-        if (props.invalid) {
-          invalid.push({
-            start: startTime,
-            end: endTime,
-            resource: resource.id,
-            recurring: {
-              repeat: 'daily',
-            },
-          });
-        }
-      }
-    }
-    return { colors, invalid };
   }
 
   getTitleTime(data: any): string {

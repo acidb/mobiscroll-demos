@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscPopup,
   MbscPopupButton,
   MbscPopupOptions,
@@ -22,7 +25,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-filtering-search.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {
@@ -30,7 +34,7 @@ export class AppComponent {
       this.myFilters.push({ id: site.id as string, name: site.name as string, value: true });
     });
 
-    this.filters = this.myFilters.reduce<{ [key: string]: boolean }>((map, filter) => {
+    this.filters = this.myFilters.reduce<Record<string, boolean>>((map, filter) => {
       map[filter.id] = true;
       return map;
     }, {});
@@ -1343,12 +1347,12 @@ export class AppComponent {
   @ViewChild('filterButton') anchorElm!: ElementRef;
   popupAnchor!: HTMLButtonElement;
   filteredResources: MbscResource[] = this.myResources;
-  searchQuery: string = '';
-  filters: { [key: string]: boolean } = {};
-  tempFilters: { [key: string]: boolean } = {};
+  searchQuery = '';
+  filters: Record<string, boolean> = {};
+  tempFilters: Record<string, boolean> = {};
   searchTimeout: ReturnType<typeof setTimeout> | undefined;
 
-  filterResources(currentFilters: { [key: string]: boolean }, currentQuery: string) {
+  filterResources(currentFilters: Record<string, boolean>, currentQuery: string) {
     this.filteredResources = this.myResources
       .map((site) => ({
         id: site.id,
@@ -1380,7 +1384,7 @@ export class AppComponent {
   }
 
   resetFilters() {
-    const updatedFilters = this.myFilters.reduce<{ [key: string]: boolean }>((map, filter) => {
+    const updatedFilters = this.myFilters.reduce<Record<string, boolean>>((map, filter) => {
       map[filter.id] = true;
       return map;
     }, {});
@@ -1433,7 +1437,7 @@ export class AppComponent {
     width: 400,
   };
 
-  popupButtons: Array<MbscPopupButton | 'cancel'> = [
+  popupButtons: (MbscPopupButton | 'cancel')[] = [
     'cancel',
     {
       handler: () => {

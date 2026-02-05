@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscDatepickerOptions, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscDatepickerOptions, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -9,7 +10,8 @@ setOptions({
 @Component({
   selector: 'app-calendar-single-select',
   templateUrl: './single-select.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   dateOptions: MbscDatepickerOptions = {

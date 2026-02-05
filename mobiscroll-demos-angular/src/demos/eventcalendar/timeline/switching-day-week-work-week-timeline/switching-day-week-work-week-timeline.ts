@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -13,20 +15,21 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './switching-day-week-work-week-timeline.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private notify: Notifications,
-  ) {}
+  ) { }
 
   myEvents: MbscCalendarEvent[] = [];
   view = 'week';
   calView: MbscEventcalendarView = {
     timeline: {
       type: 'week',
-    },
+    }
   };
 
   myResources = [

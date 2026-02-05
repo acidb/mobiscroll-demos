@@ -1,0 +1,114 @@
+<div class="mbsc-grid mbsc-no-padding mds-drag-drop-sort mds-full-height">
+  <div class="mbsc-row mds-full-height">
+    <div class="mbsc-col-sm-3 mds-drag-drop-sort-container-wrapper mds-full-height">
+      <div class="mbsc-txt-muted mds-third-party-title">Mobiscroll draggable</div>
+      <div class="mbsc-flex">
+        <div class="mbsc-col-sm-6 mbsc-flex-col">
+          <div class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
+            <div class="mbsc-txt-muted mds-third-party-list-title">Event list</div>
+            <mbsc-dropcontainer (onItemDrop)="onItemDrop($event)">
+              <div
+                mbsc-draggable
+                *ngFor="let task of myDraggableTasks"
+                class="mds-drag-drop-sort-task"
+                [style.background]="task.color"
+                [dragData]="task"
+              >
+                <div>{{task.title}}</div>
+                <div>{{getHours(task)}}</div>
+              </div>
+            </mbsc-dropcontainer>
+          </div>
+        </div>
+        <div class="mbsc-col-sm-6 mbsc-flex-col">
+          <div class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
+            <div class="mds-third-party-list-title mbsc-txt-muted">Resource list</div>
+            <div
+              mbsc-draggable
+              *ngFor="let res of myDraggableResources"
+              class="mds-drag-drop-sort-task"
+              [style.background]="'#80808099'"
+              [dragData]="res"
+              type="resource"
+            >
+              <div>{{res.name}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mbsc-txt-muted mds-third-party-title">SortableJS (externally sortable)</div>
+      <div class="mbsc-flex">
+        <div class="mbsc-col-sm-6 mbsc-flex-col">
+          <div class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
+            <div class="mds-third-party-list-title mbsc-txt-muted">Event list</div>
+            <div class="mbsc-flex-col mbsc-flex-1-0" #demoSortableTaskList>
+              <div
+                *ngFor="let task of mySortableTasks"
+                class="mds-drag-drop-sort-task"
+                [style.background]="task.color"
+                [attr.data-drag-data]="getTaskDragData(task)"
+              >
+                <div>{{task.title}}</div>
+                <div>{{getHours(task)}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mbsc-col-sm-6 mbsc-flex-col">
+          <div class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
+            <div class="mds-third-party-list-title mbsc-txt-muted">Resource list</div>
+            <div class="mbsc-flex-col mbsc-flex-1-0" #demoSortableResourceList>
+              <div
+                *ngFor="let res of mySortableResources"
+                class="mds-drag-drop-sort-task"
+                [style.background]="'#80808099'"
+                [attr.data-drag-data]="getResourceDragData(res)"
+                data-type="resource"
+              >
+                <div>{{res.name}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mbsc-txt-muted mds-third-party-title">Dragula (externally sortable)</div>
+      <div class="mbsc-flex">
+        <div class="mbsc-col-sm-6 mbsc-flex-col">
+          <div class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
+            <div class="mds-third-party-list-title mbsc-txt-muted">Event list</div>
+            <div class="mbsc-flex-col mbsc-flex-1-0" #demoDragulaTaskList>
+              <div
+                *ngFor="let task of myDragulaTasks"
+                class="mds-drag-drop-sort-task"
+                [style.background]="task.color"
+                [attr.data-drag-data]="getTaskDragData(task)"
+              >
+                <div>{{task.title}}</div>
+                <div>{{getHours(task)}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mbsc-col-sm-6 mbsc-flex-col">
+          <div class="mds-drag-drop-sort-container mbsc-flex-col mbsc-flex-1-0">
+            <div class="mds-third-party-list-title mbsc-txt-muted">Resource list</div>
+            <div class="mbsc-flex-col mbsc-flex-1-0" #demoDragulaResourceList>
+              <div
+                *ngFor="let res of myDragulaResources"
+                class="mds-drag-drop-sort-task"
+                [style.background]="'#80808099'"
+                [attr.data-drag-data]="getResourceDragData(res)"
+                data-type="resource"
+              >
+                <div>{{res.name}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mbsc-col-sm-9 mds-drag-drop-sort-calendar mds-full-height">
+      <mbsc-eventcalendar [options]="calendarOptions"></mbsc-eventcalendar>
+    </div>
+  </div>
+</div>

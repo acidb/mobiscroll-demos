@@ -1,5 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscResource, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscResource,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -13,7 +21,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './compare-resources-fixed-at-top.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
@@ -408,7 +417,7 @@ export class AppComponent {
   ];
   resources: MbscResource[] = this.myResources;
   fixedResources: MbscResource[] = [];
-  fixedNr: number = 0;
+  fixedNr = 0;
   toggleComparison = (resource: MbscResource) => {
     const origResource = this.myResources.find((r) => r.id === resource.id);
     if (!resource.fixed) {

@@ -1,18 +1,25 @@
 import * as mobiscroll from '@mobiscroll/jquery';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import $ from 'jquery';
-import * as moment from 'moment-timezone';
+
+window.dayjs_plugin_utc = utc;
+window.dayjs_plugin_timezone = timezone;
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
   init() {
+    dayjs.extend(window.dayjs_plugin_utc);
+    dayjs.extend(window.dayjs_plugin_timezone);
+    mobiscroll.dayjsTimezone.dayjs = dayjs;
+
     mobiscroll.setOptions({
       // locale,
       // theme
     });
 
     $(function () {
-      mobiscroll.momentTimezone.moment = moment;
-
       var formatDate = mobiscroll.formatDate;
 
       var myResources = [
@@ -61,12 +68,10 @@ export default {
         },
       ];
 
-      var details = getDetails();
-
       var calendar = $('#demo-timezone-meeting-planner')
         .mobiscroll()
         .eventcalendar({
-          timezonePlugin: mobiscroll.momentTimezone,
+          timezonePlugin: mobiscroll.dayjsTimezone,
           dataTimezone: 'utc',
           displayTimezone: 'utc',
           clickToCreate: true,
@@ -90,31 +95,7 @@ export default {
             },
           ],
           resources: myResources,
-          colors: details.colors,
-          invalid: details.invalid,
-          renderTimelineEvent: function (data) {
-            var start = data.startDate.clone();
-            var end = data.endDate.clone();
-
-            start.setTimezone(data.currentResource.timezone);
-            end.setTimezone(data.currentResource.timezone);
-
-            return (
-              '<div class="md-meeting-planner-cont" style="background:' +
-              data.color +
-              '">' +
-              '<div class="md-meeting-planner-wrapper">' +
-              '<div class="md-meeting-planner-title">' +
-              data.title +
-              '</div>' +
-              '<div class="md-meeting-planner-time">' +
-              formatDate('hh:mm A', start) +
-              ' - ' +
-              formatDate('hh:mm A', end) +
-              '</div>' +
-              '</div></div>'
-            );
-          },
+          invalid: getInvalids(),
           extendDefaultEvent: function () {
             return { resource: [1, 2, 3, 4, 5, 6] };
           },
@@ -136,13 +117,36 @@ export default {
           onEventUpdateFailed: function (args) {
             createUpdateEvent(args.event);
           },
+          renderScheduleEvent: function (data) {
+            var start = data.startDate.clone();
+            var end = data.endDate.clone();
+
+            start.setTimezone(data.currentResource.timezone);
+            end.setTimezone(data.currentResource.timezone);
+
+            return (
+              '<div class="mds-meeting-planner-cont" style="background:' +
+              data.color +
+              '">' +
+              '<div class="mds-meeting-planner-wrapper">' +
+              '<div class="mds-meeting-planner-title">' +
+              data.title +
+              '</div>' +
+              '<div class="mds-meeting-planner-time">' +
+              formatDate('hh:mm A', start) +
+              ' - ' +
+              formatDate('hh:mm A', end) +
+              '</div>' +
+              '</div></div>'
+            );
+          },
           renderHeader: function () {
             return (
               '<div mbsc-calendar-nav></div>' +
-              '<div class="md-meeting-planner-header">' +
-              '<div class="md-meeting-planner-zone md-meeting-planner-work">working hours</div>' +
-              '<div class="md-meeting-planner-zone md-meeting-planner-flex">flex hours</div>' +
-              '<div class="md-meeting-planner-zone md-meeting-planner-off">time off</div>' +
+              '<div class="mds-meeting-planner-header">' +
+              '<div class="mds-meeting-planner-zone mds-meeting-planner-work">working hours</div>' +
+              '<div class="mds-meeting-planner-zone mds-meeting-planner-flex">flex hours</div>' +
+              '<div class="mds-meeting-planner-zone mds-meeting-planner-off">time off</div>' +
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-today></div>' +
               '<div mbsc-calendar-next></div>' +
@@ -151,18 +155,29 @@ export default {
           },
           renderResource: function (resource) {
             return (
-              '<div class="md-meeting-participant-cont">' +
-              '<div class="md-meeting-participant-name">' +
+              '<div class="mds-meeting-participant-cont">' +
+              '<div class="mds-meeting-participant-name">' +
               resource.name +
               '</div>' +
               '<div>' +
               (resource.organizer ? '<span>Organizer </span>' : '') +
-              '<span class="md-meeting-participant-offset">' +
+              '<span class="mds-meeting-participant-offset">' +
               resource.utcOffset +
               '</span></div>' +
-              '<img class="md-meeting-participant-avatar" src="' +
+              '<img class="mds-meeting-participant-avatar" src="' +
               resource.img +
               '"/>' +
+              '</div>'
+            );
+          },
+          renderCell: function (args) {
+            var hProps = getHourProps(args.date.getHours(), args.resource.timezone);
+            return (
+              '<div class="mds-meeting-planner-time-slot mbsc-flex mbsc-justify-content-center" style="background:' +
+              hProps.color +
+              '">' +
+              hProps.title +
+              (hProps.isAM ? ' AM' : ' PM') +
               '</div>'
             );
           },
@@ -216,45 +231,42 @@ export default {
         }
       }
 
-      function getProps(h) {
-        if (h < 6) {
-          return { color: '#ffbaba4d', invalid: true };
-        } else if (h < 8) {
-          return { color: '#a5ceff4d' };
-        } else if (h < 18) {
-          return { color: '#f7f7bb4d' };
-        } else if (h < 22) {
-          return { color: '#a5ceff4d' };
-        } else return { color: '#ffbaba4d', invalid: true };
+      function getHourProps(h, timezone) {
+        var offset = getUtcOffset(timezone);
+        var hour = h + offset;
+        var isAM = hour % 24 < 12;
+        var title = ((hour % 12) + 12) % 12 || 12;
+        var hForProps = title + ((title === 12 && !isAM) || (title !== 12 && isAM) ? 0 : 12);
+        var color = '#f7f7bb4d';
+        var invalid = false;
+
+        if (hForProps < 6 || hForProps >= 22) {
+          color = '#ffbaba4d';
+          invalid = true;
+        } else if (hForProps < 8 || (hForProps >= 18 && hForProps < 22)) {
+          color = '#a5ceff4d';
+        }
+
+        return {
+          hour: hour,
+          isAM: isAM,
+          title: title,
+          color: color,
+          invalid: invalid,
+        };
       }
 
-      function getDetails() {
-        var colors = [];
+      function getInvalids() {
         var invalid = [];
 
         for (var j = 0; j < myResources.length; ++j) {
           var resource = myResources[j];
 
           for (var i = 0; i < 24; ++i) {
-            var hour = i + getUtcOffset(resource.timezone);
-            var isAM = i < 12 ? hour >= 0 && hour < 12 : !(hour >= 12 && hour < 24);
-            var startTime = (i < 10 ? '0' : '') + i + ':00';
-            var endTime = (i < 9 ? '0' : '') + (i + 1) + ':00';
-            var title = hour % 12 == 0 ? 12 : hour < 0 ? 12 + hour : hour <= 12 ? hour : hour % 12;
-            var props = getProps(title + ((title == 12 && !isAM) || (title != 12 && isAM) ? 0 : 12));
+            if (getHourProps(i, resource.timezone).invalid) {
+              var startTime = (i < 10 ? '0' : '') + i + ':00:00';
+              var endTime = (i < 9 ? '0' : '') + (i + 1) + ':00:00';
 
-            colors.push({
-              start: startTime,
-              end: endTime,
-              title: title + (isAM ? ' AM' : ' PM'),
-              background: props.color,
-              recurring: {
-                repeat: 'daily',
-              },
-              resource: resource.id,
-            });
-
-            if (props.invalid) {
               invalid.push({
                 start: startTime,
                 end: endTime,
@@ -266,28 +278,17 @@ export default {
             }
           }
         }
-        return { colors: colors, invalid: invalid };
+        return invalid;
       }
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div id="demo-timezone-meeting-planner" class="md-timezone-meeting-planner"></div>
+<div id="demo-timezone-meeting-planner"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-timezone-meeting-planner .mbsc-schedule-color-text {
-    padding: 16px 0;
-    text-align: center;
-}
-
-.md-timezone-meeting-planner.mbsc-ios-dark .mbsc-timeline-color,
-.md-timezone-meeting-planner.mbsc-material-dark .mbsc-timeline-color,
-.md-timezone-meeting-planner.mbsc-windows-dark .mbsc-timeline-color {
-    color: #fff !important;
-}
-
-.md-meeting-planner-cont {
+.mds-meeting-planner-cont {
     font-size: 12px;
     font-weight: 600;
     height: 100%;
@@ -299,7 +300,7 @@ export default {
     overflow: hidden;
 }
 
-.md-meeting-planner-wrapper {
+.mds-meeting-planner-wrapper {
     background: rgba(255, 255, 255, .5);
     height: 100%;
     box-sizing: border-box;
@@ -307,33 +308,33 @@ export default {
     transition: background .15s ease-in-out;
 }
 
-.mbsc-schedule-event-hover .md-meeting-planner-wrapper {
+.mbsc-schedule-event-hover .mds-meeting-planner-wrapper {
     background: rgba(255, 255, 255, .3);
 }
 
-.md-meeting-planner-title {
+.mds-meeting-planner-title {
     padding-top: 3px;
     color: initial;
 }
 
-.md-meeting-planner-time {
+.mds-meeting-planner-time {
     color: #666;
 }
 
-.md-meeting-planner-title,
-.md-meeting-planner-time {
+.mds-meeting-planner-title,
+.mds-meeting-planner-time {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.md-meeting-planner-header {
+.mds-meeting-planner-header {
     display: flex;
     align-items: center;
     margin-left: auto;
 }
 
-.md-meeting-planner-zone {
+.mds-meeting-planner-zone {
     font-size: 12px;
     padding: 3px 6px;
     margin: 0 5px;
@@ -341,26 +342,26 @@ export default {
     color: #888;
 }
 
-.md-meeting-planner-work {
+.mds-meeting-planner-work {
     background: #f7f7bb4d;
 }
 
-.md-meeting-planner-flex {
+.mds-meeting-planner-flex {
     background: #a5ceff4d;
 }
 
-.md-meeting-planner-off {
+.mds-meeting-planner-off {
     background: #ffbaba4d;
 }
 
-.md-meeting-participant-cont {
+.mds-meeting-participant-cont {
     position: relative;
     padding-left: 50px;
     max-height: 40px;
     line-height: 20px;
 }
 
-.md-meeting-participant-avatar {
+.mds-meeting-participant-avatar {
     position: absolute;
     max-height: 40px;
     max-width: 40px;
@@ -370,13 +371,21 @@ export default {
     left: 20px;
 }
 
-.md-meeting-participant-name {
+.mds-meeting-participant-name {
     font-size: 16px;
 }
 
-.md-meeting-participant-offset {
+.mds-meeting-participant-offset {
     font-size: 12px;
     opacity: 0.6;
+}
+
+.mds-meeting-planner-time-slot {
+  font-size: 12px;
+  opacity: 0.7;
+  line-height: 50px;
+  height: 100%;
+  pointer-events: none;
 }
   `,
 };

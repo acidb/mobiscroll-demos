@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
+  MbscModule,
   MbscResource,
   Notifications,
   setOptions /* localeImport */,
@@ -22,7 +24,8 @@ const d = now.getDate();
   selector: 'app-timeline-prevent-double-booking-events',
   templateUrl: './prevent-double-booking-events.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

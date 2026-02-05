@@ -1,14 +1,32 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, momentTimezone /* localeImport */ } from '@mobiscroll/angular';
-import moment from 'moment-timezone';
+import {
+  dayjsTimezone,
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscTimezonePlugin,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { dyndatetime } from '../../../../app/app.util';
 
-momentTimezone.moment = moment;
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjsTimezone.dayjs = dayjs;
+
+setOptions({
+  // locale,
+  // theme
+});
 
 @Component({
   selector: 'app-agenda-setting-the-timezone',
   templateUrl: './setting-the-timezone.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   myEvents: MbscCalendarEvent[] = [
@@ -57,5 +75,5 @@ export class AppComponent {
   ];
 
   myView: MbscEventcalendarView = { agenda: { type: 'week' } };
-  myTimezonePlugin = momentTimezone;
+  myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;
 }

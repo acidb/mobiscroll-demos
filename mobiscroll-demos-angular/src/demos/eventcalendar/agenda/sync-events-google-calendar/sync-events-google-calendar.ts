@@ -1,8 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscDateType,
   MbscEventcalendarView,
+  MbscModule,
   MbscPageLoadingEvent,
   MbscPopup,
   MbscPopupOptions,
@@ -22,7 +25,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './sync-events-google-calendar.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(
@@ -34,14 +38,14 @@ export class AppComponent implements OnInit {
 
   @ViewChild('calButton') anchorElm!: ElementRef;
 
-  calendarData: { [key: string]: { checked: boolean } } = {};
+  calendarData: Record<string, { checked: boolean }> = {};
   calendarIds: string[] = [];
   isLoggedIn = false;
   isLoading = false;
   startDate!: Date;
   endDate!: Date;
   myAnchor!: HTMLButtonElement;
-  myCalendars: Array<{ summary: string; id: string }> = [];
+  myCalendars: { summary: string; id: string }[] = [];
   myEvents: MbscCalendarEvent[] = [];
   myView: MbscEventcalendarView = { agenda: { type: 'month' } };
   selectedDate: MbscDateType = new Date();

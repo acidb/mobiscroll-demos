@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscCalendarEvent,
@@ -8,6 +10,7 @@ import {
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscEventUpdatedEvent,
+  MbscModule,
   MbscPopup,
   MbscPopupButton,
   MbscPopupOptions,
@@ -29,7 +32,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './employee-shifts.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
@@ -46,9 +50,9 @@ export class AppComponent {
   shiftNotes?: string;
 
   popupHeader = '';
-  popupButtons: Array<MbscPopupButton | 'cancel'> = [];
+  popupButtons: (MbscPopupButton | 'cancel')[] = [];
 
-  popupResponsive: { [key: string]: MbscPopupOptions } = {
+  popupResponsive: Record<string, MbscPopupOptions> = {
     medium: {
       display: 'center',
       fullScreen: false,

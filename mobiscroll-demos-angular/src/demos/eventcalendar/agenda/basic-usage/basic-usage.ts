@@ -1,9 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
+  MbscModule,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -17,7 +19,8 @@ setOptions({
   selector: 'app-agenda-basic-usage',
   templateUrl: './basic-usage.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements AfterViewInit {
   constructor(

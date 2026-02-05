@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MbscDatepicker, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import { MbscDatepicker, MbscModule, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -14,7 +16,8 @@ const week = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 6);
   styleUrl: './mobile-desktop-usage.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './mobile-desktop-usage.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('picker', { static: false })

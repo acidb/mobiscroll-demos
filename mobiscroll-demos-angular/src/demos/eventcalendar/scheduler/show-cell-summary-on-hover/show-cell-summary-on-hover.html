@@ -1,0 +1,29 @@
+<mbsc-eventcalendar
+  #calendar
+  class="mds-cell-summary-on-hover"
+  [view]="myView"
+  [data]="myEvents"
+  [invalid]="myInvalid"
+  [colors]="myColors"
+  (onCellHoverIn)="handleCellHoverIn($event)"
+  (onCellHoverOut)="handleCellHoverOut()"
+>
+</mbsc-eventcalendar>
+
+<mbsc-popup #tooltip display="anchored" [anchor]="tooltipAnchor" [showOverlay]="false" [touchUi]="false" [scrollLock]="false">
+  <div class="mds-cell-summary-title">{{cellDate}}</div>
+  <div class="mbsc-flex">
+    <div class="mbsc-flex-1-0 mds-cell-summary-item">
+      <div class="mbsc-txt-muted">Events</div>
+      <div class="mds-cell-summary-content">{{cellEventNr}}</div>
+    </div>
+    <div class="mbsc-flex-1-0 mds-cell-summary-item">
+      <div class="mbsc-txt-muted">Invalid</div>
+      <div class="mds-cell-summary-content">{{cellInvalidNr}}</div>
+    </div>
+    <div class="mbsc-flex-1-0 mds-cell-summary-item">
+      <div class="mbsc-txt-muted">Colors</div>
+      <div class="mds-cell-summary-content">{{cellColorNr}}</div>
+    </div>
+  </div>
+</mbsc-popup>

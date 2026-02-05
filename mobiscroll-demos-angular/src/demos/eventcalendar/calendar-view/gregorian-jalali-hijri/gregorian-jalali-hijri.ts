@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -8,6 +9,7 @@ import {
   localeFa,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   setOptions,
 } from '@mobiscroll/angular';
 
@@ -18,23 +20,24 @@ setOptions({
 @Component({
   selector: 'app-eventcalendar-gregorian-jalali-hijri',
   templateUrl: './gregorian-jalali-hijri.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   myEvents: MbscCalendarEvent[] = [];
 
-  gregorianSettings: MbscEventcalendarOptions = {
+  gregorianOptions: MbscEventcalendarOptions = {
     locale: localeEn,
   };
 
-  jalaliSettings: MbscEventcalendarOptions = {
+  jalaliOptions: MbscEventcalendarOptions = {
     calendarSystem: jalaliCalendar,
     locale: localeFa,
   };
 
-  hijriSettings: MbscEventcalendarOptions = {
+  hijriOptions: MbscEventcalendarOptions = {
     calendarSystem: hijriCalendar,
     locale: localeAr,
   };

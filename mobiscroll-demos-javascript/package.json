@@ -20,9 +20,12 @@
   },
   "dependencies": {
     "@mobiscroll/calendar-integration": "file:src/addons/calendar-integration",
-    "@mobiscroll/javascript": "^5.34.1",
+    "@mobiscroll/javascript": "^5.35.1",
     "@mobiscroll/print": "file:src/addons/print",
+    "dayjs": "^1.11.18",
+    "dragula": "^3.7.3",
     "html5-history-router": "^1.1.0",
-    "moment-timezone": "^0.5.43"
+    "moment-timezone": "^0.5.43",
+    "sortablejs": "^1.15.6"
   }
 }

@@ -1,0 +1,14 @@
+<mbsc-eventcalendar [options]="myOptions"></mbsc-eventcalendar>
+
+<ng-template #resourceHeaderTemplate>
+  <div class="mds-36-hour-resource-header">TIMES SHOWN IN <span class="mds-36-hour-resource-header-utc">UTC</span></div>
+</ng-template>
+
+<ng-template #hourTemplate let-args>
+  <div>
+    {{ formatMyDate('DD DDD', args.date) }}<span class="mds-36-hour-date" *ngIf="getDayDiff(args.date) > 0">
+      +{{ getDayDiff(args.date) }}D</span
+    >
+  </div>
+  <div><span class="mds-36-hour-time">{{ formatMyDate('h A', args.date) }}</span></div>
+</ng-template>

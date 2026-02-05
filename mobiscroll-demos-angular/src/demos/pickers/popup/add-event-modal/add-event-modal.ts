@@ -1,8 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscDatepickerOptions,
   MbscEventcalendarView,
+  MbscModule,
   MbscPopup,
   MbscPopupOptions,
   Notifications,
@@ -20,7 +23,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './add-event-modal.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

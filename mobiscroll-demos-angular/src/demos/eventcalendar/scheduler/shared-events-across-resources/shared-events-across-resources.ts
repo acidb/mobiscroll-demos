@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
   MbscEventCreatedEvent,
+  MbscModule,
   MbscPopup,
   MbscPopupButton,
   MbscPopupOptions,
@@ -20,7 +23,8 @@ setOptions({
 @Component({
   selector: 'app-scheduler-shared-events-across-resources',
   templateUrl: './shared-events-across-resources.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
   @ViewChild('popup', { static: false })

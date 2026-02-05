@@ -8,6 +8,7 @@ import {
 import type {
   MbscCalendarEvent,
   MbscCellClickEvent,
+  MbscCellHoverEvent,
   MbscEventcalendarView,
   MbscEventClickEvent,
   MbscEventCreatedEvent,
@@ -90,6 +91,14 @@ function handleCellDoubleClick(args: MbscCellClickEvent) {
 }
 function handleCellRightClick(args: MbscCellClickEvent) {
   // Logic for cell right click
+  console.log(args)
+}
+function handleCellHoverIn(args: MbscCellHoverEvent) {
+  // Logic for cell hover in
+  console.log(args)
+}
+function handleCellHoverOut(args: MbscCellHoverEvent) {
+  // Logic for cell hover out
   console.log(args)
 }
 function handleDestroy(args: any) {
@@ -192,6 +201,14 @@ function handleResourceRightClick(args: MbscResourceClickEvent) {
   // Logic for resource right click
   console.log(args)
 }
+function handleResourceHoverIn(args: MbscResourceClickEvent) {
+  // Logic for resource hover in
+  console.log(args)
+}
+function handleResourceHoverOut(args: MbscResourceClickEvent) {
+  // Logic for resource hover out
+  console.log(args)
+}
 function handleResourceDragEnd(args: MbscResourceDragEvent) {
   // Logic for resource drag end
   console.log(args)
@@ -272,6 +289,8 @@ onMounted(() => {
     @cell-click="handleCellClick"
     @cell-double-click="handleCellDoubleClick"
     @cell-right-click="handleCellRightClick"
+    @cell-hover-in="handleCellHoverIn"
+    @cell-hover-out="handleCellHoverOut"
     @destroy="handleDestroy"
     @event-click="handleEventClick"
     @event-create="handleEventCreate"
@@ -306,6 +325,8 @@ onMounted(() => {
     @resource-drag-enter="handleResourceDragEnter"
     @resource-drag-leave="handleResourceDragLeave"
     @resource-right-click="handleResourceRightClick"
+    @resource-hover-in="handleResourceHoverIn"
+    @resource-hover-out="handleResourceHoverOut"
     @selected-date-change="handleSelectedDateChange"
   />
 </template>

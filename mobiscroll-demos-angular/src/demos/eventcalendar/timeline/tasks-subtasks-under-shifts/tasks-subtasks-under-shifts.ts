@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
@@ -9,6 +10,7 @@ import {
   MbscEventDragEvent,
   MbscEventUpdateEvent,
   MbscEventUpdateFailedEvent,
+  MbscModule,
   MbscNewEventData,
   MbscResource,
   Notifications,
@@ -18,7 +20,7 @@ import { dyndatetime } from '../../../../app/app.util';
 
 interface MyEvent extends MbscCalendarEvent {
   shift?: number | string;
-  tasks?: Array<string | number>;
+  tasks?: (string | number)[];
 }
 
 interface MyBlockedTimes extends MbscCalendarEvent {
@@ -59,7 +61,8 @@ const blockedOutTimes: MyBlockedTimes[] = [
   encapsulation: ViewEncapsulation.None,
   templateUrl: './tasks-subtasks-under-shifts.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}

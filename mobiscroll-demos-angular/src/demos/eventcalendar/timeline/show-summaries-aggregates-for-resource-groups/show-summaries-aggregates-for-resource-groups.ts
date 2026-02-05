@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import {
   formatDate,
@@ -7,6 +8,7 @@ import {
   MbscEventCreatedEvent,
   MbscEventDeletedEvent,
   MbscEventUpdatedEvent,
+  MbscModule,
   MbscNewEventData,
   MbscPageLoadingEvent,
   MbscResource,
@@ -24,7 +26,8 @@ setOptions({
   styleUrl: './show-summaries-aggregates-for-resource-groups.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './show-summaries-aggregates-for-resource-groups.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   calendarOptions: MbscEventcalendarOptions = {
@@ -890,7 +893,7 @@ export class AppComponent {
   lastViewDay: Date = new Date();
 
   getAggregateEvents(dayEvents: MbscCalendarEvent[]): MbscCalendarEvent[] {
-    const aggregateEvents: { [key: string]: MbscCalendarEvent } = {};
+    const aggregateEvents: Record<string, MbscCalendarEvent> = {};
     this.myResources.forEach((resource) => {
       for (let date = new Date(this.firstViewDay); date <= this.lastViewDay; date.setDate(date.getDate() + 1)) {
         aggregateEvents[(resource.id as string) + +date] = {

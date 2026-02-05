@@ -52,6 +52,12 @@ function handleCellDoubleClick() {
 function handleCellRightClick() {
   // Logic for cell right click
 }
+function handleCellHoverIn() {
+  // Logic for cell hover in
+}
+function handleCellHoverOut() {
+  // Logic for cell hover out
+}
 function handleDestroy() {
   // Logic for destroying the event calendar
 }
@@ -127,6 +133,12 @@ function handleResourceDoubleClick() {
 function handleResourceRightClick() {
   // Logic for resource right click
 }
+function handleResourceHoverIn() {
+  // Logic for resource hover in
+}
+function handleResourceHoverOut() {
+  // Logic for resource hover out
+}
 function handleSelectedDateChange() {
   // Use it to keep track of the selected date externally
 }
@@ -165,6 +177,8 @@ onMounted(() => {
     @cell-click="handleCellClick"
     @cell-double-click="handleCellDoubleClick"
     @cell-right-click="handleCellRightClick"
+    @cell-hover-in="handleCellHoverIn"
+    @cell-hover-out="handleCellHoverOut"
     @destroy="handleDestroy"
     @event-click="handleEventClick"
     @event-create="handleEventCreate"
@@ -190,6 +204,8 @@ onMounted(() => {
     @resource-click="handleResourceClick"
     @resource-double-click="handleResourceDoubleClick"
     @resource-right-click="handleResourceRightClick"
+    @resource-hover-in="handleResourceHoverIn"
+    @resource-hover-out="handleResourceHoverOut"
     @selected-date-change="handleSelectedDateChange"
   ></MbscEventcalendar>
 </template>

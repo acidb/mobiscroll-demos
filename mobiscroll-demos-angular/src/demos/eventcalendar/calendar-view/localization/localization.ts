@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { locale, MbscCalendarEvent, setOptions } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
+import { locale, MbscCalendarEvent, MbscModule, setOptions } from '@mobiscroll/angular';
 
 setOptions({
   // theme
@@ -11,7 +13,8 @@ setOptions({
   styleUrl: './localization.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './localization.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}

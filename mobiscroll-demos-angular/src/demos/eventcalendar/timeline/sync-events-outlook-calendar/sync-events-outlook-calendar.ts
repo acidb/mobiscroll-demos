@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   MbscCalendarEvent,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscPopup,
   MbscPopupOptions,
   MbscResource,
@@ -21,7 +24,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './sync-events-outlook-calendar.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(

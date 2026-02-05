@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
 
 setOptions({
   // locale,
@@ -13,7 +14,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './event-content-customization.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   constructor(
@@ -23,7 +25,7 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
 
-  myParticipants: { [key: number]: { img: string; name: string } } = {
+  myParticipants: Record<number, { img: string; name: string }> = {
     1: { name: 'Barry L.', img: 'https://img.mobiscroll.com/demos/m1.png' },
     2: { name: 'Hortense T.', img: 'https://img.mobiscroll.com/demos/f1.png' },
     3: { name: 'Carl H.', img: 'https://img.mobiscroll.com/demos/m2.png' },

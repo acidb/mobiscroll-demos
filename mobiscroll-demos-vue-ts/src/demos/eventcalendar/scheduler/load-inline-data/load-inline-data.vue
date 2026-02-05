@@ -283,16 +283,11 @@ const myEvents = ref<MbscCalendarEvent[]>([
 ])
 
 const myView: MbscEventcalendarView = {
-  calendar: {
-    type: 'week'
-  },
-  scheduler: {
-    type: 'day'
-  }
+  calendar: { type: 'week' },
+  scheduler: { type: 'day' }
 }
 </script>
 
 <template>
-  <!-- dragOptions -->
   <MbscEventcalendar :view="myView" :data="myEvents" />
 </template>

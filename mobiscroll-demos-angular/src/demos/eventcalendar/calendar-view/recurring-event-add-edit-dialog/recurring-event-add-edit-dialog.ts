@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscCalendarEvent,
   MbscDatepickerOptions,
   MbscEventcalendarOptions,
+  MbscModule,
   MbscPopup,
   MbscPopupOptions,
   setOptions,
@@ -79,7 +82,8 @@ function getWeekDayNum(date: Date): number {
   styleUrl: './recurring-event-add-edit-dialog.css',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './recurring-event-add-edit-dialog.html',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent implements OnInit {
   @ViewChild('popup', { static: false })

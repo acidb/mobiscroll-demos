@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, NgZone, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendarView,
+  MbscModule,
   MbscResource,
   MbscResourceOrderEvent,
   Notifications,
@@ -20,7 +22,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-drag-drop-reorder.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(

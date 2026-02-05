@@ -39,7 +39,7 @@ export default {
           break;
         case 'yearly':
           text = recurrenceInterval > 1 ? 'Every ' + recurrenceInterval + ' years' : 'Annualy';
-          text += ' on ' + MONTH_NAMES[recurrenceMonth - 1] + ' ' + recurrenceDay;
+          text += ' on ' + MONTH_NAMES[recurrenceMonth - 1].text + ' ' + recurrenceDay;
           break;
       }
 

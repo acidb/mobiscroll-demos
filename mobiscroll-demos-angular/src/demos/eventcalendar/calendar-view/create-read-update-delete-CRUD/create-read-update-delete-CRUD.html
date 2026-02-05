@@ -1,24 +1,53 @@
-<mbsc-eventcalendar #calendar [data]="myEvents" [options]="calendarOptions"></mbsc-eventcalendar>
-<mbsc-popup [options]="popupOptions" [anchor]="popupAnchor" [buttons]="popupButtons" [headerText]="popupHeaderText" #popup>
-  <div class="mbsc-form-group">
-    <mbsc-input label="Title" [(ngModel)]="popupEventTitle"></mbsc-input>
-    <mbsc-textarea label="Description" [(ngModel)]="popupEventDescription"></mbsc-textarea>
-  </div>
-  <div class="mbsc-form-group">
-    <mbsc-switch label="All-day" [(ngModel)]="popupEventAllDay"></mbsc-switch>
-    <mbsc-datepicker
-      [(ngModel)]="popupEventDates"
-      [options]="datePickerOptions"
-      [controls]="popupEventAllDay ? datePickerControls : datetimePickerControls"
-      [responsive]="popupEventAllDay ? datePickerResponsive : datetimePickerResponsive"
-      [startInput]="startInput"
-      [endInput]="endInput"
-    ></mbsc-datepicker>
-    <mbsc-input #startInput label="Starts"></mbsc-input>
-    <mbsc-input #endInput label="Ends"></mbsc-input>
+<mbsc-eventcalendar
+  #calendar
+  [data]="myEvents"
+  [clickToCreate]="true"
+  [dragToCreate]="true"
+  [dragToMove]="true"
+  [dragToResize]="true"
+  [view]="myView"
+  (onEventClick)="handleEventClick($event)"
+  (onEventCreated)="handleEventCreated($event)"
+  (onEventDeleted)="handleEventDeleted()"
+></mbsc-eventcalendar>
 
-    <div id="travel-time-group" *ngIf="!popupEventAllDay">
-      <mbsc-dropdown [(ngModel)]="popupTravelTime" label="Travel time" id="travel-time-selection">
+<mbsc-popup
+  #addEditPopup
+  display="bottom"
+  [contentPadding]="false"
+  [fullScreen]="true"
+  [scrollLock]="false"
+  [headerText]="isEdit ? 'Edit event' : 'New Event'"
+  [anchor]="addEditPopupAnchor"
+  [buttons]="isEdit ? editButtons: addButtons"
+  [responsive]="addEditPopupResponsive"
+  (onClose)="handleAddEditPopupClose()"
+>
+  <div class="mbsc-form-group">
+    <mbsc-input label="Title" [(ngModel)]="eventTitle"></mbsc-input>
+    <mbsc-textarea label="Description" [(ngModel)]="eventDescription"></mbsc-textarea>
+  </div>
+
+  <div class="mbsc-form-group">
+    <div>
+      <mbsc-switch label="All-day" [(ngModel)]="eventAllDay"></mbsc-switch>
+
+      <mbsc-datepicker
+        [(ngModel)]="eventDates"
+        select="range"
+        display="anchored"
+        [touchUi]="true"
+        [showRangeLabels]="false"
+        [controls]="eventAllDay ? ['date'] : ['datetime']"
+        [responsive]="eventAllDay ? { medium: { controls: ['calendar'], touchUi: false } } : { medium: { controls: ['calendar', 'time'], touchUi: false } }"
+        [startInput]="startInput"
+        [endInput]="endInput"
+      ></mbsc-datepicker>
+
+      <mbsc-input #startInput label="Starts"></mbsc-input>
+      <mbsc-input #endInput label="Ends"></mbsc-input>
+
+      <mbsc-dropdown [(ngModel)]="eventBuffer" label="Travel time" *ngIf="!eventAllDay">
         <option value="0">None</option>
         <option value="5">5 minutes</option>
         <option value="15">15 minutes</option>
@@ -29,44 +58,55 @@
       </mbsc-dropdown>
     </div>
 
-    <div class="event-color-c" (click)="openColorPicker($event)">
-      <div class="event-color-label">Color</div>
-      <div class="event-color" [ngStyle]="{background: selectedColor}"></div>
+    <div class="mbsc-flex mds-crud-event-color-cont" (click)="handleEventColorClick($event)">
+      <div class="mbsc-flex-1-0">Color</div>
+      <div class="mds-crud-selected-event-color" [ngStyle]="{background: eventColor}"></div>
     </div>
-    <mbsc-segmented-group [(ngModel)]="popupEventStatus">
+
+    <mbsc-segmented-group [(ngModel)]="statusValue">
       <mbsc-segmented value="busy">Show as busy</mbsc-segmented>
       <mbsc-segmented value="free">Show as free</mbsc-segmented>
     </mbsc-segmented-group>
+
     <div *ngIf="isEdit" class="mbsc-button-group">
-      <mbsc-button class="mbsc-button-block" color="danger" variant="outline" (click)="onDeleteClick()">Delete event </mbsc-button>
+      <mbsc-button class="mbsc-button-block" color="danger" variant="outline" (click)="handleDeleteButtonClick()"
+        >Delete event
+      </mbsc-button>
     </div>
   </div>
 </mbsc-popup>
 
-<mbsc-popup [options]="colorOptions" [anchor]="colorAnchor" #colorPicker>
-  <div class="crud-color-row">
+<mbsc-popup
+  #colorPicker
+  display="bottom"
+  [contentPadding]="false"
+  [showArrow]="false"
+  [showOverlay]="false"
+  [anchor]="colorPickerAnchor"
+  [buttons]="colorPickerButtons"
+  [responsive]="colorPickerResponsive"
+>
+  <div class="mbsc-flex mds-crud-color-row">
     <div *ngFor="let color of colors;let i=index">
       <div
         *ngIf="i<5"
-        class="crud-color-c"
-        [ngClass]="{'selected': tempColor === color}"
+        [class]="'mds-crud-color-value' + (eventColor === color ? ' mds-crud-color-value-selected' : '')"
         [attr.data-value]="color"
-        (click)="changeColor($event)"
+        (click)="handleColorChange($event)"
       >
-        <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" [ngStyle]="{background: color}"></div>
+        <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" [ngStyle]="{background: color}"></div>
       </div>
     </div>
   </div>
-  <div class="crud-color-row">
+  <div class="mbsc-flex mds-crud-color-row">
     <div *ngFor="let color of colors;let i=index">
       <div
         *ngIf="i>=5"
-        class="crud-color-c"
-        [ngClass]="{'selected': tempColor === color}"
+        [class]="'mds-crud-color-value' + (eventColor === color ? ' mds-crud-color-value-selected' : '')"
         [attr.data-value]="color"
-        (click)="changeColor($event)"
+        (click)="handleColorChange($event)"
       >
-        <div class="crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" [ngStyle]="{background: color}"></div>
+        <div class="mds-crud-color mbsc-icon mbsc-font-icon mbsc-icon-material-check" [ngStyle]="{background: color}"></div>
       </div>
     </div>
   </div>

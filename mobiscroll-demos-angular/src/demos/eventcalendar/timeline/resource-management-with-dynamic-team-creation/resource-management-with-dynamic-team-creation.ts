@@ -1,9 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
   MbscEventcalendar,
   MbscEventcalendarView,
   MbscItemDragEvent,
+  MbscModule,
   MbscResource,
   MbscResourceCreateEvent,
   MbscResourceDeleteEvent,
@@ -24,7 +26,8 @@ setOptions({
   encapsulation: ViewEncapsulation.None,
   templateUrl: './resource-management-with-dynamic-team-creation.html',
   providers: [Notifications],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
   constructor(private notify: Notifications) {}
