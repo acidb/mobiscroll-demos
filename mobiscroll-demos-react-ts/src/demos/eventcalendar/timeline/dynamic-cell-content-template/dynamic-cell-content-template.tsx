@@ -611,7 +611,7 @@ const App: FC = () => {
     [handleAddClick, iconMap],
   );
 
-  const renderScheduleEventContent = useCallback((event: MbscCalendarEventData) => {
+  const renderTimelineEventContent = useCallback((event: MbscCalendarEventData) => {
     const hours = Math.round(((event.endDate as Date).getTime() - (event.startDate as Date).getTime()) / 36e5);
     return (
       <div>
@@ -632,7 +632,7 @@ const App: FC = () => {
         extendDefaultEvent={customDefaultEvent}
         resources={myResources}
         renderCell={renderCell}
-        renderScheduleEventContent={renderScheduleEventContent}
+        renderTimelineEventContent={renderTimelineEventContent}
         view={myView}
       />
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={() => setToastOpen(false)} />

@@ -111,7 +111,7 @@ export default {
       onEventUpdateFailed: function (args) {
         createUpdateEvent(args.event);
       },
-      renderScheduleEvent: function (data) {
+      renderTimelineEvent: function (data) {
         var start = data.startDate.clone();
         var end = data.endDate.clone();
 

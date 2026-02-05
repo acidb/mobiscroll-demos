@@ -595,7 +595,7 @@ function App() {
     [handleAddClick, iconMap],
   );
 
-  const renderScheduleEventContent = useCallback((event) => {
+  const renderTimelineEventContent = useCallback((event) => {
     const hours = Math.round((event.endDate - event.startDate) / 36e5);
     return (
       <div>
@@ -616,7 +616,7 @@ function App() {
         extendDefaultEvent={customDefaultEvent}
         resources={myResources}
         renderCell={renderCell}
-        renderScheduleEventContent={renderScheduleEventContent}
+        renderTimelineEventContent={renderTimelineEventContent}
         view={myView}
       />
       <Toast isOpen={isToastOpen} message={toastMessage} onClose={() => setToastOpen(false)} />
