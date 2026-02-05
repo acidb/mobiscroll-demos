@@ -455,7 +455,7 @@ export class AppComponent {
     groupBy: 'date',
     resources: this.myResources,
     view: {
-      schedule: {
+      scheduler: {
         type: 'week',
         allDay: false,
         startTime: '06:00',

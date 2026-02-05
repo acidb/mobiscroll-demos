@@ -289,5 +289,5 @@ export class AppComponent {
     },
   ];
 
-  myView: MbscEventcalendarView = { calendar: { type: 'week' }, schedule: { type: 'day' } };
+  myView: MbscEventcalendarView = { calendar: { type: 'week' }, scheduler: { type: 'day' } };
 }

@@ -290,7 +290,7 @@ export class AppComponent {
       case 'week':
         this.myCssClass = 'mds-cell-template mds-cell-template-week-view';
         this.myView = {
-          schedule: {
+          scheduler: {
             type: 'week',
             allDay: false,
             startTime: '08:00',
@@ -301,7 +301,7 @@ export class AppComponent {
       case 'day':
         this.myCssClass = 'mds-cell-template mds-cell-template-day-view';
         this.myView = {
-          schedule: {
+          scheduler: {
             type: 'day',
             allDay: false,
             startTime: '08:00',

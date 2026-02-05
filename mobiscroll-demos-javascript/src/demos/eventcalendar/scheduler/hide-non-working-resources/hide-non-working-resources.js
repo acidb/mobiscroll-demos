@@ -10,7 +10,7 @@ export default {
 
     mobiscroll.eventcalendar('#demo-hide-non-working-resources', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           allDay: false,
           startDay: 1,

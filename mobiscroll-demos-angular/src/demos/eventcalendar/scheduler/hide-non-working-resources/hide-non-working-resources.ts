@@ -1,12 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import {
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-  MbscModule,
-  MbscResource,
-  setOptions /* localeImport */,
-} from '@mobiscroll/angular';
+import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, MbscResource, setOptions /* localeImport */ } from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -24,7 +18,7 @@ setOptions({
 })
 export class AppComponent {
   myView: MbscEventcalendarView = {
-    schedule: {
+    scheduler: {
       type: 'week',
       allDay: false,
       startDay: 1,
@@ -32,8 +26,8 @@ export class AppComponent {
       startTime: '08:00',
       endTime: '20:00',
       hideInvalidColumns: true,
-    }
-  }
+    },
+  };
 
   myEvents: MbscCalendarEvent[] = [
     // Dr. Alice Johnson – Neurology
@@ -120,7 +114,7 @@ export class AppComponent {
     { start: dyndatetime('y,m,d+3,13'), end: dyndatetime('y,m,d+3,14'), title: 'Hand Injury Check', resource: 5 },
     { start: dyndatetime('y,m,d+4,13'), end: dyndatetime('y,m,d+4,14'), title: 'Orthopedic Follow-up', resource: 5 },
     { start: dyndatetime('y,m,d+4,15'), end: dyndatetime('y,m,d+4,18'), title: 'Sports Rehab Therapy', resource: 5 },
-  ]
+  ];
 
   myResources: MbscResource[] = [
     {
@@ -163,7 +157,7 @@ export class AppComponent {
       textColor: '#1c1b0180',
       img: 'https://img.mobiscroll.com/demos/f1.png',
     },
-  ]
+  ];
 
   myColors: MbscCalendarEvent[] = [
     {
@@ -211,7 +205,7 @@ export class AppComponent {
       },
       background: '#ffffd04d',
     },
-  ]
+  ];
 
   myInvalid: MbscCalendarEvent[] = [
     {
@@ -269,5 +263,5 @@ export class AppComponent {
       resource: 5,
       title: 'Dr. Eva Martinez OFF',
     },
-  ]
+  ];
 }

@@ -144,7 +144,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     externalDrop: true,
     externalDrag: true,
     view: {
-      schedule: { type: 'week' },
+      scheduler: { type: 'week' },
     },
     onEventCreated: (args) => {
       if (args.action === 'externalDrop') {

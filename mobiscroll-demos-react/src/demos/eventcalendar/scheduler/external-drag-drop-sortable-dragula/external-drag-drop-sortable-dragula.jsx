@@ -150,7 +150,7 @@ function App() {
     },
   ]);
 
-  const myView = useMemo(() => ({ schedule: { type: 'week' } }), []);
+  const myView = useMemo(() => ({ scheduler: { type: 'week' } }), []);
 
   const handleEventCreated = useCallback((args) => {
     if (args.action === 'externalDrop') {

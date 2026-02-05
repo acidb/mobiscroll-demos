@@ -14,7 +14,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           view: {
-            schedule: {
+            scheduler: {
               type: 'week',
               allDay: false,
               startDay: 1,

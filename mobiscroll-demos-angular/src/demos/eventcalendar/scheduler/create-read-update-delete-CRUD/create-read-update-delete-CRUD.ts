@@ -61,7 +61,7 @@ export class AppComponent {
   isEdit = false;
   isSuccess = false;
 
-  myView: MbscEventcalendarView = { schedule: { type: 'week' } };
+  myView: MbscEventcalendarView = { scheduler: { type: 'week' } };
 
   colors: string[] = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '', '#009788', '#4baf4f', '#7e5d4e'];
 

@@ -195,7 +195,7 @@ const isTooltipOpen = ref<boolean>(false)
 const tooltipAnchor = ref<HTMLElement | undefined>(undefined)
 
 const myView: MbscEventcalendarView = {
-  schedule: {
+  scheduler: {
     type: 'week',
     startTime: '08:00',
     endTime: '18:00',

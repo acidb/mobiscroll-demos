@@ -451,7 +451,7 @@ export default {
         return '<div' + style + '>' + res.name + '</div>';
       },
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           allDay: false,
           startTime: '06:00',

@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
   myView: MbscEventcalendarView = {
     calendar: { type: 'week' },
-    schedule: { type: 'day' },
+    scheduler: { type: 'day' },
   };
 
   ngOnInit(): void {

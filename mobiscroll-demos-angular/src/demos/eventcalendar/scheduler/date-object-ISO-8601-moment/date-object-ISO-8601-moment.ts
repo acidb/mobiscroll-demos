@@ -15,7 +15,7 @@ setOptions({
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
-  myView: MbscEventcalendarView = { schedule: { type: 'week' } };
+  myView: MbscEventcalendarView = { scheduler: { type: 'week' } };
 
   selectedDateObj = new Date(2020, 4, 19);
   selectedDateISO = '2020-05-20';

@@ -448,7 +448,7 @@ const resources = [
 ]
 
 const view = {
-  schedule: {
+  scheduler: {
     type: 'week',
     allDay: false,
     startTime: '06:00',

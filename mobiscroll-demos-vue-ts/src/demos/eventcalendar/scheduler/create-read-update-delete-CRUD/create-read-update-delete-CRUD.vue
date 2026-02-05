@@ -63,7 +63,7 @@ const snackbarButton = {
   text: 'Undo'
 }
 
-const myView: MbscEventcalendarView = { schedule: { type: 'week' } }
+const myView: MbscEventcalendarView = { scheduler: { type: 'week' } }
 
 const colors: string[] = [
   '#ffeb3c',
