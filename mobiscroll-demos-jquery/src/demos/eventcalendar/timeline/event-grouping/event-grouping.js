@@ -6,8 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'material',
-      themeVariant: 'light',
+      // theme
     });
 
     $(function () {
