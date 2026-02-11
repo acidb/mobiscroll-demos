@@ -719,9 +719,12 @@ export default {
                 data: groupedEvents,
               });
 
-              mobiscroll.toast({
-                message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been updated.',
-              });
+              // Only show toast if dates changed
+              if (startDelta !== 0 || endDelta !== 0) {
+                mobiscroll.toast({
+                  message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been updated.',
+                });
+              }
             } else {
               eventsToUpdate = myEvents.filter(function (event) {
                 return (
@@ -747,15 +750,14 @@ export default {
               });
               var resourceName = resource ? resource.name : 'Unknown';
 
-              if (eventsToUpdate.length > 0) {
+              // Only show toast if dates changed and there are events to update
+              if (eventsToUpdate.length > 0 && (startDelta !== 0 || endDelta !== 0)) {
                 mobiscroll.toast({
                   message:
                     eventsToUpdate.length + 1 + ' event(s) for ' + resourceName + ' (' + updatedEvent.clientGroup + ') have been updated.',
                 });
               }
             }
-
-            return true;
           },
         })
         .mobiscroll('getInst');
@@ -1008,6 +1010,7 @@ export default {
   border-radius: 0 8px 8px 0;
   height: 40px;
   transition: height 0.3s ease-out, padding 0.3s ease-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .mds-event-grouping-task.expanded {
