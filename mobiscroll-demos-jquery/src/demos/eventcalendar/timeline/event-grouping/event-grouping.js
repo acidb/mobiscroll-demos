@@ -1078,7 +1078,8 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#group-filter-btn').on('click', function () {
+      $('#demo-event-grouping').on('click', '#group-filter-btn', function () {
+        console.log(popup);
         popup.open();
       });
 
