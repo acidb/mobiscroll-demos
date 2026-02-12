@@ -1122,14 +1122,11 @@ export default {
         var iconId = event.currentTarget.id;
         var groupId = iconId.replace('mds-event-grouping-icon-', '');
 
-        console.log('Icon clicked, groupId:', groupId); // Debug
-
         var groupedEvent = groupedEvents.find(function (e) {
           return e.id === groupId;
         });
 
         if (!groupedEvent) {
-          console.log('Grouped event not found'); // Debug
           return;
         }
 
@@ -1137,8 +1134,6 @@ export default {
         var container = $(icon).closest('.mds-event-grouping-task')[0];
         var scheduleEvent = $(icon).closest('.mbsc-schedule-event')[0];
         var eventsDiv = document.getElementById('mds-event-grouping-events-' + groupId);
-
-        console.log('Elements found:', { container: !!container, scheduleEvent: !!scheduleEvent, eventsDiv: !!eventsDiv }); // Debug
 
         if (!container || !scheduleEvent || !eventsDiv) return;
 
