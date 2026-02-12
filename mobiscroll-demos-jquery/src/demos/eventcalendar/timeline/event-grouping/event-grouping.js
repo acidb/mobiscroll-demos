@@ -1081,6 +1081,7 @@ export default {
         popup.setOptions({
           anchor: this,
         });
+        console.log(popup, this);
         popup.open();
       });
 
