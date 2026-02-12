@@ -1224,19 +1224,17 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-event-grouping" class="mds-event-grouping-calendar"></div>
-<div style="display: none;">
-  <div id="group-filter-popup">
-    <div>
-      <label>
-        <input mbsc-radio type="radio" name="group-by-radio" value="assignee" checked data-description="View by assignee" />
-      </label>
-      <label>
-        <input mbsc-radio type="radio" name="group-by-radio" value="type" data-description="View by type" />
-      </label>
-      <label>
-        <input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-description="Group by client/quarter" />
-      </label>
-    </div>
+<div id="group-filter-popup" style="display: none;">
+  <div>
+    <label>
+      <input mbsc-radio type="radio" name="group-by-radio" value="assignee" checked data-description="View by assignee" />
+    </label>
+    <label>
+      <input mbsc-radio type="radio" name="group-by-radio" value="type" data-description="View by type" />
+    </label>
+    <label>
+      <input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-description="Group by client/quarter" />
+    </label>
   </div>
 </div>
   `,
