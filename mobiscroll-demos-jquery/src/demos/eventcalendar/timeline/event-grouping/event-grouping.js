@@ -1072,15 +1072,13 @@ export default {
         .popup({
           display: 'anchored',
           showArrow: false,
+          showOverlay: false,
           contentPadding: false,
           width: 300,
         })
         .mobiscroll('getInst');
 
       $('#demo-event-grouping').on('click', '#group-filter-btn', function () {
-        popup.setOptions({
-          anchor: this,
-        });
         console.log(popup, this);
         popup.open();
       });
