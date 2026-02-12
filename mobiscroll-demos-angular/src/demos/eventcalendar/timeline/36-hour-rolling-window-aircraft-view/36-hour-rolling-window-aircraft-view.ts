@@ -41,21 +41,13 @@ export class AppComponent {
   getEndTime(): string {
     const start = dayjs.utc().startOf('hour');
     const end = start.add(36, 'hours');
-    const dayOffset = end.startOf('day').diff(start.startOf('day'), 'days');
+    const dayOffset = end.subtract(1, 'minute').startOf('day').diff(start.startOf('day'), 'days');
     const suffix = dayOffset > 0 ? '+' + dayOffset : '';
     return end.format('HH:00') + suffix;
   }
 
-  formatMyDate(format: string, date: Date): string {
-    return formatDate(format, date);
-  }
-
   startTime = this.getStartTime();
   endTime = this.getEndTime();
-
-  getDayDiff(date: Date): number {
-    return dayjs.utc(date).diff(this.currentDate, 'days');
-  }
 
   myEvents: MbscCalendarEvent[] = [
     {
