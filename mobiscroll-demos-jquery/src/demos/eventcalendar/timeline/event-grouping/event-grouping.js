@@ -1073,13 +1073,14 @@ export default {
           display: 'anchored',
           showArrow: false,
           contentPadding: false,
-          anchor: $('#group-filter-btn')[0],
           width: 300,
         })
         .mobiscroll('getInst');
 
       $('#demo-event-grouping').on('click', '#group-filter-btn', function () {
-        console.log(popup);
+        popup.setOptions({
+          anchor: this,
+        });
         popup.open();
       });
 
