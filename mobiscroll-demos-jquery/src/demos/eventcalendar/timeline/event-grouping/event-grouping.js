@@ -11,403 +11,622 @@ export default {
 
     $(function () {
       var myEvents = [
-        // Enterprise Solutions Group - Large group with 12 tasks across 4 employees
+        // Enterprise Solutions Group - Large group with tasks across 4 employees
         {
           id: 1,
           title: 'HVAC System Overhaul - Building A',
           start: '2026-01-15',
-          end: '2026-02-10',
+          end: '2026-03-10',
           resource: 1,
+          type: 'Installation',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 2,
           title: 'Complete Electrical System Inspection',
           start: '2026-02-15',
-          end: '2026-03-05',
+          end: '2026-03-25',
           resource: 1,
+          type: 'Inspection',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 3,
           title: 'ICU Plumbing Infrastructure Renovation',
-          start: '2026-03-10',
-          end: '2026-03-31',
-          resource: 4,
+          start: '2026-01-20',
+          end: '2026-03-15',
+          resource: 2,
+          type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 4,
           title: 'Fire Safety System Upgrade & Testing',
-          start: '2026-04-20',
-          end: '2026-05-30',
+          start: '2026-04-05',
+          end: '2026-06-20',
           resource: 4,
+          type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 5,
           title: 'Emergency Generator Complete Overhaul',
-          start: '2026-06-01',
-          end: '2026-07-10',
+          start: '2026-05-01',
+          end: '2026-06-30',
           resource: 1,
+          type: 'Maintenance',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 6,
           title: 'Boiler Room Equipment Replacement',
-          start: '2026-03-15',
-          end: '2026-04-10',
+          start: '2026-04-15',
+          end: '2026-06-10',
           resource: 1,
+          type: 'Repair',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 7,
           title: 'Server Room HVAC Installation Project',
           start: '2026-01-10',
-          end: '2026-02-20',
+          end: '2026-03-20',
           resource: 3,
+          type: 'Installation',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 8,
           title: 'Data Center Cable Infrastructure Upgrade',
-          start: '2026-02-25',
-          end: '2026-04-10',
+          start: '2026-02-10',
+          end: '2026-03-30',
           resource: 3,
+          type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 9,
           title: 'Power Distribution System Modernization',
-          start: '2026-04-15',
-          end: '2026-06-05',
-          resource: 3,
+          start: '2026-04-10',
+          end: '2026-06-25',
+          resource: 2,
+          type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 10,
           title: 'Backup Power System Implementation',
-          start: '2026-06-10',
-          end: '2026-07-20',
+          start: '2026-05-10',
+          end: '2026-06-30',
           resource: 3,
+          type: 'Installation',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 11,
           title: 'Network Equipment Room Cooling Upgrade',
-          start: '2026-01-20',
-          end: '2026-02-15',
+          start: '2026-01-25',
+          end: '2026-03-15',
           resource: 4,
+          type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 12,
           title: 'Security System Integration',
-          start: '2026-05-01',
-          end: '2026-06-15',
+          start: '2026-05-05',
+          end: '2026-06-20',
           resource: 4,
+          type: 'Installation',
+          clientGroup: 'Enterprise Solutions Group',
+        },
+        {
+          id: 49,
+          title: 'Annual HVAC System Winterization',
+          start: '2026-10-01',
+          end: '2026-12-15',
+          resource: 1,
+          type: 'Maintenance',
+          clientGroup: 'Enterprise Solutions Group',
+        },
+        {
+          id: 50,
+          title: 'Year-End Electrical Safety Audit',
+          start: '2026-11-01',
+          end: '2026-12-31',
+          resource: 3,
+          type: 'Inspection',
+          clientGroup: 'Enterprise Solutions Group',
+        },
+        {
+          id: 61,
+          title: 'Summer Cooling System Optimization',
+          start: '2026-07-01',
+          end: '2026-09-15',
+          resource: 2,
+          type: 'Maintenance',
+          clientGroup: 'Enterprise Solutions Group',
+        },
+        {
+          id: 62,
+          title: 'Backup Generator Testing & Certification',
+          start: '2026-08-10',
+          end: '2026-09-30',
+          resource: 4,
+          type: 'Inspection',
           clientGroup: 'Enterprise Solutions Group',
         },
 
-        // Retail Partners - Medium group with 6 tasks across 2 employees
+        // Retail Partners - Medium group with tasks across 2 employees
         {
           id: 13,
           title: 'Storefront LED Lighting Conversion',
-          start: '2026-01-12',
-          end: '2026-02-05',
+          start: '2026-01-08',
+          end: '2026-03-10',
           resource: 5,
+          type: 'Upgrade',
           clientGroup: 'Retail Partners',
         },
         {
           id: 14,
           title: 'Parking Lot Lighting System Replacement',
-          start: '2026-02-10',
-          end: '2026-03-20',
+          start: '2026-02-05',
+          end: '2026-03-30',
           resource: 7,
+          type: 'Repair',
           clientGroup: 'Retail Partners',
         },
         {
           id: 15,
           title: 'Store-wide HVAC Filter & Duct Cleaning',
-          start: '2026-03-25',
-          end: '2026-04-20',
+          start: '2026-04-10',
+          end: '2026-06-20',
           resource: 5,
+          type: 'Maintenance',
           clientGroup: 'Retail Partners',
         },
         {
           id: 16,
           title: 'Automatic Door System Replacement',
-          start: '2026-04-25',
-          end: '2026-05-25',
+          start: '2026-05-01',
+          end: '2026-06-30',
           resource: 7,
+          type: 'Repair',
           clientGroup: 'Retail Partners',
         },
         {
           id: 17,
           title: 'Point of Sale Electrical Infrastructure',
-          start: '2026-01-08',
-          end: '2026-01-30',
+          start: '2026-01-15',
+          end: '2026-03-05',
           resource: 5,
+          type: 'Installation',
           clientGroup: 'Retail Partners',
         },
         {
           id: 18,
           title: 'Emergency Lighting System Certification',
-          start: '2026-06-15',
-          end: '2026-07-10',
+          start: '2026-04-15',
+          end: '2026-06-10',
           resource: 7,
+          type: 'Inspection',
+          clientGroup: 'Retail Partners',
+        },
+        {
+          id: 51,
+          title: 'Holiday Lighting Installation',
+          start: '2026-10-01',
+          end: '2026-12-15',
+          resource: 5,
+          type: 'Installation',
+          clientGroup: 'Retail Partners',
+        },
+        {
+          id: 52,
+          title: 'Winter HVAC Maintenance',
+          start: '2026-11-01',
+          end: '2026-12-31',
+          resource: 7,
+          type: 'Maintenance',
+          clientGroup: 'Retail Partners',
+        },
+        {
+          id: 63,
+          title: 'Summer Cooling System Service',
+          start: '2026-07-10',
+          end: '2026-09-10',
+          resource: 5,
+          type: 'Maintenance',
           clientGroup: 'Retail Partners',
         },
 
-        // City Municipal Services - Small group with 3 tasks across 2 employees
+        // City Municipal Services - Group with tasks across 2 employees
         {
           id: 19,
           title: 'City Hall HVAC Modernization',
-          start: '2026-01-14',
-          end: '2026-02-25',
+          start: '2026-01-10',
+          end: '2026-03-20',
           resource: 2,
+          type: 'Upgrade',
           clientGroup: 'City Municipal Services',
         },
         {
           id: 20,
           title: 'Public Library Climate Control',
-          start: '2026-03-01',
-          end: '2026-04-10',
+          start: '2026-02-01',
+          end: '2026-03-31',
           resource: 6,
+          type: 'Maintenance',
           clientGroup: 'City Municipal Services',
         },
         {
           id: 21,
           title: 'Community Center Lighting Retrofit',
-          start: '2026-04-02',
-          end: '2026-06-15',
+          start: '2026-04-10',
+          end: '2026-06-25',
           resource: 2,
+          type: 'Upgrade',
+          clientGroup: 'City Municipal Services',
+        },
+        {
+          id: 53,
+          title: 'Municipal Building Fire System Upgrade',
+          start: '2026-07-01',
+          end: '2026-09-20',
+          resource: 6,
+          type: 'Upgrade',
+          clientGroup: 'City Municipal Services',
+        },
+        {
+          id: 64,
+          title: 'Year-End Facility Safety Inspection',
+          start: '2026-10-15',
+          end: '2026-12-20',
+          resource: 2,
+          type: 'Inspection',
           clientGroup: 'City Municipal Services',
         },
 
-        // Industrial Manufacturing Co - Large group with 9 tasks across 1 employee
+        // Industrial Manufacturing Co - Large group with tasks across 1 employee
         {
           id: 22,
           title: 'Warehouse High-Bay Lighting Installation',
-          start: '2026-01-11',
-          end: '2026-02-15',
+          start: '2026-01-05',
+          end: '2026-03-15',
           resource: 8,
+          type: 'Installation',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
           id: 23,
           title: 'Industrial Compressor System Overhaul',
-          start: '2026-02-20',
-          end: '2026-04-05',
+          start: '2026-02-01',
+          end: '2026-03-31',
           resource: 8,
+          type: 'Maintenance',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
           id: 24,
           title: 'Loading Dock Door Automation Project',
-          start: '2026-04-10',
-          end: '2026-05-10',
+          start: '2026-04-05',
+          end: '2026-06-20',
           resource: 8,
+          type: 'Installation',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
           id: 25,
           title: 'Factory Ventilation System Upgrade',
-          start: '2026-05-15',
+          start: '2026-05-01',
           end: '2026-06-30',
           resource: 8,
+          type: 'Upgrade',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
           id: 26,
           title: 'Main Electrical Panel Replacement Project',
-          start: '2026-03-05',
-          end: '2026-04-20',
+          start: '2026-01-15',
+          end: '2026-03-20',
           resource: 8,
+          type: 'Repair',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
           id: 27,
           title: 'Production Floor Lighting Modernization',
-          start: '2026-01-15',
-          end: '2026-02-10',
+          start: '2026-02-10',
+          end: '2026-03-31',
           resource: 8,
+          type: 'Upgrade',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
           id: 28,
           title: 'Overhead Crane Electrical Certification',
-          start: '2026-06-10',
-          end: '2026-07-15',
+          start: '2026-04-15',
+          end: '2026-06-15',
           resource: 8,
+          type: 'Inspection',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
           id: 29,
           title: 'Production Line Power Infrastructure',
-          start: '2026-04-25',
-          end: '2026-05-30',
+          start: '2026-05-10',
+          end: '2026-06-30',
           resource: 8,
+          type: 'Installation',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
           id: 30,
           title: 'Chiller Plant Annual Overhaul',
-          start: '2026-02-18',
-          end: '2026-03-15',
+          start: '2026-01-20',
+          end: '2026-03-25',
           resource: 8,
+          type: 'Maintenance',
+          clientGroup: 'Industrial Manufacturing Co',
+        },
+        {
+          id: 54,
+          title: 'Fall Preventive Maintenance Program',
+          start: '2026-07-15',
+          end: '2026-09-30',
+          resource: 8,
+          type: 'Maintenance',
+          clientGroup: 'Industrial Manufacturing Co',
+        },
+        {
+          id: 55,
+          title: 'Year-End Equipment Calibration',
+          start: '2026-10-01',
+          end: '2026-12-20',
+          resource: 8,
+          type: 'Inspection',
           clientGroup: 'Industrial Manufacturing Co',
         },
 
-        // Education District - Medium group with 5 tasks across 2 employees
+        // Education District - Medium group with tasks across 2 employees
         {
           id: 31,
           title: 'Classroom Building HVAC Renovation',
-          start: '2026-01-16',
-          end: '2026-02-28',
+          start: '2026-01-10',
+          end: '2026-03-20',
           resource: 3,
+          type: 'Upgrade',
           clientGroup: 'Education District',
         },
         {
           id: 32,
           title: 'Gymnasium Lighting System Replacement',
-          start: '2026-04-20',
-          end: '2026-05-25',
+          start: '2026-04-10',
+          end: '2026-06-15',
           resource: 3,
+          type: 'Repair',
           clientGroup: 'Education District',
         },
         {
           id: 33,
           title: 'Auditorium Climate Control Installation',
-          start: '2026-03-09',
-          end: '2026-05-05',
+          start: '2026-01-20',
+          end: '2026-03-31',
           resource: 6,
+          type: 'Installation',
           clientGroup: 'Education District',
         },
         {
           id: 34,
           title: 'Science Lab Electrical Infrastructure',
-          start: '2026-05-10',
-          end: '2026-06-20',
+          start: '2026-05-01',
+          end: '2026-06-30',
           resource: 3,
+          type: 'Installation',
           clientGroup: 'Education District',
         },
         {
           id: 35,
           title: 'Campus Fire Alarm System Certification',
-          start: '2026-01-20',
-          end: '2026-02-20',
+          start: '2026-02-01',
+          end: '2026-03-20',
           resource: 6,
+          type: 'Inspection',
+          clientGroup: 'Education District',
+        },
+        {
+          id: 56,
+          title: 'School Year-End HVAC Service',
+          start: '2026-07-01',
+          end: '2026-09-15',
+          resource: 3,
+          type: 'Maintenance',
+          clientGroup: 'Education District',
+        },
+        {
+          id: 57,
+          title: 'Winter Heating System Preparation',
+          start: '2026-10-01',
+          end: '2026-12-10',
+          resource: 6,
+          type: 'Maintenance',
           clientGroup: 'Education District',
         },
 
-        // Hospitality Group - Medium group with 7 tasks across 2 employees
+        // Hospitality Group - Medium group with tasks across 2 employees
         {
           id: 36,
           title: 'Hotel Lobby Climate System Replacement',
-          start: '2026-01-13',
-          end: '2026-02-25',
+          start: '2026-01-10',
+          end: '2026-03-15',
           resource: 4,
+          type: 'Repair',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 37,
           title: 'Commercial Kitchen Exhaust Installation',
-          start: '2026-03-05',
-          end: '2026-04-20',
+          start: '2026-02-05',
+          end: '2026-03-31',
           resource: 6,
+          type: 'Installation',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 38,
           title: 'Pool Area LED Lighting Conversion',
-          start: '2026-04-25',
-          end: '2026-05-30',
+          start: '2026-04-10',
+          end: '2026-06-20',
           resource: 4,
+          type: 'Upgrade',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 39,
           title: 'Guest Room HVAC Zone Upgrade Project',
-          start: '2026-06-05',
-          end: '2026-07-20',
+          start: '2026-05-01',
+          end: '2026-06-30',
           resource: 6,
+          type: 'Upgrade',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 40,
           title: 'Conference Center AV & Electrical Setup',
-          start: '2026-02-01',
+          start: '2026-01-15',
           end: '2026-03-10',
           resource: 4,
+          type: 'Installation',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 41,
           title: 'Spa Facility Equipment Installation',
-          start: '2026-05-05',
-          end: '2026-06-10',
+          start: '2026-04-20',
+          end: '2026-06-15',
           resource: 4,
+          type: 'Installation',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 42,
           title: 'Ballroom Lighting & Rigging Project',
-          start: '2026-06-15',
-          end: '2026-07-30',
+          start: '2026-05-10',
+          end: '2026-06-30',
           resource: 6,
+          type: 'Installation',
+          clientGroup: 'Hospitality Group',
+        },
+        {
+          id: 58,
+          title: 'Fall Season HVAC Maintenance',
+          start: '2026-07-15',
+          end: '2026-09-30',
+          resource: 4,
+          type: 'Maintenance',
+          clientGroup: 'Hospitality Group',
+        },
+        {
+          id: 65,
+          title: 'Holiday Season Preparation',
+          start: '2026-10-15',
+          end: '2026-12-31',
+          resource: 6,
+          type: 'Maintenance',
           clientGroup: 'Hospitality Group',
         },
 
-        // Greenfield Medical Center - Small group with 2 tasks across 1 employee
+        // Greenfield Medical Center - Group with tasks across 1 employee
         {
           id: 43,
           title: 'Operating Room HVAC Upgrade',
-          start: '2026-01-08',
-          end: '2026-03-15',
+          start: '2026-01-15',
+          end: '2026-03-30',
           resource: 1,
+          type: 'Upgrade',
           clientGroup: 'Greenfield Medical Center',
         },
         {
           id: 44,
           title: 'Medical Equipment Power Installation',
-          start: '2026-04-10',
+          start: '2026-04-05',
           end: '2026-06-20',
           resource: 1,
+          type: 'Installation',
+          clientGroup: 'Greenfield Medical Center',
+        },
+        {
+          id: 59,
+          title: 'Emergency Room Electrical Upgrade',
+          start: '2026-07-01',
+          end: '2026-09-15',
+          resource: 1,
+          type: 'Upgrade',
+          clientGroup: 'Greenfield Medical Center',
+        },
+        {
+          id: 60,
+          title: 'Medical Facility Winter Readiness',
+          start: '2026-10-10',
+          end: '2026-12-20',
+          resource: 1,
+          type: 'Maintenance',
           clientGroup: 'Greenfield Medical Center',
         },
 
-        // Tech Startup Hub - Small group with 4 tasks across 3 employees
+        // Tech Startup Hub - Group with tasks across 3 employees
         {
           id: 45,
           title: 'Open Office Climate Control',
           start: '2026-01-05',
-          end: '2026-02-10',
+          end: '2026-03-10',
           resource: 5,
+          type: 'Installation',
           clientGroup: 'Tech Startup Hub',
         },
         {
           id: 46,
           title: 'Conference Room AV Setup',
-          start: '2026-02-15',
-          end: '2026-03-20',
+          start: '2026-02-10',
+          end: '2026-03-31',
           resource: 7,
+          type: 'Installation',
           clientGroup: 'Tech Startup Hub',
         },
         {
           id: 47,
           title: 'Server Closet Cooling System',
-          start: '2026-03-25',
-          end: '2026-04-30',
+          start: '2026-01-20',
+          end: '2026-03-20',
           resource: 3,
+          type: 'Installation',
           clientGroup: 'Tech Startup Hub',
         },
         {
           id: 48,
           title: 'Emergency Exit Lighting',
-          start: '2026-05-05',
-          end: '2026-07-01',
+          start: '2026-04-10',
+          end: '2026-06-15',
           resource: 7,
+          type: 'Maintenance',
+          clientGroup: 'Tech Startup Hub',
+        },
+        {
+          id: 66,
+          title: 'Office Expansion Electrical Work',
+          start: '2026-07-15',
+          end: '2026-09-25',
+          resource: 5,
+          type: 'Installation',
+          clientGroup: 'Tech Startup Hub',
+        },
+        {
+          id: 67,
+          title: 'Year-End System Maintenance',
+          start: '2026-10-20',
+          end: '2026-12-30',
+          resource: 3,
+          type: 'Maintenance',
           clientGroup: 'Tech Startup Hub',
         },
       ];
@@ -471,8 +690,37 @@ export default {
         },
       ];
 
+      var typeResources = [
+        {
+          id: 'installation',
+          name: 'Installation',
+          color: '#3b82f6',
+        },
+        {
+          id: 'maintenance',
+          name: 'Maintenance',
+          color: '#10b981',
+        },
+        {
+          id: 'repair',
+          name: 'Repair',
+          color: '#f59e0b',
+        },
+        {
+          id: 'inspection',
+          name: 'Inspection',
+          color: '#8b5cf6',
+        },
+        {
+          id: 'upgrade',
+          name: 'Upgrade',
+          color: '#ef4444',
+        },
+      ];
+
       var groupedEvents = [];
-      var selectedGrouping = 'user';
+      var groupBy = 'assignee'; // 'assignee' or 'type'
+      var groupByClientQuarter = false;
 
       // Generate client resources dynamically from events
       function getClientResources() {
@@ -492,7 +740,7 @@ export default {
         });
       }
 
-      function groupEventsByClient(events) {
+      function groupEventsByClientQuarter(events) {
         var groups = {};
         var result = [];
         var clientResources = getClientResources();
@@ -512,7 +760,7 @@ export default {
             return r.name === clientGroup;
           });
 
-          // Group events by 3-month periods
+          // Group events by 3-month periods based on START date only
           var periodGroups = {};
 
           clientEvents.forEach(function (event) {
@@ -520,7 +768,7 @@ export default {
             var month = eventStart.getMonth(); // 0-11
             var year = eventStart.getFullYear();
 
-            // Calculate 3-month period (0: Jan-Mar, 1: Apr-Jun, 2: Jul-Sep, 3: Oct-Dec)
+            // Calculate 3-month period based on start date (0: Jan-Mar, 1: Apr-Jun, 2: Jul-Sep, 3: Oct-Dec)
             var period = Math.floor(month / 3);
             var periodKey = year + '-' + period;
 
@@ -542,11 +790,23 @@ export default {
               return a.start < b.start ? -1 : a.start > b.start ? 1 : 0;
             });
 
-            var firstEmployee = myResources.find(function (r) {
-              return periodEvents.some(function (e) {
-                return e.resource === r.id;
+            // Get color based on groupBy mode
+            var color;
+            if (groupBy === 'assignee') {
+              var firstEmployee = myResources.find(function (r) {
+                return periodEvents.some(function (e) {
+                  return e.resource === r.id;
+                });
               });
-            });
+              color = firstEmployee ? firstEmployee.color : '#64748b';
+            } else {
+              var firstType = typeResources.find(function (r) {
+                return periodEvents.some(function (e) {
+                  return e.type.toLowerCase() === r.id;
+                });
+              });
+              color = firstType ? firstType.color : '#64748b';
+            }
 
             var eventIds = periodEvents
               .map(function (e) {
@@ -554,7 +814,7 @@ export default {
               })
               .join('-');
 
-            // Use actual task dates instead of full period dates
+            // Use actual task dates - let end date span across quarters
             var earliestStart = periodEvents[0].start;
             var latestEnd = periodEvents.reduce(function (latest, event) {
               return event.end > latest ? event.end : latest;
@@ -566,7 +826,7 @@ export default {
               clientGroup: clientGroup,
               start: earliestStart,
               end: latestEnd,
-              color: firstEmployee ? firstEmployee.color : '#64748b',
+              color: color,
               count: periodEvents.length,
               originalEvents: periodEvents,
             });
@@ -576,11 +836,111 @@ export default {
         return result;
       }
 
+      function updateView() {
+        var currentResources;
+        var currentEvents;
+
+        if (groupByClientQuarter) {
+          // Grouped view by client/quarter
+          var clientResources = getClientResources();
+          groupedEvents = groupEventsByClientQuarter(myEvents, groupBy === 'assignee' ? 'resource' : 'type');
+          currentResources = clientResources;
+          currentEvents = groupedEvents;
+        } else {
+          // Simple view
+          groupedEvents = [];
+          if (groupBy === 'assignee') {
+            currentResources = myResources;
+            currentEvents = myEvents;
+          } else {
+            // By type - need to map events to type resources
+            currentResources = typeResources;
+            currentEvents = myEvents.map(function (event) {
+              return {
+                id: event.id,
+                title: event.title,
+                start: event.start,
+                end: event.end,
+                resource: event.type.toLowerCase(),
+                type: event.type,
+                assignee: event.resource,
+                clientGroup: event.clientGroup,
+                color: typeResources.find(function (t) {
+                  return t.id === event.type.toLowerCase();
+                }).color,
+              };
+            });
+          }
+        }
+
+        calendar.setOptions({
+          data: currentEvents,
+          resources: currentResources,
+          renderScheduleEvent: groupByClientQuarter ? renderGroupedEvent : null,
+        });
+      }
+
+      function renderGroupedEvent(event) {
+        var origEvent = event.original;
+
+        // Get unique assignees or types depending on groupBy
+        var uniqueItems = {};
+        origEvent.originalEvents.forEach(function (ev) {
+          if (groupBy === 'assignee') {
+            var emp = myResources.find(function (r) {
+              return r.id === ev.resource;
+            });
+            if (emp) {
+              uniqueItems[emp.id] = emp;
+            }
+          } else {
+            var typeObj = typeResources.find(function (r) {
+              return r.id === ev.type.toLowerCase();
+            });
+            if (typeObj) {
+              uniqueItems[typeObj.id] = typeObj;
+            }
+          }
+        });
+
+        var itemCount = Object.keys(uniqueItems).length;
+        var itemLabel = groupBy === 'assignee' ? 'employee' : 'type';
+
+        return (
+          '<div class="mds-event-grouping-task mds-event-grouping-task-client" style="border-left: 4px solid ' +
+          origEvent.color +
+          '">' +
+          '<div class="mds-event-grouping-summary">' +
+          '<div class="mds-event-grouping-title-text">' +
+          origEvent.count +
+          ' task' +
+          (origEvent.count > 1 ? 's' : '') +
+          ' with ' +
+          itemCount +
+          ' ' +
+          itemLabel +
+          (itemCount > 1 ? 's' : '') +
+          '</div>' +
+          '<div class="mds-event-grouping-date-range">' +
+          mobiscroll.formatDate('DD MMM', new Date(origEvent.start)) +
+          ' - ' +
+          mobiscroll.formatDate('DD MMM', new Date(origEvent.end)) +
+          '</div>' +
+          '</div>' +
+          '<div id="mds-event-grouping-icon-' +
+          origEvent.id +
+          '" class="mds-event-grouping-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"></div>' +
+          '<div id="mds-event-grouping-events-' +
+          origEvent.id +
+          '" class="mds-event-grouping-events"></div>' +
+          '</div>'
+        );
+      }
+
       var calendar = $('#demo-event-grouping')
         .mobiscroll()
         .eventcalendar({
           dragToMove: true,
-          dragToResize: true,
           view: {
             timeline: {
               type: 'year',
@@ -610,61 +970,45 @@ export default {
                 '</div>' +
                 '</div>'
               );
-            } else {
-              // Client resource - get color from first employee
-              var employees = myResources.filter(function (r) {
-                return myEvents.some(function (e) {
-                  return e.clientGroup === resource.name && e.resource === r.id;
-                });
-              });
-
-              var color = employees.length > 0 ? employees[0].color : '#64748b';
-
-              var employeeHtml = employees
-                .map(function (emp) {
-                  return (
-                    '<div class="mds-event-grouping-employee-item">' +
-                    '<img src="' +
-                    emp.img +
-                    '" alt="' +
-                    emp.name +
-                    '" class="mds-event-grouping-employee-avatar" />' +
-                    '<span class="mds-event-grouping-employee-name">' +
-                    emp.name +
-                    '</span>' +
-                    '</div>'
-                  );
-                })
-                .join('');
-
+            } else if (
+              resource.name &&
+              !resource.img &&
+              typeResources.find(function (t) {
+                return t.id === resource.id;
+              })
+            ) {
+              // Type resource
               return (
-                '<div class="mds-event-grouping-client-resource">' +
-                '<div class="mds-event-grouping-client-header">' +
-                '<div class="mds-event-grouping-client-badge" style="background-color: ' +
-                color +
+                '<div class="mds-event-grouping-type-resource">' +
+                '<div class="mds-event-grouping-type-badge" style="background-color: ' +
+                resource.color +
                 '"></div>' +
-                '<div class="mds-event-grouping-client-name">' +
+                '<div class="mds-event-grouping-type-name">' +
                 resource.name +
-                '</div>' +
-                '</div>' +
-                '<div class="mds-event-grouping-employees-list">' +
-                employeeHtml +
                 '</div>' +
                 '</div>'
               );
+            } else {
+              // Client resource - only show name (no badge) when groupByClientQuarter is ON
+              if (groupByClientQuarter) {
+                return (
+                  '<div class="mds-event-grouping-client-resource">' +
+                  '<div class="mds-event-grouping-client-name">' +
+                  resource.name +
+                  '</div>' +
+                  '</div>'
+                );
+              } else {
+                // This shouldn't happen, but just in case
+                return '<div>' + resource.name + '</div>';
+              }
             }
           },
           renderHeader: function () {
             return (
               '<div mbsc-calendar-nav></div>' +
               '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">' +
-              '<label>' +
-              '<input mbsc-input id="event-grouping-input" data-dropdown="true" data-input-style="box" />' +
-              '</label>' +
-              '<select id="event-grouping-select">' +
-              '<option value="user" selected>Assigned User</option>' +
-              '<option value="group">Client Group</option>' +
-              '</select>' +
+              '<button id="group-filter-btn" mbsc-button data-variant="flat">Group & Filter</button>' +
               '</div>' +
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-today></div>' +
@@ -672,21 +1016,21 @@ export default {
             );
           },
           onEventUpdate: function (args) {
-            var updatedEvent = args.event;
-            var oldEvent = args.oldEvent;
+            if (groupByClientQuarter) {
+              var updatedEvent = args.event;
+              var oldEvent = args.oldEvent;
 
-            var oldStart = new Date(oldEvent.start).getTime();
-            var newStart = new Date(updatedEvent.start).getTime();
-            var oldEnd = new Date(oldEvent.end).getTime();
-            var newEnd = new Date(updatedEvent.end).getTime();
+              var oldStart = new Date(oldEvent.start).getTime();
+              var newStart = new Date(updatedEvent.start).getTime();
 
-            var startDelta = newStart - oldStart;
-            var endDelta = newEnd - oldEnd;
+              var startDelta = newStart - oldStart;
 
-            var eventsToUpdate = [];
+              // If no movement, just return
+              if (startDelta === 0) {
+                return true;
+              }
 
-            if (selectedGrouping === 'group') {
-              // Find the grouped event that was moved/resized
+              // Find the grouped event that was moved
               var movedGroupedEvent = groupedEvents.find(function (ge) {
                 return ge.id === updatedEvent.id;
               });
@@ -694,6 +1038,7 @@ export default {
               if (!movedGroupedEvent) return false;
 
               var clientGroupName = movedGroupedEvent.clientGroup;
+              var eventsToUpdate = [];
 
               // Update all events within this grouped event (same 3-month period)
               movedGroupedEvent.originalEvents.forEach(function (originalEvent) {
@@ -702,135 +1047,52 @@ export default {
                 });
 
                 if (eventInMyEvents) {
-                  if (startDelta !== 0) {
-                    eventInMyEvents.start = new Date(new Date(eventInMyEvents.start).getTime() + startDelta).toISOString().split('T')[0];
-                  }
-                  if (endDelta !== 0) {
-                    eventInMyEvents.end = new Date(new Date(eventInMyEvents.end).getTime() + endDelta).toISOString().split('T')[0];
-                  }
+                  eventInMyEvents.start = new Date(new Date(eventInMyEvents.start).getTime() + startDelta).toISOString().split('T')[0];
+                  eventInMyEvents.end = new Date(new Date(eventInMyEvents.end).getTime() + startDelta).toISOString().split('T')[0];
                   eventsToUpdate.push(eventInMyEvents);
                 }
               });
 
               // Regenerate grouped events
-              groupedEvents = groupEventsByClient(myEvents);
+              updateView();
 
-              calendar.setOptions({
-                data: groupedEvents,
+              mobiscroll.toast({
+                message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been moved.',
               });
 
-              // Only show toast if dates changed
-              if (startDelta !== 0 || endDelta !== 0) {
-                mobiscroll.toast({
-                  message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been updated.',
-                });
-              }
-            } else {
-              eventsToUpdate = myEvents.filter(function (event) {
-                return (
-                  event.resource === updatedEvent.resource && event.clientGroup === updatedEvent.clientGroup && event.id !== updatedEvent.id
-                );
-              });
-
-              eventsToUpdate.forEach(function (event) {
-                if (startDelta !== 0) {
-                  event.start = new Date(new Date(event.start).getTime() + startDelta).toISOString().split('T')[0];
-                }
-                if (endDelta !== 0) {
-                  event.end = new Date(new Date(event.end).getTime() + endDelta).toISOString().split('T')[0];
-                }
-              });
-
-              calendar.setOptions({
-                data: myEvents,
-              });
-
-              var resource = myResources.find(function (r) {
-                return r.id === updatedEvent.resource;
-              });
-              var resourceName = resource ? resource.name : 'Unknown';
-
-              // Only show toast if dates changed and there are events to update
-              if (eventsToUpdate.length > 0 && (startDelta !== 0 || endDelta !== 0)) {
-                mobiscroll.toast({
-                  message:
-                    eventsToUpdate.length + 1 + ' event(s) for ' + resourceName + ' (' + updatedEvent.clientGroup + ') have been updated.',
-                });
-              }
+              return true;
             }
           },
         })
         .mobiscroll('getInst');
 
-      $('#event-grouping-select')
+      // Group & Filter popup
+      var popup = $('#group-filter-popup')
         .mobiscroll()
-        .select({
-          inputElement: document.getElementById('event-grouping-input'),
-          touchUi: false,
-          onChange: function (args) {
-            if (args.value == 'user') {
-              groupedEvents = [];
-              selectedGrouping = 'user';
-              calendar.setOptions({
-                data: myEvents,
-                resources: myResources,
-                renderScheduleEvent: null,
-              });
-            } else {
-              var clientResources = getClientResources();
-              groupedEvents = groupEventsByClient(myEvents);
-              selectedGrouping = 'group';
-              calendar.setOptions({
-                data: groupedEvents,
-                resources: clientResources,
-                renderScheduleEvent: function (event) {
-                  var origEvent = event.original;
+        .popup({
+          display: 'anchored',
+          showArrow: false,
+          contentPadding: false,
+          anchor: $('#group-filter-btn')[0],
+          width: 300,
+        })
+        .mobiscroll('getInst');
 
-                  var assignedEmployees = {};
-                  origEvent.originalEvents.forEach(function (ev) {
-                    var emp = myResources.find(function (r) {
-                      return r.id === ev.resource;
-                    });
-                    if (emp) {
-                      assignedEmployees[emp.id] = emp;
-                    }
-                  });
+      $('#group-filter-btn').on('click', function () {
+        popup.open();
+      });
 
-                  var employeeCount = Object.keys(assignedEmployees).length;
+      // Radio buttons for groupBy
+      $('input[name="group-by-radio"]').on('change', function () {
+        groupBy = this.value;
+        updateView();
+      });
 
-                  return (
-                    '<div class="mds-event-grouping-task mds-event-grouping-task-client" style="border-left: 4px solid ' +
-                    origEvent.color +
-                    '">' +
-                    '<div class="mds-event-grouping-summary">' +
-                    '<div class="mds-event-grouping-title-text">' +
-                    origEvent.count +
-                    ' task' +
-                    (origEvent.count > 1 ? 's' : '') +
-                    ' with ' +
-                    employeeCount +
-                    ' client' +
-                    (employeeCount > 1 ? 's' : '') +
-                    '</div>' +
-                    '<div class="mds-event-grouping-date-range">' +
-                    mobiscroll.formatDate('DD MMM', new Date(origEvent.start)) +
-                    ' - ' +
-                    mobiscroll.formatDate('DD MMM', new Date(origEvent.end)) +
-                    '</div>' +
-                    '</div>' +
-                    '<div id="mds-event-grouping-icon-' +
-                    origEvent.id +
-                    '" class="mds-event-grouping-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"></div>' +
-                    '<div id="mds-event-grouping-events-' +
-                    origEvent.id +
-                    '" class="mds-event-grouping-events"></div>' +
-                    '</div>'
-                  );
-                },
-              });
-            }
-          },
-        });
+      // Checkbox for client/quarter grouping
+      $('#group-by-client-quarter').on('change', function () {
+        groupByClientQuarter = this.checked;
+        updateView();
+      });
 
       $(document).on('click', '.mds-event-grouping-icon', function (event) {
         var iconId = event.currentTarget.id;
@@ -861,18 +1123,23 @@ export default {
       function expand(container, scheduleEvent, eventsDiv, icon, groupedEvent) {
         var html = groupedEvent.originalEvents
           .map(function (ev) {
-            var employee = myResources.find(function (r) {
-              return r.id === ev.resource;
-            });
-            var employeeName = employee ? employee.name : 'Unknown';
+            var detailText;
+            if (groupBy === 'assignee') {
+              var employee = myResources.find(function (r) {
+                return r.id === ev.resource;
+              });
+              detailText = employee ? employee.name : 'Unknown';
+            } else {
+              detailText = ev.type;
+            }
 
             return (
               '<div class="mds-event-grouping-original-event">' +
               '<div class="mds-event-grouping-event-content">' +
               '<div class="mds-event-grouping-event-title">' +
               ev.title +
-              ' <span class="mds-event-grouping-event-employee">· ' +
-              employeeName +
+              ' <span class="mds-event-grouping-event-employee">- ' +
+              detailText +
               '</span>' +
               '</div>' +
               '<div class="mds-event-grouping-event-date">' +
@@ -927,6 +1194,17 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-event-grouping" class="mds-event-grouping-calendar"></div>
+<div id="group-filter-popup" style="display: none;">
+  <label>
+    <input mbsc-radio type="radio" name="group-by-radio" value="assignee" checked data-description="View by assignee" />
+  </label>
+  <label>
+    <input mbsc-radio type="radio" name="group-by-radio" value="type" data-description="View by type" />
+  </label>
+  <label>
+    <input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-description="Group by client/quarter" />
+  </label>
+</div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
@@ -935,19 +1213,6 @@ export default {
 }
 .mds-event-grouping-calendar .mbsc-timeline-resource-col {
   width: 240px;
-}
-.mds-event-grouping-calendar .mbsc-select.mbsc-textfield {
-  height: 32px;
-  width: 180px;
-  padding: 0 16px;
-}
-.mds-event-grouping-calendar .mbsc-ios.mbsc-textfield-wrapper {
-  margin: 12px 12px 12px 28px;
-}
-.mds-event-grouping-calendar .mbsc-ios.mbsc-select-icon {
-  width: 20px;
-  height: 20px;
-  top: 7px;
 }
 
 /* Resource rendering */
@@ -968,6 +1233,27 @@ export default {
   line-height: 16px;
 }
 
+/* Type resource styling */
+.mds-event-grouping-type-resource {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.mds-event-grouping-type-badge {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mds-event-grouping-type-name {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
 /* Base task styling */
 .mds-event-grouping-task {
   position: relative;
@@ -980,28 +1266,6 @@ export default {
   transition: height 0.25s ease-out;
 }
 
-/* User view - old grouped task styles */
-.mds-event-grouping-client {
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 42px;
-}
-.mds-event-grouping-count {
-  font-size: 13px;
-  color: #64748b;
-}
-.mds-event-grouping-info {
-  position: absolute;
-  top: 10px;
-  right: 40px;
-  font-size: 12px;
-  background: rgba(255,255,255,0.7);
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-weight: 400;
-  white-space: nowrap;
-}
-
 /* Client view specific styling */
 .mds-event-grouping-task-client {
   background-color: #f8f9fa;
@@ -1010,7 +1274,7 @@ export default {
   border-radius: 0 8px 8px 0;
   height: 40px;
   transition: height 0.3s ease-out, padding 0.3s ease-out;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 .mds-event-grouping-task.expanded {
@@ -1126,6 +1390,7 @@ export default {
 .mds-event-grouping-task.expanded .mds-event-grouping-icon {
   transform: rotate(180deg);
 }
+
 /* Client resource styling */
 .mds-event-grouping-client-resource {
   display: flex;
@@ -1138,29 +1403,6 @@ export default {
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
-}
-
-.mds-event-grouping-employees-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.mds-event-grouping-employee-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.mds-event-grouping-employee-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-}
-
-.mds-event-grouping-employee-name {
-  font-size: 12px;
-  font-weight: 400;
 }
   `,
 };
