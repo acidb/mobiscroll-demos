@@ -1255,6 +1255,7 @@ export default {
 
 /* Resource rendering - Types */
 .mds-event-grouping-type-resource {
+align-items: center;
   padding: 8px 0;
 }
 
