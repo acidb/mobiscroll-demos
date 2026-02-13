@@ -762,12 +762,12 @@ export default {
             var resourceItem = myResources.find(function (r) {
               return r.id === groupData.resource;
             });
-            color = resourceItem ? resourceItem.color : '#64748b';
+            color = resourceItem.color;
           } else {
             var typeObj = typeResources.find(function (r) {
               return r.id === groupData.resource;
             });
-            color = typeObj ? typeObj.color : '#64748b';
+            color = typeObj.color;
           }
 
           var eventIds = periodEvents
@@ -783,6 +783,7 @@ export default {
 
           result.push({
             id: 'group-' + groupKey + '-' + eventIds,
+            title: groupData.clientGroup,
             resource: groupData.resource,
             clientGroup: groupData.clientGroup,
             start: earliestStart,
@@ -794,6 +795,35 @@ export default {
         });
 
         return result;
+      }
+
+      function prepareEventsForDisplay(events, colorByType) {
+        return events.map(function (event) {
+          var color;
+          if (colorByType) {
+            var typeObj = typeResources.find(function (t) {
+              return t.id === event.type.toLowerCase();
+            });
+            color = typeObj.color;
+          } else {
+            var employee = myResources.find(function (r) {
+              return r.id === event.resource;
+            });
+            color = employee.color;
+          }
+
+          return {
+            id: event.id,
+            title: event.title,
+            start: event.start,
+            end: event.end,
+            resource: colorByType ? event.resource : event.type.toLowerCase(),
+            type: event.type,
+            assignee: event.resource, // Always preserve original employee ID
+            clientGroup: event.clientGroup,
+            color: color,
+          };
+        });
       }
 
       function updateView() {
@@ -816,42 +846,10 @@ export default {
           groupedEvents = [];
           if (groupBy === 'assignee') {
             currentResources = myResources;
-            // Color events by type
-            currentEvents = myEvents.map(function (event) {
-              var typeObj = typeResources.find(function (t) {
-                return t.id === event.type.toLowerCase();
-              });
-              return {
-                id: event.id,
-                title: event.title,
-                start: event.start,
-                end: event.end,
-                resource: event.resource,
-                type: event.type,
-                assignee: event.resource,
-                clientGroup: event.clientGroup,
-                color: typeObj ? typeObj.color : '#64748b',
-              };
-            });
+            currentEvents = prepareEventsForDisplay(myEvents, true);
           } else {
-            // By type - color by assignee
             currentResources = typeResources;
-            currentEvents = myEvents.map(function (event) {
-              var employee = myResources.find(function (r) {
-                return r.id === event.resource;
-              });
-              return {
-                id: event.id,
-                title: event.title,
-                start: event.start,
-                end: event.end,
-                resource: event.type.toLowerCase(),
-                type: event.type,
-                assignee: event.resource,
-                clientGroup: event.clientGroup,
-                color: employee ? employee.color : '#64748b',
-              };
-            });
+            currentEvents = prepareEventsForDisplay(myEvents, false);
           }
         }
 
@@ -891,15 +889,15 @@ export default {
         var itemLabel = groupBy === 'assignee' ? 'type' : 'employee';
 
         return (
-          '<div class="mds-event-grouping-task mds-event-grouping-task-client" style="border-left: 4px solid ' +
+          '<div class="mbsc-flex mds-event-grouping-task mds-event-grouping-task-client" style="border-left-color: ' +
           origEvent.color +
           '">' +
-          '<div class="mds-event-grouping-content">' +
+          '<div class="mbsc-flex mds-event-grouping-content">' +
           '<div class="mds-event-grouping-title-text">' +
           origEvent.clientGroup +
           '</div>' +
-          '<div class="mds-event-grouping-right">' +
-          '<div class="mds-event-grouping-meta">' +
+          '<div class="mbsc-flex mds-event-grouping-right">' +
+          '<div class="mbsc-flex mds-event-grouping-meta">' +
           '<div class="mds-event-grouping-date-range">' +
           mobiscroll.formatDate('DD MMM', new Date(origEvent.start)) +
           ' - ' +
@@ -916,14 +914,10 @@ export default {
           (itemCount > 1 ? 's' : '') +
           '</div>' +
           '</div>' +
-          '<div id="mds-event-grouping-icon-' +
-          origEvent.id +
-          '" class="mds-event-grouping-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"></div>' +
+          '<div class="mbsc-flex mds-event-grouping-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"></div>' +
           '</div>' +
           '</div>' +
-          '<div id="mds-event-grouping-events-' +
-          origEvent.id +
-          '" class="mds-event-grouping-events"></div>' +
+          '<div class="mds-event-grouping-events"><div class="mds-event-grouping-events-inner"></div></div>' +
           '</div>'
         );
       }
@@ -941,10 +935,9 @@ export default {
             detailText = typeObj.name;
           }
         } else {
-          // Show assignee - need to get it from the mapped event or original resource
-          var assigneeId = origEvent.assignee || origEvent.resource;
+          // Show assignee - always use origEvent.assignee
           var employee = myResources.find(function (r) {
-            return r.id === assigneeId;
+            return r.id === origEvent.assignee;
           });
           if (employee) {
             detailText = employee.name;
@@ -952,17 +945,19 @@ export default {
         }
 
         return (
-          '<div class="mds-event-simple" style="background-color: ' +
+          '<div class="mbsc-flex mds-event-simple" style="background-color: ' +
           origEvent.color +
           '">' +
           '<div class="mds-event-simple-title">' +
           origEvent.title +
-          (detailText ? ' <span class="mds-event-simple-subtitle">- ' + detailText + '</span>' : '') +
           '</div>' +
+          '<div class="mbsc-flex mds-event-simple-right">' +
           '<div class="mds-event-simple-date">' +
           mobiscroll.formatDate('DD MMM', new Date(origEvent.start)) +
           ' - ' +
           mobiscroll.formatDate('DD MMM', new Date(origEvent.end)) +
+          '</div>' +
+          (detailText ? '<div class="mds-event-simple-subtitle">' + detailText + '</div>' : '') +
           '</div>' +
           '</div>'
         );
@@ -972,6 +967,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           dragToMove: true,
+          dragBetweenResources: false,
           view: {
             timeline: {
               type: 'year',
@@ -1005,7 +1001,7 @@ export default {
             } else {
               // Type resource
               return (
-                '<div class="mds-event-grouping-type-resource">' +
+                '<div class="mbsc-flex mds-event-grouping-type-resource">' +
                 '<div class="mds-event-grouping-type-badge" style="background-color: ' +
                 resource.color +
                 '"></div>' +
@@ -1028,56 +1024,47 @@ export default {
             );
           },
           onEventUpdate: function (args) {
-            if (!groupByClientQuarter) {
-              // No grouping - use default behavior
-              return true;
-            }
+            if (groupByClientQuarter) {
+              // Grouping is ON - handle grouped event moves
+              var updatedEvent = args.event;
+              var oldEvent = args.oldEvent;
 
-            // Grouping is ON - handle grouped event moves
-            var updatedEvent = args.event;
-            var oldEvent = args.oldEvent;
+              var oldStart = new Date(oldEvent.start).getTime();
+              var newStart = new Date(updatedEvent.start).getTime();
+              var startDelta = newStart - oldStart;
 
-            var oldStart = new Date(oldEvent.start).getTime();
-            var newStart = new Date(updatedEvent.start).getTime();
+              if (startDelta !== 0) {
+                // Find the grouped event that was moved
+                var movedGroupedEvent = groupedEvents.find(function (ge) {
+                  return ge.id === updatedEvent.id;
+                });
 
-            var startDelta = newStart - oldStart;
+                if (movedGroupedEvent) {
+                  var clientGroupName = movedGroupedEvent.clientGroup;
+                  var eventsToUpdate = [];
 
-            // If no movement, just return
-            if (startDelta === 0) {
-              return true;
-            }
+                  // Update all events within this grouped event
+                  movedGroupedEvent.originalEvents.forEach(function (originalEvent) {
+                    var eventInMyEvents = myEvents.find(function (e) {
+                      return e.id === originalEvent.id;
+                    });
 
-            // Find the grouped event that was moved
-            var movedGroupedEvent = groupedEvents.find(function (ge) {
-              return ge.id === updatedEvent.id;
-            });
+                    if (eventInMyEvents) {
+                      eventInMyEvents.start = new Date(new Date(eventInMyEvents.start).getTime() + startDelta);
+                      eventInMyEvents.end = new Date(new Date(eventInMyEvents.end).getTime() + startDelta);
+                      eventsToUpdate.push(eventInMyEvents);
+                    }
+                  });
 
-            if (!movedGroupedEvent) return false;
+                  // Regenerate grouped events
+                  updateView();
 
-            var clientGroupName = movedGroupedEvent.clientGroup;
-            var eventsToUpdate = [];
-
-            // Update all events within this grouped event
-            movedGroupedEvent.originalEvents.forEach(function (originalEvent) {
-              var eventInMyEvents = myEvents.find(function (e) {
-                return e.id === originalEvent.id;
-              });
-
-              if (eventInMyEvents) {
-                eventInMyEvents.start = new Date(new Date(eventInMyEvents.start).getTime() + startDelta).toISOString().split('T')[0];
-                eventInMyEvents.end = new Date(new Date(eventInMyEvents.end).getTime() + startDelta).toISOString().split('T')[0];
-                eventsToUpdate.push(eventInMyEvents);
+                  mobiscroll.toast({
+                    message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been moved.',
+                  });
+                }
               }
-            });
-
-            // Regenerate grouped events
-            updateView();
-
-            mobiscroll.toast({
-              message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been moved.',
-            });
-
-            return true;
+            }
           },
         })
         .mobiscroll('getInst');
@@ -1119,62 +1106,74 @@ export default {
         event.preventDefault();
         event.stopPropagation();
 
-        var iconId = event.currentTarget.id;
-        var groupId = iconId.replace('mds-event-grouping-icon-', '');
+        var icon = event.currentTarget;
+        var task = $(icon).closest('.mds-event-grouping-task')[0];
+        var scheduleEvent = $(icon).closest('.mbsc-schedule-event')[0];
+        var eventsInner = $(task).find('.mds-event-grouping-events-inner')[0];
 
+        if (!task || !scheduleEvent || !eventsInner) return;
+
+        var isExpanded = task.classList.contains('expanded');
+
+        // Find grouped event by client group text
+        var clientText = $(task).find('.mds-event-grouping-title-text').text();
         var groupedEvent = groupedEvents.find(function (e) {
-          return e.id === groupId;
+          return e.clientGroup === clientText;
         });
 
-        if (!groupedEvent) {
-          return;
-        }
-
-        var icon = event.currentTarget;
-        var container = $(icon).closest('.mds-event-grouping-task')[0];
-        var scheduleEvent = $(icon).closest('.mbsc-schedule-event')[0];
-        var eventsDiv = document.getElementById('mds-event-grouping-events-' + groupId);
-
-        if (!container || !scheduleEvent || !eventsDiv) return;
-
-        var isExpanded = container.classList.contains('expanded');
+        if (!groupedEvent) return;
 
         if (isExpanded) {
-          collapse(container, scheduleEvent, eventsDiv, icon);
+          collapse(task, scheduleEvent, eventsInner, icon);
         } else {
-          expand(container, scheduleEvent, eventsDiv, icon, groupedEvent);
+          expand(task, scheduleEvent, eventsInner, icon, groupedEvent);
         }
       });
 
-      function expand(container, scheduleEvent, eventsDiv, icon, groupedEvent) {
+      function getDetailText(event) {
+        if (groupBy === 'assignee') {
+          var typeObj = typeResources.find(function (r) {
+            return r.id === event.type.toLowerCase();
+          });
+          return typeObj.name;
+        } else {
+          var employee = myResources.find(function (r) {
+            return r.id === event.resource;
+          });
+          return employee.name;
+        }
+      }
+
+      function toggleIcon(icon, isExpanded) {
+        if (isExpanded) {
+          icon.classList.remove('mbsc-icon-material-keyboard-arrow-up');
+          icon.classList.add('mbsc-icon-material-keyboard-arrow-down');
+        } else {
+          icon.classList.remove('mbsc-icon-material-keyboard-arrow-down');
+          icon.classList.add('mbsc-icon-material-keyboard-arrow-up');
+        }
+      }
+
+      function expand(task, scheduleEvent, eventsInner, icon, groupedEvent) {
         var html = groupedEvent.originalEvents
           .map(function (ev) {
-            var detailText;
-            if (groupBy === 'assignee') {
-              var typeObj = typeResources.find(function (r) {
-                return r.id === ev.type.toLowerCase();
-              });
-              detailText = typeObj ? typeObj.name : 'Unknown';
-            } else {
-              var employee = myResources.find(function (r) {
-                return r.id === ev.resource;
-              });
-              detailText = employee ? employee.name : 'Unknown';
-            }
+            var detailText = getDetailText(ev);
 
             return (
               '<div class="mds-event-grouping-original-event">' +
-              '<div class="mds-event-grouping-event-content">' +
+              '<div class="mbsc-flex mds-event-grouping-event-content">' +
               '<div class="mds-event-grouping-event-title">' +
               ev.title +
-              ' <span class="mds-event-grouping-event-employee">- ' +
-              detailText +
-              '</span>' +
               '</div>' +
+              '<div class="mbsc-flex mds-event-grouping-event-right">' +
               '<div class="mds-event-grouping-event-date">' +
               mobiscroll.formatDate('DD MMM', new Date(ev.start)) +
               ' - ' +
               mobiscroll.formatDate('DD MMM', new Date(ev.end)) +
+              '</div>' +
+              '<div class="mds-event-grouping-event-employee">' +
+              detailText +
+              '</div>' +
               '</div>' +
               '</div>' +
               '</div>'
@@ -1182,37 +1181,27 @@ export default {
           })
           .join('');
 
-        eventsDiv.innerHTML = html;
-        container.classList.add('expanded');
+        eventsInner.innerHTML = html;
         scheduleEvent.style.zIndex = '3';
+        eventsInner.offsetHeight; // Force reflow
 
-        toggleIcon(icon, true);
-
-        // Trigger layout recalculation after animation starts
-        setTimeout(function () {
-          calendar.refresh();
-        }, 50);
-      }
-
-      function collapse(container, scheduleEvent, eventsDiv, icon) {
-        container.classList.remove('expanded');
-        scheduleEvent.style.zIndex = '';
-
+        task.classList.add('expanded');
         toggleIcon(icon, false);
 
         setTimeout(function () {
-          eventsDiv.innerHTML = '';
-
-          // Trigger layout recalculation after animation completes
           calendar.refresh();
-        }, 300);
+        }, 250);
       }
 
-      function toggleIcon(icon, isExpanding) {
-        var downClass = 'mbsc-icon-material-keyboard-arrow-down';
-        var upClass = 'mbsc-icon-material-keyboard-arrow-up';
-        icon.classList.remove(isExpanding ? downClass : upClass);
-        icon.classList.add(isExpanding ? upClass : downClass);
+      function collapse(task, scheduleEvent, eventsInner, icon) {
+        task.classList.remove('expanded');
+        scheduleEvent.style.zIndex = '';
+        toggleIcon(icon, true);
+
+        setTimeout(function () {
+          eventsInner.innerHTML = '';
+          calendar.refresh();
+        }, 250);
       }
     });
   },
@@ -1238,33 +1227,34 @@ export default {
 .mds-event-grouping-calendar .mbsc-timeline-row {
   height: 140px;
 }
+
 .mds-event-grouping-calendar .mbsc-timeline-resource-col {
   width: 240px;
 }
 
-/* Resource rendering */
+/* Resource rendering - Employees */
 .mds-event-grouping-avatar {
   width: 40px;
   height: 40px;
 }
+
 .mds-event-grouping-cont {
   padding: 0 7px;
 }
+
 .mds-event-grouping-name {
   font-size: 14px;
   line-height: 24px;
 }
+
 .mds-event-grouping-title {
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
 }
 
-/* Type resource styling */
+/* Resource rendering - Types */
 .mds-event-grouping-type-resource {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   padding: 8px 0;
 }
 
@@ -1272,7 +1262,7 @@ export default {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  flex-shrink: 0;
+  margin-right: 10px;
 }
 
 .mds-event-grouping-type-name {
@@ -1281,44 +1271,21 @@ export default {
   line-height: 20px;
 }
 
-/* Base task styling */
-.mds-event-grouping-task {
-  position: relative;
-  border-radius: 8px;
-  padding: 10px 14px;
-  background-color: #e1e1e1;
-  height: 50px;
-  box-sizing: border-box;
-  overflow: hidden;
-  transition: height 0.25s ease-out;
-}
-
-/* Client view specific styling */
+/* Grouped event - collapsed state */
 .mds-event-grouping-task-client {
   background-color: #f8f9fa;
-  border-left-width: 4px;
-  border-left-style: solid;
+  border-left: 4px solid;
   border-radius: 0 8px 8px 0;
-  padding: 0;
-  transition: height 0.3s ease-out, padding 0.3s ease-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
-  min-height: 50px;
-  display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-.mds-event-grouping-task.expanded {
-  height: auto;
-  overflow: visible;
-}
-
+/* Grouped event - content area */
 .mds-event-grouping-content {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
-  gap: 12px;
-  flex: 1;
 }
 
 .mds-event-grouping-title-text {
@@ -1326,40 +1293,36 @@ export default {
   font-weight: 600;
   color: #1e293b;
   line-height: 20px;
-  margin: 0;
   flex: 1;
   min-width: 0;
-  display: flex;
-  align-items: center;
+  margin-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+/* Right side - fixed width */
 .mds-event-grouping-right {
-  display: flex;
   align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-  height: 100%;
+  width: 130px;
 }
 
 .mds-event-grouping-meta {
-  display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-content: center;
-  gap: 2px;
+  flex: 1;
+  margin-right: 12px;
 }
 
 .mds-event-grouping-date-range {
   font-size: 11px;
-  color: #64748b;
   line-height: 14px;
-  margin: 0;
   white-space: nowrap;
+  margin-bottom: 2px;
 }
 
 .mds-event-grouping-count {
   font-size: 11px;
-  color: #64748b;
   line-height: 14px;
   white-space: nowrap;
 }
@@ -1369,54 +1332,44 @@ export default {
   font-size: 20px;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.3s ease-out;
-  z-index: 10;
-  pointer-events: auto;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.3s ease;
   width: 24px;
   height: 24px;
+  align-items: center;
+  justify-content: center;
 }
 
 .mds-event-grouping-task.expanded .mds-event-grouping-icon {
   transform: rotate(180deg);
 }
 
-/* Expanded events list */
+/* Expanded events list - grid wrapper */
 .mds-event-grouping-events {
-  max-height: 0;
-  opacity: 0;
-  width: 100%;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.mds-event-grouping-events-inner {
   overflow: hidden;
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
   padding: 0 14px;
-  box-sizing: border-box;
+  transition: padding 0.25s ease;
 }
 
 .mds-event-grouping-task.expanded .mds-event-grouping-events {
-  max-height: 1000px;
-  opacity: 1;
+  grid-template-rows: 1fr;
+}
+
+.mds-event-grouping-task.expanded .mds-event-grouping-events-inner {
   padding: 0 14px 10px 14px;
 }
 
 .mds-event-grouping-original-event {
   background: #fff;
   border-radius: 6px;
-  margin: 0 0 4px 0;
-  padding: 6px 10px;
-  font-size: 13px;
-  box-sizing: border-box;
+  margin-bottom: 6px;
+  padding: 8px 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.3s ease-out 0.15s, transform 0.3s ease-out 0.15s;
-}
-
-.mds-event-grouping-task.expanded .mds-event-grouping-original-event {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .mds-event-grouping-original-event:last-child {
@@ -1424,10 +1377,8 @@ export default {
 }
 
 .mds-event-grouping-event-content {
-  display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
 }
 
 .mds-event-grouping-event-title {
@@ -1435,47 +1386,46 @@ export default {
   color: #1e293b;
   font-size: 13px;
   line-height: 18px;
-  margin: 0;
   flex: 1;
   min-width: 0;
+  margin-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.mds-event-grouping-event-employee {
-  font-weight: 400;
-  color: #64748b;
+.mds-event-grouping-event-right {
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 80px;
 }
 
 .mds-event-grouping-event-date {
   font-size: 11px;
   color: #94a3b8;
   white-space: nowrap;
-  line-height: 18px;
+  line-height: 14px;
+  text-align: right;
+  margin-bottom: 2px;
 }
 
-/* Client resource styling */
-.mds-event-grouping-client-resource {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 8px 0;
-}
-
-.mds-event-grouping-client-name {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
+.mds-event-grouping-event-employee {
+  font-size: 11px;
+  font-weight: 400;
+  color: #64748b;
+  white-space: nowrap;
+  line-height: 14px;
+  text-align: right;
 }
 
 /* Simple event styling */
 .mds-event-simple {
   padding: 10px 12px;
   border-radius: 6px;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
 }
 
 .mds-event-simple-title {
@@ -1483,11 +1433,18 @@ export default {
   font-weight: 600;
   color: #fff;
   line-height: 18px;
+  flex: 1;
+  min-width: 0;
+  margin-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.mds-event-simple-subtitle {
-  font-weight: 400;
-  opacity: 0.9;
+.mds-event-simple-right {
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 80px;
 }
 
 .mds-event-simple-date {
@@ -1495,6 +1452,19 @@ export default {
   color: #fff;
   line-height: 14px;
   opacity: 0.85;
+  white-space: nowrap;
+  text-align: right;
+  margin-bottom: 2px;
+}
+
+.mds-event-simple-subtitle {
+  font-size: 11px;
+  font-weight: 400;
+  color: #fff;
+  opacity: 0.9;
+  line-height: 14px;
+  text-align: right;
+  white-space: nowrap;
 }
   `,
 };
