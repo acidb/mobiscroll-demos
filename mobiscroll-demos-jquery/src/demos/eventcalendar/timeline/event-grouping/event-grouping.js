@@ -6,7 +6,8 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -953,7 +954,7 @@ export default {
             ? '<div class="mbsc-flex mds-event-simple-subtitle-wrapper">' +
               (avatarUrl ? '<img src="' + avatarUrl + '" alt="' + detailText + '" class="mds-event-simple-avatar" />' : '') +
               (typeDotColor ? '<span class="mds-event-simple-type-dot" style="background-color: ' + typeDotColor + '"></span>' : '') +
-              '<div class="mds-event-simple-subtitle">' +
+              '<div class="mbsc-flex mds-event-simple-subtitle">' +
               detailText +
               '</div>' +
               '</div>'
@@ -1459,7 +1460,6 @@ color: #797979;
   height: 16px;
   border-radius: 50%;
   margin-right: 6px;
-  flex-shrink: 0;
 }
 
 /* Colored dot for type in assignee view */
@@ -1468,7 +1468,6 @@ color: #797979;
   height: 8px;
   border-radius: 50%;
   margin-right: 6px;
-  flex-shrink: 0;
 }
 
 /* Simple event styling (no grouping) */
@@ -1485,12 +1484,9 @@ color: #797979;
 
 /* Event title */
 .mds-event-simple-title {
+  flex: 1;
   font-size: 13px;
   font-weight: 600;
-  color: #fff;
-  line-height: 18px;
-  flex: 1;
-  min-width: 0;
   margin-right: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1507,7 +1503,6 @@ color: #797979;
 /* Date range */
 .mds-event-simple-date {
   font-size: 11px;
-  color: #fff;
   line-height: 14px;
   opacity: 0.85;
   white-space: nowrap;
@@ -1517,7 +1512,6 @@ color: #797979;
 
 /* Subtitle wrapper (avatar/dot + text) */
 .mds-event-simple-subtitle-wrapper {
-  display: flex;
   align-items: center;
   justify-content: flex-end;
 }
@@ -1528,7 +1522,6 @@ color: #797979;
   height: 20px;
   border-radius: 50%;
   margin-right: 6px;
-  flex-shrink: 0;
 }
 
 /* Colored dot for type in assignee view */
@@ -1537,18 +1530,16 @@ color: #797979;
   height: 8px;
   border-radius: 50%;
   margin-right: 6px;
-  flex-shrink: 0;
+  align-self: center;
 }
 
 /* Subtitle text (type or assignee name) */
 .mds-event-simple-subtitle {
   font-size: 11px;
   font-weight: 700;
-  color: #fff;
-  opacity: 0.9;
-  line-height: 15px;
   text-align: right;
   white-space: nowrap;
+  align-items: center;
 }
 
 /* Header controls */
@@ -1569,6 +1560,5 @@ color: #797979;
 .mds-event-grouping-select.mbsc-textfield {
   width: 210px;
 }
-
   `,
 };
