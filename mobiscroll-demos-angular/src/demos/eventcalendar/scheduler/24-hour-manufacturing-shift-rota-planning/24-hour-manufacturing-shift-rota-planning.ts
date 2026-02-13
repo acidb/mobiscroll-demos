@@ -322,7 +322,7 @@ export class AppComponent {
         startTime.setHours(this.shifts[slotKey].startHour, 0, 0, 0);
         const endTime = new Date(+startTime + 8 * 60 * 60 * 1000 - 1);
         this.availableSlotOnHover = {
-          background: '#e0fff0',
+          background: '#c1ffe180',
           cssClass: 'available-slot mbsc-font-icon mbsc-icon-plus',
           start: (+startTime + 1) as any,
           end: endTime,
@@ -371,7 +371,10 @@ export class AppComponent {
       colorEnd.setDate(colorEnd.getDate() + 1);
       colorEnd.setHours(6, 0, 0, 0);
 
-      this.colors = [...this.colors, { start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource as string }];
+      this.colors = [
+        ...this.colors,
+        { start: colorStart, end: colorEnd, background: '#ffdbd280', resource: args.event.resource as string },
+      ];
       const resource = args.event.resource as string;
       const day = new Date(args.event.start as Date);
       day.setHours(0, 0, 0, 0);
@@ -443,7 +446,7 @@ export class AppComponent {
         colorEnd.setHours(6, 0, 0, 0);
         this.colors = [
           ...this.colors,
-          { start: dayStart, end: colorEnd, background: '#fff8f6', resource: args.oldEvent!.resource as string },
+          { start: dayStart, end: colorEnd, background: '#ffdbd280', resource: args.oldEvent!.resource as string },
         ];
         this.redResources[(args.oldEvent!.resource as string) + day.toISOString()] = true;
       }
@@ -468,7 +471,7 @@ export class AppComponent {
 
   getResourceStyle(resource: MbscResource, day: Date): Record<string, string> {
     return day && this.redResources[resource.id + day.toISOString()]
-      ? { color: '#a65037', background: '#fff8f6', margin: '-0.5em', padding: '0.5em' }
+      ? { color: '#53000080', background: '#ffdbd280', margin: '-0.5em', padding: '0.5em' }
       : {};
   }
 }

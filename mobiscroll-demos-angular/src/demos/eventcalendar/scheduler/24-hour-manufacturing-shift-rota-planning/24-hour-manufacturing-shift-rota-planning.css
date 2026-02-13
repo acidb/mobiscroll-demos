@@ -26,7 +26,7 @@
   height: 35px;
   border: none;
   border-radius: 50%;
-  background: linear-gradient(135deg,rgba(160, 160, 160),rgba(93, 93, 93));
+  background: linear-gradient(135deg, #33333380, #00000080);
   box-sizing: border-box;
 }
 
