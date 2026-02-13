@@ -11,7 +11,6 @@ export default {
 
     $(function () {
       var myEvents = [
-        // Enterprise Solutions Group - Large group with tasks across 4 employees
         {
           id: 1,
           title: 'HVAC System Overhaul - Building A',
@@ -48,6 +47,7 @@ export default {
           type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
+        //<hide-comment>
         {
           id: 5,
           title: 'Emergency Generator Complete Overhaul',
@@ -121,44 +121,6 @@ export default {
           clientGroup: 'Enterprise Solutions Group',
         },
         {
-          id: 49,
-          title: 'Annual HVAC System Winterization',
-          start: '2026-10-01',
-          end: '2026-12-15',
-          resource: 1,
-          type: 'Maintenance',
-          clientGroup: 'Enterprise Solutions Group',
-        },
-        {
-          id: 50,
-          title: 'Year-End Electrical Safety Audit',
-          start: '2026-11-01',
-          end: '2026-12-31',
-          resource: 3,
-          type: 'Inspection',
-          clientGroup: 'Enterprise Solutions Group',
-        },
-        {
-          id: 61,
-          title: 'Summer Cooling System Optimization',
-          start: '2026-07-01',
-          end: '2026-09-15',
-          resource: 2,
-          type: 'Maintenance',
-          clientGroup: 'Enterprise Solutions Group',
-        },
-        {
-          id: 62,
-          title: 'Backup Generator Testing & Certification',
-          start: '2026-08-10',
-          end: '2026-09-30',
-          resource: 4,
-          type: 'Inspection',
-          clientGroup: 'Enterprise Solutions Group',
-        },
-
-        // Retail Partners - Medium group with tasks across 2 employees
-        {
           id: 13,
           title: 'Storefront LED Lighting Conversion',
           start: '2026-01-08',
@@ -213,35 +175,6 @@ export default {
           clientGroup: 'Retail Partners',
         },
         {
-          id: 51,
-          title: 'Holiday Lighting Installation',
-          start: '2026-10-01',
-          end: '2026-12-15',
-          resource: 5,
-          type: 'Installation',
-          clientGroup: 'Retail Partners',
-        },
-        {
-          id: 52,
-          title: 'Winter HVAC Maintenance',
-          start: '2026-11-01',
-          end: '2026-12-31',
-          resource: 7,
-          type: 'Maintenance',
-          clientGroup: 'Retail Partners',
-        },
-        {
-          id: 63,
-          title: 'Summer Cooling System Service',
-          start: '2026-07-10',
-          end: '2026-09-10',
-          resource: 5,
-          type: 'Maintenance',
-          clientGroup: 'Retail Partners',
-        },
-
-        // City Municipal Services - Group with tasks across 2 employees
-        {
           id: 19,
           title: 'City Hall HVAC Modernization',
           start: '2026-01-10',
@@ -269,26 +202,6 @@ export default {
           clientGroup: 'City Municipal Services',
         },
         {
-          id: 53,
-          title: 'Municipal Building Fire System Upgrade',
-          start: '2026-07-01',
-          end: '2026-09-20',
-          resource: 6,
-          type: 'Upgrade',
-          clientGroup: 'City Municipal Services',
-        },
-        {
-          id: 64,
-          title: 'Year-End Facility Safety Inspection',
-          start: '2026-10-15',
-          end: '2026-12-20',
-          resource: 2,
-          type: 'Inspection',
-          clientGroup: 'City Municipal Services',
-        },
-
-        // Industrial Manufacturing Co - Large group with tasks across 1 employee
-        {
           id: 22,
           title: 'Warehouse High-Bay Lighting Installation',
           start: '2026-01-05',
@@ -302,7 +215,7 @@ export default {
           title: 'Industrial Compressor System Overhaul',
           start: '2026-02-01',
           end: '2026-03-31',
-          resource: 8,
+          resource: 3,
           type: 'Maintenance',
           clientGroup: 'Industrial Manufacturing Co',
         },
@@ -320,7 +233,7 @@ export default {
           title: 'Factory Ventilation System Upgrade',
           start: '2026-05-01',
           end: '2026-06-30',
-          resource: 8,
+          resource: 2,
           type: 'Upgrade',
           clientGroup: 'Industrial Manufacturing Co',
         },
@@ -329,7 +242,7 @@ export default {
           title: 'Main Electrical Panel Replacement Project',
           start: '2026-01-15',
           end: '2026-03-20',
-          resource: 8,
+          resource: 4,
           type: 'Repair',
           clientGroup: 'Industrial Manufacturing Co',
         },
@@ -338,7 +251,7 @@ export default {
           title: 'Production Floor Lighting Modernization',
           start: '2026-02-10',
           end: '2026-03-31',
-          resource: 8,
+          resource: 7,
           type: 'Upgrade',
           clientGroup: 'Industrial Manufacturing Co',
         },
@@ -347,7 +260,7 @@ export default {
           title: 'Overhead Crane Electrical Certification',
           start: '2026-04-15',
           end: '2026-06-15',
-          resource: 8,
+          resource: 4,
           type: 'Inspection',
           clientGroup: 'Industrial Manufacturing Co',
         },
@@ -356,7 +269,7 @@ export default {
           title: 'Production Line Power Infrastructure',
           start: '2026-05-10',
           end: '2026-06-30',
-          resource: 8,
+          resource: 3,
           type: 'Installation',
           clientGroup: 'Industrial Manufacturing Co',
         },
@@ -365,30 +278,10 @@ export default {
           title: 'Chiller Plant Annual Overhaul',
           start: '2026-01-20',
           end: '2026-03-25',
-          resource: 8,
+          resource: 2,
           type: 'Maintenance',
           clientGroup: 'Industrial Manufacturing Co',
         },
-        {
-          id: 54,
-          title: 'Fall Preventive Maintenance Program',
-          start: '2026-07-15',
-          end: '2026-09-30',
-          resource: 8,
-          type: 'Maintenance',
-          clientGroup: 'Industrial Manufacturing Co',
-        },
-        {
-          id: 55,
-          title: 'Year-End Equipment Calibration',
-          start: '2026-10-01',
-          end: '2026-12-20',
-          resource: 8,
-          type: 'Inspection',
-          clientGroup: 'Industrial Manufacturing Co',
-        },
-
-        // Education District - Medium group with tasks across 2 employees
         {
           id: 31,
           title: 'Classroom Building HVAC Renovation',
@@ -434,26 +327,6 @@ export default {
           type: 'Inspection',
           clientGroup: 'Education District',
         },
-        {
-          id: 56,
-          title: 'School Year-End HVAC Service',
-          start: '2026-07-01',
-          end: '2026-09-15',
-          resource: 3,
-          type: 'Maintenance',
-          clientGroup: 'Education District',
-        },
-        {
-          id: 57,
-          title: 'Winter Heating System Preparation',
-          start: '2026-10-01',
-          end: '2026-12-10',
-          resource: 6,
-          type: 'Maintenance',
-          clientGroup: 'Education District',
-        },
-
-        // Hospitality Group - Medium group with tasks across 2 employees
         {
           id: 36,
           title: 'Hotel Lobby Climate System Replacement',
@@ -518,26 +391,6 @@ export default {
           clientGroup: 'Hospitality Group',
         },
         {
-          id: 58,
-          title: 'Fall Season HVAC Maintenance',
-          start: '2026-07-15',
-          end: '2026-09-30',
-          resource: 4,
-          type: 'Maintenance',
-          clientGroup: 'Hospitality Group',
-        },
-        {
-          id: 65,
-          title: 'Holiday Season Preparation',
-          start: '2026-10-15',
-          end: '2026-12-31',
-          resource: 6,
-          type: 'Maintenance',
-          clientGroup: 'Hospitality Group',
-        },
-
-        // Greenfield Medical Center - Group with tasks across 1 employee
-        {
           id: 43,
           title: 'Operating Room HVAC Upgrade',
           start: '2026-01-15',
@@ -555,26 +408,6 @@ export default {
           type: 'Installation',
           clientGroup: 'Greenfield Medical Center',
         },
-        {
-          id: 59,
-          title: 'Emergency Room Electrical Upgrade',
-          start: '2026-07-01',
-          end: '2026-09-15',
-          resource: 1,
-          type: 'Upgrade',
-          clientGroup: 'Greenfield Medical Center',
-        },
-        {
-          id: 60,
-          title: 'Medical Facility Winter Readiness',
-          start: '2026-10-10',
-          end: '2026-12-20',
-          resource: 1,
-          type: 'Maintenance',
-          clientGroup: 'Greenfield Medical Center',
-        },
-
-        // Tech Startup Hub - Group with tasks across 3 employees
         {
           id: 45,
           title: 'Open Office Climate Control',
@@ -612,6 +445,159 @@ export default {
           clientGroup: 'Tech Startup Hub',
         },
         {
+          id: 49,
+          title: 'Annual HVAC System Winterization',
+          start: '2026-10-01',
+          end: '2026-12-15',
+          resource: 1,
+          type: 'Maintenance',
+          clientGroup: 'Enterprise Solutions Group',
+        },
+        {
+          id: 50,
+          title: 'Year-End Electrical Safety Audit',
+          start: '2026-11-01',
+          end: '2026-12-31',
+          resource: 3,
+          type: 'Inspection',
+          clientGroup: 'Enterprise Solutions Group',
+        },
+        {
+          id: 51,
+          title: 'Holiday Lighting Installation',
+          start: '2026-10-01',
+          end: '2026-12-15',
+          resource: 5,
+          type: 'Installation',
+          clientGroup: 'Retail Partners',
+        },
+        {
+          id: 52,
+          title: 'Winter HVAC Maintenance',
+          start: '2026-11-01',
+          end: '2026-12-31',
+          resource: 7,
+          type: 'Maintenance',
+          clientGroup: 'Retail Partners',
+        },
+        {
+          id: 53,
+          title: 'Municipal Building Fire System Upgrade',
+          start: '2026-07-01',
+          end: '2026-09-20',
+          resource: 6,
+          type: 'Upgrade',
+          clientGroup: 'City Municipal Services',
+        },
+        {
+          id: 54,
+          title: 'Fall Preventive Maintenance Program',
+          start: '2026-07-15',
+          end: '2026-09-30',
+          resource: 8,
+          type: 'Maintenance',
+          clientGroup: 'Industrial Manufacturing Co',
+        },
+        {
+          id: 55,
+          title: 'Year-End Equipment Calibration',
+          start: '2026-10-01',
+          end: '2026-12-20',
+          resource: 7,
+          type: 'Inspection',
+          clientGroup: 'Industrial Manufacturing Co',
+        },
+        {
+          id: 56,
+          title: 'School Year-End HVAC Service',
+          start: '2026-07-01',
+          end: '2026-09-15',
+          resource: 3,
+          type: 'Maintenance',
+          clientGroup: 'Education District',
+        },
+        {
+          id: 57,
+          title: 'Winter Heating System Preparation',
+          start: '2026-10-01',
+          end: '2026-12-10',
+          resource: 6,
+          type: 'Maintenance',
+          clientGroup: 'Education District',
+        },
+        {
+          id: 58,
+          title: 'Fall Season HVAC Maintenance',
+          start: '2026-07-15',
+          end: '2026-09-30',
+          resource: 4,
+          type: 'Maintenance',
+          clientGroup: 'Hospitality Group',
+        },
+        {
+          id: 59,
+          title: 'Emergency Room Electrical Upgrade',
+          start: '2026-07-01',
+          end: '2026-09-15',
+          resource: 1,
+          type: 'Upgrade',
+          clientGroup: 'Greenfield Medical Center',
+        },
+        {
+          id: 60,
+          title: 'Medical Facility Winter Readiness',
+          start: '2026-10-10',
+          end: '2026-12-20',
+          resource: 1,
+          type: 'Maintenance',
+          clientGroup: 'Greenfield Medical Center',
+        },
+        {
+          id: 61,
+          title: 'Summer Cooling System Optimization',
+          start: '2026-07-01',
+          end: '2026-09-15',
+          resource: 2,
+          type: 'Maintenance',
+          clientGroup: 'Enterprise Solutions Group',
+        },
+        {
+          id: 62,
+          title: 'Backup Generator Testing & Certification',
+          start: '2026-08-10',
+          end: '2026-09-30',
+          resource: 4,
+          type: 'Inspection',
+          clientGroup: 'Enterprise Solutions Group',
+        },
+        {
+          id: 63,
+          title: 'Summer Cooling System Service',
+          start: '2026-07-10',
+          end: '2026-09-10',
+          resource: 5,
+          type: 'Maintenance',
+          clientGroup: 'Retail Partners',
+        },
+        {
+          id: 64,
+          title: 'Year-End Facility Safety Inspection',
+          start: '2026-10-15',
+          end: '2026-12-20',
+          resource: 2,
+          type: 'Inspection',
+          clientGroup: 'City Municipal Services',
+        },
+        {
+          id: 65,
+          title: 'Holiday Season Preparation',
+          start: '2026-10-15',
+          end: '2026-12-31',
+          resource: 6,
+          type: 'Maintenance',
+          clientGroup: 'Hospitality Group',
+        },
+        {
           id: 66,
           title: 'Office Expansion Electrical Work',
           start: '2026-07-15',
@@ -629,6 +615,7 @@ export default {
           type: 'Maintenance',
           clientGroup: 'Tech Startup Hub',
         },
+        //</hide-comment>
       ];
 
       var myResources = [
@@ -694,29 +681,40 @@ export default {
         {
           id: 'installation',
           name: 'Installation',
-          color: '#4a7c9e',
+          color: '#3b5998',
         },
         {
           id: 'maintenance',
           name: 'Maintenance',
-          color: '#5a9d76',
+          color: '#2d7a4f',
         },
         {
           id: 'repair',
           name: 'Repair',
-          color: '#d4a056',
+          color: '#b8621b',
         },
         {
           id: 'inspection',
           name: 'Inspection',
-          color: '#7c6ba1',
+          color: '#6b4fa3',
         },
         {
           id: 'upgrade',
           name: 'Upgrade',
-          color: '#c67e5c',
+          color: '#a03a3a',
         },
       ];
+
+      var clientGroupColors = {
+        'Enterprise Solutions Group': '#7fb069',
+        'Retail Partners': '#d4b949',
+        'City Municipal Services': '#9b87d4',
+        'Industrial Manufacturing Co': '#c97a7a',
+        'Education District': '#d888b8',
+        'Hospitality Group': '#e89a5f',
+        'Greenfield Medical Center': '#5fadce',
+        'Tech Startup Hub': '#8f98d4',
+      };
 
       var groupedEvents = [];
       var groupBy = 'assignee'; // 'assignee' or 'type'
@@ -799,18 +797,8 @@ export default {
 
       function prepareEventsForDisplay(events, colorByType) {
         return events.map(function (event) {
-          var color;
-          if (colorByType) {
-            var typeObj = typeResources.find(function (t) {
-              return t.id === event.type.toLowerCase();
-            });
-            color = typeObj.color;
-          } else {
-            var employee = myResources.find(function (r) {
-              return r.id === event.resource;
-            });
-            color = employee.color;
-          }
+          // Use client group color for simple view
+          var color = clientGroupColors[event.clientGroup];
 
           return {
             id: event.id,
@@ -819,7 +807,7 @@ export default {
             end: event.end,
             resource: colorByType ? event.resource : event.type.toLowerCase(),
             type: event.type,
-            assignee: event.resource, // Always preserve original employee ID
+            assignee: event.resource,
             clientGroup: event.clientGroup,
             color: color,
           };
@@ -831,7 +819,7 @@ export default {
         var currentEvents;
 
         if (groupByClientQuarter) {
-          // Grouped view - resources stay the same
+          // Grouped view
           groupedEvents = groupEventsByClientQuarter(myEvents);
 
           if (groupBy === 'assignee') {
@@ -925,22 +913,26 @@ export default {
       function renderSimpleEvent(event) {
         var origEvent = event.original;
         var detailText = '';
+        var avatarUrl = '';
+        var typeDotColor = '';
 
         if (groupBy === 'assignee') {
-          // Show type
+          // Show type with colored dot
           var typeObj = typeResources.find(function (t) {
             return t.id === origEvent.type.toLowerCase();
           });
           if (typeObj) {
             detailText = typeObj.name;
+            typeDotColor = typeObj.color;
           }
         } else {
-          // Show assignee - always use origEvent.assignee
+          // Show assignee with avatar
           var employee = myResources.find(function (r) {
             return r.id === origEvent.assignee;
           });
           if (employee) {
             detailText = employee.name;
+            avatarUrl = employee.img;
           }
         }
 
@@ -957,16 +949,111 @@ export default {
           ' - ' +
           mobiscroll.formatDate('DD MMM', new Date(origEvent.end)) +
           '</div>' +
-          (detailText ? '<div class="mds-event-simple-subtitle">' + detailText + '</div>' : '') +
+          (detailText
+            ? '<div class="mbsc-flex mds-event-simple-subtitle-wrapper">' +
+              (avatarUrl ? '<img src="' + avatarUrl + '" alt="' + detailText + '" class="mds-event-simple-avatar" />' : '') +
+              (typeDotColor ? '<span class="mds-event-simple-type-dot" style="background-color: ' + typeDotColor + '"></span>' : '') +
+              '<div class="mds-event-simple-subtitle">' +
+              detailText +
+              '</div>' +
+              '</div>'
+            : '') +
           '</div>' +
           '</div>'
         );
+      }
+
+      function toggleIcon(icon, isExpanded) {
+        if (isExpanded) {
+          icon.classList.remove('mbsc-icon-material-keyboard-arrow-up');
+          icon.classList.add('mbsc-icon-material-keyboard-arrow-down');
+        } else {
+          icon.classList.remove('mbsc-icon-material-keyboard-arrow-down');
+          icon.classList.add('mbsc-icon-material-keyboard-arrow-up');
+        }
+      }
+
+      function expand(task, scheduleEvent, eventsInner, icon, groupedEvent) {
+        var html = groupedEvent.originalEvents
+          .map(function (ev) {
+            var detailText = '';
+            var typeDotColor = '';
+            var avatarUrl = '';
+
+            if (groupBy === 'assignee') {
+              // Show type with colored dot
+              var typeObj = typeResources.find(function (r) {
+                return r.id === ev.type.toLowerCase();
+              });
+              if (typeObj) {
+                detailText = typeObj.name;
+                typeDotColor = typeObj.color;
+              }
+            } else {
+              // Show assignee with avatar
+              var employee = myResources.find(function (r) {
+                return r.id === ev.resource;
+              });
+              if (employee) {
+                detailText = employee.name;
+                avatarUrl = employee.img;
+              }
+            }
+
+            return (
+              '<div class="mds-event-grouping-original-event">' +
+              '<div class="mbsc-flex mds-event-grouping-event-content">' +
+              '<div class="mds-event-grouping-event-title">' +
+              ev.title +
+              '</div>' +
+              '<div class="mbsc-flex mds-event-grouping-event-right">' +
+              '<div class="mds-event-grouping-event-date">' +
+              mobiscroll.formatDate('DD MMM', new Date(ev.start)) +
+              ' - ' +
+              mobiscroll.formatDate('DD MMM', new Date(ev.end)) +
+              '</div>' +
+              '<div class="mbsc-flex mds-event-grouping-event-detail">' +
+              (avatarUrl ? '<img src="' + avatarUrl + '" alt="' + detailText + '" class="mds-event-grouping-event-avatar" />' : '') +
+              (typeDotColor ? '<span class="mds-event-grouping-type-dot" style="background-color: ' + typeDotColor + '"></span>' : '') +
+              '<div class="mds-event-grouping-event-employee">' +
+              detailText +
+              '</div>' +
+              '</div>' +
+              '</div>' +
+              '</div>' +
+              '</div>'
+            );
+          })
+          .join('');
+
+        eventsInner.innerHTML = html;
+        scheduleEvent.style.zIndex = '3';
+        eventsInner.offsetHeight; // Force reflow
+
+        task.classList.add('expanded');
+        toggleIcon(icon, false);
+
+        setTimeout(function () {
+          calendar.refresh();
+        }, 250);
+      }
+
+      function collapse(task, scheduleEvent, eventsInner, icon) {
+        task.classList.remove('expanded');
+        scheduleEvent.style.zIndex = '';
+        toggleIcon(icon, true);
+
+        setTimeout(function () {
+          eventsInner.innerHTML = '';
+          calendar.refresh();
+        }, 250);
       }
 
       var calendar = $('#demo-event-grouping')
         .mobiscroll()
         .eventcalendar({
           dragToMove: true,
+          dragToResize: false,
           dragBetweenResources: false,
           view: {
             timeline: {
@@ -1015,8 +1102,17 @@ export default {
           renderHeader: function () {
             return (
               '<div mbsc-calendar-nav></div>' +
-              '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">' +
-              '<button id="group-filter-btn" mbsc-button data-variant="flat">Group & Filter</button>' +
+              '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-grouping-header-controls">' +
+              '<label>' +
+              '<input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-input-style="box" data-label="Group by Client/Quarter" />' +
+              '</label>' +
+              '<label>' +
+              '<input mbsc-input id="event-grouping-input" class="mds-event-grouping-select" data-dropdown="true" data-input-style="box" />' +
+              '</label>' +
+              '<select id="group-by-select">' +
+              '<option value="assignee" selected>View by Assignee</option>' +
+              '<option value="type">View by Type</option>' +
+              '</select>' +
               '</div>' +
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-today></div>' +
@@ -1069,32 +1165,18 @@ export default {
         })
         .mobiscroll('getInst');
 
-      updateView();
-
-      // Group & Filter popup
-      var popup = $('#group-filter-popup')
+      // Initialize Mobiscroll select dropdown
+      $('#group-by-select')
         .mobiscroll()
-        .popup({
-          display: 'anchored',
-          showArrow: false,
-          showOverlay: false,
-          contentPadding: false,
-          width: 300,
+        .select({
+          inputElement: document.getElementById('event-grouping-input'),
+          touchUi: false,
+          onChange: function (args) {
+            groupBy = args.value;
+            updateView();
+          },
         })
         .mobiscroll('getInst');
-
-      $('#demo-event-grouping').on('click', '#group-filter-btn', function () {
-        popup.setOptions({
-          anchor: this,
-        });
-        popup.open();
-      });
-
-      // Radio buttons for groupBy
-      $('input[name="group-by-radio"]').on('change', function () {
-        groupBy = this.value;
-        updateView();
-      });
 
       // Checkbox for client/quarter grouping
       $('#group-by-client-quarter').on('change', function () {
@@ -1102,6 +1184,7 @@ export default {
         updateView();
       });
 
+      // Expand/collapse icon click handler
       $(document).on('click', '.mds-event-grouping-icon', function (event) {
         event.preventDefault();
         event.stopPropagation();
@@ -1130,100 +1213,17 @@ export default {
         }
       });
 
-      function getDetailText(event) {
-        if (groupBy === 'assignee') {
-          var typeObj = typeResources.find(function (r) {
-            return r.id === event.type.toLowerCase();
-          });
-          return typeObj.name;
-        } else {
-          var employee = myResources.find(function (r) {
-            return r.id === event.resource;
-          });
-          return employee.name;
-        }
-      }
-
-      function toggleIcon(icon, isExpanded) {
-        if (isExpanded) {
-          icon.classList.remove('mbsc-icon-material-keyboard-arrow-up');
-          icon.classList.add('mbsc-icon-material-keyboard-arrow-down');
-        } else {
-          icon.classList.remove('mbsc-icon-material-keyboard-arrow-down');
-          icon.classList.add('mbsc-icon-material-keyboard-arrow-up');
-        }
-      }
-
-      function expand(task, scheduleEvent, eventsInner, icon, groupedEvent) {
-        var html = groupedEvent.originalEvents
-          .map(function (ev) {
-            var detailText = getDetailText(ev);
-
-            return (
-              '<div class="mds-event-grouping-original-event">' +
-              '<div class="mbsc-flex mds-event-grouping-event-content">' +
-              '<div class="mds-event-grouping-event-title">' +
-              ev.title +
-              '</div>' +
-              '<div class="mbsc-flex mds-event-grouping-event-right">' +
-              '<div class="mds-event-grouping-event-date">' +
-              mobiscroll.formatDate('DD MMM', new Date(ev.start)) +
-              ' - ' +
-              mobiscroll.formatDate('DD MMM', new Date(ev.end)) +
-              '</div>' +
-              '<div class="mds-event-grouping-event-employee">' +
-              detailText +
-              '</div>' +
-              '</div>' +
-              '</div>' +
-              '</div>'
-            );
-          })
-          .join('');
-
-        eventsInner.innerHTML = html;
-        scheduleEvent.style.zIndex = '3';
-        eventsInner.offsetHeight; // Force reflow
-
-        task.classList.add('expanded');
-        toggleIcon(icon, false);
-
-        setTimeout(function () {
-          calendar.refresh();
-        }, 250);
-      }
-
-      function collapse(task, scheduleEvent, eventsInner, icon) {
-        task.classList.remove('expanded');
-        scheduleEvent.style.zIndex = '';
-        toggleIcon(icon, true);
-
-        setTimeout(function () {
-          eventsInner.innerHTML = '';
-          calendar.refresh();
-        }, 250);
-      }
+      updateView();
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-event-grouping" class="mds-event-grouping-calendar"></div>
-<div id="group-filter-popup" style="display: none;">
-  <div>
-    <label>
-      <input mbsc-radio type="radio" name="group-by-radio" value="assignee" checked data-description="View by assignee" />
-    </label>
-    <label>
-      <input mbsc-radio type="radio" name="group-by-radio" value="type" data-description="View by type" />
-    </label>
-    <label>
-      <input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-description="Group by client/quarter" />
-    </label>
-  </div>
-</div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+/* Calendar base styles */
+
 .mds-event-grouping-calendar .mbsc-timeline-row {
   height: 140px;
 }
@@ -1232,7 +1232,24 @@ export default {
   width: 240px;
 }
 
+.mds-event-grouping-calendar .mbsc-ios.mbsc-textfield-wrapper-box {
+  margin: 10px 20px;
+}
+
+/* Mobiscroll checkbox*/
+.mds-event-grouping-calendar .mbsc-ios.mbsc-form-control-wrapper:before,
+.mds-event-grouping-calendar .mbsc-ios.mbsc-form-control-wrapper:after {
+  border: none;
+}
+
+.mds-event-grouping-calendar .mbsc-ios.mbsc-checkbox {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-radius: 8px;
+}
+
 /* Resource rendering - Employees */
+
 .mds-event-grouping-avatar {
   width: 40px;
   height: 40px;
@@ -1254,8 +1271,9 @@ export default {
 }
 
 /* Resource rendering - Types */
+
 .mds-event-grouping-type-resource {
-align-items: center;
+  align-items: center;
   padding: 8px 0;
 }
 
@@ -1273,6 +1291,7 @@ align-items: center;
 }
 
 /* Grouped event - collapsed state */
+
 .mds-event-grouping-task-client {
   background-color: #f8f9fa;
   border-left: 4px solid;
@@ -1282,13 +1301,14 @@ align-items: center;
   overflow: hidden;
 }
 
-/* Grouped event - content area */
+/* Grouped event header content */
 .mds-event-grouping-content {
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
 }
 
+/* Client group title */
 .mds-event-grouping-title-text {
   font-size: 14px;
   font-weight: 600;
@@ -1302,12 +1322,13 @@ align-items: center;
   white-space: nowrap;
 }
 
-/* Right side - fixed width */
+/* Right side container (meta + icon) */
 .mds-event-grouping-right {
   align-items: center;
   width: 130px;
 }
 
+/* Meta information (dates + counts) */
 .mds-event-grouping-meta {
   flex-direction: column;
   align-items: flex-end;
@@ -1316,6 +1337,7 @@ align-items: center;
 }
 
 .mds-event-grouping-date-range {
+color: #797979;
   font-size: 11px;
   line-height: 14px;
   white-space: nowrap;
@@ -1344,7 +1366,9 @@ align-items: center;
   transform: rotate(180deg);
 }
 
-/* Expanded events list - grid wrapper */
+/* Grouped event - expanded state */
+
+/* Grid wrapper for smooth animation */
 .mds-event-grouping-events {
   display: grid;
   grid-template-rows: 0fr;
@@ -1365,6 +1389,7 @@ align-items: center;
   padding: 0 14px 10px 14px;
 }
 
+/* Individual event in expanded list */
 .mds-event-grouping-original-event {
   background: #fff;
   border-radius: 6px;
@@ -1377,11 +1402,13 @@ align-items: center;
   margin-bottom: 0;
 }
 
+/* Event content layout */
 .mds-event-grouping-event-content {
   justify-content: space-between;
   align-items: center;
 }
 
+/* Event title */
 .mds-event-grouping-event-title {
   font-weight: 600;
   color: #1e293b;
@@ -1395,6 +1422,7 @@ align-items: center;
   white-space: nowrap;
 }
 
+/* Right side (date + detail) */
 .mds-event-grouping-event-right {
   flex-direction: column;
   align-items: flex-end;
@@ -1410,16 +1438,41 @@ align-items: center;
   margin-bottom: 2px;
 }
 
+/* Detail container (avatar/dot + text) */
+.mds-event-grouping-event-detail {
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .mds-event-grouping-event-employee {
   font-size: 11px;
-  font-weight: 400;
+  font-weight: 700;
   color: #64748b;
   white-space: nowrap;
   line-height: 14px;
   text-align: right;
 }
 
-/* Simple event styling */
+/* Avatar for assignee in type view */
+.mds-event-grouping-event-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+/* Colored dot for type in assignee view */
+.mds-event-grouping-type-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+/* Simple event styling (no grouping) */
+
 .mds-event-simple {
   padding: 10px 12px;
   border-radius: 6px;
@@ -1427,8 +1480,10 @@ align-items: center;
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  color: #fff;
 }
 
+/* Event title */
 .mds-event-simple-title {
   font-size: 13px;
   font-weight: 600;
@@ -1442,12 +1497,14 @@ align-items: center;
   white-space: nowrap;
 }
 
+/* Right side container */
 .mds-event-simple-right {
   flex-direction: column;
   align-items: flex-end;
   min-width: 80px;
 }
 
+/* Date range */
 .mds-event-simple-date {
   font-size: 11px;
   color: #fff;
@@ -1458,14 +1515,60 @@ align-items: center;
   margin-bottom: 2px;
 }
 
+/* Subtitle wrapper (avatar/dot + text) */
+.mds-event-simple-subtitle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Avatar for assignee in type view */
+.mds-event-simple-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+/* Colored dot for type in assignee view */
+.mds-event-simple-type-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+/* Subtitle text (type or assignee name) */
 .mds-event-simple-subtitle {
   font-size: 11px;
-  font-weight: 400;
+  font-weight: 700;
   color: #fff;
   opacity: 0.9;
-  line-height: 14px;
+  line-height: 15px;
   text-align: right;
   white-space: nowrap;
 }
+
+/* Header controls */
+.mds-event-grouping-header-controls {
+  align-items: center;
+}
+
+/* Spacing between controls */
+.mds-event-grouping-header-controls > * {
+  margin-left: 12px;
+}
+
+.mds-event-grouping-header-controls > *:first-child {
+  margin-left: 0;
+}
+
+/* Select input */
+.mds-event-grouping-select.mbsc-textfield {
+  width: 210px;
+}
+
   `,
 };
