@@ -1456,7 +1456,7 @@ color: #797979;
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  color: #fff;
+  color: #2c2c2c;
 }
 
 /* Event title */
