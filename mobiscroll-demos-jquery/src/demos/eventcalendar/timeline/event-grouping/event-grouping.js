@@ -725,6 +725,14 @@ export default {
         var groups = {};
         var result = [];
 
+        // Save old collapsed states including year and period
+        var oldCollapsedStates = {};
+        groupedEvents.forEach(function (ge) {
+          // Extract year and period from the group
+          var stateKey = ge.resource + '-' + ge.clientGroup + '-' + ge.year + '-' + ge.period;
+          oldCollapsedStates[stateKey] = ge.collapsed;
+        });
+
         // Group events by resource (assignee or type) + client + quarter
         events.forEach(function (event) {
           var resourceId = groupBy === 'assignee' ? event.resource : event.type.toLowerCase();
@@ -780,16 +788,25 @@ export default {
             return event.end > latest ? event.end : latest;
           }, periodEvents[0].end);
 
+          var newId = 'group-' + groupKey + '-' + eventIds;
+
+          // Use full key including year and period
+          var stateKey = groupData.resource + '-' + groupData.clientGroup + '-' + groupData.year + '-' + groupData.period;
+          var collapsedState = stateKey in oldCollapsedStates ? oldCollapsedStates[stateKey] : true;
+
           result.push({
-            id: 'group-' + groupKey + '-' + eventIds,
+            id: newId,
             title: groupData.clientGroup,
             resource: groupData.resource,
             clientGroup: groupData.clientGroup,
+            year: groupData.year,
+            period: groupData.period,
             start: earliestStart,
             end: latestEnd,
             color: color,
             count: periodEvents.length,
             originalEvents: periodEvents,
+            collapsed: collapsedState,
           });
         });
 
@@ -851,12 +868,12 @@ export default {
 
       function renderGroupedEvent(event) {
         var origEvent = event.original;
+        var isExpanded = !origEvent.collapsed;
 
         // Get unique items (opposite of groupBy)
         var uniqueItems = {};
         origEvent.originalEvents.forEach(function (ev) {
           if (groupBy === 'assignee') {
-            // Show types
             var typeObj = typeResources.find(function (r) {
               return r.id === ev.type.toLowerCase();
             });
@@ -864,7 +881,6 @@ export default {
               uniqueItems[typeObj.id] = typeObj;
             }
           } else {
-            // Show employees
             var emp = myResources.find(function (r) {
               return r.id === ev.resource;
             });
@@ -877,8 +893,64 @@ export default {
         var itemCount = Object.keys(uniqueItems).length;
         var itemLabel = groupBy === 'assignee' ? 'type' : 'employee';
 
+        // Generate expanded content HTML if expanded
+        var expandedHTML = '';
+        if (isExpanded) {
+          expandedHTML = origEvent.originalEvents
+            .map(function (ev) {
+              var detailText = '';
+              var typeDotColor = '';
+              var avatarUrl = '';
+
+              if (groupBy === 'assignee') {
+                var typeObj = typeResources.find(function (r) {
+                  return r.id === ev.type.toLowerCase();
+                });
+                if (typeObj) {
+                  detailText = typeObj.name;
+                  typeDotColor = typeObj.color;
+                }
+              } else {
+                var employee = myResources.find(function (r) {
+                  return r.id === ev.resource;
+                });
+                if (employee) {
+                  detailText = employee.name;
+                  avatarUrl = employee.img;
+                }
+              }
+
+              return (
+                '<div class="mds-event-grouping-original-event">' +
+                '<div class="mbsc-flex mds-event-grouping-event-content">' +
+                '<div class="mds-event-grouping-event-title">' +
+                ev.title +
+                '</div>' +
+                '<div class="mbsc-flex mds-event-grouping-event-right">' +
+                '<div class="mds-event-grouping-event-date">' +
+                mobiscroll.formatDate('DD MMM', new Date(ev.start)) +
+                ' - ' +
+                mobiscroll.formatDate('DD MMM', new Date(ev.end)) +
+                '</div>' +
+                '<div class="mbsc-flex mds-event-grouping-event-detail">' +
+                (avatarUrl ? '<img src="' + avatarUrl + '" alt="' + detailText + '" class="mds-event-grouping-event-avatar" />' : '') +
+                (typeDotColor ? '<span class="mds-event-grouping-type-dot" style="background-color: ' + typeDotColor + '"></span>' : '') +
+                '<div class="mds-event-grouping-event-employee">' +
+                detailText +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>'
+              );
+            })
+            .join('');
+        }
+
         return (
-          '<div class="mbsc-flex mds-event-grouping-task mds-event-grouping-task-client" style="border-left-color: ' +
+          '<div class="mbsc-flex mds-event-grouping-task mds-event-grouping-task-client' +
+          (isExpanded ? ' expanded' : '') +
+          '" style="border-left-color: ' +
           origEvent.color +
           '">' +
           '<div class="mbsc-flex mds-event-grouping-content">' +
@@ -906,7 +978,9 @@ export default {
           '<div class="mbsc-flex mds-event-grouping-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"></div>' +
           '</div>' +
           '</div>' +
-          '<div class="mds-event-grouping-events"><div class="mds-event-grouping-events-inner"></div></div>' +
+          '<div class="mds-event-grouping-events"><div class="mds-event-grouping-events-inner">' +
+          expandedHTML +
+          '</div></div>' +
           '</div>'
         );
       }
@@ -962,92 +1036,6 @@ export default {
           '</div>' +
           '</div>'
         );
-      }
-
-      function toggleIcon(icon, isExpanded) {
-        if (isExpanded) {
-          icon.classList.remove('mbsc-icon-material-keyboard-arrow-up');
-          icon.classList.add('mbsc-icon-material-keyboard-arrow-down');
-        } else {
-          icon.classList.remove('mbsc-icon-material-keyboard-arrow-down');
-          icon.classList.add('mbsc-icon-material-keyboard-arrow-up');
-        }
-      }
-
-      function expand(task, scheduleEvent, eventsInner, icon, groupedEvent) {
-        var html = groupedEvent.originalEvents
-          .map(function (ev) {
-            var detailText = '';
-            var typeDotColor = '';
-            var avatarUrl = '';
-
-            if (groupBy === 'assignee') {
-              // Show type with colored dot
-              var typeObj = typeResources.find(function (r) {
-                return r.id === ev.type.toLowerCase();
-              });
-              if (typeObj) {
-                detailText = typeObj.name;
-                typeDotColor = typeObj.color;
-              }
-            } else {
-              // Show assignee with avatar
-              var employee = myResources.find(function (r) {
-                return r.id === ev.resource;
-              });
-              if (employee) {
-                detailText = employee.name;
-                avatarUrl = employee.img;
-              }
-            }
-
-            return (
-              '<div class="mds-event-grouping-original-event">' +
-              '<div class="mbsc-flex mds-event-grouping-event-content">' +
-              '<div class="mds-event-grouping-event-title">' +
-              ev.title +
-              '</div>' +
-              '<div class="mbsc-flex mds-event-grouping-event-right">' +
-              '<div class="mds-event-grouping-event-date">' +
-              mobiscroll.formatDate('DD MMM', new Date(ev.start)) +
-              ' - ' +
-              mobiscroll.formatDate('DD MMM', new Date(ev.end)) +
-              '</div>' +
-              '<div class="mbsc-flex mds-event-grouping-event-detail">' +
-              (avatarUrl ? '<img src="' + avatarUrl + '" alt="' + detailText + '" class="mds-event-grouping-event-avatar" />' : '') +
-              (typeDotColor ? '<span class="mds-event-grouping-type-dot" style="background-color: ' + typeDotColor + '"></span>' : '') +
-              '<div class="mds-event-grouping-event-employee">' +
-              detailText +
-              '</div>' +
-              '</div>' +
-              '</div>' +
-              '</div>' +
-              '</div>'
-            );
-          })
-          .join('');
-
-        eventsInner.innerHTML = html;
-        scheduleEvent.style.zIndex = '3';
-        eventsInner.offsetHeight; // Force reflow
-
-        task.classList.add('expanded');
-        toggleIcon(icon, false);
-
-        setTimeout(function () {
-          calendar.refresh();
-        }, 250);
-      }
-
-      function collapse(task, scheduleEvent, eventsInner, icon) {
-        task.classList.remove('expanded');
-        scheduleEvent.style.zIndex = '';
-        toggleIcon(icon, true);
-
-        setTimeout(function () {
-          eventsInner.innerHTML = '';
-          calendar.refresh();
-        }, 250);
       }
 
       var calendar = $('#demo-event-grouping')
@@ -1122,7 +1110,6 @@ export default {
           },
           onEventUpdate: function (args) {
             if (groupByClientQuarter) {
-              // Grouping is ON - handle grouped event moves
               var updatedEvent = args.event;
               var oldEvent = args.oldEvent;
 
@@ -1131,16 +1118,20 @@ export default {
               var startDelta = newStart - oldStart;
 
               if (startDelta !== 0) {
-                // Find the grouped event that was moved
+                // Find the old grouped event before updateView
                 var movedGroupedEvent = groupedEvents.find(function (ge) {
-                  return ge.id === updatedEvent.id;
+                  return ge.id === oldEvent.id;
                 });
 
                 if (movedGroupedEvent) {
                   var clientGroupName = movedGroupedEvent.clientGroup;
+                  var resourceId = movedGroupedEvent.resource;
+
+                  // Save the collapsed state before updating
+                  var wasCollapsed = movedGroupedEvent.collapsed;
+
                   var eventsToUpdate = [];
 
-                  // Update all events within this grouped event
                   movedGroupedEvent.originalEvents.forEach(function (originalEvent) {
                     var eventInMyEvents = myEvents.find(function (e) {
                       return e.id === originalEvent.id;
@@ -1155,6 +1146,25 @@ export default {
 
                   // Regenerate grouped events
                   updateView();
+
+                  // Find the NEW grouped event (with new year/period) and restore state
+                  var newYear = new Date(eventsToUpdate[0].start).getFullYear();
+                  var newMonth = new Date(eventsToUpdate[0].start).getMonth();
+                  var newPeriod = Math.floor(newMonth / 3);
+
+                  var newGroupedEvent = groupedEvents.find(function (ge) {
+                    return (
+                      ge.resource === resourceId && ge.clientGroup === clientGroupName && ge.year === newYear && ge.period === newPeriod
+                    );
+                  });
+
+                  if (newGroupedEvent) {
+                    // Restore the collapsed state
+                    newGroupedEvent.collapsed = wasCollapsed;
+
+                    // Re-render to apply the state
+                    calendar.setEvents(groupedEvents);
+                  }
 
                   mobiscroll.toast({
                     message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been moved.',
@@ -1187,30 +1197,41 @@ export default {
 
       // Expand/collapse icon click handler
       $(document).on('click', '.mds-event-grouping-icon', function (event) {
-        event.preventDefault();
         event.stopPropagation();
 
         var icon = event.currentTarget;
         var task = $(icon).closest('.mds-event-grouping-task')[0];
         var scheduleEvent = $(icon).closest('.mbsc-schedule-event')[0];
-        var eventsInner = $(task).find('.mds-event-grouping-events-inner')[0];
 
-        if (!task || !scheduleEvent || !eventsInner) return;
+        if (task && scheduleEvent) {
+          var eventId = $(scheduleEvent).attr('data-id');
+          var groupedEvent = groupedEvents.find(function (e) {
+            return e.id === eventId;
+          });
 
-        var isExpanded = task.classList.contains('expanded');
+          if (groupedEvent) {
+            // Toggle the collapsed state in data
+            groupedEvent.collapsed = !groupedEvent.collapsed;
 
-        // Find grouped event by client group text
-        var clientText = $(task).find('.mds-event-grouping-title-text').text();
-        var groupedEvent = groupedEvents.find(function (e) {
-          return e.clientGroup === clientText;
-        });
+            // Toggle the "expanded" class on the task element for CSS animation
+            if (!groupedEvent.collapsed) {
+              $(task).addClass('expanded');
+              $(scheduleEvent).css('z-index', '10');
 
-        if (!groupedEvent) return;
+              // Force Mobiscroll to recalculate after animation completes
+              setTimeout(function () {
+                calendar.refresh();
+              }, 200); // Match this to CSS transition duration
+            } else {
+              $(task).removeClass('expanded');
+              $(scheduleEvent).css('z-index', '3');
 
-        if (isExpanded) {
-          collapse(task, scheduleEvent, eventsInner, icon);
-        } else {
-          expand(task, scheduleEvent, eventsInner, icon, groupedEvent);
+              // Force Mobiscroll to recalculate after animation completes
+              setTimeout(function () {
+                calendar.refresh();
+              }, 200); // Match this to CSS transition duration
+            }
+          }
         }
       });
 
@@ -1356,30 +1377,30 @@ color: #797979;
   font-size: 20px;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease; /* Reduced from 0.3s to 0.2s */
   width: 24px;
   height: 24px;
   align-items: center;
   justify-content: center;
+  transform: rotate(0deg);
 }
 
+/* Icon rotation when expanded */
 .mds-event-grouping-task.expanded .mds-event-grouping-icon {
   transform: rotate(180deg);
 }
-
-/* Grouped event - expanded state */
 
 /* Grid wrapper for smooth animation */
 .mds-event-grouping-events {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.25s ease;
+  transition: grid-template-rows 0.2s ease; /* Reduced from 0.25s to 0.2s */
 }
 
 .mds-event-grouping-events-inner {
   overflow: hidden;
   padding: 0 14px;
-  transition: padding 0.25s ease;
+  transition: padding 0.2s ease; /* Reduced from 0.25s to 0.2s */
 }
 
 .mds-event-grouping-task.expanded .mds-event-grouping-events {
