@@ -1167,6 +1167,9 @@ export default {
                   }
 
                   mobiscroll.toast({
+                    //<hidden>
+                    // theme,//</hidden>
+                    // context,
                     message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been moved.',
                   });
                 }
