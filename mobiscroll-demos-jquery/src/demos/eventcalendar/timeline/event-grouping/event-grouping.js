@@ -6,7 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      // theme,
     });
 
     $(function () {
@@ -14,8 +14,8 @@ export default {
         {
           id: 1,
           title: 'HVAC System Overhaul - Building A',
-          start: '2026-01-15',
-          end: '2026-03-10',
+          start: 'dyndatetime(y,1,15)',
+          end: 'dyndatetime(y,3,10)',
           resource: 1,
           type: 'Installation',
           clientGroup: 'Enterprise Solutions Group',
@@ -23,8 +23,8 @@ export default {
         {
           id: 2,
           title: 'Complete Electrical System Inspection',
-          start: '2026-02-15',
-          end: '2026-03-25',
+          start: 'dyndatetime(y,2,15)',
+          end: 'dyndatetime(y,3,25)',
           resource: 1,
           type: 'Inspection',
           clientGroup: 'Enterprise Solutions Group',
@@ -32,8 +32,8 @@ export default {
         {
           id: 3,
           title: 'ICU Plumbing Infrastructure Renovation',
-          start: '2026-01-20',
-          end: '2026-03-15',
+          start: 'dyndatetime(y,1,20)',
+          end: 'dyndatetime(y,3,15)',
           resource: 2,
           type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
@@ -41,8 +41,8 @@ export default {
         {
           id: 4,
           title: 'Fire Safety System Upgrade & Testing',
-          start: '2026-04-05',
-          end: '2026-06-20',
+          start: 'dyndatetime(y,4,5)',
+          end: 'dyndatetime(y,6,20)',
           resource: 4,
           type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
@@ -51,8 +51,8 @@ export default {
         {
           id: 5,
           title: 'Emergency Generator Complete Overhaul',
-          start: '2026-05-01',
-          end: '2026-06-30',
+          start: 'dyndatetime(y,5,1)',
+          end: 'dyndatetime(y,6,30)',
           resource: 1,
           type: 'Maintenance',
           clientGroup: 'Enterprise Solutions Group',
@@ -60,8 +60,8 @@ export default {
         {
           id: 6,
           title: 'Boiler Room Equipment Replacement',
-          start: '2026-04-15',
-          end: '2026-06-10',
+          start: 'dyndatetime(y,4,15)',
+          end: 'dyndatetime(y,6,10)',
           resource: 1,
           type: 'Repair',
           clientGroup: 'Enterprise Solutions Group',
@@ -69,8 +69,8 @@ export default {
         {
           id: 7,
           title: 'Server Room HVAC Installation Project',
-          start: '2026-01-10',
-          end: '2026-03-20',
+          start: 'dyndatetime(y,1,10)',
+          end: 'dyndatetime(y,3,20)',
           resource: 3,
           type: 'Installation',
           clientGroup: 'Enterprise Solutions Group',
@@ -78,8 +78,8 @@ export default {
         {
           id: 8,
           title: 'Data Center Cable Infrastructure Upgrade',
-          start: '2026-02-10',
-          end: '2026-03-30',
+          start: 'dyndatetime(y,2,10)',
+          end: 'dyndatetime(y,3,30)',
           resource: 3,
           type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
@@ -87,8 +87,8 @@ export default {
         {
           id: 9,
           title: 'Power Distribution System Modernization',
-          start: '2026-04-10',
-          end: '2026-06-25',
+          start: 'dyndatetime(y,4,10)',
+          end: 'dyndatetime(y,6,25)',
           resource: 2,
           type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
@@ -96,8 +96,8 @@ export default {
         {
           id: 10,
           title: 'Backup Power System Implementation',
-          start: '2026-05-10',
-          end: '2026-06-30',
+          start: 'dyndatetime(y,5,10)',
+          end: 'dyndatetime(y,6,30)',
           resource: 3,
           type: 'Installation',
           clientGroup: 'Enterprise Solutions Group',
@@ -105,8 +105,8 @@ export default {
         {
           id: 11,
           title: 'Network Equipment Room Cooling Upgrade',
-          start: '2026-01-25',
-          end: '2026-03-15',
+          start: 'dyndatetime(y,1,25)',
+          end: 'dyndatetime(y,3,15)',
           resource: 4,
           type: 'Upgrade',
           clientGroup: 'Enterprise Solutions Group',
@@ -114,8 +114,8 @@ export default {
         {
           id: 12,
           title: 'Security System Integration',
-          start: '2026-05-05',
-          end: '2026-06-20',
+          start: 'dyndatetime(y,5,5)',
+          end: 'dyndatetime(y,6,20)',
           resource: 4,
           type: 'Installation',
           clientGroup: 'Enterprise Solutions Group',
@@ -123,8 +123,8 @@ export default {
         {
           id: 13,
           title: 'Storefront LED Lighting Conversion',
-          start: '2026-01-08',
-          end: '2026-03-10',
+          start: 'dyndatetime(y,1,8)',
+          end: 'dyndatetime(y,3,10)',
           resource: 5,
           type: 'Upgrade',
           clientGroup: 'Retail Partners',
@@ -132,8 +132,8 @@ export default {
         {
           id: 14,
           title: 'Parking Lot Lighting System Replacement',
-          start: '2026-02-05',
-          end: '2026-03-30',
+          start: 'dyndatetime(y,2,5)',
+          end: 'dyndatetime(y,3,30)',
           resource: 7,
           type: 'Repair',
           clientGroup: 'Retail Partners',
@@ -141,8 +141,8 @@ export default {
         {
           id: 15,
           title: 'Store-wide HVAC Filter & Duct Cleaning',
-          start: '2026-04-10',
-          end: '2026-06-20',
+          start: 'dyndatetime(y,4,10)',
+          end: 'dyndatetime(y,6,20)',
           resource: 5,
           type: 'Maintenance',
           clientGroup: 'Retail Partners',
@@ -150,8 +150,8 @@ export default {
         {
           id: 16,
           title: 'Automatic Door System Replacement',
-          start: '2026-05-01',
-          end: '2026-06-30',
+          start: 'dyndatetime(y,5,1)',
+          end: 'dyndatetime(y,6,30)',
           resource: 7,
           type: 'Repair',
           clientGroup: 'Retail Partners',
@@ -159,8 +159,8 @@ export default {
         {
           id: 17,
           title: 'Point of Sale Electrical Infrastructure',
-          start: '2026-01-15',
-          end: '2026-03-05',
+          start: 'dyndatetime(y,1,15)',
+          end: 'dyndatetime(y,3,5)',
           resource: 5,
           type: 'Installation',
           clientGroup: 'Retail Partners',
@@ -168,8 +168,8 @@ export default {
         {
           id: 18,
           title: 'Emergency Lighting System Certification',
-          start: '2026-04-15',
-          end: '2026-06-10',
+          start: 'dyndatetime(y,4,15)',
+          end: 'dyndatetime(y,6,10)',
           resource: 7,
           type: 'Inspection',
           clientGroup: 'Retail Partners',
@@ -177,8 +177,8 @@ export default {
         {
           id: 19,
           title: 'City Hall HVAC Modernization',
-          start: '2026-01-10',
-          end: '2026-03-20',
+          start: 'dyndatetime(y,1,10)',
+          end: 'dyndatetime(y,3,20)',
           resource: 2,
           type: 'Upgrade',
           clientGroup: 'City Municipal Services',
@@ -186,8 +186,8 @@ export default {
         {
           id: 20,
           title: 'Public Library Climate Control',
-          start: '2026-02-01',
-          end: '2026-03-31',
+          start: 'dyndatetime(y,2,1)',
+          end: 'dyndatetime(y,3,31)',
           resource: 6,
           type: 'Maintenance',
           clientGroup: 'City Municipal Services',
@@ -195,8 +195,8 @@ export default {
         {
           id: 21,
           title: 'Community Center Lighting Retrofit',
-          start: '2026-04-10',
-          end: '2026-06-25',
+          start: 'dyndatetime(y,4,10)',
+          end: 'dyndatetime(y,6,25)',
           resource: 2,
           type: 'Upgrade',
           clientGroup: 'City Municipal Services',
@@ -204,8 +204,8 @@ export default {
         {
           id: 22,
           title: 'Warehouse High-Bay Lighting Installation',
-          start: '2026-01-05',
-          end: '2026-03-15',
+          start: 'dyndatetime(y,1,5)',
+          end: 'dyndatetime(y,3,15)',
           resource: 8,
           type: 'Installation',
           clientGroup: 'Industrial Manufacturing Co',
@@ -213,8 +213,8 @@ export default {
         {
           id: 23,
           title: 'Industrial Compressor System Overhaul',
-          start: '2026-02-01',
-          end: '2026-03-31',
+          start: 'dyndatetime(y,2,1)',
+          end: 'dyndatetime(y,3,31)',
           resource: 3,
           type: 'Maintenance',
           clientGroup: 'Industrial Manufacturing Co',
@@ -222,8 +222,8 @@ export default {
         {
           id: 24,
           title: 'Loading Dock Door Automation Project',
-          start: '2026-04-05',
-          end: '2026-06-20',
+          start: 'dyndatetime(y,4,5)',
+          end: 'dyndatetime(y,6,20)',
           resource: 8,
           type: 'Installation',
           clientGroup: 'Industrial Manufacturing Co',
@@ -231,8 +231,8 @@ export default {
         {
           id: 25,
           title: 'Factory Ventilation System Upgrade',
-          start: '2026-05-01',
-          end: '2026-06-30',
+          start: 'dyndatetime(y,5,1)',
+          end: 'dyndatetime(y,6,30)',
           resource: 2,
           type: 'Upgrade',
           clientGroup: 'Industrial Manufacturing Co',
@@ -240,8 +240,8 @@ export default {
         {
           id: 26,
           title: 'Main Electrical Panel Replacement Project',
-          start: '2026-01-15',
-          end: '2026-03-20',
+          start: 'dyndatetime(y,1,15)',
+          end: 'dyndatetime(y,3,20)',
           resource: 4,
           type: 'Repair',
           clientGroup: 'Industrial Manufacturing Co',
@@ -249,8 +249,8 @@ export default {
         {
           id: 27,
           title: 'Production Floor Lighting Modernization',
-          start: '2026-02-10',
-          end: '2026-03-31',
+          start: 'dyndatetime(y,2,10)',
+          end: 'dyndatetime(y,3,31)',
           resource: 7,
           type: 'Upgrade',
           clientGroup: 'Industrial Manufacturing Co',
@@ -258,8 +258,8 @@ export default {
         {
           id: 28,
           title: 'Overhead Crane Electrical Certification',
-          start: '2026-04-15',
-          end: '2026-06-15',
+          start: 'dyndatetime(y,4,15)',
+          end: 'dyndatetime(y,6,15)',
           resource: 4,
           type: 'Inspection',
           clientGroup: 'Industrial Manufacturing Co',
@@ -267,8 +267,8 @@ export default {
         {
           id: 29,
           title: 'Production Line Power Infrastructure',
-          start: '2026-05-10',
-          end: '2026-06-30',
+          start: 'dyndatetime(y,5,10)',
+          end: 'dyndatetime(y,6,30)',
           resource: 3,
           type: 'Installation',
           clientGroup: 'Industrial Manufacturing Co',
@@ -276,8 +276,8 @@ export default {
         {
           id: 30,
           title: 'Chiller Plant Annual Overhaul',
-          start: '2026-01-20',
-          end: '2026-03-25',
+          start: 'dyndatetime(y,1,20)',
+          end: 'dyndatetime(y,3,25)',
           resource: 2,
           type: 'Maintenance',
           clientGroup: 'Industrial Manufacturing Co',
@@ -285,8 +285,8 @@ export default {
         {
           id: 31,
           title: 'Classroom Building HVAC Renovation',
-          start: '2026-01-10',
-          end: '2026-03-20',
+          start: 'dyndatetime(y,1,10)',
+          end: 'dyndatetime(y,3,20)',
           resource: 3,
           type: 'Upgrade',
           clientGroup: 'Education District',
@@ -294,8 +294,8 @@ export default {
         {
           id: 32,
           title: 'Gymnasium Lighting System Replacement',
-          start: '2026-04-10',
-          end: '2026-06-15',
+          start: 'dyndatetime(y,4,10)',
+          end: 'dyndatetime(y,6,15)',
           resource: 3,
           type: 'Repair',
           clientGroup: 'Education District',
@@ -303,8 +303,8 @@ export default {
         {
           id: 33,
           title: 'Auditorium Climate Control Installation',
-          start: '2026-01-20',
-          end: '2026-03-31',
+          start: 'dyndatetime(y,1,20)',
+          end: 'dyndatetime(y,3,31)',
           resource: 6,
           type: 'Installation',
           clientGroup: 'Education District',
@@ -312,8 +312,8 @@ export default {
         {
           id: 34,
           title: 'Science Lab Electrical Infrastructure',
-          start: '2026-05-01',
-          end: '2026-06-30',
+          start: 'dyndatetime(y,5,1)',
+          end: 'dyndatetime(y,6,30)',
           resource: 3,
           type: 'Installation',
           clientGroup: 'Education District',
@@ -321,8 +321,8 @@ export default {
         {
           id: 35,
           title: 'Campus Fire Alarm System Certification',
-          start: '2026-02-01',
-          end: '2026-03-20',
+          start: 'dyndatetime(y,2,1)',
+          end: 'dyndatetime(y,3,20)',
           resource: 6,
           type: 'Inspection',
           clientGroup: 'Education District',
@@ -330,8 +330,8 @@ export default {
         {
           id: 36,
           title: 'Hotel Lobby Climate System Replacement',
-          start: '2026-01-10',
-          end: '2026-03-15',
+          start: 'dyndatetime(y,1,10)',
+          end: 'dyndatetime(y,3,15)',
           resource: 4,
           type: 'Repair',
           clientGroup: 'Hospitality Group',
@@ -339,8 +339,8 @@ export default {
         {
           id: 37,
           title: 'Commercial Kitchen Exhaust Installation',
-          start: '2026-02-05',
-          end: '2026-03-31',
+          start: 'dyndatetime(y,2,5)',
+          end: 'dyndatetime(y,3,31)',
           resource: 6,
           type: 'Installation',
           clientGroup: 'Hospitality Group',
@@ -348,8 +348,8 @@ export default {
         {
           id: 38,
           title: 'Pool Area LED Lighting Conversion',
-          start: '2026-04-10',
-          end: '2026-06-20',
+          start: 'dyndatetime(y,4,10)',
+          end: 'dyndatetime(y,6,20)',
           resource: 4,
           type: 'Upgrade',
           clientGroup: 'Hospitality Group',
@@ -357,8 +357,8 @@ export default {
         {
           id: 39,
           title: 'Guest Room HVAC Zone Upgrade Project',
-          start: '2026-05-01',
-          end: '2026-06-30',
+          start: 'dyndatetime(y,5,1)',
+          end: 'dyndatetime(y,6,30)',
           resource: 6,
           type: 'Upgrade',
           clientGroup: 'Hospitality Group',
@@ -366,8 +366,8 @@ export default {
         {
           id: 40,
           title: 'Conference Center AV & Electrical Setup',
-          start: '2026-01-15',
-          end: '2026-03-10',
+          start: 'dyndatetime(y,1,15)',
+          end: 'dyndatetime(y,3,10)',
           resource: 4,
           type: 'Installation',
           clientGroup: 'Hospitality Group',
@@ -375,8 +375,8 @@ export default {
         {
           id: 41,
           title: 'Spa Facility Equipment Installation',
-          start: '2026-04-20',
-          end: '2026-06-15',
+          start: 'dyndatetime(y,4,20)',
+          end: 'dyndatetime(y,6,15)',
           resource: 4,
           type: 'Installation',
           clientGroup: 'Hospitality Group',
@@ -384,8 +384,8 @@ export default {
         {
           id: 42,
           title: 'Ballroom Lighting & Rigging Project',
-          start: '2026-05-10',
-          end: '2026-06-30',
+          start: 'dyndatetime(y,5,10)',
+          end: 'dyndatetime(y,6,30)',
           resource: 6,
           type: 'Installation',
           clientGroup: 'Hospitality Group',
@@ -393,8 +393,8 @@ export default {
         {
           id: 43,
           title: 'Operating Room HVAC Upgrade',
-          start: '2026-01-15',
-          end: '2026-03-30',
+          start: 'dyndatetime(y,1,15)',
+          end: 'dyndatetime(y,3,30)',
           resource: 1,
           type: 'Upgrade',
           clientGroup: 'Greenfield Medical Center',
@@ -402,8 +402,8 @@ export default {
         {
           id: 44,
           title: 'Medical Equipment Power Installation',
-          start: '2026-04-05',
-          end: '2026-06-20',
+          start: 'dyndatetime(y,4,5)',
+          end: 'dyndatetime(y,6,20)',
           resource: 1,
           type: 'Installation',
           clientGroup: 'Greenfield Medical Center',
@@ -411,8 +411,8 @@ export default {
         {
           id: 45,
           title: 'Open Office Climate Control',
-          start: '2026-01-05',
-          end: '2026-03-10',
+          start: 'dyndatetime(y,1,5)',
+          end: 'dyndatetime(y,3,10)',
           resource: 5,
           type: 'Installation',
           clientGroup: 'Tech Startup Hub',
@@ -420,8 +420,8 @@ export default {
         {
           id: 46,
           title: 'Conference Room AV Setup',
-          start: '2026-02-10',
-          end: '2026-03-31',
+          start: 'dyndatetime(y,2,10)',
+          end: 'dyndatetime(y,3,31)',
           resource: 7,
           type: 'Installation',
           clientGroup: 'Tech Startup Hub',
@@ -429,8 +429,8 @@ export default {
         {
           id: 47,
           title: 'Server Closet Cooling System',
-          start: '2026-01-20',
-          end: '2026-03-20',
+          start: 'dyndatetime(y,1,20)',
+          end: 'dyndatetime(y,3,20)',
           resource: 3,
           type: 'Installation',
           clientGroup: 'Tech Startup Hub',
@@ -438,8 +438,8 @@ export default {
         {
           id: 48,
           title: 'Emergency Exit Lighting',
-          start: '2026-04-10',
-          end: '2026-06-15',
+          start: 'dyndatetime(y,4,10)',
+          end: 'dyndatetime(y,6,15)',
           resource: 7,
           type: 'Maintenance',
           clientGroup: 'Tech Startup Hub',
@@ -447,8 +447,8 @@ export default {
         {
           id: 49,
           title: 'Annual HVAC System Winterization',
-          start: '2026-10-01',
-          end: '2026-12-15',
+          start: 'dyndatetime(y,10,1)',
+          end: 'dyndatetime(y,12,15)',
           resource: 1,
           type: 'Maintenance',
           clientGroup: 'Enterprise Solutions Group',
@@ -456,8 +456,8 @@ export default {
         {
           id: 50,
           title: 'Year-End Electrical Safety Audit',
-          start: '2026-11-01',
-          end: '2026-12-31',
+          start: 'dyndatetime(y,11,1)',
+          end: 'dyndatetime(y,12,31)',
           resource: 3,
           type: 'Inspection',
           clientGroup: 'Enterprise Solutions Group',
@@ -465,8 +465,8 @@ export default {
         {
           id: 51,
           title: 'Holiday Lighting Installation',
-          start: '2026-10-01',
-          end: '2026-12-15',
+          start: 'dyndatetime(y,10,1)',
+          end: 'dyndatetime(y,12,15)',
           resource: 5,
           type: 'Installation',
           clientGroup: 'Retail Partners',
@@ -474,8 +474,8 @@ export default {
         {
           id: 52,
           title: 'Winter HVAC Maintenance',
-          start: '2026-11-01',
-          end: '2026-12-31',
+          start: 'dyndatetime(y,11,1)',
+          end: 'dyndatetime(y,12,31)',
           resource: 7,
           type: 'Maintenance',
           clientGroup: 'Retail Partners',
@@ -483,8 +483,8 @@ export default {
         {
           id: 53,
           title: 'Municipal Building Fire System Upgrade',
-          start: '2026-07-01',
-          end: '2026-09-20',
+          start: 'dyndatetime(y,7,1)',
+          end: 'dyndatetime(y,9,20)',
           resource: 6,
           type: 'Upgrade',
           clientGroup: 'City Municipal Services',
@@ -492,8 +492,8 @@ export default {
         {
           id: 54,
           title: 'Fall Preventive Maintenance Program',
-          start: '2026-07-15',
-          end: '2026-09-30',
+          start: 'dyndatetime(y,7,15)',
+          end: 'dyndatetime(y,9,30)',
           resource: 8,
           type: 'Maintenance',
           clientGroup: 'Industrial Manufacturing Co',
@@ -501,8 +501,8 @@ export default {
         {
           id: 55,
           title: 'Year-End Equipment Calibration',
-          start: '2026-10-01',
-          end: '2026-12-20',
+          start: 'dyndatetime(y,10,1)',
+          end: 'dyndatetime(y,12,20)',
           resource: 7,
           type: 'Inspection',
           clientGroup: 'Industrial Manufacturing Co',
@@ -510,8 +510,8 @@ export default {
         {
           id: 56,
           title: 'School Year-End HVAC Service',
-          start: '2026-07-01',
-          end: '2026-09-15',
+          start: 'dyndatetime(y,7,1)',
+          end: 'dyndatetime(y,9,15)',
           resource: 3,
           type: 'Maintenance',
           clientGroup: 'Education District',
@@ -519,8 +519,8 @@ export default {
         {
           id: 57,
           title: 'Winter Heating System Preparation',
-          start: '2026-10-01',
-          end: '2026-12-10',
+          start: 'dyndatetime(y,10,1)',
+          end: 'dyndatetime(y,12,10)',
           resource: 6,
           type: 'Maintenance',
           clientGroup: 'Education District',
@@ -528,8 +528,8 @@ export default {
         {
           id: 58,
           title: 'Fall Season HVAC Maintenance',
-          start: '2026-07-15',
-          end: '2026-09-30',
+          start: 'dyndatetime(y,7,15)',
+          end: 'dyndatetime(y,9,30)',
           resource: 4,
           type: 'Maintenance',
           clientGroup: 'Hospitality Group',
@@ -537,8 +537,8 @@ export default {
         {
           id: 59,
           title: 'Emergency Room Electrical Upgrade',
-          start: '2026-07-01',
-          end: '2026-09-15',
+          start: 'dyndatetime(y,7,1)',
+          end: 'dyndatetime(y,9,15)',
           resource: 1,
           type: 'Upgrade',
           clientGroup: 'Greenfield Medical Center',
@@ -546,8 +546,8 @@ export default {
         {
           id: 60,
           title: 'Medical Facility Winter Readiness',
-          start: '2026-10-10',
-          end: '2026-12-20',
+          start: 'dyndatetime(y,10,10)',
+          end: 'dyndatetime(y,12,20)',
           resource: 1,
           type: 'Maintenance',
           clientGroup: 'Greenfield Medical Center',
@@ -555,8 +555,8 @@ export default {
         {
           id: 61,
           title: 'Summer Cooling System Optimization',
-          start: '2026-07-01',
-          end: '2026-09-15',
+          start: 'dyndatetime(y,7,1)',
+          end: 'dyndatetime(y,9,15)',
           resource: 2,
           type: 'Maintenance',
           clientGroup: 'Enterprise Solutions Group',
@@ -564,8 +564,8 @@ export default {
         {
           id: 62,
           title: 'Backup Generator Testing & Certification',
-          start: '2026-08-10',
-          end: '2026-09-30',
+          start: 'dyndatetime(y,8,10)',
+          end: 'dyndatetime(y,9,30)',
           resource: 4,
           type: 'Inspection',
           clientGroup: 'Enterprise Solutions Group',
@@ -573,8 +573,8 @@ export default {
         {
           id: 63,
           title: 'Summer Cooling System Service',
-          start: '2026-07-10',
-          end: '2026-09-10',
+          start: 'dyndatetime(y,7,10)',
+          end: 'dyndatetime(y,9,10)',
           resource: 5,
           type: 'Maintenance',
           clientGroup: 'Retail Partners',
@@ -582,8 +582,8 @@ export default {
         {
           id: 64,
           title: 'Year-End Facility Safety Inspection',
-          start: '2026-10-15',
-          end: '2026-12-20',
+          start: 'dyndatetime(y,10,15)',
+          end: 'dyndatetime(y,12,20)',
           resource: 2,
           type: 'Inspection',
           clientGroup: 'City Municipal Services',
@@ -591,8 +591,8 @@ export default {
         {
           id: 65,
           title: 'Holiday Season Preparation',
-          start: '2026-10-15',
-          end: '2026-12-31',
+          start: 'dyndatetime(y,10,15)',
+          end: 'dyndatetime(y,12,31)',
           resource: 6,
           type: 'Maintenance',
           clientGroup: 'Hospitality Group',
@@ -600,8 +600,8 @@ export default {
         {
           id: 66,
           title: 'Office Expansion Electrical Work',
-          start: '2026-07-15',
-          end: '2026-09-25',
+          start: 'dyndatetime(y,7,15)',
+          end: 'dyndatetime(y,9,25)',
           resource: 5,
           type: 'Installation',
           clientGroup: 'Tech Startup Hub',
@@ -609,8 +609,8 @@ export default {
         {
           id: 67,
           title: 'Year-End System Maintenance',
-          start: '2026-10-20',
-          end: '2026-12-30',
+          start: 'dyndatetime(y,10,20)',
+          end: 'dyndatetime(y,12,30)',
           resource: 3,
           type: 'Maintenance',
           clientGroup: 'Tech Startup Hub',
@@ -618,7 +618,7 @@ export default {
         //</hide-comment>
       ];
 
-      var myResources = [
+      var assigneeResources = [
         {
           id: 1,
           name: 'Sarah Johnson',
@@ -637,7 +637,6 @@ export default {
           id: 3,
           name: 'Emily Rodriguez',
           title: 'Electrical Systems Specialist',
-          color: '#c76b8a',
           img: 'https://img.mobiscroll.com/demos/f2.png',
         },
         {
@@ -705,17 +704,6 @@ export default {
         },
       ];
 
-      var clientGroupColors = {
-        'Enterprise Solutions Group': '#7fb069',
-        'Retail Partners': '#d4b949',
-        'City Municipal Services': '#9b87d4',
-        'Industrial Manufacturing Co': '#c97a7a',
-        'Education District': '#d888b8',
-        'Hospitality Group': '#e89a5f',
-        'Greenfield Medical Center': '#5fadce',
-        'Tech Startup Hub': '#8f98d4',
-      };
-
       var groupedEvents = [];
       var groupBy = 'assignee'; // 'assignee' or 'type'
       var groupByClientQuarter = false;
@@ -765,7 +753,7 @@ export default {
           // Get color based on groupBy mode
           var color;
           if (groupBy === 'assignee') {
-            var resourceItem = myResources.find(function (r) {
+            var resourceItem = assigneeResources.find(function (r) {
               return r.id === groupData.resource;
             });
             color = resourceItem.color;
@@ -814,9 +802,6 @@ export default {
 
       function prepareEventsForDisplay(events, colorByType) {
         return events.map(function (event) {
-          // Use client group color for simple view
-          var color = clientGroupColors[event.clientGroup];
-
           return {
             id: event.id,
             title: event.title,
@@ -826,7 +811,7 @@ export default {
             type: event.type,
             assignee: event.resource,
             clientGroup: event.clientGroup,
-            color: color,
+            color: '#f8f9fa',
           };
         });
       }
@@ -840,7 +825,7 @@ export default {
           groupedEvents = groupEventsByClientQuarter(myEvents);
 
           if (groupBy === 'assignee') {
-            currentResources = myResources;
+            currentResources = assigneeResources;
           } else {
             currentResources = typeResources;
           }
@@ -850,7 +835,7 @@ export default {
           // Simple view
           groupedEvents = [];
           if (groupBy === 'assignee') {
-            currentResources = myResources;
+            currentResources = assigneeResources;
             currentEvents = prepareEventsForDisplay(myEvents, true);
           } else {
             currentResources = typeResources;
@@ -880,7 +865,7 @@ export default {
               uniqueItems[typeObj.id] = typeObj;
             }
           } else {
-            var emp = myResources.find(function (r) {
+            var emp = assigneeResources.find(function (r) {
               return r.id === ev.resource;
             });
             if (emp) {
@@ -910,7 +895,7 @@ export default {
                   typeDotColor = typeObj.color;
                 }
               } else {
-                var employee = myResources.find(function (r) {
+                var employee = assigneeResources.find(function (r) {
                   return r.id === ev.resource;
                 });
                 if (employee) {
@@ -1001,7 +986,7 @@ export default {
           }
         } else {
           // Show assignee with avatar
-          var employee = myResources.find(function (r) {
+          var employee = assigneeResources.find(function (r) {
             return r.id === origEvent.assignee;
           });
           if (employee) {
@@ -1051,7 +1036,7 @@ export default {
             },
           },
           data: myEvents,
-          resources: myResources,
+          resources: assigneeResources,
           renderScheduleEvent: renderSimpleEvent,
           renderResource: function (resource) {
             if (resource.img) {
@@ -1092,7 +1077,7 @@ export default {
               '<div mbsc-calendar-nav></div>' +
               '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-grouping-header-controls">' +
               '<label>' +
-              '<input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-input-style="box" data-label="Group by Client/Quarter" />' +
+              '<input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-theme="material" data-input-style="box" data-label="Group by Client/Quarter" />' +
               '</label>' +
               '<label>' +
               '<input mbsc-input id="event-grouping-input" class="mds-event-grouping-select" data-dropdown="true" data-input-style="box" />' +
@@ -1112,9 +1097,7 @@ export default {
               var updatedEvent = args.event;
               var oldEvent = args.oldEvent;
 
-              var oldStart = new Date(oldEvent.start).getTime();
-              var newStart = new Date(updatedEvent.start).getTime();
-              var startDelta = newStart - oldStart;
+              var startDelta = new Date(updatedEvent.start).getTime() - new Date(oldEvent.start).getTime();
 
               if (startDelta !== 0) {
                 // Find the old grouped event before updateView
@@ -1178,7 +1161,6 @@ export default {
         })
         .mobiscroll('getInst');
 
-      // Initialize Mobiscroll select dropdown
       $('#group-by-select')
         .mobiscroll()
         .select({
@@ -1201,39 +1183,23 @@ export default {
       $(document).on('click', '.mds-event-grouping-icon', function (event) {
         event.stopPropagation();
 
-        var icon = event.currentTarget;
-        var task = $(icon).closest('.mds-event-grouping-task')[0];
-        var scheduleEvent = $(icon).closest('.mbsc-schedule-event')[0];
+        var $task = $(this).closest('.mds-event-grouping-task');
+        var eventId = $(this).closest('.mbsc-schedule-event').attr('data-id');
+        var groupedEvent = groupedEvents.find(function (e) {
+          return e.id === eventId;
+        });
 
-        if (task && scheduleEvent) {
-          var eventId = $(scheduleEvent).attr('data-id');
-          var groupedEvent = groupedEvents.find(function (e) {
-            return e.id === eventId;
-          });
+        if (groupedEvent) {
+          // Toggle collapsed state in data
+          groupedEvent.collapsed = !groupedEvent.collapsed;
 
-          if (groupedEvent) {
-            // Toggle the collapsed state in data
-            groupedEvent.collapsed = !groupedEvent.collapsed;
+          // Toggle CSS class for animation
+          $task.toggleClass('expanded', !groupedEvent.collapsed);
 
-            // Toggle the "expanded" class on the task element for CSS animation
-            if (!groupedEvent.collapsed) {
-              $(task).addClass('expanded');
-              $(scheduleEvent).css('z-index', '10');
-
-              // Force Mobiscroll to recalculate after animation completes
-              setTimeout(function () {
-                calendar.refresh();
-              }, 200); // Match this to CSS transition duration
-            } else {
-              $(task).removeClass('expanded');
-              $(scheduleEvent).css('z-index', '3');
-
-              // Force Mobiscroll to recalculate after animation completes
-              setTimeout(function () {
-                calendar.refresh();
-              }, 200); // Match this to CSS transition duration
-            }
-          }
+          // Refresh calendar after animation completes
+          setTimeout(function () {
+            calendar.refresh();
+          }, 200);
         }
       });
 
@@ -1258,18 +1224,6 @@ export default {
 
 .mds-event-grouping-calendar .mbsc-ios.mbsc-textfield-wrapper-box {
   margin: 10px 20px;
-}
-
-/* Mobiscroll checkbox*/
-.mds-event-grouping-calendar .mbsc-ios.mbsc-form-control-wrapper:before,
-.mds-event-grouping-calendar .mbsc-ios.mbsc-form-control-wrapper:after {
-  border: none;
-}
-
-.mds-event-grouping-calendar .mbsc-ios.mbsc-checkbox {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  border-radius: 8px;
 }
 
 /* Resource rendering - Employees */
@@ -1568,15 +1522,6 @@ color: #797979;
 /* Header controls */
 .mds-event-grouping-header-controls {
   align-items: center;
-}
-
-/* Spacing between controls */
-.mds-event-grouping-header-controls > * {
-  margin-left: 12px;
-}
-
-.mds-event-grouping-header-controls > *:first-child {
-  margin-left: 0;
 }
 
 /* Select input */
