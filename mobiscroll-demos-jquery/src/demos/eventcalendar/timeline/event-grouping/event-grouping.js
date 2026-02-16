@@ -1475,6 +1475,7 @@ color: #797979;
   flex-direction: column;
   align-items: flex-end;
   min-width: 80px;
+  position: relative;
 }
 
 /* Date range */
@@ -1491,6 +1492,7 @@ color: #797979;
 .mds-event-simple-subtitle-wrapper {
   align-items: center;
   justify-content: flex-end;
+  margin-left: 25px;
 }
 
 /* Avatar for assignee in type view */
@@ -1499,6 +1501,8 @@ color: #797979;
   height: 20px;
   border-radius: 50%;
   margin-right: 6px;
+  position: absolute;
+  left: 0;
 }
 
 /* Colored dot for type in assignee view */
