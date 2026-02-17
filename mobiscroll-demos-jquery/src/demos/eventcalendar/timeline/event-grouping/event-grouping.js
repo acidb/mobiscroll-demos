@@ -1012,7 +1012,9 @@ export default {
             ? '<div class="mbsc-flex mds-event-simple-subtitle-wrapper">' +
               (avatarUrl ? '<img src="' + avatarUrl + '" alt="' + detailText + '" class="mds-event-simple-avatar" />' : '') +
               (typeDotColor ? '<span class="mds-event-simple-type-dot" style="background-color: ' + typeDotColor + '"></span>' : '') +
-              '<div class="mbsc-flex mds-event-simple-subtitle">' +
+              '<div class="mbsc-flex mds-event-simple-subtitle" style="' +
+              (groupBy === 'assignee' ? '' : 'margin-left: 25px;') +
+              '">' +
               detailText +
               '</div>' +
               '</div>'
@@ -1259,7 +1261,7 @@ export default {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin: 0 10px;
 }
 
 .mds-event-grouping-type-name {
@@ -1473,7 +1475,6 @@ color: #797979;
 /* Right side container */
 .mds-event-simple-right {
   flex-direction: column;
-  align-items: flex-end;
   min-width: 80px;
   position: relative;
 }
@@ -1492,7 +1493,6 @@ color: #797979;
 .mds-event-simple-subtitle-wrapper {
   align-items: center;
   justify-content: flex-end;
-  margin-left: 25px;
 }
 
 /* Avatar for assignee in type view */
@@ -1510,17 +1510,13 @@ color: #797979;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  margin-right: 6px;
-  align-self: center;
+  margin: 0 6px;
 }
 
 /* Subtitle text (type or assignee name) */
 .mds-event-simple-subtitle {
   font-size: 11px;
   font-weight: 700;
-  text-align: right;
-  white-space: nowrap;
-  align-items: center;
 }
 
 /* Header controls */
