@@ -233,6 +233,7 @@ import Demo604 from './demos/eventcalendar/timeline/timeline-time-grid/timeline-
 import Demo660 from './demos/eventcalendar/timeline/printing-the-view/printing-the-view';
 import Demo621 from './demos/eventcalendar/timeline/employee-shifts/employee-shifts';
 import Demo626 from './demos/eventcalendar/timeline/work-order-scheduling/work-order-scheduling';
+import Demo785 from './demos/eventcalendar/timeline/event-grouping/event-grouping';
 import Demo627 from './demos/eventcalendar/timeline/timezone-meeting-planner/timezone-meeting-planner';
 import Demo634 from './demos/eventcalendar/timeline/restaurant-shift-management/restaurant-shift-management';
 import Demo628 from './demos/eventcalendar/timeline/meal-planner/meal-planner';
@@ -965,6 +966,7 @@ export const demos = [
             items: [
               { name: 'Employee shift/rota planning', unique: 'employee-shifts', component: Demo621 },
               { name: 'Work order scheduling', unique: 'work-order-scheduling', component: Demo626 },
+              { name: 'Event grouping', unique: 'event-grouping', component: Demo785 },
               { name: 'Meeting planner across timezones', unique: 'timezone-meeting-planner', component: Demo627 },
               { name: 'Restaurant shift management', unique: 'restaurant-shift-management', component: Demo634 },
               { name: 'Weekly meal planner', unique: 'meal-planner', component: Demo628 },

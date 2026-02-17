@@ -10,23 +10,23 @@ export default {
     });
 
     $(function () {
-      var myEvents = [
+      var defaultEvents = [
         {
           id: 1,
           title: 'HVAC System Overhaul - Building A',
           start: 'dyndatetime(y,1,15)',
           end: 'dyndatetime(y,3,10)',
           resource: 1,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 2,
-          title: 'Complete Electrical System Inspection',
+          title: 'Complete Electrical System inspection',
           start: 'dyndatetime(y,2,15)',
           end: 'dyndatetime(y,3,25)',
           resource: 1,
-          type: 'Inspection',
+          type: 'inspection',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
@@ -35,16 +35,16 @@ export default {
           start: 'dyndatetime(y,1,20)',
           end: 'dyndatetime(y,3,15)',
           resource: 2,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 4,
-          title: 'Fire Safety System Upgrade & Testing',
+          title: 'Fire Safety System upgrade & Testing',
           start: 'dyndatetime(y,4,5)',
           end: 'dyndatetime(y,6,20)',
           resource: 4,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         //<hide-comment>
@@ -54,7 +54,7 @@ export default {
           start: 'dyndatetime(y,5,1)',
           end: 'dyndatetime(y,6,30)',
           resource: 1,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
@@ -63,25 +63,25 @@ export default {
           start: 'dyndatetime(y,4,15)',
           end: 'dyndatetime(y,6,10)',
           resource: 1,
-          type: 'Repair',
+          type: 'repair',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 7,
-          title: 'Server Room HVAC Installation Project',
+          title: 'Server Room HVAC installation Project',
           start: 'dyndatetime(y,1,10)',
           end: 'dyndatetime(y,3,20)',
           resource: 3,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 8,
-          title: 'Data Center Cable Infrastructure Upgrade',
+          title: 'Data Center Cable Infrastructure upgrade',
           start: 'dyndatetime(y,2,10)',
           end: 'dyndatetime(y,3,30)',
           resource: 3,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
@@ -90,7 +90,7 @@ export default {
           start: 'dyndatetime(y,4,10)',
           end: 'dyndatetime(y,6,25)',
           resource: 2,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
@@ -99,16 +99,16 @@ export default {
           start: 'dyndatetime(y,5,10)',
           end: 'dyndatetime(y,6,30)',
           resource: 3,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 11,
-          title: 'Network Equipment Room Cooling Upgrade',
+          title: 'Network Equipment Room Cooling upgrade',
           start: 'dyndatetime(y,1,25)',
           end: 'dyndatetime(y,3,15)',
           resource: 4,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
@@ -117,7 +117,7 @@ export default {
           start: 'dyndatetime(y,5,5)',
           end: 'dyndatetime(y,6,20)',
           resource: 4,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
@@ -126,7 +126,7 @@ export default {
           start: 'dyndatetime(y,1,8)',
           end: 'dyndatetime(y,3,10)',
           resource: 5,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Retail Partners',
         },
         {
@@ -135,7 +135,7 @@ export default {
           start: 'dyndatetime(y,2,5)',
           end: 'dyndatetime(y,3,30)',
           resource: 7,
-          type: 'Repair',
+          type: 'repair',
           clientGroup: 'Retail Partners',
         },
         {
@@ -144,7 +144,7 @@ export default {
           start: 'dyndatetime(y,4,10)',
           end: 'dyndatetime(y,6,20)',
           resource: 5,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Retail Partners',
         },
         {
@@ -153,7 +153,7 @@ export default {
           start: 'dyndatetime(y,5,1)',
           end: 'dyndatetime(y,6,30)',
           resource: 7,
-          type: 'Repair',
+          type: 'repair',
           clientGroup: 'Retail Partners',
         },
         {
@@ -162,7 +162,7 @@ export default {
           start: 'dyndatetime(y,1,15)',
           end: 'dyndatetime(y,3,5)',
           resource: 5,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Retail Partners',
         },
         {
@@ -171,7 +171,7 @@ export default {
           start: 'dyndatetime(y,4,15)',
           end: 'dyndatetime(y,6,10)',
           resource: 7,
-          type: 'Inspection',
+          type: 'inspection',
           clientGroup: 'Retail Partners',
         },
         {
@@ -180,7 +180,7 @@ export default {
           start: 'dyndatetime(y,1,10)',
           end: 'dyndatetime(y,3,20)',
           resource: 2,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'City Municipal Services',
         },
         {
@@ -189,7 +189,7 @@ export default {
           start: 'dyndatetime(y,2,1)',
           end: 'dyndatetime(y,3,31)',
           resource: 6,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'City Municipal Services',
         },
         {
@@ -198,16 +198,16 @@ export default {
           start: 'dyndatetime(y,4,10)',
           end: 'dyndatetime(y,6,25)',
           resource: 2,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'City Municipal Services',
         },
         {
           id: 22,
-          title: 'Warehouse High-Bay Lighting Installation',
+          title: 'Warehouse High-Bay Lighting installation',
           start: 'dyndatetime(y,1,5)',
           end: 'dyndatetime(y,3,15)',
           resource: 8,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -216,7 +216,7 @@ export default {
           start: 'dyndatetime(y,2,1)',
           end: 'dyndatetime(y,3,31)',
           resource: 3,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -225,16 +225,16 @@ export default {
           start: 'dyndatetime(y,4,5)',
           end: 'dyndatetime(y,6,20)',
           resource: 8,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
           id: 25,
-          title: 'Factory Ventilation System Upgrade',
+          title: 'Factory Ventilation System upgrade',
           start: 'dyndatetime(y,5,1)',
           end: 'dyndatetime(y,6,30)',
           resource: 2,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -243,7 +243,7 @@ export default {
           start: 'dyndatetime(y,1,15)',
           end: 'dyndatetime(y,3,20)',
           resource: 4,
-          type: 'Repair',
+          type: 'repair',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -252,7 +252,7 @@ export default {
           start: 'dyndatetime(y,2,10)',
           end: 'dyndatetime(y,3,31)',
           resource: 7,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -261,7 +261,7 @@ export default {
           start: 'dyndatetime(y,4,15)',
           end: 'dyndatetime(y,6,15)',
           resource: 4,
-          type: 'Inspection',
+          type: 'inspection',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -270,7 +270,7 @@ export default {
           start: 'dyndatetime(y,5,10)',
           end: 'dyndatetime(y,6,30)',
           resource: 3,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -279,7 +279,7 @@ export default {
           start: 'dyndatetime(y,1,20)',
           end: 'dyndatetime(y,3,25)',
           resource: 2,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -288,7 +288,7 @@ export default {
           start: 'dyndatetime(y,1,10)',
           end: 'dyndatetime(y,3,20)',
           resource: 3,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Education District',
         },
         {
@@ -297,16 +297,16 @@ export default {
           start: 'dyndatetime(y,4,10)',
           end: 'dyndatetime(y,6,15)',
           resource: 3,
-          type: 'Repair',
+          type: 'repair',
           clientGroup: 'Education District',
         },
         {
           id: 33,
-          title: 'Auditorium Climate Control Installation',
+          title: 'Auditorium Climate Control installation',
           start: 'dyndatetime(y,1,20)',
           end: 'dyndatetime(y,3,31)',
           resource: 6,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Education District',
         },
         {
@@ -315,7 +315,7 @@ export default {
           start: 'dyndatetime(y,5,1)',
           end: 'dyndatetime(y,6,30)',
           resource: 3,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Education District',
         },
         {
@@ -324,7 +324,7 @@ export default {
           start: 'dyndatetime(y,2,1)',
           end: 'dyndatetime(y,3,20)',
           resource: 6,
-          type: 'Inspection',
+          type: 'inspection',
           clientGroup: 'Education District',
         },
         {
@@ -333,16 +333,16 @@ export default {
           start: 'dyndatetime(y,1,10)',
           end: 'dyndatetime(y,3,15)',
           resource: 4,
-          type: 'Repair',
+          type: 'repair',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 37,
-          title: 'Commercial Kitchen Exhaust Installation',
+          title: 'Commercial Kitchen Exhaust installation',
           start: 'dyndatetime(y,2,5)',
           end: 'dyndatetime(y,3,31)',
           resource: 6,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Hospitality Group',
         },
         {
@@ -351,16 +351,16 @@ export default {
           start: 'dyndatetime(y,4,10)',
           end: 'dyndatetime(y,6,20)',
           resource: 4,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 39,
-          title: 'Guest Room HVAC Zone Upgrade Project',
+          title: 'Guest Room HVAC Zone upgrade Project',
           start: 'dyndatetime(y,5,1)',
           end: 'dyndatetime(y,6,30)',
           resource: 6,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Hospitality Group',
         },
         {
@@ -369,16 +369,16 @@ export default {
           start: 'dyndatetime(y,1,15)',
           end: 'dyndatetime(y,3,10)',
           resource: 4,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 41,
-          title: 'Spa Facility Equipment Installation',
+          title: 'Spa Facility Equipment installation',
           start: 'dyndatetime(y,4,20)',
           end: 'dyndatetime(y,6,15)',
           resource: 4,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Hospitality Group',
         },
         {
@@ -387,25 +387,25 @@ export default {
           start: 'dyndatetime(y,5,10)',
           end: 'dyndatetime(y,6,30)',
           resource: 6,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 43,
-          title: 'Operating Room HVAC Upgrade',
+          title: 'Operating Room HVAC upgrade',
           start: 'dyndatetime(y,1,15)',
           end: 'dyndatetime(y,3,30)',
           resource: 1,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Greenfield Medical Center',
         },
         {
           id: 44,
-          title: 'Medical Equipment Power Installation',
+          title: 'Medical Equipment Power installation',
           start: 'dyndatetime(y,4,5)',
           end: 'dyndatetime(y,6,20)',
           resource: 1,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Greenfield Medical Center',
         },
         {
@@ -414,7 +414,7 @@ export default {
           start: 'dyndatetime(y,1,5)',
           end: 'dyndatetime(y,3,10)',
           resource: 5,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Tech Startup Hub',
         },
         {
@@ -423,7 +423,7 @@ export default {
           start: 'dyndatetime(y,2,10)',
           end: 'dyndatetime(y,3,31)',
           resource: 7,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Tech Startup Hub',
         },
         {
@@ -432,7 +432,7 @@ export default {
           start: 'dyndatetime(y,1,20)',
           end: 'dyndatetime(y,3,20)',
           resource: 3,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Tech Startup Hub',
         },
         {
@@ -441,7 +441,7 @@ export default {
           start: 'dyndatetime(y,4,10)',
           end: 'dyndatetime(y,6,15)',
           resource: 7,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Tech Startup Hub',
         },
         {
@@ -450,7 +450,7 @@ export default {
           start: 'dyndatetime(y,10,1)',
           end: 'dyndatetime(y,12,15)',
           resource: 1,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
@@ -459,43 +459,43 @@ export default {
           start: 'dyndatetime(y,11,1)',
           end: 'dyndatetime(y,12,31)',
           resource: 3,
-          type: 'Inspection',
+          type: 'inspection',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
           id: 51,
-          title: 'Holiday Lighting Installation',
+          title: 'Holiday Lighting installation',
           start: 'dyndatetime(y,10,1)',
           end: 'dyndatetime(y,12,15)',
           resource: 5,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Retail Partners',
         },
         {
           id: 52,
-          title: 'Winter HVAC Maintenance',
+          title: 'Winter HVAC maintenance',
           start: 'dyndatetime(y,11,1)',
           end: 'dyndatetime(y,12,31)',
           resource: 7,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Retail Partners',
         },
         {
           id: 53,
-          title: 'Municipal Building Fire System Upgrade',
+          title: 'Municipal Building Fire System upgrade',
           start: 'dyndatetime(y,7,1)',
           end: 'dyndatetime(y,9,20)',
           resource: 6,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'City Municipal Services',
         },
         {
           id: 54,
-          title: 'Fall Preventive Maintenance Program',
+          title: 'Fall Preventive maintenance Program',
           start: 'dyndatetime(y,7,15)',
           end: 'dyndatetime(y,9,30)',
           resource: 8,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -504,7 +504,7 @@ export default {
           start: 'dyndatetime(y,10,1)',
           end: 'dyndatetime(y,12,20)',
           resource: 7,
-          type: 'Inspection',
+          type: 'inspection',
           clientGroup: 'Industrial Manufacturing Co',
         },
         {
@@ -513,7 +513,7 @@ export default {
           start: 'dyndatetime(y,7,1)',
           end: 'dyndatetime(y,9,15)',
           resource: 3,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Education District',
         },
         {
@@ -522,25 +522,25 @@ export default {
           start: 'dyndatetime(y,10,1)',
           end: 'dyndatetime(y,12,10)',
           resource: 6,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Education District',
         },
         {
           id: 58,
-          title: 'Fall Season HVAC Maintenance',
+          title: 'Fall Season HVAC maintenance',
           start: 'dyndatetime(y,7,15)',
           end: 'dyndatetime(y,9,30)',
           resource: 4,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Hospitality Group',
         },
         {
           id: 59,
-          title: 'Emergency Room Electrical Upgrade',
+          title: 'Emergency Room Electrical upgrade',
           start: 'dyndatetime(y,7,1)',
           end: 'dyndatetime(y,9,15)',
           resource: 1,
-          type: 'Upgrade',
+          type: 'upgrade',
           clientGroup: 'Greenfield Medical Center',
         },
         {
@@ -549,7 +549,7 @@ export default {
           start: 'dyndatetime(y,10,10)',
           end: 'dyndatetime(y,12,20)',
           resource: 1,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Greenfield Medical Center',
         },
         {
@@ -558,7 +558,7 @@ export default {
           start: 'dyndatetime(y,7,1)',
           end: 'dyndatetime(y,9,15)',
           resource: 2,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
@@ -567,7 +567,7 @@ export default {
           start: 'dyndatetime(y,8,10)',
           end: 'dyndatetime(y,9,30)',
           resource: 4,
-          type: 'Inspection',
+          type: 'inspection',
           clientGroup: 'Enterprise Solutions Group',
         },
         {
@@ -576,16 +576,16 @@ export default {
           start: 'dyndatetime(y,7,10)',
           end: 'dyndatetime(y,9,10)',
           resource: 5,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Retail Partners',
         },
         {
           id: 64,
-          title: 'Year-End Facility Safety Inspection',
+          title: 'Year-End Facility Safety inspection',
           start: 'dyndatetime(y,10,15)',
           end: 'dyndatetime(y,12,20)',
           resource: 2,
-          type: 'Inspection',
+          type: 'inspection',
           clientGroup: 'City Municipal Services',
         },
         {
@@ -594,7 +594,7 @@ export default {
           start: 'dyndatetime(y,10,15)',
           end: 'dyndatetime(y,12,31)',
           resource: 6,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Hospitality Group',
         },
         {
@@ -603,16 +603,16 @@ export default {
           start: 'dyndatetime(y,7,15)',
           end: 'dyndatetime(y,9,25)',
           resource: 5,
-          type: 'Installation',
+          type: 'installation',
           clientGroup: 'Tech Startup Hub',
         },
         {
           id: 67,
-          title: 'Year-End System Maintenance',
+          title: 'Year-End System maintenance',
           start: 'dyndatetime(y,10,20)',
           end: 'dyndatetime(y,12,30)',
           resource: 3,
-          type: 'Maintenance',
+          type: 'maintenance',
           clientGroup: 'Tech Startup Hub',
         },
         //</hide-comment>
@@ -637,6 +637,7 @@ export default {
           id: 3,
           name: 'Emily Rodriguez',
           title: 'Electrical Systems Specialist',
+          color: '#c76b8a',
           img: 'https://img.mobiscroll.com/demos/f2.png',
         },
         {
@@ -670,7 +671,7 @@ export default {
         {
           id: 8,
           name: 'Robert Taylor',
-          title: 'Industrial Maintenance Lead',
+          title: 'Industrial maintenance Lead',
           color: '#7fa650',
           img: 'https://img.mobiscroll.com/demos/m4.png',
         },
@@ -679,27 +680,27 @@ export default {
       var typeResources = [
         {
           id: 'installation',
-          name: 'Installation',
+          name: 'installation',
           color: '#3b5998',
         },
         {
           id: 'maintenance',
-          name: 'Maintenance',
+          name: 'maintenance',
           color: '#2d7a4f',
         },
         {
           id: 'repair',
-          name: 'Repair',
+          name: 'repair',
           color: '#b8621b',
         },
         {
           id: 'inspection',
-          name: 'Inspection',
+          name: 'inspection',
           color: '#6b4fa3',
         },
         {
           id: 'upgrade',
-          name: 'Upgrade',
+          name: 'upgrade',
           color: '#a03a3a',
         },
       ];
@@ -707,6 +708,7 @@ export default {
       var groupedEvents = [];
       var groupBy = 'assignee'; // 'assignee' or 'type'
       var groupByClientQuarter = false;
+      var rawEvents = defaultEvents.slice();
 
       function groupEventsByClientQuarter(events) {
         var groups = {};
@@ -722,7 +724,7 @@ export default {
 
         // Group events by resource (assignee or type) + client + quarter
         events.forEach(function (event) {
-          var resourceId = groupBy === 'assignee' ? event.resource : event.type.toLowerCase();
+          var resourceId = groupBy === 'assignee' ? event.resource : event.type;
           var eventStart = new Date(event.start);
           var month = eventStart.getMonth();
           var year = eventStart.getFullYear();
@@ -807,7 +809,7 @@ export default {
             title: event.title,
             start: event.start,
             end: event.end,
-            resource: colorByType ? event.resource : event.type.toLowerCase(),
+            resource: colorByType ? event.resource : event.type,
             type: event.type,
             assignee: event.resource,
             clientGroup: event.clientGroup,
@@ -817,30 +819,15 @@ export default {
       }
 
       function updateView() {
-        var currentResources;
+        var currentResources = groupBy === 'assignee' ? assigneeResources : typeResources;
         var currentEvents;
 
         if (groupByClientQuarter) {
-          // Grouped view
-          groupedEvents = groupEventsByClientQuarter(myEvents);
-
-          if (groupBy === 'assignee') {
-            currentResources = assigneeResources;
-          } else {
-            currentResources = typeResources;
-          }
-
+          groupedEvents = groupEventsByClientQuarter(rawEvents);
           currentEvents = groupedEvents;
         } else {
-          // Simple view
           groupedEvents = [];
-          if (groupBy === 'assignee') {
-            currentResources = assigneeResources;
-            currentEvents = prepareEventsForDisplay(myEvents, true);
-          } else {
-            currentResources = typeResources;
-            currentEvents = prepareEventsForDisplay(myEvents, false);
-          }
+          currentEvents = prepareEventsForDisplay(rawEvents, groupBy === 'assignee');
         }
 
         calendar.setOptions({
@@ -859,7 +846,7 @@ export default {
         origEvent.originalEvents.forEach(function (ev) {
           if (groupBy === 'assignee') {
             var typeObj = typeResources.find(function (r) {
-              return r.id === ev.type.toLowerCase();
+              return r.id === ev.type;
             });
             if (typeObj) {
               uniqueItems[typeObj.id] = typeObj;
@@ -888,7 +875,7 @@ export default {
 
               if (groupBy === 'assignee') {
                 var typeObj = typeResources.find(function (r) {
-                  return r.id === ev.type.toLowerCase();
+                  return r.id === ev.type;
                 });
                 if (typeObj) {
                   detailText = typeObj.name;
@@ -919,7 +906,7 @@ export default {
                 '<div class="mbsc-flex mds-event-grouping-event-detail">' +
                 (avatarUrl ? '<img src="' + avatarUrl + '" alt="' + detailText + '" class="mds-event-grouping-event-avatar" />' : '') +
                 (typeDotColor ? '<span class="mds-event-grouping-type-dot" style="background-color: ' + typeDotColor + '"></span>' : '') +
-                '<div class="mds-event-grouping-event-employee">' +
+                '<div class="mds-event-grouping-event-info">' +
                 detailText +
                 '</div>' +
                 '</div>' +
@@ -978,7 +965,7 @@ export default {
         if (groupBy === 'assignee') {
           // Show type with colored dot
           var typeObj = typeResources.find(function (t) {
-            return t.id === origEvent.type.toLowerCase();
+            return t.id === origEvent.type;
           });
           if (typeObj) {
             detailText = typeObj.name;
@@ -1037,7 +1024,7 @@ export default {
               eventHeight: 'variable',
             },
           },
-          data: myEvents,
+          data: defaultEvents,
           resources: assigneeResources,
           renderScheduleEvent: renderSimpleEvent,
           renderResource: function (resource) {
@@ -1095,69 +1082,72 @@ export default {
             );
           },
           onEventUpdate: function (args) {
+            var updatedEvent = args.event;
+            var oldEvent = args.oldEvent;
+
             if (groupByClientQuarter) {
-              var updatedEvent = args.event;
-              var oldEvent = args.oldEvent;
-
+              // Grouped view: shift all original events by the same delta
               var startDelta = new Date(updatedEvent.start).getTime() - new Date(oldEvent.start).getTime();
+              if (startDelta === 0) return;
 
-              if (startDelta !== 0) {
-                // Find the old grouped event before updateView
-                var movedGroupedEvent = groupedEvents.find(function (ge) {
-                  return ge.id === oldEvent.id;
+              var movedGroupedEvent = groupedEvents.find(function (ge) {
+                return ge.id === oldEvent.id;
+              });
+
+              if (movedGroupedEvent) {
+                var clientGroupName = movedGroupedEvent.clientGroup;
+                var resourceId = movedGroupedEvent.resource;
+                var wasCollapsed = movedGroupedEvent.collapsed;
+
+                var eventsToUpdate = movedGroupedEvent.originalEvents.map(function (originalEvent) {
+                  return {
+                    id: originalEvent.id,
+                    title: originalEvent.title,
+                    resource: originalEvent.resource,
+                    type: originalEvent.type,
+                    clientGroup: originalEvent.clientGroup,
+                    start: new Date(new Date(originalEvent.start).getTime() + startDelta),
+                    end: new Date(new Date(originalEvent.end).getTime() + startDelta),
+                  };
                 });
 
-                if (movedGroupedEvent) {
-                  var clientGroupName = movedGroupedEvent.clientGroup;
-                  var resourceId = movedGroupedEvent.resource;
+                // Sync into rawEvents
+                var updatedIds = {};
+                eventsToUpdate.forEach(function (e) {
+                  updatedIds[e.id] = e;
+                });
+                rawEvents = rawEvents.map(function (e) {
+                  return updatedIds[e.id] ? updatedIds[e.id] : e;
+                });
 
-                  // Save the collapsed state before updating
-                  var wasCollapsed = movedGroupedEvent.collapsed;
+                // Rebuild grouped view from updated rawEvents
+                updateView();
 
-                  var eventsToUpdate = [];
+                // Restore collapsed state
+                var newYear = new Date(eventsToUpdate[0].start).getFullYear();
+                var newPeriod = Math.floor(new Date(eventsToUpdate[0].start).getMonth() / 3);
 
-                  movedGroupedEvent.originalEvents.forEach(function (originalEvent) {
-                    var eventInMyEvents = myEvents.find(function (e) {
-                      return e.id === originalEvent.id;
-                    });
+                var newGroupedEvent = groupedEvents.find(function (ge) {
+                  return ge.resource === resourceId && ge.clientGroup === clientGroupName && ge.year === newYear && ge.period === newPeriod;
+                });
 
-                    if (eventInMyEvents) {
-                      eventInMyEvents.start = new Date(new Date(eventInMyEvents.start).getTime() + startDelta);
-                      eventInMyEvents.end = new Date(new Date(eventInMyEvents.end).getTime() + startDelta);
-                      eventsToUpdate.push(eventInMyEvents);
-                    }
-                  });
-
-                  // Regenerate grouped events
-                  updateView();
-
-                  // Find the NEW grouped event (with new year/period) and restore state
-                  var newYear = new Date(eventsToUpdate[0].start).getFullYear();
-                  var newMonth = new Date(eventsToUpdate[0].start).getMonth();
-                  var newPeriod = Math.floor(newMonth / 3);
-
-                  var newGroupedEvent = groupedEvents.find(function (ge) {
-                    return (
-                      ge.resource === resourceId && ge.clientGroup === clientGroupName && ge.year === newYear && ge.period === newPeriod
-                    );
-                  });
-
-                  if (newGroupedEvent) {
-                    // Restore the collapsed state
-                    newGroupedEvent.collapsed = wasCollapsed;
-
-                    // Re-render to apply the state
-                    calendar.setEvents(groupedEvents);
-                  }
-
-                  mobiscroll.toast({
-                    //<hidden>
-                    // theme,//</hidden>
-                    // context,
-                    message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been moved.',
-                  });
+                if (newGroupedEvent) {
+                  newGroupedEvent.collapsed = wasCollapsed;
+                  calendar.setEvents(groupedEvents);
                 }
+
+                mobiscroll.toast({
+                  //<hidden>
+                  // theme,//</hidden>
+                  // context,
+                  message: eventsToUpdate.length + ' event(s) for ' + clientGroupName + ' have been moved.',
+                });
               }
+            } else {
+              // Sync into rawEvents
+              rawEvents = rawEvents.map(function (e) {
+                return e.id === updatedEvent.id ? Object.assign({}, e, { start: updatedEvent.start, end: updatedEvent.end }) : e;
+              });
             }
           },
         })
@@ -1215,79 +1205,68 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 /* Calendar base styles */
-
 .mds-event-grouping-calendar .mbsc-timeline-row {
   height: 140px;
 }
-
 .mds-event-grouping-calendar .mbsc-timeline-resource-col {
   width: 240px;
 }
-
 .mds-event-grouping-calendar .mbsc-ios.mbsc-textfield-wrapper-box {
   margin: 10px 20px;
 }
-
+.mds-event-grouping-calendar .mbsc-timeline-resource-title {
+  text-transform: capitalize;
+}
 /* Resource rendering - Employees */
-
 .mds-event-grouping-avatar {
   width: 40px;
   height: 40px;
 }
-
 .mds-event-grouping-cont {
   padding: 0 7px;
 }
-
 .mds-event-grouping-name {
   font-size: 14px;
   line-height: 24px;
 }
-
 .mds-event-grouping-title {
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
 }
-
 /* Resource rendering - Types */
-
 .mds-event-grouping-type-resource {
   align-items: center;
   padding: 8px 0;
 }
-
 .mds-event-grouping-type-badge {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   margin: 0 10px;
 }
-
 .mds-event-grouping-type-name {
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
 }
-
 /* Grouped event - collapsed state */
-
 .mds-event-grouping-task-client {
   background-color: #f8f9fa;
   border-left: 4px solid;
   border-radius: 0 8px 8px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.08);
   flex-direction: column;
   overflow: hidden;
 }
-
 /* Grouped event header content */
 .mds-event-grouping-content {
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
 }
-
 /* Client group title */
 .mds-event-grouping-title-text {
   font-size: 14px;
@@ -1301,13 +1280,11 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 /* Right side container (meta + icon) */
 .mds-event-grouping-right {
   align-items: center;
   width: 130px;
 }
-
 /* Meta information (dates + counts) */
 .mds-event-grouping-meta {
   flex-direction: column;
@@ -1315,21 +1292,18 @@ export default {
   flex: 1;
   margin-right: 12px;
 }
-
 .mds-event-grouping-date-range {
-color: #797979;
+  color: #797979;
   font-size: 11px;
   line-height: 14px;
   white-space: nowrap;
   margin-bottom: 2px;
 }
-
 .mds-event-grouping-count {
   font-size: 11px;
   line-height: 14px;
   white-space: nowrap;
 }
-
 /* Expand/collapse icon */
 .mds-event-grouping-icon {
   font-size: 20px;
@@ -1342,33 +1316,27 @@ color: #797979;
   justify-content: center;
   transform: rotate(0deg);
 }
-
 /* Icon rotation when expanded */
 .mds-event-grouping-task.expanded .mds-event-grouping-icon {
   transform: rotate(180deg);
 }
-
 /* Grid wrapper for smooth animation */
 .mds-event-grouping-events {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.2s ease; /* Reduced from 0.25s to 0.2s */
 }
-
 .mds-event-grouping-events-inner {
   overflow: hidden;
   padding: 0 14px;
   transition: padding 0.2s ease; /* Reduced from 0.25s to 0.2s */
 }
-
 .mds-event-grouping-task.expanded .mds-event-grouping-events {
   grid-template-rows: 1fr;
 }
-
 .mds-event-grouping-task.expanded .mds-event-grouping-events-inner {
   padding: 0 14px 10px 14px;
 }
-
 /* Individual event in expanded list */
 .mds-event-grouping-original-event {
   background: #fff;
@@ -1377,17 +1345,14 @@ color: #797979;
   padding: 8px 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
-
 .mds-event-grouping-original-event:last-child {
   margin-bottom: 0;
 }
-
 /* Event content layout */
 .mds-event-grouping-event-content {
   justify-content: space-between;
   align-items: center;
 }
-
 /* Event title */
 .mds-event-grouping-event-title {
   font-weight: 600;
@@ -1401,14 +1366,12 @@ color: #797979;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 /* Right side (date + detail) */
 .mds-event-grouping-event-right {
   flex-direction: column;
   align-items: flex-end;
   min-width: 80px;
 }
-
 .mds-event-grouping-event-date {
   font-size: 11px;
   color: #94a3b8;
@@ -1417,22 +1380,20 @@ color: #797979;
   text-align: right;
   margin-bottom: 2px;
 }
-
 /* Detail container (avatar/dot + text) */
 .mds-event-grouping-event-detail {
   align-items: center;
   justify-content: flex-end;
 }
-
-.mds-event-grouping-event-employee {
+.mds-event-grouping-event-info {
   font-size: 11px;
   font-weight: 700;
   color: #64748b;
   white-space: nowrap;
   line-height: 14px;
   text-align: right;
+  text-transform: capitalize;
 }
-
 /* Avatar for assignee in type view */
 .mds-event-grouping-event-avatar {
   width: 16px;
@@ -1440,7 +1401,6 @@ color: #797979;
   border-radius: 50%;
   margin-right: 6px;
 }
-
 /* Colored dot for type in assignee view */
 .mds-event-grouping-type-dot {
   width: 8px;
@@ -1448,19 +1408,18 @@ color: #797979;
   border-radius: 50%;
   margin-right: 6px;
 }
-
 /* Simple event styling (no grouping) */
-
 .mds-event-simple {
   padding: 10px 12px;
   border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.15),
+    0 1px 2px rgba(0, 0, 0, 0.1);
   justify-content: space-between;
   align-items: center;
   height: 100%;
   color: #2c2c2c;
 }
-
 /* Event title */
 .mds-event-simple-title {
   flex: 1;
@@ -1471,14 +1430,11 @@ color: #797979;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 /* Right side container */
 .mds-event-simple-right {
   flex-direction: column;
-  min-width: 80px;
   position: relative;
 }
-
 /* Date range */
 .mds-event-simple-date {
   font-size: 11px;
@@ -1488,13 +1444,11 @@ color: #797979;
   text-align: right;
   margin-bottom: 2px;
 }
-
 /* Subtitle wrapper (avatar/dot + text) */
 .mds-event-simple-subtitle-wrapper {
   align-items: center;
   justify-content: flex-end;
 }
-
 /* Avatar for assignee in type view */
 .mds-event-simple-avatar {
   width: 20px;
@@ -1504,7 +1458,6 @@ color: #797979;
   position: absolute;
   left: 0;
 }
-
 /* Colored dot for type in assignee view */
 .mds-event-simple-type-dot {
   width: 8px;
@@ -1512,18 +1465,16 @@ color: #797979;
   border-radius: 50%;
   margin: 0 6px;
 }
-
 /* Subtitle text (type or assignee name) */
 .mds-event-simple-subtitle {
   font-size: 11px;
   font-weight: 700;
+  text-transform: capitalize;
 }
-
 /* Header controls */
 .mds-event-grouping-header-controls {
   align-items: center;
 }
-
 /* Select input */
 .mds-event-grouping-select.mbsc-textfield {
   width: 210px;
