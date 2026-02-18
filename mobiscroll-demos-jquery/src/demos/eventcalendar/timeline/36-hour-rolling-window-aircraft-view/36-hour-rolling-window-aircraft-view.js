@@ -26,13 +26,12 @@ export default {
     function getEndTime() {
       var start = dayjs.utc().startOf('hour');
       var end = start.add(36, 'hours');
-      var dayOffset = end.startOf('day').diff(start.startOf('day'), 'days');
+      var dayOffset = end.subtract(1, 'minute').startOf('day').diff(start.startOf('day'), 'days');
       var suffix = dayOffset > 0 ? '+' + dayOffset : '';
       return end.format('HH:00') + suffix;
     }
 
     $(function () {
-      var currentDate = dayjs().startOf('day');
       var startTime = getStartTime();
       var endTime = getEndTime();
       $('#demo-36-hour-rolling-window-aircraft-view')
@@ -888,22 +887,6 @@ export default {
           showControls: false,
           renderResourceHeader: function () {
             return '<div class="mds-36-hour-resource-header">TIMES SHOWN IN <span class="mds-36-hour-resource-header-utc">UTC</span></div>';
-          },
-          renderHour: function (args) {
-            var d = args.date;
-            var dayDiff = dayjs.utc(d).diff(currentDate, 'days');
-            return (
-              '<div>' +
-              mobiscroll.formatDate('DD DDD', d) +
-              '<span class="mds-36-hour-date">' +
-              (dayDiff > 0 ? ' +' + dayDiff + 'D' : '') +
-              '</span>' +
-              '</div>' +
-              '<div><span class="mds-36-hour-time">' +
-              mobiscroll.formatDate('h A', d) +
-              '</span>' +
-              '</div>'
-            );
           },
           timezonePlugin: mobiscroll.dayjsTimezone,
         });

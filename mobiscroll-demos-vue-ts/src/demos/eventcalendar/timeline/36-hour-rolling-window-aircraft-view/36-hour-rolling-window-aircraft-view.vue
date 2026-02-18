@@ -846,8 +846,6 @@ const myResources: MbscResource[] = [
   //</hide-comment>
 ]
 
-const dayDiff = (d: Date) => dayjs.utc(d).diff(dayjs().startOf('day'), 'days')
-
 const myView = computed<MbscEventcalendarView>(() => ({
   timeline: {
     type: 'day',
@@ -861,7 +859,7 @@ const startTime = computed(() => dayjs.utc().format('HH:00'))
 const endTime = computed(() => {
   const start = dayjs.utc().startOf('hour')
   const end = start.add(36, 'hours')
-  const dayOffset = end.startOf('day').diff(start.startOf('day'), 'days')
+  const dayOffset = end.subtract(1, 'minute').startOf('day').diff(start.startOf('day'), 'days')
   const suffix = dayOffset > 0 ? '+' + dayOffset : ''
   return end.format('HH:00') + suffix
 })
@@ -880,15 +878,6 @@ const endTime = computed(() => {
     <template #resourceHeader>
       <div class="mds-36-hour-resource-header">
         TIMES SHOWN IN <span class="mds-36-hour-resource-header-utc">UTC</span>
-      </div>
-    </template>
-    <template #hour="{ date }">
-      <div>
-        {{ formatDate('DD DDD', date) }}
-        <span class="mds-36-hour-date" v-if="dayDiff(date) > 0"> +{{ dayDiff(date) }}D</span>
-      </div>
-      <div>
-        <span class="mds-36-hour-time">{{ formatDate('h A', date) }}</span>
       </div>
     </template>
   </MbscEventcalendar>

@@ -317,7 +317,7 @@ const App: FC = () => {
         startTime.setHours(shifts[slotKey].startHour, 0, 0, 0);
         const endTime = new Date(+startTime + 8 * 60 * 60 * 1000 - 1);
         const slot: MbscCalendarColor = {
-          background: '#e0fff0',
+          background: '#c1ffe180',
           cssClass: 'available-slot mbsc-font-icon mbsc-icon-plus',
           start: startTime as MbscDateType,
           end: endTime,
@@ -379,7 +379,7 @@ const App: FC = () => {
     const colorEnd = new Date(args.event.start as Date);
     colorEnd.setDate(colorEnd.getDate() + 1);
     colorEnd.setHours(6, 0, 0, 0);
-    setColors((prev) => [...prev, { start: colorStart, end: colorEnd, background: '#fff8f6', resource: String(args.event.resource) }]);
+    setColors((prev) => [...prev, { start: colorStart, end: colorEnd, background: '#ffdbd280', resource: String(args.event.resource) }]);
     const resource = String(args.event.resource);
     const day = new Date(args.event.start as Date);
     day.setHours(0, 0, 0, 0);
@@ -467,7 +467,7 @@ const App: FC = () => {
         colorEnd.setHours(6, 0, 0, 0);
         setColors((prev) => [
           ...prev,
-          { start: dayStart, resource: String(args.oldEvent!.resource), background: '#fff8f6', end: colorEnd },
+          { start: dayStart, resource: String(args.oldEvent!.resource), background: '#ffdbd280', end: colorEnd },
         ]);
         setRedResources((prev) => ({ ...prev, [String(args.oldEvent!.resource) + day.toISOString()]: true }));
       }
@@ -495,7 +495,7 @@ const App: FC = () => {
   const customResource = useCallback(
     (res: MbscResource, day: Date) => {
       const style = redResources[res.id + day.toISOString()]
-        ? { color: '#a65037', background: '#fff8f6', margin: '-0.5em', padding: '0.5em' }
+        ? { color: '#53000080', background: '#ffdbd280', margin: '-0.5em', padding: '0.5em' }
         : {};
       return <div style={style}>{res.name}</div>;
     },

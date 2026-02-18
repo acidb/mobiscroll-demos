@@ -294,7 +294,7 @@ export default {
           startTime.setHours(shifts[slotKey].startHour, 0, 0, 0);
           var endTime = new Date(+startTime + 8 * 60 * 60 * 1000 - 1);
           availableSlotOnHover = {
-            background: '#e0fff0',
+            background: '#c1ffe180',
             cssClass: 'available-slot mbsc-font-icon mbsc-icon-plus',
             start: +startTime + 1,
             end: endTime,
@@ -347,9 +347,9 @@ export default {
         colorEnd.setHours(6, 0, 0, 0);
 
         if (currentColors.length) {
-          currentColors.push({ start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource });
+          currentColors.push({ start: colorStart, end: colorEnd, background: '#ffdbd280', resource: args.event.resource });
         } else {
-          currentColors = [{ start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource }];
+          currentColors = [{ start: colorStart, end: colorEnd, background: '#ffdbd280', resource: args.event.resource }];
         }
         var resource = args.event.resource;
         var day = new Date(args.event.start);
@@ -430,7 +430,7 @@ export default {
           var colorEnd = new Date(dayStart);
           colorEnd.setDate(colorEnd.getDate() + 1);
           colorEnd.setHours(6, 0, 0, 0);
-          currentColors.push({ start: dayStart, resource: args.oldEvent.resource, background: '#fff8f6', end: colorEnd });
+          currentColors.push({ start: dayStart, resource: args.oldEvent.resource, background: '#ffdbd280', end: colorEnd });
           redResources[args.oldEvent.resource + day.toISOString()] = true;
         }
         inst.setOptions({ colors: currentColors });
@@ -446,7 +446,7 @@ export default {
       ],
       renderResource: function (res, day) {
         var style = redResources[res.id + day.toISOString()]
-          ? ' style="color: #a65037; background: #fff8f6; margin: -0.5em; padding: 0.5em"'
+          ? ' style="color: #53000080; background: #ffdbd280; margin: -0.5em; padding: 0.5em"'
           : '';
         return '<div' + style + '>' + res.name + '</div>';
       },
@@ -496,7 +496,7 @@ export default {
   height: 35px;
   border: none;
   border-radius: 50%;
-  background: linear-gradient(135deg,rgba(160, 160, 160),rgba(93, 93, 93));
+  background: linear-gradient(135deg, #33333380, #00000080);
   box-sizing: border-box;
 }
 

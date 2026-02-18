@@ -25,7 +25,7 @@ const App: FC = () => {
   const endTime = useMemo(() => {
     const start = dayjs.utc().startOf('hour');
     const end = start.add(36, 'hours');
-    const dayOffset = end.startOf('day').diff(start.startOf('day'), 'days');
+    const dayOffset = end.subtract(1, 'minute').startOf('day').diff(start.startOf('day'), 'days');
     const suffix = dayOffset > 0 ? '+' + dayOffset : '';
     return end.format('HH:00') + suffix;
   }, []);
@@ -890,23 +890,6 @@ const App: FC = () => {
     [],
   );
 
-  const customHour = useCallback((args: { date: Date }) => {
-    const d = args.date;
-    const currentDate = dayjs().startOf('day');
-    const dayDiff = dayjs.utc(d).diff(currentDate, 'days');
-    return (
-      <>
-        <div>
-          {formatDate('DD DDD', d)}
-          <span className="mds-36-hour-date">{dayDiff > 0 ? ' +' + dayDiff + 'D' : ''}</span>
-        </div>
-        <div>
-          <span className="mds-36-hour-time">{formatDate('h A', d)}</span>
-        </div>
-      </>
-    );
-  }, []);
-
   return (
     <Eventcalendar
       cssClass="mds-36-hour-rolling-calendar"
@@ -917,7 +900,6 @@ const App: FC = () => {
       resources={myResources}
       showControls={false}
       renderResourceHeader={customResourceHeader}
-      renderHour={customHour}
       timezonePlugin={dayjsTimezone}
     />
   );

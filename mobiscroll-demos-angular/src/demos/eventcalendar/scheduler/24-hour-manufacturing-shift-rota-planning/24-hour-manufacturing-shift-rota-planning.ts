@@ -102,11 +102,14 @@ export class AppComponent {
   redResources: Record<string, boolean> = {};
   colors: MbscCalendarColor[] = [];
 
-  getAvailableSlots(inst: any, resourceId: string, dayStart: Date): Record<string, boolean> {
+  getAvailableSlots(resourceId: string, dayStart: Date): Record<string, boolean> {
     const dayEnd = new Date(dayStart);
     dayEnd.setDate(dayEnd.getDate() + 1);
     dayEnd.setHours(6, 0, 0, 0);
-    const dayEvents = inst.getEvents(dayStart, dayEnd);
+    const dayEvents = this.myEvents.filter((e: MbscCalendarEvent) => {
+      const eStart = new Date(e.start as Date);
+      return eStart >= dayStart && eStart < dayEnd;
+    });
     const slots: Record<string, boolean> = { morning: true, afternoon: true, night: true };
     dayEvents.forEach((e: MbscCalendarEvent) => {
       if (e.resource === resourceId) {
@@ -306,7 +309,7 @@ export class AppComponent {
         color: color,
       };
     },
-    onCellHoverIn: (args: MbscCellHoverEvent, inst) => {
+    onCellHoverIn: (args: MbscCellHoverEvent) => {
       const hoveredDate = new Date(args.date);
       const shift = this.getShiftByHour(hoveredDate.getHours());
       if (!shift) {
@@ -315,14 +318,14 @@ export class AppComponent {
 
       const dayStart = new Date(args.date);
       dayStart.setHours(6, 0, 0, 0);
-      const availableSlots = this.getAvailableSlots(inst, String(args.resource.id), dayStart);
+      const availableSlots = this.getAvailableSlots(String(args.resource.id), dayStart);
       const slotKey = Object.keys(availableSlots).find((key) => availableSlots[key] && this.shifts[key].startHour === shift.startHour);
       if (slotKey) {
         const startTime = new Date(dayStart);
         startTime.setHours(this.shifts[slotKey].startHour, 0, 0, 0);
         const endTime = new Date(+startTime + 8 * 60 * 60 * 1000 - 1);
         this.availableSlotOnHover = {
-          background: '#e0fff0',
+          background: '#c1ffe180',
           cssClass: 'available-slot mbsc-font-icon mbsc-icon-plus',
           start: (+startTime + 1) as any,
           end: endTime,
@@ -337,16 +340,19 @@ export class AppComponent {
         this.availableSlotOnHover = null;
       }
     },
-    onEventCreate: (args: MbscEventCreateEvent, inst) => {
-      const event = args.event;
+    onEventCreate: (args: MbscEventCreateEvent) => {
+      const event = { ...(args.event as MbscCalendarEvent), id: Date.now() } as MbscCalendarEvent;
       const dayStart = new Date(event.start as Date);
       dayStart.setHours(6, 0, 0, 0);
       const dayEnd = new Date(dayStart);
       dayEnd.setDate(dayEnd.getDate() + 1);
       dayEnd.setHours(6, 0, 0, 0);
-      const dayEvents = inst.getEvents(dayStart, dayEnd);
+      const dayEvents = this.myEvents.filter((e: MbscCalendarEvent) => {
+        const eStart = new Date(e.start as Date);
+        return eStart >= dayStart && eStart < dayEnd;
+      });
       const conflict = dayEvents.find(
-        (ev) => ev.resource === event.resource || +new Date(ev.start as Date) === +new Date(event.start as Date),
+        (ev: MbscCalendarEvent) => ev.resource === event.resource || +new Date(ev.start as Date) === +new Date(event.start as Date),
       );
       if (conflict) {
         this.notify.toast({ message: 'Already assigned' });
@@ -357,6 +363,7 @@ export class AppComponent {
       day.setHours(0, 0, 0, 0);
       this.redResources[String(event.resource) + day.toISOString()] = false;
       this.availableSlotOnHover = null;
+      this.myEvents = [...this.myEvents, event];
       return;
     },
     onEventClick: () => {
@@ -371,7 +378,10 @@ export class AppComponent {
       colorEnd.setDate(colorEnd.getDate() + 1);
       colorEnd.setHours(6, 0, 0, 0);
 
-      this.colors = [...this.colors, { start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource as string }];
+      this.colors = [
+        ...this.colors,
+        { start: colorStart, end: colorEnd, background: '#ffdbd280', resource: args.event.resource as string },
+      ];
       const resource = args.event.resource as string;
       const day = new Date(args.event.start as Date);
       day.setHours(0, 0, 0, 0);
@@ -390,7 +400,7 @@ export class AppComponent {
         message: 'Already assigned',
       });
     },
-    onEventUpdate: (args: MbscEventUpdateEvent, inst) => {
+    onEventUpdate: (args: MbscEventUpdateEvent) => {
       const event = args.event;
       const dayStart = new Date(event.start as Date);
       dayStart.setHours(6, 0, 0, 0);
@@ -400,9 +410,18 @@ export class AppComponent {
         return false;
       }
 
-      const dayEvents = inst.getEvents(dayStart);
+      const dayEnd = new Date(dayStart);
+      dayEnd.setDate(dayEnd.getDate() + 1);
+      dayEnd.setHours(6, 0, 0, 0);
+
+      const dayEvents = this.myEvents.filter((e: MbscCalendarEvent) => {
+        const eStart = new Date(e.start as Date);
+        return eStart >= dayStart && eStart < dayEnd;
+      });
+
       const conflicts = dayEvents.filter(
-        (ev) => ev.id !== event.id && (ev.resource === event.resource || +new Date(ev.start as Date) === +new Date(event.start as Date)),
+        (ev: MbscCalendarEvent) =>
+          ev.id !== event.id && (ev.resource === event.resource || +new Date(ev.start as Date) === +new Date(event.start as Date)),
       );
       const evStart = new Date(event.start as Date);
       event.title = this.getTitle(evStart.getHours());
@@ -410,7 +429,7 @@ export class AppComponent {
 
       if (conflicts.length) {
         let shouldReturn = false;
-        conflicts.forEach((sh) => {
+        conflicts.forEach((sh: MbscCalendarEvent) => {
           const shStart = new Date(sh.start as Date);
           if (shStart.getHours() === evStart.getHours()) {
             shouldReturn = true;
@@ -420,10 +439,15 @@ export class AppComponent {
           this.notify.toast({ message: 'Already assigned' });
           return false;
         }
-        inst.updateEvent([...conflicts, event]);
+
+        const toUpdate = [...conflicts, event];
+        this.myEvents = this.myEvents.map((e) => {
+          const u = toUpdate.find((u) => u.id === e.id);
+          return u || e;
+        });
       } else {
         if (
-          dayEvents.some((ev) => {
+          dayEvents.some((ev: MbscCalendarEvent) => {
             const evStartDate = new Date(ev.start as Date);
             return evStartDate.getHours() === evStart.getHours() && ev.resource === event.resource;
           })
@@ -431,6 +455,7 @@ export class AppComponent {
           this.notify.toast({ message: 'Already assigned' });
           return false;
         }
+        this.myEvents = this.myEvents.map((e) => (e.id === event.id ? event : e));
       }
 
       this.colors = this.clearColorsForResource(this.colors, event.resource as string, event.start as Date);
@@ -443,7 +468,7 @@ export class AppComponent {
         colorEnd.setHours(6, 0, 0, 0);
         this.colors = [
           ...this.colors,
-          { start: dayStart, end: colorEnd, background: '#fff8f6', resource: args.oldEvent!.resource as string },
+          { start: dayStart, end: colorEnd, background: '#ffdbd280', resource: args.oldEvent!.resource as string },
         ];
         this.redResources[(args.oldEvent!.resource as string) + day.toISOString()] = true;
       }
@@ -468,7 +493,7 @@ export class AppComponent {
 
   getResourceStyle(resource: MbscResource, day: Date): Record<string, string> {
     return day && this.redResources[resource.id + day.toISOString()]
-      ? { color: '#a65037', background: '#fff8f6', margin: '-0.5em', padding: '0.5em' }
+      ? { color: '#53000080', background: '#ffdbd280', margin: '-0.5em', padding: '0.5em' }
       : {};
   }
 }

@@ -295,7 +295,7 @@ function App() {
         startTime.setHours(shifts[slotKey].startHour, 0, 0, 0);
         const endTime = new Date(+startTime + 8 * 60 * 60 * 1000 - 1);
         const slot = {
-          background: '#e0fff0',
+          background: '#c1ffe180',
           cssClass: 'available-slot mbsc-font-icon mbsc-icon-plus',
           start: +startTime + 1,
           end: endTime,
@@ -355,7 +355,7 @@ function App() {
     const colorEnd = new Date(args.event.start);
     colorEnd.setDate(colorEnd.getDate() + 1);
     colorEnd.setHours(6, 0, 0, 0);
-    setColors((prev) => [...prev, { start: colorStart, end: colorEnd, background: '#fff8f6', resource: args.event.resource }]);
+    setColors((prev) => [...prev, { start: colorStart, end: colorEnd, background: '#ffdbd280', resource: args.event.resource }]);
     const resource = args.event.resource;
     const day = new Date(args.event.start);
     day.setHours(0, 0, 0, 0);
@@ -441,7 +441,7 @@ function App() {
         const colorEnd = new Date(dayStart);
         colorEnd.setDate(colorEnd.getDate() + 1);
         colorEnd.setHours(6, 0, 0, 0);
-        setColors((prev) => [...prev, { start: dayStart, resource: args.oldEvent.resource, background: '#fff8f6', end: colorEnd }]);
+        setColors((prev) => [...prev, { start: dayStart, resource: args.oldEvent.resource, background: '#ffdbd280', end: colorEnd }]);
         setRedResources((prev) => ({ ...prev, [args.oldEvent.resource + day.toISOString()]: true }));
       }
       setDraggedEventStart(null);
@@ -468,7 +468,7 @@ function App() {
   const customResource = useCallback(
     (res, day) => {
       const style = redResources[res.id + day.toISOString()]
-        ? { color: '#a65037', background: '#fff8f6', margin: '-0.5em', padding: '0.5em' }
+        ? { color: '#53000080', background: '#ffdbd280', margin: '-0.5em', padding: '0.5em' }
         : {};
       return <div style={style}>{res.name}</div>;
     },
