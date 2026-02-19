@@ -233,6 +233,7 @@ import { AppComponent as Demo604 } from '../demos/eventcalendar/timeline/timelin
 import { AppComponent as Demo660 } from '../demos/eventcalendar/timeline/printing-the-view/printing-the-view';
 import { AppComponent as Demo621 } from '../demos/eventcalendar/timeline/employee-shifts/employee-shifts';
 import { AppComponent as Demo626 } from '../demos/eventcalendar/timeline/work-order-scheduling/work-order-scheduling';
+import { AppComponent as Demo785 } from '../demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action';
 import { AppComponent as Demo627 } from '../demos/eventcalendar/timeline/timezone-meeting-planner/timezone-meeting-planner';
 import { AppComponent as Demo634 } from '../demos/eventcalendar/timeline/restaurant-shift-management/restaurant-shift-management';
 import { AppComponent as Demo628 } from '../demos/eventcalendar/timeline/meal-planner/meal-planner';
@@ -979,6 +980,7 @@ export const demos: any[] = [
               { name: 'Managing tasks within shifts', unique: 'tasks-subtasks-under-shifts', component: Demo750 },
               { name: 'Resource filtering', unique: 'resource-filtering-search', component: Demo751 },
               { name: 'Set up custom teams', unique: 'resource-management-with-dynamic-team-creation', component: Demo772 },
+              { name: 'Group events by client and apply custom actions', unique: 'event-grouping-bulk-action', component: Demo785 },
             ],
           },
           {

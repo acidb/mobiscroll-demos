@@ -233,7 +233,6 @@ import Demo604 from './demos/eventcalendar/timeline/timeline-time-grid/timeline-
 import Demo660 from './demos/eventcalendar/timeline/printing-the-view/printing-the-view';
 import Demo621 from './demos/eventcalendar/timeline/employee-shifts/employee-shifts';
 import Demo626 from './demos/eventcalendar/timeline/work-order-scheduling/work-order-scheduling';
-import Demo785 from './demos/eventcalendar/timeline/event-grouping/event-grouping';
 import Demo627 from './demos/eventcalendar/timeline/timezone-meeting-planner/timezone-meeting-planner';
 import Demo634 from './demos/eventcalendar/timeline/restaurant-shift-management/restaurant-shift-management';
 import Demo628 from './demos/eventcalendar/timeline/meal-planner/meal-planner';
@@ -248,6 +247,7 @@ import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/
 import Demo750 from './demos/eventcalendar/timeline/tasks-subtasks-under-shifts/tasks-subtasks-under-shifts';
 import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search';
 import Demo772 from './demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation';
+import Demo785 from './demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action';
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
 import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
@@ -966,7 +966,6 @@ export const demos = [
             items: [
               { name: 'Employee shift/rota planning', unique: 'employee-shifts', component: Demo621 },
               { name: 'Work order scheduling', unique: 'work-order-scheduling', component: Demo626 },
-              { name: 'Event grouping', unique: 'event-grouping', component: Demo785 },
               { name: 'Meeting planner across timezones', unique: 'timezone-meeting-planner', component: Demo627 },
               { name: 'Restaurant shift management', unique: 'restaurant-shift-management', component: Demo634 },
               { name: 'Weekly meal planner', unique: 'meal-planner', component: Demo628 },
@@ -981,6 +980,7 @@ export const demos = [
               { name: 'Managing tasks within shifts', unique: 'tasks-subtasks-under-shifts', component: Demo750 },
               { name: 'Resource filtering', unique: 'resource-filtering-search', component: Demo751 },
               { name: 'Set up custom teams', unique: 'resource-management-with-dynamic-team-creation', component: Demo772 },
+              { name: 'Group events by client and apply custom actions', unique: 'event-grouping-bulk-action', component: Demo785 },
             ],
           },
           {

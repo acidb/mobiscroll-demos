@@ -10,7 +10,7 @@ setOptions({
 
 @Component({
   selector: 'app-timeline-month-view',
-  templateUrl: './month-view.html',
+  templateUrl: './calendar-timeline.html',
   standalone: true,
   imports: [CommonModule, MbscModule],
 })

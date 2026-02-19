@@ -247,6 +247,7 @@ import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/
 import Demo750 from './demos/eventcalendar/timeline/tasks-subtasks-under-shifts/tasks-subtasks-under-shifts.vue'
 import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search.vue'
 import Demo772 from './demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation.vue'
+import Demo785 from './demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action.vue'
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline.vue'
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution.vue'
 import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom.vue'
@@ -1474,7 +1475,12 @@ export const demos = [
                 name: 'Set up custom teams',
                 unique: 'resource-management-with-dynamic-team-creation',
                 component: Demo772
-              }
+              },
+              {
+                name: 'Group events by client and apply custom actions',
+                unique: 'event-grouping-bulk-action',
+                component: Demo785
+              },
             ]
           },
           {

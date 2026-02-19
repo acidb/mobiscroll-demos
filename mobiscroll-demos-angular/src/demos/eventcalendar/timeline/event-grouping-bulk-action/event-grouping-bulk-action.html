@@ -1,0 +1,135 @@
+<mbsc-eventcalendar
+  #calendar
+  [data]="displayEvents"
+  [view]="myView"
+  [resources]="myResources"
+  [dragToMove]="true"
+  [dragToResize]="false"
+  [dragBetweenResources]="false"
+  (onEventUpdate)="onEventUpdate($event)"
+  [headerTemplate]="customHeaderTemplate"
+  [resourceTemplate]="customResourceTemplate"
+  [scheduleEventTemplate]="groupByClientQuarter ? groupedEventTemplate : simpleEventTemplate"
+  class="mds-event-grouping-calendar"
+>
+  <!-- Custom Header -->
+  <ng-template #customHeaderTemplate>
+    <mbsc-calendar-nav></mbsc-calendar-nav>
+    <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-grouping-header-controls">
+      <mbsc-checkbox [(ngModel)]="groupByClientQuarter" (change)="onGroupByClientQuarterChange($event)" label="Group by Client/Quarter">
+      </mbsc-checkbox>
+      <mbsc-select
+        inputStyle="box"
+        display="anchored"
+        [touchUi]="false"
+        [data]="selectData"
+        [(ngModel)]="groupBy"
+        (onChange)="onGroupByChange($event)"
+      >
+      </mbsc-select>
+    </div>
+    <mbsc-calendar-prev></mbsc-calendar-prev>
+    <mbsc-calendar-today></mbsc-calendar-today>
+    <mbsc-calendar-next></mbsc-calendar-next>
+  </ng-template>
+
+  <!-- Custom resource -->
+  <ng-template #customResourceTemplate let-resource>
+    <div class="mbsc-flex" *ngIf="groupBy === 'assignee'">
+      <img [alt]="resource.name" class="mds-event-grouping-avatar" [src]="resource.img" />
+      <div class="mds-event-grouping-cont">
+        <div class="mds-event-grouping-name">{{ resource.name }}</div>
+        <div class="mds-event-grouping-title">{{ resource.title }}</div>
+      </div>
+    </div>
+    <div class="mbsc-flex mds-event-grouping-type-resource" *ngIf="groupBy === 'type'">
+      <div class="mds-event-grouping-type-badge" [style.background-color]="resource.color"></div>
+      <div class="mds-event-grouping-type-name">{{ resource.name }}</div>
+    </div>
+  </ng-template>
+
+  <!-- Grouped Event Template -->
+  <ng-template #groupedEventTemplate let-event>
+    <div
+      class="mbsc-flex mds-event-grouping-task mds-event-grouping-task-client"
+      [class.expanded]="!event.original.collapsed"
+      [style.border-left-color]="event.original.color"
+    >
+      <div class="mbsc-flex mds-event-grouping-content">
+        <div class="mds-event-grouping-title-text">{{ event.original.clientGroup }}</div>
+
+        <div class="mbsc-flex mds-event-grouping-right">
+          <div class="mbsc-flex mds-event-grouping-meta">
+            <div class="mds-event-grouping-date-range">
+              {{ formatEventDate(event.original.start) }} - {{ formatEventDate(event.original.end) }}
+            </div>
+            <div class="mds-event-grouping-count">
+              {{ event.original.count }} task{{ event.original.count > 1 ? 's' : '' }}, {{ getUniqueItems(event.original.originalEvents ||
+              []).count }} {{ getUniqueItems(event.original.originalEvents || []).label }}{{ getUniqueItems(event.original.originalEvents ||
+              []).count > 1 ? 's' : '' }}
+            </div>
+          </div>
+          <div
+            class="mbsc-flex mds-event-grouping-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"
+            (click)="toggleGroupCollapse(event.original); $event.stopPropagation()"
+          ></div>
+        </div>
+      </div>
+
+      <div class="mds-event-grouping-events">
+        <div class="mds-event-grouping-events-inner" *ngIf="!event.original.collapsed">
+          <div *ngFor="let ev of event.original.originalEvents" class="mds-event-grouping-original-event">
+            <div class="mbsc-flex mds-event-grouping-event-content">
+              <div class="mds-event-grouping-event-title">{{ ev.title }}</div>
+              <div class="mbsc-flex mds-event-grouping-event-right">
+                <div class="mds-event-grouping-event-date">{{ formatEventDate(ev.start) }} - {{ formatEventDate(ev.end) }}</div>
+                <div class="mbsc-flex mds-event-grouping-event-detail">
+                  <img
+                    *ngIf="getDetailInfo(ev).avatarUrl"
+                    [src]="getDetailInfo(ev).avatarUrl"
+                    [alt]="getDetailInfo(ev).detailText"
+                    class="mds-event-grouping-event-avatar"
+                  />
+                  <span
+                    *ngIf="getDetailInfo(ev).typeDotColor"
+                    class="mds-event-grouping-type-dot"
+                    [style.background-color]="getDetailInfo(ev).typeDotColor"
+                  >
+                  </span>
+                  <div class="mds-event-grouping-event-info">{{ getDetailInfo(ev).detailText }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Simple Event Template -->
+  <ng-template #simpleEventTemplate let-event>
+    <div class="mbsc-flex mds-event-simple" [style.background-color]="event.original.color">
+      <div class="mds-event-simple-title">{{ event.original.title }}</div>
+      <div class="mbsc-flex mds-event-simple-right">
+        <div class="mds-event-simple-date">{{ formatEventDate(event.original.start) }} - {{ formatEventDate(event.original.end) }}</div>
+        <div class="mbsc-flex mds-event-simple-subtitle-wrapper" *ngIf="getDetailInfo(event.original).detailText">
+          <img
+            *ngIf="getDetailInfo(event.original).avatarUrl"
+            [src]="getDetailInfo(event.original).avatarUrl"
+            [alt]="getDetailInfo(event.original).detailText"
+            class="mds-event-simple-avatar"
+          />
+          <span
+            *ngIf="getDetailInfo(event.original).typeDotColor"
+            class="mds-event-simple-type-dot"
+            [style.background-color]="getDetailInfo(event.original).typeDotColor"
+          >
+          </span>
+          <div class="mbsc-flex mds-event-simple-subtitle" [style.margin-left]="groupBy === 'type' ? '25px' : ''">
+            {{ getDetailInfo(event.original).detailText }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</mbsc-eventcalendar>
