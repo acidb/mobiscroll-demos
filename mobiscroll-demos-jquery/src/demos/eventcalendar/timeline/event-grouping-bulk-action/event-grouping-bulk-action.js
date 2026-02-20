@@ -38,7 +38,6 @@ export default {
           type: 'maintenance',
           clientGroup: 'Enterprise Solutions Group',
         },
-        //<hide-comment>
         {
           id: 4,
           title: 'Building Infrastructure Assessment',
@@ -57,6 +56,7 @@ export default {
           type: 'upgrade',
           clientGroup: 'Enterprise Solutions Group',
         },
+        //<hide-comment>
         {
           id: 6,
           title: 'Factory Data & Electrical Infrastructure',
