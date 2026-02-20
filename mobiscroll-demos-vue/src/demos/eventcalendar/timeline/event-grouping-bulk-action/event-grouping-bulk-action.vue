@@ -2603,6 +2603,8 @@ updateView()
     :resources="myResources"
     :dragToMove="true"
     :dragToResize="false"
+    :dragToCreate="false"
+    :clickToCreate="false"
     :dragBetweenResources="false"
     @event-updated="handleEventUpdated"
   >

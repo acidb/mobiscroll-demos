@@ -2645,6 +2645,8 @@ export default {
     var calendar = mobiscroll.eventcalendar('#demo-event-grouping', {
       dragToMove: true,
       dragToResize: false,
+      dragToCreate: false,
+      clickToCreate: false,
       dragBetweenResources: false,
       view: {
         timeline: {

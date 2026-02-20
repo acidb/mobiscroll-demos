@@ -2735,6 +2735,8 @@ const App: FC = () => {
         className="mds-event-grouping-calendar"
         dragToMove={true}
         dragToResize={false}
+        dragToCreate={false}
+        clickToCreate={false}
         dragBetweenResources={false}
         view={myView}
         data={displayEvents}
