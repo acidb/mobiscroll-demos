@@ -7,7 +7,6 @@ setOptions({
   // theme
 })
 
-const myEvents = ref(initialEvents)
 const colors = ref([])
 const redResources = ref({})
 const draggedEventStart = ref(null)
@@ -436,6 +435,8 @@ const resources = [
   { id: 'B', name: 'Crew B' },
   { id: 'C', name: 'Crew C' }
 ]
+
+const myEvents = ref(initialEvents)
 
 const view = {
   scheduler: {

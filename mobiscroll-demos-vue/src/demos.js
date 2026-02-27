@@ -1125,8 +1125,12 @@ export const demos = [
                 name: 'Availability planner & appointment manager',
                 unique: 'doctors-availability-calendar-planner',
                 component: Demo769
+              },
+              {
+                name: 'Continuous shift planning',
+                unique: '24-hour-manufacturing-shift-rota-planning',
+                component: Demo2222
               }
-              { name: 'Continuous shift planning', unique: '24-hour-manufacturing-shift-rota-planning', component: Demo2222 },
             ]
           },
           {
@@ -1477,8 +1481,12 @@ export const demos = [
                 name: 'Set up custom teams',
                 unique: 'resource-management-with-dynamic-team-creation',
                 component: Demo772
+              },
+              {
+                name: '36 hour rolling view',
+                unique: '36-hour-rolling-window-aircraft-view',
+                component: Demo111111
               }
-              { name: '36 hour rolling view', unique: '36-hour-rolling-window-aircraft-view', component: Demo111111 },
             ]
           },
           {

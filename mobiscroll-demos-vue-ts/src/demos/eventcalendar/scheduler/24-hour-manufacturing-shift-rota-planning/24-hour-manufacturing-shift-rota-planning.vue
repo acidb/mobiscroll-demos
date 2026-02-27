@@ -19,7 +19,6 @@ setOptions({
   // theme
 })
 
-const myEvents = ref<MbscCalendarEvent[]>(initialEvents)
 const colors = ref<MbscCalendarColor[]>([])
 const redResources = ref<Record<string, boolean>>({})
 const draggedEventStart = ref<Date | null | undefined>(null)
@@ -452,10 +451,12 @@ const initialEvents: MbscCalendarEvent[] = [
 ]
 
 const resources: MbscResource[] = [
-  { id: 'A', name: 'Crew A' },
+  { id: 'A', name: 'Crew' },
   { id: 'B', name: 'Crew B' },
   { id: 'C', name: 'Crew C' }
 ]
+
+const myEvents = ref<MbscCalendarEvent[]>(initialEvents)
 
 const view: MbscEventcalendarView = {
   scheduler: {
