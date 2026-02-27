@@ -15,6 +15,7 @@ export default {
       display: 'inline',
       calendarType: 'month',
       calendarSize: 3,
+      refDate: '1970-01-01',
       showWeekNumbers: true,
       renderCalendarHeader: function () {
         return (
@@ -83,6 +84,7 @@ export default {
               date = new Date(year, selectedDate.getMonth(), 1);
               break;
           }
+          console.log(year, selectedDate, type, date);
           myCalendar.setOptions({ calendarType: type });
           myCalendar.navigate(date);
         });
