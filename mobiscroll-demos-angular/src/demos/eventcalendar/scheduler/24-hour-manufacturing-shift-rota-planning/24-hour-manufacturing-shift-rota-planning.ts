@@ -148,136 +148,332 @@ export class AppComponent {
   }
 
   myEvents: MbscCalendarEvent[] = [
-    { resource: 'A', title: 'Morning Shift', start: dyndatetime('y,m,d-6,6'), end: dyndatetime('y,m,d-6,14'), color: this.morningColor },
     {
+      id: 1,
+      resource: 'A',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d-6,6'),
+      end: dyndatetime('y,m,d-6,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 2,
       resource: 'B',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d-6,14'),
       end: dyndatetime('y,m,d-6,22'),
       color: this.afternoonColor,
     },
-    { resource: 'C', title: 'Night Shift', start: dyndatetime('y,m,d-6,22'), end: dyndatetime('y,m,d-5,6'), color: this.nightColor },
-    { resource: 'A', title: 'Morning Shift', start: dyndatetime('y,m,d-5,6'), end: dyndatetime('y,m,d-5,14'), color: this.morningColor },
+    { id: 3, resource: 'C', title: 'Night Shift', start: dyndatetime('y,m,d-6,22'), end: dyndatetime('y,m,d-5,6'), color: this.nightColor },
     {
+      id: 4,
+      resource: 'A',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d-5,6'),
+      end: dyndatetime('y,m,d-5,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 5,
       resource: 'B',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d-5,14'),
       end: dyndatetime('y,m,d-5,22'),
       color: this.afternoonColor,
     },
-    { resource: 'C', title: 'Night Shift', start: dyndatetime('y,m,d-5,22'), end: dyndatetime('y,m,d-4,6'), color: this.nightColor },
+    { id: 6, resource: 'C', title: 'Night Shift', start: dyndatetime('y,m,d-5,22'), end: dyndatetime('y,m,d-4,6'), color: this.nightColor },
     //<hide-comment>
-    { resource: 'A', title: 'Morning Shift', start: dyndatetime('y,m,d-4,6'), end: dyndatetime('y,m,d-4,14'), color: this.morningColor },
     {
+      id: 7,
+      resource: 'A',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d-4,6'),
+      end: dyndatetime('y,m,d-4,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 8,
       resource: 'B',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d-4,14'),
       end: dyndatetime('y,m,d-4,22'),
       color: this.afternoonColor,
     },
-    { resource: 'C', title: 'Night Shift', start: dyndatetime('y,m,d-4,22'), end: dyndatetime('y,m,d-3,6'), color: this.nightColor },
-    { resource: 'C', title: 'Morning Shift', start: dyndatetime('y,m,d-3,6'), end: dyndatetime('y,m,d-3,14'), color: this.morningColor },
+    { id: 9, resource: 'C', title: 'Night Shift', start: dyndatetime('y,m,d-4,22'), end: dyndatetime('y,m,d-3,6'), color: this.nightColor },
     {
+      id: 10,
+      resource: 'C',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d-3,6'),
+      end: dyndatetime('y,m,d-3,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 11,
       resource: 'A',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d-3,14'),
       end: dyndatetime('y,m,d-3,22'),
       color: this.afternoonColor,
     },
-    { resource: 'B', title: 'Night Shift', start: dyndatetime('y,m,d-3,22'), end: dyndatetime('y,m,d-2,6'), color: this.nightColor },
-    { resource: 'C', title: 'Morning Shift', start: dyndatetime('y,m,d-2,6'), end: dyndatetime('y,m,d-2,14'), color: this.morningColor },
     {
+      id: 12,
+      resource: 'B',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d-3,22'),
+      end: dyndatetime('y,m,d-2,6'),
+      color: this.nightColor,
+    },
+    {
+      id: 13,
+      resource: 'C',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d-2,6'),
+      end: dyndatetime('y,m,d-2,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 14,
       resource: 'A',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d-2,14'),
       end: dyndatetime('y,m,d-2,22'),
       color: this.afternoonColor,
     },
-    { resource: 'B', title: 'Night Shift', start: dyndatetime('y,m,d-2,22'), end: dyndatetime('y,m,d-1,6'), color: this.nightColor },
-    { resource: 'C', title: 'Morning Shift', start: dyndatetime('y,m,d-1,6'), end: dyndatetime('y,m,d-1,14'), color: this.morningColor },
     {
+      id: 15,
+      resource: 'B',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d-2,22'),
+      end: dyndatetime('y,m,d-1,6'),
+      color: this.nightColor,
+    },
+    {
+      id: 16,
+      resource: 'C',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d-1,6'),
+      end: dyndatetime('y,m,d-1,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 17,
       resource: 'A',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d-1,14'),
       end: dyndatetime('y,m,d-1,22'),
       color: this.afternoonColor,
     },
-    { resource: 'B', title: 'Night Shift', start: dyndatetime('y,m,d-1,22'), end: dyndatetime('y,m,d,6'), color: this.nightColor },
-    { resource: 'B', title: 'Morning Shift', start: dyndatetime('y,m,d,6'), end: dyndatetime('y,m,d,14'), color: this.morningColor },
-    { resource: 'C', title: 'Afternoon Shift', start: dyndatetime('y,m,d,14'), end: dyndatetime('y,m,d,22'), color: this.afternoonColor },
-    { resource: 'A', title: 'Night Shift', start: dyndatetime('y,m,d,22'), end: dyndatetime('y,m,d+1,6'), color: this.nightColor },
-    { resource: 'B', title: 'Morning Shift', start: dyndatetime('y,m,d+1,6'), end: dyndatetime('y,m,d+1,14'), color: this.morningColor },
+    { id: 18, resource: 'B', title: 'Night Shift', start: dyndatetime('y,m,d-1,22'), end: dyndatetime('y,m,d,6'), color: this.nightColor },
     {
+      id: 19,
+      resource: 'B',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d,6'),
+      end: dyndatetime('y,m,d,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 20,
+      resource: 'C',
+      title: 'Afternoon Shift',
+      start: dyndatetime('y,m,d,14'),
+      end: dyndatetime('y,m,d,22'),
+      color: this.afternoonColor,
+    },
+    { id: 21, resource: 'A', title: 'Night Shift', start: dyndatetime('y,m,d,22'), end: dyndatetime('y,m,d+1,6'), color: this.nightColor },
+    {
+      id: 22,
+      resource: 'B',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d+1,6'),
+      end: dyndatetime('y,m,d+1,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 23,
       resource: 'C',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d+1,14'),
       end: dyndatetime('y,m,d+1,22'),
       color: this.afternoonColor,
     },
-    { resource: 'A', title: 'Night Shift', start: dyndatetime('y,m,d+1,22'), end: dyndatetime('y,m,d+2,6'), color: this.nightColor },
-    { resource: 'B', title: 'Morning Shift', start: dyndatetime('y,m,d+2,6'), end: dyndatetime('y,m,d+2,14'), color: this.morningColor },
     {
+      id: 24,
+      resource: 'A',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d+1,22'),
+      end: dyndatetime('y,m,d+2,6'),
+      color: this.nightColor,
+    },
+    {
+      id: 25,
+      resource: 'B',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d+2,6'),
+      end: dyndatetime('y,m,d+2,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 26,
       resource: 'C',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d+2,14'),
       end: dyndatetime('y,m,d+2,22'),
       color: this.afternoonColor,
     },
-    { resource: 'A', title: 'Night Shift', start: dyndatetime('y,m,d+2,22'), end: dyndatetime('y,m,d+3,6'), color: this.nightColor },
-    { resource: 'A', title: 'Morning Shift', start: dyndatetime('y,m,d+3,6'), end: dyndatetime('y,m,d+3,14'), color: this.morningColor },
     {
+      id: 27,
+      resource: 'A',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d+2,22'),
+      end: dyndatetime('y,m,d+3,6'),
+      color: this.nightColor,
+    },
+    {
+      id: 28,
+      resource: 'A',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d+3,6'),
+      end: dyndatetime('y,m,d+3,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 29,
       resource: 'B',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d+3,14'),
       end: dyndatetime('y,m,d+3,22'),
       color: this.afternoonColor,
     },
-    { resource: 'C', title: 'Night Shift', start: dyndatetime('y,m,d+3,22'), end: dyndatetime('y,m,d+4,6'), color: this.nightColor },
-    { resource: 'A', title: 'Morning Shift', start: dyndatetime('y,m,d+4,6'), end: dyndatetime('y,m,d+4,14'), color: this.morningColor },
     {
+      id: 30,
+      resource: 'C',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d+3,22'),
+      end: dyndatetime('y,m,d+4,6'),
+      color: this.nightColor,
+    },
+    {
+      id: 31,
+      resource: 'A',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d+4,6'),
+      end: dyndatetime('y,m,d+4,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 32,
       resource: 'B',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d+4,14'),
       end: dyndatetime('y,m,d+4,22'),
       color: this.afternoonColor,
     },
-    { resource: 'C', title: 'Night Shift', start: dyndatetime('y,m,d+4,22'), end: dyndatetime('y,m,d+5,6'), color: this.nightColor },
-    { resource: 'A', title: 'Morning Shift', start: dyndatetime('y,m,d+5,6'), end: dyndatetime('y,m,d+5,14'), color: this.morningColor },
     {
+      id: 33,
+      resource: 'C',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d+4,22'),
+      end: dyndatetime('y,m,d+5,6'),
+      color: this.nightColor,
+    },
+    {
+      id: 34,
+      resource: 'A',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d+5,6'),
+      end: dyndatetime('y,m,d+5,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 35,
       resource: 'B',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d+5,14'),
       end: dyndatetime('y,m,d+5,22'),
       color: this.afternoonColor,
     },
-    { resource: 'C', title: 'Night Shift', start: dyndatetime('y,m,d+5,22'), end: dyndatetime('y,m,d+6,6'), color: this.nightColor },
-    { resource: 'C', title: 'Morning Shift', start: dyndatetime('y,m,d+6,6'), end: dyndatetime('y,m,d+6,14'), color: this.morningColor },
     {
+      id: 36,
+      resource: 'C',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d+5,22'),
+      end: dyndatetime('y,m,d+6,6'),
+      color: this.nightColor,
+    },
+    {
+      id: 37,
+      resource: 'C',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d+6,6'),
+      end: dyndatetime('y,m,d+6,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 38,
       resource: 'B',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d+6,14'),
       end: dyndatetime('y,m,d+6,22'),
       color: this.afternoonColor,
     },
-    { resource: 'A', title: 'Night Shift', start: dyndatetime('y,m,d+6,22'), end: dyndatetime('y,m,d+7,6'), color: this.nightColor },
-    { resource: 'C', title: 'Morning Shift', start: dyndatetime('y,m,d+7,6'), end: dyndatetime('y,m,d+7,14'), color: this.morningColor },
     {
+      id: 39,
+      resource: 'A',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d+6,22'),
+      end: dyndatetime('y,m,d+7,6'),
+      color: this.nightColor,
+    },
+    {
+      id: 40,
+      resource: 'C',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d+7,6'),
+      end: dyndatetime('y,m,d+7,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 41,
       resource: 'B',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d+7,14'),
       end: dyndatetime('y,m,d+7,22'),
       color: this.afternoonColor,
     },
-    { resource: 'A', title: 'Night Shift', start: dyndatetime('y,m,d+7,22'), end: dyndatetime('y,m,d+8,6'), color: this.nightColor },
-    { resource: 'C', title: 'Morning Shift', start: dyndatetime('y,m,d+8,6'), end: dyndatetime('y,m,d+8,14'), color: this.morningColor },
     {
+      id: 42,
+      resource: 'A',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d+7,22'),
+      end: dyndatetime('y,m,d+8,6'),
+      color: this.nightColor,
+    },
+    {
+      id: 43,
+      resource: 'C',
+      title: 'Morning Shift',
+      start: dyndatetime('y,m,d+8,6'),
+      end: dyndatetime('y,m,d+8,14'),
+      color: this.morningColor,
+    },
+    {
+      id: 44,
       resource: 'B',
       title: 'Afternoon Shift',
       start: dyndatetime('y,m,d+8,14'),
       end: dyndatetime('y,m,d+8,22'),
       color: this.afternoonColor,
     },
-    { resource: 'A', title: 'Night Shift', start: dyndatetime('y,m,d+8,22'), end: dyndatetime('y,m,d+9,6'), color: this.nightColor },
+    {
+      id: 45,
+      resource: 'A',
+      title: 'Night Shift',
+      start: dyndatetime('y,m,d+8,22'),
+      end: dyndatetime('y,m,d+9,6'),
+      color: this.nightColor,
+    },
     //</hide-comment>
   ];
 
@@ -294,6 +490,7 @@ export class AppComponent {
     clickToCreate: 'single',
     dragToResize: false,
     dragTimeStep: 480,
+    dragTimeStepBase: 'viewStart',
     eventDelete: true,
     eventOverlap: false,
     extendDefaultEvent: (args: MbscNewEventData): MbscCalendarEvent => {
@@ -341,7 +538,7 @@ export class AppComponent {
       }
     },
     onEventCreate: (args: MbscEventCreateEvent) => {
-      const event = { ...(args.event as MbscCalendarEvent), id: Date.now() } as MbscCalendarEvent;
+      const event = args.event as MbscCalendarEvent;
       const dayStart = new Date(event.start as Date);
       dayStart.setHours(6, 0, 0, 0);
       const dayEnd = new Date(dayStart);
@@ -361,9 +558,9 @@ export class AppComponent {
       this.colors = this.clearColorsForResource(this.colors, event.resource as string, event.start as Date);
       const day = new Date(event.start as Date);
       day.setHours(0, 0, 0, 0);
-      this.redResources[String(event.resource) + day.toISOString()] = false;
+      this.redResources = { ...this.redResources, [String(event.resource) + day.toISOString()]: false };
       this.availableSlotOnHover = null;
-      this.myEvents = [...this.myEvents, event];
+      this.myEvents = [...this.myEvents, { ...event, id: Date.now() }];
       return;
     },
     onEventClick: () => {
@@ -372,6 +569,7 @@ export class AppComponent {
       });
     },
     onEventDelete: (args: MbscEventDeleteEvent) => {
+      this.myEvents = this.myEvents.filter((e) => e.id !== args.event.id);
       const colorStart = new Date(args.event.start as Date);
       colorStart.setHours(6, 0, 0, 0);
       const colorEnd = new Date(args.event.start as Date);
@@ -385,7 +583,7 @@ export class AppComponent {
       const resource = args.event.resource as string;
       const day = new Date(args.event.start as Date);
       day.setHours(0, 0, 0, 0);
-      this.redResources[resource + day.toISOString()] = true;
+      this.redResources = { ...this.redResources, [resource + day.toISOString()]: true };
       this.notify.toast({
         message: (args.event.title as string) + ' deleted',
       });
@@ -429,39 +627,40 @@ export class AppComponent {
 
       if (conflicts.length) {
         let shouldReturn = false;
-        conflicts.forEach((sh: MbscCalendarEvent) => {
-          const shStart = new Date(sh.start as Date);
-          if (shStart.getHours() === evStart.getHours()) {
-            shouldReturn = true;
+        conflicts.forEach((sh: MbscCalendarEvent, i: number) => {
+          if (sh.resource === event.resource) {
+            if (event.start && +event.start === +new Date(sh.start as Date)) {
+              shouldReturn = true;
+            }
+            conflicts[i] = { ...sh, resource: this.draggedEventResource! };
+          } else {
+            conflicts[i] = {
+              ...sh,
+              start: this.draggedEventStart!,
+              end: this.draggedEventEnd!,
+              title: this.getTitle(new Date(this.draggedEventStart!).getHours()),
+              color: this.getColor(new Date(this.draggedEventStart!).getHours()),
+            };
           }
         });
         if (shouldReturn) {
-          this.notify.toast({ message: 'Already assigned' });
           return false;
         }
-
         const toUpdate = [...conflicts, event];
         this.myEvents = this.myEvents.map((e) => {
           const u = toUpdate.find((u) => u.id === e.id);
           return u || e;
         });
       } else {
-        if (
-          dayEvents.some((ev: MbscCalendarEvent) => {
-            const evStartDate = new Date(ev.start as Date);
-            return evStartDate.getHours() === evStart.getHours() && ev.resource === event.resource;
-          })
-        ) {
-          this.notify.toast({ message: 'Already assigned' });
-          return false;
+        if (dayEvents.some((ev) => ev.id === event.id)) {
+          this.myEvents = this.myEvents.map((e) => (e.id === event.id ? event : e));
         }
-        this.myEvents = this.myEvents.map((e) => (e.id === event.id ? event : e));
       }
 
       this.colors = this.clearColorsForResource(this.colors, event.resource as string, event.start as Date);
       const day = new Date(event.start as Date);
       day.setHours(0, 0, 0, 0);
-      this.redResources[String(event.resource) + day.toISOString()] = false;
+      this.redResources = { ...this.redResources, [String(event.resource) + day.toISOString()]: false };
       if (!conflicts.length && event.resource !== this.draggedEventResource) {
         const colorEnd = new Date(dayStart);
         colorEnd.setDate(colorEnd.getDate() + 1);
@@ -470,7 +669,7 @@ export class AppComponent {
           ...this.colors,
           { start: dayStart, end: colorEnd, background: '#ffdbd280', resource: args.oldEvent!.resource as string },
         ];
-        this.redResources[(args.oldEvent!.resource as string) + day.toISOString()] = true;
+        this.redResources = { ...this.redResources, [(args.oldEvent!.resource as string) + day.toISOString()]: true };
       }
       this.draggedEventStart = null;
       this.draggedEventEnd = null;
