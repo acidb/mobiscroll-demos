@@ -365,11 +365,13 @@ export default {
 }
 
 .md-meal-planner-calendar .md-meal-planner-event-title {
-    font-size: 12px;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .md-meal-planner-calendar .md-meal-planner-event-desc {
-    opacity: .6;
+  opacity: 0.6;
+  line-height: 18px;
 }
 
 .md-meal-planner-popup .mbsc-segmented-item:first-child .mbsc-selected.mbsc-material,
