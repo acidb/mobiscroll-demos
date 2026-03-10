@@ -629,7 +629,7 @@ export default {
   padding-bottom: 0;
 }
 
-.mds-tooltip-button.mbsc-button-txt {
+.mds-tooltip-button .mbsc-button-txt {
   font-size: 14px;
 }
 `,

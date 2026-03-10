@@ -410,6 +410,7 @@ export default {
   margin: 0;
   line-height: 24px;
   padding: 0 10px;
+  will-change: opacity;
 }
 .mds-resource-info-pay .mbsc-button-txt {
   font-size: 12px;
