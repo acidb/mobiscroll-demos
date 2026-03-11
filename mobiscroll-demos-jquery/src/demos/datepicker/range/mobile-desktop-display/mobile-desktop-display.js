@@ -21,7 +21,7 @@ export default {
       $('#demo-anchored')
         .mobiscroll()
         .datepicker({
-          controls: ['time'],
+          controls: ['calendar'],
           select: 'range',
           display: 'anchored',
         });
