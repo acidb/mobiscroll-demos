@@ -523,13 +523,7 @@ function handleToastClose() {
         >
           Cancel
         </MbscButton>
-        <MbscButton
-          @click="cancelReorder()"
-          className="mds-reorder-header-filter-separator"
-          variant="outline"
-          color="light"
-        >
-        </MbscButton>
+        <div class="mds-reorder-header-filter-separator"></div>
       </div>
       <MbscCalendarPrev />
       <MbscCalendarToday />
@@ -549,13 +543,10 @@ function handleToastClose() {
   align-items: center;
 }
 
-.mbsc-button.mds-reorder-header-filter-separator {
+.mds-reorder-header-filter-separator {
   height: 25px;
-  min-width: 0;
-  padding: 0;
   margin: 0 8px 0 12px;
-  border-width: 1px;
-  cursor: none;
+  border: 1px solid var(--mbsc-eventcalendar-border-color);
 }
 
 .mbsc-material .mds-reorder-switch {
