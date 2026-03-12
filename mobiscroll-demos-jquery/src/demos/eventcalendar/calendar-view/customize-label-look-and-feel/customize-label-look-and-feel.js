@@ -27,7 +27,7 @@ export default {
                 '<div class="single-day-event-dot" style="background:' +
                 data.original.color +
                 '"></div>' +
-                '<div class="single-day-event" style="color:#000">' +
+                '<div class="single-day-event">' +
                 data.original.title +
                 '</div>'
               );
