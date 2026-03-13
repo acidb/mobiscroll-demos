@@ -67,8 +67,7 @@ export default {
 
         // Set popup header text and buttons for adding
         popup.setOptions({
-          headerText:
-            '<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start)) + '</div>',
+          headerText: 'New meal - ' + formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start)),
           buttons: [
             'cancel',
             {
@@ -109,8 +108,7 @@ export default {
 
         // // set popup header text and buttons for editing
         popup.setOptions({
-          headerText:
-            '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(ev.start)) + '</div>',
+          headerText: resource.name + ' - ' + formatDate('DDDD, DD MMMM YYYY', new Date(ev.start)),
           buttons: [
             'cancel',
             {
@@ -338,12 +336,6 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-meal-type {
-    font-size: 14px;
-    font-weight: 600;
-    opacity: .6;
-}
-
 .md-meal-planner-popup .mbsc-popup .mbsc-popup-header {
     padding-top: 8px;
     padding-bottom: 8px;

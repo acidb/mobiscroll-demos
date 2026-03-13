@@ -148,7 +148,7 @@ function App() {
   const handleEventClick = useCallback(
     (args) => {
       const event = args.event;
-      setHeader('<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>');
+      setHeader('New meal - ' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)));
       setType(event.resource);
       setEdit(true);
       setTempMeal({ ...event });
@@ -163,9 +163,7 @@ function App() {
     (args) => {
       const event = args.event;
       const resource = args.resourceObj;
-      setHeader(
-        '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>',
-      );
+      setHeader(resource.name + ' - ' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)));
       setType(event.resource);
       setEdit(false);
       setTempMeal(event);
