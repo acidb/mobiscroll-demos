@@ -17,12 +17,12 @@ export default {
           color: '#f5da7b',
         },
         {
-          date: 'dyndatetime(y,m,d-1)',
+          date: 'dyndatetime(y,m,d)',
           name: 'Product shipping',
           color: '#acf3a3',
         },
         {
-          date: 'dyndatetime(y,m,d+1)',
+          date: 'dyndatetime(y,m,d+2)',
           name: 'Cycle finish',
           color: '#ff84a0',
         },
