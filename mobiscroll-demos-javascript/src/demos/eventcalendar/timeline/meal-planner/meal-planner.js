@@ -369,31 +369,31 @@ export default {
   line-height: 18px;
 }
 
-.md-meal-planner-popup .mbsc-segmented-item:first-child .mbsc-selected.mbsc-material,
+.md-meal-planner-popup .mbsc-segmented-item:first-child .mbsc-selected .mbsc-button-bg.mbsc-material,
 .md-meal-planner-popup .mbsc-segmented-item:first-child .mbsc-selected.mbsc-windows,
 .md-meal-planner-popup .mbsc-segmented-item:first-child .mbsc-segmented-selectbox-inner {
     background: #f08786;
 }
 
-.md-meal-planner-popup .mbsc-segmented-item:nth-child(2) .mbsc-selected.mbsc-material,
+.md-meal-planner-popup .mbsc-segmented-item:nth-child(2) .mbsc-selected .mbsc-button-bg.mbsc-material,
 .md-meal-planner-popup .mbsc-segmented-item:nth-child(2) .mbsc-selected.mbsc-windows,
 .md-meal-planner-popup .mbsc-segmented-item:nth-child(2) .mbsc-segmented-selectbox-inner {
     background: #8abe89;
 }
 
-.md-meal-planner-popup .mbsc-segmented-item:nth-child(3) .mbsc-selected.mbsc-material,
+.md-meal-planner-popup .mbsc-segmented-item:nth-child(3) .mbsc-selected .mbsc-button-bg.mbsc-material,
 .md-meal-planner-popup .mbsc-segmented-item:nth-child(3) .mbsc-selected.mbsc-windows,
 .md-meal-planner-popup .mbsc-segmented-item:nth-child(3) .mbsc-segmented-selectbox-inner {
     background: #99d3ef;
 }
 
-.md-meal-planner-popup .mbsc-segmented-item:nth-child(4) .mbsc-selected.mbsc-material,
+.md-meal-planner-popup .mbsc-segmented-item:nth-child(4) .mbsc-selected .mbsc-button-bg.mbsc-material,
 .md-meal-planner-popup .mbsc-segmented-item:nth-child(4) .mbsc-selected.mbsc-windows,
 .md-meal-planner-popup .mbsc-segmented-item:nth-child(4) .mbsc-segmented-selectbox-inner {
     background: #f0ce8e;
 }
 
-.md-meal-planner-popup .mbsc-segmented-item:last-child .mbsc-selected.mbsc-material,
+.md-meal-planner-popup .mbsc-segmented-item:last-child .mbsc-selected .mbsc-button-bg.mbsc-material,
 .md-meal-planner-popup .mbsc-segmented-item:last-child .mbsc-selected.mbsc-windows,
 .md-meal-planner-popup .mbsc-segmented-item:last-child .mbsc-segmented-selectbox-inner {
     background: #b48bce;
