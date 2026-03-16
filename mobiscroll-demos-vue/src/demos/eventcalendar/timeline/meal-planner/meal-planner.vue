@@ -286,6 +286,8 @@ onMounted(() => {
 .md-meal-planner-popup .mbsc-popup .mbsc-popup-header {
   padding-top: 8px;
   padding-bottom: 8px;
+  font-size: 18px;
+  text-align: center;
 }
 
 .md-meal-planner-cont {
