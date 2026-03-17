@@ -161,7 +161,7 @@ const App: FC = () => {
   const handleEventClick = useCallback(
     (args: MbscEventClickEvent) => {
       const event = args.event;
-      setHeader('New meal<br>' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start as string)));
+      setHeader('New meal - ' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start as string)));
       setType(+event.resource!);
       setEdit(true);
       setTempMeal({ ...event });
@@ -176,7 +176,7 @@ const App: FC = () => {
     (args: MbscEventCreateEvent) => {
       const event = args.event;
       const resource = args.resourceObj!;
-      setHeader(resource.name + '<br>' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start as string)));
+      setHeader(resource.name + ' - ' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start as string)));
       setType(+event.resource!);
       setEdit(false);
       setTempMeal(event);

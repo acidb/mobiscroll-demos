@@ -435,12 +435,12 @@ function App() {
       setPopupHeader(
         'Edit ' +
           resource.name +
-          "'s hours<br>" +
-          formatDate('DDDD', new Date(event.start as Date)) +
+          "'s hours - " +
+          formatDate('DDD', new Date(event.start as Date)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start as Date)),
+          formatDate('D MMM YYYY', new Date(event.start as Date)),
       );
       setPopupOpen(true);
     },
@@ -454,12 +454,12 @@ function App() {
 
       fillPopup(event, false);
       setPopupHeader(
-        'New shift<br>' +
-          formatDate('DDDD', new Date(event.start as Date)) +
+        'New shift - ' +
+          formatDate('DDD', new Date(event.start as Date)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start as Date)),
+          formatDate('D MMM YYYY', new Date(event.start as Date)),
       );
       setPopupOpen(true);
     },
@@ -563,6 +563,7 @@ function App() {
         onEventUpdateFailed={handleEventUpdateFailed}
       />
       <Popup
+        cssClass="mds-employee-shifts-popup"
         buttons={popupButtons}
         display="bottom"
         contentPadding={false}
