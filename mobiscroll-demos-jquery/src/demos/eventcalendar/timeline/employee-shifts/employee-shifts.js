@@ -461,6 +461,7 @@ export default {
               fullScreen: false,
               touchUi: false,
               width: 400,
+              height: 450,
             },
           },
           scrollLock: false,
