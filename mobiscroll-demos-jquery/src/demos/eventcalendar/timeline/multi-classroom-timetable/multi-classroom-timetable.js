@@ -129,13 +129,13 @@ export default {
 }
 
 .md-timetable-event-prop {
-    color: #555;
-    padding-bottom: 5px;
+  padding-bottom: 5px;
+  opacity: 0.6;
 }
 
 .md-timetable-event-class {
-    color: #555;
-    font-style: italic;
+  opacity: 0.6;
+  font-style: italic;
 }
   `,
 };
