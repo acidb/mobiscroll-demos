@@ -58,7 +58,7 @@ onMounted(() => {
           class="mds-agenda-event-avatar"
           :src="myParticipants[data.original!.participant as number].img"
         />
-        <div class="mbsc-flex-1-0">
+        <div class="mbsc-flex-1-1">
           {{ myParticipants[data.original!.participant as number].name }}
         </div>
         <MbscButton cssClass="mds-agenda-event-btn" color="secondary" @click="add(data.original!)">
@@ -86,9 +86,11 @@ onMounted(() => {
   line-height: 20px;
 }
 
-.mds-agenda-event-btn.mbsc-ios {
+.mds-agenda-event-btn.mbsc-ios,
+.mds-agenda-event-btn.mbsc-material {
   position: absolute;
   right: 8px;
   bottom: 8px;
+  margin: 0;
 }
 </style>
