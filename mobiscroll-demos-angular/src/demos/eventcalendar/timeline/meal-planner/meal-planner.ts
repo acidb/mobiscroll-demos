@@ -146,7 +146,7 @@ export class AppComponent implements OnInit {
       // Set popup options
       this.popupButtons = this.popupEditButtons;
       this.popupHeader =
-        resource.name + ' - ' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start));
+        resource.name + '<br>' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start));
       this.type = +event.resource;
       // Open the popup
       this.popup.open();
@@ -161,7 +161,7 @@ export class AppComponent implements OnInit {
         // Set popup options
         this.popupButtons = this.popupAddButtons;
         this.popupHeader =
-          'New meal - ' + formatDate('DDDD, DD MMMM YYYY', new Date(this.tempMeal.start));
+          'New meal<br>' + formatDate('DDDD, DD MMMM YYYY', new Date(this.tempMeal.start));
         this.type = +event.resource;
         // Open the popup
         this.popup.open();

@@ -433,15 +433,14 @@ function App() {
 
       fillPopup(event, true);
       setPopupHeader(
-        '<div>Edit ' +
+        'Edit ' +
           resource.name +
-          '\'s hours</div><div class="mds-employee-shifts-header">' +
+          "'s hours<br>" +
           formatDate('DDDD', new Date(event.start as Date)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start as Date)) +
-          '</div>',
+          formatDate('D MMMM YYYY', new Date(event.start as Date)),
       );
       setPopupOpen(true);
     },
@@ -455,13 +454,12 @@ function App() {
 
       fillPopup(event, false);
       setPopupHeader(
-        '<div>New shift</div><div class="mds-employee-shifts-header">' +
+        'New shift<br>' +
           formatDate('DDDD', new Date(event.start as Date)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start as Date)) +
-          '</div>',
+          formatDate('D MMMM YYYY', new Date(event.start as Date)),
       );
       setPopupOpen(true);
     },

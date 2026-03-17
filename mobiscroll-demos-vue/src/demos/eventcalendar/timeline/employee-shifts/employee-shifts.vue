@@ -374,15 +374,14 @@ function handleEventClick(args) {
     }
   ]
   popupHeader.value =
-    '<div>Edit ' +
+    'Edit ' +
     resource.name +
-    '\'s hours</div><div class="mds-employee-shifts-header">' +
+    "'s hours<br>" +
     formatDate('DDDD', new Date(event.start)) +
     ' ' +
     slot.name +
     ', ' +
-    formatDate('D MMMM YYYY', new Date(event.start)) +
-    '</div>'
+    formatDate('D MMMM YYYY', new Date(event.start))
   isPopupOpen.value = true
 }
 
@@ -403,13 +402,12 @@ function handleEventCreated(args) {
     }
   ]
   popupHeader.value =
-    '<div>New shift</div><div class="mds-employee-shifts-header">' +
+    'New shift<br>' +
     formatDate('DDDD', new Date(event.start)) +
     ' ' +
     slot.name +
     ', ' +
-    formatDate('D MMMM YYYY', new Date(event.start)) +
-    '</div>'
+    formatDate('D MMMM YYYY', new Date(event.start))
   isPopupOpen.value = true
 }
 
@@ -536,12 +534,6 @@ function handleShiftDeleteClick() {
 </template>
 
 <style>
-.mds-employee-shifts-header {
-  font-size: 14px;
-  font-weight: 600;
-  opacity: 0.6;
-}
-
 .mds-employee-shifts .mbsc-timeline-resource-col {
   width: 200px;
 }

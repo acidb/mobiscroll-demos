@@ -160,7 +160,7 @@ function handleEventClick(args) {
   loadPopupForm(event)
   // Set popup options
   popupButtons.value = popupEditButtons
-  headerText.value = 'New meal - ' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start))
+  headerText.value = 'New meal<br>' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start))
   type.value = event.resource
   // Open the popup
   isPopupOpen.value = true
@@ -175,7 +175,8 @@ function handleEventCreated(args) {
   loadPopupForm(event)
   // Set popup options
   popupButtons.value = popupAddButtons
-  headerText.value = resource.name + ' - ' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start))
+  headerText.value =
+    resource.name + '<br>' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start))
   type.value = event.resource
   // Open the popup
   isPopupOpen.value = true
@@ -286,8 +287,6 @@ onMounted(() => {
 .md-meal-planner-popup .mbsc-popup .mbsc-popup-header {
   padding-top: 8px;
   padding-bottom: 8px;
-  font-size: 18px;
-  text-align: center;
 }
 
 .md-meal-planner-cont {

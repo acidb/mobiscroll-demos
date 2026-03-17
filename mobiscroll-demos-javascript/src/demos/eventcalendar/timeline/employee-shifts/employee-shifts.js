@@ -60,13 +60,12 @@ export default {
       // Set popup header text and buttons
       addEditPopup.setOptions({
         headerText:
-          '<div>New shift</div><div class="mds-employee-shifts-header">' +
+          'New shift<br>' +
           formatDate('DDDD', new Date(event.start)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start)) +
-          '</div>',
+          formatDate('D MMMM YYYY', new Date(event.start)),
         buttons: [
           'cancel',
           {
@@ -103,15 +102,14 @@ export default {
 
       addEditPopup.setOptions({
         headerText:
-          '<div>Edit ' +
+          'Edit ' +
           resource.name +
-          '\'s hours</div><div class="mds-employee-shifts-header">' +
+          "'s hours<br>" +
           formatDate('DDDD', new Date(event.start)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start)) +
-          '</div>',
+          formatDate('D MMMM YYYY', new Date(event.start)),
         buttons: [
           'cancel',
           {
@@ -515,12 +513,6 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-employee-shifts-header {
-  font-size: 14px;
-  font-weight: 600;
-  opacity: .6;
-}
-
 .mds-employee-shifts .mbsc-timeline-resource-col {
   width: 200px;
 }
