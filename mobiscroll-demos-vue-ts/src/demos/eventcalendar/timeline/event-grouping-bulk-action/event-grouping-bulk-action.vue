@@ -7,13 +7,17 @@ import {
   MbscCalendarToday,
   MbscCheckbox,
   MbscEventcalendar,
-  MbscEventUpdateEvent,
   MbscSelect,
-  MbscSelectData,
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
+import type {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscEventUpdateEvent,
+  MbscResource,
+  MbscSelectData
+} from '@mobiscroll/vue'
 import { ref } from 'vue'
 
 setOptions({
@@ -2377,7 +2381,7 @@ const groupBy = ref<string>('assignee')
 const groupByClientQuarter = ref<boolean>(false)
 const isToastOpen = ref<boolean>(false)
 const toastMessage = ref<string>('')
-const calendarRef = ref<typeof MbscEventcalendar>(null)
+const calendarRef = ref<typeof MbscEventcalendar>()
 
 function groupEventsByClientQuarter(events: MbscCalendarEvent[]) {
   const groups = new Map<
@@ -2417,13 +2421,13 @@ function groupEventsByClientQuarter(events: MbscCalendarEvent[]) {
         events: []
       })
     }
-    groups.get(groupKey).events.push(event)
+    groups.get(groupKey)!.events.push(event)
   })
 
   // Create grouped events
   groups.forEach((groupData, groupKey) => {
     const periodEvents = [...groupData.events].sort((a, b) =>
-      a.start < b.start ? -1 : a.start > b.start ? 1 : 0
+      a.start! < b.start! ? -1 : a.start! > b.start! ? 1 : 0
     )
 
     const resourceList = groupBy.value === 'assignee' ? assigneeResources : typeResources
@@ -2431,7 +2435,7 @@ function groupEventsByClientQuarter(events: MbscCalendarEvent[]) {
     const eventIds = periodEvents.map((e) => e.id).join('-')
     const earliestStart = periodEvents[0].start
     const latestEnd = periodEvents.reduce(
-      (latest, e) => (e.end > latest ? e.end : latest),
+      (latest, e) => (e.end! > latest! ? e.end : latest),
       periodEvents[0].end
     )
     const newId = `group-${groupKey}-${eventIds}`
@@ -2499,10 +2503,10 @@ function handleEventUpdated(args: MbscEventUpdateEvent) {
   // Grouped view
   const startDelta =
     new Date(updatedEvent.start as string | number | Date).getTime() -
-    new Date(oldEvent.start as string | number | Date).getTime()
+    new Date(oldEvent!.start as string | number | Date).getTime()
   if (startDelta === 0) return
 
-  const movedGroupedEvent = groupedEvents.value.find((ge) => ge.id === oldEvent.id)
+  const movedGroupedEvent = groupedEvents.value.find((ge) => ge.id === oldEvent!.id)
   if (!movedGroupedEvent) return
 
   const {
@@ -2511,11 +2515,13 @@ function handleEventUpdated(args: MbscEventUpdateEvent) {
     collapsed: wasCollapsed
   } = movedGroupedEvent
 
-  const eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent) => ({
-    ...originalEvent,
-    start: new Date(new Date(originalEvent.start).getTime() + startDelta),
-    end: new Date(new Date(originalEvent.end).getTime() + startDelta)
-  }))
+  const eventsToUpdate = movedGroupedEvent.originalEvents.map(
+    (originalEvent: MbscCalendarEvent) => ({
+      ...originalEvent,
+      start: new Date(new Date(originalEvent.start as string).getTime() + startDelta),
+      end: new Date(new Date(originalEvent.end as string).getTime() + startDelta)
+    })
+  )
 
   // Sync into rawEvents
   const updatedIds = new Set(eventsToUpdate.map((e: MbscCalendarEvent) => e.id))
@@ -2581,7 +2587,7 @@ function getUniqueItems(originalEvents: MbscCalendarEvent[]) {
 }
 
 function getDetailInfo(event: MbscCalendarEvent) {
-  let detailText = ''
+  let detailText: string | undefined = ''
   let typeDotColor: string | undefined = undefined
   let avatarUrl: string | undefined = undefined
 

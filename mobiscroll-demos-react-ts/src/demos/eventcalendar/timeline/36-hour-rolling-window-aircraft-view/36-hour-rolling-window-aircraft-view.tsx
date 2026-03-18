@@ -1,7 +1,6 @@
 import {
   dayjsTimezone,
   Eventcalendar,
-  formatDate,
   MbscCalendarEvent,
   MbscEventcalendarView,
   MbscResource,

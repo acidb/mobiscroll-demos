@@ -37,8 +37,8 @@ const App: FC = () => {
     },
   });
 
-  const startDate = useRef<Date>();
-  const endDate = useRef<Date>();
+  const startDate = useRef<Date>(null);
+  const endDate = useRef<Date>(null);
 
   // Returns the number of days between two dates
   const getNrDays = useCallback(

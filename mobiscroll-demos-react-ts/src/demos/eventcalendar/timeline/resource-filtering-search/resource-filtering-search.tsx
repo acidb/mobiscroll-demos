@@ -1344,7 +1344,7 @@ function App() {
   const [toastMsg, setToastMsg] = useState<string>('');
 
   const buttonRef = useRef<Button>(null);
-  const searchTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const searchTimeout = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
