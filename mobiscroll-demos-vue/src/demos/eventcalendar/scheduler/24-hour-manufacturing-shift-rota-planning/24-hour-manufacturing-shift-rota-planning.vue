@@ -1,6 +1,7 @@
 <script setup>
 import { MbscEventcalendar, MbscToast, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import { ref } from 'vue'
+import { dyndatetime } from '../../../../dyndatetime'
 
 setOptions({
   // locale,
@@ -70,48 +71,48 @@ const initialEvents = [
     id: 1,
     resource: 'A',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d-6,6)',
-    end: 'dyndatetime(y,m,d-6,14)',
+    start: dyndatetime('y,m,d-6,6'),
+    end: dyndatetime('y,m,d-6,14'),
     color: morningColor
   },
   {
     id: 2,
     resource: 'B',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d-6,14)',
-    end: 'dyndatetime(y,m,d-6,22)',
+    start: dyndatetime('y,m,d-6,14'),
+    end: dyndatetime('y,m,d-6,22'),
     color: afternoonColor
   },
   {
     id: 3,
     resource: 'C',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d-6,22)',
-    end: 'dyndatetime(y,m,d-5,6)',
+    start: dyndatetime('y,m,d-6,22'),
+    end: dyndatetime('y,m,d-5,6'),
     color: nightColor
   },
   {
     id: 4,
     resource: 'A',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d-5,6)',
-    end: 'dyndatetime(y,m,d-5,14)',
+    start: dyndatetime('y,m,d-5,6'),
+    end: dyndatetime('y,m,d-5,14'),
     color: morningColor
   },
   {
     id: 5,
     resource: 'B',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d-5,14)',
-    end: 'dyndatetime(y,m,d-5,22)',
+    start: dyndatetime('y,m,d-5,14'),
+    end: dyndatetime('y,m,d-5,22'),
     color: afternoonColor
   },
   {
     id: 6,
     resource: 'C',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d-5,22)',
-    end: 'dyndatetime(y,m,d-4,6)',
+    start: dyndatetime('y,m,d-5,22'),
+    end: dyndatetime('y,m,d-4,6'),
     color: nightColor
   },
   //<hide-comment>
@@ -119,312 +120,312 @@ const initialEvents = [
     id: 7,
     resource: 'A',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d-4,6)',
-    end: 'dyndatetime(y,m,d-4,14)',
+    start: dyndatetime('y,m,d-4,6'),
+    end: dyndatetime('y,m,d-4,14'),
     color: morningColor
   },
   {
     id: 8,
     resource: 'B',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d-4,14)',
-    end: 'dyndatetime(y,m,d-4,22)',
+    start: dyndatetime('y,m,d-4,14'),
+    end: dyndatetime('y,m,d-4,22'),
     color: afternoonColor
   },
   {
     id: 9,
     resource: 'C',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d-4,22)',
-    end: 'dyndatetime(y,m,d-3,6)',
+    start: dyndatetime('y,m,d-4,22'),
+    end: dyndatetime('y,m,d-3,6'),
     color: nightColor
   },
   {
     id: 10,
     resource: 'C',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d-3,6)',
-    end: 'dyndatetime(y,m,d-3,14)',
+    start: dyndatetime('y,m,d-3,6'),
+    end: dyndatetime('y,m,d-3,14'),
     color: morningColor
   },
   {
     id: 11,
     resource: 'A',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d-3,14)',
-    end: 'dyndatetime(y,m,d-3,22)',
+    start: dyndatetime('y,m,d-3,14'),
+    end: dyndatetime('y,m,d-3,22'),
     color: afternoonColor
   },
   {
     id: 12,
     resource: 'B',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d-3,22)',
-    end: 'dyndatetime(y,m,d-2,6)',
+    start: dyndatetime('y,m,d-3,22'),
+    end: dyndatetime('y,m,d-2,6'),
     color: nightColor
   },
   {
     id: 13,
     resource: 'C',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d-2,6)',
-    end: 'dyndatetime(y,m,d-2,14)',
+    start: dyndatetime('y,m,d-2,6'),
+    end: dyndatetime('y,m,d-2,14'),
     color: morningColor
   },
   {
     id: 14,
     resource: 'A',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d-2,14)',
-    end: 'dyndatetime(y,m,d-2,22)',
+    start: dyndatetime('y,m,d-2,14'),
+    end: dyndatetime('y,m,d-2,22'),
     color: afternoonColor
   },
   {
     id: 15,
     resource: 'B',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d-2,22)',
-    end: 'dyndatetime(y,m,d-1,6)',
+    start: dyndatetime('y,m,d-2,22'),
+    end: dyndatetime('y,m,d-1,6'),
     color: nightColor
   },
   {
     id: 16,
     resource: 'C',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d-1,6)',
-    end: 'dyndatetime(y,m,d-1,14)',
+    start: dyndatetime('y,m,d-1,6'),
+    end: dyndatetime('y,m,d-1,14'),
     color: morningColor
   },
   {
     id: 17,
     resource: 'A',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d-1,14)',
-    end: 'dyndatetime(y,m,d-1,22)',
+    start: dyndatetime('y,m,d-1,14'),
+    end: dyndatetime('y,m,d-1,22'),
     color: afternoonColor
   },
   {
     id: 18,
     resource: 'B',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d-1,22)',
-    end: 'dyndatetime(y,m,d,6)',
+    start: dyndatetime('y,m,d-1,22'),
+    end: dyndatetime('y,m,d,6'),
     color: nightColor
   },
   {
     id: 19,
     resource: 'B',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d,6)',
-    end: 'dyndatetime(y,m,d,14)',
+    start: dyndatetime('y,m,d,6'),
+    end: dyndatetime('y,m,d,14'),
     color: morningColor
   },
   {
     id: 20,
     resource: 'C',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d,14)',
-    end: 'dyndatetime(y,m,d,22)',
+    start: dyndatetime('y,m,d,14'),
+    end: dyndatetime('y,m,d,22'),
     color: afternoonColor
   },
   {
     id: 21,
     resource: 'A',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d,22)',
-    end: 'dyndatetime(y,m,d+1,6)',
+    start: dyndatetime('y,m,d,22'),
+    end: dyndatetime('y,m,d+1,6'),
     color: nightColor
   },
   {
     id: 22,
     resource: 'B',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d+1,6)',
-    end: 'dyndatetime(y,m,d+1,14)',
+    start: dyndatetime('y,m,d+1,6'),
+    end: dyndatetime('y,m,d+1,14'),
     color: morningColor
   },
   {
     id: 23,
     resource: 'C',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d+1,14)',
-    end: 'dyndatetime(y,m,d+1,22)',
+    start: dyndatetime('y,m,d+1,14'),
+    end: dyndatetime('y,m,d+1,22'),
     color: afternoonColor
   },
   {
     id: 24,
     resource: 'A',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d+1,22)',
-    end: 'dyndatetime(y,m,d+2,6)',
+    start: dyndatetime('y,m,d+1,22'),
+    end: dyndatetime('y,m,d+2,6'),
     color: nightColor
   },
   {
     id: 25,
     resource: 'B',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d+2,6)',
-    end: 'dyndatetime(y,m,d+2,14)',
+    start: dyndatetime('y,m,d+2,6'),
+    end: dyndatetime('y,m,d+2,14'),
     color: morningColor
   },
   {
     id: 26,
     resource: 'C',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d+2,14)',
-    end: 'dyndatetime(y,m,d+2,22)',
+    start: dyndatetime('y,m,d+2,14'),
+    end: dyndatetime('y,m,d+2,22'),
     color: afternoonColor
   },
   {
     id: 27,
     resource: 'A',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d+2,22)',
-    end: 'dyndatetime(y,m,d+3,6)',
+    start: dyndatetime('y,m,d+2,22'),
+    end: dyndatetime('y,m,d+3,6'),
     color: nightColor
   },
   {
     id: 28,
     resource: 'A',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d+3,6)',
-    end: 'dyndatetime(y,m,d+3,14)',
+    start: dyndatetime('y,m,d+3,6'),
+    end: dyndatetime('y,m,d+3,14'),
     color: morningColor
   },
   {
     id: 29,
     resource: 'B',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d+3,14)',
-    end: 'dyndatetime(y,m,d+3,22)',
+    start: dyndatetime('y,m,d+3,14'),
+    end: dyndatetime('y,m,d+3,22'),
     color: afternoonColor
   },
   {
     id: 30,
     resource: 'C',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d+3,22)',
-    end: 'dyndatetime(y,m,d+4,6)',
+    start: dyndatetime('y,m,d+3,22'),
+    end: dyndatetime('y,m,d+4,6'),
     color: nightColor
   },
   {
     id: 31,
     resource: 'A',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d+4,6)',
-    end: 'dyndatetime(y,m,d+4,14)',
+    start: dyndatetime('y,m,d+4,6'),
+    end: dyndatetime('y,m,d+4,14'),
     color: morningColor
   },
   {
     id: 32,
     resource: 'B',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d+4,14)',
-    end: 'dyndatetime(y,m,d+4,22)',
+    start: dyndatetime('y,m,d+4,14'),
+    end: dyndatetime('y,m,d+4,22'),
     color: afternoonColor
   },
   {
     id: 33,
     resource: 'C',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d+4,22)',
-    end: 'dyndatetime(y,m,d+5,6)',
+    start: dyndatetime('y,m,d+4,22'),
+    end: dyndatetime('y,m,d+5,6'),
     color: nightColor
   },
   {
     id: 34,
     resource: 'A',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d+5,6)',
-    end: 'dyndatetime(y,m,d+5,14)',
+    start: dyndatetime('y,m,d+5,6'),
+    end: dyndatetime('y,m,d+5,14'),
     color: morningColor
   },
   {
     id: 35,
     resource: 'B',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d+5,14)',
-    end: 'dyndatetime(y,m,d+5,22)',
+    start: dyndatetime('y,m,d+5,14'),
+    end: dyndatetime('y,m,d+5,22'),
     color: afternoonColor
   },
   {
     id: 36,
     resource: 'C',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d+5,22)',
-    end: 'dyndatetime(y,m,d+6,6)',
+    start: dyndatetime('y,m,d+5,22'),
+    end: dyndatetime('y,m,d+6,6'),
     color: nightColor
   },
   {
     id: 37,
     resource: 'C',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d+6,6)',
-    end: 'dyndatetime(y,m,d+6,14)',
+    start: dyndatetime('y,m,d+6,6'),
+    end: dyndatetime('y,m,d+6,14'),
     color: morningColor
   },
   {
     id: 38,
     resource: 'B',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d+6,14)',
-    end: 'dyndatetime(y,m,d+6,22)',
+    start: dyndatetime('y,m,d+6,14'),
+    end: dyndatetime('y,m,d+6,22'),
     color: afternoonColor
   },
   {
     id: 39,
     resource: 'A',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d+6,22)',
-    end: 'dyndatetime(y,m,d+7,6)',
+    start: dyndatetime('y,m,d+6,22'),
+    end: dyndatetime('y,m,d+7,6'),
     color: nightColor
   },
   {
     id: 40,
     resource: 'C',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d+7,6)',
-    end: 'dyndatetime(y,m,d+7,14)',
+    start: dyndatetime('y,m,d+7,6'),
+    end: dyndatetime('y,m,d+7,14'),
     color: morningColor
   },
   {
     id: 41,
     resource: 'B',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d+7,14)',
-    end: 'dyndatetime(y,m,d+7,22)',
+    start: dyndatetime('y,m,d+7,14'),
+    end: dyndatetime('y,m,d+7,22'),
     color: afternoonColor
   },
   {
     id: 42,
     resource: 'A',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d+7,22)',
-    end: 'dyndatetime(y,m,d+8,6)',
+    start: dyndatetime('y,m,d+7,22'),
+    end: dyndatetime('y,m,d+8,6'),
     color: nightColor
   },
   {
     id: 43,
     resource: 'C',
     title: 'Morning Shift',
-    start: 'dyndatetime(y,m,d+8,6)',
-    end: 'dyndatetime(y,m,d+8,14)',
+    start: dyndatetime('y,m,d+8,6'),
+    end: dyndatetime('y,m,d+8,14'),
     color: morningColor
   },
   {
     id: 44,
     resource: 'B',
     title: 'Afternoon Shift',
-    start: 'dyndatetime(y,m,d+8,14)',
-    end: 'dyndatetime(y,m,d+8,22)',
+    start: dyndatetime('y,m,d+8,14'),
+    end: dyndatetime('y,m,d+8,22'),
     color: afternoonColor
   },
   {
     id: 45,
     resource: 'A',
     title: 'Night Shift',
-    start: 'dyndatetime(y,m,d+8,22)',
-    end: 'dyndatetime(y,m,d+9,6)',
+    start: dyndatetime('y,m,d+8,22'),
+    end: dyndatetime('y,m,d+9,6'),
     color: nightColor
   }
   //</hide-comment>

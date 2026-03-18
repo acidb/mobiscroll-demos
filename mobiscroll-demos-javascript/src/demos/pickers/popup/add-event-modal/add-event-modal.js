@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript';
+import { dyndatetime } from '../../../../dyndatetime';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -16,8 +17,8 @@ export default {
     var myData = [
       {
         id: 1,
-        start: 'dyndatetime(y,m,8,13)',
-        end: 'dyndatetime(y,m,8,13,45)',
+        start: dyndatetime('y,m,8,13'),
+        end: dyndatetime('y,m,8,13,45'),
         title: "Lunch @ Butcher's",
         description: '',
         allDay: false,
@@ -27,8 +28,8 @@ export default {
       },
       {
         id: 2,
-        start: 'dyndatetime(y,m,d,15)',
-        end: 'dyndatetime(y,m,d,16)',
+        start: dyndatetime('y,m,d,15'),
+        end: dyndatetime('y,m,d,16'),
         title: 'Conference',
         description: '',
         allDay: false,
@@ -38,8 +39,8 @@ export default {
       },
       {
         id: 3,
-        start: 'dyndatetime(y,m,d-1,18)',
-        end: 'dyndatetime(y,m,d-1,22)',
+        start: dyndatetime('y,m,d-1,18'),
+        end: dyndatetime('y,m,d-1,22'),
         title: 'Site Visit',
         description: '',
         allDay: false,
@@ -49,8 +50,8 @@ export default {
       },
       {
         id: 4,
-        start: 'dyndatetime(y,m,d+1,10,30)',
-        end: 'dyndatetime(y,m,d+1,11,30)',
+        start: dyndatetime('y,m,d+1,10,30'),
+        end: dyndatetime('y,m,d+1,11,30'),
         title: 'Stakeholder mtg.',
         description: '',
         allDay: false,

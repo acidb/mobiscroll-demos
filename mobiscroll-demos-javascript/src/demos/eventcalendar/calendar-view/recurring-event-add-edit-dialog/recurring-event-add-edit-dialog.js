@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript';
+import { dyndatetime } from '../../../../dyndatetime';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -476,8 +477,8 @@ export default {
     var myEvents = [
       {
         id: 1,
-        start: 'dyndatetime(y,m,21)',
-        end: 'dyndatetime(y,m,24)',
+        start: dyndatetime('y,m,21'),
+        end: dyndatetime('y,m,24'),
         title: 'Alice OFF',
         allDay: true,
         color: '#67ab0d',
