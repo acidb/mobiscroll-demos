@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   dayjsTimezone,
-  formatDate,
   MbscCalendarEvent,
   MbscEventcalendarOptions,
   MbscEventcalendarView,
