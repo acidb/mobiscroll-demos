@@ -90,7 +90,7 @@ const initialEvents: MbscCalendarEvent[] = [
   {
     id: 1,
     resource: 'A',
-    title: 'xx Morning Shift',
+    title: 'Morning Shift',
     start: dyndatetime('y,m,d-6,6'),
     end: dyndatetime('y,m,d-6,14'),
     color: morningColor
