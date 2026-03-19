@@ -443,5 +443,7 @@ function deleteAppointment() {
 
 .mds-tooltip-button .mbsc-button-txt {
   font-size: 14px;
+  padding-left: 0;
+  padding-right: 0;
 }
 </style>
