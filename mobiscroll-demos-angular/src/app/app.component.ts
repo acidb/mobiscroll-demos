@@ -1,3 +1,5 @@
+import { MbscModule } from '@mobiscroll/angular';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
@@ -6,7 +8,7 @@ import { demoTitleMap } from './demos';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterLink, RouterOutlet],
+  imports: [MbscModule, FormsModule, CommonModule, RouterLink, RouterOutlet],
   providers: [Notifications],
   templateUrl: './app.component.html',
   standalone: true,
