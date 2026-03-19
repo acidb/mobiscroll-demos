@@ -29,7 +29,7 @@ export default {
             {
               start: dyndatetime('y,m,d-3,10'),
               end: dyndatetime('y,m,d-3,15'),
-              title: 'Impact Training',
+              title: 'zaza Impact Training',
               resource: [2, 3],
               color: '#35bb5a',
             },
