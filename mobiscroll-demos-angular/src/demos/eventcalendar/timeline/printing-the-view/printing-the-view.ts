@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
       type: 'week',
       startDay: 1,
       endDay: 5,
-      eventList: true,
+      eventDisplay: 'fill',
     },
   };
 

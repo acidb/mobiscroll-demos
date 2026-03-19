@@ -339,7 +339,7 @@ function App() {
         resources={myResources}
         invalid={getInvalids}
         extendDefaultEvent={myDefaultEvent}
-        renderScheduleEvent={myScheduleEvent}
+        renderTimelineEvent={myScheduleEvent}
         renderHeader={myHeader}
         renderResource={myResource}
         renderCell={myCell}

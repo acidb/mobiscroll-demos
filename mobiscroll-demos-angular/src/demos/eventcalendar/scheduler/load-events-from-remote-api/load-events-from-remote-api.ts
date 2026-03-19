@@ -15,12 +15,12 @@ setOptions({
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   myEvents: MbscCalendarEvent[] = [];
   myView: MbscEventcalendarView = {
     calendar: { type: 'week' },
-    schedule: { type: 'day' },
+    scheduler: { type: 'day' },
   };
 
   ngOnInit(): void {

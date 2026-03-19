@@ -41,7 +41,7 @@ export default {
       dragToMove: true,
       dragToResize: true,
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           allDay: false,
           startDay: 1,

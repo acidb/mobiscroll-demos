@@ -31,7 +31,7 @@ export default {
       appointmentTime.innerHTML = time;
       appointmentStatus.innerHTML = event.confirmed ? 'Confirmed' : 'Canceled';
 
-      btnStatus.innerHTML = buttonText;
+      btnStatus.querySelector('.mbsc-button-txt').innerHTML = buttonText;
       mobiscroll.getInst(btnStatus).setOptions({ color: buttonType });
 
       tooltipHeader.style.backgroundColor = doctor.color;
@@ -64,7 +64,7 @@ export default {
 
     var calendar = mobiscroll.eventcalendar('#demo-tooltip-calendar', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           startDay: 1,
           endDay: 5,
@@ -603,12 +603,17 @@ export default {
 }
 
 .mds-tooltip-button.mbsc-button {
-  font-size: 14px;
+  font-size: 16px;
   margin: 0;
+  line-height: 32px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.mds-tooltip-button.mbsc-material {
-  font-size: 12px;
+.mds-tooltip-button .mbsc-button-txt {
+  font-size: 14px;
+  padding-left: 0;
+  padding-right: 0;
 }
 `,
 };

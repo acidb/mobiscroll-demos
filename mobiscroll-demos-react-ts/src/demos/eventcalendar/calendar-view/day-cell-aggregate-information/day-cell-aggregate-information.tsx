@@ -297,7 +297,7 @@ const App: FC = () => {
         case 'week':
           setCssClass('mds-cell-template mds-cell-template-week-view');
           setView({
-            schedule: {
+            scheduler: {
               type: 'week',
               allDay: false,
               startTime: '08:00',
@@ -308,7 +308,7 @@ const App: FC = () => {
         case 'day':
           setCssClass('mds-cell-template mds-cell-template-day-view');
           setView({
-            schedule: {
+            scheduler: {
               type: 'day',
               allDay: false,
               startTime: '08:00',

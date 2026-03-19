@@ -506,8 +506,8 @@ function App() {
         onEventCreated={handleEventCreated}
         onEventDeleted={handleEventDeleted}
         extendDefaultEvent={extendMyDefaultEvent}
-        renderDay={renderCustomDay}
-        renderScheduleEventContent={myScheduleEvent}
+        renderTimelineDay={renderCustomDay}
+        renderTimelineEventContent={myScheduleEvent}
       />
       <Popup
         display="bottom"

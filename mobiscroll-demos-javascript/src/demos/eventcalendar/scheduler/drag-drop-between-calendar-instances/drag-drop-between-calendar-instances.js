@@ -10,7 +10,7 @@ export default {
 
     mobiscroll.eventcalendar('#demo-drag-drop-first-calendar', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
         },
       },
@@ -105,7 +105,7 @@ export default {
 
     mobiscroll.eventcalendar('#demo-drag-drop-second-calendar', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
         },
       },

@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   myEvents: MbscCalendarEvent[] = [];
-  myView: MbscEventcalendarView = { schedule: { type: 'week' } };
+  myView: MbscEventcalendarView = { scheduler: { type: 'week' } };
 
   theme = 'auto';
   themeVariant: 'auto' | 'light' | 'dark' = 'auto';

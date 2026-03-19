@@ -64,7 +64,7 @@ function App() {
 
   const myView = useMemo(
     () => ({
-      schedule: {
+      scheduler: {
         type: 'week',
         timezones: [
           {

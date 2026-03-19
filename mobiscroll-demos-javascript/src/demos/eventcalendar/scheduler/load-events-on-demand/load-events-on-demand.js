@@ -8,7 +8,7 @@ export default {
       // theme,
       // drag,
       view: {
-        schedule: { type: 'day' },
+        scheduler: { type: 'day' },
       },
       onPageLoading: function (event, inst) {
         var year = event.firstDay.getFullYear();

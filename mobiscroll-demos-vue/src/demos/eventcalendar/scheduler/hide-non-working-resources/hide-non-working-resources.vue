@@ -618,7 +618,7 @@ const myInvalids = [
 ]
 
 const myView = {
-  schedule: {
+  scheduler: {
     type: 'week',
     allDay: false,
     startDay: 1,

@@ -74,6 +74,6 @@ export class AppComponent {
     },
   ];
 
-  myView: MbscEventcalendarView = { schedule: { type: 'week' } };
+  myView: MbscEventcalendarView = { scheduler: { type: 'week' } };
   myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;
 }

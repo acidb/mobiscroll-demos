@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
           break;
         case 'schedule':
           this.calView = {
-            schedule: { type: 'week' },
+            scheduler: { type: 'week' },
           };
           break;
       }

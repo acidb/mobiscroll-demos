@@ -22,7 +22,7 @@ function App() {
   const [calView, setCalView] = useState({
     timeline: {
       type: 'month',
-      eventList: true,
+      eventDisplay: 'fill',
     },
   });
 
@@ -154,7 +154,7 @@ function App() {
         calView = {
           timeline: {
             type: 'week',
-            eventList: true,
+            eventDisplay: 'fill',
             startDay: 1,
             endDay: 5,
           },
@@ -164,7 +164,7 @@ function App() {
         calView = {
           timeline: {
             type: 'week',
-            eventList: true,
+            eventDisplay: 'fill',
           },
         };
         break;
@@ -173,7 +173,7 @@ function App() {
         calView = {
           timeline: {
             type: 'month',
-            eventList: true,
+            eventDisplay: 'fill',
           },
         };
         break;

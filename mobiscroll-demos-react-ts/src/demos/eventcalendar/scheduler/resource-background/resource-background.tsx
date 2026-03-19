@@ -10,7 +10,7 @@ setOptions({
 const App: FC = () => {
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
-      schedule: {
+      scheduler: {
         type: 'day',
       },
     }),

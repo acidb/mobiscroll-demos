@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
     view: {
       timeline: {
         type: 'week',
-        eventList: true,
+        eventDisplay: 'fill',
       },
     },
     onPageLoading: (args: any) => {

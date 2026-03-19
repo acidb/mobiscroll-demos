@@ -100,7 +100,7 @@ const myView: MbscEventcalendarView = {
     :extendDefaultEvent="myDefaultEvent"
     className="md-timeline-template"
   >
-    <template #scheduleEvent="data">
+    <template #timelineEvent="data">
       <div
         class="md-timeline-template-event"
         :style="{ borderColor: data.color, background: data.color }"

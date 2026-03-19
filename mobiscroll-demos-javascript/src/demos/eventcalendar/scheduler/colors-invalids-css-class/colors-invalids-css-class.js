@@ -11,7 +11,7 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-colors-invalids-css-class', {
       // drag,
       view: {
-        schedule: {
+        scheduler: {
           allDay: false,
           type: 'week',
           startDay: 1,

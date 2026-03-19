@@ -55,7 +55,7 @@ export default {
       view: {
         timeline: {
           type: 'month',
-          eventList: true,
+          eventDisplay: 'fill',
         },
       },
       dragToCreate: false,

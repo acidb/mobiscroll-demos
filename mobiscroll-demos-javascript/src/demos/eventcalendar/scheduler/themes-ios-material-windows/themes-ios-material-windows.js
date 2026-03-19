@@ -9,7 +9,7 @@ export default {
 
     var inst = mobiscroll.eventcalendar('#demo-theme', {
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
     });
 

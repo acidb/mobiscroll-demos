@@ -253,7 +253,7 @@ export default {
           calendar.setOptions({
             cssClass: 'mds-cell-template mds-cell-template-week-view',
             view: {
-              schedule: {
+              scheduler: {
                 type: 'week',
                 allDay: false,
                 startTime: '08:00',
@@ -266,7 +266,7 @@ export default {
           calendar.setOptions({
             cssClass: 'mds-cell-template mds-cell-template-day-view',
             view: {
-              schedule: {
+              scheduler: {
                 type: 'day',
                 allDay: false,
                 startTime: '08:00',

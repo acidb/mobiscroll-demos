@@ -463,11 +463,11 @@ function App() {
   const [tooltipAnchor, setTooltipAnchor] = useState();
   const [tooltipColor, setTooltipColor] = useState<string>('');
 
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
-      schedule: {
+      scheduler: {
         type: 'week',
         startDay: 1,
         endDay: 5,

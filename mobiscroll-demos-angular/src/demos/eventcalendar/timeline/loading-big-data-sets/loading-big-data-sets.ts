@@ -42,7 +42,7 @@ export class AppComponent {
   myView: MbscEventcalendarView = {
     timeline: {
       type: 'year',
-      eventList: true,
+      eventDisplay: 'fill',
     },
   };
 

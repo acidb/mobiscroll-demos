@@ -11,7 +11,7 @@ export default {
     mobiscroll.eventcalendar('#demo-resource-background', {
       // drag,
       view: {
-        schedule: {
+        scheduler: {
           type: 'day',
         },
       },

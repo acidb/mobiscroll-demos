@@ -154,7 +154,7 @@ const App: FC = () => {
     },
   ]);
 
-  const myView = useMemo<MbscEventcalendarView>(() => ({ schedule: { type: 'week' } }), []);
+  const myView = useMemo<MbscEventcalendarView>(() => ({ scheduler: { type: 'week' } }), []);
 
   const handleEventCreated = useCallback((args: MbscEventCreatedEvent) => {
     if (args.action === 'externalDrop') {

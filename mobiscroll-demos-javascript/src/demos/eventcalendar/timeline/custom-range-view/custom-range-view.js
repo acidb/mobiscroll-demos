@@ -27,7 +27,7 @@ export default {
         timeline: {
           type: 'day',
           size: 14,
-          eventList: true,
+          eventDisplay: 'fill',
         },
       },
       renderHeader: function () {
@@ -77,7 +77,7 @@ export default {
               timeline: {
                 type: 'day',
                 size: getNrDays(startDate, endDate),
-                eventList: true,
+                eventDisplay: 'fill',
               },
             },
           });

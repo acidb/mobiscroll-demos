@@ -36,7 +36,7 @@ setOptions({
   imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) {}
+  constructor(private notify: Notifications) { }
 
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
@@ -300,7 +300,7 @@ export class AppComponent {
   myView: MbscEventcalendarView = {
     timeline: {
       type: 'week',
-      eventList: true,
+      eventDisplay: 'fill',
       startDay: 1,
       endDay: 5,
     },
@@ -392,15 +392,14 @@ export class AppComponent {
       },
     ];
     this.popupHeader =
-      '<div>Edit ' +
+      'Edit ' +
       resource.name +
-      '\'s hours</div><div class="mds-employee-shifts-header">' +
-      formatDate('DDDD', new Date(event.start as Date)) +
+      '\'s hours - ' +
+      formatDate('DDD', new Date(event.start as Date)) +
       ' ' +
       slot.name +
       ', ' +
-      formatDate('D MMMM YYYY', new Date(event.start as Date)) +
-      '</div>';
+      formatDate('D MMM YYYY', new Date(event.start as Date));
     this.popup.open();
   }
 
@@ -422,13 +421,12 @@ export class AppComponent {
         },
       ];
       this.popupHeader =
-        '<div>New shift</div><div class="mds-employee-shifts-header">' +
-        formatDate('DDDD', new Date(event.start as Date)) +
+        'New shift - ' +
+        formatDate('DDD', new Date(event.start as Date)) +
         ' ' +
         slot.name +
         ', ' +
-        formatDate('D MMMM YYYY', new Date(event.start as Date)) +
-        '</div>';
+        formatDate('D MMM YYYY', new Date(event.start as Date));
       this.popup.open();
     });
   }

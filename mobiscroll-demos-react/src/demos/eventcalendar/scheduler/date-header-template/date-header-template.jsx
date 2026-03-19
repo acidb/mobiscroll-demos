@@ -30,7 +30,7 @@ function App() {
 
   const calView = useMemo(
     () => ({
-      schedule: {
+      scheduler: {
         type: 'week',
         allDay: false,
         startDay: 1,
@@ -110,7 +110,7 @@ function App() {
       data={myEvents}
       resources={myResources}
       groupBy="date"
-      renderDay={renderCustomDay}
+      renderSchedulerDay={renderCustomDay}
       renderResource={renderCustomResource}
     />
   );

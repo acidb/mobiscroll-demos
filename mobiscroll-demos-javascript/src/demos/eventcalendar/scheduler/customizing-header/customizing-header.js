@@ -13,7 +13,7 @@ export default {
     var calendar = mobiscroll.eventcalendar('#demo-custom-header', {
       // drag,
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       onSelectedDateChange: function (args) {
         currentDate = args.date;
@@ -74,7 +74,7 @@ export default {
           case 'schedule':
             calendar.setOptions({
               view: {
-                schedule: { type: 'week' },
+                scheduler: { type: 'week' },
               },
             });
             view = 'schedule';

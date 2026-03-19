@@ -733,7 +733,7 @@ const myResources = [
 ]
 
 const myView = {
-  schedule: {
+  scheduler: {
     type: 'week',
     startDay: 1,
     endDay: 5,

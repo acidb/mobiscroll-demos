@@ -110,6 +110,6 @@ export class AppComponent {
   ];
 
   myView: MbscEventcalendarView = {
-    schedule: { type: 'day' },
+    scheduler: { type: 'day' },
   };
 }

@@ -147,7 +147,7 @@ export default {
             );
           },
           view: {
-            schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
+            scheduler: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 },
           },
         })
         .mobiscroll('getInst');

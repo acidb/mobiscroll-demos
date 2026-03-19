@@ -10,7 +10,7 @@ export default {
 
     var inst = mobiscroll.eventcalendar('#demo-time-off-blocked-ranges', {
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       dragToCreate: true,
       dragToMove: true,

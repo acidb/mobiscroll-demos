@@ -180,7 +180,7 @@ const toastMessage = ref('')
 const isToastOpen = ref(false)
 
 const myView = {
-  schedule: {
+  scheduler: {
     type: 'day',
     startTime: '08:00',
     endTime: '20:00',

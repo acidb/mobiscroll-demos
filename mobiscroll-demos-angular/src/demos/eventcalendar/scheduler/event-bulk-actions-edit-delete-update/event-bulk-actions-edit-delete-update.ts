@@ -138,7 +138,7 @@ export class AppComponent implements OnInit {
     // drag,
     selectMultipleEvents: true,
     view: {
-      schedule: {
+      scheduler: {
         type: 'week',
       },
     },

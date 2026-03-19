@@ -62,14 +62,14 @@ export default {
           case 'week':
             calendar.setOptions({
               view: {
-                schedule: { type: 'week' },
+                scheduler: { type: 'week' },
               },
             });
             break;
           case 'day':
             calendar.setOptions({
               view: {
-                schedule: { type: 'day' },
+                scheduler: { type: 'day' },
               },
             });
             break;

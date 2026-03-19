@@ -301,7 +301,7 @@ const myInvalids = [
 const myView: MbscEventcalendarView = {
   timeline: {
     type: 'week',
-    eventList: true,
+    eventDisplay: 'fill',
     startDay: 1,
     endDay: 5
   }
@@ -386,15 +386,14 @@ function handleEventClick(args: MbscEventClickEvent) {
     }
   ]
   popupHeader.value =
-    '<div>Edit ' +
+    'Edit ' +
     resource.name +
-    '\'s hours</div><div class="mds-employee-shifts-header">' +
-    formatDate('DDDD', new Date(event.start as Date)) +
+    "'s hours - " +
+    formatDate('DDD', new Date(event.start as Date)) +
     ' ' +
     slot.name +
     ', ' +
-    formatDate('D MMMM YYYY', new Date(event.start as Date)) +
-    '</div>'
+    formatDate('D MMM YYYY', new Date(event.start as Date))
   isPopupOpen.value = true
 }
 
@@ -415,13 +414,12 @@ function handleEventCreated(args: MbscEventCreatedEvent) {
     }
   ]
   popupHeader.value =
-    '<div>New shift</div><div class="mds-employee-shifts-header">' +
-    formatDate('DDDD', new Date(event.start as Date)) +
+    'New shift - ' +
+    formatDate('DDD', new Date(event.start as Date)) +
     ' ' +
     slot.name +
     ', ' +
-    formatDate('D MMMM YYYY', new Date(event.start as Date)) +
-    '</div>'
+    formatDate('D MMM YYYY', new Date(event.start as Date))
   isPopupOpen.value = true
 }
 
@@ -496,6 +494,7 @@ function handleShiftDeleteClick() {
     </template>
   </MbscEventcalendar>
   <MbscPopup
+    cssClass="mds-employee-shifts-popup"
     display="bottom"
     :buttons="popupButtons"
     :contentPadding="false"
@@ -548,10 +547,8 @@ function handleShiftDeleteClick() {
 </template>
 
 <style>
-.mds-employee-shifts-header {
-  font-size: 14px;
-  font-weight: 600;
-  opacity: 0.6;
+.mds-employee-shifts-popup .mbsc-popup-header {
+  font-size: 16px;
 }
 
 .mds-employee-shifts .mbsc-timeline-resource-col {

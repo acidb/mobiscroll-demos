@@ -1893,7 +1893,7 @@ export class AppComponent {
   calView: any = {
     timeline: {
       type: 'week',
-      eventList: true,
+      eventDisplay: 'fill',
       startDay: 1,
       endDay: 5,
     },
@@ -1996,13 +1996,13 @@ export class AppComponent {
         ? {
             timeline: {
               type: 'day',
-              eventList: true,
+              eventDisplay: 'fill',
             },
           }
         : {
             timeline: {
               type: 'week',
-              eventList: true,
+              eventDisplay: 'fill',
               startDay: 1,
               endDay: 5,
             },

@@ -14,7 +14,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           view: {
-            schedule: { type: 'day' },
+            scheduler: { type: 'day' },
           },
           resources: [
             {

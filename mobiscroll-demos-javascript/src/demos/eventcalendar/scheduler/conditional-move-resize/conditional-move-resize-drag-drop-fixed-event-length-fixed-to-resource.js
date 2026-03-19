@@ -10,7 +10,7 @@ export default {
 
     mobiscroll.eventcalendar('#demo-conditional-drag-drop-scheduler', {
       view: {
-        schedule: { type: 'day' },
+        scheduler: { type: 'day' },
       },
       dragToMove: true,
       dragToResize: true,

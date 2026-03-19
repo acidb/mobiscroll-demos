@@ -18,7 +18,7 @@ setOptions({
 })
 export class AppComponent {
   view: MbscEventcalendarView = {
-    schedule: {
+    scheduler: {
       type: 'week',
       allDay: false,
       startDay: 1,

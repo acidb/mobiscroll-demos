@@ -13,7 +13,7 @@ export default {
     mobiscroll.eventcalendar('#demo-inline-data', {
       view: {
         calendar: { type: 'week' },
-        schedule: { type: 'day' },
+        scheduler: { type: 'day' },
       },
       data: [
         {

@@ -297,7 +297,7 @@ function setSelectedView(view: string, date?: Date) {
     case 'week':
       myCssClass.value = 'mds-cell-template mds-cell-template-week-view'
       myView.value = {
-        schedule: {
+        scheduler: {
           type: 'week',
           allDay: false,
           startTime: '08:00',
@@ -308,7 +308,7 @@ function setSelectedView(view: string, date?: Date) {
     case 'day':
       myCssClass.value = 'mds-cell-template mds-cell-template-day-view'
       myView.value = {
-        schedule: {
+        scheduler: {
           type: 'day',
           allDay: false,
           startTime: '08:00',

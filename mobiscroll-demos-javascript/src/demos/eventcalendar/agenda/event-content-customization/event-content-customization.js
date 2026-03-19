@@ -20,7 +20,7 @@ export default {
         calendar: { type: 'week' },
         agenda: { type: 'day' },
       },
-      renderEventContent: function (data) {
+      renderAgendaEventContent: function (data) {
         var participant = participants[data.original.participant];
         return (
           '<div>' +
@@ -32,7 +32,7 @@ export default {
           '" src="' +
           participant.img +
           '"/>' +
-          '<div class="mbsc-custom-event-name">' +
+          '<div class="mbsc-flex-1-1">' +
           participant.name +
           '</div>' +
           '<button mbsc-button class="mds-agenda-event-btn" data-color="secondary">Add participant</button>' +
@@ -77,10 +77,12 @@ export default {
   line-height: 20px;
 }
 
-.mds-agenda-event-btn.mbsc-ios {
+.mds-agenda-event-btn.mbsc-ios,
+.mds-agenda-event-btn.mbsc-material {
   position: absolute;
   right: 8px;
   bottom: 8px;
+  margin: 0;
 }
   `,
 };

@@ -297,7 +297,7 @@ export default {
               resource: 8,
             },
           ],
-          renderDay: function (args) {
+          renderTimelineDay: function (args) {
             var date = args.date;
 
             return (

@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   view: MbscEventcalendarView = {
-    schedule: {
+    scheduler: {
       type: 'week',
       size: 2,
     },

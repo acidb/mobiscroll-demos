@@ -123,7 +123,7 @@ const myDragulaTasks = ref([
 ])
 
 const myView = {
-  schedule: { type: 'week' }
+  scheduler: { type: 'week' }
 }
 
 function handleEventCreated(args) {

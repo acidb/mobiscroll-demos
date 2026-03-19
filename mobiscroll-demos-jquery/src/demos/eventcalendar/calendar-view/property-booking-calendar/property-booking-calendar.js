@@ -148,7 +148,7 @@ export default {
               end: end,
             };
           },
-          renderLabelContent: function (event) {
+          renderCalendarEventContent: function (event) {
             return (
               '<div class="mbsc-flex mds-booking-item mbsc-align-items-center">' +
               (event.original.icon ? '<img class="mds-booking-icon" draggable="false" src=' + event.original.icon + '>' : '') +

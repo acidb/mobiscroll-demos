@@ -748,7 +748,7 @@ function App() {
     () => ({
       timeline: {
         type: 'week',
-        eventList: true,
+        eventDisplay: 'fill',
         eventHeight: 'variable',
       },
     }),
@@ -1041,7 +1041,7 @@ function App() {
       onEventCreated={handleEventCreated}
       onEventDeleted={handleEventDeleted}
       renderResource={customResource}
-      renderScheduleEventContent={customScheduleEventContent}
+      renderTimelineEventContent={customScheduleEventContent}
     />
   );
 }

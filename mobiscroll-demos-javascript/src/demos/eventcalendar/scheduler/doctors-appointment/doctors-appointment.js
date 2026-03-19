@@ -99,7 +99,7 @@ export default {
 
     var myCalendar = mobiscroll.eventcalendar('#md-docs-appointment-calendar', {
       view: {
-        schedule: {
+        scheduler: {
           type: 'day',
           startTime: '08:00',
           endTime: '20:00',

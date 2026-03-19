@@ -767,7 +767,7 @@ export class AppComponent {
   ];
 
   myView: MbscEventcalendarView = {
-    schedule: { type: 'week', startDay: 1, endDay: 5, startTime: '08:00', endTime: '19:00', allDay: false },
+    scheduler: { type: 'week', startDay: 1, endDay: 5, startTime: '08:00', endTime: '19:00', allDay: false },
   };
 
   getIcons(resource: MyResource) {

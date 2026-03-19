@@ -266,9 +266,9 @@ function App() {
   const metricBarAnimation = useRef<boolean>(true);
   const sortColumn = useRef<'standby' | 'payload' | 'deadhead' | 'name'>('standby');
   const sortDirection = useRef<'asc' | 'desc'>('asc');
-  const tempEvent = useRef<MyEvent>();
-  const weekStart = useRef<Date>();
-  const weekEnd = useRef<Date>();
+  const tempEvent = useRef<MyEvent>(undefined);
+  const weekStart = useRef<Date>(undefined);
+  const weekEnd = useRef<Date>(undefined);
 
   const myView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'week', resolutionHorizontal: 'day' } }), []);
 
@@ -544,7 +544,7 @@ function App() {
         renderHeader={myCustomHeader}
         renderResourceHeader={myCustomResourceHeader}
         renderResource={myCustomResource}
-        renderScheduleEventContent={myScheduleEvent}
+        renderTimelineEventContent={myScheduleEvent}
         onPageLoading={handlePageLoading}
         onEventCreated={handleEventCreated}
         onEventDeleted={handleEventDeleted}

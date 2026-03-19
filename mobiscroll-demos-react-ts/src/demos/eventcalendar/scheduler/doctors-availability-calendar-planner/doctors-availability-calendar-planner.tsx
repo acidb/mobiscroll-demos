@@ -780,7 +780,7 @@ const App: FC = () => {
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
-      schedule: {
+      scheduler: {
         type: 'week',
         startDay: 1,
         endDay: 5,
@@ -851,7 +851,7 @@ const App: FC = () => {
         invalid={myInvalids}
         resources={myResources}
         view={myView}
-        renderScheduleEventContent={customScheduleEventContent}
+        renderSchedulerEventContent={customScheduleEventContent}
         renderResource={customResource}
         onEventCreated={handleEventCreated}
         onEventDeleted={handleEventDeleted}

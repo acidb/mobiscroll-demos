@@ -151,7 +151,7 @@ function App() {
 
   const isDraggingProgress = useRef(false);
 
-  const myView = useMemo(() => ({ timeline: { type: 'month', eventList: true } }), []);
+  const myView = useMemo(() => ({ timeline: { type: 'month', eventDisplay: 'fill' } }), []);
 
   const loadPopupForm = useCallback((event) => {
     setTitle(event.title);
@@ -380,7 +380,7 @@ function App() {
         onEventCreated={handleEventCreated}
         onEventUpdated={handleEventUpdated}
         renderResource={renderCustomResource}
-        renderScheduleEvent={renderCustomEvent}
+        renderTimelineEvent={renderCustomEvent}
       />
       <Popup
         display="bottom"

@@ -94,7 +94,7 @@ const myEvents = [
 ]
 
 const myView = {
-  schedule: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 }
+  scheduler: { type: 'week', startTime: '08:00', endTime: '18:00', startDay: 1, endDay: 5 }
 }
 
 const getIcons = (date) => {
@@ -164,7 +164,7 @@ const getIcons = (date) => {
 }
 
 .mds-schedule-cell-icons {
-  pointer-events: auto; 
+  pointer-events: auto;
   position: absolute;
   top: 2px;
   right: 6px;

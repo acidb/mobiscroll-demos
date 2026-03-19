@@ -608,7 +608,7 @@ function extendDefaultEvent(args) {
       </div>
     </template>
 
-    <template #scheduleEventContent="{ title, startDate, endDate }">
+    <template #timelineEventContent="{ title, startDate, endDate }">
       <div>{{ title }} - {{ Math.round((endDate - startDate) / 36e5) }}h</div>
     </template>
   </MbscEventcalendar>

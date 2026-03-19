@@ -230,7 +230,7 @@ const myEvents = [
 ]
 
 const myView = {
-  schedule: { type: 'month', startTime: '08:00', endTime: '20:00', allDay: false }
+  scheduler: { type: 'month', startTime: '08:00', endTime: '20:00', allDay: false }
 }
 </script>
 

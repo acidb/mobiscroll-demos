@@ -754,14 +754,14 @@ function App() {
 
   const [eventsWithSummaries, setEventsWithSummaries] = useState<MbscCalendarEvent[]>(myEvents.current);
 
-  const firstViewDay = useRef<Date>();
-  const lastViewDay = useRef<Date>();
+  const firstViewDay = useRef<Date>(null);
+  const lastViewDay = useRef<Date>(null);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'week',
-        eventList: true,
+        eventDisplay: 'fill',
         eventHeight: 'variable',
       },
     }),
@@ -1054,7 +1054,7 @@ function App() {
       onEventCreated={handleEventCreated}
       onEventDeleted={handleEventDeleted}
       renderResource={customResource}
-      renderScheduleEventContent={customScheduleEventContent}
+      renderTimelineEventContent={customScheduleEventContent}
     />
   );
 }

@@ -367,7 +367,7 @@ function App() {
     () => ({
       timeline: {
         type: 'week',
-        eventList: true,
+        eventDisplay: 'fill',
         startDay: 1,
         endDay: 5,
       },
@@ -433,15 +433,14 @@ function App() {
 
       fillPopup(event, true);
       setPopupHeader(
-        '<div>Edit ' +
+        'Edit ' +
           resource.name +
-          '\'s hours</div><div class="mds-employee-shifts-header">' +
-          formatDate('DDDD', new Date(event.start as Date)) +
+          "'s hours - " +
+          formatDate('DDD', new Date(event.start as Date)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start as Date)) +
-          '</div>',
+          formatDate('D MMM YYYY', new Date(event.start as Date)),
       );
       setPopupOpen(true);
     },
@@ -455,13 +454,12 @@ function App() {
 
       fillPopup(event, false);
       setPopupHeader(
-        '<div>New shift</div><div class="mds-employee-shifts-header">' +
-          formatDate('DDDD', new Date(event.start as Date)) +
+        'New shift - ' +
+          formatDate('DDD', new Date(event.start as Date)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start as Date)) +
-          '</div>',
+          formatDate('D MMM YYYY', new Date(event.start as Date)),
       );
       setPopupOpen(true);
     },
@@ -565,6 +563,7 @@ function App() {
         onEventUpdateFailed={handleEventUpdateFailed}
       />
       <Popup
+        cssClass="mds-employee-shifts-popup"
         buttons={popupButtons}
         display="bottom"
         contentPadding={false}

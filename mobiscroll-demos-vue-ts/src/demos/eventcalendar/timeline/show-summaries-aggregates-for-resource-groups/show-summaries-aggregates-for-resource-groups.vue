@@ -754,7 +754,7 @@ const myEvents = ref<MbscCalendarEvent[]>([
 const myView: MbscEventcalendarView = {
   timeline: {
     type: 'week',
-    eventList: true,
+    eventDisplay: 'fill',
     eventHeight: 'variable'
   }
 }
@@ -959,7 +959,7 @@ function handleEventDeleted(args: MbscEventDeletedEvent, inst: any): void {
         <div class="mds-aggregates-cartype">{{ resource.type }}</div>
       </template>
     </template>
-    <template #scheduleEventContent="event">
+    <template #timelineEventContent="event">
       <template v-if="event.currentResource.isParent">
         <div class="mds-aggregates-summary-event mbsc-flex">
           <div class="mds-aggregates-summary-details mbsc-flex mbsc-flex-1-1">

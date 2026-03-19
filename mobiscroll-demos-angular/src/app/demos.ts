@@ -174,6 +174,7 @@ import { AppComponent as Demo659 } from '../demos/eventcalendar/scheduler/printi
 import { AppComponent as Demo581 } from '../demos/eventcalendar/scheduler/work-week-hours/work-week-hours';
 import { AppComponent as Demo721 } from '../demos/eventcalendar/scheduler/doctors-appointment/doctors-appointment';
 import { AppComponent as Demo769 } from '../demos/eventcalendar/scheduler/doctors-availability-calendar-planner/doctors-availability-calendar-planner';
+import { AppComponent as Demo2222 } from '../demos/eventcalendar/scheduler/24-hour-manufacturing-shift-rota-planning/24-hour-manufacturing-shift-rota-planning';
 import { AppComponent as Demo696 } from '../demos/eventcalendar/scheduler/custom-range-view/custom-range-view';
 import { AppComponent as Demo733 } from '../demos/eventcalendar/scheduler/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events';
 import { AppComponent as Demo664 } from '../demos/eventcalendar/scheduler/display-multiple-days-weeks/display-multiple-days-weeks';
@@ -233,7 +234,6 @@ import { AppComponent as Demo604 } from '../demos/eventcalendar/timeline/timelin
 import { AppComponent as Demo660 } from '../demos/eventcalendar/timeline/printing-the-view/printing-the-view';
 import { AppComponent as Demo621 } from '../demos/eventcalendar/timeline/employee-shifts/employee-shifts';
 import { AppComponent as Demo626 } from '../demos/eventcalendar/timeline/work-order-scheduling/work-order-scheduling';
-import { AppComponent as Demo785 } from '../demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action';
 import { AppComponent as Demo627 } from '../demos/eventcalendar/timeline/timezone-meeting-planner/timezone-meeting-planner';
 import { AppComponent as Demo634 } from '../demos/eventcalendar/timeline/restaurant-shift-management/restaurant-shift-management';
 import { AppComponent as Demo628 } from '../demos/eventcalendar/timeline/meal-planner/meal-planner';
@@ -308,6 +308,7 @@ import { AppComponent as Demo673 } from '../demos/eventcalendar/timeline/gregori
 import { AppComponent as Demo674 } from '../demos/eventcalendar/timeline/event-hooks/event-hooks';
 import { AppComponent as Demo675 } from '../demos/eventcalendar/timeline/localization/localization';
 import { AppComponent as Demo676 } from '../demos/eventcalendar/timeline/rtl-right-to-left/rtl-right-to-left';
+import { AppComponent as Demo111111 } from '../demos/eventcalendar/timeline/36-hour-rolling-window-aircraft-view/36-hour-rolling-window-aircraft-view';
 import { AppComponent as Demo459 } from '../demos/form-components/forms/mobile/mobile';
 import { AppComponent as Demo640 } from '../demos/form-components/forms/desktop/desktop';
 import { AppComponent as Demo461 } from '../demos/form-components/forms/responsive/responsive';
@@ -829,6 +830,7 @@ export const demos: any[] = [
               { name: 'Work calendar', unique: 'work-week-hours', component: Demo581 },
               { name: 'Doctor’s appointment', unique: 'doctors-appointment', component: Demo721 },
               { name: 'Availability planner & appointment manager', unique: 'doctors-availability-calendar-planner', component: Demo769 },
+              { name: 'Continuous shift planning', unique: '24-hour-manufacturing-shift-rota-planning', component: Demo2222 },
             ],
           },
           {
@@ -980,7 +982,7 @@ export const demos: any[] = [
               { name: 'Managing tasks within shifts', unique: 'tasks-subtasks-under-shifts', component: Demo750 },
               { name: 'Resource filtering', unique: 'resource-filtering-search', component: Demo751 },
               { name: 'Set up custom teams', unique: 'resource-management-with-dynamic-team-creation', component: Demo772 },
-              { name: 'Group events by client and apply custom actions', unique: 'event-grouping-bulk-action', component: Demo785 },
+              { name: '36-hour rolling window aircraft view', unique: '36-hour-rolling-window-aircraft-view', component: Demo111111 },
             ],
           },
           {

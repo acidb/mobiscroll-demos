@@ -112,7 +112,7 @@ const App: FC = () => {
     setColorPickerOpen(false);
   }, []);
 
-  const myView: MbscEventcalendarView = useMemo(() => ({ schedule: { type: 'week' } }), []);
+  const myView: MbscEventcalendarView = useMemo(() => ({ scheduler: { type: 'week' } }), []);
 
   const colorPickerButtons = useMemo<(string | MbscPopupButton)[]>(
     () => [

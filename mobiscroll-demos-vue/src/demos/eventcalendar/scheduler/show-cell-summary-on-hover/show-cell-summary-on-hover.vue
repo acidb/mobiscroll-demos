@@ -194,7 +194,7 @@ const isTooltipOpen = ref(false)
 const tooltipAnchor = ref(null)
 
 const myView = {
-  schedule: {
+  scheduler: {
     type: 'week',
     startTime: '08:00',
     endTime: '18:00',

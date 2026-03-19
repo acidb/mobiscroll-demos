@@ -19,7 +19,7 @@ export default {
         .mobiscroll()
         .eventcalendar({
           view: {
-            schedule: {
+            scheduler: {
               type: 'week',
               startTime: '08:00',
               endTime: '18:00',

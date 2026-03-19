@@ -239,7 +239,7 @@ export default {
             message: msg,
           });
       },
-      renderScheduleEventContent: function (args) {
+      renderTimelineEventContent: function (args) {
         var duration = (+args.endDate - +args.startDate) / 3600000;
         return (
           args.title +

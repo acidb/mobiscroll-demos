@@ -67,7 +67,7 @@ const App: FC = () => {
     [],
   );
 
-  const view = useMemo<MbscEventcalendarView>(() => ({ schedule: { type: 'week' } }), []);
+  const view = useMemo<MbscEventcalendarView>(() => ({ scheduler: { type: 'week' } }), []);
 
   return <Eventcalendar data={myEvents} view={view} />;
 };

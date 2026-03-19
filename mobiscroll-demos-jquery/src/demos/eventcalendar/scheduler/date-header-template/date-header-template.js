@@ -33,7 +33,7 @@ export default {
         .eventcalendar({
           // drag,
           view: {
-            schedule: {
+            scheduler: {
               type: 'week',
               allDay: false,
               startDay: 1,
@@ -63,7 +63,7 @@ export default {
             },
           ],
           groupBy: 'date',
-          renderDay: function (args) {
+          renderSchedulerDay: function (args) {
             var date = args.date;
             var formatDate = mobiscroll.formatDate;
             var task = milestones.find(function (obj) {

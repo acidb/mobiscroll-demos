@@ -28,7 +28,7 @@ export default {
 
     var myCalendar = mobiscroll.eventcalendar('#demo-drag-drop-sortable-dragula', {
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       dragToMove: true,
       dragToCreate: true,

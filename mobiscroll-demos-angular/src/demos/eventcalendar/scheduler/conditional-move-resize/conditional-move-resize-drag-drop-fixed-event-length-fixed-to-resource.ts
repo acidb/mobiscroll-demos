@@ -16,7 +16,7 @@ setOptions({
 })
 export class AppComponent {
   myView: MbscEventcalendarView = {
-    schedule: {
+    scheduler: {
       type: 'day',
     },
   };

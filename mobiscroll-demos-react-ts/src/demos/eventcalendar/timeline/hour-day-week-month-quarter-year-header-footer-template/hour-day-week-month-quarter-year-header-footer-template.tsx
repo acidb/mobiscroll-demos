@@ -783,7 +783,7 @@ const App: FC = () => {
           view={dayView}
           data={dailyEvents}
           resources={myResources}
-          renderDay={renderCustomDay}
+          renderTimelineDay={renderCustomDay}
           renderDayFooter={renderCustomDayFooter}
         />
       </div>

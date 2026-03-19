@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   myEvents: MbscCalendarEvent[] = [];
   myView: MbscEventcalendarView = {
-    schedule: { type: 'week' },
+    scheduler: { type: 'week' },
   };
 
   localeStr = 'en';

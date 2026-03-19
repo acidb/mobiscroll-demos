@@ -767,7 +767,7 @@ const myInvalids = [
 ]
 
 const myView: MbscEventcalendarView = {
-  schedule: {
+  scheduler: {
     type: 'week',
     startDay: 1,
     endDay: 5,
@@ -813,7 +813,7 @@ function showToast(message: string) {
         </div>
       </div>
     </template>
-    <template #scheduleEventContent="data: MbscCalendarEventData">
+    <template #schedulerEventContent="data: MbscCalendarEventData">
       <template v-if="!data.original!.type">
         Patient: {{ data.title === 'New event' ? 'John Doe' : data.title }}
       </template>

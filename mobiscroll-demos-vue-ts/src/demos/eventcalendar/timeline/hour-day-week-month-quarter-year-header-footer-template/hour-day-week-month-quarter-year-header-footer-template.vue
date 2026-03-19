@@ -674,7 +674,7 @@ function getEventOccurrence(args: any) {
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Daily header template</div>
       <MbscEventcalendar :view="myDayView" :data="dailyEvents" :resources="myResources">
-        <template #day="day">
+        <template #timelineDay="day">
           <div
             :class="
               'md-date-header md-date-header-day md-date-header-events-' + getEventOccurrence(day)

@@ -276,7 +276,7 @@ function handleConfirmClose() {
         <img class="mds-meeting-participant-avatar" :src="resource.img" />
       </div>
     </template>
-    <template #scheduleEvent="event">
+    <template #timelineEvent="event">
       <div class="mds-meeting-planner-cont" :style="{ background: event.color }">
         <div class="mds-meeting-planner-wrapper">
           <div class="mds-meeting-planner-title">{{ event.title }}</div>

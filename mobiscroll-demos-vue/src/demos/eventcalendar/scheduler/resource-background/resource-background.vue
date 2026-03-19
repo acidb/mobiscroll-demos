@@ -108,7 +108,7 @@ const myEvents = ref([
 ])
 
 const myView = {
-  schedule: { type: 'day' }
+  scheduler: { type: 'day' }
 }
 </script>
 

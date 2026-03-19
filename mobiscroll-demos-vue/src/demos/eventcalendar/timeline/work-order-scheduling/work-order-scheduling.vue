@@ -466,11 +466,11 @@ function myDefaultEvent() {
     @event-deleted="handleEventDeleted"
     @event-updated="handleEventUpdated"
   >
-    <template #day="day">
+    <template #timelineDay="day">
       <div class="md-work-order-date">{{ formatDate('DD DDD MMM YYYY', day.date) }}</div>
       <div class="md-work-order-date-title">{{ getRevenue(day) }}</div>
     </template>
-    <template #scheduleEventContent="event">
+    <template #timelineEventContent="event">
       <div>
         {{ event.title }}
         <span class="md-work-order-price-tag">${{ getCostString(event.original.cost) }}</span>
@@ -564,9 +564,9 @@ function myDefaultEvent() {
 
 .md-work-order-date-title {
   font-size: 13px;
-  color: #959595;
   padding: 5px 10px;
   line-height: 18px;
+  opacity: 0.6;
 }
 
 .md-work-order-price-tag {
@@ -574,11 +574,11 @@ function myDefaultEvent() {
   font-size: 11px;
   line-height: 16px;
   vertical-align: middle;
-  border: 1px solid #959595;
-  color: #959595;
+  border: 1px solid currentColor;
   border-radius: 5px;
   margin: 0 10px;
   padding: 0px 5px;
+  opacity: 0.6;
 }
 
 .md-work-order-scheduling .mbsc-timeline-parent {

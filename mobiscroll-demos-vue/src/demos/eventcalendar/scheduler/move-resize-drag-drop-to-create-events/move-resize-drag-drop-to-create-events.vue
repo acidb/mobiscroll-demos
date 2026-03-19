@@ -36,7 +36,7 @@ const myData = ref([
 ])
 
 const myView = ref({
-  schedule: { type: 'week' }
+  scheduler: { type: 'week' }
 })
 </script>
 

@@ -304,7 +304,7 @@ export default {
               message: 'Event deleted',
             });
           },
-          renderDay: function (args) {
+          renderTimelineDay: function (args) {
             var formatDate = mobiscroll.formatDate;
             var events = args.events;
             var costs = 0;
@@ -324,7 +324,7 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEventContent: function (event) {
+          renderTimelineEventContent: function (event) {
             return '<div>' + event.title + '<span class="md-work-order-price-tag">$' + getCostString(event.original.cost) + '</span></div>';
           },
         })
@@ -633,9 +633,9 @@ export default {
 
 .md-work-order-date-title {
     font-size: 13px;
-    color: #959595;
     padding: 5px 10px;
     line-height: 18px;
+    opacity: 0.6;
 }
 
 .md-work-order-price-tag {
@@ -643,11 +643,11 @@ export default {
     font-size: 11px;
     line-height: 16px;
     vertical-align: middle;
-    border: 1px solid #959595;
-    color: #959595;
+    border: 1px solid currentColor;
     border-radius: 5px;
     margin: 0 10px;
     padding: 0px 5px;
+    opacity: 0.6;
 }
 
 .md-work-order-scheduling .mbsc-timeline-parent {

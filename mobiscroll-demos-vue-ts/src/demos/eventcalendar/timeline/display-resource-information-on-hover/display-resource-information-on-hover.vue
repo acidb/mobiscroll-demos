@@ -427,10 +427,13 @@ function handleTooltipClose() {
   padding: 16px 10px;
 }
 .mds-resource-info-pay.mbsc-button {
-  font-size: 12px;
-  width: 40px;
-  height: 22px;
   margin: 0;
+  line-height: 24px;
+  padding: 0 10px;
+  will-change: opacity;
+}
+.mds-resource-info-pay .mbsc-button-txt {
+  font-size: 12px;
 }
 .mds-resource-info-cont {
   font-size: 14px;

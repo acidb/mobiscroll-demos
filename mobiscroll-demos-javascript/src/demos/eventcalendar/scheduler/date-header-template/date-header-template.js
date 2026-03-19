@@ -29,7 +29,7 @@ export default {
     var calendar = mobiscroll.eventcalendar('#demo-date-header-template', {
       // drag,
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           allDay: false,
           startDay: 1,
@@ -59,7 +59,7 @@ export default {
         },
       ],
       groupBy: 'date',
-      renderDay: function (args) {
+      renderSchedulerDay: function (args) {
         var date = args.date;
         var formatDate = mobiscroll.formatDate;
         var task = milestones.find(function (obj) {

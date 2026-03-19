@@ -459,7 +459,7 @@ const tooltipColor = ref()
 const timer = ref()
 
 const myView = ref({
-  schedule: {
+  scheduler: {
     type: 'week',
     startDay: 1,
     endDay: 5,
@@ -640,11 +640,16 @@ function deleteAppointment() {
 }
 
 .mds-tooltip-button.mbsc-button {
-  font-size: 14px;
+  font-size: 16px;
   margin: 0;
+  line-height: 32px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.mds-tooltip-button.mbsc-material {
-  font-size: 12px;
+.mds-tooltip-button .mbsc-button-txt {
+  font-size: 14px;
+  padding-left: 0;
+  padding-right: 0;
 }
 </style>

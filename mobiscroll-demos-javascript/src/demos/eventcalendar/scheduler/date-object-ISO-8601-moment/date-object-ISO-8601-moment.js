@@ -13,7 +13,7 @@ export default {
     var dateObj = mobiscroll.eventcalendar('#demo-date-type-obj', {
       // drag,
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       data: [
         {
@@ -30,7 +30,7 @@ export default {
     var dateISO = mobiscroll.eventcalendar('#demo-date-type-iso', {
       // drag,
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       data: [
         {
@@ -47,7 +47,7 @@ export default {
     var dateMoment = mobiscroll.eventcalendar('#demo-date-type-moment', {
       // drag,
       view: {
-        schedule: { type: 'week' },
+        scheduler: { type: 'week' },
       },
       data: [
         {

@@ -883,7 +883,7 @@ export default {
           view: {
             timeline: {
               type: 'week',
-              eventList: true,
+              eventDisplay: 'fill',
               eventHeight: 'variable',
             },
           },
@@ -941,7 +941,7 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEventContent: function (event) {
+          renderTimelineEventContent: function (event) {
             if (event.currentResource.isParent) {
               return (
                 '<div class="mds-aggregates-summary-event mbsc-flex">' +

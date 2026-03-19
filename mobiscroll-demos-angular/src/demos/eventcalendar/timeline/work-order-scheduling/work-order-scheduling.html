@@ -5,8 +5,8 @@
   [resources]="myResources"
   [options]="calendarOptions"
   [extendDefaultEvent]="extendDefaultEvent"
-  [dayTemplate]="dayTemp"
-  [scheduleEventContentTemplate]="eventTemp"
+  [timelineDayTemplate]="dayTemp"
+  [timelineEventContentTemplate]="eventTemp"
 >
   <ng-template #dayTemp let-day>
     <div class="md-work-order-date">{{formatDate('DD DDD MMM YYYY', day.date)}}</div>

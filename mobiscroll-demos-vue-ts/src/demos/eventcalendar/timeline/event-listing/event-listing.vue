@@ -134,7 +134,7 @@ const myResources: MbscResource[] = [
 const myView = ref<MbscEventcalendarView>({
   timeline: {
     type: 'month',
-    eventList: true
+    eventDisplay: 'fill'
   }
 })
 
@@ -146,7 +146,7 @@ function handleViewChange() {
       myView.value = {
         timeline: {
           type: 'week',
-          eventList: true,
+          eventDisplay: 'fill',
           startDay: 1,
           endDay: 5
         }
@@ -156,7 +156,7 @@ function handleViewChange() {
       myView.value = {
         timeline: {
           type: 'week',
-          eventList: true
+          eventDisplay: 'fill'
         }
       }
       break
@@ -164,7 +164,7 @@ function handleViewChange() {
       myView.value = {
         timeline: {
           type: 'month',
-          eventList: true
+          eventDisplay: 'fill'
         }
       }
       break

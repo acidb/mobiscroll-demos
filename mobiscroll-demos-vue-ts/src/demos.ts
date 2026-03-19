@@ -247,7 +247,6 @@ import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/
 import Demo750 from './demos/eventcalendar/timeline/tasks-subtasks-under-shifts/tasks-subtasks-under-shifts.vue'
 import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search.vue'
 import Demo772 from './demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation.vue'
-import Demo785 from './demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action.vue'
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline.vue'
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution.vue'
 import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom.vue'
@@ -308,6 +307,8 @@ import Demo673 from './demos/eventcalendar/timeline/gregorian-jalali-hijri/grego
 import Demo674 from './demos/eventcalendar/timeline/event-hooks/event-hooks.vue'
 import Demo675 from './demos/eventcalendar/timeline/localization/localization.vue'
 import Demo676 from './demos/eventcalendar/timeline/rtl-right-to-left/rtl-right-to-left.vue'
+import Demo2222 from './demos/eventcalendar/scheduler/24-hour-manufacturing-shift-rota-planning/24-hour-manufacturing-shift-rota-planning.vue'
+import Demo111111 from './demos/eventcalendar/timeline/36-hour-rolling-window-aircraft-view/36-hour-rolling-window-aircraft-view.vue'
 import Demo459 from './demos/form-components/forms/mobile/mobile.vue'
 import Demo640 from './demos/form-components/forms/desktop/desktop.vue'
 import Demo461 from './demos/form-components/forms/responsive/responsive.vue'
@@ -1124,6 +1125,11 @@ export const demos = [
                 name: 'Availability planner & appointment manager',
                 unique: 'doctors-availability-calendar-planner',
                 component: Demo769
+              },
+              {
+                name: 'Continuous shift planning',
+                unique: '24-hour-manufacturing-shift-rota-planning',
+                component: Demo2222
               }
             ]
           },
@@ -1420,6 +1426,26 @@ export const demos = [
                 unique: 'restaurant-shift-management',
                 component: Demo634
               },
+              {
+                name: 'Employee shift/rota planning',
+                unique: 'employee-shifts',
+                component: Demo621
+              },
+              {
+                name: 'Work order scheduling',
+                unique: 'work-order-scheduling',
+                component: Demo626
+              },
+              {
+                name: 'Meeting planner across timezones',
+                unique: 'timezone-meeting-planner',
+                component: Demo627
+              },
+              {
+                name: 'Restaurant shift management',
+                unique: 'restaurant-shift-management',
+                component: Demo634
+              },
               { name: 'Weekly meal planner', unique: 'meal-planner', component: Demo628 },
               {
                 name: 'Dynamically color & invalidate',
@@ -1477,10 +1503,10 @@ export const demos = [
                 component: Demo772
               },
               {
-                name: 'Group events by client and apply custom actions',
-                unique: 'event-grouping-bulk-action',
-                component: Demo785
-              },
+                name: '36 hour rolling view',
+                unique: '36-hour-rolling-window-aircraft-view',
+                component: Demo111111
+              }
             ]
           },
           {

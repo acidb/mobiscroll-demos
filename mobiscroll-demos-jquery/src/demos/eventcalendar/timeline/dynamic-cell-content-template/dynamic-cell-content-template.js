@@ -580,7 +580,7 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEventContent: function (event) {
+          renderTimelineEventContent: function (event) {
             var hours = Math.round((event.endDate - event.startDate) / 36e5);
             return '<div>' + event.title + ' - ' + hours + 'h</div>';
           },

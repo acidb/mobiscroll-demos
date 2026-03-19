@@ -101,7 +101,7 @@ function App() {
     setColorPickerOpen(false);
   }, []);
 
-  const myView = useMemo(() => ({ schedule: { type: 'week' } }), []);
+  const myView = useMemo(() => ({ scheduler: { type: 'week' } }), []);
 
   const colorPickerButtons = useMemo(
     () => [

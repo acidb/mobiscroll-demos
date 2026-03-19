@@ -781,7 +781,7 @@ export default {
           invalid: myInvalids,
           resources: myResources,
           view: {
-            schedule: {
+            scheduler: {
               type: 'week',
               startDay: 1,
               endDay: 5,
@@ -792,7 +792,7 @@ export default {
               allDay: false,
             },
           },
-          renderScheduleEventContent: function (event) {
+          renderSchedulerEventContent: function (event) {
             return !event.original.type ? 'Patient: ' + (event.title === 'New event' ? 'John Doe' : event.title) : '';
           },
           renderResource: function (resource) {

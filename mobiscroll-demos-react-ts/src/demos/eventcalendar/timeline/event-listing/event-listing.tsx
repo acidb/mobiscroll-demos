@@ -25,7 +25,7 @@ const App: FC = () => {
   const [calView, setCalView] = useState<MbscEventcalendarView>({
     timeline: {
       type: 'month',
-      eventList: true,
+      eventDisplay: 'fill',
     },
   });
   const myEvents = useState<MbscCalendarEvent[]>(() => [
@@ -153,7 +153,7 @@ const App: FC = () => {
         calView = {
           timeline: {
             type: 'week',
-            eventList: true,
+            eventDisplay: 'fill',
             startDay: 1,
             endDay: 5,
           },
@@ -163,7 +163,7 @@ const App: FC = () => {
         calView = {
           timeline: {
             type: 'week',
-            eventList: true,
+            eventDisplay: 'fill',
           },
         };
         break;
@@ -172,7 +172,7 @@ const App: FC = () => {
         calView = {
           timeline: {
             type: 'month',
-            eventList: true,
+            eventDisplay: 'fill',
           },
         };
         break;

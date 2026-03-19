@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private notify: Notifications,
-  ) {}
+  ) { }
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
   myMeals: MbscCalendarEvent[] = [];
@@ -125,7 +125,7 @@ export class AppComponent implements OnInit {
     view: {
       timeline: {
         type: 'week',
-        eventList: true,
+        eventDisplay: 'fill',
       },
     },
     dragToCreate: false,
@@ -146,7 +146,7 @@ export class AppComponent implements OnInit {
       // Set popup options
       this.popupButtons = this.popupEditButtons;
       this.popupHeader =
-        '<div>' + resource.name + '</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start)) + '</div>';
+        resource.name + ' - ' + formatDate('DDDD, DD MMMM YYYY', new Date(event.start));
       this.type = +event.resource;
       // Open the popup
       this.popup.open();
@@ -161,7 +161,7 @@ export class AppComponent implements OnInit {
         // Set popup options
         this.popupButtons = this.popupAddButtons;
         this.popupHeader =
-          '<div>New meal</div><div class="md-meal-type">' + formatDate('DDDD, DD MMMM YYYY', new Date(this.tempMeal.start)) + '</div>';
+          'New meal - ' + formatDate('DDDD, DD MMMM YYYY', new Date(this.tempMeal.start));
         this.type = +event.resource;
         // Open the popup
         this.popup.open();

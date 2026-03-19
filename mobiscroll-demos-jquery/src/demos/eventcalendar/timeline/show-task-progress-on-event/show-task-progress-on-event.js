@@ -266,7 +266,7 @@ export default {
           dragToResize: true,
           dragToCreate: true,
           clickToCreate: true,
-          view: { timeline: { type: 'month', eventList: true } },
+          view: { timeline: { type: 'month', eventDisplay: 'fill' } },
           data: myEvents,
           resources: myResources,
           onEventClick: function (args) {
@@ -287,7 +287,7 @@ export default {
             eventToUpdate.end = args.event.end;
             eventToUpdate.resource = args.event.resource;
           },
-          renderScheduleEvent: renderEvent,
+          renderTimelineEvent: renderEvent,
           renderResource: renderCustomResource,
         })
         .mobiscroll('getInst');

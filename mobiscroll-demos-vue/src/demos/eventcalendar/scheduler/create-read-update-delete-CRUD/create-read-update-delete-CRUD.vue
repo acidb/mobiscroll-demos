@@ -53,7 +53,7 @@ const snackbarButton = {
   text: 'Undo'
 }
 
-const myView = { schedule: { type: 'week' } }
+const myView = { scheduler: { type: 'week' } }
 
 const colors = [
   '#ffeb3c',

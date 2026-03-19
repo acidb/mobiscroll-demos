@@ -131,7 +131,7 @@ const myDragulaTasks = ref<MbscCalendarEvent[]>([
 ])
 
 const myView: MbscEventcalendarView = {
-  schedule: { type: 'week' }
+  scheduler: { type: 'week' }
 }
 
 function handleEventCreated(args: MbscEventCreatedEvent) {

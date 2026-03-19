@@ -248,7 +248,6 @@ import Demo746 from './demos/eventcalendar/timeline/show-task-progress-on-event/
 import Demo750 from './demos/eventcalendar/timeline/tasks-subtasks-under-shifts/tasks-subtasks-under-shifts';
 import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/resource-filtering-search';
 import Demo772 from './demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation';
-import Demo785 from './demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action';
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
 import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
@@ -353,6 +352,8 @@ import Demo387 from './demos/pickers/select/themes-ios-material-windows/themes-i
 import Demo276 from './demos/pickers/select/event-hooks/event-hooks';
 import Demo471 from './demos/pickers/select/localization/localization';
 import Demo601 from './demos/pickers/select/rtl-right-to-left/rtl-right-to-left';
+import Demo111111 from './demos/eventcalendar/timeline/36-hour-rolling-window-aircraft-view/36-hour-rolling-window-aircraft-view';
+import Demo2222 from './demos/eventcalendar/scheduler/24-hour-manufacturing-shift-rota-planning/24-hour-manufacturing-shift-rota-planning';
 
 export const demos = [
   {
@@ -830,6 +831,7 @@ export const demos = [
               { name: 'Work calendar', unique: 'work-week-hours', component: Demo581 },
               { name: 'Doctor’s appointment', unique: 'doctors-appointment', component: Demo721 },
               { name: 'Availability planner & appointment manager', unique: 'doctors-availability-calendar-planner', component: Demo769 },
+              { name: 'Continuous shift planning', unique: '24-hour-manufacturing-shift-rota-planning', component: Demo2222 },
             ],
           },
           {
@@ -981,7 +983,7 @@ export const demos = [
               { name: 'Managing tasks within shifts', unique: 'tasks-subtasks-under-shifts', component: Demo750 },
               { name: 'Resource filtering', unique: 'resource-filtering-search', component: Demo751 },
               { name: 'Set up custom teams', unique: 'resource-management-with-dynamic-team-creation', component: Demo772 },
-              { name: 'Group events by client and apply custom actions', unique: 'event-grouping-bulk-action', component: Demo785 },
+              { name: '36 hour rolling view', unique: '36-hour-rolling-window-aircraft-view', component: Demo111111 },
             ],
           },
           {
