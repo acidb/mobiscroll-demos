@@ -440,7 +440,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#demo-compare-resources').on('click', '.md-compare-button', function (e) {
+      $('#demo-compare-resources').on('click', '.md-compare-button', function () {
         var id = +$(this).data('id');
         var isFixed = fixedResourceMap[id];
         var resource = resourceMap[id];

@@ -279,6 +279,7 @@ const popupAnchor = ref<HTMLButtonElement>()
 const sortRequest = ref<number>(0)
 const snackbarKey = ref<number>(0)
 const sortedResources = computed(() => myResources.value)
+const sortColumn = ref<'standby' | 'payload' | 'deadhead' | 'name'>('standby')
 const tempSortColumn = ref<'standby' | 'payload' | 'deadhead' | 'name'>()
 const tempSortDirection = ref<'asc' | 'desc'>()
 
@@ -286,7 +287,6 @@ const buttonRef = ref<typeof MbscButton | null>(null)
 const calRef = ref<typeof MbscEventcalendar | null>(null)
 
 let metricBarAnimation = true
-let sortColumn: 'standby' | 'payload' | 'deadhead' | 'name' = 'standby'
 let sortDirection: 'asc' | 'desc' = 'asc'
 let tempEvent: MyEvent | null = null
 let weekStart: Date | null = null
@@ -349,7 +349,7 @@ const sortResources = () => {
   metricBarAnimation = true
 
   myResources.value = [...myResources.value].sort((resource1, resource2) => {
-    let col = sortColumn
+    let col = sortColumn.value
     if (resource1[col] === resource2[col]) {
       col = 'name'
     }
@@ -385,7 +385,7 @@ const popupButtons: Array<MbscPopupButton | 'cancel'> = [
     handler: () => {
       isPopupOpen.value = false
       isToastOpen.value = true
-      sortColumn = tempSortColumn.value!
+      sortColumn.value = tempSortColumn.value!
       sortDirection = tempSortDirection.value!
       sortResources()
     },
@@ -416,7 +416,7 @@ const handleSnackbarClose = () => {
 }
 
 const handlePopupOpen = () => {
-  tempSortColumn.value = sortColumn
+  tempSortColumn.value = sortColumn.value
   tempSortDirection.value = sortDirection
   popupAnchor.value = buttonRef.value?.instance.nativeElement
   isPopupOpen.value = true
@@ -461,8 +461,8 @@ const handleEventUpdated = (args: MbscEventUpdatedEvent) => {
 }
 
 const getBarValue = (resource: MyResource) => {
-  const metricValue = resource[sortColumn]
-  return sortColumn === 'payload' ? metricValue : ((metricValue as number) / 168) * 100
+  const metricValue = resource[sortColumn.value]
+  return sortColumn.value === 'payload' ? metricValue : ((metricValue as number) / 168) * 100
 }
 
 const getBarColor = (resource: MyResource) => {

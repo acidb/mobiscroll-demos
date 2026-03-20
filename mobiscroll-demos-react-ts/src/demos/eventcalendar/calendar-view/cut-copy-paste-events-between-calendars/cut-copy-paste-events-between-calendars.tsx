@@ -126,8 +126,8 @@ const App: FC = () => {
   ]);
 
   const dummyRef = useRef<HTMLDivElement>(null);
-  const isMenuOpen = useRef<boolean>();
-  const action = useRef<string>();
+  const isMenuOpen = useRef<boolean>(false);
+  const action = useRef<string>(undefined);
 
   const handleToastClose = useCallback(() => {
     setToastOpen(false);

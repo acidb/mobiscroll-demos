@@ -34,8 +34,8 @@ const App: FC = () => {
   });
   const [toastMessage, setToastMessage] = useState<string>('');
 
-  const firstDay = useRef<Date>();
-  const lastDay = useRef<Date>();
+  const firstDay = useRef<Date>(null);
+  const lastDay = useRef<Date>(null);
 
   const handleError = useCallback((resp: { error: string; result: { error: { message: string } } }) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);
