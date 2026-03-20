@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { MbscCalendarEvent, MbscEventcalendarView, MbscResource } from '@mobiscroll/vue'
-import { formatDate, MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
+import { MbscEventcalendar, setOptions /* localeImport */ } from '@mobiscroll/vue'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { computed } from 'vue'
