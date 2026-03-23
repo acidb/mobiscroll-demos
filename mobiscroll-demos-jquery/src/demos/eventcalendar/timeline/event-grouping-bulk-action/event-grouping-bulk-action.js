@@ -3377,6 +3377,10 @@ export default {
 /* Select input */
 .mds-event-grouping-select.mbsc-textfield {
   width: 210px;
+  max-height: 36px;
+}
+.mds-event-grouping-select + .mbsc-ios.mbsc-select-icon {
+  top: 6px;
 }
   `,
 };
