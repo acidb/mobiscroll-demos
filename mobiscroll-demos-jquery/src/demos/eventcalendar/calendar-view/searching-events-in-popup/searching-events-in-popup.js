@@ -83,12 +83,34 @@ export default {
           showArrow: false,
           showOverlay: false,
           width: 400,
-          onPosition: function (args) {
-            var popupElm = args.target.querySelector('.mbsc-popup');
-            var rect = $searchInput[0].getBoundingClientRect();
-            popupElm.style.top = rect.bottom + 'px';
-            return false;
-          },
+          onPosition: (function () {
+            var callCount = 0;
+            var $log = $(
+              '<div id="demo-pos-log" style="font-size:11px;padding:4px;background:rgba(0,0,0,.8);color:#fff;word-break:break-all;"></div>',
+            ).insertAfter($searchInput.closest('label'));
+            return function (args) {
+              callCount++;
+              var rect = $searchInput[0].getBoundingClientRect();
+              $log.append(
+                '<div>#' +
+                  callCount +
+                  ' top:' +
+                  Math.round(rect.top) +
+                  ' bottom:' +
+                  Math.round(rect.bottom) +
+                  ' left:' +
+                  Math.round(rect.left) +
+                  ' w:' +
+                  Math.round(rect.width) +
+                  ' h:' +
+                  Math.round(rect.height) +
+                  '</div>',
+              );
+              var popupElm = args.target.querySelector('.mbsc-popup');
+              popupElm.style.top = rect.bottom + 'px';
+              return false;
+            };
+          })(),
         })
         .mobiscroll('getInst');
 
@@ -102,6 +124,9 @@ export default {
               function (data) {
                 list.setEvents(data);
                 popup.open();
+                requestAnimationFrame(function () {
+                  popup.position();
+                });
               },
               'jsonp',
             );
