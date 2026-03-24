@@ -16,61 +16,61 @@ export default {
         {
           start: 'dyndatetime(y,m,d,9)',
           end: 'dyndatetime(y,m,d+3,18)',
-          title: 'Business of Software Conference',
+          title: 'Test event 1',
           color: '#ff6d42',
         },
         {
           start: 'dyndatetime(y,m,d,13)',
           end: 'dyndatetime(y,m,d+1,21)',
-          title: 'Friends binge marathon',
+          title: 'Test event 2',
           color: '#7bde83',
         },
         {
           start: 'dyndatetime(y,m,d+7,13)',
           end: 'dyndatetime(y,m,d+8,21)',
-          title: 'Friends binge marathon',
+          title: 'Test event 3',
           color: '#7bde83',
         },
         {
           start: 'dyndatetime(y,m,d,8)',
           end: 'dyndatetime(y,m,d,9)',
-          title: 'Product team mtg.',
+          title: 'Test event 4',
           color: '#913aa7',
         },
         {
           start: 'dyndatetime(y,m,d+1,7)',
           end: 'dyndatetime(y,m,d+1,8)',
-          title: 'Green box to post office',
+          title: 'Test event 5',
           color: '#6e7f29',
         },
         {
           start: 'dyndatetime(y,m,d-1,8,45)',
           end: 'dyndatetime(y,m,d-1,10)',
-          title: 'Quick mtg. with Martin',
+          title: 'Test event 6',
           color: '#de3d83',
         },
         {
           start: 'dyndatetime(y,m,8,9,30)',
           end: 'dyndatetime(y,m,8,10,30)',
-          title: 'Product team mtg.',
+          title: 'Test event 7',
           color: '#f67944',
         },
         {
           start: 'dyndatetime(y,m,8,11,0)',
           end: 'dyndatetime(y,m,8,11,45)',
-          title: 'Stakeholder mtg.',
+          title: 'Test event 8',
           color: '#a144f6',
         },
         {
           start: 'dyndatetime(y,m,8,13,0)',
           end: 'dyndatetime(y,m,8,13,45)',
-          title: "Lunch @ Butcher's",
+          title: 'Test event 9',
           color: '#00aabb',
         },
         {
           start: 'dyndatetime(y,m,8,15,0)',
           end: 'dyndatetime(y,m,8,16,0)',
-          title: 'General orientation',
+          title: 'Test event 10',
           color: '#a71111',
         },
       ];
@@ -143,10 +143,7 @@ export default {
         clearTimeout(timer);
         timer = setTimeout(function () {
           if (searchText.length > 0) {
-            var filtered = myEvents.filter(function (event) {
-              return event.title.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
-            });
-            list.setEvents(filtered);
+            list.setEvents(myEvents);
             popup.open();
           } else {
             popup.close();
