@@ -84,9 +84,9 @@ export default {
           showOverlay: false,
           width: 400,
           onPosition: function (args) {
-            // var popupElm = args.target.querySelector('.mbsc-popup');
-            // var rect = $searchInput[0].getBoundingClientRect();
-            // popupElm.style.top = rect.bottom + 'px';
+            var popupElm = args.target.querySelector('.mbsc-popup');
+            var rect = $searchInput[0].getBoundingClientRect();
+            popupElm.style.top = rect.bottom + 'px';
             return false;
           },
         })
