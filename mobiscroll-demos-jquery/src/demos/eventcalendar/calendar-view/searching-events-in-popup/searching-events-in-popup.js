@@ -138,13 +138,41 @@ export default {
         })
         .mobiscroll('getInst');
 
+      var $log = $(
+        '<div id="demo-pos-log" style="font-size:12px;padding:4px 8px;background:#fffde7;color:#333;word-break:break-all;"></div>',
+      ).insertAfter($searchInput.closest('label'));
+
+      function logRect(label) {
+        var rect = $searchInput[0].getBoundingClientRect();
+        var vvHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+        var anchor = popup.s.anchor;
+        var anchorId = anchor ? anchor.id || anchor.tagName + '.' + anchor.className : 'none';
+        $log.append(
+          '<div><b>' +
+            label +
+            '</b> anchor:' +
+            anchorId +
+            ' top:' +
+            Math.round(rect.top) +
+            ' bottom:' +
+            Math.round(rect.bottom) +
+            ' vp:' +
+            Math.round(vvHeight) +
+            '</div>',
+        );
+      }
+
       $searchInput.on('input', function (ev) {
         var searchText = ev.target.value;
         clearTimeout(timer);
         timer = setTimeout(function () {
           if (searchText.length > 0) {
             list.setEvents(myEvents);
-            popup.open();
+            logRect('before');
+            setTimeout(function () {
+              logRect('after(300ms)');
+              popup.open();
+            }, 300);
           } else {
             popup.close();
           }
