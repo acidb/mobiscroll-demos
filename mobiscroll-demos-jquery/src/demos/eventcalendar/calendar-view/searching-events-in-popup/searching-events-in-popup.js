@@ -12,6 +12,69 @@ export default {
     $(function () {
       var timer;
 
+      var myEvents = [
+        {
+          start: 'dyndatetime(y,m,d,9)',
+          end: 'dyndatetime(y,m,d+3,18)',
+          title: 'Business of Software Conference',
+          color: '#ff6d42',
+        },
+        {
+          start: 'dyndatetime(y,m,d,13)',
+          end: 'dyndatetime(y,m,d+1,21)',
+          title: 'Friends binge marathon',
+          color: '#7bde83',
+        },
+        {
+          start: 'dyndatetime(y,m,d+7,13)',
+          end: 'dyndatetime(y,m,d+8,21)',
+          title: 'Friends binge marathon',
+          color: '#7bde83',
+        },
+        {
+          start: 'dyndatetime(y,m,d,8)',
+          end: 'dyndatetime(y,m,d,9)',
+          title: 'Product team mtg.',
+          color: '#913aa7',
+        },
+        {
+          start: 'dyndatetime(y,m,d+1,7)',
+          end: 'dyndatetime(y,m,d+1,8)',
+          title: 'Green box to post office',
+          color: '#6e7f29',
+        },
+        {
+          start: 'dyndatetime(y,m,d-1,8,45)',
+          end: 'dyndatetime(y,m,d-1,10)',
+          title: 'Quick mtg. with Martin',
+          color: '#de3d83',
+        },
+        {
+          start: 'dyndatetime(y,m,8,9,30)',
+          end: 'dyndatetime(y,m,8,10,30)',
+          title: 'Product team mtg.',
+          color: '#f67944',
+        },
+        {
+          start: 'dyndatetime(y,m,8,11,0)',
+          end: 'dyndatetime(y,m,8,11,45)',
+          title: 'Stakeholder mtg.',
+          color: '#a144f6',
+        },
+        {
+          start: 'dyndatetime(y,m,8,13,0)',
+          end: 'dyndatetime(y,m,8,13,45)',
+          title: "Lunch @ Butcher's",
+          color: '#00aabb',
+        },
+        {
+          start: 'dyndatetime(y,m,8,15,0)',
+          end: 'dyndatetime(y,m,8,16,0)',
+          title: 'General orientation',
+          color: '#a71111',
+        },
+      ];
+
       var list = $('#demo-search-results')
         .mobiscroll()
         .eventcalendar({
@@ -36,6 +99,7 @@ export default {
           dragToMove: false,
           dragToResize: false,
           selectMultipleEvents: true,
+          data: myEvents,
           view: {
             calendar: { labels: true },
           },
@@ -50,18 +114,6 @@ export default {
               '<button mbsc-calendar-prev></button>' +
               '<button mbsc-calendar-today></button>' +
               '<button mbsc-calendar-next></button>'
-            );
-          },
-          onPageLoading: function (args) {
-            var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
-            var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
-
-            $.getJSON(
-              'https://trial.mobiscroll.com/searchevents/?start=' + start + '&end=' + end + '&callback=?',
-              function (data) {
-                calendar.setEvents(data);
-              },
-              'jsonp',
             );
           },
         })
@@ -91,14 +143,11 @@ export default {
         clearTimeout(timer);
         timer = setTimeout(function () {
           if (searchText.length > 0) {
-            $.getJSON(
-              'https://trial.mobiscroll.com/searchevents/?text=' + searchText + '&callback=?',
-              function (data) {
-                list.setEvents(data);
-                popup.open();
-              },
-              'jsonp',
-            );
+            var filtered = myEvents.filter(function (event) {
+              return event.title.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
+            });
+            list.setEvents(filtered);
+            popup.open();
           } else {
             popup.close();
           }
