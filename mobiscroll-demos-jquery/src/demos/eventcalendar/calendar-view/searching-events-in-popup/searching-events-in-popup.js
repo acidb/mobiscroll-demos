@@ -12,69 +12,6 @@ export default {
     $(function () {
       var timer;
 
-      var myEvents = [
-        {
-          start: 'dyndatetime(y,m,d,9)',
-          end: 'dyndatetime(y,m,d+3,18)',
-          title: 'Test event 1',
-          color: '#ff6d42',
-        },
-        {
-          start: 'dyndatetime(y,m,d,13)',
-          end: 'dyndatetime(y,m,d+1,21)',
-          title: 'Test event 2',
-          color: '#7bde83',
-        },
-        {
-          start: 'dyndatetime(y,m,d+7,13)',
-          end: 'dyndatetime(y,m,d+8,21)',
-          title: 'Test event 3',
-          color: '#7bde83',
-        },
-        {
-          start: 'dyndatetime(y,m,d,8)',
-          end: 'dyndatetime(y,m,d,9)',
-          title: 'Test event 4',
-          color: '#913aa7',
-        },
-        {
-          start: 'dyndatetime(y,m,d+1,7)',
-          end: 'dyndatetime(y,m,d+1,8)',
-          title: 'Test event 5',
-          color: '#6e7f29',
-        },
-        {
-          start: 'dyndatetime(y,m,d-1,8,45)',
-          end: 'dyndatetime(y,m,d-1,10)',
-          title: 'Test event 6',
-          color: '#de3d83',
-        },
-        {
-          start: 'dyndatetime(y,m,8,9,30)',
-          end: 'dyndatetime(y,m,8,10,30)',
-          title: 'Test event 7',
-          color: '#f67944',
-        },
-        {
-          start: 'dyndatetime(y,m,8,11,0)',
-          end: 'dyndatetime(y,m,8,11,45)',
-          title: 'Test event 8',
-          color: '#a144f6',
-        },
-        {
-          start: 'dyndatetime(y,m,8,13,0)',
-          end: 'dyndatetime(y,m,8,13,45)',
-          title: 'Test event 9',
-          color: '#00aabb',
-        },
-        {
-          start: 'dyndatetime(y,m,8,15,0)',
-          end: 'dyndatetime(y,m,8,16,0)',
-          title: 'Test event 10',
-          color: '#a71111',
-        },
-      ];
-
       var list = $('#demo-search-results')
         .mobiscroll()
         .eventcalendar({
@@ -99,7 +36,6 @@ export default {
           dragToMove: false,
           dragToResize: false,
           selectMultipleEvents: true,
-          data: myEvents,
           view: {
             calendar: { labels: true },
           },
@@ -116,6 +52,18 @@ export default {
               '<button mbsc-calendar-next></button>'
             );
           },
+          onPageLoading: function (args) {
+            var start = mobiscroll.formatDate('YYYY-MM-DD', args.viewStart);
+            var end = mobiscroll.formatDate('YYYY-MM-DD', args.viewEnd);
+
+            $.getJSON(
+              'https://trial.mobiscroll.com/searchevents/?start=' + start + '&end=' + end + '&callback=?',
+              function (data) {
+                calendar.setEvents(data);
+              },
+              'jsonp',
+            );
+          },
         })
         .mobiscroll('getInst');
 
@@ -130,12 +78,11 @@ export default {
           focusElm: $searchInput[0],
           focusOnClose: false,
           focusOnOpen: false,
-          maxHeight: 300,
+          // maxHeight: 500,
           scrollLock: false,
           showArrow: false,
           showOverlay: false,
           width: 400,
-          touchUi: false,
         })
         .mobiscroll('getInst');
 
@@ -144,11 +91,14 @@ export default {
         clearTimeout(timer);
         timer = setTimeout(function () {
           if (searchText.length > 0) {
-            popup.open();
-            list.setEvents(myEvents);
-            setTimeout(function () {
-              popup.position();
-            }, 300);
+            $.getJSON(
+              'https://trial.mobiscroll.com/searchevents/?text=' + searchText + '&callback=?',
+              function (data) {
+                list.setEvents(data);
+                popup.open();
+              },
+              'jsonp',
+            );
           } else {
             popup.close();
           }
