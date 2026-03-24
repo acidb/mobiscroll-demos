@@ -130,10 +130,6 @@ export default {
           focusElm: $searchInput[0],
           focusOnClose: false,
           focusOnOpen: false,
-          maxHeight: 500,
-          scrollLock: false,
-          showArrow: false,
-          showOverlay: false,
           width: 400,
         })
         .mobiscroll('getInst');
@@ -143,19 +139,14 @@ export default {
       ).insertAfter($searchInput.closest('label'));
 
       function logRect(label) {
-        var rect = $searchInput[0].getBoundingClientRect();
         var vvHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-        var anchor = popup.s.anchor;
-        var anchorId = anchor ? anchor.id || anchor.tagName + '.' + anchor.className : 'none';
         $log.append(
           '<div><b>' +
             label +
-            '</b> anchor:' +
-            anchorId +
-            ' top:' +
-            Math.round(rect.top) +
-            ' bottom:' +
-            Math.round(rect.bottom) +
+            '</b> scrollY:' +
+            Math.round(window.scrollY) +
+            ' innerH:' +
+            Math.round(window.innerHeight) +
             ' vp:' +
             Math.round(vvHeight) +
             '</div>',
