@@ -84,21 +84,12 @@ export default {
           showOverlay: false,
           width: 400,
           onPosition: function (args) {
-            var inputRect = $searchInput[0].getBoundingClientRect();
+            var rect = $searchInput[0].getBoundingClientRect();
             var vvHeight = window.visualViewport ? window.visualViewport.height : args.windowHeight;
-            var spaceBelow = Math.max(100, vvHeight - inputRect.bottom - 8);
-            var el = args.target;
-
-            el.style.setProperty('position', 'fixed', 'important');
-            el.style.setProperty('top', inputRect.bottom + 'px', 'important');
-            el.style.setProperty('bottom', 'auto', 'important');
-            el.style.setProperty('left', inputRect.left + 'px', 'important');
-            el.style.setProperty('right', 'auto', 'important');
-            el.style.setProperty('width', inputRect.width + 'px', 'important');
-            el.style.setProperty('max-height', spaceBelow + 'px', 'important');
-            el.style.setProperty('transform', 'none', 'important');
-            el.style.setProperty('margin', '0', 'important');
-
+            args.target.style.position = 'fixed';
+            args.target.style.top = rect.bottom + 'px';
+            args.target.style.left = rect.left + 'px';
+            args.target.style.maxHeight = vvHeight - rect.bottom - 8 + 'px';
             return false;
           },
         })
