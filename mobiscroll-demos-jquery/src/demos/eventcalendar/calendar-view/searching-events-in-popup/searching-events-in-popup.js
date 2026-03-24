@@ -87,6 +87,7 @@ export default {
             var popupElm = args.target.querySelector('.mbsc-popup');
             var rect = $searchInput[0].getBoundingClientRect();
             popupElm.style.top = rect.bottom + 'px';
+            popupElm.style.left = rect.left + 'px';
             return false;
           },
         })
