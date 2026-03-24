@@ -78,11 +78,20 @@ export default {
           focusElm: $searchInput[0],
           focusOnClose: false,
           focusOnOpen: false,
-          // maxHeight: 500,
+          maxHeight: 500,
           scrollLock: false,
           showArrow: false,
           showOverlay: false,
           width: 400,
+          onPosition: function (args) {
+            var rect = $searchInput[0].getBoundingClientRect();
+            var vvHeight = window.visualViewport ? window.visualViewport.height : args.windowHeight;
+            var scrollY = window.visualViewport ? window.visualViewport.offsetTop : window.scrollY;
+            args.target.style.top = rect.bottom + scrollY + 'px';
+            args.target.style.left = rect.left + 'px';
+            args.target.style.maxHeight = vvHeight - rect.bottom - 8 + 'px';
+            return false;
+          },
         })
         .mobiscroll('getInst');
 
