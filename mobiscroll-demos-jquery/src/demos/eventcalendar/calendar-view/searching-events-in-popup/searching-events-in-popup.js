@@ -130,6 +130,9 @@ export default {
           focusElm: $searchInput[0],
           focusOnClose: false,
           focusOnOpen: false,
+          scrollLock: false,
+          showArrow: false,
+          showOverlay: false,
           width: 400,
         })
         .mobiscroll('getInst');
