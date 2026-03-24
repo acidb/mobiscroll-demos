@@ -85,11 +85,13 @@ export default {
           width: 400,
           onPosition: function (args) {
             var inputRect = $('#demo-search-input')[0].getBoundingClientRect();
+            var vvHeight = window.visualViewport ? window.visualViewport.height : args.windowHeight;
             var popupEl = args.target;
 
             popupEl.style.top = inputRect.bottom + 'px';
             popupEl.style.left = inputRect.left + 'px';
             popupEl.style.width = inputRect.width + 'px';
+            popupEl.style.maxHeight = vvHeight - inputRect.bottom - 8 + 'px';
 
             return false;
           },
