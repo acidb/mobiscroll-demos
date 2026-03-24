@@ -130,6 +130,7 @@ export default {
           focusElm: $searchInput[0],
           focusOnClose: false,
           focusOnOpen: false,
+          maxHeight: 300,
           scrollLock: false,
           showArrow: false,
           showOverlay: false,
