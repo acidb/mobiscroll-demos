@@ -135,6 +135,7 @@ export default {
           showArrow: false,
           showOverlay: false,
           width: 400,
+          touchUi: false,
         })
         .mobiscroll('getInst');
 
