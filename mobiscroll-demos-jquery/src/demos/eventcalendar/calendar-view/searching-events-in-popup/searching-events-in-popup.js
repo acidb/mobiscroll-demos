@@ -138,35 +138,15 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var $log = $(
-        '<div id="demo-pos-log" style="font-size:12px;padding:4px 8px;background:#fffde7;color:#333;word-break:break-all;"></div>',
-      ).insertAfter($searchInput.closest('label'));
-
-      function logRect(label) {
-        var vvHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-        $log.append(
-          '<div><b>' +
-            label +
-            '</b> scrollY:' +
-            Math.round(window.scrollY) +
-            ' innerH:' +
-            Math.round(window.innerHeight) +
-            ' vp:' +
-            Math.round(vvHeight) +
-            '</div>',
-        );
-      }
-
       $searchInput.on('input', function (ev) {
         var searchText = ev.target.value;
         clearTimeout(timer);
         timer = setTimeout(function () {
           if (searchText.length > 0) {
+            popup.open();
             list.setEvents(myEvents);
-            logRect('before');
             setTimeout(function () {
-              logRect('after(300ms)');
-              popup.open();
+              popup.position();
             }, 300);
           } else {
             popup.close();
