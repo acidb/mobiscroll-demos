@@ -84,12 +84,9 @@ export default {
           showOverlay: false,
           width: 400,
           onPosition: function (args) {
+            var popupElm = args.target.querySelector('.mbsc-popup');
             var rect = $searchInput[0].getBoundingClientRect();
-            var vvHeight = window.visualViewport ? window.visualViewport.height : args.windowHeight;
-            args.target.style.position = 'fixed';
-            args.target.style.top = rect.bottom + 'px';
-            args.target.style.left = rect.left + 'px';
-            args.target.style.maxHeight = vvHeight - rect.bottom - 8 + 'px';
+            popupElm.style.top = rect.bottom + 'px';
             return false;
           },
         })
