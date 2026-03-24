@@ -84,14 +84,20 @@ export default {
           showOverlay: false,
           width: 400,
           onPosition: function (args) {
-            var inputRect = $('#demo-search-input')[0].getBoundingClientRect();
+            var inputRect = $searchInput[0].getBoundingClientRect();
             var vvHeight = window.visualViewport ? window.visualViewport.height : args.windowHeight;
-            var popupEl = args.target;
+            var spaceBelow = Math.max(100, vvHeight - inputRect.bottom - 8);
+            var el = args.target;
 
-            popupEl.style.top = inputRect.bottom + 'px';
-            popupEl.style.left = inputRect.left + 'px';
-            popupEl.style.width = inputRect.width + 'px';
-            popupEl.style.maxHeight = vvHeight - inputRect.bottom - 8 + 'px';
+            el.style.setProperty('position', 'fixed', 'important');
+            el.style.setProperty('top', inputRect.bottom + 'px', 'important');
+            el.style.setProperty('bottom', 'auto', 'important');
+            el.style.setProperty('left', inputRect.left + 'px', 'important');
+            el.style.setProperty('right', 'auto', 'important');
+            el.style.setProperty('width', inputRect.width + 'px', 'important');
+            el.style.setProperty('max-height', spaceBelow + 'px', 'important');
+            el.style.setProperty('transform', 'none', 'important');
+            el.style.setProperty('margin', '0', 'important');
 
             return false;
           },
