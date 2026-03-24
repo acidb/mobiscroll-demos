@@ -84,12 +84,13 @@ export default {
           showOverlay: false,
           width: 400,
           onPosition: function (args) {
-            var rect = $searchInput[0].getBoundingClientRect();
-            var vvHeight = window.visualViewport ? window.visualViewport.height : args.windowHeight;
-            var scrollY = window.visualViewport ? window.visualViewport.offsetTop : window.scrollY;
-            args.target.style.top = rect.bottom + scrollY + 'px';
-            args.target.style.left = rect.left + 'px';
-            args.target.style.maxHeight = vvHeight - rect.bottom - 8 + 'px';
+            var inputRect = $('#demo-search-input')[0].getBoundingClientRect();
+            var popupEl = args.target;
+
+            popupEl.style.top = inputRect.bottom + 'px';
+            popupEl.style.left = inputRect.left + 'px';
+            popupEl.style.width = inputRect.width + 'px';
+
             return false;
           },
         })
