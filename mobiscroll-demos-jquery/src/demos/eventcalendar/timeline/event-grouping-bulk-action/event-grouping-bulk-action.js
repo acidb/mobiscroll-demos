@@ -2343,9 +2343,6 @@ export default {
       var groupByClient = false;
       var zoomLevel = 'year-month'; // 'year-quarter', 'year-month', 'half-year'
       var rawEvents = defaultEvents.slice();
-      // Minimum event duration
-      var minDays = 45;
-
       // Edit popup state
       var editingEventId = null;
 
@@ -2487,6 +2484,7 @@ export default {
           resources: currentResources,
           renderScheduleEvent: groupByClient ? renderGroupedEvent : renderSimpleEvent,
           view: { timeline: timelineConfig },
+          dragBetweenResources: !groupByClient,
         });
       }
 
@@ -2685,7 +2683,7 @@ export default {
           dragToResize: true,
           dragToCreate: false,
           clickToCreate: false,
-          dragBetweenResources: false,
+          dragBetweenResources: true,
           view: {
             timeline: {
               type: 'year',
@@ -2758,14 +2756,6 @@ export default {
             var oldEvent = args.oldEvent;
             var newStart = new Date(updatedEvent.start).getTime();
             var newEnd = new Date(updatedEvent.end).getTime();
-            var durationDays = (newEnd - newStart) / (1000 * 60 * 60 * 24);
-
-            if (durationDays < minDays) {
-              mobiscroll.toast({
-                message: 'Minimum task duration is ' + minDays + ' days.',
-              });
-              return false;
-            }
 
             if (groupByClient) {
               var oldStart = new Date(oldEvent.start).getTime();
@@ -2877,10 +2867,46 @@ export default {
                 });
               }
             } else {
-              // Sync into rawEvents
+              var oldResource = args.oldEvent.resource;
+              var newResource = updatedEvent.resource;
+              var resourceChanged = oldResource !== newResource;
+
+              // Sync into rawEvents (dates + resource if changed)
               rawEvents = rawEvents.map(function (e) {
-                return e.id === updatedEvent.id ? Object.assign({}, e, { start: updatedEvent.start, end: updatedEvent.end }) : e;
+                if (e.id === updatedEvent.id) {
+                  var update = { start: updatedEvent.start, end: updatedEvent.end };
+                  if (resourceChanged) {
+                    if (groupBy === 'assignee') {
+                      update.resource = newResource;
+                    } else {
+                      update.type = newResource;
+                    }
+                  }
+                  return Object.assign({}, e, update);
+                }
+                return e;
               });
+
+              if (resourceChanged) {
+                var fromName;
+                var toName;
+                if (groupBy === 'assignee') {
+                  var fromRes = assigneeResources.find(function (r) {
+                    return r.id === oldResource;
+                  });
+                  var toRes = assigneeResources.find(function (r) {
+                    return r.id === newResource;
+                  });
+                  fromName = fromRes ? fromRes.name : oldResource;
+                  toName = toRes ? toRes.name : newResource;
+                } else {
+                  fromName = oldResource;
+                  toName = newResource;
+                }
+                mobiscroll.toast({
+                  message: '"' + updatedEvent.title + '" moved from ' + fromName + ' to ' + toName + '.',
+                });
+              }
             }
           },
         })
@@ -2892,6 +2918,7 @@ export default {
         .popup({
           display: 'center',
           headerText: 'Edit Task Dates',
+          contentPadding: false,
           buttons: [
             'cancel',
             {
@@ -2920,13 +2947,6 @@ export default {
                   var quarterChanged = groupByClient && (oldQuarter !== newQuarter || oldYear !== newYear);
 
                   var applyUpdate = function () {
-                    var durationDays = (new Date(endVal).getTime() - new Date(startVal).getTime()) / (1000 * 60 * 60 * 24);
-                    if (durationDays < minDays) {
-                      mobiscroll.toast({
-                        message: 'Minimum task duration is ' + minDays + ' days.',
-                      });
-                      return false;
-                    }
                     rawEvents = rawEvents.map(function (e) {
                       if (e.id === editingEventId) {
                         return Object.assign({}, e, { start: startVal, end: endVal });
@@ -2977,11 +2997,8 @@ export default {
         .datepicker({
           controls: ['calendar'],
           select: 'range',
-          startInput: '#edit-event-start',
-          endInput: '#edit-event-end',
-          inputStyle: 'box',
-          labelStyle: 'stacked',
-          showRangeLabels: false,
+          display: 'inline',
+          showRangeLabels: true,
           touchUi: true,
           responsive: { medium: { touchUi: false } },
         })
@@ -3061,14 +3078,6 @@ export default {
 <div id="edit-event-popup">
   <div class="mds-edit-popup-content">
     <div id="edit-event-dates"></div>
-    <label>
-      Start Date
-      <input mbsc-input id="edit-event-start" data-input-style="box" data-label-style="stacked" />
-    </label>
-    <label>
-      End Date
-      <input mbsc-input id="edit-event-end" data-input-style="box" data-label-style="stacked" />
-    </label>
   </div>
 </div>
   `,
