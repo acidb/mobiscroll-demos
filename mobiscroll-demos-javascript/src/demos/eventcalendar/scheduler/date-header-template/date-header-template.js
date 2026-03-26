@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript';
+import { dyndatetime } from '../../../../dyndatetime';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -10,17 +11,17 @@ export default {
 
     var milestones = [
       {
-        date: 'dyndatetime(y,m,d-2)',
+        date: dyndatetime('y,m,d-2'),
         name: 'Project review',
         color: '#f5da7b',
       },
       {
-        date: 'dyndatetime(y,m,d-1)',
+        date: dyndatetime('y,m,d-1'),
         name: 'Product shipping',
         color: '#acf3a3',
       },
       {
-        date: 'dyndatetime(y,m,d+1)',
+        date: dyndatetime('y,m,d+1'),
         name: 'Cycle finish',
         color: '#ff84a0',
       },

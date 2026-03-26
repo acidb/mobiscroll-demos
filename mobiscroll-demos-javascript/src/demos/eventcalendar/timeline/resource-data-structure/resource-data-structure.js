@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript';
+import { dyndatetime } from '../../../../dyndatetime';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -79,20 +80,20 @@ export default {
       ],
       data: [
         {
-          start: 'dyndatetime(y,m,d,15)',
-          end: 'dyndatetime(y,m,d,16)',
+          start: dyndatetime('y,m,d,15'),
+          end: dyndatetime('y,m,d,16'),
           title: 'General orientation',
           resource: 1,
         },
         {
-          start: 'dyndatetime(y,m,d,9)',
-          end: 'dyndatetime(y,m,d,10)',
+          start: dyndatetime('y,m,d,9'),
+          end: dyndatetime('y,m,d,10'),
           text: 'Stakeholder mtg.',
           resource: 2,
         },
         {
-          start: 'dyndatetime(y,m,d,13,30)',
-          end: 'dyndatetime(y,m,d,14,30)',
+          start: dyndatetime('y,m,d,13,30'),
+          end: dyndatetime('y,m,d,14,30'),
           text: "Lunch @ Butcher's",
           resource: 5,
         },

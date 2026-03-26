@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript';
+import { dyndatetime } from '../../../../dyndatetime';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -18,61 +19,61 @@ export default {
       },
       data: [
         {
-          start: 'dyndatetime(y,m,d-2)',
-          end: 'dyndatetime(y,m,d+1)',
+          start: dyndatetime('y,m,d-2'),
+          end: dyndatetime('y,m,d+1'),
           allDay: true,
           title: 'Event 1',
           resource: 1,
         },
         {
-          start: 'dyndatetime(y,m,d,9)',
-          end: 'dyndatetime(y,m,d+4,15)',
+          start: dyndatetime('y,m,d,9'),
+          end: dyndatetime('y,m,d+4,15'),
           title: 'Event 2',
           resource: 2,
         },
         {
-          start: 'dyndatetime(y,m,d+3)',
-          end: 'dyndatetime(y,m,d+10)',
+          start: dyndatetime('y,m,d+3'),
+          end: dyndatetime('y,m,d+10'),
           allDay: true,
           title: 'Event 3',
           resource: 2,
         },
         {
-          start: 'dyndatetime(y,m,d-10,7)',
-          end: 'dyndatetime(y,m,d-5,12)',
+          start: dyndatetime('y,m,d-10,7'),
+          end: dyndatetime('y,m,d-5,12'),
           title: 'Event 4',
           resource: 2,
         },
         {
-          start: 'dyndatetime(y,m,d+7)',
-          end: 'dyndatetime(y,m,d+13)',
+          start: dyndatetime('y,m,d+7'),
+          end: dyndatetime('y,m,d+13'),
           allDay: true,
           title: 'Event 5',
           resource: 3,
         },
         {
-          start: 'dyndatetime(y,m,d,8)',
-          end: 'dyndatetime(y,m,d+2,20)',
+          start: dyndatetime('y,m,d,8'),
+          end: dyndatetime('y,m,d+2,20'),
           title: 'Event 6',
           resource: 4,
         },
         {
-          start: 'dyndatetime(y,m,d-2)',
-          end: 'dyndatetime(y,m,d+1)',
+          start: dyndatetime('y,m,d-2'),
+          end: dyndatetime('y,m,d+1'),
           allDay: true,
           title: 'Event 7',
           resource: 4,
         },
         {
-          start: 'dyndatetime(y,m,d-8)',
-          end: 'dyndatetime(y,m,d-3)',
+          start: dyndatetime('y,m,d-8'),
+          end: dyndatetime('y,m,d-3'),
           allDay: true,
           title: 'Event 8',
           resource: 5,
         },
         {
-          start: 'dyndatetime(y,m,d+6)',
-          end: 'dyndatetime(y,m,d+14)',
+          start: dyndatetime('y,m,d+6'),
+          end: dyndatetime('y,m,d+14'),
           allDay: true,
           title: 'Event 9',
           resource: 6,
