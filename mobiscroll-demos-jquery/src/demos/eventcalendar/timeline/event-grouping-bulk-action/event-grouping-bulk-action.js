@@ -2921,6 +2921,7 @@ export default {
       var editDatePicker = $('#demo-event-grouping-dates')
         .mobiscroll()
         .datepicker({
+          // context,
           controls: ['calendar'],
           select: 'range',
           display: 'center',
