@@ -6,7 +6,8 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -2341,7 +2342,7 @@ export default {
       var groupedEvents = [];
       var groupBy = 'assignee'; // 'assignee' or 'type'
       var groupByClient = false;
-      var zoomLevel = 'year-month'; // 'year-quarter', 'year-month', 'half-year'
+      var zoomLevel = 'month'; // 'quarter', 'month', 'half-year'
       var rawEvents = defaultEvents.slice();
       // Edit popup state
       var editingEventId = null;
@@ -2468,10 +2469,10 @@ export default {
         var timelineConfig;
 
         switch (zoomLevel) {
-          case 'year-quarter':
+          case 'quarter':
             timelineConfig = { type: 'year', resolutionHorizontal: 'quarter', eventHeight: 'variable' };
             break;
-          case 'year-month':
+          case 'month':
             timelineConfig = { type: 'year', resolutionHorizontal: 'month', eventHeight: 'variable' };
             break;
           case 'half-year':
@@ -2743,8 +2744,8 @@ export default {
               '<option value="type">View by Type</option>' +
               '</select>' +
               '</div>' +
-              '<label>Year (Q)<input mbsc-segmented type="radio" name="zoom-level" value="year-quarter"/></label>' +
-              '<label>Year (M)<input mbsc-segmented type="radio" name="zoom-level" value="year-month" checked/></label>' +
+              '<label>Quarterly<input mbsc-segmented type="radio" name="zoom-level" value="quarter"/></label>' +
+              '<label>Monthly<input mbsc-segmented type="radio" name="zoom-level" value="month" checked/></label>' +
               '<label>6 Months<input mbsc-segmented type="radio" name="zoom-level" value="half-year"/></label>' +
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-today></div>' +
@@ -3139,6 +3140,13 @@ export default {
     0 1px 2px rgba(0, 0, 0, 0.08);
   flex-direction: column;
   overflow: hidden;
+  container-type: inline-size;
+}
+@container (max-width: 240px) {
+  .mds-event-grouping-count { display: none; }
+}
+@container (max-width: 180px) {
+  .mds-event-grouping-meta { display: none; }
 }
 /* Grouped event header content */
 .mds-event-grouping-content {
@@ -3225,6 +3233,17 @@ export default {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
   box-sizing: border-box;
   min-width: 120px;
+  container-type: inline-size;
+}
+@container (max-width: 220px) {
+  .mds-event-grouping-event-detail { display: none; }
+}
+@container (max-width: 160px) {
+  .mds-event-grouping-event-date { display: none; }
+  .mds-event-grouping-edit-btn { display: none; }
+}
+@container (max-width: 110px) {
+  .mds-event-grouping-event-right { display: none; }
 }
 .mds-event-grouping-original-event:last-child {
   margin-bottom: 0;
@@ -3327,6 +3346,16 @@ export default {
   height: 100%;
   color: #2c2c2c;
   background-color: #e8ecf0;
+  container-type: inline-size;
+}
+@container (max-width: 220px) {
+  .mds-event-simple-subtitle-wrapper { display: none; }
+}
+@container (max-width: 140px) {
+  .mds-event-simple-date { display: none; }
+}
+@container (max-width: 100px) {
+  .mds-event-simple-right { display: none; }
 }
 /* Event title */
 .mds-event-simple-title {
@@ -3390,6 +3419,9 @@ export default {
 }
 .mds-event-grouping-select + .mbsc-ios.mbsc-select-icon {
   top: 6px;
+}
+.mds-event-grouping-calendar .mbsc-ios.mbsc-segmented-button {
+  padding: 0 12px;
 }
   `,
 };
