@@ -6,8 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light',
+      // theme
     });
 
     $(function () {
@@ -2553,7 +2552,13 @@ export default {
               }
 
               return (
-                '<div class="mds-event-grouping-original-event" style="margin-left:' +
+                '<div class="mds-event-grouping-original-event" title="' +
+                ev.title +
+                ', ' +
+                mobiscroll.formatDate('MM/DD/YYYY', new Date(ev.start)) +
+                ' - ' +
+                mobiscroll.formatDate('MM/DD/YYYY', new Date(ev.end)) +
+                '" style="margin-left:' +
                 leftPercent +
                 '%; width:' +
                 widthPercent +
@@ -3130,6 +3135,13 @@ export default {
   font-weight: 600;
   line-height: 20px;
 }
+/* Enforce minimum event width so text is always visible */
+.mds-event-grouping-calendar .mbsc-schedule-event {
+  min-width: 72px;
+}
+.mds-event-grouping-calendar .mbsc-schedule-event:has(.mds-event-grouping-task-client) {
+  min-width: 120px;
+}
 /* Grouped event - collapsed state */
 .mds-event-grouping-task-client {
   background-color: #e8ecf0;
@@ -3141,18 +3153,16 @@ export default {
   flex-direction: column;
   overflow: hidden;
   container-type: inline-size;
-}
-@container (max-width: 240px) {
-  .mds-event-grouping-count { display: none; }
-}
-@container (max-width: 180px) {
-  .mds-event-grouping-meta { display: none; }
+  min-width: 120px;
 }
 /* Grouped event header content */
 .mds-event-grouping-content {
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
+  height: 42px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 /* Client group title */
 .mds-event-grouping-title-text {
@@ -3170,7 +3180,7 @@ export default {
 /* Right side container (meta + icon) */
 .mds-event-grouping-right {
   align-items: center;
-  width: 130px;
+  flex-shrink: 0;
 }
 /* Meta information (dates + counts) */
 .mds-event-grouping-meta {
@@ -3229,20 +3239,18 @@ export default {
   background: #fff;
   border-radius: 6px;
   margin-bottom: 6px;
-  padding: 8px 10px;
+  padding: 6px 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
   box-sizing: border-box;
-  min-width: 120px;
+  min-height: 38px;
+  min-width: 100px;
+  overflow: hidden;
   container-type: inline-size;
 }
-@container (max-width: 220px) {
-  .mds-event-grouping-event-detail { display: none; }
+@container (max-width: 180px) {
+  .mds-event-grouping-meta { display: none; }
 }
-@container (max-width: 160px) {
-  .mds-event-grouping-event-date { display: none; }
-  .mds-event-grouping-edit-btn { display: none; }
-}
-@container (max-width: 110px) {
+@container (max-width: 140px) {
   .mds-event-grouping-event-right { display: none; }
 }
 .mds-event-grouping-original-event:last-child {
@@ -3343,18 +3351,14 @@ export default {
     0 1px 2px rgba(0, 0, 0, 0.1);
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: 42px;
+  box-sizing: border-box;
+  overflow: hidden;
   color: #2c2c2c;
   background-color: #e8ecf0;
   container-type: inline-size;
 }
-@container (max-width: 220px) {
-  .mds-event-simple-subtitle-wrapper { display: none; }
-}
 @container (max-width: 140px) {
-  .mds-event-simple-date { display: none; }
-}
-@container (max-width: 100px) {
   .mds-event-simple-right { display: none; }
 }
 /* Event title */
@@ -3415,13 +3419,13 @@ export default {
 /* Select input */
 .mds-event-grouping-select.mbsc-textfield {
   width: 210px;
-  max-height: 36px;
+  max-height: 34px;
 }
 .mds-event-grouping-select + .mbsc-ios.mbsc-select-icon {
-  top: 6px;
+  font-size: 13px;
 }
 .mds-event-grouping-calendar .mbsc-ios.mbsc-segmented-button {
-  padding: 0 12px;
+  padding: 2px 12px;
 }
   `,
 };
