@@ -2581,7 +2581,7 @@ export default {
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="mds-event-grouping-edit-btn mbsc-icon mbsc-font-icon mbsc-icon-pencil" data-event-id="' +
+                '<div class="mds-event-grouping-edit-btn mbsc-flex mbsc-icon mbsc-font-icon mbsc-icon-pencil" data-event-id="' +
                 ev.id +
                 '"></div>' +
                 '</div>' +
@@ -3325,6 +3325,8 @@ export default {
 }
 /* Edit button on subtask events */
 .mds-event-grouping-edit-btn {
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   cursor: pointer;
   color: #94a3b8;
