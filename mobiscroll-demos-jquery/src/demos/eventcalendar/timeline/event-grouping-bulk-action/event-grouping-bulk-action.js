@@ -3426,7 +3426,7 @@ export default {
   top: 8px;
 }
 .mds-event-grouping-calendar .mbsc-ios.mbsc-segmented-button {
-  padding: 2px 12px;
+  padding: 1px 12px;
 }
   `,
 };
