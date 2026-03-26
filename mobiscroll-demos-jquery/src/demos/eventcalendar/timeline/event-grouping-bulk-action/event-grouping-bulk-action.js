@@ -2918,95 +2918,75 @@ export default {
         })
         .mobiscroll('getInst');
 
-      // Initialize the edit popup with date range picker
-      var editPopup = $('#edit-event-popup')
-        .mobiscroll()
-        .popup({
-          display: 'center',
-          headerText: 'Edit Task Dates',
-          contentPadding: false,
-          buttons: [
-            'cancel',
-            {
-              text: 'Save',
-              keyCode: 'enter',
-              handler: function () {
-                var dates = editDatePicker.getVal();
-                var startVal = dates[0];
-                var endVal = dates[1];
-
-                if (editingEventId !== null && startVal && endVal) {
-                  var oldEvent = rawEvents.find(function (e) {
-                    return e.id === editingEventId;
-                  });
-
-                  if (!oldEvent) {
-                    editPopup.close();
-                    return;
-                  }
-
-                  var eventTitle = oldEvent.title;
-                  var oldQuarter = Math.floor(new Date(oldEvent.start).getMonth() / 3);
-                  var newQuarter = Math.floor(new Date(startVal).getMonth() / 3);
-                  var oldYear = new Date(oldEvent.start).getFullYear();
-                  var newYear = new Date(startVal).getFullYear();
-                  var quarterChanged = groupByClient && (oldQuarter !== newQuarter || oldYear !== newYear);
-
-                  var applyUpdate = function () {
-                    rawEvents = rawEvents.map(function (e) {
-                      if (e.id === editingEventId) {
-                        return Object.assign({}, e, { start: startVal, end: endVal });
-                      }
-                      return e;
-                    });
-                    updateView();
-                    return true;
-                  };
-
-                  if (quarterChanged) {
-                    var quarterNames = ['Q1', 'Q2', 'Q3', 'Q4'];
-                    var fromLabel = quarterNames[oldQuarter] + ' ' + oldYear;
-                    var toLabel = quarterNames[newQuarter] + ' ' + newYear;
-
-                    editPopup.close();
-                    mobiscroll.confirm({
-                      title: 'Move to different group',
-                      message: '"' + eventTitle + '" will move from ' + fromLabel + ' to ' + toLabel + '. Do you want to continue?',
-                      okText: 'Move',
-                      cancelText: 'Cancel',
-                      callback: function (result) {
-                        if (result) {
-                          applyUpdate();
-                          mobiscroll.toast({
-                            message: '"' + eventTitle + '" moved to ' + toLabel + '.',
-                          });
-                        }
-                      },
-                    });
-                  } else {
-                    if (applyUpdate()) {
-                      editPopup.close();
-                      mobiscroll.toast({
-                        message: '"' + eventTitle + '" dates updated.',
-                      });
-                    }
-                  }
-                }
-              },
-            },
-          ],
-        })
-        .mobiscroll('getInst');
-
-      var editDatePicker = $('#edit-event-dates')
+      var editDatePicker = $('#demo-event-grouping-dates')
         .mobiscroll()
         .datepicker({
           controls: ['calendar'],
           select: 'range',
-          display: 'inline',
+          display: 'center',
           showRangeLabels: true,
           touchUi: true,
           responsive: { medium: { touchUi: false } },
+          onChange: function (args) {
+            var dates = args.value;
+            var startVal = dates[0];
+            var endVal = dates[1];
+
+            if (editingEventId !== null && startVal && endVal) {
+              var oldEvent = rawEvents.find(function (e) {
+                return e.id === editingEventId;
+              });
+
+              if (!oldEvent) {
+                return;
+              }
+
+              var eventTitle = oldEvent.title;
+              var oldQuarter = Math.floor(new Date(oldEvent.start).getMonth() / 3);
+              var newQuarter = Math.floor(new Date(startVal).getMonth() / 3);
+              var oldYear = new Date(oldEvent.start).getFullYear();
+              var newYear = new Date(startVal).getFullYear();
+              var quarterChanged = groupByClient && (oldQuarter !== newQuarter || oldYear !== newYear);
+
+              var applyUpdate = function () {
+                rawEvents = rawEvents.map(function (e) {
+                  if (e.id === editingEventId) {
+                    return Object.assign({}, e, { start: startVal, end: endVal });
+                  }
+                  return e;
+                });
+                updateView();
+                return true;
+              };
+
+              if (quarterChanged) {
+                var quarterNames = ['Q1', 'Q2', 'Q3', 'Q4'];
+                var fromLabel = quarterNames[oldQuarter] + ' ' + oldYear;
+                var toLabel = quarterNames[newQuarter] + ' ' + newYear;
+
+                mobiscroll.confirm({
+                  title: 'Move to different group',
+                  message: '"' + eventTitle + '" will move from ' + fromLabel + ' to ' + toLabel + '. Do you want to continue?',
+                  okText: 'Move',
+                  cancelText: 'Cancel',
+                  callback: function (result) {
+                    if (result) {
+                      applyUpdate();
+                      mobiscroll.toast({
+                        message: '"' + eventTitle + '" moved to ' + toLabel + '.',
+                      });
+                    }
+                  },
+                });
+              } else {
+                if (applyUpdate()) {
+                  mobiscroll.toast({
+                    message: '"' + eventTitle + '" dates updated.',
+                  });
+                }
+              }
+            }
+          },
         })
         .mobiscroll('getInst');
 
@@ -3018,12 +2998,11 @@ export default {
         var rawEvent = rawEvents.find(function (e) {
           return e.id === eventId;
         });
-
         if (rawEvent) {
           editingEventId = eventId;
-          editPopup.setOptions({ headerText: rawEvent.title });
+          editDatePicker.setOptions({ headerText: rawEvent.title });
           editDatePicker.setVal([new Date(rawEvent.start), new Date(rawEvent.end)]);
-          editPopup.open();
+          editDatePicker.open();
         }
       });
 
@@ -3081,11 +3060,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-event-grouping" class="mds-event-grouping-calendar"></div>
-<div id="edit-event-popup">
-  <div class="mds-edit-popup-content">
-    <div id="edit-event-dates"></div>
-  </div>
-</div>
+<div id="demo-event-grouping-dates"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
@@ -3339,10 +3314,6 @@ export default {
 .mds-event-grouping-edit-btn:hover {
   color: #1e293b;
   background-color: rgba(0, 0, 0, 0.06);
-}
-/* Edit popup content */
-.mds-edit-popup-content {
-  min-width: 280px;
 }
 /* Simple event styling (no grouping) */
 .mds-event-simple {
