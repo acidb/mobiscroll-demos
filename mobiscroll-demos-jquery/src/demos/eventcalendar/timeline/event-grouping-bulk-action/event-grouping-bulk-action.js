@@ -3250,7 +3250,7 @@ export default {
 @container (max-width: 180px) {
   .mds-event-grouping-meta { display: none; }
 }
-@container (max-width: 140px) {
+@container (max-width: 130px) {
   .mds-event-grouping-event-right { display: none; }
 }
 .mds-event-grouping-original-event:last-child {
@@ -3358,7 +3358,7 @@ export default {
   background-color: #e8ecf0;
   container-type: inline-size;
 }
-@container (max-width: 140px) {
+@container (max-width: 130px) {
   .mds-event-simple-right { display: none; }
 }
 /* Event title */
@@ -3366,7 +3366,7 @@ export default {
   flex: 1;
   font-size: 13px;
   font-weight: 600;
-  margin-right: 12px;
+  margin-right: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -3423,6 +3423,7 @@ export default {
 }
 .mds-event-grouping-select + .mbsc-ios.mbsc-select-icon {
   font-size: 13px;
+  top: 8px;
 }
 .mds-event-grouping-calendar .mbsc-ios.mbsc-segmented-button {
   padding: 2px 12px;
