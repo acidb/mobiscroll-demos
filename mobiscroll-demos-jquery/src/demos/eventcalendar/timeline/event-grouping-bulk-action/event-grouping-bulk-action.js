@@ -2751,7 +2751,7 @@ export default {
               '</div>' +
               '<label>Quarterly<input mbsc-segmented type="radio" name="zoom-level" value="quarter"/></label>' +
               '<label>Monthly<input mbsc-segmented type="radio" name="zoom-level" value="month" checked/></label>' +
-              '<label>6 Months<input mbsc-segmented type="radio" name="zoom-level" value="half-year"/></label>' +
+              '<label>Semiannual<input mbsc-segmented type="radio" name="zoom-level" value="half-year"/></label>' +
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-today></div>' +
               '<div mbsc-calendar-next></div>'
