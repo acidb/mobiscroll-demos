@@ -147,7 +147,7 @@ export default {
           '<button mbsc-button data-variant="flat" class="mds-reorder-switch mds-enable">Reorder resources</button>' +
           '<button mbsc-button class="mds-reorder-save mds-update">Save</button>' +
           '<button mbsc-button class="mds-reorder-cancel mds-update">Cancel</button>' +
-          '<button mbsc-button class="mds-reorder-header-filter-separator" data-variant="outline" data-color="light"></button>' +
+          '<div class="mds-reorder-header-filter-separator"></div>' +
           '<button mbsc-calendar-prev class="mds-header-filter-prev"></button>' +
           '<button mbsc-calendar-today class="mds-header-filter-today"></button>' +
           '<button mbsc-calendar-next class="mds-header-filter-next"></button>'
@@ -245,13 +245,10 @@ export default {
   align-items: center;
 }
 
-.mbsc-button.mds-reorder-header-filter-separator {
+.mds-reorder-header-filter-separator {
   height: 25px;
-  min-width: 0;
-  padding: 0;
   margin: 0 8px 0 12px;
-  border-width: 1px;
-  cursor: none;
+  border: 1px solid var(--mbsc-eventcalendar-border-color);
 }
 
 .mbsc-material .mds-reorder-switch {

@@ -728,6 +728,10 @@ const extendDefaultEvent = (args: MbscNewEventData) => {
 const handleToastClose = () => {
   isToastOpen.value = false
 }
+
+// Workaround for TypeScript error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const day = new Date()
 </script>
 
 <template>

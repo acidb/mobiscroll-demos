@@ -217,7 +217,7 @@ function App() {
               </Button>
             </>
           )}
-          <Button className="mds-reorder-header-filter-separator" variant="outline" color="light"></Button>
+          <div className="mds-reorder-header-filter-separator" />
         </div>
         <CalendarPrev />
         <CalendarToday />

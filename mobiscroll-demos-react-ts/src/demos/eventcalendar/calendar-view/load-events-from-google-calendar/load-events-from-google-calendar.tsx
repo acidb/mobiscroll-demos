@@ -33,8 +33,8 @@ const App: FC = () => {
     calendar: { labels: true },
   });
 
-  const firstDay = useRef<Date>();
-  const lastDay = useRef<Date>();
+  const firstDay = useRef<Date>(null);
+  const lastDay = useRef<Date>(null);
 
   const onError = useCallback((resp: { error?: string; result: { error: { message: string } } }) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);

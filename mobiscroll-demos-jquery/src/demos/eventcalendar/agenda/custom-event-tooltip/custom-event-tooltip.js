@@ -33,7 +33,7 @@ export default {
         $appointmentTime.text(time);
         $appointmentStatus.text(event.confirmed ? 'Confirmed' : 'Canceled');
 
-        $btnStatus.text(buttonText);
+        $btnStatus.find('.mbsc-button-txt').text(buttonText);
         $btnStatus.mobiscroll('setOptions', { color: buttonType });
 
         $tooltipHeader.css('background-color', event.color);
@@ -599,12 +599,17 @@ export default {
 }
 
 .mds-tooltip-button.mbsc-button {
-  font-size: 14px;
+  font-size: 16px;
   margin: 0;
+  line-height: 32px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.mds-tooltip-button.mbsc-material {
-  font-size: 12px;
+.mds-tooltip-button .mbsc-button-txt {
+  font-size: 14px;
+  padding-left: 0;
+  padding-right: 0;
 }
 `,
 };

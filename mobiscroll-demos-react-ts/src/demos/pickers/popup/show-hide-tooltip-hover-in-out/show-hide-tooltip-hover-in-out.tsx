@@ -89,7 +89,7 @@ function App() {
   const [eventTitle, setEventTitle] = useState<string>('');
   const [eventStart, setEventStart] = useState<string>('');
   const [eventEnd, setEventEnd] = useState<string>('');
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const handleEventHoverIn = useCallback((args: MbscCalendarEvent) => {
     if (timerRef.current) {

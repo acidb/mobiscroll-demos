@@ -44,7 +44,7 @@ function App() {
         <div>{data.title}</div>
         <div className="mds-agenda-event-content mbsc-flex mbsc-align-items-center">
           <img className="mds-agenda-event-avatar" src={myParticipants[data.original.participant].img} />
-          <div className="mbsc-flex-1-0">{myParticipants[data.original.participant].name}</div>
+          <div className="mbsc-flex-1-1">{myParticipants[data.original.participant].name}</div>
           <Button className="mds-agenda-event-btn" color="secondary" onClick={() => add(data.original)}>
             Add participant
           </Button>

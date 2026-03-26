@@ -375,15 +375,14 @@ function handleEventClick(args) {
     }
   ]
   popupHeader.value =
-    '<div>Edit ' +
+    'Edit ' +
     resource.name +
-    '\'s hours</div><div class="mds-employee-shifts-header">' +
-    formatDate('DDDD', new Date(event.start)) +
+    "'s hours - " +
+    formatDate('DDD', new Date(event.start)) +
     ' ' +
     slot.name +
     ', ' +
-    formatDate('D MMMM YYYY', new Date(event.start)) +
-    '</div>'
+    formatDate('D MMM YYYY', new Date(event.start))
   isPopupOpen.value = true
 }
 
@@ -404,13 +403,12 @@ function handleEventCreated(args) {
     }
   ]
   popupHeader.value =
-    '<div>New shift</div><div class="mds-employee-shifts-header">' +
-    formatDate('DDDD', new Date(event.start)) +
+    'New shift - ' +
+    formatDate('DDD', new Date(event.start)) +
     ' ' +
     slot.name +
     ', ' +
-    formatDate('D MMMM YYYY', new Date(event.start)) +
-    '</div>'
+    formatDate('D MMM YYYY', new Date(event.start))
   isPopupOpen.value = true
 }
 
@@ -485,6 +483,7 @@ function handleShiftDeleteClick() {
     </template>
   </MbscEventcalendar>
   <MbscPopup
+    cssClass="mds-employee-shifts-popup"
     display="bottom"
     :buttons="popupButtons"
     :contentPadding="false"
@@ -537,10 +536,8 @@ function handleShiftDeleteClick() {
 </template>
 
 <style>
-.mds-employee-shifts-header {
-  font-size: 14px;
-  font-weight: 600;
-  opacity: 0.6;
+.mds-employee-shifts-popup .mbsc-popup-header {
+  font-size: 16px;
 }
 
 .mds-employee-shifts .mbsc-timeline-resource-col {

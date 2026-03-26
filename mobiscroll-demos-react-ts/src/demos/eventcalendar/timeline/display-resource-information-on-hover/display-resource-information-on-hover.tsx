@@ -32,12 +32,12 @@ const App: FC = () => {
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
 
-  const hoveredResourceElmRef = useRef<HTMLElement>();
+  const hoveredResourceElmRef = useRef<HTMLElement>(null);
   const mySelectedDate = useRef(new Date());
   const calInst = useRef<Eventcalendar>(null);
   const popupInst = useRef<Popup>(null);
-  const openTimer = useRef<ReturnType<typeof setTimeout>>();
-  const closeTimer = useRef<ReturnType<typeof setTimeout>>();
+  const openTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const myResources = useMemo<MbscResource[]>(
     () => [

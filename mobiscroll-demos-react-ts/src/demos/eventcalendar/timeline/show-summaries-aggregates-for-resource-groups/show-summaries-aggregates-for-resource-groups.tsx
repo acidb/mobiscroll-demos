@@ -755,8 +755,8 @@ function App() {
 
   const [eventsWithSummaries, setEventsWithSummaries] = useState<MbscCalendarEvent[]>(myEvents.current);
 
-  const firstViewDay = useRef<Date>();
-  const lastViewDay = useRef<Date>();
+  const firstViewDay = useRef<Date>(null);
+  const lastViewDay = useRef<Date>(null);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({

@@ -44,9 +44,9 @@ const App: FC = () => {
 
   const myView = useMemo<MbscEventcalendarView>(() => ({ scheduler: { type: 'week' } }), []);
 
-  const debounce = useRef<ReturnType<typeof setTimeout>>();
-  const startDate = useRef<Date>();
-  const endDate = useRef<Date>();
+  const debounce = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const startDate = useRef<Date>(null);
+  const endDate = useRef<Date>(null);
 
   const onError = useCallback((resp: { error?: string; result: { error: { message: string } } }) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);
