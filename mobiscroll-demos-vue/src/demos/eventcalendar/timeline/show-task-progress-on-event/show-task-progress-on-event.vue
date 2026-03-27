@@ -7,6 +7,7 @@ import {
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { ref } from 'vue'
+import { dyndatetime } from '../../../../dyndatetime'
 
 setOptions({
   // locale,
@@ -15,50 +16,50 @@ setOptions({
 
 const myEvents = ref([
   {
-    start: 'dyndatetime(y,m,d-3)',
-    end: 'dyndatetime(y,m,d)',
+    start: dyndatetime('y,m,d-3'),
+    end: dyndatetime('y,m,d'),
     title: 'Design Homepage',
     resource: 'alice',
     progress: 100
   },
   {
-    start: 'dyndatetime(y,m,d-3)',
-    end: 'dyndatetime(y,m,d+1)',
+    start: dyndatetime('y,m,d-3'),
+    end: dyndatetime('y,m,d+1'),
     title: 'Create Wireframes',
     resource: 'bob',
     progress: 100
   },
   {
-    start: 'dyndatetime(y,m,d-1)',
-    end: 'dyndatetime(y,m,d+4)',
+    start: dyndatetime('y,m,d-1'),
+    end: dyndatetime('y,m,d+4'),
     title: 'Develop Frontend',
     resource: 'charlie',
     progress: 45
   },
   {
-    start: 'dyndatetime(y,m,d-1)',
-    end: 'dyndatetime(y,m,d+4)',
+    start: dyndatetime('y,m,d-1'),
+    end: dyndatetime('y,m,d+4'),
     title: 'Develop Backend',
     resource: 'dave',
     progress: 35
   },
   {
-    start: 'dyndatetime(y,m,d+4)',
-    end: 'dyndatetime(y,m,d+8)',
+    start: dyndatetime('y,m,d+4'),
+    end: dyndatetime('y,m,d+8'),
     title: 'Test Website',
     resource: 'erin',
     progress: 0
   },
   {
-    start: 'dyndatetime(y,m,d+1)',
-    end: 'dyndatetime(y,m,d+8)',
+    start: dyndatetime('y,m,d+1'),
+    end: dyndatetime('y,m,d+8'),
     title: 'Fix Bugs',
     resource: 'frank',
     progress: 0
   },
   {
-    start: 'dyndatetime(y,m,d+8)',
-    end: 'dyndatetime(y,m,d+11)',
+    start: dyndatetime('y,m,d+8'),
+    end: dyndatetime('y,m,d+11'),
     title: 'Deploy Website',
     resource: 'george',
     progress: 0

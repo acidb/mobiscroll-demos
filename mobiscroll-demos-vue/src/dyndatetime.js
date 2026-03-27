@@ -1,45 +1,24 @@
-export default function myPlugin() {
-  return {
-    name: 'transform-file',
-    transform(src, id) {
-      if (/\.(vue)$/.test(id)) {
-        return {
-          code: replaceDynamicDates(src),
-          map: null // Provide source map if available
-        }
-      }
-    }
-  }
-}
-
 const now = new Date()
 
-const replaceDynamicDates = (src) =>
-  src.replace(/['|"]dyndatetime\(([^)])*\)['|"]/g, (i) => parseDatestring(i))
-
-const parseDatestring = (s) => {
-  s = s.replace(/dyndatetime/, '')
-  s = s.replace(/\(/, '')
-  s = s.replace(/\)/, '')
+/**
+ * Returns an ISO 8601 date string generated dynamically relative to the current date.
+ * It is useful for generating dates for sample data.
+ * @param {string} s The string to parse the date from, e.g. 'y,m,d,8,30'
+ * @returns {string} An ISO 8601 date string.
+ */
+export function dyndatetime(s) {
   s = s.replace(/y/, now.getFullYear())
   s = s.replace(/m/, now.getMonth() + 1)
   s = s.replace(/d/, now.getDate())
   s = s.replace(/h/, now.getHours())
   s = s.replace(/i/, now.getMinutes())
-  s = s.replace(/['|"](.*)['|"]/, (i) => {
-    const dateDict = {
-      0: 0,
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0
-    }
-    const date = i.replace(/['|"]/g, '')
+  s = s.replace(/(.*)/, (date) => {
+    const dateDict = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 }
     const dateArray = date.split(',')
-    dateArray.forEach((i, index) => {
-      const splittedNum = i.split(/[/+|/-]/)
+    dateArray.forEach((item, index) => {
+      const splittedNum = item.split(/[/+|-]/)
       if (splittedNum.length > 1) {
-        const minus = i.indexOf('-') !== -1
+        const minus = item.indexOf('-') !== -1
         dateDict[index] = minus
           ? +splittedNum[0] - +splittedNum[1]
           : +splittedNum[0] + +splittedNum[1]
@@ -54,7 +33,6 @@ const parseDatestring = (s) => {
     const h = dd.getHours()
     const mm = dd.getMinutes()
     return (
-      "'" +
       y +
       '-' +
       (m < 10 ? '0' : '') +
@@ -67,8 +45,7 @@ const parseDatestring = (s) => {
       h +
       ':' +
       (mm < 10 ? '0' : '') +
-      mm +
-      "'"
+      mm
     )
   })
   return s

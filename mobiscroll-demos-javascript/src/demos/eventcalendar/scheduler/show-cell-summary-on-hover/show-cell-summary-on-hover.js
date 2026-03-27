@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript';
+import { dyndatetime } from '../../../../dyndatetime';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -24,107 +25,107 @@ export default {
       },
       data: [
         {
-          start: 'dyndatetime(y,m,d-3,8)',
-          end: 'dyndatetime(y,m,d-3,11)',
+          start: dyndatetime('y,m,d-3,8'),
+          end: dyndatetime('y,m,d-3,11'),
           title: 'Task 1',
         },
         {
-          start: 'dyndatetime(y,m,d-2,14)',
-          end: 'dyndatetime(y,m,d-2,16)',
+          start: dyndatetime('y,m,d-2,14'),
+          end: dyndatetime('y,m,d-2,16'),
           title: 'Task 2',
         },
         {
-          start: 'dyndatetime(y,m,d-1,15)',
-          end: 'dyndatetime(y,m,d-1,17)',
+          start: dyndatetime('y,m,d-1,15'),
+          end: dyndatetime('y,m,d-1,17'),
           title: 'Task 3',
         },
         {
-          start: 'dyndatetime(y,m,d-1,10)',
-          end: 'dyndatetime(y,m,d-1,12)',
+          start: dyndatetime('y,m,d-1,10'),
+          end: dyndatetime('y,m,d-1,12'),
           title: 'Task 4',
         },
         {
-          start: 'dyndatetime(y,m,d,8)',
-          end: 'dyndatetime(y,m,d,11)',
+          start: dyndatetime('y,m,d,8'),
+          end: dyndatetime('y,m,d,11'),
           title: 'Task 5',
         },
         {
-          start: 'dyndatetime(y,m,d,9)',
-          end: 'dyndatetime(y,m,d,12)',
+          start: dyndatetime('y,m,d,9'),
+          end: dyndatetime('y,m,d,12'),
           title: 'Task 6',
         },
         {
-          start: 'dyndatetime(y,m,d,10)',
-          end: 'dyndatetime(y,m,d,12)',
+          start: dyndatetime('y,m,d,10'),
+          end: dyndatetime('y,m,d,12'),
           title: 'Task 7',
         },
         {
-          start: 'dyndatetime(y,m,d,10)',
-          end: 'dyndatetime(y,m,d,13)',
+          start: dyndatetime('y,m,d,10'),
+          end: dyndatetime('y,m,d,13'),
           title: 'Task 8',
         },
         {
-          start: 'dyndatetime(y,m,d,10)',
-          end: 'dyndatetime(y,m,d,14)',
+          start: dyndatetime('y,m,d,10'),
+          end: dyndatetime('y,m,d,14'),
           title: 'Task 9',
         },
         {
-          start: 'dyndatetime(y,m,d,16)',
-          end: 'dyndatetime(y,m,d,18)',
+          start: dyndatetime('y,m,d,16'),
+          end: dyndatetime('y,m,d,18'),
           title: 'Task 10',
         },
         {
-          start: 'dyndatetime(y,m,d+1,13)',
-          end: 'dyndatetime(y,m,d+1,17)',
+          start: dyndatetime('y,m,d+1,13'),
+          end: dyndatetime('y,m,d+1,17'),
           title: 'Task 11',
         },
         {
-          start: 'dyndatetime(y,m,d+1,18)',
-          end: 'dyndatetime(y,m,d+1,20)',
+          start: dyndatetime('y,m,d+1,18'),
+          end: dyndatetime('y,m,d+1,20'),
           title: 'Task 12',
         },
         {
-          start: 'dyndatetime(y,m,d+2,8)',
-          end: 'dyndatetime(y,m,d+2,12)',
+          start: dyndatetime('y,m,d+2,8'),
+          end: dyndatetime('y,m,d+2,12'),
           title: 'Task 13',
         },
         {
-          start: 'dyndatetime(y,m,d+2,15)',
-          end: 'dyndatetime(y,m,d+2,18)',
+          start: dyndatetime('y,m,d+2,15'),
+          end: dyndatetime('y,m,d+2,18'),
           title: 'Task 14',
         },
         {
-          start: 'dyndatetime(y,m,d+3,8)',
-          end: 'dyndatetime(y,m,d+3,11)',
+          start: dyndatetime('y,m,d+3,8'),
+          end: dyndatetime('y,m,d+3,11'),
           title: 'Task 15',
         },
         {
-          start: 'dyndatetime(y,m,d+3,15)',
-          end: 'dyndatetime(y,m,d+3,17)',
+          start: dyndatetime('y,m,d+3,15'),
+          end: dyndatetime('y,m,d+3,17'),
           title: 'Task 16',
         },
         {
-          start: 'dyndatetime(y,m,d+4,9)',
-          end: 'dyndatetime(y,m,d+4,12)',
+          start: dyndatetime('y,m,d+4,9'),
+          end: dyndatetime('y,m,d+4,12'),
           title: 'Task 17',
         },
       ],
       invalid: [
         {
-          start: 'dyndatetime(y,m,d-2,12)',
-          end: 'dyndatetime(y,m,d-2,13)',
+          start: dyndatetime('y,m,d-2,12'),
+          end: dyndatetime('y,m,d-2,13'),
         },
         {
-          start: 'dyndatetime(y,m,d-1,8)',
-          end: 'dyndatetime(y,m,d-1,10)',
+          start: dyndatetime('y,m,d-1,8'),
+          end: dyndatetime('y,m,d-1,10'),
         },
         {
-          start: 'dyndatetime(y,m,d,13)',
-          end: 'dyndatetime(y,m,d,15)',
+          start: dyndatetime('y,m,d,13'),
+          end: dyndatetime('y,m,d,15'),
         },
         {
-          start: 'dyndatetime(y,m,d+1,15)',
-          end: 'dyndatetime(y,m,d+1,17)',
+          start: dyndatetime('y,m,d+1,15'),
+          end: dyndatetime('y,m,d+1,17'),
         },
         {
           start: '10:00',
@@ -137,23 +138,23 @@ export default {
       ],
       colors: [
         {
-          start: 'dyndatetime(y,m,d-1,12)',
-          end: 'dyndatetime(y,m,d-1,14)',
+          start: dyndatetime('y,m,d-1,12'),
+          end: dyndatetime('y,m,d-1,14'),
           cssClass: 'mds-cell-summary-color',
         },
         {
-          start: 'dyndatetime(y,m,d,10)',
-          end: 'dyndatetime(y,m,d,12)',
+          start: dyndatetime('y,m,d,10'),
+          end: dyndatetime('y,m,d,12'),
           cssClass: 'mds-cell-summary-color',
         },
         {
-          start: 'dyndatetime(y,m,d+1,8)',
-          end: 'dyndatetime(y,m,d+1,11)',
+          start: dyndatetime('y,m,d+1,8'),
+          end: dyndatetime('y,m,d+1,11'),
           cssClass: 'mds-cell-summary-color',
         },
         {
-          start: 'dyndatetime(y,m,d+2,14)',
-          end: 'dyndatetime(y,m,d+2,17)',
+          start: dyndatetime('y,m,d+2,14'),
+          end: dyndatetime('y,m,d+2,17'),
           cssClass: 'mds-cell-summary-color',
         },
         {

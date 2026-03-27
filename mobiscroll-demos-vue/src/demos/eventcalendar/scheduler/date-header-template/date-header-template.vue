@@ -6,6 +6,7 @@ import {
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
 import { onMounted, ref } from 'vue'
+import { dyndatetime } from '../../../../dyndatetime'
 
 setOptions({
   // locale,
@@ -48,17 +49,17 @@ const myView = {
 
 const milestones = [
   {
-    date: 'dyndatetime(y,m,d-2)',
+    date: dyndatetime('y,m,d-2'),
     name: 'Project review',
     color: '#f5da7b'
   },
   {
-    date: 'dyndatetime(y,m,d-1)',
+    date: dyndatetime('y,m,d-1'),
     name: 'Product shipping',
     color: '#acf3a3'
   },
   {
-    date: 'dyndatetime(y,m,d+1)',
+    date: dyndatetime('y,m,d+1'),
     name: 'Cycle finish',
     color: '#ff84a0'
   }

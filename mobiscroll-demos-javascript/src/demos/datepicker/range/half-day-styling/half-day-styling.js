@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript';
+import { dyndatetime } from '../../../../dyndatetime';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -13,9 +14,9 @@ export default {
       select: 'range',
       display: 'inline',
       colors: [
-        { date: 'dyndatetime(y,m,12)', cellCssClass: 'check-in' },
-        { date: 'dyndatetime(y,m,16)', cellCssClass: 'check-out' },
-        { start: 'dyndatetime(y,m,13)', end: 'dyndatetime(y,m,15)', background: '#46c4f3' },
+        { date: dyndatetime('y,m,12'), cellCssClass: 'check-in' },
+        { date: dyndatetime('y,m,16'), cellCssClass: 'check-out' },
+        { start: dyndatetime('y,m,13'), end: dyndatetime('y,m,15'), background: '#46c4f3' },
       ],
     });
   },
