@@ -2639,6 +2639,7 @@ updateView()
         <MbscCheckbox
           v-model="groupByClientQuarter"
           @change="updateView"
+          theme="material"
           label="Group by Client/Quarter"
         />
         <MbscSelect

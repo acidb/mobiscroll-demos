@@ -2615,7 +2615,7 @@ function App() {
       <>
         <CalendarNav />
         <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-grouping-header-controls">
-          <Checkbox checked={groupByClientQuarter} onChange={changeByClientQuarter} label="Group by Client/Quarter" />
+          <Checkbox checked={groupByClientQuarter} onChange={changeByClientQuarter} theme="material" label="Group by Client/Quarter" />
           <Select inputStyle="box" display="anchored" touchUi={false} data={selectData} value={groupBy} onChange={changeGroupBy} />
         </div>
         <CalendarPrev />

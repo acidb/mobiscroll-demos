@@ -2702,7 +2702,7 @@ export default {
               '<div mbsc-calendar-nav></div>' +
               '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-grouping-header-controls">' +
               '<label>' +
-              '<input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-theme="material" data-input-style="box" data-label="Group by Client/Quarter" />' +
+              '<input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-theme="material" data-label="Group by Client/Quarter" />' +
               '</label>' +
               '<label>' +
               '<input mbsc-input id="event-grouping-input" class="mds-event-grouping-select" data-dropdown="true" data-input-style="box" />' +

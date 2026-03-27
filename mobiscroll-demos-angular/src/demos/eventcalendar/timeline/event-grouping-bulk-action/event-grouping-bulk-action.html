@@ -18,7 +18,12 @@
   <ng-template #customHeaderTemplate>
     <mbsc-calendar-nav></mbsc-calendar-nav>
     <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-grouping-header-controls">
-      <mbsc-checkbox [(ngModel)]="groupByClientQuarter" (change)="onGroupByClientQuarterChange($event)" label="Group by Client/Quarter">
+      <mbsc-checkbox
+        [(ngModel)]="groupByClientQuarter"
+        (change)="onGroupByClientQuarterChange($event)"
+        theme="material"
+        label="Group by Client/Quarter"
+      >
       </mbsc-checkbox>
       <mbsc-select
         inputStyle="box"
