@@ -2926,9 +2926,7 @@ export default {
           controls: ['calendar'],
           select: 'range',
           display: 'center',
-          showRangeLabels: true,
-          touchUi: true,
-          responsive: { medium: { touchUi: false } },
+          touchUi: false,
           onChange: function (args) {
             var dates = args.value;
             var startVal = dates[0];
@@ -3183,7 +3181,7 @@ export default {
   font-size: 20px;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.2s ease; /* Reduced from 0.3s to 0.2s */
+  transition: transform 0.2s ease;
   width: 24px;
   height: 24px;
   align-items: center;
@@ -3198,12 +3196,12 @@ export default {
 .mds-event-grouping-events {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.2s ease; /* Reduced from 0.25s to 0.2s */
+  transition: grid-template-rows 0.2s ease;
 }
 .mds-event-grouping-events-inner {
   overflow: hidden;
   padding: 0 14px;
-  transition: padding 0.2s ease; /* Reduced from 0.25s to 0.2s */
+  transition: padding 0.2s ease;
 }
 .mds-event-grouping-task.expanded .mds-event-grouping-events {
   grid-template-rows: 1fr;
@@ -3269,6 +3267,7 @@ export default {
   text-overflow: ellipsis;
   max-width: 100%;
 }
+/* Detail container (avatar/dot + text) */
 .mds-event-grouping-event-detail {
   align-items: center;
   justify-content: flex-end;

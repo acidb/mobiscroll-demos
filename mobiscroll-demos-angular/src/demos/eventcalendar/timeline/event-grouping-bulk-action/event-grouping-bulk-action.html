@@ -4,10 +4,10 @@
   [view]="myView"
   [resources]="myResources"
   [dragToMove]="true"
-  [dragToResize]="false"
+  [dragToResize]="true"
   [dragToCreate]="false"
   [clickToCreate]="false"
-  [dragBetweenResources]="false"
+  [dragBetweenResources]="myDragBetweenResources"
   (onEventUpdate)="onEventUpdate($event)"
   [headerTemplate]="customHeaderTemplate"
   [resourceTemplate]="customResourceTemplate"
@@ -35,6 +35,9 @@
       >
       </mbsc-select>
     </div>
+    <label><input mbsc-segmented type="radio" name="zoom-level" value="quarter" [checked]="zoomLevel === 'quarter'" (change)="onZoomLevelChange('quarter')">Quarterly</label>
+    <label><input mbsc-segmented type="radio" name="zoom-level" value="month" [checked]="zoomLevel === 'month'" (change)="onZoomLevelChange('month')">Monthly</label>
+    <label><input mbsc-segmented type="radio" name="zoom-level" value="half-year" [checked]="zoomLevel === 'half-year'" (change)="onZoomLevelChange('half-year')">Semiannual</label>
     <mbsc-calendar-prev></mbsc-calendar-prev>
     <mbsc-calendar-today></mbsc-calendar-today>
     <mbsc-calendar-next></mbsc-calendar-next>
@@ -84,8 +87,13 @@
       </div>
 
       <div class="mds-event-grouping-events">
-        <div class="mds-event-grouping-events-inner" *ngIf="!event.original.collapsed">
-          <div *ngFor="let ev of event.original.originalEvents" class="mds-event-grouping-original-event">
+        <div class="mds-event-grouping-events-inner">
+          <div
+            *ngFor="let ev of event.original.originalEvents"
+            class="mds-event-grouping-original-event"
+            [ngStyle]="getOriginalEventStyle(ev, event.original)"
+            [title]="getOriginalEventTitle(ev)"
+          >
             <div class="mbsc-flex mds-event-grouping-event-content">
               <div class="mds-event-grouping-event-title">{{ ev.title }}</div>
               <div class="mbsc-flex mds-event-grouping-event-right">
@@ -106,6 +114,10 @@
                   <div class="mds-event-grouping-event-info">{{ getDetailInfo(ev).detailText }}</div>
                 </div>
               </div>
+              <div
+                class="mds-event-grouping-edit-btn mbsc-flex mbsc-icon mbsc-font-icon mbsc-icon-pencil"
+                (click)="onEditBtnClick($event, ev)"
+              ></div>
             </div>
           </div>
         </div>
@@ -115,7 +127,7 @@
 
   <!-- Simple Event Template -->
   <ng-template #simpleEventTemplate let-event>
-    <div class="mbsc-flex mds-event-simple" [style.background-color]="event.original.color">
+    <div class="mbsc-flex mds-event-simple">
       <div class="mds-event-simple-title">{{ event.original.title }}</div>
       <div class="mbsc-flex mds-event-simple-right">
         <div class="mds-event-simple-date">{{ formatEventDate(event.original.start) }} - {{ formatEventDate(event.original.end) }}</div>
@@ -140,3 +152,12 @@
     </div>
   </ng-template>
 </mbsc-eventcalendar>
+<mbsc-datepicker
+  #editDatePicker
+  select="range"
+  display="center"
+  [touchUi]="false"
+  [controls]="['calendar']"
+  (onChange)="onDatepickerChange($event)"
+>
+</mbsc-datepicker>
