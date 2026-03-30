@@ -2669,7 +2669,7 @@ function toggleGroupCollapse(groupEvent) {
   // Refresh calendar to recalculate row heights
   setTimeout(() => {
     calendarRef.value?.instance?.refresh()
-  }, 200)
+  }, 0)
 }
 
 function openEditDatePicker(eventId) {

@@ -18,7 +18,6 @@ import {
 import type {
   MbscCalendarEvent,
   MbscDatepickerChangeEvent,
-  MbscDatepickerValue,
   MbscEventcalendarView,
   MbscEventUpdateEvent,
   MbscResource,
@@ -2683,7 +2682,7 @@ function toggleGroupCollapse(groupEvent: MbscCalendarEvent) {
   // Refresh calendar to recalculate row heights
   setTimeout(() => {
     calendarRef.value?.instance?.refresh()
-  }, 200)
+  }, 0)
 }
 
 function openEditDatePicker(eventId: number) {
@@ -2700,9 +2699,9 @@ function openEditDatePicker(eventId: number) {
 }
 
 function handleEditDateChange(args: MbscDatepickerChangeEvent) {
-  const dates: MbscDatepickerValue = args.value
-  const startVal = dates![0]
-  const endVal = dates![1]
+  const dateRange: any = args.value
+  const startVal = dateRange[0]
+  const endVal = dateRange[1]
 
   if (editingEventId.value !== null && startVal && endVal) {
     const oldEvent = rawEvents.value.find((e: MbscCalendarEvent) => e.id === editingEventId.value)
