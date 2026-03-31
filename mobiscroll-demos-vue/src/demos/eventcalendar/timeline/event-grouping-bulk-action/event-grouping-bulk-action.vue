@@ -6,7 +6,11 @@ import {
   MbscCalendarPrev,
   MbscCalendarToday,
   MbscCheckbox,
+  MbscConfirm,
+  MbscDatepicker,
   MbscEventcalendar,
+  MbscSegmented,
+  MbscSegmentedGroup,
   MbscSelect,
   MbscToast,
   setOptions /* localeImport */
@@ -2358,51 +2362,62 @@ const defaultEvents = [
   //</hide-comment>
 ]
 
-const myView = {
-  timeline: {
-    type: 'year',
-    resolutionHorizontal: 'month',
-    eventHeight: 'variable'
-  }
-}
-
 // Reactive state
 const rawEvents = ref([...defaultEvents])
 const displayEvents = ref([])
 const groupedEvents = ref([])
 const myResources = ref(assigneeResources)
+const myView = ref({
+  timeline: {
+    type: 'year',
+    resolutionHorizontal: 'month',
+    eventHeight: 'variable'
+  }
+})
 const groupBy = ref('assignee')
 const groupByClientQuarter = ref(false)
+const zoomLevel = ref('month')
 const isToastOpen = ref(false)
 const toastMessage = ref('')
 const calendarRef = ref(null)
+const dragBetweenResources = ref(true)
+const isConfirmOpen = ref(false)
+const confirmTitle = ref('')
+const confirmMessage = ref('')
+const confirmCallback = ref(null)
+
+// Edit popup state
+const editingEventId = ref(null)
+const editDatePickerRef = ref(null)
+const editDatePickerHeaderText = ref('')
+const editDatePickerValue = ref(null)
 
 function groupEventsByClientQuarter(events) {
   const groups = new Map()
   const result = []
 
-  // Save old collapsed states
+  // Save old collapsed states including year and quarter
   const oldCollapsedStates = {}
   groupedEvents.value.forEach((ge) => {
-    const stateKey = `${ge.resource}-${ge.clientGroup}-${ge.year}-${ge.period}`
+    const stateKey = `${ge.resource}-${ge.clientGroup}-${ge.year}-${ge.quarter}`
     oldCollapsedStates[stateKey] = ge.collapsed
   })
 
-  // Group events
+  // Group events by resource (assignee or type) + client + quarter
   events.forEach((event) => {
     const resourceId = groupBy.value === 'assignee' ? event.resource : event.type
     const eventStart = new Date(event.start)
     const month = eventStart.getMonth()
     const year = eventStart.getFullYear()
-    const period = Math.floor(month / 3)
-    const groupKey = `${resourceId}-${event.clientGroup}-${year}-${period}`
+    const quarter = Math.floor(month / 3)
+    const groupKey = `${resourceId}-${event.clientGroup}-${year}-${quarter}`
 
     if (!groups.has(groupKey)) {
       groups.set(groupKey, {
         resource: resourceId,
         clientGroup: event.clientGroup,
         year,
-        period,
+        quarter,
         events: []
       })
     }
@@ -2411,20 +2426,32 @@ function groupEventsByClientQuarter(events) {
 
   // Create grouped events
   groups.forEach((groupData, groupKey) => {
-    const periodEvents = [...groupData.events].sort((a, b) =>
-      a.start < b.start ? -1 : a.start > b.start ? 1 : 0
+    const quarterEvents = [...groupData.events].sort(
+      (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
     )
 
-    const resourceList = groupBy.value === 'assignee' ? assigneeResources : typeResources
-    const color = resourceList.find((r) => r.id === groupData.resource)?.color
-    const eventIds = periodEvents.map((e) => e.id).join('-')
-    const earliestStart = periodEvents[0].start
-    const latestEnd = periodEvents.reduce(
-      (latest, e) => (e.end > latest ? e.end : latest),
-      periodEvents[0].end
+    // Get color based on groupBy mode
+    let color
+    if (groupBy.value === 'assignee') {
+      const resourceItem = assigneeResources.find((r) => r.id === groupData.resource)
+      color = resourceItem.color
+    } else {
+      const typeObj = typeResources.find((r) => r.id === groupData.resource)
+      color = typeObj.color
+    }
+
+    const eventIds = quarterEvents.map((e) => e.id).join('-')
+    const earliestStart = quarterEvents[0].start
+    const latestEnd = quarterEvents.reduce(
+      (latest, event) =>
+        new Date(event.end).getTime() > new Date(latest).getTime() ? event.end : latest,
+      quarterEvents[0].end
     )
     const newId = `group-${groupKey}-${eventIds}`
-    const stateKey = `${groupData.resource}-${groupData.clientGroup}-${groupData.year}-${groupData.period}`
+
+    // Use full key including year and quarter
+    const stateKey = `${groupData.resource}-${groupData.clientGroup}-${groupData.year}-${groupData.quarter}`
+    const collapsedState = stateKey in oldCollapsedStates ? oldCollapsedStates[stateKey] : true
 
     result.push({
       id: newId,
@@ -2432,13 +2459,13 @@ function groupEventsByClientQuarter(events) {
       resource: groupData.resource,
       clientGroup: groupData.clientGroup,
       year: groupData.year,
-      period: groupData.period,
+      quarter: groupData.quarter,
       start: earliestStart,
       end: latestEnd,
       color,
-      count: periodEvents.length,
-      originalEvents: periodEvents,
-      collapsed: stateKey in oldCollapsedStates ? oldCollapsedStates[stateKey] : true
+      count: quarterEvents.length,
+      originalEvents: quarterEvents,
+      collapsed: collapsedState
     })
   })
 
@@ -2471,67 +2498,166 @@ function updateView() {
   }
 
   myResources.value = currentResources
+  dragBetweenResources.value = !groupByClientQuarter.value
+
+  // Update timeline config based on zoom level
+  let timelineConfig
+  switch (zoomLevel.value) {
+    case 'quarter':
+      timelineConfig = { type: 'year', resolutionHorizontal: 'quarter', eventHeight: 'variable' }
+      break
+    case 'month':
+      timelineConfig = { type: 'year', resolutionHorizontal: 'month', eventHeight: 'variable' }
+      break
+    case 'half-year':
+      timelineConfig = {
+        type: 'month',
+        size: 6,
+        resolutionHorizontal: 'month',
+        eventHeight: 'variable'
+      }
+      break
+  }
+  myView.value = { timeline: timelineConfig }
+}
+
+function handleZoomChange() {
+  updateView()
 }
 
 function handleEventUpdated(args) {
   const updatedEvent = args.event
   const oldEvent = args.oldEvent
+  const newStart = new Date(updatedEvent.start).getTime()
+  const newEnd = new Date(updatedEvent.end).getTime()
 
-  if (!groupByClientQuarter.value) {
-    // Simple view: sync into rawEvents
-    rawEvents.value = rawEvents.value.map((e) =>
-      e.id === updatedEvent.id ? { ...e, start: updatedEvent.start, end: updatedEvent.end } : e
+  if (groupByClientQuarter.value) {
+    const oldStart = new Date(oldEvent.start).getTime()
+    const oldEnd = new Date(oldEvent.end).getTime()
+    const startDelta = newStart - oldStart
+    const endDelta = newEnd - oldEnd
+
+    // Nothing changed
+    if (startDelta === 0 && endDelta === 0) return
+
+    const movedGroupedEvent = groupedEvents.value.find((ge) => ge.id === oldEvent.id)
+    if (!movedGroupedEvent) return
+
+    const clientGroupName = movedGroupedEvent.clientGroup
+    const resourceId = movedGroupedEvent.resource
+    const wasCollapsed = movedGroupedEvent.collapsed
+
+    const isMove = startDelta === endDelta
+
+    let eventsToUpdate
+
+    if (isMove) {
+      // MOVE: shift all original events by the same delta
+      eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent) => ({
+        ...originalEvent,
+        start: new Date(new Date(originalEvent.start).getTime() + startDelta),
+        end: new Date(new Date(originalEvent.end).getTime() + startDelta)
+      }))
+    } else {
+      // RESIZE: proportionally remap all child events within the new group span
+      const oldGroupStart = oldStart
+      const oldGroupEnd = oldEnd
+      const oldGroupDuration = oldGroupEnd - oldGroupStart
+      const newGroupStart = newStart
+      const newGroupEnd = newEnd
+      const newGroupDuration = newGroupEnd - newGroupStart
+
+      eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent) => {
+        const evStart = new Date(originalEvent.start).getTime()
+        const evEnd = new Date(originalEvent.end).getTime()
+
+        // Calculate relative positions (0 to 1) within the old group span
+        const relativeStart =
+          oldGroupDuration > 0 ? (evStart - oldGroupStart) / oldGroupDuration : 0
+        const relativeEnd = oldGroupDuration > 0 ? (evEnd - oldGroupStart) / oldGroupDuration : 1
+
+        // Map to the new group span
+        let mappedStart = newGroupStart + relativeStart * newGroupDuration
+        let mappedEnd = newGroupStart + relativeEnd * newGroupDuration
+
+        // Ensure minimum duration for each child event
+        const childDurationDays = (mappedEnd - mappedStart) / (1000 * 60 * 60 * 24)
+        if (childDurationDays < 1) {
+          mappedEnd = mappedStart + 1000 * 60 * 60 * 24 // At least 1 day
+        }
+
+        return {
+          ...originalEvent,
+          start: new Date(mappedStart),
+          end: new Date(mappedEnd)
+        }
+      })
+    }
+
+    // Sync into rawEvents
+    const updatedIds = new Map(eventsToUpdate.map((e) => [e.id, e]))
+    rawEvents.value = rawEvents.value.map((e) => (updatedIds.has(e.id) ? updatedIds.get(e.id) : e))
+
+    // Rebuild grouped view from updated rawEvents
+    updateView()
+
+    // Restore collapsed state
+    const newYear = new Date(eventsToUpdate[0].start).getFullYear()
+    const newQuarter = Math.floor(new Date(eventsToUpdate[0].start).getMonth() / 3)
+
+    const newGroupedEvent = groupedEvents.value.find(
+      (ge) =>
+        ge.resource === resourceId &&
+        ge.clientGroup === clientGroupName &&
+        ge.year === newYear &&
+        ge.quarter === newQuarter
     )
-    return
+
+    if (newGroupedEvent) {
+      newGroupedEvent.collapsed = wasCollapsed
+      displayEvents.value = [...groupedEvents.value]
+    }
+
+    const actionLabel = isMove ? 'moved' : 'resized'
+    toastMessage.value = `${eventsToUpdate.length} event(s) for ${clientGroupName} have been ${actionLabel}.`
+    isToastOpen.value = true
+  } else {
+    const oldResource = args.oldEvent.resource
+    const newResource = updatedEvent.resource
+    const resourceChanged = oldResource !== newResource
+
+    // Sync into rawEvents (dates + resource if changed)
+    rawEvents.value = rawEvents.value.map((e) => {
+      if (e.id === updatedEvent.id) {
+        const update = { start: updatedEvent.start, end: updatedEvent.end }
+        if (resourceChanged) {
+          if (groupBy.value === 'assignee') {
+            update.resource = newResource
+          } else {
+            update.type = newResource
+          }
+        }
+        return { ...e, ...update }
+      }
+      return e
+    })
+
+    if (resourceChanged) {
+      let fromName
+      let toName
+      if (groupBy.value === 'assignee') {
+        const fromRes = assigneeResources.find((r) => r.id === oldResource)
+        const toRes = assigneeResources.find((r) => r.id === newResource)
+        fromName = fromRes ? fromRes.name : oldResource
+        toName = toRes ? toRes.name : newResource
+      } else {
+        fromName = oldResource
+        toName = newResource
+      }
+      toastMessage.value = `"${updatedEvent.title}" moved from ${fromName} to ${toName}.`
+      isToastOpen.value = true
+    }
   }
-
-  // Grouped view
-  const startDelta = new Date(updatedEvent.start).getTime() - new Date(oldEvent.start).getTime()
-  if (startDelta === 0) return
-
-  const movedGroupedEvent = groupedEvents.value.find((ge) => ge.id === oldEvent.id)
-  if (!movedGroupedEvent) return
-
-  const {
-    clientGroup: clientGroupName,
-    resource: resourceId,
-    collapsed: wasCollapsed
-  } = movedGroupedEvent
-
-  const eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent) => ({
-    ...originalEvent,
-    start: new Date(new Date(originalEvent.start).getTime() + startDelta),
-    end: new Date(new Date(originalEvent.end).getTime() + startDelta)
-  }))
-
-  // Sync into rawEvents
-  const updatedIds = new Set(eventsToUpdate.map((e) => e.id))
-  const updatedMap = new Map(eventsToUpdate.map((e) => [e.id, e]))
-
-  rawEvents.value = rawEvents.value.map((e) => (updatedIds.has(e.id) ? updatedMap.get(e.id) : e))
-
-  // Rebuild view
-  updateView()
-
-  // Restore collapsed state
-  const newYear = new Date(eventsToUpdate[0].start).getFullYear()
-  const newPeriod = Math.floor(new Date(eventsToUpdate[0].start).getMonth() / 3)
-
-  const newGroupedEvent = groupedEvents.value.find(
-    (ge) =>
-      ge.resource === resourceId &&
-      ge.clientGroup === clientGroupName &&
-      ge.year === newYear &&
-      ge.period === newPeriod
-  )
-
-  if (newGroupedEvent) {
-    newGroupedEvent.collapsed = wasCollapsed
-    displayEvents.value = [...groupedEvents.value]
-  }
-
-  toastMessage.value = `${eventsToUpdate.length} event(s) for ${clientGroupName} have been moved.`
-  isToastOpen.value = true
 }
 
 function toggleGroupCollapse(groupEvent) {
@@ -2543,7 +2669,77 @@ function toggleGroupCollapse(groupEvent) {
   // Refresh calendar to recalculate row heights
   setTimeout(() => {
     calendarRef.value?.instance?.refresh()
-  }, 200)
+  }, 0)
+}
+
+function openEditDatePicker(eventId) {
+  const rawEvent = rawEvents.value.find((e) => e.id === eventId)
+  if (rawEvent) {
+    editingEventId.value = eventId
+    editDatePickerHeaderText.value = rawEvent.title
+    editDatePickerValue.value = [new Date(rawEvent.start), new Date(rawEvent.end)]
+    editDatePickerRef.value?.instance?.open()
+  }
+}
+
+function handleEditDateChange(args) {
+  const dates = args.value
+  const startVal = dates[0]
+  const endVal = dates[1]
+
+  if (editingEventId.value !== null && startVal && endVal) {
+    const oldEvent = rawEvents.value.find((e) => e.id === editingEventId.value)
+    if (!oldEvent) return
+
+    const eventTitle = oldEvent.title
+    const oldQuarter = Math.floor(new Date(oldEvent.start).getMonth() / 3)
+    const newQuarter = Math.floor(new Date(startVal).getMonth() / 3)
+    const oldYear = new Date(oldEvent.start).getFullYear()
+    const newYear = new Date(startVal).getFullYear()
+    const quarterChanged =
+      groupByClientQuarter.value && (oldQuarter !== newQuarter || oldYear !== newYear)
+
+    const applyUpdate = () => {
+      rawEvents.value = rawEvents.value.map((e) => {
+        if (e.id === editingEventId.value) {
+          return { ...e, start: startVal, end: endVal }
+        }
+        return e
+      })
+      updateView()
+      return true
+    }
+
+    if (quarterChanged) {
+      const quarterNames = ['Q1', 'Q2', 'Q3', 'Q4']
+      const fromLabel = quarterNames[oldQuarter] + ' ' + oldYear
+      const toLabel = quarterNames[newQuarter] + ' ' + newYear
+
+      // Replace with:
+      confirmTitle.value = 'Move to different group'
+      confirmMessage.value =
+        '"' +
+        eventTitle +
+        '" will move from ' +
+        fromLabel +
+        ' to ' +
+        toLabel +
+        '. Do you want to continue?'
+      confirmCallback.value = (result) => {
+        if (result) {
+          applyUpdate()
+          toastMessage.value = `"${eventTitle}" moved to ${toLabel}.`
+          isToastOpen.value = true
+        }
+      }
+      isConfirmOpen.value = true
+    } else {
+      if (applyUpdate()) {
+        toastMessage.value = `"${eventTitle}" dates updated.`
+        isToastOpen.value = true
+      }
+    }
+  }
 }
 
 function getUniqueItems(originalEvents) {
@@ -2577,7 +2773,7 @@ function getDetailInfo(event) {
       typeDotColor = typeObj.color
     }
   } else {
-    const employee = assigneeResources.find((r) => r.id === event.assignee)
+    const employee = assigneeResources.find((r) => r.id === (event.assignee || event.resource))
     if (employee) {
       detailText = employee.name
       avatarUrl = employee.img
@@ -2587,8 +2783,40 @@ function getDetailInfo(event) {
   return { detailText, typeDotColor, avatarUrl }
 }
 
+function getSubEventStyle(ev, groupStart, groupEnd) {
+  const groupStartTime = new Date(groupStart).getTime()
+  const groupEndTime = new Date(groupEnd).getTime()
+  const groupDuration = groupEndTime - groupStartTime
+  const evStart = new Date(ev.start).getTime()
+  const evEnd = new Date(ev.end).getTime()
+  const leftPercent = groupDuration > 0 ? ((evStart - groupStartTime) / groupDuration) * 100 : 0
+  const widthPercent = groupDuration > 0 ? ((evEnd - evStart) / groupDuration) * 100 : 100
+
+  return {
+    marginLeft: leftPercent + '%',
+    width: widthPercent + '%'
+  }
+}
+
+function getSubEventTooltip(ev) {
+  return (
+    ev.title +
+    ', ' +
+    formatDate('MM/DD/YYYY', new Date(ev.start)) +
+    ' - ' +
+    formatDate('MM/DD/YYYY', new Date(ev.end))
+  )
+}
+
 function formatEventDate(date) {
   return formatDate('DD MMM', new Date(date))
+}
+
+function handleConfirmResult(result) {
+  if (confirmCallback.value) {
+    confirmCallback.value(result)
+  }
+  isConfirmOpen.value = false
 }
 
 // Initialize view on mount
@@ -2603,10 +2831,10 @@ updateView()
     :view="myView"
     :resources="myResources"
     :dragToMove="true"
-    :dragToResize="false"
+    :dragToResize="true"
     :dragToCreate="false"
     :clickToCreate="false"
-    :dragBetweenResources="false"
+    :dragBetweenResources="dragBetweenResources"
     @event-updated="handleEventUpdated"
   >
     <template #header>
@@ -2629,6 +2857,11 @@ updateView()
           @change="updateView"
         />
       </div>
+      <MbscSegmentedGroup v-model="zoomLevel" @change="handleZoomChange">
+        <MbscSegmented value="quarter">Quarterly</MbscSegmented>
+        <MbscSegmented value="month">Monthly</MbscSegmented>
+        <MbscSegmented value="half-year">Semiannual</MbscSegmented>
+      </MbscSegmentedGroup>
       <MbscCalendarPrev />
       <MbscCalendarToday />
       <MbscCalendarNext />
@@ -2687,6 +2920,8 @@ updateView()
               v-show="!event.original.collapsed"
               :key="ev.id"
               class="mds-event-grouping-original-event"
+              :title="getSubEventTooltip(ev)"
+              :style="getSubEventStyle(ev, event.original.start, event.original.end)"
             >
               <div class="mbsc-flex mds-event-grouping-event-content">
                 <div class="mds-event-grouping-event-title">{{ ev.title }}</div>
@@ -2711,6 +2946,10 @@ updateView()
                     </div>
                   </div>
                 </div>
+                <div
+                  class="mds-event-grouping-edit-btn mbsc-flex mbsc-icon mbsc-font-icon mbsc-icon-pencil"
+                  @click.stop="openEditDatePicker(ev.id)"
+                ></div>
               </div>
             </div>
           </div>
@@ -2718,11 +2957,7 @@ updateView()
       </div>
 
       <!-- Simple Event Template -->
-      <div
-        v-else
-        class="mbsc-flex mds-event-simple"
-        :style="{ backgroundColor: event.original.color }"
-      >
+      <div v-else class="mbsc-flex mds-event-simple">
         <div class="mds-event-simple-title">{{ event.original.title }}</div>
         <div class="mbsc-flex mds-event-simple-right">
           <div class="mds-event-simple-date">
@@ -2754,7 +2989,25 @@ updateView()
       </div>
     </template>
   </MbscEventcalendar>
+  <MbscDatepicker
+    ref="editDatePickerRef"
+    :controls="['calendar']"
+    select="range"
+    display="center"
+    :touchUi="false"
+    :headerText="editDatePickerHeaderText"
+    v-model="editDatePickerValue"
+    @change="handleEditDateChange"
+  />
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
+  <MbscConfirm
+    :title="confirmTitle"
+    :message="confirmMessage"
+    :isOpen="isConfirmOpen"
+    okText="Move"
+    cancelText="Cancel"
+    @close="handleConfirmResult"
+  />
 </template>
 
 <style>
@@ -2804,9 +3057,16 @@ updateView()
   font-weight: 600;
   line-height: 20px;
 }
+/* Enforce minimum event width so text is always visible */
+.mds-event-grouping-calendar .mbsc-schedule-event {
+  min-width: 72px;
+}
+.mds-event-grouping-calendar .mbsc-schedule-event:has(.mds-event-grouping-task-client) {
+  min-width: 120px;
+}
 /* Grouped event - collapsed state */
 .mds-event-grouping-task-client {
-  background-color: #f8f9fa;
+  background-color: #e8ecf0;
   border-left: 4px solid;
   border-radius: 0 8px 8px 0;
   box-shadow:
@@ -2814,12 +3074,17 @@ updateView()
     0 1px 2px rgba(0, 0, 0, 0.08);
   flex-direction: column;
   overflow: hidden;
+  container-type: inline-size;
+  min-width: 120px;
 }
 /* Grouped event header content */
 .mds-event-grouping-content {
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
+  height: 42px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 /* Client group title */
 .mds-event-grouping-title-text {
@@ -2837,7 +3102,7 @@ updateView()
 /* Right side container (meta + icon) */
 .mds-event-grouping-right {
   align-items: center;
-  width: 130px;
+  flex-shrink: 0;
 }
 /* Meta information (dates + counts) */
 .mds-event-grouping-meta {
@@ -2896,8 +3161,23 @@ updateView()
   background: #fff;
   border-radius: 6px;
   margin-bottom: 6px;
-  padding: 8px 10px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  padding: 6px 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+  box-sizing: border-box;
+  min-height: 38px;
+  min-width: 100px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+@container (max-width: 180px) {
+  .mds-event-grouping-meta {
+    display: none;
+  }
+}
+@container (max-width: 130px) {
+  .mds-event-grouping-event-right {
+    display: none;
+  }
 }
 .mds-event-grouping-original-event:last-child {
   margin-bottom: 0;
@@ -2914,8 +3194,8 @@ updateView()
   font-size: 13px;
   line-height: 18px;
   flex: 1;
-  min-width: 0;
-  margin-right: 12px;
+  min-width: 30px;
+  margin-right: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2924,7 +3204,8 @@ updateView()
 .mds-event-grouping-event-right {
   flex-direction: column;
   align-items: flex-end;
-  min-width: 80px;
+  min-width: 0;
+  overflow: hidden;
 }
 .mds-event-grouping-event-date {
   font-size: 11px;
@@ -2933,11 +3214,16 @@ updateView()
   line-height: 14px;
   text-align: right;
   margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 /* Detail container (avatar/dot + text) */
 .mds-event-grouping-event-detail {
   align-items: center;
   justify-content: flex-end;
+  overflow: hidden;
+  max-width: 100%;
 }
 .mds-event-grouping-event-info {
   font-size: 11px;
@@ -2947,6 +3233,8 @@ updateView()
   line-height: 14px;
   text-align: right;
   text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 /* Avatar for assignee in type view */
 .mds-event-grouping-event-avatar {
@@ -2962,6 +3250,25 @@ updateView()
   border-radius: 50%;
   margin-right: 6px;
 }
+/* Edit button on subtask events */
+.mds-event-grouping-edit-btn {
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 4px;
+  margin-left: 8px;
+  border-radius: 4px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+  flex-shrink: 0;
+}
+.mds-event-grouping-edit-btn:hover {
+  color: #1e293b;
+  background-color: rgba(0, 0, 0, 0.06);
+}
 /* Simple event styling (no grouping) */
 .mds-event-simple {
   padding: 10px 12px;
@@ -2971,15 +3278,24 @@ updateView()
     0 1px 2px rgba(0, 0, 0, 0.1);
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: 42px;
+  box-sizing: border-box;
+  overflow: hidden;
   color: #2c2c2c;
+  background-color: #e8ecf0;
+  container-type: inline-size;
+}
+@container (max-width: 130px) {
+  .mds-event-simple-right {
+    display: none;
+  }
 }
 /* Event title */
 .mds-event-simple-title {
   flex: 1;
   font-size: 13px;
   font-weight: 600;
-  margin-right: 12px;
+  margin-right: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -3032,5 +3348,13 @@ updateView()
 /* Select input */
 .mds-event-grouping-select.mbsc-textfield {
   width: 210px;
+  max-height: 34px;
+}
+.mds-event-grouping-select + .mbsc-ios.mbsc-select-icon {
+  font-size: 13px;
+  top: 8px;
+}
+.mds-event-grouping-calendar .mbsc-ios.mbsc-segmented-button {
+  padding: 1px 12px;
 }
 </style>

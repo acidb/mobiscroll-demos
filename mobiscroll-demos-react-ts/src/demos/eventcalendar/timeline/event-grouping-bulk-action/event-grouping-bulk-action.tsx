@@ -11,7 +11,6 @@ import {
   MbscCalendarEvent,
   MbscCalendarEventData,
   MbscDatepickerChangeEvent,
-  MbscDatepickerValue,
   MbscEventcalendarView,
   MbscEventUpdateEvent,
   MbscResource,
@@ -2384,7 +2383,7 @@ const App: FC = () => {
   const confirmCallbackRef = useRef<((result: boolean) => void) | null>(null);
   const [zoomLevel, setZoomLevel] = useState<string>('month');
   const [isEditDatepickerOpen, setEditDatepickerOpen] = useState<boolean>(false);
-  const [editDatepickerValue, setEditDatepickerValue] = useState<MbscDatepickerValue>(null);
+  const [editDatepickerValue, setEditDatepickerValue] = useState<Date[] | null>(null);
   const [editDatepickerTitle, setEditDatepickerTitle] = useState<string>('');
   const editingEventIdRef = useRef<number | string | null>(null);
   const calendarRef = useRef<Eventcalendar>(null);
