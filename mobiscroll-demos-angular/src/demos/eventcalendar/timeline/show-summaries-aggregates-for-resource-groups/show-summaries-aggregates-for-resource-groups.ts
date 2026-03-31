@@ -41,7 +41,7 @@ export class AppComponent {
     view: {
       timeline: {
         type: 'week',
-        eventList: true,
+        eventDisplay: 'fill',
         eventHeight: 'variable',
       },
     },

@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   myEvents: MbscCalendarEvent[] = [];
   view = 'calendar';
   calView: MbscEventcalendarView = {
-    schedule: {
+    scheduler: {
       type: 'day',
       size: 14,
     },
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
       // Set calendar view
       this.refDate = date[0];
       this.calView = {
-        schedule: {
+        scheduler: {
           type: 'day',
           size: this.getNrDays(date[0], date[1]),
         },

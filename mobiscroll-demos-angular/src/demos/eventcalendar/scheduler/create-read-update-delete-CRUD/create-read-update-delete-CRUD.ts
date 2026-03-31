@@ -33,7 +33,7 @@ setOptions({
   imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) { }
+  constructor(private notify: Notifications) {}
 
   @ViewChild('calendar', { static: false })
   calendar!: MbscEventcalendar;
@@ -61,7 +61,7 @@ export class AppComponent {
   isEdit = false;
   isSuccess = false;
 
-  myView: MbscEventcalendarView = { schedule: { type: 'week' } };
+  myView: MbscEventcalendarView = { scheduler: { type: 'week' } };
 
   colors: string[] = ['#ffeb3c', '#ff9900', '#f44437', '#ea1e63', '#9c26b0', '#3f51b5', '', '#009788', '#4baf4f', '#7e5d4e'];
 
@@ -111,7 +111,7 @@ export class AppComponent {
     },
   ];
 
-  editButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
+  editButtons: (MbscPopupButton | 'ok' | 'close' | 'set' | 'cancel')[] = [
     'cancel',
     {
       text: 'Save',
@@ -132,7 +132,7 @@ export class AppComponent {
     },
   ];
 
-  addButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
+  addButtons: (MbscPopupButton | 'ok' | 'close' | 'set' | 'cancel')[] = [
     'cancel',
     {
       text: 'Add',
@@ -149,7 +149,7 @@ export class AppComponent {
         this.addEditPopup.close();
       },
     },
-  ]
+  ];
 
   addEditPopupResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
     medium: {
@@ -157,10 +157,10 @@ export class AppComponent {
       width: 400,
       fullScreen: false,
       touchUi: false,
-    }
-  }
+    },
+  };
 
-  colorPickerButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
+  colorPickerButtons: (MbscPopupButton | 'ok' | 'close' | 'set' | 'cancel')[] = [
     'cancel',
     {
       text: 'Set',
@@ -207,7 +207,7 @@ export class AppComponent {
     this.addEditPopup.open();
   }
 
-  getEventData(): (MbscCalendarEvent) {
+  getEventData(): MbscCalendarEvent {
     return {
       id: this.eventId,
       title: this.eventTitle,
@@ -218,7 +218,7 @@ export class AppComponent {
       bufferBefore: this.eventBuffer,
       color: this.eventColor,
       free: this.statusValue === 'free',
-    }
+    };
   }
 
   handleAddEditPopupClose(): void {
@@ -283,5 +283,4 @@ export class AppComponent {
     this.eventColor = color;
     this.colorPicker.close();
   }
-
 }

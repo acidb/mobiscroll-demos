@@ -20,7 +20,7 @@ setOptions({
 export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
-  dayView: MbscEventcalendarView = { schedule: { type: 'day' } };
+  dayView: MbscEventcalendarView = { scheduler: { type: 'day' } };
   myEvents: MbscCalendarEvent[] = [];
   selectedDate: MbscDateType = new Date();
 

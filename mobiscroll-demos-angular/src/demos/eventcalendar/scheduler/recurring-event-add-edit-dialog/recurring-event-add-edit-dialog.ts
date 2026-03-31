@@ -270,7 +270,7 @@ export class AppComponent implements OnInit {
     dragToMove: true,
     dragToResize: true,
     view: {
-      schedule: { type: 'week' },
+      scheduler: { type: 'week' },
     },
     onEventClick: (args: any) => {
       const event = args.event;

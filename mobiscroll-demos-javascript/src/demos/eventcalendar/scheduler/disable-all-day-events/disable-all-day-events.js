@@ -11,7 +11,7 @@ export default {
     var inst = mobiscroll.eventcalendar('#demo-drag-drop-events', {
       // drag,
       view: {
-        schedule: {
+        scheduler: {
           type: 'week',
           allDay: false,
         },

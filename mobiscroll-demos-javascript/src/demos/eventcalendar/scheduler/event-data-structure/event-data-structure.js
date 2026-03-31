@@ -11,7 +11,7 @@ export default {
     var now = new Date();
     var calendar = mobiscroll.eventcalendar('#demo-event-data', {
       view: {
-        schedule: { type: 'day' },
+        scheduler: { type: 'day' },
       },
       data: [
         {

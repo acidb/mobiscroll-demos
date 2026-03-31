@@ -1,4 +1,4 @@
-<mbsc-eventcalendar class="mds-custom-day-header" [view]="myView" [data]="myEvents" [dayTemplate]="customDayTemplate">
+<mbsc-eventcalendar class="mds-custom-day-header" [view]="myView" [data]="myEvents" [agendaDayTemplate]="customDayTemplate">
   <ng-template #customDayTemplate let-day>
     <div class="mbsc-flex mbsc-flex-1-1 mbsc-align-items-center">
       <div class="mbsc-flex-1-1">{{ formatDate('D MMM YYYY', day.date) }}</div>

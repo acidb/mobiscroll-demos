@@ -1,0 +1,5 @@
+<mbsc-eventcalendar [options]="myOptions" [data]="myEvents" [colors]="colors" [resourceTemplate]="myResourceTemplate">
+  <ng-template #myResourceTemplate let-resource let-day="day">
+    <div [ngStyle]="getResourceStyle(resource, day)">{{ resource.name }}</div>
+  </ng-template>
+</mbsc-eventcalendar>

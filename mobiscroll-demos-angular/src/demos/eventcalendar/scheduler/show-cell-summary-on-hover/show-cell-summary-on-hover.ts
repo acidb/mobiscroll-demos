@@ -203,7 +203,7 @@ export class AppComponent {
   ];
 
   myView: MbscEventcalendarView = {
-    schedule: {
+    scheduler: {
       type: 'week',
       startTime: '08:00',
       endTime: '18:00',

@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript';
+import { dyndatetime } from '../../../../dyndatetime';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -12,38 +13,38 @@ export default {
       {
         title: 'Small wrap',
         color: '#637e57',
-        start: 'dyndatetime(y,m,d)',
-        end: 'dyndatetime(y,m,d+1)',
+        start: dyndatetime('y,m,d'),
+        end: dyndatetime('y,m,d+1'),
       },
       {
         title: 'Full-size wrap',
         color: '#50789d',
-        start: 'dyndatetime(y,m,d)',
-        end: 'dyndatetime(y,m,d+2)',
+        start: dyndatetime('y,m,d'),
+        end: dyndatetime('y,m,d+2'),
       },
       {
         title: 'Mid-size wrap',
         color: '#6c5d45',
-        start: 'dyndatetime(y,m,d)',
-        end: 'dyndatetime(y,m,d+2)',
+        start: dyndatetime('y,m,d'),
+        end: dyndatetime('y,m,d+2'),
       },
       {
         title: 'Roadster wrap',
         color: '#9da721',
-        start: 'dyndatetime(y,m,d)',
-        end: 'dyndatetime(y,m,d+2)',
+        start: dyndatetime('y,m,d'),
+        end: dyndatetime('y,m,d+2'),
       },
       {
         title: 'SUV wrap',
         color: '#cd6957',
-        start: 'dyndatetime(y,m,d)',
-        end: 'dyndatetime(y,m,d+3)',
+        start: dyndatetime('y,m,d'),
+        end: dyndatetime('y,m,d+3'),
       },
       {
         title: 'Hypercar wrap',
         color: '#7a5886',
-        start: 'dyndatetime(y,m,d)',
-        end: 'dyndatetime(y,m,d+4)',
+        start: dyndatetime('y,m,d'),
+        end: dyndatetime('y,m,d+4'),
       },
     ];
     var taskElm = document.querySelectorAll('.external-event-task');

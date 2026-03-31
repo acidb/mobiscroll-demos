@@ -1,4 +1,5 @@
 import * as mobiscroll from '@mobiscroll/javascript';
+import { dyndatetime } from '../../../../dyndatetime';
 
 export default {
   // eslint-disable-next-line es5/no-shorthand-properties
@@ -60,13 +61,12 @@ export default {
       // Set popup header text and buttons
       addEditPopup.setOptions({
         headerText:
-          '<div>New shift</div><div class="mds-employee-shifts-header">' +
-          formatDate('DDDD', new Date(event.start)) +
+          'New shift - ' +
+          formatDate('DDD', new Date(event.start)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start)) +
-          '</div>',
+          formatDate('D MMM YYYY', new Date(event.start)),
         buttons: [
           'cancel',
           {
@@ -103,15 +103,14 @@ export default {
 
       addEditPopup.setOptions({
         headerText:
-          '<div>Edit ' +
+          'Edit ' +
           resource.name +
-          '\'s hours</div><div class="mds-employee-shifts-header">' +
-          formatDate('DDDD', new Date(event.start)) +
+          "'s hours - " +
+          formatDate('DDD', new Date(event.start)) +
           ' ' +
           slot.name +
           ', ' +
-          formatDate('D MMMM YYYY', new Date(event.start)) +
-          '</div>',
+          formatDate('D MMM YYYY', new Date(event.start)),
         buttons: [
           'cancel',
           {
@@ -181,169 +180,169 @@ export default {
 
     var shifts = [
       {
-        start: 'dyndatetime(y,m,d-2,7)',
-        end: 'dyndatetime(y,m,d-2,13)',
+        start: dyndatetime('y,m,d-2,7'),
+        end: dyndatetime('y,m,d-2,13'),
         title: '07:00 - 13:00',
         resource: 2,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d-2,7)',
-        end: 'dyndatetime(y,m,d-2,13)',
+        start: dyndatetime('y,m,d-2,7'),
+        end: dyndatetime('y,m,d-2,13'),
         title: '07:00 - 13:00',
         resource: 3,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d-2,7)',
-        end: 'dyndatetime(y,m,d-2,13)',
+        start: dyndatetime('y,m,d-2,7'),
+        end: dyndatetime('y,m,d-2,13'),
         title: '07:00 - 13:00',
         resource: 6,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d-2,12)',
-        end: 'dyndatetime(y,m,d-2,18)',
+        start: dyndatetime('y,m,d-2,12'),
+        end: dyndatetime('y,m,d-2,18'),
         title: '12:00 - 18:00',
         resource: 4,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d-2,12)',
-        end: 'dyndatetime(y,m,d-2,18)',
+        start: dyndatetime('y,m,d-2,12'),
+        end: dyndatetime('y,m,d-2,18'),
         title: '12:00 - 18:00',
         resource: 5,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d-1,7)',
-        end: 'dyndatetime(y,m,d-1,13)',
+        start: dyndatetime('y,m,d-1,7'),
+        end: dyndatetime('y,m,d-1,13'),
         title: '07:00 - 13:00',
         resource: 1,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d-1,7)',
-        end: 'dyndatetime(y,m,d-1,13)',
+        start: dyndatetime('y,m,d-1,7'),
+        end: dyndatetime('y,m,d-1,13'),
         title: '07:00 - 13:00',
         resource: 2,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d-1,7)',
-        end: 'dyndatetime(y,m,d-1,13)',
+        start: dyndatetime('y,m,d-1,7'),
+        end: dyndatetime('y,m,d-1,13'),
         title: '07:00 - 13:00',
         resource: 6,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d-1,12)',
-        end: 'dyndatetime(y,m,d-1,18)',
+        start: dyndatetime('y,m,d-1,12'),
+        end: dyndatetime('y,m,d-1,18'),
         title: '12:00 - 18:00',
         resource: 3,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d-1,12)',
-        end: 'dyndatetime(y,m,d-1,18)',
+        start: dyndatetime('y,m,d-1,12'),
+        end: dyndatetime('y,m,d-1,18'),
         title: '12:00 - 18:00',
         resource: 5,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d,7)',
-        end: 'dyndatetime(y,m,d,13)',
+        start: dyndatetime('y,m,d,7'),
+        end: dyndatetime('y,m,d,13'),
         title: '07:00 - 13:00',
         resource: 1,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d,7)',
-        end: 'dyndatetime(y,m,d,13)',
+        start: dyndatetime('y,m,d,7'),
+        end: dyndatetime('y,m,d,13'),
         title: '07:00 - 13:00',
         resource: 3,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d,7)',
-        end: 'dyndatetime(y,m,d,13)',
+        start: dyndatetime('y,m,d,7'),
+        end: dyndatetime('y,m,d,13'),
         title: '07:00 - 13:00',
         resource: 4,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d,12)',
-        end: 'dyndatetime(y,m,d,18)',
+        start: dyndatetime('y,m,d,12'),
+        end: dyndatetime('y,m,d,18'),
         title: '12:00 - 18:00',
         resource: 2,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d,12)',
-        end: 'dyndatetime(y,m,d,18)',
+        start: dyndatetime('y,m,d,12'),
+        end: dyndatetime('y,m,d,18'),
         title: '12:00 - 18:00',
         resource: 6,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d+1,7)',
-        end: 'dyndatetime(y,m,d+1,13)',
+        start: dyndatetime('y,m,d+1,7'),
+        end: dyndatetime('y,m,d+1,13'),
         title: '07:00 - 13:00',
         resource: 5,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d+1,7)',
-        end: 'dyndatetime(y,m,d+1,13)',
+        start: dyndatetime('y,m,d+1,7'),
+        end: dyndatetime('y,m,d+1,13'),
         title: '07:00 - 13:00',
         resource: 6,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d+1,12)',
-        end: 'dyndatetime(y,m,d+1,18)',
+        start: dyndatetime('y,m,d+1,12'),
+        end: dyndatetime('y,m,d+1,18'),
         title: '12:00 - 18:00',
         resource: 2,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d+1,12)',
-        end: 'dyndatetime(y,m,d+1,18)',
+        start: dyndatetime('y,m,d+1,12'),
+        end: dyndatetime('y,m,d+1,18'),
         title: '12:00 - 18:00',
         resource: 4,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d+2,7)',
-        end: 'dyndatetime(y,m,d+2,13)',
+        start: dyndatetime('y,m,d+2,7'),
+        end: dyndatetime('y,m,d+2,13'),
         title: '07:00 - 13:00',
         resource: 1,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d+2,7)',
-        end: 'dyndatetime(y,m,d+2,13)',
+        start: dyndatetime('y,m,d+2,7'),
+        end: dyndatetime('y,m,d+2,13'),
         title: '07:00 - 13:00',
         resource: 5,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d+2,12)',
-        end: 'dyndatetime(y,m,d+2,18)',
+        start: dyndatetime('y,m,d+2,12'),
+        end: dyndatetime('y,m,d+2,18'),
         title: '12:00 - 18:00',
         resource: 2,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d+2,12)',
-        end: 'dyndatetime(y,m,d+2,18)',
+        start: dyndatetime('y,m,d+2,12'),
+        end: dyndatetime('y,m,d+2,18'),
         title: '12:00 - 18:00',
         resource: 3,
         slot: 2,
       },
       {
-        start: 'dyndatetime(y,m,d+2,12)',
-        end: 'dyndatetime(y,m,d+2,18)',
+        start: dyndatetime('y,m,d+2,12'),
+        end: dyndatetime('y,m,d+2,18'),
         title: '12:00 - 18:00',
         resource: 6,
         slot: 2,
@@ -357,14 +356,14 @@ export default {
 
     var myInvalids = [
       {
-        start: 'dyndatetime(y,m,d+1,0)',
-        end: 'dyndatetime(y,m,d+1,23,59)',
+        start: dyndatetime('y,m,d+1,0'),
+        end: dyndatetime('y,m,d+1,23,59'),
         resource: 4,
         slot: 1,
       },
       {
-        start: 'dyndatetime(y,m,d-1,0)',
-        end: 'dyndatetime(y,m,d-1,23,59)',
+        start: dyndatetime('y,m,d-1,0'),
+        end: dyndatetime('y,m,d-1,23,59'),
         resource: 2,
         slot: 2,
       },
@@ -383,7 +382,7 @@ export default {
       view: {
         timeline: {
           type: 'week',
-          eventList: true,
+          eventDisplay: 'fill',
           startDay: 1,
           endDay: 5,
         },
@@ -490,7 +489,7 @@ export default {
 <div id="demo-employee-shifts-calendar" class="mds-employee-shifts"></div>
 
 <div style="display: none;">
-  <div id="demo-employee-shifts-popup">
+  <div id="demo-employee-shifts-popup" class="mds-employee-shifts-popup">
     <div>
       <div id="demo-popup-shift-dates"></div>
     </div>
@@ -515,10 +514,8 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-employee-shifts-header {
-  font-size: 14px;
-  font-weight: 600;
-  opacity: .6;
+.mds-employee-shifts-popup .mbsc-popup-header {
+  font-size: 16px;
 }
 
 .mds-employee-shifts .mbsc-timeline-resource-col {

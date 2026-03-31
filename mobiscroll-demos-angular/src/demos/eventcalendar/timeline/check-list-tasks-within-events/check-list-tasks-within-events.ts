@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
       timeline: {
         type: 'week',
         eventHeight: 'variable',
-        eventList: true,
+        eventDisplay: 'fill',
       },
     },
     extendDefaultEvent: () => ({
