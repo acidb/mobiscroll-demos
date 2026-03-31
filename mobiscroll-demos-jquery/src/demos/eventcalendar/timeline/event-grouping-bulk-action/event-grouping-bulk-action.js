@@ -2919,7 +2919,7 @@ export default {
         })
         .mobiscroll('getInst');
 
-      var editDatePicker = $('#demo-event-grouping-dates')
+      var editDatePicker = $('#event-grouping-dates')
         .mobiscroll()
         .datepicker({
           // context,
@@ -3061,7 +3061,7 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   markup: `
 <div id="demo-event-grouping" class="mds-event-grouping-calendar"></div>
-<div id="demo-event-grouping-dates"></div>
+<div id="event-grouping-dates"></div>
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
