@@ -347,6 +347,9 @@ export default {
                   for (var k = 0; k < m.attendees.length; k++) {
                     if (m.attendees[k].id === employee.id) {
                       mobiscroll.toast({
+                        //<hidden>
+                        // theme,//</hidden>
+                        // context,
                         message: employee.name + ' is already assigned',
                         color: 'danger',
                       });
@@ -358,6 +361,9 @@ export default {
                   var conflict = findConflict(employee.id, eventId);
                   if (conflict) {
                     mobiscroll.toast({
+                      //<hidden>
+                      // theme,//</hidden>
+                      // context,
                       message: employee.name + ' already has a ' + conflict.title + ' on this timeslot',
                       color: 'danger',
                     });
@@ -377,6 +383,9 @@ export default {
                   }, 0);
 
                   mobiscroll.toast({
+                    //<hidden>
+                    // theme,//</hidden>
+                    // context,
                     message: employee.name + ' assigned to ' + m.title,
                     color: 'success',
                   });
@@ -446,6 +455,9 @@ export default {
 
                   (function (att, idx, meeting) {
                     mobiscroll.snackbar({
+                      //<hidden>
+                      // theme,//</hidden>
+                      // context,
                       message: att.name + ' removed from ' + meeting.title,
                       button: {
                         text: 'Undo',
@@ -454,6 +466,9 @@ export default {
                           inst.setEvents(meetings);
                           renderEmployeeList();
                           mobiscroll.toast({
+                            //<hidden>
+                            // theme,//</hidden>
+                            // context,
                             message: 'Assignment restored',
                             color: 'success',
                           });
