@@ -2750,9 +2750,9 @@ export default {
               '<option value="type">View by Type</option>' +
               '</select>' +
               '</div>' +
-              '<label>Quarterly<input mbsc-segmented type="radio" name="zoom-level" value="quarter"/></label>' +
-              '<label>Monthly<input mbsc-segmented type="radio" name="zoom-level" value="month" checked/></label>' +
-              '<label>Semiannual<input mbsc-segmented type="radio" name="zoom-level" value="half-year"/></label>' +
+              '<label>Quarterly Year<input mbsc-segmented type="radio" name="zoom-level" value="quarter"/></label>' +
+              '<label>Monthly Year<input mbsc-segmented type="radio" name="zoom-level" value="month" checked/></label>' +
+              '<label>Monthly Half-Year<input mbsc-segmented type="radio" name="zoom-level" value="half-year"/></label>' +
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-today></div>' +
               '<div mbsc-calendar-next></div>'
@@ -2927,6 +2927,7 @@ export default {
           select: 'range',
           display: 'center',
           touchUi: false,
+          showRangeLabels: false,
           onChange: function (args) {
             var dates = args.value;
             var startVal = dates[0];
