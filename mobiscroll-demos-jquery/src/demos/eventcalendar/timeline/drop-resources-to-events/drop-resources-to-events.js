@@ -12,10 +12,10 @@ export default {
 
     $(function () {
       var rooms = [
-        { id: 1, name: 'Conference Room', color: '#f7c4a5' },
-        { id: 2, name: 'Board Room', color: '#a5c8f7' },
-        { id: 3, name: 'Meeting Room', color: '#c4f7a5' },
-        { id: 4, name: 'Training Room', color: '#e0a5f7' },
+        { id: 1, name: 'Conference Room' },
+        { id: 2, name: 'Board Room' },
+        { id: 3, name: 'Meeting Room' },
+        { id: 4, name: 'Training Room' },
       ];
 
       var meetings = [
@@ -25,7 +25,7 @@ export default {
           start: dyndatetime('y,m,d,9'),
           end: dyndatetime('y,m,d,11'),
           resource: 1,
-          color: '#f7c4a5',
+          color: '#b52db9',
           attendees: [],
         },
         {
@@ -34,7 +34,7 @@ export default {
           start: dyndatetime('y,m,d,10'),
           end: dyndatetime('y,m,d,13'),
           resource: 2,
-          color: '#a5c8f7',
+          color: '#669ce2',
           attendees: [],
         },
         {
@@ -43,7 +43,7 @@ export default {
           start: dyndatetime('y,m,d,15'),
           end: dyndatetime('y,m,d,18'),
           resource: 2,
-          color: '#a5c8f7',
+          color: '#88bd42',
           attendees: [],
         },
         {
@@ -52,7 +52,7 @@ export default {
           start: dyndatetime('y,m,d,9'),
           end: dyndatetime('y,m,d,11'),
           resource: 3,
-          color: '#c4f7a5',
+          color: '#b6962f',
           attendees: [],
         },
         {
@@ -61,7 +61,7 @@ export default {
           start: dyndatetime('y,m,d,13'),
           end: dyndatetime('y,m,d,16'),
           resource: 4,
-          color: '#e0a5f7',
+          color: '#c864f0',
           attendees: [],
         },
         {
@@ -70,7 +70,7 @@ export default {
           start: dyndatetime('y,m,d,13'),
           end: dyndatetime('y,m,d,15'),
           resource: 1,
-          color: '#f7c4a5',
+          color: '#c7682d',
           attendees: [],
         },
         {
@@ -79,7 +79,7 @@ export default {
           start: dyndatetime('y,m,d+1,9'),
           end: dyndatetime('y,m,d+1,11'),
           resource: 1,
-          color: '#f7c4a5',
+          color: '#ad2b6c',
           attendees: [],
         },
         {
@@ -88,7 +88,7 @@ export default {
           start: dyndatetime('y,m,d+1,10'),
           end: dyndatetime('y,m,d+1,12'),
           resource: 2,
-          color: '#a5c8f7',
+          color: '#0f60ca',
           attendees: [],
         },
         {
@@ -97,7 +97,7 @@ export default {
           start: dyndatetime('y,m,d+1,10'),
           end: dyndatetime('y,m,d+1,12'),
           resource: 3,
-          color: '#c4f7a5',
+          color: '#56a823',
           attendees: [],
         },
         {
@@ -106,7 +106,7 @@ export default {
           start: dyndatetime('y,m,d+1,13'),
           end: dyndatetime('y,m,d+1,16'),
           resource: 4,
-          color: '#e0a5f7',
+          color: '#aa36d8',
           attendees: [],
         },
         {
@@ -115,7 +115,7 @@ export default {
           start: dyndatetime('y,m,d+2,9'),
           end: dyndatetime('y,m,d+2,11'),
           resource: 1,
-          color: '#f7c4a5',
+          color: '#c45f20',
           attendees: [],
         },
         {
@@ -124,7 +124,7 @@ export default {
           start: dyndatetime('y,m,d+2,13'),
           end: dyndatetime('y,m,d+2,16'),
           resource: 2,
-          color: '#a5c8f7',
+          color: '#1e58a5',
           attendees: [],
         },
         {
@@ -133,7 +133,7 @@ export default {
           start: dyndatetime('y,m,d+2,10'),
           end: dyndatetime('y,m,d+2,12'),
           resource: 3,
-          color: '#c4f7a5',
+          color: '#549e27',
           attendees: [],
         },
         {
@@ -142,7 +142,7 @@ export default {
           start: dyndatetime('y,m,d+2,13'),
           end: dyndatetime('y,m,d+2,16'),
           resource: 4,
-          color: '#e0a5f7',
+          color: '#7c1ca1',
           attendees: [],
         },
         {
@@ -151,7 +151,7 @@ export default {
           start: dyndatetime('y,m,d+3,9'),
           end: dyndatetime('y,m,d+3,11,30'),
           resource: 1,
-          color: '#f7c4a5',
+          color: '#a7511c',
           attendees: [],
         },
         {
@@ -160,7 +160,7 @@ export default {
           start: dyndatetime('y,m,d+3,13'),
           end: dyndatetime('y,m,d+3,16'),
           resource: 2,
-          color: '#a5c8f7',
+          color: '#13488d',
           attendees: [],
         },
         {
@@ -169,7 +169,7 @@ export default {
           start: dyndatetime('y,m,d+3,10'),
           end: dyndatetime('y,m,d+3,12'),
           resource: 3,
-          color: '#c4f7a5',
+          color: '#51ac19',
           attendees: [],
         },
       ];
@@ -186,6 +186,8 @@ export default {
         { id: 'emp9', name: 'Ivy Torres', avatar: 'IT', color: '#e84393' },
         { id: 'emp10', name: 'Jack Murphy', avatar: 'JM', color: '#0984e3' },
       ];
+
+      var $container = $('.mds-drop-resources-to-events');
 
       function getAssignmentCount(empId) {
         var count = 0;
@@ -277,6 +279,21 @@ export default {
               });
           })(employees[j]);
         }
+
+        // Track drag start/end to toggle global dragging state
+        $('#external-employee-list')
+          .off('pointerdown.mds')
+          .on('pointerdown.mds', '.mds-employee-item', function () {
+            function onMove() {
+              $container.addClass('mds-external-dragging');
+              $(document).off('pointermove.mds');
+            }
+            function onUp() {
+              $container.removeClass('mds-external-dragging');
+              $(document).off('pointermove.mds pointerup.mds');
+            }
+            $(document).on('pointermove.mds', onMove).on('pointerup.mds', onUp);
+          });
       }
 
       renderEmployeeList();
@@ -303,8 +320,6 @@ export default {
               '</span>';
           }
           attendeesHtml += '</div>';
-        } else {
-          attendeesHtml = '<div class="mds-event-empty">Drop people here</div>';
         }
 
         return (
@@ -324,6 +339,7 @@ export default {
           '</div>' +
           '</div>' +
           attendeesHtml +
+          '<div class="mds-event-drop-hint">Drop people to assign</div>' +
           '</div>'
         );
       }
@@ -521,7 +537,7 @@ export default {
   <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
       <div class="mbsc-col-sm-3 mbsc-flex-col mds-sidebar">
-        <div class="mbsc-form-group-title">Employees</div>
+        <div class="mbsc-form-group-title">Team Members</div>
         <div id="external-employee-list" class="mds-employee-list mbsc-flex"></div>
       </div>
       <div class="mbsc-col-sm-9 mds-calendar-wrapper">
@@ -549,23 +565,26 @@ export default {
 .mds-employee-item {
   align-items: center;
   gap: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
   cursor: grab;
   user-select: none;
-  background: #ccc;
-  border: 1px solid transparent;
-  margin: 5px;
+  background: rgba(128, 128, 128, .5);
+  margin: 0 5px 5px 5px;
   touch-action: none;
-  transition: box-shadow 0.15s, background 0.15s;
+  transition: background 0.15s, box-shadow 0.2s, transform 0.15s;
 }
 .mds-employee-item:hover {
-  background: #ddd;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  background: rgba(128, 128, 128, .4);
+  transform: translateY(-1px);
+}
+.mds-employee-item:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 .mds-employee-avatar {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   align-items: center;
   justify-content: center;
@@ -574,42 +593,42 @@ export default {
   font-weight: 700;
   flex-shrink: 0;
   letter-spacing: 0.5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 .mds-employee-info {
   flex-direction: column;
   overflow: hidden;
 }
 .mds-employee-name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
-  color: #374151;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .mds-employee-count {
-  font-size: 14px;
-  color: #5b5b5b;
+  font-size: 13px;
+  opacity: 0.55;
 }
 .mds-calendar-wrapper {
-  border-left: 1px solid #ccc;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 /* Source item left behind in the sidebar while dragging */
 .mds-employee-item.mbsc-drag-clone {
   opacity: 0.8;
-  font-family: -apple-system, Segoe UI, Roboto, sans-serif;
 }
 .mds-custom-event {
-  background:#ebebeb;
+  background: #cccccc;
   border-radius: 6px;
   padding: 6px 8px;
   height: 100%;
   box-sizing: border-box;
   flex-direction: column;
   gap: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  transition: outline-color 0.15s, background 0.15s;
+  outline: 2px solid transparent;
+  transition: background 0.15s;
+  position: relative;
 }
 .mds-event-header {
   flex-direction: column;
@@ -618,26 +637,32 @@ export default {
 .mds-event-title {
   font-size: 14px;
   font-weight: 600;
-  color: #1f2937;
+  color: #181818;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .mds-event-time {
   font-size: 12px;
-  color: #7d7d7d;
+  color: #545454;
 }
 .mds-event-attendees {
   flex-wrap: wrap;
   gap: 3px;
 }
-.mds-event-empty {
+/* Drop hint - hidden by default, shown only during external drag */
+.mds-event-drop-hint {
+  display: none;
   font-size: 11px;
-  color: #9a9a9a;
   font-style: italic;
-  border: 1px dashed rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  padding: 4px 8px;
+  color: #686868;
+}
+/* Show drop hints and dashed borders on events during external drag */
+.mds-external-dragging .mds-event-drop-hint {
+  display: block;
+}
+.mds-external-dragging .mds-custom-event {
+  outline: 2px dashed #b9b9b9;
 }
 .mds-attendee-chip {
   display: flex;
@@ -649,8 +674,8 @@ export default {
   color: #fff;
   font-size: 9px;
   font-weight: 700;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   position: relative;
 }
@@ -670,15 +695,13 @@ export default {
 }
 .mds-custom-event.mds-drop-active {
   cursor: copy;
-  outline: 2px solid #70a369;
-  outline-offset: -2px;
-  background: rgba(112, 163, 105, 0.15);
+  outline: 2px solid rgba(54, 133, 43, 0.8);
+  background: rgba(180, 223, 173, 0.8);
 }
 .mds-custom-event.mds-drop-conflict {
   cursor: not-allowed;
-  outline: 2px solid #df6d6d;
-  outline-offset: -2px;
-  background: rgba(223, 109, 109, 0.1);
+  outline: 2px solid rgba(145, 34, 34, 0.8);
+  background: rgba(235, 194, 194, 0.8);
 }
 .mds-drop-resources-to-events .mbsc-timeline-event {
   min-height: 80px;
