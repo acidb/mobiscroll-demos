@@ -3120,7 +3120,7 @@ export default {
 }
 /* Grouped event - collapsed state */
 .mds-event-grouping-task-client {
-  background-color: #e8ecf0;
+  background-color: #dddddd;
   border-left: 4px solid;
   border-radius: 0 8px 8px 0;
   box-shadow:
@@ -3166,7 +3166,7 @@ export default {
   margin-right: 12px;
 }
 .mds-event-grouping-date-range {
-  color: #797979;
+  color: #575757;
   font-size: 11px;
   line-height: 14px;
   white-space: nowrap;
@@ -3212,7 +3212,7 @@ export default {
 }
 /* Individual event in expanded list */
 .mds-event-grouping-original-event {
-  background: #fff;
+  background: #f1f1f1;
   border-radius: 6px;
   margin-bottom: 6px;
   padding: 6px 10px;
@@ -3330,7 +3330,7 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   color: #2c2c2c;
-  background-color: #e8ecf0;
+  background-color: #dddddd;
   container-type: inline-size;
 }
 @container (max-width: 130px) {
