@@ -394,7 +394,7 @@ export default {
                   });
 
                   setTimeout(function () {
-                    inst.setEvents(meetings);
+                    calendar.setEvents(meetings);
                     renderEmployeeList();
                   }, 0);
 
@@ -466,7 +466,7 @@ export default {
                   var meetingRef = meetings[i];
 
                   attendees.splice(j, 1);
-                  inst.setEvents(meetings);
+                  calendar.setEvents(meetings);
                   renderEmployeeList();
 
                   (function (att, idx, meeting) {
@@ -479,7 +479,7 @@ export default {
                         text: 'Undo',
                         action: function () {
                           meeting.attendees.splice(idx, 0, att);
-                          inst.setEvents(meetings);
+                          calendar.setEvents(meetings);
                           renderEmployeeList();
                           mobiscroll.toast({
                             //<hidden>
@@ -502,7 +502,7 @@ export default {
         });
       }
 
-      var inst = $('#demo-drop-resources-to-events')
+      var calendar = $('#demo-drop-resources-to-events')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -515,6 +515,7 @@ export default {
               endTime: '18:00',
               timeCellStep: 60,
               timeLabelStep: 60,
+              virtualScroll: false,
             },
           },
           data: meetings,
