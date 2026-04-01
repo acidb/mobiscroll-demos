@@ -2342,7 +2342,7 @@ export default {
       var groupedEvents = [];
       var groupBy = 'assignee'; // 'assignee' or 'type'
       var groupByClient = false;
-      var zoomLevel = 'month'; // 'quarter', 'month', 'half-year'
+      var zoomLevel = 'month'; // 'quarter', 'month', 'week'
       var rawEvents = defaultEvents.slice();
       // Edit popup state
       var editingEventId = null;
@@ -2475,8 +2475,8 @@ export default {
           case 'month':
             timelineConfig = { type: 'year', resolutionHorizontal: 'month', eventHeight: 'variable' };
             break;
-          case 'half-year':
-            timelineConfig = { type: 'month', size: 6, resolutionHorizontal: 'month', eventHeight: 'variable' };
+          case 'week':
+            timelineConfig = { type: 'year', resolutionHorizontal: 'week', eventHeight: 'variable' };
             break;
         }
 
@@ -2750,9 +2750,9 @@ export default {
               '<option value="type">View by Type</option>' +
               '</select>' +
               '</div>' +
-              '<label>Quarterly Year<input mbsc-segmented type="radio" name="zoom-level" value="quarter"/></label>' +
-              '<label>Monthly Year<input mbsc-segmented type="radio" name="zoom-level" value="month" checked/></label>' +
-              '<label>Monthly Half-Year<input mbsc-segmented type="radio" name="zoom-level" value="half-year"/></label>' +
+              '<label>Quarterly<input mbsc-segmented type="radio" name="zoom-level" value="quarter"/></label>' +
+              '<label>Monthly<input mbsc-segmented type="radio" name="zoom-level" value="month" checked/></label>' +
+              '<label>Weekly<input mbsc-segmented type="radio" name="zoom-level" value="week"/></label>' +
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-today></div>' +
               '<div mbsc-calendar-next></div>'
