@@ -1,5 +1,5 @@
 import { Button, Datepicker, formatDate, Input, options, Page, Popup, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './range-picker-popup-presets.css';
 
 setOptions({
@@ -12,6 +12,11 @@ const endDate = 'dyndatetime(y,m,d+6)';
 const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day === 0 ? -6 : 1);
+const getFormattedRangeValue = (start, end) => {
+  const locale = options.locale || {};
+  const dateFormat = locale.dateFormat || 'DD/MM/YYYY';
+  return formatDate(dateFormat, new Date(start)) + ' - ' + formatDate(dateFormat, new Date(end));
+};
 
 function App() {
   const [isOpen, setOpen] = useState(false);
@@ -19,7 +24,7 @@ function App() {
   const [end, endRef] = useState(null);
   const [selected, setSelected] = useState('custom');
   const [selectedDate, setSelectedDate] = useState([startDate, endDate]);
-  const [inputValue, setInputValue] = useState();
+  const [inputValue, setInputValue] = useState(() => getFormattedRangeValue(startDate, endDate));
   const [disabledInput, setDisabledInput] = useState(false);
   const [input, inputRef] = useState(null);
 
@@ -28,9 +33,7 @@ function App() {
   }, []);
 
   const changeInputValue = useCallback((start, end) => {
-    const locale = options.locale || {};
-    const dateFormat = locale.dateFormat || 'DD/MM/YYYY';
-    setInputValue(formatDate(dateFormat, new Date(start)) + ' - ' + formatDate(dateFormat, new Date(end)));
+    setInputValue(getFormattedRangeValue(start, end));
   }, []);
 
   const applyClick = useCallback(() => {
@@ -165,10 +168,6 @@ function App() {
     }),
     [changeInputValue, input, selectedDate],
   );
-
-  useEffect(() => {
-    changeInputValue(startDate, endDate);
-  }, [changeInputValue]);
 
   return (
     <Page>

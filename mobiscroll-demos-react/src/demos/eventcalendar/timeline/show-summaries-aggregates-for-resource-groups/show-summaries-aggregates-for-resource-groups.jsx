@@ -739,7 +739,7 @@ function App() {
     //</hide-comment>
   ]);
 
-  const [eventsWithSummaries, setEventsWithSummaries] = useState(myEvents.current);
+  const [eventsWithSummaries, setEventsWithSummaries] = useState([]);
 
   const firstViewDay = useRef();
   const lastViewDay = useRef();

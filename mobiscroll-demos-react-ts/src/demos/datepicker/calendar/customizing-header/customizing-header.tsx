@@ -44,25 +44,22 @@ const App: FC = () => {
     [],
   );
 
-  const calendarHeaderSwitch = useCallback(
-    () => (
-      <>
-        <CalendarNav className="custom-view-nav" />
-        <div className="custom-view">
-          <SegmentedGroup value={calendarType} onChange={changeView}>
-            <Segmented value="week" icon="material-date-range" />
-            <Segmented value="month" icon="material-event-note" />
-          </SegmentedGroup>
-        </div>
-        <CalendarPrev />
-        <CalendarNext />
-      </>
-    ),
-    [calendarType],
-  );
   const changeView = (event: ChangeEvent<HTMLInputElement>) => {
     setCalendarType(event.target.value as 'week' | 'year' | 'month' | undefined);
   };
+  const calendarHeaderSwitch = () => (
+    <>
+      <CalendarNav className="custom-view-nav" />
+      <div className="custom-view">
+        <SegmentedGroup value={calendarType} onChange={changeView}>
+          <Segmented value="week" icon="material-date-range" />
+          <Segmented value="month" icon="material-event-note" />
+        </SegmentedGroup>
+      </div>
+      <CalendarPrev />
+      <CalendarNext />
+    </>
+  );
   return (
     <div>
       <Datepicker controls={['calendar']} display="inline" calendarType="week" calendarSize={2} />

@@ -15,7 +15,7 @@ import {
   Textarea,
   updateRecurringEvent /* localeImport */,
 } from '@mobiscroll/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './recurring-event-add-edit-dialog.css';
 
 setOptions({
@@ -292,7 +292,7 @@ function App() {
           };
           break;
         case 'yearly-pos':
-          tempEvent.recurring = {
+          recurringRule = {
             repeat: 'yearly',
             month: d.getMonth() + 1,
             weekDays: days[weekday].short,
@@ -820,26 +820,33 @@ function App() {
           if (recurringDelete) {
             deleteRecurringEvent();
           } else {
+            let popupTempEvent = tempEvent;
             if (editFromPopup) {
-              tempEvent.title = popupEventTitle;
-              tempEvent.description = popupEventDescription;
-              tempEvent.start = popupEventDate[0];
-              tempEvent.end = popupEventDate[1];
-              tempEvent.allDay = popupEventAllDay;
-              tempEvent.recurring = getCustomRule();
+              popupTempEvent = {
+                ...tempEvent,
+                title: popupEventTitle,
+                description: popupEventDescription,
+                start: popupEventDate[0],
+                end: popupEventDate[1],
+                allDay: popupEventAllDay,
+                recurring: getCustomRule(),
+              };
             }
 
             if (recurringEditMode === 'current') {
-              delete tempEvent.id;
-              delete tempEvent.recurring;
-              delete tempEvent.recurringException;
+              popupTempEvent = {
+                ...popupTempEvent,
+                id: undefined,
+                recurring: undefined,
+                recurringException: undefined,
+              };
             }
 
             const events = updateRecurringEvent(
               originalRecurringEvent,
               eventOccurrence,
               editFromPopup ? null : newEvent,
-              editFromPopup ? tempEvent : null,
+              editFromPopup ? popupTempEvent : null,
               recurringEditMode,
             );
 
@@ -890,13 +897,6 @@ function App() {
     setRecurringEditMode('current');
     setRecurringEditOpen(false);
   }, []);
-
-  useEffect(() => {
-    populateMonthDays(1, 'monthly');
-    setMonthlyDay(1);
-    populateMonthDays(1, 'yearly');
-    setYearlyDay(1);
-  }, [populateMonthDays]);
 
   return (
     <>

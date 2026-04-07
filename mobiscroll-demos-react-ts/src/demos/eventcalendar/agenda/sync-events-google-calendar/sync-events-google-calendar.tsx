@@ -14,7 +14,7 @@ import {
   Switch,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './sync-events-google-calendar.css';
 
 setOptions({
@@ -35,7 +35,7 @@ const App: FC = () => {
   const [mySelectedDate, setSelectedDate] = useState(new Date());
   const [toastMessage, setToastMessage] = useState<string>('');
 
-  const { current: view } = useRef<MbscEventcalendarView>({ agenda: { type: 'month' } });
+  const view = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
   const buttonRef = useRef<Button>(null);
   const startDate = useRef<Date>(null);
   const endDate = useRef<Date>(null);
@@ -84,7 +84,8 @@ const App: FC = () => {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
       if (calendarData) {
-        calendarData[calendarId].checked = checked;
+        const updatedCalendarData = { ...calendarData, [calendarId]: { ...calendarData[calendarId], checked } };
+        setCalendarData(updatedCalendarData);
       }
       if (checked) {
         setLoading(true);

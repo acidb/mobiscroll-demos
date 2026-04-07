@@ -778,7 +778,7 @@ function App() {
         endDay: 5,
         startTime: '01:00',
         endTime: '24:00',
-        // timeCellStep: 20,
+        timeCellStep: 20,
         allDay: false,
       },
     }),
@@ -839,7 +839,7 @@ function App() {
         dragTimeStep={480}
         eventOverlap={false}
         groupBy="date"
-        // invalid={myInvalids}
+        invalid={myInvalids}
         resources={myResources}
         view={myView}
         dragToCreate={true}

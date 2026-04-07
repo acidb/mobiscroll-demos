@@ -752,7 +752,7 @@ function App() {
     //</hide-comment>
   ]);
 
-  const [eventsWithSummaries, setEventsWithSummaries] = useState<MbscCalendarEvent[]>(myEvents.current);
+  const [eventsWithSummaries, setEventsWithSummaries] = useState<MbscCalendarEvent[]>([]);
 
   const firstViewDay = useRef<Date>(null);
   const lastViewDay = useRef<Date>(null);

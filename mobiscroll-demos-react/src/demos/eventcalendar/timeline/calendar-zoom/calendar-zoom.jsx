@@ -18,6 +18,7 @@ setOptions({
 function App() {
   const [myEvents, setEvents] = useState([]);
   const [zoomLevel, setZoomLevel] = useState(9);
+  const [viewDate, setViewDate] = useState(new Date());
 
   const calRef = useRef(null);
 
@@ -62,7 +63,6 @@ function App() {
   );
 
   const refDate = useMemo(() => {
-    const viewDate = calRef.current ? calRef.current.getViewDate() : new Date();
     if (zoomLevel < 11) {
       return new Date(viewDate.getFullYear() - 12, 0, 1);
     }
@@ -70,19 +70,31 @@ function App() {
       return new Date(viewDate.getFullYear() - 1, 0, 1);
     }
     return new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
-  }, [zoomLevel]);
+  }, [zoomLevel, viewDate]);
+
+  const syncViewDate = useCallback(() => {
+    if (calRef.current?.getViewDate) {
+      setViewDate(calRef.current.getViewDate());
+    }
+  }, []);
 
   const zoomIn = useCallback(() => {
     setZoomLevel((prevZoom) => prevZoom + 1);
-  }, []);
+    syncViewDate();
+  }, [syncViewDate]);
 
   const zoomOut = useCallback(() => {
     setZoomLevel((prevZoom) => prevZoom - 1);
-  }, []);
+    syncViewDate();
+  }, [syncViewDate]);
 
-  const handleSliderChange = useCallback((ev) => {
-    setZoomLevel(+ev.target.value);
-  }, []);
+  const handleSliderChange = useCallback(
+    (ev) => {
+      setZoomLevel(+ev.target.value);
+      syncViewDate();
+    },
+    [syncViewDate],
+  );
 
   const myHeader = useCallback(
     () => (
@@ -110,6 +122,10 @@ function App() {
       'jsonp',
     );
   }, []);
+
+  useEffect(() => {
+    syncViewDate();
+  }, [syncViewDate]);
 
   return (
     <Eventcalendar

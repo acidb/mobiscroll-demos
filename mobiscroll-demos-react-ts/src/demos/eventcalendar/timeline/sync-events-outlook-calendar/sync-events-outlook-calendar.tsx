@@ -98,7 +98,8 @@ const App: FC = () => {
     (ev: ChangeEvent<HTMLInputElement>) => {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
-      calendarData[calendarId].checked = checked;
+      const updatedCalendarData = { ...calendarData, [calendarId]: { ...calendarData[calendarId], checked } };
+      setCalendarData(updatedCalendarData);
       if (checked) {
         setLoading(true);
         setCalendarIds((calIds) => [...calIds, calendarId]);

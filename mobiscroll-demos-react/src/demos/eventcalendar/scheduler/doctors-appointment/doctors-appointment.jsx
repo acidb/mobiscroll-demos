@@ -1,6 +1,6 @@
 import { Draggable, Dropcontainer, Eventcalendar, setOptions, Toast /* localeImport */ } from '@mobiscroll/react';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './doctors-appointment.css';
 
 setOptions({
@@ -303,22 +303,21 @@ const App = () => {
     setToastOpen(false);
   }, []);
 
-  useEffect(() => {
-    for (const event of myEvents) {
-      // Convert dates to date objects
-      event.start = event.start ? new Date(event.start) : event.start;
-      event.end = event.end ? new Date(event.end) : event.end;
-      // Mark past events as fixed by setting the event.editable property to false
-      event.editable = !!(event.start && today < event.start);
-    }
-  }, [myEvents]);
-
   return (
     <div className="mbsc-grid mbsc-no-padding">
       <div className="mbsc-row">
         <div className="mbsc-col-sm-9 docs-appointment-calendar">
           <Eventcalendar
-            data={myEvents}
+            data={myEvents.map((event) => {
+              const start = event.start ? new Date(event.start) : event.start;
+              const end = event.end ? new Date(event.end) : event.end;
+              return {
+                ...event,
+                start,
+                end,
+                editable: !!(start && today < start),
+              };
+            })}
             view={myView}
             resources={doctors}
             invalid={myInvalid}

@@ -12,7 +12,7 @@ import {
   Switch,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './sync-events-google-calendar.css';
 
 setOptions({
@@ -28,7 +28,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [editable, setEditable] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [isHidden, setHidden] = useState(true);
+  const [isHidden] = useState(false);
   const [primaryCalendarId, setPrimaryCalendarId] = useState();
   const [isToastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -37,7 +37,7 @@ function App() {
   const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
   const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
-  const { current: view } = useRef({ calendar: { labels: true } });
+  const view = useMemo(() => ({ calendar: { labels: true } }), []);
   const debounce = useRef();
   const startDate = useRef();
   const endDate = useRef();
@@ -172,7 +172,8 @@ function App() {
     (ev) => {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
-      calendarData[calendarId].checked = checked;
+      const updatedCalendarData = { ...calendarData, [calendarId]: { ...calendarData[calendarId], checked } };
+      setCalendarData(updatedCalendarData);
       if (checked) {
         setLoading(true);
         setCalendarIds((calIds) => [...calIds, calendarId]);
@@ -256,8 +257,6 @@ function App() {
       setCalendarData({});
       setEvents([]);
     };
-
-    setHidden(false);
 
     // Init google client
     googleCalendarSync.init({

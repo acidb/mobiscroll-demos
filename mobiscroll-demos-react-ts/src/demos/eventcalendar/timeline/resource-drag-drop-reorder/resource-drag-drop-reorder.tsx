@@ -15,7 +15,7 @@ import {
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, Fragment, useCallback, useRef, useState } from 'react';
+import { FC, Fragment, useCallback, useState } from 'react';
 import './resource-drag-drop-reorder.css';
 
 setOptions({
@@ -131,18 +131,18 @@ const App: FC = () => {
   const [myResources, setResources] = useState<MbscResource[]>(resources);
   const [tempResources, setTempResources] = useState<MbscResource[]>([...resources]);
   const [myEvents, setEvents] = useState<MbscCalendarEvent[]>(events);
-  const myView = useRef<MbscEventcalendarView>(defaultView);
+  const [myView, setMyView] = useState<MbscEventcalendarView>(defaultView);
   const [isReorder, setReorder] = useState(false);
   const [isToastOpen, setToastOpen] = useState(false);
   const [message, setMessage] = useState('');
   const enableReorder = useCallback(() => {
     setReorder(true);
-    myView.current = {
+    setMyView({
       timeline: {
         type: 'month',
         resourceReorder: true,
       },
-    };
+    });
   }, []);
 
   const onToastClose = useCallback(() => {
@@ -151,24 +151,24 @@ const App: FC = () => {
 
   const saveReorder = useCallback(() => {
     setReorder(false);
-    myView.current = {
+    setMyView({
       timeline: {
         type: 'month',
         resourceReorder: false,
       },
-    };
+    });
     setResources([...tempResources]);
   }, [tempResources]);
 
   const cancelReorder = useCallback(() => {
     setReorder(false);
     setResources([...myResources]);
-    myView.current = {
+    setMyView({
       timeline: {
         type: 'month',
         resourceReorder: false,
       },
-    };
+    });
     setMessage('Resource order canceled');
     setToastOpen(true);
   }, [myResources]);
@@ -237,7 +237,7 @@ const App: FC = () => {
       <Eventcalendar
         resources={myResources}
         immutableData={true}
-        view={myView.current}
+        view={myView}
         data={myEvents}
         renderHeader={customHeader}
         onResourceOrderUpdate={handleResourceOrder}

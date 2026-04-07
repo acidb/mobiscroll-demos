@@ -6,7 +6,7 @@ import {
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import './role-based-views-with-different-permission.css';
 
 setOptions({
@@ -122,9 +122,16 @@ const App: FC = () => {
   const user = useMemo(() => ({ name: 'Client', role: 'readonly' }), []);
   const user = useMemo(() => ({ name: 'Project Manager', role: 'full' }), []); */
 
-  const [editEvents, setEditEvents] = useState<boolean>(false);
-  const [isToastOpen, setToastOpen] = useState<boolean>(false);
-  const [toastMessage, setToastMessage] = useState<string>('');
+  const [isToastOpen, setToastOpen] = useState<boolean>(true);
+  const toastMessage = useMemo(() => {
+    if (user.role === 'readonly') {
+      return 'Client with read-only access logged in';
+    }
+    if (user.role === 'limited') {
+      return 'User ' + user.name + ' with limited access logged in';
+    }
+    return 'User with full access logged in';
+  }, [user]);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
@@ -137,9 +144,28 @@ const App: FC = () => {
     [],
   );
 
-  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>(initialEvents);
+  const myEvents = useMemo<MbscCalendarEvent[]>(() => {
+    const newTasks = initialEvents.map((task) => ({ ...task }));
+    if (user.role === 'readonly') {
+      return newTasks.map((task) => ({ ...task, editable: false, color: '#af2ec3' }));
+    }
+    if (user.role === 'limited') {
+      return newTasks.map((task) =>
+        task.resource !== user.id ? { ...task, editable: false, color: '#6a6a6a' } : { ...task, color: '#af2424' },
+      );
+    }
+    return newTasks;
+  }, [user]);
 
-  const [myResources, setResources] = useState<MbscResource[]>(initialResources);
+  const myResources = useMemo<MbscResource[]>(() => {
+    const newResources = initialResources.map((res) => ({ ...res }));
+    if (user.role !== 'limited') {
+      return newResources;
+    }
+    return newResources.map((res) => (res.id !== user.id ? { ...res, eventCreation: false } : res));
+  }, [user]);
+
+  const editEvents = useMemo<boolean>(() => user.role !== 'readonly', [user]);
 
   const getDefaultEvent = useCallback(
     () => ({
@@ -151,45 +177,6 @@ const App: FC = () => {
   const handleCloseToast = useCallback(() => {
     setToastOpen(false);
   }, []);
-
-  // Simulate login
-  useEffect(() => {
-    const newTasks = [...initialEvents];
-    const newResources = [...initialResources];
-
-    if (user.role === 'readonly') {
-      for (const task of newTasks) {
-        task.editable = false;
-        task.color = '#af2ec3';
-      }
-
-      setToastMessage('Client with read-only access logged in');
-    } else if (user.role === 'limited') {
-      for (const task of newTasks) {
-        if (task.resource !== user.id) {
-          task.editable = false;
-          task.color = '#6a6a6a';
-        } else {
-          task.color = '#af2424';
-        }
-      }
-
-      for (const res of newResources) {
-        if (res.id !== user.id) {
-          res.eventCreation = false;
-        }
-      }
-
-      setToastMessage('User ' + user.name + ' with limited access logged in');
-    } else {
-      setToastMessage('User with full access logged in');
-    }
-
-    setEvents(newTasks);
-    setResources(newResources);
-    setEditEvents(user.role !== 'readonly');
-    setToastOpen(true);
-  }, [user]);
 
   return (
     <>
