@@ -6,26 +6,10 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light',
+      // theme
     });
 
     $(function () {
-      var colors = [
-        '#FF5733',
-        '#33FF57',
-        '#3357FF',
-        '#FF33A6',
-        '#FFC300',
-        '#DAF7A6',
-        '#581845',
-        '#900C3F',
-        '#C70039',
-        '#33FFBD',
-        '#FF33F6',
-        '#33A6FF',
-      ];
-
       var resources = [
         { id: 1, name: 'Resource 1', color: '#FF5733' },
         { id: 2, name: 'Resource 2', color: '#33FF57' },
