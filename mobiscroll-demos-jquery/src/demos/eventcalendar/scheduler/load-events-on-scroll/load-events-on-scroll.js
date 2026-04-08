@@ -84,6 +84,9 @@ export default {
                 inst.setEvents(data.events);
 
                 mobiscroll.toast({
+                  //<hidden>
+                  // theme,//</hidden>
+                  // context,
                   message: 'Loading events...',
                   duration: 1000,
                 });
