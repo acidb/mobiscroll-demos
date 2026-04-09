@@ -26,6 +26,23 @@ body,
   z-index: 5;
 }
 
+.app-footer-theme-select {
+  width: 280px;
+}
+
+.app-footer-theme-variant-select {
+  width: 140px;
+}
+
+.app-footer-locale-select.mbsc-select {
+  width: 180px;
+  height: 34px;
+}
+
+.app-footer-locale-select + .mbsc-select-icon.mbsc-ios {
+  font-size: 11px;
+}
+
 .app-header {
   top: 0;
 }

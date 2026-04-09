@@ -1,3 +1,97 @@
+// --- THEME/VARIANT/LOCALE FOOTER CONTROLS ---
+import * as mobiscroll from '@mobiscroll/jquery';
+import $ from 'jquery';
+
+// Supported locales (extend as needed)
+var locales = [
+  { value: mobiscroll.localeEn, text: 'English' },
+  { value: mobiscroll.localeAr, text: 'Arabic' },
+  { value: mobiscroll.localeBg, text: 'Bulgarian' },
+  { value: mobiscroll.localeCa, text: 'Català' },
+  { value: mobiscroll.localeCs, text: 'Cestina' },
+  { value: mobiscroll.localeZh, text: 'Chinese' },
+  { value: mobiscroll.localeHr, text: 'Croatian' },
+  { value: mobiscroll.localeDa, text: 'Dansk' },
+  { value: mobiscroll.localeDe, text: 'Deutsch' },
+  { value: mobiscroll.localeEnGB, text: 'English (UK)' },
+  { value: mobiscroll.localeEs, text: 'Español' },
+  { value: mobiscroll.localeFr, text: 'Français' },
+  { value: mobiscroll.localeEl, text: 'Greek' },
+  { value: mobiscroll.localeHi, text: 'Hindi' },
+  { value: mobiscroll.localeIt, text: 'Italiano' },
+  { value: mobiscroll.localeJa, text: 'Japanese' },
+  { value: mobiscroll.localeKo, text: 'Korean' },
+  { value: mobiscroll.localeLt, text: 'Lietuvių' },
+  { value: mobiscroll.localeHu, text: 'Magyar' },
+  { value: mobiscroll.localeNl, text: 'Nederlands' },
+  { value: mobiscroll.localeNo, text: 'Norsk' },
+  { value: mobiscroll.localePl, text: 'Polski' },
+  { value: mobiscroll.localePtPT, text: 'Português Europeu' },
+  { value: mobiscroll.localePtBR, text: 'Pt. Brasileiro' },
+  { value: mobiscroll.localeRo, text: 'Română' },
+  { value: mobiscroll.localeSr, text: 'Serbian' },
+  { value: mobiscroll.localeSk, text: 'Slovencina' },
+  { value: mobiscroll.localeFi, text: 'Suomi' },
+  { value: mobiscroll.localeSv, text: 'Svenska' },
+  { value: mobiscroll.localeTh, text: 'Thai' },
+  { value: mobiscroll.localeTr, text: 'Türkçe' },
+  { value: mobiscroll.localeUa, text: 'Ukrainian' },
+  { value: mobiscroll.localeVi, text: 'Vietnamese' },
+  { value: mobiscroll.localeRu, text: 'Русский' },
+  { value: mobiscroll.localeRuUA, text: 'Русский (UA)' },
+  { value: mobiscroll.localeHe, text: 'עברית' },
+  { value: mobiscroll.localeFa, text: 'فارسی' },
+];
+
+function setGlobalOptions(theme, themeVariant, locale) {
+  console.log(theme, themeVariant, locale);
+  mobiscroll.setOptions({
+    theme: theme,
+    themeVariant: themeVariant,
+    locale: locale,
+  });
+}
+
+function setupFooterControls() {
+  // Initialize Mobiscroll select with input and data array
+  var localeSelect = $('#mobiscroll-locale')
+    .mobiscroll()
+    .select({
+      data: locales,
+      touchUi: false,
+      onChange: function (args) {
+        console.log(args);
+        setGlobalOptions(
+          $("input[name='mobiscroll-theme']:checked").val(),
+          $("input[name='mobiscroll-theme-variant']:checked").val(),
+          args.value,
+        );
+      },
+    })
+    .mobiscroll('getInst');
+
+  localeSelect.setVal(mobiscroll.localeEn);
+
+  // Segmented change for theme
+  $("input[name='mobiscroll-theme']").on('change', function () {
+    setGlobalOptions(this.value, $("input[name='mobiscroll-theme-variant']:checked").val(), $('#mbsc-locale-select').val());
+  });
+  // Segmented change for themeVariant
+  $("input[name='mobiscroll-theme-variant']").on('change', function () {
+    setGlobalOptions($("input[name='mobiscroll-theme']:checked").val(), this.value, $('#mbsc-locale-select').val());
+  });
+
+  // Set initial
+  setGlobalOptions(
+    $("input[name='mobiscroll-theme']:checked").val(),
+    $("input[name='mobiscroll-theme-variant']:checked").val(),
+    localeSelect.getVal(),
+  );
+}
+
+$(function () {
+  setupFooterControls();
+});
 import {
   Button,
   CalendarNav,
