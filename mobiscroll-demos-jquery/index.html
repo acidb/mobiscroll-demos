@@ -22,17 +22,24 @@
     </div>
     <div class="app-footer mbsc-font" style="display: flex; align-items: center; justify-content: center; gap: 24px">
       <div style="display: flex; align-items: center; gap: 16px">
-        <div class="app-footer-theme-select">
-          <label><input mbsc-segmented name="mobiscroll-theme" value="ios" checked />iOS</label>
-          <label><input mbsc-segmented name="mobiscroll-theme" value="material" />Material</label>
-          <label><input mbsc-segmented name="mobiscroll-theme" value="windows" />Windows</label>
+        <div mbsc-segmented-group data-theme="ios" class="app-footer-theme-select app-footer-segmented">
+          <label><input mbsc-segmented data-theme="ios" name="mobiscroll-theme" value="ios" checked />iOS</label>
+          <label><input mbsc-segmented data-theme="ios" name="mobiscroll-theme" value="material" />Material</label>
+          <label><input mbsc-segmented data-theme="ios" name="mobiscroll-theme" value="windows" />Windows</label>
         </div>
-        <div class="app-footer-theme-variant-select">
-          <label><input mbsc-segmented name="mobiscroll-theme-variant" value="light" checked />Light</label>
-          <label><input mbsc-segmented name="mobiscroll-theme-variant" value="dark" />Dark</label>
+        <div mbsc-segmented-group data-theme="ios" class="app-footer-theme-variant-select app-footer-segmented">
+          <label><input mbsc-segmented data-theme="ios" name="mobiscroll-theme-variant" value="light" checked />Light</label>
+          <label><input mbsc-segmented data-theme="ios" name="mobiscroll-theme-variant" value="dark" />Dark</label>
         </div>
         <label>
-          <input mbsc-input id="mobiscroll-locale" data-dropdown="true" data-input-style="box" class="app-footer-locale-select" />
+          <input
+            mbsc-input
+            id="mobiscroll-locale"
+            data-dropdown="true"
+            data-theme="ios"
+            data-input-style="box"
+            class="app-footer-locale-select"
+          />
         </label>
       </div>
       <div class="app-path" id="app-path" style="margin-left: auto"></div>
