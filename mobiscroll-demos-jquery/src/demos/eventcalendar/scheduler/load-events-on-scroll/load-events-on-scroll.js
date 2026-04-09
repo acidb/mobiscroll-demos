@@ -31,11 +31,6 @@ export default {
         { id: 18, name: 'Resource 18', color: '#900C3F' },
         { id: 19, name: 'Resource 19', color: '#C70039' },
         { id: 20, name: 'Resource 20', color: '#FF33F6' },
-        { id: 21, name: 'Resource 21', color: '#FF5733' },
-        { id: 22, name: 'Resource 22', color: '#33FF57' },
-        { id: 23, name: 'Resource 23', color: '#3357FF' },
-        { id: 24, name: 'Resource 24', color: '#FF33A6' },
-        { id: 25, name: 'Resource 25', color: '#FFC300' },
       ];
 
       $('#demo-load-events-on-scroll')
@@ -44,8 +39,8 @@ export default {
           view: {
             scheduler: {
               type: 'month',
-              timeCellStep: 30,
-              timeLabelStep: 30,
+              timeCellStep: 15,
+              timeLabelStep: 15,
             },
           },
           groupBy: 'date',

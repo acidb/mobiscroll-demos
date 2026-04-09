@@ -14,7 +14,7 @@ export default {
         return Math.floor(Math.random() * (max - min) + min);
       }
 
-      var resourceNr = 10;
+      var resourceNr = 20;
       var eventsNr = 2000;
       var myResources = [];
       var myEventColors = ['#ff0101', '#239a21', '#8f1ed6', '#01adff', '#d8ca1a'];
