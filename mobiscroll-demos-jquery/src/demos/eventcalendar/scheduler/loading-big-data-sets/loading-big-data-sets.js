@@ -15,7 +15,7 @@ export default {
       }
 
       var resourceNr = 10;
-      var eventsNr = 10000;
+      var eventsNr = 2000;
       var myResources = [];
       var myEventColors = ['#ff0101', '#239a21', '#8f1ed6', '#01adff', '#d8ca1a'];
 
@@ -36,24 +36,22 @@ export default {
             },
           },
           groupBy: 'date',
-          eventOverlap: false,
           onPageLoading: function (args, inst) {
+            inst.setEvents([]);
             setTimeout(function () {
               var myEvents = [];
               var year = args.firstDay.getFullYear();
-              // Generate random events
+              var month = args.firstDay.getMonth();
+              var daysInMonth = new Date(year, month + 1, 0).getDate();
+              // Generate random events for the visible month
               for (var i = 0; i < eventsNr; i++) {
-                var day = getRandomInt(1, 31);
+                var day = getRandomInt(1, daysInMonth + 1);
                 var resource = getRandomInt(1, resourceNr + 1);
-                var month = getRandomInt(0, 12);
                 var color = getRandomInt(0, myEventColors.length);
                 var startHour = getRandomInt(0, 23);
-                var startMinute = getRandomInt(0, 60);
+                var startMinute = getRandomInt(0, 4) * 15;
                 var start = new Date(year, month, day, startHour, startMinute);
-                var minDurationMs = 30 * 60 * 1000; // 30 minutes
-                var maxDurationMs = 2 * 60 * 60 * 1000; // 2 hours
-                var durationMs = getRandomInt(minDurationMs, maxDurationMs);
-                var end = new Date(start.getTime() + durationMs);
+                var end = new Date(start.getTime() + getRandomInt(2, 9) * 15 * 60 * 1000);
                 if (end.getDate() === start.getDate()) {
                   myEvents.push({
                     color: myEventColors[color],
