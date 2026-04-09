@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
@@ -25,9 +25,10 @@ setOptions({
 })
 export class AppComponent {
   constructor(
+    private cdr: ChangeDetectorRef,
     private http: HttpClient,
     public notify: Notifications,
-  ) {}
+  ) { }
 
   myEvents: MbscCalendarEvent[] = [];
   myResources = [
@@ -61,6 +62,7 @@ export class AppComponent {
         .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/load-data-scroll/?start=' + start + '&end=' + end, 'callback')
         .subscribe((data: any) => {
           this.myEvents = data.events;
+          this.cdr.detectChanges();
           this.notify.toast({
             message: 'Loading events...',
             duration: 1000,
