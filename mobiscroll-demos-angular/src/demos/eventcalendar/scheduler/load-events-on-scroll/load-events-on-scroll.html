@@ -1,0 +1,7 @@
+<mbsc-eventcalendar
+  [data]="myEvents"
+  [resources]="myResources"
+  [view]="myView"
+  groupBy="date"
+  (onVirtualLoading)="handleVirtualLoading($event)"
+></mbsc-eventcalendar>

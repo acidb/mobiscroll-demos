@@ -217,6 +217,8 @@ import Demo490 from './demos/eventcalendar/scheduler/recurring-events/recurring-
 import Demo517 from './demos/eventcalendar/scheduler/load-inline-data/load-inline-data';
 import Demo483 from './demos/eventcalendar/scheduler/load-events-from-remote-api/load-events-from-remote-api';
 import Demo482 from './demos/eventcalendar/scheduler/load-events-on-demand/load-events-on-demand';
+import Demo788 from './demos/eventcalendar/scheduler/load-events-on-scroll/load-events-on-scroll';
+import Demo789 from './demos/eventcalendar/scheduler/loading-big-data-sets/loading-big-data-sets';
 import Demo682 from './demos/eventcalendar/scheduler/sync-events-google-calendar/sync-events-google-calendar';
 import Demo687 from './demos/eventcalendar/scheduler/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import Demo500 from './demos/eventcalendar/scheduler/load-events-from-google-calendar/load-events-from-google-calendar';
@@ -924,6 +926,8 @@ export const demos = [
               { name: 'Loading inline data', unique: 'load-inline-data', component: Demo517 },
               { name: 'Events from remote API', unique: 'load-events-from-remote-api', component: Demo483 },
               { name: 'Loading events on demand', unique: 'load-events-on-demand', component: Demo482 },
+              { name: 'Loading events on scroll', unique: 'load-events-on-scroll', component: Demo788 },
+              { name: 'Working with large data sets', unique: 'loading-big-data-sets', component: Demo789 },
             ],
           },
           {
