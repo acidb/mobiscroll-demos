@@ -46,10 +46,68 @@ body,
   line-height: 36px;
 }
 
+.app-footer-controls {
+  flex-shrink: 0;
+  gap: 0 16px;
+  flex-wrap: wrap;
+  padding: 0 12px;
+}
+
+.app-footer-controls .mbsc-form-control-wrapper {
+  margin: 0;
+}
+
+.app-footer-theme-variant-select.mbsc-segmented {
+  width: 180px;
+  margin: 0;
+}
+
+.app-footer-select.mbsc-select.mbsc-textfield {
+  height: 34px;
+}
+
+.app-footer-select + .mbsc-select-icon.mbsc-ios {
+  font-size: 11px;
+}
+
+.app-footer-theme-select.mbsc-select {
+  width: 140px;
+}
+
+.app-footer-locale-select.mbsc-select {
+  width: 180px;
+}
+
+@media (max-width: 565px) {
+  .app-footer-locale-select.mbsc-select {
+    width: 140px;
+  }
+}
+
+@media (max-width: 525px) {
+  .app-footer-theme-select.mbsc-select {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-footer-theme-variant-select.mbsc-segmented {
+    width: 120px;
+  }
+}
+
+@media (max-width: 420px) {
+  .app-footer-locale-select.mbsc-select {
+    width: 100px;
+  }
+}
+
 .app-path {
   font-size: 12px;
   line-height: 36px;
   padding: 0 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .app-back {

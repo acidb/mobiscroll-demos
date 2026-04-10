@@ -1,9 +1,141 @@
 <script setup lang="ts">
 import '@mobiscroll/vue/dist/css/mobiscroll.min.css'
+import {
+  localeAr,
+  localeBg,
+  localeCa,
+  localeCs,
+  localeDa,
+  localeDe,
+  localeEl,
+  localeEn,
+  localeEnGB,
+  localeEs,
+  localeFa,
+  localeFi,
+  localeFr,
+  localeHe,
+  localeHi,
+  localeHr,
+  localeHu,
+  localeIt,
+  localeJa,
+  localeKo,
+  localeLt,
+  localeNl,
+  localeNo,
+  localePl,
+  localePtBR,
+  localePtPT,
+  localeRo,
+  localeRu,
+  localeRuUA,
+  localeSk,
+  localeSr,
+  localeSv,
+  localeTh,
+  localeTr,
+  localeUa,
+  localeVi,
+  localeZh,
+  type MbscLocale,
+  MbscSegmented,
+  MbscSegmentedGroup,
+  MbscSelect,
+  setOptions
+} from '@mobiscroll/vue'
+import { onMounted, onUnmounted, ref, shallowRef, watch } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { demoTitleMap } from './demos'
 
 const route = useRoute()
+
+const theme = ref<string>('auto')
+const themeVariant = ref<'auto' | 'light' | 'dark'>('auto')
+const locale = shallowRef<MbscLocale>(localeEn)
+
+const footerRef = ref<HTMLElement | null>(null)
+const pathRef = ref<HTMLElement | null>(null)
+
+const themes = [
+  { value: 'ios', text: 'iOS' },
+  { value: 'material', text: 'Material' },
+  { value: 'windows', text: 'Windows' },
+  { value: 'auto', text: 'Auto' }
+]
+
+const locales = [
+  { value: localeEn, text: 'English' },
+  { value: localeAr, text: 'Arabic' },
+  { value: localeBg, text: 'Bulgarian' },
+  { value: localeCa, text: 'Català' },
+  { value: localeCs, text: 'Cestina' },
+  { value: localeZh, text: 'Chinese' },
+  { value: localeHr, text: 'Croatian' },
+  { value: localeDa, text: 'Dansk' },
+  { value: localeDe, text: 'Deutsch' },
+  { value: localeEnGB, text: 'English (UK)' },
+  { value: localeEs, text: 'Español' },
+  { value: localeFr, text: 'Français' },
+  { value: localeEl, text: 'Greek' },
+  { value: localeHi, text: 'Hindi' },
+  { value: localeIt, text: 'Italiano' },
+  { value: localeJa, text: 'Japanese' },
+  { value: localeKo, text: 'Korean' },
+  { value: localeLt, text: 'Lietuvių' },
+  { value: localeHu, text: 'Magyar' },
+  { value: localeNl, text: 'Nederlands' },
+  { value: localeNo, text: 'Norsk' },
+  { value: localePl, text: 'Polski' },
+  { value: localePtPT, text: 'Português Europeu' },
+  { value: localePtBR, text: 'Pt. Brasileiro' },
+  { value: localeRo, text: 'Română' },
+  { value: localeSr, text: 'Serbian' },
+  { value: localeSk, text: 'Slovencina' },
+  { value: localeFi, text: 'Suomi' },
+  { value: localeSv, text: 'Svenska' },
+  { value: localeTh, text: 'Thai' },
+  { value: localeTr, text: 'Türkçe' },
+  { value: localeUa, text: 'Ukrainian' },
+  { value: localeVi, text: 'Vietnamese' },
+  { value: localeRu, text: 'Русский' },
+  { value: localeRuUA, text: 'Русский (UA)' },
+  { value: localeHe, text: 'עברית' },
+  { value: localeFa, text: 'فارسی' }
+]
+
+function updatePath() {
+  const footer = footerRef.value
+  const pathEl = pathRef.value
+  if (footer && pathEl) {
+    pathEl.style.display = ''
+    pathEl.style.display = footer.scrollWidth > footer.clientWidth ? 'none' : ''
+  }
+}
+
+function setGlobalOptions() {
+  setOptions({
+    theme: theme.value,
+    themeVariant: themeVariant.value,
+    locale: locale.value
+  })
+}
+
+watch(route, () => {
+  setTimeout(updatePath)
+})
+
+watch([theme, themeVariant, locale], setGlobalOptions)
+
+onMounted(() => {
+  window.addEventListener('resize', updatePath)
+  setGlobalOptions()
+  updatePath()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updatePath)
+})
 </script>
 
 <template>
@@ -20,8 +152,36 @@ const route = useRoute()
   <div class="app-page">
     <RouterView />
   </div>
-  <div class="app-footer mbsc-font">
-    <div v-if="route.path !== '/'" class="app-path">{{ './src/demos' + route.path }}</div>
+  <div
+    class="app-footer mbsc-font mbsc-flex mbsc-justify-content-between mbsc-align-items-center"
+    ref="footerRef"
+  >
+    <div class="app-footer-controls mbsc-flex mbsc-align-items-center">
+      <div class="app-footer-select app-footer-theme-select">
+        <MbscSelect v-model="theme" :data="themes" :touchUi="false" theme="ios" inputStyle="box" />
+      </div>
+      <MbscSegmentedGroup
+        v-model="themeVariant"
+        theme="ios"
+        cssClass="app-footer-theme-variant-select"
+      >
+        <MbscSegmented theme="ios" value="light">Light</MbscSegmented>
+        <MbscSegmented theme="ios" value="dark">Dark</MbscSegmented>
+        <MbscSegmented theme="ios" value="auto">Auto</MbscSegmented>
+      </MbscSegmentedGroup>
+      <div class="app-footer-select app-footer-locale-select">
+        <MbscSelect
+          v-model="locale"
+          :data="locales"
+          :touchUi="false"
+          theme="ios"
+          inputStyle="box"
+        />
+      </div>
+    </div>
+    <div class="app-path" ref="pathRef">
+      {{ route.path !== '/' ? './src/demos' + route.path : '' }}
+    </div>
   </div>
 </template>
 
@@ -72,10 +232,68 @@ body,
   line-height: 36px;
 }
 
+.app-footer-controls {
+  flex-shrink: 0;
+  gap: 0 16px;
+  flex-wrap: wrap;
+  padding: 0 12px;
+}
+
+.app-footer-controls .mbsc-form-control-wrapper {
+  margin: 0;
+}
+
+.app-footer-theme-variant-select.mbsc-segmented {
+  width: 180px;
+  margin: 0;
+}
+
+.app-footer-select .mbsc-select.mbsc-textfield {
+  height: 34px;
+}
+
+.app-footer-select .mbsc-select-icon.mbsc-ios {
+  font-size: 11px;
+}
+
+.app-footer-theme-select .mbsc-select {
+  width: 140px;
+}
+
+.app-footer-locale-select .mbsc-select {
+  width: 180px;
+}
+
+@media (max-width: 565px) {
+  .app-footer-locale-select .mbsc-select {
+    width: 140px;
+  }
+}
+
+@media (max-width: 525px) {
+  .app-footer-theme-select .mbsc-select {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-footer-theme-variant-select.mbsc-segmented {
+    width: 120px;
+  }
+}
+
+@media (max-width: 420px) {
+  .app-footer-locale-select .mbsc-select {
+    width: 100px;
+  }
+}
+
 .app-path {
   font-size: 12px;
   line-height: 36px;
   padding: 0 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .app-back {
