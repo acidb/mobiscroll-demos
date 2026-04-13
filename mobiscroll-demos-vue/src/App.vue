@@ -179,7 +179,7 @@ onUnmounted(() => {
           theme="ios"
           inputStyle="box"
           labelStyle="stacked"
-          label="Theme variant"
+          label="Mode"
         />
       </div>
       <div class="app-footer-select app-footer-locale-select">

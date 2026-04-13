@@ -150,13 +150,40 @@ export default function Root() {
       <div className="app-footer mbsc-font mbsc-flex mbsc-justify-content-between mbsc-align-items-center" ref={footerRef}>
         <div className="app-footer-controls mbsc-flex mbsc-align-items-center">
           <div className="app-footer-select app-footer-theme-select">
-            <Select data={themes} touchUi={false} theme="ios" inputStyle="box" labelStyle="stacked" label="Theme" value={theme} onChange={(args) => setTheme(args.value)} />
+            <Select
+              data={themes}
+              touchUi={false}
+              theme="ios"
+              inputStyle="box"
+              labelStyle="stacked"
+              label="Theme"
+              value={theme}
+              onChange={(args) => setTheme(args.value)}
+            />
           </div>
           <div className="app-footer-select app-footer-theme-variant-select">
-            <Select data={themeVariants} touchUi={false} theme="ios" inputStyle="box" labelStyle="stacked" label="Theme variant" value={themeVariant} onChange={(args) => setThemeVariant(args.value as 'light' | 'dark' | 'auto')} />
+            <Select
+              data={themeVariants}
+              touchUi={false}
+              theme="ios"
+              inputStyle="box"
+              labelStyle="stacked"
+              label="Mode"
+              value={themeVariant}
+              onChange={(args) => setThemeVariant(args.value as 'light' | 'dark' | 'auto')}
+            />
           </div>
           <div className="app-footer-select app-footer-locale-select">
-            <Select data={locales} touchUi={false} theme="ios" inputStyle="box" labelStyle="stacked" label="Locale" value={locale} onChange={(args) => setLocale(args.value)} />
+            <Select
+              data={locales}
+              touchUi={false}
+              theme="ios"
+              inputStyle="box"
+              labelStyle="stacked"
+              label="Locale"
+              value={locale}
+              onChange={(args) => setLocale(args.value)}
+            />
           </div>
         </div>
         <div className="app-path" ref={pathRef}>

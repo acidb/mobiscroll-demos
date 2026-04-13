@@ -162,10 +162,26 @@ onUnmounted(() => {
   >
     <div class="app-footer-controls mbsc-flex mbsc-align-items-center">
       <div class="app-footer-select app-footer-theme-select">
-        <MbscSelect v-model="theme" :data="themes" :touchUi="false" theme="ios" inputStyle="box" labelStyle="stacked" label="Theme" />
+        <MbscSelect
+          v-model="theme"
+          :data="themes"
+          :touchUi="false"
+          theme="ios"
+          inputStyle="box"
+          labelStyle="stacked"
+          label="Theme"
+        />
       </div>
       <div class="app-footer-select app-footer-theme-variant-select">
-        <MbscSelect v-model="themeVariant" :data="themeVariants" :touchUi="false" theme="ios" inputStyle="box" labelStyle="stacked" label="Theme variant" />
+        <MbscSelect
+          v-model="themeVariant"
+          :data="themeVariants"
+          :touchUi="false"
+          theme="ios"
+          inputStyle="box"
+          labelStyle="stacked"
+          label="Mode"
+        />
       </div>
       <div class="app-footer-select app-footer-locale-select">
         <MbscSelect
