@@ -11,6 +11,41 @@
 <div class="app-page">
   <router-outlet></router-outlet>
 </div>
-<div class="app-footer mbsc-font">
-  <div *ngIf="path !== '/'" class="app-path">{{ './src/demos' + path }}</div>
+<div class="app-footer mbsc-font mbsc-flex mbsc-justify-content-between mbsc-align-items-center" #appFooter>
+  <div class="app-footer-controls mbsc-flex mbsc-align-items-center">
+    <mbsc-select
+      [(ngModel)]="theme"
+      (ngModelChange)="setGlobalOptions()"
+      [data]="themes"
+      [touchUi]="false"
+      theme="ios"
+      inputStyle="box"
+      labelStyle="stacked"
+      label="Theme"
+      class="app-footer-select app-footer-theme-select"
+    ></mbsc-select>
+    <mbsc-select
+      [(ngModel)]="themeVariant"
+      (ngModelChange)="setGlobalOptions()"
+      [data]="themeVariants"
+      [touchUi]="false"
+      theme="ios"
+      inputStyle="box"
+      labelStyle="stacked"
+      label="Theme variant"
+      class="app-footer-select app-footer-theme-variant-select"
+    ></mbsc-select>
+    <mbsc-select
+      [(ngModel)]="locale"
+      (ngModelChange)="setGlobalOptions()"
+      [data]="locales"
+      [touchUi]="false"
+      theme="ios"
+      inputStyle="box"
+      labelStyle="stacked"
+      label="Locale"
+      class="app-footer-select app-footer-locale-select"
+    ></mbsc-select>
+  </div>
+  <div class="app-path" #appPath>{{ path !== '/' ? './src/demos' + path : '' }}</div>
 </div>
