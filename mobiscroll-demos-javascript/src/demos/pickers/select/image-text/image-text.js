@@ -8,7 +8,7 @@ export default {
       // theme
     });
 
-    mobiscroll.select('#demo-image-text', {
+    var instance = mobiscroll.select('#demo-image-text', {
       display: 'anchored',
       itemHeight: 50,
       data: [
@@ -66,6 +66,7 @@ export default {
         );
       },
     });
+    instance.setVal(['42976', '45290'], true);
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
