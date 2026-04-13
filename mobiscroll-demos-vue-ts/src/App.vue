@@ -211,7 +211,8 @@ body,
 
 .app-page {
   height: 100%;
-  padding: 44px 0;
+  padding-top: 44px;
+  padding-bottom: 60px;
   box-sizing: border-box;
 }
 
