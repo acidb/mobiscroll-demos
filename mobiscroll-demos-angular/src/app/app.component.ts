@@ -85,6 +85,12 @@ export class AppComponent implements AfterViewInit {
     { value: 'auto', text: 'Auto' },
   ];
 
+  themeVariants = [
+    { value: 'light', text: 'Light' },
+    { value: 'dark', text: 'Dark' },
+    { value: 'auto', text: 'Auto' },
+  ];
+
   locales = [
     { value: localeEn, text: 'English' },
     { value: localeAr, text: 'Arabic' },

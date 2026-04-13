@@ -38,8 +38,6 @@ import {
   localeUa,
   localeVi,
   localeZh,
-  MbscSegmented,
-  MbscSegmentedGroup,
   MbscSelect,
   setOptions
 } from '@mobiscroll/vue'
@@ -60,6 +58,12 @@ const themes = [
   { value: 'ios', text: 'iOS' },
   { value: 'material', text: 'Material' },
   { value: 'windows', text: 'Windows' },
+  { value: 'auto', text: 'Auto' }
+]
+
+const themeVariants = [
+  { value: 'light', text: 'Light' },
+  { value: 'dark', text: 'Dark' },
   { value: 'auto', text: 'Auto' }
 ]
 
@@ -157,17 +161,27 @@ onUnmounted(() => {
   >
     <div class="app-footer-controls mbsc-flex mbsc-align-items-center">
       <div class="app-footer-select app-footer-theme-select">
-        <MbscSelect v-model="theme" :data="themes" :touchUi="false" theme="ios" inputStyle="box" />
+        <MbscSelect
+          v-model="theme"
+          :data="themes"
+          :touchUi="false"
+          theme="ios"
+          inputStyle="box"
+          labelStyle="stacked"
+          label="Theme"
+        />
       </div>
-      <MbscSegmentedGroup
-        v-model="themeVariant"
-        theme="ios"
-        cssClass="app-footer-theme-variant-select"
-      >
-        <MbscSegmented theme="ios" value="light">Light</MbscSegmented>
-        <MbscSegmented theme="ios" value="dark">Dark</MbscSegmented>
-        <MbscSegmented theme="ios" value="auto">Auto</MbscSegmented>
-      </MbscSegmentedGroup>
+      <div class="app-footer-select app-footer-theme-variant-select">
+        <MbscSelect
+          v-model="themeVariant"
+          :data="themeVariants"
+          :touchUi="false"
+          theme="ios"
+          inputStyle="box"
+          labelStyle="stacked"
+          label="Theme variant"
+        />
+      </div>
       <div class="app-footer-select app-footer-locale-select">
         <MbscSelect
           v-model="locale"
@@ -175,6 +189,8 @@ onUnmounted(() => {
           :touchUi="false"
           theme="ios"
           inputStyle="box"
+          labelStyle="stacked"
+          label="Locale"
         />
       </div>
     </div>
@@ -200,7 +216,6 @@ body,
 
 .app-header,
 .app-footer {
-  height: 44px;
   padding: 4px;
   background: #011742;
   color: #fff;
@@ -213,10 +228,12 @@ body,
 
 .app-header {
   top: 0;
+  height: 44px;
 }
 
 .app-footer {
   bottom: 0;
+  height: 60px;
 }
 
 .app-title {
@@ -242,49 +259,21 @@ body,
   margin: 0;
 }
 
-.app-footer-theme-variant-select.mbsc-segmented {
-  width: 180px;
-  margin: 0;
-}
-
 .app-footer-select .mbsc-select.mbsc-textfield {
-  height: 34px;
+  height: 44px;
 }
 
 .app-footer-select .mbsc-select-icon.mbsc-ios {
-  font-size: 11px;
+  font-size: 13px;
 }
 
-.app-footer-theme-select .mbsc-select {
-  width: 140px;
+.app-footer-theme-select .mbsc-select,
+.app-footer-theme-variant-select .mbsc-select {
+  width: clamp(90px, 27vw, 140px);
 }
 
 .app-footer-locale-select .mbsc-select {
-  width: 180px;
-}
-
-@media (max-width: 565px) {
-  .app-footer-locale-select .mbsc-select {
-    width: 140px;
-  }
-}
-
-@media (max-width: 525px) {
-  .app-footer-theme-select .mbsc-select {
-    width: 100px;
-  }
-}
-
-@media (max-width: 480px) {
-  .app-footer-theme-variant-select.mbsc-segmented {
-    width: 120px;
-  }
-}
-
-@media (max-width: 420px) {
-  .app-footer-locale-select .mbsc-select {
-    width: 100px;
-  }
+  width: clamp(90px, 27vw, 180px);
 }
 
 .app-path {
@@ -327,7 +316,7 @@ body,
 }
 
 .app-home {
-  padding-bottom: 44px;
+  padding-bottom: 60px;
   background: inherit;
 }
 

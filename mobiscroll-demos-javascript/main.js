@@ -231,6 +231,12 @@ var themes = [
   { value: 'auto', text: 'Auto' },
 ];
 
+var themeVariants = [
+  { value: 'light', text: 'Light' },
+  { value: 'dark', text: 'Dark' },
+  { value: 'auto', text: 'Auto' },
+];
+
 var theme = 'auto';
 var themeVariant = 'auto';
 var locale = localeEn;
@@ -254,6 +260,17 @@ var themeSelect = mobiscroll.select('#mobiscroll-theme', {
 
 themeSelect.setVal('auto');
 
+var themeVariantSelect = mobiscroll.select('#mobiscroll-theme-variant', {
+  data: themeVariants,
+  touchUi: false,
+  onChange: function (args) {
+    themeVariant = args.value;
+    setGlobalOptions();
+  },
+});
+
+themeVariantSelect.setVal('auto');
+
 var localeSelect = mobiscroll.select('#mobiscroll-locale', {
   data: locales,
   touchUi: false,
@@ -264,12 +281,5 @@ var localeSelect = mobiscroll.select('#mobiscroll-locale', {
 });
 
 localeSelect.setVal(localeEn);
-
-document.querySelectorAll('.mobiscroll-theme-variant').forEach(function (el) {
-  el.addEventListener('change', function () {
-    themeVariant = this.value;
-    setGlobalOptions();
-  });
-});
 
 setGlobalOptions();

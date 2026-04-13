@@ -36,8 +36,6 @@ import {
   localeUa,
   localeVi,
   localeZh,
-  Segmented,
-  SegmentedGroup,
   Select,
   setOptions,
 } from '@mobiscroll/react';
@@ -51,6 +49,12 @@ const themes = [
   { value: 'ios', text: 'iOS' },
   { value: 'material', text: 'Material' },
   { value: 'windows', text: 'Windows' },
+  { value: 'auto', text: 'Auto' },
+];
+
+const themeVariants = [
+  { value: 'light', text: 'Light' },
+  { value: 'dark', text: 'Dark' },
   { value: 'auto', text: 'Auto' },
 ];
 
@@ -145,26 +149,13 @@ export default function Root() {
       <div className="app-footer mbsc-font mbsc-flex mbsc-justify-content-between mbsc-align-items-center" ref={footerRef}>
         <div className="app-footer-controls mbsc-flex mbsc-align-items-center">
           <div className="app-footer-select app-footer-theme-select">
-            <Select data={themes} touchUi={false} theme="ios" inputStyle="box" value={theme} onChange={(args) => setTheme(args.value)} />
+            <Select data={themes} touchUi={false} theme="ios" inputStyle="box" labelStyle="stacked" label="Theme" value={theme} onChange={(args) => setTheme(args.value)} />
           </div>
-          <SegmentedGroup
-            theme="ios"
-            cssClass="app-footer-theme-variant-select"
-            value={themeVariant}
-            onChange={(event) => setThemeVariant(event.target.value)}
-          >
-            <Segmented theme="ios" value="light">
-              Light
-            </Segmented>
-            <Segmented theme="ios" value="dark">
-              Dark
-            </Segmented>
-            <Segmented theme="ios" value="auto">
-              Auto
-            </Segmented>
-          </SegmentedGroup>
+          <div className="app-footer-select app-footer-theme-variant-select">
+            <Select data={themeVariants} touchUi={false} theme="ios" inputStyle="box" labelStyle="stacked" label="Theme variant" value={themeVariant} onChange={(args) => setThemeVariant(args.value)} />
+          </div>
           <div className="app-footer-select app-footer-locale-select">
-            <Select data={locales} touchUi={false} theme="ios" inputStyle="box" value={locale} onChange={(args) => setLocale(args.value)} />
+            <Select data={locales} touchUi={false} theme="ios" inputStyle="box" labelStyle="stacked" label="Locale" value={locale} onChange={(args) => setLocale(args.value)} />
           </div>
         </div>
         <div className="app-path" ref={pathRef}>

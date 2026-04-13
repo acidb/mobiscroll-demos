@@ -20,13 +20,21 @@
       [touchUi]="false"
       theme="ios"
       inputStyle="box"
+      labelStyle="stacked"
+      label="Theme"
       class="app-footer-select app-footer-theme-select"
     ></mbsc-select>
-    <mbsc-segmented-group [(ngModel)]="themeVariant" (change)="setGlobalOptions()" theme="ios" class="app-footer-theme-variant-select">
-      <mbsc-segmented value="light" theme="ios">Light</mbsc-segmented>
-      <mbsc-segmented value="dark" theme="ios">Dark</mbsc-segmented>
-      <mbsc-segmented value="auto" theme="ios">Auto</mbsc-segmented>
-    </mbsc-segmented-group>
+    <mbsc-select
+      [(ngModel)]="themeVariant"
+      (ngModelChange)="setGlobalOptions()"
+      [data]="themeVariants"
+      [touchUi]="false"
+      theme="ios"
+      inputStyle="box"
+      labelStyle="stacked"
+      label="Theme variant"
+      class="app-footer-select app-footer-theme-variant-select"
+    ></mbsc-select>
     <mbsc-select
       [(ngModel)]="locale"
       (ngModelChange)="setGlobalOptions()"
@@ -34,6 +42,8 @@
       [touchUi]="false"
       theme="ios"
       inputStyle="box"
+      labelStyle="stacked"
+      label="Locale"
       class="app-footer-select app-footer-locale-select"
     ></mbsc-select>
   </div>

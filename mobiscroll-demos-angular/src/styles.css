@@ -13,7 +13,6 @@ body,
 
 .app-header,
 .app-footer {
-  height: 44px;
   padding: 4px;
   background: #011742;
   color: #fff;
@@ -26,10 +25,12 @@ body,
 
 .app-header {
   top: 0;
+  height: 44px;
 }
 
 .app-footer {
   bottom: 0;
+  height: 60px;
 }
 
 .app-title {
@@ -55,49 +56,21 @@ body,
   margin: 0;
 }
 
-.app-footer-theme-variant-select.mbsc-segmented {
-  width: 180px;
-  margin: 0;
-}
-
 .app-footer-select .mbsc-select.mbsc-textfield {
-  height: 34px;
+  height: 44px;
 }
 
 .app-footer-select .mbsc-select-icon.mbsc-ios {
-  font-size: 11px;
+  font-size: 13px;
 }
 
-.app-footer-theme-select .mbsc-select {
-  width: 140px;
+.app-footer-theme-select .mbsc-select,
+.app-footer-theme-variant-select .mbsc-select {
+  width: clamp(90px, 27vw, 140px);
 }
 
 .app-footer-locale-select .mbsc-select {
-  width: 180px;
-}
-
-@media (max-width: 565px) {
-  .app-footer-locale-select .mbsc-select {
-    width: 140px;
-  }
-}
-
-@media (max-width: 525px) {
-  .app-footer-theme-select .mbsc-select {
-    width: 100px;
-  }
-}
-
-@media (max-width: 480px) {
-  .app-footer-theme-variant-select.mbsc-segmented {
-    width: 120px;
-  }
-}
-
-@media (max-width: 420px) {
-  .app-footer-locale-select .mbsc-select {
-    width: 100px;
-  }
+  width: clamp(90px, 27vw, 180px);
 }
 
 .app-path {
@@ -140,7 +113,7 @@ body,
 }
 
 .app-home {
-  padding-bottom: 44px;
+  padding-bottom: 60px;
   background: inherit;
 }
 
