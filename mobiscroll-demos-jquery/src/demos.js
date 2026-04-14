@@ -177,6 +177,7 @@ import Demo581 from './demos/eventcalendar/scheduler/work-week-hours/work-week-h
 import Demo721 from './demos/eventcalendar/scheduler/doctors-appointment/doctors-appointment';
 import Demo786 from './demos/eventcalendar/scheduler/24-hour-manufacturing-shift-rota-planning/24-hour-manufacturing-shift-rota-planning';
 import Demo769 from './demos/eventcalendar/scheduler/doctors-availability-calendar-planner/doctors-availability-calendar-planner';
+import Demo789 from './demos/eventcalendar/scheduler/event-drop-assign-attendees/event-drop-assign-attendees';
 import Demo696 from './demos/eventcalendar/scheduler/custom-range-view/custom-range-view';
 import Demo733 from './demos/eventcalendar/scheduler/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events';
 import Demo664 from './demos/eventcalendar/scheduler/display-multiple-days-weeks/display-multiple-days-weeks';
@@ -837,6 +838,7 @@ export const demos = [
               { name: 'Doctor’s appointment', unique: 'doctors-appointment', component: Demo721 },
               { name: 'Continuous shift planning', unique: '24-hour-manufacturing-shift-rota-planning', component: Demo786 },
               { name: 'Availability planner & appointment manager', unique: 'doctors-availability-calendar-planner', component: Demo769 },
+              { name: 'Event Drop Assignment', unique: 'event-drop-assign-attendees', component: Demo789 },
             ],
           },
           {
