@@ -337,10 +337,8 @@ export default {
           data.end +
           '</div>' +
           '</div>' +
-          '<div class="mds-event-body">' +
           attendeesHtml +
           '<div class="mds-event-drop-hint">Drop people to assign</div>' +
-          '</div>' +
           '</div>'
         );
       }
@@ -626,7 +624,7 @@ export default {
   height: 100%;
   box-sizing: border-box;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
   overflow: hidden;
   outline: 2px solid transparent;
   transition: background 0.15s;
@@ -649,30 +647,18 @@ export default {
 }
 .mds-event-attendees {
   flex-wrap: wrap;
-  gap: 2px;
-}
-.mds-event-body {
-  position: relative;
-  flex: 1;
-  min-height: 14px;
+  gap: 3px;
 }
 /* Drop hint - hidden by default, shown only during external drag */
 .mds-event-drop-hint {
   display: none;
-  position: absolute;
-  inset: 0;
-  align-items: center;
-  justify-content: center;
   font-size: 11px;
   font-style: italic;
   color: #686868;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 3px;
-  padding: 5px;
 }
 /* Show drop hints and dashed borders on events during external drag */
 .mds-external-dragging .mds-event-drop-hint {
-  display: flex;
+  display: block;
 }
 .mds-external-dragging .mds-custom-event {
   outline: 2px dashed #b9b9b9;
@@ -700,7 +686,7 @@ export default {
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1;
 }
 .mds-attendee-chip:hover .mds-attendee-remove {
