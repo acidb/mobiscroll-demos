@@ -217,6 +217,8 @@ import { AppComponent as Demo490 } from '../demos/eventcalendar/scheduler/recurr
 import { AppComponent as Demo517 } from '../demos/eventcalendar/scheduler/load-inline-data/load-inline-data';
 import { AppComponent as Demo483 } from '../demos/eventcalendar/scheduler/load-events-from-remote-api/load-events-from-remote-api';
 import { AppComponent as Demo482 } from '../demos/eventcalendar/scheduler/load-events-on-demand/load-events-on-demand';
+import { AppComponent as Demo788 } from '../demos/eventcalendar/scheduler/load-events-on-scroll/load-events-on-scroll';
+import { AppComponent as Demo789 } from '../demos/eventcalendar/scheduler/loading-big-data-sets/loading-big-data-sets';
 import { AppComponent as Demo682 } from '../demos/eventcalendar/scheduler/sync-events-google-calendar/sync-events-google-calendar';
 import { AppComponent as Demo687 } from '../demos/eventcalendar/scheduler/sync-events-outlook-calendar/sync-events-outlook-calendar';
 import { AppComponent as Demo500 } from '../demos/eventcalendar/scheduler/load-events-from-google-calendar/load-events-from-google-calendar';
@@ -913,6 +915,8 @@ export const demos: any[] = [
               { name: 'Loading inline data', unique: 'load-inline-data', component: Demo517 },
               { name: 'Events from remote API', unique: 'load-events-from-remote-api', component: Demo483 },
               { name: 'Loading events on demand', unique: 'load-events-on-demand', component: Demo482 },
+              { name: 'Loading events on scroll', unique: 'load-events-on-scroll', component: Demo788 },
+              { name: 'Working with large data sets', unique: 'loading-big-data-sets', component: Demo789 },
             ],
           },
           {
