@@ -551,7 +551,8 @@ export default {
   css: `
 .mds-scheduler-event-drop-assign-attendees,
 .mds-scheduler-event-drop-assign-attendees .mbsc-grid,
-.mds-scheduler-event-drop-assign-attendees .mbsc-row {
+.mds-scheduler-event-drop-assign-attendees .mbsc-row,
+.mds-calendar-wrapper {
   height: 100%;
 }
 .mds-sidebar {

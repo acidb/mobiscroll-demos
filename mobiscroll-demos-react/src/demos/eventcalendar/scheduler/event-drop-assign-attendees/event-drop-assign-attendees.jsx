@@ -1,14 +1,20 @@
 import { Draggable, Dropcontainer, Eventcalendar, Page, setOptions, Snackbar, Toast /* localeImport */ } from '@mobiscroll/react';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
 import { dyndatetime } from '../../../../dyndatetime';
-import './timeline-event-drop-assign-attendees.css';
+import './event-drop-assign-attendees.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
+
+const rooms = [
+  { id: 1, name: 'Conference Room' },
+  { id: 2, name: 'Board Room' },
+  { id: 3, name: 'Meeting Room' },
+  { id: 4, name: 'Training Room' },
+];
 
 const employees = [
   { id: 'emp1', name: 'Alice Martin', avatar: 'AM', color: '#e74c3c' },
@@ -20,46 +26,38 @@ const employees = [
   { id: 'emp7', name: 'Grace Kim', avatar: 'GK', color: '#e67e22' },
   { id: 'emp8', name: 'Henry Patel', avatar: 'HP', color: '#34495e' },
   { id: 'emp9', name: 'Ivy Torres', avatar: 'IT', color: '#e84393' },
-  { id: 'emp10', name: 'Jack Murphy', avatar: 'JM', color: '#0984e3' },
 ];
 
-const rooms = [
-  { id: 1, name: 'Conference Room' },
-  { id: 2, name: 'Board Room' },
-  { id: 3, name: 'Meeting Room' },
-  { id: 4, name: 'Training Room' },
-];
+function EmployeeItem({ employee, assignmentCount, onDragStart }) {
+  const [el, setEl] = useState(null);
 
-function EmployeeItem({ emp, assignmentCount, onDragStart }) {
-  const [dragEl, setDragEl] = useState(null);
-
-  const setDragElm = useCallback((elm) => {
-    setDragEl(elm);
+  const setElm = useCallback((elm) => {
+    setEl(elm);
   }, []);
 
   return (
-    <div className="mds-employee-item mbsc-flex" ref={setDragElm} onPointerDown={onDragStart}>
-      <div className="mds-employee-avatar mbsc-flex" style={{ background: emp.color }}>
-        {emp.avatar}
+    <div className="mds-employee-item mbsc-flex" ref={setElm} onPointerDown={onDragStart}>
+      <div className="mds-employee-avatar mbsc-flex" style={{ background: employee.color }}>
+        {employee.avatar}
       </div>
       <div className="mds-employee-info mbsc-flex">
-        <div className="mds-employee-name">{emp.name}</div>
+        <div className="mds-employee-name">{employee.name}</div>
         <div className="mds-employee-count">
           {assignmentCount > 0 ? `${assignmentCount} meeting${assignmentCount > 1 ? 's' : ''}` : 'No assignments'}
         </div>
       </div>
-      <Draggable dragData={emp} element={dragEl} />
+      <Draggable dragData={employee} element={el} />
     </div>
   );
 }
 
 EmployeeItem.propTypes = {
   assignmentCount: PropTypes.number.isRequired,
-  emp: PropTypes.object.isRequired,
+  employee: PropTypes.object.isRequired,
   onDragStart: PropTypes.func.isRequired,
 };
 
-function MeetingEvent({ data, findConflict, onAssign, onRemove, onToast }) {
+function SchedulerEvent({ data, findConflict, onAssign, onRemove, onToast }) {
   const [dropEl, setDropEl] = useState(null);
   const [dropState, setDropState] = useState('');
 
@@ -146,7 +144,7 @@ function MeetingEvent({ data, findConflict, onAssign, onRemove, onToast }) {
   );
 }
 
-MeetingEvent.propTypes = {
+SchedulerEvent.propTypes = {
   data: PropTypes.object.isRequired,
   findConflict: PropTypes.func.isRequired,
   onAssign: PropTypes.func.isRequired,
@@ -326,14 +324,14 @@ function App() {
 
   const myView = useMemo(
     () => ({
-      timeline: {
+      scheduler: {
         type: 'week',
         startDay: 1,
         endDay: 5,
         startTime: '08:00',
         endTime: '18:00',
-        timeCellStep: 60,
-        timeLabelStep: 60,
+        timeCellStep: 30,
+        timeLabelStep: 30,
         virtualScroll: false,
       },
     }),
@@ -344,10 +342,8 @@ function App() {
     const allMeetings = meetingsRef.current;
     const target = allMeetings.find((m) => m.id === targetEventId);
     if (!target) return null;
-
     const targetStart = new Date(target.start).getTime();
     const targetEnd = new Date(target.end).getTime();
-
     for (const m of allMeetings) {
       if (m.id === targetEventId) continue;
       const attendees = m.attendees || [];
@@ -407,7 +403,9 @@ function App() {
   );
 
   const renderEvent = useCallback(
-    (data) => <MeetingEvent data={data} findConflict={findConflict} onAssign={handleAssign} onRemove={handleRemove} onToast={showToast} />,
+    (data) => (
+      <SchedulerEvent data={data} findConflict={findConflict} onAssign={handleAssign} onRemove={handleRemove} onToast={showToast} />
+    ),
     [findConflict, handleAssign, handleRemove, showToast],
   );
 
@@ -420,7 +418,7 @@ function App() {
   }, []);
 
   return (
-    <Page className={`mds-timeline-event-drop-assign-attendees${isExternalDragging ? ' mds-external-dragging' : ''}`}>
+    <Page className={`mds-scheduler-event-drop-assign-attendees${isExternalDragging ? ' mds-external-dragging' : ''}`}>
       <div className="mbsc-grid mbsc-no-padding">
         <div className="mbsc-row">
           <div className="mbsc-col-sm-3 mbsc-flex-col mds-sidebar">
@@ -429,7 +427,7 @@ function App() {
               {employees.map((emp) => (
                 <EmployeeItem
                   key={emp.id}
-                  emp={emp}
+                  employee={emp}
                   assignmentCount={meetings.filter((m) => (m.attendees || []).some((a) => a.id === emp.id)).length}
                   onDragStart={handleDragStart}
                 />
@@ -447,7 +445,7 @@ function App() {
               clickToCreate={false}
               eventDelete={false}
               showEventTooltip={false}
-              renderTimelineEvent={renderEvent}
+              renderSchedulerEvent={renderEvent}
             />
           </div>
         </div>

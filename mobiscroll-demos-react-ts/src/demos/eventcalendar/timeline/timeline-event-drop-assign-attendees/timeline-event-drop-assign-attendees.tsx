@@ -3,6 +3,7 @@ import {
   Dropcontainer,
   Eventcalendar,
   MbscCalendarEvent,
+  MbscCalendarEventData,
   MbscEventcalendarView,
   MbscItemDragEvent,
   MbscResource,
@@ -11,7 +12,7 @@ import {
   Snackbar,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { dyndatetime } from '../../../../dyndatetime';
 import './timeline-event-drop-assign-attendees.css';
@@ -58,12 +59,8 @@ const rooms: MbscResource[] = [
 function EmployeeItem({ emp, assignmentCount, onDragStart }: { emp: Employee; assignmentCount: number; onDragStart: () => void }) {
   const [dragEl, setDragEl] = useState<HTMLDivElement | null>(null);
 
-  const setDragElm = useCallback((elm: HTMLDivElement) => {
-    setDragEl(elm);
-  }, []);
-
   return (
-    <div className="mds-employee-item mbsc-flex" ref={setDragElm} onPointerDown={onDragStart}>
+    <div className="mds-employee-item mbsc-flex" ref={setDragEl} onPointerDown={onDragStart}>
       <div className="mds-employee-avatar mbsc-flex" style={{ background: emp.color }}>
         {emp.avatar}
       </div>
@@ -85,18 +82,14 @@ function MeetingEvent({
   onRemove,
   onToast,
 }: {
-  data: any;
+  data: MbscCalendarEventData;
   findConflict: (empId: string, targetEventId: string) => Meeting | null;
   onAssign: (eventId: string, employee: Employee) => void;
   onRemove: (eventId: string, employee: Employee, eventTitle: string) => void;
-  onToast: (message: string, color: string) => void;
+  onToast: (message: string, color: 'success' | 'danger') => void;
 }) {
   const [dropEl, setDropEl] = useState<HTMLDivElement | null>(null);
   const [dropState, setDropState] = useState<string>('');
-
-  const setDropElm = useCallback((elm: HTMLDivElement) => {
-    setDropEl(elm);
-  }, []);
 
   const event = data.original as Meeting;
   const attendees = useMemo(() => event.attendees || [], [event.attendees]);
@@ -145,7 +138,7 @@ function MeetingEvent({
   }, []);
 
   return (
-    <div ref={setDropElm} className={`mds-custom-event mbsc-flex ${dropState}`} style={{ borderLeft: `4px solid ${event.color}` }}>
+    <div ref={setDropEl} className={`mds-custom-event mbsc-flex ${dropState}`} style={{ borderLeft: `4px solid ${event.color}` }}>
       <Dropcontainer element={dropEl} onItemDrop={handleItemDrop} onItemDragEnter={handleDragEnter} onItemDragLeave={handleDragLeave} />
       <div className="mds-event-header mbsc-flex">
         <div className="mds-event-title">{event.title}</div>
@@ -179,35 +172,173 @@ function MeetingEvent({
 
 const App: FC = () => {
   const [meetings, setMeetings] = useState<Meeting[]>(() => [
-    { id: 'evt1', title: 'Sprint Planning', start: dyndatetime('y,m,d,9'), end: dyndatetime('y,m,d,11'), resource: 1, color: '#b52db9', attendees: [] },
-    { id: 'evt2', title: 'Budget Review', start: dyndatetime('y,m,d,10'), end: dyndatetime('y,m,d,13'), resource: 2, color: '#669ce2', attendees: [] },
-    { id: 'evt3', title: 'Client Presentation', start: dyndatetime('y,m,d,15'), end: dyndatetime('y,m,d,18'), resource: 2, color: '#88bd42', attendees: [] },
-    { id: 'evt4', title: 'Project Kickoff', start: dyndatetime('y,m,d,9'), end: dyndatetime('y,m,d,11'), resource: 3, color: '#b6962f', attendees: [] },
-    { id: 'evt5', title: 'New Hire Orientation', start: dyndatetime('y,m,d,13'), end: dyndatetime('y,m,d,16'), resource: 4, color: '#c864f0', attendees: [] },
-    { id: 'evt6', title: 'Design Review', start: dyndatetime('y,m,d,13'), end: dyndatetime('y,m,d,15'), resource: 1, color: '#c7682d', attendees: [] },
-    { id: 'evt7', title: 'Product Demo', start: dyndatetime('y,m,d+1,9'), end: dyndatetime('y,m,d+1,11'), resource: 1, color: '#ad2b6c', attendees: [] },
-    { id: 'evt8', title: 'Stakeholder Update', start: dyndatetime('y,m,d+1,10'), end: dyndatetime('y,m,d+1,12'), resource: 2, color: '#0f60ca', attendees: [] },
-    { id: 'evt9', title: 'Code Review', start: dyndatetime('y,m,d+1,10'), end: dyndatetime('y,m,d+1,12'), resource: 3, color: '#56a823', attendees: [] },
-    { id: 'evt10', title: 'Safety Training', start: dyndatetime('y,m,d+1,13'), end: dyndatetime('y,m,d+1,16'), resource: 4, color: '#aa36d8', attendees: [] },
-    { id: 'evt11', title: 'Retrospective', start: dyndatetime('y,m,d+2,9'), end: dyndatetime('y,m,d+2,11'), resource: 1, color: '#c45f20', attendees: [] },
-    { id: 'evt12', title: 'Board Briefing', start: dyndatetime('y,m,d+2,13'), end: dyndatetime('y,m,d+2,16'), resource: 2, color: '#1e58a5', attendees: [] },
-    { id: 'evt13', title: 'Marketing Sync', start: dyndatetime('y,m,d+2,10'), end: dyndatetime('y,m,d+2,12'), resource: 3, color: '#549e27', attendees: [] },
-    { id: 'evt14', title: 'API Workshop', start: dyndatetime('y,m,d+2,13'), end: dyndatetime('y,m,d+2,16'), resource: 4, color: '#7c1ca1', attendees: [] },
-    { id: 'evt15', title: 'Architecture Review', start: dyndatetime('y,m,d+3,9'), end: dyndatetime('y,m,d+3,11,30'), resource: 1, color: '#a7511c', attendees: [] },
-    { id: 'evt16', title: 'Quarterly Planning', start: dyndatetime('y,m,d+3,13'), end: dyndatetime('y,m,d+3,16'), resource: 2, color: '#13488d', attendees: [] },
-    { id: 'evt17', title: 'Hiring Debrief', start: dyndatetime('y,m,d+3,10'), end: dyndatetime('y,m,d+3,12'), resource: 3, color: '#51ac19', attendees: [] },
+    {
+      id: 'evt1',
+      title: 'Sprint Planning',
+      start: dyndatetime('y,m,d,9'),
+      end: dyndatetime('y,m,d,11'),
+      resource: 1,
+      color: '#b52db9',
+      attendees: [],
+    },
+    {
+      id: 'evt2',
+      title: 'Budget Review',
+      start: dyndatetime('y,m,d,10'),
+      end: dyndatetime('y,m,d,13'),
+      resource: 2,
+      color: '#669ce2',
+      attendees: [],
+    },
+    {
+      id: 'evt3',
+      title: 'Client Presentation',
+      start: dyndatetime('y,m,d,15'),
+      end: dyndatetime('y,m,d,18'),
+      resource: 2,
+      color: '#88bd42',
+      attendees: [],
+    },
+    {
+      id: 'evt4',
+      title: 'Project Kickoff',
+      start: dyndatetime('y,m,d,9'),
+      end: dyndatetime('y,m,d,11'),
+      resource: 3,
+      color: '#b6962f',
+      attendees: [],
+    },
+    {
+      id: 'evt5',
+      title: 'New Hire Orientation',
+      start: dyndatetime('y,m,d,13'),
+      end: dyndatetime('y,m,d,16'),
+      resource: 4,
+      color: '#c864f0',
+      attendees: [],
+    },
+    {
+      id: 'evt6',
+      title: 'Design Review',
+      start: dyndatetime('y,m,d,13'),
+      end: dyndatetime('y,m,d,15'),
+      resource: 1,
+      color: '#c7682d',
+      attendees: [],
+    },
+    {
+      id: 'evt7',
+      title: 'Product Demo',
+      start: dyndatetime('y,m,d+1,9'),
+      end: dyndatetime('y,m,d+1,11'),
+      resource: 1,
+      color: '#ad2b6c',
+      attendees: [],
+    },
+    {
+      id: 'evt8',
+      title: 'Stakeholder Update',
+      start: dyndatetime('y,m,d+1,10'),
+      end: dyndatetime('y,m,d+1,12'),
+      resource: 2,
+      color: '#0f60ca',
+      attendees: [],
+    },
+    {
+      id: 'evt9',
+      title: 'Code Review',
+      start: dyndatetime('y,m,d+1,10'),
+      end: dyndatetime('y,m,d+1,12'),
+      resource: 3,
+      color: '#56a823',
+      attendees: [],
+    },
+    {
+      id: 'evt10',
+      title: 'Safety Training',
+      start: dyndatetime('y,m,d+1,13'),
+      end: dyndatetime('y,m,d+1,16'),
+      resource: 4,
+      color: '#aa36d8',
+      attendees: [],
+    },
+    {
+      id: 'evt11',
+      title: 'Retrospective',
+      start: dyndatetime('y,m,d+2,9'),
+      end: dyndatetime('y,m,d+2,11'),
+      resource: 1,
+      color: '#c45f20',
+      attendees: [],
+    },
+    {
+      id: 'evt12',
+      title: 'Board Briefing',
+      start: dyndatetime('y,m,d+2,13'),
+      end: dyndatetime('y,m,d+2,16'),
+      resource: 2,
+      color: '#1e58a5',
+      attendees: [],
+    },
+    {
+      id: 'evt13',
+      title: 'Marketing Sync',
+      start: dyndatetime('y,m,d+2,10'),
+      end: dyndatetime('y,m,d+2,12'),
+      resource: 3,
+      color: '#549e27',
+      attendees: [],
+    },
+    {
+      id: 'evt14',
+      title: 'API Workshop',
+      start: dyndatetime('y,m,d+2,13'),
+      end: dyndatetime('y,m,d+2,16'),
+      resource: 4,
+      color: '#7c1ca1',
+      attendees: [],
+    },
+    {
+      id: 'evt15',
+      title: 'Architecture Review',
+      start: dyndatetime('y,m,d+3,9'),
+      end: dyndatetime('y,m,d+3,11,30'),
+      resource: 1,
+      color: '#a7511c',
+      attendees: [],
+    },
+    {
+      id: 'evt16',
+      title: 'Quarterly Planning',
+      start: dyndatetime('y,m,d+3,13'),
+      end: dyndatetime('y,m,d+3,16'),
+      resource: 2,
+      color: '#13488d',
+      attendees: [],
+    },
+    {
+      id: 'evt17',
+      title: 'Hiring Debrief',
+      start: dyndatetime('y,m,d+3,10'),
+      end: dyndatetime('y,m,d+3,12'),
+      resource: 3,
+      color: '#51ac19',
+      attendees: [],
+    },
   ]);
 
   const [isExternalDragging, setIsExternalDragging] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
-  const [toastColor, setToastColor] = useState<string>('');
+  const [toastColor, setToastColor] = useState<'success' | 'danger'>('success');
   const [isToastOpen, setIsToastOpen] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>('');
   const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
   const [undoData, setUndoData] = useState<{ eventId: string; employee: Employee } | null>(null);
 
   const meetingsRef = useRef<Meeting[]>(meetings);
-  meetingsRef.current = meetings;
+  useEffect(() => {
+    meetingsRef.current = meetings;
+  }, [meetings]);
 
   const myView = useMemo<MbscEventcalendarView>(
     () => ({
@@ -254,7 +385,7 @@ const App: FC = () => {
     setIsSnackbarOpen(true);
   }, []);
 
-  const showToast = useCallback((message: string, color: string) => {
+  const showToast = useCallback((message: string, color: 'success' | 'danger') => {
     setToastMessage(message);
     setToastColor(color);
     setIsToastOpen(true);
@@ -287,7 +418,7 @@ const App: FC = () => {
   );
 
   const renderEvent = useCallback(
-    (data: any) => (
+    (data: MbscCalendarEventData) => (
       <MeetingEvent data={data} findConflict={findConflict} onAssign={handleAssign} onRemove={handleRemove} onToast={showToast} />
     ),
     [findConflict, handleAssign, handleRemove, showToast],

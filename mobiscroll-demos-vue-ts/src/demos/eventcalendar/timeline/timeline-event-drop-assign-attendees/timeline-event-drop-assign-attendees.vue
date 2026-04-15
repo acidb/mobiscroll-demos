@@ -99,7 +99,7 @@ const toastColor = ref<string>('')
 const isToastOpen = ref<boolean>(false)
 
 const snackbarMessage = ref<string>('')
-const snackbarButton = ref<{ text: string; action: () => void } | null>(null)
+const snackbarButton = ref<{ text: string; action: () => void } | undefined>(undefined)
 const isSnackbarOpen = ref<boolean>(false)
 
 function getAssignmentCount(empId: string): number {
@@ -343,15 +343,15 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
 .mds-timeline-event-drop-assign-attendees .mbsc-row {
   height: 100%;
 }
-.mds-sidebar {
+.mds-timeline-event-drop-assign-attendees .mds-sidebar {
   overflow-y: auto;
 }
-.mds-employee-list {
+.mds-timeline-event-drop-assign-attendees .mds-employee-list {
   padding: 8px;
   flex-direction: column;
   gap: 4px;
 }
-.mds-employee-item {
+.mds-timeline-event-drop-assign-attendees .mds-employee-item {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
@@ -366,15 +366,15 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
     box-shadow 0.2s,
     transform 0.15s;
 }
-.mds-employee-item:hover {
+.mds-timeline-event-drop-assign-attendees .mds-employee-item:hover {
   background: rgba(128, 128, 128, 0.4);
   transform: translateY(-1px);
 }
-.mds-employee-item:active {
+.mds-timeline-event-drop-assign-attendees .mds-employee-item:active {
   transform: translateY(0);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-.mds-employee-avatar {
+.mds-timeline-event-drop-assign-attendees .mds-employee-avatar {
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -387,29 +387,29 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   letter-spacing: 0.5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
-.mds-employee-info {
+.mds-timeline-event-drop-assign-attendees .mds-employee-info {
   flex-direction: column;
   overflow: hidden;
 }
-.mds-employee-name {
+.mds-timeline-event-drop-assign-attendees .mds-employee-name {
   font-size: 15px;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.mds-employee-count {
+.mds-timeline-event-drop-assign-attendees .mds-employee-count {
   font-size: 13px;
   opacity: 0.55;
 }
-.mds-calendar-wrapper {
+.mds-timeline-event-drop-assign-attendees .mds-calendar-wrapper {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
-/* Source item left behind in the sidebar while dragging */
+/* Drag clone is appended to body, outside the root — keep unscoped */
 .mds-employee-item.mbsc-drag-clone {
   opacity: 0.8;
 }
-.mds-custom-event {
+.mds-timeline-event-drop-assign-attendees .mds-custom-event {
   background: #cccccc;
   border-radius: 6px;
   padding: 6px 8px;
@@ -422,11 +422,11 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   transition: background 0.15s;
   position: relative;
 }
-.mds-event-header {
+.mds-timeline-event-drop-assign-attendees .mds-event-header {
   flex-direction: column;
   gap: 1px;
 }
-.mds-event-title {
+.mds-timeline-event-drop-assign-attendees .mds-event-title {
   font-size: 14px;
   font-weight: 600;
   color: #181818;
@@ -434,29 +434,29 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.mds-event-time {
+.mds-timeline-event-drop-assign-attendees .mds-event-time {
   font-size: 12px;
   color: #545454;
 }
-.mds-event-attendees {
+.mds-timeline-event-drop-assign-attendees .mds-event-attendees {
   flex-wrap: wrap;
   gap: 3px;
 }
 /* Drop hint - hidden by default, shown only during external drag */
-.mds-event-drop-hint {
+.mds-timeline-event-drop-assign-attendees .mds-event-drop-hint {
   display: none;
   font-size: 11px;
   font-style: italic;
   color: #686868;
 }
 /* Show drop hints and dashed borders on events during external drag */
-.mds-external-dragging .mds-event-drop-hint {
+.mds-timeline-event-drop-assign-attendees.mds-external-dragging .mds-event-drop-hint {
   display: block;
 }
-.mds-external-dragging .mds-custom-event {
+.mds-timeline-event-drop-assign-attendees.mds-external-dragging .mds-custom-event {
   outline: 2px dashed #b9b9b9;
 }
-.mds-attendee-chip {
+.mds-timeline-event-drop-assign-attendees .mds-attendee-chip {
   display: flex;
   width: 25px;
   height: 25px;
@@ -471,7 +471,7 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   cursor: pointer;
   position: relative;
 }
-.mds-attendee-remove {
+.mds-timeline-event-drop-assign-attendees .mds-attendee-remove {
   display: none;
   position: absolute;
   inset: 0;
@@ -482,15 +482,15 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   font-size: 12px;
   line-height: 1;
 }
-.mds-attendee-chip:hover .mds-attendee-remove {
+.mds-timeline-event-drop-assign-attendees .mds-attendee-chip:hover .mds-attendee-remove {
   display: flex;
 }
-.mds-custom-event.mds-drop-active {
+.mds-timeline-event-drop-assign-attendees .mds-custom-event.mds-drop-active {
   cursor: copy;
   outline: 2px solid rgba(54, 133, 43, 0.8);
   background: rgba(180, 223, 173, 0.8);
 }
-.mds-custom-event.mds-drop-conflict {
+.mds-timeline-event-drop-assign-attendees .mds-custom-event.mds-drop-conflict {
   cursor: not-allowed;
   outline: 2px solid rgba(145, 34, 34, 0.8);
   background: rgba(235, 194, 194, 0.8);
