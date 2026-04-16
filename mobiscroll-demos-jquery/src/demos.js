@@ -255,6 +255,7 @@ import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/re
 import Demo772 from './demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation';
 import Demo785 from './demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action';
 import Demo787 from './demos/eventcalendar/timeline/36-hour-rolling-window-aircraft-view/36-hour-rolling-window-aircraft-view';
+import Demo792 from './demos/eventcalendar/timeline/dispatch-management/dispatch-management';
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
 import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
@@ -994,6 +995,7 @@ export const demos = [
               { name: 'Set up custom teams', unique: 'resource-management-with-dynamic-team-creation', component: Demo772 },
               { name: 'Group events by client and apply custom actions', unique: 'event-grouping-bulk-action', component: Demo785 },
               { name: '36 hour rolling view', unique: '36-hour-rolling-window-aircraft-view', component: Demo787 },
+              { name: 'Dispatch management', unique: 'dispatch-management', component: Demo792 },
             ],
           },
           {
