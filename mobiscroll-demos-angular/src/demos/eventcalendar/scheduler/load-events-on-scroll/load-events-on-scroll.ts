@@ -4,7 +4,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   formatDate,
   MbscCalendarEvent,
-  MbscEventcalendarOptions,
+  MbscEventcalendarView,
   MbscModule,
   MbscVirtualLoadEvent,
   Notifications,
@@ -47,27 +47,42 @@ export class AppComponent {
     { id: 13, name: 'Resource 13', color: '#FF33F6' },
     { id: 14, name: 'Resource 14', color: '#33FF57' },
     { id: 15, name: 'Resource 15', color: '#33A6FF' },
+    { id: 16, name: 'Resource 16', color: '#DAF7A6' },
+    { id: 17, name: 'Resource 17', color: '#581845' },
+    { id: 18, name: 'Resource 18', color: '#900C3F' },
+    { id: 19, name: 'Resource 19', color: '#C70039' },
+    { id: 20, name: 'Resource 20', color: '#FF33F6' },
   ];
 
-  eventSettings: MbscEventcalendarOptions = {
-    // drag,
-    view: {
-      timeline: { type: 'month', resolutionHorizontal: 'hour' },
+  myView: MbscEventcalendarView = {
+    scheduler: {
+      type: 'month',
+      timeCellStep: 15,
+      timeLabelStep: 15,
     },
-    onVirtualLoading: (args: MbscVirtualLoadEvent) => {
-      const start = formatDate('YYYY-MM-DD', args.viewStart);
-      const end = formatDate('YYYY-MM-DD', args.viewEnd);
+  }
 
-      this.http
-        .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/load-data-scroll/?start=' + start + '&end=' + end, 'callback')
-        .subscribe((data: any) => {
-          this.myEvents = data.events;
-          this.cdr.detectChanges();
-          this.notify.toast({
-            message: 'Loading events...',
-            duration: 1000,
-          });
+  handleVirtualLoading = (args: MbscVirtualLoadEvent) => {
+    const start = formatDate('YYYY-MM-DDTHH:mm:ss', args.viewStart);
+    const end = formatDate('YYYY-MM-DDTHH:mm:ss', args.viewEnd);
+
+    this.http
+      .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/load-data-scroll/?start=' + start +
+        '&end=' +
+        end +
+        '&rstart=' +
+        args.resourceStart +
+        '&rend=' +
+        args.resourceEnd, 'callback')
+      .subscribe((data: any) => {
+        this.myEvents = data.events;
+        this.cdr.detectChanges();
+        this.notify.toast({
+          message: 'Loading events...',
+          duration: 1000,
         });
-    },
+      });
+
   };
 }
+
