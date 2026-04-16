@@ -2599,7 +2599,7 @@ export default {
           origEvent.color +
           '">' +
           '<div class="mbsc-flex mds-event-grouping-content">' +
-          '<div class="mds-event-grouping-title-text">' +
+          '<div class="mbsc-flex-1-1-0 mds-event-grouping-title-text">' +
           origEvent.clientGroup +
           '</div>' +
           '<div class="mbsc-flex mds-event-grouping-right">' +
@@ -2658,8 +2658,10 @@ export default {
 
         return (
           '<div class="mbsc-flex mds-event-simple">' +
-          '<div class="mds-event-simple-title">' +
+          '<div class="mbsc-flex-1-1-0 mds-event-simple-title">' +
+          '<div class="mds-event-simple-title-inner">' +
           origEvent.title +
+          '</div>' +
           '</div>' +
           '<div class="mbsc-flex mds-event-simple-right">' +
           '<div class="mds-event-simple-date">' +
@@ -3127,7 +3129,6 @@ export default {
     0 2px 4px rgba(0, 0, 0, 0.12),
     0 1px 2px rgba(0, 0, 0, 0.08);
   flex-direction: column;
-  overflow: hidden;
   container-type: inline-size;
   min-width: 120px;
 }
@@ -3138,7 +3139,7 @@ export default {
   padding: 10px 14px;
   height: 42px;
   box-sizing: border-box;
-  overflow: hidden;
+  gap: 8px;
 }
 /* Client group title */
 .mds-event-grouping-title-text {
@@ -3146,24 +3147,25 @@ export default {
   font-weight: 600;
   color: #1e293b;
   line-height: 20px;
-  flex: 1;
   min-width: 0;
-  margin-right: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  position: sticky;
+  left: 250px;
 }
 /* Right side container (meta + icon) */
 .mds-event-grouping-right {
   align-items: center;
-  flex-shrink: 0;
+  z-index: 1;
+  background-color: #dddddd;
 }
 /* Meta information (dates + counts) */
 .mds-event-grouping-meta {
   flex-direction: column;
   align-items: flex-end;
   flex: 1;
-  margin-right: 12px;
+  margin: 0 12px;
 }
 .mds-event-grouping-date-range {
   color: #575757;
@@ -3328,28 +3330,34 @@ export default {
   align-items: center;
   height: 42px;
   box-sizing: border-box;
-  overflow: hidden;
   color: #2c2c2c;
   background-color: #dddddd;
   container-type: inline-size;
+  gap: 8px;
 }
 @container (max-width: 130px) {
   .mds-event-simple-right { display: none; }
 }
 /* Event title */
 .mds-event-simple-title {
-  flex: 1;
   font-size: 13px;
   font-weight: 600;
-  margin-right: 5px;
+  white-space: nowrap;
+  position: sticky;
+  left: 250px;
+  min-width: 0;
+}
+.mds-event-simple-title-inner {
+  display: inline-block;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 /* Right side container */
 .mds-event-simple-right {
   flex-direction: column;
-  position: relative;
+  z-index: 1;
+  background-color: #dddddd;
 }
 /* Date range */
 .mds-event-simple-date {
@@ -3362,6 +3370,7 @@ export default {
 }
 /* Subtitle wrapper (avatar/dot + text) */
 .mds-event-simple-subtitle-wrapper {
+  position: relative;
   align-items: center;
   justify-content: flex-end;
 }
@@ -3386,6 +3395,7 @@ export default {
   font-size: 11px;
   font-weight: 700;
   text-transform: capitalize;
+  white-space: nowrap;
 }
 /* Header controls */
 .mds-event-grouping-header-controls {
