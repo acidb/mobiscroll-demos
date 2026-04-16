@@ -177,6 +177,7 @@ import { AppComponent as Demo581 } from '../demos/eventcalendar/scheduler/work-w
 import { AppComponent as Demo721 } from '../demos/eventcalendar/scheduler/doctors-appointment/doctors-appointment';
 import { AppComponent as Demo786 } from '../demos/eventcalendar/scheduler/24-hour-manufacturing-shift-rota-planning/24-hour-manufacturing-shift-rota-planning';
 import { AppComponent as Demo769 } from '../demos/eventcalendar/scheduler/doctors-availability-calendar-planner/doctors-availability-calendar-planner';
+import { AppComponent as Demo791 } from '../demos/eventcalendar/scheduler/event-drop-assign-attendees/event-drop-assign-attendees';
 import { AppComponent as Demo696 } from '../demos/eventcalendar/scheduler/custom-range-view/custom-range-view';
 import { AppComponent as Demo733 } from '../demos/eventcalendar/scheduler/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events';
 import { AppComponent as Demo664 } from '../demos/eventcalendar/scheduler/display-multiple-days-weeks/display-multiple-days-weeks';
@@ -255,6 +256,7 @@ import { AppComponent as Demo751 } from '../demos/eventcalendar/timeline/resourc
 import { AppComponent as Demo772 } from '../demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation';
 import { AppComponent as Demo785 } from '../demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action';
 import { AppComponent as Demo787 } from '../demos/eventcalendar/timeline/36-hour-rolling-window-aircraft-view/36-hour-rolling-window-aircraft-view';
+import { AppComponent as Demo790 } from '../demos/eventcalendar/timeline/timeline-event-drop-assign-attendees/timeline-event-drop-assign-attendees';
 import { AppComponent as Demo605 } from '../demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import { AppComponent as Demo663 } from '../demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
 import { AppComponent as Demo764 } from '../demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
@@ -838,6 +840,7 @@ export const demos: any[] = [
               { name: 'Doctor’s appointment', unique: 'doctors-appointment', component: Demo721 },
               { name: 'Continuous shift planning', unique: '24-hour-manufacturing-shift-rota-planning', component: Demo786 },
               { name: 'Availability planner & appointment manager', unique: 'doctors-availability-calendar-planner', component: Demo769 },
+              { name: 'Event Drop Assignment', unique: 'event-drop-assign-attendees', component: Demo791 },
             ],
           },
           {
@@ -994,6 +997,7 @@ export const demos: any[] = [
               { name: 'Set up custom teams', unique: 'resource-management-with-dynamic-team-creation', component: Demo772 },
               { name: 'Group events by client and apply custom actions', unique: 'event-grouping-bulk-action', component: Demo785 },
               { name: '36 hour rolling view', unique: '36-hour-rolling-window-aircraft-view', component: Demo787 },
+              { name: 'Timeline Event Drop Assignment', unique: 'timeline-event-drop-assign-attendees', component: Demo790 },
             ],
           },
           {
