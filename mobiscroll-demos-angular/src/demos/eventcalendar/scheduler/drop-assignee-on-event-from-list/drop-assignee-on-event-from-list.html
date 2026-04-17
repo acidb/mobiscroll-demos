@@ -1,0 +1,70 @@
+<mbsc-page [ngClass]="{'mds-external-dragging': isExternalDragging}" class="mds-scheduler-drop-assignee-on-event-from-list">
+  <div class="mbsc-grid mbsc-no-padding">
+    <div class="mbsc-row">
+      <div class="mbsc-col-sm-3 mbsc-flex-col mds-sidebar">
+        <div class="mbsc-form-group-title">Team Members</div>
+        <div class="mds-employee-list mbsc-flex">
+          <div
+            *ngFor="let emp of employees"
+            mbsc-draggable
+            [dragData]="emp"
+            class="mds-employee-item mbsc-flex"
+            (pointerdown)="onEmployeePointerDown()"
+          >
+            <div class="mds-employee-avatar mbsc-flex" [ngStyle]="{ background: emp.color }">{{ emp.avatar }}</div>
+            <div class="mds-employee-info mbsc-flex">
+              <div class="mds-employee-name">{{ emp.name }}</div>
+              <div class="mds-employee-count">
+                <ng-container *ngIf="getAssignmentCount(emp.id) > 0; else noAssignment">
+                  {{ getAssignmentCount(emp.id) }} meeting{{ getAssignmentCount(emp.id) > 1 ? 's' : '' }}
+                </ng-container>
+                <ng-template #noAssignment>No assignments</ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mbsc-col-sm-9 mds-calendar-wrapper">
+        <mbsc-eventcalendar
+          [data]="meetings"
+          [view]="calendarView"
+          [options]="calendarOptions"
+          [resources]="rooms"
+          [schedulerEventTemplate]="schedulerEventTemplate"
+        ></mbsc-eventcalendar>
+      </div>
+    </div>
+  </div>
+</mbsc-page>
+
+<ng-template #schedulerEventTemplate let-data>
+  <mbsc-dropcontainer
+    class="mds-custom-event mbsc-flex"
+    [ngClass]="{
+      'mds-drop-active': dropStateMap[data.original.id] === 'active',
+      'mds-drop-conflict': dropStateMap[data.original.id] === 'conflict'
+    }"
+    [style.borderLeft]="'4px solid ' + data.original.color"
+    (onItemDrop)="onEventDrop($event, data.original.id)"
+    (onItemDragEnter)="onEventDragEnter($event, data.original.id)"
+    (onItemDragLeave)="onEventDragLeave(data.original.id)"
+  >
+    <div class="mds-event-header mbsc-flex">
+      <div class="mds-event-title">{{ data.title }}</div>
+      <div class="mds-event-time">{{ data.start }} - {{ data.end }}</div>
+    </div>
+    <div class="mds-event-attendees mbsc-flex" *ngIf="data.original.attendees?.length > 0">
+      <span
+        *ngFor="let att of data.original.attendees"
+        class="mds-attendee-chip"
+        [ngStyle]="{ background: att.color }"
+        [title]="att.name + ' (click to remove)'"
+        (click)="$event.stopPropagation(); removeAttendee(data.original.id, att.id)"
+      >
+        {{ att.avatar }}
+        <span class="mds-attendee-remove">&times;</span>
+      </span>
+    </div>
+    <div class="mds-event-drop-hint">Drop people to assign</div>
+  </mbsc-dropcontainer>
+</ng-template>
