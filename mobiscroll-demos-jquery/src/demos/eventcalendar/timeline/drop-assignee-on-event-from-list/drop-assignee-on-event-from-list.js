@@ -187,7 +187,7 @@ export default {
         { id: 'emp10', name: 'Jack Murphy', avatar: 'JM', color: '#0984e3' },
       ];
 
-      var $container = $('.mds-timeline-event-drop-assign-attendees');
+      var $container = $('.mds-drop-assignee-on-event-from-list');
 
       function getAssignmentCount(empId) {
         var count = 0;
@@ -502,7 +502,7 @@ export default {
         });
       }
 
-      var calendar = $('#demo-timeline-event-drop-assign-attendees')
+      var calendar = $('#demo-drop-assignee-on-event-from-list')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -534,7 +534,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mds-timeline-event-drop-assign-attendees" mbsc-page>
+<div class="mds-drop-assignee-on-event-from-list" mbsc-page>
   <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
       <div class="mbsc-col-sm-3 mbsc-flex-col mds-sidebar">
@@ -542,7 +542,7 @@ export default {
         <div id="external-employee-list" class="mds-employee-list mbsc-flex"></div>
       </div>
       <div class="mbsc-col-sm-9 mds-calendar-wrapper">
-        <div id="demo-timeline-event-drop-assign-attendees"></div>
+        <div id="demo-drop-assignee-on-event-from-list"></div>
       </div>
     </div>
   </div>
@@ -550,9 +550,9 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-timeline-event-drop-assign-attendees,
-.mds-timeline-event-drop-assign-attendees .mbsc-grid,
-.mds-timeline-event-drop-assign-attendees .mbsc-row {
+.mds-drop-assignee-on-event-from-list,
+.mds-drop-assignee-on-event-from-list .mbsc-grid,
+.mds-drop-assignee-on-event-from-list .mbsc-row {
   height: 100%;
 }
 .mds-sidebar {
@@ -704,10 +704,10 @@ export default {
   outline: 2px solid rgba(145, 34, 34, 0.8);
   background: rgba(235, 194, 194, 0.8);
 }
-.mds-timeline-event-drop-assign-attendees .mbsc-timeline-event {
+.mds-drop-assignee-on-event-from-list .mbsc-timeline-event {
   min-height: 80px;
 }
-.mds-timeline-event-drop-assign-attendees .mbsc-schedule-event-inner {
+.mds-drop-assignee-on-event-from-list .mbsc-schedule-event-inner {
   height: 100%;
 }
   `,

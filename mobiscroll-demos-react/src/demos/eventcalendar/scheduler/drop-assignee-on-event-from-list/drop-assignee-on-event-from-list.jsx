@@ -2,7 +2,7 @@ import { Draggable, Dropcontainer, Eventcalendar, Page, setOptions, Snackbar, To
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { dyndatetime } from '../../../../dyndatetime';
-import './event-drop-assign-attendees.css';
+import './drop-assignee-on-event-from-list.css';
 
 setOptions({
   // localeJs,
@@ -418,7 +418,7 @@ function App() {
   }, []);
 
   return (
-    <Page className={`mds-scheduler-event-drop-assign-attendees${isExternalDragging ? ' mds-external-dragging' : ''}`}>
+    <Page className={`mds-scheduler-drop-assignee-on-event-from-list${isExternalDragging ? ' mds-external-dragging' : ''}`}>
       <div className="mbsc-grid mbsc-no-padding">
         <div className="mbsc-row">
           <div className="mbsc-col-sm-3 mbsc-flex-col mds-sidebar">

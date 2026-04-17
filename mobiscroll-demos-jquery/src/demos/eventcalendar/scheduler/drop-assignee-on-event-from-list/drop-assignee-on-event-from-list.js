@@ -186,7 +186,7 @@ export default {
         { id: 'emp9', name: 'Ivy Torres', avatar: 'IT', color: '#e84393' },
       ];
 
-      var $container = $('.mds-scheduler-event-drop-assign-attendees');
+      var $container = $('.mds-scheduler-drop-assignee-on-event-from-list');
 
       function getAssignmentCount(empId) {
         var count = 0;
@@ -501,7 +501,7 @@ export default {
         });
       }
 
-      var calendar = $('#demo-scheduler-event-drop-assign-attendees')
+      var calendar = $('#demo-scheduler-drop-assignee-on-event-from-list')
         .mobiscroll()
         .eventcalendar({
           // context,
@@ -533,7 +533,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mds-scheduler-event-drop-assign-attendees" mbsc-page>
+<div class="mds-scheduler-drop-assignee-on-event-from-list" mbsc-page>
   <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
       <div class="mbsc-col-sm-3 mbsc-flex-col mds-sidebar">
@@ -541,7 +541,7 @@ export default {
         <div id="external-employee-list" class="mds-employee-list mbsc-flex"></div>
       </div>
       <div class="mbsc-col-sm-9 mds-calendar-wrapper">
-        <div id="demo-scheduler-event-drop-assign-attendees"></div>
+        <div id="demo-scheduler-drop-assignee-on-event-from-list"></div>
       </div>
     </div>
   </div>
@@ -549,9 +549,9 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-scheduler-event-drop-assign-attendees,
-.mds-scheduler-event-drop-assign-attendees .mbsc-grid,
-.mds-scheduler-event-drop-assign-attendees .mbsc-row,
+.mds-scheduler-drop-assignee-on-event-from-list,
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-grid,
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-row,
 .mds-calendar-wrapper {
   height: 100%;
 }
@@ -703,10 +703,10 @@ export default {
   outline: 2px solid rgba(145, 34, 34, 0.8);
   background: rgba(235, 194, 194, 0.8);
 }
-.mds-scheduler-event-drop-assign-attendees .mbsc-scheduler-event {
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-scheduler-event {
   min-height: 80px;
 }
-.mds-scheduler-event-drop-assign-attendees .mbsc-schedule-event-inner {
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-schedule-event-inner {
   height: 100%;
 }
   `,

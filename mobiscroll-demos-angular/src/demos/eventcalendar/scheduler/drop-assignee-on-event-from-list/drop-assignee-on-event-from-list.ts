@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgZone, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import {
   MbscCalendarEvent,
+  MbscEventcalendarOptions,
   MbscEventcalendarView,
   MbscItemDragEvent,
   MbscModule,
-  MbscResource,
   Notifications,
   setOptions /* localeImport */,
 } from '@mobiscroll/angular';
@@ -16,45 +16,19 @@ setOptions({
   // theme
 });
 
-interface Employee {
-  id: string;
-  name: string;
-  avatar: string;
-  color: string;
-}
-
 @Component({
-  selector: 'app-timeline-timeline-event-drop-assign-attendees',
-  styleUrl: './timeline-event-drop-assign-attendees.css',
+  selector: 'app-scheduler-drop-assignee-on-event-from-list',
+  styleUrl: './drop-assignee-on-event-from-list.css',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './timeline-event-drop-assign-attendees.html',
+  templateUrl: './drop-assignee-on-event-from-list.html',
   providers: [Notifications],
   standalone: true,
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
-  constructor(
-    private notify: Notifications,
-    private zone: NgZone,
-  ) { }
+  constructor(private notify: Notifications) { }
 
-  isExternalDragging = false;
-  dropStates: Record<string, string> = {};
-
-  myView: MbscEventcalendarView = {
-    timeline: {
-      type: 'week',
-      startDay: 1,
-      endDay: 5,
-      startTime: '08:00',
-      endTime: '18:00',
-      timeCellStep: 60,
-      timeLabelStep: 60,
-      virtualScroll: false,
-    },
-  };
-
-  rooms: MbscResource[] = [
+  rooms = [
     { id: 1, name: 'Conference Room' },
     { id: 2, name: 'Board Room' },
     { id: 3, name: 'Meeting Room' },
@@ -81,7 +55,7 @@ export class AppComponent {
     { id: 'evt17', title: 'Hiring Debrief', start: dyndatetime('y,m,d+3,10'), end: dyndatetime('y,m,d+3,12'), resource: 3, color: '#51ac19', attendees: [] },
   ];
 
-  employees: Employee[] = [
+  employees = [
     { id: 'emp1', name: 'Alice Martin', avatar: 'AM', color: '#e74c3c' },
     { id: 'emp2', name: 'Bob Johnson', avatar: 'BJ', color: '#3498db' },
     { id: 'emp3', name: 'Carol Smith', avatar: 'CS', color: '#2ecc71' },
@@ -91,16 +65,38 @@ export class AppComponent {
     { id: 'emp7', name: 'Grace Kim', avatar: 'GK', color: '#e67e22' },
     { id: 'emp8', name: 'Henry Patel', avatar: 'HP', color: '#34495e' },
     { id: 'emp9', name: 'Ivy Torres', avatar: 'IT', color: '#e84393' },
-    { id: 'emp10', name: 'Jack Murphy', avatar: 'JM', color: '#0984e3' },
   ];
+
+  isExternalDragging = false;
+  dropStateMap: Record<string, string> = {};
+
+  calendarView: MbscEventcalendarView = {
+    scheduler: {
+      type: 'week',
+      startDay: 1,
+      endDay: 5,
+      startTime: '08:00',
+      endTime: '18:00',
+      timeCellStep: 30,
+      timeLabelStep: 30,
+      virtualScroll: false,
+    },
+  };
+
+  calendarOptions: MbscEventcalendarOptions = {
+    dragToCreate: false,
+    dragToMove: false,
+    dragToResize: false,
+    clickToCreate: false,
+    eventDelete: false,
+    showEventTooltip: false,
+  };
 
   getAssignmentCount(empId: string): number {
     let count = 0;
-    for (const meeting of this.meetings) {
-      const attendees = meeting['attendees'] as Employee[];
-      if (attendees && attendees.some((a) => a.id === empId)) {
-        count++;
-      }
+    for (const m of this.meetings) {
+      const attendees = (m as any).attendees || [];
+      count += attendees.filter((a: any) => a.id === empId).length;
     }
     return count;
   }
@@ -114,106 +110,112 @@ export class AppComponent {
 
     for (const m of this.meetings) {
       if (m.id === targetEventId) continue;
-      const attendees = m['attendees'] as Employee[];
-      if (!attendees || !attendees.some((a) => a.id === empId)) continue;
+      const attendees = (m as any).attendees || [];
+      if (!attendees.some((a: any) => a.id === empId)) continue;
+
       const mStart = new Date(m.start as string).getTime();
       const mEnd = new Date(m.end as string).getTime();
+
       if (mStart < targetEnd && mEnd > targetStart) return m;
     }
+
     return null;
   }
 
-  onDragStart(): void {
-    const onMove = () => {
-      this.zone.run(() => {
-        this.isExternalDragging = true;
+  onEventDrop(args: MbscItemDragEvent, eventId: string): void {
+    const employee = args.data;
+    const meeting = this.meetings.find((m) => m.id === eventId) as any;
+    if (!meeting) return;
+
+    this.dropStateMap[eventId] = '';
+
+    // Prevent duplicate assignment
+    if (meeting.attendees.some((a: any) => a.id === employee.id)) {
+      this.notify.toast({
+        message: employee['name'] + ' is already assigned',
+        color: 'danger',
       });
+      return;
+    }
+
+    // Check for time conflicts
+    const conflict = this.findConflict(employee.id as string, eventId);
+    if (conflict) {
+      this.notify.toast({
+        message: employee['name'] + ' already has a ' + conflict.title + ' on this timeslot',
+        color: 'danger',
+      });
+      return;
+    }
+
+    meeting.attendees = [...meeting.attendees, { id: employee.id, name: employee['name'], avatar: employee['avatar'], color: employee['color'] }];
+    this.meetings = [...this.meetings];
+
+    this.notify.toast({
+      message: employee['name'] + ' assigned to ' + meeting.title,
+      color: 'success',
+    });
+  }
+
+  onEventDragEnter(args: MbscItemDragEvent, eventId: string): void {
+    const employee = args.data;
+    const meeting = this.meetings.find((m) => m.id === eventId) as any;
+
+    if (employee && meeting && employee.id) {
+      if (meeting.attendees.some((a: any) => a.id === employee.id) || this.findConflict(employee.id as string, eventId)) {
+        this.dropStateMap[eventId] = 'conflict';
+      } else {
+        this.dropStateMap[eventId] = 'active';
+      }
+    } else {
+      this.dropStateMap[eventId] = 'active';
+    }
+
+    this.dropStateMap = { ...this.dropStateMap };
+  }
+
+  onEventDragLeave(eventId: string): void {
+    this.dropStateMap = { ...this.dropStateMap, [eventId]: '' };
+  }
+
+  removeAttendee(eventId: string, empId: string): void {
+    const meeting = this.meetings.find((m) => m.id === eventId) as any;
+    if (!meeting) return;
+
+    const idx = meeting.attendees.findIndex((a: any) => a.id === empId);
+    if (idx === -1) return;
+
+    const removedAtt = meeting.attendees[idx];
+    meeting.attendees = [...meeting.attendees.slice(0, idx), ...meeting.attendees.slice(idx + 1)];
+    this.meetings = [...this.meetings];
+
+    this.notify.snackbar({
+      message: removedAtt.name + ' removed from ' + meeting.title,
+      button: {
+        text: 'Undo',
+        action: () => {
+          meeting.attendees = [...meeting.attendees.slice(0, idx), removedAtt, ...meeting.attendees.slice(idx)];
+          this.meetings = [...this.meetings];
+          this.notify.toast({
+            message: 'Assignment restored',
+            color: 'success',
+          });
+        },
+      },
+    });
+  }
+
+  onEmployeePointerDown(): void {
+    const onMove = () => {
+      this.isExternalDragging = true;
       document.removeEventListener('pointermove', onMove);
     };
     const onUp = () => {
-      this.zone.run(() => {
-        this.isExternalDragging = false;
-      });
+      this.isExternalDragging = false;
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerup', onUp);
     };
     document.addEventListener('pointermove', onMove);
     document.addEventListener('pointerup', onUp);
-  }
-
-  onItemDrop(dropEvent: MbscItemDragEvent, eventId: string): void {
-    const employee = dropEvent.data as Employee;
-    this.dropStates[eventId] = '';
-
-    const meeting = this.meetings.find((m) => m.id === eventId);
-    if (!meeting) return;
-
-    const attendees = meeting['attendees'] as Employee[];
-
-    if (attendees.some((a) => a.id === employee.id)) {
-      this.notify.toast({ message: employee.name + ' is already assigned', color: 'danger' });
-      return;
-    }
-
-    const conflict = this.findConflict(employee.id, eventId);
-    if (conflict) {
-      this.notify.toast({ message: employee.name + ' already has a ' + conflict.title + ' on this timeslot', color: 'danger' });
-      return;
-    }
-
-    attendees.push({ id: employee.id, name: employee.name, avatar: employee.avatar, color: employee.color });
-    this.meetings = [...this.meetings];
-
-    this.notify.toast({ message: employee.name + ' assigned to ' + meeting.title, color: 'success' });
-  }
-
-  onItemDragEnter(enterEvent: MbscItemDragEvent, eventId: string): void {
-    const employee = enterEvent.data as Employee;
-    const meeting = this.meetings.find((m) => m.id === eventId);
-    if (!meeting) return;
-
-    const attendees = meeting['attendees'] as Employee[];
-
-    if (employee) {
-      if (attendees.some((a) => a.id === employee.id)) {
-        this.dropStates[eventId] = 'mds-drop-conflict';
-      } else {
-        const conflict = this.findConflict(employee.id, eventId);
-        this.dropStates[eventId] = conflict ? 'mds-drop-conflict' : 'mds-drop-active';
-      }
-    } else {
-      this.dropStates[eventId] = 'mds-drop-active';
-    }
-  }
-
-  onItemDragLeave(eventId: string): void {
-    this.dropStates[eventId] = '';
-  }
-
-  removeAttendee(eventId: string, empId: string, domEvent: Event): void {
-    domEvent.stopPropagation();
-
-    const meeting = this.meetings.find((m) => m.id === eventId);
-    if (!meeting) return;
-
-    const attendees = meeting['attendees'] as Employee[];
-    const idx = attendees.findIndex((a) => a.id === empId);
-    if (idx === -1) return;
-
-    const removed = attendees[idx];
-    attendees.splice(idx, 1);
-    this.meetings = [...this.meetings];
-
-    this.notify.snackbar({
-      message: removed.name + ' removed from ' + meeting.title,
-      button: {
-        text: 'Undo',
-        action: () => {
-          attendees.splice(idx, 0, removed);
-          this.meetings = [...this.meetings];
-          this.notify.toast({ message: 'Assignment restored', color: 'success' });
-        },
-      },
-    });
   }
 }

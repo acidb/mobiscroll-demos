@@ -176,7 +176,7 @@ import Demo581 from './demos/eventcalendar/scheduler/work-week-hours/work-week-h
 import Demo721 from './demos/eventcalendar/scheduler/doctors-appointment/doctors-appointment.vue'
 import Demo786 from './demos/eventcalendar/scheduler/24-hour-manufacturing-shift-rota-planning/24-hour-manufacturing-shift-rota-planning.vue'
 import Demo769 from './demos/eventcalendar/scheduler/doctors-availability-calendar-planner/doctors-availability-calendar-planner.vue'
-import Demo791 from './demos/eventcalendar/scheduler/event-drop-assign-attendees/event-drop-assign-attendees.vue'
+import Demo791 from './demos/eventcalendar/scheduler/drop-assignee-on-event-from-list/drop-assignee-on-event-from-list.vue'
 import Demo696 from './demos/eventcalendar/scheduler/custom-range-view/custom-range-view.vue'
 import Demo733 from './demos/eventcalendar/scheduler/control-number-of-concurrently-shown-events/control-number-of-concurrently-shown-events.vue'
 import Demo664 from './demos/eventcalendar/scheduler/display-multiple-days-weeks/display-multiple-days-weeks.vue'
@@ -255,7 +255,7 @@ import Demo751 from './demos/eventcalendar/timeline/resource-filtering-search/re
 import Demo772 from './demos/eventcalendar/timeline/resource-management-with-dynamic-team-creation/resource-management-with-dynamic-team-creation.vue'
 import Demo785 from './demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action.vue'
 import Demo787 from './demos/eventcalendar/timeline/36-hour-rolling-window-aircraft-view/36-hour-rolling-window-aircraft-view.vue'
-import Demo790 from './demos/eventcalendar/timeline/timeline-event-drop-assign-attendees/timeline-event-drop-assign-attendees.vue'
+import Demo790 from './demos/eventcalendar/timeline/drop-assignee-on-event-from-list/drop-assignee-on-event-from-list.vue'
 import Demo605 from './demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline.vue'
 import Demo663 from './demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution.vue'
 import Demo764 from './demos/eventcalendar/timeline/calendar-zoom/calendar-zoom.vue'
@@ -1165,7 +1165,7 @@ export const demos = [
               },
               {
                 name: 'Event Drop Assignment',
-                unique: 'event-drop-assign-attendees',
+                unique: 'drop-assignee-on-event-from-list',
                 component: Demo791
               }
             ]
@@ -1542,7 +1542,7 @@ export const demos = [
               },
               {
                 name: 'Timeline Event Drop Assignment',
-                unique: 'timeline-event-drop-assign-attendees',
+                unique: 'drop-assignee-on-event-from-list',
                 component: Demo790
               }
             ]

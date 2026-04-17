@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import {
   MbscDraggable,
   MbscDropcontainer,
@@ -8,12 +8,6 @@ import {
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import type {
-  MbscCalendarEvent,
-  MbscEventcalendarView,
-  MbscItemDragEvent,
-  MbscResource
-} from '@mobiscroll/vue'
 import { reactive, ref } from 'vue'
 import { dyndatetime } from '../../../../dyndatetime'
 
@@ -22,21 +16,7 @@ setOptions({
   // theme
 })
 
-interface Employee {
-  id: string
-  name: string
-  avatar: string
-  color: string
-}
-
-interface Meeting extends MbscCalendarEvent {
-  id: string
-  title: string
-  color: string
-  attendees: Employee[]
-}
-
-const employees: Employee[] = [
+const employees = [
   { id: 'emp1', name: 'Alice Martin', avatar: 'AM', color: '#e74c3c' },
   { id: 'emp2', name: 'Bob Johnson', avatar: 'BJ', color: '#3498db' },
   { id: 'emp3', name: 'Carol Smith', avatar: 'CS', color: '#2ecc71' },
@@ -49,34 +29,170 @@ const employees: Employee[] = [
   { id: 'emp10', name: 'Jack Murphy', avatar: 'JM', color: '#0984e3' }
 ]
 
-const rooms: MbscResource[] = [
+const rooms = [
   { id: 1, name: 'Conference Room' },
   { id: 2, name: 'Board Room' },
   { id: 3, name: 'Meeting Room' },
   { id: 4, name: 'Training Room' }
 ]
 
-const meetings = ref<Meeting[]>([
-  { id: 'evt1', title: 'Sprint Planning', start: dyndatetime('y,m,d,9'), end: dyndatetime('y,m,d,11'), resource: 1, color: '#b52db9', attendees: [] },
-  { id: 'evt2', title: 'Budget Review', start: dyndatetime('y,m,d,10'), end: dyndatetime('y,m,d,13'), resource: 2, color: '#669ce2', attendees: [] },
-  { id: 'evt3', title: 'Client Presentation', start: dyndatetime('y,m,d,15'), end: dyndatetime('y,m,d,18'), resource: 2, color: '#88bd42', attendees: [] },
-  { id: 'evt4', title: 'Project Kickoff', start: dyndatetime('y,m,d,9'), end: dyndatetime('y,m,d,11'), resource: 3, color: '#b6962f', attendees: [] },
-  { id: 'evt5', title: 'New Hire Orientation', start: dyndatetime('y,m,d,13'), end: dyndatetime('y,m,d,16'), resource: 4, color: '#c864f0', attendees: [] },
-  { id: 'evt6', title: 'Design Review', start: dyndatetime('y,m,d,13'), end: dyndatetime('y,m,d,15'), resource: 1, color: '#c7682d', attendees: [] },
-  { id: 'evt7', title: 'Product Demo', start: dyndatetime('y,m,d+1,9'), end: dyndatetime('y,m,d+1,11'), resource: 1, color: '#ad2b6c', attendees: [] },
-  { id: 'evt8', title: 'Stakeholder Update', start: dyndatetime('y,m,d+1,10'), end: dyndatetime('y,m,d+1,12'), resource: 2, color: '#0f60ca', attendees: [] },
-  { id: 'evt9', title: 'Code Review', start: dyndatetime('y,m,d+1,10'), end: dyndatetime('y,m,d+1,12'), resource: 3, color: '#56a823', attendees: [] },
-  { id: 'evt10', title: 'Safety Training', start: dyndatetime('y,m,d+1,13'), end: dyndatetime('y,m,d+1,16'), resource: 4, color: '#aa36d8', attendees: [] },
-  { id: 'evt11', title: 'Retrospective', start: dyndatetime('y,m,d+2,9'), end: dyndatetime('y,m,d+2,11'), resource: 1, color: '#c45f20', attendees: [] },
-  { id: 'evt12', title: 'Board Briefing', start: dyndatetime('y,m,d+2,13'), end: dyndatetime('y,m,d+2,16'), resource: 2, color: '#1e58a5', attendees: [] },
-  { id: 'evt13', title: 'Marketing Sync', start: dyndatetime('y,m,d+2,10'), end: dyndatetime('y,m,d+2,12'), resource: 3, color: '#549e27', attendees: [] },
-  { id: 'evt14', title: 'API Workshop', start: dyndatetime('y,m,d+2,13'), end: dyndatetime('y,m,d+2,16'), resource: 4, color: '#7c1ca1', attendees: [] },
-  { id: 'evt15', title: 'Architecture Review', start: dyndatetime('y,m,d+3,9'), end: dyndatetime('y,m,d+3,11,30'), resource: 1, color: '#a7511c', attendees: [] },
-  { id: 'evt16', title: 'Quarterly Planning', start: dyndatetime('y,m,d+3,13'), end: dyndatetime('y,m,d+3,16'), resource: 2, color: '#13488d', attendees: [] },
-  { id: 'evt17', title: 'Hiring Debrief', start: dyndatetime('y,m,d+3,10'), end: dyndatetime('y,m,d+3,12'), resource: 3, color: '#51ac19', attendees: [] }
+const meetings = ref([
+  {
+    id: 'evt1',
+    title: 'Sprint Planning',
+    start: dyndatetime('y,m,d,9'),
+    end: dyndatetime('y,m,d,11'),
+    resource: 1,
+    color: '#b52db9',
+    attendees: []
+  },
+  {
+    id: 'evt2',
+    title: 'Budget Review',
+    start: dyndatetime('y,m,d,10'),
+    end: dyndatetime('y,m,d,13'),
+    resource: 2,
+    color: '#669ce2',
+    attendees: []
+  },
+  {
+    id: 'evt3',
+    title: 'Client Presentation',
+    start: dyndatetime('y,m,d,15'),
+    end: dyndatetime('y,m,d,18'),
+    resource: 2,
+    color: '#88bd42',
+    attendees: []
+  },
+  {
+    id: 'evt4',
+    title: 'Project Kickoff',
+    start: dyndatetime('y,m,d,9'),
+    end: dyndatetime('y,m,d,11'),
+    resource: 3,
+    color: '#b6962f',
+    attendees: []
+  },
+  {
+    id: 'evt5',
+    title: 'New Hire Orientation',
+    start: dyndatetime('y,m,d,13'),
+    end: dyndatetime('y,m,d,16'),
+    resource: 4,
+    color: '#c864f0',
+    attendees: []
+  },
+  {
+    id: 'evt6',
+    title: 'Design Review',
+    start: dyndatetime('y,m,d,13'),
+    end: dyndatetime('y,m,d,15'),
+    resource: 1,
+    color: '#c7682d',
+    attendees: []
+  },
+  {
+    id: 'evt7',
+    title: 'Product Demo',
+    start: dyndatetime('y,m,d+1,9'),
+    end: dyndatetime('y,m,d+1,11'),
+    resource: 1,
+    color: '#ad2b6c',
+    attendees: []
+  },
+  {
+    id: 'evt8',
+    title: 'Stakeholder Update',
+    start: dyndatetime('y,m,d+1,10'),
+    end: dyndatetime('y,m,d+1,12'),
+    resource: 2,
+    color: '#0f60ca',
+    attendees: []
+  },
+  {
+    id: 'evt9',
+    title: 'Code Review',
+    start: dyndatetime('y,m,d+1,10'),
+    end: dyndatetime('y,m,d+1,12'),
+    resource: 3,
+    color: '#56a823',
+    attendees: []
+  },
+  {
+    id: 'evt10',
+    title: 'Safety Training',
+    start: dyndatetime('y,m,d+1,13'),
+    end: dyndatetime('y,m,d+1,16'),
+    resource: 4,
+    color: '#aa36d8',
+    attendees: []
+  },
+  {
+    id: 'evt11',
+    title: 'Retrospective',
+    start: dyndatetime('y,m,d+2,9'),
+    end: dyndatetime('y,m,d+2,11'),
+    resource: 1,
+    color: '#c45f20',
+    attendees: []
+  },
+  {
+    id: 'evt12',
+    title: 'Board Briefing',
+    start: dyndatetime('y,m,d+2,13'),
+    end: dyndatetime('y,m,d+2,16'),
+    resource: 2,
+    color: '#1e58a5',
+    attendees: []
+  },
+  {
+    id: 'evt13',
+    title: 'Marketing Sync',
+    start: dyndatetime('y,m,d+2,10'),
+    end: dyndatetime('y,m,d+2,12'),
+    resource: 3,
+    color: '#549e27',
+    attendees: []
+  },
+  {
+    id: 'evt14',
+    title: 'API Workshop',
+    start: dyndatetime('y,m,d+2,13'),
+    end: dyndatetime('y,m,d+2,16'),
+    resource: 4,
+    color: '#7c1ca1',
+    attendees: []
+  },
+  {
+    id: 'evt15',
+    title: 'Architecture Review',
+    start: dyndatetime('y,m,d+3,9'),
+    end: dyndatetime('y,m,d+3,11,30'),
+    resource: 1,
+    color: '#a7511c',
+    attendees: []
+  },
+  {
+    id: 'evt16',
+    title: 'Quarterly Planning',
+    start: dyndatetime('y,m,d+3,13'),
+    end: dyndatetime('y,m,d+3,16'),
+    resource: 2,
+    color: '#13488d',
+    attendees: []
+  },
+  {
+    id: 'evt17',
+    title: 'Hiring Debrief',
+    start: dyndatetime('y,m,d+3,10'),
+    end: dyndatetime('y,m,d+3,12'),
+    resource: 3,
+    color: '#51ac19',
+    attendees: []
+  }
 ])
 
-const myView: MbscEventcalendarView = {
+const myView = {
   timeline: {
     type: 'week',
     startDay: 1,
@@ -89,51 +205,51 @@ const myView: MbscEventcalendarView = {
   }
 }
 
-const dragElements = ref<HTMLElement[]>([])
-const dropZoneEls = reactive<Record<string, HTMLElement | null>>({})
-const dropStates = reactive<Record<string, string>>({})
-const isExternalDragging = ref<boolean>(false)
+const dragElements = ref([])
+const dropZoneEls = reactive({})
+const dropStates = reactive({})
+const isExternalDragging = ref(false)
 
-const toastMessage = ref<string>('')
-const toastColor = ref<string>('')
-const isToastOpen = ref<boolean>(false)
+const toastMessage = ref('')
+const toastColor = ref('')
+const isToastOpen = ref(false)
 
-const snackbarMessage = ref<string>('')
-const snackbarButton = ref<{ text: string; action: () => void } | undefined>(undefined)
-const isSnackbarOpen = ref<boolean>(false)
+const snackbarMessage = ref('')
+const snackbarButton = ref(null)
+const isSnackbarOpen = ref(false)
 
-function getAssignmentCount(empId: string): number {
+function getAssignmentCount(empId) {
   return meetings.value.filter((m) => m.attendees.some((a) => a.id === empId)).length
 }
 
-function findConflict(empId: string, targetEventId: string): Meeting | null {
+function findConflict(empId, targetEventId) {
   const target = meetings.value.find((m) => m.id === targetEventId)
   if (!target) return null
 
-  const targetStart = new Date(target.start as string).getTime()
-  const targetEnd = new Date(target.end as string).getTime()
+  const targetStart = new Date(target.start).getTime()
+  const targetEnd = new Date(target.end).getTime()
 
   for (const m of meetings.value) {
     if (m.id === targetEventId) continue
     if (!m.attendees.some((a) => a.id === empId)) continue
-    const mStart = new Date(m.start as string).getTime()
-    const mEnd = new Date(m.end as string).getTime()
+    const mStart = new Date(m.start).getTime()
+    const mEnd = new Date(m.end).getTime()
     if (mStart < targetEnd && mEnd > targetStart) return m
   }
   return null
 }
 
-function setDropZoneEl(el: HTMLElement | null, eventId: string): void {
+function setDropZoneEl(el, eventId) {
   dropZoneEls[eventId] = el
 }
 
-function showToast(message: string, color: string): void {
+function showToast(message, color) {
   toastMessage.value = message
   toastColor.value = color
   isToastOpen.value = true
 }
 
-function onDragStart(): void {
+function onDragStart() {
   const onMove = () => {
     isExternalDragging.value = true
     document.removeEventListener('pointermove', onMove)
@@ -147,8 +263,8 @@ function onDragStart(): void {
   document.addEventListener('pointerup', onUp)
 }
 
-function onItemDrop(dropEvent: MbscItemDragEvent, eventId: string): void {
-  const employee = dropEvent.data as Employee
+function onItemDrop(dropEvent, eventId) {
+  const employee = dropEvent.data
   dropStates[eventId] = ''
 
   const meeting = meetings.value.find((m) => m.id === eventId)
@@ -180,8 +296,8 @@ function onItemDrop(dropEvent: MbscItemDragEvent, eventId: string): void {
   showToast(employee.name + ' assigned to ' + meeting.title, 'success')
 }
 
-function onItemDragEnter(enterEvent: MbscItemDragEvent, eventId: string): void {
-  const employee = enterEvent.data as Employee
+function onItemDragEnter(enterEvent, eventId) {
+  const employee = enterEvent.data
   const meeting = meetings.value.find((m) => m.id === eventId)
   if (!meeting) return
 
@@ -197,11 +313,11 @@ function onItemDragEnter(enterEvent: MbscItemDragEvent, eventId: string): void {
   }
 }
 
-function onItemDragLeave(eventId: string): void {
+function onItemDragLeave(eventId) {
   dropStates[eventId] = ''
 }
 
-function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
+function removeAttendee(eventId, empId, domEvent) {
   domEvent.stopPropagation()
 
   const meeting = meetings.value.find((m) => m.id === eventId)
@@ -235,7 +351,7 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
 
 <template>
   <MbscPage
-    :cssClass="`mds-timeline-event-drop-assign-attendees${
+    :cssClass="`mds-drop-assignee-on-event-from-list${
       isExternalDragging ? ' mds-external-dragging' : ''
     }`"
   >
@@ -283,7 +399,7 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
           >
             <template #timelineEvent="data">
               <div
-                :ref="(el) => setDropZoneEl(el as HTMLElement | null, data.original.id)"
+                :ref="(el) => setDropZoneEl(el, data.original.id)"
                 class="mds-custom-event mbsc-flex"
                 :class="dropStates[data.original.id]"
                 :style="{ borderLeft: '4px solid ' + data.original.color }"
@@ -338,20 +454,20 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
 </template>
 
 <style>
-.mds-timeline-event-drop-assign-attendees,
-.mds-timeline-event-drop-assign-attendees .mbsc-grid,
-.mds-timeline-event-drop-assign-attendees .mbsc-row {
+.mds-drop-assignee-on-event-from-list,
+.mds-drop-assignee-on-event-from-list .mbsc-grid,
+.mds-drop-assignee-on-event-from-list .mbsc-row {
   height: 100%;
 }
-.mds-timeline-event-drop-assign-attendees .mds-sidebar {
+.mds-drop-assignee-on-event-from-list .mds-sidebar {
   overflow-y: auto;
 }
-.mds-timeline-event-drop-assign-attendees .mds-employee-list {
+.mds-drop-assignee-on-event-from-list .mds-employee-list {
   padding: 8px;
   flex-direction: column;
   gap: 4px;
 }
-.mds-timeline-event-drop-assign-attendees .mds-employee-item {
+.mds-drop-assignee-on-event-from-list .mds-employee-item {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
@@ -366,15 +482,15 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
     box-shadow 0.2s,
     transform 0.15s;
 }
-.mds-timeline-event-drop-assign-attendees .mds-employee-item:hover {
+.mds-drop-assignee-on-event-from-list .mds-employee-item:hover {
   background: rgba(128, 128, 128, 0.4);
   transform: translateY(-1px);
 }
-.mds-timeline-event-drop-assign-attendees .mds-employee-item:active {
+.mds-drop-assignee-on-event-from-list .mds-employee-item:active {
   transform: translateY(0);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-.mds-timeline-event-drop-assign-attendees .mds-employee-avatar {
+.mds-drop-assignee-on-event-from-list .mds-employee-avatar {
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -387,29 +503,29 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   letter-spacing: 0.5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
-.mds-timeline-event-drop-assign-attendees .mds-employee-info {
+.mds-drop-assignee-on-event-from-list .mds-employee-info {
   flex-direction: column;
   overflow: hidden;
 }
-.mds-timeline-event-drop-assign-attendees .mds-employee-name {
+.mds-drop-assignee-on-event-from-list .mds-employee-name {
   font-size: 15px;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.mds-timeline-event-drop-assign-attendees .mds-employee-count {
+.mds-drop-assignee-on-event-from-list .mds-employee-count {
   font-size: 13px;
   opacity: 0.55;
 }
-.mds-timeline-event-drop-assign-attendees .mds-calendar-wrapper {
+.mds-drop-assignee-on-event-from-list .mds-calendar-wrapper {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 /* Drag clone is appended to body, outside the root — keep unscoped */
 .mds-employee-item.mbsc-drag-clone {
   opacity: 0.8;
 }
-.mds-timeline-event-drop-assign-attendees .mds-custom-event {
+.mds-drop-assignee-on-event-from-list .mds-custom-event {
   background: #cccccc;
   border-radius: 6px;
   padding: 6px 8px;
@@ -422,11 +538,11 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   transition: background 0.15s;
   position: relative;
 }
-.mds-timeline-event-drop-assign-attendees .mds-event-header {
+.mds-drop-assignee-on-event-from-list .mds-event-header {
   flex-direction: column;
   gap: 1px;
 }
-.mds-timeline-event-drop-assign-attendees .mds-event-title {
+.mds-drop-assignee-on-event-from-list .mds-event-title {
   font-size: 14px;
   font-weight: 600;
   color: #181818;
@@ -434,29 +550,29 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.mds-timeline-event-drop-assign-attendees .mds-event-time {
+.mds-drop-assignee-on-event-from-list .mds-event-time {
   font-size: 12px;
   color: #545454;
 }
-.mds-timeline-event-drop-assign-attendees .mds-event-attendees {
+.mds-drop-assignee-on-event-from-list .mds-event-attendees {
   flex-wrap: wrap;
   gap: 3px;
 }
 /* Drop hint - hidden by default, shown only during external drag */
-.mds-timeline-event-drop-assign-attendees .mds-event-drop-hint {
+.mds-drop-assignee-on-event-from-list .mds-event-drop-hint {
   display: none;
   font-size: 11px;
   font-style: italic;
   color: #686868;
 }
 /* Show drop hints and dashed borders on events during external drag */
-.mds-timeline-event-drop-assign-attendees.mds-external-dragging .mds-event-drop-hint {
+.mds-drop-assignee-on-event-from-list.mds-external-dragging .mds-event-drop-hint {
   display: block;
 }
-.mds-timeline-event-drop-assign-attendees.mds-external-dragging .mds-custom-event {
+.mds-drop-assignee-on-event-from-list.mds-external-dragging .mds-custom-event {
   outline: 2px dashed #b9b9b9;
 }
-.mds-timeline-event-drop-assign-attendees .mds-attendee-chip {
+.mds-drop-assignee-on-event-from-list .mds-attendee-chip {
   display: flex;
   width: 25px;
   height: 25px;
@@ -471,7 +587,7 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   cursor: pointer;
   position: relative;
 }
-.mds-timeline-event-drop-assign-attendees .mds-attendee-remove {
+.mds-drop-assignee-on-event-from-list .mds-attendee-remove {
   display: none;
   position: absolute;
   inset: 0;
@@ -482,23 +598,23 @@ function removeAttendee(eventId: string, empId: string, domEvent: Event): void {
   font-size: 12px;
   line-height: 1;
 }
-.mds-timeline-event-drop-assign-attendees .mds-attendee-chip:hover .mds-attendee-remove {
+.mds-drop-assignee-on-event-from-list .mds-attendee-chip:hover .mds-attendee-remove {
   display: flex;
 }
-.mds-timeline-event-drop-assign-attendees .mds-custom-event.mds-drop-active {
+.mds-drop-assignee-on-event-from-list .mds-custom-event.mds-drop-active {
   cursor: copy;
   outline: 2px solid rgba(54, 133, 43, 0.8);
   background: rgba(180, 223, 173, 0.8);
 }
-.mds-timeline-event-drop-assign-attendees .mds-custom-event.mds-drop-conflict {
+.mds-drop-assignee-on-event-from-list .mds-custom-event.mds-drop-conflict {
   cursor: not-allowed;
   outline: 2px solid rgba(145, 34, 34, 0.8);
   background: rgba(235, 194, 194, 0.8);
 }
-.mds-timeline-event-drop-assign-attendees .mbsc-timeline-event {
+.mds-drop-assignee-on-event-from-list .mbsc-timeline-event {
   min-height: 80px;
 }
-.mds-timeline-event-drop-assign-attendees .mbsc-schedule-event-inner {
+.mds-drop-assignee-on-event-from-list .mbsc-schedule-event-inner {
   height: 100%;
 }
 </style>

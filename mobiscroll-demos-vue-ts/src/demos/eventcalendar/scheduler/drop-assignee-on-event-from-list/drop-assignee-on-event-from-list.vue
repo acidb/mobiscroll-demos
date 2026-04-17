@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {
   MbscDraggable,
   MbscDropcontainer,
@@ -8,6 +8,7 @@ import {
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
+import type { MbscEventcalendarView, MbscItemDragEvent } from '@mobiscroll/vue'
 import { reactive, ref } from 'vue'
 import { dyndatetime } from '../../../../dyndatetime'
 
@@ -16,6 +17,23 @@ setOptions({
   // theme
 })
 
+interface Attendee {
+  id: string
+  name: string
+  avatar: string
+  color: string
+}
+
+interface Meeting {
+  id: string
+  title: string
+  start: string
+  end: string
+  resource: number
+  color: string
+  attendees: Attendee[]
+}
+
 const rooms = [
   { id: 1, name: 'Conference Room' },
   { id: 2, name: 'Board Room' },
@@ -23,7 +41,7 @@ const rooms = [
   { id: 4, name: 'Training Room' }
 ]
 
-const employees = [
+const employees: Attendee[] = [
   { id: 'emp1', name: 'Alice Martin', avatar: 'AM', color: '#e74c3c' },
   { id: 'emp2', name: 'Bob Johnson', avatar: 'BJ', color: '#3498db' },
   { id: 'emp3', name: 'Carol Smith', avatar: 'CS', color: '#2ecc71' },
@@ -35,7 +53,7 @@ const employees = [
   { id: 'emp9', name: 'Ivy Torres', avatar: 'IT', color: '#e84393' }
 ]
 
-const meetings = ref([
+const meetings = ref<Meeting[]>([
   {
     id: 'evt1',
     title: 'Sprint Planning',
@@ -191,7 +209,7 @@ const meetings = ref([
   }
 ])
 
-const myView = {
+const myView: MbscEventcalendarView = {
   scheduler: {
     type: 'week',
     startDay: 1,
@@ -205,19 +223,19 @@ const myView = {
 }
 
 const isExternalDragging = ref(false)
-const dropStateMap = reactive({})
-const eventRefs = reactive({})
-const dragElements = ref([])
+const dropStateMap = reactive<{ [key: string]: string }>({})
+const eventRefs = reactive<{ [key: string]: HTMLElement }>({})
+const dragElements = ref<HTMLElement[]>([])
 
 const toastMessage = ref('')
-const toastColor = ref('success')
+const toastColor = ref<'success' | 'danger'>('success')
 const isToastOpen = ref(false)
 
 const snackbarMessage = ref('')
-const snackbarButton = ref(null)
+const snackbarButton = ref<{ text: string; action: () => void } | undefined>(undefined)
 const isSnackbarOpen = ref(false)
 
-function getAssignmentCount(empId) {
+function getAssignmentCount(empId: string): number {
   let count = 0
   for (const m of meetings.value) {
     count += m.attendees.filter((a) => a.id === empId).length
@@ -225,7 +243,7 @@ function getAssignmentCount(empId) {
   return count
 }
 
-function findConflict(empId, targetEventId) {
+function findConflict(empId: string, targetEventId: string): Meeting | null {
   const target = meetings.value.find((m) => m.id === targetEventId)
   if (!target) return null
   const tStart = new Date(target.start).getTime()
@@ -239,8 +257,8 @@ function findConflict(empId, targetEventId) {
   return null
 }
 
-function handleEventDrop(e, eventId) {
-  const employee = e.data
+function handleEventDrop(e: MbscItemDragEvent, eventId: string): void {
+  const employee = e.data as Attendee
   const meetingIdx = meetings.value.findIndex((m) => m.id === eventId)
   if (meetingIdx === -1) return
   const meeting = meetings.value[meetingIdx]
@@ -279,8 +297,8 @@ function handleEventDrop(e, eventId) {
   isToastOpen.value = true
 }
 
-function handleEventDragEnter(e, eventId) {
-  const emp = e.data
+function handleEventDragEnter(e: MbscItemDragEvent, eventId: string): void {
+  const emp = e.data as Attendee
   const meeting = meetings.value.find((m) => m.id === eventId)
   if (emp && meeting) {
     if (meeting.attendees.some((a) => a.id === emp.id) || findConflict(emp.id, eventId)) {
@@ -293,11 +311,11 @@ function handleEventDragEnter(e, eventId) {
   }
 }
 
-function handleEventDragLeave(eventId) {
+function handleEventDragLeave(eventId: string): void {
   dropStateMap[eventId] = ''
 }
 
-function removeAttendee(eventId, empId) {
+function removeAttendee(eventId: string, empId: string): void {
   const meetingIdx = meetings.value.findIndex((m) => m.id === eventId)
   if (meetingIdx === -1) return
   const meeting = meetings.value[meetingIdx]
@@ -333,7 +351,7 @@ function removeAttendee(eventId, empId) {
   isSnackbarOpen.value = true
 }
 
-function handleEmployeePointerDown() {
+function handleEmployeePointerDown(): void {
   function onMove() {
     isExternalDragging.value = true
     document.removeEventListener('pointermove', onMove)
@@ -350,7 +368,7 @@ function handleEmployeePointerDown() {
 
 <template>
   <MbscPage
-    :cssClass="`mds-scheduler-event-drop-assign-attendees${
+    :cssClass="`mds-scheduler-drop-assignee-on-event-from-list${
       isExternalDragging ? ' mds-external-dragging' : ''
     }`"
   >
@@ -364,7 +382,7 @@ function handleEmployeePointerDown() {
               :key="emp.id"
               :ref="
                 (el) => {
-                  if (el) dragElements[i] = el
+                  if (el) dragElements[i] = el as HTMLElement
                 }
               "
               class="mds-employee-item mbsc-flex"
@@ -405,7 +423,7 @@ function handleEmployeePointerDown() {
               <div
                 :ref="
                   (el) => {
-                    if (el) eventRefs[data.original.id] = el
+                    if (el) eventRefs[data.original.id] = el as HTMLElement
                   }
                 "
                 class="mds-custom-event mbsc-flex"
@@ -465,21 +483,21 @@ function handleEmployeePointerDown() {
 </template>
 
 <style>
-.mds-scheduler-event-drop-assign-attendees,
-.mds-scheduler-event-drop-assign-attendees .mbsc-grid,
-.mds-scheduler-event-drop-assign-attendees .mbsc-row,
-.mds-scheduler-event-drop-assign-attendees .mds-calendar-wrapper {
+.mds-scheduler-drop-assignee-on-event-from-list,
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-grid,
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-row,
+.mds-scheduler-drop-assignee-on-event-from-list .mds-calendar-wrapper {
   height: 100%;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-sidebar {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-sidebar {
   overflow-y: auto;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-employee-list {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-employee-list {
   padding: 8px;
   flex-direction: column;
   gap: 4px;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-employee-item {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-employee-item {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
@@ -494,15 +512,15 @@ function handleEmployeePointerDown() {
     box-shadow 0.2s,
     transform 0.15s;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-employee-item:hover {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-employee-item:hover {
   background: rgba(128, 128, 128, 0.4);
   transform: translateY(-1px);
 }
-.mds-scheduler-event-drop-assign-attendees .mds-employee-item:active {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-employee-item:active {
   transform: translateY(0);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-.mds-scheduler-event-drop-assign-attendees .mds-employee-avatar {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-employee-avatar {
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -515,29 +533,29 @@ function handleEmployeePointerDown() {
   letter-spacing: 0.5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
-.mds-scheduler-event-drop-assign-attendees .mds-employee-info {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-employee-info {
   flex-direction: column;
   overflow: hidden;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-employee-name {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-employee-name {
   font-size: 15px;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-employee-count {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-employee-count {
   font-size: 13px;
   opacity: 0.55;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-calendar-wrapper {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-calendar-wrapper {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 /* Drag clone is appended to body, outside the root — keep unscoped */
 .mds-employee-item.mbsc-drag-clone {
   opacity: 0.8;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-custom-event {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-custom-event {
   background: #cccccc;
   border-radius: 6px;
   padding: 6px;
@@ -550,40 +568,38 @@ function handleEmployeePointerDown() {
   transition: background 0.15s;
   position: relative;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-event-header {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-event-header {
   flex-direction: column;
   gap: 1px;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-event-title {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-event-title {
   font-size: 13px;
   font-weight: 600;
   color: #181818;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-event-time {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-event-time {
   font-size: 11px;
   color: #545454;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-event-attendees {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-event-attendees {
   flex-wrap: wrap;
   gap: 3px;
 }
-/* Drop hint - hidden by default, shown only during external drag */
-.mds-scheduler-event-drop-assign-attendees .mds-event-drop-hint {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-event-drop-hint {
   display: none;
   font-size: 11px;
   font-style: italic;
   color: #686868;
 }
-/* Show drop hints and dashed borders on events during external drag */
-.mds-scheduler-event-drop-assign-attendees.mds-external-dragging .mds-event-drop-hint {
+.mds-scheduler-drop-assignee-on-event-from-list.mds-external-dragging .mds-event-drop-hint {
   display: block;
 }
-.mds-scheduler-event-drop-assign-attendees.mds-external-dragging .mds-custom-event {
+.mds-scheduler-drop-assignee-on-event-from-list.mds-external-dragging .mds-custom-event {
   outline: 2px dashed #b9b9b9;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-attendee-chip {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-attendee-chip {
   display: flex;
   width: 22px;
   height: 22px;
@@ -598,7 +614,7 @@ function handleEmployeePointerDown() {
   cursor: pointer;
   position: relative;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-attendee-remove {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-attendee-remove {
   display: none;
   position: absolute;
   inset: 0;
@@ -609,23 +625,23 @@ function handleEmployeePointerDown() {
   font-size: 10px;
   line-height: 1;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-attendee-chip:hover .mds-attendee-remove {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-attendee-chip:hover .mds-attendee-remove {
   display: flex;
 }
-.mds-scheduler-event-drop-assign-attendees .mds-custom-event.mds-drop-active {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-custom-event.mds-drop-active {
   cursor: copy;
   outline: 2px solid rgba(54, 133, 43, 0.8);
   background: rgba(180, 223, 173, 0.8);
 }
-.mds-scheduler-event-drop-assign-attendees .mds-custom-event.mds-drop-conflict {
+.mds-scheduler-drop-assignee-on-event-from-list .mds-custom-event.mds-drop-conflict {
   cursor: not-allowed;
   outline: 2px solid rgba(145, 34, 34, 0.8);
   background: rgba(235, 194, 194, 0.8);
 }
-.mds-scheduler-event-drop-assign-attendees .mbsc-scheduler-event {
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-scheduler-event {
   min-height: 80px;
 }
-.mds-scheduler-event-drop-assign-attendees .mbsc-schedule-event-inner {
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-schedule-event-inner {
   height: 100%;
 }
 </style>

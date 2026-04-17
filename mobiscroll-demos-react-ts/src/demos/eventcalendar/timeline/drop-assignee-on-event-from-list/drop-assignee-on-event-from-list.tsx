@@ -1,16 +1,42 @@
-import { Draggable, Dropcontainer, Eventcalendar, Page, setOptions, Snackbar, Toast /* localeImport */ } from '@mobiscroll/react';
-import PropTypes from 'prop-types';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Draggable,
+  Dropcontainer,
+  Eventcalendar,
+  MbscCalendarEvent,
+  MbscCalendarEventData,
+  MbscEventcalendarView,
+  MbscItemDragEvent,
+  MbscResource,
+  Page,
+  setOptions,
+  Snackbar,
+  Toast /* localeImport */,
+} from '@mobiscroll/react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { dyndatetime } from '../../../../dyndatetime';
-import './timeline-event-drop-assign-attendees.css';
+import './drop-assignee-on-event-from-list.css';
 
 setOptions({
   // localeJs,
   // themeJs
 });
 
-const employees = [
+interface Employee {
+  id: string;
+  name: string;
+  avatar: string;
+  color: string;
+}
+
+interface Meeting extends MbscCalendarEvent {
+  id: string;
+  title: string;
+  color: string;
+  attendees: Employee[];
+}
+
+const employees: Employee[] = [
   { id: 'emp1', name: 'Alice Martin', avatar: 'AM', color: '#e74c3c' },
   { id: 'emp2', name: 'Bob Johnson', avatar: 'BJ', color: '#3498db' },
   { id: 'emp3', name: 'Carol Smith', avatar: 'CS', color: '#2ecc71' },
@@ -23,22 +49,18 @@ const employees = [
   { id: 'emp10', name: 'Jack Murphy', avatar: 'JM', color: '#0984e3' },
 ];
 
-const rooms = [
+const rooms: MbscResource[] = [
   { id: 1, name: 'Conference Room' },
   { id: 2, name: 'Board Room' },
   { id: 3, name: 'Meeting Room' },
   { id: 4, name: 'Training Room' },
 ];
 
-function EmployeeItem({ emp, assignmentCount, onDragStart }) {
-  const [dragEl, setDragEl] = useState(null);
-
-  const setDragElm = useCallback((elm) => {
-    setDragEl(elm);
-  }, []);
+function EmployeeItem({ emp, assignmentCount, onDragStart }: { emp: Employee; assignmentCount: number; onDragStart: () => void }) {
+  const [dragEl, setDragEl] = useState<HTMLDivElement | null>(null);
 
   return (
-    <div className="mds-employee-item mbsc-flex" ref={setDragElm} onPointerDown={onDragStart}>
+    <div className="mds-employee-item mbsc-flex" ref={setDragEl} onPointerDown={onDragStart}>
       <div className="mds-employee-avatar mbsc-flex" style={{ background: emp.color }}>
         {emp.avatar}
       </div>
@@ -53,26 +75,28 @@ function EmployeeItem({ emp, assignmentCount, onDragStart }) {
   );
 }
 
-EmployeeItem.propTypes = {
-  assignmentCount: PropTypes.number.isRequired,
-  emp: PropTypes.object.isRequired,
-  onDragStart: PropTypes.func.isRequired,
-};
+function MeetingEvent({
+  data,
+  findConflict,
+  onAssign,
+  onRemove,
+  onToast,
+}: {
+  data: MbscCalendarEventData;
+  findConflict: (empId: string, targetEventId: string) => Meeting | null;
+  onAssign: (eventId: string, employee: Employee) => void;
+  onRemove: (eventId: string, employee: Employee, eventTitle: string) => void;
+  onToast: (message: string, color: 'success' | 'danger') => void;
+}) {
+  const [dropEl, setDropEl] = useState<HTMLDivElement | null>(null);
+  const [dropState, setDropState] = useState<string>('');
 
-function MeetingEvent({ data, findConflict, onAssign, onRemove, onToast }) {
-  const [dropEl, setDropEl] = useState(null);
-  const [dropState, setDropState] = useState('');
-
-  const setDropElm = useCallback((elm) => {
-    setDropEl(elm);
-  }, []);
-
-  const event = data.original;
+  const event = data.original as Meeting;
   const attendees = useMemo(() => event.attendees || [], [event.attendees]);
 
   const handleItemDrop = useCallback(
-    (args) => {
-      const employee = args.data;
+    (args: MbscItemDragEvent) => {
+      const employee = args.data as Employee;
       setDropState('');
 
       if (attendees.some((a) => a.id === employee.id)) {
@@ -93,8 +117,8 @@ function MeetingEvent({ data, findConflict, onAssign, onRemove, onToast }) {
   );
 
   const handleDragEnter = useCallback(
-    (args) => {
-      const employee = args.data;
+    (args: MbscItemDragEvent) => {
+      const employee = args.data as Employee;
       if (employee) {
         if (attendees.some((a) => a.id === employee.id)) {
           setDropState('mds-drop-conflict');
@@ -114,7 +138,7 @@ function MeetingEvent({ data, findConflict, onAssign, onRemove, onToast }) {
   }, []);
 
   return (
-    <div ref={setDropElm} className={`mds-custom-event mbsc-flex ${dropState}`} style={{ borderLeft: `4px solid ${event.color}` }}>
+    <div ref={setDropEl} className={`mds-custom-event mbsc-flex ${dropState}`} style={{ borderLeft: `4px solid ${event.color}` }}>
       <Dropcontainer element={dropEl} onItemDrop={handleItemDrop} onItemDragEnter={handleDragEnter} onItemDragLeave={handleDragLeave} />
       <div className="mds-event-header mbsc-flex">
         <div className="mds-event-title">{event.title}</div>
@@ -146,16 +170,8 @@ function MeetingEvent({ data, findConflict, onAssign, onRemove, onToast }) {
   );
 }
 
-MeetingEvent.propTypes = {
-  data: PropTypes.object.isRequired,
-  findConflict: PropTypes.func.isRequired,
-  onAssign: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
-  onToast: PropTypes.func.isRequired,
-};
-
-function App() {
-  const [meetings, setMeetings] = useState(() => [
+const App: FC = () => {
+  const [meetings, setMeetings] = useState<Meeting[]>(() => [
     {
       id: 'evt1',
       title: 'Sprint Planning',
@@ -311,20 +327,20 @@ function App() {
     },
   ]);
 
-  const [isExternalDragging, setIsExternalDragging] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastColor, setToastColor] = useState('');
-  const [isToastOpen, setIsToastOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-  const [undoData, setUndoData] = useState(null);
+  const [isExternalDragging, setIsExternalDragging] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
+  const [toastColor, setToastColor] = useState<'success' | 'danger'>('success');
+  const [isToastOpen, setIsToastOpen] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('');
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
+  const [undoData, setUndoData] = useState<{ eventId: string; employee: Employee } | null>(null);
 
-  const meetingsRef = useRef(meetings);
+  const meetingsRef = useRef<Meeting[]>(meetings);
   useEffect(() => {
     meetingsRef.current = meetings;
   }, [meetings]);
 
-  const myView = useMemo(
+  const myView = useMemo<MbscEventcalendarView>(
     () => ({
       timeline: {
         type: 'week',
@@ -340,39 +356,36 @@ function App() {
     [],
   );
 
-  const findConflict = useCallback((empId, targetEventId) => {
+  const findConflict = useCallback((empId: string, targetEventId: string): Meeting | null => {
     const allMeetings = meetingsRef.current;
     const target = allMeetings.find((m) => m.id === targetEventId);
     if (!target) return null;
 
-    const targetStart = new Date(target.start).getTime();
-    const targetEnd = new Date(target.end).getTime();
+    const targetStart = new Date(target.start as string).getTime();
+    const targetEnd = new Date(target.end as string).getTime();
 
     for (const m of allMeetings) {
       if (m.id === targetEventId) continue;
-      const attendees = m.attendees || [];
-      if (!attendees.some((a) => a.id === empId)) continue;
-      const mStart = new Date(m.start).getTime();
-      const mEnd = new Date(m.end).getTime();
+      if (!m.attendees.some((a) => a.id === empId)) continue;
+      const mStart = new Date(m.start as string).getTime();
+      const mEnd = new Date(m.end as string).getTime();
       if (mStart < targetEnd && mEnd > targetStart) return m;
     }
     return null;
   }, []);
 
-  const handleAssign = useCallback((eventId, employee) => {
-    setMeetings((prev) => prev.map((m) => (m.id === eventId ? { ...m, attendees: [...(m.attendees || []), employee] } : m)));
+  const handleAssign = useCallback((eventId: string, employee: Employee) => {
+    setMeetings((prev) => prev.map((m) => (m.id === eventId ? { ...m, attendees: [...m.attendees, employee] } : m)));
   }, []);
 
-  const handleRemove = useCallback((eventId, employee, eventTitle) => {
-    setMeetings((prev) =>
-      prev.map((m) => (m.id === eventId ? { ...m, attendees: (m.attendees || []).filter((a) => a.id !== employee.id) } : m)),
-    );
+  const handleRemove = useCallback((eventId: string, employee: Employee, eventTitle: string) => {
+    setMeetings((prev) => prev.map((m) => (m.id === eventId ? { ...m, attendees: m.attendees.filter((a) => a.id !== employee.id) } : m)));
     setSnackbarMessage(`${employee.name} removed from ${eventTitle}`);
     setUndoData({ eventId, employee });
     setIsSnackbarOpen(true);
   }, []);
 
-  const showToast = useCallback((message, color) => {
+  const showToast = useCallback((message: string, color: 'success' | 'danger') => {
     setToastMessage(message);
     setToastColor(color);
     setIsToastOpen(true);
@@ -397,9 +410,7 @@ function App() {
       text: 'Undo',
       action: () => {
         if (!undoData) return;
-        setMeetings((prev) =>
-          prev.map((m) => (m.id === undoData.eventId ? { ...m, attendees: [...(m.attendees || []), undoData.employee] } : m)),
-        );
+        setMeetings((prev) => prev.map((m) => (m.id === undoData.eventId ? { ...m, attendees: [...m.attendees, undoData.employee] } : m)));
         showToast('Assignment restored', 'success');
       },
     }),
@@ -407,7 +418,9 @@ function App() {
   );
 
   const renderEvent = useCallback(
-    (data) => <MeetingEvent data={data} findConflict={findConflict} onAssign={handleAssign} onRemove={handleRemove} onToast={showToast} />,
+    (data: MbscCalendarEventData) => (
+      <MeetingEvent data={data} findConflict={findConflict} onAssign={handleAssign} onRemove={handleRemove} onToast={showToast} />
+    ),
     [findConflict, handleAssign, handleRemove, showToast],
   );
 
@@ -420,7 +433,7 @@ function App() {
   }, []);
 
   return (
-    <Page className={`mds-timeline-event-drop-assign-attendees${isExternalDragging ? ' mds-external-dragging' : ''}`}>
+    <Page className={`mds-drop-assignee-on-event-from-list${isExternalDragging ? ' mds-external-dragging' : ''}`}>
       <div className="mbsc-grid mbsc-no-padding">
         <div className="mbsc-row">
           <div className="mbsc-col-sm-3 mbsc-flex-col mds-sidebar">
@@ -430,7 +443,7 @@ function App() {
                 <EmployeeItem
                   key={emp.id}
                   emp={emp}
-                  assignmentCount={meetings.filter((m) => (m.attendees || []).some((a) => a.id === emp.id)).length}
+                  assignmentCount={meetings.filter((m) => m.attendees.some((a) => a.id === emp.id)).length}
                   onDragStart={handleDragStart}
                 />
               ))}
@@ -456,6 +469,6 @@ function App() {
       <Snackbar message={snackbarMessage} isOpen={isSnackbarOpen} onClose={handleSnackbarClose} button={snackbarButton} />
     </Page>
   );
-}
+};
 
 export default App;

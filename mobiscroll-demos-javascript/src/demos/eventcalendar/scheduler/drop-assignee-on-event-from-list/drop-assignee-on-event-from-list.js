@@ -6,8 +6,7 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      theme: 'ios',
-      themeVariant: 'light',
+      // theme
     });
 
     var rooms = [
@@ -183,10 +182,9 @@ export default {
       { id: 'emp7', name: 'Grace Kim', avatar: 'GK', color: '#e67e22' },
       { id: 'emp8', name: 'Henry Patel', avatar: 'HP', color: '#34495e' },
       { id: 'emp9', name: 'Ivy Torres', avatar: 'IT', color: '#e84393' },
-      { id: 'emp10', name: 'Jack Murphy', avatar: 'JM', color: '#0984e3' },
     ];
 
-    var container = document.querySelector('.mds-timeline-event-drop-assign-attendees');
+    var container = document.querySelector('.mds-scheduler-drop-assignee-on-event-from-list');
 
     function getAssignmentCount(empId) {
       var count = 0;
@@ -244,17 +242,14 @@ export default {
     }
 
     function renderEmployeeList() {
-      var list = document.getElementById('external-employee-list');
-      list.innerHTML = '';
-
+      var listHtml = '';
       for (var i = 0; i < employees.length; i++) {
         var emp = employees[i];
         var count = getAssignmentCount(emp.id);
-
-        var item = document.createElement('div');
-        item.className = 'mds-employee-item mbsc-flex';
-        item.id = 'mds-emp-' + emp.id;
-        item.innerHTML =
+        listHtml +=
+          '<div class="mds-employee-item mbsc-flex" id="mds-emp-' +
+          emp.id +
+          '">' +
           '<div class="mds-employee-avatar mbsc-flex" style="background:' +
           emp.color +
           '">' +
@@ -267,20 +262,23 @@ export default {
           (count > 0
             ? '<div class="mds-employee-count">' + count + ' meeting' + (count > 1 ? 's' : '') + '</div>'
             : '<div class="mds-employee-count">No assignments</div>') +
+          '</div>' +
           '</div>';
+      }
+      document.getElementById('external-employee-list').innerHTML = listHtml;
 
-        list.appendChild(item);
-
-        mobiscroll.draggable('#mds-emp-' + emp.id, {
-          dragData: emp,
-        });
+      for (var j = 0; j < employees.length; j++) {
+        (function (employee) {
+          mobiscroll.draggable('#mds-emp-' + employee.id, {
+            dragData: employee,
+          });
+        })(employees[j]);
       }
 
       // Track drag start/end to toggle global dragging state
-      if (list._mdsPointerDown) {
-        list.removeEventListener('pointerdown', list._mdsPointerDown);
-      }
-      list._mdsPointerDown = function (e) {
+      var empList = document.getElementById('external-employee-list');
+      empList.removeEventListener('pointerdown', empList._mdsPointerDown);
+      empList._mdsPointerDown = function (e) {
         if (!e.target.closest('.mds-employee-item')) {
           return;
         }
@@ -296,8 +294,10 @@ export default {
         document.addEventListener('pointermove', onMove);
         document.addEventListener('pointerup', onUp);
       };
-      list.addEventListener('pointerdown', list._mdsPointerDown);
+      empList.addEventListener('pointerdown', empList._mdsPointerDown);
     }
+
+    renderEmployeeList();
 
     function renderEvent(data) {
       var event = data.original;
@@ -324,9 +324,7 @@ export default {
       }
 
       return (
-        '<div class="mds-custom-event mbsc-flex" id="mds-zone-' +
-        event.id +
-        '" style="border-left: 4px solid ' +
+        '<div class="mds-custom-event mbsc-flex" style="border-left: 4px solid ' +
         event.color +
         '" data-event-id="' +
         event.id +
@@ -349,113 +347,109 @@ export default {
 
     function initDropZones() {
       var zones = document.querySelectorAll('.mds-custom-event');
-      for (var z = 0; z < zones.length; z++) {
-        (function (zone) {
-          var eventId = zone.getAttribute('data-event-id');
+      zones.forEach(function (zone) {
+        var eventId = zone.getAttribute('data-event-id');
 
-          mobiscroll.dropcontainer('#mds-zone-' + eventId, {
-            onItemDrop: function (dropEvent) {
-              var employee = dropEvent.data;
+        mobiscroll.dropcontainer(zone, {
+          onItemDrop: function (dropEvent) {
+            var employee = dropEvent.data;
 
-              zone.classList.remove('mds-drop-active', 'mds-drop-conflict');
+            zone.classList.remove('mds-drop-active', 'mds-drop-conflict');
 
-              for (var i = 0; i < meetings.length; i++) {
-                if (meetings[i].id === eventId) {
-                  var m = meetings[i];
+            for (var i = 0; i < meetings.length; i++) {
+              if (meetings[i].id === eventId) {
+                var m = meetings[i];
 
-                  // Prevent duplicate assignment to the same event
-                  for (var k = 0; k < m.attendees.length; k++) {
-                    if (m.attendees[k].id === employee.id) {
-                      mobiscroll.toast({
-                        message: employee.name + ' is already assigned',
-                        color: 'danger',
-                      });
-                      return;
-                    }
-                  }
-
-                  // Check for time conflicts
-                  var conflict = findConflict(employee.id, eventId);
-                  if (conflict) {
+                // Prevent duplicate assignment
+                for (var k = 0; k < m.attendees.length; k++) {
+                  if (m.attendees[k].id === employee.id) {
                     mobiscroll.toast({
-                      message: employee.name + ' already has a ' + conflict.title + ' on this timeslot',
+                      message: employee.name + ' is already assigned',
                       color: 'danger',
                     });
                     return;
                   }
+                }
 
-                  m.attendees.push({
-                    id: employee.id,
-                    name: employee.name,
-                    avatar: employee.avatar,
-                    color: employee.color,
-                  });
-
-                  setTimeout(function () {
-                    calendar.setEvents(meetings);
-                    renderEmployeeList();
-                  }, 0);
-
+                // Check for time conflicts
+                var conflict = findConflict(employee.id, eventId);
+                if (conflict) {
                   mobiscroll.toast({
-                    message: employee.name + ' assigned to ' + m.title,
-                    color: 'success',
+                    message: employee.name + ' already has a ' + conflict.title + ' on this timeslot',
+                    color: 'danger',
                   });
+                  return;
+                }
+
+                m.attendees.push({
+                  id: employee.id,
+                  name: employee.name,
+                  avatar: employee.avatar,
+                  color: employee.color,
+                });
+
+                setTimeout(function () {
+                  calendar.setEvents(meetings);
+                  renderEmployeeList();
+                }, 0);
+
+                mobiscroll.toast({
+                  message: employee.name + ' assigned to ' + m.title,
+                  color: 'success',
+                });
+                break;
+              }
+            }
+          },
+          onItemDragEnter: function (enterEvent) {
+            var employee = enterEvent.data;
+
+            zone.classList.remove('mds-drop-active', 'mds-drop-conflict');
+
+            if (employee) {
+              var alreadyAssigned = false;
+              for (var i = 0; i < meetings.length; i++) {
+                if (meetings[i].id === eventId) {
+                  for (var k = 0; k < meetings[i].attendees.length; k++) {
+                    if (meetings[i].attendees[k].id === employee.id) {
+                      alreadyAssigned = true;
+                      break;
+                    }
+                  }
                   break;
                 }
               }
-            },
-            onItemDragEnter: function (enterEvent) {
-              var employee = enterEvent.data;
 
-              zone.classList.remove('mds-drop-active', 'mds-drop-conflict');
-
-              if (employee) {
-                // Check if already assigned to this event
-                var alreadyAssigned = false;
-                for (var i = 0; i < meetings.length; i++) {
-                  if (meetings[i].id === eventId) {
-                    for (var k = 0; k < meetings[i].attendees.length; k++) {
-                      if (meetings[i].attendees[k].id === employee.id) {
-                        alreadyAssigned = true;
-                        break;
-                      }
-                    }
-                    break;
-                  }
-                }
-
-                if (alreadyAssigned) {
+              if (alreadyAssigned) {
+                zone.classList.add('mds-drop-conflict');
+              } else {
+                var conflict = findConflict(employee.id, eventId);
+                if (conflict) {
                   zone.classList.add('mds-drop-conflict');
                 } else {
-                  var conflict = findConflict(employee.id, eventId);
-                  if (conflict) {
-                    zone.classList.add('mds-drop-conflict');
-                  } else {
-                    zone.classList.add('mds-drop-active');
-                  }
+                  zone.classList.add('mds-drop-active');
                 }
-              } else {
-                zone.classList.add('mds-drop-active');
               }
-            },
-            onItemDragLeave: function () {
-              zone.classList.remove('mds-drop-active', 'mds-drop-conflict');
-            },
-          });
-        })(zones[z]);
-      }
+            } else {
+              zone.classList.add('mds-drop-active');
+            }
+          },
+          onItemDragLeave: function () {
+            zone.classList.remove('mds-drop-active', 'mds-drop-conflict');
+          },
+        });
+      });
 
       // Handle attendee removal on chip click
-      var chips = document.querySelectorAll('.mds-attendee-chip');
-      for (var c = 0; c < chips.length; c++) {
-        chips[c].addEventListener('click', function (e) {
+      document.querySelectorAll('.mds-attendee-chip').forEach(function (chip) {
+        chip.addEventListener('click', function (e) {
           e.stopPropagation();
-          var empId = this.getAttribute('data-emp-id');
-          var eventEl = this.closest('.mds-custom-event');
-          var evtId = eventEl.getAttribute('data-event-id');
+          var empId = chip.getAttribute('data-emp-id');
+          var eventZone = chip.closest('.mds-custom-event');
+          var chipEventId = eventZone.getAttribute('data-event-id');
 
           for (var i = 0; i < meetings.length; i++) {
-            if (meetings[i].id === evtId) {
+            if (meetings[i].id === chipEventId) {
               var attendees = meetings[i].attendees;
               for (var j = 0; j < attendees.length; j++) {
                 if (attendees[j].id === empId) {
@@ -492,21 +486,19 @@ export default {
             }
           }
         });
-      }
+      });
     }
 
-    renderEmployeeList();
-
-    var calendar = mobiscroll.eventcalendar('#demo-timeline-event-drop-assign-attendees', {
+    var calendar = mobiscroll.eventcalendar('#demo-scheduler-drop-assignee-on-event-from-list', {
       view: {
-        timeline: {
+        scheduler: {
           type: 'week',
           startDay: 1,
           endDay: 5,
           startTime: '08:00',
           endTime: '18:00',
-          timeCellStep: 60,
-          timeLabelStep: 60,
+          timeCellStep: 30,
+          timeLabelStep: 30,
           virtualScroll: false,
         },
       },
@@ -518,13 +510,13 @@ export default {
       clickToCreate: false,
       eventDelete: false,
       showEventTooltip: false,
-      renderTimelineEvent: renderEvent,
+      renderSchedulerEvent: renderEvent,
       onPageLoaded: initDropZones,
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mds-timeline-event-drop-assign-attendees" mbsc-page>
+<div class="mds-scheduler-drop-assignee-on-event-from-list" mbsc-page>
   <div class="mbsc-grid mbsc-no-padding">
     <div class="mbsc-row">
       <div class="mbsc-col-sm-3 mbsc-flex-col mds-sidebar">
@@ -532,7 +524,7 @@ export default {
         <div id="external-employee-list" class="mds-employee-list mbsc-flex"></div>
       </div>
       <div class="mbsc-col-sm-9 mds-calendar-wrapper">
-        <div id="demo-timeline-event-drop-assign-attendees"></div>
+        <div id="demo-scheduler-drop-assignee-on-event-from-list"></div>
       </div>
     </div>
   </div>
@@ -540,9 +532,10 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-timeline-event-drop-assign-attendees,
-.mds-timeline-event-drop-assign-attendees .mbsc-grid,
-.mds-timeline-event-drop-assign-attendees .mbsc-row {
+.mds-scheduler-drop-assignee-on-event-from-list,
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-grid,
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-row,
+.mds-calendar-wrapper {
   height: 100%;
 }
 .mds-sidebar {
@@ -604,14 +597,13 @@ export default {
 .mds-calendar-wrapper {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
-/* Source item left behind in the sidebar while dragging */
 .mds-employee-item.mbsc-drag-clone {
   opacity: 0.8;
 }
 .mds-custom-event {
   background: #cccccc;
   border-radius: 6px;
-  padding: 6px 8px;
+  padding: 6px;
   height: 100%;
   box-sizing: border-box;
   flex-direction: column;
@@ -626,29 +618,26 @@ export default {
   gap: 1px;
 }
 .mds-event-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #181818;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .mds-event-time {
-  font-size: 12px;
+  font-size: 11px;
   color: #545454;
 }
 .mds-event-attendees {
   flex-wrap: wrap;
   gap: 3px;
 }
-/* Drop hint - hidden by default, shown only during external drag */
 .mds-event-drop-hint {
   display: none;
   font-size: 11px;
   font-style: italic;
   color: #686868;
 }
-/* Show drop hints and dashed borders on events during external drag */
 .mds-external-dragging .mds-event-drop-hint {
   display: block;
 }
@@ -657,8 +646,8 @@ export default {
 }
 .mds-attendee-chip {
   display: flex;
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   align-items: center;
   justify-content: center;
@@ -678,7 +667,7 @@ export default {
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 1;
 }
 .mds-attendee-chip:hover .mds-attendee-remove {
@@ -694,10 +683,10 @@ export default {
   outline: 2px solid rgba(145, 34, 34, 0.8);
   background: rgba(235, 194, 194, 0.8);
 }
-.mds-timeline-event-drop-assign-attendees .mbsc-timeline-event {
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-scheduler-event {
   min-height: 80px;
 }
-.mds-timeline-event-drop-assign-attendees .mbsc-schedule-event-inner {
+.mds-scheduler-drop-assignee-on-event-from-list .mbsc-schedule-event-inner {
   height: 100%;
 }
   `,
