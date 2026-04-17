@@ -2502,7 +2502,11 @@ function handleEventUpdated(args) {
     const movedGroupedEvent = groupedEvents.value.find((ge) => ge.id === oldEvent.id)
     if (!movedGroupedEvent) return
 
-    const { clientGroup: clientGroupName, resource: resourceId, collapsed: wasCollapsed } = movedGroupedEvent
+    const {
+      clientGroup: clientGroupName,
+      resource: resourceId,
+      collapsed: wasCollapsed
+    } = movedGroupedEvent
     const isMove = startDelta === endDelta
 
     let eventsToUpdate
@@ -2685,7 +2689,8 @@ function handleEditDateChange(args) {
   const newQuarter = Math.floor(new Date(startVal).getMonth() / 3)
   const oldYear = new Date(oldEvent.start).getFullYear()
   const newYear = new Date(startVal).getFullYear()
-  const quarterChanged = groupByClientQuarter.value && (oldQuarter !== newQuarter || oldYear !== newYear)
+  const quarterChanged =
+    groupByClientQuarter.value && (oldQuarter !== newQuarter || oldYear !== newYear)
 
   const applyUpdate = () => {
     rawEvents.value = rawEvents.value.map((e) =>
@@ -2790,7 +2795,9 @@ updateView()
         :style="{ borderLeftColor: event.original.color }"
       >
         <div class="mbsc-flex mds-event-group-content">
-          <div class="mds-event-group-title-text mds-event-group-text-truncate">{{ event.original.clientGroup }}</div>
+          <div class="mds-event-group-title-text mds-event-group-text-truncate">
+            {{ event.original.clientGroup }}
+          </div>
           <div class="mbsc-flex mds-event-group-right">
             <div class="mbsc-flex mds-event-group-meta">
               <div class="mds-event-group-date-range">
@@ -2818,10 +2825,15 @@ updateView()
               :key="ev.id"
               class="mds-event-group-original-event"
               :title="`${ev.title}, ${formatEventDate(ev.start)} - ${formatEventDate(ev.end)}`"
-              :style="{ marginLeft: getEventMarginLeft(ev, event.original), width: getEventWidth(ev, event.original) }"
+              :style="{
+                marginLeft: getEventMarginLeft(ev, event.original),
+                width: getEventWidth(ev, event.original)
+              }"
             >
               <div class="mbsc-flex mds-event-group-event-content">
-                <div class="mds-event-group-event-title mds-event-group-text-truncate">{{ ev.title }}</div>
+                <div class="mds-event-group-event-title mds-event-group-text-truncate">
+                  {{ ev.title }}
+                </div>
                 <div class="mbsc-flex mds-event-group-event-right">
                   <div class="mds-event-group-event-date mds-event-group-text-truncate">
                     {{ formatEventDate(ev.start) }} - {{ formatEventDate(ev.end) }}
@@ -2854,13 +2866,11 @@ updateView()
       </div>
 
       <!-- Simple Event Template -->
-      <div
-        v-else
-        class="mbsc-flex mds-event-simple"
-        :style="{ backgroundColor: event.original.color }"
-      >
+      <div v-else class="mbsc-flex mds-event-simple">
         <div class="mds-event-simple-title">
-          <div class="mds-event-simple-title-inner mds-event-group-text-truncate">{{ event.original.title }}</div>
+          <div class="mds-event-simple-title-inner mds-event-group-text-truncate">
+            {{ event.original.title }}
+          </div>
         </div>
         <div class="mbsc-flex mds-event-simple-right">
           <div class="mds-event-simple-date">
@@ -2916,7 +2926,6 @@ updateView()
 </template>
 
 <style>
-/* Calendar base styles */
 .mds-event-group-calendar .mbsc-timeline-row {
   height: 140px;
 }
@@ -2929,7 +2938,6 @@ updateView()
 .mds-event-group-calendar .mbsc-timeline-resource-title {
   text-transform: capitalize;
 }
-/* Resource rendering - Employees */
 .mds-event-group-avatar {
   width: 40px;
   height: 40px;
@@ -2946,7 +2954,6 @@ updateView()
   font-weight: 400;
   line-height: 16px;
 }
-/* Resource rendering - Types */
 .mds-event-group-type-resource {
   align-items: center;
   padding: 8px 0;
@@ -2962,61 +2969,60 @@ updateView()
   font-weight: 600;
   line-height: 20px;
 }
-/* Grouped event - collapsed state */
+.mds-event-group-calendar .mbsc-schedule-event {
+  min-width: 72px;
+}
+.mds-event-group-calendar .mbsc-schedule-event:has(.mds-event-group-task-client) {
+  min-width: 120px;
+}
 .mds-event-group-task-client {
-  background-color: #f8f9fa;
+  background-color: #ddd;
   border-left: 4px solid;
   border-radius: 0 8px 8px 0;
   box-shadow:
     0 2px 4px rgba(0, 0, 0, 0.12),
     0 1px 2px rgba(0, 0, 0, 0.08);
   flex-direction: column;
-  overflow: hidden;
+  container-type: inline-size;
+  min-width: 120px;
 }
-/* Grouped event header content */
 .mds-event-group-content {
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
+  height: 42px;
+  box-sizing: border-box;
+  gap: 8px;
 }
-/* Client group title */
 .mds-event-group-title-text {
   font-size: 14px;
   font-weight: 600;
   color: #1e293b;
   line-height: 20px;
-  flex: 1;
   min-width: 0;
-  margin-right: 12px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  position: sticky;
+  left: 250px;
 }
-/* Right side container (meta + icon) */
 .mds-event-group-right {
   align-items: center;
-  width: 130px;
+  z-index: 1;
+  background-color: #ddd;
 }
-/* Meta information (dates + counts) */
 .mds-event-group-meta {
   flex-direction: column;
   align-items: flex-end;
   flex: 1;
-  margin-right: 12px;
+  margin: 0 12px;
 }
 .mds-event-group-date-range {
-  color: #797979;
+  color: #575757;
   font-size: 11px;
-  line-height: 14px;
-  white-space: nowrap;
   margin-bottom: 2px;
 }
 .mds-event-group-count {
   font-size: 11px;
-  line-height: 14px;
   white-space: nowrap;
 }
-/* Expand/collapse icon */
 .mds-event-group-icon {
   font-size: 20px;
   cursor: pointer;
@@ -3027,11 +3033,9 @@ updateView()
   justify-content: center;
   transform: rotate(0deg);
 }
-/* Icon rotation when expanded */
 .mds-event-group-task.expanded .mds-event-group-icon {
   transform: rotate(180deg);
 }
-/* Grid wrapper for smooth animation */
 .mds-event-group-events {
   display: grid;
   grid-template-rows: 0fr;
@@ -3045,75 +3049,104 @@ updateView()
 .mds-event-group-task.expanded .mds-event-group-events {
   grid-template-rows: 1fr;
 }
-/* Individual event in expanded list */
 .mds-event-group-original-event {
-  background: #fff;
+  background: #f1f1f1;
   border-radius: 6px;
   margin-bottom: 6px;
-  padding: 8px 10px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  padding: 6px 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+  box-sizing: border-box;
+  min-height: 38px;
+  min-width: 100px;
+  overflow: hidden;
+  container-type: inline-size;
 }
-/* Event content layout */
+@container (max-width: 180px) {
+  .mds-event-group-meta {
+    display: none;
+  }
+}
+@container (max-width: 130px) {
+  .mds-event-group-event-right {
+    display: none;
+  }
+  .mds-event-simple-right {
+    display: none;
+  }
+}
 .mds-event-group-event-content {
   justify-content: space-between;
   align-items: center;
+  line-height: 14px;
 }
-/* Event title */
 .mds-event-group-event-title {
   font-weight: 600;
   color: #1e293b;
   font-size: 13px;
   line-height: 18px;
   flex: 1;
-  min-width: 0;
-  margin-right: 12px;
+  min-width: 30px;
+  margin-right: 8px;
+}
+.mds-event-group-text-truncate {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* Right side (date + detail) */
 .mds-event-group-event-right {
   flex-direction: column;
   align-items: flex-end;
-  min-width: 80px;
+  min-width: 0;
 }
 .mds-event-group-event-date {
   font-size: 11px;
   color: #94a3b8;
-  white-space: nowrap;
-  line-height: 14px;
   text-align: right;
   margin-bottom: 2px;
+  max-width: 100%;
 }
-/* Detail container (avatar/dot + text) */
 .mds-event-group-event-detail {
   align-items: center;
   justify-content: flex-end;
+  overflow: hidden;
+  max-width: 100%;
 }
 .mds-event-group-event-info {
   font-size: 11px;
   font-weight: 700;
   color: #64748b;
-  white-space: nowrap;
-  line-height: 14px;
-  text-align: right;
   text-transform: capitalize;
 }
-/* Avatar for assignee in type view */
 .mds-event-group-event-avatar {
   width: 16px;
   height: 16px;
   border-radius: 50%;
   margin-right: 6px;
 }
-/* Colored dot for type in assignee view */
 .mds-event-group-type-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   margin-right: 6px;
 }
-/* Simple event styling (no grouping) */
+.mds-event-group-edit-btn {
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 4px;
+  margin-left: 8px;
+  border-radius: 4px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+  flex-shrink: 0;
+}
+.mds-event-group-edit-btn:hover {
+  color: #1e293b;
+  background-color: rgba(0, 0, 0, 0.06);
+}
 .mds-event-simple {
   padding: 10px 12px;
   border-radius: 6px;
@@ -3122,39 +3155,41 @@ updateView()
     0 1px 2px rgba(0, 0, 0, 0.1);
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: 42px;
+  box-sizing: border-box;
   color: #2c2c2c;
+  background-color: #ddd;
+  container-type: inline-size;
+  gap: 8px;
 }
-/* Event title */
 .mds-event-simple-title {
-  flex: 1;
   font-size: 13px;
   font-weight: 600;
-  margin-right: 12px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  position: sticky;
+  left: 250px;
+  min-width: 0;
 }
-/* Right side container */
+.mds-event-simple-title-inner {
+  display: inline-block;
+  max-width: 100%;
+}
 .mds-event-simple-right {
   flex-direction: column;
-  position: relative;
+  z-index: 1;
+  background-color: #ddd;
 }
-/* Date range */
 .mds-event-simple-date {
   font-size: 11px;
-  line-height: 14px;
   opacity: 0.85;
   white-space: nowrap;
   text-align: right;
   margin-bottom: 2px;
 }
-/* Subtitle wrapper (avatar/dot + text) */
 .mds-event-simple-subtitle-wrapper {
+  position: relative;
   align-items: center;
   justify-content: flex-end;
 }
-/* Avatar for assignee in type view */
 .mds-event-simple-avatar {
   width: 20px;
   height: 20px;
@@ -3163,25 +3198,30 @@ updateView()
   position: absolute;
   left: 0;
 }
-/* Colored dot for type in assignee view */
 .mds-event-simple-type-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   margin: 0 6px;
 }
-/* Subtitle text (type or assignee name) */
 .mds-event-simple-subtitle {
   font-size: 11px;
   font-weight: 700;
   text-transform: capitalize;
+  white-space: nowrap;
 }
-/* Header controls */
 .mds-event-group-header-controls {
   align-items: center;
 }
-/* Select input */
-.mds-event-group-select.mbsc-textfield {
+.mds-event-group-select .mbsc-textfield {
   width: 210px;
+  max-height: 34px;
+}
+.mds-event-group-select .mbsc-ios.mbsc-select-icon {
+  font-size: 13px;
+  top: 8px;
+}
+.mds-event-group-calendar .mbsc-ios.mbsc-segmented-button {
+  padding: 1px 12px;
 }
 </style>

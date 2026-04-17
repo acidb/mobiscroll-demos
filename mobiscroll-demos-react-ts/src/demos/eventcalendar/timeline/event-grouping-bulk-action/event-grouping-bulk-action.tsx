@@ -21,7 +21,7 @@ import {
   setOptions,
   Toast,
 } from '@mobiscroll/react';
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react';
 import { dyndatetime } from '../../../../dyndatetime';
 import './event-grouping-bulk-action.css';
 
@@ -2384,12 +2384,12 @@ const App: FC = () => {
 
   const calendarRef = useRef<Eventcalendar>(null);
 
-  const myView = useMemo<MbscEventcalendarView>(
+  const myView = useMemo(
     () => ({
       timeline: {
-        type: 'year',
+        type: 'year' as const,
         resolutionHorizontal: zoomLevel,
-        eventHeight: 'variable',
+        eventHeight: 'variable' as const,
       },
     }),
     [zoomLevel],
@@ -2690,7 +2690,7 @@ const App: FC = () => {
         <div className="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-group-header-controls">
           <Checkbox
             checked={groupByClientQuarter}
-            onChange={(e) => setGroupByClientQuarter(e.target.checked)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setGroupByClientQuarter(e.target.checked)}
             theme="material"
             label="Group by Client/Quarter"
           />
@@ -2703,7 +2703,7 @@ const App: FC = () => {
             onChange={(e) => setGroupBy(e.value)}
           />
         </div>
-        <SegmentedGroup value={zoomLevel} onChange={(e) => setZoomLevel(e.target.value)}>
+        <SegmentedGroup value={zoomLevel} onChange={(e: ChangeEvent<HTMLInputElement>) => setZoomLevel(e.target.value as typeof zoomLevel)}>
           <Segmented value="quarter">Quarterly</Segmented>
           <Segmented value="month">Monthly</Segmented>
           <Segmented value="week">Weekly</Segmented>
@@ -2895,12 +2895,10 @@ const App: FC = () => {
         message={confirmMessage}
         okText="Move"
         cancelText="Cancel"
-        onOk={() => {
-          confirmCallbackRef.current?.();
+        onClose={(result: boolean) => {
+          if (result) confirmCallbackRef.current?.();
           setConfirmOpen(false);
         }}
-        onCancel={() => setConfirmOpen(false)}
-        onClose={() => setConfirmOpen(false)}
       />
       <Toast message={toastMessage} isOpen={isToastOpen} onClose={() => setToastOpen(false)} />
     </>
