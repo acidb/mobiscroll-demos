@@ -1,3 +1,4 @@
+/* Calendar base styles */
 .mds-event-grouping-calendar .mbsc-timeline-row {
   height: 140px;
 }
@@ -10,6 +11,7 @@
 .mds-event-grouping-calendar .mbsc-timeline-resource-title {
   text-transform: capitalize;
 }
+/* Resource rendering - Employees */
 .mds-event-grouping-avatar {
   width: 40px;
   height: 40px;
@@ -26,6 +28,7 @@
   font-weight: 400;
   line-height: 16px;
 }
+/* Resource rendering - Types */
 .mds-event-grouping-type-resource {
   align-items: center;
   padding: 8px 0;
@@ -41,14 +44,9 @@
   font-weight: 600;
   line-height: 20px;
 }
-.mds-event-grouping-calendar .mbsc-schedule-event {
-  min-width: 72px;
-}
-.mds-event-grouping-calendar .mbsc-schedule-event:has(.mds-event-grouping-task-client) {
-  min-width: 120px;
-}
+/* Grouped event - collapsed state */
 .mds-event-grouping-task-client {
-  background-color: #e8ecf0;
+  background-color: #f8f9fa;
   border-left: 4px solid;
   border-radius: 0 8px 8px 0;
   box-shadow:
@@ -56,17 +54,14 @@
     0 1px 2px rgba(0, 0, 0, 0.08);
   flex-direction: column;
   overflow: hidden;
-  container-type: inline-size;
-  min-width: 120px;
 }
+/* Grouped event header content */
 .mds-event-grouping-content {
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
-  height: 42px;
-  box-sizing: border-box;
-  overflow: hidden;
 }
+/* Client group title */
 .mds-event-grouping-title-text {
   font-size: 14px;
   font-weight: 600;
@@ -79,10 +74,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Right side container (meta + icon) */
 .mds-event-grouping-right {
   align-items: center;
-  flex-shrink: 0;
+  width: 130px;
 }
+/* Meta information (dates + counts) */
 .mds-event-grouping-meta {
   flex-direction: column;
   align-items: flex-end;
@@ -101,6 +98,7 @@
   line-height: 14px;
   white-space: nowrap;
 }
+/* Expand/collapse icon */
 .mds-event-grouping-icon {
   font-size: 20px;
   cursor: pointer;
@@ -112,9 +110,11 @@
   justify-content: center;
   transform: rotate(0deg);
 }
+/* Icon rotation when expanded */
 .mds-event-grouping-task.expanded .mds-event-grouping-icon {
   transform: rotate(180deg);
 }
+/* Grid wrapper for smooth animation */
 .mds-event-grouping-events {
   display: grid;
   grid-template-rows: 0fr;
@@ -136,48 +136,35 @@
   background: #fff;
   border-radius: 6px;
   margin-bottom: 6px;
-  padding: 6px 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
-  box-sizing: border-box;
-  min-height: 38px;
-  min-width: 100px;
-  overflow: hidden;
-  container-type: inline-size;
-}
-@container (max-width: 180px) {
-  .mds-event-grouping-meta {
-    display: none;
-  }
-}
-@container (max-width: 130px) {
-  .mds-event-grouping-event-right {
-    display: none;
-  }
+  padding: 8px 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 .mds-event-grouping-original-event:last-child {
   margin-bottom: 0;
 }
+/* Event content layout */
 .mds-event-grouping-event-content {
   justify-content: space-between;
   align-items: center;
 }
+/* Event title */
 .mds-event-grouping-event-title {
   font-weight: 600;
   color: #1e293b;
   font-size: 13px;
   line-height: 18px;
   flex: 1;
-  min-width: 30px;
-  margin-right: 8px;
+  min-width: 0;
+  margin-right: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Right side (date + detail) */
 .mds-event-grouping-event-right {
   flex-direction: column;
   align-items: flex-end;
-  min-width: 0;
-  overflow: hidden;
+  min-width: 80px;
 }
 .mds-event-grouping-event-date {
   font-size: 11px;
@@ -186,15 +173,11 @@
   line-height: 14px;
   text-align: right;
   margin-bottom: 2px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
 }
+/* Detail container (avatar/dot + text) */
 .mds-event-grouping-event-detail {
   align-items: center;
   justify-content: flex-end;
-  overflow: hidden;
-  max-width: 100%;
 }
 .mds-event-grouping-event-info {
   font-size: 11px;
@@ -204,39 +187,22 @@
   line-height: 14px;
   text-align: right;
   text-transform: capitalize;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
+/* Avatar for assignee in type view */
 .mds-event-grouping-event-avatar {
   width: 16px;
   height: 16px;
   border-radius: 50%;
   margin-right: 6px;
 }
+/* Colored dot for type in assignee view */
 .mds-event-grouping-type-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   margin-right: 6px;
 }
-.mds-event-grouping-edit-btn {
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  cursor: pointer;
-  color: #94a3b8;
-  padding: 4px;
-  margin-left: 8px;
-  border-radius: 4px;
-  transition:
-    color 0.15s ease,
-    background-color 0.15s ease;
-  flex-shrink: 0;
-}
-.mds-event-grouping-edit-btn:hover {
-  color: #1e293b;
-  background-color: rgba(0, 0, 0, 0.06);
-}
+/* Simple event styling (no grouping) */
 .mds-event-simple {
   padding: 10px 12px;
   border-radius: 6px;
@@ -245,31 +211,25 @@
     0 1px 2px rgba(0, 0, 0, 0.1);
   justify-content: space-between;
   align-items: center;
-  height: 42px;
-  box-sizing: border-box;
-  overflow: hidden;
+  height: 100%;
   color: #2c2c2c;
-  background-color: #e8ecf0;
-  container-type: inline-size;
 }
-@container (max-width: 130px) {
-  .mds-event-simple-right {
-    display: none;
-  }
-}
+/* Event title */
 .mds-event-simple-title {
   flex: 1;
   font-size: 13px;
   font-weight: 600;
-  margin-right: 5px;
+  margin-right: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Right side container */
 .mds-event-simple-right {
   flex-direction: column;
   position: relative;
 }
+/* Date range */
 .mds-event-simple-date {
   font-size: 11px;
   line-height: 14px;
@@ -278,10 +238,12 @@
   text-align: right;
   margin-bottom: 2px;
 }
+/* Subtitle wrapper (avatar/dot + text) */
 .mds-event-simple-subtitle-wrapper {
   align-items: center;
   justify-content: flex-end;
 }
+/* Avatar for assignee in type view */
 .mds-event-simple-avatar {
   width: 20px;
   height: 20px;
@@ -290,28 +252,24 @@
   position: absolute;
   left: 0;
 }
+/* Colored dot for type in assignee view */
 .mds-event-simple-type-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   margin: 0 6px;
 }
+/* Subtitle text (type or assignee name) */
 .mds-event-simple-subtitle {
   font-size: 11px;
   font-weight: 700;
   text-transform: capitalize;
 }
+/* Header controls */
 .mds-event-grouping-header-controls {
   align-items: center;
 }
+/* Select input */
 .mds-event-grouping-select.mbsc-textfield {
   width: 210px;
-  max-height: 34px;
-}
-.mds-event-grouping-select + .mbsc-ios.mbsc-select-icon {
-  font-size: 13px;
-  top: 8px;
-}
-.mds-event-grouping-calendar .mbsc-ios.mbsc-segmented-button {
-  padding: 1px 12px;
 }
