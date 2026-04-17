@@ -2553,7 +2553,7 @@ export default {
               }
 
               return (
-                '<div class="mds-event-grouping-original-event" title="' +
+                '<div class="mds-event-group-original-event" title="' +
                 ev.title +
                 ', ' +
                 mobiscroll.formatDate('MM/DD/YYYY', new Date(ev.start)) +
@@ -2564,25 +2564,25 @@ export default {
                 '%; width:' +
                 widthPercent +
                 '%;">' +
-                '<div class="mbsc-flex mds-event-grouping-event-content">' +
-                '<div class="mds-event-grouping-event-title">' +
+                '<div class="mbsc-flex mds-event-group-event-content">' +
+                '<div class="mds-event-group-event-title mds-event-group-text-truncate">' +
                 ev.title +
                 '</div>' +
-                '<div class="mbsc-flex mds-event-grouping-event-right">' +
-                '<div class="mds-event-grouping-event-date">' +
+                '<div class="mbsc-flex mds-event-group-event-right">' +
+                '<div class="mds-event-group-event-date mds-event-group-text-truncate">' +
                 mobiscroll.formatDate('DD MMM', new Date(ev.start)) +
                 ' - ' +
                 mobiscroll.formatDate('DD MMM', new Date(ev.end)) +
                 '</div>' +
-                '<div class="mbsc-flex mds-event-grouping-event-detail">' +
-                (avatarUrl ? '<img src="' + avatarUrl + '" alt="' + detailText + '" class="mds-event-grouping-event-avatar" />' : '') +
-                (typeDotColor ? '<span class="mds-event-grouping-type-dot" style="background-color: ' + typeDotColor + '"></span>' : '') +
-                '<div class="mds-event-grouping-event-info">' +
+                '<div class="mbsc-flex mds-event-group-event-detail">' +
+                (avatarUrl ? '<img src="' + avatarUrl + '" alt="' + detailText + '" class="mds-event-group-event-avatar" />' : '') +
+                (typeDotColor ? '<span class="mds-event-group-type-dot" style="background-color: ' + typeDotColor + '"></span>' : '') +
+                '<div class="mds-event-group-event-info mds-event-group-text-truncate">' +
                 detailText +
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="mds-event-grouping-edit-btn mbsc-flex mbsc-icon mbsc-font-icon mbsc-icon-pencil" data-event-id="' +
+                '<div class="mds-event-group-edit-btn mbsc-flex mbsc-icon mbsc-font-icon mbsc-icon-pencil" data-event-id="' +
                 ev.id +
                 '"></div>' +
                 '</div>' +
@@ -2593,23 +2593,23 @@ export default {
         }
 
         return (
-          '<div class="mbsc-flex mds-event-grouping-task mds-event-grouping-task-client' +
+          '<div class="mbsc-flex mds-event-group-task mds-event-group-task-client' +
           (isExpanded ? ' expanded' : '') +
           '" style="border-left-color: ' +
           origEvent.color +
           '">' +
-          '<div class="mbsc-flex mds-event-grouping-content">' +
-          '<div class="mbsc-flex-1-1-0 mds-event-grouping-title-text">' +
+          '<div class="mbsc-flex mds-event-group-content">' +
+          '<div class="mds-event-group-title-text mds-event-group-text-truncate">' +
           origEvent.clientGroup +
           '</div>' +
-          '<div class="mbsc-flex mds-event-grouping-right">' +
-          '<div class="mbsc-flex mds-event-grouping-meta">' +
-          '<div class="mds-event-grouping-date-range">' +
+          '<div class="mbsc-flex mds-event-group-right">' +
+          '<div class="mbsc-flex mds-event-group-meta">' +
+          '<div class="mds-event-group-date-range">' +
           mobiscroll.formatDate('DD MMM', new Date(origEvent.start)) +
           ' - ' +
           mobiscroll.formatDate('DD MMM', new Date(origEvent.end)) +
           '</div>' +
-          '<div class="mds-event-grouping-count">' +
+          '<div class="mds-event-group-count">' +
           origEvent.count +
           ' task' +
           (origEvent.count > 1 ? 's' : '') +
@@ -2620,10 +2620,10 @@ export default {
           (itemCount > 1 ? 's' : '') +
           '</div>' +
           '</div>' +
-          '<div class="mbsc-flex mds-event-grouping-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"></div>' +
+          '<div class="mbsc-flex mds-event-group-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"></div>' +
           '</div>' +
           '</div>' +
-          '<div class="mds-event-grouping-events"><div class="mds-event-grouping-events-inner">' +
+          '<div class="mds-event-group-events"><div class="mds-event-group-events-inner">' +
           expandedHTML +
           '</div></div>' +
           '</div>'
@@ -2658,8 +2658,8 @@ export default {
 
         return (
           '<div class="mbsc-flex mds-event-simple">' +
-          '<div class="mbsc-flex-1-1-0 mds-event-simple-title">' +
-          '<div class="mds-event-simple-title-inner">' +
+          '<div class="mds-event-simple-title">' +
+          '<div class="mds-event-simple-title-inner mds-event-group-text-truncate">' +
           origEvent.title +
           '</div>' +
           '</div>' +
@@ -2710,14 +2710,14 @@ export default {
                 '<div class="mbsc-flex">' +
                 '<img alt="' +
                 resource.name +
-                '" class="mds-event-grouping-avatar" src="' +
+                '" class="mds-event-group-avatar" src="' +
                 resource.img +
                 '"/>' +
-                '<div class="mds-event-grouping-cont">' +
-                '<div class="mds-event-grouping-name">' +
+                '<div class="mds-event-group-cont">' +
+                '<div class="mds-event-group-name">' +
                 resource.name +
                 '</div>' +
-                '<div class="mds-event-grouping-title">' +
+                '<div class="mds-event-group-title">' +
                 resource.title +
                 '</div>' +
                 '</div>' +
@@ -2726,11 +2726,11 @@ export default {
             } else {
               // Type resource
               return (
-                '<div class="mbsc-flex mds-event-grouping-type-resource">' +
-                '<div class="mds-event-grouping-type-badge" style="background-color: ' +
+                '<div class="mbsc-flex mds-event-group-type-resource">' +
+                '<div class="mds-event-group-type-badge" style="background-color: ' +
                 resource.color +
                 '"></div>' +
-                '<div class="mds-event-grouping-type-name">' +
+                '<div class="mds-event-group-type-name">' +
                 resource.name +
                 '</div>' +
                 '</div>'
@@ -2740,12 +2740,12 @@ export default {
           renderHeader: function () {
             return (
               '<div mbsc-calendar-nav></div>' +
-              '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-grouping-header-controls">' +
+              '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-group-header-controls">' +
               '<label>' +
               '<input mbsc-checkbox type="checkbox" id="group-by-client-quarter" data-theme="material" data-label="Group by Client/Quarter" />' +
               '</label>' +
               '<label>' +
-              '<input mbsc-input id="event-grouping-input" class="mds-event-grouping-select" data-dropdown="true" data-input-style="box" />' +
+              '<input mbsc-input id="event-grouping-input" class="mds-event-group-select" data-dropdown="true" data-input-style="box" />' +
               '</label>' +
               '<select id="group-by-select">' +
               '<option value="assignee" selected>View by Assignee</option>' +
@@ -2994,7 +2994,7 @@ export default {
         .mobiscroll('getInst');
 
       // Edit button click handler (on expanded subtasks)
-      $(document).on('click', '.mds-event-grouping-edit-btn', function (event) {
+      $(document).on('click', '.mds-event-group-edit-btn', function (event) {
         event.stopPropagation();
 
         var eventId = Number($(this).attr('data-event-id'));
@@ -3034,10 +3034,10 @@ export default {
       });
 
       // Expand/collapse icon click handler
-      $(document).on('click', '.mds-event-grouping-icon', function (event) {
+      $(document).on('click', '.mds-event-group-icon', function (event) {
         event.stopPropagation();
 
-        var $task = $(this).closest('.mds-event-grouping-task');
+        var $task = $(this).closest('.mds-event-group-task');
         var eventId = $(this).closest('.mbsc-schedule-event').attr('data-id');
         var groupedEvent = groupedEvents.find(function (e) {
           return e.id === eventId;
@@ -3062,7 +3062,7 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mds-event-grouping-calendar">
+<div class="mds-event-group-calendar">
   <div id="demo-event-grouping"></div>
   <div id="event-grouping-dates"></div>
 </div>
@@ -3070,60 +3070,63 @@ export default {
   // eslint-disable-next-line es5/no-template-literals
   css: `
 /* Calendar base styles */
-.mds-event-grouping-calendar .mbsc-timeline-row {
+.mds-event-group-calendar {
+  height: 100%;
+}
+.mds-event-group-calendar .mbsc-timeline-row {
   height: 140px;
 }
-.mds-event-grouping-calendar .mbsc-timeline-resource-col {
+.mds-event-group-calendar .mbsc-timeline-resource-col {
   width: 240px;
 }
-.mds-event-grouping-calendar .mbsc-ios.mbsc-textfield-wrapper-box {
+.mds-event-group-calendar .mbsc-ios.mbsc-textfield-wrapper-box {
   margin: 10px 20px;
 }
-.mds-event-grouping-calendar .mbsc-timeline-resource-title {
+.mds-event-group-calendar .mbsc-timeline-resource-title {
   text-transform: capitalize;
 }
 /* Resource rendering - Employees */
-.mds-event-grouping-avatar {
+.mds-event-group-avatar {
   width: 40px;
   height: 40px;
 }
-.mds-event-grouping-cont {
+.mds-event-group-cont {
   padding: 0 7px;
 }
-.mds-event-grouping-name {
+.mds-event-group-name {
   font-size: 14px;
   line-height: 24px;
 }
-.mds-event-grouping-title {
+.mds-event-group-title {
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
 }
 /* Resource rendering - Types */
-.mds-event-grouping-type-resource {
+.mds-event-group-type-resource {
   align-items: center;
   padding: 8px 0;
 }
-.mds-event-grouping-type-badge {
+.mds-event-group-type-badge {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   margin: 0 10px;
 }
-.mds-event-grouping-type-name {
+.mds-event-group-type-name {
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
 }
 /* Enforce minimum event width so text is always visible */
-.mds-event-grouping-calendar .mbsc-schedule-event {
+.mds-event-group-calendar .mbsc-schedule-event {
   min-width: 72px;
 }
-.mds-event-grouping-calendar .mbsc-schedule-event:has(.mds-event-grouping-task-client) {
+.mds-event-group-calendar .mbsc-schedule-event:has(.mds-event-group-task-client) {
   min-width: 120px;
 }
 /* Grouped event - collapsed state */
-.mds-event-grouping-task-client {
+.mds-event-group-task-client {
   background-color: #dddddd;
   border-left: 4px solid;
   border-radius: 0 8px 8px 0;
@@ -3135,7 +3138,7 @@ export default {
   min-width: 120px;
 }
 /* Grouped event header content */
-.mds-event-grouping-content {
+.mds-event-group-content {
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
@@ -3144,48 +3147,41 @@ export default {
   gap: 8px;
 }
 /* Client group title */
-.mds-event-grouping-title-text {
+.mds-event-group-title-text {
   font-size: 14px;
   font-weight: 600;
   color: #1e293b;
   line-height: 20px;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   position: sticky;
   left: 250px;
 }
 /* Right side container (meta + icon) */
-.mds-event-grouping-right {
+.mds-event-group-right {
   align-items: center;
   z-index: 1;
   background-color: #dddddd;
 }
 /* Meta information (dates + counts) */
-.mds-event-grouping-meta {
+.mds-event-group-meta {
   flex-direction: column;
   align-items: flex-end;
   flex: 1;
   margin: 0 12px;
 }
-.mds-event-grouping-date-range {
+.mds-event-group-date-range {
   color: #575757;
   font-size: 11px;
-  line-height: 14px;
-  white-space: nowrap;
   margin-bottom: 2px;
 }
-.mds-event-grouping-count {
+.mds-event-group-count {
   font-size: 11px;
-  line-height: 14px;
   white-space: nowrap;
 }
 /* Expand/collapse icon */
-.mds-event-grouping-icon {
+.mds-event-group-icon {
   font-size: 20px;
   cursor: pointer;
-  user-select: none;
   transition: transform 0.2s ease;
   width: 24px;
   height: 24px;
@@ -3194,28 +3190,25 @@ export default {
   transform: rotate(0deg);
 }
 /* Icon rotation when expanded */
-.mds-event-grouping-task.expanded .mds-event-grouping-icon {
+.mds-event-group-task.expanded .mds-event-group-icon {
   transform: rotate(180deg);
 }
 /* Grid wrapper for smooth animation */
-.mds-event-grouping-events {
+.mds-event-group-events {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.2s ease;
 }
-.mds-event-grouping-events-inner {
+.mds-event-group-events-inner {
   overflow: hidden;
-  padding: 0 14px;
+  padding: 0 14px 4px;
   transition: padding 0.2s ease;
 }
-.mds-event-grouping-task.expanded .mds-event-grouping-events {
+.mds-event-group-task.expanded .mds-event-group-events {
   grid-template-rows: 1fr;
 }
-.mds-event-grouping-task.expanded .mds-event-grouping-events-inner {
-  padding: 0 14px 10px 14px;
-}
 /* Individual event in expanded list */
-.mds-event-grouping-original-event {
+.mds-event-group-original-event {
   background: #f1f1f1;
   border-radius: 6px;
   margin-bottom: 6px;
@@ -3228,21 +3221,19 @@ export default {
   container-type: inline-size;
 }
 @container (max-width: 180px) {
-  .mds-event-grouping-meta { display: none; }
+  .mds-event-group-meta { display: none; }
 }
 @container (max-width: 130px) {
-  .mds-event-grouping-event-right { display: none; }
-}
-.mds-event-grouping-original-event:last-child {
-  margin-bottom: 0;
+  .mds-event-group-event-right { display: none; }
 }
 /* Event content layout */
-.mds-event-grouping-event-content {
+.mds-event-group-event-content {
   justify-content: space-between;
   align-items: center;
+  line-height: 14px;
 }
 /* Event title */
-.mds-event-grouping-event-title {
+.mds-event-group-event-title {
   font-weight: 600;
   color: #1e293b;
   font-size: 13px;
@@ -3250,62 +3241,54 @@ export default {
   flex: 1;
   min-width: 30px;
   margin-right: 8px;
+}
+.mds-event-group-text-truncate {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 /* Right side (date + detail) */
-.mds-event-grouping-event-right {
+.mds-event-group-event-right {
   flex-direction: column;
   align-items: flex-end;
   min-width: 0;
-  overflow: hidden;
 }
-.mds-event-grouping-event-date {
+.mds-event-group-event-date {
   font-size: 11px;
   color: #94a3b8;
-  white-space: nowrap;
-  line-height: 14px;
   text-align: right;
   margin-bottom: 2px;
-  overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 100%;
 }
 /* Detail container (avatar/dot + text) */
-.mds-event-grouping-event-detail {
+.mds-event-group-event-detail {
   align-items: center;
   justify-content: flex-end;
   overflow: hidden;
   max-width: 100%;
 }
-.mds-event-grouping-event-info {
+.mds-event-group-event-info {
   font-size: 11px;
   font-weight: 700;
   color: #64748b;
-  white-space: nowrap;
-  line-height: 14px;
-  text-align: right;
   text-transform: capitalize;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 /* Avatar for assignee in type view */
-.mds-event-grouping-event-avatar {
+.mds-event-group-event-avatar {
   width: 16px;
   height: 16px;
   border-radius: 50%;
   margin-right: 6px;
 }
 /* Colored dot for type in assignee view */
-.mds-event-grouping-type-dot {
+.mds-event-group-type-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   margin-right: 6px;
 }
 /* Edit button on subtask events */
-.mds-event-grouping-edit-btn {
+.mds-event-group-edit-btn {
   align-items: center;
   justify-content: center;
   font-size: 14px;
@@ -3317,7 +3300,7 @@ export default {
   transition: color 0.15s ease, background-color 0.15s ease;
   flex-shrink: 0;
 }
-.mds-event-grouping-edit-btn:hover {
+.mds-event-group-edit-btn:hover {
   color: #1e293b;
   background-color: rgba(0, 0, 0, 0.06);
 }
@@ -3344,7 +3327,6 @@ export default {
 .mds-event-simple-title {
   font-size: 13px;
   font-weight: 600;
-  white-space: nowrap;
   position: sticky;
   left: 250px;
   min-width: 0;
@@ -3352,8 +3334,6 @@ export default {
 .mds-event-simple-title-inner {
   display: inline-block;
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 /* Right side container */
 .mds-event-simple-right {
@@ -3364,7 +3344,6 @@ export default {
 /* Date range */
 .mds-event-simple-date {
   font-size: 11px;
-  line-height: 14px;
   opacity: 0.85;
   white-space: nowrap;
   text-align: right;
@@ -3400,19 +3379,19 @@ export default {
   white-space: nowrap;
 }
 /* Header controls */
-.mds-event-grouping-header-controls {
+.mds-event-group-header-controls {
   align-items: center;
 }
 /* Select input */
-.mds-event-grouping-select.mbsc-textfield {
+.mds-event-group-select.mbsc-textfield {
   width: 210px;
   max-height: 34px;
 }
-.mds-event-grouping-select + .mbsc-ios.mbsc-select-icon {
+.mds-event-group-select + .mbsc-ios.mbsc-select-icon {
   font-size: 13px;
   top: 8px;
 }
-.mds-event-grouping-calendar .mbsc-ios.mbsc-segmented-button {
+.mds-event-group-calendar .mbsc-ios.mbsc-segmented-button {
   padding: 1px 12px;
 }
   `,

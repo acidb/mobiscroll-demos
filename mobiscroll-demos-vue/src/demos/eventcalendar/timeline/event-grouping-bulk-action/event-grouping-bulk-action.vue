@@ -6,12 +6,16 @@ import {
   MbscCalendarPrev,
   MbscCalendarToday,
   MbscCheckbox,
+  MbscConfirm,
+  MbscDatepicker,
   MbscEventcalendar,
+  MbscSegmented,
+  MbscSegmentedGroup,
   MbscSelect,
   MbscToast,
   setOptions /* localeImport */
 } from '@mobiscroll/vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { dyndatetime } from '../../../../dyndatetime'
 
 setOptions({
@@ -2358,13 +2362,14 @@ const defaultEvents = [
   //</hide-comment>
 ]
 
-const myView = {
+const zoomLevel = ref('month')
+const myView = computed(() => ({
   timeline: {
     type: 'year',
-    resolutionHorizontal: 'month',
+    resolutionHorizontal: zoomLevel.value,
     eventHeight: 'variable'
   }
-}
+}))
 
 // Reactive state
 const rawEvents = ref([...defaultEvents])
@@ -2376,6 +2381,13 @@ const groupByClientQuarter = ref(false)
 const isToastOpen = ref(false)
 const toastMessage = ref('')
 const calendarRef = ref(null)
+const isConfirmOpen = ref(false)
+const confirmMessage = ref('')
+let confirmCallback = null
+const editingEventId = ref(null)
+const editEventTitle = ref('')
+const editEventDateRange = ref([])
+const isDatePickerOpen = ref(false)
 
 function groupEventsByClientQuarter(events) {
   const groups = new Map()
@@ -2476,62 +2488,106 @@ function updateView() {
 function handleEventUpdated(args) {
   const updatedEvent = args.event
   const oldEvent = args.oldEvent
+  const newStart = new Date(updatedEvent.start).getTime()
+  const newEnd = new Date(updatedEvent.end).getTime()
 
-  if (!groupByClientQuarter.value) {
-    // Simple view: sync into rawEvents
-    rawEvents.value = rawEvents.value.map((e) =>
-      e.id === updatedEvent.id ? { ...e, start: updatedEvent.start, end: updatedEvent.end } : e
+  if (groupByClientQuarter.value) {
+    const oldStart = new Date(oldEvent.start).getTime()
+    const oldEnd = new Date(oldEvent.end).getTime()
+    const startDelta = newStart - oldStart
+    const endDelta = newEnd - oldEnd
+
+    if (startDelta === 0 && endDelta === 0) return
+
+    const movedGroupedEvent = groupedEvents.value.find((ge) => ge.id === oldEvent.id)
+    if (!movedGroupedEvent) return
+
+    const { clientGroup: clientGroupName, resource: resourceId, collapsed: wasCollapsed } = movedGroupedEvent
+    const isMove = startDelta === endDelta
+
+    let eventsToUpdate
+
+    if (isMove) {
+      eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent) => ({
+        ...originalEvent,
+        start: new Date(new Date(originalEvent.start).getTime() + startDelta),
+        end: new Date(new Date(originalEvent.end).getTime() + startDelta)
+      }))
+    } else {
+      const oldGroupDuration = oldEnd - oldStart
+      const newGroupDuration = newEnd - newStart
+
+      eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent) => {
+        const evStart = new Date(originalEvent.start).getTime()
+        const evEnd = new Date(originalEvent.end).getTime()
+        const relativeStart = oldGroupDuration > 0 ? (evStart - oldStart) / oldGroupDuration : 0
+        const relativeEnd = oldGroupDuration > 0 ? (evEnd - oldStart) / oldGroupDuration : 1
+        const mappedStart = newStart + relativeStart * newGroupDuration
+        const mappedEnd = newStart + relativeEnd * newGroupDuration
+        const childDurationDays = (mappedEnd - mappedStart) / (1000 * 60 * 60 * 24)
+        return {
+          ...originalEvent,
+          start: new Date(mappedStart),
+          end: new Date(childDurationDays < 1 ? mappedStart + 1000 * 60 * 60 * 24 : mappedEnd)
+        }
+      })
+    }
+
+    const updatedMap = new Map(eventsToUpdate.map((e) => [e.id, e]))
+    rawEvents.value = rawEvents.value.map((e) => (updatedMap.has(e.id) ? updatedMap.get(e.id) : e))
+
+    updateView()
+
+    const newYear = new Date(eventsToUpdate[0].start).getFullYear()
+    const newPeriod = Math.floor(new Date(eventsToUpdate[0].start).getMonth() / 3)
+
+    const newGroupedEvent = groupedEvents.value.find(
+      (ge) =>
+        ge.resource === resourceId &&
+        ge.clientGroup === clientGroupName &&
+        ge.year === newYear &&
+        ge.period === newPeriod
     )
-    return
+
+    if (newGroupedEvent) {
+      newGroupedEvent.collapsed = wasCollapsed
+      displayEvents.value = [...groupedEvents.value]
+    }
+
+    const actionLabel = isMove ? 'moved' : 'resized'
+    toastMessage.value = `${eventsToUpdate.length} event(s) for ${clientGroupName} have been ${actionLabel}.`
+    isToastOpen.value = true
+  } else {
+    const oldResource = oldEvent.resource
+    const newResource = updatedEvent.resource
+    const resourceChanged = oldResource !== newResource
+
+    rawEvents.value = rawEvents.value.map((e) => {
+      if (e.id !== updatedEvent.id) return e
+      const update = { start: updatedEvent.start, end: updatedEvent.end }
+      if (resourceChanged) {
+        if (groupBy.value === 'assignee') update.resource = newResource
+        else update.type = String(newResource)
+      }
+      return { ...e, ...update }
+    })
+
+    if (resourceChanged) {
+      let fromName
+      let toName
+      if (groupBy.value === 'assignee') {
+        const fromRes = assigneeResources.find((r) => r.id === oldResource)
+        const toRes = assigneeResources.find((r) => r.id === newResource)
+        fromName = fromRes ? fromRes.name : String(oldResource)
+        toName = toRes ? toRes.name : String(newResource)
+      } else {
+        fromName = String(oldResource)
+        toName = String(newResource)
+      }
+      toastMessage.value = `"${updatedEvent.title}" moved from ${fromName} to ${toName}.`
+      isToastOpen.value = true
+    }
   }
-
-  // Grouped view
-  const startDelta = new Date(updatedEvent.start).getTime() - new Date(oldEvent.start).getTime()
-  if (startDelta === 0) return
-
-  const movedGroupedEvent = groupedEvents.value.find((ge) => ge.id === oldEvent.id)
-  if (!movedGroupedEvent) return
-
-  const {
-    clientGroup: clientGroupName,
-    resource: resourceId,
-    collapsed: wasCollapsed
-  } = movedGroupedEvent
-
-  const eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent) => ({
-    ...originalEvent,
-    start: new Date(new Date(originalEvent.start).getTime() + startDelta),
-    end: new Date(new Date(originalEvent.end).getTime() + startDelta)
-  }))
-
-  // Sync into rawEvents
-  const updatedIds = new Set(eventsToUpdate.map((e) => e.id))
-  const updatedMap = new Map(eventsToUpdate.map((e) => [e.id, e]))
-
-  rawEvents.value = rawEvents.value.map((e) => (updatedIds.has(e.id) ? updatedMap.get(e.id) : e))
-
-  // Rebuild view
-  updateView()
-
-  // Restore collapsed state
-  const newYear = new Date(eventsToUpdate[0].start).getFullYear()
-  const newPeriod = Math.floor(new Date(eventsToUpdate[0].start).getMonth() / 3)
-
-  const newGroupedEvent = groupedEvents.value.find(
-    (ge) =>
-      ge.resource === resourceId &&
-      ge.clientGroup === clientGroupName &&
-      ge.year === newYear &&
-      ge.period === newPeriod
-  )
-
-  if (newGroupedEvent) {
-    newGroupedEvent.collapsed = wasCollapsed
-    displayEvents.value = [...groupedEvents.value]
-  }
-
-  toastMessage.value = `${eventsToUpdate.length} event(s) for ${clientGroupName} have been moved.`
-  isToastOpen.value = true
 }
 
 function toggleGroupCollapse(groupEvent) {
@@ -2591,6 +2647,80 @@ function formatEventDate(date) {
   return formatDate('DD MMM', new Date(date))
 }
 
+function getEventMarginLeft(ev, group) {
+  const groupStart = new Date(group.start).getTime()
+  const groupEnd = new Date(group.end).getTime()
+  const groupDuration = groupEnd - groupStart
+  const evStart = new Date(ev.start).getTime()
+  return groupDuration > 0 ? ((evStart - groupStart) / groupDuration) * 100 + '%' : '0%'
+}
+
+function getEventWidth(ev, group) {
+  const groupStart = new Date(group.start).getTime()
+  const groupEnd = new Date(group.end).getTime()
+  const groupDuration = groupEnd - groupStart
+  const evStart = new Date(ev.start).getTime()
+  const evEnd = new Date(ev.end).getTime()
+  return groupDuration > 0 ? ((evEnd - evStart) / groupDuration) * 100 + '%' : '100%'
+}
+
+function handleEditEvent(ev) {
+  editingEventId.value = ev.id ?? null
+  editEventTitle.value = ev.title ?? ''
+  editEventDateRange.value = [new Date(ev.start), new Date(ev.end)]
+  isDatePickerOpen.value = true
+}
+
+function handleEditDateChange(args) {
+  const dates = args.value
+  const startVal = dates && dates[0]
+  const endVal = dates && dates[1]
+
+  if (editingEventId.value === null || !startVal || !endVal) return
+
+  const oldEvent = rawEvents.value.find((e) => e.id === editingEventId.value)
+  if (!oldEvent) return
+
+  const oldQuarter = Math.floor(new Date(oldEvent.start).getMonth() / 3)
+  const newQuarter = Math.floor(new Date(startVal).getMonth() / 3)
+  const oldYear = new Date(oldEvent.start).getFullYear()
+  const newYear = new Date(startVal).getFullYear()
+  const quarterChanged = groupByClientQuarter.value && (oldQuarter !== newQuarter || oldYear !== newYear)
+
+  const applyUpdate = () => {
+    rawEvents.value = rawEvents.value.map((e) =>
+      e.id === editingEventId.value ? { ...e, start: startVal, end: endVal } : e
+    )
+    updateView()
+  }
+
+  if (quarterChanged) {
+    const quarterNames = ['Q1', 'Q2', 'Q3', 'Q4']
+    const fromLabel = `${quarterNames[oldQuarter]} ${oldYear}`
+    const toLabel = `${quarterNames[newQuarter]} ${newYear}`
+
+    confirmCallback = () => {
+      applyUpdate()
+      toastMessage.value = `"${oldEvent.title}" moved to ${toLabel}.`
+      isToastOpen.value = true
+    }
+    confirmMessage.value = `"${oldEvent.title}" will move from ${fromLabel} to ${toLabel}. Do you want to continue?`
+    isConfirmOpen.value = true
+  } else {
+    applyUpdate()
+    toastMessage.value = `"${oldEvent.title}" dates updated.`
+    isToastOpen.value = true
+  }
+}
+
+function handleConfirmClose(result) {
+  isConfirmOpen.value = false
+  if (result && confirmCallback) {
+    confirmCallback()
+    confirmCallback = null
+  }
+}
+
 // Initialize view on mount
 updateView()
 </script>
@@ -2598,22 +2728,20 @@ updateView()
 <template>
   <MbscEventcalendar
     ref="calendarRef"
-    cssClass="mds-event-grouping-calendar"
+    cssClass="mds-event-group-calendar"
     :data="displayEvents"
     :view="myView"
     :resources="myResources"
     :dragToMove="true"
-    :dragToResize="false"
+    :dragToResize="true"
     :dragToCreate="false"
     :clickToCreate="false"
-    :dragBetweenResources="false"
+    :dragBetweenResources="!groupByClientQuarter"
     @event-updated="handleEventUpdated"
   >
     <template #header>
       <MbscCalendarNav />
-      <div
-        class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-grouping-header-controls"
-      >
+      <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-group-header-controls">
         <MbscCheckbox
           v-model="groupByClientQuarter"
           @change="updateView"
@@ -2629,6 +2757,11 @@ updateView()
           @change="updateView"
         />
       </div>
+      <MbscSegmentedGroup v-model="zoomLevel">
+        <MbscSegmented value="quarter">Quarterly</MbscSegmented>
+        <MbscSegmented value="month">Monthly</MbscSegmented>
+        <MbscSegmented value="week">Weekly</MbscSegmented>
+      </MbscSegmentedGroup>
       <MbscCalendarPrev />
       <MbscCalendarToday />
       <MbscCalendarNext />
@@ -2636,18 +2769,15 @@ updateView()
 
     <template #resource="resource">
       <div v-if="groupBy === 'assignee'" class="mbsc-flex">
-        <img :alt="resource.name" class="mds-event-grouping-avatar" :src="resource.img" />
-        <div class="mds-event-grouping-cont">
-          <div class="mds-event-grouping-name">{{ resource.name }}</div>
-          <div class="mds-event-grouping-title">{{ resource.title }}</div>
+        <img :alt="resource.name" class="mds-event-group-avatar" :src="resource.img" />
+        <div class="mds-event-group-cont">
+          <div class="mds-event-group-name">{{ resource.name }}</div>
+          <div class="mds-event-group-title">{{ resource.title }}</div>
         </div>
       </div>
-      <div v-else class="mbsc-flex mds-event-grouping-type-resource">
-        <div
-          class="mds-event-grouping-type-badge"
-          :style="{ backgroundColor: resource.color }"
-        ></div>
-        <div class="mds-event-grouping-type-name">{{ resource.name }}</div>
+      <div v-else class="mbsc-flex mds-event-group-type-resource">
+        <div class="mds-event-group-type-badge" :style="{ backgroundColor: resource.color }"></div>
+        <div class="mds-event-group-type-name">{{ resource.name }}</div>
       </div>
     </template>
 
@@ -2655,19 +2785,19 @@ updateView()
       <!-- Grouped Event Template -->
       <div
         v-if="groupByClientQuarter"
-        class="mbsc-flex mds-event-grouping-task mds-event-grouping-task-client"
+        class="mbsc-flex mds-event-group-task mds-event-group-task-client"
         :class="{ expanded: !event.original.collapsed }"
         :style="{ borderLeftColor: event.original.color }"
       >
-        <div class="mbsc-flex mds-event-grouping-content">
-          <div class="mds-event-grouping-title-text">{{ event.original.clientGroup }}</div>
-          <div class="mbsc-flex mds-event-grouping-right">
-            <div class="mbsc-flex mds-event-grouping-meta">
-              <div class="mds-event-grouping-date-range">
+        <div class="mbsc-flex mds-event-group-content">
+          <div class="mds-event-group-title-text mds-event-group-text-truncate">{{ event.original.clientGroup }}</div>
+          <div class="mbsc-flex mds-event-group-right">
+            <div class="mbsc-flex mds-event-group-meta">
+              <div class="mds-event-group-date-range">
                 {{ formatEventDate(event.original.start) }} -
                 {{ formatEventDate(event.original.end) }}
               </div>
-              <div class="mds-event-grouping-count">
+              <div class="mds-event-group-count">
                 {{ event.original.count }} task{{ event.original.count > 1 ? 's' : '' }},
                 {{ getUniqueItems(event.original.originalEvents).count }}
                 {{ getUniqueItems(event.original.originalEvents).label
@@ -2675,42 +2805,48 @@ updateView()
               </div>
             </div>
             <div
-              class="mbsc-flex mds-event-grouping-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"
+              class="mbsc-flex mds-event-group-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"
               @click.stop="toggleGroupCollapse(event.original)"
             ></div>
           </div>
         </div>
-        <div class="mds-event-grouping-events">
-          <div class="mds-event-grouping-events-inner">
+        <div class="mds-event-group-events">
+          <div class="mds-event-group-events-inner">
             <div
               v-for="ev in event.original.originalEvents"
               v-show="!event.original.collapsed"
               :key="ev.id"
-              class="mds-event-grouping-original-event"
+              class="mds-event-group-original-event"
+              :title="`${ev.title}, ${formatEventDate(ev.start)} - ${formatEventDate(ev.end)}`"
+              :style="{ marginLeft: getEventMarginLeft(ev, event.original), width: getEventWidth(ev, event.original) }"
             >
-              <div class="mbsc-flex mds-event-grouping-event-content">
-                <div class="mds-event-grouping-event-title">{{ ev.title }}</div>
-                <div class="mbsc-flex mds-event-grouping-event-right">
-                  <div class="mds-event-grouping-event-date">
+              <div class="mbsc-flex mds-event-group-event-content">
+                <div class="mds-event-group-event-title mds-event-group-text-truncate">{{ ev.title }}</div>
+                <div class="mbsc-flex mds-event-group-event-right">
+                  <div class="mds-event-group-event-date mds-event-group-text-truncate">
                     {{ formatEventDate(ev.start) }} - {{ formatEventDate(ev.end) }}
                   </div>
-                  <div class="mbsc-flex mds-event-grouping-event-detail">
+                  <div class="mbsc-flex mds-event-group-event-detail">
                     <img
                       v-if="getDetailInfo(ev).avatarUrl"
                       :src="getDetailInfo(ev).avatarUrl"
                       :alt="getDetailInfo(ev).detailText"
-                      class="mds-event-grouping-event-avatar"
+                      class="mds-event-group-event-avatar"
                     />
                     <span
                       v-if="getDetailInfo(ev).typeDotColor"
-                      class="mds-event-grouping-type-dot"
+                      class="mds-event-group-type-dot"
                       :style="{ backgroundColor: getDetailInfo(ev).typeDotColor }"
                     ></span>
-                    <div class="mds-event-grouping-event-info">
+                    <div class="mds-event-group-event-info mds-event-group-text-truncate">
                       {{ getDetailInfo(ev).detailText }}
                     </div>
                   </div>
                 </div>
+                <div
+                  class="mds-event-group-edit-btn mbsc-flex mbsc-icon mbsc-font-icon mbsc-icon-pencil"
+                  @click.stop="handleEditEvent(ev)"
+                ></div>
               </div>
             </div>
           </div>
@@ -2723,7 +2859,9 @@ updateView()
         class="mbsc-flex mds-event-simple"
         :style="{ backgroundColor: event.original.color }"
       >
-        <div class="mds-event-simple-title">{{ event.original.title }}</div>
+        <div class="mds-event-simple-title">
+          <div class="mds-event-simple-title-inner mds-event-group-text-truncate">{{ event.original.title }}</div>
+        </div>
         <div class="mbsc-flex mds-event-simple-right">
           <div class="mds-event-simple-date">
             {{ formatEventDate(event.original.start) }} - {{ formatEventDate(event.original.end) }}
@@ -2755,57 +2893,77 @@ updateView()
     </template>
   </MbscEventcalendar>
   <MbscToast :message="toastMessage" :isOpen="isToastOpen" @close="isToastOpen = false" />
+  <MbscDatepicker
+    :controls="['calendar']"
+    select="range"
+    display="center"
+    :touchUi="false"
+    :showRangeLabels="false"
+    :headerText="editEventTitle"
+    :value="editEventDateRange"
+    :isOpen="isDatePickerOpen"
+    @close="isDatePickerOpen = false"
+    @change="handleEditDateChange"
+  />
+  <MbscConfirm
+    :isOpen="isConfirmOpen"
+    title="Move to different group"
+    :message="confirmMessage"
+    okText="Move"
+    cancelText="Cancel"
+    @close="handleConfirmClose"
+  />
 </template>
 
 <style>
 /* Calendar base styles */
-.mds-event-grouping-calendar .mbsc-timeline-row {
+.mds-event-group-calendar .mbsc-timeline-row {
   height: 140px;
 }
-.mds-event-grouping-calendar .mbsc-timeline-resource-col {
+.mds-event-group-calendar .mbsc-timeline-resource-col {
   width: 240px;
 }
-.mds-event-grouping-calendar .mbsc-ios.mbsc-textfield-wrapper-box {
+.mds-event-group-calendar .mbsc-ios.mbsc-textfield-wrapper-box {
   margin: 10px 20px;
 }
-.mds-event-grouping-calendar .mbsc-timeline-resource-title {
+.mds-event-group-calendar .mbsc-timeline-resource-title {
   text-transform: capitalize;
 }
 /* Resource rendering - Employees */
-.mds-event-grouping-avatar {
+.mds-event-group-avatar {
   width: 40px;
   height: 40px;
 }
-.mds-event-grouping-cont {
+.mds-event-group-cont {
   padding: 0 7px;
 }
-.mds-event-grouping-name {
+.mds-event-group-name {
   font-size: 14px;
   line-height: 24px;
 }
-.mds-event-grouping-title {
+.mds-event-group-title {
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
 }
 /* Resource rendering - Types */
-.mds-event-grouping-type-resource {
+.mds-event-group-type-resource {
   align-items: center;
   padding: 8px 0;
 }
-.mds-event-grouping-type-badge {
+.mds-event-group-type-badge {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   margin: 0 10px;
 }
-.mds-event-grouping-type-name {
+.mds-event-group-type-name {
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
 }
 /* Grouped event - collapsed state */
-.mds-event-grouping-task-client {
+.mds-event-group-task-client {
   background-color: #f8f9fa;
   border-left: 4px solid;
   border-radius: 0 8px 8px 0;
@@ -2816,13 +2974,13 @@ updateView()
   overflow: hidden;
 }
 /* Grouped event header content */
-.mds-event-grouping-content {
+.mds-event-group-content {
   justify-content: space-between;
   align-items: center;
   padding: 10px 14px;
 }
 /* Client group title */
-.mds-event-grouping-title-text {
+.mds-event-group-title-text {
   font-size: 14px;
   font-weight: 600;
   color: #1e293b;
@@ -2835,34 +2993,33 @@ updateView()
   white-space: nowrap;
 }
 /* Right side container (meta + icon) */
-.mds-event-grouping-right {
+.mds-event-group-right {
   align-items: center;
   width: 130px;
 }
 /* Meta information (dates + counts) */
-.mds-event-grouping-meta {
+.mds-event-group-meta {
   flex-direction: column;
   align-items: flex-end;
   flex: 1;
   margin-right: 12px;
 }
-.mds-event-grouping-date-range {
+.mds-event-group-date-range {
   color: #797979;
   font-size: 11px;
   line-height: 14px;
   white-space: nowrap;
   margin-bottom: 2px;
 }
-.mds-event-grouping-count {
+.mds-event-group-count {
   font-size: 11px;
   line-height: 14px;
   white-space: nowrap;
 }
 /* Expand/collapse icon */
-.mds-event-grouping-icon {
+.mds-event-group-icon {
   font-size: 20px;
   cursor: pointer;
-  user-select: none;
   transition: transform 0.2s ease;
   width: 24px;
   height: 24px;
@@ -2871,44 +3028,38 @@ updateView()
   transform: rotate(0deg);
 }
 /* Icon rotation when expanded */
-.mds-event-grouping-task.expanded .mds-event-grouping-icon {
+.mds-event-group-task.expanded .mds-event-group-icon {
   transform: rotate(180deg);
 }
 /* Grid wrapper for smooth animation */
-.mds-event-grouping-events {
+.mds-event-group-events {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.2s ease;
 }
-.mds-event-grouping-events-inner {
+.mds-event-group-events-inner {
   overflow: hidden;
-  padding: 0 14px;
+  padding: 0 14px 4px;
   transition: padding 0.2s ease;
 }
-.mds-event-grouping-task.expanded .mds-event-grouping-events {
+.mds-event-group-task.expanded .mds-event-group-events {
   grid-template-rows: 1fr;
 }
-.mds-event-grouping-task.expanded .mds-event-grouping-events-inner {
-  padding: 0 14px 10px 14px;
-}
 /* Individual event in expanded list */
-.mds-event-grouping-original-event {
+.mds-event-group-original-event {
   background: #fff;
   border-radius: 6px;
   margin-bottom: 6px;
   padding: 8px 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
-.mds-event-grouping-original-event:last-child {
-  margin-bottom: 0;
-}
 /* Event content layout */
-.mds-event-grouping-event-content {
+.mds-event-group-event-content {
   justify-content: space-between;
   align-items: center;
 }
 /* Event title */
-.mds-event-grouping-event-title {
+.mds-event-group-event-title {
   font-weight: 600;
   color: #1e293b;
   font-size: 13px;
@@ -2921,12 +3072,12 @@ updateView()
   white-space: nowrap;
 }
 /* Right side (date + detail) */
-.mds-event-grouping-event-right {
+.mds-event-group-event-right {
   flex-direction: column;
   align-items: flex-end;
   min-width: 80px;
 }
-.mds-event-grouping-event-date {
+.mds-event-group-event-date {
   font-size: 11px;
   color: #94a3b8;
   white-space: nowrap;
@@ -2935,11 +3086,11 @@ updateView()
   margin-bottom: 2px;
 }
 /* Detail container (avatar/dot + text) */
-.mds-event-grouping-event-detail {
+.mds-event-group-event-detail {
   align-items: center;
   justify-content: flex-end;
 }
-.mds-event-grouping-event-info {
+.mds-event-group-event-info {
   font-size: 11px;
   font-weight: 700;
   color: #64748b;
@@ -2949,14 +3100,14 @@ updateView()
   text-transform: capitalize;
 }
 /* Avatar for assignee in type view */
-.mds-event-grouping-event-avatar {
+.mds-event-group-event-avatar {
   width: 16px;
   height: 16px;
   border-radius: 50%;
   margin-right: 6px;
 }
 /* Colored dot for type in assignee view */
-.mds-event-grouping-type-dot {
+.mds-event-group-type-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -3026,11 +3177,11 @@ updateView()
   text-transform: capitalize;
 }
 /* Header controls */
-.mds-event-grouping-header-controls {
+.mds-event-group-header-controls {
   align-items: center;
 }
 /* Select input */
-.mds-event-grouping-select.mbsc-textfield {
+.mds-event-group-select.mbsc-textfield {
   width: 210px;
 }
 </style>
