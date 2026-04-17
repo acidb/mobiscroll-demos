@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscCalendarEvent,
-  MbscDatepicker,
   MbscEventcalendar,
   MbscEventcalendarView,
   MbscEventUpdateEvent,
@@ -2378,7 +2377,7 @@ interface GroupData {
   resource: string | number;
   clientGroup: string;
   year: number;
-  quarter: number;
+  period: number;
   events: MbscCalendarEvent[];
 }
 
@@ -2394,8 +2393,6 @@ interface GroupData {
 export class AppComponent implements OnInit {
   @ViewChild('calendar', { static: false })
   calendar!: MbscEventcalendar;
-  @ViewChild('editDatePicker', { static: false })
-  editDatePicker!: MbscDatepicker;
   constructor(private notify: Notifications) { }
 
   rawEvents: MbscCalendarEvent[] = defaultEvents;
@@ -2405,10 +2402,6 @@ export class AppComponent implements OnInit {
 
   groupBy = 'assignee';
   groupByClientQuarter = false;
-  zoomLevel = 'month'; // 'quarter', 'month', 'half-year'
-  editingEventId: number | null = null;
-  editDatePickerHeader = '';
-  myDragBetweenResources = true;
 
   assigneeResources = assigneeResources;
   typeResources = typeResources;
@@ -2434,7 +2427,7 @@ export class AppComponent implements OnInit {
     // Save old collapsed states
     const oldCollapsedStates: Record<string, boolean | undefined> = {};
     this.groupedEvents.forEach((ge: any) => {
-      const stateKey = `${ge.resource}-${ge.clientGroup}-${ge.year}-${ge.quarter}`;
+      const stateKey = `${ge.resource}-${ge.clientGroup}-${ge.year}-${ge.period}`;
       oldCollapsedStates[stateKey] = ge.collapsed;
     });
 
@@ -2444,15 +2437,15 @@ export class AppComponent implements OnInit {
       const eventStart = new Date(event.start as string | number | Date);
       const month = eventStart.getMonth();
       const year = eventStart.getFullYear();
-      const quarter = Math.floor(month / 3);
-      const groupKey = `${resourceId}-${event.clientGroup}-${year}-${quarter}`;
+      const period = Math.floor(month / 3);
+      const groupKey = `${resourceId}-${event.clientGroup}-${year}-${period}`;
 
       if (!groups.has(groupKey)) {
         groups.set(groupKey, {
           resource: resourceId,
           clientGroup: event.clientGroup,
           year,
-          quarter,
+          period,
           events: []
         });
       }
@@ -2461,20 +2454,20 @@ export class AppComponent implements OnInit {
 
     // Create grouped events
     groups.forEach((groupData, groupKey) => {
-      const quarterEvents = [...groupData.events].sort((a, b) =>
-        new Date(a.start as any).getTime() - new Date(b.start as any).getTime()
+      const periodEvents = [...groupData.events].sort((a, b) =>
+        (a.start! < b.start! ? -1 : a.start! > b.start! ? 1 : 0)
       );
 
       const resourceList = this.groupBy === 'assignee' ? assigneeResources : typeResources;
       const color = resourceList.find((r) => r.id === groupData.resource)?.color;
-      const eventIds = quarterEvents.map((e) => e.id).join('-');
-      const earliestStart = quarterEvents[0].start;
-      const latestEnd = quarterEvents.reduce(
-        (latest, e) => (new Date(e.end as any).getTime() > new Date(latest as any).getTime() ? e.end : latest),
-        quarterEvents[0].end
+      const eventIds = periodEvents.map((e) => e.id).join('-');
+      const earliestStart = periodEvents[0].start;
+      const latestEnd = periodEvents.reduce(
+        (latest, e) => (e.end! > latest! ? e.end : latest),
+        periodEvents[0].end
       );
       const newId = `group-${groupKey}-${eventIds}`;
-      const stateKey = `${groupData.resource}-${groupData.clientGroup}-${groupData.year}-${groupData.quarter}`;
+      const stateKey = `${groupData.resource}-${groupData.clientGroup}-${groupData.year}-${groupData.period}`;
 
       result.push({
         id: newId,
@@ -2482,12 +2475,12 @@ export class AppComponent implements OnInit {
         resource: groupData.resource,
         clientGroup: groupData.clientGroup,
         year: groupData.year,
-        quarter: groupData.quarter,
+        period: groupData.period,
         start: earliestStart,
         end: latestEnd,
         color,
-        count: quarterEvents.length,
-        originalEvents: quarterEvents,
+        count: periodEvents.length,
+        originalEvents: periodEvents,
         collapsed: stateKey in oldCollapsedStates ? oldCollapsedStates[stateKey] : true,
       } as any);
     });
@@ -2521,20 +2514,6 @@ export class AppComponent implements OnInit {
     }
 
     this.myResources = currentResources;
-
-    switch (this.zoomLevel) {
-      case 'quarter':
-        this.myView = { timeline: { type: 'year', resolutionHorizontal: 'quarter', eventHeight: 'variable' } };
-        break;
-      case 'month':
-        this.myView = { timeline: { type: 'year', resolutionHorizontal: 'month', eventHeight: 'variable' } };
-        break;
-      case 'half-year':
-        this.myView = { timeline: { type: 'month', size: 6, resolutionHorizontal: 'month', eventHeight: 'variable' } };
-        break;
-    }
-
-    this.myDragBetweenResources = !this.groupByClientQuarter;
   }
 
   onGroupByChange(event: any): void {
@@ -2550,125 +2529,62 @@ export class AppComponent implements OnInit {
   onEventUpdate(args: MbscEventUpdateEvent): void {
     const updatedEvent = args.event as any;
     const oldEvent = args.oldEvent as any;
-    const newStart = new Date(updatedEvent.start).getTime();
-    const newEnd = new Date(updatedEvent.end).getTime();
 
-    if (this.groupByClientQuarter) {
-      const oldStart = new Date(oldEvent.start).getTime();
-      const oldEnd = new Date(oldEvent.end).getTime();
-      const startDelta = newStart - oldStart;
-      const endDelta = newEnd - oldEnd;
-
-      // Nothing changed
-      if (startDelta === 0 && endDelta === 0) return;
-
-      const movedGroupedEvent = this.groupedEvents.find((ge: any) => ge.id === oldEvent.id) as any;
-      if (!movedGroupedEvent) return;
-
-      const { clientGroup: clientGroupName, resource: resourceId, collapsed: wasCollapsed } = movedGroupedEvent;
-      const isMove = startDelta === endDelta;
-      let eventsToUpdate: any[];
-
-      if (isMove) {
-        // MOVE: shift all original events by the same delta
-        eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent: any) => ({
-          ...originalEvent,
-          start: new Date(new Date(originalEvent.start).getTime() + startDelta),
-          end: new Date(new Date(originalEvent.end).getTime() + startDelta),
-        }));
-      } else {
-        // RESIZE: proportionally remap all child events within the new group span
-        const oldGroupDuration = oldEnd - oldStart;
-        const newGroupDuration = newEnd - newStart;
-
-        eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent: any) => {
-          const evStart = new Date(originalEvent.start).getTime();
-          const evEnd = new Date(originalEvent.end).getTime();
-          const relativeStart = oldGroupDuration > 0 ? (evStart - oldStart) / oldGroupDuration : 0;
-          const relativeEnd = oldGroupDuration > 0 ? (evEnd - oldStart) / oldGroupDuration : 1;
-          const mappedStart = newStart + relativeStart * newGroupDuration;
-          let mappedEnd = newStart + relativeEnd * newGroupDuration;
-
-          // Ensure minimum duration for each child event
-          if ((mappedEnd - mappedStart) / (1000 * 60 * 60 * 24) < 1) {
-            mappedEnd = mappedStart + 1000 * 60 * 60 * 24; // At least 1 day
-          }
-
-          return {
-            ...originalEvent,
-            start: new Date(mappedStart),
-            end: new Date(mappedEnd),
-          };
-        });
-      }
-
-      // Sync into rawEvents
-      const updatedMap = new Map(eventsToUpdate.map((e: any) => [e.id, e]));
+    if (!this.groupByClientQuarter) {
+      // Simple view: sync into rawEvents
       this.rawEvents = this.rawEvents.map((e: any) =>
-        updatedMap.has(e.id) ? updatedMap.get(e.id)! : e
+        e.id === updatedEvent.id
+          ? { ...e, start: updatedEvent.start, end: updatedEvent.end }
+          : e
       );
-
-      // Rebuild view
-      this.updateView();
-
-      // Restore collapsed state
-      const newYear = new Date(eventsToUpdate[0].start).getFullYear();
-      const newQuarter = Math.floor(new Date(eventsToUpdate[0].start).getMonth() / 3);
-
-      const newGroupedEvent = this.groupedEvents.find((ge: any) =>
-        ge.resource === resourceId &&
-        ge.clientGroup === clientGroupName &&
-        ge.year === newYear &&
-        ge.quarter === newQuarter
-      ) as any;
-
-      if (newGroupedEvent) {
-        newGroupedEvent.collapsed = wasCollapsed;
-        this.displayEvents = [...this.groupedEvents];
-      }
-
-      const actionLabel = isMove ? 'moved' : 'resized';
-      this.notify.toast({
-        message: `${eventsToUpdate.length} event(s) for ${clientGroupName} have been ${actionLabel}.`,
-      });
-    } else {
-      const oldResource = (args.oldEvent as any).resource;
-      const newResource = updatedEvent.resource;
-      const resourceChanged = oldResource !== newResource;
-
-      // Sync into rawEvents (dates + resource if changed)
-      this.rawEvents = this.rawEvents.map((e: any) => {
-        if (e.id === updatedEvent.id) {
-          const update: any = { start: updatedEvent.start, end: updatedEvent.end };
-          if (resourceChanged) {
-            if (this.groupBy === 'assignee') {
-              update.resource = newResource;
-            } else {
-              update.type = newResource;
-            }
-          }
-          return { ...e, ...update };
-        }
-        return e;
-      });
-
-      if (resourceChanged) {
-        let fromName: string;
-        let toName: string;
-        if (this.groupBy === 'assignee') {
-          const fromRes = assigneeResources.find((r) => r.id === oldResource);
-          const toRes = assigneeResources.find((r) => r.id === newResource);
-          fromName = fromRes ? fromRes.name : oldResource;
-          toName = toRes ? toRes.name : newResource;
-        } else {
-          fromName = oldResource;
-          toName = newResource;
-        }
-        this.notify.toast({
-          message: `"${updatedEvent.title}" moved from ${fromName} to ${toName}.`,
-        });
-      }
+      return;
     }
+
+    // Grouped view
+    const startDelta = new Date(updatedEvent.start).getTime() - new Date(oldEvent.start).getTime();
+    if (startDelta === 0) return;
+
+    const movedGroupedEvent = this.groupedEvents.find((ge: any) => ge.id === oldEvent.id) as any;
+    if (!movedGroupedEvent) return;
+
+    const { clientGroup: clientGroupName, resource: resourceId, collapsed: wasCollapsed } = movedGroupedEvent;
+
+    const eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent: any) => ({
+      ...originalEvent,
+      start: new Date(new Date(originalEvent.start).getTime() + startDelta),
+      end: new Date(new Date(originalEvent.end).getTime() + startDelta),
+    }));
+
+    // Sync into rawEvents
+    const updatedIds = new Set(eventsToUpdate.map((e: any) => e.id));
+    const updatedMap = new Map(eventsToUpdate.map((e: any) => [e.id, e]));
+
+    this.rawEvents = this.rawEvents.map((e: any) =>
+      updatedIds.has(e.id) ? updatedMap.get(e.id)! : e
+    );
+
+    // Rebuild view
+    this.updateView();
+
+    // Restore collapsed state
+    const newYear = new Date(eventsToUpdate[0].start).getFullYear();
+    const newPeriod = Math.floor(new Date(eventsToUpdate[0].start).getMonth() / 3);
+
+    const newGroupedEvent = this.groupedEvents.find((ge: any) =>
+      ge.resource === resourceId &&
+      ge.clientGroup === clientGroupName &&
+      ge.year === newYear &&
+      ge.period === newPeriod
+    ) as any;
+
+    if (newGroupedEvent) {
+      newGroupedEvent.collapsed = wasCollapsed;
+      this.displayEvents = [...this.groupedEvents];
+    }
+
+    this.notify.toast({
+      message: `${eventsToUpdate.length} event(s) for ${clientGroupName} have been moved.`,
+    });
   }
 
   toggleGroupCollapse(groupEvent: any): void {
@@ -2725,81 +2641,6 @@ export class AppComponent implements OnInit {
 
   formatEventDate(date: any): string {
     return formatDate('DD MMM', new Date(date));
-  }
-
-  onZoomLevelChange(value: string): void {
-    this.zoomLevel = value;
-    this.updateView();
-  }
-
-  onEditBtnClick(mouseEvent: MouseEvent, ev: any): void {
-    mouseEvent.stopPropagation();
-    this.editingEventId = ev.id;
-    this.editDatePicker.options = { headerText: ev.title };
-    this.editDatePicker.setVal([new Date(ev.start), new Date(ev.end)]);
-    this.editDatePicker.open();
-  }
-
-  onDatepickerChange(args: any): void {
-    const dates = args.value;
-    const startVal = dates[0];
-    const endVal = dates[1];
-
-    if (this.editingEventId !== null && startVal && endVal) {
-      const oldEvent = this.rawEvents.find((e: any) => e.id === this.editingEventId) as any;
-      if (!oldEvent) return;
-
-      const eventTitle = oldEvent.title;
-      const oldQuarter = Math.floor(new Date(oldEvent.start).getMonth() / 3);
-      const newQuarterVal = Math.floor(new Date(startVal).getMonth() / 3);
-      const oldYear = new Date(oldEvent.start).getFullYear();
-      const newYear = new Date(startVal).getFullYear();
-      const quarterChanged = this.groupByClientQuarter && (oldQuarter !== newQuarterVal || oldYear !== newYear);
-
-      const applyUpdate = () => {
-        this.rawEvents = this.rawEvents.map((e: any) =>
-          e.id === this.editingEventId ? { ...e, start: startVal, end: endVal } : e
-        );
-        this.updateView();
-      };
-
-      if (quarterChanged) {
-        const quarterNames = ['Q1', 'Q2', 'Q3', 'Q4'];
-        const fromLabel = `${quarterNames[oldQuarter]} ${oldYear}`;
-        const toLabel = `${quarterNames[newQuarterVal]} ${newYear}`;
-
-        this.notify.confirm({
-          title: 'Move to different group',
-          message: `"${eventTitle}" will move from ${fromLabel} to ${toLabel}. Do you want to continue?`,
-          okText: 'Move',
-          cancelText: 'Cancel',
-          callback: (result: boolean) => {
-            if (result) {
-              applyUpdate();
-              this.notify.toast({ message: `"${eventTitle}" moved to ${toLabel}.` });
-            }
-          },
-        });
-      } else {
-        applyUpdate();
-        this.notify.toast({ message: `"${eventTitle}" dates updated.` });
-      }
-    }
-  }
-
-  getOriginalEventStyle(ev: any, groupEvent: any): Record<string, string> {
-    const groupStart = new Date(groupEvent.start).getTime();
-    const groupEnd = new Date(groupEvent.end).getTime();
-    const groupDuration = groupEnd - groupStart;
-    const evStart = new Date(ev.start).getTime();
-    const evEnd = new Date(ev.end).getTime();
-    const leftPercent = groupDuration > 0 ? ((evStart - groupStart) / groupDuration) * 100 : 0;
-    const widthPercent = groupDuration > 0 ? ((evEnd - evStart) / groupDuration) * 100 : 100;
-    return { 'margin-left': `${leftPercent}%`, width: `${widthPercent}%` };
-  }
-
-  getOriginalEventTitle(ev: any): string {
-    return `${ev.title}, ${formatDate('MM/DD/YYYY', new Date(ev.start))} - ${formatDate('MM/DD/YYYY', new Date(ev.end))}`;
   }
 
 }
