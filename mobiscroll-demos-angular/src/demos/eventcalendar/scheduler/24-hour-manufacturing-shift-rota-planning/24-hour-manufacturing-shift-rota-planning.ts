@@ -42,58 +42,15 @@ interface Shift {
 export class AppComponent {
   constructor(private notify: Notifications) {}
 
+  morningColor = '#4a8c4d';
+  afternoonColor = '#f87c6b';
+  nightColor = '#8567AD';
+
   shifts: Record<string, Shift> = {
     morning: { startHour: 6, endHour: 14, title: 'Morning Shift', color: '#4a8c4d' },
     afternoon: { startHour: 14, endHour: 22, title: 'Afternoon Shift', color: '#f87c6b' },
     night: { startHour: 22, endHour: 6, nextDay: true, title: 'Night Shift', color: '#8567AD' },
   };
-
-  getShiftByHour(hour: number) {
-    if (hour >= 6 && hour < 14) {
-      return this.shifts['morning'];
-    }
-    if (hour >= 14 && hour < 22) {
-      return this.shifts['afternoon'];
-    }
-    if (hour >= 22 || hour < 6) {
-      return this.shifts['night'];
-    }
-    return this.shifts['afternoon'];
-  }
-
-  calculateStart(start: Date): Date {
-    const d = new Date(start);
-    const originalHour = d.getHours();
-    const shift = this.getShiftByHour(originalHour);
-    d.setHours(shift.startHour, 0, 0, 0);
-    if (shift.startHour === 22 && originalHour < 6) {
-      d.setDate(d.getDate() - 1);
-    }
-    return d;
-  }
-
-  calculateEnd(start: Date): Date {
-    const d = new Date(start);
-    const startHour = d.getHours();
-    const shift = this.getShiftByHour(d.getHours());
-    d.setHours(shift.endHour, 0, 0, 0);
-    if (shift.nextDay && startHour === 22) {
-      d.setDate(d.getDate() + 1);
-    }
-    return d;
-  }
-
-  getTitle(startHours: number): string {
-    return this.getShiftByHour(startHours).title;
-  }
-
-  getColor(startHours: number): string {
-    return this.getShiftByHour(startHours).color;
-  }
-
-  morningColor = '#4a8c4d';
-  afternoonColor = '#f87c6b';
-  nightColor = '#8567AD';
 
   draggedEventStart: Date | null = null;
   draggedEventEnd: Date | null = null;
@@ -101,51 +58,6 @@ export class AppComponent {
   availableSlotOnHover: MbscCalendarColor | null = null;
   redResources: Record<string, boolean> = {};
   colors: MbscCalendarColor[] = [];
-
-  getAvailableSlots(resourceId: string, dayStart: Date): Record<string, boolean> {
-    const dayEnd = new Date(dayStart);
-    dayEnd.setDate(dayEnd.getDate() + 1);
-    dayEnd.setHours(6, 0, 0, 0);
-    const dayEvents = this.myEvents.filter((e: MbscCalendarEvent) => {
-      const eStart = new Date(e.start as Date);
-      return eStart >= dayStart && eStart < dayEnd;
-    });
-    const slots: Record<string, boolean> = { morning: true, afternoon: true, night: true };
-    dayEvents.forEach((e: MbscCalendarEvent) => {
-      if (e.resource === resourceId) {
-        slots['morning'] = slots['afternoon'] = slots['night'] = false;
-      } else {
-        const startHour = new Date(e.start as Date).getHours();
-        if (startHour === 6) {
-          slots['morning'] = false;
-        } else if (startHour === 14) {
-          slots['afternoon'] = false;
-        } else if (startHour === 22) {
-          slots['night'] = false;
-        }
-      }
-    });
-    return slots;
-  }
-
-  clearColorsForResource(colors: MbscCalendarColor[], resourceId: string, date: Date): MbscCalendarColor[] {
-    const base = new Date(date);
-    base.setHours(0, 0, 0, 0);
-    const baseTime = +base;
-    return colors.filter((c) => {
-      if (c.resource === resourceId) {
-        const cDate = new Date(c.start as Date);
-        cDate.setHours(0, 0, 0, 0);
-        if (+cDate === baseTime) {
-          const hour = new Date(c.start as Date).getHours();
-          if (hour === 6 || hour === 14 || hour === 22) {
-            return false;
-          }
-        }
-      }
-      return true;
-    });
-  }
 
   myEvents: MbscCalendarEvent[] = [
     {
@@ -482,6 +394,94 @@ export class AppComponent {
     { id: 'B', name: 'Crew B' },
     { id: 'C', name: 'Crew C' },
   ];
+
+  getShiftByHour(hour: number) {
+    if (hour >= 6 && hour < 14) {
+      return this.shifts['morning'];
+    }
+    if (hour >= 14 && hour < 22) {
+      return this.shifts['afternoon'];
+    }
+    if (hour >= 22 || hour < 6) {
+      return this.shifts['night'];
+    }
+    return this.shifts['afternoon'];
+  }
+
+  calculateStart(start: Date): Date {
+    const d = new Date(start);
+    const originalHour = d.getHours();
+    const shift = this.getShiftByHour(originalHour);
+    d.setHours(shift.startHour, 0, 0, 0);
+    if (shift.startHour === 22 && originalHour < 6) {
+      d.setDate(d.getDate() - 1);
+    }
+    return d;
+  }
+
+  calculateEnd(start: Date): Date {
+    const d = new Date(start);
+    const startHour = d.getHours();
+    const shift = this.getShiftByHour(d.getHours());
+    d.setHours(shift.endHour, 0, 0, 0);
+    if (shift.nextDay && startHour === 22) {
+      d.setDate(d.getDate() + 1);
+    }
+    return d;
+  }
+
+  getTitle(startHours: number): string {
+    return this.getShiftByHour(startHours).title;
+  }
+
+  getColor(startHours: number): string {
+    return this.getShiftByHour(startHours).color;
+  }
+
+  getAvailableSlots(resourceId: string, dayStart: Date): Record<string, boolean> {
+    const dayEnd = new Date(dayStart);
+    dayEnd.setDate(dayEnd.getDate() + 1);
+    dayEnd.setHours(6, 0, 0, 0);
+    const dayEvents = this.myEvents.filter((e: MbscCalendarEvent) => {
+      const eStart = new Date(e.start as Date);
+      return eStart >= dayStart && eStart < dayEnd;
+    });
+    const slots: Record<string, boolean> = { morning: true, afternoon: true, night: true };
+    dayEvents.forEach((e: MbscCalendarEvent) => {
+      if (e.resource === resourceId) {
+        slots['morning'] = slots['afternoon'] = slots['night'] = false;
+      } else {
+        const startHour = new Date(e.start as Date).getHours();
+        if (startHour === 6) {
+          slots['morning'] = false;
+        } else if (startHour === 14) {
+          slots['afternoon'] = false;
+        } else if (startHour === 22) {
+          slots['night'] = false;
+        }
+      }
+    });
+    return slots;
+  }
+
+  clearColorsForResource(colors: MbscCalendarColor[], resourceId: string, date: Date): MbscCalendarColor[] {
+    const base = new Date(date);
+    base.setHours(0, 0, 0, 0);
+    const baseTime = +base;
+    return colors.filter((c) => {
+      if (c.resource === resourceId) {
+        const cDate = new Date(c.start as Date);
+        cDate.setHours(0, 0, 0, 0);
+        if (+cDate === baseTime) {
+          const hour = new Date(c.start as Date).getHours();
+          if (hour === 6 || hour === 14 || hour === 22) {
+            return false;
+          }
+        }
+      }
+      return true;
+    });
+  }
 
   myOptions: MbscEventcalendarOptions = {
     cssClass: 'mds-24-hour-manufacturing-calendar',
