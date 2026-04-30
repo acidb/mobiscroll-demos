@@ -45,7 +45,7 @@ export default {
         var start = mobiscroll.formatDate('YYYY-MM-DDTHH:mm:ss', args.viewStart);
         var end = mobiscroll.formatDate('YYYY-MM-DDTHH:mm:ss', args.viewEnd);
 
-        $.getJSON(
+        mobiscroll.getJson(
           'https://trial.mobiscroll.com/load-data-scroll/?start=' +
             start +
             '&end=' +
@@ -53,8 +53,7 @@ export default {
             '&rstart=' +
             args.resourceStart +
             '&rend=' +
-            args.resourceEnd +
-            '&callback=?',
+            args.resourceEnd,
           function (data) {
             inst.setEvents(data.events);
 

@@ -2911,7 +2911,6 @@ export default {
     });
 
     var editDatePicker = mobiscroll.datepicker('#event-grouping-dates', {
-      // context,
       controls: ['calendar'],
       select: 'range',
       display: 'center',
