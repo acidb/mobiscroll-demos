@@ -188,6 +188,78 @@ const meetings = ref([
     resource: 3,
     color: '#51ac19',
     attendees: []
+  },
+  {
+    id: 'evt18',
+    title: 'Team Standup',
+    start: dyndatetime('y,m,d-1,9'),
+    end: dyndatetime('y,m,d-1,11'),
+    resource: 1,
+    color: '#e74c3c',
+    attendees: []
+  },
+  {
+    id: 'evt19',
+    title: 'Daily Scrum',
+    start: dyndatetime('y,m,d-1,10'),
+    end: dyndatetime('y,m,d-1,13'),
+    resource: 2,
+    color: '#3498db',
+    attendees: []
+  },
+  {
+    id: 'evt20',
+    title: 'Lunch Meeting',
+    start: dyndatetime('y,m,d-1,12'),
+    end: dyndatetime('y,m,d-1,14'),
+    resource: 3,
+    color: '#2ecc71',
+    attendees: []
+  },
+  {
+    id: 'evt21',
+    title: 'Weekly Sync',
+    start: dyndatetime('y,m,d-1,14'),
+    end: dyndatetime('y,m,d-1,16'),
+    resource: 4,
+    color: '#f39c12',
+    attendees: []
+  },
+  {
+    id: 'evt22',
+    title: 'Morning Briefing',
+    start: dyndatetime('y,m,d-2,9'),
+    end: dyndatetime('y,m,d-2,11'),
+    resource: 1,
+    color: '#9b59b6',
+    attendees: []
+  },
+  {
+    id: 'evt23',
+    title: 'Status Update',
+    start: dyndatetime('y,m,d-2,11'),
+    end: dyndatetime('y,m,d-2,14'),
+    resource: 2,
+    color: '#1abc9c',
+    attendees: []
+  },
+  {
+    id: 'evt24',
+    title: 'Client Call',
+    start: dyndatetime('y,m,d-2,13'),
+    end: dyndatetime('y,m,d-2,15'),
+    resource: 3,
+    color: '#e67e22',
+    attendees: []
+  },
+  {
+    id: 'evt25',
+    title: 'End of Day Review',
+    start: dyndatetime('y,m,d-2,16'),
+    end: dyndatetime('y,m,d-2,18'),
+    resource: 4,
+    color: '#34495e',
+    attendees: []
   }
 ])
 
