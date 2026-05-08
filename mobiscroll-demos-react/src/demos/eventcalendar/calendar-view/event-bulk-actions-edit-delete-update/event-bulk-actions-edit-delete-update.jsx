@@ -42,7 +42,7 @@ function App() {
 
     for (const event of events) {
       if (event.recurring) {
-        const origEvent = event.original;
+        const origEvent = eventsToUpdate.find((x) => x.id === event.original.id);
         const newEvent = {
           ...event,
           recurring: undefined,
@@ -54,9 +54,7 @@ function App() {
           ...origEvent,
           recurringException: [...(origEvent.recurringException || []), event.start],
         };
-
-        // Update the event in the list
-        const index = eventsToUpdate.findIndex((x) => x.id === updatedOrigEvent.id);
+        const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id);
         eventsToUpdate.splice(index, 1, updatedOrigEvent);
       } else {
         const newEv = { ...event };
@@ -83,14 +81,12 @@ function App() {
 
         for (const event of mySelectedEvents) {
           if (event.recurring) {
-            const origEvent = event.original;
+            const origEvent = eventsToUpdate.find((x) => x.id === event.original.id);
             const updatedOrigEvent = {
               ...origEvent,
               recurringException: [...(origEvent.recurringException || []), event.start],
             };
-
-            // Update the event in the list
-            const index = eventsToUpdate.findIndex((x) => x.id === updatedOrigEvent.id);
+            const index = eventsToUpdate.findIndex((x) => x.id === origEvent.id);
             eventsToUpdate.splice(index, 1, updatedOrigEvent);
           } else {
             eventsToUpdate = eventsToUpdate.filter((ev) => ev.id !== event.id);

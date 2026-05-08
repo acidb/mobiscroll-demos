@@ -915,52 +915,48 @@ function App() {
     [firstViewDay, lastViewDay, myResources],
   );
 
-  const updateCalendarEvents = useCallback(
-    (inst: Eventcalendar) => {
-      const dailyEvents = inst.getEvents();
-      const updatedSummaries = getAggregateEvents(dailyEvents);
-      setEventsWithSummaries([...myEvents.current, ...updatedSummaries]);
-    },
-    [getAggregateEvents, myEvents],
-  );
+  const updateCalendarEvents = useCallback(() => {
+    const updatedSummaries = getAggregateEvents(myEvents.current);
+    setEventsWithSummaries([...myEvents.current, ...updatedSummaries]);
+  }, [getAggregateEvents, myEvents]);
 
   const handlePageLoading = useCallback(
-    (args: MbscPageLoadingEvent, inst: Eventcalendar) => {
+    (args: MbscPageLoadingEvent) => {
       firstViewDay.current = new Date(args.firstDay);
       lastViewDay.current = new Date(args.lastDay);
-      setTimeout(() => updateCalendarEvents(inst));
+      setTimeout(() => updateCalendarEvents());
     },
     [updateCalendarEvents],
   );
 
   const handleEventUpdated = useCallback(
-    (args: MbscEventUpdatedEvent, inst: Eventcalendar) => {
+    (args: MbscEventUpdatedEvent) => {
       const updatedEvent = args.event;
       const index = myEvents.current.indexOf(updatedEvent);
       myEvents.current.splice(index, 1, updatedEvent);
-      setTimeout(() => updateCalendarEvents(inst));
+      setTimeout(() => updateCalendarEvents());
     },
     [updateCalendarEvents],
   );
 
   const handleEventCreated = useCallback(
-    (args: MbscEventCreatedEvent, inst: Eventcalendar) => {
+    (args: MbscEventCreatedEvent) => {
       const newEvent = args.event;
       myEvents.current = [...myEvents.current, newEvent];
       setTimeout(() => {
-        updateCalendarEvents(inst);
+        updateCalendarEvents();
       });
     },
     [updateCalendarEvents],
   );
 
   const handleEventDeleted = useCallback(
-    (args: MbscEventDeletedEvent, inst: Eventcalendar) => {
+    (args: MbscEventDeletedEvent) => {
       const deletedEvent = args.event;
       const index = myEvents.current.indexOf(deletedEvent);
       myEvents.current.splice(index, 1);
       setTimeout(() => {
-        updateCalendarEvents(inst);
+        updateCalendarEvents();
       });
     },
     [myEvents, updateCalendarEvents],

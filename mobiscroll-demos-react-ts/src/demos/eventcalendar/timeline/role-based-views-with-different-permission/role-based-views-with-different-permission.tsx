@@ -6,7 +6,7 @@ import {
   setOptions,
   Toast /* localeImport */,
 } from '@mobiscroll/react';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import './role-based-views-with-different-permission.css';
 
 setOptions({
@@ -122,7 +122,14 @@ const App: FC = () => {
   const user = useMemo(() => ({ name: 'Client', role: 'readonly' }), []);
   const user = useMemo(() => ({ name: 'Project Manager', role: 'full' }), []); */
 
-  const [isToastOpen, setToastOpen] = useState<boolean>(true);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setToastOpen(true);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
   const toastMessage = useMemo(() => {
     if (user.role === 'readonly') {
       return 'Client with read-only access logged in';

@@ -602,7 +602,7 @@ function App() {
         scrollLock={false}
         showOverlay={false}
         touchUi={false}
-        width={350}
+        width={400}
         onClose={handleTooltipClose}
       >
         <div className="mds-tooltip" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

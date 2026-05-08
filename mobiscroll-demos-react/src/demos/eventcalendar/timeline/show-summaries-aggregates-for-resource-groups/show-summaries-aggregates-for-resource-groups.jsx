@@ -902,52 +902,48 @@ function App() {
     [firstViewDay, lastViewDay, myResources],
   );
 
-  const updateCalendarEvents = useCallback(
-    (inst) => {
-      const dailyEvents = inst.getEvents();
-      const updatedSummaries = getAggregateEvents(dailyEvents);
-      setEventsWithSummaries([...myEvents.current, ...updatedSummaries]);
-    },
-    [getAggregateEvents, myEvents],
-  );
+  const updateCalendarEvents = useCallback(() => {
+    const updatedSummaries = getAggregateEvents(myEvents.current);
+    setEventsWithSummaries([...myEvents.current, ...updatedSummaries]);
+  }, [getAggregateEvents, myEvents]);
 
   const handlePageLoading = useCallback(
-    (args, inst) => {
+    (args) => {
       firstViewDay.current = new Date(args.firstDay);
       lastViewDay.current = new Date(args.lastDay);
-      setTimeout(() => updateCalendarEvents(inst));
+      setTimeout(() => updateCalendarEvents());
     },
     [updateCalendarEvents],
   );
 
   const handleEventUpdated = useCallback(
-    (args, inst) => {
+    (args) => {
       const updatedEvent = args.event;
       const index = myEvents.current.indexOf(updatedEvent);
       myEvents.current.splice(index, 1, updatedEvent);
-      setTimeout(() => updateCalendarEvents(inst));
+      setTimeout(() => updateCalendarEvents());
     },
     [updateCalendarEvents],
   );
 
   const handleEventCreated = useCallback(
-    (args, inst) => {
+    (args) => {
       const newEvent = args.event;
       myEvents.current = [...myEvents.current, newEvent];
       setTimeout(() => {
-        updateCalendarEvents(inst);
+        updateCalendarEvents();
       });
     },
     [updateCalendarEvents],
   );
 
   const handleEventDeleted = useCallback(
-    (args, inst) => {
+    (args) => {
       const deletedEvent = args.event;
       const index = myEvents.current.indexOf(deletedEvent);
       myEvents.current.splice(index, 1);
       setTimeout(() => {
-        updateCalendarEvents(inst);
+        updateCalendarEvents();
       });
     },
     [myEvents, updateCalendarEvents],
