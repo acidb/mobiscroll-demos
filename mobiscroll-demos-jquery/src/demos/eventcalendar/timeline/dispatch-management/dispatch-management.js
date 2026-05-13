@@ -1262,6 +1262,7 @@ export default {
 
 .mds-dispatch-management-wrapper {
   overflow: auto;
+  margin-top: 16px;
 }
 
 .mds-dispatch-management-jobs {
