@@ -1270,7 +1270,7 @@ export default {
   align-items: center;
   gap: 8px;
   margin: 4px 0;
-  padding: 7px 10px;
+  padding: 6px 10px;
   touch-action: none;
   color: #fff;
   background-color: #488dc5;
