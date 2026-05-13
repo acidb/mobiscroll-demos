@@ -358,7 +358,7 @@ export default {
               color: '#439ad1',
               name: '',
               capacity: 12,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'EP17 GMF',
               eventCreation: false,
               cssClass: 'mds-actual-resource',
@@ -376,7 +376,7 @@ export default {
               color: '#af5b1a',
               name: '',
               capacity: 12,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'DS41 CXP',
               eventCreation: false,
               cssClass: 'mds-actual-resource',
@@ -411,7 +411,7 @@ export default {
               color: '#62a83d',
               name: 'Mercedes Actros 2545',
               capacity: 20,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'KT19 LNV',
             },
             {
@@ -419,7 +419,7 @@ export default {
               color: '#62a83d',
               name: '',
               capacity: 20,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'KT19 LNV',
               eventCreation: false,
               cssClass: 'mds-actual-resource',
@@ -490,7 +490,7 @@ export default {
               color: '#d94c1a',
               name: 'Freightliner Cascadia',
               capacity: 24,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'VA18 RQW',
             },
             {
@@ -498,7 +498,7 @@ export default {
               color: '#d94c1a',
               name: '',
               capacity: 24,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'VA18 RQW',
               eventCreation: false,
               cssClass: 'mds-actual-resource',
@@ -619,7 +619,6 @@ export default {
       var zoomLevel = 5;
       var now = new Date();
       var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      var success;
       var myInvalids = [];
 
       function getActualDates(start, end) {
@@ -673,7 +672,7 @@ export default {
 
       function refresh() {
         var events = calendar.getEvents();
-        var minTime = new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000));
+        var minTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
 
         now = new Date();
 
@@ -707,12 +706,29 @@ export default {
             .attr('id', 'mds-dispatch-management-event-' + (i + 1))
             .addClass('mds-dispatch-management-jobs');
 
-          var $fromEl = $('<div></div>').html('<span style="font-weight:bold">From:</span> ' + job.from);
-          var $toEl = $('<div></div>').html('<span style="font-weight:bold">To:</span> ' + job.to);
-          var $sizeEl = $('<div></div>').html('<span style="font-weight:bold">Size:</span> ' + job.size + ' tons');
+          var $routeEl = $('<div class="mds-job-route"></div>');
+          var $fromEl = $('<div class="mds-job-stop"></div>').html(
+            '<span class="mds-job-dot mds-job-dot-origin"></span>' + '<span class="mds-job-addr">' + job.from + '</span>',
+          );
+          var $connectorEl = $('<div class="mds-job-connector"></div>');
+          var $toEl = $('<div class="mds-job-stop"></div>').html(
+            '<span class="mds-job-dot mds-job-dot-dest"></span>' + '<span class="mds-job-addr">' + job.to + '</span>',
+          );
+          $routeEl.append($fromEl, $connectorEl, $toEl);
+
+          var $metaEl = $('<div class="mds-job-meta"></div>').html(
+            '<span class="mds-job-time">' +
+              mobiscroll.formatDate('H:mm', new Date(job.start)) +
+              ' – ' +
+              mobiscroll.formatDate('H:mm', new Date(job.end)) +
+              '</span>' +
+              '<span class="mds-job-size">' +
+              job.size +
+              ' t</span>',
+          );
 
           // Append inner divs to job element
-          $jobEl.append($fromEl, $toEl, $sizeEl);
+          $jobEl.append($routeEl, $metaEl);
           container.append($jobEl);
 
           // Initialize mobiscroll draggable
@@ -725,17 +741,28 @@ export default {
       function filterResources() {
         filteredResources = myResources
           .map(function (category) {
+            var keptIds = {};
+            category.children.forEach(function (resource) {
+              if (String(resource.id).includes('actual')) return;
+              if (
+                filters[resource.status] &&
+                (!searchQuery ||
+                  resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  resource.plate.toLowerCase().includes(searchQuery.toLowerCase()))
+              ) {
+                keptIds[resource.id] = true;
+              }
+            });
             return {
               id: category.id,
               name: category.name,
               eventCreation: category.eventCreation,
               children: category.children.filter(function (resource) {
-                return (
-                  filters[resource.status] &&
-                  (!searchQuery ||
-                    resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    resource.plate.toLowerCase().includes(searchQuery.toLowerCase()))
-                );
+                if (String(resource.id).includes('actual')) {
+                  var parentId = String(resource.id).replace('-actual', '');
+                  return keptIds[parentId];
+                }
+                return keptIds[resource.id];
               }),
             };
           })
@@ -778,28 +805,27 @@ export default {
 
             // Capacity check
             if (truck.capacity < event.size) {
-              console.log('setting invalid due to capacity', truck.name);
               truck.eventCreation = false;
               invalidIds.push(truck.id);
               isValid = false;
             }
 
-            var truckEvents = calendar.getEvents().filter(function (ev) {
-              return ev.resource === truck.id;
-            });
-
-            // Overlap check
-            var overlappingEvent = truckEvents.find(function (ev) {
-              return ev.end > windowStart && ev.start < windowEnd;
-            });
-
-            // If truck has an overlap and the event is not already assigned to this truck
-            if (overlappingEvent && event.resource !== truck.id) {
-              console.log('setting invalid due to overlap', truck.name);
-              truck.eventCreation = false;
-              invalidIds.push(truck.id);
-              invalidIds.push(truck.id + '-actual');
-              isValid = false;
+            // Overlap check — only run if capacity is sufficient
+            if (isValid) {
+              var truckEvents = calendar.getEvents().filter(function (ev) {
+                return ev.resource === truck.id;
+              });
+              var overlappingEvent = truckEvents.find(function (ev) {
+                return ev.end > windowStart && ev.start < windowEnd;
+              });
+              if (overlappingEvent && event.resource !== truck.id) {
+                truck.eventCreation = false;
+                invalidIds.push(truck.id);
+                if (!String(truck.id).includes('actual')) {
+                  invalidIds.push(truck.id + '-actual');
+                }
+                isValid = false;
+              }
             }
 
             // Add to valid list if no issues found and not an actual resource
@@ -890,16 +916,14 @@ export default {
           draggedEvent.start = slot.start;
           draggedEvent.end = slot.end;
 
-          success = true;
-
           if (isEdit) {
             calendar.updateEvent(draggedEvent);
           } else {
             calendar.addEvent(draggedEvent);
           }
-        } else {
-          success = false;
+          return true;
         }
+        return false;
       }
 
       var popup = $popupElm
@@ -1013,7 +1037,7 @@ export default {
           eventOverlap: false,
           cssClass: 'mds-dispatch-management-calendar',
           zoomLevel: zoomLevel,
-          min: new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000)),
+          min: new Date(now.getTime() + 2 * 60 * 60 * 1000),
           view: {
             timeline: {
               type: 'day',
@@ -1045,8 +1069,7 @@ export default {
               '</div>' +
               '<div mbsc-calendar-prev></div>' +
               '<div mbsc-calendar-today></div>' +
-              '<div mbsc-calendar-next></div>' +
-              '</div>'
+              '<div mbsc-calendar-next></div>'
             );
           },
           renderResource: function (resource) {
@@ -1104,8 +1127,8 @@ export default {
           },
           onEventCreateFailed: function (args) {
             var draggedEvent = args.event;
-            moveToFirstAvailableSlot(draggedEvent, false);
-            if (success) {
+            var moved = moveToFirstAvailableSlot(draggedEvent, false);
+            if (moved) {
               if (args.action === 'externalDrop') {
                 $('#mds-dispatch-management-event-' + args.event.id).remove();
               }
@@ -1126,9 +1149,9 @@ export default {
           },
           onEventUpdateFailed: function (args) {
             var draggedEvent = args.event;
-            moveToFirstAvailableSlot(draggedEvent, true);
+            var moved = moveToFirstAvailableSlot(draggedEvent, true);
             calendar.navigateToEvent({ start: draggedEvent.start });
-            if (success) {
+            if (moved) {
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
@@ -1152,11 +1175,9 @@ export default {
             }
           },
           onEventDragEnd: function () {
-            console.log('success:', success);
             resetEventCreationFlags();
             now = new Date();
-            var minTime = new Date(now.setTime(now.getTime() + 2 * 60 * 60 * 1000));
-            console.log(minTime);
+            var minTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
             myInvalids = [];
             calendar.setOptions({
               resources: myResources,
@@ -1244,16 +1265,76 @@ export default {
 }
 
 .mds-dispatch-management-jobs {
-  margin: 5px 0;
-  padding: 10px 12px;
-  align-content: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+  padding: 7px 10px;
   touch-action: none;
   color: #fff;
   background-color: #488dc5;
   border-radius: 8px;
-  flex: 0 0 4.2em;
   font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-  font-size: 12px; 
+  font-size: 12px;
+  cursor: grab;
+}
+
+.mds-job-route {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.mds-job-stop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mds-job-dot {
+  flex: 0 0 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.mds-job-dot-origin {
+  background: transparent;
+}
+
+.mds-job-dot-dest {
+  background: #fff;
+}
+
+.mds-job-addr {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
+
+.mds-job-connector {
+  width: 2px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.4);
+  margin-left: 3px;
+}
+
+.mds-job-meta {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.mds-job-size {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-weight: 600;
 }
   
 .mds-dispatch-management-calendar .mbsc-timeline-resource-header {
