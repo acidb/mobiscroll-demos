@@ -1180,7 +1180,7 @@ export default {
             var minTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
             myInvalids = [];
             calendar.setOptions({
-              resources: myResources,
+              resources: filteredResources,
               invalid: myInvalids,
               min: minTime,
             });
