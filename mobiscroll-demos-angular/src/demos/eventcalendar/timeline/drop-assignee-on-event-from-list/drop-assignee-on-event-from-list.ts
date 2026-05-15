@@ -62,9 +62,9 @@ export class AppComponent {
   ];
 
   meetings: MbscCalendarEvent[] = [
-    { id: 'evt1', title: 'Sprint Planning', start: dyndatetime('y,m,d,9'), end: dyndatetime('y,m,d,11'), resource: 1, color: '#b52db9', attendees: [] },
+    { id: 'evt1', title: 'Sprint Planning', start: dyndatetime('y,m,d,9'), end: dyndatetime('y,m,d,11'), resource: 1, color: '#b52db9', attendees: [{ id: 'emp1', name: 'Alice Martin', avatar: 'AM', color: '#e74c3c' }, { id: 'emp2', name: 'Bob Johnson', avatar: 'BJ', color: '#3498db' }] },
     { id: 'evt2', title: 'Budget Review', start: dyndatetime('y,m,d,10'), end: dyndatetime('y,m,d,13'), resource: 2, color: '#669ce2', attendees: [] },
-    { id: 'evt3', title: 'Client Presentation', start: dyndatetime('y,m,d,15'), end: dyndatetime('y,m,d,18'), resource: 2, color: '#88bd42', attendees: [] },
+    { id: 'evt3', title: 'Client Presentation', start: dyndatetime('y,m,d,15'), end: dyndatetime('y,m,d,18'), resource: 2, color: '#88bd42', attendees: [{ id: 'emp3', name: 'Carol Smith', avatar: 'CS', color: '#2ecc71' }, { id: 'emp4', name: 'David Lee', avatar: 'DL', color: '#f39c12' }] },
     { id: 'evt4', title: 'Project Kickoff', start: dyndatetime('y,m,d,9'), end: dyndatetime('y,m,d,11'), resource: 3, color: '#b6962f', attendees: [] },
     { id: 'evt5', title: 'New Hire Orientation', start: dyndatetime('y,m,d,13'), end: dyndatetime('y,m,d,16'), resource: 4, color: '#c864f0', attendees: [] },
     { id: 'evt6', title: 'Design Review', start: dyndatetime('y,m,d,13'), end: dyndatetime('y,m,d,15'), resource: 1, color: '#c7682d', attendees: [] },
