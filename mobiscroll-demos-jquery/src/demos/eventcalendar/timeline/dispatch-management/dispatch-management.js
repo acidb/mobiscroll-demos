@@ -8,8 +8,6 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
-      themeVariant: 'light',
-      theme: 'ios',
     });
 
     $(function () {
