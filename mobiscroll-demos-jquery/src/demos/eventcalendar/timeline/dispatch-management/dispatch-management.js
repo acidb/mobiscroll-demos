@@ -8,6 +8,8 @@ export default {
     mobiscroll.setOptions({
       // locale,
       // theme
+      themeVariant: 'light',
+      theme: 'ios',
     });
 
     $(function () {
@@ -225,7 +227,6 @@ export default {
           children: [
             {
               id: 1,
-              color: '#7a8df5',
               name: 'Isuzu N-Series N35',
               capacity: 3.5,
               status: 'operational',
@@ -233,7 +234,6 @@ export default {
             },
             {
               id: '1-actual',
-              color: '#7a8df5',
               name: '',
               capacity: 3.5,
               status: 'operational',
@@ -243,7 +243,6 @@ export default {
             },
             {
               id: 2,
-              color: '#5cb87a',
               name: 'Mercedes-Benz Sprinter 3500',
               capacity: 3.5,
               status: 'operational',
@@ -251,7 +250,6 @@ export default {
             },
             {
               id: '2-actual',
-              color: '#5cb87a',
               name: '',
               capacity: 3.5,
               status: 'operational',
@@ -261,21 +259,23 @@ export default {
             },
             {
               id: 3,
-              color: '#c46c5a',
               name: 'Ford Transit 350',
               capacity: 3.5,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'QN62 RPV',
+              maintenanceFrom: dyndatetime('y,m,d-2,0'),
+              maintenanceTo: dyndatetime('y,m,d+2,0'),
             },
             {
               id: '3-actual',
-              color: '#c46c5a',
               name: '',
               capacity: 3.5,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'QN62 RPV',
               eventCreation: false,
               cssClass: 'mds-actual-resource',
+              maintenanceFrom: dyndatetime('y,m,d-2,0'),
+              maintenanceTo: dyndatetime('y,m,d+2,0'),
             },
           ],
         },
@@ -286,15 +286,13 @@ export default {
           children: [
             {
               id: 4,
-              color: '#c54242',
-              name: 'Ford F-150',
+              name: 'Ford F-650 Super Duty',
               capacity: 7,
               status: 'operational',
               plate: 'GR12 PEV',
             },
             {
               id: '4-actual',
-              color: '#c54242',
               name: '',
               capacity: 7,
               status: 'operational',
@@ -304,7 +302,6 @@ export default {
             },
             {
               id: 5,
-              color: '#7c4fcf',
               name: 'Isuzu F-Series FTR',
               capacity: 7,
               status: 'operational',
@@ -312,7 +309,6 @@ export default {
             },
             {
               id: '5-actual',
-              color: '#7c4fcf',
               name: '',
               capacity: 7,
               status: 'operational',
@@ -322,21 +318,23 @@ export default {
             },
             {
               id: 6,
-              color: '#a5d852',
               name: 'Hino 300 Series 716',
               capacity: 7,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'KT73 ZLD',
+              maintenanceFrom: dyndatetime('y,m,d+2,0'),
+              maintenanceTo: dyndatetime('y,m,d+5,0'),
             },
             {
               id: '6-actual',
-              color: '#a5d852',
               name: '',
               capacity: 7,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'KT73 ZLD',
               eventCreation: false,
               cssClass: 'mds-actual-resource',
+              maintenanceFrom: dyndatetime('y,m,d+2,0'),
+              maintenanceTo: dyndatetime('y,m,d+5,0'),
             },
           ],
         },
@@ -347,7 +345,6 @@ export default {
           children: [
             {
               id: 7,
-              color: '#439ad1',
               name: 'Hino 500 Series FD',
               capacity: 12,
               status: 'operational',
@@ -355,7 +352,6 @@ export default {
             },
             {
               id: '7-actual',
-              color: '#439ad1',
               name: '',
               capacity: 12,
               status: 'operational',
@@ -365,7 +361,6 @@ export default {
             },
             {
               id: 8,
-              color: '#af5b1a',
               name: 'Isuzu F-Series FVR',
               capacity: 12,
               status: 'operational',
@@ -373,7 +368,6 @@ export default {
             },
             {
               id: '8-actual',
-              color: '#af5b1a',
               name: '',
               capacity: 12,
               status: 'operational',
@@ -383,21 +377,23 @@ export default {
             },
             {
               id: 9,
-              color: '#6e6e6e',
               name: 'Mercedes-Benz Atego 1218',
               capacity: 12,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'NH65 QWD',
+              maintenanceFrom: dyndatetime('y,m,d-1,0'),
+              maintenanceTo: dyndatetime('y,m,d+1,0'),
             },
             {
               id: '9-actual',
-              color: '#6e6e6e',
               name: '',
               capacity: 12,
-              status: 'maintenance',
+              status: 'operational',
               plate: 'NH65 QWD',
               eventCreation: false,
               cssClass: 'mds-actual-resource',
+              maintenanceFrom: dyndatetime('y,m,d-1,0'),
+              maintenanceTo: dyndatetime('y,m,d+1,0'),
             },
           ],
         },
@@ -408,7 +404,6 @@ export default {
           children: [
             {
               id: 10,
-              color: '#62a83d',
               name: 'Mercedes Actros 2545',
               capacity: 20,
               status: 'operational',
@@ -416,7 +411,6 @@ export default {
             },
             {
               id: '10-actual',
-              color: '#62a83d',
               name: '',
               capacity: 20,
               status: 'operational',
@@ -426,7 +420,6 @@ export default {
             },
             {
               id: 11,
-              color: '#2d9b92',
               name: 'DAF XF 530',
               capacity: 20,
               status: 'operational',
@@ -434,7 +427,6 @@ export default {
             },
             {
               id: '11-actual',
-              color: '#2d9b92',
               name: '',
               capacity: 20,
               status: 'operational',
@@ -444,20 +436,22 @@ export default {
             },
             {
               id: 12,
-              color: '#b82f5e',
               name: 'Renault T High 520',
               capacity: 20,
               status: 'operational',
               plate: 'CD70 UJE',
+              maintenanceFrom: dyndatetime('y,m,d+4,0'),
+              maintenanceTo: dyndatetime('y,m,d+7,0'),
             },
             {
               id: '12-actual',
-              color: '#b82f5e',
               name: '',
               capacity: 20,
               status: 'operational',
               plate: 'CD70 UJE',
               eventCreation: false,
+              maintenanceFrom: dyndatetime('y,m,d+4,0'),
+              maintenanceTo: dyndatetime('y,m,d+7,0'),
               cssClass: 'mds-actual-resource',
             },
           ],
@@ -469,7 +463,6 @@ export default {
           children: [
             {
               id: 13,
-              color: '#3a6cc5',
               name: 'Volvo FH16',
               capacity: 24,
               status: 'operational',
@@ -477,7 +470,6 @@ export default {
             },
             {
               id: '13-actual',
-              color: '#3a6cc5',
               name: '',
               capacity: 24,
               status: 'operational',
@@ -487,7 +479,6 @@ export default {
             },
             {
               id: 14,
-              color: '#d94c1a',
               name: 'Freightliner Cascadia',
               capacity: 24,
               status: 'operational',
@@ -495,7 +486,6 @@ export default {
             },
             {
               id: '14-actual',
-              color: '#d94c1a',
               name: '',
               capacity: 24,
               status: 'operational',
@@ -505,7 +495,6 @@ export default {
             },
             {
               id: 15,
-              color: '#8e3d2f',
               name: 'Kenworth T680',
               capacity: 24,
               status: 'operational',
@@ -513,7 +502,6 @@ export default {
             },
             {
               id: '15-actual',
-              color: '#8e3d2f',
               name: '',
               capacity: 24,
               status: 'operational',
@@ -526,6 +514,7 @@ export default {
       ];
 
       var externalEvents = [
+        // Week 1
         {
           id: 1,
           from: '2000 Q St, Sacramento, CA',
@@ -584,7 +573,7 @@ export default {
         },
         {
           id: 8,
-          from: '1 E 1st St, Tulsa, OK',
+          from: '410 S Houston Ave, Tulsa, OK',
           to: '250 W Capitol Ave, Little Rock, AR',
           size: 11.5,
           pickup: [dyndatetime('y,m,d+2,6,30'), dyndatetime('y,m,d+2,8,30')],
@@ -606,20 +595,139 @@ export default {
           pickup: [dyndatetime('y,m,d+3,10'), dyndatetime('y,m,d+3,12')],
           drop: [dyndatetime('y,m,d+3,13'), dyndatetime('y,m,d+3,18')],
         },
+        // Week 2
+        {
+          id: 11,
+          from: '300 S Grand Ave, Los Angeles, CA',
+          to: '400 E Van Buren St, Phoenix, AZ',
+          size: 5,
+          pickup: [dyndatetime('y,m,d+7,8'), dyndatetime('y,m,d+7,10')],
+          drop: [dyndatetime('y,m,d+7,13'), dyndatetime('y,m,d+7,18')],
+        },
+        {
+          id: 12,
+          from: '200 W Washington St, Indianapolis, IN',
+          to: '100 N Main St, Louisville, KY',
+          size: 18,
+          pickup: [dyndatetime('y,m,d+8,7'), dyndatetime('y,m,d+8,9')],
+          drop: [dyndatetime('y,m,d+8,12'), dyndatetime('y,m,d+8,17')],
+        },
+        {
+          id: 13,
+          from: '500 N Michigan Ave, Chicago, IL',
+          to: '250 Marquette Ave, Minneapolis, MN',
+          size: 3,
+          pickup: [dyndatetime('y,m,d+9,9'), dyndatetime('y,m,d+9,11')],
+          drop: [dyndatetime('y,m,d+9,14'), dyndatetime('y,m,d+9,19')],
+        },
+        {
+          id: 14,
+          from: '600 Congress Ave, Austin, TX',
+          to: '700 Texas Ave, Houston, TX',
+          size: 12,
+          pickup: [dyndatetime('y,m,d+10,6'), dyndatetime('y,m,d+10,8')],
+          drop: [dyndatetime('y,m,d+10,11'), dyndatetime('y,m,d+10,16')],
+        },
+        {
+          id: 15,
+          from: '100 Broad St, Newark, NJ',
+          to: '200 S Orange Ave, Orlando, FL',
+          size: 7,
+          pickup: [dyndatetime('y,m,d+12,10'), dyndatetime('y,m,d+12,12')],
+          drop: [dyndatetime('y,m,d+12,15'), dyndatetime('y,m,d+12,20')],
+        },
+        // Week 3
+        {
+          id: 16,
+          from: '400 Pike St, Seattle, WA',
+          to: '800 SW Broadway, Portland, OR',
+          size: 9,
+          pickup: [dyndatetime('y,m,d+14,7'), dyndatetime('y,m,d+14,9')],
+          drop: [dyndatetime('y,m,d+14,12'), dyndatetime('y,m,d+14,16')],
+        },
+        {
+          id: 17,
+          from: '300 Main St, Buffalo, NY',
+          to: '500 Euclid Ave, Cleveland, OH',
+          size: 22,
+          pickup: [dyndatetime('y,m,d+15,8'), dyndatetime('y,m,d+15,11')],
+          drop: [dyndatetime('y,m,d+15,14'), dyndatetime('y,m,d+15,19')],
+        },
+        {
+          id: 18,
+          from: '150 S Miami Ave, Miami, FL',
+          to: '300 Peachtree St, Atlanta, GA',
+          size: 6,
+          pickup: [dyndatetime('y,m,d+16,9'), dyndatetime('y,m,d+16,11')],
+          drop: [dyndatetime('y,m,d+16,13'), dyndatetime('y,m,d+16,18')],
+        },
+        {
+          id: 19,
+          from: '700 W 3rd St, Kansas City, MO',
+          to: '400 N Broadway, St Louis, MO',
+          size: 15,
+          pickup: [dyndatetime('y,m,d+18,6'), dyndatetime('y,m,d+18,8')],
+          drop: [dyndatetime('y,m,d+18,10'), dyndatetime('y,m,d+18,15')],
+        },
+        {
+          id: 20,
+          from: '250 E Houston St, San Antonio, TX',
+          to: '1200 Commerce St, Dallas, TX',
+          size: 4,
+          pickup: [dyndatetime('y,m,d+19,11'), dyndatetime('y,m,d+19,13')],
+          drop: [dyndatetime('y,m,d+19,15'), dyndatetime('y,m,d+19,20')],
+        },
+        // Week 4
+        {
+          id: 21,
+          from: '800 N Michigan Ave, Chicago, IL',
+          to: '500 Woodward Ave, Detroit, MI',
+          size: 11,
+          pickup: [dyndatetime('y,m,d+21,7'), dyndatetime('y,m,d+21,9')],
+          drop: [dyndatetime('y,m,d+21,12'), dyndatetime('y,m,d+21,17')],
+        },
+        {
+          id: 22,
+          from: '900 Market St, San Francisco, CA',
+          to: '600 Wilshire Blvd, Los Angeles, CA',
+          size: 20,
+          pickup: [dyndatetime('y,m,d+22,8'), dyndatetime('y,m,d+22,10')],
+          drop: [dyndatetime('y,m,d+22,14'), dyndatetime('y,m,d+22,19')],
+        },
+        {
+          id: 23,
+          from: '350 5th Ave, New York, NY',
+          to: '100 Federal St, Boston, MA',
+          size: 3.5,
+          pickup: [dyndatetime('y,m,d+23,9'), dyndatetime('y,m,d+23,11')],
+          drop: [dyndatetime('y,m,d+23,13'), dyndatetime('y,m,d+23,17')],
+        },
+        {
+          id: 24,
+          from: '200 S Tryon St, Charlotte, NC',
+          to: '100 N Main St, Greenville, SC',
+          size: 8,
+          pickup: [dyndatetime('y,m,d+25,6'), dyndatetime('y,m,d+25,8')],
+          drop: [dyndatetime('y,m,d+25,10'), dyndatetime('y,m,d+25,14')],
+        },
       ];
 
       var $calendarElm = $('#demo-dispatch-management');
       var $popupElm = $('#demo-dispatch-management-filtering-popup');
       var $resourceList = $('#demo-dispatch-management-resource-list');
+      var scheduledJobIds = [];
 
       var filters = {};
       var filteredResources = myResources;
       var searchTimeout;
       var searchQuery;
-      var zoomLevel = 5;
+      var zoomLevel = 3;
       var now = new Date();
       var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       var myInvalids = [];
+      var currentViewStart = today;
+      var currentViewEnd = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+      var maintenanceInvalids = [];
 
       function getActualDates(start, end) {
         var duration = end.getTime() - start.getTime(); // Get duration in milliseconds
@@ -641,15 +749,86 @@ export default {
         return [actualStart, actualEnd];
       }
 
+      var statusColors = {
+        scheduled: '#5cb87a',
+        started: '#e8a838',
+        completed: '#9e9e9e',
+      };
+
+      var maintenanceColors = {
+        'in-maintenance': '#f44336',
+        'maintenance-planned': '#ff9800',
+        operational: '#4caf50',
+      };
+
+      var maintenanceLabels = {
+        'in-maintenance': 'In Maintenance',
+        'maintenance-planned': 'Maintenance Planned',
+        operational: 'Operational',
+      };
+
+      function getResourceMaintenanceStatus(resource) {
+        if (!resource.maintenanceFrom || !resource.maintenanceTo) {
+          return 'operational';
+        }
+        var from = resource.maintenanceFrom;
+        var to = resource.maintenanceTo;
+        if (now >= from && now <= to) {
+          return 'in-maintenance';
+        }
+        if (from < currentViewEnd && to > currentViewStart) {
+          return 'maintenance-planned';
+        }
+        return 'operational';
+      }
+
+      function buildMaintenanceInvalids() {
+        var invalids = [];
+        myResources.forEach(function (group) {
+          group.children.forEach(function (resource) {
+            if (resource.maintenanceFrom && resource.maintenanceTo && !String(resource.id).includes('actual')) {
+              invalids.push({
+                start: resource.maintenanceFrom,
+                end: resource.maintenanceTo,
+                resource: resource.id,
+                cssClass: 'mds-maintenance-invalid',
+              });
+            }
+          });
+        });
+        return invalids;
+      }
+
+      function setupMaintenanceDates() {
+        myResources.forEach(function (group) {
+          group.children.forEach(function (resource) {
+            if (resource.maintenanceFrom) {
+              resource.maintenanceFrom = new Date(resource.maintenanceFrom);
+            }
+            if (resource.maintenanceTo) {
+              resource.maintenanceTo = new Date(resource.maintenanceTo);
+            }
+          });
+        });
+      }
+
       function addActualEvents(events) {
         for (var i = 0; i < events.length; ++i) {
           var event = events[i];
           // Convert dates to date objects
           event.start = event.start ? new Date(event.start) : event.start;
           event.end = event.end ? new Date(event.end) : event.end;
+          // Assign status-based color
+          if (event.status && statusColors[event.status]) {
+            event.color = statusColors[event.status];
+          }
           // Mark past events
           event.editable = event.start && new Date() < event.start;
-          // Add actual events for ongoing jobs
+          // Override color for in-progress events (including ones already paired with an actual)
+          if (event.start < now && event.end > now && event.status !== 'actual') {
+            event.color = statusColors['started'];
+          }
+          // Create actual event if not already done
           if (event.start < now && event.end > now && event.status !== 'actual' && !event.actual) {
             var actualDates = getActualDates(event.start, event.end);
             var newEvent = {
@@ -659,6 +838,7 @@ export default {
               end: actualDates[1],
               title: event.from + ' → ' + event.to,
               status: 'actual',
+              color: event.color,
               cssClass: 'mds-actual-event',
               editable: false,
             };
@@ -672,15 +852,15 @@ export default {
 
       function refresh() {
         var events = calendar.getEvents();
-        var minTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
 
         now = new Date();
+        filteredResources = computeFilteredResources();
 
         addActualEvents(events);
         setTimeout(function () {
           calendar.setOptions({
-            min: minTime, // Dynamic min is not working, only if invalids changed as well
-            invalid: $.merge([], myInvalids),
+            resources: filteredResources,
+            invalid: $.merge([], myInvalids).concat(maintenanceInvalids),
             data: events,
           });
         });
@@ -695,15 +875,31 @@ export default {
         }
       }
 
-      function setupDispatchJobs() {
+      function refreshJobList() {
         var container = $('#dispatch-management-events');
-        setEventData(externalEvents);
+        container.empty();
 
-        for (var i = 0; i < externalEvents.length; i++) {
-          var job = externalEvents[i];
+        var rangeEnd = new Date(currentRangeStart.getTime() + currentRangeDays * 24 * 60 * 60 * 1000);
+        var minPickup = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+        var visibleJobs = externalEvents.filter(function (job) {
+          if (scheduledJobIds.indexOf(job.id) !== -1) return false;
+          var pickupStart = new Date(job.pickup[0]);
+          if (pickupStart < minPickup) return false;
+          return pickupStart >= currentRangeStart && pickupStart < rangeEnd;
+        });
+
+        if (visibleJobs.length === 0) {
+          container.html(
+            '<p class="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted mds-dispatch-jobs-empty">No unscheduled jobs for this period.</p>',
+          );
+          return;
+        }
+
+        for (var i = 0; i < visibleJobs.length; i++) {
+          var job = visibleJobs[i];
 
           var $jobEl = $('<div></div>')
-            .attr('id', 'mds-dispatch-management-event-' + (i + 1))
+            .attr('id', 'mds-dispatch-management-event-' + job.id)
             .addClass('mds-dispatch-management-jobs');
 
           var $routeEl = $('<div class="mds-job-route"></div>');
@@ -718,34 +914,33 @@ export default {
 
           var $metaEl = $('<div class="mds-job-meta"></div>').html(
             '<span class="mds-job-time">' +
-              mobiscroll.formatDate('H:mm', new Date(job.start)) +
+              mobiscroll.formatDate('H:mm', new Date(job.pickup[0])) +
               ' – ' +
-              mobiscroll.formatDate('H:mm', new Date(job.end)) +
+              mobiscroll.formatDate('H:mm', new Date(job.drop[1])) +
               '</span>' +
               '<span class="mds-job-size">' +
               job.size +
               ' t</span>',
           );
 
-          // Append inner divs to job element
           $jobEl.append($routeEl, $metaEl);
           container.append($jobEl);
 
-          // Initialize mobiscroll draggable
           $jobEl.mobiscroll().draggable({
             dragData: job,
           });
         }
       }
 
-      function filterResources() {
-        filteredResources = myResources
+      function computeFilteredResources() {
+        return myResources
           .map(function (category) {
             var keptIds = {};
             category.children.forEach(function (resource) {
               if (String(resource.id).includes('actual')) return;
+              var filterKey = getResourceMaintenanceStatus(resource) === 'operational' ? 'operational' : 'maintenance';
               if (
-                filters[resource.status] &&
+                filters[filterKey] &&
                 (!searchQuery ||
                   resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                   resource.plate.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -760,7 +955,11 @@ export default {
               children: category.children.filter(function (resource) {
                 if (String(resource.id).includes('actual')) {
                   var parentId = String(resource.id).replace('-actual', '');
-                  return keptIds[parentId];
+                  if (!keptIds[parentId]) return false;
+                  var parent = category.children.find(function (r) {
+                    return String(r.id) === parentId;
+                  });
+                  return !parent || getResourceMaintenanceStatus(parent) === 'operational';
                 }
                 return keptIds[resource.id];
               }),
@@ -769,7 +968,10 @@ export default {
           .filter(function (res) {
             return res.children.length > 0 && filters[res.id];
           });
+      }
 
+      function filterResources() {
+        filteredResources = computeFilteredResources();
         calendar.setOptions({ resources: filteredResources });
       }
 
@@ -777,12 +979,36 @@ export default {
         zoomLevel = zoom;
 
         $('#demo-dispatch-management-zoom-level-slider').val(zoomLevel);
-        $('#demo-dispatch-management-zoom-level-in').prop('disabled', zoomLevel === 8);
+        $('#demo-dispatch-management-zoom-level-in').prop('disabled', zoomLevel === 5);
         $('#demo-dispatch-management-zoom-level-out').prop('disabled', zoomLevel === 1);
 
         calendar.setOptions({
           zoomLevel: zoomLevel,
         });
+      }
+
+      function buildViewConfig(days) {
+        return {
+          timeline: {
+            type: 'day',
+            size: days,
+            timeCellStep: 60,
+            timeLabelStep: 60,
+            eventHeight: 'variable',
+            zoomLevels: {
+              1: { type: 'day', size: days, timeCellStep: 360, timeLabelStep: 360, columnWidth: 'xsmall' },
+              2: { type: 'day', size: days, timeCellStep: 120, timeLabelStep: 120, columnWidth: 'small' },
+              3: { type: 'day', size: days, timeCellStep: 60, timeLabelStep: 60, columnWidth: 'medium' },
+              4: { type: 'day', size: days, timeCellStep: 60, timeLabelStep: 60, columnWidth: 'xlarge' },
+              5: { type: 'day', size: days, timeCellStep: 30, timeLabelStep: 60, columnWidth: 'xlarge' },
+            },
+          },
+        };
+      }
+
+      function applyDaysRange(days, startDate) {
+        calendar.navigate(startDate || today);
+        calendar.setOptions({ view: buildViewConfig(days) });
       }
 
       function invalidateResources(event) {
@@ -816,7 +1042,8 @@ export default {
                 return ev.resource === truck.id;
               });
               var overlappingEvent = truckEvents.find(function (ev) {
-                return ev.end > windowStart && ev.start < windowEnd;
+                var evEnd = ev.drop ? new Date(ev.drop[1]) : ev.end;
+                return evEnd > windowStart && ev.start < windowEnd;
               });
               if (overlappingEvent && event.resource !== truck.id) {
                 truck.eventCreation = false;
@@ -835,6 +1062,24 @@ export default {
           }
         }
 
+        var resourcesToSet = filteredResources.map(function (group) {
+          var hasValidChild = false;
+          for (var k = 0; k < group.children.length; k++) {
+            var child = group.children[k];
+            if (!String(child.id).includes('actual') && validIds.indexOf(child.id) !== -1) {
+              hasValidChild = true;
+              break;
+            }
+          }
+          return {
+            id: group.id,
+            name: group.name,
+            eventCreation: group.eventCreation,
+            children: group.children,
+            collapsed: !hasValidChild,
+          };
+        });
+
         myInvalids = [
           {
             start: today,
@@ -844,7 +1089,6 @@ export default {
             start: today,
             end: sevenDaysFromNow,
             resource: invalidIds,
-            // cssClass: 'mds-dispatch-management-disabled-row mbsc-flex',
           },
           {
             start: windowEnd,
@@ -853,7 +1097,9 @@ export default {
         ];
 
         calendar.setOptions({
-          invalid: myInvalids,
+          resources: resourcesToSet,
+          invalid: myInvalids.concat(maintenanceInvalids),
+          min: minTime,
         });
 
         return validIds.length > 0 ? validIds[0] : null;
@@ -1017,13 +1263,13 @@ export default {
 
       myResources.forEach(function (category) {
         filters[category.id] = true;
-        category.children.forEach(function (resource) {
-          filters[resource.id] = true;
-        });
       });
 
       setEventData(myEvents);
       addActualEvents(myEvents);
+      setupMaintenanceDates();
+      maintenanceInvalids = buildMaintenanceInvalids();
+      filteredResources = computeFilteredResources();
 
       var calendar = $calendarElm
         .mobiscroll()
@@ -1037,42 +1283,27 @@ export default {
           eventOverlap: false,
           cssClass: 'mds-dispatch-management-calendar',
           zoomLevel: zoomLevel,
-          min: new Date(now.getTime() + 2 * 60 * 60 * 1000),
           view: {
             timeline: {
               type: 'day',
               size: 7,
-              timeCellStep: 180,
-              timeLabelStep: 180,
+              timeCellStep: 60,
+              timeLabelStep: 60,
               eventHeight: 'variable',
               zoomLevels: {
-                1: { type: 'day', size: 7, columnWidth: 'xxsmall' },
-                2: { type: 'day', size: 7, columnWidth: 'xsmall' },
-                3: { type: 'day', size: 7, columnWidth: 'small' },
-                4: { type: 'day', size: 7, columnWidth: 'medium' },
-                5: { type: 'day', size: 7, columnWidth: 'large' },
-                6: { type: 'day', size: 7, columnWidth: 'xlarge' },
-                7: { type: 'day', size: 7, columnWidth: 'xxlarge' },
-                8: { type: 'day', size: 7, columnWidth: 'xxxlarge' },
+                1: { type: 'day', size: 7, timeCellStep: 360, timeLabelStep: 360, columnWidth: 'xsmall' },
+                2: { type: 'day', size: 7, timeCellStep: 120, timeLabelStep: 120, columnWidth: 'small' },
+                3: { type: 'day', size: 7, timeCellStep: 60, timeLabelStep: 60, columnWidth: 'medium' },
+                4: { type: 'day', size: 7, timeCellStep: 60, timeLabelStep: 60, columnWidth: 'xlarge' },
+                5: { type: 'day', size: 7, timeCellStep: 30, timeLabelStep: 60, columnWidth: 'xlarge' },
               },
             },
           },
           data: myEvents,
           resources: filteredResources,
-          renderHeader: function () {
-            return (
-              '<div mbsc-calendar-nav></div>' +
-              '<div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end">' +
-              '<button id="demo-dispatch-management-zoom-level-out" mbsc-button data-icon="minus" data-variant="flat"></button>' +
-              '<input id="demo-dispatch-management-zoom-level-slider" type="range" min="1" max="8" value="5" />' +
-              '<button id="demo-dispatch-management-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>' +
-              '</div>' +
-              '<div mbsc-calendar-prev></div>' +
-              '<div mbsc-calendar-today></div>' +
-              '<div mbsc-calendar-next></div>'
-            );
-          },
+          invalid: maintenanceInvalids,
           renderResource: function (resource) {
+            var mStatus = getResourceMaintenanceStatus(resource);
             return (
               '<div>' +
               '<div class="mds-dispatch-management-name">' +
@@ -1082,9 +1313,9 @@ export default {
               (!resource.isParent && resource.name
                 ? '<div class="mds-dispatch-management-status">' +
                   '<span class="mds-dispatch-management-status-dot" style="background-color:' +
-                  (resource.status === 'operational' ? 'green' : 'orange') +
+                  maintenanceColors[mStatus] +
                   ';"></span>' +
-                  resource.status +
+                  maintenanceLabels[mStatus] +
                   '</div>'
                 : '') +
               '</div>'
@@ -1118,8 +1349,15 @@ export default {
           },
           onEventCreated: function (args) {
             if (args.action === 'externalDrop') {
+              scheduledJobIds.push(args.event.id);
               $('#mds-dispatch-management-event-' + args.event.id).remove();
+              calendar.updateEvent(Object.assign({}, args.event, { status: 'scheduled', color: statusColors['scheduled'] }));
             }
+            var eventStart = args.event.start;
+            var eventResource = args.event.resource;
+            setTimeout(function () {
+              calendar.navigateToEvent({ start: eventStart, resource: eventResource });
+            });
             mobiscroll.toast({
               // context,
               message: args.event.from + ' → ' + args.event.to + ' added',
@@ -1132,6 +1370,9 @@ export default {
               if (args.action === 'externalDrop') {
                 $('#mds-dispatch-management-event-' + args.event.id).remove();
               }
+              setTimeout(function () {
+                calendar.navigateToEvent({ start: draggedEvent.start, resource: draggedEvent.resource });
+              });
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
@@ -1150,7 +1391,9 @@ export default {
           onEventUpdateFailed: function (args) {
             var draggedEvent = args.event;
             var moved = moveToFirstAvailableSlot(draggedEvent, true);
-            calendar.navigateToEvent({ start: draggedEvent.start });
+            setTimeout(function () {
+              calendar.navigateToEvent({ start: draggedEvent.start, resource: draggedEvent.resource });
+            });
             if (moved) {
               mobiscroll.toast({
                 //<hidden>
@@ -1169,21 +1412,36 @@ export default {
           },
           onEventDragStart: function (args) {
             var resourceToNavigate = invalidateResources(args.event);
-            // Only navitate if drag is from external list
             if (!args.event.resource) {
-              calendar.navigateToEvent({ start: args.event.start, resource: resourceToNavigate });
+              if (resourceToNavigate && findFirstSlot(args.event)) {
+                calendar.navigateToEvent({ start: args.event.start, resource: resourceToNavigate });
+              } else {
+                mobiscroll.toast({ message: 'No available slot for: ' + args.event.from + ' → ' + args.event.to });
+              }
             }
           },
           onEventDragEnd: function () {
             resetEventCreationFlags();
-            now = new Date();
-            var minTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
             myInvalids = [];
             calendar.setOptions({
-              resources: filteredResources,
-              invalid: myInvalids,
-              min: minTime,
+              resources: filteredResources.map(function (group) {
+                return {
+                  id: group.id,
+                  name: group.name,
+                  eventCreation: group.eventCreation,
+                  children: group.children,
+                  collapsed: false,
+                };
+              }),
+              invalid: maintenanceInvalids,
+              min: null,
             });
+          },
+          onPageLoaded: function (args) {
+            currentViewStart = args.firstDay;
+            currentViewEnd = args.lastDay;
+            filteredResources = computeFilteredResources();
+            calendar.setOptions({ resources: filteredResources });
           },
         })
         .mobiscroll('getInst');
@@ -1200,20 +1458,171 @@ export default {
         handleZoom(zoomLevel - 1);
       });
 
-      setupDispatchJobs();
+      setEventData(externalEvents);
+
+      var pendingRangeStart = today;
+      var pendingRangeDays = 7;
+      var currentRangeStart = today;
+      var currentRangeDays = 7;
+
+      function formatRangeLabel(start, days) {
+        var end = new Date(start.getTime() + (days - 1) * 24 * 60 * 60 * 1000);
+        return mobiscroll.formatDate('MMM D', start) + ' – ' + mobiscroll.formatDate('MMM D, YYYY', end);
+      }
+
+      function applyPendingRange() {
+        currentRangeStart = pendingRangeStart;
+        currentRangeDays = pendingRangeDays;
+        applyDaysRange(currentRangeDays, currentRangeStart);
+        $('#mds-dispatch-range-label').text(formatRangeLabel(currentRangeStart, currentRangeDays));
+        refreshJobList();
+      }
+
+      function disableRangeInputs(disable) {
+        var startInst = mobiscroll.getInst($('#mds-dispatch-range-start')[0]);
+        var endInst = mobiscroll.getInst($('#mds-dispatch-range-end')[0]);
+        if (startInst) startInst.setOptions({ disabled: disable });
+        if (endInst) endInst.setOptions({ disabled: disable });
+      }
+
+      var rangePopup = $('#mds-dispatch-range-popup')
+        .mobiscroll()
+        .popup({
+          responsive: {
+            xsmall: {
+              display: 'bottom',
+              touchUi: true,
+              buttons: [
+                {
+                  text: 'Apply',
+                  keyCode: 'enter',
+                  handler: function () {
+                    applyPendingRange();
+                    rangePopup.close();
+                  },
+                  cssClass: 'mbsc-popup-button-primary',
+                },
+                'cancel',
+              ],
+            },
+            custom: {
+              breakpoint: 575,
+              buttons: [],
+              display: 'anchored',
+              anchor: document.getElementById('mds-dispatch-range-trigger'),
+              anchorAlign: 'start',
+              touchUi: false,
+              scrollLock: false,
+              showArrow: false,
+              maxWidth: 920,
+            },
+          },
+        })
+        .mobiscroll('getInst');
+
+      var rangeSelectInst = $('#mds-dispatch-range-select')
+        .mobiscroll()
+        .select({
+          inputElement: document.getElementById('mds-dispatch-range-select-input'),
+          responsive: {
+            xsmall: { touchUi: true },
+            small: { touchUi: false },
+          },
+          onChange: function (args) {
+            var val = args.value;
+            if (val === 'custom') {
+              disableRangeInputs(false);
+            } else {
+              disableRangeInputs(true);
+              pendingRangeDays = +val;
+              pendingRangeStart = today;
+              if (rangeCalendar) {
+                var end = new Date(today.getTime() + (pendingRangeDays - 1) * 24 * 60 * 60 * 1000);
+                rangeCalendar.setVal([today, end]);
+              }
+            }
+          },
+        })
+        .mobiscroll('getInst');
+
+      var rangeCalendar = $('#mds-dispatch-range-calendar')
+        .mobiscroll()
+        .datepicker({
+          controls: ['calendar'],
+          select: 'range',
+          display: 'inline',
+          showRangeLabels: false,
+          pages: 'auto',
+          startInput: '#mds-dispatch-range-start',
+          endInput: '#mds-dispatch-range-end',
+          returnFormat: 'iso8601',
+          showOnClick: false,
+          showOnFocus: false,
+          onInit: function (event, inst) {
+            var end = new Date(today.getTime() + 6 * 24 * 60 * 60 * 1000);
+            inst.setVal([today, end]);
+          },
+          onChange: function (event, inst) {
+            var dates = inst.getVal();
+            if (dates && dates[0] && dates[1]) {
+              var start = new Date(dates[0]);
+              var end = new Date(dates[1]);
+              pendingRangeStart = start;
+              pendingRangeDays = Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+              disableRangeInputs(false);
+              rangeSelectInst.setVal('custom', true);
+            }
+          },
+        })
+        .mobiscroll('getInst');
+
+      $('#mds-dispatch-range-trigger').on('click', function () {
+        rangePopup.open();
+      });
+
+      $('#mds-dispatch-range-apply').on('click', function () {
+        applyPendingRange();
+        rangePopup.close();
+      });
+
+      $('#mds-dispatch-range-cancel').on('click', function () {
+        rangePopup.close();
+      });
+
+      disableRangeInputs(true);
+      $('#mds-dispatch-range-label').text(formatRangeLabel(today, 7));
+      refreshJobList();
+
       setInterval(refresh, 60000);
     });
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mbsc-grid mbsc-no-padding mds-full-height">
-  <div class="mbsc-row mds-full-height">
-    <div class="mbsc-col-sm-3 mds-full-height mds-dispatch-management-wrapper">
-      <div class="mbsc-form-group-title">Transport jobs</div>
-      <div id="dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
+<div class="mds-dispatch-outer">
+  <div id="mds-dispatch-custom-header" class="mds-dispatch-custom-header">
+    <button id="mds-dispatch-range-trigger" mbsc-button data-variant="flat"><span id="mds-dispatch-range-label"></span></button>
+    <div class="mds-dispatch-header-right">
+      <div class="mds-dispatch-legend mbsc-flex mbsc-flex-wrap">
+        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#5cb87a;"></span>Scheduled</span>
+        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#e8a838;"></span>Started</span>
+        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#9e9e9e;"></span>Completed</span>
+      </div>
+      <div class="mds-dispatch-zoom">
+        <button id="demo-dispatch-management-zoom-level-out" mbsc-button data-icon="minus" data-variant="flat"></button>
+        <input type="range" id="demo-dispatch-management-zoom-level-slider" min="1" max="5" value="3" class="mds-dispatch-zoom-slider" />
+        <button id="demo-dispatch-management-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>
+      </div>
     </div>
-    <div class="mbsc-col-sm-9 mds-dispatch-management-calendar mds-full-height">
-      <div id="demo-dispatch-management"></div>
+  </div>
+  <div class="mbsc-grid mbsc-no-padding mds-dispatch-content">
+    <div class="mbsc-row mds-full-height">
+      <div class="mbsc-col-sm-3 mds-full-height mds-dispatch-management-wrapper">
+        <div class="mbsc-form-group-title">Transport jobs</div>
+        <div id="dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
+      </div>
+      <div class="mbsc-col-sm-9 mds-dispatch-management-col mds-full-height">
+        <div id="demo-dispatch-management"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1229,7 +1638,7 @@ export default {
         <input
           type="checkbox"
           mbsc-checkbox
-          data-label="In maintenance"
+          data-label="In maintenance/Maintenance planned"
           class="mds-dispatch-management-checkbox"
           value="maintenance"
           checked
@@ -1247,6 +1656,45 @@ export default {
       </label>
     </div>
   </div>
+  <div id="mds-dispatch-range-popup" class="mds-dispatch-range-popup">
+    <div class="mbsc-grid mbsc-no-padding">
+      <div class="mbsc-row">
+        <div class="mbsc-col-sm-4 mbsc-push-sm-8 mds-dispatch-range-dates">
+          <div class="mds-dispatch-range-inputs">
+            <label>
+              Date range
+              <input mbsc-input id="mds-dispatch-range-select-input" data-dropdown="true" data-input-style="box" data-label-style="stacked" />
+            </label>
+            <select id="mds-dispatch-range-select">
+              <option value="custom">Custom</option>
+              <option value="7" selected>Next 7 days</option>
+              <option value="14">Next 14 days</option>
+              <option value="30">Next 30 days</option>
+              <option value="60">Next 60 days</option>
+              <option value="90">Next 90 days</option>
+            </select>
+            <div id="mds-dispatch-custom-range-wrapper">
+              <label class="mds-dispatch-range-input">
+                Start
+                <input id="mds-dispatch-range-start" mbsc-input data-input-style="box" data-label-style="stacked" />
+              </label>
+              <label class="mds-dispatch-range-input">
+                End
+                <input id="mds-dispatch-range-end" mbsc-input data-input-style="box" data-label-style="stacked" />
+              </label>
+            </div>
+          </div>
+          <div class="mds-dispatch-range-desktop-btns mbsc-button-group-justified">
+            <button id="mds-dispatch-range-apply" mbsc-button>Apply</button>
+            <button id="mds-dispatch-range-cancel" mbsc-button>Cancel</button>
+          </div>
+        </div>
+        <div class="mbsc-col-sm-8 mbsc-pull-sm-4">
+          <div id="mds-dispatch-range-calendar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 `,
@@ -1256,13 +1704,17 @@ export default {
   height: 100%;
 }
 
-.mds-dispatch-management-calendar {
+.mds-dispatch-management-col {
   border-left: 1px solid #ccc;
+}
+
+.mds-dispatch-management-calendar .mbsc-calendar-header {
+  display: none;
 }
 
 .mds-dispatch-management-wrapper {
   overflow: auto;
-  margin-top: 16px;
+  padding-top: 16px;
 }
 
 .mds-dispatch-management-jobs {
@@ -1375,7 +1827,7 @@ export default {
 
 .mds-dispatch-management-calendar .mbsc-timeline-parent {
   height: 34px;
-  background: #8eb4d4;
+  background: #4a86b8;
 }
 
 .mds-dispatch-management-calendar .mbsc-timeline-parent .mbsc-timeline-invalid {
@@ -1475,7 +1927,11 @@ export default {
 }
 
 .mds-dispatch-management-disabled-row.mbsc-schedule-invalid {
-  background: repeating-linear-gradient(-45deg, #f3f3f3, #f3f3f3 11px, #e5e5e5 11px, #e5e5e5 22px);
+  background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.12), rgba(128,128,128,0.12) 11px, rgba(128,128,128,0.28) 11px, rgba(128,128,128,0.28) 22px);
+}
+
+.mds-maintenance-invalid.mbsc-schedule-invalid {
+  background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.12), rgba(128,128,128,0.12) 11px, rgba(128,128,128,0.28) 11px, rgba(128,128,128,0.28) 22px);
 }
 
 .mds-pulse:not(.mbsc-schedule-event-hover) .mbsc-timeline-event-background {
@@ -1493,6 +1949,101 @@ export default {
   100% {
       box-shadow: 0 0 0 0 rgba(204,169,44, 0);
   }
+}
+
+.mds-dispatch-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.mds-dispatch-legend {
+  gap: 0 16px;
+}
+
+.mds-dispatch-legend-item {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.mds-dispatch-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.mds-dispatch-zoom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mds-dispatch-zoom-slider {
+  width: 80px;
+  cursor: pointer;
+}
+
+.mds-dispatch-outer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mds-dispatch-custom-header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 52px;
+  padding: 0 12px;
+  border-bottom: 1px solid #ccc;
+  gap: 12px;
+}
+
+.mds-dispatch-range-popup .mbsc-datepicker-inline {
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.mds-dispatch-range-popup .mbsc-textfield-wrapper-box {
+  margin-top: 0;
+  margin-right: 0;
+}
+
+.mds-dispatch-range-dates {
+  display: flex;
+  flex-direction: column;
+}
+
+.mds-dispatch-range-inputs {
+  flex: 1;
+}
+
+.mds-dispatch-range-desktop-btns.mbsc-button-group-justified,
+.mds-dispatch-range-desktop-btns.mbsc-button-group-justified button {
+  margin-bottom: 0;
+}
+
+@media (max-width: 575px) {
+  .mds-dispatch-range-desktop-btns {
+    display: none;
+  }
+  .mds-dispatch-range-popup .mbsc-textfield-wrapper-box {
+    margin-left: 0;
+  }
+}
+
+.mds-dispatch-content {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.mds-dispatch-content > .mbsc-row {
+  height: 100%;
 }
 
 /* move this to website css with updated unique name */
