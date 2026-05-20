@@ -36,8 +36,8 @@ export default {
           from: '150 Broadway, Manchester, NH',
           to: '50 Kennedy Memorial Dr, Waterville, ME',
           size: 3.5,
-          pickup: [dyndatetime('y,m,d+1,7'), dyndatetime('y,m,d+1,9')],
-          drop: [dyndatetime('y,m,d+1,12'), dyndatetime('y,m,d+1,14')],
+          pickup: [dyndatetime('y,m,d+3,7'), dyndatetime('y,m,d+3,9')],
+          drop: [dyndatetime('y,m,d+3,12'), dyndatetime('y,m,d+3,14')],
           status: 'scheduled',
         },
         {
@@ -73,8 +73,8 @@ export default {
           from: '900 W Belmont Ave, Chicago, IL',
           to: '300 Market St, St Louis, MO',
           size: 6,
-          pickup: [dyndatetime('y,m,d+2,9'), dyndatetime('y,m,d+2,11')],
-          drop: [dyndatetime('y,m,d+2,14'), dyndatetime('y,m,d+2,16')],
+          pickup: [dyndatetime('y,m,d+6,9'), dyndatetime('y,m,d+6,11')],
+          drop: [dyndatetime('y,m,d+6,14'), dyndatetime('y,m,d+6,16')],
           status: 'scheduled',
         },
         {
@@ -748,9 +748,9 @@ export default {
       }
 
       var statusColors = {
-        scheduled: '#5cb87a',
-        started: '#e8a838',
-        completed: '#9e9e9e',
+        scheduled: '#2196f3',
+        started: '#00bcd4',
+        completed: '#78909c',
       };
 
       var maintenanceColors = {
@@ -888,7 +888,7 @@ export default {
 
         if (visibleJobs.length === 0) {
           container.html(
-            '<p class="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted mds-dispatch-jobs-empty">No unscheduled jobs for this period.</p>',
+            '<p class="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted mds-dispatch-jobs-empty">No jobs for this period.</p>',
           );
           return;
         }
@@ -977,10 +977,12 @@ export default {
         zoomLevel = zoom;
 
         $('#demo-dispatch-management-zoom-level-slider').val(zoomLevel);
-        $('#demo-dispatch-management-zoom-level-in').prop('disabled', zoomLevel === 5);
+        $('#demo-dispatch-management-zoom-level-in').prop('disabled', zoomLevel === 4);
         $('#demo-dispatch-management-zoom-level-out').prop('disabled', zoomLevel === 1);
 
         calendar.setOptions({
+          refDate: currentRangeStart,
+          view: buildViewConfig(currentRangeDays),
           zoomLevel: zoomLevel,
         });
       }
@@ -994,19 +996,25 @@ export default {
             timeLabelStep: 60,
             eventHeight: 'variable',
             zoomLevels: {
-              1: { type: 'day', size: days, timeCellStep: 360, timeLabelStep: 360, columnWidth: 'xsmall' },
-              2: { type: 'day', size: days, timeCellStep: 120, timeLabelStep: 120, columnWidth: 'small' },
-              3: { type: 'day', size: days, timeCellStep: 60, timeLabelStep: 60, columnWidth: 'medium' },
-              4: { type: 'day', size: days, timeCellStep: 60, timeLabelStep: 60, columnWidth: 'xlarge' },
-              5: { type: 'day', size: days, timeCellStep: 30, timeLabelStep: 60, columnWidth: 'xlarge' },
+              1: { type: 'day', size: days, columnWidth: 'xsmall' },
+              2: { type: 'day', size: days, columnWidth: 'small' },
+              3: { type: 'day', size: days, columnWidth: 'medium' },
+              4: { type: 'day', size: days, columnWidth: 'xlarge' },
             },
           },
         };
       }
 
       function applyDaysRange(days, startDate) {
-        calendar.navigate(startDate || today);
-        calendar.setOptions({ view: buildViewConfig(days) });
+        var target = startDate || today;
+        currentViewStart = target;
+        currentViewEnd = new Date(target.getTime() + days * 24 * 60 * 60 * 1000);
+        filteredResources = computeFilteredResources();
+        calendar.setOptions({ refDate: target, view: buildViewConfig(days), zoomLevel: zoomLevel, resources: filteredResources });
+        var navigateTo = today >= target && today < currentViewEnd ? now : target;
+        setTimeout(function () {
+          calendar.navigate(navigateTo);
+        }, 100);
       }
 
       function invalidateResources(event) {
@@ -1116,6 +1124,19 @@ export default {
         }
       }
 
+      function findResourceById(id) {
+        var baseId = String(id).replace('-actual', '');
+        for (var i = 0; i < myResources.length; i++) {
+          var group = myResources[i];
+          for (var j = 0; j < group.children.length; j++) {
+            if (String(group.children[j].id) === baseId) {
+              return group.children[j];
+            }
+          }
+        }
+        return null;
+      }
+
       function findFirstSlot(draggedEvent) {
         now = new Date();
         var minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000);
@@ -1147,7 +1168,18 @@ export default {
           eventStart = new Date(windowEnd.getTime() - eventDuration);
         }
 
-        // Return first available slot
+        // Reject slot if it overlaps with the resource's maintenance period
+        if (draggedEvent.resource) {
+          var resource = findResourceById(draggedEvent.resource);
+          if (resource && resource.maintenanceFrom && resource.maintenanceTo) {
+            var mFrom = new Date(resource.maintenanceFrom);
+            var mTo = new Date(resource.maintenanceTo);
+            if (eventStart < mTo && eventEnd > mFrom) {
+              return null;
+            }
+          }
+        }
+
         return {
           start: eventStart,
           end: eventEnd,
@@ -1280,23 +1312,9 @@ export default {
           externalDrop: true,
           eventOverlap: false,
           cssClass: 'mds-dispatch-management-calendar',
+          refDate: today,
           zoomLevel: zoomLevel,
-          view: {
-            timeline: {
-              type: 'day',
-              size: 7,
-              timeCellStep: 60,
-              timeLabelStep: 60,
-              eventHeight: 'variable',
-              zoomLevels: {
-                1: { type: 'day', size: 7, timeCellStep: 360, timeLabelStep: 360, columnWidth: 'xsmall' },
-                2: { type: 'day', size: 7, timeCellStep: 120, timeLabelStep: 120, columnWidth: 'small' },
-                3: { type: 'day', size: 7, timeCellStep: 60, timeLabelStep: 60, columnWidth: 'medium' },
-                4: { type: 'day', size: 7, timeCellStep: 60, timeLabelStep: 60, columnWidth: 'xlarge' },
-                5: { type: 'day', size: 7, timeCellStep: 30, timeLabelStep: 60, columnWidth: 'xlarge' },
-              },
-            },
-          },
+          view: buildViewConfig(7),
           data: myEvents,
           resources: filteredResources,
           invalid: maintenanceInvalids,
@@ -1438,8 +1456,6 @@ export default {
           onPageLoaded: function (args) {
             currentViewStart = args.firstDay;
             currentViewEnd = args.lastDay;
-            filteredResources = computeFilteredResources();
-            calendar.setOptions({ resources: filteredResources });
           },
         })
         .mobiscroll('getInst');
@@ -1469,8 +1485,17 @@ export default {
       }
 
       function applyPendingRange() {
-        currentRangeStart = pendingRangeStart;
-        currentRangeDays = pendingRangeDays;
+        var dates = rangeCalendar.getVal();
+        if (dates && dates[0] && dates[1]) {
+          var rawStart = dates[0];
+          var rawEnd = dates[1];
+          currentRangeStart = typeof rawStart === 'string' ? new Date(rawStart + 'T00:00:00') : new Date(rawStart);
+          var rangeEnd = typeof rawEnd === 'string' ? new Date(rawEnd + 'T00:00:00') : new Date(rawEnd);
+          currentRangeDays = Math.round((rangeEnd.getTime() - currentRangeStart.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+        } else {
+          currentRangeStart = pendingRangeStart;
+          currentRangeDays = pendingRangeDays;
+        }
         applyDaysRange(currentRangeDays, currentRangeStart);
         $('#mds-dispatch-range-label').text(formatRangeLabel(currentRangeStart, currentRangeDays));
         refreshJobList();
@@ -1511,7 +1536,6 @@ export default {
               anchorAlign: 'start',
               touchUi: false,
               scrollLock: false,
-              showArrow: false,
               maxWidth: 920,
             },
           },
@@ -1578,6 +1602,16 @@ export default {
         rangePopup.open();
       });
 
+      $('#mds-dispatch-go-live').on('click', function () {
+        now = new Date();
+        today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        currentRangeStart = today;
+        applyDaysRange(currentRangeDays, today);
+        $('#mds-dispatch-range-label').text(formatRangeLabel(today, currentRangeDays));
+        calendar.navigateToEvent({ start: now });
+        refreshJobList();
+      });
+
       $('#mds-dispatch-range-apply').on('click', function () {
         applyPendingRange();
         rangePopup.close();
@@ -1601,15 +1635,16 @@ export default {
     <button id="mds-dispatch-range-trigger" mbsc-button data-variant="flat"><span id="mds-dispatch-range-label"></span></button>
     <div class="mds-dispatch-header-right">
       <div class="mds-dispatch-legend mbsc-flex mbsc-flex-wrap">
-        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#5cb87a;"></span>Scheduled</span>
-        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#e8a838;"></span>Started</span>
-        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#9e9e9e;"></span>Completed</span>
+        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#2196f3;"></span>Scheduled</span>
+        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#00bcd4;"></span>Started</span>
+        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#78909c;"></span>Completed</span>
       </div>
       <div class="mds-dispatch-zoom">
         <button id="demo-dispatch-management-zoom-level-out" mbsc-button data-icon="minus" data-variant="flat"></button>
-        <input type="range" id="demo-dispatch-management-zoom-level-slider" min="1" max="5" value="3" class="mds-dispatch-zoom-slider" />
+        <input type="range" id="demo-dispatch-management-zoom-level-slider" min="1" max="4" value="3" class="mds-dispatch-zoom-slider" />
         <button id="demo-dispatch-management-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>
       </div>
+      <button id="mds-dispatch-go-live" mbsc-button data-variant="flat">Go live</button>
     </div>
   </div>
   <div class="mbsc-grid mbsc-no-padding mds-dispatch-content">
@@ -1825,7 +1860,6 @@ export default {
 
 .mds-dispatch-management-calendar .mbsc-timeline-parent {
   height: 34px;
-  background: #4a86b8;
 }
 
 .mds-dispatch-management-calendar .mbsc-timeline-parent .mbsc-timeline-invalid {
@@ -1961,7 +1995,7 @@ export default {
 }
 
 .mds-dispatch-legend-item {
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap;
 }
 
@@ -1999,6 +2033,20 @@ export default {
   padding: 0 12px;
   border-bottom: 1px solid #ccc;
   gap: 12px;
+  background-color: #fff;
+}
+
+.mds-dispatch-custom-header .mbsc-button-txt {
+  font-size: 20px;
+}
+
+.mbsc-ios-dark .mds-dispatch-custom-header,
+.mbsc-material-dark .mds-dispatch-custom-header {
+  background-color: #000;
+}
+
+.mbsc-windows-dark .mds-dispatch-custom-header {
+  background-color: #1f1f1f;
 }
 
 .mds-dispatch-range-popup .mbsc-datepicker-inline {
@@ -2042,6 +2090,10 @@ export default {
 
 .mds-dispatch-content > .mbsc-row {
   height: 100%;
+}
+
+.mds-dispatch-management-calendar.mbsc-eventcalendar .mbsc-calendar-wrapper {
+  border: none;
 }
 
 /* move this to website css with updated unique name */
