@@ -1632,7 +1632,7 @@ export default {
   markup: `
 <div class="mds-dispatch-outer">
   <div id="mds-dispatch-custom-header" class="mds-dispatch-custom-header">
-    <button id="mds-dispatch-range-trigger" mbsc-button data-variant="flat"><span id="mds-dispatch-range-label"></span></button>
+    <button id="mds-dispatch-range-trigger" mbsc-button data-variant="flat"><span id="mds-dispatch-range-label" class="mds-dispatch-range-label"></span></button>
     <div class="mds-dispatch-header-right">
       <div class="mds-dispatch-legend mbsc-flex mbsc-flex-wrap">
         <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#2196f3;"></span>Scheduled</span>
@@ -2036,7 +2036,7 @@ export default {
   background-color: #fff;
 }
 
-.mds-dispatch-custom-header .mbsc-button-txt {
+.mds-dispatch-range-label {
   font-size: 20px;
 }
 
