@@ -1650,7 +1650,6 @@ export default {
   <div class="mbsc-grid mbsc-no-padding mds-dispatch-content">
     <div class="mbsc-row mds-full-height">
       <div class="mbsc-col-sm-3 mds-full-height mds-dispatch-management-wrapper">
-        <div class="mbsc-form-group-title">Transport jobs</div>
         <div id="dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
       </div>
       <div class="mbsc-col-sm-9 mds-dispatch-management-col mds-full-height">
@@ -1747,7 +1746,6 @@ export default {
 
 .mds-dispatch-management-wrapper {
   overflow: auto;
-  padding-top: 16px;
 }
 
 .mds-dispatch-management-jobs {
