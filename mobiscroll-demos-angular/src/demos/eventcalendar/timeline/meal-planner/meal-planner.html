@@ -22,7 +22,8 @@
     </div>
   </ng-template>
 </mbsc-eventcalendar>
-<mbsc-popup [options]="popupOptions" [buttons]="popupButtons" [headerText]="popupHeader" #popup class="md-meal-planner-popup">
+
+<mbsc-popup [options]="popupOptions" [buttons]="popupButtons" [headerTemplate]="headerTemp" #popup class="md-meal-planner-popup">
   <mbsc-segmented-group [(ngModel)]="type">
     <mbsc-segmented *ngFor="let t of types" [value]="t.id">{{t.name}}</mbsc-segmented>
   </mbsc-segmented-group>
@@ -35,3 +36,8 @@
     <mbsc-button class="mbsc-button-block" color="danger" variant="outline" (click)="onDeleteClick()">Delete meal </mbsc-button>
   </div>
 </mbsc-popup>
+
+<ng-template #headerTemp>
+  <div class="md-meal-planner-header-primary">{{ headerPrimary }}</div>
+  <div class="md-meal-planner-header-date">{{ headerDate }}</div>
+</ng-template>
