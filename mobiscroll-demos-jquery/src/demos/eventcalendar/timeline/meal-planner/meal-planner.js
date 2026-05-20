@@ -82,7 +82,12 @@ export default {
             },
           ],
           renderHeader: function () {
-            return 'New meal<br />' + formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start));
+            return (
+              '<div class="md-meal-planner-header-primary">New meal</div>' +
+              '<div class="md-meal-planner-header-date">' +
+              formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start)) +
+              '</div>'
+            );
           },
         });
 
@@ -135,7 +140,14 @@ export default {
             },
           ],
           renderHeader: function () {
-            return resource.name + ' - ' + formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start));
+            return (
+              '<div class="md-meal-planner-header-primary">' +
+              resource.name +
+              '</div>' +
+              '<div class="md-meal-planner-header-date">' +
+              formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start)) +
+              '</div>'
+            );
           },
         });
 
@@ -340,10 +352,16 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.md-meal-planner-popup .mbsc-popup .mbsc-popup-header {
-    padding-top: 8px;
-    padding-bottom: 8px;
-    font-size: 18px;
+.md-meal-planner-header-primary {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.md-meal-planner-header-date {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    opacity: .6;
 }
 
 .md-meal-planner-cont {
