@@ -114,7 +114,7 @@ export class AppComponent implements OnInit {
     },
     responsive: {
       medium: {
-        display: 'anchored',
+        display: 'center',
         width: 400,
         fullScreen: false,
         touchUi: false,
