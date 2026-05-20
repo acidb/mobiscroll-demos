@@ -60,13 +60,6 @@ export default {
 
       // Set popup header text and buttons
       addEditPopup.setOptions({
-        headerText:
-          'New shift - ' +
-          formatDate('DDD', new Date(event.start)) +
-          ' ' +
-          slot.name +
-          ', ' +
-          formatDate('D MMM YYYY', new Date(event.start)),
         buttons: [
           'cancel',
           {
@@ -79,6 +72,17 @@ export default {
             addEditPopup: 'mbsc-popup-button-primary',
           },
         ],
+        renderHeader: function () {
+          return (
+            '<div>New shift</div><div class="mds-employee-shifts-header">' +
+            formatDate('DDDD', new Date(event.start)) +
+            ' ' +
+            slot.name +
+            ', ' +
+            formatDate('D MMMM YYYY', new Date(event.start)) +
+            '</div>'
+          );
+        },
         onClose: function () {
           // Remove event if popup is cancelled
           if (!success) {
@@ -102,15 +106,6 @@ export default {
       var slot = args.slotObj;
 
       addEditPopup.setOptions({
-        headerText:
-          'Edit ' +
-          resource.name +
-          "'s hours - " +
-          formatDate('DDD', new Date(event.start)) +
-          ' ' +
-          slot.name +
-          ', ' +
-          formatDate('D MMM YYYY', new Date(event.start)),
         buttons: [
           'cancel',
           {
@@ -122,6 +117,19 @@ export default {
             cssClass: 'mbsc-popup-button-primary',
           },
         ],
+        renderHeader: function () {
+          return (
+            '<div>Edit ' +
+            resource.name +
+            '\'s hours</div><div class="mds-employee-shifts-header">' +
+            formatDate('DDDD', new Date(event.start)) +
+            ' ' +
+            slot.name +
+            ', ' +
+            formatDate('D MMMM YYYY', new Date(event.start)) +
+            '</div>'
+          );
+        },
       });
 
       addEditPopup.open();
@@ -489,7 +497,7 @@ export default {
 <div id="demo-employee-shifts-calendar" class="mds-employee-shifts"></div>
 
 <div style="display: none;">
-  <div id="demo-employee-shifts-popup" class="mds-employee-shifts-popup">
+  <div id="demo-employee-shifts-popup">
     <div>
       <div id="demo-popup-shift-dates"></div>
     </div>
@@ -514,8 +522,10 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-employee-shifts-popup .mbsc-popup-header {
-  font-size: 16px;
+.mds-employee-shifts-header {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: .6;
 }
 
 .mds-employee-shifts .mbsc-timeline-resource-col {

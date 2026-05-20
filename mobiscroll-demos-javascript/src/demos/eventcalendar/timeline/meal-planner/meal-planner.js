@@ -69,7 +69,9 @@ export default {
 
       // Set popup header text and buttons for adding
       popup.setOptions({
-        headerText: 'New meal - ' + formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start)),
+        renderHeader: function () {
+          return 'New meal<br />' + formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start));
+        },
         buttons: [
           'cancel',
           {
@@ -108,9 +110,11 @@ export default {
       deleteMeal = false;
       restoreMeal = true;
 
-      // // set popup header text and buttons for editing
+      // Set popup header text and buttons for editing
       popup.setOptions({
-        headerText: resource.name + ' - ' + formatDate('DDDD, DD MMMM YYYY', new Date(ev.start)),
+        renderHeader: function () {
+          return resource.name + ' - ' + formatDate('DDDD, DD MMMM YYYY', new Date(tempMeal.start));
+        },
         buttons: [
           'cancel',
           {

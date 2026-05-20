@@ -32,12 +32,11 @@
 
 <mbsc-popup
   #popup
-  cssClass="mds-employee-shifts-popup"
   display="bottom"
   [buttons]="popupButtons"
   [contentPadding]="false"
   [fullScreen]="true"
-  [headerText]="popupHeader"
+  [headerTemplate]="myHeaderTemplate"
   [responsive]="popupResponsive"
   [scrollLock]="false"
   (onClose)="handlePopupClose()"
@@ -67,3 +66,8 @@
     <mbsc-button class="mbsc-button-block" color="danger" variant="outline" (click)="handleShiftDeleteClick()"> Delete shift </mbsc-button>
   </div>
 </mbsc-popup>
+
+<ng-template #myHeaderTemplate>
+  <div>{{ headerPrimary }}</div>
+  <div class="mds-employee-shifts-header">{{ headerDate }}</div>
+</ng-template>

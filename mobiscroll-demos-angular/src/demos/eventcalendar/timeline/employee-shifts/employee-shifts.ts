@@ -36,7 +36,7 @@ setOptions({
   imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) { }
+  constructor(private notify: Notifications) {}
 
   @ViewChild('popup', { static: false })
   popup!: MbscPopup;
@@ -48,8 +48,9 @@ export class AppComponent {
   shift!: MbscCalendarEvent;
   shiftDates?: MbscDatepickerValue;
   shiftNotes?: string;
+  headerPrimary = '';
+  headerDate = '';
 
-  popupHeader = '';
   popupButtons: (MbscPopupButton | 'cancel')[] = [];
 
   popupResponsive: Record<string, MbscPopupOptions> = {
@@ -391,15 +392,9 @@ export class AppComponent {
         cssClass: 'mbsc-popup-button-primary',
       },
     ];
-    this.popupHeader =
-      'Edit ' +
-      resource.name +
-      '\'s hours - ' +
-      formatDate('DDD', new Date(event.start as Date)) +
-      ' ' +
-      slot.name +
-      ', ' +
-      formatDate('D MMM YYYY', new Date(event.start as Date));
+    this.headerPrimary = 'Edit ' + resource.name + "'s hours";
+    this.headerDate =
+      formatDate('DDDD', new Date(event.start as Date)) + ' ' + slot.name + ', ' + formatDate('D MMMM YYYY', new Date(event.start as Date));
     this.popup.open();
   }
 
@@ -420,13 +415,13 @@ export class AppComponent {
           cssClass: 'mbsc-popup-button-primary',
         },
       ];
-      this.popupHeader =
-        'New shift - ' +
-        formatDate('DDD', new Date(event.start as Date)) +
+      this.headerPrimary = 'New shift';
+      this.headerDate =
+        formatDate('DDDD', new Date(event.start as Date)) +
         ' ' +
         slot.name +
         ', ' +
-        formatDate('D MMM YYYY', new Date(event.start as Date));
+        formatDate('D MMMM YYYY', new Date(event.start as Date));
       this.popup.open();
     });
   }
