@@ -263,11 +263,8 @@ onMounted(() => {
     @close="handlePopupClose"
   >
     <template #header>
-      <template v-if="isEdit"> {{ headerPrimary }} - {{ headerDate }} </template>
-      <template v-else>
-        {{ headerPrimary }} <br />
-        {{ headerDate }}
-      </template>
+      <div class="md-meal-planner-header-primary">{{ headerPrimary }}</div>
+      <div class="md-meal-planner-header-date">{{ headerDate }}</div>
     </template>
     <MbscSegmentedGroup v-model="type">
       <template v-for="t in types" :key="t.id">
@@ -299,10 +296,16 @@ onMounted(() => {
 </template>
 
 <style>
-.md-meal-planner-popup .mbsc-popup .mbsc-popup-header {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  font-size: 18px;
+.md-meal-planner-header-primary {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.md-meal-planner-header-date {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  opacity: 0.6;
 }
 
 .md-meal-planner-cont {

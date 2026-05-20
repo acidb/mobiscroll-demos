@@ -430,8 +430,8 @@ function App() {
   const renderPopupHeader = useCallback(
     () => (
       <>
-        <div>{headerPrimary}</div>
-        <div className="mds-employee-shifts-header">{headerDate}</div>
+        <div className="mds-employee-shifts-header-primary">{headerPrimary}</div>
+        <div className="mds-employee-shifts-header-date">{headerDate}</div>
       </>
     ),
     [headerPrimary, headerDate],

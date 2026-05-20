@@ -146,17 +146,13 @@ function App() {
   }, [deleteEvent, tempMeal]);
 
   const renderPopupHeader = useCallback(
-    () =>
-      isEdit ? (
-        headerPrimary + ' - ' + headerDate
-      ) : (
-        <>
-          {headerPrimary}
-          <br />
-          {headerDate}
-        </>
-      ),
-    [isEdit, headerPrimary, headerDate],
+    () => (
+      <>
+        <div className="md-meal-planner-header-primary">{headerPrimary}</div>
+        <div className="md-meal-planner-header-date">{headerDate}</div>
+      </>
+    ),
+    [headerPrimary, headerDate],
   );
 
   // Scheduler options

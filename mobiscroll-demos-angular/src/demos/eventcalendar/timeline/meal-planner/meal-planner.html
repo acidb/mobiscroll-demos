@@ -38,9 +38,6 @@
 </mbsc-popup>
 
 <ng-template #headerTemp>
-  <ng-container *ngIf="isEdit"> {{ headerPrimary }} - {{ headerDate }} </ng-container>
-  <ng-container *ngIf="!isEdit">
-    {{ headerPrimary }} <br />
-    {{ headerDate }}
-  </ng-container>
+  <div class="md-meal-planner-header-primary">{{ headerPrimary }}</div>
+  <div class="md-meal-planner-header-date">{{ headerDate }}</div>
 </ng-template>

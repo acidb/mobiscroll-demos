@@ -504,8 +504,8 @@ function handleShiftDeleteClick() {
     @close="handlePopupClose"
   >
     <template #header>
-      <div>{{ headerPrimary }}</div>
-      <div class="mds-employee-shifts-header">{{ headerDate }}</div>
+      <div class="mds-employee-shifts-header-primary">{{ headerPrimary }}</div>
+      <div class="mds-employee-shifts-header-date">{{ headerDate }}</div>
     </template>
     <MbscDatepicker
       v-model="shiftDates"
@@ -549,9 +549,15 @@ function handleShiftDeleteClick() {
 </template>
 
 <style>
-.mds-employee-shifts-header {
+.mds-employee-shifts-header-primary {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.mds-employee-shifts-header-date {
   font-size: 14px;
   font-weight: 600;
+  line-height: 20px;
   opacity: 0.6;
 }
 

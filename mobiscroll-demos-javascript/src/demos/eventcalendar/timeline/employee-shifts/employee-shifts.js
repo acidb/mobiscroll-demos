@@ -74,7 +74,8 @@ export default {
         ],
         renderHeader: function () {
           return (
-            '<div>New shift</div><div class="mds-employee-shifts-header">' +
+            '<div class="mds-employee-shifts-header-primary">New shift</div>' +
+            '<div class="mds-employee-shifts-header-date">' +
             formatDate('DDDD', new Date(event.start)) +
             ' ' +
             slot.name +
@@ -119,9 +120,10 @@ export default {
         ],
         renderHeader: function () {
           return (
-            '<div>Edit ' +
+            '<div class="mds-employee-shifts-header-primary">Edit ' +
             resource.name +
-            '\'s hours</div><div class="mds-employee-shifts-header">' +
+            "'s hours</div>" +
+            '<div class="mds-employee-shifts-header-date">' +
             formatDate('DDDD', new Date(event.start)) +
             ' ' +
             slot.name +
@@ -522,9 +524,15 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-employee-shifts-header {
+.mds-employee-shifts-header-primary {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.mds-employee-shifts-header-date {
   font-size: 14px;
   font-weight: 600;
+  line-height: 20px;
   opacity: .6;
 }
 
