@@ -7,7 +7,8 @@ export default {
   init() {
     mobiscroll.setOptions({
       // locale,
-      // theme
+      theme: 'ios',
+      themeVariant: 'light',
     });
 
     $(function () {
@@ -213,6 +214,79 @@ export default {
           size: 24,
           pickup: [dyndatetime('y,m,d+6,8'), dyndatetime('y,m,d+6,11')],
           drop: [dyndatetime('y,m,d+6,16'), dyndatetime('y,m,d+6,19')],
+          status: 'scheduled',
+        },
+        // Extra scheduled events
+        {
+          resource: 1,
+          from: '300 W Madison St, Chicago, IL',
+          to: '500 Euclid Ave, Cleveland, OH',
+          size: 3,
+          pickup: [dyndatetime('y,m,d+1,8'), dyndatetime('y,m,d+1,10')],
+          drop: [dyndatetime('y,m,d+1,13'), dyndatetime('y,m,d+1,16')],
+          status: 'scheduled',
+        },
+        {
+          resource: 4,
+          from: '800 N 3rd St, Philadelphia, PA',
+          to: '200 W Baltimore St, Baltimore, MD',
+          size: 6.5,
+          pickup: [dyndatetime('y,m,d+2,7'), dyndatetime('y,m,d+2,9')],
+          drop: [dyndatetime('y,m,d+2,12'), dyndatetime('y,m,d+2,15')],
+          status: 'scheduled',
+        },
+        {
+          resource: 5,
+          from: '900 Biscayne Blvd, Miami, FL',
+          to: '400 N Orange Ave, Orlando, FL',
+          size: 7,
+          pickup: [dyndatetime('y,m,d+1,9'), dyndatetime('y,m,d+1,11')],
+          drop: [dyndatetime('y,m,d+1,14'), dyndatetime('y,m,d+1,18')],
+          status: 'scheduled',
+        },
+        {
+          resource: 7,
+          from: '100 S 5th St, Minneapolis, MN',
+          to: '300 W Kellogg Blvd, St Paul, MN',
+          size: 9,
+          pickup: [dyndatetime('y,m,d+3,8'), dyndatetime('y,m,d+3,10')],
+          drop: [dyndatetime('y,m,d+3,14'), dyndatetime('y,m,d+3,17')],
+          status: 'scheduled',
+        },
+        {
+          resource: 8,
+          from: '500 W 2nd St, Austin, TX',
+          to: '2200 Post Oak Blvd, Houston, TX',
+          size: 12,
+          pickup: [dyndatetime('y,m,d+4,7'), dyndatetime('y,m,d+4,10')],
+          drop: [dyndatetime('y,m,d+4,15'), dyndatetime('y,m,d+4,18')],
+          status: 'scheduled',
+        },
+        {
+          resource: 11,
+          from: '600 Grant St, Pittsburgh, PA',
+          to: '200 W Washington St, Indianapolis, IN',
+          size: 18,
+          pickup: [dyndatetime('y,m,d+1,6'), dyndatetime('y,m,d+1,9')],
+          drop: [dyndatetime('y,m,d+1,16'), dyndatetime('y,m,d+1,20')],
+          status: 'scheduled',
+        },
+        {
+          resource: 14,
+          from: '400 N Michigan Ave, Chicago, IL',
+          to: '250 E Wisconsin Ave, Milwaukee, WI',
+          size: 23,
+          pickup: [dyndatetime('y,m,d+5,8'), dyndatetime('y,m,d+5,11')],
+          drop: [dyndatetime('y,m,d+5,15'), dyndatetime('y,m,d+5,18')],
+          status: 'scheduled',
+        },
+        {
+          resource: 13,
+          from: '700 Figueroa St, Los Angeles, CA',
+          to: '50 W San Fernando St, San Jose, CA',
+          size: 22,
+          pickup: [dyndatetime('y,m,d+4,6'), dyndatetime('y,m,d+4,9')],
+          drop: [dyndatetime('y,m,d+4,17'), dyndatetime('y,m,d+4,21')],
           status: 'scheduled',
         },
       ];
@@ -538,6 +612,22 @@ export default {
           drop: [dyndatetime('y,m,d,18'), dyndatetime('y,m,d,22')],
         },
         {
+          id: 25,
+          from: '350 Fifth Ave, New York, NY',
+          to: '100 Broad St, Newark, NJ',
+          size: 3.5,
+          pickup: [dyndatetime('y,m,d,14'), dyndatetime('y,m,d,16')],
+          drop: [dyndatetime('y,m,d,18'), dyndatetime('y,m,d,21')],
+        },
+        {
+          id: 26,
+          from: '800 Market St, San Francisco, CA',
+          to: '400 Capitol Mall, Sacramento, CA',
+          size: 6,
+          pickup: [dyndatetime('y,m,d,15'), dyndatetime('y,m,d,17')],
+          drop: [dyndatetime('y,m,d,19'), dyndatetime('y,m,d,22')],
+        },
+        {
           id: 4,
           from: '1100 Congress Ave, Austin, TX',
           to: '500 E Main St, Dallas, TX',
@@ -562,6 +652,22 @@ export default {
           drop: [dyndatetime('y,m,d+1,12,30'), dyndatetime('y,m,d+1,18,30')],
         },
         {
+          id: 27,
+          from: '200 S Lamar Blvd, Austin, TX',
+          to: '500 Commerce St, Dallas, TX',
+          size: 19,
+          pickup: [dyndatetime('y,m,d+1,13'), dyndatetime('y,m,d+1,15')],
+          drop: [dyndatetime('y,m,d+1,18'), dyndatetime('y,m,d+1,22')],
+        },
+        {
+          id: 28,
+          from: '300 W Colfax Ave, Denver, CO',
+          to: '100 N Main St, Pueblo, CO',
+          size: 10,
+          pickup: [dyndatetime('y,m,d+2,10'), dyndatetime('y,m,d+2,12')],
+          drop: [dyndatetime('y,m,d+2,14'), dyndatetime('y,m,d+2,18')],
+        },
+        {
           id: 7,
           from: '400 S 4th St, Louisville, KY',
           to: '1400 Main St, Cincinnati, OH',
@@ -576,6 +682,14 @@ export default {
           size: 11.5,
           pickup: [dyndatetime('y,m,d+2,6,30'), dyndatetime('y,m,d+2,8,30')],
           drop: [dyndatetime('y,m,d+2,10,30'), dyndatetime('y,m,d+2,15,30')],
+        },
+        {
+          id: 29,
+          from: '450 Sutter St, San Francisco, CA',
+          to: '200 Pine Ave, Long Beach, CA',
+          size: 22,
+          pickup: [dyndatetime('y,m,d+3,7'), dyndatetime('y,m,d+3,9')],
+          drop: [dyndatetime('y,m,d+3,13'), dyndatetime('y,m,d+3,17')],
         },
         {
           id: 9,
@@ -749,7 +863,7 @@ export default {
 
       var statusColors = {
         scheduled: '#2196f3',
-        started: '#00bcd4',
+        started: '#f97316',
         completed: '#78909c',
       };
 
@@ -893,9 +1007,15 @@ export default {
           return;
         }
 
+        var lastDayKey = null;
         for (var i = 0; i < visibleJobs.length; i++) {
           var job = visibleJobs[i];
-
+          var pickupDate = new Date(job.pickup[0]);
+          var dayKey = mobiscroll.formatDate('YYYY-MM-DD', pickupDate);
+          if (dayKey !== lastDayKey) {
+            container.append('<div class="mds-job-day-header">' + mobiscroll.formatDate('DDD, DD MMM', pickupDate) + '</div>');
+            lastDayKey = dayKey;
+          }
           var $jobEl = $('<div></div>')
             .attr('id', 'mds-dispatch-management-event-' + job.id)
             .addClass('mds-dispatch-management-jobs');
@@ -977,7 +1097,7 @@ export default {
         zoomLevel = zoom;
 
         $('#demo-dispatch-management-zoom-level-slider').val(zoomLevel);
-        $('#demo-dispatch-management-zoom-level-in').prop('disabled', zoomLevel === 4);
+        $('#demo-dispatch-management-zoom-level-in').prop('disabled', zoomLevel === 5);
         $('#demo-dispatch-management-zoom-level-out').prop('disabled', zoomLevel === 1);
 
         calendar.setOptions({
@@ -996,10 +1116,11 @@ export default {
             timeLabelStep: 60,
             eventHeight: 'variable',
             zoomLevels: {
-              1: { type: 'day', size: days, columnWidth: 'xsmall' },
-              2: { type: 'day', size: days, columnWidth: 'small' },
-              3: { type: 'day', size: days, columnWidth: 'medium' },
-              4: { type: 'day', size: days, columnWidth: 'xlarge' },
+              1: { type: 'day', size: days, columnWidth: 'xsmall', timeCellStep: 240, timeLabelStep: 240 },
+              2: { type: 'day', size: days, columnWidth: 'small', timeCellStep: 120, timeLabelStep: 120 },
+              3: { type: 'day', size: days, columnWidth: 'medium', timeCellStep: 60, timeLabelStep: 60 },
+              4: { type: 'day', size: days, columnWidth: 'xlarge', timeCellStep: 30, timeLabelStep: 60 },
+              5: { type: 'day', size: days, columnWidth: 'xlarge', timeCellStep: 15, timeLabelStep: 60 },
             },
           },
         };
@@ -1068,23 +1189,23 @@ export default {
           }
         }
 
-        var resourcesToSet = filteredResources.map(function (group) {
-          var hasValidChild = false;
-          for (var k = 0; k < group.children.length; k++) {
-            var child = group.children[k];
-            if (!String(child.id).includes('actual') && validIds.indexOf(child.id) !== -1) {
-              hasValidChild = true;
-              break;
-            }
-          }
-          return {
-            id: group.id,
-            name: group.name,
-            eventCreation: group.eventCreation,
-            children: group.children,
-            collapsed: !hasValidChild,
-          };
-        });
+        var resourcesToSet = filteredResources
+          .map(function (group) {
+            return {
+              id: group.id,
+              name: group.name,
+              eventCreation: group.eventCreation,
+              children: group.children.filter(function (child) {
+                if (String(child.id).includes('actual')) {
+                  return validIds.indexOf(String(child.id).replace('-actual', '')) !== -1;
+                }
+                return validIds.indexOf(child.id) !== -1;
+              }),
+            };
+          })
+          .filter(function (group) {
+            return group.children.length > 0;
+          });
 
         myInvalids = [
           {
@@ -1440,15 +1561,7 @@ export default {
             resetEventCreationFlags();
             myInvalids = [];
             calendar.setOptions({
-              resources: filteredResources.map(function (group) {
-                return {
-                  id: group.id,
-                  name: group.name,
-                  eventCreation: group.eventCreation,
-                  children: group.children,
-                  collapsed: false,
-                };
-              }),
+              resources: filteredResources,
               invalid: maintenanceInvalids,
               min: null,
             });
@@ -1636,15 +1749,15 @@ export default {
     <div class="mds-dispatch-header-right">
       <div class="mds-dispatch-legend mbsc-flex mbsc-flex-wrap">
         <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#2196f3;"></span>Scheduled</span>
-        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#00bcd4;"></span>Started</span>
+        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#f97316;"></span>Started</span>
         <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#78909c;"></span>Completed</span>
       </div>
       <div class="mds-dispatch-zoom">
         <button id="demo-dispatch-management-zoom-level-out" mbsc-button data-icon="minus" data-variant="flat"></button>
-        <input type="range" id="demo-dispatch-management-zoom-level-slider" min="1" max="4" value="3" class="mds-dispatch-zoom-slider" />
+        <input type="range" id="demo-dispatch-management-zoom-level-slider" min="1" max="5" value="3" class="mds-dispatch-zoom-slider" />
         <button id="demo-dispatch-management-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>
       </div>
-      <button id="mds-dispatch-go-live" mbsc-button data-variant="flat">Go live</button>
+      <button id="mds-dispatch-go-live" mbsc-button data-variant="flat" data-icon="location"></button>
     </div>
   </div>
   <div class="mbsc-grid mbsc-no-padding mds-dispatch-content">
@@ -1746,6 +1859,20 @@ export default {
 
 .mds-dispatch-management-wrapper {
   overflow: auto;
+}
+
+.mds-job-day-header {
+  font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  padding: 10px 2px 4px;
+}
+
+.mds-job-day-header:first-child {
+  padding-top: 2px;
 }
 
 .mds-dispatch-management-jobs {
@@ -1870,10 +1997,6 @@ export default {
 
 .mds-dispatch-management-calendar .mbsc-timeline-row-gutter {
   height: 6px;
-}
-
-.mds-dispatch-management-calendar .mbsc-readonly-event {
-  opacity: 0.6;
 }
 
 .mds-dispatch-management-search {
@@ -2036,6 +2159,7 @@ export default {
 
 .mds-dispatch-range-label {
   font-size: 20px;
+  font-weight: bold;
 }
 
 .mbsc-ios-dark .mds-dispatch-custom-header,
