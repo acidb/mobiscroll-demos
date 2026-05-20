@@ -1757,7 +1757,7 @@ export default {
         <input type="range" id="demo-dispatch-management-zoom-level-slider" min="1" max="5" value="3" class="mds-dispatch-zoom-slider" />
         <button id="demo-dispatch-management-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>
       </div>
-      <button id="mds-dispatch-go-live" mbsc-button data-variant="outline" data-start-icon="clock">Now</button>
+      <button id="mds-dispatch-go-live" mbsc-button data-variant="outline" data-start-icon="clock" class="mds-dispatch-now-btn">Now</button>
     </div>
   </div>
   <div class="mbsc-grid mbsc-no-padding mds-dispatch-content">
@@ -2133,6 +2133,11 @@ export default {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.mds-dispatch-now-btn.mbsc-ios {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .mds-dispatch-zoom-slider {
