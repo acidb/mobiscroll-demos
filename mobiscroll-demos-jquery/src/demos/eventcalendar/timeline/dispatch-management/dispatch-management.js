@@ -1538,7 +1538,7 @@ export default {
               ' → ' +
               job.to +
               '</span>' +
-              '<span class="mds-event-planned-badge"><span>Planned</span></span>' +
+              '<span class="mds-event-planned-badge-content"><span class="mds-event-planned-badge">Planned</span></span>' +
               '</div>'
             );
           },
@@ -2193,13 +2193,13 @@ export default {
   white-space: nowrap;
 }
 
-.mds-event-planned-badge {
+.mds-event-planned-badge-content {
   flex-shrink: 100;
   min-width: 0;
   overflow: hidden;
 }
 
-.mds-event-planned-badge > span {
+.mds-event-planned-badge-content .mds-event-planned-badge {
   font-size: 10px;
   padding: 0 5px;
   border-radius: 4px;
