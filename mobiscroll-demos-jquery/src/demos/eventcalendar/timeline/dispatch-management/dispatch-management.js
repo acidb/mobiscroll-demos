@@ -30,7 +30,7 @@ export default {
           size: 2.5,
           pickup: [dyndatetime('y,m,d,9'), dyndatetime('y,m,d,11')],
           drop: [dyndatetime('y,m,d,13'), dyndatetime('y,m,d,15')],
-          status: 'started',
+          status: 'in progress',
         },
         {
           resource: 3,
@@ -132,7 +132,7 @@ export default {
           size: 20,
           pickup: [dyndatetime('y,m,d,10'), dyndatetime('y,m,d,13')],
           drop: [dyndatetime('y,m,d,18'), dyndatetime('y,m,d,21')],
-          status: 'started',
+          status: 'in progress',
         },
         {
           resource: 11,
@@ -830,6 +830,11 @@ export default {
       var scheduledJobIds = [];
 
       var filters = {};
+      var statusFilters = {
+        scheduled: true,
+        'in progress': true,
+        completed: true,
+      };
       var filteredResources = myResources;
       var searchTimeout;
       var searchQuery;
@@ -863,7 +868,7 @@ export default {
 
       var statusColors = {
         scheduled: '#2196f3',
-        started: '#f97316',
+        'in progress': '#f97316',
         completed: '#78909c',
       };
 
@@ -930,50 +935,56 @@ export default {
           // Convert dates to date objects
           event.start = event.start ? new Date(event.start) : event.start;
           event.end = event.end ? new Date(event.end) : event.end;
-          // Assign status-based color
-          if (event.status && statusColors[event.status]) {
-            event.color = statusColors[event.status];
-          }
-          // Mark past events
-          event.editable = event.start && new Date() < event.start;
-          // Override color for in-progress events (including ones already paired with an actual)
-          if (event.start < now && event.end > now && event.status !== 'actual') {
-            event.color = statusColors['started'];
-          }
-          // Create actual event if not already done
-          if (event.start < now && event.end > now && event.status !== 'actual' && !event.actual) {
-            var actualDates = getActualDates(event.start, event.end);
-            var newEvent = {
-              resource: event.resource + '-actual',
-              size: event.size,
-              start: actualDates[0],
-              end: actualDates[1],
-              title: event.from + ' → ' + event.to,
-              status: 'actual',
-              color: event.color,
-              cssClass: 'mds-actual-event',
-              editable: false,
-            };
 
-            event.actual = true;
-            event.cssClass = 'mds-pulse';
-            events.push(newEvent);
+          if (event.status === 'actual') continue;
+
+          // Derive color from time-relative state, not hardcoded status
+          if (event.end <= now) {
+            event.color = statusColors['completed'];
+          } else if (event.start < now) {
+            event.color = statusColors['in progress'];
+          } else {
+            event.color = statusColors[event.status] || statusColors['scheduled'];
+          }
+
+          event.editable = now < event.start;
+
+          if (event.start < now && event.end > now) {
+            if (!event.actual) {
+              // Create actual event — clamp actualStart so it never exceeds now
+              var actualDates = getActualDates(event.start, event.end);
+              var actualStart = actualDates[0] >= event.start && actualDates[0] < now ? actualDates[0] : event.start;
+              var newEvent = {
+                resource: event.resource + '-actual',
+                size: event.size,
+                start: actualStart,
+                end: now,
+                title: 'In progress',
+                status: 'actual',
+                color: event.color,
+                cssClass: 'mds-actual-event mds-pulse',
+                editable: false,
+              };
+              event.actual = true;
+              event.actualRef = newEvent;
+              events.push(newEvent);
+            } else if (event.actualRef) {
+              // Keep actual end in sync with current time on each refresh
+              event.actualRef.end = now;
+            }
           }
         }
       }
 
       function refresh() {
-        var events = calendar.getEvents();
-
         now = new Date();
         filteredResources = computeFilteredResources();
-
-        addActualEvents(events);
+        addActualEvents(myEvents);
         setTimeout(function () {
           calendar.setOptions({
             resources: filteredResources,
             invalid: $.merge([], myInvalids).concat(maintenanceInvalids),
-            data: events,
+            data: getStatusFilteredEvents(),
           });
         });
       }
@@ -982,9 +993,23 @@ export default {
         for (var i = 0; i < events.length; i++) {
           var event = events[i];
           event.start = event.start ? event.start : event.pickup[0];
-          event.end = event.end ? event.end : event.drop[0];
+          event.end = event.end ? event.end : event.drop[1];
           event.title = event.from + ' → ' + event.to;
         }
+      }
+
+      function getMaxAvailableCapacity() {
+        var max = 0;
+        myResources.forEach(function (group) {
+          if (filters[group.id]) {
+            group.children.forEach(function (child) {
+              if (!String(child.id).includes('actual') && child.capacity > max) {
+                max = child.capacity;
+              }
+            });
+          }
+        });
+        return max;
       }
 
       function refreshJobList() {
@@ -993,8 +1018,10 @@ export default {
 
         var rangeEnd = new Date(currentRangeStart.getTime() + currentRangeDays * 24 * 60 * 60 * 1000);
         var minPickup = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+        var maxCapacity = getMaxAvailableCapacity();
         var visibleJobs = externalEvents.filter(function (job) {
           if (scheduledJobIds.indexOf(job.id) !== -1) return false;
+          if (job.size > maxCapacity) return false;
           var pickupStart = new Date(job.pickup[0]);
           if (pickupStart < minPickup) return false;
           return pickupStart >= currentRangeStart && pickupStart < rangeEnd;
@@ -1018,19 +1045,19 @@ export default {
           }
           var $jobEl = $('<div></div>')
             .attr('id', 'mds-dispatch-management-event-' + job.id)
-            .addClass('mds-dispatch-management-jobs');
+            .addClass('mds-dispatch-management-jobs mbsc-flex');
 
           var $routeEl = $('<div class="mds-job-route"></div>');
-          var $fromEl = $('<div class="mds-job-stop"></div>').html(
+          var $fromEl = $('<div class="mds-job-stop mbsc-flex"></div>').html(
             '<span class="mds-job-dot mds-job-dot-origin"></span>' + '<span class="mds-job-addr">' + job.from + '</span>',
           );
           var $connectorEl = $('<div class="mds-job-connector"></div>');
-          var $toEl = $('<div class="mds-job-stop"></div>').html(
+          var $toEl = $('<div class="mds-job-stop mbsc-flex"></div>').html(
             '<span class="mds-job-dot mds-job-dot-dest"></span>' + '<span class="mds-job-addr">' + job.to + '</span>',
           );
           $routeEl.append($fromEl, $connectorEl, $toEl);
 
-          var $metaEl = $('<div class="mds-job-meta"></div>').html(
+          var $metaEl = $('<div class="mds-job-meta mbsc-flex-col mbsc-flex-none"></div>').html(
             '<span class="mds-job-time">' +
               mobiscroll.formatDate('H:mm', new Date(job.pickup[0])) +
               ' – ' +
@@ -1091,6 +1118,19 @@ export default {
       function filterResources() {
         filteredResources = computeFilteredResources();
         calendar.setOptions({ resources: filteredResources });
+      }
+
+      function getEffectiveStatus(ev) {
+        if (ev.status === 'actual') return 'in progress';
+        if (ev.end && ev.end <= now) return 'completed';
+        if (ev.start && ev.start < now) return 'in progress';
+        return ev.status || 'scheduled';
+      }
+
+      function getStatusFilteredEvents() {
+        return myEvents.filter(function (ev) {
+          return statusFilters[getEffectiveStatus(ev)] !== false;
+        });
       }
 
       function handleZoom(zoom) {
@@ -1336,6 +1376,7 @@ export default {
                   filters[this.value] = this.checked;
                 });
                 filterResources();
+                refreshJobList();
                 popup.close();
                 mobiscroll.toast({
                   //<hidden>
@@ -1388,6 +1429,11 @@ export default {
         popup.open();
       });
 
+      $('#mds-status-filter').on('change', 'input[type="checkbox"]', function () {
+        statusFilters[this.value] = this.checked;
+        calendar.setOptions({ data: getStatusFilteredEvents() });
+      });
+
       $calendarElm.on('click', '#demo-dispatch-management-reset-filters', function () {
         searchQuery = '';
 
@@ -1399,6 +1445,7 @@ export default {
         });
 
         filterResources();
+        refreshJobList();
 
         mobiscroll.toast({
           //<hidden>
@@ -1436,7 +1483,7 @@ export default {
           refDate: today,
           zoomLevel: zoomLevel,
           view: buildViewConfig(7),
-          data: myEvents,
+          data: getStatusFilteredEvents(),
           resources: filteredResources,
           invalid: maintenanceInvalids,
           renderResource: function (resource) {
@@ -1482,13 +1529,27 @@ export default {
           },
           renderScheduleEventContent: function (data) {
             var job = data.original;
-            return job.status === 'actual' ? '' : '<div>' + job.from + ' → ' + job.to + '</div>';
+            if (job.status === 'actual') {
+              return '<span class="mds-actual-label">In progress</span>';
+            }
+            return (
+              '<div class="mds-event-content-wrapper mbsc-flex">' +
+              '<span class="mds-event-route mbsc-flex-1-1">' +
+              job.from +
+              ' → ' +
+              job.to +
+              '</span>' +
+              '<span class="mds-event-planned-badge"><span>Planned</span></span>' +
+              '</div>'
+            );
           },
           onEventCreated: function (args) {
             if (args.action === 'externalDrop') {
               scheduledJobIds.push(args.event.id);
               $('#mds-dispatch-management-event-' + args.event.id).remove();
-              calendar.updateEvent(Object.assign({}, args.event, { status: 'scheduled', color: statusColors['scheduled'] }));
+              var scheduledEvent = Object.assign({}, args.event, { status: 'scheduled', color: statusColors['scheduled'] });
+              calendar.updateEvent(scheduledEvent);
+              myEvents.push(scheduledEvent);
             }
             var eventStart = args.event.start;
             var eventResource = args.event.resource;
@@ -1743,16 +1804,25 @@ export default {
   },
   // eslint-disable-next-line es5/no-template-literals
   markup: `
-<div class="mds-dispatch-outer">
-  <div id="mds-dispatch-custom-header" class="mds-dispatch-custom-header">
+<div class="mds-dispatch-outer mbsc-flex-col">
+  <div id="mds-dispatch-custom-header" class="mds-dispatch-custom-header mbsc-flex">
     <button id="mds-dispatch-range-trigger" mbsc-button data-variant="flat"><span id="mds-dispatch-range-label" class="mds-dispatch-range-label"></span></button>
-    <div class="mds-dispatch-header-right">
-      <div class="mds-dispatch-legend mbsc-flex mbsc-flex-wrap">
-        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#2196f3;"></span>Scheduled</span>
-        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#f97316;"></span>Started</span>
-        <span class="mds-dispatch-legend-item"><span class="mds-dispatch-legend-dot" style="background:#78909c;"></span>Completed</span>
+    <div class="mds-dispatch-header-right mbsc-flex">
+      <div class="mds-dispatch-status-filter" id="mds-status-filter" mbsc-segmented-group>
+        <label class="mds-seg-scheduled">
+          <input type="checkbox" mbsc-segmented value="scheduled" checked />
+          Scheduled
+        </label>
+        <label class="mds-seg-inprogress">
+          <input type="checkbox" mbsc-segmented value="in progress" checked />
+          In progress
+        </label>
+        <label class="mds-seg-completed">
+          <input type="checkbox" mbsc-segmented value="completed" checked />
+          Completed
+        </label>
       </div>
-      <div class="mds-dispatch-zoom">
+      <div class="mds-dispatch-zoom mbsc-flex">
         <button id="demo-dispatch-management-zoom-level-out" mbsc-button data-icon="minus" data-variant="flat"></button>
         <input type="range" id="demo-dispatch-management-zoom-level-slider" min="1" max="5" value="3" class="mds-dispatch-zoom-slider" />
         <button id="demo-dispatch-management-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>
@@ -1804,7 +1874,7 @@ export default {
   <div id="mds-dispatch-range-popup" class="mds-dispatch-range-popup">
     <div class="mbsc-grid mbsc-no-padding">
       <div class="mbsc-row">
-        <div class="mbsc-col-sm-4 mbsc-push-sm-8 mds-dispatch-range-dates">
+        <div class="mbsc-col-sm-4 mbsc-push-sm-8 mbsc-flex mbsc-flex-col">
           <div class="mds-dispatch-range-inputs">
             <label>
               Date range
@@ -1876,7 +1946,6 @@ export default {
 }
 
 .mds-dispatch-management-jobs {
-  display: flex;
   align-items: center;
   gap: 8px;
   margin: 4px 0;
@@ -1896,7 +1965,6 @@ export default {
 }
 
 .mds-job-stop {
-  display: flex;
   align-items: center;
   gap: 6px;
 }
@@ -1932,9 +2000,6 @@ export default {
 }
 
 .mds-job-meta {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
   align-items: flex-end;
   gap: 3px;
   font-size: 11px;
@@ -2071,12 +2136,23 @@ export default {
 }
 
 .mds-actual-event .mbsc-schedule-event-range,
-.mds-actual-event .mbsc-schedule-event-bar {
+.mds-actual-event .mbsc-schedule-event-bar,
+.mds-actual-event .mbsc-schedule-event-title,
+.mds-actual-event .mbsc-schedule-event-time,
+.mds-actual-event .mbsc-timeline-event-time {
   display: none;
 }
 
 .mds-actual-event {
   height: 20px;
+}
+
+.mds-actual-label {
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0.9;
+  line-height: 1;
 }
 
 .mds-dispatch-management-disabled-row.mbsc-schedule-invalid {
@@ -2088,49 +2164,84 @@ export default {
 }
 
 .mds-pulse:not(.mbsc-schedule-event-hover) .mbsc-timeline-event-background {
-  box-shadow: 0 0 0 rgba(108, 130, 145, 0.4);
+  box-shadow: 0 0 0 rgba(249, 115, 22, 0.4);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(108, 130, 145, 0.4);
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4);
   }
   70% {
-      box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+    box-shadow: 0 0 0 8px rgba(249, 115, 22, 0);
   }
   100% {
-      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
   }
 }
 
+.mds-event-content-wrapper {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.mds-event-route {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mds-event-planned-badge {
+  flex-shrink: 100;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.mds-event-planned-badge > span {
+  font-size: 10px;
+  padding: 0 5px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  display: block;
+}
+
 .mds-dispatch-header-right {
-  display: flex;
   align-items: center;
   gap: 16px;
   margin-left: auto;
 }
 
-.mds-dispatch-legend {
-  gap: 0 16px;
+.mds-dispatch-status-filter {
+  width: 300px;
 }
 
-.mds-dispatch-legend-item {
-  font-size: 14px;
-  white-space: nowrap;
+.mds-dispatch-status-filter .mbsc-segmented-button.mbsc-selected {
+  color: #fff;
 }
 
-.mds-dispatch-legend-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  vertical-align: middle;
-  margin-right: 6px;
+.mds-seg-scheduled .mbsc-selected.mbsc-material.mbsc-segmented-button .mbsc-button-bg,
+.mds-seg-scheduled .mbsc-button.mbsc-selected.mbsc-windows,
+.mds-seg-scheduled .mbsc-segmented-selectbox-inner {
+  background: #2196f3;
+}
+
+.mds-seg-inprogress .mbsc-selected.mbsc-material.mbsc-segmented-button .mbsc-button-bg,
+.mds-seg-inprogress .mbsc-button.mbsc-selected.mbsc-windows,
+.mds-seg-inprogress .mbsc-segmented-selectbox-inner {
+  background: #f97316;
+}
+
+.mds-seg-completed .mbsc-selected.mbsc-material.mbsc-segmented-button .mbsc-button-bg,
+.mds-seg-completed .mbsc-button.mbsc-selected.mbsc-windows,
+.mds-seg-completed .mbsc-segmented-selectbox-inner {
+  background: #78909c;
 }
 
 .mds-dispatch-zoom {
-  display: flex;
   align-items: center;
   gap: 6px;
 }
@@ -2146,13 +2257,10 @@ export default {
 }
 
 .mds-dispatch-outer {
-  display: flex;
-  flex-direction: column;
   height: 100%;
 }
 
 .mds-dispatch-custom-header {
-  display: flex;
   align-items: center;
   flex-shrink: 0;
   height: 52px;
@@ -2167,12 +2275,19 @@ export default {
   font-weight: bold;
 }
 
+.mds-dispatch-management-wrapper {
+  background-color: #fff;
+}
+
 .mbsc-ios-dark .mds-dispatch-custom-header,
-.mbsc-material-dark .mds-dispatch-custom-header {
+.mbsc-material-dark .mds-dispatch-custom-header,
+.mbsc-ios-dark .mds-dispatch-management-wrapper,
+.mbsc-material-dark .mds-dispatch-management-wrapper {
   background-color: #000;
 }
 
-.mbsc-windows-dark .mds-dispatch-custom-header {
+.mbsc-windows-dark .mds-dispatch-custom-header,
+.mbsc-windows-dark .mds-dispatch-management-wrapper {
   background-color: #1f1f1f;
 }
 
@@ -2185,11 +2300,6 @@ export default {
 .mds-dispatch-range-popup .mbsc-textfield-wrapper-box {
   margin-top: 0;
   margin-right: 0;
-}
-
-.mds-dispatch-range-dates {
-  display: flex;
-  flex-direction: column;
 }
 
 .mds-dispatch-range-inputs {
