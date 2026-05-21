@@ -310,7 +310,7 @@ export default {
               status: 'operational',
               plate: 'AB14 KTP',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 2,
@@ -326,7 +326,7 @@ export default {
               status: 'operational',
               plate: 'FR19 XDL',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 3,
@@ -344,7 +344,7 @@ export default {
               status: 'operational',
               plate: 'QN62 RPV',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
               maintenanceFrom: dyndatetime('y,m,d-2,0'),
               maintenanceTo: dyndatetime('y,m,d+2,0'),
             },
@@ -369,7 +369,7 @@ export default {
               status: 'operational',
               plate: 'GR12 PEV',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 5,
@@ -385,7 +385,7 @@ export default {
               status: 'operational',
               plate: 'MB27 FTK',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 6,
@@ -403,7 +403,7 @@ export default {
               status: 'operational',
               plate: 'KT73 ZLD',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
               maintenanceFrom: dyndatetime('y,m,d+2,0'),
               maintenanceTo: dyndatetime('y,m,d+5,0'),
             },
@@ -428,7 +428,7 @@ export default {
               status: 'operational',
               plate: 'EP17 GMF',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 8,
@@ -444,7 +444,7 @@ export default {
               status: 'operational',
               plate: 'DS41 CXP',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 9,
@@ -462,7 +462,7 @@ export default {
               status: 'operational',
               plate: 'NH65 QWD',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
               maintenanceFrom: dyndatetime('y,m,d-1,0'),
               maintenanceTo: dyndatetime('y,m,d+1,0'),
             },
@@ -487,7 +487,7 @@ export default {
               status: 'operational',
               plate: 'KT19 LNV',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 11,
@@ -503,7 +503,7 @@ export default {
               status: 'operational',
               plate: 'WP64 GBX',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 12,
@@ -523,7 +523,7 @@ export default {
               eventCreation: false,
               maintenanceFrom: dyndatetime('y,m,d+4,0'),
               maintenanceTo: dyndatetime('y,m,d+7,0'),
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
           ],
         },
@@ -546,7 +546,7 @@ export default {
               status: 'operational',
               plate: 'BD67 HTA',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 14,
@@ -562,7 +562,7 @@ export default {
               status: 'operational',
               plate: 'VA18 RQW',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
             {
               id: 15,
@@ -578,7 +578,7 @@ export default {
               status: 'operational',
               plate: 'HY22 BPL',
               eventCreation: false,
-              cssClass: 'mds-actual-resource',
+              cssClass: 'mds-dispatch-actual-resource',
             },
           ],
         },
@@ -823,9 +823,9 @@ export default {
         },
       ];
 
-      var $calendarElm = $('#demo-dispatch-management');
-      var $popupElm = $('#demo-dispatch-management-filtering-popup');
-      var $resourceList = $('#demo-dispatch-management-resource-list');
+      var $calendarElm = $('#demo-dispatch');
+      var $popupElm = $('#demo-dispatch-filtering-popup');
+      var $resourceList = $('#demo-dispatch-resource-list');
       var scheduledJobIds = [];
 
       var filters = {};
@@ -846,23 +846,10 @@ export default {
       var maintenanceInvalids = [];
 
       function getActualDates(start, end) {
-        var duration = end.getTime() - start.getTime(); // Get duration in milliseconds
-
-        // Define possible offset intervals in minutes
-        var possibleOffsets = [15, 30, 60, 90, 120]; // 15min, 30min, 1h, 1.5h, 2h
-
-        // Randomly select an offset
-        var randomOffsetMinutes = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)];
-        var offsetMs = randomOffsetMinutes * 60 * 1000;
-
-        // Randomly choose positive or negative offset
-        var offset = Math.random() > 0.5 ? offsetMs : -offsetMs;
-
-        // Create new start and end time
-        var actualStart = new Date(start.getTime() + offset);
-        var actualEnd = new Date(actualStart.getTime() + duration);
-
-        return [actualStart, actualEnd];
+        var possibleOffsets = [-120, -90, -60, -30, -15, 0, 15, 30, 60, 90, 120];
+        var departureOffset = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)] * 60000;
+        var arrivalOffset = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)] * 60000;
+        return [new Date(start.getTime() + departureOffset), new Date(end.getTime() + arrivalOffset)];
       }
 
       var statusColors = {
@@ -907,7 +894,7 @@ export default {
                 start: resource.maintenanceFrom,
                 end: resource.maintenanceTo,
                 resource: resource.id,
-                cssClass: 'mds-maintenance-invalid',
+                cssClass: 'mds-dispatch-maintenance-invalid',
               });
             }
           });
@@ -951,17 +938,21 @@ export default {
           if (event.start < now && event.end > now) {
             if (!event.actual) {
               // Create actual event — clamp actualStart so it never exceeds now
-              var actualDates = getActualDates(event.start, event.end);
+              var actualDates = getActualDates(event.start, new Date(event.drop[0]));
               var actualStart = actualDates[0] >= event.start && actualDates[0] < now ? actualDates[0] : event.start;
               var newEvent = {
                 resource: event.resource + '-actual',
+                from: event.from,
+                to: event.to,
+                pickup: event.pickup,
+                drop: event.drop,
                 size: event.size,
                 start: actualStart,
                 end: now,
                 title: 'In progress',
                 status: 'actual',
                 color: event.color,
-                cssClass: 'mds-actual-event mds-pulse',
+                cssClass: 'mds-dispatch-actual-event mds-dispatch-pulse',
                 editable: false,
               };
               event.actual = true;
@@ -971,6 +962,31 @@ export default {
               // Keep actual end in sync with current time on each refresh
               event.actualRef.end = now;
             }
+          } else if (event.end <= now && !event.actual) {
+            var completedActualDates = getActualDates(event.start, new Date(event.drop[0]));
+            var completedActualStart =
+              completedActualDates[0] >= event.start && completedActualDates[0] < event.end ? completedActualDates[0] : event.start;
+            var completedActualEnd = completedActualDates[1];
+            var minEnd = new Date(completedActualStart.getTime() + 30 * 60000);
+            if (completedActualEnd < minEnd) completedActualEnd = minEnd;
+            var completedNewEvent = {
+              resource: event.resource + '-actual',
+              from: event.from,
+              to: event.to,
+              pickup: event.pickup,
+              drop: event.drop,
+              size: event.size,
+              start: completedActualStart,
+              end: completedActualEnd,
+              title: 'Completed',
+              status: 'actual',
+              color: event.color,
+              cssClass: 'mds-dispatch-actual-event',
+              editable: false,
+            };
+            event.actual = true;
+            event.actualRef = completedNewEvent;
+            events.push(completedNewEvent);
           }
         }
       }
@@ -992,7 +1008,7 @@ export default {
         for (var i = 0; i < events.length; i++) {
           var event = events[i];
           event.start = event.start ? event.start : event.pickup[0];
-          event.end = event.end ? event.end : event.drop[1];
+          event.end = event.end ? event.end : event.drop[0];
           event.title = event.from + ' → ' + event.to;
         }
       }
@@ -1012,7 +1028,7 @@ export default {
       }
 
       function refreshJobList() {
-        var container = $('#dispatch-management-events');
+        var container = $('#dispatch-events');
         container.empty();
 
         var rangeEnd = new Date(currentRangeStart.getTime() + currentRangeDays * 24 * 60 * 60 * 1000);
@@ -1039,30 +1055,36 @@ export default {
           var pickupDate = new Date(job.pickup[0]);
           var dayKey = mobiscroll.formatDate('YYYY-MM-DD', pickupDate);
           if (dayKey !== lastDayKey) {
-            container.append('<div class="mds-job-day-header">' + mobiscroll.formatDate('DDD, DD MMM', pickupDate) + '</div>');
+            container.append('<div class="mds-dispatch-job-day-header">' + mobiscroll.formatDate('DDD, DD MMM', pickupDate) + '</div>');
             lastDayKey = dayKey;
           }
           var $jobEl = $('<div></div>')
-            .attr('id', 'mds-dispatch-management-event-' + job.id)
-            .addClass('mds-dispatch-management-jobs mbsc-flex');
+            .attr('id', 'mds-dispatch-event-' + job.id)
+            .addClass('mds-dispatch-jobs mbsc-flex');
 
-          var $routeEl = $('<div class="mds-job-route"></div>');
-          var $fromEl = $('<div class="mds-job-stop mbsc-flex"></div>').html(
-            '<span class="mds-job-dot mds-job-dot-origin"></span>' + '<span class="mds-job-addr">' + job.from + '</span>',
+          var $routeEl = $('<div class="mds-dispatch-job-route"></div>');
+          var $fromEl = $('<div class="mds-dispatch-job-stop mbsc-flex"></div>').html(
+            '<span class="mds-dispatch-job-dot mds-dispatch-job-dot-origin"></span>' +
+              '<span class="mds-dispatch-job-addr">' +
+              job.from +
+              '</span>',
           );
-          var $connectorEl = $('<div class="mds-job-connector"></div>');
-          var $toEl = $('<div class="mds-job-stop mbsc-flex"></div>').html(
-            '<span class="mds-job-dot mds-job-dot-dest"></span>' + '<span class="mds-job-addr">' + job.to + '</span>',
+          var $connectorEl = $('<div class="mds-dispatch-job-connector"></div>');
+          var $toEl = $('<div class="mds-dispatch-job-stop mbsc-flex"></div>').html(
+            '<span class="mds-dispatch-job-dot mds-dispatch-job-dot-dest"></span>' +
+              '<span class="mds-dispatch-job-addr">' +
+              job.to +
+              '</span>',
           );
           $routeEl.append($fromEl, $connectorEl, $toEl);
 
-          var $metaEl = $('<div class="mds-job-meta mbsc-flex-col mbsc-flex-none"></div>').html(
-            '<span class="mds-job-time">' +
+          var $metaEl = $('<div class="mds-dispatch-job-meta mbsc-flex-col mbsc-flex-none"></div>').html(
+            '<span class="mds-dispatch-job-time">' +
               mobiscroll.formatDate('H:mm', new Date(job.pickup[0])) +
               ' – ' +
               mobiscroll.formatDate('H:mm', new Date(job.drop[1])) +
               '</span>' +
-              '<span class="mds-job-size">' +
+              '<span class="mds-dispatch-job-size">' +
               job.size +
               ' t</span>',
           );
@@ -1120,7 +1142,7 @@ export default {
       }
 
       function getEffectiveStatus(ev) {
-        if (ev.status === 'actual') return 'in progress';
+        if (ev.status === 'actual') return ev.title === 'Completed' ? 'completed' : 'in progress';
         if (ev.end && ev.end <= now) return 'completed';
         if (ev.start && ev.start < now) return 'in progress';
         return ev.status || 'scheduled';
@@ -1135,9 +1157,9 @@ export default {
       function handleZoom(zoom) {
         zoomLevel = zoom;
 
-        $('#demo-dispatch-management-zoom-level-slider').val(zoomLevel);
-        $('#demo-dispatch-management-zoom-level-in').prop('disabled', zoomLevel === 5);
-        $('#demo-dispatch-management-zoom-level-out').prop('disabled', zoomLevel === 1);
+        $('#demo-dispatch-zoom-level-slider').val(zoomLevel);
+        $('#demo-dispatch-zoom-level-in').prop('disabled', zoomLevel === 5);
+        $('#demo-dispatch-zoom-level-out').prop('disabled', zoomLevel === 1);
 
         calendar.setOptions({
           refDate: currentRangeStart,
@@ -1153,7 +1175,6 @@ export default {
             size: days,
             timeCellStep: 60,
             timeLabelStep: 60,
-            eventHeight: 'variable',
             zoomLevels: {
               1: { type: 'day', size: days, columnWidth: 'xsmall', timeCellStep: 240, timeLabelStep: 240 },
               2: { type: 'day', size: days, columnWidth: 'small', timeCellStep: 120, timeLabelStep: 120 },
@@ -1371,7 +1392,7 @@ export default {
               text: 'Apply',
               keyCode: 'enter',
               handler: function () {
-                $('.mds-dispatch-management-checkbox').each(function () {
+                $('.mds-dispatch-checkbox').each(function () {
                   filters[this.value] = this.checked;
                 });
                 filterResources();
@@ -1396,19 +1417,19 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $calendarElm.on('input', '#demo-dispatch-management-search-input', function (event) {
+      $calendarElm.on('input', '#demo-dispatch-search-input', function (event) {
         clearTimeout(searchTimeout);
         searchQuery = event.target.value.toLowerCase();
         searchTimeout = setTimeout(filterResources, 300);
       });
 
-      $calendarElm.on('click', '#demo-dispatch-management-filter-button', function () {
+      $calendarElm.on('click', '#demo-dispatch-filter-button', function () {
         // Create resource checkbox list
         var checkboxes = '';
         myResources.forEach(function (res) {
           checkboxes +=
             '<label>' +
-            '<input type="checkbox" mbsc-checkbox class="mds-dispatch-management-checkbox" value="' +
+            '<input type="checkbox" mbsc-checkbox class="mds-dispatch-checkbox" value="' +
             res.id +
             '" checked /> ' +
             res.name +
@@ -1419,7 +1440,7 @@ export default {
         mobiscroll.enhance($resourceList[0]);
 
         // Set checkbox checked states
-        $('.mds-dispatch-management-checkbox').each(function () {
+        $('.mds-dispatch-checkbox').each(function () {
           var checkbox = $(this).mobiscroll('getInst');
           checkbox.checked = filters[this.value];
         });
@@ -1433,11 +1454,11 @@ export default {
         calendar.setOptions({ data: getStatusFilteredEvents() });
       });
 
-      $calendarElm.on('click', '#demo-dispatch-management-reset-filters', function () {
+      $calendarElm.on('click', '#demo-dispatch-reset-filters', function () {
         searchQuery = '';
 
-        $('#demo-dispatch-management-search-input').val('');
-        $('.mds-dispatch-management-checkbox').each(function () {
+        $('#demo-dispatch-search-input').val('');
+        $('.mds-dispatch-checkbox').each(function () {
           var checkbox = $(this).mobiscroll('getInst');
           checkbox.checked = true;
           filters[this.value] = true;
@@ -1478,7 +1499,7 @@ export default {
           dragToMove: true,
           externalDrop: true,
           eventOverlap: false,
-          cssClass: 'mds-dispatch-management-calendar',
+          cssClass: 'mds-dispatch-calendar',
           refDate: today,
           zoomLevel: zoomLevel,
           view: buildViewConfig(7),
@@ -1489,13 +1510,13 @@ export default {
             var mStatus = getResourceMaintenanceStatus(resource);
             return (
               '<div>' +
-              '<div class="mds-dispatch-management-name">' +
+              '<div class="mds-dispatch-name">' +
               resource.name +
-              (resource.name && resource.plate ? '<span class="mds-dispatch-management-plate">' + resource.plate + '</span>' : '') +
+              (resource.name && resource.plate ? '<span class="mds-dispatch-plate">' + resource.plate + '</span>' : '') +
               '</div>' +
               (!resource.isParent && resource.name
-                ? '<div class="mds-dispatch-management-status">' +
-                  '<span class="mds-dispatch-management-status-dot" style="background-color:' +
+                ? '<div class="mds-dispatch-status">' +
+                  '<span class="mds-dispatch-status-dot" style="background-color:' +
                   maintenanceColors[mStatus] +
                   ';"></span>' +
                   maintenanceLabels[mStatus] +
@@ -1506,46 +1527,46 @@ export default {
           },
           renderResourceEmpty: function () {
             return (
-              '<div class="mds-dispatch-management-empty mbsc-flex mbsc-align-items-center">' +
+              '<div class="mds-dispatch-empty mbsc-flex mbsc-align-items-center">' +
               '<div class="mbsc-flex-1-1">' +
               '<img src="https://img.mobiscroll.com/demos/filter-no-result.png" alt="Empty list" style="width:100px;" />' +
               '<p class="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>' +
               '<p class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>' +
-              '<button mbsc-button id="demo-dispatch-management-reset-filters" data-variant="outline">Reset Filters</button>' +
+              '<button mbsc-button id="demo-dispatch-reset-filters" data-variant="outline">Reset Filters</button>' +
               '</div>' +
               '</div>'
             );
           },
           renderResourceHeader: function () {
             return (
-              '<div class="mbsc-flex mbsc-align-items-center mbsc-font mds-dispatch-management-search">' +
+              '<div class="mbsc-flex mbsc-align-items-center mbsc-font mds-dispatch-search">' +
               '<label class="mbsc-flex-1-1">' +
-              '<input type="text" mbsc-input id="demo-dispatch-management-search-input" autocomplete="off" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." />' +
+              '<input type="text" mbsc-input id="demo-dispatch-search-input" autocomplete="off" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." />' +
               '</label>' +
-              '<button mbsc-button id="demo-dispatch-management-filter-button" data-start-icon="material-filter-list" data-variant="outline" class="mbsc-flex-none">Filter</button>' +
+              '<button mbsc-button id="demo-dispatch-filter-button" data-start-icon="material-filter-list" data-variant="outline" class="mbsc-flex-none">Filter</button>' +
               '</div>'
             );
           },
           renderScheduleEventContent: function (data) {
             var job = data.original;
             if (job.status === 'actual') {
-              return '<span class="mds-actual-label">In progress</span>';
+              return job.title === 'In progress' ? '<span class="mds-dispatch-actual-label">In progress</span>' : '';
             }
             return (
-              '<div class="mds-event-content-wrapper mbsc-flex">' +
-              '<span class="mds-event-route mbsc-flex-1-1">' +
+              '<div class="mds-dispatch-event-content-wrapper mbsc-flex">' +
+              '<span class="mds-dispatch-event-route mbsc-flex-1-1">' +
               job.from +
               ' → ' +
               job.to +
               '</span>' +
-              '<span class="mds-event-planned-badge-content"><span class="mds-event-planned-badge">Planned</span></span>' +
+              '<span class="mds-dispatch-event-planned-badge"><span class="mds-dispatch-event-planned-badge-text">Planned</span></span>' +
               '</div>'
             );
           },
           onEventCreated: function (args) {
             if (args.action === 'externalDrop') {
               scheduledJobIds.push(args.event.id);
-              $('#mds-dispatch-management-event-' + args.event.id).remove();
+              $('#mds-dispatch-event-' + args.event.id).remove();
               var scheduledEvent = Object.assign({}, args.event, { status: 'scheduled', color: statusColors['scheduled'] });
               calendar.updateEvent(scheduledEvent);
               myEvents.push(scheduledEvent);
@@ -1565,7 +1586,7 @@ export default {
             var moved = moveToFirstAvailableSlot(draggedEvent, false);
             if (moved) {
               if (args.action === 'externalDrop') {
-                $('#mds-dispatch-management-event-' + args.event.id).remove();
+                $('#mds-dispatch-event-' + args.event.id).remove();
               }
               setTimeout(function () {
                 calendar.navigateToEvent({ start: draggedEvent.start, resource: draggedEvent.resource });
@@ -1626,6 +1647,25 @@ export default {
               min: null,
             });
           },
+          onEventClick: function (args) {
+            if (args.event.status === 'actual') {
+              var ev = args.event;
+              var actualStart = new Date(ev.start);
+              var scheduledDeparture = new Date(ev.pickup[0]);
+              var departureDelay = Math.round((actualStart - scheduledDeparture) / 60000);
+              var msg;
+              if (ev.title === 'In progress') {
+                msg =
+                  'Actual transport: departed ' + formatDelay(departureDelay) + ' · running ' + formatDuration(new Date() - actualStart);
+              } else {
+                var actualEnd = new Date(ev.end);
+                var scheduledArrival = new Date(ev.drop[0]);
+                var arrivalDelay = Math.round((actualEnd - scheduledArrival) / 60000);
+                msg = 'Actual transport: departed ' + formatDelay(departureDelay) + ' · arrived ' + formatDelay(arrivalDelay);
+              }
+              mobiscroll.toast({ message: msg, duration: 5000 });
+            }
+          },
           onPageLoaded: function (args) {
             currentViewStart = args.firstDay;
             currentViewEnd = args.lastDay;
@@ -1633,15 +1673,15 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#demo-dispatch-management-zoom-level-slider').on('input', function (ev) {
+      $('#demo-dispatch-zoom-level-slider').on('input', function (ev) {
         handleZoom(+ev.target.value);
       });
 
-      $('#demo-dispatch-management-zoom-level-in').on('click', function () {
+      $('#demo-dispatch-zoom-level-in').on('click', function () {
         handleZoom(zoomLevel + 1);
       });
 
-      $('#demo-dispatch-management-zoom-level-out').on('click', function () {
+      $('#demo-dispatch-zoom-level-out').on('click', function () {
         handleZoom(zoomLevel - 1);
       });
 
@@ -1651,6 +1691,21 @@ export default {
       var pendingRangeDays = 7;
       var currentRangeStart = today;
       var currentRangeDays = 7;
+
+      function formatDuration(ms) {
+        var totalMin = Math.round(ms / 60000);
+        var h = Math.floor(totalMin / 60);
+        var m = totalMin % 60;
+        if (h === 0) return m + ' min';
+        if (m === 0) return h + ' h';
+        return h + ' h ' + m + ' min';
+      }
+
+      function formatDelay(minutes) {
+        if (Math.abs(minutes) < 5) return 'on time';
+        if (minutes > 0) return minutes + ' min late';
+        return Math.abs(minutes) + ' min early';
+      }
 
       function formatRangeLabel(start, days) {
         var end = new Date(start.getTime() + (days - 1) * 24 * 60 * 60 * 1000);
@@ -1808,43 +1863,43 @@ export default {
     <button id="mds-dispatch-range-trigger" mbsc-button data-variant="flat"><span id="mds-dispatch-range-label" class="mds-dispatch-range-label"></span></button>
     <div class="mds-dispatch-header-right mbsc-flex">
       <div class="mds-dispatch-status-filter" id="mds-status-filter" mbsc-segmented-group>
-        <label class="mds-seg-scheduled">
+        <label class="mds-dispatch-seg-scheduled">
           <input type="checkbox" mbsc-segmented value="scheduled" checked />
-          Scheduled
+          <span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-scheduled"></span>Scheduled
         </label>
-        <label class="mds-seg-inprogress">
+        <label class="mds-dispatch-seg-inprogress">
           <input type="checkbox" mbsc-segmented value="in progress" checked />
-          In progress
+          <span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-inprogress"></span>In progress
         </label>
-        <label class="mds-seg-completed">
+        <label class="mds-dispatch-seg-completed">
           <input type="checkbox" mbsc-segmented value="completed" checked />
-          Completed
+          <span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-completed"></span>Completed
         </label>
       </div>
       <div class="mds-dispatch-zoom mbsc-flex">
-        <button id="demo-dispatch-management-zoom-level-out" mbsc-button data-icon="minus" data-variant="flat"></button>
-        <input type="range" id="demo-dispatch-management-zoom-level-slider" min="1" max="5" value="3" class="mds-dispatch-zoom-slider" />
-        <button id="demo-dispatch-management-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>
+        <button id="demo-dispatch-zoom-level-out" mbsc-button data-icon="minus" data-variant="flat"></button>
+        <input type="range" id="demo-dispatch-zoom-level-slider" min="1" max="5" value="3" class="mds-dispatch-zoom-slider" />
+        <button id="demo-dispatch-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>
       </div>
       <button id="mds-dispatch-go-live" mbsc-button data-variant="outline" data-start-icon="clock" class="mds-dispatch-now-btn">Now</button>
     </div>
   </div>
   <div class="mbsc-grid mbsc-no-padding mds-dispatch-content">
-    <div class="mbsc-row mds-full-height">
-      <div class="mbsc-col-sm-3 mds-full-height mds-dispatch-management-wrapper">
-        <div id="dispatch-management-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
+    <div class="mbsc-row mds-dispatch-full-height">
+      <div class="mbsc-col-sm-3 mds-dispatch-full-height mds-dispatch-wrapper">
+        <div id="dispatch-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
       </div>
-      <div class="mbsc-col-sm-9 mds-dispatch-management-col mds-full-height">
-        <div id="demo-dispatch-management"></div>
+      <div class="mbsc-col-sm-9 mds-dispatch-column mds-dispatch-full-height">
+        <div id="demo-dispatch"></div>
       </div>
     </div>
   </div>
 </div>
 <div style="display:none">
-  <div id="demo-dispatch-management-filtering-popup">
+  <div id="demo-dispatch-filtering-popup">
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Capacity</div>
-      <div id="demo-dispatch-management-resource-list"></div>
+      <div id="demo-dispatch-resource-list"></div>
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Operational Status</div>
@@ -1853,7 +1908,7 @@ export default {
           type="checkbox"
           mbsc-checkbox
           data-label="In maintenance/Maintenance planned"
-          class="mds-dispatch-management-checkbox"
+          class="mds-dispatch-checkbox"
           value="maintenance"
           checked
         />
@@ -1863,7 +1918,7 @@ export default {
           type="checkbox"
           mbsc-checkbox
           data-label="Operational"
-          class="mds-dispatch-management-checkbox"
+          class="mds-dispatch-checkbox"
           value="operational"
           checked
         />
@@ -1914,23 +1969,166 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-full-height {
-  height: 100%;
-}
-
-.mds-dispatch-management-col {
-  border-left: 1px solid #ccc;
-}
-
-.mds-dispatch-management-calendar .mbsc-calendar-header {
+/* --- Mobiscroll overrides --- */
+.mds-dispatch-calendar .mbsc-calendar-header {
   display: none;
 }
-
-.mds-dispatch-management-wrapper {
-  overflow: auto;
+.mds-dispatch-calendar .mbsc-timeline-resource-header {
+  height: 100%;
+  padding: 8px;
+  box-sizing: border-box;
 }
-
-.mds-job-day-header {
+.mds-dispatch-calendar .mbsc-timeline-resource-col {
+  width: 300px;
+}
+.mds-dispatch-calendar .mbsc-timeline-resource-title {
+  height: 100%;
+  box-sizing: border-box;
+}
+.mds-dispatch-calendar .mbsc-timeline-row:not(.mds-dispatch-actual-resource):not(.mbsc-timeline-parent) {
+  height: 58px;
+}
+.mds-dispatch-calendar .mds-dispatch-actual-resource {
+  height: 8px;
+}
+.mbsc-timeline-row:has(+ .mds-dispatch-actual-resource) {
+  border-bottom: none;
+}
+.mds-dispatch-actual-resource .mbsc-timeline-event {
+  height: 10px;
+  margin-top: -7px;
+}
+.mds-dispatch-actual-resource .mbsc-timeline-event-background {
+  margin: 0;
+}
+.mds-dispatch-calendar .mbsc-timeline-parent {
+  height: 34px;
+}
+.mds-dispatch-calendar .mbsc-timeline-parent .mbsc-timeline-invalid {
+  display: none;
+}
+.mds-dispatch-calendar .mbsc-timeline-parent .mbsc-timeline-column {
+  border: 0;
+}
+.mds-dispatch-calendar .mbsc-timeline-row-gutter {
+  height: 6px;
+}
+.mds-dispatch-search .mbsc-textfield-wrapper {
+  margin: 0;
+}
+.mds-dispatch-search .mbsc-textfield-wrapper.mbsc-ltr {
+  margin-right: 8px;
+}
+.mds-dispatch-search .mbsc-textfield-wrapper.mbsc-rtl {
+  margin-left: 8px;
+}
+.mds-dispatch-search .mbsc-textfield-wrapper.mbsc-material {
+  margin-top: 2px;
+}
+.mds-dispatch-search .mbsc-textfield {
+  height: 36px;
+  padding: 0 8px 0 38px;
+}
+.mds-dispatch-search .mbsc-textfield-icon {
+  top: 50%;
+  left: 8px;
+  font-size: 20px;
+  height: 24px;
+  line-height: 24px;
+  margin-top: -12px;
+}
+.mds-dispatch-search .mbsc-button {
+  margin: 0;
+  height: 36px;
+  font-size: 14px;
+}
+.mds-dispatch-actual-event .mbsc-schedule-event-range,
+.mds-dispatch-actual-event .mbsc-schedule-event-bar,
+.mds-dispatch-actual-event .mbsc-schedule-event-title,
+.mds-dispatch-actual-event .mbsc-schedule-event-time,
+.mds-dispatch-actual-event .mbsc-timeline-event-time {
+  display: none;
+}
+.mds-dispatch-disabled-row.mbsc-schedule-invalid {
+  background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.12), rgba(128,128,128,0.12) 11px, rgba(128,128,128,0.28) 11px, rgba(128,128,128,0.28) 22px);
+}
+.mds-dispatch-maintenance-invalid.mbsc-schedule-invalid {
+  background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.12), rgba(128,128,128,0.12) 11px, rgba(128,128,128,0.28) 11px, rgba(128,128,128,0.28) 22px);
+}
+.mds-dispatch-pulse:not(.mbsc-schedule-event-hover) .mbsc-timeline-event-background {
+  box-shadow: 0 0 0 rgba(249, 115, 22, 0.4);
+  animation: pulse 2s infinite;
+}
+.mds-dispatch-now-btn.mbsc-ios {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.mds-dispatch-seg-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.mds-dispatch-seg-dot-scheduled {
+  background: #2196f3;
+}
+.mds-dispatch-seg-dot-inprogress {
+  background: #f97316;
+}
+.mds-dispatch-seg-dot-completed {
+  background: #78909c;
+}
+.mbsc-ios-dark .mds-dispatch-custom-header,
+.mbsc-material-dark .mds-dispatch-custom-header,
+.mbsc-ios-dark .mds-dispatch-wrapper,
+.mbsc-material-dark .mds-dispatch-wrapper {
+  background-color: #000;
+}
+.mbsc-windows-dark .mds-dispatch-custom-header,
+.mbsc-windows-dark .mds-dispatch-wrapper {
+  background-color: #1f1f1f;
+}
+.mds-dispatch-range-popup .mbsc-datepicker-inline {
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.mds-dispatch-range-popup .mbsc-textfield-wrapper-box {
+  margin-top: 0;
+  margin-right: 0;
+}
+.mds-dispatch-range-desktop-btns.mbsc-button-group-justified,
+.mds-dispatch-range-desktop-btns.mbsc-button-group-justified button {
+  margin-bottom: 0;
+}
+.mds-dispatch-content > .mbsc-row {
+  height: 100%;
+}
+.mds-dispatch-calendar.mbsc-eventcalendar .mbsc-calendar-wrapper {
+  border: none;
+}
+@media (max-width: 575px) {
+  .mds-dispatch-range-desktop-btns {
+    display: none;
+  }
+  .mds-dispatch-range-popup .mbsc-textfield-wrapper-box {
+    margin-left: 0;
+  }
+}
+/* --- Demo styles --- */
+.mds-dispatch-full-height {
+  height: 100%;
+}
+.mds-dispatch-column {
+  border-left: 1px solid #ccc;
+}
+.mds-dispatch-wrapper {
+  overflow: auto;
+  background-color: #fff;
+}
+.mds-dispatch-job-day-header {
   font-family: -apple-system, Segoe UI, Roboto, sans-serif;
   font-size: 11px;
   font-weight: 600;
@@ -1939,12 +2137,10 @@ export default {
   color: #6b7280;
   padding: 10px 2px 4px;
 }
-
-.mds-job-day-header:first-child {
+.mds-dispatch-job-day-header:first-child {
   padding-top: 2px;
 }
-
-.mds-dispatch-management-jobs {
+.mds-dispatch-jobs {
   align-items: center;
   gap: 8px;
   margin: 4px 0;
@@ -1957,216 +2153,61 @@ export default {
   font-size: 12px;
   cursor: grab;
 }
-
-.mds-job-route {
+.mds-dispatch-job-route {
   flex: 1 1 0;
   min-width: 0;
 }
-
-.mds-job-stop {
+.mds-dispatch-job-stop {
   align-items: center;
   gap: 6px;
 }
-
-.mds-job-dot {
+.mds-dispatch-job-dot {
   flex: 0 0 8px;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   border: 2px solid #fff;
 }
-
-.mds-job-dot-origin {
+.mds-dispatch-job-dot-origin {
   background: transparent;
 }
-
-.mds-job-dot-dest {
+.mds-dispatch-job-dot-dest {
   background: #fff;
 }
-
-.mds-job-addr {
+.mds-dispatch-job-addr {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.5;
 }
-
-.mds-job-connector {
+.mds-dispatch-job-connector {
   width: 2px;
   height: 5px;
   background: rgba(255, 255, 255, 0.4);
   margin-left: 3px;
 }
-
-.mds-job-meta {
+.mds-dispatch-job-meta {
   align-items: flex-end;
   gap: 3px;
   font-size: 11px;
   opacity: 0.9;
 }
-
-.mds-job-size {
+.mds-dispatch-job-size {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   padding: 1px 7px;
   font-weight: 600;
 }
-  
-.mds-dispatch-management-calendar .mbsc-timeline-resource-header {
-  height: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-.mds-dispatch-management-calendar .mbsc-timeline-resource-col {
-  width: 300px;
-}
-
-.mds-dispatch-management-calendar .mbsc-timeline-resource-title {
-  height: 100%;
-  box-sizing: border-box;
-}
-
-.mds-dispatch-management-calendar .mbsc-timeline-row:not(.mds-actual-resource):not(.mbsc-timeline-parent) {
-  height: 58px;
-}
-  
-.mds-dispatch-management-calendar .mds-actual-resource {
-  height: 8px;
-}
-
-.mbsc-timeline-row:has(+ .mds-actual-resource) {
-  border-bottom: none;
-}
-
-.mds-actual-resource .mbsc-timeline-event {
-  height: 10px;
-}
-
-.mds-actual-resource .mbsc-timeline-event-background {
-  margin: 0;
-}
-
-.mds-dispatch-management-calendar .mbsc-timeline-parent {
-  height: 34px;
-}
-
-.mds-dispatch-management-calendar .mbsc-timeline-parent .mbsc-timeline-invalid {
-  display: none;
-}
-
-.mds-dispatch-management-calendar .mbsc-timeline-parent .mbsc-timeline-column {
-  border: 0;
-}
-
-.mds-dispatch-management-calendar .mbsc-timeline-row-gutter {
-  height: 6px;
-}
-
-.mds-dispatch-management-search {
-  height: 100%;
-}
-
-.mds-dispatch-management-search .mbsc-textfield-wrapper {
-  margin: 0;
-}
-
-.mds-dispatch-management-search .mbsc-textfield-wrapper.mbsc-ltr {
-  margin-right: 8px;
-}
-
-.mds-dispatch-management-search .mbsc-textfield-wrapper.mbsc-rtl {
-  margin-left: 8px;
-}
-
-.mds-dispatch-management-search .mbsc-textfield-wrapper.mbsc-material {
-  margin-top: 2px;
-}
-
-.mds-dispatch-management-search .mbsc-textfield {
-  height: 36px;
-  padding: 0 8px 0 38px;
-}
-
-.mds-dispatch-management-search .mbsc-textfield-icon {
-  top: 50%;
-  left: 8px;
-  font-size: 20px;
-  height: 24px;
-  line-height: 24px;
-  margin-top: -12px;
-}
-
-.mds-dispatch-management-search .mbsc-button {
-  margin: 0;
-  height: 36px;
-  font-size: 14px;
-}
-
-.mds-dispatch-management-name {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.mds-dispatch-management-plate {
-    border: 1px solid #488dc5;
-    border-radius: 4px;
-    margin: 0 5px;
-    padding: 0 5px;
-}
-
-.mds-dispatch-management-status-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-
-.mds-dispatch-management-status {
-  font-size: 13px;
-  font-weight: normal;
-}
-
-.mds-dispatch-management-empty {
-  height: 100%;
-  text-align: center;
-}
-
-.mds-actual-event .mbsc-schedule-event-range,
-.mds-actual-event .mbsc-schedule-event-bar,
-.mds-actual-event .mbsc-schedule-event-title,
-.mds-actual-event .mbsc-schedule-event-time,
-.mds-actual-event .mbsc-timeline-event-time {
-  display: none;
-}
-
-.mds-actual-event {
+.mds-dispatch-actual-event {
   height: 20px;
 }
-
-.mds-actual-label {
+.mds-dispatch-actual-label {
   font-size: 9px;
   font-weight: 600;
   white-space: nowrap;
   opacity: 0.9;
   line-height: 1;
 }
-
-.mds-dispatch-management-disabled-row.mbsc-schedule-invalid {
-  background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.12), rgba(128,128,128,0.12) 11px, rgba(128,128,128,0.28) 11px, rgba(128,128,128,0.28) 22px);
-}
-
-.mds-maintenance-invalid.mbsc-schedule-invalid {
-  background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.12), rgba(128,128,128,0.12) 11px, rgba(128,128,128,0.28) 11px, rgba(128,128,128,0.28) 22px);
-}
-
-.mds-pulse:not(.mbsc-schedule-event-hover) .mbsc-timeline-event-background {
-  box-shadow: 0 0 0 rgba(249, 115, 22, 0.4);
-  animation: pulse 2s infinite;
-}
-
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4);
@@ -2178,28 +2219,24 @@ export default {
     box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
   }
 }
-
-.mds-event-content-wrapper {
+.mds-dispatch-event-content-wrapper {
   width: 100%;
   height: 100%;
   align-items: center;
   gap: 5px;
   overflow: hidden;
 }
-
-.mds-event-route {
+.mds-dispatch-event-route {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.mds-event-planned-badge-content {
+.mds-dispatch-event-planned-badge {
   flex-shrink: 100;
   min-width: 0;
   overflow: hidden;
 }
-
-.mds-event-planned-badge-content .mds-event-planned-badge {
+.mds-dispatch-event-planned-badge-text {
   font-size: 10px;
   padding: 0 5px;
   border-radius: 4px;
@@ -2207,58 +2244,54 @@ export default {
   white-space: nowrap;
   display: block;
 }
-
+.mds-dispatch-search {
+  height: 100%;
+}
+.mds-dispatch-name {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.mds-dispatch-plate {
+  border: 1px solid #488dc5;
+  border-radius: 4px;
+  margin: 0 5px;
+  padding: 0 5px;
+}
+.mds-dispatch-status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.mds-dispatch-status {
+  font-size: 13px;
+  font-weight: normal;
+}
+.mds-dispatch-empty {
+  height: 100%;
+  text-align: center;
+}
 .mds-dispatch-header-right {
   align-items: center;
   gap: 16px;
   margin-left: auto;
 }
-
 .mds-dispatch-status-filter {
   width: 300px;
 }
-
-.mds-dispatch-status-filter .mbsc-segmented-button.mbsc-selected {
-  color: #fff;
-}
-
-.mds-seg-scheduled .mbsc-selected.mbsc-material.mbsc-segmented-button .mbsc-button-bg,
-.mds-seg-scheduled .mbsc-button.mbsc-selected.mbsc-windows,
-.mds-seg-scheduled .mbsc-segmented-selectbox-inner {
-  background: #2196f3;
-}
-
-.mds-seg-inprogress .mbsc-selected.mbsc-material.mbsc-segmented-button .mbsc-button-bg,
-.mds-seg-inprogress .mbsc-button.mbsc-selected.mbsc-windows,
-.mds-seg-inprogress .mbsc-segmented-selectbox-inner {
-  background: #f97316;
-}
-
-.mds-seg-completed .mbsc-selected.mbsc-material.mbsc-segmented-button .mbsc-button-bg,
-.mds-seg-completed .mbsc-button.mbsc-selected.mbsc-windows,
-.mds-seg-completed .mbsc-segmented-selectbox-inner {
-  background: #78909c;
-}
-
 .mds-dispatch-zoom {
   align-items: center;
   gap: 6px;
 }
-
-.mds-dispatch-now-btn.mbsc-ios {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .mds-dispatch-zoom-slider {
   width: 80px;
   cursor: pointer;
 }
-
 .mds-dispatch-outer {
   height: 100%;
 }
-
 .mds-dispatch-custom-header {
   align-items: center;
   flex-shrink: 0;
@@ -2268,72 +2301,19 @@ export default {
   gap: 12px;
   background-color: #fff;
 }
-
 .mds-dispatch-range-label {
   font-size: 20px;
   font-weight: bold;
 }
-
-.mds-dispatch-management-wrapper {
-  background-color: #fff;
-}
-
-.mbsc-ios-dark .mds-dispatch-custom-header,
-.mbsc-material-dark .mds-dispatch-custom-header,
-.mbsc-ios-dark .mds-dispatch-management-wrapper,
-.mbsc-material-dark .mds-dispatch-management-wrapper {
-  background-color: #000;
-}
-
-.mbsc-windows-dark .mds-dispatch-custom-header,
-.mbsc-windows-dark .mds-dispatch-management-wrapper {
-  background-color: #1f1f1f;
-}
-
-.mds-dispatch-range-popup .mbsc-datepicker-inline {
-  border: none;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.mds-dispatch-range-popup .mbsc-textfield-wrapper-box {
-  margin-top: 0;
-  margin-right: 0;
-}
-
 .mds-dispatch-range-inputs {
   flex: 1;
 }
-
-.mds-dispatch-range-desktop-btns.mbsc-button-group-justified,
-.mds-dispatch-range-desktop-btns.mbsc-button-group-justified button {
-  margin-bottom: 0;
-}
-
-@media (max-width: 575px) {
-  .mds-dispatch-range-desktop-btns {
-    display: none;
-  }
-  .mds-dispatch-range-popup .mbsc-textfield-wrapper-box {
-    margin-left: 0;
-  }
-}
-
 .mds-dispatch-content {
   flex: 1 1 0;
   min-height: 0;
 }
-
-.mds-dispatch-content > .mbsc-row {
-  height: 100%;
-}
-
-.mds-dispatch-management-calendar.mbsc-eventcalendar .mbsc-calendar-wrapper {
-  border: none;
-}
-
 /* move this to website css with updated unique name */
-.demo-dispatch-management {
+.demo-dispatch {
   height: 100%;
 }
 `,
