@@ -1271,15 +1271,18 @@ export default {
           {
             start: today,
             end: windowStart < minTime ? minTime : windowStart,
+            cssClass: 'mds-dispatch-disabled-row',
           },
           {
             start: today,
             end: sevenDaysFromNow,
             resource: invalidIds,
+            cssClass: 'mds-dispatch-disabled-row',
           },
           {
             start: windowEnd,
             end: sevenDaysFromNow,
+            cssClass: 'mds-dispatch-disabled-row',
           },
         ];
 
@@ -1865,15 +1868,15 @@ export default {
       <div class="mds-dispatch-status-filter" id="mds-status-filter" mbsc-segmented-group>
         <label class="mds-dispatch-seg-scheduled">
           <input type="checkbox" mbsc-segmented value="scheduled" checked />
-          Scheduled
+          <span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-scheduled"></span>Scheduled
         </label>
         <label class="mds-dispatch-seg-inprogress">
           <input type="checkbox" mbsc-segmented value="in progress" checked />
-          In progress
+                    <span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-inprogress"></span>In progress
         </label>
         <label class="mds-dispatch-seg-completed">
           <input type="checkbox" mbsc-segmented value="completed" checked />
-          Completed
+                    <span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-completed"></span>Completed
         </label>
       </div>
       <div class="mds-dispatch-zoom mbsc-flex">
@@ -2063,9 +2066,8 @@ export default {
   padding-top: 0;
   padding-bottom: 0;
 }
-.mds-dispatch-seg-scheduled .mbsc-segmented-button::before,
-.mds-dispatch-seg-inprogress .mbsc-segmented-button::before,
-.mds-dispatch-seg-completed .mbsc-segmented-button::before {
+
+.mds-dispatch-seg-dot {
   content: '';
   display: inline-block;
   width: 8px;
@@ -2074,13 +2076,13 @@ export default {
   margin-right: 5px;
   vertical-align: middle;
 }
-.mds-dispatch-seg-scheduled .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot-scheduled {
   background: #2196f3;
 }
-.mds-dispatch-seg-inprogress .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot-inprogress {
   background: #f97316;
 }
-.mds-dispatch-seg-completed .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot-completed {
   background: #78909c;
 }
 .mbsc-ios-dark .mds-dispatch-custom-header,
@@ -2316,7 +2318,7 @@ export default {
   min-height: 0;
 }
 /* move this to website css with updated unique name */
-.dispatch {
+.demo-dispatch-management {
   height: 100%;
 }
 `,
