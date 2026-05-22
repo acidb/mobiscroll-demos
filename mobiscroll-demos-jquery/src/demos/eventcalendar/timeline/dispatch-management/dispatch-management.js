@@ -1352,14 +1352,18 @@ export default {
           eventStart = new Date(windowEnd.getTime() - eventDuration);
         }
 
-        // Reject slot if it overlaps with the resource's maintenance period
+        // Push slot past maintenance period if needed
         if (draggedEvent.resource) {
           var resource = findResourceById(draggedEvent.resource);
           if (resource && resource.maintenanceFrom && resource.maintenanceTo) {
             var mFrom = new Date(resource.maintenanceFrom);
             var mTo = new Date(resource.maintenanceTo);
             if (eventStart < mTo && eventEnd > mFrom) {
-              return null;
+              eventStart = new Date(mTo);
+              eventEnd = new Date(mTo.getTime() + eventDuration);
+              if (eventEnd > windowEnd) {
+                return null;
+              }
             }
           }
         }
@@ -1614,10 +1618,10 @@ export default {
           onEventUpdateFailed: function (args) {
             var draggedEvent = args.event;
             var moved = moveToFirstAvailableSlot(draggedEvent, true);
-            setTimeout(function () {
-              calendar.navigateToEvent({ start: draggedEvent.start, resource: draggedEvent.resource });
-            });
             if (moved) {
+              setTimeout(function () {
+                calendar.navigateToEvent({ start: draggedEvent.start, resource: draggedEvent.resource });
+              });
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
@@ -1625,6 +1629,10 @@ export default {
                 message: draggedEvent.from + ' → ' + draggedEvent.to + ' moved to first available slot',
               });
             } else {
+              var originalEvent = args.oldEvent;
+              setTimeout(function () {
+                calendar.navigateToEvent({ start: originalEvent.start, resource: originalEvent.resource });
+              });
               mobiscroll.toast({
                 //<hidden>
                 // theme,//</hidden>
