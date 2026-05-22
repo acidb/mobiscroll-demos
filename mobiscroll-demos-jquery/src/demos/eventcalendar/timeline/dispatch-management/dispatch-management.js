@@ -1287,7 +1287,7 @@ export default {
         ];
 
         calendar.setOptions({
-          resources: resourcesToSet,
+          // resources: resourcesToSet,
           invalid: myInvalids.concat(maintenanceInvalids),
           min: minTime,
         });
