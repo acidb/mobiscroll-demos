@@ -2317,7 +2317,7 @@ export default {
   min-height: 0;
 }
 /* move this to website css with updated unique name */
-.demo-dispatch-management {
+.demo-truck-transport-planning-and-dispatch {
   height: 100%;
 }
 `,
