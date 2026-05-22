@@ -1580,6 +1580,8 @@ export default {
               calendar.navigateToEvent({ start: eventStart, resource: eventResource });
             });
             mobiscroll.toast({
+              //<hidden>
+              // theme,//</hidden>
               // context,
               message: args.event.from + ' → ' + args.event.to + ' added',
             });
@@ -1637,7 +1639,12 @@ export default {
               if (resourceToNavigate && findFirstSlot(args.event)) {
                 calendar.navigateToEvent({ start: args.event.start, resource: resourceToNavigate });
               } else {
-                mobiscroll.toast({ message: 'No available slot for: ' + args.event.from + ' → ' + args.event.to });
+                mobiscroll.toast({
+                  //<hidden>
+                  // theme,//</hidden>
+                  // context,
+                  message: 'No available slot for: ' + args.event.from + ' → ' + args.event.to,
+                });
               }
             }
           },
@@ -1666,7 +1673,13 @@ export default {
                 var arrivalDelay = Math.round((actualEnd - scheduledArrival) / 60000);
                 msg = 'Actual transport: departed ' + formatDelay(departureDelay) + ' · arrived ' + formatDelay(arrivalDelay);
               }
-              mobiscroll.toast({ message: msg, duration: 5000 });
+              mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
+                message: msg,
+                duration: 5000,
+              });
             }
           },
           onPageLoaded: function (args) {
