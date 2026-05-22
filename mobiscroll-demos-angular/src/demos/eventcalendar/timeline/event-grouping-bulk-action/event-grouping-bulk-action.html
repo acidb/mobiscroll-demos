@@ -4,20 +4,20 @@
   [view]="myView"
   [resources]="myResources"
   [dragToMove]="true"
-  [dragToResize]="false"
+  [dragToResize]="true"
   [dragToCreate]="false"
   [clickToCreate]="false"
-  [dragBetweenResources]="false"
+  [dragBetweenResources]="!groupByClientQuarter"
   (onEventUpdate)="onEventUpdate($event)"
   [headerTemplate]="customHeaderTemplate"
   [resourceTemplate]="customResourceTemplate"
   [scheduleEventTemplate]="groupByClientQuarter ? groupedEventTemplate : simpleEventTemplate"
-  class="mds-event-grouping-calendar"
+  class="mds-event-group-calendar"
 >
   <!-- Custom Header -->
   <ng-template #customHeaderTemplate>
     <mbsc-calendar-nav></mbsc-calendar-nav>
-    <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-grouping-header-controls">
+    <div class="mbsc-flex mbsc-flex-1-0 mbsc-justify-content-end mds-event-group-header-controls">
       <mbsc-checkbox
         [(ngModel)]="groupByClientQuarter"
         (change)="onGroupByClientQuarterChange($event)"
@@ -28,6 +28,7 @@
       <mbsc-select
         inputStyle="box"
         display="anchored"
+        class="mds-event-group-select"
         [touchUi]="false"
         [data]="selectData"
         [(ngModel)]="groupBy"
@@ -35,6 +36,11 @@
       >
       </mbsc-select>
     </div>
+    <mbsc-segmented-group [(ngModel)]="zoomLevel" (ngModelChange)="onZoomLevelChange()">
+      <mbsc-segmented value="quarter">Quarterly</mbsc-segmented>
+      <mbsc-segmented value="month">Monthly</mbsc-segmented>
+      <mbsc-segmented value="week">Weekly</mbsc-segmented>
+    </mbsc-segmented-group>
     <mbsc-calendar-prev></mbsc-calendar-prev>
     <mbsc-calendar-today></mbsc-calendar-today>
     <mbsc-calendar-next></mbsc-calendar-next>
@@ -43,69 +49,81 @@
   <!-- Custom resource -->
   <ng-template #customResourceTemplate let-resource>
     <div class="mbsc-flex" *ngIf="groupBy === 'assignee'">
-      <img [alt]="resource.name" class="mds-event-grouping-avatar" [src]="resource.img" />
-      <div class="mds-event-grouping-cont">
-        <div class="mds-event-grouping-name">{{ resource.name }}</div>
-        <div class="mds-event-grouping-title">{{ resource.title }}</div>
+      <img [alt]="resource.name" class="mds-event-group-avatar" [src]="resource.img" />
+      <div class="mds-event-group-cont">
+        <div class="mds-event-group-name">{{ resource.name }}</div>
+        <div class="mds-event-group-title">{{ resource.title }}</div>
       </div>
     </div>
-    <div class="mbsc-flex mds-event-grouping-type-resource" *ngIf="groupBy === 'type'">
-      <div class="mds-event-grouping-type-badge" [style.background-color]="resource.color"></div>
-      <div class="mds-event-grouping-type-name">{{ resource.name }}</div>
+    <div class="mbsc-flex mds-event-group-type-resource" *ngIf="groupBy === 'type'">
+      <div class="mds-event-group-type-badge" [style.background-color]="resource.color"></div>
+      <div class="mds-event-group-type-name">{{ resource.name }}</div>
     </div>
   </ng-template>
 
   <!-- Grouped Event Template -->
   <ng-template #groupedEventTemplate let-event>
     <div
-      class="mbsc-flex mds-event-grouping-task mds-event-grouping-task-client"
+      class="mbsc-flex mds-event-group-task mds-event-group-task-client"
       [class.expanded]="!event.original.collapsed"
       [style.border-left-color]="event.original.color"
     >
-      <div class="mbsc-flex mds-event-grouping-content">
-        <div class="mds-event-grouping-title-text">{{ event.original.clientGroup }}</div>
+      <div class="mbsc-flex mds-event-group-content">
+        <div class="mds-event-group-title-text mds-event-group-text-truncate">{{ event.original.clientGroup }}</div>
 
-        <div class="mbsc-flex mds-event-grouping-right">
-          <div class="mbsc-flex mds-event-grouping-meta">
-            <div class="mds-event-grouping-date-range">
+        <div class="mbsc-flex mds-event-group-right">
+          <div class="mbsc-flex mds-event-group-meta">
+            <div class="mds-event-group-date-range">
               {{ formatEventDate(event.original.start) }} - {{ formatEventDate(event.original.end) }}
             </div>
-            <div class="mds-event-grouping-count">
+            <div class="mds-event-group-count">
               {{ event.original.count }} task{{ event.original.count > 1 ? 's' : '' }}, {{ getUniqueItems(event.original.originalEvents ||
               []).count }} {{ getUniqueItems(event.original.originalEvents || []).label }}{{ getUniqueItems(event.original.originalEvents ||
               []).count > 1 ? 's' : '' }}
             </div>
           </div>
           <div
-            class="mbsc-flex mds-event-grouping-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"
+            class="mbsc-flex mds-event-group-icon mbsc-icon mbsc-font-icon mbsc-icon-material-keyboard-arrow-down"
             (click)="toggleGroupCollapse(event.original); $event.stopPropagation()"
           ></div>
         </div>
       </div>
 
-      <div class="mds-event-grouping-events">
-        <div class="mds-event-grouping-events-inner" *ngIf="!event.original.collapsed">
-          <div *ngFor="let ev of event.original.originalEvents" class="mds-event-grouping-original-event">
-            <div class="mbsc-flex mds-event-grouping-event-content">
-              <div class="mds-event-grouping-event-title">{{ ev.title }}</div>
-              <div class="mbsc-flex mds-event-grouping-event-right">
-                <div class="mds-event-grouping-event-date">{{ formatEventDate(ev.start) }} - {{ formatEventDate(ev.end) }}</div>
-                <div class="mbsc-flex mds-event-grouping-event-detail">
+      <div class="mds-event-group-events">
+        <div class="mds-event-group-events-inner" *ngIf="!event.original.collapsed">
+          <div
+            *ngFor="let ev of event.original.originalEvents"
+            class="mds-event-group-original-event"
+            [style.margin-left]="getEventMarginLeft(ev, event.original)"
+            [style.width]="getEventWidth(ev, event.original)"
+            [title]="ev.title + ', ' + formatEventDate(ev.start) + ' - ' + formatEventDate(ev.end)"
+          >
+            <div class="mbsc-flex mds-event-group-event-content">
+              <div class="mds-event-group-event-title mds-event-group-text-truncate">{{ ev.title }}</div>
+              <div class="mbsc-flex mds-event-group-event-right">
+                <div class="mds-event-group-event-date mds-event-group-text-truncate">
+                  {{ formatEventDate(ev.start) }} - {{ formatEventDate(ev.end) }}
+                </div>
+                <div class="mbsc-flex mds-event-group-event-detail">
                   <img
                     *ngIf="getDetailInfo(ev).avatarUrl"
                     [src]="getDetailInfo(ev).avatarUrl"
                     [alt]="getDetailInfo(ev).detailText"
-                    class="mds-event-grouping-event-avatar"
+                    class="mds-event-group-event-avatar"
                   />
                   <span
                     *ngIf="getDetailInfo(ev).typeDotColor"
-                    class="mds-event-grouping-type-dot"
+                    class="mds-event-group-type-dot"
                     [style.background-color]="getDetailInfo(ev).typeDotColor"
                   >
                   </span>
-                  <div class="mds-event-grouping-event-info">{{ getDetailInfo(ev).detailText }}</div>
+                  <div class="mds-event-group-event-info mds-event-group-text-truncate">{{ getDetailInfo(ev).detailText }}</div>
                 </div>
               </div>
+              <div
+                class="mds-event-group-edit-btn mbsc-flex mbsc-icon mbsc-font-icon mbsc-icon-pencil"
+                (click)="editEvent(ev); $event.stopPropagation()"
+              ></div>
             </div>
           </div>
         </div>
@@ -115,8 +133,10 @@
 
   <!-- Simple Event Template -->
   <ng-template #simpleEventTemplate let-event>
-    <div class="mbsc-flex mds-event-simple" [style.background-color]="event.original.color">
-      <div class="mds-event-simple-title">{{ event.original.title }}</div>
+    <div class="mbsc-flex mds-event-simple">
+      <div class="mds-event-simple-title">
+        <div class="mds-event-simple-title-inner mds-event-group-text-truncate">{{ event.original.title }}</div>
+      </div>
       <div class="mbsc-flex mds-event-simple-right">
         <div class="mds-event-simple-date">{{ formatEventDate(event.original.start) }} - {{ formatEventDate(event.original.end) }}</div>
         <div class="mbsc-flex mds-event-simple-subtitle-wrapper" *ngIf="getDetailInfo(event.original).detailText">
@@ -140,3 +160,15 @@
     </div>
   </ng-template>
 </mbsc-eventcalendar>
+<mbsc-datepicker
+  #editDatePickerRef
+  [controls]="['calendar']"
+  select="range"
+  display="center"
+  [touchUi]="false"
+  [showRangeLabels]="false"
+  [headerText]="editEventTitle"
+  [(ngModel)]="editEventDateRange"
+  (onChange)="onEditDateChange($event)"
+>
+</mbsc-datepicker>

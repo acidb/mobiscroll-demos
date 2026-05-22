@@ -293,8 +293,11 @@ export default {
 
 /* Resource header */
 
+.mds-hide-non-working-resources .mbsc-schedule-resource-title {
+  padding: 0;
+}
+
 .mds-hide-non-working-resources-bg {
-  margin: -10px;
   padding: 10px;
 }
 

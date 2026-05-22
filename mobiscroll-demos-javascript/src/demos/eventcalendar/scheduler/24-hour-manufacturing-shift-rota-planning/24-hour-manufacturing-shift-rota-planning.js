@@ -9,6 +9,17 @@ export default {
       // theme
     });
 
+    var draggedEventStart;
+    var draggedEventEnd;
+    var draggedEventResource;
+    var availableSlotOnHover;
+    var redResources = {};
+    var currentColors = [];
+
+    var morningColor = '#4a8c4d';
+    var afternoonColor = '#f87c6b';
+    var nightColor = '#8567AD';
+
     var shifts = {
       morning: { startHour: 6, endHour: 14, title: 'Morning Shift', color: '#4a8c4d' },
       afternoon: { startHour: 14, endHour: 22, title: 'Afternoon Shift', color: '#f87c6b' },
@@ -57,17 +68,6 @@ export default {
     function getColor(startHours) {
       return getShiftByHour(startHours).color;
     }
-
-    var morningColor = '#4a8c4d';
-    var afternoonColor = '#f87c6b';
-    var nightColor = '#8567AD';
-
-    var draggedEventStart;
-    var draggedEventEnd;
-    var draggedEventResource;
-    var availableSlotOnHover;
-    var redResources = {};
-    var currentColors = [];
 
     function getAvailableSlots(inst, resourceId, dayStart) {
       var dayEnd = new Date(dayStart);

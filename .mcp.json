@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mobiscroll": {
+      "type": "http",
+      "url": "https://mcp.mobiscroll.com/"
+    }
+  }
+}
