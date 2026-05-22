@@ -1581,7 +1581,7 @@ export default {
             var eventStart = args.event.start;
             var eventResource = args.event.resource;
             setTimeout(function () {
-              calendar.navigateToEvent({ start: eventStart, resource: eventResource });
+              // calendar.navigateToEvent({ start: eventStart, resource: eventResource });
             });
             mobiscroll.toast({
               //<hidden>
