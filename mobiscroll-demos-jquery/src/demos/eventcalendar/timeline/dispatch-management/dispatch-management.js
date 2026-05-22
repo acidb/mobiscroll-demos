@@ -1175,6 +1175,7 @@ export default {
             size: days,
             timeCellStep: 60,
             timeLabelStep: 60,
+            eventHeight: 'variable',
             zoomLevels: {
               1: { type: 'day', size: days, columnWidth: 'xsmall', timeCellStep: 240, timeLabelStep: 240 },
               2: { type: 'day', size: days, columnWidth: 'small', timeCellStep: 120, timeLabelStep: 120 },
@@ -2010,7 +2011,7 @@ export default {
   box-sizing: border-box;
 }
 .mds-dispatch-calendar .mbsc-timeline-row:not(.mds-dispatch-actual-resource):not(.mbsc-timeline-parent) {
-  height: 58px;
+  height: 60px;
 }
 .mds-dispatch-calendar .mds-dispatch-actual-resource {
   height: 8px;
@@ -2020,7 +2021,7 @@ export default {
 }
 .mds-dispatch-actual-resource .mbsc-timeline-event {
   height: 10px;
-  margin-top: -7px;
+  margin-top: -9px;
 }
 .mds-dispatch-actual-resource .mbsc-timeline-event-background {
   margin: 0;
