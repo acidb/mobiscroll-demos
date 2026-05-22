@@ -638,6 +638,15 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
+.mds-timeline-cell-content .mbsc-timeline-day-fri::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  border-right: 1px solid var(--mbsc-eventcalendar-border-color);
+}
+
 .mds-timeline-cell-content .mbsc-timeline-events {
   top: 25px;
 }
