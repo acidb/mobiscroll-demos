@@ -1274,8 +1274,8 @@ export default {
             cssClass: 'mds-dispatch-disabled-row',
           },
           {
-            start: today,
-            end: sevenDaysFromNow,
+            start: windowStart < minTime ? minTime : windowStart,
+            end: windowEnd,
             resource: invalidIds,
             cssClass: 'mds-dispatch-disabled-row',
           },
