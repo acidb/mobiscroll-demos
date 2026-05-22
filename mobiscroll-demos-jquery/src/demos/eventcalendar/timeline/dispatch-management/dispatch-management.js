@@ -823,9 +823,9 @@ export default {
         },
       ];
 
-      var $calendarElm = $('#demo-dispatch');
-      var $popupElm = $('#demo-dispatch-filtering-popup');
-      var $resourceList = $('#demo-dispatch-resource-list');
+      var $calendarElm = $('#demo-dispatch-calendar');
+      var $popupElm = $('#dispatch-filtering-popup');
+      var $resourceList = $('#dispatch-resource-list');
       var scheduledJobIds = [];
 
       var filters = {};
@@ -1157,9 +1157,9 @@ export default {
       function handleZoom(zoom) {
         zoomLevel = zoom;
 
-        $('#demo-dispatch-zoom-level-slider').val(zoomLevel);
-        $('#demo-dispatch-zoom-level-in').prop('disabled', zoomLevel === 5);
-        $('#demo-dispatch-zoom-level-out').prop('disabled', zoomLevel === 1);
+        $('#dispatch-zoom-level-slider').val(zoomLevel);
+        $('#dispatch-zoom-level-in').prop('disabled', zoomLevel === 5);
+        $('#dispatch-zoom-level-out').prop('disabled', zoomLevel === 1);
 
         calendar.setOptions({
           refDate: currentRangeStart,
@@ -1257,7 +1257,7 @@ export default {
               eventCreation: group.eventCreation,
               children: group.children.filter(function (child) {
                 if (String(child.id).includes('actual')) {
-                  return validIds.indexOf(String(child.id).replace('-actual', '')) !== -1;
+                  return validIds.indexOf(+String(child.id).replace('-actual', '')) !== -1;
                 }
                 return validIds.indexOf(child.id) !== -1;
               }),
@@ -1417,13 +1417,13 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $calendarElm.on('input', '#demo-dispatch-search-input', function (event) {
+      $calendarElm.on('input', '#dispatch-search-input', function (event) {
         clearTimeout(searchTimeout);
         searchQuery = event.target.value.toLowerCase();
         searchTimeout = setTimeout(filterResources, 300);
       });
 
-      $calendarElm.on('click', '#demo-dispatch-filter-button', function () {
+      $calendarElm.on('click', '#dispatch-filter-button', function () {
         // Create resource checkbox list
         var checkboxes = '';
         myResources.forEach(function (res) {
@@ -1454,10 +1454,10 @@ export default {
         calendar.setOptions({ data: getStatusFilteredEvents() });
       });
 
-      $calendarElm.on('click', '#demo-dispatch-reset-filters', function () {
+      $calendarElm.on('click', '#dispatch-reset-filters', function () {
         searchQuery = '';
 
-        $('#demo-dispatch-search-input').val('');
+        $('#dispatch-search-input').val('');
         $('.mds-dispatch-checkbox').each(function () {
           var checkbox = $(this).mobiscroll('getInst');
           checkbox.checked = true;
@@ -1532,7 +1532,7 @@ export default {
               '<img src="https://img.mobiscroll.com/demos/filter-no-result.png" alt="Empty list" style="width:100px;" />' +
               '<p class="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>' +
               '<p class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>' +
-              '<button mbsc-button id="demo-dispatch-reset-filters" data-variant="outline">Reset Filters</button>' +
+              '<button mbsc-button id="dispatch-reset-filters" data-variant="outline">Reset Filters</button>' +
               '</div>' +
               '</div>'
             );
@@ -1541,9 +1541,9 @@ export default {
             return (
               '<div class="mbsc-flex mbsc-align-items-center mbsc-font mds-dispatch-search">' +
               '<label class="mbsc-flex-1-1">' +
-              '<input type="text" mbsc-input id="demo-dispatch-search-input" autocomplete="off" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." />' +
+              '<input type="text" mbsc-input id="dispatch-search-input" autocomplete="off" data-input-style="outline" data-start-icon="material-search" placeholder="Search..." />' +
               '</label>' +
-              '<button mbsc-button id="demo-dispatch-filter-button" data-start-icon="material-filter-list" data-variant="outline" class="mbsc-flex-none">Filter</button>' +
+              '<button mbsc-button id="dispatch-filter-button" data-start-icon="material-filter-list" data-variant="outline" class="mbsc-flex-none">Filter</button>' +
               '</div>'
             );
           },
@@ -1673,15 +1673,15 @@ export default {
         })
         .mobiscroll('getInst');
 
-      $('#demo-dispatch-zoom-level-slider').on('input', function (ev) {
+      $('#dispatch-zoom-level-slider').on('input', function (ev) {
         handleZoom(+ev.target.value);
       });
 
-      $('#demo-dispatch-zoom-level-in').on('click', function () {
+      $('#dispatch-zoom-level-in').on('click', function () {
         handleZoom(zoomLevel + 1);
       });
 
-      $('#demo-dispatch-zoom-level-out').on('click', function () {
+      $('#dispatch-zoom-level-out').on('click', function () {
         handleZoom(zoomLevel - 1);
       });
 
@@ -1865,21 +1865,21 @@ export default {
       <div class="mds-dispatch-status-filter" id="mds-status-filter" mbsc-segmented-group>
         <label class="mds-dispatch-seg-scheduled">
           <input type="checkbox" mbsc-segmented value="scheduled" checked />
-          <span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-scheduled"></span>Scheduled
+          Scheduled
         </label>
         <label class="mds-dispatch-seg-inprogress">
           <input type="checkbox" mbsc-segmented value="in progress" checked />
-          <span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-inprogress"></span>In progress
+          In progress
         </label>
         <label class="mds-dispatch-seg-completed">
           <input type="checkbox" mbsc-segmented value="completed" checked />
-          <span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-completed"></span>Completed
+          Completed
         </label>
       </div>
       <div class="mds-dispatch-zoom mbsc-flex">
-        <button id="demo-dispatch-zoom-level-out" mbsc-button data-icon="minus" data-variant="flat"></button>
-        <input type="range" id="demo-dispatch-zoom-level-slider" min="1" max="5" value="3" class="mds-dispatch-zoom-slider" />
-        <button id="demo-dispatch-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>
+        <button id="dispatch-zoom-level-out" mbsc-button data-icon="minus" data-variant="flat"></button>
+        <input type="range" id="dispatch-zoom-level-slider" min="1" max="5" value="3" class="mds-dispatch-zoom-slider" />
+        <button id="dispatch-zoom-level-in" mbsc-button data-icon="plus" data-variant="flat"></button>
       </div>
       <button id="mds-dispatch-go-live" mbsc-button data-variant="outline" data-start-icon="clock" class="mds-dispatch-now-btn">Now</button>
     </div>
@@ -1890,16 +1890,16 @@ export default {
         <div id="dispatch-events" class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding"></div>
       </div>
       <div class="mbsc-col-sm-9 mds-dispatch-column mds-dispatch-full-height">
-        <div id="demo-dispatch"></div>
+        <div id="demo-dispatch-calendar"></div>
       </div>
     </div>
   </div>
 </div>
 <div style="display:none">
-  <div id="demo-dispatch-filtering-popup">
+  <div id="dispatch-filtering-popup">
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Capacity</div>
-      <div id="demo-dispatch-resource-list"></div>
+      <div id="dispatch-resource-list"></div>
     </div>
     <div class="mbsc-form-group">
       <div class="mbsc-form-group-title">Operational Status</div>
@@ -2063,7 +2063,10 @@ export default {
   padding-top: 0;
   padding-bottom: 0;
 }
-.mds-dispatch-seg-dot {
+.mds-dispatch-seg-scheduled .mbsc-segmented-button::before,
+.mds-dispatch-seg-inprogress .mbsc-segmented-button::before,
+.mds-dispatch-seg-completed .mbsc-segmented-button::before {
+  content: '';
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -2071,13 +2074,13 @@ export default {
   margin-right: 5px;
   vertical-align: middle;
 }
-.mds-dispatch-seg-dot-scheduled {
+.mds-dispatch-seg-scheduled .mbsc-segmented-button::before {
   background: #2196f3;
 }
-.mds-dispatch-seg-dot-inprogress {
+.mds-dispatch-seg-inprogress .mbsc-segmented-button::before {
   background: #f97316;
 }
-.mds-dispatch-seg-dot-completed {
+.mds-dispatch-seg-completed .mbsc-segmented-button::before {
   background: #78909c;
 }
 .mbsc-ios-dark .mds-dispatch-custom-header,
@@ -2313,7 +2316,7 @@ export default {
   min-height: 0;
 }
 /* move this to website css with updated unique name */
-.demo-dispatch {
+.dispatch {
   height: 100%;
 }
 `,
