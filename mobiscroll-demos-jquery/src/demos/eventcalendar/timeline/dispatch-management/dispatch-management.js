@@ -2074,7 +2074,7 @@ export default {
   display: none;
 }
 .mds-dispatch-disabled-row.mbsc-schedule-invalid {
-  background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.12), rgba(128,128,128,0.12) 11px, rgba(128,128,128,0.28) 11px, rgba(128,128,128,0.28) 22px);
+  background: rgba(128, 128, 128, 0.2);
 }
 .mds-dispatch-maintenance-invalid.mbsc-schedule-invalid {
   background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.12), rgba(128,128,128,0.12) 11px, rgba(128,128,128,0.28) 11px, rgba(128,128,128,0.28) 22px);
