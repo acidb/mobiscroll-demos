@@ -1250,24 +1250,6 @@ export default {
           }
         }
 
-        var resourcesToSet = filteredResources
-          .map(function (group) {
-            return {
-              id: group.id,
-              name: group.name,
-              eventCreation: group.eventCreation,
-              children: group.children.filter(function (child) {
-                if (String(child.id).includes('actual')) {
-                  return validIds.indexOf(+String(child.id).replace('-actual', '')) !== -1;
-                }
-                return validIds.indexOf(child.id) !== -1;
-              }),
-            };
-          })
-          .filter(function (group) {
-            return group.children.length > 0;
-          });
-
         myInvalids = [
           {
             start: today,
@@ -1288,7 +1270,6 @@ export default {
         ];
 
         calendar.setOptions({
-          // resources: resourcesToSet,
           invalid: myInvalids.concat(maintenanceInvalids),
           min: minTime,
         });
@@ -1579,11 +1560,6 @@ export default {
               calendar.updateEvent(scheduledEvent);
               myEvents.push(scheduledEvent);
             }
-            var eventStart = args.event.start;
-            var eventResource = args.event.resource;
-            setTimeout(function () {
-              // calendar.navigateToEvent({ start: eventStart, resource: eventResource });
-            });
             mobiscroll.toast({
               //<hidden>
               // theme,//</hidden>
@@ -2206,6 +2182,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.5;
+  font-weight: bold;
 }
 .mds-dispatch-job-connector {
   width: 2px;
@@ -2305,7 +2282,7 @@ export default {
   gap: 16px;
   margin-left: auto;
 }
-.mds-dispatch-status-filter {
+.mds-dispatch-status-filter.mbsc-ios {
   width: 300px;
 }
 .mds-dispatch-zoom {

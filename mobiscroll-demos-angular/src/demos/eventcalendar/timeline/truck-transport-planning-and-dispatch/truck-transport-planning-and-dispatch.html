@@ -1,0 +1,230 @@
+<div class="mds-dispatch-outer mbsc-flex-col">
+  <div class="mds-dispatch-custom-header mbsc-flex">
+    <button mbsc-button variant="flat" (click)="openRangePopup()">
+      <span class="mds-dispatch-range-label">{{ rangeLabel }}</span>
+    </button>
+    <div class="mds-dispatch-header-right mbsc-flex">
+      <div class="mds-dispatch-status-filter">
+        <mbsc-segmented-group>
+          <label class="mds-dispatch-seg-scheduled">
+            <mbsc-segmented value="scheduled" [(ngModel)]="statusFilters.scheduled" (ngModelChange)="onStatusFilterChange()" [isMultiple]="true"><span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-scheduled"></span>Scheduled</mbsc-segmented>
+          </label>
+          <label class="mds-dispatch-seg-inprogress">
+            <mbsc-segmented value="in progress" [(ngModel)]="statusFilters['in progress']" (ngModelChange)="onStatusFilterChange()" [isMultiple]="true"><span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-inprogress"></span>In progress</mbsc-segmented>
+          </label>
+          <label class="mds-dispatch-seg-completed">
+            <mbsc-segmented value="completed" [(ngModel)]="statusFilters.completed" (ngModelChange)="onStatusFilterChange()" [isMultiple]="true"><span class="mds-dispatch-seg-dot mds-dispatch-seg-dot-completed"></span>Completed</mbsc-segmented>
+          </label>
+        </mbsc-segmented-group>
+      </div>
+      <div class="mds-dispatch-zoom mbsc-flex">
+        <button mbsc-button icon="minus" variant="flat" (click)="handleZoom(zoomLevel - 1)" [disabled]="zoomLevel === 1"></button>
+        <input type="range" min="1" max="5" [value]="zoomLevel" class="mds-dispatch-zoom-slider" (input)="handleZoom(+$any($event.target).value)" />
+        <button mbsc-button icon="plus" variant="flat" (click)="handleZoom(zoomLevel + 1)" [disabled]="zoomLevel === 5"></button>
+      </div>
+      <button mbsc-button variant="outline" startIcon="clock" class="mds-dispatch-now-btn" (click)="goLive()">Now</button>
+    </div>
+  </div>
+  <div class="mbsc-grid mbsc-no-padding mds-dispatch-content">
+    <div class="mbsc-row mds-dispatch-full-height">
+      <div class="mbsc-col-sm-3 mds-dispatch-full-height mds-dispatch-wrapper">
+        <div class="mbsc-flex-col mbsc-flex-1-0 mbsc-padding">
+          <ng-container *ngIf="visibleJobs.length === 0">
+            <p class="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted mds-dispatch-jobs-empty">No jobs for this period.</p>
+          </ng-container>
+          <ng-container *ngFor="let item of jobListItems">
+            <div *ngIf="item.type === 'header'" class="mds-dispatch-job-day-header">{{ item.label }}</div>
+            <div
+              *ngIf="item.type === 'job'"
+              mbsc-draggable
+              [dragData]="item.job"
+              class="mds-dispatch-jobs mbsc-flex"
+            >
+              <div class="mds-dispatch-job-route">
+                <div class="mds-dispatch-job-stop mbsc-flex">
+                  <span class="mds-dispatch-job-dot mds-dispatch-job-dot-origin"></span>
+                  <span class="mds-dispatch-job-addr">{{ item.job.from }}</span>
+                </div>
+                <div class="mds-dispatch-job-connector"></div>
+                <div class="mds-dispatch-job-stop mbsc-flex">
+                  <span class="mds-dispatch-job-dot mds-dispatch-job-dot-dest"></span>
+                  <span class="mds-dispatch-job-addr">{{ item.job.to }}</span>
+                </div>
+              </div>
+              <div class="mds-dispatch-job-meta mbsc-flex-col mbsc-flex-none">
+                <span class="mds-dispatch-job-time">{{ formatTime(item.job.pickup[0]) }} – {{ formatTime(item.job.drop[1]) }}</span>
+                <span class="mds-dispatch-job-size">{{ item.job.size }} t</span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="mbsc-col-sm-9 mds-dispatch-column mds-dispatch-full-height">
+        <mbsc-eventcalendar
+          #calendar
+          [clickToCreate]="false"
+          [dragToCreate]="false"
+          [dragToResize]="false"
+          [dragToMove]="true"
+          [externalDrop]="true"
+          [eventOverlap]="false"
+          cssClass="mds-dispatch-calendar"
+          [refDate]="refDate"
+          [zoomLevel]="zoomLevel"
+          [view]="calView"
+          [data]="calendarData"
+          [resources]="filteredResources"
+          [invalid]="calendarInvalid"
+          [resourceTemplate]="resourceTemplate"
+          [resourceEmptyTemplate]="resourceEmptyTemplate"
+          [resourceHeaderTemplate]="resourceHeaderTemplate"
+          [timelineEventContentTemplate]="eventContentTemplate"
+          (onEventCreated)="onEventCreated($event)"
+          (onEventCreateFailed)="onEventCreateFailed($event)"
+          (onEventUpdateFailed)="onEventUpdateFailed($event)"
+          (onEventDragStart)="onEventDragStart($event)"
+          (onEventDragEnd)="onEventDragEnd($event)"
+          (onEventClick)="onEventClick($event)"
+          (onPageLoaded)="onPageLoaded($event)"
+        ></mbsc-eventcalendar>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #resourceHeaderTemplate>
+  <div class="mbsc-flex mbsc-align-items-center mbsc-font mds-dispatch-search">
+    <mbsc-input
+      class="mbsc-flex-1-1"
+      type="text"
+      inputStyle="outline"
+      startIcon="material-search"
+      autocomplete="off"
+      placeholder="Search..."
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="onSearchChange()"
+    ></mbsc-input>
+    <button mbsc-button startIcon="material-filter-list" variant="outline" class="mbsc-flex-none" (click)="openFilterPopup($event)">Filter</button>
+  </div>
+</ng-template>
+
+<ng-template #resourceTemplate let-resource>
+  <div>
+    <div class="mds-dispatch-name">
+      {{ resource.name }}
+      <span *ngIf="resource.name && resource.plate" class="mds-dispatch-plate">{{ resource.plate }}</span>
+    </div>
+    <div *ngIf="!resource.isParent && resource.name" class="mds-dispatch-status">
+      <span class="mds-dispatch-status-dot" [style.backgroundColor]="getMaintenanceColor(resource)"></span>
+      {{ getMaintenanceLabel(resource) }}
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #resourceEmptyTemplate>
+  <div class="mds-dispatch-empty mbsc-flex mbsc-align-items-center">
+    <div class="mbsc-flex-1-1">
+      <img src="https://img.mobiscroll.com/demos/filter-no-result.png" alt="Empty list" style="width:100px;" />
+      <p class="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>
+      <p class="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>
+      <button mbsc-button variant="outline" (click)="resetFilters()">Reset Filters</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #eventContentTemplate let-data>
+  <ng-container *ngIf="data.original.status === 'actual'; else plannedEvent">
+    <span *ngIf="data.original.title === 'In progress'" class="mds-dispatch-actual-label">In progress</span>
+  </ng-container>
+  <ng-template #plannedEvent>
+    <div class="mds-dispatch-event-content-wrapper mbsc-flex">
+      <span class="mds-dispatch-event-route mbsc-flex-1-1">{{ data.original.from }} → {{ data.original.to }}</span>
+      <span class="mds-dispatch-event-planned-badge"><span class="mds-dispatch-event-planned-badge-text">Planned</span></span>
+    </div>
+  </ng-template>
+</ng-template>
+
+<mbsc-popup
+  #filterPopup
+  [buttons]="filterPopupButtons"
+  [contentPadding]="false"
+  display="anchored"
+  [focusOnClose]="false"
+  [focusOnOpen]="false"
+  [showOverlay]="false"
+  [width]="400"
+  [anchor]="filterAnchor"
+>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Capacity</div>
+    <div *ngFor="let res of myResources">
+      <mbsc-checkbox [label]="res.name" [(ngModel)]="tempFilters[res.id]"></mbsc-checkbox>
+    </div>
+  </div>
+  <div class="mbsc-form-group">
+    <div class="mbsc-form-group-title">Operational Status</div>
+    <mbsc-checkbox label="In maintenance/Maintenance planned" [(ngModel)]="tempFilters['maintenance']"></mbsc-checkbox>
+    <mbsc-checkbox label="Operational" [(ngModel)]="tempFilters['operational']"></mbsc-checkbox>
+  </div>
+</mbsc-popup>
+
+<mbsc-popup
+  #rangePopup
+  [responsive]="rangePopupResponsive"
+>
+  <div class="mds-dispatch-range-popup">
+    <div class="mbsc-grid mbsc-no-padding">
+      <div class="mbsc-row">
+        <div class="mbsc-col-sm-4 mbsc-push-sm-8 mbsc-flex mbsc-flex-col">
+          <div class="mds-dispatch-range-inputs">
+            <mbsc-select
+              label="Date range"
+              labelStyle="stacked"
+              inputStyle="box"
+              [data]="rangeSelectorData"
+              [(ngModel)]="rangeSelectValue"
+              (onChange)="onRangeSelectChange($event)"
+            ></mbsc-select>
+            <div>
+              <mbsc-datepicker
+                label="Start"
+                labelStyle="stacked"
+                inputStyle="box"
+                class="mds-dispatch-range-input"
+                [(ngModel)]="rangeStart"
+                [disabled]="rangeInputsDisabled"
+                (onChange)="onRangeStartChange($event)"
+              ></mbsc-datepicker>
+              <mbsc-datepicker
+                label="End"
+                labelStyle="stacked"
+                inputStyle="box"
+                class="mds-dispatch-range-input"
+                [(ngModel)]="rangeEnd"
+                [disabled]="rangeInputsDisabled"
+                (onChange)="onRangeEndChange($event)"
+              ></mbsc-datepicker>
+            </div>
+          </div>
+          <div class="mds-dispatch-range-desktop-btns mbsc-button-group-justified">
+            <button mbsc-button (click)="applyPendingRange()">Apply</button>
+            <button mbsc-button (click)="rangePopup.close()">Cancel</button>
+          </div>
+        </div>
+        <div class="mbsc-col-sm-8 mbsc-pull-sm-4">
+          <mbsc-datepicker
+            display="inline"
+            [controls]="['calendar']"
+            select="range"
+            [showRangeLabels]="false"
+            pages="auto"
+            [value]="calendarRangeValue"
+            (onChange)="onCalendarRangeChange($event)"
+          ></mbsc-datepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+</mbsc-popup>
+
+<mbsc-toast [message]="toastMessage" [isOpen]="isToastOpen" (closed)="isToastOpen = false"></mbsc-toast>
