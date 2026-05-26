@@ -2327,9 +2327,5 @@ export default {
   flex: 1 1 0;
   min-height: 0;
 }
-/* move this to website css with updated unique name */
-.demo-truck-transport-planning-and-dispatch {
-  height: 100%;
-}
 `,
 };
