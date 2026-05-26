@@ -8,5 +8,4 @@ In situations when users are interested in seeing a daily summary rather than an
 
 This is especially useful for spotting overloaded resources/days and helps in managing and creating efficient schedules.
 
-Are you building UI for planning employee shifts?&nbsp;
-[Check out this example &#8594;](https://demo.mobiscroll.com/jquery/timeline/employee-shifts#)
+- **Are you building UI for planning employee shifts?** [Check out this example &#8594;](https://demo.mobiscroll.com/jquery/timeline/employee-shifts#)

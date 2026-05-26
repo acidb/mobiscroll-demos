@@ -10,5 +10,4 @@ The before/after buffers can help you visualise delays or added minutes for task
 
 Templating the buffers can be done through the `bufferBefore`  and `bufferAfter` options.
 
-Want to see how custom event rendering looks on the time grid?&nbsp;
-[Check out this example &#8594;](https://demo.mobiscroll.com/vue/scheduler/customizing-events#)
+- **Want to see how custom event rendering looks on the time grid?** [Check out this example &#8594;](https://demo.mobiscroll.com/vue/scheduler/customizing-events#)

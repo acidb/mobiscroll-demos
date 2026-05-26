@@ -10,5 +10,4 @@ All-day events are fixed at the top below the header and calendar, while the sch
 
 The dates can be quickly navigated by clicking on the month & year indicator.
 
-Interested in weekly schedule?&nbsp;
-[Explore this example &#8594;](https://demo.mobiscroll.com/jquery/scheduler/desktop-week-view#)
+- **Interested in weekly schedule?** [Explore this example &#8594;](https://demo.mobiscroll.com/jquery/scheduler/desktop-week-view#)

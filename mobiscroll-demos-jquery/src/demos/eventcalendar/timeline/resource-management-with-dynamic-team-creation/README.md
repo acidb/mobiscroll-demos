@@ -39,5 +39,4 @@ calendar and the
 
 You can also use the :::framework{only="vue"} `resource-drag-leave` ::: :::framework{only="angular"} `onResourceDragLeave` ::: :::framework{only="react"} `onResourceDragLeave` ::: :::framework{only="javascript"} `onResourceDragLeave` ::: :::framework{only="jquery"} `onResourceDragLeave` ::: and :::framework{only="vue"} `resource-drag-enter` ::: :::framework{only="angular"} `onResourceDragEnter` ::: :::framework{only="react"} `onResourceDragEnter` ::: :::framework{only="javascript"} `onResourceDragEnter` ::: :::framework{only="jquery"} `onResourceDragEnter` :::, and the drop container's `onItemDragEnter` and `onItemDragLeave` events to provide visual feedback or running custom logic during drag.
 
-Looking for external event drag & drop?&nbsp;
-[Check out this example &#8594;](https://demo.mobiscroll.com/jquery/timeline/external-drag-drop-sortable-dragula#)
+- **Looking for external event drag & drop?** [Check out this example &#8594;](https://demo.mobiscroll.com/jquery/timeline/external-drag-drop-sortable-dragula#)

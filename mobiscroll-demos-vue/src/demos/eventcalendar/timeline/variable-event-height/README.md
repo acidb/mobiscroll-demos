@@ -8,5 +8,4 @@ By default, events are equal in height and content is truncated by default where
 
 In the following example the height of the resource rows change dynamically based on the height of their events. Resources are the rooms where events are held and events have varying descriptions.
 
-Variable event height is an experimental feature.&nbsp;
-[Learn more about it in the documentation &#8594;](https://docs.mobiscroll.com/vue/eventcalendar/timeline#variable-event-height)
+- **Variable event height is an experimental feature.** [Learn more about it in the documentation &#8594;](https://docs.mobiscroll.com/vue/eventcalendar/timeline#variable-event-height)

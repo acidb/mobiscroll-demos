@@ -11,6 +11,8 @@ You can also show a footer element, for displaying more information.
 
 Add summaries, statistics or simply color the background depending on the number events that occur on that specific day, like in this example.
 
+- **Check out how you can customize the date header for the scheduler** [Let's go &#8594;](https://demo.mobiscroll.com/react/scheduler/date-header-template#)
+
 ## Related demos
 
-- **Check out how you can customize the date header for the scheduler** [Let's go &#8594;](https://demo.mobiscroll.com/react/scheduler/date-header-template#)
+- [Let's go &#8594;](https://demo.mobiscroll.com/react/scheduler/date-header-template#)

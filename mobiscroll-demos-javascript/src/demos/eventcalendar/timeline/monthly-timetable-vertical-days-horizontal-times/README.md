@@ -13,6 +13,8 @@ to day and keeping the horizontal resolution hourly,
 you can easily render month views where the days of the month are listed vertically
 and the daily timeline is laid out horizontally.
 
+- **Want to learn about how you can configure the horizontal and vertical resolution?** [Play around with this example &#8594;](https://demo.mobiscroll.com/javascript/timeline/multiple-days-weeks-months-quarters-years-variable-resolution#)
+
 ## Related demos
 
-- **Want to learn about how you can configure the horizontal and vertical resolution?** [Play around with this example &#8594;](https://demo.mobiscroll.com/javascript/timeline/multiple-days-weeks-months-quarters-years-variable-resolution#)
+- [Play around with this example &#8594;](https://demo.mobiscroll.com/javascript/timeline/multiple-days-weeks-months-quarters-years-variable-resolution#)

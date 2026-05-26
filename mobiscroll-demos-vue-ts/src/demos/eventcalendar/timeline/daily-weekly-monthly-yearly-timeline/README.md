@@ -15,5 +15,4 @@ For certain views you can customize the visible days along with the scale of the
 - **Week numbers** - Controlled through the `weekNumbers` property
 - **Real time positioning or event listing** - Set `eventDisplay: 'fill'` if you want to list the events on a daily basis rather than have them positioned with minute precision
 
-Interested in the time grid?&nbsp;
-[Check out how you can configure the vertical time rendering &#8594;](https://demo.mobiscroll.com/vue/scheduler/show-hide-hours-days#)
+- **Interested in the time grid?** [Check out how you can configure the vertical time rendering &#8594;](https://demo.mobiscroll.com/vue/scheduler/show-hide-hours-days#)

@@ -12,5 +12,4 @@ In the following example we have two types of tasks/events: **HW** for Hardware 
 
 We'll use the `onEventDragStart` and `onEventDragEnd` lifecycle events to highlight & invalidate and then set everything back to the default state. We have access to the `event.category` through the lifecycle event's `args`.
 
-Want to learn about lifecycle events?&nbsp;
-[Learn how you can levarage the various events that are triggered &#8594;](https://demo.mobiscroll.com/javascript/timeline/event-hooks#)
+- **Want to learn about lifecycle events?** [Learn how you can levarage the various events that are triggered &#8594;](https://demo.mobiscroll.com/javascript/timeline/event-hooks#)

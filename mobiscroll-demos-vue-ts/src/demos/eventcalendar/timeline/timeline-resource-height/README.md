@@ -12,7 +12,9 @@ If there is more vertical space available the rows automatically grow to fill it
 
 This can however be overridden with a custom CSS rule:
 
+```css
 .md-timeline-height .mbsc-timeline-resource,
 .md-timeline-height .mbsc-timeline-row {
 min-height: 120px;
 }
+```

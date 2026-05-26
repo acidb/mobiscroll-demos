@@ -12,5 +12,4 @@ These areas can help you visualize delays or added minutes for tasks. Here are s
 - Loading/unloading for bus/truck
 - Cleaning, inspection, maintenance work that happen on a recurring basis
 
-Looking to customize event buffers?&nbsp;
-[Check out the templating capabilities &#8594;](https://demo.mobiscroll.com/react/timeline/timeline-custom-event-rendering#)
+- **Looking to customize event buffers?** [Check out the templating capabilities &#8594;](https://demo.mobiscroll.com/react/timeline/timeline-custom-event-rendering#)

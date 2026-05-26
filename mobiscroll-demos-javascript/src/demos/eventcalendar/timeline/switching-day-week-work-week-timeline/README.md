@@ -8,5 +8,4 @@ Scheduling people, teams or an entire workforce requires different views. Someti
 
 By dynamically changing the options you can set the level of detail you want to see. *Eg. Show a daily timeline with hourly steps, show the work week with the same resolution or zoom out for a full week-view with 12 hour steps.*
 
-Want to see how to set other views?&nbsp;
-[Check out this example for switching views &#8594;](https://demo.mobiscroll.com/javascript/scheduler/switching-calendar-scheduler-agenda#)
+- **Want to see how to set other views?** [Check out this example for switching views &#8594;](https://demo.mobiscroll.com/javascript/scheduler/switching-calendar-scheduler-agenda#)

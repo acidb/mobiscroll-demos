@@ -10,5 +10,4 @@ The before/after buffers can help you visualise delays or added minutes for task
 
 The buffers can be customized through the `renderBufferBefore` and `renderBufferAfter` options.
 
-Want to see how custom event rendering looks on the time grid?&nbsp;
-[Check out this example &#8594;](https://demo.mobiscroll.com/jquery/scheduler/customizing-events#)
+- **Want to see how custom event rendering looks on the time grid?** [Check out this example &#8594;](https://demo.mobiscroll.com/jquery/scheduler/customizing-events#)

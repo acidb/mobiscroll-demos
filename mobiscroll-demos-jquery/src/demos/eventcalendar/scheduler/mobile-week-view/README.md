@@ -8,5 +8,4 @@ A full week can be rendered on small screens if needed. The header with the days
 
 The screen can easily become crowded so it might be a good idea to think in a responsive implementation - [daily schedule on small screens and weekly schedule on bigger screens](https://demo.mobiscroll.com/jquery/scheduler/responsive-day-week-schedule#).
 
-Interested in daily schedule?&nbsp;
-[Explore this example &#8594;](https://demo.mobiscroll.com/jquery/scheduler/mobile-day-view#)
+- **Interested in daily schedule?** [Explore this example &#8594;](https://demo.mobiscroll.com/jquery/scheduler/mobile-day-view#)
