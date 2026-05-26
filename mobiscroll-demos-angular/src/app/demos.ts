@@ -257,6 +257,7 @@ import { AppComponent as Demo772 } from '../demos/eventcalendar/timeline/resourc
 import { AppComponent as Demo785 } from '../demos/eventcalendar/timeline/event-grouping-bulk-action/event-grouping-bulk-action';
 import { AppComponent as Demo787 } from '../demos/eventcalendar/timeline/36-hour-rolling-window-aircraft-view/36-hour-rolling-window-aircraft-view';
 import { AppComponent as Demo790 } from '../demos/eventcalendar/timeline/drop-assignee-on-event-from-list/drop-assignee-on-event-from-list';
+import { AppComponent as Demo792 } from '../demos/eventcalendar/timeline/truck-transport-planning-and-dispatch/truck-transport-planning-and-dispatch';
 import { AppComponent as Demo605 } from '../demos/eventcalendar/timeline/daily-weekly-monthly-yearly-timeline/daily-weekly-monthly-yearly-timeline';
 import { AppComponent as Demo663 } from '../demos/eventcalendar/timeline/multiple-days-weeks-months-quarters-years-variable-resolution/multiple-days-weeks-months-quarters-years-variable-resolution';
 import { AppComponent as Demo764 } from '../demos/eventcalendar/timeline/calendar-zoom/calendar-zoom';
@@ -1011,6 +1012,7 @@ export const demos: any[] = [
               { name: 'Group events by client and apply custom actions', unique: 'event-grouping-bulk-action', component: Demo785 },
               { name: '36 hour rolling view', unique: '36-hour-rolling-window-aircraft-view', component: Demo787 },
               { name: 'Event drop assignment', unique: 'drop-assignee-on-event-from-list', component: Demo790 },
+              { name: 'Transport Management', unique: 'truck-transport-planning-and-dispatch', component: Demo792 },
             ],
           },
           {
