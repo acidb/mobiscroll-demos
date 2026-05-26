@@ -9,6 +9,7 @@ import {
   MbscModule,
   MbscPopup,
   MbscPopupButton,
+  MbscPopupOptions,
   MbscResource,
   Notifications,
   setOptions /* localeImport */,
@@ -202,7 +203,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private searchTimeout: any;
 
   filters: Record<string, boolean> = {};
-  statusFilters: Record<string, boolean> = { scheduled: true, 'in progress': true, completed: true };
+  statusFilters: string[] = ['scheduled', 'in progress', 'completed'];
   filteredResources: MbscResource[] = [];
   calendarData: MbscCalendarEvent[] = [];
   calendarInvalid: any[] = [];
@@ -217,12 +218,7 @@ export class AppComponent implements OnInit, OnDestroy {
   tempFilters: Record<string, boolean> = {};
   rangeSelectValue = '7';
   rangeInputsDisabled = true;
-  rangeStart: Date | null = null;
-  rangeEnd: Date | null = null;
   calendarRangeValue: Date[] = [];
-  isToastOpen = false;
-  toastMessage = '';
-
   rangeSelectorData = [
     { value: 'custom', text: 'Custom' },
     { value: '7', text: 'Next 7 days' },
@@ -232,12 +228,12 @@ export class AppComponent implements OnInit, OnDestroy {
     { value: '90', text: 'Next 90 days' },
   ];
 
-  rangePopupResponsive = {
+  rangePopupResponsive: Record<string, MbscPopupOptions & { breakpoint?: number }> = {
     xsmall: {
       display: 'bottom',
       touchUi: true,
       buttons: [
-        { text: 'Apply', keyCode: 'enter', handler: () => { this.applyPendingRange(); this.rangePopupRef.close(); }, cssClass: 'mbsc-popup-button-primary' },
+        { text: 'Apply', keyCode: 'enter' as const, handler: () => { this.applyPendingRange(); }, cssClass: 'mbsc-popup-button-primary' },
         'cancel',
       ],
     },
@@ -251,11 +247,11 @@ export class AppComponent implements OnInit, OnDestroy {
     },
   };
 
-  filterPopupButtons: (MbscPopupButton | string)[] = [
+  filterPopupButtons: (MbscPopupButton | 'ok' | 'close' | 'set' | 'cancel')[] = [
     'cancel',
     {
       text: 'Apply',
-      keyCode: 'enter',
+      keyCode: 'enter' as const,
       handler: () => {
         this.filters = { ...this.tempFilters };
         this.filterResources();
@@ -297,8 +293,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private showToast(message: string): void {
-    this.toastMessage = message;
-    this.isToastOpen = true;
+    this.notify.toast({ message });
   }
 
   private getResourceMaintenanceStatus(resource: any): string {
@@ -352,8 +347,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private addActualEvents(events: any[]): void {
-    for (let i = 0; i < events.length; ++i) {
-      const event = events[i];
+    for (const event of events) {
       event.start = event.start ? new Date(event.start) : event.start;
       event.end = event.end ? new Date(event.end) : event.end;
 
@@ -385,21 +379,32 @@ export class AppComponent implements OnInit, OnDestroy {
         } else if (event.actualRef) {
           event.actualRef.end = this.now;
         }
-      } else if (event.end <= this.now && !event.actual) {
-        const completedActualDates = this.getActualDates(event.start, new Date(event.drop[0]));
-        let completedActualStart = completedActualDates[0] >= event.start && completedActualDates[0] < event.end ? completedActualDates[0] : event.start;
-        let completedActualEnd = completedActualDates[1];
-        const minEnd = new Date(completedActualStart.getTime() + 30 * 60000);
-        if (completedActualEnd < minEnd) completedActualEnd = minEnd;
-        const completedNewEvent = {
-          resource: event.resource + '-actual',
-          from: event.from, to: event.to, pickup: event.pickup, drop: event.drop, size: event.size,
-          start: completedActualStart, end: completedActualEnd, title: 'Completed', status: 'actual',
-          color: event.color, cssClass: 'mds-dispatch-actual-event', editable: false,
-        };
-        event.actual = true;
-        event.actualRef = completedNewEvent;
-        events.push(completedNewEvent);
+      } else if (event.end <= this.now) {
+        if (!event.actual) {
+          const completedActualDates = this.getActualDates(event.start, new Date(event.drop[0]));
+          const completedActualStart = completedActualDates[0] >= event.start && completedActualDates[0] < event.end ? completedActualDates[0] : event.start;
+          let completedActualEnd = completedActualDates[1];
+          const minEnd = new Date(completedActualStart.getTime() + 30 * 60000);
+          if (completedActualEnd < minEnd) completedActualEnd = minEnd;
+          const completedNewEvent = {
+            resource: event.resource + '-actual',
+            from: event.from, to: event.to, pickup: event.pickup, drop: event.drop, size: event.size,
+            start: completedActualStart, end: completedActualEnd, title: 'Completed', status: 'actual',
+            color: event.color, cssClass: 'mds-dispatch-actual-event', editable: false,
+          };
+          event.actual = true;
+          event.actualRef = completedNewEvent;
+          events.push(completedNewEvent);
+        } else if (event.actualRef && event.actualRef.title !== 'Completed') {
+          const completedActualDates = this.getActualDates(event.actualRef.start, new Date(event.drop[0]));
+          let completedActualEnd = completedActualDates[1];
+          const minEnd = new Date(event.actualRef.start.getTime() + 30 * 60000);
+          if (completedActualEnd < minEnd) completedActualEnd = minEnd;
+          event.actualRef.end = completedActualEnd;
+          event.actualRef.color = event.color;
+          event.actualRef.cssClass = 'mds-dispatch-actual-event';
+          event.actualRef.title = 'Completed';
+        }
       }
     }
   }
@@ -458,7 +463,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private getStatusFilteredEvents(): MbscCalendarEvent[] {
-    return this.myEvents.filter((ev) => this.statusFilters[this.getEffectiveStatus(ev)] !== false);
+    return this.myEvents.filter((ev) => this.statusFilters.includes(this.getEffectiveStatus(ev)));
   }
 
   private getMaxAvailableCapacity(): number {
@@ -726,6 +731,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.applyDaysRange(this.currentRangeDays, this.currentRangeStart);
     this.rangeLabel = this.formatRangeLabel(this.currentRangeStart, this.currentRangeDays);
     this.refreshJobList();
+    this.rangePopupRef.close();
   }
 
   onRangeSelectChange(args: any): void {
@@ -738,36 +744,20 @@ export class AppComponent implements OnInit, OnDestroy {
       this.pendingRangeStart = this.today;
       const end = new Date(this.today.getTime() + (this.pendingRangeDays - 1) * 24 * 60 * 60 * 1000);
       this.calendarRangeValue = [this.today, end];
-      this.rangeStart = this.today;
-      this.rangeEnd = end;
-    }
-  }
-
-  onRangeStartChange(args: any): void {
-    if (args.value && this.rangeEnd) {
-      this.pendingRangeStart = new Date(args.value);
-      this.pendingRangeDays = Math.round((this.rangeEnd.getTime() - this.pendingRangeStart.getTime()) / (24 * 60 * 60 * 1000)) + 1;
-    }
-  }
-
-  onRangeEndChange(args: any): void {
-    if (args.value && this.rangeStart) {
-      const end = new Date(args.value);
-      this.pendingRangeDays = Math.round((end.getTime() - this.rangeStart.getTime()) / (24 * 60 * 60 * 1000)) + 1;
     }
   }
 
   onCalendarRangeChange(args: any): void {
     const dates = args.value;
-    if (dates && dates[0] && dates[1]) {
-      const start = new Date(dates[0]);
-      const end = new Date(dates[1]);
-      this.pendingRangeStart = start;
-      this.pendingRangeDays = Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+    if (dates) {
       this.rangeInputsDisabled = false;
       this.rangeSelectValue = 'custom';
-      this.rangeStart = start;
-      this.rangeEnd = end;
+      if (dates[0] && dates[1]) {
+        const start = new Date(dates[0]);
+        const end = new Date(dates[1]);
+        this.pendingRangeStart = start;
+        this.pendingRangeDays = Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+      }
     }
   }
 
@@ -784,11 +774,13 @@ export class AppComponent implements OnInit, OnDestroy {
   onEventCreated(args: any): void {
     if (args.action === 'externalDrop') {
       this.scheduledJobIds.push(args.event.id);
-      this.visibleJobs = this.visibleJobs.filter((j) => j.id !== args.event.id);
-      this.jobListItems = this.jobListItems.filter((item) => item.type !== 'job' || item.job.id !== args.event.id);
       const scheduledEvent = { ...args.event, status: 'scheduled', color: this.statusColors['scheduled'] };
       this.calendarRef.updateEvent(scheduledEvent);
       this.myEvents.push(scheduledEvent);
+      setTimeout(() => {
+        this.visibleJobs = this.visibleJobs.filter((j) => j.id !== args.event.id);
+        this.jobListItems = this.jobListItems.filter((item) => item.type !== 'job' || item.job.id !== args.event.id);
+      });
     }
     this.showToast(args.event.from + ' → ' + args.event.to + ' added');
   }
@@ -798,8 +790,10 @@ export class AppComponent implements OnInit, OnDestroy {
     const moved = this.moveToFirstAvailableSlot(draggedEvent, false);
     if (moved) {
       if (args.action === 'externalDrop') {
-        this.visibleJobs = this.visibleJobs.filter((j) => j.id !== args.event.id);
-        this.jobListItems = this.jobListItems.filter((item) => item.type !== 'job' || item.job.id !== args.event.id);
+        setTimeout(() => {
+          this.visibleJobs = this.visibleJobs.filter((j) => j.id !== args.event.id);
+          this.jobListItems = this.jobListItems.filter((item) => item.type !== 'job' || item.job.id !== args.event.id);
+        });
       }
       setTimeout(() => this.calendarRef?.navigateToEvent({ start: draggedEvent.start, resource: draggedEvent.resource }));
       this.showToast(draggedEvent.from + ' → ' + draggedEvent.to + ' added to first available slot');
@@ -854,8 +848,7 @@ export class AppComponent implements OnInit, OnDestroy {
         const arrivalDelay = Math.round((actualEnd.getTime() - scheduledArrival.getTime()) / 60000);
         msg = 'Actual transport: departed ' + this.formatDelay(departureDelay) + ' · arrived ' + this.formatDelay(arrivalDelay);
       }
-      this.toastMessage = msg;
-      this.isToastOpen = true;
+      this.notify.toast({ message: msg });
     }
   }
 

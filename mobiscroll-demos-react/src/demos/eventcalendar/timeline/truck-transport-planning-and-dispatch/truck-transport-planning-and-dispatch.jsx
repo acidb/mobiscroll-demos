@@ -1,4 +1,5 @@
-import { Datepicker, Draggable, Eventcalendar, formatDate, Popup, Select, setOptions, Toast } from '@mobiscroll/react';
+import { Button, Checkbox, Datepicker, Draggable, Eventcalendar, formatDate, Input, Page, Popup, Segmented, SegmentedGroup, Select, setOptions, Toast } from '@mobiscroll/react';
+import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { dyndatetime } from '../../../../dyndatetime';
 import './truck-transport-planning-and-dispatch.css';
@@ -116,7 +117,7 @@ function initEvents() {
     { resource: 11, from: '600 Grant St, Pittsburgh, PA', to: '200 W Washington St, Indianapolis, IN', size: 18, pickup: [dyndatetime('y,m,d+1,6'), dyndatetime('y,m,d+1,9')], drop: [dyndatetime('y,m,d+1,16'), dyndatetime('y,m,d+1,20')], status: 'scheduled' },
     { resource: 14, from: '400 N Michigan Ave, Chicago, IL', to: '250 E Wisconsin Ave, Milwaukee, WI', size: 23, pickup: [dyndatetime('y,m,d+5,8'), dyndatetime('y,m,d+5,11')], drop: [dyndatetime('y,m,d+5,15'), dyndatetime('y,m,d+5,18')], status: 'scheduled' },
     { resource: 13, from: '700 Figueroa St, Los Angeles, CA', to: '50 W San Fernando St, San Jose, CA', size: 22, pickup: [dyndatetime('y,m,d+4,6'), dyndatetime('y,m,d+4,9')], drop: [dyndatetime('y,m,d+4,17'), dyndatetime('y,m,d+4,21')], status: 'scheduled' },
-  ];
+  ].map((e) => ({ ...e, start: e.pickup[0], end: e.drop[0], title: e.from + ' → ' + e.to }));
 }
 
 const allExternalEvents = [
@@ -212,33 +213,46 @@ function JobCard({ job }) {
   );
 }
 
+JobCard.propTypes = {
+  job: PropTypes.shape({
+    drop: PropTypes.array,
+    from: PropTypes.string,
+    pickup: PropTypes.array,
+    size: PropTypes.number,
+    to: PropTypes.string,
+  }).isRequired,
+};
+
 function App() {
-  const nowRef = useRef(new Date());
-  const todayRef = useRef(new Date(nowRef.current.getFullYear(), nowRef.current.getMonth(), nowRef.current.getDate()));
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const nowRef = useRef(now);
+  const todayRef = useRef(today);
+  const searchQueryRef = useRef('');
   const calendarRef = useRef(null);
-  const myEventsRef = useRef(initEvents().map((e) => ({ ...e, start: e.pickup[0], end: e.drop[0], title: e.from + ' → ' + e.to })));
-  const externalEventsRef = useRef(initExternalEvents());
+  const myEventsRef = useRef(null);
+  if (!myEventsRef.current) myEventsRef.current = initEvents();
+  const externalEventsRef = useRef(null);
+  if (!externalEventsRef.current) externalEventsRef.current = initExternalEvents();
   const scheduledJobIdsRef = useRef([]);
   const myInvalidsRef = useRef([]);
-  const currentViewStartRef = useRef(todayRef.current);
-  const currentViewEndRef = useRef(new Date(todayRef.current.getTime() + 7 * 24 * 60 * 60 * 1000));
-  const currentRangeStartRef = useRef(todayRef.current);
+  const currentViewStartRef = useRef(today);
+  const currentViewEndRef = useRef(new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000));
+  const currentRangeStartRef = useRef(today);
   const currentRangeDaysRef = useRef(7);
-  const pendingRangeStartRef = useRef(todayRef.current);
+  const pendingRangeStartRef = useRef(today);
   const pendingRangeDaysRef = useRef(7);
   const filterPopupRef = useRef(null);
   const rangePopupRef = useRef(null);
-  const filterAnchorRef = useRef(null);
+  const [filterAnchor, setFilterAnchor] = useState(null);
 
-  const [myEvents, setMyEvents] = useState(() => myEventsRef.current);
+  const [myEvents, setMyEvents] = useState(initEvents);
   const [filteredResources, setFilteredResources] = useState([]);
   const [maintenanceInvalids, setMaintenanceInvalids] = useState([]);
   const [calendarInvalid, setCalendarInvalid] = useState([]);
   const [zoomLevel, setZoomLevel] = useState(3);
   const [calView, setCalView] = useState(() => buildViewConfig(7));
-  const [refDate, setRefDate] = useState(() => todayRef.current);
-  const [scheduledJobIds, setScheduledJobIds] = useState([]);
-  const [visibleJobs, setVisibleJobs] = useState([]);
+  const [refDate, setRefDate] = useState(today);
   const [jobListItems, setJobListItems] = useState([]);
   const [filters, setFilters] = useState(() => {
     const f = { operational: true, maintenance: true };
@@ -246,12 +260,14 @@ function App() {
     return f;
   });
   const [tempFilters, setTempFilters] = useState({});
-  const [statusFilters, setStatusFilters] = useState({ scheduled: true, 'in progress': true, completed: true });
+  const [statusFilters, setStatusFilters] = useState(['scheduled', 'in progress', 'completed']);
   const [searchQuery, setSearchQuery] = useState('');
   const [rangeLabel, setRangeLabel] = useState('');
   const [rangeSelectValue, setRangeSelectValue] = useState('7');
   const [rangeInputsDisabled, setRangeInputsDisabled] = useState(true);
   const [calendarRangeValue, setCalendarRangeValue] = useState(null);
+  const [rangeStartInput, rangeStartRef] = useState(null);
+  const [rangeEndInput, rangeEndRef] = useState(null);
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
@@ -260,13 +276,9 @@ function App() {
     setIsToastOpen(true);
   }, []);
 
-  const getResourceMaintenanceStatusCb = useCallback((resource) => {
-    return getResourceMaintenanceStatus(resource, nowRef.current, currentViewStartRef.current, currentViewEndRef.current);
-  }, []);
-
   const computeFilteredResources = useCallback((currentFilters, currentSearchQuery) => {
     const f = currentFilters || filters;
-    const sq = currentSearchQuery !== undefined ? currentSearchQuery : searchQuery;
+    const sq = currentSearchQuery !== undefined ? currentSearchQuery : searchQueryRef.current;
     return allResources
       .map((category) => {
         const keptIds = {};
@@ -294,18 +306,16 @@ function App() {
         };
       })
       .filter((res) => res.children.length > 0 && f[res.id]);
-  }, [filters, searchQuery]);
+  }, [filters, nowRef, currentViewStartRef, currentViewEndRef]);
 
   const getEffectiveStatus = useCallback((ev) => {
     if (ev.status === 'actual') return ev.title === 'Completed' ? 'completed' : 'in progress';
-    if (ev.end && ev.end <= nowRef.current) return 'completed';
-    if (ev.start && ev.start < nowRef.current) return 'in progress';
     return ev.status || 'scheduled';
   }, []);
 
   const getStatusFilteredEvents = useCallback((events, currentStatusFilters) => {
     const sf = currentStatusFilters || statusFilters;
-    return (events || myEventsRef.current).filter((ev) => sf[getEffectiveStatus(ev)] !== false);
+    return events.filter((ev) => sf.includes(getEffectiveStatus(ev)));
   }, [statusFilters, getEffectiveStatus]);
 
   const getMaxAvailableCapacity = useCallback((currentFilters) => {
@@ -348,7 +358,6 @@ function App() {
       if (pickupStart < minPickup) return false;
       return pickupStart >= rStart && pickupStart < rangeEnd;
     });
-    setVisibleJobs(visible);
     const items = [];
     let lastDayKey = null;
     for (const job of visible) {
@@ -361,7 +370,7 @@ function App() {
       items.push({ type: 'job', job, key: 'job-' + job.id });
     }
     setJobListItems(items);
-  }, [getMaxAvailableCapacity]);
+  }, [getMaxAvailableCapacity, nowRef, currentRangeStartRef, currentRangeDaysRef, scheduledJobIdsRef, externalEventsRef]);
 
   const addActualEvents = useCallback((events) => {
     const now = nowRef.current;
@@ -378,25 +387,36 @@ function App() {
       if (event.start < now && event.end > now) {
         if (!event.actual) {
           const dOff = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)] * 60000;
-          const aOff = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)] * 60000;
           const aStart = new Date(event.start.getTime() + dOff);
           const actualStart = aStart >= event.start && aStart < now ? aStart : event.start;
           const newEvent = { resource: event.resource + '-actual', from: event.from, to: event.to, pickup: event.pickup, drop: event.drop, size: event.size, start: actualStart, end: now, title: 'In progress', status: 'actual', color: event.color, cssClass: 'mds-dispatch-actual-event mds-dispatch-pulse', editable: false };
           event.actual = true; event.actualRef = newEvent; events.push(newEvent);
         } else if (event.actualRef) { event.actualRef.end = now; }
-      } else if (event.end <= now && !event.actual) {
-        const dOff = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)] * 60000;
-        const aOff = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)] * 60000;
-        let cAStart = new Date(event.start.getTime() + dOff);
-        if (!(cAStart >= event.start && cAStart < event.end)) cAStart = event.start;
-        let cAEnd = new Date(event.drop[0] instanceof Date ? event.drop[0].getTime() + aOff : new Date(event.drop[0]).getTime() + aOff);
-        const minEnd = new Date(cAStart.getTime() + 30 * 60000);
-        if (cAEnd < minEnd) cAEnd = minEnd;
-        const cNewEvent = { resource: event.resource + '-actual', from: event.from, to: event.to, pickup: event.pickup, drop: event.drop, size: event.size, start: cAStart, end: cAEnd, title: 'Completed', status: 'actual', color: event.color, cssClass: 'mds-dispatch-actual-event', editable: false };
-        event.actual = true; event.actualRef = cNewEvent; events.push(cNewEvent);
+      } else if (event.end <= now) {
+        if (!event.actual) {
+          const dOff = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)] * 60000;
+          const aOff = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)] * 60000;
+          let cAStart = new Date(event.start.getTime() + dOff);
+          if (!(cAStart >= event.start && cAStart < event.end)) cAStart = event.start;
+          let cAEnd = new Date(event.drop[0] instanceof Date ? event.drop[0].getTime() + aOff : new Date(event.drop[0]).getTime() + aOff);
+          const minEnd = new Date(cAStart.getTime() + 30 * 60000);
+          if (cAEnd < minEnd) cAEnd = minEnd;
+          const cNewEvent = { resource: event.resource + '-actual', from: event.from, to: event.to, pickup: event.pickup, drop: event.drop, size: event.size, start: cAStart, end: cAEnd, title: 'Completed', status: 'actual', color: event.color, cssClass: 'mds-dispatch-actual-event', editable: false };
+          event.actual = true; event.actualRef = cNewEvent; events.push(cNewEvent);
+        } else if (event.actualRef && event.actualRef.title !== 'Completed') {
+          const aOff = possibleOffsets[Math.floor(Math.random() * possibleOffsets.length)] * 60000;
+          const drop0 = event.drop[0] instanceof Date ? event.drop[0].getTime() : new Date(event.drop[0]).getTime();
+          let cAEnd = new Date(drop0 + aOff);
+          const minEnd = new Date(event.actualRef.start.getTime() + 30 * 60000);
+          if (cAEnd < minEnd) cAEnd = minEnd;
+          event.actualRef.end = cAEnd;
+          event.actualRef.color = event.color;
+          event.actualRef.cssClass = 'mds-dispatch-actual-event';
+          event.actualRef.title = 'Completed';
+        }
       }
     }
-  }, []);
+  }, [nowRef]);
 
   const findResourceById = useCallback((id) => {
     const baseId = String(id).replace('-actual', '');
@@ -408,7 +428,7 @@ function App() {
     return null;
   }, []);
 
-  const findFirstSlot = useCallback((draggedEvent, currentFilteredResources) => {
+  const findFirstSlot = useCallback((draggedEvent) => {
     const now = new Date();
     const minStart = new Date(now.getTime() + 2 * 60 * 60 * 1000);
     const windowStart = new Date(draggedEvent.pickup[0]);
@@ -437,7 +457,6 @@ function App() {
   }, [findResourceById]);
 
   useEffect(() => {
-    const now = nowRef.current;
     const today = todayRef.current;
     allResources.forEach((group) => {
       group.children.forEach((resource) => {
@@ -447,14 +466,16 @@ function App() {
     });
     addActualEvents(myEventsRef.current);
     const mInvalids = buildMaintenanceInvalids();
+    const fResources = computeFilteredResources(null, '');
+    const end = new Date(today.getTime() + 6 * 24 * 60 * 60 * 1000);
+    /* eslint-disable react-hooks/set-state-in-effect */
     setMaintenanceInvalids(mInvalids);
     setCalendarInvalid(mInvalids);
-    const fResources = computeFilteredResources(null, '');
     setFilteredResources(fResources);
     setMyEvents([...myEventsRef.current]);
-    const end = new Date(today.getTime() + 6 * 24 * 60 * 60 * 1000);
     setCalendarRangeValue([today, end]);
     setRangeLabel(formatDate('MMM D', today) + ' – ' + formatDate('MMM D, YYYY', end));
+    /* eslint-enable react-hooks/set-state-in-effect */
     refreshJobList(null, []);
     const interval = setInterval(() => {
       nowRef.current = new Date();
@@ -462,12 +483,13 @@ function App() {
       setMyEvents([...myEventsRef.current]);
     }, 60000);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleZoom = useCallback((zoom) => {
     setZoomLevel(zoom);
     setCalView(buildViewConfig(currentRangeDaysRef.current));
-  }, []);
+  }, [currentRangeDaysRef]);
 
   const applyDaysRange = useCallback((days, startDate) => {
     const target = startDate || todayRef.current;
@@ -479,7 +501,7 @@ function App() {
     setFilteredResources(fResources);
     const navigateTo = todayRef.current >= target && todayRef.current < currentViewEndRef.current ? nowRef.current : target;
     setTimeout(() => calendarRef.current?.navigate(navigateTo), 100);
-  }, [computeFilteredResources]);
+  }, [computeFilteredResources, todayRef, nowRef, currentViewStartRef, currentViewEndRef, calendarRef]);
 
   const applyPendingRange = useCallback(() => {
     currentRangeStartRef.current = pendingRangeStartRef.current;
@@ -500,12 +522,13 @@ function App() {
     const sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
     const invalidIds = []; const validIds = [];
     const windowStart = new Date(event.pickup[0]); const windowEnd = new Date(event.drop[1]);
+    const allCalendarEvents = calendarRef.current?.getEvents() || [];
     for (const group of allResources) {
       for (const truck of group.children) {
         let isValid = true;
         if (truck.capacity < event.size) { truck.eventCreation = false; invalidIds.push(truck.id); isValid = false; }
         if (isValid) {
-          const truckEvents = calendarRef.current?.getEvents()?.filter((ev) => ev.resource === truck.id) || [];
+          const truckEvents = allCalendarEvents.filter((ev) => ev.resource === truck.id);
           const overlappingEvent = truckEvents.find((ev) => { const evEnd = ev.drop ? new Date(ev.drop[1]) : ev.end; return evEnd > windowStart && ev.start < windowEnd; });
           if (overlappingEvent && event.resource !== truck.id) { truck.eventCreation = false; invalidIds.push(truck.id); if (!String(truck.id).includes('actual')) invalidIds.push(truck.id + '-actual'); isValid = false; }
         }
@@ -519,7 +542,7 @@ function App() {
     ];
     setCalendarInvalid([...myInvalidsRef.current, ...maintenanceInvalids]);
     return validIds.length > 0 ? validIds[0] : null;
-  }, [maintenanceInvalids]);
+  }, [maintenanceInvalids, nowRef, todayRef, calendarRef, myInvalidsRef]);
 
   const resetEventCreationFlags = useCallback(() => {
     for (const group of allResources) {
@@ -532,12 +555,10 @@ function App() {
   const onEventCreated = useCallback((args) => {
     if (args.action === 'externalDrop') {
       scheduledJobIdsRef.current = [...scheduledJobIdsRef.current, args.event.id];
-      setScheduledJobIds([...scheduledJobIdsRef.current]);
       const scheduledEvent = { ...args.event, status: 'scheduled', color: statusColors['scheduled'] };
       calendarRef.current?.updateEvent(scheduledEvent);
       myEventsRef.current = [...myEventsRef.current, scheduledEvent];
       setMyEvents([...myEventsRef.current]);
-      setVisibleJobs((prev) => prev.filter((j) => j.id !== args.event.id));
       setJobListItems((prev) => prev.filter((item) => item.type !== 'job' || item.job.id !== args.event.id));
     }
     showToast(args.event.from + ' → ' + args.event.to + ' added');
@@ -551,8 +572,6 @@ function App() {
       calendarRef.current?.addEvent(draggedEvent);
       if (args.action === 'externalDrop') {
         scheduledJobIdsRef.current = [...scheduledJobIdsRef.current, args.event.id];
-        setScheduledJobIds([...scheduledJobIdsRef.current]);
-        setVisibleJobs((prev) => prev.filter((j) => j.id !== args.event.id));
         setJobListItems((prev) => prev.filter((item) => item.type !== 'job' || item.job.id !== args.event.id));
       }
       setTimeout(() => calendarRef.current?.navigateToEvent({ start: draggedEvent.start, resource: draggedEvent.resource }));
@@ -578,12 +597,14 @@ function App() {
   }, [findFirstSlot, showToast]);
 
   const onEventDragStart = useCallback((args) => {
-    const resourceToNavigate = invalidateResources(args.event);
-    if (!args.event.resource) {
-      if (resourceToNavigate && findFirstSlot(args.event)) {
-        calendarRef.current?.navigateToEvent({ start: args.event.start, resource: resourceToNavigate });
+    const event = args.event;
+    const resourceToNavigate = invalidateResources(event);
+    if (!event.resource) {
+      const slot = findFirstSlot(event);
+      if (resourceToNavigate && slot) {
+        setTimeout(() => calendarRef.current?.navigateToEvent({ start: slot.start, resource: resourceToNavigate }));
       } else {
-        showToast('No available slot for: ' + args.event.from + ' → ' + args.event.to);
+        showToast('No available slot for: ' + event.from + ' → ' + event.to);
       }
     }
   }, [invalidateResources, findFirstSlot, showToast]);
@@ -619,7 +640,7 @@ function App() {
   const onPageLoaded = useCallback((args) => {
     currentViewStartRef.current = args.firstDay;
     currentViewEndRef.current = args.lastDay;
-  }, []);
+  }, [currentViewStartRef, currentViewEndRef]);
 
   const renderResource = useCallback((resource) => {
     const mStatus = getResourceMaintenanceStatus(resource, nowRef.current, currentViewStartRef.current, currentViewEndRef.current);
@@ -637,7 +658,7 @@ function App() {
         )}
       </div>
     );
-  }, []);
+  }, [nowRef, currentViewStartRef, currentViewEndRef]);
 
   const renderResourceEmpty = useCallback(() => (
     <div className="mds-dispatch-empty mbsc-flex mbsc-align-items-center">
@@ -645,10 +666,11 @@ function App() {
         <img src="https://img.mobiscroll.com/demos/filter-no-result.png" alt="Empty list" style={{ width: 100 }} />
         <p className="mbsc-font mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">No resources match your search.</p>
         <p className="mbsc-margin mbsc-medium mbsc-italic mbsc-txt-muted">Adjust your filters or try a different keyword.</p>
-        <button
-          className="mbsc-button mbsc-button-outline mbsc-font"
+        <Button
+          variant="outline"
           onClick={() => {
             setSearchQuery('');
+            searchQueryRef.current = '';
             const newFilters = { operational: true, maintenance: true };
             allResources.forEach((cat) => { newFilters[cat.id] = true; });
             setFilters(newFilters);
@@ -659,41 +681,43 @@ function App() {
           }}
         >
           Reset Filters
-        </button>
+        </Button>
       </div>
     </div>
   ), [computeFilteredResources, refreshJobList, showToast]);
 
   const renderResourceHeader = useCallback(() => (
     <div className="mbsc-flex mbsc-align-items-center mbsc-font mds-dispatch-search">
-      <label className="mbsc-flex-1-1">
-        <input
-          type="text"
-          className="mbsc-textfield mbsc-textfield-outline"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => {
-            const q = e.target.value.toLowerCase();
-            setSearchQuery(q);
-            setTimeout(() => {
-              const fResources = computeFilteredResources(null, q);
-              setFilteredResources(fResources);
-            }, 300);
-          }}
-          style={{ height: 36, padding: '0 8px', border: '1px solid #ccc', borderRadius: 4, width: '100%' }}
-        />
-      </label>
-      <button
-        className="mbsc-button mbsc-button-outline mbsc-font mbsc-flex-none"
-        style={{ margin: 0, height: 36 }}
+      <Input
+        className="mbsc-flex-1-1"
+        type="text"
+        inputStyle="outline"
+        startIcon="material-search"
+        autoComplete="off"
+        placeholder="Search..."
+        value={searchQuery}
+        onChange={(e) => {
+          const q = e.target.value.toLowerCase();
+          setSearchQuery(q);
+          searchQueryRef.current = q;
+          setTimeout(() => {
+            const fResources = computeFilteredResources(null, q);
+            setFilteredResources(fResources);
+          }, 300);
+        }}
+      />
+      <Button
+        startIcon="material-filter-list"
+        variant="outline"
+        className="mbsc-flex-none"
         onClick={(e) => {
           setTempFilters({ ...filters });
-          filterAnchorRef.current = e.target;
-          filterPopupRef.current?.open();
+          setFilterAnchor(e.currentTarget);
+          setTimeout(() => filterPopupRef.current?.open());
         }}
       >
         Filter
-      </button>
+      </Button>
     </div>
   ), [searchQuery, filters, computeFilteredResources]);
 
@@ -742,26 +766,30 @@ function App() {
   ], [tempFilters, computeFilteredResources, refreshJobList, showToast]);
 
   return (
+    <Page className="mds-dispatch-page">
     <div className="mds-dispatch-outer mbsc-flex-col">
       <div className="mds-dispatch-custom-header mbsc-flex">
-        <button className="mbsc-button mbsc-button-flat mbsc-font" onClick={() => rangePopupRef.current?.open()}>
+        <Button variant="flat" onClick={() => rangePopupRef.current?.open()}>
           <span className="mds-dispatch-range-label">{rangeLabel}</span>
-        </button>
+        </Button>
         <div className="mds-dispatch-header-right mbsc-flex">
-          <div className="mds-dispatch-status-filter mbsc-flex">
-            {[['scheduled', 'Scheduled'], ['in progress', 'In progress'], ['completed', 'Completed']].map(([val, label]) => (
-              <label key={val} className={'mds-dispatch-seg-' + val.replace(' ', '')} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', padding: '0 8px' }}>
-                <input type="checkbox" style={{ marginRight: 4 }} checked={statusFilters[val]} onChange={(e) => setStatusFilters((sf) => ({ ...sf, [val]: e.target.checked }))} />
-                <span className={'mds-dispatch-seg-dot mds-dispatch-seg-dot-' + val.replace(' ', '')}></span>{label}
-              </label>
-            ))}
-          </div>
+          <SegmentedGroup cssClass="mds-dispatch-status-filter" select="multiple">
+            <Segmented value="scheduled" checked={statusFilters.includes('scheduled')} onChange={(e) => { if (e.target.checked) setStatusFilters((sf) => [...sf, 'scheduled']); else setStatusFilters((sf) => sf.filter((s) => s !== 'scheduled')); }}>
+              <span className="mds-dispatch-seg-dot mds-dispatch-seg-dot-scheduled"></span>Scheduled
+            </Segmented>
+            <Segmented value="in progress" checked={statusFilters.includes('in progress')} onChange={(e) => { if (e.target.checked) setStatusFilters((sf) => [...sf, 'in progress']); else setStatusFilters((sf) => sf.filter((s) => s !== 'in progress')); }}>
+              <span className="mds-dispatch-seg-dot mds-dispatch-seg-dot-inprogress"></span>In progress
+            </Segmented>
+            <Segmented value="completed" checked={statusFilters.includes('completed')} onChange={(e) => { if (e.target.checked) setStatusFilters((sf) => [...sf, 'completed']); else setStatusFilters((sf) => sf.filter((s) => s !== 'completed')); }}>
+              <span className="mds-dispatch-seg-dot mds-dispatch-seg-dot-completed"></span>Completed
+            </Segmented>
+          </SegmentedGroup>
           <div className="mds-dispatch-zoom mbsc-flex">
-            <button className="mbsc-button mbsc-button-flat mbsc-font" disabled={zoomLevel === 1} onClick={() => handleZoom(zoomLevel - 1)}>–</button>
+            <Button icon="minus" variant="flat" disabled={zoomLevel === 1} onClick={() => handleZoom(zoomLevel - 1)} />
             <input type="range" min="1" max="5" value={zoomLevel} className="mds-dispatch-zoom-slider" onChange={(e) => handleZoom(+e.target.value)} />
-            <button className="mbsc-button mbsc-button-flat mbsc-font" disabled={zoomLevel === 5} onClick={() => handleZoom(zoomLevel + 1)}>+</button>
+            <Button icon="plus" variant="flat" disabled={zoomLevel === 5} onClick={() => handleZoom(zoomLevel + 1)} />
           </div>
-          <button className="mbsc-button mbsc-button-outline mbsc-font mds-dispatch-now-btn" onClick={() => {
+          <Button variant="outline" startIcon="clock" className="mds-dispatch-now-btn" onClick={() => {
             const now = new Date();
             nowRef.current = now;
             todayRef.current = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -772,7 +800,7 @@ function App() {
             setRangeLabel(formatDate('MMM D', start) + ' – ' + formatDate('MMM D, YYYY', end));
             setTimeout(() => calendarRef.current?.navigate(now));
             refreshJobList();
-          }}>Now</button>
+          }}>Now</Button>
         </div>
       </div>
       <div className="mbsc-grid mbsc-no-padding mds-dispatch-content">
@@ -830,27 +858,31 @@ function App() {
         focusOnOpen={false}
         showOverlay={false}
         width={400}
-        anchor={filterAnchorRef.current}
+        anchor={filterAnchor}
       >
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Capacity</div>
           {allResources.map((res) => (
-            <label key={res.id} style={{ display: 'flex', alignItems: 'center', padding: '4px 16px', cursor: 'pointer' }}>
-              <input type="checkbox" checked={!!tempFilters[res.id]} onChange={(e) => setTempFilters((tf) => ({ ...tf, [res.id]: e.target.checked }))} style={{ marginRight: 8 }} />
-              {res.name}
-            </label>
+            <Checkbox
+              key={res.id}
+              label={res.name}
+              checked={!!tempFilters[res.id]}
+              onChange={(e) => setTempFilters((tf) => ({ ...tf, [res.id]: e.target.checked }))}
+            />
           ))}
         </div>
         <div className="mbsc-form-group">
           <div className="mbsc-form-group-title">Operational Status</div>
-          <label style={{ display: 'flex', alignItems: 'center', padding: '4px 16px', cursor: 'pointer' }}>
-            <input type="checkbox" checked={!!tempFilters['maintenance']} onChange={(e) => setTempFilters((tf) => ({ ...tf, maintenance: e.target.checked }))} style={{ marginRight: 8 }} />
-            In maintenance/Maintenance planned
-          </label>
-          <label style={{ display: 'flex', alignItems: 'center', padding: '4px 16px', cursor: 'pointer' }}>
-            <input type="checkbox" checked={!!tempFilters['operational']} onChange={(e) => setTempFilters((tf) => ({ ...tf, operational: e.target.checked }))} style={{ marginRight: 8 }} />
-            Operational
-          </label>
+          <Checkbox
+            label="In maintenance/Maintenance planned"
+            checked={!!tempFilters['maintenance']}
+            onChange={(e) => setTempFilters((tf) => ({ ...tf, maintenance: e.target.checked }))}
+          />
+          <Checkbox
+            label="Operational"
+            checked={!!tempFilters['operational']}
+            onChange={(e) => setTempFilters((tf) => ({ ...tf, operational: e.target.checked }))}
+          />
         </div>
       </Popup>
 
@@ -883,38 +915,26 @@ function App() {
                       }
                     }}
                   />
-                  <Datepicker
+                  <Input
+                    ref={rangeStartRef}
                     label="Start"
                     labelStyle="stacked"
                     inputStyle="box"
                     className="mds-dispatch-range-input"
                     disabled={rangeInputsDisabled}
-                    value={calendarRangeValue?.[0] || null}
-                    onChange={(args) => {
-                      if (args.value && calendarRangeValue?.[1]) {
-                        pendingRangeStartRef.current = new Date(args.value);
-                        pendingRangeDaysRef.current = Math.round((new Date(calendarRangeValue[1]).getTime() - pendingRangeStartRef.current.getTime()) / (24 * 60 * 60 * 1000)) + 1;
-                      }
-                    }}
                   />
-                  <Datepicker
+                  <Input
+                    ref={rangeEndRef}
                     label="End"
                     labelStyle="stacked"
                     inputStyle="box"
                     className="mds-dispatch-range-input"
                     disabled={rangeInputsDisabled}
-                    value={calendarRangeValue?.[1] || null}
-                    onChange={(args) => {
-                      if (args.value && calendarRangeValue?.[0]) {
-                        const end = new Date(args.value);
-                        pendingRangeDaysRef.current = Math.round((end.getTime() - new Date(calendarRangeValue[0]).getTime()) / (24 * 60 * 60 * 1000)) + 1;
-                      }
-                    }}
                   />
                 </div>
                 <div className="mds-dispatch-range-desktop-btns mbsc-button-group-justified">
-                  <button className="mbsc-button mbsc-font" onClick={applyPendingRange}>Apply</button>
-                  <button className="mbsc-button mbsc-font" onClick={() => rangePopupRef.current?.close()}>Cancel</button>
+                  <Button onClick={applyPendingRange}>Apply</Button>
+                  <Button onClick={() => rangePopupRef.current?.close()}>Cancel</Button>
                 </div>
               </div>
               <div className="mbsc-col-sm-8 mbsc-pull-sm-4">
@@ -924,16 +944,23 @@ function App() {
                   select="range"
                   showRangeLabels={false}
                   pages="auto"
+                  showOnClick={false}
+                  showOnFocus={false}
                   value={calendarRangeValue}
+                  startInput={rangeStartInput}
+                  endInput={rangeEndInput}
                   onChange={(args) => {
                     const dates = args.value;
-                    if (dates && dates[0] && dates[1]) {
-                      const start = new Date(dates[0]); const end = new Date(dates[1]);
-                      pendingRangeStartRef.current = start;
-                      pendingRangeDaysRef.current = Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+                    if (dates) {
+                      setCalendarRangeValue(dates);
                       setRangeInputsDisabled(false);
                       setRangeSelectValue('custom');
-                      setCalendarRangeValue([start, end]);
+                      if (dates[0] && dates[1]) {
+                        const start = new Date(dates[0]);
+                        const end = new Date(dates[1]);
+                        pendingRangeStartRef.current = start;
+                        pendingRangeDaysRef.current = Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+                      }
                     }
                   }}
                 />
@@ -945,6 +972,7 @@ function App() {
 
       <Toast message={toastMessage} isOpen={isToastOpen} onClose={() => setIsToastOpen(false)} />
     </div>
+    </Page>
   );
 }
 

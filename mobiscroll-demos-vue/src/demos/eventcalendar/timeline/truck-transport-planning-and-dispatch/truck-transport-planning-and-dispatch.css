@@ -1,4 +1,3 @@
-/* --- Mobiscroll overrides --- */
 .mds-dispatch-calendar .mbsc-calendar-header {
   display: none;
 }
@@ -14,8 +13,12 @@
   height: 100%;
   box-sizing: border-box;
 }
-.mds-dispatch-calendar .mbsc-timeline-row:not(.mds-dispatch-actual-resource):not(.mbsc-timeline-parent) {
+.mds-dispatch-calendar
+  .mbsc-timeline-row:not(.mds-dispatch-actual-resource):not(.mbsc-timeline-parent) {
   height: 58px;
+}
+.mds-dispatch-page {
+  height: 100%;
 }
 .mds-dispatch-calendar .mds-dispatch-actual-resource {
   height: 8px !important;
@@ -83,7 +86,13 @@
   background: rgba(128, 128, 128, 0.2);
 }
 .mds-dispatch-maintenance-invalid.mbsc-schedule-invalid {
-  background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.12), rgba(128,128,128,0.12) 11px, rgba(128,128,128,0.28) 11px, rgba(128,128,128,0.28) 22px);
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(128, 128, 128, 0.12),
+    rgba(128, 128, 128, 0.12) 11px,
+    rgba(128, 128, 128, 0.28) 11px,
+    rgba(128, 128, 128, 0.28) 22px
+  );
 }
 .mds-dispatch-pulse:not(.mbsc-schedule-event-hover) .mbsc-timeline-event-background {
   box-shadow: 0 0 0 rgba(249, 115, 22, 0.4);
@@ -93,9 +102,7 @@
   padding-top: 0;
   padding-bottom: 0;
 }
-.mds-dispatch-seg-scheduled .mbsc-segmented-button::before,
-.mds-dispatch-seg-inprogress .mbsc-segmented-button::before,
-.mds-dispatch-seg-completed .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot {
   content: '';
   display: inline-block;
   width: 8px;
@@ -104,13 +111,13 @@
   margin-right: 5px;
   vertical-align: middle;
 }
-.mds-dispatch-seg-scheduled .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot-scheduled {
   background: #2196f3;
 }
-.mds-dispatch-seg-inprogress .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot-inprogress {
   background: #f97316;
 }
-.mds-dispatch-seg-completed .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot-completed {
   background: #78909c;
 }
 .mbsc-ios-dark .mds-dispatch-custom-header,
@@ -162,7 +169,11 @@
   background-color: #fff;
 }
 .mds-dispatch-job-day-header {
-  font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family:
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -182,7 +193,11 @@
   color: #fff;
   background-color: #488dc5;
   border-radius: 8px;
-  font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family:
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
   font-size: 12px;
   cursor: grab;
 }
@@ -345,6 +360,6 @@
   flex: 1 1 0;
   min-height: 0;
 }
-.dispatch {
+.demo-truck-transport-planning-and-dispatch {
   height: 100%;
 }

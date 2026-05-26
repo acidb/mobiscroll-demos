@@ -63,7 +63,7 @@ export default {
         to: '100 S Tryon St, Charlotte, NC',
         size: 7,
         pickup: [dyndatetime('y,m,d,5'), dyndatetime('y,m,d,7')],
-        drop: [dyndatetime('y,m,d,10'), dyndatetime('y,m,d,12')],
+        drop: [dyndatetime('y,m,d,8,32'), dyndatetime('y,m,d,10,32')],
         status: 'completed',
       },
       {
@@ -952,31 +952,42 @@ export default {
           } else if (event.actualRef) {
             event.actualRef.end = now;
           }
-        } else if (event.end <= now && !event.actual) {
-          var completedActualDates = getActualDates(event.start, new Date(event.drop[0]));
-          var completedActualStart =
-            completedActualDates[0] >= event.start && completedActualDates[0] < event.end ? completedActualDates[0] : event.start;
-          var completedActualEnd = completedActualDates[1];
-          var minEnd = new Date(completedActualStart.getTime() + 30 * 60000);
-          if (completedActualEnd < minEnd) completedActualEnd = minEnd;
-          var completedNewEvent = {
-            resource: event.resource + '-actual',
-            from: event.from,
-            to: event.to,
-            pickup: event.pickup,
-            drop: event.drop,
-            size: event.size,
-            start: completedActualStart,
-            end: completedActualEnd,
-            title: 'Completed',
-            status: 'actual',
-            color: event.color,
-            cssClass: 'mds-dispatch-actual-event',
-            editable: false,
-          };
-          event.actual = true;
-          event.actualRef = completedNewEvent;
-          events.push(completedNewEvent);
+        } else if (event.end <= now) {
+          if (!event.actual) {
+            var completedActualDates = getActualDates(event.start, new Date(event.drop[0]));
+            var completedActualStart =
+              completedActualDates[0] >= event.start && completedActualDates[0] < event.end ? completedActualDates[0] : event.start;
+            var completedActualEnd = completedActualDates[1];
+            var minEnd = new Date(completedActualStart.getTime() + 30 * 60000);
+            if (completedActualEnd < minEnd) completedActualEnd = minEnd;
+            var completedNewEvent = {
+              resource: event.resource + '-actual',
+              from: event.from,
+              to: event.to,
+              pickup: event.pickup,
+              drop: event.drop,
+              size: event.size,
+              start: completedActualStart,
+              end: completedActualEnd,
+              title: 'Completed',
+              status: 'actual',
+              color: event.color,
+              cssClass: 'mds-dispatch-actual-event',
+              editable: false,
+            };
+            event.actual = true;
+            event.actualRef = completedNewEvent;
+            events.push(completedNewEvent);
+          } else if (event.actualRef && event.actualRef.title !== 'Completed') {
+            var transitionDates = getActualDates(event.actualRef.start, new Date(event.drop[0]));
+            var transitionEnd = transitionDates[1];
+            var transitionMinEnd = new Date(event.actualRef.start.getTime() + 30 * 60000);
+            if (transitionEnd < transitionMinEnd) transitionEnd = transitionMinEnd;
+            event.actualRef.end = transitionEnd;
+            event.actualRef.color = event.color;
+            event.actualRef.cssClass = 'mds-dispatch-actual-event';
+            event.actualRef.title = 'Completed';
+          }
         }
       }
     }
@@ -1583,8 +1594,7 @@ export default {
           var departureDelay = Math.round((actualStart - scheduledDeparture) / 60000);
           var msg;
           if (ev.title === 'In progress') {
-            msg =
-              'Actual transport: departed ' + formatDelay(departureDelay) + ' · running ' + formatDuration(new Date() - actualStart);
+            msg = 'Actual transport: departed ' + formatDelay(departureDelay) + ' · running ' + formatDuration(new Date() - actualStart);
           } else {
             var actualEnd = new Date(ev.end);
             var scheduledArrival = new Date(ev.drop[0]);
@@ -1778,13 +1788,15 @@ export default {
       },
       onChange: function (event, inst) {
         var dates = inst.getVal();
-        if (dates && dates[0] && dates[1]) {
-          var start = new Date(dates[0]);
-          var end = new Date(dates[1]);
-          pendingRangeStart = start;
-          pendingRangeDays = Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+        if (dates && dates[0]) {
           disableRangeInputs(false);
           rangeSelectInst.setVal('custom', true);
+          if (dates[1]) {
+            var start = new Date(dates[0]);
+            var end = new Date(dates[1]);
+            pendingRangeStart = start;
+            pendingRangeDays = Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+          }
         }
       },
     });
@@ -1931,7 +1943,6 @@ export default {
 `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-/* --- Mobiscroll overrides --- */
 .mds-dispatch-calendar .mbsc-calendar-header {
   display: none;
 }
@@ -2026,9 +2037,7 @@ export default {
   padding-top: 0;
   padding-bottom: 0;
 }
-.mds-dispatch-seg-scheduled .mbsc-segmented-button::before,
-.mds-dispatch-seg-inprogress .mbsc-segmented-button::before,
-.mds-dispatch-seg-completed .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot {
   content: '';
   display: inline-block;
   width: 8px;
@@ -2037,13 +2046,13 @@ export default {
   margin-right: 5px;
   vertical-align: middle;
 }
-.mds-dispatch-seg-scheduled .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot-scheduled {
   background: #2196f3;
 }
-.mds-dispatch-seg-inprogress .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot-inprogress {
   background: #f97316;
 }
-.mds-dispatch-seg-completed .mbsc-segmented-button::before {
+.mds-dispatch-seg-dot-completed {
   background: #78909c;
 }
 .mbsc-ios-dark .mds-dispatch-custom-header,
@@ -2278,8 +2287,7 @@ export default {
   flex: 1 1 0;
   min-height: 0;
 }
-/* move this to website css with updated unique name */
-.dispatch {
+.demo-truck-transport-planning-and-dispatch {
   height: 100%;
 }
 `,

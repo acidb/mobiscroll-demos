@@ -1011,7 +1011,7 @@ export const demos = [
               { name: 'Group events by client and apply custom actions', unique: 'event-grouping-bulk-action', component: Demo785 },
               { name: '36 hour rolling view', unique: '36-hour-rolling-window-aircraft-view', component: Demo787 },
               { name: 'Event drop assignment', unique: 'drop-assignee-on-event-from-list', component: Demo790 },
-              { name: 'Dispatch management', unique: 'truck-transport-planning-and-dispatch', component: Demo792 },
+              { name: 'Transport Management', unique: 'truck-transport-planning-and-dispatch', component: Demo792 },
             ],
           },
           {
