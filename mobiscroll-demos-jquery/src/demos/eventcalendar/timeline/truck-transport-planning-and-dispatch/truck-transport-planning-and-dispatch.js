@@ -1547,7 +1547,7 @@ export default {
               '</div>'
             );
           },
-          renderScheduleEventContent: function (data) {
+          renderTimelineEventContent: function (data) {
             var job = data.original;
             if (job.status === 'actual') {
               return job.title === 'In progress' ? '<span class="mds-dispatch-actual-label">In progress</span>' : '';

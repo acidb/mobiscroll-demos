@@ -1582,7 +1582,7 @@ function App() {
     [handleSearch, handleFilterOpen, resetKey],
   );
 
-  const renderScheduleEventContent = useCallback((data: MbscCalendarEventData) => {
+  const renderTimelineEventContent = useCallback((data: MbscCalendarEventData) => {
     const job = data.original as DispatchEvent;
     if (job.status === 'actual') {
       return job.title === 'In progress' ? <span className="mds-dispatch-actual-label">In progress</span> : null;
@@ -1766,7 +1766,7 @@ function App() {
                 renderResource={renderResource}
                 renderResourceEmpty={renderResourceEmpty}
                 renderResourceHeader={renderResourceHeader}
-                renderScheduleEventContent={renderScheduleEventContent}
+                renderTimelineEventContent={renderTimelineEventContent}
                 onEventCreated={onEventCreated}
                 onEventCreateFailed={onEventCreateFailed}
                 onEventUpdateFailed={onEventUpdateFailed}
