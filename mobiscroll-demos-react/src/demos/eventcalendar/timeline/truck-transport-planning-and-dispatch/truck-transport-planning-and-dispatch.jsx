@@ -721,7 +721,7 @@ function App() {
     </div>
   ), [searchQuery, filters, computeFilteredResources]);
 
-  const renderScheduleEventContent = useCallback((data) => {
+  const renderTimelineEventContent = useCallback((data) => {
     const job = data.original;
     if (job.status === 'actual') {
       return job.title === 'In progress' ? <span className="mds-dispatch-actual-label">In progress</span> : null;
@@ -836,7 +836,7 @@ function App() {
               renderResource={renderResource}
               renderResourceEmpty={renderResourceEmpty}
               renderResourceHeader={renderResourceHeader}
-              renderScheduleEventContent={renderScheduleEventContent}
+              renderTimelineEventContent={renderTimelineEventContent}
               onEventCreated={onEventCreated}
               onEventCreateFailed={onEventCreateFailed}
               onEventUpdateFailed={onEventUpdateFailed}

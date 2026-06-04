@@ -2480,7 +2480,7 @@ export default {
       calendar.setOptions({
         data: currentEvents,
         resources: currentResources,
-        renderScheduleEvent: groupByClient ? renderGroupedEvent : renderSimpleEvent,
+        renderTimelineEvent: groupByClient ? renderGroupedEvent : renderSimpleEvent,
         view: { timeline: timelineConfig },
         dragBetweenResources: !groupByClient,
       });
@@ -2697,7 +2697,7 @@ export default {
       },
       data: defaultEvents,
       resources: assigneeResources,
-      renderScheduleEvent: renderSimpleEvent,
+      renderTimelineEvent: renderSimpleEvent,
       renderResource: function (resource) {
         if (groupBy === 'assignee') {
           // Employee resource

@@ -41,7 +41,7 @@ export class AppComponent {
       resolutionHorizontal: 'day',
       startDay: 1,
       endDay: 5,
-      eventList: true,
+      eventDisplay: 'fill',
     },
   };
 
