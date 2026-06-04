@@ -16,19 +16,19 @@ The `order` property of the event data can be used to override the default order
 ## Implementation instructions
 
 - Use the event `order` property to override the default event ordering in the calendar.
-- The `order` value takes precedence over the built-in sorting rules.
-- If two events have the same `order` value, the default ordering rules still apply between them.
 - For more advanced custom sorting logic, use the `eventOrder` option with a compare function that returns `-1` or `1`.
 
 ## What this demo shows
 
 - A weekly event calendar view where events are rendered as labels inside the day cells.
-- **Event labels** Labels use different visual styles to distinguish event states such as `PROPOSED` and `APPROVED`.
-- **Event selection** Clicking an event label highlights it to show the selected event.
+- **Event label ordering** Event labels are normally ordered with all-day events first, followed by non-all-day events sorted by start time, then alphabetically by title when start times match.
+- **Custom event order** This demo reorganizes the labels with custom event ordering.
+- **Event states** Labels use different visual styles to distinguish states such as `PROPOSED` and `APPROVED`.
+- **Event selection** Clicking or hovering over an event label highlights it as the selected event.
 - **Day hover state** Hovering over a day cell highlights the day number in the top-right corner with a gray background.
 - **Day selection** Clicking the empty area of a day cell selects that day and highlights the day number with a blue background.
-- **Calendar navigation** The calendar can be dragged horizontally to move through the visible dates.
-- **Header controls** The header shows the currently visible month and year on the left, with previous and next navigation arrows plus a `Today` button on the right.
+- **Calendar navigation** The visible week can be changed by clicking and dragging the calendar left or right.
+- **Header controls** The header shows the current month and year on the left, with previous and next navigation arrows and a `Today` button on the right.
 
 ## Best for
 

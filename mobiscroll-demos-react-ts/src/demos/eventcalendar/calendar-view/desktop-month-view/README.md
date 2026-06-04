@@ -27,9 +27,10 @@ The number of visible labels are determined by the available space and the ones 
 - **Overflow handling** The number of visible event labels depends on the available vertical space in the day cell. Additional events are moved into a popover and indicated by an `X more` label.
 - **Popover events** Clicking the `X more` label opens a popover that shows the events that do not fit in the cell.
 - **Event selection** Clicking an event label highlights it and shows a toast at the bottom center of the calendar with the event title.
-- **Day hover and selection** Hovering over a day highlights the day number in the top-right corner with a gray background. Clicking an empty area in the cell selects the day and changes that highlight to blue.
-- **Month navigation** The month can be changed by dragging the calendar left or right.
-- **Header navigation** The header shows the current month and year on the left, with previous and next navigation arrows plus a `Today` button on the right.
+- **Day hover and selection** Hovering over a day highlights the day number in the top-right corner with a gray background. Clicking an empty area in the cell (or an event) selects the day and changes that highlight to blue.
+- **Month navigation** The month can be changed by clicking and dragging the calendar left or right.
+- **Header controls** The header shows the current month and year on the left, with blue previous and next arrows plus a `Today` button on the right.
+- **Header navigation** Clicking the current month and year opens a popover with month selection and year selection views. The arrow buttons move the calendar backward or forward by month, and the `Today` button returns to the month that contains today's date.
 
 ## Best for
 

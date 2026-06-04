@@ -18,3 +18,10 @@ and the daily timeline is laid out horizontally.
 ## Related demos
 
 - [Play around with this example &#8594;](https://demo.mobiscroll.com/angular/timeline/multiple-days-weeks-months-quarters-years-variable-resolution#)
+
+## Implementation instructions
+
+- Set `type: 'month'` to show a full calendar month in a single view.
+- Set `resolutionVertical: 'day'` so each row on the vertical axis represents one day of the month.
+- Set `resolutionHorizontal: 'hour'` so the horizontal axis shows hourly time columns across the full day.
+- No resources are needed — the single vertical day axis is sufficient for a personal or single-room timetable.

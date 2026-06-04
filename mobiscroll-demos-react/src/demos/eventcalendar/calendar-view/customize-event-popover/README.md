@@ -23,25 +23,21 @@ If you add custom markup you will want to add styling too. Use the `popoverClass
 
 ## What this demo shows
 
-- A mobile-style month event calendar where days with events are marked with a small indicator in the day cell.
-- **Event labels** Days with scheduled events show one or more event labels directly in the cell.
-- **Event styling** Event labels use different visual styles to distinguish between event types.
-- **Event selection** Clicking an event label highlights the selected event.
-- **Day hover state** Hovering over a day cell highlights the day number in the top-right corner with a gray background.
-- **Day selection** Clicking an empty area of a day cell selects that day and highlights the day number with a blue background.
-- **Tooltip trigger** Hovering an event opens a custom tooltip positioned below the hovered event.
-- **Tooltip header** The tooltip header uses the event color and shows the patient's name, age, and the event start and end time.
-- **Tooltip details** The tooltip body includes `Status`, `Reason for visiting`, and `Location` rows.
-- **Status action** The status row shows whether the appointment is confirmed and includes either a `Confirm appointment` or `Cancel appointment` action. Triggering the action closes the tooltip and shows a toast message with the updated status.
-- **Patient action** The tooltip footer includes a gray `View patient` button that shows a toast message when clicked.
-- **Delete action** The tooltip footer includes a red `Delete appointment` button that removes the event.
-- **Calendar navigation** The calendar supports left and right drag navigation to move between months.
-- **Header controls** The header shows the current month and year, previous and next navigation arrows, and a `Today` button for returning to the current date.
+- A mobile-style month event calendar with fully customized events shown in the popover.
+- **Month grid** Days with scheduled events show a small marker below the day number.
+- **Day hover state** Hovering over a day cell highlights the day number with a gray background.
+- **Day selection** Clicking a day selects it and highlights the day number with a blue background.
+- **Popover trigger** Clicking a day with an event marker opens a popover below the day cell.
+- **Popover content** The popover lists the events scheduled for the selected day.
+- **Custom event layout** Each customized event includes a colored leading line, event title, assignee image, assignee name, and time information.
+- **All-day events** All-day events display an `All-day` label instead of a time range.
+- **Timed events** Time-specific events display the start and end time.
+- **Event action** Each event includes a blue `Add participant` button that highlights on hover and can be wired to a custom action.
+- **Calendar navigation** The calendar supports horizontal drag navigation for moving between months.
+- **Header controls** The header shows the current month and year on the left side, while the right side includes blue previous and next navigation arrows, and a `Today` button for returning to the current date.
 
 ## Best for
 
-- **Custom day popovers** Showing more than the default event label when users open a day from a month view.
 - **Assigned work and people-based scheduling** Displaying assignees, avatars, and event ownership directly in the popover list.
 - **Actionable event lists** Adding buttons or other controls to day-level event previews so users can trigger follow-up actions from the popover.
 - **Compact month browsing** Letting users scan a month quickly, spot days with events, and open a lightweight detail view only when needed.
-- **Mobile-first calendar experiences** Supporting touch-friendly month navigation and day-based drill-down on smaller screens.

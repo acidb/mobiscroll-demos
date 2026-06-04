@@ -14,19 +14,6 @@ If there are more events than the number of labels for a particular day, an "x m
 
 By default the width of the labels fill the day cells (`eventDisplay: 'fill'`) but alternatively `eventDisplay: 'exact'` can be used to display the labels with exact times.
 
-# What this demo shows
-
-- A desktop month view event calendar that displays event labels directly inside the day cells.
-- **Event labels** Day cells with events show one or more labels, with different colors and styles used to distinguish all-day, multi-day, and timed events.
-- **Label interaction** Clicking an event label selects it and highlights the selected label.
-- **Row height behavior** In the default setup, the month view uses dynamic row heights so all labels remain visible within each week row.
-- **Label rendering controls** A separate configuration panel next to the calendar lets users switch between `Fill` and `Exact` label rendering. `Fill` is selected by default and stretches labels across the available width, while `Exact` displays labels with exact times.
-- **View switching** A second segmented control lets users switch between month view and week view, with month view selected by default.
-- **Label count options** Users can choose between showing all labels, showing up to a specified maximum number of labels, or showing as many labels as fit based on the calendar height with equal row heights.
-- **More events popover** When the visible label count is limited, extra events are hidden behind an `x more` label on the day cell. Clicking it opens a popover that lists the remaining events for that day.
-- **Day cell states** Hovering a day cell highlights the day number with a gray background, while clicking the empty part of the cell selects the day and highlights the day number with a blue background.
-- **Calendar header** The header shows the current month and year on the left, and month navigation arrows with a `Today` button between them on the right.
-
 ## Implementation instructions
 
 - Use the `labels` option on `view.calendar` to control how many event labels appear in each day cell.
@@ -34,10 +21,22 @@ By default the width of the labels fill the day cells (`eventDisplay: 'fill'`) b
 - Use `eventDisplay: 'fill'` to make event labels fill the available width of the day cell.
 - Use `eventDisplay: 'exact'` to render labels with exact times instead of full-width labels.
 
+## What this demo shows
+
+- A desktop month-view event calendar that shows event labels inside day cells and demonstrates how label count and row height settings affect event visibility.
+- **Event labels** Day cells with events show one or more labels, with different colors and styles used to distinguish all-day, multi-day, and timed events.
+- **Label interaction** Hovering over or clicking an event label selects it and highlights the selected label.
+- **Row height behavior** In the default setup, the month view uses dynamic row heights so all labels remain visible within each week row.
+- **Label rendering controls** A configuration panel next to the calendar lets users switch between `Fill` and `Exact` label rendering. `Fill` is selected by default and stretches labels across the available width.
+- **Exact label rendering** Selecting `Exact` displays labels with exact times. In this mode, the label count display mode is not configurable, and the calendar shows as many labels as fit in each day cell with equal week row heights.
+- **View switching** A second segmented control lets users switch between `Month view` and `Week view`, with month view selected by default.
+- **Label count options** Below the segmented controls, an option list is shown from which users can choose between: `Show all labels` (the row height will be dynamic so every label can remain visible), `Show up to (a specified maximum number of) labels`, or `Labels depending on calendar height` (showing as many labels as fit based on the calendar height with equal row heights).
+- **More events popover** When the visible label count is limited, extra events are hidden behind an `X more` label on the day cell, where `X` represents the number of hidden events. Clicking it opens a popover that lists the remaining events for that day.
+- **Day cell states** Hovering a day cell highlights the day number with a gray background, while clicking the empty part of the cell selects the day and highlights the day number with a blue background.
+- **Calendar header** The header shows the current month and year on the left, and blue month navigation arrows with a `Today` button between them on the right.
+
 ## Best for
 
 - **Monthly planning views** Showing multiple events directly in month cells when users need a compact overview of busy days.
 - **Dense event calendars** Comparing how different label display strategies work when days can contain many all-day or timed events.
-- **Responsive event visibility** Testing whether all labels, a fixed number of labels, or height-based label rendering works best for a given layout.
-- **Interactive scheduling UIs** Supporting quick event inspection through selectable labels, `x more` indicators, and popovers.
 - **Configurable calendar experiences** Giving users or teams control over month and week views and how event labels are rendered.

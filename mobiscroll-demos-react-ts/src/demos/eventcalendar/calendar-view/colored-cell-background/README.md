@@ -22,20 +22,16 @@ Use the
 ## Implementation instructions
 
 - Use the `colors` option to apply colored backgrounds to day cells in the month view.
-- Configure backgrounds with exact dates, date ranges, or recurring rules depending on how the marked days are defined.
 
 ## What this demo shows
 
 - A desktop month-view event calendar where predefined day cells have pale colored backgrounds behind the events.
 - **Colored day cells** Day backgrounds are used as visual markers while keeping event labels readable on top.
-- **Event labels** Days with events display labels directly inside the month cells.
-- **Event styling** Labels use different styles and colors to distinguish all-day events, multi-day all-day events, and events with specific start and end times.
-- **Overflow handling** The number of visible event labels depends on the available cell height.
-- **More events popover** When a day has more events than can be shown in the cell, an `x more` indicator appears and opens a popover with the hidden events on click.
-- **Event selection** Clicking an event label highlights the selected event.
-- **Hover state** Hovering over a day cell highlights the day number in the top-right corner with a gray background.
-- **Day selection** Clicking the empty area of a day cell selects that date and highlights the day number with a blue background.
-- **Month navigation** The calendar supports changing months by dragging left or right.
+- **Event labels** Days with events display labels directly inside the month cells. Labels use different styles and colors to distinguish all-day events, multi-day, and timed events.
+- **Overflow handling** The number of visible event labels depends on the available vertical space in the day cell. Additional events are moved into a popover and indicated by an `X more` label, where `X` represents the number of hidden events. Clicking it opens a popover that lists the remaining events for that day.
+- **Label interaction** Hovering over or clicking an event label selects it and highlights the selected label.
+- **Day cell states** Hovering a day cell highlights the day number with a gray background, while clicking the empty part of the cell selects the day and highlights the day number with a blue background.
+- **Month navigation** The month can be changed by clicking and dragging the calendar left or right.
 - **Header** The top-left side shows the current month and year, while the top-right side includes previous and next navigation arrows with a `Today` button between them.
 
 ## Best for

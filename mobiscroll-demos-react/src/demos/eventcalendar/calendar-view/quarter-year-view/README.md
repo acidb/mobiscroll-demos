@@ -15,19 +15,18 @@ Depending on the height of the parent container the calendar is rendered in, the
 ## What this demo shows
 
 - An event calendar with a segmented control in the header that lets the user switch between quarter view and year view.
-- **Segmented control placement** — positioned in the center of the header, between the month/year navigation label (quick navigation picker) on the left and the prev/next arrows with a Today button on the right.
-- **Quarter view** — renders the three months of the current quarter as a compact multi-month grid.
-- **Year view** — renders all twelve months of the current year in a single scrollable layout.
-- **Sticky header** — the navigation bar and segmented control stay fixed at the top while the calendar months scroll vertically beneath it.
-- **Event dots** — days that have at least one event show a small dot below the day number, giving a quick visual signal of activity.
-- **Day popover** - clicking a day with events opens a popover above the day cell that lists the events for that date.
-- **Popover event styling** - each listed event has a colored vertical marker on the left to help distinguish event categories.
-- **Hover state** - hovering a date highlights the day number with a gray background.
-- **Selection state** - clicking a date selects it and highlights the day number with a blue background.
-- **Header** - shows the current year on the left, a `Quarter` / `Year` view switcher in the center, and previous, Today, and next navigation controls on the right.
+- **Header and segmented control** A segemnted control with `Quarter` and `Year` options is positioned in the center of the header, between the year navigation label (quick navigation picker) on the left and the prev/next arrows with a `Today` button on the right.
+- **Quarter view** When the `Quarter` option is selected from the segmented control, that renders the three months of the current quarter as a compact multi-month grid.
+- **Year view** When the `Year` option is selected from the segmented control, that renders all twelve months of the current year in a single scrollable layout.
+- **Sticky header** The navigation bar and segmented control stay fixed at the top while the calendar months scroll vertically beneath it.
+- **Event dots** Days that have at least one event show a small dot below the day number, giving a quick visual signal of activity.
+- **Day popover** Clicking a day with events opens a popover above the day cell that lists the events for that date.
+- **Popover event styling** Each listed event has a colored vertical marker on the left to help distinguish event categories.
+- **Hover state** Hovering a date highlights the day number with a gray background.
+- **Selection state** Clicking a date selects it and highlights the day number with a blue background.
 
 ## Best for
 
-- **High-level event overviews** — giving users a bird's-eye view of activity across a quarter or full year, where the exact time of each event matters less than seeing which days are busy.
-- **Aggregate and summary views** — dashboards or reports where totals, counts, or status indicators are shown per day, and users need to scan a large date range at once.
-- **Planning and scheduling workflows** — letting users spot free stretches or busy periods across a quarter or year before drilling into a specific day or week.
+- **High-level event overviews** Giving users a bird's-eye view of activity across a quarter or full year, where the exact time of each event matters less than seeing which days are busy.
+- **Aggregate and summary views** Dashboards or reports where totals, counts, or status indicators are shown per day, and users need to scan a large date range at once.
+- **Planning and scheduling workflows** Letting users spot free stretches or busy periods across a quarter or year before drilling into a specific day or week.
