@@ -91,4 +91,3 @@ export class AppComponent {
     timeline: { type: 'week' },
   };
 }
-

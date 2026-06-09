@@ -96,9 +96,7 @@ function App() {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
       calendarData[calendarId].checked = checked;
-      const newCalendarIds = checked
-        ? [...calendarIds, calendarId]
-        : calendarIds.filter((id) => id !== calendarId);
+      const newCalendarIds = checked ? [...calendarIds, calendarId] : calendarIds.filter((id) => id !== calendarId);
       if (checked) {
         const newResource = calendarData[calendarId];
         setResources((resources) => [...resources, { id: calendarId, name: newResource.name, color: newResource.color }]);

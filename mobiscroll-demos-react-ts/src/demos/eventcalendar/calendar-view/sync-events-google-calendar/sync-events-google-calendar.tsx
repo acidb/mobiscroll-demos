@@ -82,9 +82,7 @@ const App: FC = () => {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
       calendarData[calendarId].checked = checked;
-      const newCalendarIds = checked
-        ? [...calendarIds, calendarId]
-        : calendarIds.filter((id) => id !== calendarId);
+      const newCalendarIds = checked ? [...calendarIds, calendarId] : calendarIds.filter((id) => id !== calendarId);
       setCalendarIds(newCalendarIds);
       if (newCalendarIds.length === 0) {
         setEvents([]);

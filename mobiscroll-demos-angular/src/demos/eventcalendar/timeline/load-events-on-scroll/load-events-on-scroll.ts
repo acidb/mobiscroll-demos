@@ -28,7 +28,7 @@ export class AppComponent {
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
     public notify: Notifications,
-  ) { }
+  ) {}
 
   myEvents: MbscCalendarEvent[] = [];
   myResources = [

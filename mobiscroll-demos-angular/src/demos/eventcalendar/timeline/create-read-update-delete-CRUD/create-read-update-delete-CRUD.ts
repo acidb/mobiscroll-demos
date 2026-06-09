@@ -34,7 +34,7 @@ setOptions({
   imports: [CommonModule, FormsModule, MbscModule],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) { }
+  constructor(private notify: Notifications) {}
 
   @ViewChild('calendar', { static: false })
   calendar!: MbscEventcalendar;
@@ -139,9 +139,9 @@ export class AppComponent {
       name: 'Resource E',
       color: '#ff9900',
     },
-  ]
+  ];
 
-  editButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
+  editButtons: (MbscPopupButton | 'ok' | 'close' | 'set' | 'cancel')[] = [
     'cancel',
     {
       text: 'Save',
@@ -162,7 +162,7 @@ export class AppComponent {
     },
   ];
 
-  addButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
+  addButtons: (MbscPopupButton | 'ok' | 'close' | 'set' | 'cancel')[] = [
     'cancel',
     {
       text: 'Add',
@@ -179,7 +179,7 @@ export class AppComponent {
         this.addEditPopup.close();
       },
     },
-  ]
+  ];
 
   addEditPopupResponsive: MbscResponsiveOptions<MbscPopupOptions> = {
     medium: {
@@ -187,10 +187,10 @@ export class AppComponent {
       width: 400,
       fullScreen: false,
       touchUi: false,
-    }
-  }
+    },
+  };
 
-  colorPickerButtons: (MbscPopupButton | "ok" | "close" | "set" | "cancel")[] = [
+  colorPickerButtons: (MbscPopupButton | 'ok' | 'close' | 'set' | 'cancel')[] = [
     'cancel',
     {
       text: 'Set',
@@ -238,7 +238,7 @@ export class AppComponent {
     this.addEditPopup.open();
   }
 
-  getEventData(): (MbscCalendarEvent) {
+  getEventData(): MbscCalendarEvent {
     return {
       id: this.eventId,
       title: this.eventTitle,
@@ -250,7 +250,7 @@ export class AppComponent {
       color: this.eventColor,
       free: this.statusValue === 'free',
       resource: this.eventResource,
-    }
+    };
   }
 
   handleAddEditPopupClose(): void {
@@ -315,5 +315,4 @@ export class AppComponent {
     this.eventColor = color;
     this.colorPicker.close();
   }
-
 }
