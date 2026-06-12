@@ -14,15 +14,21 @@ By default the second dimension of the timeline (vertical axis) is reserved for 
 
 ## Implementation instructions
 
-- Use the timeline view with `type: 'week'` to display a weekly planning grid with resources as rows.
-- Set `eventDisplay: 'fill'` so meal events fill the full timeline cell instead of rendering as timed blocks.
-- Configure resources for the meal types and assign resource colors so events inherit the visual distinction for each row.
-- Use `onEventClick` to open the edit popup for existing meals, and use `onEventCreate` to open the add flow when a new meal is created from the timeline.
-- Open meal creation from a double click on an empty timeline cell so the new event is tied to the selected day and meal resource.
-- Use the `responsive` option to adapt popup behavior and layout between desktop and smaller screens.
-- Customize the popup header based on whether the user is adding or editing a meal.
-- Build the popup form with Mobiscroll input components such as Segmented, Input, Textarea, and Button, and bind them to meal fields like name, calories, and notes.
-- Implement deletion with an undoable flow by removing the event, showing a toast or snackbar message, and restoring the meal if the user chooses Undo.
+- Use the timeline view with `type: 'week'` and `eventDisplay: 'fill'` so each meal event fills the full timeline cell for its day.
+- Define resources for each meal type (Breakfast, Elevenses, Lunch, Dinner, Snack) with a `color`, a recommended `kcal` range, and an emoji `icon`. Resources serve as the vertical axis; no time grid is shown.
+- Use `renderResource` (Angular: `resourceTemplate`, Vue: `resource`) to display the meal type icon, name (in the resource color), and recommended calorie range in each resource row header.
+- Use `renderTimelineEventContent` (Angular: `timelineEventContentTemplate`, Vue: `timelineEventContent`) to render a custom event body showing the meal title and calorie count inside the timeline cell.
+- Enable `clickToCreate` so a single click on an empty cell creates a new meal. Set `dragToMove: true` to allow moving meals to different days or resource rows. Set `dragToCreate: false` and `dragToResize: false`.
+- Use `extendDefaultEvent` to pre-populate newly created events with a default title and `allDay: true`.
+- Use `onEventCreated` to open the add popup. Read `args.event` to set the popup header date and derive the meal type from the event's `resource`.
+- Use `onEventClick` to open the edit popup. Read `args.resourceObj.name` and format `args.event.start` with `formatDate` to populate the popup header.
+- Use `onEventDeleted` to handle keyboard-triggered deletions by calling the same delete helper as the Delete button in the popup.
+- Build the popup with the `Popup` component; default to `display="bottom"` with `fullScreen: true` on mobile, and use the `responsive` option to switch to `display: 'center'` at the medium breakpoint.
+- Render a custom two-line popup header via the popup's `renderHeader` prop: a primary line showing the meal type name or "New meal", and a secondary line with the formatted date.
+- Include a `SegmentedGroup` with one `Segmented` per meal type so users can change the category from within the popup. On change, update the in-progress event's `resource` to the selected ID.
+- Add `Input` fields for name and calories and a `Textarea` for notes. Show a "Save" button in edit mode and an "Add" button in create mode, both alongside a Cancel action.
+- For deletion, clicking the Delete button in the edit popup removes the event from state and shows a `Snackbar` with an Undo action that restores the meal.
+- On popup close when the add form was canceled, refresh the events list to remove the temporary placeholder event that was added to the timeline.
 
 ## What this demo shows
 

@@ -26,7 +26,7 @@ to customize the day cell structure, including the day number, event labels, and
 - **Add event action** When a day cell is hovered, an `Add event` button appears inside the cell so event creation is available only where the user is interacting.
 - **Add event button state** Hovering the `Add event` button highlights the button before creation.
 - **Event creation** Clicking the `Add event` button creates a new event in that day cell with the title `New event`.
-- **Creation feedback** After a new event is created, a toast appears at the bottom of the calendar showing the title of the new event.
+- **Creation feedback** After a new event is created, a toast appears at the bottom of the calendar showing the exact date of the new event.
 - **Day selection** Clicking a day cell selects that date and highlights the day number with a blue background.
 - **Header** The top-left side of the header shows the currently displayed month and year.
 - **Navigation** The top-right side of the header includes previous and next month arrows with a `Today` button between them for returning to the current date.

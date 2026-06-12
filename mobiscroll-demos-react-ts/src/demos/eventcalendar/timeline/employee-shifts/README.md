@@ -14,15 +14,22 @@ Customize the dialog header with a custom header renderer function using the `re
 
 ## Implementation instructions
 
-- Use the timeline view in summary mode with `eventDisplay: 'fill'` to render shift events within resource rows and named slots.
-- Configure the timeline to show work days only by limiting the visible day range with the appropriate `startDay` and `endDay` settings.
-- Define the Morning and Afternoon shift buckets with the `slots` option.
-- Use `onEventClick` for opening the edit flow, and use the event creation flow for opening the add dialog when users create a shift from an empty slot.
-- Build a custom add/edit popup with fields for start time, end time, and notes.
-- Use the `responsive` option to adapt the dialog layout and behavior between desktop and smaller screens.
-- Customize the dialog header so it reflects whether the user is adding a new shift or editing an existing one.
-- Open a time picker from the start and end fields, configured for selecting the shift time range.
-- For deletion, implement either a confirmation step or an undo-based flow that removes the shift immediately, shows a toast or snackbar message, and allows restoration.
+- Use the timeline view in summary mode with `eventDisplay: 'fill'` to render shift events within resource rows and named slot buckets. Set `startDay: 1` and `endDay: 5` to show only work days.
+- Define the Morning and Afternoon shift buckets with the `slots` option. Each slot object needs an `id` and a `name`, and each event references its slot via the `slot` field.
+- Give each employee a `color` property on the resource object. Mobiscroll automatically applies the resource color to its events, so no extra event-level styling is needed.
+- Use `renderResource` (Angular: `resourceTemplate`, Vue: `resource`) to display a custom resource row with the employee's avatar image, name, and job title.
+- Enable `clickToCreate` so users can create a new shift by clicking an empty cell. Set `dragToMove: true` so existing shifts can be repositioned by dragging, and set `dragToCreate: false` and `dragToResize: false` to prevent accidental event creation by drag and to keep shift boundaries tied to the slot definition.
+- Use `extendDefaultEvent` to set the correct start and end times on every newly created event based on which slot it lands in — for example, Morning maps to 07:00–13:00 and Afternoon to 12:00–18:00.
+- Set `eventOverlap: false` to block placing a second shift for the same employee in the same slot on the same day.
+- Use the `invalid` option to mark specific resource-slot-day combinations where shifts cannot be created or moved, such as an employee's day off or a slot they are not eligible for.
+- Use `onEventCreated` to intercept the newly created event, populate the popup with the slot-derived time range, and open the add form. The `slotObj` in the event args provides the slot name for the popup header.
+- Use `onEventClick` to open the edit form for an existing shift. Read `resourceObj` and `slotObj` from the event args to build a descriptive popup header showing the employee name, day, and slot.
+- Use `onEventUpdated` to detect when a shift has been dragged from one slot to another. When the slot changes, recalculate and overwrite the event's start, end, and title to match the new slot's fixed time range.
+- Use `onEventCreateFailed` and `onEventUpdateFailed` to show a toast message when a shift cannot be placed or moved, for example because the target cell is marked invalid or blocked by `eventOverlap`.
+- Build the add/edit popup with the `Popup` component. Use the `responsive` option to switch from a full-screen bottom sheet on mobile to a centered fixed-width dialog on larger screens.
+- Render a custom popup header with a primary line — such as "Edit Ryan's hours" or "New shift" — and a secondary line with the day name, slot name, and date.
+- Inside the popup, use a `Datepicker` in range mode with `controls={['time']}`. Connect it to two `Input` fields via `startInput` and `endInput` refs so the start and end times appear as separate labelled inputs that open the shared range picker. Constrain the allowed range with `minTime` and `maxTime` derived from the current slot.
+- For deletion, add a Delete button to the edit popup that removes the shift immediately and closes the popup, then shows a `Snackbar` with an Undo action that restores the deleted shift if the user reverses the action.
 
 ## What this demo shows
 

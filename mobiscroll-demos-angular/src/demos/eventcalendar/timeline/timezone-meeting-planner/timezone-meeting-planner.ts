@@ -37,7 +37,7 @@ setOptions({
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent {
-  constructor(private notify: Notifications) { }
+  constructor(private notify: Notifications) {}
   myEvents: MbscCalendarEvent[] = [
     {
       start: dyndatetime('y,m,d,13'),
@@ -101,7 +101,9 @@ export class AppComponent {
   };
 
   myTimezonePlugin: MbscTimezonePlugin = dayjsTimezone;
-  myDefaultEvent(): MbscCalendarEvent { return { resource: [1, 2, 3, 4, 5, 6] }; }
+  myDefaultEvent(): MbscCalendarEvent {
+    return { resource: [1, 2, 3, 4, 5, 6] };
+  }
   myInvalid: MbscCalendarEvent[] = this.getInvalids();
 
   getHourProps(h: number, timezone: string) {

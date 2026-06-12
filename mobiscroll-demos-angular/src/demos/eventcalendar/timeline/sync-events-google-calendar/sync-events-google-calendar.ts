@@ -272,29 +272,34 @@ export class AppComponent implements OnInit {
     this.calendarData[calendarId].checked = checked;
 
     if (checked) {
+      const newResource = this.calendarData[calendarId];
+      this.myResources = [...this.myResources, { id: calendarId, name: newResource.name, color: newResource.color }];
       this.calendarIds = [...this.calendarIds, calendarId];
-      this.isLoading = true;
-      googleCalendarSync
-        .getEvents([calendarId], this.startDate, this.endDate)
-        .then((resp: any) => {
-          this.zone.run(() => {
-            const newResource = this.calendarData[calendarId];
-            this.myResources = [...this.myResources, { id: calendarId, name: newResource.name, color: newResource.color }];
-            resp.forEach((event: any) => {
-              event.resource = event.googleCalendarId;
-            });
-            this.myEvents = [...this.myEvents, ...resp];
-            this.isLoading = false;
-          });
-        })
-        .catch((error: any) => {
-          this.onError(error);
-        });
     } else {
       this.myResources = this.myResources.filter((r) => r.id !== calendarId);
       this.calendarIds = this.calendarIds.filter((id) => id !== calendarId);
-      this.myEvents = this.myEvents.filter((event) => event['googleCalendarId'] !== calendarId);
     }
+
+    if (this.calendarIds.length === 0) {
+      this.myEvents = [];
+      return;
+    }
+
+    this.isLoading = true;
+    googleCalendarSync
+      .getEvents(this.calendarIds, this.startDate, this.endDate)
+      .then((resp: any) => {
+        this.zone.run(() => {
+          resp.forEach((event: any) => {
+            event.resource = event.googleCalendarId;
+          });
+          this.myEvents = resp;
+          this.isLoading = false;
+        });
+      })
+      .catch((error: any) => {
+        this.onError(error);
+      });
   }
 
   openPopup(): void {

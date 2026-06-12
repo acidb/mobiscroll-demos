@@ -23,22 +23,16 @@ You can customize the look of the labels and show additional content besides the
 ## What this demo shows
 
 - A desktop month view event calendar with a full month grid layout.
-- **Event labels** Day cells with events display the events as labels directly inside the month grid.
-- **Custom label rendering** The demo shows both approaches: labels with custom content inside the default calendar label layout, and labels with a fully customized visual appearance.
-- **Label styling** Labels use different colors and custom styling to distinguish between events.
-- **Overflow handling** The number of visible labels in each day cell is limited by the available vertical space.
-- **More events popover** When not all events fit in a day cell, the calendar shows an `X more` link that opens a popover with the hidden events for that day.
-- **Event selection** Clicking an event label highlights the selected event and shows a toast at the bottom center with the event title.
-- **Hover state** Hovering a day cell highlights the day number in the top-right corner with a gray background.
-- **Date selection** Clicking the empty area of a day cell selects the day and highlights its day number with a blue background.
-- **Month navigation** The month view can be changed by dragging the calendar left or right.
-- **Header controls** The header shows the current month and year on the left, with previous and next navigation arrows plus a `Today` button on the right.
+- **Event labels** Days with events display labels directly inside the month cells.
+- **Custom label rendering** The demo shows labels with a fully customized visual appearance: all day or multiple all day event labels have stron colors and the event title at the beggining of the event and timed events are marked with a small colored dot at the left and the event title next to it.
+- **Overflow handling** The number of visible event labels depends on the available vertical space in the day cell. Additional events are moved into a popover and indicated by an `X more` label, where `X` represents the number of hidden events. Clicking it opens a popover that lists the remaining events for that day.
+- **Event selection** Clicking an event label shows a toast with the event title at the bottom center part of the calendar.
+- **Day cell states** Hovering a day cell highlights the day number with a gray background, while clicking the empty part of the cell selects the day and highlights the day number with a blue background.
+- **Month navigation** The month view can be changed by clicking and dragging the calendar left or right.
+- **Header controls** The header shows the current month and year on the left, with blue previous and next navigation arrows plus a `Today` button on the right.
 
 ## Best for
 
 - **Branded calendar experiences** Products that need event labels to match a custom visual style instead of the default calendar appearance.
-- **Event-rich month views** Month grids where events need to stay visible and scannable directly inside day cells.
 - **Category-based event display** Use cases where color and custom label design help users quickly distinguish event types, statuses, or teams.
 - **Richer event summaries** Calendars that need to show more than the event title, such as custom fields or additional context inside the label.
-- **Space-constrained month layouts** Interfaces where built-in overflow handling and the `X more` popover help keep dense days usable.
-- **Interactive planning workflows** Scheduling and planning experiences where users need clear event selection, day selection, and fast month-to-month navigation.

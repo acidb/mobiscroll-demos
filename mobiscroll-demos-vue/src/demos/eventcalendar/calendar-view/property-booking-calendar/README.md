@@ -12,26 +12,30 @@ By combining the `eventDisplay: 'exact'` setting under the `view` option with cu
 
 ## Implementation instructions
 
-- Use the Eventcalendar month view and set `eventDisplay: 'exact'` inside the `view` configuration so labels reflect the reservation timing more precisely inside the day cells.
-- Customize the reservation label content with `renderCalendarEventContent` or the framework-specific calendar event content template/slot to display exact start and end times.
-- Prevent overlapping reservations by adding validation before saving a new event and showing feedback when the selected time range conflicts with an existing booking.
+- Use `calendar: { type: 'month', eventDisplay: 'exact' }` in the view config so each booking renders as a proportional bar spanning its exact check-in-to-check-out date range.
+- Give each event a custom `icon` property (platform logo URL), a `title` (guest name), a per-platform `color`, and `start`/`end` both set to 12:00 to represent noon check-in and noon check-out.
+- Use `renderCalendarEventContent` (Angular: `calendarEventContentTemplate`, Vue: `calendarEventContent`) to render each label as the platform icon image followed by the guest name.
+- Set `extendDefaultEvent` to snap newly created reservations to noon boundaries: set `start` to 12:00 on the drag-start day and `end` to 12:00 on the following day.
+- Enable `clickToCreate`, `dragToCreate`, `dragToMove`, `dragToResize`, and `eventOverlap={false}` for full drag-based booking management with automatic overlap prevention.
+- In `onEventCreateFailed` and `onEventUpdateFailed`, show a `Toast` with an overlap error message.
 
 ## What this demo shows
 
-- A desktop month view event calendar for reservation tracking, where bookings are shown directly inside the day cells as labels.
-- **Event labels** Labels show the exact booking start and end times, such as `14:00` for check-in and `11:00` for check-out.
-- **Event labels** Labels can use different styles to distinguish different booking or event types.
-- **Event selection** Clicking a label selects it and highlights the selected reservation.
-- **Cell hover state** Hovering a day cell highlights the day number in the top-right corner and also highlights the events in that cell.
+- A full month Eventcalendar for reservation tracking, with booking labels rendered directly inside the day cells and positioned by exact check-in and check-out times.
+- **Header controls** The calendar includes standard month and year navigation, previous and next arrows, and a Today button.
+- **Event labels** Reservation labels use exact timing, so they appear inside the day cells according to their start and end times.
+- **Event label content** Each booking label shows the reservation guest name and the logo of the platform where the booking was made, such as Airbnb, Booking.com, or MakeMyTrip.
+- **Platform colors** Label colors identify the booking platform: yellow for Airbnb, red for Booking.com, and green for MakeMyTrip.
+- **Event selection** Clicking a reservation label selects it and highlights the selected booking.
+- **Cell hover state** Hovering over a day cell highlights the day number in the top-right corner.
 - **Day selection** Clicking empty space in a day cell selects that day and highlights the day number with a blue background.
-- **Creating reservations** Double-clicking empty space or dragging across empty space creates a new event.
-- **Overlap validation** If a new reservation would overlap an existing one, the calendar shows a toast message indicating that reservations cannot overlap in the same time period.
-- **Header navigation** The header shows the current month and year on the left.
-- **Header navigation** Previous and next month navigation arrows appear on the right, with a `Today` button between them for jumping back to the current date.
+- **Creating reservations** Double-clicking empty space or clicking and dragging across empty space creates a new event.
+- **Exact-time placement** Newly created events start at 12:00 AM by default because exact label display is enabled, so they appear around the middle of the selected or dragged day cell.
+- **Overlap validation** If a new reservation would overlap an existing one, the calendar shows a toast message explaining that reservations cannot overlap in the same time period.
 
 ## Best for
 
-- **Accommodation booking** Room, property, and short-stay booking interfaces where users need to see reservations directly in a month grid.
-- **Reservation management** Booking systems that need exact start and end times displayed on the reservation labels, not just all-day occupancy.
-- **Operational overview** Teams that need a single monthly view to review existing bookings, spot availability, and keep reservation records organized.
-- **Service scheduling** Reservation-style use cases where bookings must be easy to distinguish by type through custom label styling.
+- **Single-unit reservation overview** Room, property, and short-stay booking interfaces where users need to see reservations directly in a month grid.
+- **Reservation management** Booking systems that need to display reservations with exact time labels instead of all-day occupancy blocks.
+- **Multi-platform booking records** Workflows that collect reservations from platforms such as Airbnb, Booking.com, and MakeMyTrip into one calendar view.
+- **Operational overview** Monthly planning screens where users need to review existing bookings, spot availability, and keep reservation records organized.

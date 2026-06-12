@@ -212,22 +212,27 @@ export class AppComponent implements OnInit {
 
     if (checked) {
       this.calendarIds = [...this.calendarIds, calendarId];
-      this.isLoading = true;
-      googleCalendarSync
-        .getEvents([calendarId], this.startDate, this.endDate)
-        .then((resp: any) => {
-          this.zone.run(() => {
-            this.myEvents = [...this.myEvents, ...resp];
-            this.isLoading = false;
-          });
-        })
-        .catch((error: any) => {
-          this.onError(error);
-        });
     } else {
       this.calendarIds = this.calendarIds.filter((id) => id !== calendarId);
-      this.myEvents = this.myEvents.filter((event) => event['googleCalendarId'] !== calendarId);
     }
+
+    if (this.calendarIds.length === 0) {
+      this.myEvents = [];
+      return;
+    }
+
+    this.isLoading = true;
+    googleCalendarSync
+      .getEvents(this.calendarIds, this.startDate, this.endDate)
+      .then((resp: any) => {
+        this.zone.run(() => {
+          this.myEvents = resp;
+          this.isLoading = false;
+        });
+      })
+      .catch((error: any) => {
+        this.onError(error);
+      });
   }
 
   logOut(): void {

@@ -24,7 +24,7 @@ setOptions({
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   myEvents: MbscCalendarEvent[] = [];
 

@@ -28,7 +28,7 @@ export class AppComponent {
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
     public notify: Notifications,
-  ) { }
+  ) {}
 
   myEvents: MbscCalendarEvent[] = [];
   myResources = [
@@ -60,20 +60,24 @@ export class AppComponent {
       timeCellStep: 15,
       timeLabelStep: 15,
     },
-  }
+  };
 
   handleVirtualLoading = (args: MbscVirtualLoadEvent) => {
     const start = formatDate('YYYY-MM-DDTHH:mm:ss', args.viewStart);
     const end = formatDate('YYYY-MM-DDTHH:mm:ss', args.viewEnd);
 
     this.http
-      .jsonp<MbscCalendarEvent[]>('https://trial.mobiscroll.com/load-data-scroll/?start=' + start +
-        '&end=' +
-        end +
-        '&rstart=' +
-        args.resourceStart +
-        '&rend=' +
-        args.resourceEnd, 'callback')
+      .jsonp<MbscCalendarEvent[]>(
+        'https://trial.mobiscroll.com/load-data-scroll/?start=' +
+          start +
+          '&end=' +
+          end +
+          '&rstart=' +
+          args.resourceStart +
+          '&rend=' +
+          args.resourceEnd,
+        'callback',
+      )
       .subscribe((data: any) => {
         this.myEvents = data.events;
         this.cdr.detectChanges();
@@ -82,7 +86,5 @@ export class AppComponent {
           duration: 1000,
         });
       });
-
   };
 }
-
