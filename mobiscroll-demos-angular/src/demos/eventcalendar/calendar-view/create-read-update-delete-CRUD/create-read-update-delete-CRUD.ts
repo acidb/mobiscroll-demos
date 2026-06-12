@@ -203,7 +203,7 @@ export class AppComponent {
     this.isEdit = false;
     this.editedEvent = event;
     this.addEditPopupAnchor = target;
-    this.fillPopup(event);
+    this.fillPopup({ ...event, allDay: false });
     this.addEditPopup.open();
   }
 
