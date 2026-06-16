@@ -158,7 +158,7 @@ export default {
     document.getElementById('demo-bulk-actions-select-all').addEventListener('click', function () {
       selectEvents(calendar.getEvents());
       mobiscroll.toast({
-        message: 'All events selected this month',
+        message: 'All events selected from view',
       });
     });
 

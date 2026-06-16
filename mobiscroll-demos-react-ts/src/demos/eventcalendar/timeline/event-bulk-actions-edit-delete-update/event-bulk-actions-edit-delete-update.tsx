@@ -8,6 +8,7 @@ import {
   MbscEventcalendarView,
   MbscEventClickEvent,
   MbscEventUpdateEvent,
+  MbscPageLoadingEvent,
   MbscResource,
   MbscSelectChangeEvent,
   MbscSelectedEventsChangeEvent,
@@ -161,12 +162,12 @@ function App() {
     }
   }, [confirmOpen, deleteSelectedEvents]);
 
-  const handlePageLoading = useCallback(() => {
+  const handlePageLoading = useCallback((args: MbscPageLoadingEvent) => {
     setTimeout(() => {
-      setFirstDay(firstDay);
-      setLastDay(lastDay);
+      setFirstDay(args.firstDay);
+      setLastDay(args.lastDay);
     });
-  }, [firstDay, lastDay]);
+  }, []);
 
   const handleSelectedEventsChange = useCallback(
     (args: MbscSelectedEventsChangeEvent) => {
