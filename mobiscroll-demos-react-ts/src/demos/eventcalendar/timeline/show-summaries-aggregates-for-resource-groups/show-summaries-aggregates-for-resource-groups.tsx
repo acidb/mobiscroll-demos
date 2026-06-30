@@ -21,7 +21,7 @@ setOptions({
 });
 
 function App() {
-  const myEvents = useRef<MbscCalendarEvent[]>([
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([
     {
       id: 1,
       allDay: true,
@@ -752,7 +752,7 @@ function App() {
     //</hide-comment>
   ]);
 
-  const [eventsWithSummaries, setEventsWithSummaries] = useState<MbscCalendarEvent[]>([]);
+  const [eventsWithSummaries, setEventsWithSummaries] = useState<MbscCalendarEvent[]>(myEvents);
 
   const firstViewDay = useRef<Date>(null);
   const lastViewDay = useRef<Date>(null);
@@ -915,51 +915,48 @@ function App() {
     [firstViewDay, lastViewDay, myResources],
   );
 
-  const updateCalendarEvents = useCallback(() => {
-    const updatedSummaries = getAggregateEvents(myEvents.current);
-    setEventsWithSummaries([...myEvents.current, ...updatedSummaries]);
-  }, [getAggregateEvents, myEvents]);
+  const updateCalendarEvents = useCallback(
+    (inst: Eventcalendar) => {
+      const dailyEvents = inst.getEvents();
+      const updatedSummaries = getAggregateEvents(dailyEvents);
+      setEventsWithSummaries([...myEvents, ...updatedSummaries]);
+    },
+    [getAggregateEvents, myEvents],
+  );
 
   const handlePageLoading = useCallback(
-    (args: MbscPageLoadingEvent) => {
+    (args: MbscPageLoadingEvent, inst: Eventcalendar) => {
       firstViewDay.current = new Date(args.firstDay);
       lastViewDay.current = new Date(args.lastDay);
-      setTimeout(() => updateCalendarEvents());
+      setTimeout(() => updateCalendarEvents(inst));
     },
     [updateCalendarEvents],
   );
 
   const handleEventUpdated = useCallback(
-    (args: MbscEventUpdatedEvent) => {
+    (args: MbscEventUpdatedEvent, inst: Eventcalendar) => {
       const updatedEvent = args.event;
-      const index = myEvents.current.indexOf(updatedEvent);
-      myEvents.current.splice(index, 1, updatedEvent);
-      setTimeout(() => updateCalendarEvents());
+      const index = myEvents.indexOf(updatedEvent);
+      myEvents.splice(index, 1, updatedEvent);
+      setTimeout(() => updateCalendarEvents(inst));
     },
-    [updateCalendarEvents],
+    [myEvents, updateCalendarEvents],
   );
 
   const handleEventCreated = useCallback(
-    (args: MbscEventCreatedEvent) => {
-      const newEvent = args.event;
-      myEvents.current = [...myEvents.current, newEvent];
-      setTimeout(() => {
-        updateCalendarEvents();
-      });
+    (args: MbscEventCreatedEvent, inst: Eventcalendar) => {
+      setEvents((prevEvents) => [...prevEvents, args.event]);
+      setTimeout(() => updateCalendarEvents(inst));
     },
     [updateCalendarEvents],
   );
 
   const handleEventDeleted = useCallback(
-    (args: MbscEventDeletedEvent) => {
-      const deletedEvent = args.event;
-      const index = myEvents.current.indexOf(deletedEvent);
-      myEvents.current.splice(index, 1);
-      setTimeout(() => {
-        updateCalendarEvents();
-      });
+    (args: MbscEventDeletedEvent, inst: Eventcalendar) => {
+      setEvents((prevEvents) => prevEvents.filter((item) => item.id !== args.event.id));
+      setTimeout(() => updateCalendarEvents(inst));
     },
-    [myEvents, updateCalendarEvents],
+    [updateCalendarEvents],
   );
 
   const customResource = useCallback((res: MbscResource) => {

@@ -8,7 +8,7 @@ setOptions({
 });
 
 function App() {
-  const myEvents = useRef([
+  const [myEvents, setEvents] = useState([
     {
       id: 1,
       allDay: true,
@@ -739,10 +739,10 @@ function App() {
     //</hide-comment>
   ]);
 
-  const [eventsWithSummaries, setEventsWithSummaries] = useState([]);
+  const [eventsWithSummaries, setEventsWithSummaries] = useState(myEvents);
 
-  const firstViewDay = useRef();
-  const lastViewDay = useRef();
+  const firstViewDay = useRef(null);
+  const lastViewDay = useRef(null);
 
   const myView = useMemo(
     () => ({
@@ -902,51 +902,48 @@ function App() {
     [firstViewDay, lastViewDay, myResources],
   );
 
-  const updateCalendarEvents = useCallback(() => {
-    const updatedSummaries = getAggregateEvents(myEvents.current);
-    setEventsWithSummaries([...myEvents.current, ...updatedSummaries]);
-  }, [getAggregateEvents, myEvents]);
+  const updateCalendarEvents = useCallback(
+    (inst) => {
+      const dailyEvents = inst.getEvents();
+      const updatedSummaries = getAggregateEvents(dailyEvents);
+      setEventsWithSummaries([...myEvents, ...updatedSummaries]);
+    },
+    [getAggregateEvents, myEvents],
+  );
 
   const handlePageLoading = useCallback(
-    (args) => {
+    (args, inst) => {
       firstViewDay.current = new Date(args.firstDay);
       lastViewDay.current = new Date(args.lastDay);
-      setTimeout(() => updateCalendarEvents());
+      setTimeout(() => updateCalendarEvents(inst));
     },
     [updateCalendarEvents],
   );
 
   const handleEventUpdated = useCallback(
-    (args) => {
+    (args, inst) => {
       const updatedEvent = args.event;
-      const index = myEvents.current.indexOf(updatedEvent);
-      myEvents.current.splice(index, 1, updatedEvent);
-      setTimeout(() => updateCalendarEvents());
+      const index = myEvents.indexOf(updatedEvent);
+      myEvents.splice(index, 1, updatedEvent);
+      setTimeout(() => updateCalendarEvents(inst));
     },
-    [updateCalendarEvents],
+    [myEvents, updateCalendarEvents],
   );
 
   const handleEventCreated = useCallback(
-    (args) => {
-      const newEvent = args.event;
-      myEvents.current = [...myEvents.current, newEvent];
-      setTimeout(() => {
-        updateCalendarEvents();
-      });
+    (args, inst) => {
+      setEvents((prevEvents) => [...prevEvents, args.event]);
+      setTimeout(() => updateCalendarEvents(inst));
     },
     [updateCalendarEvents],
   );
 
   const handleEventDeleted = useCallback(
-    (args) => {
-      const deletedEvent = args.event;
-      const index = myEvents.current.indexOf(deletedEvent);
-      myEvents.current.splice(index, 1);
-      setTimeout(() => {
-        updateCalendarEvents();
-      });
+    (args, inst) => {
+      setEvents((prevEvents) => prevEvents.filter((item) => item.id !== args.event.id));
+      setTimeout(() => updateCalendarEvents(inst));
     },
-    [myEvents, updateCalendarEvents],
+    [updateCalendarEvents],
   );
 
   const customResource = useCallback((res) => {

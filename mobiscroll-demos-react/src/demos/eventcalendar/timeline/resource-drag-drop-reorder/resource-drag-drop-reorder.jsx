@@ -131,12 +131,7 @@ function App() {
 
   const enableReorder = useCallback(() => {
     setReorder(true);
-    setMyView({
-      timeline: {
-        type: 'month',
-        resourceReorder: true,
-      },
-    });
+    setMyView({ timeline: { type: 'month', resourceReorder: true } });
   }, []);
 
   const onToastClose = useCallback(() => {
@@ -145,24 +140,14 @@ function App() {
 
   const saveReorder = useCallback(() => {
     setReorder(false);
-    setMyView({
-      timeline: {
-        type: 'month',
-        resourceReorder: false,
-      },
-    });
+    setMyView({ timeline: { type: 'month', resourceReorder: false } });
     setResources([...tempResources]);
   }, [tempResources]);
 
   const cancelReorder = useCallback(() => {
     setReorder(false);
     setResources([...myResources]);
-    setMyView({
-      timeline: {
-        type: 'month',
-        resourceReorder: false,
-      },
-    });
+    setMyView({ timeline: { type: 'month', resourceReorder: false } });
     setMessage('Resource order canceled');
     setToastOpen(true);
   }, [myResources]);

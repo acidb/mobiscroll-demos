@@ -36,10 +36,11 @@ function App() {
   const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
   const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
-  const view = useMemo(() => ({ calendar: { labels: true } }), []);
   const debounce = useRef();
   const startDate = useRef();
   const endDate = useRef();
+
+  const view = useMemo(() => ({ calendar: { labels: true } }), []);
 
   const handleError = useCallback((resp) => {
     setToastMessage(resp.message);

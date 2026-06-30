@@ -31,11 +31,12 @@ function App() {
   const [mySelectedDate, setSelectedDate] = useState(new Date());
   const [toastMessage, setToastMessage] = useState('');
 
-  const myView = useMemo(() => ({ agenda: { type: 'month' } }), []);
   const buttonRef = useRef();
   const startDate = useRef();
   const endDate = useRef();
   const timer = useRef();
+
+  const myView = useMemo(() => ({ agenda: { type: 'month' } }), []);
 
   const handleError = useCallback((resp) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);

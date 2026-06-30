@@ -42,20 +42,11 @@ function App() {
   const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const buttonRef = useRef(null);
-
   const debounce = useRef();
   const startDate = useRef();
   const endDate = useRef();
 
-  const myView = useMemo(
-    () => ({
-      timeline: {
-        type: 'week',
-        eventDisplay: 'fill',
-      },
-    }),
-    [],
-  );
+  const myView = useMemo(() => ({ timeline: { type: 'week', eventDisplay: 'fill' } }), []);
 
   const onError = useCallback((resp) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);

@@ -42,11 +42,11 @@ const App: FC = () => {
   const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
   const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
-  const view = useMemo<MbscEventcalendarView>(() => ({ scheduler: { type: 'week' } }), []);
-
   const debounce = useRef<ReturnType<typeof setTimeout>>(undefined);
   const startDate = useRef<Date>(null);
   const endDate = useRef<Date>(null);
+
+  const view = useMemo<MbscEventcalendarView>(() => ({ scheduler: { type: 'week' } }), []);
 
   const onError = useCallback((resp: { message: string }) => {
     setToastMessage(resp.message);

@@ -1,5 +1,5 @@
 import { Button, Datepicker, formatDate, Input, options, Page, Popup, Select, setOptions /* localeImport */ } from '@mobiscroll/react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './range-picker-popup-presets.css';
 
 setOptions({
@@ -8,15 +8,50 @@ setOptions({
 });
 
 const startDate = 'dyndatetime(y,m,d)';
-const endDate = 'dyndatetime(y,m,d+6)';
+const endDate = 'dyndatetime(y,m,d + 6)';
 const now = new Date();
 const day = now.getDay();
 const monday = now.getDate() - day + (day === 0 ? -6 : 1);
-const getFormattedRangeValue = (start, end) => {
-  const locale = options.locale || {};
-  const dateFormat = locale.dateFormat || 'DD/MM/YYYY';
-  return formatDate(dateFormat, new Date(start)) + ' - ' + formatDate(dateFormat, new Date(end));
+
+const respSelect = {
+  xsmall: {
+    touchUi: true,
+  },
+  small: {
+    touchUi: false,
+  },
 };
+
+const myData = [
+  {
+    value: 'custom',
+    text: 'Custom',
+  },
+  {
+    value: 'today',
+    text: 'Today',
+  },
+  {
+    value: 'yesterday',
+    text: 'Yesterday',
+  },
+  {
+    value: 'last-week',
+    text: 'Last week',
+  },
+  {
+    value: 'last-month',
+    text: 'Last month',
+  },
+  {
+    value: 'last-7-days',
+    text: 'Last 7 days',
+  },
+  {
+    value: 'last-30-days',
+    text: 'Last 30 days',
+  },
+];
 
 function App() {
   const [isOpen, setOpen] = useState(false);
@@ -24,16 +59,48 @@ function App() {
   const [end, endRef] = useState(null);
   const [selected, setSelected] = useState('custom');
   const [selectedDate, setSelectedDate] = useState([startDate, endDate]);
-  const [inputValue, setInputValue] = useState(() => getFormattedRangeValue(startDate, endDate));
+  const [inputValue, setInputValue] = useState('');
   const [disabledInput, setDisabledInput] = useState(false);
-  const [input, inputRef] = useState(null);
+
+  const respPopup = {
+    xsmall: {
+      display: 'bottom',
+      touchUi: true,
+      buttons: [
+        {
+          text: 'Apply',
+          handler: () => {
+            const date = selectedDate;
+
+            changeInputValue(date[0], date[1] || date[0]);
+            setOpen(false);
+          },
+        },
+        'cancel',
+      ],
+    },
+    custom: {
+      breakpoint: 559,
+      buttons: [],
+      display: 'anchored',
+      anchor: document.querySelector('.date-filter-input'),
+      anchorAlign: 'start',
+      touchUi: false,
+      scrollLock: false,
+      showArrow: false,
+      maxWidth: 920,
+    },
+  };
 
   const inputClick = useCallback(() => {
     setOpen(true);
   }, []);
 
   const changeInputValue = useCallback((start, end) => {
-    setInputValue(getFormattedRangeValue(start, end));
+    const locale = options.locale || {};
+    const dateFormat = locale.dateFormat || 'DD/MM/YYYY';
+
+    setInputValue(formatDate(dateFormat, new Date(start)) + ' - ' + formatDate(dateFormat, new Date(end)));
   }, []);
 
   const applyClick = useCallback(() => {
@@ -83,96 +150,25 @@ function App() {
   }, []);
 
   const onDateChange = useCallback((ev) => {
+    const date = ev.value;
+
     setDisabledInput(false);
     setSelected('custom');
-    setSelectedDate(ev.value);
+    setSelectedDate(date);
   }, []);
 
   const onClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const myData = useMemo(
-    () => [
-      {
-        value: 'custom',
-        text: 'Custom',
-      },
-      {
-        value: 'today',
-        text: 'Today',
-      },
-      {
-        value: 'yesterday',
-        text: 'Yesterday',
-      },
-      {
-        value: 'last-week',
-        text: 'Last week',
-      },
-      {
-        value: 'last-month',
-        text: 'Last month',
-      },
-      {
-        value: 'last-7-days',
-        text: 'Last 7 days',
-      },
-      {
-        value: 'last-30-days',
-        text: 'Last 30 days',
-      },
-    ],
-    [],
-  );
-
-  const respSelect = useMemo(
-    () => ({
-      xsmall: {
-        touchUi: true,
-      },
-      small: {
-        touchUi: false,
-      },
-    }),
-    [],
-  );
-
-  const respPopup = useMemo(
-    () => ({
-      xsmall: {
-        display: 'bottom',
-        touchUi: true,
-        buttons: [
-          {
-            text: 'Apply',
-            handler: () => {
-              changeInputValue(selectedDate[0], selectedDate[1] || selectedDate[0]);
-              setOpen(false);
-            },
-          },
-          'cancel',
-        ],
-      },
-      custom: {
-        breakpoint: 559,
-        buttons: [],
-        display: 'anchored',
-        anchor: input && input.nativeElement,
-        anchorAlign: 'start',
-        touchUi: false,
-        scrollLock: false,
-        showArrow: false,
-        maxWidth: 920,
-      },
-    }),
-    [changeInputValue, input, selectedDate],
-  );
+  useEffect(() => {
+    changeInputValue(startDate, endDate);
+  });
 
   return (
     <Page>
       <div className="mbsc-form-group">
-        <Input ref={inputRef} inputStyle="box" onClick={inputClick} defaultValue={inputValue} readOnly />
+        <Input inputStyle="box" onClick={inputClick} defaultValue={inputValue} className="date-filter-input"></Input>
       </div>
       <Popup isOpen={isOpen} onClose={onClose} responsive={respPopup} cssClass="demo-date-filtering-popup">
         <div className="mbsc-grid mbsc-no-padding">
@@ -185,6 +181,7 @@ function App() {
                   labelStyle="stacked"
                   inputStyle="box"
                   responsive={respSelect}
+                  touchUi={true}
                   value={selected}
                   onChange={onChange}
                 />

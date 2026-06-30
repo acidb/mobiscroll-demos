@@ -64,7 +64,7 @@ function App() {
         // Update the original event with a recurring exception
         const updatedEvent = {
           ...event.original!,
-          recurringException: [...(((event.original!.recurringException as Array<string>) || [])), event.start as string],
+          recurringException: [...((event.original!.recurringException as Array<string>) || []), event.start as string],
         };
         updatedEvents.splice(index, 1, updatedEvent);
         updatedEvents.push(newEvent);
@@ -114,7 +114,7 @@ function App() {
             // Update the original event with a recurring exception
             const updatedEvent = {
               ...event.original!,
-              recurringException: [...(((event.original!.recurringException as Array<string>) || [])), event.start as string],
+              recurringException: [...((event.original!.recurringException as Array<string>) || []), event.start as string],
             };
             updatedEvents.splice(index, 1, updatedEvent);
           } else {

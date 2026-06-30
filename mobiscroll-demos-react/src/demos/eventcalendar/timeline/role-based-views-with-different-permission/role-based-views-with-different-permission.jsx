@@ -109,23 +109,24 @@ const initialResources = [
 ];
 
 function App() {
-  const user = useMemo(() => ({ id: 2, name: 'Willis Cane', role: 'limited' }), []);
+  const [isToastOpen, setToastOpen] = useState(false);
 
+  const user = useMemo(() => ({ id: 2, name: 'Willis Cane', role: 'limited' }), []);
   /* Other user examples
   const user = useMemo(() => ({ name: 'Client', role: 'readonly' }), []);
   const user = useMemo(() => ({ name: 'Project Manager', role: 'full' }), []); */
 
-  const [isToastOpen, setToastOpen] = useState(false);
+  const editEvents = useMemo(() => user.role !== 'readonly', [user]);
 
   const toastMessage = useMemo(() => {
     if (user.role === 'readonly') {
       return 'Client with read-only access logged in';
     }
     if (user.role === 'limited') {
-      return `User ${user.name} with limited access logged in`;
+      return 'User ' + user.name + ' with limited access logged in';
     }
     return 'User with full access logged in';
-  }, [user.role, user.name]);
+  }, [user]);
 
   const myView = useMemo(
     () => ({
@@ -138,52 +139,23 @@ function App() {
     [],
   );
 
-  const editEvents = useMemo(() => user.role !== 'readonly', [user.role]);
-
   const myEvents = useMemo(
     () =>
       initialEvents.map((task) => {
         if (user.role === 'readonly') {
-          return {
-            ...task,
-            editable: false,
-            color: '#af2ec3',
-          };
+          return { ...task, editable: false, color: '#af2ec3' };
         }
-
         if (user.role === 'limited') {
-          if (task.resource !== user.id) {
-            return {
-              ...task,
-              editable: false,
-              color: '#6a6a6a',
-            };
-          }
-
-          return {
-            ...task,
-            color: '#af2424',
-          };
+          return { ...task, editable: task.resource === user.id, color: task.resource !== user.id ? '#6a6a6a' : '#af2424' };
         }
-
         return task;
       }),
-    [user.role, user.id],
+    [user],
   );
 
   const myResources = useMemo(
-    () =>
-      initialResources.map((res) => {
-        if (user.role === 'limited' && res.id !== user.id) {
-          return {
-            ...res,
-            eventCreation: false,
-          };
-        }
-
-        return res;
-      }),
-    [user.role, user.id],
+    () => initialResources.map((res) => (user.role === 'limited' && res.id !== user.id ? { ...res, eventCreation: false } : res)),
+    [user],
   );
 
   const getDefaultEvent = useCallback(
@@ -200,8 +172,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setToastOpen(true);
-    }, 0);
-
+    });
     return () => clearTimeout(timer);
   }, []);
 

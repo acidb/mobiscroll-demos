@@ -37,8 +37,9 @@ const App: FC = () => {
   const [confirmMessage, setConfirmMessage] = useState<string>('');
   const [toastMessage, setToastMessage] = useState<string>('');
 
-  const myView = useMemo<MbscEventcalendarView>(() => ({ calendar: { labels: true } }), []);
   const calRef = useRef<Eventcalendar>(null);
+
+  const myView = useMemo<MbscEventcalendarView>(() => ({ calendar: { labels: true } }), []);
 
   const selectData = useMemo(
     () => [
@@ -69,7 +70,7 @@ const App: FC = () => {
         eventsToUpdate = [...eventsToUpdate, newEvent];
         const updatedOrigEvent = {
           ...origEvent,
-          recurringException: [...(((origEvent.recurringException as Array<string>) || [])), event.start as string],
+          recurringException: [...((origEvent.recurringException as Array<string>) || []), event.start as string],
         };
 
         // Update the event in the list
@@ -103,7 +104,7 @@ const App: FC = () => {
             const origEvent = event.original!;
             const updatedOrigEvent = {
               ...origEvent,
-              recurringException: [...(((origEvent.recurringException as Array<string>) || [])), event.start as string],
+              recurringException: [...((origEvent.recurringException as Array<string>) || []), event.start as string],
             };
 
             // Update the event in the list

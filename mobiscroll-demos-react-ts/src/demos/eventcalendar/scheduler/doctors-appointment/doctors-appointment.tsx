@@ -53,30 +53,12 @@ const Appointment: FC<{ data: MbscCalendarEvent }> = (props) => {
 const App: FC = () => {
   const doctors = useMemo<MbscResource[]>(
     () => [
-      {
-        id: 1,
-        name: 'Dr. Keila Delores',
-      },
-      {
-        id: 2,
-        name: 'Dr. Gene Cortez',
-      },
-      {
-        id: 3,
-        name: 'Dr. Paula Bush',
-      },
-      {
-        id: 4,
-        name: 'Dr. Pete Nichols',
-      },
-      {
-        id: 5,
-        name: 'Dr. Jean Pearson',
-      },
-      {
-        id: 6,
-        name: 'Dr. Thelma Cain',
-      },
+      { id: 1, name: 'Dr. Keila Delores' },
+      { id: 2, name: 'Dr. Gene Cortez' },
+      { id: 3, name: 'Dr. Paula Bush' },
+      { id: 4, name: 'Dr. Pete Nichols' },
+      { id: 5, name: 'Dr. Jean Pearson' },
+      { id: 6, name: 'Dr. Thelma Cain' },
     ],
     [],
   );
@@ -93,96 +75,94 @@ const App: FC = () => {
     [],
   );
 
-  const myInvalid = useMemo(
-    () => [
-      {
-        recurring: {
-          repeat: 'daily',
-          until: yesterday,
-        },
-      },
-      {
-        start: yesterday,
-        end: today,
-      },
-    ],
-    [],
-  );
+  const myInvalid = useMemo(() => [{ recurring: { repeat: 'daily', until: yesterday } }, { start: yesterday, end: today }], []);
 
-  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>([
-    {
-      id: 'job1',
-      start: 'dyndatetime(y,m,d,14)',
-      end: 'dyndatetime(y,m,d,16)',
-      resource: 1,
-      title: 'Myla Bennett',
-      job: 'Wisdom tooth removal',
-      color: '#334ab9',
-    },
-    {
-      id: 'job2',
-      start: 'dyndatetime(y,m,d,17)',
-      end: 'dyndatetime(y,m,d,18,30)',
-      resource: 1,
-      title: 'Beatrix Foley',
-      job: 'Braces',
-      color: '#177e70',
-    },
-    {
-      id: 'job3',
-      start: 'dyndatetime(y,m,d,8)',
-      end: 'dyndatetime(y,m,d,9,30)',
-      resource: 3,
-      title: 'Frank Watson',
-      job: 'Teeth whitening',
-      color: '#d1891f',
-    },
-    {
-      id: 'job4',
-      start: 'dyndatetime(y,m,d,10)',
-      end: 'dyndatetime(y,m,d,12,30)',
-      resource: 3,
-      title: 'Jaime Joyce',
-      job: 'Root canal treatment',
-      color: '#cb3939',
-    },
-    {
-      id: 'job5',
-      start: 'dyndatetime(y,m,d,13)',
-      end: 'dyndatetime(y,m,d,14)',
-      resource: 3,
-      title: 'Corey Shepard',
-      job: 'Tooth extraction',
-      color: '#aba343',
-    },
-    {
-      id: 'job6',
-      start: 'dyndatetime(y,m,d,14)',
-      end: 'dyndatetime(y,m,d,16)',
-      resource: 4,
-      title: 'Callie Leonard',
-      job: 'Crown and bridge',
-      color: '#1ca11a',
-    },
-    {
-      id: 'job7',
-      start: 'dyndatetime(y,m,d,17)',
-      end: 'dyndatetime(y,m,d,18)',
-      resource: 4,
-      title: 'Harley Thomson',
-      job: 'Tartar removal',
-      color: '#a446b5',
-    },
-    {
-      id: 'job8',
-      start: 'dyndatetime(y,m,d,9)',
-      end: 'dyndatetime(y,m,d,11)',
-      resource: 6,
-      title: 'Ricky Welch',
-      job: 'Wisdom tooth removal',
-      color: '#334ab9',
-    },
-  ]);
+  const [myEvents, setEvents] = useState<MbscCalendarEvent[]>(
+    [
+      {
+        id: 'job1',
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,16)',
+        resource: 1,
+        title: 'Myla Bennett',
+        job: 'Wisdom tooth removal',
+        color: '#334ab9',
+      },
+      {
+        id: 'job2',
+        start: 'dyndatetime(y,m,d,17)',
+        end: 'dyndatetime(y,m,d,18,30)',
+        resource: 1,
+        title: 'Beatrix Foley',
+        job: 'Braces',
+        color: '#177e70',
+      },
+      {
+        id: 'job3',
+        start: 'dyndatetime(y,m,d,8)',
+        end: 'dyndatetime(y,m,d,9,30)',
+        resource: 3,
+        title: 'Frank Watson',
+        job: 'Teeth whitening',
+        color: '#d1891f',
+      },
+      {
+        id: 'job4',
+        start: 'dyndatetime(y,m,d,10)',
+        end: 'dyndatetime(y,m,d,12,30)',
+        resource: 3,
+        title: 'Jaime Joyce',
+        job: 'Root canal treatment',
+        color: '#cb3939',
+      },
+      {
+        id: 'job5',
+        start: 'dyndatetime(y,m,d,13)',
+        end: 'dyndatetime(y,m,d,14)',
+        resource: 3,
+        title: 'Corey Shepard',
+        job: 'Tooth extraction',
+        color: '#aba343',
+      },
+      {
+        id: 'job6',
+        start: 'dyndatetime(y,m,d,14)',
+        end: 'dyndatetime(y,m,d,16)',
+        resource: 4,
+        title: 'Callie Leonard',
+        job: 'Crown and bridge',
+        color: '#1ca11a',
+      },
+      {
+        id: 'job7',
+        start: 'dyndatetime(y,m,d,17)',
+        end: 'dyndatetime(y,m,d,18)',
+        resource: 4,
+        title: 'Harley Thomson',
+        job: 'Tartar removal',
+        color: '#a446b5',
+      },
+      {
+        id: 'job8',
+        start: 'dyndatetime(y,m,d,9)',
+        end: 'dyndatetime(y,m,d,11)',
+        resource: 6,
+        title: 'Ricky Welch',
+        job: 'Wisdom tooth removal',
+        color: '#334ab9',
+      },
+    ].map((event) => {
+      const start = event.start ? new Date(event.start as string) : event.start;
+      const end = event.end ? new Date(event.end as string) : event.end;
+      return {
+        ...event,
+        start,
+        end,
+        // Mark past events as fixed by setting the event.editable property to false
+        editable: !!(start && today < start),
+      };
+    }),
+  );
 
   const [appointments, setAppointments] = useState<MbscCalendarEvent[]>([
     {
@@ -319,16 +299,7 @@ const App: FC = () => {
       <div className="mbsc-row">
         <div className="mbsc-col-sm-9 docs-appointment-calendar">
           <Eventcalendar
-            data={myEvents.map((event) => {
-              const start = event.start ? new Date(event.start as string) : event.start;
-              const end = event.end ? new Date(event.end as string) : event.end;
-              return {
-                ...event,
-                start,
-                end,
-                editable: !!(start && today < start),
-              };
-            })}
+            data={myEvents}
             view={myView}
             resources={doctors}
             invalid={myInvalid}

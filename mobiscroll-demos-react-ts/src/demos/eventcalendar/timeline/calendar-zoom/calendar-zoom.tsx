@@ -23,7 +23,7 @@ const App: FC = () => {
   const [zoomLevel, setZoomLevel] = useState(9);
   const [viewDate, setViewDate] = useState(new Date());
 
-  const calRef = useRef<InstanceType<typeof Eventcalendar> | null>(null);
+  const calRef = useRef<Eventcalendar | null>(null);
 
   const myResources = useMemo<MbscResource[]>(
     () => [
@@ -131,29 +131,20 @@ const App: FC = () => {
     return new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
   }, [viewDate, zoomLevel]);
 
-  const syncViewDate = useCallback(() => {
-    if (calRef.current?.getViewDate) {
-      setViewDate(calRef.current.getViewDate());
-    }
-  }, []);
-
   const zoomIn = useCallback(() => {
     setZoomLevel((prevZoom) => prevZoom + 1);
-    syncViewDate();
-  }, [syncViewDate]);
+    setViewDate(calRef.current!.getViewDate());
+  }, []);
 
   const zoomOut = useCallback(() => {
     setZoomLevel((prevZoom) => prevZoom - 1);
-    syncViewDate();
-  }, [syncViewDate]);
+    setViewDate(calRef.current!.getViewDate());
+  }, []);
 
-  const handleSliderChange = useCallback(
-    (ev: ChangeEvent<HTMLInputElement>) => {
-      setZoomLevel(+ev.target.value);
-      syncViewDate();
-    },
-    [syncViewDate],
-  );
+  const handleSliderChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
+    setZoomLevel(+ev.target.value);
+    setViewDate(calRef.current!.getViewDate());
+  }, []);
 
   const myHeader = useCallback(
     () => (
@@ -181,10 +172,6 @@ const App: FC = () => {
       'jsonp',
     );
   }, []);
-
-  useEffect(() => {
-    syncViewDate();
-  }, [syncViewDate]);
 
   return (
     <Eventcalendar

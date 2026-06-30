@@ -34,7 +34,6 @@ const App: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [editable, setEditable] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [isHidden] = useState<boolean>(false);
   const [primaryCalendarId, setPrimaryCalendarId] = useState<string>('');
   const [isToastOpen, setToastOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
@@ -43,11 +42,11 @@ const App: FC = () => {
   const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
   const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
-  const view = useMemo<MbscEventcalendarView>(() => ({ calendar: { labels: true } }), []);
-
   const debounce = useRef<ReturnType<typeof setTimeout>>(undefined);
   const startDate = useRef<Date>(null);
   const endDate = useRef<Date>(null);
+
+  const view = useMemo<MbscEventcalendarView>(() => ({ calendar: { labels: true } }), []);
 
   const handleError = useCallback((resp: { error?: string; result: { error: { message: string } } }) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);
@@ -276,7 +275,7 @@ const App: FC = () => {
 
   return (
     <Page className="md-sync-events-google-cont">
-      <div className={'md-sync-events-google-menu ' + (isHidden ? 'mbsc-hidden' : '')}>
+      <div className="md-sync-events-google-menu">
         {isLoggedIn ? (
           <div aria-hidden={!isLoggedIn}>
             <div className="mbsc-form-group-inset mbsc-align-center">

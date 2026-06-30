@@ -36,11 +36,11 @@ function App() {
   const [isUpdateConfirmOpen, setUpdateConfirmOpen] = useState(false);
   const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
-  const myView = useMemo(() => ({ scheduler: { type: 'week' } }), []);
-
   const debounce = useRef();
   const startDate = useRef();
   const endDate = useRef();
+
+  const myView = useMemo(() => ({ scheduler: { type: 'week' } }), []);
 
   const onError = useCallback((resp) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);

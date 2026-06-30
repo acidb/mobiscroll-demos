@@ -35,11 +35,12 @@ const App: FC = () => {
   const [mySelectedDate, setSelectedDate] = useState(new Date());
   const [toastMessage, setToastMessage] = useState<string>('');
 
-  const view = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
   const buttonRef = useRef<Button>(null);
   const startDate = useRef<Date>(null);
   const endDate = useRef<Date>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const view = useMemo<MbscEventcalendarView>(() => ({ agenda: { type: 'month' } }), []);
 
   const handleError = useCallback((resp: { error?: string; result: { error: { message: string } } }) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);

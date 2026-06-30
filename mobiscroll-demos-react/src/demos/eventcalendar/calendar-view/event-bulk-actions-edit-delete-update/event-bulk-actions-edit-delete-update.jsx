@@ -20,8 +20,9 @@ function App() {
   const [confirmMessage, setConfirmMessage] = useState('');
   const [toastMessage, setToastMessage] = useState('');
 
-  const view = useMemo(() => ({ calendar: { labels: 'all' } }), []);
   const calRef = useRef();
+
+  const view = useMemo(() => ({ calendar: { labels: 'all' } }), []);
 
   const selectData = useMemo(
     () => [

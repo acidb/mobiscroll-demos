@@ -116,20 +116,15 @@ const initialResources: MbscResource[] = [
 ];
 
 const App: FC = () => {
-  const user = useMemo(() => ({ id: 2, name: 'Willis Cane', role: 'limited' }), []);
+  const [isToastOpen, setToastOpen] = useState<boolean>(false);
 
+  const user = useMemo(() => ({ id: 2, name: 'Willis Cane', role: 'limited' }), []);
   /* Other user examples
   const user = useMemo(() => ({ name: 'Client', role: 'readonly' }), []);
   const user = useMemo(() => ({ name: 'Project Manager', role: 'full' }), []); */
 
-  const [isToastOpen, setToastOpen] = useState<boolean>(false);
+  const editEvents = useMemo<boolean>(() => user.role !== 'readonly', [user]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setToastOpen(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
   const toastMessage = useMemo(() => {
     if (user.role === 'readonly') {
       return 'Client with read-only access logged in';
@@ -151,28 +146,24 @@ const App: FC = () => {
     [],
   );
 
-  const myEvents = useMemo<MbscCalendarEvent[]>(() => {
-    const newTasks = initialEvents.map((task) => ({ ...task }));
-    if (user.role === 'readonly') {
-      return newTasks.map((task) => ({ ...task, editable: false, color: '#af2ec3' }));
-    }
-    if (user.role === 'limited') {
-      return newTasks.map((task) =>
-        task.resource !== user.id ? { ...task, editable: false, color: '#6a6a6a' } : { ...task, color: '#af2424' },
-      );
-    }
-    return newTasks;
-  }, [user]);
+  const myEvents = useMemo<MbscCalendarEvent[]>(
+    () =>
+      initialEvents.map((task) => {
+        if (user.role === 'readonly') {
+          return { ...task, editable: false, color: '#af2ec3' };
+        }
+        if (user.role === 'limited') {
+          return { ...task, editable: task.resource === user.id, color: task.resource !== user.id ? '#6a6a6a' : '#af2424' };
+        }
+        return task;
+      }),
+    [user],
+  );
 
-  const myResources = useMemo<MbscResource[]>(() => {
-    const newResources = initialResources.map((res) => ({ ...res }));
-    if (user.role !== 'limited') {
-      return newResources;
-    }
-    return newResources.map((res) => (res.id !== user.id ? { ...res, eventCreation: false } : res));
-  }, [user]);
-
-  const editEvents = useMemo<boolean>(() => user.role !== 'readonly', [user]);
+  const myResources = useMemo<MbscResource[]>(
+    () => initialResources.map((res) => (user.role === 'limited' && res.id !== user.id ? { ...res, eventCreation: false } : res)),
+    [user],
+  );
 
   const getDefaultEvent = useCallback(
     () => ({
@@ -183,6 +174,13 @@ const App: FC = () => {
 
   const handleCloseToast = useCallback(() => {
     setToastOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setToastOpen(true);
+    });
+    return () => clearTimeout(timer);
   }, []);
 
   return (

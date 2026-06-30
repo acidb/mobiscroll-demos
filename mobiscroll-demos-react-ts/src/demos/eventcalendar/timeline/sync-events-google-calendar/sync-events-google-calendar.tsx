@@ -50,20 +50,11 @@ const App: FC = () => {
   const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const buttonRef = useRef<Button | null>(null);
-
   const debounce = useRef<ReturnType<typeof setTimeout>>(undefined);
   const startDate = useRef<Date>(null);
   const endDate = useRef<Date>(null);
 
-  const myView = useMemo<MbscEventcalendarView>(
-    () => ({
-      timeline: {
-        type: 'week',
-        eventDisplay: 'fill',
-      },
-    }),
-    [],
-  );
+  const myView = useMemo<MbscEventcalendarView>(() => ({ timeline: { type: 'week', eventDisplay: 'fill' } }), []);
 
   const onError = useCallback((resp: { error?: string; result: { error: { message: string } } }) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);
