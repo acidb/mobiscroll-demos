@@ -40,9 +40,10 @@ export default {
     }
 
     function loadEvents(checked, calendarId) {
+      var newResources;
       if (checked) {
         var newResource = calendarData[calendarId];
-        var newResources = inst.s.resources.slice();
+        newResources = inst.s.resources.slice();
         newResources.push({ id: calendarId, name: newResource.name, color: newResource.color });
         inst.setOptions({ resources: newResources });
         calendarIds.push(calendarId);
@@ -51,7 +52,7 @@ export default {
         if (index !== -1) {
           calendarIds.splice(index, 1);
         }
-        var newResources = inst.s.resources.filter(function (c) {
+        newResources = inst.s.resources.filter(function (c) {
           return c.id !== calendarId;
         });
         inst.setOptions({ resources: newResources });

@@ -1412,9 +1412,6 @@ export default {
             refreshJobList();
             popup.close();
             mobiscroll.toast({
-              //<hidden>
-              // theme,//</hidden>
-              // context,
               message: 'Filters applied',
             });
           },
@@ -1430,7 +1427,6 @@ export default {
     });
 
     var calendar = mobiscroll.eventcalendar('#demo-dispatch-calendar', {
-      // context,
       clickToCreate: false,
       dragToCreate: false,
       dragToResize: false,
@@ -1511,7 +1507,6 @@ export default {
           myEvents.push(scheduledEvent);
         }
         mobiscroll.toast({
-          // context,
           message: args.event.from + ' → ' + args.event.to + ' added',
         });
       },
@@ -1527,16 +1522,10 @@ export default {
             calendar.navigateToEvent({ start: draggedEvent.start, resource: draggedEvent.resource });
           });
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: draggedEvent.from + ' → ' + draggedEvent.to + ' added to first available slot',
           });
         } else {
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: 'No available slot found for ' + args.event.from + ' → ' + args.event.to,
           });
         }
@@ -1549,9 +1538,6 @@ export default {
             calendar.navigateToEvent({ start: draggedEvent.start, resource: draggedEvent.resource });
           });
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: draggedEvent.from + ' → ' + draggedEvent.to + ' moved to first available slot',
           });
         } else {
@@ -1560,9 +1546,6 @@ export default {
             calendar.navigateToEvent({ start: originalEvent.start, resource: originalEvent.resource });
           });
           mobiscroll.toast({
-            //<hidden>
-            // theme,//</hidden>
-            // context,
             message: 'No available slot found for ' + args.event.from + ' → ' + args.event.to,
           });
         }
@@ -1660,9 +1643,6 @@ export default {
         refreshJobList();
 
         mobiscroll.toast({
-          //<hidden>
-          // theme,//</hidden>
-          // context,
           message: 'Filters cleared',
         });
       }
