@@ -58,7 +58,10 @@ const initialMeetings: Meeting[] = [
     end: dyndatetime('y,m,d,11'),
     resource: 1,
     color: '#b52db9',
-    attendees: [],
+    attendees: [
+      { id: 'emp1', name: 'Alice Martin', avatar: 'AM', color: '#e74c3c' },
+      { id: 'emp2', name: 'Bob Johnson', avatar: 'BJ', color: '#3498db' },
+    ],
   },
   {
     id: 'evt2',
@@ -76,7 +79,10 @@ const initialMeetings: Meeting[] = [
     end: dyndatetime('y,m,d,18'),
     resource: 2,
     color: '#88bd42',
-    attendees: [],
+    attendees: [
+      { id: 'emp3', name: 'Carol Smith', avatar: 'CS', color: '#2ecc71' },
+      { id: 'emp4', name: 'David Lee', avatar: 'DL', color: '#f39c12' },
+    ],
   },
   {
     id: 'evt4',
@@ -204,6 +210,78 @@ const initialMeetings: Meeting[] = [
     color: '#51ac19',
     attendees: [],
   },
+  {
+    id: 'evt18',
+    title: 'Team Standup',
+    start: dyndatetime('y,m,d-1,9'),
+    end: dyndatetime('y,m,d-1,11'),
+    resource: 1,
+    color: '#e74c3c',
+    attendees: [],
+  },
+  {
+    id: 'evt19',
+    title: 'Daily Scrum',
+    start: dyndatetime('y,m,d-1,10'),
+    end: dyndatetime('y,m,d-1,13'),
+    resource: 2,
+    color: '#3498db',
+    attendees: [],
+  },
+  {
+    id: 'evt20',
+    title: 'Lunch Meeting',
+    start: dyndatetime('y,m,d-1,12'),
+    end: dyndatetime('y,m,d-1,14'),
+    resource: 3,
+    color: '#2ecc71',
+    attendees: [],
+  },
+  {
+    id: 'evt21',
+    title: 'Weekly Sync',
+    start: dyndatetime('y,m,d-1,14'),
+    end: dyndatetime('y,m,d-1,16'),
+    resource: 4,
+    color: '#f39c12',
+    attendees: [],
+  },
+  {
+    id: 'evt22',
+    title: 'Morning Briefing',
+    start: dyndatetime('y,m,d-2,9'),
+    end: dyndatetime('y,m,d-2,11'),
+    resource: 1,
+    color: '#9b59b6',
+    attendees: [],
+  },
+  {
+    id: 'evt23',
+    title: 'Status Update',
+    start: dyndatetime('y,m,d-2,11'),
+    end: dyndatetime('y,m,d-2,14'),
+    resource: 2,
+    color: '#1abc9c',
+    attendees: [],
+  },
+  {
+    id: 'evt24',
+    title: 'Client Call',
+    start: dyndatetime('y,m,d-2,13'),
+    end: dyndatetime('y,m,d-2,15'),
+    resource: 3,
+    color: '#e67e22',
+    attendees: [],
+  },
+  {
+    id: 'evt25',
+    title: 'End of Day Review',
+    start: dyndatetime('y,m,d-2,16'),
+    end: dyndatetime('y,m,d-2,18'),
+    resource: 4,
+    color: '#34495e',
+    attendees: [],
+  },
 ];
 
 interface EmployeeItemProps {
@@ -216,13 +294,15 @@ function EmployeeItem({ employee, count, onPointerDown }: EmployeeItemProps) {
   const [el, setEl] = useState<HTMLDivElement | null>(null);
 
   return (
-    <div ref={setEl} className="mds-employee-item mbsc-flex" id={'mds-emp-' + employee.id} onPointerDown={onPointerDown}>
-      <div className="mds-employee-avatar mbsc-flex" style={{ background: employee.color }}>
+    <div ref={setEl} className="mds-drop-on-events-employee-item mbsc-flex" id={'mds-emp-' + employee.id} onPointerDown={onPointerDown}>
+      <div className="mds-drop-on-events-employee-avatar mbsc-flex" style={{ background: employee.color }}>
         {employee.avatar}
       </div>
-      <div className="mds-employee-info mbsc-flex">
-        <div className="mds-employee-name">{employee.name}</div>
-        <div className="mds-employee-count">{count > 0 ? count + ' meeting' + (count > 1 ? 's' : '') : 'No assignments'}</div>
+      <div className="mds-drop-on-events-employee-info mbsc-flex">
+        <div className="mds-drop-on-events-employee-name">{employee.name}</div>
+        <div className="mds-drop-on-events-employee-count">
+          {count > 0 ? count + ' meeting' + (count > 1 ? 's' : '') : 'No assignments'}
+        </div>
       </div>
       <Draggable element={el} dragData={employee} />
     </div>
@@ -277,20 +357,24 @@ function SchedulerEvent({ data, meetingsRef, onDrop, onFindConflict, onRemoveAtt
   }, []);
 
   return (
-    <div ref={setContainerEl} className={'mds-custom-event mbsc-flex ' + dropClass} style={{ borderLeft: '4px solid ' + event.color }}>
+    <div
+      ref={setContainerEl}
+      className={'mds-drop-on-events-custom-event mbsc-flex ' + dropClass}
+      style={{ borderLeft: '4px solid ' + event.color }}
+    >
       <Dropcontainer element={containerEl} onItemDrop={handleDrop} onItemDragEnter={handleDragEnter} onItemDragLeave={handleDragLeave}>
-        <div className="mds-event-header mbsc-flex">
-          <div className="mds-event-title">{event.title as string}</div>
-          <div className="mds-event-time">
+        <div className="mds-drop-on-events-event-header mbsc-flex">
+          <div className="mds-drop-on-events-event-title">{event.title as string}</div>
+          <div className="mds-drop-on-events-event-time">
             {data.start} - {data.end}
           </div>
         </div>
         {attendees.length > 0 && (
-          <div className="mds-event-attendees mbsc-flex">
+          <div className="mds-drop-on-events-event-attendees mbsc-flex">
             {attendees.map((att) => (
               <span
                 key={att.id}
-                className="mds-attendee-chip"
+                className="mds-drop-on-events-attendee-chip"
                 style={{ background: att.color }}
                 title={att.name + ' (click to remove)'}
                 onClick={(e) => {
@@ -299,12 +383,12 @@ function SchedulerEvent({ data, meetingsRef, onDrop, onFindConflict, onRemoveAtt
                 }}
               >
                 {att.avatar}
-                <span className="mds-attendee-remove">&times;</span>
+                <span className="mds-drop-on-events-attendee-remove">&times;</span>
               </span>
             ))}
           </div>
         )}
-        <div className="mds-event-drop-hint">Drop people to assign</div>
+        <div className="mds-drop-on-events-event-drop-hint">Drop people to assign</div>
       </Dropcontainer>
     </div>
   );
@@ -456,18 +540,18 @@ const App: FC = () => {
   );
 
   return (
-    <Page className={'mds-scheduler-drop-assignee-on-event-from-list' + (isExternalDragging ? ' mds-external-dragging' : '')}>
+    <Page className={'mds-drop-on-events' + (isExternalDragging ? ' mds-drop-on-events-external-dragging' : '')}>
       <div className="mbsc-grid mbsc-no-padding">
         <div className="mbsc-row">
-          <div className="mbsc-col-sm-3 mbsc-flex-col mds-sidebar">
+          <div className="mbsc-col-sm-3 mbsc-flex-col mds-drop-on-events-sidebar">
             <div className="mbsc-form-group-title">Team Members</div>
-            <div className="mds-employee-list mbsc-flex">
+            <div className="mds-drop-on-events-employee-list mbsc-flex">
               {employees.map((emp) => (
                 <EmployeeItem key={emp.id} employee={emp} count={getAssignmentCount(emp.id)} onPointerDown={handleEmployeePointerDown} />
               ))}
             </div>
           </div>
-          <div className="mbsc-col-sm-9 mds-calendar-wrapper">
+          <div className="mbsc-col-sm-9 mds-drop-on-events-calendar-wrapper">
             <Eventcalendar
               view={myView}
               data={myEvents}

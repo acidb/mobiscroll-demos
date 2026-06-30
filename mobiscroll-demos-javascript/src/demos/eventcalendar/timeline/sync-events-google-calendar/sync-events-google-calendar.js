@@ -40,38 +40,40 @@ export default {
     }
 
     function loadEvents(checked, calendarId) {
+      var newResources;
       if (checked) {
-        loadingEvents(true);
+        var newResource = calendarData[calendarId];
+        newResources = inst.s.resources.slice();
+        newResources.push({ id: calendarId, name: newResource.name, color: newResource.color });
+        inst.setOptions({ resources: newResources });
         calendarIds.push(calendarId);
-        googleCalendarSync
-          .getEvents([calendarId], startDate, endDate)
-          .then(function (resp) {
-            var newResource = calendarData[calendarId];
-            var newResources = inst.s.resources.slice();
-            newResources.push({ id: calendarId, name: newResource.name, color: newResource.color });
-            loadingEvents(false);
-            resp.forEach(function (event) {
-              event.resource = event.googleCalendarId;
-            });
-            events = events.concat(resp);
-            inst.setOptions({ resources: newResources, data: events });
-          })
-          .catch(onError);
       } else {
         var index = calendarIds.indexOf(calendarId);
-        var newResources = inst.s.resources.slice();
-        newResources = newResources.filter(function (c) {
-          return c.id !== calendarId;
-        });
-        inst.setOptions({ resources: newResources });
         if (index !== -1) {
           calendarIds.splice(index, 1);
         }
-        events = events.filter(function (event) {
-          return event.googleCalendarId !== calendarId;
+        newResources = inst.s.resources.filter(function (c) {
+          return c.id !== calendarId;
         });
-        inst.setEvents(events);
+        inst.setOptions({ resources: newResources });
       }
+      if (calendarIds.length === 0) {
+        events = [];
+        inst.setEvents(events);
+        return;
+      }
+      loadingEvents(true);
+      googleCalendarSync
+        .getEvents(calendarIds, startDate, endDate)
+        .then(function (resp) {
+          loadingEvents(false);
+          resp.forEach(function (event) {
+            event.resource = event.googleCalendarId;
+          });
+          events = resp;
+          inst.setEvents(events);
+        })
+        .catch(onError);
     }
 
     function loadingEvents(show) {

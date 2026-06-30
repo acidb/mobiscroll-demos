@@ -10,59 +10,6 @@ export default {
       // theme
     });
 
-    var shifts = {
-      morning: { startHour: 6, endHour: 14, title: 'Morning Shift', color: '#4a8c4d' },
-      afternoon: { startHour: 14, endHour: 22, title: 'Afternoon Shift', color: '#f87c6b' },
-      night: { startHour: 22, endHour: 6, nextDay: true, title: 'Night Shift', color: '#8567AD' },
-    };
-
-    function getShiftByHour(hour) {
-      if (hour >= 6 && hour < 14) {
-        return shifts.morning;
-      }
-      if (hour >= 14 && hour < 22) {
-        return shifts.afternoon;
-      }
-      if (hour >= 22 || hour < 6) {
-        return shifts.night;
-      }
-      return shifts.afternoon;
-    }
-
-    function calculateStart(start) {
-      var d = new Date(start);
-      var originalHour = d.getHours();
-      var shift = getShiftByHour(originalHour);
-      d.setHours(shift.startHour, 0, 0, 0);
-      if (shift.startHour === 22 && originalHour < 6) {
-        d.setDate(d.getDate() - 1);
-      }
-      return d;
-    }
-
-    function calculateEnd(start) {
-      var d = new Date(start);
-      var startHour = d.getHours();
-      var shift = getShiftByHour(d.getHours());
-      d.setHours(shift.endHour, 0, 0, 0);
-      if (shift.nextDay && startHour === 22) {
-        d.setDate(d.getDate() + 1);
-      }
-      return d;
-    }
-
-    function getTitle(startHours) {
-      return getShiftByHour(startHours).title;
-    }
-
-    function getColor(startHours) {
-      return getShiftByHour(startHours).color;
-    }
-
-    var morningColor = '#4a8c4d';
-    var afternoonColor = '#f87c6b';
-    var nightColor = '#8567AD';
-
     $(function () {
       var draggedEventStart;
       var draggedEventEnd;
@@ -70,6 +17,59 @@ export default {
       var availableSlotOnHover;
       var redResources = {};
       var currentColors = [];
+
+      var morningColor = '#4a8c4d';
+      var afternoonColor = '#f87c6b';
+      var nightColor = '#8567AD';
+
+      var shifts = {
+        morning: { startHour: 6, endHour: 14, title: 'Morning Shift', color: '#4a8c4d' },
+        afternoon: { startHour: 14, endHour: 22, title: 'Afternoon Shift', color: '#f87c6b' },
+        night: { startHour: 22, endHour: 6, nextDay: true, title: 'Night Shift', color: '#8567AD' },
+      };
+
+      function getShiftByHour(hour) {
+        if (hour >= 6 && hour < 14) {
+          return shifts.morning;
+        }
+        if (hour >= 14 && hour < 22) {
+          return shifts.afternoon;
+        }
+        if (hour >= 22 || hour < 6) {
+          return shifts.night;
+        }
+        return shifts.afternoon;
+      }
+
+      function calculateStart(start) {
+        var d = new Date(start);
+        var originalHour = d.getHours();
+        var shift = getShiftByHour(originalHour);
+        d.setHours(shift.startHour, 0, 0, 0);
+        if (shift.startHour === 22 && originalHour < 6) {
+          d.setDate(d.getDate() - 1);
+        }
+        return d;
+      }
+
+      function calculateEnd(start) {
+        var d = new Date(start);
+        var startHour = d.getHours();
+        var shift = getShiftByHour(d.getHours());
+        d.setHours(shift.endHour, 0, 0, 0);
+        if (shift.nextDay && startHour === 22) {
+          d.setDate(d.getDate() + 1);
+        }
+        return d;
+      }
+
+      function getTitle(startHours) {
+        return getShiftByHour(startHours).title;
+      }
+
+      function getColor(startHours) {
+        return getShiftByHour(startHours).color;
+      }
 
       function getAvailableSlots(inst, resourceId, dayStart) {
         var dayEnd = new Date(dayStart);
@@ -112,6 +112,7 @@ export default {
           return true;
         });
       }
+
       $('#demo-24-hour-manufacturing-shift-rota-planning')
         .mobiscroll()
         .eventcalendar({
@@ -327,7 +328,12 @@ export default {
               return ev.resource === event.resource || +new Date(ev.start) === +new Date(event.start);
             });
             if (conflict) {
-              mobiscroll.toast({ message: 'Already assigned' });
+              mobiscroll.toast({
+                //<hidden>
+                // theme,//</hidden>
+                // context,
+                message: 'Already assigned',
+              });
               return false;
             }
             currentColors = clearColorsForResource(currentColors, event.resource, event.start);
@@ -339,6 +345,8 @@ export default {
           },
           onEventClick: function () {
             mobiscroll.toast({
+              //<hidden>
+              // theme,//</hidden>
               // context,
               message: 'Already assigned',
             });
@@ -364,6 +372,8 @@ export default {
               colors: currentColors,
             });
             mobiscroll.toast({
+              //<hidden>
+              // theme,//</hidden>
               // context,
               message: args.event.title + ' deleted',
             });
@@ -375,6 +385,8 @@ export default {
           },
           onEventUpdateFailed: function () {
             mobiscroll.toast({
+              //<hidden>
+              // theme,//</hidden>
               // context,
               message: 'Already assigned',
             });
@@ -494,7 +506,7 @@ export default {
 }
 
 .mds-24-hour-manufacturing-calendar .mbsc-schedule-color.available-slot .mbsc-schedule-color-text {
-  position: absolute; 
+  position: absolute;
   z-index: 1;
   pointer-events: none;
   top: 50%;

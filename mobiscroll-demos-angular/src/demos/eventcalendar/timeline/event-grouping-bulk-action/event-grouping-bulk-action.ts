@@ -4,15 +4,15 @@ import { FormsModule } from '@angular/forms';
 import {
   formatDate,
   MbscCalendarEvent,
+  MbscDatepicker,
   MbscEventcalendar,
   MbscEventcalendarView,
   MbscEventUpdateEvent,
   MbscModule,
   Notifications,
-  setOptions
+  setOptions,
   /* localeImport */
-}
-  from '@mobiscroll/angular';
+} from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -115,7 +115,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,15'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 2,
@@ -124,7 +124,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,20'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 3,
@@ -133,7 +133,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 4,
@@ -142,7 +142,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,25'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 5,
@@ -151,7 +151,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   //<hide-comment>
   {
@@ -161,7 +161,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,18'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 7,
@@ -170,7 +170,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,30'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 8,
@@ -179,7 +179,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 3,
     type: 'repair',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 9,
@@ -188,7 +188,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,22'),
     resource: 5,
     type: 'installation',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 10,
@@ -197,7 +197,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 5,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 11,
@@ -206,7 +206,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,28'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 12,
@@ -215,7 +215,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 13,
@@ -224,7 +224,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,12'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 14,
@@ -233,7 +233,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,25'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 15,
@@ -242,7 +242,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 16,
@@ -251,7 +251,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,18'),
     resource: 2,
     type: 'installation',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 17,
@@ -260,7 +260,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 18,
@@ -269,7 +269,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 19,
@@ -278,7 +278,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,15'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 20,
@@ -287,7 +287,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 21,
@@ -296,7 +296,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,22'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 22,
@@ -305,7 +305,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 4,
     type: 'repair',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 23,
@@ -314,7 +314,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,28'),
     resource: 5,
     type: 'installation',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 24,
@@ -323,7 +323,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 5,
     type: 'maintenance',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 25,
@@ -332,7 +332,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 26,
@@ -341,7 +341,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,13'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 27,
@@ -350,7 +350,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 28,
@@ -359,7 +359,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,18'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 29,
@@ -368,7 +368,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 30,
@@ -377,7 +377,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 31,
@@ -386,7 +386,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,15'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 32,
@@ -395,7 +395,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,28'),
     resource: 3,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 33,
@@ -404,7 +404,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 34,
@@ -413,7 +413,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,22'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 35,
@@ -422,7 +422,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 4,
     type: 'repair',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 36,
@@ -431,7 +431,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,25'),
     resource: 5,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 37,
@@ -440,7 +440,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 38,
@@ -449,7 +449,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,12'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 39,
@@ -458,7 +458,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,25'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 40,
@@ -467,7 +467,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 41,
@@ -476,7 +476,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,18'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 42,
@@ -485,7 +485,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,30'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 43,
@@ -494,7 +494,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 44,
@@ -503,7 +503,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,15'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 45,
@@ -512,7 +512,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 3,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 46,
@@ -521,7 +521,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,22'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 47,
@@ -530,7 +530,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 48,
@@ -539,7 +539,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,28'),
     resource: 5,
     type: 'maintenance',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 49,
@@ -548,7 +548,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 5,
     type: 'upgrade',
-    clientGroup: 'Enterprise Solutions Group'
+    clientGroup: 'Enterprise Solutions Group',
   },
   {
     id: 50,
@@ -557,7 +557,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 51,
@@ -566,7 +566,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,14'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 52,
@@ -575,7 +575,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 53,
@@ -584,7 +584,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,19'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 54,
@@ -593,7 +593,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 55,
@@ -602,7 +602,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 56,
@@ -611,7 +611,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,22'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 57,
@@ -620,7 +620,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 58,
@@ -629,7 +629,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,16'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 59,
@@ -638,7 +638,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 4,
     type: 'repair',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 60,
@@ -647,7 +647,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 61,
@@ -656,7 +656,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,26'),
     resource: 5,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 62,
@@ -665,7 +665,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 5,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 63,
@@ -674,7 +674,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,29'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 64,
@@ -683,7 +683,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,14'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 65,
@@ -692,7 +692,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,28'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 66,
@@ -701,7 +701,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 67,
@@ -710,7 +710,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,20'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 68,
@@ -719,7 +719,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 69,
@@ -728,7 +728,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,16'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 70,
@@ -737,7 +737,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 3,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 71,
@@ -746,7 +746,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,23'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 72,
@@ -755,7 +755,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 73,
@@ -764,7 +764,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 74,
@@ -773,7 +773,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 5,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 75,
@@ -782,7 +782,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 76,
@@ -791,7 +791,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,12'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 77,
@@ -800,7 +800,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 78,
@@ -809,7 +809,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,19'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 79,
@@ -818,7 +818,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 80,
@@ -827,7 +827,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 81,
@@ -836,7 +836,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,16'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 82,
@@ -845,7 +845,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,29'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 83,
@@ -854,7 +854,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 3,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 84,
@@ -863,7 +863,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,23'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 85,
@@ -872,7 +872,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 4,
     type: 'repair',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 86,
@@ -881,7 +881,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,26'),
     resource: 5,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 87,
@@ -890,7 +890,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 5,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 88,
@@ -899,7 +899,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 89,
@@ -908,7 +908,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,13'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 90,
@@ -917,7 +917,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,27'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 91,
@@ -926,7 +926,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 92,
@@ -935,7 +935,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,19'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 93,
@@ -944,7 +944,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 94,
@@ -953,7 +953,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,16'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 95,
@@ -962,7 +962,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 3,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 96,
@@ -971,7 +971,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,23'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 97,
@@ -980,7 +980,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 98,
@@ -989,7 +989,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 99,
@@ -998,7 +998,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,29'),
     resource: 5,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 100,
@@ -1007,7 +1007,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 101,
@@ -1016,7 +1016,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,10'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 102,
@@ -1025,7 +1025,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,18'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 103,
@@ -1034,7 +1034,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,25'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 104,
@@ -1043,7 +1043,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,28'),
     resource: 1,
     type: 'repair',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 105,
@@ -1052,7 +1052,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 1,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 106,
@@ -1061,7 +1061,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 107,
@@ -1070,7 +1070,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,20'),
     resource: 2,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 108,
@@ -1079,7 +1079,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,28'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 109,
@@ -1088,7 +1088,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 110,
@@ -1097,7 +1097,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 2,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 111,
@@ -1106,7 +1106,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,22'),
     resource: 2,
     type: 'repair',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 112,
@@ -1115,7 +1115,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 113,
@@ -1124,7 +1124,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,15'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 114,
@@ -1133,7 +1133,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,25'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 115,
@@ -1142,7 +1142,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 3,
     type: 'repair',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 116,
@@ -1151,7 +1151,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 117,
@@ -1160,7 +1160,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,20'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 118,
@@ -1169,7 +1169,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,17'),
     resource: 4,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 119,
@@ -1178,7 +1178,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,25'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 120,
@@ -1187,7 +1187,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 121,
@@ -1196,7 +1196,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,28'),
     resource: 4,
     type: 'repair',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 122,
@@ -1205,7 +1205,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 123,
@@ -1214,7 +1214,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 124,
@@ -1223,7 +1223,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,19'),
     resource: 5,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 125,
@@ -1232,7 +1232,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,29'),
     resource: 5,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 126,
@@ -1241,7 +1241,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 5,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 127,
@@ -1250,7 +1250,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 5,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 128,
@@ -1259,7 +1259,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,23'),
     resource: 5,
     type: 'repair',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 129,
@@ -1268,7 +1268,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,16'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 130,
@@ -1277,7 +1277,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,26'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 131,
@@ -1286,7 +1286,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 6,
     type: 'repair',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 132,
@@ -1295,7 +1295,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 133,
@@ -1304,7 +1304,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,21'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 134,
@@ -1313,7 +1313,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,13'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 135,
@@ -1322,7 +1322,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,24'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 136,
@@ -1331,7 +1331,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,28'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 137,
@@ -1340,7 +1340,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 138,
@@ -1349,7 +1349,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 1,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 139,
@@ -1358,7 +1358,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,15'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 140,
@@ -1367,7 +1367,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,26'),
     resource: 2,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 141,
@@ -1376,7 +1376,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 142,
@@ -1385,7 +1385,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 143,
@@ -1394,7 +1394,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 2,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 144,
@@ -1403,7 +1403,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,17'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 145,
@@ -1412,7 +1412,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,28'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 146,
@@ -1421,7 +1421,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 3,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 147,
@@ -1430,7 +1430,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 148,
@@ -1439,7 +1439,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 149,
@@ -1448,7 +1448,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,14'),
     resource: 4,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 150,
@@ -1457,7 +1457,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,25'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 151,
@@ -1466,7 +1466,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,29'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 152,
@@ -1475,7 +1475,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 153,
@@ -1484,7 +1484,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 154,
@@ -1493,7 +1493,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,16'),
     resource: 5,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 155,
@@ -1502,7 +1502,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,27'),
     resource: 5,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 156,
@@ -1511,7 +1511,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 5,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 157,
@@ -1520,7 +1520,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 5,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 158,
@@ -1529,7 +1529,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 5,
     type: 'repair',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 159,
@@ -1538,7 +1538,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,18'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 160,
@@ -1547,7 +1547,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,29'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 161,
@@ -1556,7 +1556,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 6,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 162,
@@ -1565,7 +1565,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 163,
@@ -1574,7 +1574,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 6,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 164,
@@ -1583,7 +1583,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,13'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 165,
@@ -1592,7 +1592,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,24'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 166,
@@ -1601,7 +1601,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,28'),
     resource: 1,
     type: 'repair',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 167,
@@ -1610,7 +1610,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 1,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 168,
@@ -1619,7 +1619,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 169,
@@ -1628,7 +1628,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,15'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 170,
@@ -1637,7 +1637,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,27'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 171,
@@ -1646,7 +1646,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 2,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 172,
@@ -1655,7 +1655,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 173,
@@ -1664,7 +1664,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 2,
     type: 'repair',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 174,
@@ -1673,7 +1673,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,17'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 175,
@@ -1682,7 +1682,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,29'),
     resource: 3,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 176,
@@ -1691,7 +1691,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 177,
@@ -1700,7 +1700,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 178,
@@ -1709,7 +1709,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 3,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 179,
@@ -1718,7 +1718,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,14'),
     resource: 4,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 180,
@@ -1727,7 +1727,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,25'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 181,
@@ -1736,7 +1736,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,29'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 182,
@@ -1745,7 +1745,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 183,
@@ -1754,7 +1754,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 4,
     type: 'repair',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 184,
@@ -1763,7 +1763,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,16'),
     resource: 5,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 185,
@@ -1772,7 +1772,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,28'),
     resource: 5,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 186,
@@ -1781,7 +1781,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 5,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 187,
@@ -1790,7 +1790,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 5,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 188,
@@ -1799,7 +1799,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 5,
     type: 'repair',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 189,
@@ -1808,7 +1808,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,18'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 190,
@@ -1817,7 +1817,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 6,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 191,
@@ -1826,7 +1826,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 192,
@@ -1835,7 +1835,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 193,
@@ -1844,7 +1844,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 6,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 194,
@@ -1853,7 +1853,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,13'),
     resource: 1,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 195,
@@ -1862,7 +1862,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,26'),
     resource: 1,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 196,
@@ -1871,7 +1871,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 1,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 197,
@@ -1880,7 +1880,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 1,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 198,
@@ -1889,7 +1889,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 1,
     type: 'repair',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 199,
@@ -1898,7 +1898,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,15'),
     resource: 2,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 200,
@@ -1907,7 +1907,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,28'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 201,
@@ -1916,7 +1916,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 2,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 202,
@@ -1925,7 +1925,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 2,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 203,
@@ -1934,7 +1934,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 2,
     type: 'repair',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 204,
@@ -1943,7 +1943,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,16'),
     resource: 3,
     type: 'upgrade',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 205,
@@ -1952,7 +1952,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,29'),
     resource: 3,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 206,
@@ -1961,7 +1961,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 3,
     type: 'inspection',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 207,
@@ -1970,7 +1970,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 3,
     type: 'installation',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 208,
@@ -1979,7 +1979,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 3,
     type: 'repair',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 209,
@@ -1988,7 +1988,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,14'),
     resource: 4,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 210,
@@ -1997,7 +1997,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,27'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 211,
@@ -2006,7 +2006,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 212,
@@ -2015,7 +2015,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 213,
@@ -2024,7 +2024,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 4,
     type: 'repair',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 214,
@@ -2033,7 +2033,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,17'),
     resource: 5,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 215,
@@ -2042,7 +2042,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,30'),
     resource: 5,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 216,
@@ -2051,7 +2051,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 5,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 217,
@@ -2060,7 +2060,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 5,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 218,
@@ -2069,7 +2069,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 5,
     type: 'repair',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 219,
@@ -2078,7 +2078,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,18'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 220,
@@ -2087,7 +2087,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 6,
     type: 'maintenance',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 221,
@@ -2096,7 +2096,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 222,
@@ -2105,7 +2105,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 6,
     type: 'inspection',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 223,
@@ -2114,7 +2114,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 6,
     type: 'repair',
-    clientGroup: 'Education & Municipal Services'
+    clientGroup: 'Education & Municipal Services',
   },
   {
     id: 224,
@@ -2123,7 +2123,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 2,
     type: 'repair',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 225,
@@ -2132,7 +2132,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 2,
     type: 'maintenance',
-    clientGroup: 'Healthcare Network'
+    clientGroup: 'Healthcare Network',
   },
   {
     id: 226,
@@ -2141,7 +2141,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,24'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 227,
@@ -2150,7 +2150,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,28'),
     resource: 4,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 228,
@@ -2159,7 +2159,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 229,
@@ -2168,7 +2168,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,20'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 230,
@@ -2177,7 +2177,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 4,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 231,
@@ -2186,7 +2186,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 232,
@@ -2195,7 +2195,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,24'),
     resource: 6,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 233,
@@ -2204,7 +2204,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,28'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 234,
@@ -2213,7 +2213,7 @@ const defaultEvents = [
     end: dyndatetime('y,3,31'),
     resource: 6,
     type: 'inspection',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 235,
@@ -2222,7 +2222,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,19'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 236,
@@ -2231,7 +2231,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 6,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 237,
@@ -2240,7 +2240,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 6,
     type: 'inspection',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 238,
@@ -2249,7 +2249,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,19'),
     resource: 6,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 239,
@@ -2258,7 +2258,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 6,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 240,
@@ -2267,7 +2267,7 @@ const defaultEvents = [
     end: dyndatetime('y,9,30'),
     resource: 6,
     type: 'inspection',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 241,
@@ -2276,7 +2276,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,19'),
     resource: 6,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 242,
@@ -2285,7 +2285,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 6,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 243,
@@ -2294,7 +2294,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 6,
     type: 'inspection',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 244,
@@ -2303,7 +2303,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,19'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 245,
@@ -2312,7 +2312,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 4,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 246,
@@ -2321,7 +2321,7 @@ const defaultEvents = [
     end: dyndatetime('y,6,30'),
     resource: 4,
     type: 'installation',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 247,
@@ -2330,7 +2330,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,19'),
     resource: 4,
     type: 'upgrade',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 248,
@@ -2339,7 +2339,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 4,
     type: 'maintenance',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 249,
@@ -2348,7 +2348,7 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 4,
     type: 'repair',
-    clientGroup: 'Industrial Manufacturing Co'
+    clientGroup: 'Industrial Manufacturing Co',
   },
   {
     id: 250,
@@ -2357,10 +2357,10 @@ const defaultEvents = [
     end: dyndatetime('y,12,31'),
     resource: 4,
     type: 'inspection',
-    clientGroup: 'Industrial Manufacturing Co'
-  }
+    clientGroup: 'Industrial Manufacturing Co',
+  },
   //</hide-comment>
-]
+];
 
 const selectData = [
   {
@@ -2393,7 +2393,9 @@ interface GroupData {
 export class AppComponent implements OnInit {
   @ViewChild('calendar', { static: false })
   calendar!: MbscEventcalendar;
-  constructor(private notify: Notifications) { }
+  @ViewChild('editDatePickerRef', { static: false })
+  editDatePicker!: MbscDatepicker;
+  constructor(private notify: Notifications) {}
 
   rawEvents: MbscCalendarEvent[] = defaultEvents;
   displayEvents: MbscCalendarEvent[] = [];
@@ -2402,6 +2404,10 @@ export class AppComponent implements OnInit {
 
   groupBy = 'assignee';
   groupByClientQuarter = false;
+  zoomLevel = 'month';
+  editingEventId: number | null = null;
+  editEventTitle = '';
+  editEventDateRange: Date[] = [];
 
   assigneeResources = assigneeResources;
   typeResources = typeResources;
@@ -2412,8 +2418,8 @@ export class AppComponent implements OnInit {
     timeline: {
       type: 'year',
       resolutionHorizontal: 'month',
-      eventHeight: 'variable'
-    }
+      eventHeight: 'variable',
+    },
   };
 
   ngOnInit(): void {
@@ -2446,7 +2452,7 @@ export class AppComponent implements OnInit {
           clientGroup: event.clientGroup,
           year,
           period,
-          events: []
+          events: [],
         });
       }
       groups.get(groupKey)!.events.push(event);
@@ -2454,18 +2460,13 @@ export class AppComponent implements OnInit {
 
     // Create grouped events
     groups.forEach((groupData, groupKey) => {
-      const periodEvents = [...groupData.events].sort((a, b) =>
-        (a.start! < b.start! ? -1 : a.start! > b.start! ? 1 : 0)
-      );
+      const periodEvents = [...groupData.events].sort((a, b) => (a.start! < b.start! ? -1 : a.start! > b.start! ? 1 : 0));
 
       const resourceList = this.groupBy === 'assignee' ? assigneeResources : typeResources;
       const color = resourceList.find((r) => r.id === groupData.resource)?.color;
       const eventIds = periodEvents.map((e) => e.id).join('-');
       const earliestStart = periodEvents[0].start;
-      const latestEnd = periodEvents.reduce(
-        (latest, e) => (e.end! > latest! ? e.end : latest),
-        periodEvents[0].end
-      );
+      const latestEnd = periodEvents.reduce((latest, e) => (e.end! > latest! ? e.end : latest), periodEvents[0].end);
       const newId = `group-${groupKey}-${eventIds}`;
       const stateKey = `${groupData.resource}-${groupData.clientGroup}-${groupData.year}-${groupData.period}`;
 
@@ -2514,6 +2515,17 @@ export class AppComponent implements OnInit {
     }
 
     this.myResources = currentResources;
+    this.myView = {
+      timeline: {
+        type: 'year',
+        resolutionHorizontal: this.zoomLevel as 'quarter' | 'month' | 'week',
+        eventHeight: 'variable',
+      },
+    };
+  }
+
+  onZoomLevelChange(): void {
+    this.updateView();
   }
 
   onGroupByChange(event: any): void {
@@ -2531,37 +2543,92 @@ export class AppComponent implements OnInit {
     const oldEvent = args.oldEvent as any;
 
     if (!this.groupByClientQuarter) {
-      // Simple view: sync into rawEvents
-      this.rawEvents = this.rawEvents.map((e: any) =>
-        e.id === updatedEvent.id
-          ? { ...e, start: updatedEvent.start, end: updatedEvent.end }
-          : e
-      );
+      const oldResource = (args.oldEvent as any).resource;
+      const newResource = updatedEvent.resource;
+      const resourceChanged = oldResource !== newResource;
+
+      this.rawEvents = this.rawEvents.map((e: any) => {
+        if (e.id === updatedEvent.id) {
+          const update: any = { start: updatedEvent.start, end: updatedEvent.end };
+          if (resourceChanged) {
+            if (this.groupBy === 'assignee') {
+              update.resource = newResource;
+            } else {
+              update.type = newResource;
+            }
+          }
+          return { ...e, ...update };
+        }
+        return e;
+      });
+
+      if (resourceChanged) {
+        let fromName: string;
+        let toName: string;
+        if (this.groupBy === 'assignee') {
+          const fromRes = assigneeResources.find((r) => r.id === oldResource);
+          const toRes = assigneeResources.find((r) => r.id === newResource);
+          fromName = fromRes ? fromRes.name : String(oldResource);
+          toName = toRes ? toRes.name : String(newResource);
+        } else {
+          fromName = String(oldResource);
+          toName = String(newResource);
+        }
+        this.notify.toast({ message: `"${updatedEvent.title}" moved from ${fromName} to ${toName}.` });
+      }
       return;
     }
 
     // Grouped view
-    const startDelta = new Date(updatedEvent.start).getTime() - new Date(oldEvent.start).getTime();
-    if (startDelta === 0) return;
+    const newStart = new Date(updatedEvent.start).getTime();
+    const newEnd = new Date(updatedEvent.end).getTime();
+    const oldStart = new Date(oldEvent.start).getTime();
+    const oldEnd = new Date(oldEvent.end).getTime();
+    const startDelta = newStart - oldStart;
+    const endDelta = newEnd - oldEnd;
+
+    if (startDelta === 0 && endDelta === 0) return;
 
     const movedGroupedEvent = this.groupedEvents.find((ge: any) => ge.id === oldEvent.id) as any;
     if (!movedGroupedEvent) return;
 
     const { clientGroup: clientGroupName, resource: resourceId, collapsed: wasCollapsed } = movedGroupedEvent;
+    const isMove = startDelta === endDelta;
 
-    const eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent: any) => ({
-      ...originalEvent,
-      start: new Date(new Date(originalEvent.start).getTime() + startDelta),
-      end: new Date(new Date(originalEvent.end).getTime() + startDelta),
-    }));
+    let eventsToUpdate: any[];
+
+    if (isMove) {
+      eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent: any) => ({
+        ...originalEvent,
+        start: new Date(new Date(originalEvent.start).getTime() + startDelta),
+        end: new Date(new Date(originalEvent.end).getTime() + startDelta),
+      }));
+    } else {
+      const oldGroupDuration = oldEnd - oldStart;
+      const newGroupDuration = newEnd - newStart;
+
+      eventsToUpdate = movedGroupedEvent.originalEvents.map((originalEvent: any) => {
+        const evStart = new Date(originalEvent.start).getTime();
+        const evEnd = new Date(originalEvent.end).getTime();
+        const relativeStart = oldGroupDuration > 0 ? (evStart - oldStart) / oldGroupDuration : 0;
+        const relativeEnd = oldGroupDuration > 0 ? (evEnd - oldStart) / oldGroupDuration : 1;
+        const mappedStart = newStart + relativeStart * newGroupDuration;
+        const mappedEnd = newStart + relativeEnd * newGroupDuration;
+        const childDurationDays = (mappedEnd - mappedStart) / (1000 * 60 * 60 * 24);
+        const finalEnd = childDurationDays < 1 ? mappedStart + 1000 * 60 * 60 * 24 : mappedEnd;
+        return {
+          ...originalEvent,
+          start: new Date(mappedStart),
+          end: new Date(finalEnd),
+        };
+      });
+    }
 
     // Sync into rawEvents
     const updatedIds = new Set(eventsToUpdate.map((e: any) => e.id));
     const updatedMap = new Map(eventsToUpdate.map((e: any) => [e.id, e]));
 
-    this.rawEvents = this.rawEvents.map((e: any) =>
-      updatedIds.has(e.id) ? updatedMap.get(e.id)! : e
-    );
+    this.rawEvents = this.rawEvents.map((e: any) => (updatedIds.has(e.id) ? updatedMap.get(e.id)! : e));
 
     // Rebuild view
     this.updateView();
@@ -2570,11 +2637,8 @@ export class AppComponent implements OnInit {
     const newYear = new Date(eventsToUpdate[0].start).getFullYear();
     const newPeriod = Math.floor(new Date(eventsToUpdate[0].start).getMonth() / 3);
 
-    const newGroupedEvent = this.groupedEvents.find((ge: any) =>
-      ge.resource === resourceId &&
-      ge.clientGroup === clientGroupName &&
-      ge.year === newYear &&
-      ge.period === newPeriod
+    const newGroupedEvent = this.groupedEvents.find(
+      (ge: any) => ge.resource === resourceId && ge.clientGroup === clientGroupName && ge.year === newYear && ge.period === newPeriod,
     ) as any;
 
     if (newGroupedEvent) {
@@ -2582,15 +2646,14 @@ export class AppComponent implements OnInit {
       this.displayEvents = [...this.groupedEvents];
     }
 
+    const actionLabel = isMove ? 'moved' : 'resized';
     this.notify.toast({
-      message: `${eventsToUpdate.length} event(s) for ${clientGroupName} have been moved.`,
+      message: `${eventsToUpdate.length} event(s) for ${clientGroupName} have been ${actionLabel}.`,
     });
   }
 
   toggleGroupCollapse(groupEvent: any): void {
-    this.groupedEvents = this.groupedEvents.map((ge: any) =>
-      ge.id === groupEvent.id ? { ...ge, collapsed: !ge.collapsed } : ge
-    );
+    this.groupedEvents = this.groupedEvents.map((ge: any) => (ge.id === groupEvent.id ? { ...ge, collapsed: !ge.collapsed } : ge));
     this.displayEvents = [...this.groupedEvents];
 
     setTimeout(() => {
@@ -2643,4 +2706,70 @@ export class AppComponent implements OnInit {
     return formatDate('DD MMM', new Date(date));
   }
 
+  editEvent(ev: any): void {
+    this.editingEventId = ev.id;
+    this.editEventTitle = ev.title;
+    this.editEventDateRange = [new Date(ev.start), new Date(ev.end)];
+    this.editDatePicker.open();
+  }
+
+  onEditDateChange(args: any): void {
+    const dates = args.value;
+    const startVal = dates && dates[0];
+    const endVal = dates && dates[1];
+
+    if (this.editingEventId !== null && startVal && endVal) {
+      const oldEvent = this.rawEvents.find((e: any) => e.id === this.editingEventId) as any;
+      if (!oldEvent) return;
+
+      const oldQuarter = Math.floor(new Date(oldEvent.start).getMonth() / 3);
+      const newQuarter = Math.floor(new Date(startVal).getMonth() / 3);
+      const oldYear = new Date(oldEvent.start).getFullYear();
+      const newYear = new Date(startVal).getFullYear();
+      const quarterChanged = this.groupByClientQuarter && (oldQuarter !== newQuarter || oldYear !== newYear);
+
+      const applyUpdate = () => {
+        this.rawEvents = this.rawEvents.map((e: any) => (e.id === this.editingEventId ? { ...e, start: startVal, end: endVal } : e));
+        this.updateView();
+      };
+
+      if (quarterChanged) {
+        const quarterNames = ['Q1', 'Q2', 'Q3', 'Q4'];
+        const fromLabel = `${quarterNames[oldQuarter]} ${oldYear}`;
+        const toLabel = `${quarterNames[newQuarter]} ${newYear}`;
+        this.notify.confirm({
+          title: 'Move to different group',
+          message: `"${oldEvent.title}" will move from ${fromLabel} to ${toLabel}. Do you want to continue?`,
+          okText: 'Move',
+          cancelText: 'Cancel',
+          callback: (result: boolean) => {
+            if (result) {
+              applyUpdate();
+              this.notify.toast({ message: `"${oldEvent.title}" moved to ${toLabel}.` });
+            }
+          },
+        });
+      } else {
+        applyUpdate();
+        this.notify.toast({ message: `"${oldEvent.title}" dates updated.` });
+      }
+    }
+  }
+
+  getEventMarginLeft(ev: any, group: any): string {
+    const groupStart = new Date(group.start).getTime();
+    const groupEnd = new Date(group.end).getTime();
+    const groupDuration = groupEnd - groupStart;
+    const evStart = new Date(ev.start).getTime();
+    return groupDuration > 0 ? ((evStart - groupStart) / groupDuration) * 100 + '%' : '0%';
+  }
+
+  getEventWidth(ev: any, group: any): string {
+    const groupStart = new Date(group.start).getTime();
+    const groupEnd = new Date(group.end).getTime();
+    const groupDuration = groupEnd - groupStart;
+    const evStart = new Date(ev.start).getTime();
+    const evEnd = new Date(ev.end).getTime();
+    return groupDuration > 0 ? ((evEnd - evStart) / groupDuration) * 100 + '%' : '100%';
+  }
 }

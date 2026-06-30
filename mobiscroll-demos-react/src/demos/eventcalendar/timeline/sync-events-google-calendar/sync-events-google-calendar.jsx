@@ -42,20 +42,11 @@ function App() {
   const [isDeleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const buttonRef = useRef(null);
-
   const debounce = useRef();
   const startDate = useRef();
   const endDate = useRef();
 
-  const myView = useMemo(
-    () => ({
-      timeline: {
-        type: 'week',
-        eventDisplay: 'fill',
-      },
-    }),
-    [],
-  );
+  const myView = useMemo(() => ({ timeline: { type: 'week', eventDisplay: 'fill' } }), []);
 
   const onError = useCallback((resp) => {
     setToastMessage(resp.error ? resp.error : resp.result.error.message);
@@ -95,29 +86,33 @@ function App() {
     (ev) => {
       const checked = ev.target.checked;
       const calendarId = ev.target.value;
-      calendarData[calendarId].checked = checked;
+      const updatedCalendarData = { ...calendarData, [calendarId]: { ...calendarData[calendarId], checked } };
+      const newCalendarIds = checked ? [...calendarIds, calendarId] : calendarIds.filter((id) => id !== calendarId);
       if (checked) {
-        setLoading(true);
-        setCalendarIds((calIds) => [...calIds, calendarId]);
-        googleCalendarSync
-          .getEvents([calendarId], startDate.current, endDate.current)
-          .then((events) => {
-            const newResource = calendarData[calendarId];
-            setLoading(false);
-            setResources((resources) => [...resources, { id: calendarId, name: newResource.name, color: newResource.color }]);
-            events.forEach((event) => {
-              event.resource = event.googleCalendarId;
-            });
-            setEvents((oldEvents) => [...oldEvents, ...events]);
-          })
-          .catch(onError);
+        const newResource = calendarData[calendarId];
+        setResources((resources) => [...resources, { id: calendarId, name: newResource.name, color: newResource.color }]);
       } else {
         setResources((resources) => resources.filter((item) => item.id !== calendarId));
-        setCalendarIds((calIds) => calIds.filter((item) => item !== calendarId));
-        setEvents((oldEvents) => oldEvents.filter((item) => item.googleCalendarId !== calendarId));
       }
+      setCalendarData(updatedCalendarData);
+      setCalendarIds(newCalendarIds);
+      if (newCalendarIds.length === 0) {
+        setEvents([]);
+        return;
+      }
+      setLoading(true);
+      googleCalendarSync
+        .getEvents(newCalendarIds, startDate.current, endDate.current)
+        .then((resp) => {
+          setLoading(false);
+          resp.forEach((event) => {
+            event.resource = event.googleCalendarId;
+          });
+          setEvents(resp);
+        })
+        .catch(onError);
     },
-    [calendarData, onError],
+    [calendarData, calendarIds, onError],
   );
 
   const renderMyHeader = useCallback(

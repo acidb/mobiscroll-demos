@@ -233,7 +233,7 @@ export class AppComponent implements OnInit {
   selectAllEvents() {
     this.refreshSelectedEvents(this.calendar.getEvents(this.firstDay, this.lastDay));
     this.notify.toast({
-      message: 'All events selected this month',
+      message: 'All events selected from view',
     });
   }
 

@@ -301,7 +301,7 @@ export default {
           color: '#656d49',
         };
       },
-      renderDay: function (args) {
+      renderCalendarDay: function (args) {
         var date = args.date;
         var nrEvents = getNrEvents(args.events);
         var nrAllEvents = args.events.length;

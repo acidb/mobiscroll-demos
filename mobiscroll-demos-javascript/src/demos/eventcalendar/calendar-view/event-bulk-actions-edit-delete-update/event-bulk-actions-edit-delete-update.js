@@ -170,7 +170,7 @@ export default {
     document.getElementById('select-all-events').addEventListener('click', function () {
       calendar.setSelectedEvents(calendar.getEvents(firstDay, lastDay));
       mobiscroll.toast({
-        message: 'All events selected this month',
+        message: 'All events selected from view',
       });
     });
 

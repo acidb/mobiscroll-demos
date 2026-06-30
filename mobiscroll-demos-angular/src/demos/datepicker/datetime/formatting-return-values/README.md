@@ -1,3 +1,15 @@
 To download and run this example locally, please follow the instructions [in the readme file of the project](https://github.com/acidb/mobiscroll-demos-angular?tab=readme-ov-file#mobiscroll-angular-demos).
 
 To see this example live, check it out on our [demo page](https://demo.mobiscroll.com/angular/datetime/formatting-return-values#).
+
+## Demo description
+
+Use the `dateFormat`, `timeFormat` options to customize how the values show up in the inputs after selection. If the formats are not explicitly set, they are inherited from the localization settings.
+
+Besides customizing the date and time formats you can reorder the picker wheels and change its formats with the `dateWheels` and `timeWheels` options.
+
+- **Interested in learning about localization?** [Check out how the return format changes based on locale →](https://demo.mobiscroll.com/angular/datetime/localization#)
+
+## Related demos
+
+- [Check out how the return format changes based on locale →](https://demo.mobiscroll.com/angular/datetime/localization#)

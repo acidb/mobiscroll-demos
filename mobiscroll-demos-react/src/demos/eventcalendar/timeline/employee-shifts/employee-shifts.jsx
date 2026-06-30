@@ -21,6 +21,77 @@ setOptions({
 
 const defaultShifts = [
   {
+    start: dyndatetime('y,m,d-4,7'),
+    end: dyndatetime('y,m,d-4,13'),
+    title: '07:00 - 13:00',
+    resource: 1,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d-4,7'),
+    end: dyndatetime('y,m,d-4,13'),
+    title: '07:00 - 13:00',
+    resource: 7,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d-4,12'),
+    end: dyndatetime('y,m,d-4,18'),
+    title: '12:00 - 18:00',
+    resource: 3,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d-4,12'),
+    end: dyndatetime('y,m,d-4,18'),
+    title: '12:00 - 18:00',
+    resource: 8,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d-3,7'),
+    end: dyndatetime('y,m,d-3,13'),
+    title: '07:00 - 13:00',
+    resource: 4,
+    slot: 1,
+  },
+  //<hide-comment>
+  {
+    start: dyndatetime('y,m,d-3,7'),
+    end: dyndatetime('y,m,d-3,13'),
+    title: '07:00 - 13:00',
+    resource: 6,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d-3,7'),
+    end: dyndatetime('y,m,d-3,13'),
+    title: '07:00 - 13:00',
+    resource: 7,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d-3,12'),
+    end: dyndatetime('y,m,d-3,18'),
+    title: '12:00 - 18:00',
+    resource: 2,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d-3,12'),
+    end: dyndatetime('y,m,d-3,18'),
+    title: '12:00 - 18:00',
+    resource: 5,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d-3,12'),
+    end: dyndatetime('y,m,d-3,18'),
+    title: '12:00 - 18:00',
+    resource: 8,
+    slot: 2,
+  },
+  {
     start: dyndatetime('y,m,d-2,7'),
     end: dyndatetime('y,m,d-2,13'),
     title: '07:00 - 13:00',
@@ -39,6 +110,13 @@ const defaultShifts = [
     end: dyndatetime('y,m,d-2,13'),
     title: '07:00 - 13:00',
     resource: 6,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d-2,7'),
+    end: dyndatetime('y,m,d-2,13'),
+    title: '07:00 - 13:00',
+    resource: 7,
     slot: 1,
   },
   {
@@ -56,6 +134,13 @@ const defaultShifts = [
     slot: 2,
   },
   {
+    start: dyndatetime('y,m,d-2,12'),
+    end: dyndatetime('y,m,d-2,18'),
+    title: '12:00 - 18:00',
+    resource: 8,
+    slot: 2,
+  },
+  {
     start: dyndatetime('y,m,d-1,7'),
     end: dyndatetime('y,m,d-1,13'),
     title: '07:00 - 13:00',
@@ -77,6 +162,13 @@ const defaultShifts = [
     slot: 1,
   },
   {
+    start: dyndatetime('y,m,d-1,7'),
+    end: dyndatetime('y,m,d-1,13'),
+    title: '07:00 - 13:00',
+    resource: 8,
+    slot: 1,
+  },
+  {
     start: dyndatetime('y,m,d-1,12'),
     end: dyndatetime('y,m,d-1,18'),
     title: '12:00 - 18:00',
@@ -88,6 +180,13 @@ const defaultShifts = [
     end: dyndatetime('y,m,d-1,18'),
     title: '12:00 - 18:00',
     resource: 5,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d-1,12'),
+    end: dyndatetime('y,m,d-1,18'),
+    title: '12:00 - 18:00',
+    resource: 7,
     slot: 2,
   },
   {
@@ -112,6 +211,13 @@ const defaultShifts = [
     slot: 1,
   },
   {
+    start: dyndatetime('y,m,d,7'),
+    end: dyndatetime('y,m,d,13'),
+    title: '07:00 - 13:00',
+    resource: 7,
+    slot: 1,
+  },
+  {
     start: dyndatetime('y,m,d,12'),
     end: dyndatetime('y,m,d,18'),
     title: '12:00 - 18:00',
@@ -126,6 +232,13 @@ const defaultShifts = [
     slot: 2,
   },
   {
+    start: dyndatetime('y,m,d,12'),
+    end: dyndatetime('y,m,d,18'),
+    title: '12:00 - 18:00',
+    resource: 8,
+    slot: 2,
+  },
+  {
     start: dyndatetime('y,m,d+1,7'),
     end: dyndatetime('y,m,d+1,13'),
     title: '07:00 - 13:00',
@@ -137,6 +250,13 @@ const defaultShifts = [
     end: dyndatetime('y,m,d+1,13'),
     title: '07:00 - 13:00',
     resource: 6,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d+1,7'),
+    end: dyndatetime('y,m,d+1,13'),
+    title: '07:00 - 13:00',
+    resource: 8,
     slot: 1,
   },
   {
@@ -154,6 +274,13 @@ const defaultShifts = [
     slot: 2,
   },
   {
+    start: dyndatetime('y,m,d+1,12'),
+    end: dyndatetime('y,m,d+1,18'),
+    title: '12:00 - 18:00',
+    resource: 7,
+    slot: 2,
+  },
+  {
     start: dyndatetime('y,m,d+2,7'),
     end: dyndatetime('y,m,d+2,13'),
     title: '07:00 - 13:00',
@@ -165,6 +292,13 @@ const defaultShifts = [
     end: dyndatetime('y,m,d+2,13'),
     title: '07:00 - 13:00',
     resource: 5,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d+2,7'),
+    end: dyndatetime('y,m,d+2,13'),
+    title: '07:00 - 13:00',
+    resource: 7,
     slot: 1,
   },
   {
@@ -188,6 +322,84 @@ const defaultShifts = [
     resource: 6,
     slot: 2,
   },
+  {
+    start: dyndatetime('y,m,d+2,12'),
+    end: dyndatetime('y,m,d+2,18'),
+    title: '12:00 - 18:00',
+    resource: 8,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d+3,7'),
+    end: dyndatetime('y,m,d+3,13'),
+    title: '07:00 - 13:00',
+    resource: 2,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d+3,7'),
+    end: dyndatetime('y,m,d+3,13'),
+    title: '07:00 - 13:00',
+    resource: 4,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d+3,7'),
+    end: dyndatetime('y,m,d+3,13'),
+    title: '07:00 - 13:00',
+    resource: 7,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d+3,12'),
+    end: dyndatetime('y,m,d+3,18'),
+    title: '12:00 - 18:00',
+    resource: 1,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d+3,12'),
+    end: dyndatetime('y,m,d+3,18'),
+    title: '12:00 - 18:00',
+    resource: 8,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d+4,7'),
+    end: dyndatetime('y,m,d+4,13'),
+    title: '07:00 - 13:00',
+    resource: 3,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d+4,7'),
+    end: dyndatetime('y,m,d+4,13'),
+    title: '07:00 - 13:00',
+    resource: 7,
+    slot: 1,
+  },
+  {
+    start: dyndatetime('y,m,d+4,12'),
+    end: dyndatetime('y,m,d+4,18'),
+    title: '12:00 - 18:00',
+    resource: 5,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d+4,12'),
+    end: dyndatetime('y,m,d+4,18'),
+    title: '12:00 - 18:00',
+    resource: 6,
+    slot: 2,
+  },
+  {
+    start: dyndatetime('y,m,d+4,12'),
+    end: dyndatetime('y,m,d+4,18'),
+    title: '12:00 - 18:00',
+    resource: 8,
+    slot: 2,
+  },
+  //</hide-comment>
 ];
 
 function App() {
@@ -200,7 +412,8 @@ function App() {
   const [endInput, setEndInput] = useState();
   const [minTime, setMinTime] = useState();
   const [maxTime, setMaxTime] = useState();
-  const [popupHeader, setPopupHeader] = useState();
+  const [headerPrimary, setHeaderPrimary] = useState('');
+  const [headerDate, setHeaderDate] = useState('');
   const [toastMessage, setToastMessage] = useState();
   const [isEdit, setEdit] = useState(false);
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -320,6 +533,20 @@ function App() {
         title: 'Product Tactics Agent',
         img: 'https://img.mobiscroll.com/demos/f3.png',
       },
+      {
+        id: 7,
+        name: 'Michael',
+        color: '#f18a1a',
+        title: 'UX Designer',
+        img: 'https://img.mobiscroll.com/demos/m4.png',
+      },
+      {
+        id: 8,
+        name: 'Laura',
+        color: '#7b61ff',
+        title: 'DevOps Engineer',
+        img: 'https://img.mobiscroll.com/demos/f4.png',
+      },
     ],
     [],
   );
@@ -412,6 +639,16 @@ function App() {
     [deletedShift],
   );
 
+  const renderPopupHeader = useCallback(
+    () => (
+      <>
+        <div className="mds-employee-shifts-header-primary">{headerPrimary}</div>
+        <div className="mds-employee-shifts-header-date">{headerDate}</div>
+      </>
+    ),
+    [headerPrimary, headerDate],
+  );
+
   const handleEventClick = useCallback(
     (args) => {
       const event = args.event;
@@ -419,16 +656,8 @@ function App() {
       const slot = args.slotObj;
 
       fillPopup(event, true);
-      setPopupHeader(
-        'Edit ' +
-          resource.name +
-          "'s hours - " +
-          formatDate('DDD', new Date(event.start)) +
-          ' ' +
-          slot.name +
-          ', ' +
-          formatDate('D MMM YYYY', new Date(event.start)),
-      );
+      setHeaderPrimary('Edit ' + resource.name + "'s hours");
+      setHeaderDate(formatDate('DDDD', new Date(event.start)) + ' ' + slot.name + ', ' + formatDate('D MMMM YYYY', new Date(event.start)));
       setPopupOpen(true);
     },
     [fillPopup],
@@ -440,14 +669,8 @@ function App() {
       const slot = args.slotObj;
 
       fillPopup(event, false);
-      setPopupHeader(
-        'New shift - ' +
-          formatDate('DDD', new Date(event.start)) +
-          ' ' +
-          slot.name +
-          ', ' +
-          formatDate('D MMM YYYY', new Date(event.start)),
-      );
+      setHeaderPrimary('New shift');
+      setHeaderDate(formatDate('DDDD', new Date(event.start)) + ' ' + slot.name + ', ' + formatDate('D MMMM YYYY', new Date(event.start)));
       setPopupOpen(true);
     },
     [fillPopup],
@@ -550,12 +773,11 @@ function App() {
         onEventUpdateFailed={handleEventUpdateFailed}
       />
       <Popup
-        cssClass="mds-employee-shifts-popup"
         buttons={popupButtons}
         display="bottom"
         contentPadding={false}
         fullScreen={true}
-        headerText={popupHeader}
+        renderHeader={renderPopupHeader}
         isOpen={isPopupOpen}
         responsive={popupResponsive}
         scrollLock={false}

@@ -60,13 +60,6 @@ export default {
 
       // Set popup header text and buttons
       addEditPopup.setOptions({
-        headerText:
-          'New shift - ' +
-          formatDate('DDD', new Date(event.start)) +
-          ' ' +
-          slot.name +
-          ', ' +
-          formatDate('D MMM YYYY', new Date(event.start)),
         buttons: [
           'cancel',
           {
@@ -79,6 +72,18 @@ export default {
             addEditPopup: 'mbsc-popup-button-primary',
           },
         ],
+        renderHeader: function () {
+          return (
+            '<div class="mds-employee-shifts-header-primary">New shift</div>' +
+            '<div class="mds-employee-shifts-header-date">' +
+            formatDate('DDDD', new Date(event.start)) +
+            ' ' +
+            slot.name +
+            ', ' +
+            formatDate('D MMMM YYYY', new Date(event.start)) +
+            '</div>'
+          );
+        },
         onClose: function () {
           // Remove event if popup is cancelled
           if (!success) {
@@ -102,15 +107,6 @@ export default {
       var slot = args.slotObj;
 
       addEditPopup.setOptions({
-        headerText:
-          'Edit ' +
-          resource.name +
-          "'s hours - " +
-          formatDate('DDD', new Date(event.start)) +
-          ' ' +
-          slot.name +
-          ', ' +
-          formatDate('D MMM YYYY', new Date(event.start)),
         buttons: [
           'cancel',
           {
@@ -122,6 +118,20 @@ export default {
             cssClass: 'mbsc-popup-button-primary',
           },
         ],
+        renderHeader: function () {
+          return (
+            '<div class="mds-employee-shifts-header-primary">Edit ' +
+            resource.name +
+            "'s hours</div>" +
+            '<div class="mds-employee-shifts-header-date">' +
+            formatDate('DDDD', new Date(event.start)) +
+            ' ' +
+            slot.name +
+            ', ' +
+            formatDate('D MMMM YYYY', new Date(event.start)) +
+            '</div>'
+          );
+        },
       });
 
       addEditPopup.open();
@@ -176,10 +186,95 @@ export default {
         title: 'Product Tactics Agent',
         img: 'https://img.mobiscroll.com/demos/f3.png',
       },
+      {
+        id: 7,
+        name: 'Michael',
+        color: '#f18a1a',
+        title: 'UX Designer',
+        img: 'https://img.mobiscroll.com/demos/m4.png',
+      },
+      {
+        id: 8,
+        name: 'Laura',
+        color: '#7b61ff',
+        title: 'DevOps Engineer',
+        img: 'https://img.mobiscroll.com/demos/f4.png',
+      },
     ];
 
     var shifts = [
       {
+        start: dyndatetime('y,m,d-4,7'),
+        end: dyndatetime('y,m,d-4,13'),
+        title: '07:00 - 13:00',
+        resource: 1,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d-4,7'),
+        end: dyndatetime('y,m,d-4,13'),
+        title: '07:00 - 13:00',
+        resource: 7,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d-4,12'),
+        end: dyndatetime('y,m,d-4,18'),
+        title: '12:00 - 18:00',
+        resource: 3,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d-4,12'),
+        end: dyndatetime('y,m,d-4,18'),
+        title: '12:00 - 18:00',
+        resource: 8,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d-3,7'),
+        end: dyndatetime('y,m,d-3,13'),
+        title: '07:00 - 13:00',
+        resource: 4,
+        slot: 1,
+      },
+      //<hide-comment>
+      {
+        start: dyndatetime('y,m,d-3,7'),
+        end: dyndatetime('y,m,d-3,13'),
+        title: '07:00 - 13:00',
+        resource: 6,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d-3,7'),
+        end: dyndatetime('y,m,d-3,13'),
+        title: '07:00 - 13:00',
+        resource: 7,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d-3,12'),
+        end: dyndatetime('y,m,d-3,18'),
+        title: '12:00 - 18:00',
+        resource: 2,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d-3,12'),
+        end: dyndatetime('y,m,d-3,18'),
+        title: '12:00 - 18:00',
+        resource: 5,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d-3,12'),
+        end: dyndatetime('y,m,d-3,18'),
+        title: '12:00 - 18:00',
+        resource: 8,
+        slot: 2,
+      },
+      {
         start: dyndatetime('y,m,d-2,7'),
         end: dyndatetime('y,m,d-2,13'),
         title: '07:00 - 13:00',
@@ -198,6 +293,13 @@ export default {
         end: dyndatetime('y,m,d-2,13'),
         title: '07:00 - 13:00',
         resource: 6,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d-2,7'),
+        end: dyndatetime('y,m,d-2,13'),
+        title: '07:00 - 13:00',
+        resource: 7,
         slot: 1,
       },
       {
@@ -215,6 +317,13 @@ export default {
         slot: 2,
       },
       {
+        start: dyndatetime('y,m,d-2,12'),
+        end: dyndatetime('y,m,d-2,18'),
+        title: '12:00 - 18:00',
+        resource: 8,
+        slot: 2,
+      },
+      {
         start: dyndatetime('y,m,d-1,7'),
         end: dyndatetime('y,m,d-1,13'),
         title: '07:00 - 13:00',
@@ -236,6 +345,13 @@ export default {
         slot: 1,
       },
       {
+        start: dyndatetime('y,m,d-1,7'),
+        end: dyndatetime('y,m,d-1,13'),
+        title: '07:00 - 13:00',
+        resource: 8,
+        slot: 1,
+      },
+      {
         start: dyndatetime('y,m,d-1,12'),
         end: dyndatetime('y,m,d-1,18'),
         title: '12:00 - 18:00',
@@ -247,6 +363,13 @@ export default {
         end: dyndatetime('y,m,d-1,18'),
         title: '12:00 - 18:00',
         resource: 5,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d-1,12'),
+        end: dyndatetime('y,m,d-1,18'),
+        title: '12:00 - 18:00',
+        resource: 7,
         slot: 2,
       },
       {
@@ -271,6 +394,13 @@ export default {
         slot: 1,
       },
       {
+        start: dyndatetime('y,m,d,7'),
+        end: dyndatetime('y,m,d,13'),
+        title: '07:00 - 13:00',
+        resource: 7,
+        slot: 1,
+      },
+      {
         start: dyndatetime('y,m,d,12'),
         end: dyndatetime('y,m,d,18'),
         title: '12:00 - 18:00',
@@ -285,6 +415,13 @@ export default {
         slot: 2,
       },
       {
+        start: dyndatetime('y,m,d,12'),
+        end: dyndatetime('y,m,d,18'),
+        title: '12:00 - 18:00',
+        resource: 8,
+        slot: 2,
+      },
+      {
         start: dyndatetime('y,m,d+1,7'),
         end: dyndatetime('y,m,d+1,13'),
         title: '07:00 - 13:00',
@@ -296,6 +433,13 @@ export default {
         end: dyndatetime('y,m,d+1,13'),
         title: '07:00 - 13:00',
         resource: 6,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d+1,7'),
+        end: dyndatetime('y,m,d+1,13'),
+        title: '07:00 - 13:00',
+        resource: 8,
         slot: 1,
       },
       {
@@ -313,6 +457,13 @@ export default {
         slot: 2,
       },
       {
+        start: dyndatetime('y,m,d+1,12'),
+        end: dyndatetime('y,m,d+1,18'),
+        title: '12:00 - 18:00',
+        resource: 7,
+        slot: 2,
+      },
+      {
         start: dyndatetime('y,m,d+2,7'),
         end: dyndatetime('y,m,d+2,13'),
         title: '07:00 - 13:00',
@@ -324,6 +475,13 @@ export default {
         end: dyndatetime('y,m,d+2,13'),
         title: '07:00 - 13:00',
         resource: 5,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d+2,7'),
+        end: dyndatetime('y,m,d+2,13'),
+        title: '07:00 - 13:00',
+        resource: 7,
         slot: 1,
       },
       {
@@ -347,6 +505,84 @@ export default {
         resource: 6,
         slot: 2,
       },
+      {
+        start: dyndatetime('y,m,d+2,12'),
+        end: dyndatetime('y,m,d+2,18'),
+        title: '12:00 - 18:00',
+        resource: 8,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d+3,7'),
+        end: dyndatetime('y,m,d+3,13'),
+        title: '07:00 - 13:00',
+        resource: 2,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d+3,7'),
+        end: dyndatetime('y,m,d+3,13'),
+        title: '07:00 - 13:00',
+        resource: 4,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d+3,7'),
+        end: dyndatetime('y,m,d+3,13'),
+        title: '07:00 - 13:00',
+        resource: 7,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d+3,12'),
+        end: dyndatetime('y,m,d+3,18'),
+        title: '12:00 - 18:00',
+        resource: 1,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d+3,12'),
+        end: dyndatetime('y,m,d+3,18'),
+        title: '12:00 - 18:00',
+        resource: 8,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d+4,7'),
+        end: dyndatetime('y,m,d+4,13'),
+        title: '07:00 - 13:00',
+        resource: 3,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d+4,7'),
+        end: dyndatetime('y,m,d+4,13'),
+        title: '07:00 - 13:00',
+        resource: 7,
+        slot: 1,
+      },
+      {
+        start: dyndatetime('y,m,d+4,12'),
+        end: dyndatetime('y,m,d+4,18'),
+        title: '12:00 - 18:00',
+        resource: 5,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d+4,12'),
+        end: dyndatetime('y,m,d+4,18'),
+        title: '12:00 - 18:00',
+        resource: 6,
+        slot: 2,
+      },
+      {
+        start: dyndatetime('y,m,d+4,12'),
+        end: dyndatetime('y,m,d+4,18'),
+        title: '12:00 - 18:00',
+        resource: 8,
+        slot: 2,
+      },
+      //</hide-comment>
     ];
 
     var mySlots = [
@@ -489,7 +725,7 @@ export default {
 <div id="demo-employee-shifts-calendar" class="mds-employee-shifts"></div>
 
 <div style="display: none;">
-  <div id="demo-employee-shifts-popup" class="mds-employee-shifts-popup">
+  <div id="demo-employee-shifts-popup">
     <div>
       <div id="demo-popup-shift-dates"></div>
     </div>
@@ -514,8 +750,16 @@ export default {
   `,
   // eslint-disable-next-line es5/no-template-literals
   css: `
-.mds-employee-shifts-popup .mbsc-popup-header {
+.mds-employee-shifts-header-primary {
   font-size: 16px;
+  line-height: 20px;
+}
+
+.mds-employee-shifts-header-date {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  opacity: .6;
 }
 
 .mds-employee-shifts .mbsc-timeline-resource-col {

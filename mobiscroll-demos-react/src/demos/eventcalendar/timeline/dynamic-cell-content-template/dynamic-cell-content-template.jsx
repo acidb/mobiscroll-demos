@@ -47,6 +47,7 @@ function App() {
       start: dyndatetime('y, m, d + 7, 0, 0'),
       end: dyndatetime('y, m, d + 7, 2, 0'),
     },
+    //<hide-comment>
     {
       id: 6,
       resource: 4,
@@ -495,6 +496,7 @@ function App() {
       start: dyndatetime('y, m, d + 12, 0, 0'),
       end: dyndatetime('y, m, d + 12, 2, 0'),
     },
+    //</hide-comment>
   ]);
 
   const iconMap = useMemo(
@@ -528,7 +530,7 @@ function App() {
     () => ({
       timeline: {
         endDay: 5,
-        eventList: true,
+        eventDisplay: 'fill',
         type: 'month',
         resolutionHorizontal: 'day',
         startDay: 1,

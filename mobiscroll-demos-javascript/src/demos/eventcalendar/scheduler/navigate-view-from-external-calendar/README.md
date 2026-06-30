@@ -1,3 +1,10 @@
 To download and run this example locally, please follow the instructions [in the readme file of the project](https://github.com/acidb/mobiscroll-demos-javascript?tab=readme-ov-file#mobiscroll-javascript-demos).
 
 To see this example live, check it out on our [demo page](https://demo.mobiscroll.com/javascript/scheduler/navigate-view-from-external-calendar#).
+
+## Demo description
+
+This example demonstrates how can the Scheduler navigated externally. Here we have a two-pane layout with a Datepicker on the left and a Scheduler on the right. Changing date on the Datepicker will trigger the date change on the Scheduler.
+
+The Datepicker calls the `navigate` method of the Scheduler in its `onChange` event,
+while the Scheduler sets the datepicker value with the `setVal` method from its `onSelectedDateChange` event.

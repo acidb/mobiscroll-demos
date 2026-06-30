@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MbscCalendarEvent, MbscEventcalendarView, MbscModule, MbscResource, Notifications, setOptions /* localeImport */ } from '@mobiscroll/angular';
+import {
+  MbscCalendarEvent,
+  MbscEventcalendarView,
+  MbscModule,
+  MbscResource,
+  Notifications,
+  setOptions /* localeImport */,
+} from '@mobiscroll/angular';
 import { dyndatetime } from '../../../../app/app.util';
 
 setOptions({
@@ -17,7 +24,7 @@ setOptions({
   imports: [CommonModule, MbscModule],
 })
 export class AppComponent implements OnInit {
-  constructor(private notify: Notifications) { }
+  constructor(private notify: Notifications) {}
 
   user = { id: 2, name: 'Willis Cane', role: 'limited' };
 
@@ -134,12 +141,12 @@ export class AppComponent implements OnInit {
     { id: 2, name: 'Willis Cane', color: '#cccc39' },
     { id: 3, name: 'Derek Austyn', color: '#56ca2c' },
     { id: 4, name: 'Merv Kenny', color: '#af2424' },
-    { id: 5, name: 'Fred Waldez', color: '#256ebc' }
+    { id: 5, name: 'Fred Waldez', color: '#256ebc' },
   ];
 
   myDefaultEvent = (): MbscCalendarEvent => ({
-    color: this.defaultColor
-  })
+    color: this.defaultColor,
+  });
 
   // Simulate login
   login(): void {
@@ -191,5 +198,4 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.login();
   }
-
 }
