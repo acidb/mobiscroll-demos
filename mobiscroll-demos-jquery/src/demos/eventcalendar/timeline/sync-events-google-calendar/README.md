@@ -10,7 +10,7 @@ It includes everything you need to authenticate your users, get their Google cal
 
 Customizing the interaction, event workflows, whether the events are read-only is up to you. In this live demo, the different calendars are handled as resources and have their own timeline rows. You can manipulate events in the desired calendars, while read-only calendars are greyed out.
 
-> **⚠️ Note:** This example uses the **integration plugin** to connect to and load events from Google Calendar and it is not available in the trial. Give the live demo a try and see how it can be configured.
+> **Warning:** This example uses the **integration plugin** to connect to and load events from Google Calendar and it is not available in the trial. Give the live demo a try and see how it can be configured.
 
 ## Implementation instructions
 

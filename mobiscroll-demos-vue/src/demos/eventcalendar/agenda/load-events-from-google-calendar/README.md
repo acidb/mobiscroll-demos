@@ -13,7 +13,7 @@ You will just need the `CALENDAR_ID` and an `apiKey` from google and you should 
 
 Public calendars are read-only. If you are interested in syncing private google calendars with read/write/delete access, [check out this example](https://demo.mobiscroll.com/vue/agenda/sync-events-google-calendar#).
 
-> **⚠️ Note:** This example uses the **integration plugin** to connect to and load events from Google Calendar and it is not available in the trial. Give the live demo a try and see how it can be configured.
+> **Warning:** This example uses the **integration plugin** to connect to and load events from Google Calendar and it is not available in the trial. Give the live demo a try and see how it can be configured.
 
 ## Implementation instructions
 

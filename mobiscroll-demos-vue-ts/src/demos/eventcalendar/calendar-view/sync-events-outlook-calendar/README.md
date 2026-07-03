@@ -10,7 +10,7 @@ It includes everything you need to authenticate your users, get their Outlook ca
 
 Customizing the interaction, event workflows, whether the events are read-only is up to you. In this live demo, newly created events will land in the `primary calendar` of the authenticated user.
 
-> **⚠️ Note:** This example uses the **integration plugin** to connect to and load events from Outlook Calendars and it is not available in the trial. Give the live demo a try and see how it can be configured.
+> **Warning:** This example uses the **integration plugin** to connect to and load events from Outlook Calendars and it is not available in the trial. Give the live demo a try and see how it can be configured.
 
 ## Implementation instructions
 

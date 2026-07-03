@@ -10,7 +10,7 @@ Print styling is applied when someone prints the page that contains the timeline
 
 Besides printing, PDF export is possible through the print dialog of the browser.
 
-> **⚠️ Note:** The **print module** is not available in the trial. You can try the live demo to see how it looks.
+> **Warning:** The **print module** is not available in the trial. You can try the live demo to see how it looks.
 
 ## Implementation instructions
 

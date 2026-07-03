@@ -15,7 +15,7 @@ In this example you can see how multiple public holiday calendars are loaded as 
 
 Public calendars are read-only. If you are interested in syncing private google calendars with read/write/delete access, [check out this example](https://demo.mobiscroll.com/angular/timeline/sync-events-google-calendar#).
 
-> **⚠️ Note:** This example uses the **integration plugin**
+> **Warning:** This example uses the **integration plugin**
 to connect to and load events from Google Calendar and it is not available in the trial. Give the live demo a try and see how it can be configured.
 
 ## Implementation instructions
