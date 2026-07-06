@@ -7,10 +7,21 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 Color the background of the days with the `colors` option.
 You can specify backgrounds as `exact dates`, `ranges` or set up `recurring rules`. The `recurring` object works the [same way as for the events](https://demo.mobiscroll.com/javascript/eventcalendar/recurring-events#).
 
-Use the 
-
+Use the :::framework{only="vue"}
+`page-loading`
+:::
+:::framework{only="angular"}
 `onPageLoading`
- lifecycle event to color backgrounds runtime. You can [learn about lifecycle events](https://demo.mobiscroll.com/javascript/eventcalendar/event-hooks#) and places where to drop logic to customize the experience.
+:::
+:::framework{only="react"}
+`onPageLoading`
+:::
+:::framework{only="javascript"}
+`onPageLoading`
+:::
+:::framework{only="jquery"}
+`onPageLoading`
+::: lifecycle event to color backgrounds runtime. You can [learn about lifecycle events](https://demo.mobiscroll.com/javascript/eventcalendar/event-hooks#) and places where to drop logic to customize the experience.
 
 - **Want to color time ranges & days in the scheduler?** [Learn how to do it &#8594;](https://demo.mobiscroll.com/javascript/scheduler/colored-cell-background#)
 

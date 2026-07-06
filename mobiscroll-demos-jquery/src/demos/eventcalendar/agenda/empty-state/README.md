@@ -7,7 +7,30 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 Customize the look of the empty state through templating or custom render functions. Give a more purposeful feedback to the user and optionally add further actions
 to it. The template can be totally custom or dynamic based on any criteria.
 
+:::framework{only="angular"}
+Use the `agendaEmptyTemplate` template for putting your custom content together.
+
+:::
+
+:::framework{only="vue"}
+Use the `agendaEmpty` template for putting your custom content together.
+
+:::
+
+:::framework{only="react"}
 Use the `renderAgendaEmpty` function for putting your custom content together.
+
+:::
+
+:::framework{only="javascript"}
+Use the `renderAgendaEmpty` function for putting your custom content together.
+
+:::
+
+:::framework{only="jquery"}
+Use the `renderAgendaEmpty` function for putting your custom content together.
+
+:::
 
 ## Implementation instructions
 

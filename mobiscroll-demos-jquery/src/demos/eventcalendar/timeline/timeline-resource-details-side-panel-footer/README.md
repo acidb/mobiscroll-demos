@@ -4,15 +4,87 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 ## Demo description
 
-The resources can be rendered vertically either as plain text or based on a custom grid template. This example utilizes the properties of the resource objects, which are conference rooms with capacities and pricing. Along with the resource template defined using `renderResource` , an additional sidebar is rendered on the opposite side of the row using @if (pagemode == PageMode.Angular) { `sidebarTemplate` } else if (pagemode == PageMode.Vue) { sidebar template } else { `renderSidebar` }, displaying the calculated revenue.
+:::inline-fw-group
+prefix: The resources can be rendered vertically either as plain text or based on a custom grid template. This example utilizes the properties of the resource objects, which are conference rooms with capacities and pricing. Along with the resource template defined using
+suffix: , an additional sidebar is rendered on the opposite side of the row using @if (pagemode == PageMode.Angular) { `sidebarTemplate` } else if (pagemode == PageMode.Vue) { sidebar template } else { `renderSidebar` }, displaying the calculated revenue.
+:::framework{only="angular"}
+`resourceTemplate`
+:::
+:::framework{only="vue"}
+`resource`
+slot
+:::
+:::framework{only="react"}
+`renderResource`
+:::
+:::framework{only="javascript"}
+`renderResource`
+:::
+:::framework{only="jquery"}
+`renderResource`
+:::
+:::end-inline-fw-group
 
-Both the resource and sidebar columns have customizable headers and footers, which are set using the renderResourceHeader,
+:::inline-fw-group
+prefix: Both the resource and sidebar columns have customizable headers and footers, which are set using the
+suffix: 
+:::framework{only="angular"}
+resourceHeaderTemplate,
+resourceFooterTemplate,
+sidebarHeaderTemplate,
+`sidebarFooterTemplate`
+templates.
+:::
+:::framework{only="vue"}
+resourceHeader,
+resourceFooter,
+sidebarHeader,
+`sidebarFooter`
+templates.
+:::
+:::framework{only="react"}
+renderResourceHeader,
 renderResourceFooter,
 renderSidebarHeader,
 `renderSidebarFooter`
 functions.
+:::
+:::framework{only="javascript"}
+renderResourceHeader,
+renderResourceFooter,
+renderSidebarHeader,
+`renderSidebarFooter`
+functions.
+:::
+:::framework{only="jquery"}
+renderResourceHeader,
+renderResourceFooter,
+renderSidebarHeader,
+`renderSidebarFooter`
+functions.
+:::
+:::end-inline-fw-group
 
-The occupancy percentages that can be seen for each day are set through the `renderDayFooter` in a similar way to the [day header templates](https://demo.mobiscroll.com/jquery/scheduler/custom-resource-header-template#).
+:::inline-fw-group
+prefix: The occupancy percentages that can be seen for each day are set through the
+suffix: in a similar way to the [day header templates](https://demo.mobiscroll.com/jquery/scheduler/custom-resource-header-template#).
+:::framework{only="angular"}
+`dayFooterTemplate`
+:::
+:::framework{only="vue"}
+`dayFooter`
+template
+:::
+:::framework{only="react"}
+`renderDayFooter`
+:::
+:::framework{only="javascript"}
+`renderDayFooter`
+:::
+:::framework{only="jquery"}
+`renderDayFooter`
+:::
+:::end-inline-fw-group
 
 The headers are equipped with sorting functionality, allowing data to be sorted on click.
 Event listeners are attached to the resource, day, and sidebar headers, making them clickable.

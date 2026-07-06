@@ -6,6 +6,12 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 You can customize how the header of calendar looks and how the components are arranged. Besides that you can also add custom functionality, like a segmented control that lets people switch between week and month view.
 
+
+
+
+
+
+
 Use the `renderCalendarHeader` option for passing a custom header layout. There are predefined components - shorthands if you will - that can be used to assemble the header:
 
 - **Navigation component** - `&lt;div mbsc-calendar-nav&gt;&lt;/div&gt;`

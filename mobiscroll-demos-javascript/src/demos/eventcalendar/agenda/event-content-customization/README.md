@@ -11,6 +11,12 @@ Above the built in look & feel, the events can be customized in two ways:
 
 You will have to place and provide styling to the `title` field and any other custom fields you are using, like `description`, `location`, `participants`. You can add custom functionality, buttons and other custom components.
 
+
+
+
+
+
+
 Pass a rendering function to the renderAgendaEventContent option. All original event fields along with computed fields like `isMultiDay`, `lastDay` can be used inside the function.
 
 ## Implementation instructions

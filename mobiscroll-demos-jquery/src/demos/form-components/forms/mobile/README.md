@@ -7,7 +7,25 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 Easily create single column layouts and render mobile forms using the various form elements like [buttons](https://demo.mobiscroll.com/jquery/forms/buttons#),
 [inputs](https://demo.mobiscroll.com/jquery/forms/inputs-text-areas-date-fields#), [radio buttons](https://demo.mobiscroll.com/jquery/forms/radio-button#) and more.
 
-Use the global options for setting the theme, localization options and everything that should be consistent across your app.
+:::inline-fw-group
+prefix: Use the
+suffix: for setting the theme, localization options and everything that should be consistent across your app.
+:::framework{only="vue"}
+global options
+:::
+:::framework{only="angular"}
+global options
+:::
+:::framework{only="react"}
+global options
+:::
+:::framework{only="javascript"}
+global options
+:::
+:::framework{only="jquery"}
+global options
+:::
+:::end-inline-fw-group
 
 - **Building for larger screens?** [See how to make forms for tablets & desktops →](https://demo.mobiscroll.com/jquery/forms/desktop#)
 

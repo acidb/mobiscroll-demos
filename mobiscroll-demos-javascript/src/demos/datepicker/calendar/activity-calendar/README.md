@@ -6,4 +6,10 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 Add custom content to the day cells of the calendar. This can be dynamic content based on the date like an activity tracker that uses daily move data from an array of records.
 
+
+
+
+
+
+
 Use the `renderDayContent` function to return custom markup that will be used when the day cells are being rendered.

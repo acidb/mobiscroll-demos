@@ -12,15 +12,47 @@ In order for that to work you will need to have two things set up:
 - Enable the scheduler to receive external events by setting `externalDrop` to `true`.
 - Initialize the external events (containers) as `draggable` components.
 
+
+
 Use the `MbscDraggable` component to specify a skeleton event through its `dragData` option and reference the draggable container in the `element` option. The `dragData` accepts a full event definition that will be added to the event calendar on drop. If omitted, a default event will be created.
 
+
+
+
+
+
+
 Use the
+:::framework{only="vue"}
 `event-create`
-
- and
+:::
+:::framework{only="angular"}
+`onEventCreate`
+:::
+:::framework{only="react"}
+`onEventCreate`
+:::
+:::framework{only="javascript"}
+`onEventCreate`
+:::
+:::framework{only="jquery"}
+`onEventCreate`
+::: and
+:::framework{only="vue"}
 `event-create-failed`
-
- for triggering a custom logic on drop like showing a toast.
+:::
+:::framework{only="angular"}
+`onEventCreateFailed`
+:::
+:::framework{only="react"}
+`onEventCreateFailed`
+:::
+:::framework{only="javascript"}
+`onEventCreateFailed`
+:::
+:::framework{only="jquery"}
+`onEventCreateFailed`
+::: for triggering a custom logic on drop like showing a toast.
 The appropriate lifecycle event will be triggered if the drop is successful or fails.
 
 **Unscheduling events (or dragging them off a calendar)**
@@ -33,16 +65,62 @@ onto an external drop container. To activate this, you will need to:
 
 `dropcontainer`
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Use the `MbscDropcontainer` component and its `item-drop` event to handle dropped events.
 
 Events can also be dropped on another event calendar with `externalDrop` enabled.
 
 When an event is dropped into an external drop container or another calendar, it will be deleted from the original
-calendar and the `event-delete`
+calendar and the :::framework{only="vue"}
+`event-delete`
+:::
+:::framework{only="angular"}
+`onEventDelete`
+:::
+:::framework{only="react"}
+`onEventDelete`
+:::
+:::framework{only="javascript"}
+`onEventDelete`
+:::
+:::framework{only="jquery"}
+`onEventDelete`
+::: will be fired.
 
- will be fired.
-
-You can also use the :::framework{only="vue"} `event-drag-leave` ::: :::framework{only="angular"} `onEventDragLeave` ::: :::framework{only="react"} `onEventDragLeave` ::: :::framework{only="javascript"} `onEventDragLeave` ::: :::framework{only="jquery"} `onEventDragLeave` ::: and :::framework{only="vue"} `event-drag-enter` ::: :::framework{only="angular"} `onEventDragEnter` ::: :::framework{only="react"} `onEventDragEnter` ::: :::framework{only="javascript"} `onEventDragEnter` ::: :::framework{only="jquery"} `onEventDragEnter` :::, and the drop container's `item-drag-enter` and `item-drag-leave` events to provide visual feedback or running custom logic during drag.
+:::inline-fw-group
+prefix: You can also use the :::framework{only="vue"} `event-drag-leave` ::: :::framework{only="angular"} `onEventDragLeave` ::: :::framework{only="react"} `onEventDragLeave` ::: :::framework{only="javascript"} `onEventDragLeave` ::: :::framework{only="jquery"} `onEventDragLeave` ::: and :::framework{only="vue"} `event-drag-enter` ::: :::framework{only="angular"} `onEventDragEnter` ::: :::framework{only="react"} `onEventDragEnter` ::: :::framework{only="javascript"} `onEventDragEnter` ::: :::framework{only="jquery"} `onEventDragEnter` :::, and the drop container's
+suffix: events to provide visual feedback or running custom logic during drag.
+:::framework{only="vue"}
+`item-drag-enter` and `item-drag-leave`
+:::
+:::framework{only="angular"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::framework{only="react"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::framework{only="javascript"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::framework{only="jquery"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::end-inline-fw-group
 
 Learn more from the external drag & drop documentation.
 

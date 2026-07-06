@@ -6,6 +6,12 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 Use the <mbsc-eventcalendar></mbsc-eventcalendar> component and pass all the necessary options as attributes, like `[theme]="ios"`.
 
+
+
+
+
+
+
 The events can be [passed in a couple of different ways](https://demo.mobiscroll.com/angular/agenda/load-inline-data#). In this example we are loading them through an external API.
 
 - **Interested to learn about the calendar view?** [Learn how to set up the range the agenda covers →](https://demo.mobiscroll.com/angular/agenda/daily-weekly-monthly-annual-agenda#)

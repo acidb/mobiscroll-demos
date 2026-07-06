@@ -8,11 +8,21 @@ The resources can be populated on initialization or in case of a bigger hierarch
 
 Getting the resources and the events in real time as the user navigates improves load performance.
 
-Use the 
-
+Use the :::framework{only="vue"}
+`resource-expand`
+:::
+:::framework{only="angular"}
 `onResourceExpand`
-
- lifecycle event to load the data runtime. You can [learn about lifecycle events](https://demo.mobiscroll.com/react/timeline/event-hooks#) and places where to drop logic to customize the experience.
+:::
+:::framework{only="react"}
+`onResourceExpand`
+:::
+:::framework{only="javascript"}
+`onResourceExpand`
+:::
+:::framework{only="jquery"}
+`onResourceExpand`
+::: lifecycle event to load the data runtime. You can [learn about lifecycle events](https://demo.mobiscroll.com/react/timeline/event-hooks#) and places where to drop logic to customize the experience.
 
 ## Implementation instructions
 

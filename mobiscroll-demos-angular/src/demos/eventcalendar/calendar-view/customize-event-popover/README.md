@@ -13,6 +13,14 @@ You can provide styling to the `title` field and any other custom fields like `d
 
 Create an event content template and pass it to the popoverEventContentTemplate option. All original event fields along with computed fields like `isMultiDay`, `lastDay` are passed to the template. For a fully custom event rendering use the popoverEventTemplate option.
 
+
+
+
+
+
+
+
+
 If you add custom markup you will want to add styling too. Use the `popoverClass` under the `view` option to tell the calendar what CSS class it should append to the popover container so that you can write specific CSS rules.
 
 ## Implementation instructions

@@ -6,8 +6,30 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 Dynamically customize the cell content of the timeline by showing event-related icons, visual indicators, and a quick add button directly in each cell.
 
-This is achieved using the [renderCell](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#renderer-renderCell)
-function, where event data in each cell is used to display icons based on the event, a badge showing total event hours, and a button to quickly add new events. The add event icon is dynamically added during [onCellHoverIn](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#event-onCellHoverIn). An event cap per cell is implemented by reading the event count from [onCellHoverIn](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#event-onCellHoverIn) args and enforcing it in [onEventCreate](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#event-onEventCreate), blocking event creation by returning `false`. This approach helps visualize workload per day and enables quick actions, making scheduling more efficient and user-friendly.
+:::inline-fw-group
+prefix: This is achieved using the
+suffix: where event data in each cell is used to display icons based on the event, a badge showing total event hours, and a button to quickly add new events. The add event icon is dynamically added during [onCellHoverIn](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#event-onCellHoverIn). An event cap per cell is implemented by reading the event count from [onCellHoverIn](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#event-onCellHoverIn) args and enforcing it in [onEventCreate](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#event-onEventCreate), blocking event creation by returning `false`. This approach helps visualize workload per day and enables quick actions, making scheduling more efficient and user-friendly.
+:::framework{only="angular"}
+[cellTemplate](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#template-cellTemplate)
+option,
+:::
+:::framework{only="vue"}
+[cell](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#slot-cell)
+slot,
+:::
+:::framework{only="react"}
+[renderCell](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#renderer-renderCell)
+function,
+:::
+:::framework{only="javascript"}
+[renderCell](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#renderer-renderCell)
+function,
+:::
+:::framework{only="jquery"}
+[renderCell](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#renderer-renderCell)
+function,
+:::
+:::end-inline-fw-group
 
 In this demo, cells represent a day. Depending on the resolution, they can also stand for a week, month, or more, while remaining fully customizable.
 See this

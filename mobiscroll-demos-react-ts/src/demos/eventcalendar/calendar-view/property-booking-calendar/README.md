@@ -8,7 +8,25 @@ When keeping records of bookings, the event calendar with exact label displays c
 accurately mark the exact start (e.g. 14:00) and end times (e.g. 11:00) of bookings, consolidating all booking 
 records in a single, clear view.
 
-By combining the `eventDisplay: 'exact'` setting under the `view` option with customizable `renderCalendarEventContent` , you can tailor the calendar to your specific needs. This allows you to create an efficient and user-friendly booking planning UI, ensuring all your bookings are easily managed and clearly displayed.
+:::inline-fw-group
+prefix: By combining the `eventDisplay: 'exact'` setting under the `view` option with customizable
+suffix: , you can tailor the calendar to your specific needs. This allows you to create an efficient and user-friendly booking planning UI, ensuring all your bookings are easily managed and clearly displayed.
+:::framework{only="angular"}
+`calendarEventContentTemplate`
+:::
+:::framework{only="vue"}
+`calendarEventContent`
+:::
+:::framework{only="react"}
+`renderCalendarEventContent`
+:::
+:::framework{only="javascript"}
+`renderCalendarEventContent`
+:::
+:::framework{only="jquery"}
+`renderCalendarEventContent`
+:::
+:::end-inline-fw-group
 
 ## Implementation instructions
 

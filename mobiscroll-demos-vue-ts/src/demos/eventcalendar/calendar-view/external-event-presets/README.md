@@ -11,13 +11,37 @@ Enable `externalDrop` for the calendar and set up the predefined event skeletons
 `draggable` component.
 
 Whenever there is more information to be captured, like detailed task notes, customer information, the name of the technician... you can trigger a `popup` with the task form in the
+:::framework{only="vue"}
 `event-create`
-
- lifecycle event.
+:::
+:::framework{only="angular"}
+`onEventCreate`
+:::
+:::framework{only="react"}
+`onEventCreate`
+:::
+:::framework{only="javascript"}
+`onEventCreate`
+:::
+:::framework{only="jquery"}
+`onEventCreate`
+::: lifecycle event.
 For failed drops (trying to schedule a task during lunch breaks or weekends) the
+:::framework{only="vue"}
 `event-create-failed`
-
- event will be triggered.
+:::
+:::framework{only="angular"}
+`onEventCreateFailed`
+:::
+:::framework{only="react"}
+`onEventCreateFailed`
+:::
+:::framework{only="javascript"}
+`onEventCreateFailed`
+:::
+:::framework{only="jquery"}
+`onEventCreateFailed`
+::: event will be triggered.
 
 - **Want to see how external presets look & feel for a scheduler?** [Check out this example &#8594;](https://demo.mobiscroll.com/vue/scheduler/external-event-presets#)
 

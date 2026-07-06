@@ -8,12 +8,38 @@ The header of the scheduler is a canvas and an opportunity for customization. Yo
 
 Such an example would be a custom filter block created with the help of a segmented control and placed between the standard UI components, which are:
 
+
+
+
+
+
+
 - **Navigation component** - `&lt;div mbsc-calendar-nav&gt;&lt;/div&gt;`. Use the `.md-header-filter-controls` CSS class for custom overrides.
 - **Today button** - `&lt;button mbsc-calendar-today&gt;&lt;/button&gt;`. Use the `.md-header-filter-today` CSS class for custom overrides.
 - **Previous month button** - `&lt;button mbsc-calendar-prev&gt;&lt;/button&gt;`. Use the `.md-header-filter-prev` CSS class for custom overrides.
 - **Next month button** - `&lt;button mbsc-calendar-next&gt;&lt;/button&gt;`. Use the `.md-header-filter-next` CSS class for custom overrides.
 
-For changing the order the controls are laid out, you only need to set up the `renderHeader`.
+
+
+:::inline-fw-group
+prefix: For changing the order the controls are laid out, you only need to set up the
+suffix: 
+:::framework{only="angular"}
+`headerTemplate`.
+:::
+:::framework{only="vue"}
+`header` template.
+:::
+:::framework{only="react"}
+`renderHeader`.
+:::
+:::framework{only="javascript"}
+`renderHeader`.
+:::
+:::framework{only="jquery"}
+`renderHeader`.
+:::
+:::end-inline-fw-group
 
 **Overriding the order for specific themes**
 

@@ -10,6 +10,12 @@ This will give you summarized daily events similar to the [event calendar labels
 
 Build a custom add/edit dialog with the necessary fields. The event dialog can be fully custom as seen in this [CRUD example](https://demo.mobiscroll.com/javascript/scheduler/create-read-update-delete-CRUD#).
 
+
+
+
+
+
+
 Customize the dialog header with a custom header renderer function using the `renderHeader` option.
 
 ## Implementation instructions

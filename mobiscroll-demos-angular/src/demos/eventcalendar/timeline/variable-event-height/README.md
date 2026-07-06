@@ -4,7 +4,25 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 ## Demo description
 
-By default, events are equal in height and content is truncated by default where necessary. There are cases however where event height should match the content so that everything fits. To render events with variable height, use the `eventHeight: 'variable'` property under the `view` option's timeline configuration and the custom event templates: `timelineEventTemplate` or @if (pagemode == PageMode.Angular) { `timelineEventContentTemplate` } else if (pagemode == PageMode.Vue) { `timelineEventContent` } else { `renderTimelineEventContent` } . When the latter is used, to let the event container grow, the height of the inner content must be set to auto: `.mbsc-schedule-event-inner { height: auto }`. The height of the timeline events grow with the internal content, and the height of the resource rows adjust themselves to the events.
+:::inline-fw-group
+prefix: By default, events are equal in height and content is truncated by default where necessary. There are cases however where event height should match the content so that everything fits. To render events with variable height, use the `eventHeight: 'variable'` property under the `view` option's timeline configuration and the custom event templates:
+suffix: or @if (pagemode == PageMode.Angular) { `timelineEventContentTemplate` } else if (pagemode == PageMode.Vue) { `timelineEventContent` } else { `renderTimelineEventContent` } . When the latter is used, to let the event container grow, the height of the inner content must be set to auto: `.mbsc-schedule-event-inner { height: auto }`. The height of the timeline events grow with the internal content, and the height of the resource rows adjust themselves to the events.
+:::framework{only="angular"}
+`timelineEventTemplate`
+:::
+:::framework{only="vue"}
+`timelineEvent`
+:::
+:::framework{only="react"}
+`renderTimelineEvent`
+:::
+:::framework{only="javascript"}
+`renderTimelineEvent`
+:::
+:::framework{only="jquery"}
+`renderTimelineEvent`
+:::
+:::end-inline-fw-group
 
 In the following example the height of the resource rows change dynamically based on the height of their events. Resources are the rooms where events are held and events have varying descriptions.
 

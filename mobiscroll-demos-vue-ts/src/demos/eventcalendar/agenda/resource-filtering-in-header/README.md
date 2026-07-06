@@ -9,7 +9,33 @@ The header of the agenda is a canvas and an opportunity for customization. You c
 
 Such an example would be a custom filter block created with the help of a segmented control and placed between the standard UI components, which are:
 
-For changing the order the controls are laid out, you only need to set up the `header` template.
+
+
+
+
+
+
+
+
+:::inline-fw-group
+prefix: For changing the order the controls are laid out, you only need to set up the
+suffix: 
+:::framework{only="angular"}
+`headerTemplate`.
+:::
+:::framework{only="vue"}
+`header` template.
+:::
+:::framework{only="react"}
+`renderHeader`.
+:::
+:::framework{only="javascript"}
+`renderHeader`.
+:::
+:::framework{only="jquery"}
+`renderHeader`.
+:::
+:::end-inline-fw-group
 
 **Overriding the order for specific themes**
 

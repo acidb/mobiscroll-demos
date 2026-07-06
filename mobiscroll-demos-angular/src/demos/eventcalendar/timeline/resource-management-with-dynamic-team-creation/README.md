@@ -13,12 +13,32 @@ Resources can be created by dragging and dropping an external element onto the t
 - Enable the timeline to receive external resources by setting `externalResourceDrop` to `true`.
 - Initialize the external resources (containers) as `draggable` components.
 
+
+
+
+
 Set up a container as draggable with the `mbsc-draggable` directive. Pass a skeleton event definition through the `dragData` option which will be added to the event calendar on drop. If omitted, a default event will be created.
 
+
+
+
+
 Use the
-
+:::framework{only="vue"}
+`resource-create`
+:::
+:::framework{only="angular"}
 `onResourceCreate`
-
+:::
+:::framework{only="react"}
+`onResourceCreate`
+:::
+:::framework{only="javascript"}
+`onResourceCreate`
+:::
+:::framework{only="jquery"}
+`onResourceCreate`
+:::
 for triggering a custom logic on drop like showing a toast.
 
 **Dragging resources off the timeline)**
@@ -29,17 +49,54 @@ onto an external drop container. To activate this, you will need to:
 - Enable the timeline to allow dragging events out by setting `externalResourceDrag` to `true`.
 - Initialize the :::framework{only="vue"} `dropcontainer` ::: :::framework{only="angular"} `dropcontainer`. ::: :::framework{only="react"} `dropcontainer`. ::: :::framework{only="javascript"} `dropcontainer`. ::: :::framework{only="jquery"} `dropcontainer`. :::
 
+
+
+
+
 Use the `dropcontainer` component and its `onItemDrop` event to handle dropped events.
+
+
+
+
 
 Resources can also be dropped on another timeline with `externalResourceDrop` enabled.
 
 When a resource is dropped into an external drop container or another timeline, it will be deleted from the original
-calendar and the 
+calendar and the :::framework{only="vue"}
+`resource-delete`
+:::
+:::framework{only="angular"}
 `onResourceDelete`
+:::
+:::framework{only="react"}
+`onResourceDelete`
+:::
+:::framework{only="javascript"}
+`onResourceDelete`
+:::
+:::framework{only="jquery"}
+`onResourceDelete`
+::: will be fired.
 
- will be fired.
-
-You can also use the :::framework{only="vue"} `resource-drag-leave` ::: :::framework{only="angular"} `onResourceDragLeave` ::: :::framework{only="react"} `onResourceDragLeave` ::: :::framework{only="javascript"} `onResourceDragLeave` ::: :::framework{only="jquery"} `onResourceDragLeave` ::: and :::framework{only="vue"} `resource-drag-enter` ::: :::framework{only="angular"} `onResourceDragEnter` ::: :::framework{only="react"} `onResourceDragEnter` ::: :::framework{only="javascript"} `onResourceDragEnter` ::: :::framework{only="jquery"} `onResourceDragEnter` :::, and the drop container's `onItemDragEnter` and `onItemDragLeave` events to provide visual feedback or running custom logic during drag.
+:::inline-fw-group
+prefix: You can also use the :::framework{only="vue"} `resource-drag-leave` ::: :::framework{only="angular"} `onResourceDragLeave` ::: :::framework{only="react"} `onResourceDragLeave` ::: :::framework{only="javascript"} `onResourceDragLeave` ::: :::framework{only="jquery"} `onResourceDragLeave` ::: and :::framework{only="vue"} `resource-drag-enter` ::: :::framework{only="angular"} `onResourceDragEnter` ::: :::framework{only="react"} `onResourceDragEnter` ::: :::framework{only="javascript"} `onResourceDragEnter` ::: :::framework{only="jquery"} `onResourceDragEnter` :::, and the drop container's
+suffix: events to provide visual feedback or running custom logic during drag.
+:::framework{only="vue"}
+`item-drag-enter` and `item-drag-leave`
+:::
+:::framework{only="angular"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::framework{only="react"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::framework{only="javascript"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::framework{only="jquery"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::end-inline-fw-group
 
 - **Looking for external event drag & drop?** [Check out this example &#8594;](https://demo.mobiscroll.com/angular/timeline/external-drag-drop-sortable-dragula#)
 

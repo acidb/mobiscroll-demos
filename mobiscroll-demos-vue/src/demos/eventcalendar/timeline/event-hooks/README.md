@@ -6,7 +6,25 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 The timeline ships with different hooks for deep customization. Events are triggered through the lifecycle of the component where you can tie in custom functionality and code.
 
-While users interact with the UI events like `event-click`, `init`, `selected-date-change` ... will be triggered.
+:::inline-fw-group
+prefix: While users interact with the UI events like
+suffix: ... will be triggered.
+:::framework{only="vue"}
+`event-click`, `init`, `selected-date-change`
+:::
+:::framework{only="angular"}
+`onEventClick`, `onInit`, `onSelectedDateChange`
+:::
+:::framework{only="react"}
+`onEventClick`, `onInit`, `onSelectedDateChange`
+:::
+:::framework{only="javascript"}
+`onEventClick`, `onInit`, `onSelectedDateChange`
+:::
+:::framework{only="jquery"}
+`onEventClick`, `onInit`, `onSelectedDateChange`
+:::
+:::end-inline-fw-group
 
 - **For a complete list of events go to the documentation** See available lifecycle events &#8594;
 

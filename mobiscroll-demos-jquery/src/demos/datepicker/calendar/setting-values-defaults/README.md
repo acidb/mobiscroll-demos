@@ -4,4 +4,22 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 ## Demo description
 
-Values can change in a couple of different ways: through defaults, interacting with the UI or programmatically. The date and time picker defaults to `now`, which can be easily overridden with the `defaultSelection` option. The values are set by interacting with the component and making a selection or it can be done programmatically with the `setVal` method. Use the `buttons` option for showing/hiding `set`, `cancel` or add custom buttons.
+:::inline-fw-group
+prefix: Values can change in a couple of different ways: through defaults, interacting with the UI or programmatically. The date and time picker defaults to `now`, which can be easily overridden with the `defaultSelection` option. The values are set by interacting with the component and making a selection or it can be done programmatically
+suffix: Use the `buttons` option for showing/hiding `set`, `cancel` or add custom buttons.
+:::framework{only="angular"}
+by updating the bound value.
+:::
+:::framework{only="react"}
+by updating the bound value.
+:::
+:::framework{only="vue"}
+by updating the bound value.
+:::
+:::framework{only="javascript"}
+with the `setVal` method.
+:::
+:::framework{only="jquery"}
+with the `setVal` method.
+:::
+:::end-inline-fw-group

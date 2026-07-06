@@ -15,6 +15,8 @@ If you would like to keep the styling of the `start/end` times, `allDay` and `co
 
 You will have to place and provide styling to all event fields. Beside the ones mentioned above you'll be able to render other custom fields, like `description`, `location`, `participants` ...
 
+
+
 Pass a full event template to the  `agendaEvent` template. All original event fields along with computed fields like `isMultiDay`, `lastDay` are available in the template.
 
 ## Implementation instructions

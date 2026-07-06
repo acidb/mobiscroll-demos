@@ -13,10 +13,35 @@ If you want to hide the native tooltip, you can set the `showEventTooltip` to `f
 
 **Fully custom tooltip**
 Setting the `showEventTooltip` to false gives room for a fully custom tooltip that can be implemented by using the
+:::framework{only="vue"}
 `event-hover-in`
-
- and `event-hover-out`
-
+:::
+:::framework{only="angular"}
+`onEventHoverIn`
+:::
+:::framework{only="react"}
+`onEventHoverIn`
+:::
+:::framework{only="javascript"}
+`onEventHoverIn`
+:::
+:::framework{only="jquery"}
+`onEventHoverIn`
+::: and :::framework{only="vue"}
+`event-hover-out`
+:::
+:::framework{only="angular"}
+`onEventHoverOut`
+:::
+:::framework{only="react"}
+`onEventHoverOut`
+:::
+:::framework{only="javascript"}
+`onEventHoverOut`
+:::
+:::framework{only="jquery"}
+`onEventHoverOut`
+:::
 lifecycle events. With the help of the Mobiscroll popup you can show a custom tooltip that holds details, actions applicable to the event it is anchored to.
 
 **Showing a third party popup**

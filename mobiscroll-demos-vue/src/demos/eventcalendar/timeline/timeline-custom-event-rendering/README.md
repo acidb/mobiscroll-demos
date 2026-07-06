@@ -6,9 +6,23 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 Events can be customized through the `timelineEvent` template. How the events look are fully up to you. Base event fields along with custom fields can be accessed when writing the event template.
 
+
+
+
+
+
+
 The before/after buffers can help you visualise delays or added minutes for tasks. For example travel time for meetings/appointments, check in/check out for flights.
 
+
+
 Templating the buffers can be done through the `bufferBefore`  and `bufferAfter` options.
+
+
+
+
+
+
 
 - **Want to see how custom event rendering looks on the time grid?** [Check out this example &#8594;](https://demo.mobiscroll.com/vue/scheduler/customizing-events#)
 

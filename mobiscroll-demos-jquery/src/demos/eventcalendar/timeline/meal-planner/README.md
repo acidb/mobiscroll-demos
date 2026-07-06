@@ -8,6 +8,14 @@ Use the [timeline summary mode/event listing](https://demo.mobiscroll.com/jquery
 
 The add/edit form shows up in a custom popover that opens on double click for meal creation and on click for editing.
 
+
+
+
+
+
+
+
+
 The popover header is customized with a custom header renderer function using the `renderHeader` option.
 
 By default the second dimension of the timeline (vertical axis) is reserved for resources, however it can be configured and used as "time slots" if the times are not relevant.

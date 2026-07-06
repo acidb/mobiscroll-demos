@@ -8,7 +8,25 @@ Dynamically switch views within one calendar instance. Use a UI control to let u
 
 Switch between a month view with a monthly agenda, a week view with a weekly agenda and daily event list.
 
+:::framework{only="angular"}
 Thanks to property binding and all option changes are live and propagate accordingly.
+:::
+
+:::framework{only="react"}
+Thanks to property binding and all option changes are live and propagate accordingly.
+:::
+
+:::framework{only="vue"}
+Thanks to property binding and all option changes are live and propagate accordingly.
+:::
+
+:::framework{only="javascript"}
+Use the `setOptions` method to dynamically update any option.
+:::
+
+:::framework{only="jquery"}
+Use the `setOptions` method to dynamically update any option.
+:::
 
 - **Interested in the agenda?** [How to render an agenda instead of a calendar &#8594;](https://demo.mobiscroll.com/angular/agenda/daily-weekly-monthly-annual-agenda#)
 

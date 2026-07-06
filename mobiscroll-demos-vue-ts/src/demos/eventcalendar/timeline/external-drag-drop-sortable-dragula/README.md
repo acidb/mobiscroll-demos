@@ -12,7 +12,15 @@ In order for that to work you will need to have two things set up:
 - Enable the timeline to receive external events and/or resources by setting `externalDrop`  and/or  `externalResourceDrop` to `true`.
 - Initialize the external events or/and resources (containers) as `draggable` components.
 
+
+
 Use the `MbscDraggable` component to specify a skeleton event through its `dragData` option and reference the draggable container in the `element` option. The `dragData` accepts a full event definition that will be added to the event calendar on drop. If omitted, a default event will be created.
+
+
+
+
+
+
 
 **Working together with SortableJS and Dragula lists**
 
@@ -25,15 +33,51 @@ Events and resources can be created and scheduled by dragging items from third-p
 - Allow the timeline to receive external drops by setting `externalDrop` or/and  `externalResourceDrop`to `true`.
 - Use the `sortableJsDraggable` or `dragulaDraggable` plugins to connect the third-party list with the scheduler. The event data will be read from the dragged element's `data-drag-data` attribute, or the plugin's options expose an `eventData` function where the event definition (title, start, end, resource, etc.) can be specified.
 
-You can then handle the calendars lifecycle events such as `event-create`
-
-,
+You can then handle the calendars lifecycle events such as :::framework{only="vue"}
+`event-create`
+:::
+:::framework{only="angular"}
+`onEventCreate`
+:::
+:::framework{only="react"}
+`onEventCreate`
+:::
+:::framework{only="javascript"}
+`onEventCreate`
+:::
+:::framework{only="jquery"}
+`onEventCreate`
+:::,
+:::framework{only="vue"}
 `event-created`
-
- or
+:::
+:::framework{only="angular"}
+`onEventCreated`
+:::
+:::framework{only="react"}
+`onEventCreated`
+:::
+:::framework{only="javascript"}
+`onEventCreated`
+:::
+:::framework{only="jquery"}
+`onEventCreated`
+::: or
+:::framework{only="vue"}
 `event-create-failed`
-
- to run custom logic (e.g. showing a toast) when
+:::
+:::framework{only="angular"}
+`onEventCreateFailed`
+:::
+:::framework{only="react"}
+`onEventCreateFailed`
+:::
+:::framework{only="javascript"}
+`onEventCreateFailed`
+:::
+:::framework{only="jquery"}
+`onEventCreateFailed`
+::: to run custom logic (e.g. showing a toast) when
 a drop succeeds or fails.
 
 **Unscheduling events and resources (or dragging them off a calendar)**
@@ -44,16 +88,67 @@ onto an external drop container. To activate this, you will need to:
 - Enable the timeline to allow dragging events or resources out by setting `externalDrag`  or `externalResourceDrag` to `true`.
 - Initialize the :::framework{only="vue"} `dropcontainer` ::: :::framework{only="angular"} `dropcontainer`. ::: :::framework{only="react"} `dropcontainer`. ::: :::framework{only="javascript"} `dropcontainer`. ::: :::framework{only="jquery"} `dropcontainer`. :::
 
+
+
 Use the `MbscDropcontainer` component and its `item-drop` event to handle dropped events.
+
+
+
+
+
+
 
 Events can also be dropped on another event calendar with `externalDrop` enabled.
 
 When an event is dropped into an external drop container or another calendar, it will be deleted from the original
-calendar and the `event-delete`
+calendar and the :::framework{only="vue"}
+`event-delete`
+:::
+:::framework{only="angular"}
+`onEventDelete`
+:::
+:::framework{only="react"}
+`onEventDelete`
+:::
+:::framework{only="javascript"}
+`onEventDelete`
+:::
+:::framework{only="jquery"}
+`onEventDelete`
+::: will be fired.
 
- will be fired.
+:::inline-fw-group
+prefix: You can also use the :::framework{only="vue"} `event-drag-leave` ::: :::framework{only="angular"} `onEventDragLeave` ::: :::framework{only="react"} `onEventDragLeave` ::: :::framework{only="javascript"} `onEventDragLeave` ::: :::framework{only="jquery"} `onEventDragLeave` ::: and :::framework{only="vue"} `event-drag-enter` ::: :::framework{only="angular"} `onEventDragEnter` ::: :::framework{only="react"} `onEventDragEnter` ::: :::framework{only="javascript"} `onEventDragEnter` ::: :::framework{only="jquery"} `onEventDragEnter` :::, and the drop container's
+suffix: events to provide visual feedback or running custom logic during drag.
+:::framework{only="vue"}
+`item-drag-enter` and `item-drag-leave`
+:::
+:::framework{only="angular"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::framework{only="react"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::framework{only="javascript"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::framework{only="jquery"}
+`onItemDragEnter` and `onItemDragLeave`
+:::
+:::end-inline-fw-group
 
-You can also use the :::framework{only="vue"} `event-drag-leave` ::: :::framework{only="angular"} `onEventDragLeave` ::: :::framework{only="react"} `onEventDragLeave` ::: :::framework{only="javascript"} `onEventDragLeave` ::: :::framework{only="jquery"} `onEventDragLeave` ::: and :::framework{only="vue"} `event-drag-enter` ::: :::framework{only="angular"} `onEventDragEnter` ::: :::framework{only="react"} `onEventDragEnter` ::: :::framework{only="javascript"} `onEventDragEnter` ::: :::framework{only="jquery"} `onEventDragEnter` :::, and the drop container's `item-drag-enter` and `item-drag-leave` events to provide visual feedback or running custom logic during drag.
+:::framework{only="angular"}
+Learn more from the external drag & drop documentation.
+:::
+:::framework{only="react"}
+Learn more from the external drag & drop documentation.
+:::
+:::framework{only="javascript"}
+Learn more from the external drag & drop documentation.
+:::
+:::framework{only="jquery"}
+Learn more from the external drag & drop documentation.
+:::
 
 **Unscheduling events or resources to SortableJS and Dragula lists**
 

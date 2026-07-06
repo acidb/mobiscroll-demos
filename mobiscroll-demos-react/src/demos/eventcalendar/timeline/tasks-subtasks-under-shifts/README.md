@@ -7,19 +7,51 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 Visualize shifts and tasks within them using the timeline view. With the help of the `order` property of the data object you can always guarantee that shifts are always displayed at the top (alternatively below tasks) and tasks within those shifts are rendered below.
 
 The shift and task events are bind together with custom data properties. Every shift contains the task IDs in the `tasks` property, and every task has a `shift` property which indicates the parent shift.
-These properties are used later in the validation logic to handle the two distinct event type behaviours. The validation is implemented by dynamically setting invalid ranges through the 
-
+These properties are used later in the validation logic to handle the two distinct event type behaviours. The validation is implemented by dynamically setting invalid ranges through the :::framework{only="vue"}
+`event-created`
+:::
+:::framework{only="angular"}
 `onEventCreated`
-
-,
-
+:::
+:::framework{only="react"}
+`onEventCreated`
+:::
+:::framework{only="javascript"}
+`onEventCreated`
+:::
+:::framework{only="jquery"}
+`onEventCreated`
+:::,
+:::framework{only="vue"}
+`event-update`
+:::
+:::framework{only="angular"}
 `onEventUpdated`
-
- and
-
+:::
+:::framework{only="react"}
+`onEventUpdated`
+:::
+:::framework{only="javascript"}
+`onEventUpdated`
+:::
+:::framework{only="jquery"}
+`onEventUpdated`
+::: and
+:::framework{only="vue"}
+`event-deleted`
+:::
+:::framework{only="angular"}
 `onEventDeleted`
-
- lifecycle events.
+:::
+:::framework{only="react"}
+`onEventDeleted`
+:::
+:::framework{only="javascript"}
+`onEventDeleted`
+:::
+:::framework{only="jquery"}
+`onEventDeleted`
+::: lifecycle events.
 
 - **Do you want to learn about the event ordering?** [Learn more about it in the documentation &#8594;](https://docs.mobiscroll.com/react/eventcalendar/timeline#event-order)
 
@@ -55,3 +87,32 @@ These properties are used later in the validation logic to handle the two distin
 - Angular: define a `MyEvent` interface extending `MbscCalendarEvent` with `shift?: number | string` and `tasks?: (string | number)[]`. Inject `Notifications` for toasts. Use `@ViewChild('timeline') timelineInst` to access the instance. Pass event-handler methods in `calendarOptions` instead of inline template bindings.
 - Vue: use `MbscToast` component with `isOpen` / `message` reactive refs for toast feedback.
 - JavaScript/jQuery: use `inst.removeEvent()` and `inst.updateEvent()` for imperative event mutations; use `inst.setOptions({ invalid: ... })` to swap the invalid list on drag.
+
+## What this demo shows
+
+- A desktop weekly timeline for planning shifts and tasks together, with Monday to Friday workdays arranged horizontally and employee resources listed vertically on the left.
+- **Header navigation** The month and year label opens date navigation, while the previous and next arrows and the Today button move between weeks or return to the current day.
+- **Week view** The fixed date strip shows the selected work week from Monday to Friday using the `DD DDD MMM YYYY` date format, with the current date highlighted.
+- **Time grid** The timeline displays working hours from 5 AM to 7 PM with hourly columns under each day.
+- **Resources** The left side lists five employee resources.
+- **Current time** A vertical blue line and time label mark the current time.
+- **Hover behavior** Hovering over the time grid shows a time indicator that follows the cursor in 15-minute increments.
+- **Shift labels** Shifts are rendered as gray labels above the task events and can span an employee's working hours, including shift types such as Daily Shift and Flex Shift.
+- **Shift constraints** Shift labels can be moved in time, but they cannot be moved between resources or overlap with other shifts.
+- **Grouped tasks** Task events are grouped under their parent shifts. When a shift is updated, the tasks assigned to that shift move with it.
+- **Task constraints** Task events can be moved in time only within their parent shift period.
+- **Event cards** Task events are rendered as colored cards with a colored stripe on the left, a bold task name, a calculated duration next to the title, and the exact start and end time below the title.
+- **Event creation** New events can be created by double-clicking an individual resource row or by clicking and dragging across a time range.
+- **Shift-first creation** Empty time ranges create a shift first; tasks can then be created and assigned to that shift.
+- **Event interaction** Events are highlighted on hover and show drag and resize handles for repositioning or changing duration.
+- **Event selection** Clicking an event selects and highlights it.
+- **Horizontal scrolling** Horizontal scrolling moves across multiple days while keeping employee rows visible.
+
+## Best for
+
+- **Workforce scheduling** Planning employee shifts and the tasks assigned within each shift.
+- **Shift management** Coordinating daily and flexible shifts while keeping work items tied to the correct employee and time range.
+- **Service operations** Scheduling field, support, or operations work where shift coverage and task timing need to be managed together.
+- **IT support planning** Assigning support tasks within employee availability windows.
+- **Maintenance teams** Organizing maintenance work by employee, workday, shift, and task duration.
+- **Employee workload management** Reviewing how individual work items fit into each employee's scheduled working hours.

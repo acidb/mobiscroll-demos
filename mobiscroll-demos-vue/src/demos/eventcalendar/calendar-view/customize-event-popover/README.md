@@ -11,7 +11,15 @@ The events listed in the popover can be customized in two ways:
 
 You can provide styling to the `title` field and any other custom fields like `description`, `location`, `participants` ...
 
+
+
 Create an event content template and pass it to the `popoverEventContent` template. All original event fields along with computed fields like `isMultiDay`, `lastDay` are passed to the template. For a fully custom event rendering use the `popoverEvent` template.
+
+
+
+
+
+
 
 If you add custom markup you will want to add styling too. Use the `popoverClass` under the `view` option to tell the calendar what CSS class it should append to the popover container so that you can write specific CSS rules.
 

@@ -13,7 +13,33 @@ Such an example would be a custom filter block created with the help of a segmen
 - **Previous month button** - `&lt;mbsc-calendar-prev&gt;&lt;/mbsc-calendar-prev>`. Use the `.md-header-filter-prev` CSS class for custom overrides.
 - **Next month button** - `&lt;mbsc-calendar-next&gt;&lt;/mbsc-calendar-next>`. Use the `.md-header-filter-next` CSS class for custom overrides.
 
-For changing the order the controls are laid out, you only need to set up the `headerTemplate`.
+
+
+
+
+
+
+
+
+:::inline-fw-group
+prefix: For changing the order the controls are laid out, you only need to set up the
+suffix: 
+:::framework{only="angular"}
+`headerTemplate`.
+:::
+:::framework{only="vue"}
+`header` template.
+:::
+:::framework{only="react"}
+`renderHeader`.
+:::
+:::framework{only="javascript"}
+`renderHeader`.
+:::
+:::framework{only="jquery"}
+`renderHeader`.
+:::
+:::end-inline-fw-group
 
 **Overriding the order for specific themes**
 

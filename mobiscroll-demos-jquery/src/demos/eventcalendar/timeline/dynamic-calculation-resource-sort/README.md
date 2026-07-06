@@ -8,7 +8,25 @@ For advanced resource sorting and ordering calculations, sorting just by resourc
 In those situations you can provide a modal or popup that is invoked either from outside of the calendar
 or from within the calendar header itself and you can get as sophisticated as you have to.
 
-In this example trucks are listed as resources along with the scheduled tours as events. The sort popup that can be invoked from the header through templating allows you to perform calculations based on truck parameters and tour events. Once the calculation options are selected, the resulting metrics are displayed in the resources column, dynamically updating to reflect the results using the @if (pagemode == PageMode.Angular) { `resourceTemplate` } else if (pagemode == PageMode.Vue) { `resource` } else { `renderResource` } templating option.
+:::inline-fw-group
+prefix: In this example trucks are listed as resources along with the scheduled tours as events. The sort popup that can be invoked from the header
+suffix: allows you to perform calculations based on truck parameters and tour events. Once the calculation options are selected, the resulting metrics are displayed in the resources column, dynamically updating to reflect the results using the @if (pagemode == PageMode.Angular) { `resourceTemplate` } else if (pagemode == PageMode.Vue) { `resource` } else { `renderResource` } templating option.
+:::framework{only="angular"}
+through templating
+:::
+:::framework{only="vue"}
+through templating
+:::
+:::framework{only="react"}
+through templating
+:::
+:::framework{only="javascript"}
+through templating
+:::
+:::framework{only="jquery"}
+through templating
+:::
+:::end-inline-fw-group
 
 Since the tours affect the resource order, on new event creation or reassignment a
 [snackbar](https://demo.mobiscroll.com/jquery/forms/notifications#)

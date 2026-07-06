@@ -5,10 +5,21 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 ## Demo description
 
 The timeline view is virtualized which means that the markup is being generated and maintained on the fly. Navigating both vertically and horizontally through scrolling fires
-the 
+the :::framework{only="vue"}
+@virtual-loading
+:::
+:::framework{only="angular"}
 `onVirtualLoading`
-
- lifecycle event which can
+:::
+:::framework{only="react"}
+`onVirtualLoading`
+:::
+:::framework{only="javascript"}
+`onVirtualLoading`
+:::
+:::framework{only="jquery"}
+`onVirtualLoading`
+::: lifecycle event which can
 be used to load the data on scroll rather than load everything on initial page rendering.
 
 This dramatically improves performance in case of a large event count since not all data is loaded in memory from start.

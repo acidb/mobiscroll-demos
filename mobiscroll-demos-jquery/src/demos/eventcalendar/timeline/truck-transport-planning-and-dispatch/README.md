@@ -8,7 +8,25 @@ Managing a fleet of delivery trucks means constantly matching incoming jobs agai
 
 To enable external drops from the sidebar, set `externalDrop` to `true` on the timeline, and initialize each job card in the sidebar using the `draggable` component with `dragData` pointing to the full job object.
 
-When the dispatcher starts dragging a job, the `onEventDragStart` event fires and drives a real-time resource validation pass: trucks with insufficient cargo capacity or a conflicting scheduled trip are filtered out of the resource list, and the grid is locked outside the job's pickup-to-drop-off window using the `invalid` option. This gives the dispatcher an immediate visual map of valid drop targets.
+:::inline-fw-group
+prefix: When the dispatcher starts dragging a job, the
+suffix: event fires and drives a real-time resource validation pass: trucks with insufficient cargo capacity or a conflicting scheduled trip are filtered out of the resource list, and the grid is locked outside the job's pickup-to-drop-off window using the `invalid` option. This gives the dispatcher an immediate visual map of valid drop targets.
+:::framework{only="vue"}
+`event-drag-start`
+:::
+:::framework{only="angular"}
+`onEventDragStart`
+:::
+:::framework{only="react"}
+`onEventDragStart`
+:::
+:::framework{only="javascript"}
+`onEventDragStart`
+:::
+:::framework{only="jquery"}
+`onEventDragStart`
+:::
+:::end-inline-fw-group
 
 A successful drop is confirmed via :::framework{only="vue"} `event-created` ::: :::framework{only="angular"} `onEventCreated` ::: :::framework{only="react"} `onEventCreated` ::: :::framework{only="javascript"} `onEventCreated` ::: :::framework{only="jquery"} `onEventCreated` :::, which removes the job from the sidebar and marks it as scheduled. If the drop lands in an invalid position, :::framework{only="vue"} `event-create-failed` ::: :::framework{only="angular"} `onEventCreateFailed` ::: :::framework{only="react"} `onEventCreateFailed` ::: :::framework{only="javascript"} `onEventCreateFailed` ::: :::framework{only="jquery"} `onEventCreateFailed` ::: snaps the job to the first free slot within the time window instead of rejecting the drop outright. The same snap logic runs for existing event moves via :::framework{only="vue"} `event-update-failed` ::: :::framework{only="angular"} `onEventUpdateFailed` ::: :::framework{only="react"} `onEventUpdateFailed` ::: :::framework{only="javascript"} `onEventUpdateFailed` ::: :::framework{only="jquery"} `onEventUpdateFailed` :::.
 
