@@ -4,26 +4,7 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 ## Demo description
 
-:::inline-fw-group
-prefix: With the combination of the timeline view along with fixed `resources` and
-suffix: you can create a UI for comparison.
-:::framework{only="angular"}
-resource templating
-:::
-:::framework{only="vue"}
-`resource`
-slot
-:::
-:::framework{only="react"}
-`renderResource`
-:::
-:::framework{only="javascript"}
-`renderResource`
-:::
-:::framework{only="jquery"}
-`renderResource`
-:::
-:::end-inline-fw-group
+With the combination of the timeline view along with fixed `resources` and `renderResource` you can create a UI for comparison.
 
 In this example resources are people with tasks. There is a button in the resource template which on click dynamically moves the resource to/from a comparison section, located at the top of the view.
 Compare up to 3 resources at a time, but adjust this as you like in your own implementation.

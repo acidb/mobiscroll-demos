@@ -7,25 +7,7 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 Events appear over scheduler cells, which provide a great background layer for information.
 They can be `disabled`, styled with `colored backgrounds`, or used to present rich content.
 
-:::inline-fw-group
-prefix: Cell content in the scheduler can be customized using the
-suffix: The callback receives cell data such as the date, resource, and overlapping events in the cell. This lets you add custom content like icons or badges to cells based on their data. It's useful for showing holidays, availability, or statuses.
-:::framework{only="angular"}
-cellTemplate option.
-:::
-:::framework{only="vue"}
-cell template.
-:::
-:::framework{only="react"}
-renderCell option.
-:::
-:::framework{only="javascript"}
-renderCell option.
-:::
-:::framework{only="jquery"}
-renderCell option.
-:::
-:::end-inline-fw-group
+Cell content in the scheduler can be customized using the renderCell option. The callback receives cell data such as the date, resource, and overlapping events in the cell. This lets you add custom content like icons or badges to cells based on their data. It's useful for showing holidays, availability, or statuses.
 
 Cells can be hourly, 30 minute long, or however it is setup using the
 [timeCellStep](https://docs.mobiscroll.com/javascript/eventcalendar/timeline#view-timeline-timeCellStep) option.

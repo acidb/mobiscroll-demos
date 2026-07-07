@@ -10,14 +10,6 @@ The add/edit form shows up in a custom popover that opens on double click for me
 
 The popover header is customized with a custom template using the `headerTemplate` option.
 
-
-
-
-
-
-
-
-
 By default the second dimension of the timeline (vertical axis) is reserved for resources, however it can be configured and used as "time slots" if the times are not relevant.
 
 ## Implementation instructions

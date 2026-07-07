@@ -6,25 +6,7 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 Dynamically switch views within one instance. Use a UI control to let users do the switching or do it programmatically.
 
-:::inline-fw-group
-prefix: The example features a month view with events as labels, a weekly schedule view, a daily schedule and a weekly agenda.
-suffix: 
-:::framework{only="angular"}
-Use property binding and when the value of the property changes the settings propagate.
-:::
-:::framework{only="react"}
-Use property binding and when the value of the property changes the settings propagate.
-:::
-:::framework{only="vue"}
-Use property binding and when the value of the property changes the settings propagate.
-:::
-:::framework{only="javascript"}
-Use the `setOptions` method to dynamically change the settings.
-:::
-:::framework{only="jquery"}
-Use the `setOptions` method to dynamically change the settings.
-:::
-:::end-inline-fw-group
+The example features a month view with events as labels, a weekly schedule view, a daily schedule and a weekly agenda. Use the `setOptions` method to dynamically change the settings.
 
 ## Implementation instructions
 

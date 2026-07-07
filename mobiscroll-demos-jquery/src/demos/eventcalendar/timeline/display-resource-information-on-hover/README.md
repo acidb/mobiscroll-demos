@@ -5,36 +5,12 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 ## Demo description
 
 Displaying information in a tooltip can come in handy when space is tight but information matters.
-When hovering over a resource cell, the :::framework{only="vue"}
-`resource-hover-in`
-:::
-:::framework{only="angular"}
+When hovering over a resource cell, the 
+
 `onResourceHoverIn`
-:::
-:::framework{only="react"}
-`onResourceHoverIn`
-:::
-:::framework{only="javascript"}
-`onResourceHoverIn`
-:::
-:::framework{only="jquery"}
-`onResourceHoverIn`
-:::
-and :::framework{only="vue"}
-`resource-hover-out`
-:::
-:::framework{only="angular"}
+and 
+
 `onResourceHoverOut`
-:::
-:::framework{only="react"}
-`onResourceHoverOut`
-:::
-:::framework{only="javascript"}
-`onResourceHoverOut`
-:::
-:::framework{only="jquery"}
-`onResourceHoverOut`
-:::
 [lifecycle events](https://demo.mobiscroll.com/jquery/timeline/event-hooks#) are triggered, which can be used to show/hide rich tooltips.
 Information and actions shown here won't clutter the main view, keep the timeline clean while still giving quick access to content that helps.
 

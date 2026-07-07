@@ -12,36 +12,11 @@ To disable specific or recurring days you can pass an array to the `invalid` opt
 - Disable a specific range - `{ start: new Date(2020, 11, 19), end: new Date(2020, 11, 20) }`
 
 When dragging events onto disabled days, they will automatically be denied and
-:::framework{only="vue"}
 `event-update-failed`
-:::
-:::framework{only="angular"}
-`onEventCreateFailed`
-:::
-:::framework{only="react"}
-`onEventCreateFailed`
-:::
-:::framework{only="javascript"}
-`onEventCreateFailed`
-:::
-:::framework{only="jquery"}
-`onEventCreateFailed`
-:::/
-:::framework{only="vue"}
+
+/
 `event-create-failed`
-:::
-:::framework{only="angular"}
-`onEventUpdateFailed`
-:::
-:::framework{only="react"}
-`onEventUpdateFailed`
-:::
-:::framework{only="javascript"}
-`onEventUpdateFailed`
-:::
-:::framework{only="jquery"}
-`onEventUpdateFailed`
-:::
+
 events will be triggered, from which custom logic can be executed to show a toast or maybe a modal for data correction. The built-in logic of how the calendar handles validation on user interaction can be controlled through the `invalidateEvent` option:
 
 - `'strict'` - Strict being the default, no event overlap is allowed with invalid ranges.

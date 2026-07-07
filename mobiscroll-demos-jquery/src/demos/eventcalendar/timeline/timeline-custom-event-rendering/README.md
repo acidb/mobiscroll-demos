@@ -8,14 +8,6 @@ Events can be customized through the `renderTimelineEvent` option. How the event
 
 The before/after buffers can help you visualise delays or added minutes for tasks. For example travel time for meetings/appointments, check in/check out for flights.
 
-
-
-
-
-
-
-
-
 The buffers can be customized through the `renderBufferBefore` and `renderBufferAfter` options.
 
 - **Want to see how custom event rendering looks on the time grid?** [Check out this example &#8594;](https://demo.mobiscroll.com/jquery/scheduler/customizing-events#)

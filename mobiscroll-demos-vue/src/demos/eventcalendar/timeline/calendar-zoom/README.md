@@ -13,25 +13,7 @@ Depending on what you are trying to accomplish, any number of levels can be spec
 [zoomLevels](https://docs.mobiscroll.com/vue/eventcalendar/timeline#view-timeline-zoomLevels)
 property, controlling settings ranging from horizontal resolution, page type and size to column widths.
 
-:::inline-fw-group
-prefix: Combined with the flexibility of
-suffix: , you can add buttons, sliders to the calendar or manage everything from external controls.
-:::framework{only="angular"}
-templating capabilities of the event calendar header
-:::
-:::framework{only="vue"}
-templating capabilities of the event calendar header
-:::
-:::framework{only="react"}
-templating capabilities of the event calendar header
-:::
-:::framework{only="javascript"}
-templating capabilities of the event calendar header
-:::
-:::framework{only="jquery"}
-templating capabilities of the event calendar header
-:::
-:::end-inline-fw-group
+Combined with the flexibility of templating capabilities of the event calendar header , you can add buttons, sliders to the calendar or manage everything from external controls.
 Dynamically zooming in and out will always keep a virtual reference point in the middle of the timeline for a smooth visual experience.
 
 ## Implementation instructions

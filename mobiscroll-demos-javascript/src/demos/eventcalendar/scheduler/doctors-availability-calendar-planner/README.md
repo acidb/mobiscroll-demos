@@ -8,25 +8,7 @@ You can tailor the scheduler to show availability per doctor using visual indica
 Availability is marked with a green status track on the left side of each doctor's column,
 making open slots easy to spot and supporting quick scheduling decisions.
 
-:::inline-fw-group
-prefix: To create the visual indicator, we added extra resource columns with a narrow width, styled using a custom CSS class set via the `cssClass` property in the resource data. The availability track is shown using events placed on these columns, with their content hidden via
-suffix: and resized responsively based on the narrow resource column width. Time ranges outside each doctor's working hours are disabled to reflect their actual schedule.
-:::framework{only="vue"}
-schedulerEvent option
-:::
-:::framework{only="angular"}
-schedulerEventTemplate option
-:::
-:::framework{only="react"}
-renderSchedulerEvent option
-:::
-:::framework{only="javascript"}
-renderSchedulerEvent option
-:::
-:::framework{only="jquery"}
-renderSchedulerEvent option
-:::
-:::end-inline-fw-group
+To create the visual indicator, we added extra resource columns with a narrow width, styled using a custom CSS class set via the `cssClass` property in the resource data. The availability track is shown using events placed on these columns, with their content hidden via renderSchedulerEvent option and resized responsively based on the narrow resource column width. Time ranges outside each doctor's working hours are disabled to reflect their actual schedule.
 
 ## Implementation instructions
 

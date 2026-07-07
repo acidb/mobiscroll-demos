@@ -9,21 +9,10 @@ You can specify backgrounds as `exact dates`, `ranges` or set up `recurring rule
 The `recurring` object works the [same way as for the events](https://demo.mobiscroll.com/javascript/scheduler/recurring-events#).
 Optionally, you can specify a `title` as well, which will be displayed on the colored block.
 
-Use the :::framework{only="vue"}
-`page-loading`
-:::
-:::framework{only="angular"}
+Use the 
+
 `onPageLoading`
-:::
-:::framework{only="react"}
-`onPageLoading`
-:::
-:::framework{only="javascript"}
-`onPageLoading`
-:::
-:::framework{only="jquery"}
-`onPageLoading`
-::: lifecycle event to color backgrounds runtime. You can [learn about lifecycle events](https://demo.mobiscroll.com/javascript/scheduler/event-hooks#) and places where to drop logic to customize the experience.
+ lifecycle event to color backgrounds runtime. You can [learn about lifecycle events](https://demo.mobiscroll.com/javascript/scheduler/event-hooks#) and places where to drop logic to customize the experience.
 
 - **Want to use patterns as backgrounds and customize how the invalid cells look?** [Learn how to do it &#8594;](https://demo.mobiscroll.com/javascript/scheduler/colors-invalids-css-class#)
 

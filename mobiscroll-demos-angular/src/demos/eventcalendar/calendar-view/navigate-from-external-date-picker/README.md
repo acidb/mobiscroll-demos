@@ -6,10 +6,6 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 This example demonstrates how can the Eventcalendar navigated externally. Here we have a two-pane layout with a Datepicker on the left and a Calendar on the right. Changing date on the Datepicker will trigger the date change on the Calendar.
 
-
-
-
-
 The Datepicker and the Calendar binds to the same selected value which makes sure that the displayed dates will be in sync in both of the components.
 The Datepicker uses the `ngModel` binding and the Calendar its `selectedDate` option to update the displayed date on the view.
 

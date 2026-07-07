@@ -6,15 +6,6 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 This example demonstrates how can the Agenda navigated externally. Here we have a two-pane layout with a Datepicker on the left and an Agenda on the right. Changing date on the Datepicker will trigger the date change on the Agenda.
 
-
-
-
-
-
-
-
-
-
 The Datepicker calls the `navigate` method of the Agenda in its `onChange` event,
 while the Agenda sets the datepicker value with the `setVal` method from its `onSelectedDateChange` event.
 

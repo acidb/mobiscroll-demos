@@ -6,36 +6,14 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 This demo demonstrates how to surface detailed cell summaries through tooltips when hovering over schedule cells.
 
-Using :::framework{only="vue"}
-`cell-hover-in`
-:::
-:::framework{only="angular"}
+Using 
+
 `onCellHoverIn`
-:::
-:::framework{only="react"}
-`onCellHoverIn`
-:::
-:::framework{only="javascript"}
-`onCellHoverIn`
-:::
-:::framework{only="jquery"}
-`onCellHoverIn`
-:::
-and :::framework{only="vue"}
-`cell-hover-out`
-:::
-:::framework{only="angular"}
+
+and 
+
 `onCellHoverOut`
-:::
-:::framework{only="react"}
-`onCellHoverOut`
-:::
-:::framework{only="javascript"}
-`onCellHoverOut`
-:::
-:::framework{only="jquery"}
-`onCellHoverOut`
-:::
+
 events, each tooltip dynamically displays the total number of events, invalid and colors in the hovered cell.
 
 ## Implementation instructions

@@ -12,36 +12,10 @@ To disable specific times, ranges, days or recurring days and times you can pass
 - Lunch break between 12 PM and 1 PM with `title` - `{ start: "12:00", end: "13:00", title: 'Lunch break', recurring: { repeat: 'weekly', weekDays: 'MO,TU,WE,TH,FR' }`
 
 When dragging events onto disabled days or time-slots, they will automatically be denied and
-:::framework{only="vue"}
-`event-create-failed`
-:::
-:::framework{only="angular"}
-`onEventCreateFailed`
-:::
-:::framework{only="react"}
-`onEventCreateFailed`
-:::
-:::framework{only="javascript"}
-`onEventCreateFailed`
-:::
-:::framework{only="jquery"}
-`onEventCreateFailed`
-::: /
-:::framework{only="vue"}
-`event-update-failed`
-:::
-:::framework{only="angular"}
-`onEventUpdateFailed`
-:::
-:::framework{only="react"}
-`onEventUpdateFailed`
-:::
-:::framework{only="javascript"}
-`onEventUpdateFailed`
-:::
-:::framework{only="jquery"}
-`onEventUpdateFailed`
-::: events will be triggered, from which custom logic can be executed to show a toast or maybe a modal for data correction.
+
+`onEventCreateFailed` /
+
+`onEventUpdateFailed` events will be triggered, from which custom logic can be executed to show a toast or maybe a modal for data correction.
 The built-in logic of how the calendar handles validation on user interaction can be controlled through the
 `invalidateEvent` option:
 

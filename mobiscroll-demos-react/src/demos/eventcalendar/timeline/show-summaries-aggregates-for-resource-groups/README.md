@@ -5,51 +5,19 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 ## Demo description
 
 When scheduling across multiple groups of resources it sometimes is helpful to provide summaries and aggregate calculations on a group level. These dynamically calculated values can be presented as custom templated events in resource parent rows.
-Whenever new bookings are made, updated or deleted, use the :::framework{only="vue"}
-`event-created`
-:::
-:::framework{only="angular"}
+Whenever new bookings are made, updated or deleted, use the 
+
 `onEventCreated`
-:::
-:::framework{only="react"}
-`onEventCreated`
-:::
-:::framework{only="javascript"}
-`onEventCreated`
-:::
-:::framework{only="jquery"}
-`onEventCreated`
-:::,
-:::framework{only="vue"}
-`event-update`
-:::
-:::framework{only="angular"}
+
+,
+
 `onEventUpdated`
-:::
-:::framework{only="react"}
-`onEventUpdated`
-:::
-:::framework{only="javascript"}
-`onEventUpdated`
-:::
-:::framework{only="jquery"}
-`onEventUpdated`
-::: and
-:::framework{only="vue"}
-`event-deleted`
-:::
-:::framework{only="angular"}
+
+ and
+
 `onEventDeleted`
-:::
-:::framework{only="react"}
-`onEventDeleted`
-:::
-:::framework{only="javascript"}
-`onEventDeleted`
-:::
-:::framework{only="jquery"}
-`onEventDeleted`
-::: lifecycle events to update the aggregates for their parent resource.
+
+ lifecycle events to update the aggregates for their parent resource.
 
 As we are working with variable event heights, make sure to set `eventHeight: 'variable'`
 which can be configured under the `view`. This is necessary if the actual booked events have a different height than the summary events (for parent resources).

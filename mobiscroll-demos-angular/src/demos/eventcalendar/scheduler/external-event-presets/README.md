@@ -8,23 +8,10 @@ Use external draggable events to create preset tasks that people can quickly cop
 
 Print a list of predefined tasks and initialize them as `draggable` elements. Enable `externalDrop` for the scheduler and set up the predefined event skeletons for the `draggable` component.
 
-Whenever there is more information to be captured, like detailed task notes, customer information, the name of the technician... you can trigger a `popup` with the task form in the :::framework{only="vue"}
-`event-create`
-:::
-:::framework{only="angular"}
+Whenever there is more information to be captured, like detailed task notes, customer information, the name of the technician... you can trigger a `popup` with the task form in the 
 `onEventCreate`
-:::
-:::framework{only="react"}
-`onEventCreate`
-:::
-:::framework{only="javascript"}
-`onEventCreate`
-:::
-:::framework{only="jquery"}
-`onEventCreate`
-::: lifecycle event. For failed drops (trying to schedule a task during lunch breaks or weekends) the :::framework{only="vue"}
-`event-create-failed`
-:::
+
+ lifecycle event. For failed drops (trying to schedule a task during lunch breaks or weekends) the 
 `onEventCreateFailed` event will be triggered.
 - **Want to see how external presets look & feel for a calendar?** [Check out this example &#8594;](https://demo.mobiscroll.com/angular/eventcalendar/external-event-presets#)
 

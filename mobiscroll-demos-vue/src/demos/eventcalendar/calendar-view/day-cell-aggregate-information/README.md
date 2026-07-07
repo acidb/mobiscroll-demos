@@ -4,25 +4,7 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 ## Demo description
 
-:::inline-fw-group
-prefix: This demo showcases an advanced event calendar implementation with extensive day cell customization using the
-suffix: , which completely overrides the default cell rendering.
-:::framework{only="angular"}
-`calendarDayTemplate`
-:::
-:::framework{only="vue"}
-`calendarDay`
-:::
-:::framework{only="react"}
-`renderCalendarDay`
-:::
-:::framework{only="javascript"}
-`renderCalendarDay`
-:::
-:::framework{only="jquery"}
-`renderCalendarDay`
-:::
-:::end-inline-fw-group
+This demo showcases an advanced event calendar implementation with extensive day cell customization using the `calendarDay` , which completely overrides the default cell rendering.
 
 The calendar provides a comprehensive visual overview of scheduling density and workload management through custom 
 aggregate data visualization with stress-level indicators, weather information, and color-coded backgrounds.

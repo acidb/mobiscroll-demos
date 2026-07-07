@@ -17,14 +17,6 @@ The scheduler takes care of positioning the event container and everything else 
 
 Pass the event template to the schedulerEventTemplate option. All original event fields along with computed fields like `isMultiDay`, `lastDay` will be available inside the template.
 
-
-
-
-
-
-
-
-
 The before/after buffers can help you visualise delays or added minutes for tasks. For example travel time for meetings/appointments, check in/check out for flights.
 
 Templating the buffers are handled through the `bufferBeforeTemplate` and `bufferAfterTemplate` options.

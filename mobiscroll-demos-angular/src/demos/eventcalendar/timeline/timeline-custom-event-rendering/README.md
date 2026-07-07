@@ -6,25 +6,9 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 Events can be customized through the `timelineEventTemplate`. How the events look are fully up to you. Base event fields along with custom fields can be accessed when writing the event template.
 
-
-
-
-
-
-
-
-
 The before/after buffers can help you visualise delays or added minutes for tasks. For example travel time for meetings/appointments, check in/check out for flights.
 
 Templating the buffers are handled through the `bufferBeforeTemplate` and `bufferAfterTemplate` options.
-
-
-
-
-
-
-
-
 
 - **Want to see how custom event rendering looks on the time grid?** [Check out this example &#8594;](https://demo.mobiscroll.com/angular/scheduler/customizing-events#)
 

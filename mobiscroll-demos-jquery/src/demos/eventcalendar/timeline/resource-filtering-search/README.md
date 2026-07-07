@@ -4,55 +4,11 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 ## Demo description
 
-:::inline-fw-group
-prefix: When dealing with numerous resources, filtering and search are essential tools. Using the
-suffix: you can customize the resource header and fit a search input and filter button. Having full control over what you render in the resource header, you can implement live search and filering with a flyout, allowing users to quickly locate specific resources based on selected filters.
-:::framework{only="angular"}
-[resourceHeaderTemplate](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#template-resourceHeaderTemplate)
-option
-:::
-:::framework{only="vue"}
-[resourceHeader](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#slot-resourceHeader)
-slot
-:::
-:::framework{only="react"}
-[renderResourceHeader](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#renderer-renderResourceHeader)
-function
-:::
-:::framework{only="javascript"}
-[renderResourceHeader](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#renderer-renderResourceHeader)
-function
-:::
-:::framework{only="jquery"}
-[renderResourceHeader](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#renderer-renderResourceHeader)
-function
-:::
-:::end-inline-fw-group
+When dealing with numerous resources, filtering and search are essential tools. Using the [renderResourceHeader](https://docs.mobiscroll.com/jquery/eventcalendar/timeline#renderer-renderResourceHeader)
+function you can customize the resource header and fit a search input and filter button. Having full control over what you render in the resource header, you can implement live search and filering with a flyout, allowing users to quickly locate specific resources based on selected filters.
 
-:::inline-fw-group
-prefix: To handle cases where no search results are found, use the
-suffix: to craft a custom placeholder with specific call-to-action buttons eg. clearing all search terms and resetting filters. The placeholder appears when an empty resource array is passed to the calendar.
-:::framework{only="angular"}
-`resourceEmptyTemplate`
-option
-:::
-:::framework{only="vue"}
-`resourceEmpty`
-slot
-:::
-:::framework{only="react"}
-`renderResourceEmpty`
-function
-:::
-:::framework{only="javascript"}
-`renderResourceEmpty`
-function
-:::
-:::framework{only="jquery"}
-`renderResourceEmpty`
-function
-:::
-:::end-inline-fw-group
+To handle cases where no search results are found, use the `renderResourceEmpty`
+function to craft a custom placeholder with specific call-to-action buttons eg. clearing all search terms and resetting filters. The placeholder appears when an empty resource array is passed to the calendar.
 
 ## Implementation instructions
 

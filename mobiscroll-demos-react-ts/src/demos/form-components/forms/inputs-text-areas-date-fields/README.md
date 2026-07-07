@@ -4,30 +4,7 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 ## Demo description
 
-:::framework{only="angular"}
-Use the input styling in Angular apps or as an alternative to the `ion-input` in Ionic Framework. The inputs feature three styles:
-
-:::
-
-:::framework{only="react"}
 Use the input styling in desktop and mobile forms. The inputs feature three styles:
-
-:::
-
-:::framework{only="vue"}
-Use the input styling in desktop and mobile forms. The inputs feature three styles:
-
-:::
-
-:::framework{only="javascript"}
-Use the input styling in desktop and mobile forms. The inputs feature three styles:
-
-:::
-
-:::framework{only="jquery"}
-Use the input styling in desktop and mobile forms. The inputs feature three styles:
-
-:::
 
 - Underline
 - Box

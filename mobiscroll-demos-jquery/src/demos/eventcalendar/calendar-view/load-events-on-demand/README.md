@@ -8,21 +8,9 @@ The event calendar supports [remote](https://demo.mobiscroll.com/jquery/eventcal
 
 Getting the events in real time as the user navigates improves load performance and always serves the most recent data.
 
-Use the :::framework{only="vue"}
-`page-loading`
-:::
-:::framework{only="angular"}
-`onPageLoading`
-:::
-:::framework{only="react"}
-`onPageLoading`
-:::
-:::framework{only="javascript"}
-`onPageLoading`
-:::
-:::framework{only="jquery"}
-`onPageLoading`
-::: lifecycle event to load the data runtime. You can [learn about lifecycle events](https://demo.mobiscroll.com/jquery/eventcalendar/event-hooks#) and places where to drop logic to customize the experience.
+Use the 
+
+`onPageLoading` lifecycle event to load the data runtime. You can [learn about lifecycle events](https://demo.mobiscroll.com/jquery/eventcalendar/event-hooks#) and places where to drop logic to customize the experience.
 
 - **Interested in loading events from Google Calendar?** [Show events from Google Calendar &#8594;](https://demo.mobiscroll.com/jquery/eventcalendar/load-events-from-google-calendar#)
 

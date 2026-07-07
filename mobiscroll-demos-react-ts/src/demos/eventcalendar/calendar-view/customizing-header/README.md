@@ -6,8 +6,6 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 You can customize how the header of the event calendar looks and how the components are arranged. Besides that you can also add custom functionality, like a segmented control that lets people switch between calendar and scheduler.
 
-
-
 Use the `renderHeader` option for passing a custom header layout. There are predefined components - shorthands if you will - that can be used to assemble the header:
 
 - **Navigation component** - `&lt;CalendarNav /&gt;`. Use the `.md-header-filter-controls` CSS class for custom overrides.
@@ -15,31 +13,7 @@ Use the `renderHeader` option for passing a custom header layout. There are pred
 - **Previous month button** - `&lt;CalendarPrev /&gt;`. Use the `.md-header-filter-prev` CSS class for custom overrides.
 - **Next month button** - `&lt;CalendarNext /&gt;`. Use the `.md-header-filter-next` CSS class for custom overrides.
 
-
-
-
-
-
-
-:::inline-fw-group
-prefix: For changing the order the controls are laid out, you only need to set up the
-suffix: This example sets a consistent order and layout across all themes and shows a custom control at the far right end.
-:::framework{only="angular"}
-`headerTemplate`.
-:::
-:::framework{only="vue"}
-`header` template.
-:::
-:::framework{only="react"}
-`renderHeader`.
-:::
-:::framework{only="javascript"}
-`renderHeader`.
-:::
-:::framework{only="jquery"}
-`renderHeader`.
-:::
-:::end-inline-fw-group
+For changing the order the controls are laid out, you only need to set up the `renderHeader`. This example sets a consistent order and layout across all themes and shows a custom control at the far right end.
 
 **Overriding the order for specific themes**
 

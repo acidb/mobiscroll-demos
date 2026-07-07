@@ -6,25 +6,7 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 Hover-based interactions can be simple yet elegant. Using the :::framework{only="vue"} `cell-hover-in` ::: :::framework{only="angular"} `onCellHoverIn` ::: :::framework{only="react"} `onCellHoverIn` ::: :::framework{only="javascript"} `onCellHoverIn` ::: :::framework{only="jquery"} `onCellHoverIn` ::: and :::framework{only="vue"} `cell-hover-out` ::: :::framework{only="angular"} `onCellHoverOut` ::: :::framework{only="react"} `onCellHoverOut` ::: :::framework{only="javascript"} `onCellHoverOut` ::: :::framework{only="jquery"} `onCellHoverOut` ::: events, the calendar dynamically displays an "Add event" button when users hover over day cells, providing an intuitive way to create new events with minimal interface clutter.
 
-:::inline-fw-group
-prefix: For customizing the cell content appearance, the
-suffix: is the perfect candidate, as it holds the basic structure of the day cell.
-:::framework{only="angular"}
-`calendarDayContentTemplate`
-:::
-:::framework{only="vue"}
-`calendarDayContent`
-:::
-:::framework{only="react"}
-`renderCalendarDayContent`
-:::
-:::framework{only="javascript"}
-`renderCalendarDayContent`
-:::
-:::framework{only="jquery"}
-`renderCalendarDayContent`
-:::
-:::end-inline-fw-group
+For customizing the cell content appearance, the `renderCalendarDayContent` is the perfect candidate, as it holds the basic structure of the day cell.
 
 ## Implementation instructions
 

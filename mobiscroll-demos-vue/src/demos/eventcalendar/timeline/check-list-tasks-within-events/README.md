@@ -8,25 +8,7 @@ When there are subtasks related to work orders, it may be necessary to display t
 Subtasks can be rendered as a list with the possibility of adding new items using the [<code>Prompt</code>](https://demo.mobiscroll.com/vue/forms/alert-confirm-prompt#) or more sophisticated modals even. The height of resources will dynamically
 increase depending on the height of the events/length of lists.
 
-:::inline-fw-group
-prefix: To allow dynamic changes in heights according to the length of subtask lists, `eventHeight: 'variable'` is used, along with
-suffix: to maintain the appropriate theme styles.
-:::framework{only="angular"}
-custom event content templating
-:::
-:::framework{only="vue"}
-custom event content slot
-:::
-:::framework{only="react"}
-custom event content rendering
-:::
-:::framework{only="javascript"}
-custom event content rendering
-:::
-:::framework{only="jquery"}
-custom event content rendering
-:::
-:::end-inline-fw-group
+To allow dynamic changes in heights according to the length of subtask lists, `eventHeight: 'variable'` is used, along with custom event content slot to maintain the appropriate theme styles.
 
 ## Implementation instructions
 

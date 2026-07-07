@@ -6,25 +6,7 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 
 The date picker ships with different event hooks for deep customization. Events are triggered through the lifecycle of the component where you can tie in custom functionality and code.
 
-:::inline-fw-group
-prefix: While users interact with the UI events like
-suffix: ... will be triggered.
-:::framework{only="vue"}
-`change`, `set`, `init`
-:::
-:::framework{only="angular"}
-`onChange`, `onSet`, `onInit`
-:::
-:::framework{only="react"}
-`onChange`, `onSet`, `onInit`
-:::
-:::framework{only="javascript"}
-`onChange`, `onSet`, `onInit`
-:::
-:::framework{only="jquery"}
-`onChange`, `onSet`, `onInit`
-:::
-:::end-inline-fw-group
+While users interact with the UI events like `change`, `set`, `init` ... will be triggered.
 
 - **For a complete list of events go to the documentation** See available lifecycle events →
 

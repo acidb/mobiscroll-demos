@@ -7,51 +7,16 @@ To see this example live, check it out on our [demo page](https://demo.mobiscrol
 Visualize shifts and tasks within them using the timeline view. With the help of the `order` property of the data object you can always guarantee that shifts are always displayed at the top (alternatively below tasks) and tasks within those shifts are rendered below.
 
 The shift and task events are bind together with custom data properties. Every shift contains the task IDs in the `tasks` property, and every task has a `shift` property which indicates the parent shift.
-These properties are used later in the validation logic to handle the two distinct event type behaviours. The validation is implemented by dynamically setting invalid ranges through the :::framework{only="vue"}
-`event-created`
-:::
-:::framework{only="angular"}
+These properties are used later in the validation logic to handle the two distinct event type behaviours. The validation is implemented by dynamically setting invalid ranges through the 
+
 `onEventCreated`
-:::
-:::framework{only="react"}
-`onEventCreated`
-:::
-:::framework{only="javascript"}
-`onEventCreated`
-:::
-:::framework{only="jquery"}
-`onEventCreated`
-:::,
-:::framework{only="vue"}
-`event-update`
-:::
-:::framework{only="angular"}
+,
+
 `onEventUpdated`
-:::
-:::framework{only="react"}
-`onEventUpdated`
-:::
-:::framework{only="javascript"}
-`onEventUpdated`
-:::
-:::framework{only="jquery"}
-`onEventUpdated`
-::: and
-:::framework{only="vue"}
-`event-deleted`
-:::
-:::framework{only="angular"}
+ and
+
 `onEventDeleted`
-:::
-:::framework{only="react"}
-`onEventDeleted`
-:::
-:::framework{only="javascript"}
-`onEventDeleted`
-:::
-:::framework{only="jquery"}
-`onEventDeleted`
-::: lifecycle events.
+ lifecycle events.
 
 - **Do you want to learn about the event ordering?** [Learn more about it in the documentation &#8594;](https://docs.mobiscroll.com/javascript/eventcalendar/timeline#event-order)
 
