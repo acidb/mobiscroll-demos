@@ -11,7 +11,7 @@ To visualize the continuous operation and manage shifts that span midnight, the 
 This is achieved using the custom day-offset feature added to the `startTime` (e.g., '20:00-1') and `endTime` (e.g., '08:00+1') properties under the `view` option, which initiates the view relative to the previous or next calendar day.
 Furthermore, to ensure compliance with 8-hour shift lengths and prevent invalid scheduling, the drag-and-drop functionality is constrained by setting the `dragTimeStep` to 8 hours, requiring all events to be moved only in 8-hour increments
 and anchoring the alignment with the dragTimeStepBase: 'viewStart' option. The drag-and-drop logic is implemented for automatic conflict resolution: when an event is dragged to a different time or resource column within the same day,
-it automatically updates and shifts any conflicting events (those sharing the same time slot or resource column) to maintain scheduling integrity and prevent overlaps.
+it automatically updates and shifts any conflicting events (those sharing the same time slot or resource column) to maintain scheduling integrity.
 
 ## Implementation instructions
 
@@ -39,7 +39,7 @@ it automatically updates and shifts any conflicting events (those sharing the sa
 - **Event overlap**: Shift events cannot overlap.
 - **Shift coverage**: By default, each resource has a scheduled shift. Users can delete, create, or move shifts.
 - **Missing shifts**: When a shift is deleted, the affected resource column is highlighted with a red background to show that no shift is scheduled for that resource.
-- **Available shift slots**: When a resource has no shift, hovering over an available 8-hour shift period highlights the slot in green. 
+- **Available shift slots**: When a resource has no shift, hovering over an available 8-hour shift period highlights the slot in green.
 - **Shift repositioning**: Moving a shift can automatically update another shift on the same day to preserve coverage.
 - **Current time**: A blue current-time line appears across the time grid.
 - **Hover behavior**: Hovering over the time grid shows a time indicator that follows the cursor in 8-hour increments.
